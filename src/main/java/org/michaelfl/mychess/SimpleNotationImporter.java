@@ -47,7 +47,8 @@ final class SimpleNotationImporter {
         // Checkmate: "[[b1-a3 b8-c6 c2-c3 g8-h6 g1-h3 f7-f6 g2-g3 c6-e5 a3-b5 h6-f7 b5-d4 f7-h6 h3-g5 e5-c4 g5-e4 c4-e3 d4-b3 a8-b8 f2-f4 d7-d6 g3-g4 e3-c4 a1-b1 d6-d5 e4-d6 c4-d6 b3-a5 d6-f7 h1-g1 e8-d7 d2-d4 e7-e6 c1-d2 e6-e5 b2-b4 c7-c6 d2-e3 c6-c5 g1-g3 d8-a5 d1-d2 f7-d8 b4-b5 e5-f4 e1-f2 f4-g3 f2-f3 g3-g2 d2-d3 d8-e6 e3-c1 a5-a3 c1-g5 f8-d6 b1-d1 b7-b6 c3-c4 b8-b7 d1-e1 a3-c3 e1-d1 c3-d2 d3-g6 a7-a5 d1-d2 f6-g5 g6-f5 h6-g4 f5-f4 d6-e7 e2-e4 e7-d6 h2-h4 e6-f8 f4-e3 d6-e7 d2-c2 d7-d6 e3-f2 h7-h6 f1-e2 g4-f6 h4-g5 c8-h3 f3-f4 a5-a4 f2-g3 f8-d7 g5-g6 h8-a8 c2-b2 d6-e6 e2-g4 h3-g4 b2-c2 e7-d8 g3-a3 h6-h5 a3-b4 a8-a7 a2-a3 d7-f8 c2-b2 g4-d1 b2-a2 f6-d7 b4-b1 d8-e7 c4-d5 e6-d6 a2-e2 e7-h4 b1-c2 f8-g6 f4-f5 g6-f4 c2-a2 d1-e2 d4-c5 b6-c5 a2-b3 e2-f3 b3-b4 f4-d5 b4-b1 h4-f6 b1-d1 g2-g1 d1-b1 d7-f8 e4-e5 d6-d7 b1-c1 b7-c7 c1-c5 g1-b1 c5-c2 b1-c2]]";
         // En passant: "[[e2-e4 c2-c5 f2-f3 c5-c4 d2-d4]]";
         // Castling king's side: "[[e2-e4 e7-e5 g1-f3 b8-c6 f1-b5 a7-a6 b5-a4 g8-f6 e1-g1]]";
-        String notation = "[[e2-e4 e7-e5 g1-f3 b8-c6 f1-b5 a7-a6 b5-a4 g8-f6 e1-g1]]";
+        // Castling queen's side: "[[e2-e4 e7-e5 d2-d4 e5-e4 d1-d4 b8-c6 d4-e3 g8-f6 b1-c3 f8-b4 c1-d2 e8-g8 e1-c1]]";
+        String notation = "[[e2-e4 e7-e5 d2-d4 e5-e4 d1-d4 b8-c6 d4-e3 g8-f6 b1-c3 f8-b4 c1-d2 e8-g8 e1-c1]]";
 
         Game game = new SimpleNotationImporter(notation).importGame();
         game.print();
