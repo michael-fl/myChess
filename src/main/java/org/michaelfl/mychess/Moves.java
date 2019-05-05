@@ -9,7 +9,7 @@ final class Moves {
     private final static int INITIAL_MOVE_CAPACITY = 30;
     private final static int CAPACITY_INCREMENT = 10;
 
-    private byte[] moves;
+    private int[] moves;
     private int size;
 
     Moves() {
@@ -17,38 +17,33 @@ final class Moves {
     }
 
     Moves(int capacity) {
-        moves = new byte[capacity * 2];
+        moves = new int[capacity];
     }
 
     boolean isIllegal() {
         return this == ILLEGAL;
     }
 
-    void addMove(int from, int to) {
+    void addMove(int move) {
         if (size == moves.length)
-            moves = Arrays.copyOf(moves, size + CAPACITY_INCREMENT * 2);
-        moves[size++] = (byte) from;
-        moves[size++] = (byte) to;
+            moves = Arrays.copyOf(moves, size + CAPACITY_INCREMENT);
+        moves[size++] = move;
     }
 
     void revertMove() {
-        size -= 2;
+        --size;
     }
 
     int count() {
-        return size / 2;
+        return size;
     }
 
-    byte[] getMoves() {
+    int[] getMoves() {
         return moves;
     }
 
-    int getFrom(int moveIndex) {
-        return moves[moveIndex * 2];
-    }
-
-    int getTo(int moveIndex) {
-        return moves[moveIndex * 2 + 1];
+    int getMove(int moveIndex) {
+        return moves[moveIndex];
     }
 
     @Override
@@ -56,28 +51,12 @@ final class Moves {
         StringBuilder buf = new StringBuilder();
         buf.append(count()).append('#');
 
-        for (int i = 0; i < size; i += 2) {
+        for (int i = 0; i < size; i ++) {
             if (i > 0)
                 buf.append(", ");
-            fieldToString(buf, moves[i]);
-            buf.append('-');
-            fieldToString(buf, moves[i+1]);
+            ChessUtil.moveToString(moves[i]);
         }
 
-        return buf.toString();
-    }
-
-    private static void fieldToString(StringBuilder buf, int field) {
-        int row = ChessUtil.getRowOfField(field);
-        int col = ChessUtil.getColOfField(field);
-        buf.append((char) ('a' + col)).append(row + 1);
-    }
-
-    String moveToString(int moveIndex) {
-        StringBuilder buf = new StringBuilder();
-        fieldToString(buf, getFrom(moveIndex));
-        buf.append('-');
-        fieldToString(buf, getTo(moveIndex));
         return buf.toString();
     }
 
