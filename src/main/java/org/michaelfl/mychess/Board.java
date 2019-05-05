@@ -2,7 +2,13 @@ package org.michaelfl.mychess;
 
 import java.util.Arrays;
 
+@SuppressWarnings({"WeakerAccess", "unused", "PointlessArithmeticExpression"})
 public final class Board {
+
+    @FunctionalInterface
+    private interface IMove {
+        void move(byte[] board, int move);
+    }
 
     final static byte illegal = 64;
     final static byte empty = 0;
@@ -29,6 +35,22 @@ public final class Board {
     final static int f1 = 2 * LENGTH + 2 + 5;
     final static int g1 = 2 * LENGTH + 2 + 6;
     final static int h1 = 2 * LENGTH + 2 + 7;
+    final static int a2 = 3 * LENGTH + 2 + 0;
+    final static int b2 = 3 * LENGTH + 2 + 1;
+    final static int c2 = 3 * LENGTH + 2 + 2;
+    final static int d2 = 3 * LENGTH + 2 + 3;
+    final static int e2 = 3 * LENGTH + 2 + 4;
+    final static int f2 = 3 * LENGTH + 2 + 5;
+    final static int g2 = 3 * LENGTH + 2 + 6;
+    final static int h2 = 3 * LENGTH + 2 + 7;
+    final static int a7 = 8 * LENGTH + 2 + 0;
+    final static int b7 = 8 * LENGTH + 2 + 1;
+    final static int c7 = 8 * LENGTH + 2 + 2;
+    final static int d7 = 8 * LENGTH + 2 + 3;
+    final static int e7 = 8 * LENGTH + 2 + 4;
+    final static int f7 = 8 * LENGTH + 2 + 5;
+    final static int g7 = 8 * LENGTH + 2 + 6;
+    final static int h7 = 8 * LENGTH + 2 + 7;
     final static int a8 = 9 * LENGTH + 2 + 0;
     final static int b8 = 9 * LENGTH + 2 + 1;
     final static int c8 = 9 * LENGTH + 2 + 2;
@@ -55,10 +77,27 @@ public final class Board {
         printSymbols[blackKing] = '\u265A';
     }
 
-    private final static int ROW1 = 26;
-    private final static int ROW2 = 38;
-    private final static int ROW7 = 98;
-    private final static int ROW8 = 110;
+    private final static IMove[] MOVE_FUNCTIONS = new IMove[Move.typePawnPromotionBishop + 1];
+    static {
+        MOVE_FUNCTIONS[Move.typeNormal]              = Board::makeNormalMove;
+        MOVE_FUNCTIONS[Move.typeCastlingKingSide]    = Board::makeCastlingKingSideMove;
+        MOVE_FUNCTIONS[Move.typeCastlingQueenSide]   = Board::makeCastlingQueenSideMove;
+        MOVE_FUNCTIONS[Move.typePawnPromotionQueen]  = Board::makePawnPromotionMoveQueen;
+        MOVE_FUNCTIONS[Move.typePawnPromotionKnight] = Board::makePawnPromotionMoveKnight;
+        MOVE_FUNCTIONS[Move.typePawnPromotionRook]   = Board::makePawnPromotionMoveRook;
+        MOVE_FUNCTIONS[Move.typePawnPromotionBishop] = Board::makePawnPromotionMoveBishop;
+    }
+
+    private final static IMove[] MOVE_REVERT_FUNCTIONS = new IMove[Move.typePawnPromotionBishop + 1];
+    static {
+        MOVE_REVERT_FUNCTIONS[Move.typeNormal]              = Board::revertNormalMove;
+        MOVE_REVERT_FUNCTIONS[Move.typeCastlingKingSide]    = Board::revertCastlingKingSideMove;
+        MOVE_REVERT_FUNCTIONS[Move.typeCastlingQueenSide]   = Board::revertCastlingQueenSideMove;
+        MOVE_REVERT_FUNCTIONS[Move.typePawnPromotionQueen]  = Board::revertPawnPromotionMove;
+        MOVE_REVERT_FUNCTIONS[Move.typePawnPromotionKnight] = Board::revertPawnPromotionMove;
+        MOVE_REVERT_FUNCTIONS[Move.typePawnPromotionRook]   = Board::revertPawnPromotionMove;
+        MOVE_REVERT_FUNCTIONS[Move.typePawnPromotionBishop] = Board::revertPawnPromotionMove;
+    }
 
     private final byte[] board;
 
@@ -74,7 +113,6 @@ public final class Board {
     //    24 25  26(a1) ...  33(h1)  34  35
     //    12 13         ...          22  23
     //    00 01         ...          10  11
-    @SuppressWarnings("PointlessArithmeticExpression")
     Board() {
         board = new byte[LENGTH*LENGTH];
         Arrays.fill(board, illegal);
@@ -85,41 +123,41 @@ public final class Board {
             }
         }
 
-        board[ROW1 + 0] = whiteRook;
-        board[ROW1 + 1] = whiteKnight;
-        board[ROW1 + 2] = whiteBishop;
-        board[ROW1 + 3] = whiteQueen;
-        board[ROW1 + 4] = whiteKing;
-        board[ROW1 + 5] = whiteBishop;
-        board[ROW1 + 6] = whiteKnight;
-        board[ROW1 + 7] = whiteRook;
+        board[a1] = whiteRook;
+        board[b1] = whiteKnight;
+        board[c1] = whiteBishop;
+        board[d1] = whiteQueen;
+        board[e1] = whiteKing;
+        board[f1] = whiteBishop;
+        board[g1] = whiteKnight;
+        board[h1] = whiteRook;
 
-        board[ROW2 + 0] = whitePawn;
-        board[ROW2 + 1] = whitePawn;
-        board[ROW2 + 2] = whitePawn;
-        board[ROW2 + 3] = whitePawn;
-        board[ROW2 + 4] = whitePawn;
-        board[ROW2 + 5] = whitePawn;
-        board[ROW2 + 6] = whitePawn;
-        board[ROW2 + 7] = whitePawn;
+        board[a2] = whitePawn;
+        board[b2] = whitePawn;
+        board[c2] = whitePawn;
+        board[d2] = whitePawn;
+        board[e2] = whitePawn;
+        board[f2] = whitePawn;
+        board[g2] = whitePawn;
+        board[h2] = whitePawn;
 
-        board[ROW7 + 0] = blackPawn;
-        board[ROW7 + 1] = blackPawn;
-        board[ROW7 + 2] = blackPawn;
-        board[ROW7 + 3] = blackPawn;
-        board[ROW7 + 4] = blackPawn;
-        board[ROW7 + 5] = blackPawn;
-        board[ROW7 + 6] = blackPawn;
-        board[ROW7 + 7] = blackPawn;
+        board[a7] = blackPawn;
+        board[b7] = blackPawn;
+        board[c7] = blackPawn;
+        board[d7] = blackPawn;
+        board[e7] = blackPawn;
+        board[f7] = blackPawn;
+        board[g7] = blackPawn;
+        board[h7] = blackPawn;
 
-        board[ROW8 + 0] = blackRook;
-        board[ROW8 + 1] = blackKnight;
-        board[ROW8 + 2] = blackBishop;
-        board[ROW8 + 3] = blackQueen;
-        board[ROW8 + 4] = blackKing;
-        board[ROW8 + 5] = blackBishop;
-        board[ROW8 + 6] = blackKnight;
-        board[ROW8 + 7] = blackRook;
+        board[a8] = blackRook;
+        board[b8] = blackKnight;
+        board[c8] = blackBishop;
+        board[d8] = blackQueen;
+        board[e8] = blackKing;
+        board[f8] = blackBishop;
+        board[g8] = blackKnight;
+        board[h8] = blackRook;
     }
 
     Board(byte[] board) {
@@ -172,38 +210,9 @@ public final class Board {
         return board[field];
     }
 
-    void makeMove(int fromField, int toField) {
-        byte piece = board[fromField];
-        board[fromField] = empty;
-        board[toField] = piece;
-
-        // Check castling
-        if (isKing(piece))
-            checkCastlingMove(fromField, toField, piece);
-    }
-
-    private void checkCastlingMove(int fromField, int toField, byte piece) {
-        if (piece == whiteKing && fromField == e1 && toField == g1) {
-            board[h1] = empty;
-            board[f1] = whiteRook;
-        } else if (piece == whiteKing && fromField == e1 && toField == c1) {
-            board[a1] = empty;
-            board[d1] = whiteRook;
-        } else if (piece == blackKing && fromField == e8 && toField == g8) {
-            board[h8] = empty;
-            board[f8] = blackRook;
-        } else if (piece == blackKing && fromField == e8 && toField == c8) {
-            board[a8] = empty;
-            board[d8] = blackRook;
-        }
-    }
-
-    void makePawnPromotionMove(int fromField, int toField, byte promoteToPiece) {
-        board[fromField] = empty;
-        board[toField] = promoteToPiece;
-    }
-
-    void validateMove(int fromField, int toField) {
+    void validateMove(int move) {
+        byte fromField = Move.getFromField(move);
+        byte toField = Move.getToField(move);
         byte piece = board[fromField];
         if (piece == empty || piece == illegal)
             throw new IllegalStateException("Illegal move: " + ChessUtil.moveToString(fromField, toField));
@@ -212,7 +221,15 @@ public final class Board {
             throw new IllegalStateException("Illegal move: " + ChessUtil.moveToString(fromField, toField));
     }
 
-    private static boolean isKing(byte piece) {
+    static boolean isKnight(byte piece) {
+        return piece == whiteKnight || piece == blackKnight;
+    }
+
+    static boolean isQueen(byte piece) {
+        return piece == whiteQueen || piece == blackQueen;
+    }
+
+    static boolean isKing(byte piece) {
         return piece == whiteKing || piece == blackKing;
     }
 
@@ -248,6 +265,140 @@ public final class Board {
                 && piecesCount[blackKnight] < 3
                 && (piecesCount[whiteKnight] == 0 || piecesCount[whiteBishop] == 0)
                 && (piecesCount[blackKnight] == 0 || piecesCount[blackBishop] == 0);
+    }
+
+    void makeMove(int move) {
+        makeMove(board, move);
+    }
+
+    static void makeMove(byte[] board, int move) {
+        MOVE_FUNCTIONS[Move.getMoveType(move)].move(board, move);
+    }
+
+    void revertMove(int move) {
+        revertMove(board, move);
+    }
+
+    static void revertMove(byte[] board, int move) {
+        MOVE_REVERT_FUNCTIONS[Move.getMoveType(move)].move(board, move);
+    }
+
+    private static void makeNormalMove(byte[] board, int move) {
+        final byte fromField = Move.getFromField(move);
+        final byte toField = Move.getToField(move);
+
+        board[toField] = board[fromField];
+        board[fromField] = empty;
+    }
+
+    private static void makePawnPromotionMoveQueen(byte[] board, int move) {
+        final byte fromField = Move.getFromField(move);
+        final byte toField = Move.getToField(move);
+        board[fromField] = empty;
+        board[toField] = toField >= a8 ? Board.whiteQueen : Board.blackQueen;
+    }
+
+    private static void makePawnPromotionMoveKnight(byte[] board, int move) {
+        final byte fromField = Move.getFromField(move);
+        final byte toField = Move.getToField(move);
+        board[fromField] = empty;
+        board[toField] = toField >= a8 ? Board.whiteKnight : Board.blackKnight;
+    }
+
+    private static void makePawnPromotionMoveRook(byte[] board, int move) {
+        final byte fromField = Move.getFromField(move);
+        final byte toField = Move.getToField(move);
+        board[fromField] = empty;
+        board[toField] = toField >= a8 ? Board.whiteRook : Board.blackRook;
+    }
+
+    private static void makePawnPromotionMoveBishop(byte[] board, int move) {
+        final byte fromField = Move.getFromField(move);
+        final byte toField = Move.getToField(move);
+        board[fromField] = empty;
+        board[toField] = toField >= a8 ? Board.whiteBishop : Board.blackBishop;
+    }
+
+    @SuppressWarnings("Duplicates")
+    private static void makeCastlingKingSideMove(byte[] board, int move) {
+        final byte fromField = Move.getFromField(move);
+        final byte toField = Move.getToField(move);
+
+        board[toField] =  board[fromField];
+        board[fromField] = empty;
+
+        if (fromField == e1) {
+            board[h1] = empty;
+            board[f1] = whiteRook;
+        } else {
+            board[h8] = empty;
+            board[f8] = blackRook;
+        }
+    }
+
+    @SuppressWarnings("Duplicates")
+    private static void makeCastlingQueenSideMove(byte[] board, int move) {
+        final byte fromField = Move.getFromField(move);
+        final byte toField = Move.getToField(move);
+
+        board[toField] =  board[fromField];
+        board[fromField] = empty;
+
+        if (fromField == e1) {
+            board[a1] = empty;
+            board[d1] = whiteRook;
+        } else {
+            board[a8] = empty;
+            board[d8] = blackRook;
+        }
+    }
+
+    private static void revertNormalMove(byte[] board, int move) {
+        final byte fromField = Move.getFromField(move);
+        final byte toField = Move.getToField(move);
+
+        board[fromField] = board[toField];
+        board[toField] = Move.getCapturedPiece(move);
+    }
+
+    private static void revertPawnPromotionMove(byte[] board, int move) {
+        byte fromField = Move.getFromField(move);
+        byte toField = Move.getToField(move);
+
+        board[fromField] = toField > fromField ? Board.whitePawn : Board.blackPawn;
+        board[toField] = Move.getCapturedPiece(move);
+    }
+
+    private static void revertCastlingKingSideMove(byte[] board, int move) {
+        byte fromField = Move.getFromField(move);
+        byte toField = Move.getToField(move);
+
+        board[fromField] = board[toField];
+        board[toField] = Board.empty;
+
+        if (fromField == Board.e1) {
+            board[Board.f1] = Board.empty;
+            board[Board.h1] = Board.whiteRook;
+        } else {
+            board[Board.f8] = Board.empty;
+            board[Board.h8] = Board.blackRook;
+        }
+    }
+
+    private static void revertCastlingQueenSideMove(byte[] board, int move) {
+        byte fromField = Move.getFromField(move);
+        byte toField = Move.getToField(move);
+
+        board[fromField] = board[toField];
+        board[toField] = Board.empty;
+
+        if (fromField == Board.e1) {
+            board[Board.d1] = Board.empty;
+            board[Board.a1] = Board.whiteRook;
+        } else {
+            board[Board.d8] = Board.empty;
+            board[Board.a8] = Board.blackRook;
+        }
     }
 
     public static void main(String[] args) {

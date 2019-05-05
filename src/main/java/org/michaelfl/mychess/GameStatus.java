@@ -3,13 +3,11 @@ package org.michaelfl.mychess;
 final class GameStatus {
 
     private final int turn;
-    private final int lastMoveFrom;
-    private final int lastMoveTo;
+    private final int lastMove;
 
-    GameStatus(int turn, int lastMoveFrom, int lastMoveTo) {
+    GameStatus(int turn, int lastMove) {
         this.turn = turn;
-        this.lastMoveFrom = lastMoveFrom;
-        this.lastMoveTo = lastMoveTo;
+        this.lastMove = lastMove;
     }
 
     int getTurn() {
@@ -20,15 +18,11 @@ final class GameStatus {
         return turn == Game.TURN_WHITE ? Game.TURN_BLACK : Game.TURN_WHITE;
     }
 
-    int getLastMoveFrom() {
-        return lastMoveFrom;
-    }
-
-    int getLastMoveTo() {
-        return lastMoveTo;
+    int getLastMove() {
+        return lastMove;
     }
 
     GameStatus switchTurn() {
-        return new GameStatus(getOppositeColor(), 0, 0);
+        return new GameStatus(getOppositeColor(), -1);
     }
 }

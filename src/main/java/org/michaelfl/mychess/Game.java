@@ -19,10 +19,10 @@ final class Game {
     final static int TURN_BLACK = 16;
 
     private final Random rand = new Random();
+    private Board previousBoard;
     private Board board = new Board();
     private int turn = TURN_WHITE; // 8 = white, 16 = black
     private int oppositeColor = TURN_BLACK; // 8 = white, 16 = black
-    private List<Board> boardStack = new ArrayList<>();
     private List<Move> moves = new ArrayList<>();
     private GameResult result = GameResult.ONGOING;
 
@@ -30,9 +30,9 @@ final class Game {
 
     }
 
-    Game(List<Move> moves) {
-        for (Move move : moves) {
-            makeMove(move.getFromField(), move.getToField());
+    Game(List<MoveDescription> moves) {
+        for (MoveDescription move : moves) {
+            makeMove(move);
         }
 
         // Check if game is already over
@@ -43,10 +43,10 @@ final class Game {
 
     GameStatus getGameStatus() {
         if (moves.isEmpty())
-            return new GameStatus(turn, 0, 0);
+            return new GameStatus(turn, -1);
         else {
             Move lastMove = moves.get(moves.size() - 1);
-            return new GameStatus(turn, lastMove.getFromField(), lastMove.getToField());
+            return new GameStatus(turn, lastMove.getMove());
         }
     }
 
@@ -63,7 +63,7 @@ final class Game {
     }
 
     Board getPreviousBoard() {
-        return boardStack.isEmpty() ? null : boardStack.get(boardStack.size() - 1);
+        return previousBoard;
     }
 
     List<Move> getMoves() {
@@ -95,19 +95,48 @@ final class Game {
         return rand;
     }
 
-    void makeMove(int fromField, int toField) {
+    void makeMove(MoveDescription moveDescr) {
+        int fromField = moveDescr.getFromField();
+        int toField = moveDescr.getToField();
+        byte piece = board.get(fromField);
+        byte capturedPiece = board.get(toField);
+        byte moveType = Move.typeNormal;
+        char promotionSymbol = moveDescr.getPawnPromotionSymbol();
+
+        if ('Q' == promotionSymbol)
+            moveType = Move.typePawnPromotionQueen;
+        else if ('N' == promotionSymbol)
+            moveType = Move.typePawnPromotionKnight;
+        else if ('R' == promotionSymbol)
+            moveType = Move.typePawnPromotionRook;
+        else if ('B' == promotionSymbol)
+            moveType = Move.typePawnPromotionBishop;
+        else if (piece == Board.whiteKing && fromField == Board.e1 && toField == Board.g1)
+            moveType = Move.typeCastlingKingSide;
+        else if (piece == Board.whiteKing && fromField == Board.e1 && toField == Board.c1)
+            moveType = Move.typeCastlingQueenSide;
+        else if (piece == Board.blackKing && fromField == Board.e8 && toField == Board.g8)
+            moveType = Move.typeCastlingKingSide;
+        else if (piece == Board.blackKing && fromField == Board.e8 && toField == Board.c8)
+            moveType = Move.typeCastlingQueenSide;
+        else if ((piece == Board.whitePawn && ChessUtil.getRowOfField(toField) == 7)
+            || (piece == Board.blackPawn && ChessUtil.getRowOfField(toField) == 0)) {
+            // Sanity check: Pawn promotion symbol is missing ==> assume queen
+            moveType = Move.typePawnPromotionQueen;
+        }
+
+        Move move = new Move(Move.create((byte) fromField, (byte) toField, capturedPiece, moveType));
+        makeMove(move.getMove());
+    }
+
+    void makeMove(int move) {
         // TODO deactivate in "production"
-        board.validateMove(fromField, toField);
+        board.validateMove(move);
 
-        boardStack.add(board.copy());
-        moves.add(new Move(fromField, toField));
+        previousBoard = board.copy();
 
-        final int toRow = ChessUtil.getRowOfField(toField);
-        final byte piece = board.get(fromField);
-        if ((piece == Board.whitePawn && toRow == 7) || (piece == Board.blackPawn && toRow == 0))
-            board.makePawnPromotionMove(fromField, toField, turn == TURN_WHITE ? Board.whiteQueen : Board.blackQueen);
-        else
-            board.makeMove(fromField, toField);
+        board.makeMove(move);
+        moves.add(new Move(move));
 
         int nextTurn = oppositeColor;
         oppositeColor = turn;
@@ -115,26 +144,18 @@ final class Game {
     }
 
     void revertMove() {
-        if (boardStack.isEmpty())
+        if (moves.isEmpty())
             throw new IllegalStateException("No move to revert");
 
-        board = boardStack.remove(boardStack.size() - 1);
-        moves.remove(moves.size() - 1);
+        Move lastMove = moves.remove(moves.size() - 1);
+        board.revertMove(lastMove.getMove());
+        previousBoard = board.copy();
+        if (!moves.isEmpty())
+            previousBoard.revertMove(moves.get(moves.size() - 1).getMove());
 
         int prevTurn = oppositeColor;
         oppositeColor = turn;
         turn = prevTurn;
-    }
-
-    private static GameStatus makeMove(GameStatus gameStatus, Board board, int fromField, int toField) {
-        final int toRow = ChessUtil.getRowOfField(toField);
-        final byte piece = board.get(fromField);
-        if ((piece == Board.whitePawn && toRow == 7) || (piece == Board.blackPawn && toRow == 0))
-            board.makePawnPromotionMove(fromField, toField, gameStatus.getTurn() == TURN_WHITE ? Board.whiteQueen : Board.blackQueen);
-        else
-            board.makeMove(fromField, toField);
-
-        return new GameStatus(gameStatus.getOppositeColor(), fromField, toField);
     }
 
     private GameResult checkGameResult(MoveGenerator moveGenerator) {
@@ -161,7 +182,10 @@ final class Game {
 
         for (int i = 0; i < nPossibleMoves; i++) {
             System.arraycopy(rawBoard, 0, rawWorkingBoard, 0, rawBoard.length);
-            GameStatus nextGameStatus = Game.makeMove(gameStatus, workingBoard, nextMoves.getFrom(i), nextMoves.getTo(i));
+            final int nextMove = nextMoves.getMove(i);
+            workingBoard.makeMove(nextMove);
+            GameStatus nextGameStatus = new GameStatus(gameStatus.getOppositeColor(), nextMove);
+
             Moves nextNextMoves = moveGenerator.calculateMoves(nextGameStatus, workingBoard);
             if (!nextNextMoves.isIllegal()) {
                 haveValidMove = true;
@@ -234,10 +258,9 @@ final class Game {
 
         for (; moveNo <= 1000; moveNo++) {
             int moveIndex = game.getRandom().nextInt(moves.count());
-            int fromField = moves.getFrom(moveIndex);
-            int toField = moves.getTo(moveIndex);
-            System.out.println("Move #" + moveNo + ": " + moves.moveToString(moveIndex));
-            game.makeMove(fromField, toField);
+            int move = moves.getMove(moveIndex);
+            System.out.println("Move #" + moveNo + ": " + ChessUtil.moveToString(move));
+            game.makeMove(move);
 
             Moves nextMoves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard());
             if (nextMoves.isIllegal()) {
@@ -282,10 +305,9 @@ final class Game {
 
         int nPossibleMoves = moves.count();
         for (int moveIndex = 0; moveIndex < nPossibleMoves; moveIndex++) {
-            int fromField = moves.getFrom(moveIndex);
-            int toField = moves.getTo(moveIndex);
-            System.out.println("Move #" + moveNo + ": " + moves.moveToString(moveIndex));
-            game.makeMove(fromField, toField);
+            int move = moves.getMove(moveIndex);
+            System.out.println("Move #" + moveNo + ": " + ChessUtil.moveToString(move));
+            game.makeMove(move);
             nextMoves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard());
             if (!nextMoves.isIllegal())
                 break;

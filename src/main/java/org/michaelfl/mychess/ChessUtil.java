@@ -10,7 +10,7 @@ final class ChessUtil {
         return (row + 2) * 12 + col + 2;
     }
 
-    static int getFieldFromString(String fieldString) {
+    static int[] getColAndRowFromString(String fieldString) {
         if (fieldString.length() != 2)
             throw new IllegalArgumentException("Wrong field notation: " + fieldString);
         char colChar = fieldString.charAt(0);
@@ -18,10 +18,14 @@ final class ChessUtil {
         if (colChar < 'a' || colChar > 'h' || rowChar < '1' || rowChar > '8')
             throw new IllegalArgumentException("Wrong field notation: " + fieldString);
 
-        int col = (int) colChar - (int) 'a';
-        int row = (int) rowChar - (int) '1';
+        return new int[] {
+            (int) colChar - (int) 'a',
+            (int) rowChar - (int) '1'
+        };
+    }
 
-        return getFieldFromColAndRow(col, row);
+    static int colAndRowToField(int col, int row) {
+        return Board.LENGTH * (2 + row) + 2 + col;
     }
 
     static int getRowOfField(int field) {
@@ -49,6 +53,22 @@ final class ChessUtil {
 
     static String moveToString(int fromField, int toField) {
         return fieldToString(fromField) + "-" + fieldToString(toField);
+    }
+
+    static String moveToString(int move) {
+        String s = moveToString(Move.getFromField(move), Move.getToField(move));
+
+        byte moveType = Move.getMoveType(move);
+        if (moveType == Move.typePawnPromotionKnight)
+            s += "N";
+        else if (moveType == Move.typePawnPromotionQueen)
+            s += "Q";
+        else if (moveType == Move.typePawnPromotionRook)
+            s += "R";
+        else if (moveType == Move.typePawnPromotionBishop)
+            s += "B";
+
+        return s;
     }
 
 }

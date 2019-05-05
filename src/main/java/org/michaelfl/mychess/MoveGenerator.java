@@ -23,22 +23,23 @@ final class MoveGenerator {
 
     private final static CalculateMoves[] calculationFunctions = new CalculateMoves[22];
     static {
-        calculationFunctions[Board.whitePawn] = MoveGenerator::_calculateWhitePawnMoves;
+        calculationFunctions[Board.whitePawn]   = MoveGenerator::_calculateWhitePawnMoves;
         calculationFunctions[Board.whiteKnight] = MoveGenerator::_calculateKnightMoves;
         calculationFunctions[Board.whiteBishop] = MoveGenerator::_calculateBishopMoves;
-        calculationFunctions[Board.whiteRook] = MoveGenerator::_calculateRookMoves;
-        calculationFunctions[Board.whiteQueen] = MoveGenerator::_calculateQueenMoves;
-        calculationFunctions[Board.whiteKing] = MoveGenerator::_calculateKingMoves;
-        calculationFunctions[Board.blackPawn] = MoveGenerator::_calculateBlackPawnMoves;
+        calculationFunctions[Board.whiteRook]   = MoveGenerator::_calculateRookMoves;
+        calculationFunctions[Board.whiteQueen]  = MoveGenerator::_calculateQueenMoves;
+        calculationFunctions[Board.whiteKing]   = MoveGenerator::_calculateKingMoves;
+        calculationFunctions[Board.blackPawn]   = MoveGenerator::_calculateBlackPawnMoves;
         calculationFunctions[Board.blackKnight] = MoveGenerator::_calculateKnightMoves;
         calculationFunctions[Board.blackBishop] = MoveGenerator::_calculateBishopMoves;
-        calculationFunctions[Board.blackRook] = MoveGenerator::_calculateRookMoves;
-        calculationFunctions[Board.blackQueen] = MoveGenerator::_calculateQueenMoves;
-        calculationFunctions[Board.blackKing] = MoveGenerator::_calculateKingMoves;
+        calculationFunctions[Board.blackRook]   = MoveGenerator::_calculateRookMoves;
+        calculationFunctions[Board.blackQueen]  = MoveGenerator::_calculateQueenMoves;
+        calculationFunctions[Board.blackKing]   = MoveGenerator::_calculateKingMoves;
     }
 
     private GameStatus game;
-    private Board theBoard;
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
+    private Board theBoard; // For debugger only
     private byte[] board;
     private int oppositeColor;
     private int oppositeKing;
@@ -77,13 +78,13 @@ final class MoveGenerator {
         // single step
         int to = field + Board.LENGTH;
         if (board[to] == 0)
-            moves.addMove(field, to);
+            addWhitePawnMove(field, to);
 
         // double step
         if (fieldToRow(field) == 1) {
             to = field + 2 * Board.LENGTH;
             if (board[to] == 0 && board[field + Board.LENGTH] == 0)
-                moves.addMove(field, to);
+                addWhitePawnMove(field, to);
         }
 
         // capture right
@@ -91,7 +92,7 @@ final class MoveGenerator {
         if ((board[to] & oppositeColor) == oppositeColor) {
             if (board[to] == oppositeKing)
                 containsIllegalMove = true;
-            moves.addMove(field, to);
+            addWhitePawnMove(field, to);
         }
 
         // capture left
@@ -99,15 +100,36 @@ final class MoveGenerator {
         if ((board[to] & oppositeColor) == oppositeColor) {
             if (board[to] == oppositeKing)
                 containsIllegalMove = true;
-            moves.addMove(field, to);
+            addWhitePawnMove(field, to);
         }
 
         // en passant
         if (fieldToRow(field) == 4) {
-            if (board[field - 1] == Board.blackPawn && game.getLastMoveTo() == field - 1 && game.getLastMoveFrom() == field - 1 + 2 * Board.LENGTH)
-                moves.addMove(field, field - 1 + Board.LENGTH);
-            else if (board[field + 1] == Board.blackPawn && game.getLastMoveTo() == field + 1 && game.getLastMoveFrom() == field + 1 + 2 * Board.LENGTH)
-                moves.addMove(field, field + 1 + Board.LENGTH);
+            int lastMove = game.getLastMove();
+            if (board[field - 1] == Board.blackPawn && Move.getToField(lastMove) == field - 1 && Move.getFromField(lastMove) == field - 1 + 2 * Board.LENGTH)
+                addWhitePawnMove(field, field - 1 + Board.LENGTH);
+            else if (board[field + 1] == Board.blackPawn && Move.getToField(lastMove) == field + 1 && Move.getFromField(lastMove) == field + 1 + 2 * Board.LENGTH)
+                addWhitePawnMove(field, field + 1 + Board.LENGTH);
+        }
+    }
+
+    private void addWhitePawnMove(int from, int to) {
+        if (to >= Board.a8) {
+            // Pawn promotion
+            moves.addMove(Move.create((byte) from, (byte) to, board[to], Move.typePawnPromotionQueen));
+            moves.addMove(Move.create((byte) from, (byte) to, board[to], Move.typePawnPromotionKnight));
+        } else {
+            moves.addMove(Move.create((byte) from, (byte) to, board[to], Move.typeNormal));
+        }
+    }
+
+    private void addBlackPawnMove(int from, int to) {
+        if (to <= Board.h1) {
+            // Pawn promotion
+            moves.addMove(Move.create((byte) from, (byte) to, board[to], Move.typePawnPromotionQueen));
+            moves.addMove(Move.create((byte) from, (byte) to, board[to], Move.typePawnPromotionKnight));
+        } else {
+            moves.addMove(Move.create((byte) from, (byte) to, board[to], Move.typeNormal));
         }
     }
 
@@ -123,13 +145,13 @@ final class MoveGenerator {
         // single step
         int to = field - Board.LENGTH;
         if (board[to] == 0)
-            moves.addMove(field, to);
+            addBlackPawnMove(field, to);
 
         // double step
         if (fieldToRow(field) == 6) {
             to = field - 2 * Board.LENGTH;
             if (board[to] == 0 && board[field - Board.LENGTH] == 0)
-                moves.addMove(field, to);
+                addBlackPawnMove(field, to);
         }
 
         // capture right
@@ -137,7 +159,7 @@ final class MoveGenerator {
         if ((board[to] & oppositeColor) == oppositeColor) {
             if (board[to] == oppositeKing)
                 containsIllegalMove = true;
-            moves.addMove(field, to);
+            addBlackPawnMove(field, to);
         }
 
         // capture left
@@ -145,15 +167,16 @@ final class MoveGenerator {
         if ((board[to] & oppositeColor) == oppositeColor) {
             if (board[to] == oppositeKing)
                 containsIllegalMove = true;
-            moves.addMove(field, to);
+            addBlackPawnMove(field, to);
         }
 
         // en passant
         if (fieldToRow(field) == 3) {
-            if (board[field - 1] == Board.whitePawn && game.getLastMoveTo() == field - 1 && game.getLastMoveFrom() == field - 1 - 2 * Board.LENGTH)
-                moves.addMove(field, field - 1 - Board.LENGTH);
-            else if (board[field + 1] == Board.whitePawn && game.getLastMoveTo() == field + 1 && game.getLastMoveFrom() == field + 1 - 2 * Board.LENGTH)
-                moves.addMove(field, field + 1 - Board.LENGTH);
+            int lastMove = game.getLastMove();
+            if (board[field - 1] == Board.whitePawn && Move.getToField(lastMove) == field - 1 && Move.getFromField(lastMove) == field - 1 - 2 * Board.LENGTH)
+                addBlackPawnMove(field, field - 1 - Board.LENGTH);
+            else if (board[field + 1] == Board.whitePawn && Move.getToField(lastMove) == field + 1 && Move.getFromField(lastMove) == field + 1 - 2 * Board.LENGTH)
+                addBlackPawnMove(field, field + 1 - Board.LENGTH);
         }
     }
 
@@ -253,7 +276,7 @@ final class MoveGenerator {
     private boolean move(final int from, final int to) {
         final byte piece = board[to];
         if (piece == 0 || (piece & oppositeColor) == oppositeColor) {
-            moves.addMove(from, to);
+            moves.addMove(Move.create((byte) from, (byte) to, piece, Move.typeNormal));
             if (piece == oppositeKing)
                 containsIllegalMove = true;
         }
