@@ -15,22 +15,20 @@ final class Game {
         ONGOING
     }
 
-    final static int TURN_WHITE = 8;
-    final static int TURN_BLACK = 16;
-
     private final Random rand = new Random();
     private Board previousBoard;
     private Board board = new Board();
-    private int turn = TURN_WHITE; // 8 = white, 16 = black
-    private int oppositeColor = TURN_BLACK; // 8 = white, 16 = black
     private List<Move> moves = new ArrayList<>();
+    private List<GameStatus> statusStack = new ArrayList<>();
     private GameResult result = GameResult.ONGOING;
 
     Game() {
-
+        statusStack.add(GameStatus.newGame());
     }
 
     Game(List<MoveDescription> moves) {
+        statusStack.add(GameStatus.newGame());
+
         for (MoveDescription move : moves) {
             makeMove(move);
         }
@@ -42,12 +40,7 @@ final class Game {
     }
 
     GameStatus getGameStatus() {
-        if (moves.isEmpty())
-            return new GameStatus(turn, -1);
-        else {
-            Move lastMove = moves.get(moves.size() - 1);
-            return new GameStatus(turn, lastMove.getMove());
-        }
+        return statusStack.get(statusStack.size() - 1);
     }
 
     GameResult getResult() {
@@ -84,11 +77,11 @@ final class Game {
     }
 
     int getTurn() {
-        return turn;
+        return getGameStatus().getTurn();
     }
 
     int getOppositeColor() {
-        return oppositeColor;
+        return getGameStatus().getOppositeColor();
     }
 
     Random getRandom() {
@@ -138,9 +131,8 @@ final class Game {
         board.makeMove(move);
         moves.add(new Move(move));
 
-        int nextTurn = oppositeColor;
-        oppositeColor = turn;
-        turn = nextTurn;
+        GameStatus newStatus = getGameStatus().makeMove(move);
+        statusStack.add(newStatus);
     }
 
     void revertMove() {
@@ -153,9 +145,7 @@ final class Game {
         if (!moves.isEmpty())
             previousBoard.revertMove(moves.get(moves.size() - 1).getMove());
 
-        int prevTurn = oppositeColor;
-        oppositeColor = turn;
-        turn = prevTurn;
+        statusStack.remove(statusStack.size() - 1);
     }
 
     private GameResult checkGameResult(MoveGenerator moveGenerator) {
@@ -184,7 +174,7 @@ final class Game {
             System.arraycopy(rawBoard, 0, rawWorkingBoard, 0, rawBoard.length);
             final int nextMove = nextMoves.getMove(i);
             workingBoard.makeMove(nextMove);
-            GameStatus nextGameStatus = new GameStatus(gameStatus.getOppositeColor(), nextMove);
+            GameStatus nextGameStatus = gameStatus.makeMove(nextMove);
 
             Moves nextNextMoves = moveGenerator.calculateMoves(nextGameStatus, workingBoard);
             if (!nextNextMoves.isIllegal()) {
@@ -222,9 +212,9 @@ final class Game {
                 game.getBoard().print();
                 int turn = game.getTurn();
                 System.out.println("Moves: " + game.exportMoves());
-                System.out.println("Turn: " + (turn == Game.TURN_WHITE ? "white" : "black"));
+                System.out.println("Turn: " + (turn == GameStatus.TURN_WHITE ? "white" : "black"));
                 if (game.getResult() == GameResult.CHECKMATE || game.getResult() == GameResult.STALEMATE)
-                    System.out.println("Result: " + (turn == Game.TURN_WHITE ? "white" : "black") + " " + game.getResult());
+                    System.out.println("Result: " + (turn == GameStatus.TURN_WHITE ? "white" : "black") + " " + game.getResult());
                 else
                     System.out.println("Result: " + game.getResult());
             }
@@ -236,7 +226,7 @@ final class Game {
                 prevBoard.print();
             game.getBoard().print();
 
-            System.out.println("Turn: " + (game.getTurn() == Game.TURN_WHITE ? "white" : "black"));
+            System.out.println("Turn: " + (game.getTurn() == GameStatus.TURN_WHITE ? "white" : "black"));
             System.out.println("Moves: " + game.getMoves());
             System.out.flush();
             System.err.println("ERROR: " + e);
@@ -291,11 +281,11 @@ final class Game {
         int turn = game.getTurn();
         int avgMoves = totalMovesCount / moveNo;
         System.out.println("Moves: " + game.exportMoves());
-        System.out.println("Turn: " + (turn == Game.TURN_WHITE ? "white" : "black"));
+        System.out.println("Turn: " + (turn == GameStatus.TURN_WHITE ? "white" : "black"));
         System.out.println("Statistics: max moves: " + maxMoves + ", avg moves: " + avgMoves
                 + ", # >40: " + countGreater40 + ", # >50: " + countGreater50);
         if (game.getResult() == GameResult.CHECKMATE || game.getResult() == GameResult.STALEMATE)
-            System.out.println("Result: " + (turn == Game.TURN_WHITE ? "white" : "black") + " " + game.getResult());
+            System.out.println("Result: " + (turn == GameStatus.TURN_WHITE ? "white" : "black") + " " + game.getResult());
         else
             System.out.println("Result: " + game.getResult());
     }
@@ -332,9 +322,9 @@ final class Game {
     void print() {
         getBoard().print();
         System.out.println("Moves: " + exportMoves());
-        System.out.println("Turn: " + (turn == Game.TURN_WHITE ? "white" : "black"));
+        System.out.println("Turn: " + (getTurn() == GameStatus.TURN_WHITE ? "white" : "black"));
         if (getResult() == GameResult.CHECKMATE || getResult() == GameResult.STALEMATE)
-            System.out.println("Result: " + (turn == Game.TURN_WHITE ? "white" : "black") + " " + getResult());
+            System.out.println("Result: " + (getTurn() == GameStatus.TURN_WHITE ? "white" : "black") + " " + getResult());
         else
             System.out.println("Result: " + getResult());
     }

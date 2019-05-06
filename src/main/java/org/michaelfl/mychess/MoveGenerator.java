@@ -52,7 +52,7 @@ final class MoveGenerator {
         this.theBoard = theBoard;
         this.board = theBoard.getRawBoard();
         this.oppositeColor = game.getOppositeColor();
-        this.oppositeKing = turn == Game.TURN_WHITE ? Board.blackKing : Board.whiteKing;
+        this.oppositeKing = turn == GameStatus.TURN_WHITE ? Board.blackKing : Board.whiteKing;
         this.moves = new Moves();
         this.containsIllegalMove = false;
 
@@ -270,7 +270,9 @@ final class MoveGenerator {
         // move up-left
         move(field, field + Board.LENGTH - 1);
 
-        // TODO: castling (Must check if king and crossed fields are not under attack!!!)
+        // castling
+        if (game.isCastlingPossible())
+            calculateCastlingMoves();
     }
 
     private boolean move(final int from, final int to) {
@@ -281,6 +283,204 @@ final class MoveGenerator {
                 containsIllegalMove = true;
         }
         return piece == 0;
+    }
+
+    private void calculateCastlingMoves() {
+        if (game.getTurn() == GameStatus.TURN_WHITE) {
+            if (game.isWhiteCastlingKingSidePossible() && canDoWhiteCastlingKingSide()) {
+                moves.addMove(Move.create(Board.e1, Board.g1, (byte) 0, Move.typeCastlingKingSide));
+            } else if (game.isWhiteCastlingQueenSidePossible() && canDoWhiteCastlingQueenSide()) {
+                moves.addMove(Move.create(Board.e1, Board.c1, (byte) 0, Move.typeCastlingQueenSide));
+            }
+        } else {
+            if (game.isBlackCastlingKingSidePossible() && canDoBlackCastlingKingSide()) {
+                moves.addMove(Move.create(Board.e8, Board.g8, (byte) 0, Move.typeCastlingKingSide));
+            } else if (game.isBlackCastlingQueenSidePossible() && canDoBlackCastlingQueenSide()) {
+                moves.addMove(Move.create(Board.e8, Board.c8, (byte) 0, Move.typeCastlingQueenSide));
+            }
+        }
+    }
+
+    private boolean canDoWhiteCastlingKingSide() {
+        // The fields between king and rook must be empty
+        if (board[Board.f1] != Board.empty || board[Board.g1] != Board.empty)
+            return false;
+
+        // Neither of king's start field, crossed field and target field must be under attack (chess)
+        return !(isWhiteCastlingFieldUnderAttack(Board.e1)
+                || isWhiteCastlingFieldUnderAttack(Board.f1)
+                || isWhiteCastlingFieldUnderAttack(Board.g1));
+
+    }
+
+    private boolean canDoWhiteCastlingQueenSide() {
+        // The fields between king and rook must be empty
+        if (board[Board.d1] != Board.empty || board[Board.c1] != Board.empty || board[Board.b1] != Board.empty)
+            return false;
+
+        // Neither of king's start field, crossed field and target field must be under attack (chess)
+        return !(isWhiteCastlingFieldUnderAttack(Board.e1)
+                || isWhiteCastlingFieldUnderAttack(Board.d1)
+                || isWhiteCastlingFieldUnderAttack(Board.c1));
+    }
+
+    private boolean canDoBlackCastlingKingSide() {
+        // The fields between king and rook must be empty
+        if (board[Board.f8] != Board.empty || board[Board.g8] != Board.empty)
+            return false;
+
+        // Neither of king's start field, crossed field and target field must be under attack (chess)
+        return !(isBlackCastlingFieldUnderAttack(Board.e8)
+                || isBlackCastlingFieldUnderAttack(Board.f8)
+                || isBlackCastlingFieldUnderAttack(Board.g8));
+
+    }
+
+    private boolean canDoBlackCastlingQueenSide() {
+        // The fields between king and rook must be empty
+        if (board[Board.d8] != Board.empty || board[Board.c8] != Board.empty || board[Board.b8] != Board.empty)
+            return false;
+
+        // Neither of king's start field, crossed field and target field must be under attack (chess)
+        return !(isBlackCastlingFieldUnderAttack(Board.e8)
+                || isBlackCastlingFieldUnderAttack(Board.d8)
+                || isBlackCastlingFieldUnderAttack(Board.c8));
+    }
+
+    private boolean isWhiteCastlingFieldUnderAttack(int field) {
+        // check left
+        int f = field - 1;
+        if ((board[f] & GameStatus.TURN_WHITE) != GameStatus.TURN_WHITE) {
+            for (; board[f] == Board.empty; f--) ;
+            byte piece = board[f];
+            if (piece == Board.blackQueen || piece == Board.blackRook)
+                return true;
+        }
+
+        // check up
+        f = field + Board.LENGTH;
+        if ((board[f] & GameStatus.TURN_WHITE) != GameStatus.TURN_WHITE) {
+            for (; board[f] == Board.empty; f += Board.LENGTH) ;
+            byte piece = board[f];
+            if (piece == Board.blackQueen || piece == Board.blackRook)
+                return true;
+        }
+
+        // check right
+        f = field + 1;
+        if ((board[f] & GameStatus.TURN_WHITE) != GameStatus.TURN_WHITE) {
+            for (; board[f] == Board.empty; f++) ;
+            byte piece = board[f];
+            if (piece == Board.blackQueen || piece == Board.blackRook)
+                return true;
+        }
+
+        // check up-left
+        f = field + Board.LENGTH - 1;
+        if ((board[f] & GameStatus.TURN_WHITE) != GameStatus.TURN_WHITE) {
+            for (; board[f] == Board.empty; f += Board.LENGTH - 1) ;
+            byte piece = board[f];
+            if (piece == Board.blackQueen || piece == Board.blackBishop)
+                return true;
+        }
+
+        // check up-right
+        f = field + Board.LENGTH + 1;
+        if ((board[f] & GameStatus.TURN_WHITE) != GameStatus.TURN_WHITE) {
+            for (; board[f] == Board.empty; f += Board.LENGTH + 1) ;
+            byte piece = board[f];
+            if (piece == Board.blackQueen || piece == Board.blackBishop)
+                return true;
+        }
+
+        // check knights
+        if (board[field + Board.LENGTH - 2] == Board.blackKnight
+                || board[field + 2 * Board.LENGTH - 1] == Board.blackKnight
+                || board[field + 2 * Board.LENGTH + 1] == Board.blackKnight
+                || board[field + Board.LENGTH + 2] == Board.blackKnight)
+            return true;
+
+        // check pawns
+        if (board[field + Board.LENGTH - 1] == Board.blackPawn
+                || board[field + Board.LENGTH + 1] == Board.blackPawn)
+            return true;
+
+        // check king
+        //noinspection RedundantIfStatement
+        if (board[field + Board.LENGTH - 1] == Board.blackKing
+                || board[field + Board.LENGTH] == Board.blackKing
+                || board[field + Board.LENGTH + 1] == Board.blackKing)
+            return true;
+
+        return false;
+    }
+
+    private boolean isBlackCastlingFieldUnderAttack(int field) {
+        // check left
+        int f = field - 1;
+        if ((board[f] & GameStatus.TURN_BLACK) != GameStatus.TURN_BLACK) {
+            for (; board[f] == Board.empty; f--) ;
+            byte piece = board[f];
+            if (piece == Board.whiteQueen || piece == Board.whiteRook)
+                return true;
+        }
+
+        // check down
+        f = field - Board.LENGTH;
+        if ((board[f] & GameStatus.TURN_BLACK) != GameStatus.TURN_BLACK) {
+            for (; board[f] == Board.empty; f -= Board.LENGTH) ;
+            byte piece = board[f];
+            if (piece == Board.whiteQueen || piece == Board.whiteRook)
+                return true;
+        }
+
+        // check right
+        f = field + 1;
+        if ((board[f] & GameStatus.TURN_BLACK) != GameStatus.TURN_BLACK) {
+            for (; board[f] == Board.empty; f++) ;
+            byte piece = board[f];
+            if (piece == Board.whiteQueen || piece == Board.whiteRook)
+                return true;
+        }
+
+        // check down-left
+        f = field - Board.LENGTH - 1;
+        if ((board[f] & GameStatus.TURN_BLACK) != GameStatus.TURN_BLACK) {
+            for (; board[f] == Board.empty; f = f - Board.LENGTH - 1) ;
+            byte piece = board[f];
+            if (piece == Board.whiteQueen || piece == Board.whiteBishop)
+                return true;
+        }
+
+        // check down-right
+        f = field - Board.LENGTH + 1;
+        if ((board[f] & GameStatus.TURN_BLACK) != GameStatus.TURN_BLACK) {
+            for (; board[f] == Board.empty; f = f - Board.LENGTH + 1) ;
+            byte piece = board[f];
+            if (piece == Board.whiteQueen || piece == Board.whiteBishop)
+                return true;
+        }
+
+        // check knights
+        if (board[field - Board.LENGTH - 2] == Board.whiteKnight
+                || board[field - 2 * Board.LENGTH - 1] == Board.whiteKnight
+                || board[field - 2 * Board.LENGTH + 1] == Board.whiteKnight
+                || board[field - Board.LENGTH + 2] == Board.whiteKnight)
+            return true;
+
+        // check pawns
+        if (board[field - Board.LENGTH - 1] == Board.whitePawn
+                || board[field - Board.LENGTH + 1] == Board.whitePawn)
+            return true;
+
+        // check king
+        //noinspection RedundantIfStatement
+        if (board[field - Board.LENGTH - 1] == Board.whiteKing
+                || board[field - Board.LENGTH] == Board.whiteKing
+                || board[field - Board.LENGTH + 1] == Board.whiteKing)
+            return true;
+
+        return false;
     }
 
 }
