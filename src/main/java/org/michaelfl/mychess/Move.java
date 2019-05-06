@@ -21,6 +21,10 @@ final class Move {
         return BitOps.createWord(fromField, toField, capturedPiece, moveType);
     }
 
+    static int create(int fromField, int toField, byte capturedPiece, byte moveType) {
+        return BitOps.createWord((byte) fromField, (byte) toField, capturedPiece, moveType);
+    }
+
     int getMove() {
         return move;
     }
