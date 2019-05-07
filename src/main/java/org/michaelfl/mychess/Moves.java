@@ -46,6 +46,15 @@ final class Moves {
         return moves[moveIndex];
     }
 
+    boolean contains(int move) {
+        for (int i = size - 1; i >= 0; i--) {
+            if (moves[i] == move)
+                return true;
+        }
+
+        return false;
+    }
+
     @Override
     public String toString() {
         StringBuilder buf = new StringBuilder();
@@ -53,8 +62,8 @@ final class Moves {
 
         for (int i = 0; i < size; i ++) {
             if (i > 0)
-                buf.append(", ");
-            ChessUtil.moveToString(moves[i]);
+                buf.append(" ");
+            buf.append(ChessUtil.moveToString(moves[i]));
         }
 
         return buf.toString();
@@ -62,9 +71,6 @@ final class Moves {
 
     void print() {
         System.out.println(this);
-    }
-
-    public static void main(String[] args) {
     }
 
 }

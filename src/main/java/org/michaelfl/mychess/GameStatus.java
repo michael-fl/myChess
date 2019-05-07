@@ -29,7 +29,7 @@ final class GameStatus {
     }
 
     static GameStatus newGame() {
-        return new GameStatus(TURN_WHITE, -1);
+        return new GameStatus(TURN_WHITE, 0);
     }
 
     int getTurn() {
@@ -53,36 +53,20 @@ final class GameStatus {
         return whiteCastlingKingSidePossible;
     }
 
-    void setWhiteCastlingKingSidePossible(boolean whiteCastlingKingSidePossible) {
-        this.whiteCastlingKingSidePossible = whiteCastlingKingSidePossible;
-    }
-
     boolean isWhiteCastlingQueenSidePossible() {
         return whiteCastlingQueenSidePossible;
-    }
-
-    void setWhiteCastlingQueenSidePossible(boolean whiteCastlingQueenSidePossible) {
-        this.whiteCastlingQueenSidePossible = whiteCastlingQueenSidePossible;
     }
 
     boolean isBlackCastlingKingSidePossible() {
         return blackCastlingKingSidePossible;
     }
 
-    void setBlackCastlingKingSidePossible(boolean blackCastlingKingSidePossible) {
-        this.blackCastlingKingSidePossible = blackCastlingKingSidePossible;
-    }
-
     boolean isBlackCastlingQueenSidePossible() {
         return blackCastlingQueenSidePossible;
     }
 
-    void setBlackCastlingQueenSidePossible(boolean blackCastlingQueenSidePossible) {
-        this.blackCastlingQueenSidePossible = blackCastlingQueenSidePossible;
-    }
-
     GameStatus switchTurn() {
-        return new GameStatus(getOppositeColor(), -1, this);
+        return new GameStatus(getOppositeColor(), 0, this);
     }
 
     GameStatus makeMove(int move) {
@@ -98,7 +82,7 @@ final class GameStatus {
         if (turn == GameStatus.TURN_WHITE) {
             if (isWhiteCastlingKingSidePossible() || isWhiteCastlingQueenSidePossible()) {
                 if (fromField == Board.e1) { // king moved
-                    setWhiteCastlingKingSidePossible(false);
+                    whiteCastlingKingSidePossible = false;
                     setWhiteCastlingQueenSidePossible(false);
                 } else if (fromField == Board.h1) { // rook moved
                     setWhiteCastlingKingSidePossible(false);
@@ -118,5 +102,13 @@ final class GameStatus {
                 }
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "turn=" + (turn == GameStatus.TURN_WHITE ? "white" : "black")
+                + ", lastMove=" + (lastMove != 0 ? ChessUtil.moveToString(lastMove) : "none")
+                + ", whiteCastling=" + (whiteCastlingKingSidePossible ? "O-O" : "") + " " + (whiteCastlingQueenSidePossible ? "O-O-O" : "")
+                + ", blackCastling=" + (blackCastlingKingSidePossible ? "O-O" : "") + " " + (blackCastlingQueenSidePossible ? "O-O-O" : "");
     }
 }

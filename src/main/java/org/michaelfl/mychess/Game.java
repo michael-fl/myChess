@@ -2,6 +2,7 @@ package org.michaelfl.mychess;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -63,6 +64,10 @@ final class Game {
         return moves;
     }
 
+    int getMoveCount() {
+        return moves.size();
+    }
+
     String exportMoves() {
         StringBuilder buf = new StringBuilder("[[");
 
@@ -119,6 +124,16 @@ final class Game {
         }
 
         Move move = new Move(Move.create((byte) fromField, (byte) toField, capturedPiece, moveType));
+
+        // Validate the move
+        MoveGenerator moveGenerator = new MoveGenerator();
+        Moves validMoves = moveGenerator.calculateMoves(getGameStatus(), board);
+        if (!validMoves.contains(move.getMove())) {
+            print();
+            System.out.println("Valid moves: " + validMoves);
+            throw new IllegalStateException("Illegal move: " + move);
+        }
+
         makeMove(move.getMove());
     }
 
@@ -206,18 +221,18 @@ final class Game {
 
     static void playAutoGame(Game game) {
         try {
-            if (game.getResult() == GameResult.ONGOING) {
+            if (game.getResult() == GameResult.ONGOING)
                 playAutoGameInternal(game);
-            } else {
-                game.getBoard().print();
-                int turn = game.getTurn();
-                System.out.println("Moves: " + game.exportMoves());
-                System.out.println("Turn: " + (turn == GameStatus.TURN_WHITE ? "white" : "black"));
-                if (game.getResult() == GameResult.CHECKMATE || game.getResult() == GameResult.STALEMATE)
-                    System.out.println("Result: " + (turn == GameStatus.TURN_WHITE ? "white" : "black") + " " + game.getResult());
-                else
-                    System.out.println("Result: " + game.getResult());
-            }
+
+            game.getBoard().print();
+            int turn = game.getTurn();
+            System.out.println("Moves: " + game.exportMoves());
+            System.out.println("Turn: " + (turn == GameStatus.TURN_WHITE ? "white" : "black"));
+            if (game.getResult() == GameResult.CHECKMATE || game.getResult() == GameResult.STALEMATE)
+                System.out.println("Result: " + (turn == GameStatus.TURN_WHITE ? "white" : "black") + " " + game.getResult());
+            else
+                System.out.println("Result: " + game.getResult());
+
         } catch (Throwable e) {
             e.printStackTrace();
 
@@ -227,13 +242,61 @@ final class Game {
             game.getBoard().print();
 
             System.out.println("Turn: " + (game.getTurn() == GameStatus.TURN_WHITE ? "white" : "black"));
-            System.out.println("Moves: " + game.getMoves());
+            System.out.println("Moves: " + game.exportMoves());
+            System.out.println("Status: " + game.getGameStatus());
+            MoveGenerator moveGenerator = new MoveGenerator();
+            Moves possibleMoves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard());
+            System.out.println("Possible moves: " + possibleMoves);
             System.out.flush();
             System.err.println("ERROR: " + e);
         }
     }
 
+    @SuppressWarnings("Duplicates")
     private static void playAutoGameInternal(Game game) {
+        //BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        ChessEngine engine = new RandomMoveEngine(game);
+
+        game.getBoard().print();
+
+        int maxMoves = 0;
+        int totalMovesCount = 0;
+        int countGreater40 = 0;
+        int countGreater50 = 0;
+        int moveNo = game.getMoveCount() + 1;
+
+        int i = 0;
+        for (; i <=1000; i++, moveNo++) {
+            int move = engine.nextMove();
+            if (move == 0) {
+                // No valid move possible ==> checkmate or stalemate
+                System.out.println("NO MOVE POSSIBLE");
+                break;
+            }
+            game.makeMove(move);
+            System.out.println("Move #" + moveNo + ": " + ChessUtil.moveToString(move));
+
+            if (game.getBoard().isDrawByMaterial())
+                break;
+
+            int countPossibleMoves = engine.getCountPossibleMoves();
+            maxMoves = Math.max(maxMoves, countPossibleMoves);
+            totalMovesCount += countPossibleMoves;
+            if (countPossibleMoves > 40)
+                countGreater40++;
+            if (countPossibleMoves > 50)
+                countGreater50++;
+        }
+
+        GameResult gameResult = game.checkGameResult(new MoveGenerator());
+        game.setResult(gameResult);
+
+        int avgMoves = i > 0 ? totalMovesCount / i : 0;
+        System.out.println("Statistics: max moves: " + maxMoves + ", avg moves: " + avgMoves
+                + ", # >40: " + countGreater40 + ", # >50: " + countGreater50);
+    }
+
+    private static void playAutoGameInternalOld(Game game) {
         MoveGenerator moveGenerator = new MoveGenerator();
 
         Moves moves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard());
@@ -277,17 +340,9 @@ final class Game {
         GameResult gameResult = game.checkGameResult(moveGenerator);
         game.setResult(gameResult);
 
-        game.getBoard().print();
-        int turn = game.getTurn();
         int avgMoves = totalMovesCount / moveNo;
-        System.out.println("Moves: " + game.exportMoves());
-        System.out.println("Turn: " + (turn == GameStatus.TURN_WHITE ? "white" : "black"));
         System.out.println("Statistics: max moves: " + maxMoves + ", avg moves: " + avgMoves
                 + ", # >40: " + countGreater40 + ", # >50: " + countGreater50);
-        if (game.getResult() == GameResult.CHECKMATE || game.getResult() == GameResult.STALEMATE)
-            System.out.println("Result: " + (turn == GameStatus.TURN_WHITE ? "white" : "black") + " " + game.getResult());
-        else
-            System.out.println("Result: " + game.getResult());
     }
 
     private static Moves findValidMove(Game game, Moves moves, MoveGenerator moveGenerator, int moveNo) {
