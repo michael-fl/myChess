@@ -1,6 +1,12 @@
 package org.michaelfl.mychess;
 
 final class MoveDescription {
+
+    final static MoveDescription whiteCastlingKingSide = new MoveDescription(4, 0, 6, 0);
+    final static MoveDescription whiteCastlingQueenSide = new MoveDescription(4, 0, 2, 0);
+    final static MoveDescription blackCastlingKingSide = new MoveDescription(4, 7, 6, 7);
+    final static MoveDescription blackCastlingQueenSide = new MoveDescription(4, 7, 2, 7);
+
     private final int fromCol;
     private final int fromRow;
     private final int toCol;
