@@ -16,10 +16,8 @@ final class RandomMoveEngine extends ChessEngine {
         Moves moves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard());
         countPossibleMoves = moves.count();
 
-        if (moves.isIllegal() || moves.count() == 0) {
-            System.out.println("1!!!!!!");
+        if (moves.isIllegal() || moves.count() == 0)
             return 0; // No move possible
-        }
 
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
@@ -33,17 +31,14 @@ final class RandomMoveEngine extends ChessEngine {
             workingBoard.makeMove(move);
             Moves nextMoves = moveGenerator.calculateMoves(gameStatus, workingBoard);
 
-            if (!nextMoves.isIllegal()) {
-                System.out.println("2!!!!!! count=" + nextMoves.count() + " ==> move=" + move);
+            if (!nextMoves.isIllegal())
                 return move;
-            }
 
             workingBoard.revertMove(move);
             moveIndex = (moveIndex + 1) % countMoves; // try next move
         }
 
         // No legal move possible
-        System.out.println("3!!!!!!");
         return 0;
     }
 

@@ -270,7 +270,6 @@ final class Game {
             int move = engine.nextMove();
             if (move == 0) {
                 // No valid move possible ==> checkmate or stalemate
-                System.out.println("NO MOVE POSSIBLE");
                 break;
             }
             game.makeMove(move);
