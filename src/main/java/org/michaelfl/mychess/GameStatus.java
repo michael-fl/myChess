@@ -25,7 +25,7 @@ final class GameStatus {
         this.whiteCastlingKingSidePossible = previousStatus.whiteCastlingKingSidePossible;
         this.whiteCastlingQueenSidePossible = previousStatus.whiteCastlingQueenSidePossible;
         this.blackCastlingKingSidePossible = previousStatus.blackCastlingKingSidePossible;
-        this.whiteCastlingQueenSidePossible = previousStatus.blackCastlingQueenSidePossible;
+        this.blackCastlingQueenSidePossible = previousStatus.blackCastlingQueenSidePossible;
     }
 
     static GameStatus newGame() {
@@ -83,22 +83,22 @@ final class GameStatus {
             if (isWhiteCastlingKingSidePossible() || isWhiteCastlingQueenSidePossible()) {
                 if (fromField == Board.e1) { // king moved
                     whiteCastlingKingSidePossible = false;
-                    setWhiteCastlingQueenSidePossible(false);
+                    whiteCastlingQueenSidePossible = false;
                 } else if (fromField == Board.h1) { // rook moved
-                    setWhiteCastlingKingSidePossible(false);
+                    whiteCastlingKingSidePossible = false;
                 } else if (fromField == Board.a1) { // rook moved
-                    setWhiteCastlingQueenSidePossible(false);
+                    whiteCastlingQueenSidePossible = false;
                 }
             }
         } else {
             if (isBlackCastlingKingSidePossible() || isBlackCastlingQueenSidePossible()) {
                 if (fromField == Board.e8) {
-                    setBlackCastlingKingSidePossible(false);
-                    setBlackCastlingQueenSidePossible(false);
+                    blackCastlingKingSidePossible = false;
+                    blackCastlingQueenSidePossible = false;
                 } else if (fromField == Board.h8) {
-                    setWhiteCastlingKingSidePossible(false);
+                    blackCastlingKingSidePossible = false;
                 } else if (fromField == Board.a8) {
-                    setWhiteCastlingQueenSidePossible(false);
+                    blackCastlingQueenSidePossible = false;
                 }
             }
         }
