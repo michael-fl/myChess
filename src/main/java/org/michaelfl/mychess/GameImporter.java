@@ -37,6 +37,6 @@ final class GameImporter {
             return;
 
         Game game = importGame(gameNotation);
-        Game.playAutoGame(game);
+        game.print();
     }
 }

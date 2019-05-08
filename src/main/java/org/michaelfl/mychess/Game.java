@@ -2,7 +2,6 @@ package org.michaelfl.mychess;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -94,6 +93,11 @@ final class Game {
     }
 
     void makeMove(MoveDescription moveDescr) {
+        if (getResult() != GameResult.ONGOING) {
+            System.err.println("Game is already over");
+            return;
+        }
+
         int fromField = moveDescr.getFromField();
         int toField = moveDescr.getToField();
         byte piece = board.get(fromField);
@@ -216,36 +220,36 @@ final class Game {
     }
 
     public static void main(String[] args) {
-        playAutoGame(new Game());
+        new Game().playAutoGame();
     }
 
-    static void playAutoGame(Game game) {
+    void playAutoGame() {
         try {
-            if (game.getResult() == GameResult.ONGOING)
-                playAutoGameInternal(game);
+            if (getResult() == GameResult.ONGOING)
+                playAutoGameInternal();
 
-            game.getBoard().print();
-            int turn = game.getTurn();
-            System.out.println("Moves: " + game.exportMoves());
+            getBoard().print();
+            int turn = getTurn();
+            System.out.println("Moves: " + exportMoves());
             System.out.println("Turn: " + (turn == GameStatus.TURN_WHITE ? "white" : "black"));
-            if (game.getResult() == GameResult.CHECKMATE || game.getResult() == GameResult.STALEMATE)
-                System.out.println("Result: " + (turn == GameStatus.TURN_WHITE ? "white" : "black") + " " + game.getResult());
+            if (getResult() == GameResult.CHECKMATE || getResult() == GameResult.STALEMATE)
+                System.out.println("Result: " + (turn == GameStatus.TURN_WHITE ? "white" : "black") + " " + getResult());
             else
-                System.out.println("Result: " + game.getResult());
+                System.out.println("Result: " + getResult());
 
         } catch (Throwable e) {
             e.printStackTrace();
 
-            Board prevBoard = game.getPreviousBoard();
+            Board prevBoard = getPreviousBoard();
             if (prevBoard != null)
                 prevBoard.print();
-            game.getBoard().print();
+            getBoard().print();
 
-            System.out.println("Turn: " + (game.getTurn() == GameStatus.TURN_WHITE ? "white" : "black"));
-            System.out.println("Moves: " + game.exportMoves());
-            System.out.println("Status: " + game.getGameStatus());
+            System.out.println("Turn: " + (getTurn() == GameStatus.TURN_WHITE ? "white" : "black"));
+            System.out.println("Moves: " + exportMoves());
+            System.out.println("Status: " + getGameStatus());
             MoveGenerator moveGenerator = new MoveGenerator();
-            Moves possibleMoves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard());
+            Moves possibleMoves = moveGenerator.calculateMoves(getGameStatus(), getBoard());
             System.out.println("Possible moves: " + possibleMoves);
             System.out.flush();
             System.err.println("ERROR: " + e);
@@ -253,17 +257,17 @@ final class Game {
     }
 
     @SuppressWarnings("Duplicates")
-    private static void playAutoGameInternal(Game game) {
+    private void playAutoGameInternal() {
         //BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        ChessEngine engine = new RandomMoveEngine(game);
+        ChessEngine engine = new RandomMoveEngine(this);
 
-        game.getBoard().print();
+        getBoard().print();
 
         int maxMoves = 0;
         int totalMovesCount = 0;
         int countGreater40 = 0;
         int countGreater50 = 0;
-        int moveNo = game.getMoveCount() + 1;
+        int moveNo = getMoveCount() + 1;
 
         int i = 0;
         for (; i <=1000; i++, moveNo++) {
@@ -272,10 +276,10 @@ final class Game {
                 // No valid move possible ==> checkmate or stalemate
                 break;
             }
-            game.makeMove(move);
+            makeMove(move);
             System.out.println("Move #" + moveNo + ": " + ChessUtil.moveToString(move));
 
-            if (game.getBoard().isDrawByMaterial())
+            if (getBoard().isDrawByMaterial())
                 break;
 
             int countPossibleMoves = engine.getCountPossibleMoves();
@@ -287,59 +291,10 @@ final class Game {
                 countGreater50++;
         }
 
-        GameResult gameResult = game.checkGameResult(new MoveGenerator());
-        game.setResult(gameResult);
+        GameResult gameResult = checkGameResult(new MoveGenerator());
+        setResult(gameResult);
 
         int avgMoves = i > 0 ? totalMovesCount / i : 0;
-        System.out.println("Statistics: max moves: " + maxMoves + ", avg moves: " + avgMoves
-                + ", # >40: " + countGreater40 + ", # >50: " + countGreater50);
-    }
-
-    private static void playAutoGameInternalOld(Game game) {
-        MoveGenerator moveGenerator = new MoveGenerator();
-
-        Moves moves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard());
-        game.getBoard().print();
-        moves.print();
-
-        int maxMoves = 0;
-        int totalMovesCount = 0;
-        int countGreater40 = 0;
-        int countGreater50 = 0;
-        int moveNo = 1;
-
-        for (; moveNo <= 1000; moveNo++) {
-            int moveIndex = game.getRandom().nextInt(moves.count());
-            int move = moves.getMove(moveIndex);
-            System.out.println("Move #" + moveNo + ": " + ChessUtil.moveToString(move));
-            game.makeMove(move);
-
-            Moves nextMoves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard());
-            if (nextMoves.isIllegal()) {
-                System.out.println("ILLEGAL");
-                game.getBoard().print();
-                game.revertMove();
-                game.getBoard().print();
-                nextMoves = findValidMove(game, moves, moveGenerator, moveNo);
-            }
-            if (nextMoves.isIllegal() || nextMoves.count() == 0)
-                break;
-            if (game.getBoard().isDrawByMaterial())
-                break;
-
-            moves = nextMoves;
-            maxMoves = Math.max(maxMoves, moves.count());
-            totalMovesCount += moves.count();
-            if (moves.count() > 40)
-                countGreater40++;
-            if (moves.count() > 50)
-                countGreater50++;
-        }
-
-        GameResult gameResult = game.checkGameResult(moveGenerator);
-        game.setResult(gameResult);
-
-        int avgMoves = totalMovesCount / moveNo;
         System.out.println("Statistics: max moves: " + maxMoves + ", avg moves: " + avgMoves
                 + ", # >40: " + countGreater40 + ", # >50: " + countGreater50);
     }
