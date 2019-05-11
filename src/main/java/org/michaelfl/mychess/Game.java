@@ -33,10 +33,15 @@ final class Game {
             makeMove(move);
         }
 
-        // Check if game is already over
+        // Check if game is over
+        calculateAndSetGameResult();
+    }
+
+    GameResult calculateAndSetGameResult() {
         MoveGenerator moveGenerator = new MoveGenerator();
         GameResult gameResult = checkGameResult(moveGenerator);
         setResult(gameResult);
+        return gameResult;
     }
 
     GameStatus getGameStatus() {
@@ -139,6 +144,8 @@ final class Game {
         }
 
         makeMove(move.getMove());
+
+        calculateAndSetGameResult();
     }
 
     void makeMove(int move) {
@@ -330,11 +337,11 @@ final class Game {
 
     void print() {
         getBoard().print();
-        System.out.println("Moves: " + exportMoves());
-        System.out.println("Turn: " + (getTurn() == GameStatus.TURN_WHITE ? "white" : "black"));
         if (getResult() == GameResult.CHECKMATE || getResult() == GameResult.STALEMATE)
             System.out.println("Result: " + (getTurn() == GameStatus.TURN_WHITE ? "white" : "black") + " " + getResult());
+        else if (getResult() == GameResult.DRAW)
+            System.out.println("Result: DRAW");
         else
-            System.out.println("Result: " + getResult());
+            System.out.println("Turn: " + (getTurn() == GameStatus.TURN_WHITE ? "white" : "black"));
     }
 }
