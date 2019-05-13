@@ -52,7 +52,7 @@ final class CommandHandler {
             computerColor = null;
             game = new Game();
             game.print();
-            engine = new RandomMoveEngine(game);
+            engine = newEngine(game);
         }
     }
 
@@ -141,7 +141,7 @@ final class CommandHandler {
                 SimpleNotationImporter importer = new SimpleNotationImporter(commandLine.substring(7));
                 game = importer.importGame();
                 game.print();
-                engine = new RandomMoveEngine(game);
+                engine = newEngine(game);
             } catch (RuntimeException e) {
                 System.err.println(e.getMessage());
             }
@@ -259,7 +259,7 @@ final class CommandHandler {
 
         @Override
         boolean canHandle(String commandLine) {
-            return "go".equals(commandLine);
+            return "go".equals(commandLine) || "g".equals(commandLine);
         }
 
         @Override
@@ -307,7 +307,11 @@ final class CommandHandler {
 
     CommandHandler(Game game) {
         this.game = game;
-        engine = new PositionEngine(game);
+        engine = newEngine(game);
+    }
+
+    private ChessEngine newEngine(Game game) {
+        return new PositionEngine(game);
     }
 
     void nextCommand() {

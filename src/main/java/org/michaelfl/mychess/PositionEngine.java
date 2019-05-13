@@ -22,7 +22,7 @@ final class PositionEngine extends ChessEngine {
         final int countMoves = moves.count();
         final Board workingBoard = game.getBoard().copy();
         final boolean isWhiteTurn = game.getTurn() == GameStatus.TURN_WHITE;
-        float bestWeight = isWhiteTurn ? Float.MIN_VALUE : Float.MAX_VALUE;
+        float bestWeight = isWhiteTurn ? Float.NEGATIVE_INFINITY : Float.POSITIVE_INFINITY;
         int bestMove = -1;
 
         for (int i = 0; i < countMoves; i++) {

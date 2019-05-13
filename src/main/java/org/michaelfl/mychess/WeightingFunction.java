@@ -13,10 +13,12 @@ package org.michaelfl.mychess;
 //    12 13         ...          22  23
 //    00 01         ...          10  11
 
+import java.util.Arrays;
+
 @SuppressWarnings({"StatementWithEmptyBody", "Duplicates", "PointlessArithmeticExpression"})
 final class WeightingFunction {
 
-    final static float ILLEGAL_WEIGHT = Float.MIN_VALUE;
+    final static float ILLEGAL_WEIGHT = Float.NEGATIVE_INFINITY;
 
     private final static float[] weightOfPiece = new float[Board.blackKing + 1];
     static {
@@ -157,10 +159,10 @@ final class WeightingFunction {
     private final static int[] oppositeColor = new int[] { GameStatus.TURN_BLACK, GameStatus.TURN_WHITE };
     private final static int[] oppositeKing = new int[] { Board.blackKing, Board.whiteKing };
 
-    private final static float mobilityFactor = 0.1f;
+    private final static float mobilityFactor = 0.01f;
     private final static float threadCountFactor = 0.01f;
-    private final static float threadWeightFactor = 0.5f;
-    private final static float fieldDominanceWeightFactor = 0.1f;
+    private final static float threadWeightFactor = 0.01f;
+    private final static float fieldDominanceWeightFactor = 0.005f;
 
     private GameStatus game;
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
@@ -172,6 +174,8 @@ final class WeightingFunction {
     private float[] threadWeight = new float[2];
     private int[] fieldDominanceWeight = new int[2];
     private boolean containsIllegalMove;
+//    private final byte[] fieldAttackCountWhite = Board.createEmptyBoard().getRawBoard();
+//    private final byte[] fieldAttackCountBlack = Board.createEmptyBoard().getRawBoard();
 
     float calculate(GameStatus game, Board theBoard) {
         this.game = game;
@@ -188,6 +192,9 @@ final class WeightingFunction {
         this.fieldDominanceWeight[0] = 0;
         this.fieldDominanceWeight[1] = 0;
         this.containsIllegalMove = false;
+
+//        Arrays.fill(fieldAttackCountWhite, (byte) 0);
+//        Arrays.fill(fieldAttackCountBlack, (byte) 0);
 
         final int stopField = 9 * Board.LENGTH + 10;
 
@@ -241,6 +248,10 @@ final class WeightingFunction {
         final byte[] weightOfField = color == 0 ? weightOfFieldForWhite : weightOfFieldForBlack;
         return weightOfField[field];
     }
+
+//    private byte[] getFieldAttackCount(int color) {
+//        return color == 0 ? fieldAttackCountWhite : fieldAttackCountBlack;
+//    }
 
     private void calculateForWhitePawn(int field, int color) {
         // single step
