@@ -241,6 +241,20 @@ final class CommandHandler {
         }
     }
 
+    private final class WeightCommand extends Command {
+
+        @Override
+        boolean canHandle(String commandLine) {
+            return "weight".equals(commandLine) || "w".equals(commandLine);
+        }
+
+        @Override
+        void handle(String commandLine) {
+            weightingFunction.calculate(game.getGameStatus(), game.getBoard());
+            weightingFunction.print();
+        }
+    }
+
     private final class GoCommand extends Command {
 
         @Override
@@ -281,17 +295,19 @@ final class CommandHandler {
             new RevertCommand(),
             new TipCommand(),
             new LastCommand(),
-            new GoCommand()
+            new GoCommand(),
+            new WeightCommand()
     );
 
     private final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     private Game game;
     private ChessEngine engine;
+    private WeightingFunction weightingFunction = new WeightingFunction();
     private Integer computerColor;
 
     CommandHandler(Game game) {
         this.game = game;
-        engine = new RandomMoveEngine(game);
+        engine = new PositionEngine(game);
     }
 
     void nextCommand() {

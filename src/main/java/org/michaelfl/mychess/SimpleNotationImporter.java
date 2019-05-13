@@ -50,6 +50,8 @@ final class SimpleNotationImporter {
         // En passant: "[[e2-e4 c2-c5 f2-f3 c5-c4 d2-d4]]";
         // Castling king's side: "[[e2-e4 e7-e5 g1-f3 b8-c6 f1-b5 a7-a6 b5-a4 g8-f6 e1-g1]]";
         // Castling queen's side: "[[e2-e4 e7-e5 d2-d4 e5-d4 d1-d4 b8-c6 d4-e3 g8-f6 b1-c3 f8-b4 c1-d2 e8-g8 e1-c1]]";
+        // Spain opening: "[[e2-e4 e7-e5 g1-f3 b8-c6 f1-b5 a7-a6]]";
+        // No move possinble???: "[[d2-d4 d7-d5 d1-d3 c8-f5 d3-f5 e7-e6 f5-e5 f7-f6 e5-c7 d8-c7]]";
         String notation = "[[g2-g4 f7-f5 e2-e3 f5-g4 f2-f4 a7-a6 d1-f3 a6-a5 f4-f5 a5-a4 f5-f6 a4-a3]]";
 
         Game game = new SimpleNotationImporter(notation).importGame();
