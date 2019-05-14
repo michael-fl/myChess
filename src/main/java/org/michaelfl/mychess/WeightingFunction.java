@@ -159,28 +159,39 @@ final class WeightingFunction {
     private final static int[] oppositeColor = new int[] { GameStatus.TURN_BLACK, GameStatus.TURN_WHITE };
     private final static int[] oppositeKing = new int[] { Board.blackKing, Board.whiteKing };
 
-    private final static float mobilityFactor = 0.01f;
-    private final static float threadCountFactor = 0.01f;
+    private final static float mobilityFactor = 0.02f;
+    private final static float threadCountFactorLow = 0.05f;
+    private final static float threadCountFactorHigh = 0.2f;
     private final static float threadWeightFactor = 0.01f;
-    private final static float fieldDominanceWeightFactor = 0.005f;
+    private final static float unguardedWeightFactor = 0.2f;
+    private final static float underGuardedWeightFactor = 0.05f;
+    private final static float fieldDominanceWeightFactor = 0.025f;
+    private final static float chessFactor = 0.5f;
 
     private GameStatus game;
+    private int turn; // 0 = white, 1 = black
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Board theBoard; // For debugger only
     private byte[] board;
+    private int[] chessCount = new int[2];
     private float[] piecesWeight = new float[2];
     private int[] movesCount = new int[2];
     private int[] threadCount = new int[2];
     private float[] threadWeight = new float[2];
     private int[] fieldDominanceWeight = new int[2];
+    private float[] unguardedWeight = new float[2];
+    private float[] underGuardedWeight = new float[2];
     private boolean containsIllegalMove;
-//    private final byte[] fieldAttackCountWhite = Board.createEmptyBoard().getRawBoard();
-//    private final byte[] fieldAttackCountBlack = Board.createEmptyBoard().getRawBoard();
+    private final byte[] fieldAttackCountWhite = Board.createEmptyBoard().getRawBoard();
+    private final byte[] fieldAttackCountBlack = Board.createEmptyBoard().getRawBoard();
 
     float calculate(GameStatus game, Board theBoard) {
         this.game = game;
+        this.turn = game.getTurn() == GameStatus.TURN_WHITE ? 0 : 1;
         this.theBoard = theBoard;
         this.board = theBoard.getRawBoard();
+        this.chessCount[0] = 0;
+        this.chessCount[1] = 0;
         this.piecesWeight[0] = 0;
         this.piecesWeight[1] = 0;
         this.movesCount[0] = 0;
@@ -189,12 +200,16 @@ final class WeightingFunction {
         this.threadCount[1] = 0;
         this.threadWeight[0] = 0;
         this.threadWeight[1] = 0;
+        this.unguardedWeight[0] = 0;
+        this.unguardedWeight[1] = 0;
+        this.underGuardedWeight[0] = 0;
+        this.underGuardedWeight[1] = 0;
         this.fieldDominanceWeight[0] = 0;
         this.fieldDominanceWeight[1] = 0;
         this.containsIllegalMove = false;
 
-//        Arrays.fill(fieldAttackCountWhite, (byte) 0);
-//        Arrays.fill(fieldAttackCountBlack, (byte) 0);
+        Arrays.fill(fieldAttackCountWhite, (byte) 0);
+        Arrays.fill(fieldAttackCountBlack, (byte) 0);
 
         final int stopField = 9 * Board.LENGTH + 10;
 
@@ -212,6 +227,8 @@ final class WeightingFunction {
             }
         }
 
+        calculateAttackersAndGuards();
+
         return calculatePositionWeight();
     }
 
@@ -219,11 +236,16 @@ final class WeightingFunction {
         if (containsIllegalMove)
             return ILLEGAL_WEIGHT;
 
+        final int threadCountDelta = threadCount[0] - threadCount[1];
+
         return piecesWeight[0] - piecesWeight[1]
                 + (movesCount[0] - movesCount[1]) * mobilityFactor
-                + (threadCount[0] - threadCount[1]) * threadCountFactor
+                + (threadCountDelta * ((Math.abs(threadCountDelta) > 2) ? threadCountFactorHigh : threadCountFactorLow))
                 + (threadWeight[0] - threadWeight[1]) * threadWeightFactor
-                + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) * fieldDominanceWeightFactor;
+                + (unguardedWeight[0] - unguardedWeight[1]) * unguardedWeightFactor
+                + (underGuardedWeight[0] - underGuardedWeight[1]) * underGuardedWeightFactor
+                + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) * fieldDominanceWeightFactor
+                + (chessCount[0] - chessCount[1]) * chessFactor;
     }
 
     void print() {
@@ -232,11 +254,16 @@ final class WeightingFunction {
 
     @Override
     public String toString() {
-        return "piecesWeight:   w=" + piecesWeight[0] + ", b=" + piecesWeight[1] + ", delta=" + (piecesWeight[0] - piecesWeight[1]) + ", weight=" + (piecesWeight[0] - piecesWeight[1]) + '\n' +
-               "movesCount:     w=" + movesCount[0] + ", b=" + movesCount[1] + ", delta=" + (movesCount[0] - movesCount[1]) + ", weight=" + (movesCount[0] - movesCount[1]) * mobilityFactor + '\n' +
-               "threadCount:    w=" + threadCount[0] + ", b=" + threadCount[1] + ", delta=" + (threadCount[0] - threadCount[1]) + ", weight=" + (threadCount[0] - threadCount[1]) * threadCountFactor + '\n' +
-               "threadWeight:   w=" + threadWeight[0] + ", b=" + threadWeight[1] + ", delta=" + (threadWeight[0] - threadWeight[1]) + ", weight=" + (threadWeight[0] - threadWeight[1]) * threadWeightFactor + '\n' +
-               "fieldDominance: w=" + fieldDominanceWeight[0] + ", b=" + fieldDominanceWeight[1] + ", delta=" + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) + ", weight=" + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) * fieldDominanceWeightFactor + '\n' +
+        final int threadCountDelta = threadCount[0] - threadCount[1];
+
+        return "piecesWeight:       w=" + piecesWeight[0] + ", b=" + piecesWeight[1] + ", delta=" + (piecesWeight[0] - piecesWeight[1]) + ", weight=" + (piecesWeight[0] - piecesWeight[1]) + '\n' +
+               "movesCount:         w=" + movesCount[0] + ", b=" + movesCount[1] + ", delta=" + (movesCount[0] - movesCount[1]) + ", weight=" + (movesCount[0] - movesCount[1]) * mobilityFactor + '\n' +
+               "chessCount:         w=" + chessCount[0] + ", b=" + chessCount[1] + ", delta=" + (chessCount[0] - chessCount[1]) + ", weight=" + (chessCount[0] - chessCount[1]) * chessFactor + '\n' +
+               "threadCount:        w=" + threadCount[0] + ", b=" + threadCount[1] + ", delta=" + threadCountDelta + ", weight=" + (threadCountDelta * ((Math.abs(threadCountDelta) > 2) ? threadCountFactorHigh : threadCountFactorLow)) + '\n' +
+               "threadWeight:       w=" + threadWeight[0] + ", b=" + threadWeight[1] + ", delta=" + (threadWeight[0] - threadWeight[1]) + ", weight=" + (threadWeight[0] - threadWeight[1]) * threadWeightFactor + '\n' +
+               "unguardedWeight:    w=" + unguardedWeight[0] + ", b=" + unguardedWeight[1] + ", delta=" + (unguardedWeight[0] - unguardedWeight[1]) + ", weight=" + (unguardedWeight[0] - unguardedWeight[1]) * unguardedWeightFactor + '\n' +
+               "underGuardedWeight: w=" + underGuardedWeight[0] + ", b=" + underGuardedWeight[1] + ", delta=" + (underGuardedWeight[0] - underGuardedWeight[1]) + ", weight=" + (underGuardedWeight[0] - underGuardedWeight[1]) * underGuardedWeightFactor + '\n' +
+               "fieldDominance:     w=" + fieldDominanceWeight[0] + ", b=" + fieldDominanceWeight[1] + ", delta=" + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) + ", weight=" + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) * fieldDominanceWeightFactor + '\n' +
                "weight: " + calculatePositionWeight();
     }
 
@@ -249,9 +276,9 @@ final class WeightingFunction {
         return weightOfField[field];
     }
 
-//    private byte[] getFieldAttackCount(int color) {
-//        return color == 0 ? fieldAttackCountWhite : fieldAttackCountBlack;
-//    }
+    private byte[] getFieldAttackCount(int color) {
+        return color == 0 ? fieldAttackCountWhite : fieldAttackCountBlack;
+    }
 
     private void calculateForWhitePawn(int field, int color) {
         // single step
@@ -272,6 +299,8 @@ final class WeightingFunction {
             countThreat(field, to, color, board[to]);
         } else if (board[to] != Board.illegal) {
             fieldDominanceWeight[color] += getWeightOfField(to, color);
+            if (board[to] != Board.empty) // own color
+                getFieldAttackCount(color)[to]++;
         }
 
         // capture left
@@ -280,6 +309,8 @@ final class WeightingFunction {
             countThreat(field, to, color, board[to]);
         } else if (board[to] != Board.illegal) {
             fieldDominanceWeight[color] += getWeightOfField(to, color);
+            if (board[to] != Board.empty) // own color
+                getFieldAttackCount(color)[to]++;
         }
 
         // en passant
@@ -321,6 +352,8 @@ final class WeightingFunction {
             countThreat(field, to, color, board[to]);
         } else if (board[to] != Board.illegal) {
             fieldDominanceWeight[color] += getWeightOfField(to, color);
+            if (board[to] != Board.empty) // own color
+                getFieldAttackCount(color)[to]++;
         }
 
         // capture left
@@ -329,6 +362,8 @@ final class WeightingFunction {
             countThreat(field, to, color, board[to]);
         } else if (board[to] != Board.illegal) {
             fieldDominanceWeight[color] += getWeightOfField(to, color);
+            if (board[to] != Board.empty) // own color
+                getFieldAttackCount(color)[to]++;
         }
 
         // en passant
@@ -436,25 +471,27 @@ final class WeightingFunction {
         final int oppositeColor = WeightingFunction.oppositeColor[color];
 
         if (piece == Board.empty) {
-            countMove(to, color);
+            movesCount[color]++;
+            fieldDominanceWeight[color] += getWeightOfField(to, color);
             return true;
         } else if ((piece & oppositeColor) == oppositeColor) {
             countThreat(from, to, color, piece);
             return false;
-        } else {
+        } else if (piece != Board.illegal) { // own color
             fieldDominanceWeight[color] += getWeightOfField(to, color);
+            getFieldAttackCount(color)[to]++;
+            return false;
+        } else {
             return false;
         }
     }
 
-    private void countMove(final int field, final int color) {
-        movesCount[color]++;
-        fieldDominanceWeight[color] += getWeightOfField(field, color);
-    }
-
     private void countThreat(final int from, final int to, final int color, final byte piece) {
         if (piece == oppositeKing[color]) {
-            containsIllegalMove = true;
+            if (turn == color)
+                containsIllegalMove = true;
+            else
+                chessCount[color]++;
             return;
         }
 
@@ -463,12 +500,42 @@ final class WeightingFunction {
         fieldDominanceWeight[color] += getWeightOfField(to, color);
         threadCount[color]++;
 
-        final float myWeight = weightOfPiece[board[from]];
-        final float opponentWeight = weightOfPiece[piece];
-        if (myWeight < opponentWeight)
-            threadWeight[color] += (opponentWeight - myWeight) * 2;
-        else if (myWeight == opponentWeight)
-            threadWeight[color] += 1;
+        final byte myPiece = board[from];
+        if (!Board.isKing(myPiece)) {
+            final float myWeight = weightOfPiece[myPiece];
+            final float opponentWeight = weightOfPiece[piece];
+            if (myWeight < opponentWeight)
+                threadWeight[color] += opponentWeight - myWeight;
+            else if (myWeight == opponentWeight)
+                threadWeight[color] += 1;
+            else
+                threadWeight[color] += 0.2;
+        }
+
+        getFieldAttackCount(color)[to]++;
     }
 
+    private void calculateAttackersAndGuards() {
+        final int stopField = 9 * Board.LENGTH + 10;
+
+        for (int field = 2 * Board.LENGTH + 2; field < stopField; field++) {
+            final byte piece = board[field];
+            if (piece != Board.empty && piece != Board.illegal) {
+                final int color = (piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE ? 0 : 1;
+                final byte countGuards = getFieldAttackCount(color)[field];
+                final byte countAttackers = getFieldAttackCount(color == 0 ? 1 : 0)[field];
+
+                if (countGuards == 0) {
+                    // unguarded piece
+                    unguardedWeight[color] -= weightOfPiece[piece];
+                }
+
+                if (countAttackers > countGuards) {
+                    // potential loss
+                    underGuardedWeight[color] -= weightOfPiece[piece];
+                }
+            }
+        }
+
+    }
 }
