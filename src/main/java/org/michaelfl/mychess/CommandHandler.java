@@ -138,7 +138,7 @@ final class CommandHandler {
         void handle(String commandLine) {
             try {
                 computerColor = null;
-                SimpleNotationImporter importer = new SimpleNotationImporter(commandLine.substring(7));
+                SimpleNotationImporter importer = new SimpleNotationImporter(commandLine.substring(commandLine.indexOf(' ') + 1));
                 game = importer.importGame();
                 game.print();
                 engine = newEngine(game);
