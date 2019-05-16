@@ -200,7 +200,7 @@ public final class Board {
         return new Board(new byte[LENGTH*LENGTH]);
     }
 
-    Board copy() {
+    public Board copy() {
         return new Board(Arrays.copyOf(board, board.length));
     }
 
@@ -299,7 +299,7 @@ public final class Board {
                 && (piecesCount[blackKnight] == 0 || piecesCount[blackBishop] == 0);
     }
 
-    void makeMove(int move) {
+    public void makeMove(int move) {
         makeMove(board, move);
     }
 
@@ -307,7 +307,7 @@ public final class Board {
         MOVE_FUNCTIONS[Move.getMoveType(move)].move(board, move);
     }
 
-    void revertMove(int move) {
+    public void revertMove(int move) {
         revertMove(board, move);
     }
 

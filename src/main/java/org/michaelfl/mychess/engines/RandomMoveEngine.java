@@ -1,4 +1,6 @@
-package org.michaelfl.mychess;
+package org.michaelfl.mychess.engines;
+
+import org.michaelfl.mychess.*;
 
 import java.util.Random;
 

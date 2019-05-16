@@ -1,4 +1,6 @@
-package org.michaelfl.mychess;
+package org.michaelfl.mychess.engines;
+
+import org.michaelfl.mychess.*;
 
 @SuppressWarnings("Duplicates")
 final class FixDepthEngine extends ChessEngine {
@@ -6,7 +8,7 @@ final class FixDepthEngine extends ChessEngine {
     private final static int DEPTH = 5;
 
     private WeightingFunction weightingFunction = new WeightingFunction();
-    private int countPossibleMoves = -1;
+    private int countPossibleMoves = 0;
     private int countPositions;
 
     FixDepthEngine(Game game) {

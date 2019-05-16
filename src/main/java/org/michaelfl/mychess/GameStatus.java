@@ -1,10 +1,10 @@
 package org.michaelfl.mychess;
 
-final class GameStatus {
+public final class GameStatus {
 
-    final static int TURN_WHITE = 8;
+    public final static int TURN_WHITE = 8;
     @SuppressWarnings("WeakerAccess")
-    final static int TURN_BLACK = 16;
+    public final static int TURN_BLACK = 16;
 
     private int turn;
     private int lastMove;
@@ -32,7 +32,7 @@ final class GameStatus {
         return new GameStatus(TURN_WHITE, 0);
     }
 
-    int getTurn() {
+    public int getTurn() {
         return turn;
     }
 
@@ -69,7 +69,7 @@ final class GameStatus {
         return new GameStatus(getOppositeColor(), 0, this);
     }
 
-    GameStatus makeMove(int move) {
+    public GameStatus makeMove(int move) {
         GameStatus newStatus = new GameStatus(getOppositeColor(), move, this);
         newStatus.updateCastlingState(turn, move);
 
