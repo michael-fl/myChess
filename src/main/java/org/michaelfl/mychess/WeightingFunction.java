@@ -19,6 +19,8 @@ import java.util.Arrays;
 final class WeightingFunction {
 
     final static float ILLEGAL_WEIGHT = Float.NEGATIVE_INFINITY;
+    final static float CHECKMATE_WHITE = -1.0e10f;
+    final static float CHECKMATE_BLACK = 1.0e10f;
 
     private final static float[] weightOfPiece = new float[Board.blackKing + 1];
     static {
@@ -317,10 +319,10 @@ final class WeightingFunction {
         if (fieldToRow(field) == 4) {
             int lastMove = game.getLastMove();
             if (lastMove != 0) {
-                if ((board[field - 1] == Board.blackPawn && Move.getToField(lastMove) == field - 1 && Move.getFromField(lastMove) == field - 1 + 2 * Board.LENGTH)
-                        || (board[field + 1] == Board.blackPawn && Move.getToField(lastMove) == field + 1 && Move.getFromField(lastMove) == field + 1 + 2 * Board.LENGTH)) {
-                    countThreat(field, to, color, board[to]);
-                }
+                if (board[field - 1] == Board.blackPawn && Move.getToField(lastMove) == field - 1 && Move.getFromField(lastMove) == field - 1 + 2 * Board.LENGTH)
+                    countThreat(field, field - 1, color, Board.blackPawn);
+                else if (board[field + 1] == Board.blackPawn && Move.getToField(lastMove) == field + 1 && Move.getFromField(lastMove) == field + 1 + 2 * Board.LENGTH)
+                    countThreat(field, field + 1, color, Board.blackPawn);
             }
         }
     }
@@ -369,9 +371,10 @@ final class WeightingFunction {
         // en passant
         if (fieldToRow(field) == 3) {
             int lastMove = game.getLastMove();
-            if ((board[field - 1] == Board.whitePawn && Move.getToField(lastMove) == field - 1 && Move.getFromField(lastMove) == field - 1 - 2 * Board.LENGTH)
-                    || (board[field + 1] == Board.whitePawn && Move.getToField(lastMove) == field + 1 && Move.getFromField(lastMove) == field + 1 - 2 * Board.LENGTH))
-                countThreat(field, to, color, board[to]);
+            if (board[field - 1] == Board.whitePawn && Move.getToField(lastMove) == field - 1 && Move.getFromField(lastMove) == field - 1 - 2 * Board.LENGTH)
+                countThreat(field, field - 1, color, Board.whitePawn);
+            else if (board[field + 1] == Board.whitePawn && Move.getToField(lastMove) == field + 1 && Move.getFromField(lastMove) == field + 1 - 2 * Board.LENGTH)
+                countThreat(field, field + 1, color, Board.whitePawn);
         }
     }
 
@@ -495,7 +498,6 @@ final class WeightingFunction {
             return;
         }
 
-        final byte[] weightOfField = color == 0 ? weightOfFieldForWhite : weightOfFieldForBlack;
         movesCount[color]++;
         fieldDominanceWeight[color] += getWeightOfField(to, color);
         threadCount[color]++;
