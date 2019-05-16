@@ -16,6 +16,7 @@ final class Game {
     }
 
     private final Random rand = new Random();
+    private final ChessEngine engine = new FixDepthEngine(this);
     private Board previousBoard;
     private Board board = new Board();
     private List<Move> moves = new ArrayList<>();
@@ -35,6 +36,10 @@ final class Game {
 
         // Check if game is over
         calculateAndSetGameResult();
+    }
+
+    ChessEngine getEngine() {
+        return engine;
     }
 
     GameResult calculateAndSetGameResult() {
@@ -216,7 +221,7 @@ final class Game {
         return checkIsKingUnderChess(gameStatus, board, moveGenerator) ? GameResult.CHECKMATE : GameResult.STALEMATE;
     }
 
-    private static boolean checkIsKingUnderChess(GameStatus gameStatus, Board board, MoveGenerator moveGenerator) {
+    static boolean checkIsKingUnderChess(GameStatus gameStatus, Board board, MoveGenerator moveGenerator) {
         // Switch turn
         gameStatus = gameStatus.switchTurn();
 
@@ -265,9 +270,6 @@ final class Game {
 
     @SuppressWarnings("Duplicates")
     private void playAutoGameInternal() {
-        //BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        ChessEngine engine = new RandomMoveEngine(this);
-
         getBoard().print();
 
         int maxMoves = 0;

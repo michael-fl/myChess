@@ -52,7 +52,6 @@ final class CommandHandler {
             computerColor = null;
             game = new Game();
             game.print();
-            engine = newEngine(game);
         }
     }
 
@@ -87,7 +86,7 @@ final class CommandHandler {
         @Override
         void handle(String commandLine) {
             boolean isWhiteTurn = game.getTurn() == GameStatus.TURN_WHITE;
-            MoveDescription move = null;
+            MoveDescription move;
 
             if ("O-O".equals(commandLine) || "0-0".equals(commandLine)) {
                 move = isWhiteTurn ? MoveDescription.whiteCastlingKingSide : MoveDescription.blackCastlingKingSide;
@@ -114,7 +113,7 @@ final class CommandHandler {
         }
 
         private void makeComputerMove() {
-            int move = engine.nextMove();
+            int move = game.getEngine().nextMove();
             if (move == 0) {
                 System.err.println("No move possible!?");
                 return;
@@ -141,7 +140,6 @@ final class CommandHandler {
                 SimpleNotationImporter importer = new SimpleNotationImporter(commandLine.substring(commandLine.indexOf(' ') + 1));
                 game = importer.importGame();
                 game.print();
-                engine = newEngine(game);
             } catch (RuntimeException e) {
                 System.err.println(e.getMessage());
             }
@@ -191,7 +189,7 @@ final class CommandHandler {
 
         @Override
         boolean canHandle(String commandLine) {
-            return "revert".equals(commandLine);
+            return "revert".equals(commandLine) || "r".equals(commandLine);
         }
 
         @Override
@@ -219,7 +217,7 @@ final class CommandHandler {
                 System.err.println("Game is already over");
                 return;
             }
-            int move = engine.nextMove();
+            int move = game.getEngine().nextMove();
             System.out.println(ChessUtil.moveToString(move));
         }
     }
@@ -269,7 +267,9 @@ final class CommandHandler {
                 return;
             }
 
-            int move = engine.nextMove();
+            long t1 = System.currentTimeMillis();
+            int move = game.getEngine().nextMove();
+            long t2 = System.currentTimeMillis();
             if (move == 0) {
                 System.err.println("No move possible!?");
                 return;
@@ -277,7 +277,7 @@ final class CommandHandler {
 
             computerColor = game.getTurn();
             game.makeMove(move);
-            System.out.println("Move #" + game.getMoveCount() + ": " + ChessUtil.moveToString(move));
+            System.out.println("Move #" + game.getMoveCount() + ": " + ChessUtil.moveToString(move) + ", " + (t2 - t1) + "ms");
             game.calculateAndSetGameResult();
             game.print();
         }
@@ -301,17 +301,11 @@ final class CommandHandler {
 
     private final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     private Game game;
-    private ChessEngine engine;
     private WeightingFunction weightingFunction = new WeightingFunction();
     private Integer computerColor;
 
     CommandHandler(Game game) {
         this.game = game;
-        engine = newEngine(game);
-    }
-
-    private ChessEngine newEngine(Game game) {
-        return new PositionEngine(game);
     }
 
     void nextCommand() {
