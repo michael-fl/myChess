@@ -16,11 +16,11 @@ package org.michaelfl.mychess;
 import java.util.Arrays;
 
 @SuppressWarnings({"StatementWithEmptyBody", "Duplicates", "PointlessArithmeticExpression"})
-final class WeightingFunction {
+public final class WeightingFunction {
 
-    final static float ILLEGAL_WEIGHT = Float.NEGATIVE_INFINITY;
-    final static float CHECKMATE_WHITE = -1.0e10f;
-    final static float CHECKMATE_BLACK = 1.0e10f;
+    public final static float ILLEGAL_WEIGHT = Float.NEGATIVE_INFINITY;
+    public final static float CHECKMATE_WHITE = -1.0e10f;
+    public final static float CHECKMATE_BLACK = 1.0e10f;
 
     private final static float[] weightOfPiece = new float[Board.blackKing + 1];
     static {
@@ -187,7 +187,7 @@ final class WeightingFunction {
     private final byte[] fieldAttackCountWhite = Board.createEmptyBoard().getRawBoard();
     private final byte[] fieldAttackCountBlack = Board.createEmptyBoard().getRawBoard();
 
-    float calculate(GameStatus game, Board theBoard) {
+    public float calculate(GameStatus game, Board theBoard) {
         this.game = game;
         this.turn = game.getTurn() == GameStatus.TURN_WHITE ? 0 : 1;
         this.theBoard = theBoard;

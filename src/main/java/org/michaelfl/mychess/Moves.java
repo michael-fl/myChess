@@ -2,7 +2,7 @@ package org.michaelfl.mychess;
 
 import java.util.Arrays;
 
-final class Moves {
+public final class Moves {
 
     final static Moves ILLEGAL = new Moves(0);
 
@@ -20,25 +20,25 @@ final class Moves {
         moves = new int[capacity];
     }
 
-    boolean isIllegal() {
+    public boolean isIllegal() {
         return this == ILLEGAL;
     }
 
-    void addMove(int move) {
+    public void addMove(int move) {
         if (size == moves.length)
             moves = Arrays.copyOf(moves, size + CAPACITY_INCREMENT);
         moves[size++] = move;
     }
 
-    void revertMove() {
+    public void revertMove() {
         --size;
     }
 
-    int count() {
+    public int count() {
         return size;
     }
 
-    int[] getMoves() {
+    public int[] getMoves() {
         return moves;
     }
 

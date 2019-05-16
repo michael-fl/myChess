@@ -14,7 +14,7 @@ package org.michaelfl.mychess;
 //    00 01         ...          10  11
 
 @SuppressWarnings({"StatementWithEmptyBody", "Duplicates", "PointlessArithmeticExpression"})
-final class MoveGenerator {
+public final class MoveGenerator {
 
     @FunctionalInterface
     private interface CalculateMoves {
@@ -46,7 +46,7 @@ final class MoveGenerator {
     private Moves moves;
     private boolean containsIllegalMove;
 
-    Moves calculateMoves(GameStatus game, Board theBoard) {
+    public Moves calculateMoves(GameStatus game, Board theBoard) {
         final int turn = game.getTurn();
         this.game = game;
         this.theBoard = theBoard;

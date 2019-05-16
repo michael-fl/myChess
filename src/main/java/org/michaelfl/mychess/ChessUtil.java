@@ -1,16 +1,16 @@
 package org.michaelfl.mychess;
 
-final class ChessUtil {
+public final class ChessUtil {
 
     private ChessUtil() {
         // class cannot be instantiated
     }
 
-    static int getFieldFromColAndRow(int col, int row) {
+    public static int getFieldFromColAndRow(int col, int row) {
         return (row + 2) * 12 + col + 2;
     }
 
-    static int[] getColAndRowFromString(String fieldString) {
+    public static int[] getColAndRowFromString(String fieldString) {
         if (fieldString.length() != 2)
             throw new IllegalArgumentException("Wrong field notation: " + fieldString);
         char colChar = fieldString.charAt(0);
@@ -24,18 +24,18 @@ final class ChessUtil {
         };
     }
 
-    static int colAndRowToField(int col, int row) {
+    public static int colAndRowToField(int col, int row) {
         return Board.LENGTH * (2 + row) + 2 + col;
     }
 
-    static int getRowOfField(int field) {
+    public static int getRowOfField(int field) {
         int row = field / Board.LENGTH;
         if (row < 2 || row > 9)
             return -1;
         return row - 2;
     }
 
-    static int getColOfField(int field) {
+    public static int getColOfField(int field) {
         int row = field / Board.LENGTH;
         if (row < 2 || row > 9)
             return -1;
@@ -45,17 +45,17 @@ final class ChessUtil {
         return col - 2;
     }
 
-    static String fieldToString(int field) {
+    public static String fieldToString(int field) {
         int row = getRowOfField(field);
         int col = getColOfField(field);
         return String.valueOf((char) ('a' + col)) + (row + 1);
     }
 
-    static String moveToString(int fromField, int toField) {
+    public static String moveToString(int fromField, int toField) {
         return fieldToString(fromField) + "-" + fieldToString(toField);
     }
 
-    static String moveToString(int move) {
+    public static String moveToString(int move) {
         String s = moveToString(Move.getFromField(move), Move.getToField(move));
 
         byte moveType = Move.getMoveType(move);

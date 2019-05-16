@@ -1,14 +1,16 @@
 package org.michaelfl.mychess;
 
+import org.michaelfl.mychess.engines.ChessEngine;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-final class Game {
+public final class Game {
 
-    enum GameResult {
+    public enum GameResult {
         CHECKMATE,
         STALEMATE,
         DRAW,
@@ -16,7 +18,7 @@ final class Game {
     }
 
     private final Random rand = new Random();
-    private final ChessEngine engine = new FixDepthEngine(this);
+    private final ChessEngine engine = ChessEngine.newEngine(this);
     private Board previousBoard;
     private Board board = new Board();
     private List<Move> moves = new ArrayList<>();
@@ -49,11 +51,11 @@ final class Game {
         return gameResult;
     }
 
-    GameStatus getGameStatus() {
+    public GameStatus getGameStatus() {
         return statusStack.get(statusStack.size() - 1);
     }
 
-    GameResult getResult() {
+    public GameResult getResult() {
         return result;
     }
 
@@ -61,7 +63,7 @@ final class Game {
         this.result = result;
     }
 
-    Board getBoard() {
+    public Board getBoard() {
         return board;
     }
 
@@ -90,7 +92,7 @@ final class Game {
         return buf.toString();
     }
 
-    int getTurn() {
+    public int getTurn() {
         return getGameStatus().getTurn();
     }
 
@@ -221,7 +223,7 @@ final class Game {
         return checkIsKingUnderChess(gameStatus, board, moveGenerator) ? GameResult.CHECKMATE : GameResult.STALEMATE;
     }
 
-    static boolean checkIsKingUnderChess(GameStatus gameStatus, Board board, MoveGenerator moveGenerator) {
+    public static boolean checkIsKingUnderChess(GameStatus gameStatus, Board board, MoveGenerator moveGenerator) {
         // Switch turn
         gameStatus = gameStatus.switchTurn();
 
