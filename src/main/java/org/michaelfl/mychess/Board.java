@@ -230,7 +230,7 @@ public final class Board {
         return buf.toString();
     }
 
-    void print() {
+    public void print() {
         System.out.println(this);
     }
 

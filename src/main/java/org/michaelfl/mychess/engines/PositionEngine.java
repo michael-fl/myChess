@@ -2,12 +2,12 @@ package org.michaelfl.mychess.engines;
 
 import org.michaelfl.mychess.*;
 
-final class PositionEngine extends ChessEngine {
+public final class PositionEngine extends ChessEngine {
 
     private WeightingFunction weightingFunction = new WeightingFunction();
     private int countPossibleMoves = 0;
 
-    PositionEngine(Game game) {
+    public PositionEngine(Game game) {
         super(game);
     }
 

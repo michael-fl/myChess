@@ -1,7 +1,7 @@
 package org.michaelfl.mychess;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
-final class Move {
+public final class Move {
 
     final static byte typeNormal = 0;
     final static byte typeCastlingKingSide    = 1;
@@ -25,75 +25,75 @@ final class Move {
         return BitOps.createWord((byte) fromField, (byte) toField, capturedPiece, moveType);
     }
 
-    int getMove() {
+    public int getMove() {
         return move;
     }
 
-    static byte getFromField(int move) {
+    public static byte getFromField(int move) {
         return BitOps.getByte0(move);
     }
 
-    static byte getToField(int move) {
+    public static byte getToField(int move) {
         return BitOps.getByte1(move);
     }
 
-    static int getFromCol(int move) {
+    public static int getFromCol(int move) {
         int field = getFromField(move);
         return ChessUtil.getColOfField(field);
     }
 
-    static int getToCol(int move) {
+    public static int getToCol(int move) {
         int field = getToField(move);
         return ChessUtil.getColOfField(field);
     }
 
-    static int getFromRow(int move) {
+    public static int getFromRow(int move) {
         int field = getFromField(move);
         return ChessUtil.getRowOfField(field);
     }
 
-    static int getToRow(int move) {
+    public static int getToRow(int move) {
         int field = getToField(move);
         return ChessUtil.getRowOfField(field);
     }
 
-    static byte getCapturedPiece(int move) {
+    public static byte getCapturedPiece(int move) {
         return BitOps.getByte2(move);
     }
 
-    static byte getMoveType(int move) {
+    public static byte getMoveType(int move) {
         return BitOps.getByte3(move);
     }
 
-    byte getFromField() {
+    public byte getFromField() {
         return getFromField(move);
     }
 
-    byte getToField() {
+    public byte getToField() {
         return getToField(move);
     }
 
-    int getFromCol() {
+    public int getFromCol() {
         return getFromCol(move);
     }
 
-    int getToCol() {
+    public int getToCol() {
         return getToCol(move);
     }
 
-    int getFromRow() {
+    public int getFromRow() {
         return getFromRow(move);
     }
 
-    int getToRow() {
+    public int getToRow() {
         return getToRow(move);
     }
 
-    byte getCapturedPiece() {
+    public byte getCapturedPiece() {
         return getCapturedPiece(move);
     }
 
-    byte getMoveType() {
+    public byte getMoveType() {
         return getMoveType(move);
     }
 

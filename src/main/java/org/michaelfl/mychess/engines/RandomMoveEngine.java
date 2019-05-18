@@ -4,12 +4,12 @@ import org.michaelfl.mychess.*;
 
 import java.util.Random;
 
-final class RandomMoveEngine extends ChessEngine {
+public final class RandomMoveEngine extends ChessEngine {
 
     private final Random rand = new Random();
     private int countPossibleMoves = -1;
 
-    RandomMoveEngine(Game game) {
+    public RandomMoveEngine(Game game) {
         super(game);
     }
 

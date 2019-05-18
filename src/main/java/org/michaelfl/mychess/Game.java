@@ -1,6 +1,8 @@
 package org.michaelfl.mychess;
 
 import org.michaelfl.mychess.engines.ChessEngine;
+import org.michaelfl.mychess.engines.FixDepthEngine;
+import org.michaelfl.mychess.engines.RandomMoveEngine;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +20,8 @@ public final class Game {
     }
 
     private final Random rand = new Random();
-    private final ChessEngine engine = ChessEngine.newEngine(this);
+    private final ChessEngine engineWhite = new FixDepthEngine(this);
+    private final ChessEngine engineBlack = new RandomMoveEngine(this);
     private Board previousBoard;
     private Board board = new Board();
     private List<Move> moves = new ArrayList<>();
@@ -41,7 +44,7 @@ public final class Game {
     }
 
     ChessEngine getEngine() {
-        return engine;
+        return getTurn() == GameStatus.TURN_WHITE ? engineWhite : engineBlack;
     }
 
     GameResult calculateAndSetGameResult() {
@@ -282,7 +285,7 @@ public final class Game {
 
         int i = 0;
         for (; i <=1000; i++, moveNo++) {
-            int move = engine.nextMove();
+            int move = getEngine().nextMove();
             if (move == 0) {
                 // No valid move possible ==> checkmate or stalemate
                 break;
@@ -293,7 +296,7 @@ public final class Game {
             if (getBoard().isDrawByMaterial())
                 break;
 
-            int countPossibleMoves = engine.getCountPossibleMoves();
+            int countPossibleMoves = getEngine().getCountPossibleMoves();
             maxMoves = Math.max(maxMoves, countPossibleMoves);
             totalMovesCount += countPossibleMoves;
             if (countPossibleMoves > 40)
