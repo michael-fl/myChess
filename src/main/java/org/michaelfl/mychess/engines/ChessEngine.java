@@ -12,10 +12,6 @@ public abstract class ChessEngine {
         this.game = game;
     }
 
-    public static ChessEngine newEngine(Game game) {
-        return new FixDepthEngine(game);
-    }
-
     public final int nextMove() {
         return calculateNextMove();
     }

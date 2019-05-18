@@ -36,36 +36,36 @@ public final class GameStatus {
         return turn;
     }
 
-    int getOppositeColor() {
+    public int getOppositeColor() {
         return turn == GameStatus.TURN_WHITE ? GameStatus.TURN_BLACK : GameStatus.TURN_WHITE;
     }
 
-    int getLastMove() {
+    public int getLastMove() {
         return lastMove;
     }
 
-    boolean isCastlingPossible() {
+    public boolean isCastlingPossible() {
         return (turn == TURN_WHITE && (whiteCastlingKingSidePossible || whiteCastlingQueenSidePossible))
                 || (turn == TURN_BLACK && (blackCastlingKingSidePossible || blackCastlingQueenSidePossible));
     }
 
-    boolean isWhiteCastlingKingSidePossible() {
+    public boolean isWhiteCastlingKingSidePossible() {
         return whiteCastlingKingSidePossible;
     }
 
-    boolean isWhiteCastlingQueenSidePossible() {
+    public boolean isWhiteCastlingQueenSidePossible() {
         return whiteCastlingQueenSidePossible;
     }
 
-    boolean isBlackCastlingKingSidePossible() {
+    public boolean isBlackCastlingKingSidePossible() {
         return blackCastlingKingSidePossible;
     }
 
-    boolean isBlackCastlingQueenSidePossible() {
+    public boolean isBlackCastlingQueenSidePossible() {
         return blackCastlingQueenSidePossible;
     }
 
-    GameStatus switchTurn() {
+    public GameStatus switchTurn() {
         return new GameStatus(getOppositeColor(), 0, this);
     }
 
@@ -102,6 +102,10 @@ public final class GameStatus {
                 }
             }
         }
+    }
+
+    public boolean isBetterWeight(float w1, float w2) {
+        return turn == TURN_WHITE ? w1 > w2 : w2 > w1;
     }
 
     @Override
