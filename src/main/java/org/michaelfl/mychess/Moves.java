@@ -12,7 +12,7 @@ public final class Moves {
     private int[] moves;
     private int size;
 
-    Moves() {
+    public Moves() {
         this(INITIAL_MOVE_CAPACITY);
     }
 
@@ -28,6 +28,10 @@ public final class Moves {
         if (size == moves.length)
             moves = Arrays.copyOf(moves, size + CAPACITY_INCREMENT);
         moves[size++] = move;
+    }
+
+    public int popMove() {
+        return moves[--size];
     }
 
     public void revertMove() {

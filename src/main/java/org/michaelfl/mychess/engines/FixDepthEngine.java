@@ -5,7 +5,7 @@ import org.michaelfl.mychess.*;
 @SuppressWarnings("Duplicates")
 public final class FixDepthEngine extends ChessEngine {
 
-    private final static int MAX_DEPTH = 2;
+    private final static int MAX_DEPTH = 5;
 
     private WeightingFunction weightingFunction = new WeightingFunction();
     private int countPossibleMoves;
@@ -63,6 +63,8 @@ public final class FixDepthEngine extends ChessEngine {
             return 0;
         }
 
+        game.setWeight(weights[bestMove]); // Remember last calculated best position weight
+
         System.out.println("==> move: " + ChessUtil.moveToString(plainMoves[bestMove]) + ", weight: " + weights[bestMove]);
         return plainMoves[bestMove];
     }
@@ -83,7 +85,7 @@ public final class FixDepthEngine extends ChessEngine {
             return followCapturedPiecesRecursive(depth, gameStatus, workingBoard);
         }
 
-        Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard);
+        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard);
         if (moves.isIllegal())
             return WeightingFunction.ILLEGAL_WEIGHT;
 
@@ -115,7 +117,7 @@ public final class FixDepthEngine extends ChessEngine {
             // No legal move possible ==> Checkmate or stalemate
             if (Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator)) {
                 // Checkmate
-                return isWhiteTurn ? WeightingFunction.CHECKMATE_WHITE : WeightingFunction.CHECKMATE_BLACK;
+                return (100 - depth) * (isWhiteTurn ? WeightingFunction.CHECKMATE_WHITE : WeightingFunction.CHECKMATE_BLACK);
             }
             // Stalemate
             return 0; // draw
@@ -127,7 +129,6 @@ public final class FixDepthEngine extends ChessEngine {
     private float followCapturedPiecesRecursive(int depth, GameStatus gameStatus, Board workingBoard) {
         final int capturedOnField = Move.getToField(gameStatus.getLastMove());
         maxReachedDepth = Math.max(maxReachedDepth, depth);
-        workingBoard.print();
 
         Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard);
         if (moves.isIllegal())

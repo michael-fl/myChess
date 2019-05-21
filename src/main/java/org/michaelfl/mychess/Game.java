@@ -2,6 +2,7 @@ package org.michaelfl.mychess;
 
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.FixDepthEngine;
+import org.michaelfl.mychess.engines.MyChessEngine;
 import org.michaelfl.mychess.engines.RandomMoveEngine;
 
 import java.io.BufferedReader;
@@ -20,13 +21,14 @@ public final class Game {
     }
 
     private final Random rand = new Random();
-    private final ChessEngine engineWhite = new FixDepthEngine(this);
-    private final ChessEngine engineBlack = new RandomMoveEngine(this);
+    private final ChessEngine engineWhite = new MyChessEngine(this);
+    private final ChessEngine engineBlack = new FixDepthEngine(this);
     private Board previousBoard;
     private Board board = new Board();
     private List<Move> moves = new ArrayList<>();
     private List<GameStatus> statusStack = new ArrayList<>();
     private GameResult result = GameResult.ONGOING;
+    private Float weight;
 
     Game() {
         statusStack.add(GameStatus.newGame());
@@ -52,6 +54,14 @@ public final class Game {
         GameResult gameResult = checkGameResult(moveGenerator);
         setResult(gameResult);
         return gameResult;
+    }
+
+    public Float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
     }
 
     public GameStatus getGameStatus() {
@@ -227,6 +237,7 @@ public final class Game {
     }
 
     public static boolean checkIsKingUnderChess(GameStatus gameStatus, Board board, MoveGenerator moveGenerator) {
+        // TODO MF: Optimize method checkIsKingUnderChess
         // Switch turn
         gameStatus = gameStatus.switchTurn();
 

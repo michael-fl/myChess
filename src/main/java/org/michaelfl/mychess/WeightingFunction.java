@@ -169,6 +169,7 @@ public final class WeightingFunction {
     private final static float underGuardedWeightFactor = 0.05f;
     private final static float fieldDominanceWeightFactor = 0.025f;
     private final static float chessFactor = 0.5f;
+    private final static float castlingFactor = 0.25f;
 
     private GameStatus game;
     private int turn; // 0 = white, 1 = black
@@ -184,6 +185,7 @@ public final class WeightingFunction {
     private float[] unguardedWeight = new float[2];
     private float[] underGuardedWeight = new float[2];
     private boolean containsIllegalMove;
+    private int[] castlingState = new int[2];
     private final byte[] fieldAttackCountWhite = Board.createEmptyBoard().getRawBoard();
     private final byte[] fieldAttackCountBlack = Board.createEmptyBoard().getRawBoard();
 
@@ -209,6 +211,8 @@ public final class WeightingFunction {
         this.fieldDominanceWeight[0] = 0;
         this.fieldDominanceWeight[1] = 0;
         this.containsIllegalMove = false;
+        this.castlingState[0] = 0;
+        this.castlingState[1] = 0;
 
         Arrays.fill(fieldAttackCountWhite, (byte) 0);
         Arrays.fill(fieldAttackCountBlack, (byte) 0);
@@ -230,6 +234,7 @@ public final class WeightingFunction {
         }
 
         calculateAttackersAndGuards();
+        calculateCastlingState();
 
         return calculatePositionWeight();
     }
@@ -247,6 +252,7 @@ public final class WeightingFunction {
                 + (unguardedWeight[0] - unguardedWeight[1]) * unguardedWeightFactor
                 + (underGuardedWeight[0] - underGuardedWeight[1]) * underGuardedWeightFactor
                 + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) * fieldDominanceWeightFactor
+                + (castlingState[0] - castlingState[1]) * castlingFactor
                 + (chessCount[0] - chessCount[1]) * chessFactor;
     }
 
@@ -266,6 +272,7 @@ public final class WeightingFunction {
                "unguardedWeight:    w=" + unguardedWeight[0] + ", b=" + unguardedWeight[1] + ", delta=" + (unguardedWeight[0] - unguardedWeight[1]) + ", weight=" + (unguardedWeight[0] - unguardedWeight[1]) * unguardedWeightFactor + '\n' +
                "underGuardedWeight: w=" + underGuardedWeight[0] + ", b=" + underGuardedWeight[1] + ", delta=" + (underGuardedWeight[0] - underGuardedWeight[1]) + ", weight=" + (underGuardedWeight[0] - underGuardedWeight[1]) * underGuardedWeightFactor + '\n' +
                "fieldDominance:     w=" + fieldDominanceWeight[0] + ", b=" + fieldDominanceWeight[1] + ", delta=" + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) + ", weight=" + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) * fieldDominanceWeightFactor + '\n' +
+               "castlingState:      w=" + castlingState[0] + ", b=" + castlingState[1] + ", delta=" + (castlingState[0] - castlingState[1]) + ", weight=" + (castlingState[0] - castlingState[1]) * castlingFactor + '\n' +
                "weight: " + calculatePositionWeight();
     }
 
@@ -538,6 +545,25 @@ public final class WeightingFunction {
                 }
             }
         }
+    }
 
+    private void calculateCastlingState() {
+        if (game.hasWhiteCastled())
+            castlingState[0] = 0;
+        else if (game.isWhiteCastlingQueenSidePossible() && game.isWhiteCastlingKingSidePossible())
+            castlingState[0] = -1;
+        else if (game.isWhiteCastlingQueenSidePossible() || game.isWhiteCastlingKingSidePossible())
+            castlingState[0] = -2;
+        else
+            castlingState[0] = -3;
+
+        if (game.hasBlackCastled())
+            castlingState[1] = 0;
+        else if (game.isBlackCastlingQueenSidePossible() && game.isBlackCastlingKingSidePossible())
+            castlingState[1] = -1;
+        else if (game.isBlackCastlingQueenSidePossible() || game.isBlackCastlingKingSidePossible())
+            castlingState[1] = -2;
+        else
+            castlingState[1] = -4;
     }
 }
