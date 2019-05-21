@@ -21,7 +21,7 @@ public final class Game {
     }
 
     private final Random rand = new Random();
-    private final ChessEngine engineWhite = new MyChessEngine(this);
+    private final ChessEngine engineWhite = new FixDepthEngine(this);
     private final ChessEngine engineBlack = new FixDepthEngine(this);
     private Board previousBoard;
     private Board board = new Board();
