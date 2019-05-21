@@ -1,6 +1,7 @@
 package org.michaelfl.mychess;
 
 import org.michaelfl.mychess.Game.GameResult;
+import org.michaelfl.mychess.engines.FixDepthEngine;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -146,6 +147,28 @@ final class CommandHandler {
         }
     }
 
+    private final class LoadCommand extends Command {
+
+        @Override
+        boolean canHandle(String commandLine) {
+            return commandLine.equals("l");
+        }
+
+        @Override
+        void handle(String commandLine) {
+            try {
+                String notation = "[[c2-c3 e7-e5 d2-d3 f7-f6 g1-h3 f6-f5 e2-e4 g8-h6 d1-b3 h6-f7 f1-e2 f5-e4 d3-e4 c7-c6 e1-g1 d7-d5 c1-e3 h8-g8 e3-c1 e8-e7 b1-d2 g8-h8]]";
+                        //"[[c2-c3 e7-e5 d2-d3 f7-f6 g1-h3 f6-f5 e2-e4 g8-h6]]";
+                computerColor = null;
+                SimpleNotationImporter importer = new SimpleNotationImporter(notation);
+                game = importer.importGame();
+                game.print();
+            } catch (RuntimeException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+    }
+
     private final class PrintCommand extends Command {
 
         @Override
@@ -239,6 +262,31 @@ final class CommandHandler {
         }
     }
 
+    private final class DeepWeightCommand extends Command {
+
+        @Override
+        boolean canHandle(String commandLine) {
+            return "dw".equals(commandLine);
+        }
+
+        @Override
+        void handle(String commandLine) {
+            if (game.getResult() != GameResult.ONGOING) {
+                System.err.println("Game is already over");
+                return;
+            }
+
+            Float oldWeight = game.getWeight();
+            FixDepthEngine engine = new FixDepthEngine(game);
+            int move = engine.nextMove();
+            if (move != 0)
+                System.out.println("weight: " + game.getWeight());
+            else
+                System.out.println("Illegal position. No move possible.");
+            game.setWeight(oldWeight != null ? oldWeight : 0);
+        }
+    }
+
     private final class WeightCommand extends Command {
 
         @Override
@@ -248,6 +296,9 @@ final class CommandHandler {
 
         @Override
         void handle(String commandLine) {
+            MoveGenerator gen = new MoveGenerator();
+            Moves moves = gen.calculateMoves(game.getGameStatus(), game.getBoard());
+            System.out.println("Possible moves: " + moves);
             weightingFunction.calculate(game.getGameStatus(), game.getBoard());
             weightingFunction.print();
         }
@@ -296,7 +347,9 @@ final class CommandHandler {
             new TipCommand(),
             new LastCommand(),
             new GoCommand(),
-            new WeightCommand()
+            new WeightCommand(),
+            new DeepWeightCommand(),
+            new LoadCommand()
     );
 
     private final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));

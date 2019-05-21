@@ -51,8 +51,14 @@ final class SimpleNotationImporter {
         // Castling king's side: "[[e2-e4 e7-e5 g1-f3 b8-c6 f1-b5 a7-a6 b5-a4 g8-f6 e1-g1]]";
         // Castling queen's side: "[[e2-e4 e7-e5 d2-d4 e5-d4 d1-d4 b8-c6 d4-e3 g8-f6 b1-c3 f8-b4 c1-d2 e8-g8 e1-c1]]";
         // Spain opening: "[[e2-e4 e7-e5 g1-f3 b8-c6 f1-b5 a7-a6]]";
-        // : "[[d2-d4 d7-d5 d1-d3 b8-c6 b1-c3 a8-b8 d3-b5 d8-d6]]";
-        String notation = "[[b2-b3 b7-b6 c1-b2 e7-e6 e2-e4 f8-c5 d1-g4]]";
+        // "[[d2-d4 d7-d5 d1-d3 b8-c6 b1-c3 a8-b8 d3-b5 d8-d6]]";
+        // "[[b2-b3 b7-b6 c1-b2 e7-e6 e2-e4 f8-c5 d1-g4]]";
+        // "[[c2-c3 e7-e5 d2-d3 f7-f6 g1-h3 f6-f5 e2-e4 g8-h6]]";
+        // "[[c2-c3 b8-c6 d2-d4 d7-d5 d1-b3 d8-d6 b1-a3 a7-a6 g2-g4 c8-g4 f2-f4 e8-c8]]";
+        // "[[c2-c3 e7-e5 d2-d3 f7-f6 g1-h3 f6-f5 e2-e4 g8-h6 d1-b3 h6-f7 f1-e2 f5-e4 d3-e4 c7-c6 e1-g1 d7-d5 c1-e3 h8-g8 e3-c1 e8-e7 b1-d2 g8-h8]]";
+        // "[[c2-c3 e7-e5 d2-d3 f7-f6 g1-h3 f6-f5 e2-e4 g8-h6 d1-b3 h6-f7 f1-e2 f5-e4 d3-e4 c7-c6 e1-g1 d7-d5 c1-e3 h8-g8 e3-c1 e8-e7 b1-d2 g8-h8 c3-c4 d5-e4 d2-e4 c8-h3 b3-h3 d8-d4 e4-g5 f7-g5 c1-g5 e7-f7 h3-f5 f7-e8 f5-e6 f8-e7 e6-e7]]";
+        // Checkmate in 5: "[[c2-c3 e7-e5 d2-d3 f7-f6 g1-h3 f6-f5 e2-e4 g8-h6 d1-b3 h6-f7 f1-e2 f5-e4 d3-e4 c7-c6 e1-g1 d7-d5 c1-e3 h8-g8 e3-c1 e8-e7 b1-d2 g8-h8 c3-c4 d5-e4 d2-e4 c8-h3 b3-h3 d8-d4 e4-g5 f7-g5 c1-g5 e7-f7]]";
+        String notation = "[[c2-c3 e7-e5 d2-d3 f7-f6 g1-h3 f6-f5 e2-e4 g8-h6]]";
 
         Game game = new SimpleNotationImporter(notation).importGame();
         game.print();

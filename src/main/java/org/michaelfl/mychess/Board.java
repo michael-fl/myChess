@@ -204,7 +204,7 @@ public final class Board {
         return new Board(Arrays.copyOf(board, board.length));
     }
 
-    byte[] getRawBoard() {
+    public byte[] getRawBoard() {
         return board;
     }
 
@@ -234,7 +234,7 @@ public final class Board {
         System.out.println(this);
     }
 
-    private char toPrintSymbol(byte piece) {
+    public static char toPrintSymbol(byte piece) {
         return printSymbols[piece];
     }
 
@@ -391,6 +391,12 @@ public final class Board {
 
         board[fromField] = board[toField];
         board[toField] = Move.getCapturedPiece(move);
+        if (fromField == Board.c1 && board[fromField] == Board.blackRook) {
+            Board b = new Board(board);
+            b.print();
+            System.out.println("Move: " + ChessUtil.moveToString(move));
+            System.out.println("Captured: " + Board.toPrintSymbol(Move.getCapturedPiece(move)));
+        }
     }
 
     private static void revertPawnPromotionMove(byte[] board, int move) {

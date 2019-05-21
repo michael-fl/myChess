@@ -8,6 +8,8 @@ public final class GameStatus {
 
     private int turn;
     private int lastMove;
+    private boolean whiteHasCastled = false;
+    private boolean blackHasCastled = false;
     private boolean whiteCastlingKingSidePossible = true;
     private boolean whiteCastlingQueenSidePossible = true;
     private boolean blackCastlingKingSidePossible = true;
@@ -22,6 +24,8 @@ public final class GameStatus {
         this.turn = turn;
         this.lastMove = lastMove;
 
+        this.whiteHasCastled = previousStatus.whiteHasCastled;
+        this.blackHasCastled = previousStatus.blackHasCastled;
         this.whiteCastlingKingSidePossible = previousStatus.whiteCastlingKingSidePossible;
         this.whiteCastlingQueenSidePossible = previousStatus.whiteCastlingQueenSidePossible;
         this.blackCastlingKingSidePossible = previousStatus.blackCastlingKingSidePossible;
@@ -36,12 +40,24 @@ public final class GameStatus {
         return turn;
     }
 
+    public boolean isWhiteTurn() {
+        return turn == GameStatus.TURN_WHITE;
+    }
+
     public int getOppositeColor() {
         return turn == GameStatus.TURN_WHITE ? GameStatus.TURN_BLACK : GameStatus.TURN_WHITE;
     }
 
     public int getLastMove() {
         return lastMove;
+    }
+
+    public boolean hasWhiteCastled() {
+        return whiteHasCastled;
+    }
+
+    public boolean hasBlackCastled() {
+        return blackHasCastled;
     }
 
     public boolean isCastlingPossible() {
@@ -78,10 +94,13 @@ public final class GameStatus {
 
     private void updateCastlingState(final int turn, final int move) {
         final int fromField = Move.getFromField(move);
+        final int toField = Move.getToField(move);
 
         if (turn == GameStatus.TURN_WHITE) {
             if (isWhiteCastlingKingSidePossible() || isWhiteCastlingQueenSidePossible()) {
                 if (fromField == Board.e1) { // king moved
+                    if (toField == Board.g1 || toField == Board.c1)
+                        whiteHasCastled = true;
                     whiteCastlingKingSidePossible = false;
                     whiteCastlingQueenSidePossible = false;
                 } else if (fromField == Board.h1) { // rook moved
@@ -90,9 +109,15 @@ public final class GameStatus {
                     whiteCastlingQueenSidePossible = false;
                 }
             }
+            if (blackCastlingQueenSidePossible && toField == Board.a8)
+                blackCastlingQueenSidePossible = false;
+            else if (blackCastlingKingSidePossible && toField == Board.h8)
+                blackCastlingKingSidePossible = false;
         } else {
             if (isBlackCastlingKingSidePossible() || isBlackCastlingQueenSidePossible()) {
                 if (fromField == Board.e8) {
+                    if (toField == Board.g8 || toField == Board.c8)
+                        blackHasCastled = true;
                     blackCastlingKingSidePossible = false;
                     blackCastlingQueenSidePossible = false;
                 } else if (fromField == Board.h8) {
@@ -101,6 +126,10 @@ public final class GameStatus {
                     blackCastlingQueenSidePossible = false;
                 }
             }
+            if (whiteCastlingQueenSidePossible && toField == Board.a1)
+                whiteCastlingQueenSidePossible = false;
+            else if (whiteCastlingKingSidePossible && toField == Board.h1)
+                whiteCastlingKingSidePossible = false;
         }
     }
 
