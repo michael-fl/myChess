@@ -20,6 +20,15 @@ public final class FixDepthEngine extends ChessEngine {
     @Override
     protected int calculateNextMove() {
         final GameStatus gameStatus = game.getGameStatus();
+        final Board workingBoard = game.getBoard().copy();
+
+        final long t1 = System.currentTimeMillis();
+        final int checkmateMove = findCheckmateMove(game, workingBoard);
+        final long t2 = System.currentTimeMillis();
+        System.out.println("Checkmate check took " + (t2-t1) + "ms");
+        if (checkmateMove != 0)
+            return checkmateMove;
+
         Moves moves = moveGenerator.calculateMoves(gameStatus, game.getBoard());
         countPossibleMoves = moves.count();
         countPositions = 0;
@@ -32,7 +41,6 @@ public final class FixDepthEngine extends ChessEngine {
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
         final float[] weights = new float[countMoves];
-        final Board workingBoard = game.getBoard().copy();
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];

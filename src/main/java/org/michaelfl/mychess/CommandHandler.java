@@ -157,8 +157,8 @@ final class CommandHandler {
         @Override
         void handle(String commandLine) {
             try {
-                String notation = "[[c2-c3 e7-e5 d2-d3 f7-f6 g1-h3 f6-f5 e2-e4 g8-h6 d1-b3 h6-f7 f1-e2 f5-e4 d3-e4 c7-c6 e1-g1 d7-d5 c1-e3 h8-g8 e3-c1 e8-e7 b1-d2 g8-h8]]";
-                        //"[[c2-c3 e7-e5 d2-d3 f7-f6 g1-h3 f6-f5 e2-e4 g8-h6]]";
+                String notation = "[[e2-e4 d7-d5 e4-d5 d8-d5 b1-c3 d5-d4 g1-f3 d4-g4 h2-h3 g4-b4 f1-b5 b8-c6 d2-d4 c8-e6 c1-d2 e8-c8 b5-c6 b7-c6]]";
+
                 computerColor = null;
                 SimpleNotationImporter importer = new SimpleNotationImporter(notation);
                 game = importer.importGame();
@@ -304,6 +304,34 @@ final class CommandHandler {
         }
     }
 
+    private final class CheckmateSearchCommand extends Command {
+
+        @Override
+        boolean canHandle(String commandLine) {
+            return "cm".equals(commandLine) || "checkmate".equals(commandLine);
+        }
+
+        @Override
+        void handle(String commandLine) {
+            if (game.getResult() != GameResult.ONGOING) {
+                System.err.println("Game is already over");
+                return;
+            }
+
+            int[] moveOut = new int[1];
+            int depth = game.getEngine().findCheckmate(game.getTurn(), game.getGameStatus(), game.getBoard().copy(), moveOut);
+            if (depth < 0)
+                depth = game.getEngine().findCheckmate(game.getOppositeColor(), game.getGameStatus(), game.getBoard().copy(), moveOut);
+            if (depth < 0) {
+                System.out.println("No checkmate found");
+            } else {
+                int nextMove = game.getEngine().nextMove();
+                game.getBoard().print();
+                System.out.println(ChessUtil.moveToString(moveOut[0]) + " ==> Checkmate in " + depth + " moves. Next calculated move: " + ChessUtil.moveToString(nextMove));
+            }
+        }
+    }
+
     private final class GoCommand extends Command {
 
         @Override
@@ -349,7 +377,8 @@ final class CommandHandler {
             new GoCommand(),
             new WeightCommand(),
             new DeepWeightCommand(),
-            new LoadCommand()
+            new LoadCommand(),
+            new CheckmateSearchCommand()
     );
 
     private final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
