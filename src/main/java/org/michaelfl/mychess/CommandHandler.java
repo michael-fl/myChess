@@ -157,7 +157,7 @@ final class CommandHandler {
         @Override
         void handle(String commandLine) {
             try {
-                String notation = "[[e2-e4 d7-d5 e4-d5 d8-d5 b1-c3 d5-d4 g1-f3 d4-g4 h2-h3 g4-b4 f1-b5 b8-c6 d2-d4 c8-e6 c1-d2 e8-c8 b5-c6 b7-c6]]";
+                String notation = "[[e2-e4 d7-d5 e4-d5 d8-d5 b1-c3 d5-e5 f1-e2 b8-c6 g1-f3 e5-f4 d2-d4 f4-d6 e2-b5 g8-f6 d4-d5 a7-a6 b5-a4 b7-b5 a4-b3 c6-a5 e1-g1 c8-f5 f1-e1 e8-c8 f3-e5 a5-b3 a2-b3 f6-d5]]";
 
                 computerColor = null;
                 SimpleNotationImporter importer = new SimpleNotationImporter(notation);

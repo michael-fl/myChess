@@ -5,7 +5,7 @@ import org.michaelfl.mychess.*;
 @SuppressWarnings("Duplicates")
 public final class FixDepthEngine extends ChessEngine {
 
-    private final static int MAX_DEPTH = 5;
+    private final static int MAX_DEPTH = 4;
 
     private WeightingFunction weightingFunction = new WeightingFunction();
     private int countPossibleMoves;
