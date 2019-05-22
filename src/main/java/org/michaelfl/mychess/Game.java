@@ -192,6 +192,7 @@ public final class Game {
             previousBoard.revertMove(moves.get(moves.size() - 1).getMove());
 
         statusStack.remove(statusStack.size() - 1);
+        result = GameResult.ONGOING;
     }
 
     private GameResult checkGameResult(MoveGenerator moveGenerator) {

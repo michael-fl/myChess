@@ -393,9 +393,6 @@ public final class Board {
         board[toField] = Move.getCapturedPiece(move);
         if (fromField == Board.c1 && board[fromField] == Board.blackRook) {
             Board b = new Board(board);
-            b.print();
-            System.out.println("Move: " + ChessUtil.moveToString(move));
-            System.out.println("Captured: " + Board.toPrintSymbol(Move.getCapturedPiece(move)));
         }
     }
 
