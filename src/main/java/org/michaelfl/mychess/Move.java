@@ -13,7 +13,7 @@ public final class Move {
 
     private final int move;
 
-    Move(int move) {
+    public Move(int move) {
         this.move = move;
     }
 
