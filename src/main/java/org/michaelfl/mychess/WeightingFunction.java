@@ -22,7 +22,7 @@ public final class WeightingFunction {
     public final static float CHECKMATE_WHITE = -1.0e10f;
     public final static float CHECKMATE_BLACK = 1.0e10f;
 
-    private final static float[] weightOfPiece = new float[Board.blackKing + 1];
+    public final static float[] weightOfPiece = new float[Board.blackKing + 1];
     static {
         weightOfPiece[Board.whitePawn]   = 1.0f;
         weightOfPiece[Board.whiteKnight] = 3.0f;

@@ -157,8 +157,8 @@ final class CommandHandler {
         @Override
         void handle(String commandLine) {
             try {
-                String notation = "[[e2-e4 d7-d5 e4-d5 d8-d5 b1-c3 d5-e5 f1-e2 b8-c6 g1-f3 e5-f4 d2-d4 f4-d6 e2-b5 g8-f6 d4-d5 a7-a6 b5-a4 b7-b5 a4-b3 c6-a5 e1-g1 c8-f5 f1-e1 e8-c8 f3-e5 a5-b3 a2-b3 f6-d5]]";
-
+                String notation = "[[d2-d3 b8-a6 a2-a4 a6-b8 a1-a3 b8-a6 a3-c3 a6-b8 c1-f4 h7-h6]]";
+                        //"[[d2-d3 b8-a6 a2-a4 a6-b8 a1-a3 b8-a6 a3-c3 a6-b8 c1-f4 h7-h6 f4-c7 e7-e6]]";
                 computerColor = null;
                 SimpleNotationImporter importer = new SimpleNotationImporter(notation);
                 game = importer.importGame();

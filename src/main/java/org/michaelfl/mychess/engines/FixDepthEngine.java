@@ -22,12 +22,21 @@ public final class FixDepthEngine extends ChessEngine {
         final GameStatus gameStatus = game.getGameStatus();
         final Board workingBoard = game.getBoard().copy();
 
-        final long t1 = System.currentTimeMillis();
-        final int checkmateMove = findCheckmateMove(game, workingBoard);
-        final long t2 = System.currentTimeMillis();
-        System.out.println("Checkmate check took " + (t2-t1) + "ms");
-        if (checkmateMove != 0)
-            return checkmateMove;
+        if (false) {
+            final long t1 = System.currentTimeMillis();
+            final int checkmateMove = findCheckmateMove(game, workingBoard);
+            final long t2 = System.currentTimeMillis();
+            System.out.println("Checkmate check took " + (t2 - t1) + "ms");
+            if (checkmateMove != 0)
+                return checkmateMove;
+        }
+
+        final long t3 = System.currentTimeMillis();
+        final int combinationMove = findCombinationMove(game, workingBoard);
+        final long t4 = System.currentTimeMillis();
+        System.out.println("Combination check took " + (t4-t3) + "ms");
+        if (combinationMove != 0)
+            return combinationMove;
 
         Moves moves = moveGenerator.calculateMoves(gameStatus, game.getBoard());
         countPossibleMoves = moves.count();

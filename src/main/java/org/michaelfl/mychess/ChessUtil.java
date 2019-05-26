@@ -56,6 +56,9 @@ public final class ChessUtil {
     }
 
     public static String moveToString(int move) {
+        if (move == 0)
+            return "nil";
+
         String s = moveToString(Move.getFromField(move), Move.getToField(move));
 
         byte moveType = Move.getMoveType(move);
