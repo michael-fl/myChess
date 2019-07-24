@@ -288,6 +288,18 @@ public final class WeightingFunction {
                "weight: " + calculatePositionWeight();
     }
 
+    public int[] getThreadCount() {
+        return threadCount;
+    }
+
+    public float[] getThreadWeight() {
+        return threadWeight;
+    }
+
+    public int[] getChessCount() {
+        return chessCount;
+    }
+
     private static void _calculateForWhitePawn(WeightingFunction generator, int field, int color) {
         generator.calculateForWhitePawn(field, color);
     }

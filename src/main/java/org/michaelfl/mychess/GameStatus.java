@@ -137,6 +137,10 @@ public final class GameStatus {
         return turn == TURN_WHITE ? w1 > w2 : w2 > w1;
     }
 
+    public float getPositiveWeight(float w) {
+        return turn == TURN_WHITE ? w : -w;
+    }
+
     @Override
     public String toString() {
         return "turn=" + (turn == GameStatus.TURN_WHITE ? "white" : "black")
