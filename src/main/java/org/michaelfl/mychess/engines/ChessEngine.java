@@ -8,6 +8,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 @SuppressWarnings("Duplicates")
 public abstract class ChessEngine {
 
+    final static class MoveAndWeight {
+
+        final static MoveAndWeight NO_MOVE = new MoveAndWeight(0, 0);
+
+        final int move;
+        final float weight;
+
+        MoveAndWeight(int move, float weight) {
+            this.move = move;
+            this.weight = weight;
+        }
+    }
+
     private final static class CheckmateSearchContext {
         final Board workingBoard;
         GameStatus gameStatus;
@@ -41,27 +54,25 @@ public abstract class ChessEngine {
 
     public abstract int getCountPossibleMoves();
 
-    protected int findCheckmateMove(Game game, Board workingBoard) {
+    protected MoveAndWeight findCheckmateMove(Game game, Board workingBoard) {
         final GameStatus gameStatus = game.getGameStatus();
         final int[] checkmateMove = new int[1];
 
         int checkmateDepth = findCheckmate(gameStatus.getOppositeColor(), gameStatus, workingBoard, checkmateMove);
         if (checkmateDepth > 0) {
             final float weight = (100 - checkmateDepth) * (gameStatus.isWhiteTurn() ? WeightingFunction.CHECKMATE_BLACK : WeightingFunction.CHECKMATE_WHITE);
-            game.setWeight(weight); // Remember last calculated best position weight
             System.out.println("==> opposite checkmate in " + checkmateDepth + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + weight);
-            return checkmateMove[0];
+            return new MoveAndWeight(checkmateMove[0], weight);
         }
 
         checkmateDepth = findCheckmate(gameStatus.getTurn(), gameStatus, workingBoard, checkmateMove);
         if (checkmateDepth > 0) {
             final float weight = (100 - checkmateDepth) * (gameStatus.isWhiteTurn() ? WeightingFunction.CHECKMATE_WHITE : WeightingFunction.CHECKMATE_BLACK);
-            game.setWeight(weight); // Remember last calculated best position weight
             System.out.println("==> I'm checkmate in " + checkmateDepth + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + weight);
-            return checkmateMove[0];
+            return new MoveAndWeight(checkmateMove[0], weight);
         }
 
-        return 0;
+        return MoveAndWeight.NO_MOVE;
     }
 
     public final int findCheckmate(int forColor, GameStatus gameStatus, Board workingBoard, int[] moveOut) {
@@ -162,12 +173,12 @@ public abstract class ChessEngine {
     private static int pruneCount;
 
     @SuppressWarnings("Duplicates")
-    public int findCombinationMove(Game game, Board workingBoard) {
+    public MoveAndWeight findCombinationMove(Game game, Board workingBoard) {
         final AtomicInteger positionsCount = new AtomicInteger();
         final GameStatus gameStatus = game.getGameStatus();
         final int[] plainMoves = findPromisingMoves(gameStatus, workingBoard);
         if (plainMoves.length == 0)
-            return 0;
+            return MoveAndWeight.NO_MOVE;
         final int countMoves = plainMoves.length;
         final int factor = gameStatus.isWhiteTurn() ? 1 : -1;
         float bestWeight = gameStatus.isWhiteTurn() ? Float.NEGATIVE_INFINITY : Float.POSITIVE_INFINITY;
@@ -200,12 +211,11 @@ public abstract class ChessEngine {
             for (int i = 0; i < moveStack.length && moveStack[i] != 0; i++) {
                 System.out.println("-- " + ChessUtil.moveToString(moveStack[i]));
             }
-            game.setWeight(bestWeight); // Remember last calculated best position weight
-            return bestMove;
+            return new MoveAndWeight(bestMove, bestWeight);
         } else
             System.out.println("#positions for combination check: " + positionsCount);
 
-        return 0;
+        return MoveAndWeight.NO_MOVE;
     }
 
     private int[] findPromisingMoves(final GameStatus gameStatus, final Board workingBoard) {
