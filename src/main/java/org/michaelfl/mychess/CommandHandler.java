@@ -1,7 +1,7 @@
 package org.michaelfl.mychess;
 
 import org.michaelfl.mychess.Game.GameResult;
-import org.michaelfl.mychess.engines.FixDepthEngine;
+import org.michaelfl.mychess.engines.MyChessEngine;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -277,7 +277,7 @@ final class CommandHandler {
             }
 
             Float oldWeight = game.getWeight();
-            FixDepthEngine engine = new FixDepthEngine(game);
+            MyChessEngine engine = new MyChessEngine(game);
             int move = engine.nextMove();
             if (move != 0)
                 System.out.println("weight: " + game.getWeight());

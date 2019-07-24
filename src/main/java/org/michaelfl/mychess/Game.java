@@ -1,9 +1,7 @@
 package org.michaelfl.mychess;
 
 import org.michaelfl.mychess.engines.ChessEngine;
-import org.michaelfl.mychess.engines.FixDepthEngine;
 import org.michaelfl.mychess.engines.MyChessEngine;
-import org.michaelfl.mychess.engines.RandomMoveEngine;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,8 +19,8 @@ public final class Game {
     }
 
     private final Random rand = new Random();
-    private final ChessEngine engineWhite = new FixDepthEngine(this);
-    private final ChessEngine engineBlack = new FixDepthEngine(this);
+    private final ChessEngine engineWhite = new MyChessEngine(this);
+    private final ChessEngine engineBlack = new MyChessEngine(this);
     private Board previousBoard;
     private Board board = new Board();
     private List<Move> moves = new ArrayList<>();
