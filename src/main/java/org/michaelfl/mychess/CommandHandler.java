@@ -157,8 +157,8 @@ final class CommandHandler {
         @Override
         void handle(String commandLine) {
             try {
-                String notation = "[[d2-d3 b8-a6 a2-a4 a6-b8 a1-a3 b8-a6 a3-c3 a6-b8 c1-f4 h7-h6]]";
-                        //"[[d2-d3 b8-a6 a2-a4 a6-b8 a1-a3 b8-a6 a3-c3 a6-b8 c1-f4 h7-h6 f4-c7 e7-e6]]";
+                String notation = "[[e2-e4 d7-d5 e4-d5 d8-d5 b1-c3 d5-e5 f1-e2 b8-c6 g1-f3 e5-f4 d2-d4 f4-d6 e1-g1 c6-b4 c3-b5 d6-c6 c1-f4 b4-d5 f4-g3 a7-a6 a2-a4 c8-f5 c2-c4 c6-h6 b5-c7 d5-c7 g3-c7 h6-c6 c7-g3 e8-c8 f3-e5 c6-e6 e2-h5 g7-g6 h5-f3 f8-h6 f1-e1 b7-b6 f3-d5 d8-d5 c4-d5 e6-d5 a1-a3 g8-f6 a3-c3 c8-b7 e5-f3 h8-e8 c3-c7 b7-a8 e1-e7 e8-e7 c7-e7 h6-f8 d1-e2]]";
+                //[[e2-e4 d7-d5 e4-d5 d8-d5 b1-c3 d5-e5 f1-e2 b8-c6 g1-f3 e5-f4 d2-d4 f4-d6 e1-g1 c6-b4 c3-b5 d6-c6 c1-f4 b4-d5 f4-g3 a7-a6 a2-a4 c8-f5 c2-c4 c6-h6 b5-c7 d5-c7 g3-c7 h6-c6 c7-g3 e8-c8 f3-e5 c6-e6 e2-h5 g7-g6 h5-f3 f8-h6 f1-e1 b7-b6]]";
                 computerColor = null;
                 SimpleNotationImporter importer = new SimpleNotationImporter(notation);
                 game = importer.importGame();

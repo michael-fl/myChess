@@ -49,7 +49,7 @@ public abstract class ChessEngine {
         if (checkmateDepth > 0) {
             final float weight = (100 - checkmateDepth) * (gameStatus.isWhiteTurn() ? WeightingFunction.CHECKMATE_BLACK : WeightingFunction.CHECKMATE_WHITE);
             game.setWeight(weight); // Remember last calculated best position weight
-            System.out.println("==> checkmate in " + checkmateDepth + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + weight);
+            System.out.println("==> opposite checkmate in " + checkmateDepth + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + weight);
             return checkmateMove[0];
         }
 
@@ -57,7 +57,7 @@ public abstract class ChessEngine {
         if (checkmateDepth > 0) {
             final float weight = (100 - checkmateDepth) * (gameStatus.isWhiteTurn() ? WeightingFunction.CHECKMATE_WHITE : WeightingFunction.CHECKMATE_BLACK);
             game.setWeight(weight); // Remember last calculated best position weight
-            System.out.println("==> checkmate in " + checkmateDepth + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + weight);
+            System.out.println("==> I'm checkmate in " + checkmateDepth + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + weight);
             return checkmateMove[0];
         }
 
@@ -165,11 +165,10 @@ public abstract class ChessEngine {
     public int findCombinationMove(Game game, Board workingBoard) {
         final AtomicInteger positionsCount = new AtomicInteger();
         final GameStatus gameStatus = game.getGameStatus();
-        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard);
-        if (moves.isIllegal())
+        final int[] plainMoves = findPromisingMoves(gameStatus, workingBoard);
+        if (plainMoves.length == 0)
             return 0;
-        final int[] plainMoves = moves.getMoves();
-        final int countMoves = moves.count();
+        final int countMoves = plainMoves.length;
         final int factor = gameStatus.isWhiteTurn() ? 1 : -1;
         float bestWeight = gameStatus.isWhiteTurn() ? Float.NEGATIVE_INFINITY : Float.POSITIVE_INFINITY;
         int bestMove = -1;
@@ -179,31 +178,71 @@ public abstract class ChessEngine {
         for (int i = 0; i < countMoves; i++) {
             positionsCount.incrementAndGet();
             final int move = plainMoves[i];
-            final byte piece = Move.getCapturedPiece(move);
-            GameStatus nextGameStatus = gameStatus.makeMove(move);
-            workingBoard.makeMove(move);
-            float weight = findCombination(1, factor * WeightingFunction.weightOfPiece[piece], -factor, false, nextGameStatus, workingBoard, positionsCount, workingStack);
-            System.out.println("  " + ChessUtil.moveToString(move) + " ==> " + weight);
-            workingBoard.revertMove(move);
-            if (weight != WeightingFunction.ILLEGAL_WEIGHT && gameStatus.isBetterWeight(weight, bestWeight)) {
-                bestWeight = weight;
-                bestMove = move;
-                System.arraycopy(workingStack, 0, moveStack, 0, workingStack.length);
+            if (move != 0) {
+                final byte piece = Move.getCapturedPiece(move);
+                GameStatus nextGameStatus = gameStatus.makeMove(move);
+                workingBoard.makeMove(move);
+                float weight = findCombination(1, factor * WeightingFunction.weightOfPiece[piece], -factor, false, nextGameStatus, workingBoard, positionsCount, workingStack);
+                System.out.println("  " + ChessUtil.moveToString(move) + " ==> " + weight);
+                workingBoard.revertMove(move);
+                if (weight != WeightingFunction.ILLEGAL_WEIGHT && gameStatus.isBetterWeight(weight, bestWeight)) {
+                    bestWeight = weight;
+                    bestMove = move;
+                    System.arraycopy(workingStack, 0, moveStack, 0, workingStack.length);
+                }
             }
         }
 
-        if (bestMove != -1 && bestWeight >= 1.0f) {
+        if (bestMove != -1 && gameStatus.getPositiveWeight(bestWeight) >= 0.9f) {
             System.out.println("==> combination move: " + ChessUtil.moveToString(bestMove) + ", weight: " + bestWeight + ", #positions: " + positionsCount);
             System.out.println("#pruned: " + pruneCount);
             moveStack[0] = bestMove;
             for (int i = 0; i < moveStack.length && moveStack[i] != 0; i++) {
                 System.out.println("-- " + ChessUtil.moveToString(moveStack[i]));
             }
+            game.setWeight(bestWeight); // Remember last calculated best position weight
             return bestMove;
         } else
             System.out.println("#positions for combination check: " + positionsCount);
 
         return 0;
+    }
+
+    private int[] findPromisingMoves(final GameStatus gameStatus, final Board workingBoard) {
+        final WeightingFunction weightingFunction = new WeightingFunction();
+        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard);
+        if (moves.isIllegal())
+            return new int[0];
+        final int[] plainMoves = moves.getMoves();
+        final int countMoves = moves.count();
+        final int color = gameStatus.isWhiteTurn() ? 0 : 1;
+
+        weightingFunction.calculate(gameStatus, workingBoard);
+        final int chessCount = weightingFunction.getChessCount()[color];
+        final int threadCount = weightingFunction.getThreadCount()[color];
+        final float threadWeight = weightingFunction.getThreadWeight()[color];
+
+        for (int i = 0; i < countMoves; i++) {
+            final int move = plainMoves[i];
+            boolean isPromisingMove = Move.getCapturedPiece(move) != 0;
+            if (!isPromisingMove) {
+                GameStatus nextGameStatus = gameStatus.makeMove(move);
+                workingBoard.makeMove(move);
+                weightingFunction.calculate(nextGameStatus, workingBoard);
+                workingBoard.revertMove(move);
+
+                final int newChessCount = weightingFunction.getChessCount()[color];
+                final int newThreadCount = weightingFunction.getThreadCount()[color];
+                final float newThreadWeight = weightingFunction.getThreadWeight()[color];
+
+                isPromisingMove = newChessCount > chessCount || newThreadCount > threadCount || newThreadWeight > threadWeight;
+            }
+
+            if (!isPromisingMove)
+                plainMoves[i] = 0;
+        }
+
+        return plainMoves;
     }
 
     @SuppressWarnings("Duplicates")
