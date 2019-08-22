@@ -74,4 +74,14 @@ public final class ChessUtil {
         return s;
     }
 
+    public static String weightToString(float weight) {
+        if (weight == WeightingFunction.ILLEGAL_WEIGHT)
+            return "illegal";
+        if (weight >= WeightingFunction.CHECKMATE_BLACK)
+            return "black checkmate";
+        if (weight <= WeightingFunction.CHECKMATE_WHITE)
+            return "white checkmate";
+
+        return String.valueOf(weight);
+    }
 }

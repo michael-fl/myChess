@@ -90,7 +90,7 @@ public final class MyChessEngine extends ChessEngine {
 
         for (int i = 0; i < countPossibleMoves; i++) {
             if (weights[i] != WeightingFunction.ILLEGAL_WEIGHT) {
-                System.out.println("  " + ChessUtil.moveToString(plainMoves[i]) + " ==> weight " + weights[i]);
+                System.out.println("  " + ChessUtil.moveToString(plainMoves[i]) + " ==> " + ChessUtil.weightToString(weights[i]));
                 if (gameStatus.isBetterWeight(weights[i], bestWeight)) {
                     bestMove = i;
                     bestWeight = weights[i];
@@ -133,27 +133,26 @@ public final class MyChessEngine extends ChessEngine {
         final int countMoves = moves.count();
         final boolean isWhiteTurn = gameStatus.getTurn() == GameStatus.TURN_WHITE;
         float bestWeight = isWhiteTurn ? Float.NEGATIVE_INFINITY : Float.POSITIVE_INFINITY;
-        int bestMove = -1;
+        int bestMove = 0;
 
         for (int i = 0; i < countMoves; i++) {
-            // Make this move and calculate its weight; also check if it is a legal one
             final int move = plainMoves[i];
+
+            // Make this move and calculate its weight; also check if it is a legal one
             GameStatus nextGameStatus = gameStatus.makeMove(move);
             workingBoard.makeMove(move);
             countPositions++;
 
             float weight = calculateWeightRecursive(depth + 1, nextGameStatus, workingBoard);
-            if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
-                if (gameStatus.isBetterWeight(weight, bestWeight)) {
-                    bestWeight = weight;
-                    bestMove = i;
-                }
+            if (weight != WeightingFunction.ILLEGAL_WEIGHT && gameStatus.isBetterWeight(weight, bestWeight)) {
+                bestWeight = weight;
+                bestMove = move;
             }
 
             workingBoard.revertMove(move);
         }
 
-        if (bestMove == -1) {
+        if (bestMove == 0) {
             // No legal move possible ==> Checkmate or stalemate
             if (Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator)) {
                 // Checkmate
