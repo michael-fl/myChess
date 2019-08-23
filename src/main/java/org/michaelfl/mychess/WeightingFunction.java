@@ -27,14 +27,14 @@ public final class WeightingFunction {
         weightOfPiece[Board.whitePawn]   = 1.0f;
         weightOfPiece[Board.whiteKnight] = 3.0f;
         weightOfPiece[Board.whiteBishop] = 3.0f;
-        weightOfPiece[Board.whiteRook]   = 4.5f;
-        weightOfPiece[Board.whiteQueen]  = 9.0f;
+        weightOfPiece[Board.whiteRook]   = 5.0f;
+        weightOfPiece[Board.whiteQueen]  = 10.0f;
         weightOfPiece[Board.whiteKing]   = 0.0f;
         weightOfPiece[Board.blackPawn]   = 1.0f;
         weightOfPiece[Board.blackKnight] = 3.0f;
         weightOfPiece[Board.blackBishop] = 3.0f;
-        weightOfPiece[Board.blackRook]   = 4.5f;
-        weightOfPiece[Board.blackQueen]  = 9.0f;
+        weightOfPiece[Board.blackRook]   = 5.0f;
+        weightOfPiece[Board.blackQueen]  = 10.0f;
         weightOfPiece[Board.blackKing]   = 0.0f;
     }
 
