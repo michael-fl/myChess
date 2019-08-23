@@ -27,7 +27,7 @@ public final class MyChessEngine extends ChessEngine {
         final long t2 = System.currentTimeMillis();
         System.out.println("1) Checkmate check took " + (t2 - t1) + "ms");
 
-        if (move.move == 0) {
+//        if (move.move == 0) {
             final long t3 = System.currentTimeMillis();
             MoveAndWeight combinationMove = findCombinationMove(game, workingBoard);
             final long t4 = System.currentTimeMillis();
@@ -39,7 +39,7 @@ public final class MyChessEngine extends ChessEngine {
             System.out.println("3) Move calculation took " + (t6 - t5) + "ms");
 
             move = getBestMove(gameStatus, combinationMove, positionMove);
-        }
+//        }
 
         if (move.move != 0)
             game.setWeight(move.weight); // Remember last calculated best position weight
