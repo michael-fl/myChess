@@ -19,8 +19,9 @@ import java.util.Arrays;
 public final class WeightingFunction {
 
     public final static float ILLEGAL_WEIGHT = Float.NEGATIVE_INFINITY;
-    public final static float CHECKMATE_WHITE = -1.0e10f;
-    public final static float CHECKMATE_BLACK = 1.0e10f;
+    public final static float CHECKMATE_WEIGHT = 1.0e10f;
+    public final static float CHECKMATE_BLACK = CHECKMATE_WEIGHT;
+    public final static float CHECKMATE_WHITE = -CHECKMATE_BLACK;
 
     public final static float[] weightOfPiece = new float[Board.blackKing + 1];
     static {
