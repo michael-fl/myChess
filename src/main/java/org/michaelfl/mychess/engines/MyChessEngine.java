@@ -21,6 +21,7 @@ public final class MyChessEngine extends ChessEngine {
     protected int calculateNextMove() {
         final GameStatus gameStatus = game.getGameStatus();
         final Board workingBoard = game.getBoard().copy();
+        final int weightCorrectionFactor = gameStatus.isWhiteTurn() ? 1 : -1;
 
         final long t1 = System.currentTimeMillis();
         MoveAndWeight move = findCheckmateMove(game, workingBoard);
@@ -29,84 +30,16 @@ public final class MyChessEngine extends ChessEngine {
 
 //        if (move.move == 0) {
             final long t3 = System.currentTimeMillis();
-            MoveAndWeight combinationMove = findCombinationMove(game, workingBoard);
+            move = findCombinationMove(game, workingBoard);
             final long t4 = System.currentTimeMillis();
             System.out.println("2) Combination check took " + (t4 - t3) + "ms");
 
-            final long t5 = System.currentTimeMillis();
-            MoveAndWeight positionMove = findMoveByPositionWeight(game, workingBoard);
-            final long t6 = System.currentTimeMillis();
-            System.out.println("3) Move calculation took " + (t6 - t5) + "ms");
-
-            move = getBestMove(gameStatus, combinationMove, positionMove);
 //        }
 
         if (move.move != 0)
-            game.setWeight(move.weight); // Remember last calculated best position weight
+            game.setWeight(move.weight * weightCorrectionFactor); // Remember last calculated best position weight
 
         return move.move;
-    }
-
-    private MoveAndWeight getBestMove(GameStatus gameStatus, MoveAndWeight ... moves) {
-        MoveAndWeight bestMove = MoveAndWeight.NO_MOVE;
-        float bestWeight = gameStatus.isWhiteTurn() ? Float.NEGATIVE_INFINITY : Float.POSITIVE_INFINITY;
-
-        for (MoveAndWeight move : moves) {
-            if (move.move != 0 && gameStatus.isBetterWeight(move.weight, bestWeight)) {
-                bestMove = move;
-                bestWeight = move.weight;
-            }
-        }
-
-        return bestMove;
-    }
-
-    private MoveAndWeight findMoveByPositionWeight(Game game, Board workingBoard) {
-        final GameStatus gameStatus = game.getGameStatus();
-        Moves moves = moveGenerator.calculateMoves(gameStatus, game.getBoard());
-        countPossibleMoves = moves.count();
-        countPositions = 0;
-        maxReachedDepth = 0;
-
-        if (moves.isIllegal() || moves.count() == 0)
-            return MoveAndWeight.NO_MOVE; // No move possible
-
-        final boolean isWhiteTurn = gameStatus.getTurn() == GameStatus.TURN_WHITE;
-        final int[] plainMoves = moves.getMoves();
-        final int countMoves = moves.count();
-        final float[] weights = new float[countMoves];
-
-        for (int i = 0; i < countMoves; i++) {
-            final int move = plainMoves[i];
-            // TODO: Pass GameStatus as result parameter to avoid allocation of many objects
-            GameStatus nextGameStatus = gameStatus.makeMove(move);
-            workingBoard.makeMove(move);
-            weights[i] = calculateWeightRecursive(1, nextGameStatus, workingBoard);
-            workingBoard.revertMove(move);
-        }
-
-        int bestMove = -1;
-        float bestWeight = isWhiteTurn ? Float.NEGATIVE_INFINITY : Float.POSITIVE_INFINITY;
-
-        for (int i = 0; i < countPossibleMoves; i++) {
-            if (weights[i] != WeightingFunction.ILLEGAL_WEIGHT) {
-                System.out.println("  " + ChessUtil.moveToString(plainMoves[i]) + " ==> " + ChessUtil.weightToString(weights[i]));
-                if (gameStatus.isBetterWeight(weights[i], bestWeight)) {
-                    bestMove = i;
-                    bestWeight = weights[i];
-                }
-            }
-        }
-
-        System.out.println("#positions: " + countPositions + ", maxDepth: " + maxReachedDepth);
-
-        if (bestMove == -1) {
-            // No legal move possible
-            return MoveAndWeight.NO_MOVE;
-        }
-
-        System.out.println("==> move: " + ChessUtil.moveToString(plainMoves[bestMove]) + ", weight: " + weights[bestMove]);
-        return new MoveAndWeight(plainMoves[bestMove], weights[bestMove]);
     }
 
     @Override

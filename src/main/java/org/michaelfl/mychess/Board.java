@@ -245,6 +245,10 @@ public final class Board {
     void validateMove(int move) {
         byte fromField = Move.getFromField(move);
         byte toField = Move.getToField(move);
+        if (fromField < 0 || fromField >= board.length)
+            throw new IllegalStateException("Illegal move: " + move);
+        if (toField < 0 || toField >= board.length)
+            throw new IllegalStateException("Illegal move: " + move);
         byte piece = board[fromField];
         if (piece == empty || piece == illegal)
             throw new IllegalStateException("Illegal move: " + ChessUtil.moveToString(fromField, toField));
