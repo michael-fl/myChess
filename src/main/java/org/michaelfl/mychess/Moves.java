@@ -1,8 +1,14 @@
 package org.michaelfl.mychess;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public final class Moves {
+
+    private final static Random rand = new Random();
 
     final static Moves ILLEGAL = new Moves(0);
 
@@ -73,8 +79,17 @@ public final class Moves {
         return buf.toString();
     }
 
+    void shuffle() {
+        // Implementing Fisher–Yates shuffle
+        for (int i = size - 1; i > 0; i--) {
+            final int index = rand.nextInt(i + 1);
+            final int tmp = moves[index];
+            moves[index] = moves[i];
+            moves[i] = tmp;
+        }
+    }
+
     void print() {
         System.out.println(this);
     }
-
 }
