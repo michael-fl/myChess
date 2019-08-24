@@ -67,6 +67,9 @@ public final class MoveGenerator {
         if (containsIllegalMove)
             return Moves.ILLEGAL;
 
+        moves.shuffle();
+        //orderMoves();
+
         return moves;
     }
 
@@ -483,4 +486,32 @@ public final class MoveGenerator {
         return false;
     }
 
+    /*
+       - "Killer moves"
+
+       [2000 - pieceWeight]
+       - captured piece last played by opposite (in order: with Pawn, Knight, Bishop, Rook, Queen, King)
+
+       [capturedPieceWeight * 100 + (capturedPieceWeight - pieceWeight)]
+       [91 - 1010]
+       - captured Queen (in order: with Pawn, Knight, Bishop, Rook, Queen, King)
+       - captured Rook (ditto)
+       - captured Bishop (ditto)
+       - captured Knight (ditto)
+       - captured Pawn (ditto)
+
+       - Queen moves
+       - Knight moves
+       - Rook moves
+       - Bishop moves
+       - Pawn moves
+       - King moves
+
+     */
+    private void orderMoves() {
+        final int[] moves = this.moves.getMoves();
+        final int size = this.moves.count();
+
+
+    }
 }
