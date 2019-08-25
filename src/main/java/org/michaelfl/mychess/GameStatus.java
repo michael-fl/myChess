@@ -44,6 +44,10 @@ public final class GameStatus {
         return turn == GameStatus.TURN_WHITE;
     }
 
+    public boolean isBlackTurn() {
+        return turn == GameStatus.TURN_BLACK;
+    }
+
     public int getOppositeColor() {
         return turn == GameStatus.TURN_WHITE ? GameStatus.TURN_BLACK : GameStatus.TURN_WHITE;
     }

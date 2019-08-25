@@ -4,13 +4,13 @@ import java.util.Arrays;
 import java.util.Random;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
-public final class IntArray {
+public class IntArray {
 
     private final static int INITIAL_CAPACITY = 30;
     private final static int CAPACITY_INCREMENT = 10;
 
     int[] array;
-    private int size;
+    int size;
 
     public IntArray() {
         this(INITIAL_CAPACITY);
@@ -26,6 +26,18 @@ public final class IntArray {
         array[size++] = element;
     }
 
+    public void addAll(IntArray other) {
+        final int countNew = other.size;
+        if (countNew == 0)
+            return;
+
+        if (array.length < size + countNew)
+            array = Arrays.copyOf(array, size + countNew + CAPACITY_INCREMENT);
+
+        System.arraycopy(other.array, 0, array, size, countNew);
+        size += countNew;
+    }
+
     public final int pop() {
         return array[--size];
     }
@@ -38,6 +50,10 @@ public final class IntArray {
         return size;
     }
 
+    public final void clear() {
+        size = 0;
+    }
+
     public final boolean contains(int element) {
         for (int i = size - 1; i >= 0; i--) {
             if (array[i] == element)
@@ -47,7 +63,10 @@ public final class IntArray {
         return false;
     }
 
-    public final void shuffle(final Random random) {
+    public final void mayShuffle(final Random random) {
+        if (size < 4)
+            return;
+
         // Implementing Fisher–Yates shuffle
         for (int i = size - 1; i > 0; i--) {
             final int index = random.nextInt(i + 1);
@@ -61,4 +80,5 @@ public final class IntArray {
     public String toString() {
         return Arrays.toString(Arrays.copyOf(array, size));
     }
+
 }

@@ -36,14 +36,14 @@ public abstract class ChessEngine {
     }
 
     private final static int MAX_CHECKMATE_SEARCH_DEPTH = 10;
-    private final static int MAX_COMBINATION_SEARCH_DEPTH = 7;
+    private final static int MAX_COMBINATION_SEARCH_DEPTH = 8;
     private final static int NO_CHECKMATE = -1;
     private final static int ILLEGAL = -2;
 
     private final Random rand = new Random();
 
     protected final Game game;
-    protected final MoveGenerator moveGenerator = new MoveGenerator();
+    protected final MoveGenerator moveGenerator = new MoveGenerator(rand);
 
     ChessEngine(Game game) {
         this.game = game;
@@ -191,6 +191,9 @@ public abstract class ChessEngine {
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
+//            TODO: remove
+//            if (move == 19287 || move == 28751 || move == 13647 || move == 19021)
+//                continue;
             positionsCount.incrementAndGet();
             final byte piece = Move.getCapturedPiece(move);
             GameStatus nextGameStatus = gameStatus.makeMove(move);
@@ -208,7 +211,7 @@ public abstract class ChessEngine {
 
         System.out.println("#positions for combination check: " + positionsCount + ", #pruned: " + prunedPositionsCount);
         if (bestMove != 0) { // && gameStatus.getPositiveWeight(bestWeight) >= 0.9f) {
-            System.out.println("==> combination move: " + ChessUtil.moveToString(bestMove) + ", weight: " + ChessUtil.weightToString(bestWeight * weightCorrectionFactor));
+            System.out.println("==> combination move: " + ChessUtil.moveToString(bestMove) + ", weight: " + ChessUtil.weightToString(bestWeight * weightCorrectionFactor) + " " + bestMove);
             return new MoveAndWeight(bestMove, bestWeight);
         }
 
