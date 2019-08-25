@@ -58,7 +58,7 @@ public final class MyChessEngine extends ChessEngine {
             return followCapturedPiecesRecursive(depth, gameStatus, workingBoard);
         }
 
-        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard);
+        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, depth);
         if (moves.isIllegal())
             return WeightingFunction.ILLEGAL_WEIGHT;
 
@@ -102,7 +102,7 @@ public final class MyChessEngine extends ChessEngine {
         final int capturedOnField = Move.getToField(gameStatus.getLastMove());
         maxReachedDepth = Math.max(maxReachedDepth, depth);
 
-        Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard);
+        Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, depth);
         if (moves.isIllegal())
             return WeightingFunction.ILLEGAL_WEIGHT;
 

@@ -74,6 +74,19 @@ public final class ChessUtil {
         return s;
     }
 
+    public static String movesToString(int[] moves, int length) {
+        StringBuilder buf = new StringBuilder();
+        buf.append(length).append('#');
+
+        for (int i = 0; i < length; i ++) {
+            if (i > 0)
+                buf.append(" ");
+            buf.append(ChessUtil.moveToString(moves[i]));
+        }
+
+        return buf.toString();
+    }
+
     public static String weightToString(float weight) {
         if (weight == WeightingFunction.ILLEGAL_WEIGHT)
             return "illegal";

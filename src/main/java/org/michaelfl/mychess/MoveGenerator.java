@@ -51,11 +51,19 @@ public final class MoveGenerator {
     private boolean containsIllegalMove;
 
     public MoveGenerator(Random rand) {
+        this(rand, new KillerMoves());
+    }
+
+    public MoveGenerator(Random rand, KillerMoves killerMoves) {
         this.rand = rand;
-        this.moveSorter = new MoveSorter(rand);
+        this.moveSorter = new MoveSorter(rand, killerMoves);
     }
 
     public Moves calculateMoves(GameStatus game, Board theBoard) {
+        return calculateMoves(game, theBoard, 0);
+    }
+
+    public Moves calculateMoves(GameStatus game, Board theBoard, int depth) {
         final int turn = game.getTurn();
         this.game = game;
         this.theBoard = theBoard;
@@ -63,7 +71,7 @@ public final class MoveGenerator {
         this.oppositeColor = game.getOppositeColor();
         this.oppositeKing = turn == GameStatus.TURN_WHITE ? Board.blackKing : Board.whiteKing;
         this.containsIllegalMove = false;
-        this.moveSorter.reset(game, theBoard);
+        this.moveSorter.reset(game, theBoard, depth);
 
         final int stopField = 9 * Board.LENGTH + 10;
 
@@ -502,7 +510,7 @@ public final class MoveGenerator {
         return false;
     }
 
-    private void addMove(int fromField, int toField, byte movingPiece, byte capturedPiece, byte moveType) {
+    private void addMove(final int fromField, final int toField, final byte movingPiece, final byte capturedPiece, final byte moveType) {
         int move = Move.create((byte) fromField, (byte) toField, capturedPiece, moveType);
 
         moveSorter.addMove(move, fromField, toField, movingPiece, capturedPiece);
