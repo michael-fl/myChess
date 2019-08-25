@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import org.michaelfl.mychess.KillerMoves.MoveSet;
+
 import java.util.Random;
 
 final class MoveSorter {
@@ -14,18 +16,22 @@ final class MoveSorter {
     private final MovesArray bucketKingMoves = new MovesArray();
 
     private final Random rand;
+    private final KillerMoves killerMoves;
     private GameStatus gameStatus;
     private int targetFieldOfLastOppositeMove;
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Board board;
+    private MoveSet killerMoveSet;
 
-    MoveSorter(Random rand) {
+    MoveSorter(Random rand, KillerMoves killerMoves) {
         this.rand = rand;
+        this.killerMoves = killerMoves;
     }
 
-    final void reset(GameStatus gameStatus, Board board) {
+    final void reset(GameStatus gameStatus, Board board, int depth) {
         this.gameStatus = gameStatus;
         this.board = board;
+        this.killerMoveSet = killerMoves.getMovesOnDepth(depth);
 
         targetFieldOfLastOppositeMove = Move.getToField(gameStatus.getLastMove());
 
@@ -39,8 +45,10 @@ final class MoveSorter {
         bucketKingMoves.clear();
     }
 
-    final void addMove(int move, int fromField, int toField, byte movingPiece, byte capturedPiece) {
-        if (capturedPiece != 0) {
+    final void addMove(final int move, final int fromField, final int toField, final byte movingPiece, final byte capturedPiece) {
+        if (killerMoveSet.contains(move)) {
+            bucketKillerMoves.add(move);
+        } else if (capturedPiece != 0) {
             final float deltaWeight = WeightingFunction.weightOfPiece[capturedPiece] - WeightingFunction.weightOfPiece[movingPiece];
             if (toField == targetFieldOfLastOppositeMove)
                 bucketCapturingLastPlayedOppositePiece.add(move);

@@ -36,14 +36,15 @@ public abstract class ChessEngine {
     }
 
     private final static int MAX_CHECKMATE_SEARCH_DEPTH = 10;
-    private final static int MAX_COMBINATION_SEARCH_DEPTH = 8;
+    private final static int MAX_COMBINATION_SEARCH_DEPTH = 9;
     private final static int NO_CHECKMATE = -1;
     private final static int ILLEGAL = -2;
 
     private final Random rand = new Random();
 
     protected final Game game;
-    protected final MoveGenerator moveGenerator = new MoveGenerator(rand);
+    protected final KillerMoves killerMoves = new KillerMoves();
+    protected final MoveGenerator moveGenerator = new MoveGenerator(rand, killerMoves);
 
     ChessEngine(Game game) {
         this.game = game;
@@ -104,7 +105,7 @@ public abstract class ChessEngine {
 
         int maxCheckmateDepth = -1;
 
-        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard);
+        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, depth);
         if (moves.isIllegal())
             return ILLEGAL;
         final int[] plainMoves = moves.getMoves();
@@ -144,7 +145,7 @@ public abstract class ChessEngine {
         if (depth > MAX_CHECKMATE_SEARCH_DEPTH)
             return NO_CHECKMATE;
 
-        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard);
+        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, depth);
         if (moves.isIllegal())
             return ILLEGAL;
         final int[] plainMoves = moves.getMoves();
@@ -175,11 +176,14 @@ public abstract class ChessEngine {
 
     @SuppressWarnings("Duplicates")
     public MoveAndWeight findCombinationMove(Game game, Board workingBoard) {
+
+        killerMoves.clear();
+
         final AtomicInteger positionsCount = new AtomicInteger();
         final AtomicInteger prunedPositionsCount = new AtomicInteger();
         final GameStatus gameStatus = game.getGameStatus();
         final int weightCorrectionFactor = gameStatus.isWhiteTurn() ? 1 : -1;
-        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard);
+        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, 0);
         if (moves.isIllegal() || moves.count() == 0)
             return MoveAndWeight.NO_MOVE; // No move possible
 
@@ -231,7 +235,7 @@ public abstract class ChessEngine {
             return quiescenceSearch(Move.getToField(lastMove), depth, positionWeight, factor, gameStatus, workingBoard, positionsCount);
         }
 
-        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard);
+        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, depth);
         if (moves.isIllegal())
             return WeightingFunction.ILLEGAL_WEIGHT;
         final int[] plainMoves = moves.getMoves();
@@ -256,6 +260,7 @@ public abstract class ChessEngine {
                 // Alpha-Beta search pruning
                 if (weight >= betaWeight) {
                     prunedPositionsCount.addAndGet(countMoves - i - 1);
+                    killerMoves.addMove(move, depth);
                     return weight;
                 }
 
@@ -290,7 +295,7 @@ public abstract class ChessEngine {
             return quiescenceSearch(Move.getToField(lastMove), depth, positionWeight, factor, gameStatus, workingBoard, positionsCount);
         }
 
-        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard);
+        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, depth);
         if (moves.isIllegal())
             return WeightingFunction.ILLEGAL_WEIGHT;
         final int[] plainMoves = moves.getMoves();
@@ -315,6 +320,7 @@ public abstract class ChessEngine {
                 // Alpha-Beta search pruning
                 if (weight <= alphaWeight) {
                     prunedPositionsCount.addAndGet(countMoves - i - 1);
+                    killerMoves.addMove(move, depth);
                     return weight;
                 }
 
@@ -347,7 +353,7 @@ public abstract class ChessEngine {
             System.out.println("Max depth: " + maxDepth + " on field " + ChessUtil.fieldToString(capturedOnField));
         }
 
-        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard);
+        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, depth);
         if (moves.isIllegal())
             return WeightingFunction.ILLEGAL_WEIGHT;
         final int[] plainMoves = moves.getMoves();

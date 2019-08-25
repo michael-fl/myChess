@@ -242,6 +242,7 @@ public final class Game {
 
         // Check the next theoretically possible moves. If those contain an illegal move (king can be captured),
         // the king was under chess.
+        // TODO MF: Calculate moves without sorting
         Moves nextMoves = moveGenerator.calculateMoves(gameStatus, board);
         return nextMoves.isIllegal();
     }
@@ -321,35 +322,6 @@ public final class Game {
         int avgMoves = i > 0 ? totalMovesCount / i : 0;
         System.out.println("Statistics: max moves: " + maxMoves + ", avg moves: " + avgMoves
                 + ", # >40: " + countGreater40 + ", # >50: " + countGreater50);
-    }
-
-    private static Moves findValidMove(Game game, Moves moves, MoveGenerator moveGenerator, int moveNo) {
-        Moves nextMoves = null;
-
-        int nPossibleMoves = moves.count();
-        for (int moveIndex = 0; moveIndex < nPossibleMoves; moveIndex++) {
-            int move = moves.getMove(moveIndex);
-            System.out.println("Move #" + moveNo + ": " + ChessUtil.moveToString(move));
-            game.makeMove(move);
-            nextMoves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard());
-            if (!nextMoves.isIllegal())
-                break;
-
-            System.out.println("ILLEGAL");
-            game.revertMove();
-        }
-
-        return nextMoves;
-    }
-
-    private static String readLineFromStdin(BufferedReader in) throws IOException {
-        System.out.print(">");
-        System.out.flush();
-        return in.readLine();
-    }
-
-    private static boolean isQuit(String line) {
-        return "quit".equals(line) || "exit".equals(line);
     }
 
     void print() {

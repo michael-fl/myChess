@@ -1,7 +1,5 @@
 package org.michaelfl.mychess;
 
-import java.util.Random;
-
 @SuppressWarnings({"WeakerAccess", "unused"})
 public final class Moves {
 
@@ -54,17 +52,7 @@ public final class Moves {
 
     @Override
     public String toString() {
-        final int size = moves.size();
-        StringBuilder buf = new StringBuilder();
-        buf.append(size).append('#');
-
-        for (int i = 0; i < size; i ++) {
-            if (i > 0)
-                buf.append(" ");
-            buf.append(ChessUtil.moveToString(moves.array[i]));
-        }
-
-        return buf.toString();
+        return ChessUtil.movesToString(moves.array, moves.size());
     }
 
     void print() {
