@@ -119,20 +119,20 @@ public final class MoveGenerator {
     private void addWhitePawnMove(int from, int to) {
         if (to >= Board.a8) {
             // Pawn promotion
-            moves.addMove(Move.create((byte) from, (byte) to, board[to], Move.typePawnPromotionQueen));
-            moves.addMove(Move.create((byte) from, (byte) to, board[to], Move.typePawnPromotionKnight));
+            addMove(from, to, Board.whitePawn, board[to], Move.typePawnPromotionQueen);
+            addMove(from, to, Board.whitePawn, board[to], Move.typePawnPromotionKnight);
         } else {
-            moves.addMove(Move.create((byte) from, (byte) to, board[to], Move.typeNormal));
+            addMove(from, to, Board.whitePawn, board[to], Move.typeNormal);
         }
     }
 
     private void addBlackPawnMove(int from, int to) {
         if (to <= Board.h1) {
             // Pawn promotion
-            moves.addMove(Move.create((byte) from, (byte) to, board[to], Move.typePawnPromotionQueen));
-            moves.addMove(Move.create((byte) from, (byte) to, board[to], Move.typePawnPromotionKnight));
+            addMove(from, to, Board.blackPawn, board[to], Move.typePawnPromotionQueen);
+            addMove(from, to, Board.blackPawn, board[to], Move.typePawnPromotionKnight);
         } else {
-            moves.addMove(Move.create((byte) from, (byte) to, board[to], Move.typeNormal));
+            addMove(from, to, Board.blackPawn, board[to], Move.typeNormal);
         }
     }
 
@@ -188,14 +188,16 @@ public final class MoveGenerator {
     }
 
     private void calculateKnightMoves(int field) {
-        move(field, field + 2 * Board.LENGTH + 1);
-        move(field, field + 1 * Board.LENGTH + 2);
-        move(field, field - 1 * Board.LENGTH + 2);
-        move(field, field - 2 * Board.LENGTH + 1);
-        move(field, field - 2 * Board.LENGTH - 1);
-        move(field, field - 1 * Board.LENGTH - 2);
-        move(field, field + 1 * Board.LENGTH - 2);
-        move(field, field + 2 * Board.LENGTH - 1);
+        final byte piece = board[field];
+
+        move(piece, field, field + 2 * Board.LENGTH + 1);
+        move(piece, field, field + 1 * Board.LENGTH + 2);
+        move(piece, field, field - 1 * Board.LENGTH + 2);
+        move(piece, field, field - 2 * Board.LENGTH + 1);
+        move(piece, field, field - 2 * Board.LENGTH - 1);
+        move(piece, field, field - 1 * Board.LENGTH - 2);
+        move(piece, field, field + 1 * Board.LENGTH - 2);
+        move(piece, field, field + 2 * Board.LENGTH - 1);
     }
 
     private static void _calculateBishopMoves(MoveGenerator generator, int field) {
@@ -203,14 +205,16 @@ public final class MoveGenerator {
     }
 
     private void calculateBishopMoves(int field) {
+        final byte piece = board[field];
+
         // move up-right
-        for (int to = field + Board.LENGTH + 1; move(field, to); to += Board.LENGTH + 1);
+        for (int to = field + Board.LENGTH + 1; move(piece, field, to); to += Board.LENGTH + 1);
         // move down-right
-        for (int to = field - Board.LENGTH + 1; move(field, to); to = to - Board.LENGTH + 1);
+        for (int to = field - Board.LENGTH + 1; move(piece, field, to); to = to - Board.LENGTH + 1);
         // move down-left
-        for (int to = field - Board.LENGTH - 1; move(field, to); to = to - Board.LENGTH - 1);
+        for (int to = field - Board.LENGTH - 1; move(piece, field, to); to = to - Board.LENGTH - 1);
         // move up-left
-        for (int to = field + Board.LENGTH - 1; move(field, to); to += Board.LENGTH - 1);
+        for (int to = field + Board.LENGTH - 1; move(piece, field, to); to += Board.LENGTH - 1);
     }
 
     private static void _calculateRookMoves(MoveGenerator generator, int field) {
@@ -218,14 +222,16 @@ public final class MoveGenerator {
     }
 
     private void calculateRookMoves(int field) {
+        final byte piece = board[field];
+
         // move up
-        for (int to = field + Board.LENGTH; move(field, to); to += Board.LENGTH);
+        for (int to = field + Board.LENGTH; move(piece, field, to); to += Board.LENGTH);
         // move down
-        for (int to = field - Board.LENGTH; move(field, to); to -= Board.LENGTH);
+        for (int to = field - Board.LENGTH; move(piece, field, to); to -= Board.LENGTH);
         // move left
-        for (int to = field - 1; move(field, to); to--);
+        for (int to = field - 1; move(piece, field, to); to--);
         // move right
-        for (int to = field + 1; move(field, to); to++);
+        for (int to = field + 1; move(piece, field, to); to++);
     }
 
     private static void _calculateQueenMoves(MoveGenerator generator, int field) {
@@ -233,22 +239,24 @@ public final class MoveGenerator {
     }
 
     private void calculateQueenMoves(int field) {
+        final byte piece = board[field];
+
         // move up
-        for (int to = field + Board.LENGTH; move(field, to); to += Board.LENGTH);
+        for (int to = field + Board.LENGTH; move(piece, field, to); to += Board.LENGTH);
         // move up-right
-        for (int to = field + Board.LENGTH + 1; move(field, to); to += Board.LENGTH + 1);
+        for (int to = field + Board.LENGTH + 1; move(piece, field, to); to += Board.LENGTH + 1);
         // move right
-        for (int to = field + 1; move(field, to); to++);
+        for (int to = field + 1; move(piece, field, to); to++);
         // move down-right
-        for (int to = field - Board.LENGTH + 1; move(field, to); to = to - Board.LENGTH + 1);
+        for (int to = field - Board.LENGTH + 1; move(piece, field, to); to = to - Board.LENGTH + 1);
         // move down
-        for (int to = field - Board.LENGTH; move(field, to); to -= Board.LENGTH);
+        for (int to = field - Board.LENGTH; move(piece, field, to); to -= Board.LENGTH);
         // move down-left
-        for (int to = field - Board.LENGTH - 1; move(field, to); to = to - Board.LENGTH - 1);
+        for (int to = field - Board.LENGTH - 1; move(piece, field, to); to = to - Board.LENGTH - 1);
         // move left
-        for (int to = field - 1; move(field, to); to--);
+        for (int to = field - 1; move(piece, field, to); to--);
         // move up-left
-        for (int to = field + Board.LENGTH - 1; move(field, to); to += Board.LENGTH - 1);
+        for (int to = field + Board.LENGTH - 1; move(piece, field, to); to += Board.LENGTH - 1);
     }
 
     private static void _calculateKingMoves(MoveGenerator generator, int field) {
@@ -256,50 +264,52 @@ public final class MoveGenerator {
     }
 
     private void calculateKingMoves(int field) {
+        final byte piece = board[field];
+
         // move up
-        move(field, field + Board.LENGTH);
+        move(piece, field, field + Board.LENGTH);
         // move up-right
-        move(field, field + Board.LENGTH + 1);
+        move(piece, field, field + Board.LENGTH + 1);
         // move right
-        move(field, field + 1);
+        move(piece, field, field + 1);
         // move down-right
-        move(field, field - Board.LENGTH + 1);
+        move(piece, field, field - Board.LENGTH + 1);
         // move down
-        move(field, field - Board.LENGTH);
+        move(piece, field, field - Board.LENGTH);
         // move down-left
-        move(field, field - Board.LENGTH - 1);
+        move(piece, field, field - Board.LENGTH - 1);
         // move left
-        move(field, field - 1);
+        move(piece, field, field - 1);
         // move up-left
-        move(field, field + Board.LENGTH - 1);
+        move(piece, field, field + Board.LENGTH - 1);
 
         // castling
         if (game.isCastlingPossible())
             calculateCastlingMoves();
     }
 
-    private boolean move(final int from, final int to) {
-        final byte piece = board[to];
-        if (piece == 0 || (piece & oppositeColor) == oppositeColor) {
-            moves.addMove(Move.create((byte) from, (byte) to, piece, Move.typeNormal));
-            if (piece == oppositeKing)
+    private boolean move(final byte piece, final int from, final int to) {
+        final byte capturedPiece = board[to];
+        if (capturedPiece == 0 || (capturedPiece & oppositeColor) == oppositeColor) {
+            addMove(from, to, piece, capturedPiece, Move.typeNormal);
+            if (capturedPiece == oppositeKing)
                 containsIllegalMove = true;
         }
-        return piece == 0;
+        return capturedPiece == 0;
     }
 
     private void calculateCastlingMoves() {
         if (game.getTurn() == GameStatus.TURN_WHITE) {
             if (game.isWhiteCastlingKingSidePossible() && canDoWhiteCastlingKingSide()) {
-                moves.addMove(Move.create(Board.e1, Board.g1, (byte) 0, Move.typeCastlingKingSide));
+                addMove(Board.e1, Board.g1, Board.whiteKing, (byte) 0, Move.typeCastlingKingSide);
             } else if (game.isWhiteCastlingQueenSidePossible() && canDoWhiteCastlingQueenSide()) {
-                moves.addMove(Move.create(Board.e1, Board.c1, (byte) 0, Move.typeCastlingQueenSide));
+                addMove(Board.e1, Board.c1, Board.whiteKing, (byte) 0, Move.typeCastlingQueenSide);
             }
         } else {
             if (game.isBlackCastlingKingSidePossible() && canDoBlackCastlingKingSide()) {
-                moves.addMove(Move.create(Board.e8, Board.g8, (byte) 0, Move.typeCastlingKingSide));
+                addMove(Board.e8, Board.g8, Board.blackKing, (byte) 0, Move.typeCastlingKingSide);
             } else if (game.isBlackCastlingQueenSidePossible() && canDoBlackCastlingQueenSide()) {
-                moves.addMove(Move.create(Board.e8, Board.c8, (byte) 0, Move.typeCastlingQueenSide));
+                addMove(Board.e8, Board.c8, Board.blackKing, (byte) 0, Move.typeCastlingQueenSide);
             }
         }
     }
@@ -486,32 +496,10 @@ public final class MoveGenerator {
         return false;
     }
 
-    /*
-       - "Killer moves"
+    private void addMove(int fromField, int toField, byte movingPiece, byte capturedPiece, byte moveType) {
+        int move = Move.create((byte) fromField, (byte) toField, capturedPiece, moveType);
 
-       [2000 - pieceWeight]
-       - captured piece last played by opposite (in order: with Pawn, Knight, Bishop, Rook, Queen, King)
-
-       [capturedPieceWeight * 100 + (capturedPieceWeight - pieceWeight)]
-       [91 - 1010]
-       - captured Queen (in order: with Pawn, Knight, Bishop, Rook, Queen, King)
-       - captured Rook (ditto)
-       - captured Bishop (ditto)
-       - captured Knight (ditto)
-       - captured Pawn (ditto)
-
-       - Queen moves
-       - Knight moves
-       - Rook moves
-       - Bishop moves
-       - Pawn moves
-       - King moves
-
-     */
-    private void orderMoves() {
-        final int[] moves = this.moves.getMoves();
-        final int size = this.moves.count();
-
-
+        moves.addMove(move);
     }
+
 }
