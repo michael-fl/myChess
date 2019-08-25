@@ -5,14 +5,12 @@ import java.util.Random;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public final class Moves {
 
-    private final static Random rand = new Random();
-
     final static Moves ILLEGAL = new Moves(0);
 
     private final static int INITIAL_MOVE_CAPACITY = 30;
     private final static int CAPACITY_INCREMENT = 10;
 
-    private final IntArray moves;
+    final IntArray moves;
 
     public Moves() {
         this(INITIAL_MOVE_CAPACITY);
@@ -58,7 +56,7 @@ public final class Moves {
     public String toString() {
         final int size = moves.size();
         StringBuilder buf = new StringBuilder();
-        buf.append(count()).append('#');
+        buf.append(size).append('#');
 
         for (int i = 0; i < size; i ++) {
             if (i > 0)
@@ -67,10 +65,6 @@ public final class Moves {
         }
 
         return buf.toString();
-    }
-
-    final void shuffle() {
-        moves.shuffle(rand);
     }
 
     void print() {

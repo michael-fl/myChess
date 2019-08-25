@@ -13,6 +13,8 @@ package org.michaelfl.mychess;
 //    12 13         ...          22  23
 //    00 01         ...          10  11
 
+import java.util.Random;
+
 @SuppressWarnings({"StatementWithEmptyBody", "Duplicates", "PointlessArithmeticExpression"})
 public final class MoveGenerator {
 
@@ -37,14 +39,21 @@ public final class MoveGenerator {
         calculationFunctions[Board.blackKing]   = MoveGenerator::_calculateKingMoves;
     }
 
+    private final Random rand;
+    private final MoveSorter moveSorter;
+
     private GameStatus game;
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Board theBoard; // For debugger only
     private byte[] board;
     private int oppositeColor;
     private int oppositeKing;
-    private Moves moves;
     private boolean containsIllegalMove;
+
+    public MoveGenerator(Random rand) {
+        this.rand = rand;
+        this.moveSorter = new MoveSorter(rand);
+    }
 
     public Moves calculateMoves(GameStatus game, Board theBoard) {
         final int turn = game.getTurn();
@@ -53,8 +62,8 @@ public final class MoveGenerator {
         this.board = theBoard.getRawBoard();
         this.oppositeColor = game.getOppositeColor();
         this.oppositeKing = turn == GameStatus.TURN_WHITE ? Board.blackKing : Board.whiteKing;
-        this.moves = new Moves();
         this.containsIllegalMove = false;
+        this.moveSorter.reset(game, theBoard);
 
         final int stopField = 9 * Board.LENGTH + 10;
 
@@ -67,10 +76,7 @@ public final class MoveGenerator {
         if (containsIllegalMove)
             return Moves.ILLEGAL;
 
-        moves.shuffle();
-        //orderMoves();
-
-        return moves;
+        return moveSorter.getSortedMoves();
     }
 
     private static void _calculateWhitePawnMoves(MoveGenerator generator, int field) {
@@ -499,7 +505,7 @@ public final class MoveGenerator {
     private void addMove(int fromField, int toField, byte movingPiece, byte capturedPiece, byte moveType) {
         int move = Move.create((byte) fromField, (byte) toField, capturedPiece, moveType);
 
-        moves.addMove(move);
+        moveSorter.addMove(move, fromField, toField, movingPiece, capturedPiece);
     }
 
 }

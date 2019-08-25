@@ -48,7 +48,7 @@ public final class Game {
     }
 
     GameResult calculateAndSetGameResult() {
-        MoveGenerator moveGenerator = new MoveGenerator();
+        MoveGenerator moveGenerator = new MoveGenerator(rand);
         GameResult gameResult = checkGameResult(moveGenerator);
         setResult(gameResult);
         return gameResult;
@@ -153,7 +153,7 @@ public final class Game {
         Move move = new Move(Move.create((byte) fromField, (byte) toField, capturedPiece, moveType));
 
         // Validate the move
-        MoveGenerator moveGenerator = new MoveGenerator();
+        MoveGenerator moveGenerator = new MoveGenerator(rand);
         Moves validMoves = moveGenerator.calculateMoves(getGameStatus(), board);
         if (!validMoves.contains(move.getMove())) {
             print();
@@ -275,7 +275,7 @@ public final class Game {
             System.out.println("Turn: " + (getTurn() == GameStatus.TURN_WHITE ? "white" : "black"));
             System.out.println("Moves: " + exportMoves());
             System.out.println("Status: " + getGameStatus());
-            MoveGenerator moveGenerator = new MoveGenerator();
+            MoveGenerator moveGenerator = new MoveGenerator(rand);
             Moves possibleMoves = moveGenerator.calculateMoves(getGameStatus(), getBoard());
             System.out.println("Possible moves: " + possibleMoves);
             System.out.flush();
@@ -315,7 +315,7 @@ public final class Game {
                 countGreater50++;
         }
 
-        GameResult gameResult = checkGameResult(new MoveGenerator());
+        GameResult gameResult = checkGameResult(new MoveGenerator(rand));
         setResult(gameResult);
 
         int avgMoves = i > 0 ? totalMovesCount / i : 0;

@@ -296,7 +296,7 @@ final class CommandHandler {
 
         @Override
         void handle(String commandLine) {
-            MoveGenerator gen = new MoveGenerator();
+            MoveGenerator gen = new MoveGenerator(game.getRandom());
             Moves moves = gen.calculateMoves(game.getGameStatus(), game.getBoard());
             System.out.println("Possible moves: " + moves);
             weightingFunction.calculate(game.getGameStatus(), game.getBoard());

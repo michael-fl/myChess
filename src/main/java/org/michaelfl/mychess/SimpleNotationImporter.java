@@ -63,7 +63,7 @@ final class SimpleNotationImporter {
 
         Game game = new SimpleNotationImporter(notation).importGame();
         game.print();
-        MoveGenerator moveGenerator = new MoveGenerator();
+        MoveGenerator moveGenerator = new MoveGenerator(game.getRandom());
         Moves possibleMoves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard());
         System.out.println("Possible moves: " + possibleMoves);
         game.playAutoGame();
