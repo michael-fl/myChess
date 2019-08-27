@@ -58,4 +58,25 @@ final class BitOps {
         return (byte) (word >>> 24);
     }
 
+    static short createShort(byte b0, byte b1) {
+        return (short) (((b0 & 0xFF)      ) +
+                ((b1 & 0xFF) <<  8));
+    }
+
+    static byte getByte0(short word) {
+        return (byte) word;
+    }
+
+    static byte getByte1(short word) {
+        return (byte) (word >>> 8);
+    }
+
+    public static void main(String[] args) {
+        short[] moves = new short[Short.MAX_VALUE];
+        short s1 = (short) createWord((byte) Board.a1, (byte) Board.h8, (byte) 255, (byte) 255);
+        moves[s1]++;
+        byte b0 = getByte0(s1);
+        byte b1 = getByte1(s1);
+        System.out.println(s1 + " = [" + ChessUtil.fieldToString(b0) + "-" + ChessUtil.fieldToString(b1) + "]");
+    }
 }

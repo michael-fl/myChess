@@ -46,7 +46,7 @@ final class MoveSorter {
     }
 
     final void addMove(final int move, final int fromField, final int toField, final byte movingPiece, final byte capturedPiece) {
-        if (killerMoveSet.contains(move)) {
+        if (false && killerMoveSet.contains(move)) {
             bucketKillerMoves.add(move);
         } else if (capturedPiece != 0) {
             final float deltaWeight = WeightingFunction.weightOfPiece[capturedPiece] - WeightingFunction.weightOfPiece[movingPiece];
