@@ -26,9 +26,9 @@ public final class KillerMoves {
             return moveCounts[shortMove] > 0;
         }
 
-        /** Get the n best moves. */
-        public short[] findTopMoves(int n) {
-            return KillerMoves.findTopMoves(n, moveCounts);
+        /** Get the best moves. */
+        public short[] findTopMoves() {
+            return KillerMoves.findTopMoves(moveCounts);
         }
 
         private int size() {
@@ -95,14 +95,14 @@ public final class KillerMoves {
     }
 
     /** Traditional (without sentinel) insertion sort, descending. */
-    static short[] sortDescending(short[] moves, int[] counts) {
+    static void sortDescending(final short[] moves, final int[] counts) {
         final int n = moves.length - 1;
 
         for (int i = 0, j = 0; i < n; j = ++i) {
             final int cnt = counts[i + 1];
             final short move = moves[i + 1];
 
-            while (cnt >= counts[j]) {
+            while (cnt > counts[j]) {
                 counts[j + 1] = counts[j];
                 moves[j + 1] = moves[j];
                 if (j-- == 0)
@@ -112,22 +112,22 @@ public final class KillerMoves {
             counts[j + 1] = cnt;
             moves[j + 1] = move;
         }
-
-        return moves;
     }
 
-    /** Get the n best moves. */
-    static short[] findTopMoves(final int n, final int[] moveCounts) {
+    private final static int TOP_N = 10;
+
+    /** Get the 10 best moves. */
+    static short[] findTopMoves(final int[] moveCounts) {
         final short moveCount = (short) moveCounts.length;
-        final short[] bestMoves = new short[n];
-        final int[] bestCounts = new int[n];
+        final short[] bestMoves = new short[TOP_N];
+        final int[] bestCounts = new int[TOP_N];
 
         initTopMoves(moveCounts, bestMoves, bestCounts);
 
         int minIndex = minIndex(bestCounts);
         int min = bestCounts[minIndex];
 
-        for (short i = (short) n; i < moveCount; i++) {
+        for (short i = (short) TOP_N; i < moveCount; i++) {
             if (moveCounts[i] > min) {
                 bestCounts[minIndex] = moveCounts[i];
                 bestMoves[minIndex] = i;
@@ -136,7 +136,9 @@ public final class KillerMoves {
             }
         }
 
-        return sortDescending(bestMoves, bestCounts);
+        sortDescending(bestMoves, bestCounts);
+
+        return Arrays.copyOf(bestMoves, bestMoves.length);
     }
 
     private static int minIndex(final int[] counts) {
@@ -161,14 +163,6 @@ public final class KillerMoves {
             bestCounts[i] = moveCounts[i];
             bestMoves[i] = i;
         }
-    }
-
-    public static void main(String[] args) {
-        short[] moves = new short[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        int[] counts = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-
-        System.out.println(Arrays.toString(sortDescending(moves, counts)));
-        System.out.println();
     }
 
 }
