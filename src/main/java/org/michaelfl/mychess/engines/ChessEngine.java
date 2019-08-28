@@ -241,6 +241,7 @@ public abstract class ChessEngine {
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
         float bestWeight = alphaWeight; // Float.NEGATIVE_INFINITY
+        int bestMove = 0;
         boolean haveValidMove = false;
 
         for (int i = 0; i < countMoves; i++) {
@@ -264,13 +265,18 @@ public abstract class ChessEngine {
                     return weight;
                 }
 
-                if (weight > bestWeight)
+                if (weight > bestWeight) {
                     bestWeight = weight;
+                    bestMove = move;
+                }
             }
         }
 
-        if (haveValidMove)
+        if (haveValidMove) {
+            if (bestMove != 0)
+                killerMoves.addMove(bestMove, depth);
             return bestWeight;
+        }
 
         // No legal move possible ==> Checkmate or stalemate
         if (Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator)) {
@@ -302,6 +308,7 @@ public abstract class ChessEngine {
         final int countMoves = moves.count();
         float bestWeight = betaWeight; // Float.POSITIVE_INFINITY
         boolean haveValidMove = false;
+        int bestMove = 0;
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
@@ -324,13 +331,18 @@ public abstract class ChessEngine {
                     return weight;
                 }
 
-                if (weight < bestWeight)
+                if (weight < bestWeight) {
                     bestWeight = weight;
+                    bestMove = move;
+                }
             }
         }
 
-        if (haveValidMove)
+        if (haveValidMove) {
+            if (bestMove != 0)
+                killerMoves.addMove(bestMove, depth);
             return bestWeight;
+        }
 
         // No legal move possible ==> Checkmate or stalemate
         if (Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator)) {
