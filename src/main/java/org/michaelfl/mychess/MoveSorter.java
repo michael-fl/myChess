@@ -1,7 +1,5 @@
 package org.michaelfl.mychess;
 
-import org.michaelfl.mychess.KillerMoves.MoveSet;
-
 import java.util.Random;
 
 final class MoveSorter {
@@ -21,7 +19,7 @@ final class MoveSorter {
     private int targetFieldOfLastOppositeMove;
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Board board;
-    private MoveSet killerMoveSet;
+    private short[] topKillerMoves;
 
     MoveSorter(Random rand, KillerMoves killerMoves) {
         this.rand = rand;
@@ -31,7 +29,7 @@ final class MoveSorter {
     final void reset(GameStatus gameStatus, Board board, int depth) {
         this.gameStatus = gameStatus;
         this.board = board;
-        this.killerMoveSet = killerMoves.getMovesOnDepth(depth);
+        this.topKillerMoves = killerMoves.getMovesOnDepth(depth).getTopMoves();
 
         targetFieldOfLastOppositeMove = Move.getToField(gameStatus.getLastMove());
 
@@ -46,7 +44,7 @@ final class MoveSorter {
     }
 
     final void addMove(final int move, final int fromField, final int toField, final byte movingPiece, final byte capturedPiece) {
-        if (false && killerMoveSet.contains(move)) {
+        if (isKillerMove(move)) {
             bucketKillerMoves.add(move);
         } else if (capturedPiece != 0) {
             final float deltaWeight = WeightingFunction.weightOfPiece[capturedPiece] - WeightingFunction.weightOfPiece[movingPiece];
@@ -69,17 +67,26 @@ final class MoveSorter {
         }
     }
 
+    private boolean isKillerMove(final int move) {
+        // Cut off captured piece and move type
+        final short m1 = (short) move;
+
+        for (short m2 : topKillerMoves) {
+            if (m1 == m2)
+                return true;
+        }
+
+        return false;
+    }
+
     final Moves getSortedMoves() {
         final Moves moves = new Moves();
         final IntArray movesArray = moves.moves;
 
-        bucketRemainingMoves.mayShuffle(rand);
-        bucketForwardMoves.mayShuffle(rand);
-
         // TODO: Add move to capture last played piece of opposite (if possible)
 
-        movesArray.addAll(bucketKillerMoves);
         movesArray.addAll(bucketCapturingPositiveWeight);
+        movesArray.addAll(bucketKillerMoves);
         movesArray.addAll(bucketCapturingLastPlayedOppositePiece);
         movesArray.addAll(bucketCapturingSameWeight);
         movesArray.addAll(bucketCapturingNegativeWeight);

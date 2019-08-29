@@ -6,9 +6,13 @@ import java.util.Arrays;
 @SuppressWarnings("WeakerAccess")
 public final class KillerMoves {
 
+    final static int TOP_N = 1;
+    private final static short[] EMPTY_MOVE_ARR = new short[0];
+
     @SuppressWarnings("WeakerAccess")
     public final static class MoveSet {
         private final int[] moveCounts = new int[Short.MAX_VALUE];
+        private short[] topMoves = EMPTY_MOVE_ARR;
 
         public final void add(final int move) {
             // Remove information about captured piece and move type from the move
@@ -18,17 +22,20 @@ public final class KillerMoves {
 
         public final void clear() {
             Arrays.fill(moveCounts, 0);
+            topMoves = EMPTY_MOVE_ARR;
         }
 
-        public final boolean contains(final int move) {
-            // Remove information about captured piece and move type from the move
-            final short shortMove = (short) move;
-            return moveCounts[shortMove] > 0;
+        /**
+         * Get the currently known best moves.
+         * Unless findAndStoreTopMoves was not called at least once, the returned array will be empty.
+         */
+        short[] getTopMoves() {
+            return topMoves;
         }
 
-        /** Get the best moves. */
-        public short[] findTopMoves() {
-            return KillerMoves.findTopMoves(moveCounts);
+        /** Find the best moves and store them internally. */
+        public void findAndStoreTopMoves() {
+            topMoves = findTopMoves(moveCounts);
         }
 
         private int size() {
@@ -57,7 +64,16 @@ public final class KillerMoves {
             final Short[] moves = sortMoves();
 
             StringBuilder buf = new StringBuilder();
-            buf.append(size()).append('#');
+
+            buf.append("Top:");
+            for (short move : topMoves) {
+                if (move > 0) {
+                    buf.append(" ");
+                    buf.append(ChessUtil.moveToString(move));
+                }
+            }
+
+            buf.append(", total: #").append(size());
 
             for (short move : moves) {
                 if (moveCounts[move] > 0) {
@@ -81,6 +97,13 @@ public final class KillerMoves {
 
     public final void addMove(final int move, final int depth) {
         getMovesOnDepth(depth).add(move);
+    }
+
+    /** Find and store current killer moves. */
+    public final void sample() {
+        for (var moveSet : killerMovesPerDepth) {
+            moveSet.findAndStoreTopMoves();
+        }
     }
 
     public final MoveSet getMovesOnDepth(int depth) {
@@ -114,8 +137,6 @@ public final class KillerMoves {
         }
     }
 
-    private final static int TOP_N = 10;
-
     /** Get the 10 best moves. */
     static short[] findTopMoves(final int[] moveCounts) {
         final short moveCount = (short) moveCounts.length;
@@ -137,6 +158,12 @@ public final class KillerMoves {
         }
 
         sortDescending(bestMoves, bestCounts);
+
+//        final int limit = 1000; // Math.max(bestCounts[0] * 2 / 3, 1000);
+//        for (var i = 0; i < TOP_N; i++) {
+//            if (bestCounts[i] < limit)
+//                bestMoves[i] = 0;
+//        }
 
         return Arrays.copyOf(bestMoves, bestMoves.length);
     }
@@ -161,7 +188,7 @@ public final class KillerMoves {
 
         for (short i = 0; i < n; i++) {
             bestCounts[i] = moveCounts[i];
-            bestMoves[i] = i;
+            bestMoves[i] = moveCounts[i] > 0 ? i : 0;
         }
     }
 

@@ -211,11 +211,14 @@ public abstract class ChessEngine {
                     bestMove = move;
                 }
             }
+
+            // Find and store current killer moves
+            killerMoves.sample();
         }
 
         System.out.println("#positions for combination check: " + positionsCount + ", #pruned: " + prunedPositionsCount);
         if (bestMove != 0) { // && gameStatus.getPositiveWeight(bestWeight) >= 0.9f) {
-            System.out.println("==> combination move: " + ChessUtil.moveToString(bestMove) + ", weight: " + ChessUtil.weightToString(bestWeight * weightCorrectionFactor) + " " + bestMove);
+            System.out.println("==> combination move: " + ChessUtil.moveToString(bestMove) + ", weight: " + ChessUtil.weightToString(bestWeight * weightCorrectionFactor));
             return new MoveAndWeight(bestMove, bestWeight);
         }
 
@@ -241,13 +244,13 @@ public abstract class ChessEngine {
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
         float bestWeight = alphaWeight; // Float.NEGATIVE_INFINITY
-        int bestMove = 0;
         boolean haveValidMove = false;
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
             positionsCount.incrementAndGet();
             final byte piece = Move.getCapturedPiece(move);
+            // TODO: Consider pawn promotion in material weight calculation, too!
             final float newMaterialDelta = materialDelta + factor * WeightingFunction.weightOfPiece[piece];
 
             final GameStatus nextGameStatus = gameStatus.makeMove(move);
@@ -261,22 +264,16 @@ public abstract class ChessEngine {
                 // Alpha-Beta search pruning
                 if (weight >= betaWeight) {
                     prunedPositionsCount.addAndGet(countMoves - i - 1);
-                    killerMoves.addMove(move, depth);
                     return weight;
                 }
 
-                if (weight > bestWeight) {
+                if (weight > bestWeight)
                     bestWeight = weight;
-                    bestMove = move;
-                }
             }
         }
 
-        if (haveValidMove) {
-            if (bestMove != 0)
-                killerMoves.addMove(bestMove, depth);
+        if (haveValidMove)
             return bestWeight;
-        }
 
         // No legal move possible ==> Checkmate or stalemate
         if (Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator)) {
@@ -308,7 +305,6 @@ public abstract class ChessEngine {
         final int countMoves = moves.count();
         float bestWeight = betaWeight; // Float.POSITIVE_INFINITY
         boolean haveValidMove = false;
-        int bestMove = 0;
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
@@ -331,18 +327,13 @@ public abstract class ChessEngine {
                     return weight;
                 }
 
-                if (weight < bestWeight) {
+                if (weight < bestWeight)
                     bestWeight = weight;
-                    bestMove = move;
-                }
             }
         }
 
-        if (haveValidMove) {
-            if (bestMove != 0)
-                killerMoves.addMove(bestMove, depth);
+        if (haveValidMove)
             return bestWeight;
-        }
 
         // No legal move possible ==> Checkmate or stalemate
         if (Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator)) {

@@ -191,7 +191,8 @@ class KillerMovesTest {
             }
         }
 
-        short[] topMoves = moveSet.findTopMoves();
+        moveSet.findAndStoreTopMoves();
+        short[] topMoves = moveSet.getTopMoves();
 
         expected.sort((m1, m2) -> m2.count - m1.count);
 
