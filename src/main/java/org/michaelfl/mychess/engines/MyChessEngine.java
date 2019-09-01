@@ -7,7 +7,6 @@ public final class MyChessEngine extends ChessEngine {
 
     private final static int MAX_DEPTH = 4;
 
-    private WeightingFunction weightingFunction = new WeightingFunction();
     private int countPossibleMoves;
     private int countPositions;
     private int maxReachedDepth;
