@@ -194,6 +194,44 @@ public final class WeightingFunction {
     private final byte[] fieldAttackCountBlack = Board.createEmptyBoard().getRawBoard();
     private int[] doublePawnCount = new int[2];
 
+    public static float calculateMaterialWeight(Board theBoard) {
+        final byte[] board = theBoard.getRawBoard();
+        final float[] piecesWeight = new float[2];
+
+        final int stopField = 9 * Board.LENGTH + 10;
+
+        for (int field = 2 * Board.LENGTH + 2; field < stopField; field++) {
+            final byte piece = board[field];
+            if (piece != Board.empty && piece != Board.illegal) {
+                final int color = (piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE ? 0 : 1;
+
+                piecesWeight[color] += weightOfPiece[piece];
+            }
+        }
+
+        return piecesWeight[0] - piecesWeight[1];
+    }
+
+    public static float getMaterialWeightOfMove(int move, int depth) {
+        final float pw = WeightingFunction.weightOfPiece[Move.getCapturedPiece(move)];
+        final float capturedWeight = pw != 0 ? pw - depth * 0.0001f : 0;
+        final byte moveType = Move.getMoveType(move);
+        if (moveType == Move.typeNormal)
+            return capturedWeight;
+
+        final float pawnWeight = weightOfPiece[Board.whitePawn];
+        if (moveType == Move.typePawnPromotionQueen)
+            return weightOfPiece[Board.whiteQueen] - pawnWeight + capturedWeight;
+        else if (moveType == Move.typePawnPromotionKnight)
+            return weightOfPiece[Board.whiteKnight] - pawnWeight + capturedWeight;
+        else if (moveType == Move.typePawnPromotionRook)
+            return weightOfPiece[Board.whiteRook] - pawnWeight + capturedWeight;
+        else if (moveType == Move.typePawnPromotionBishop)
+            return weightOfPiece[Board.whiteBishop] - pawnWeight + capturedWeight;
+        else
+            return 0;
+    }
+
     public float calculate(GameStatus game, Board theBoard) {
         this.game = game;
         this.turn = game.getTurn() == GameStatus.TURN_WHITE ? 0 : 1;

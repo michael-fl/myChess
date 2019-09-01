@@ -6,7 +6,7 @@ import java.util.Arrays;
 @SuppressWarnings("WeakerAccess")
 public final class KillerMoves {
 
-    final static int TOP_N = 1;
+    final static int TOP_N = 2;
     private final static short[] EMPTY_MOVE_ARR = new short[0];
 
     @SuppressWarnings("WeakerAccess")

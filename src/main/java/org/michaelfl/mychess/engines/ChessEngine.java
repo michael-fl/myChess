@@ -5,6 +5,7 @@ import org.michaelfl.mychess.*;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 @SuppressWarnings("Duplicates")
 public abstract class ChessEngine {
@@ -42,6 +43,7 @@ public abstract class ChessEngine {
 
     private final Random rand = new Random();
 
+    protected final WeightingFunction weightingFunction = new WeightingFunction();
     protected final Game game;
     protected final KillerMoves killerMoves = new KillerMoves();
     protected final MoveGenerator moveGenerator = new MoveGenerator(rand, killerMoves);
@@ -179,33 +181,34 @@ public abstract class ChessEngine {
 
         killerMoves.clear();
 
-        final AtomicInteger positionsCount = new AtomicInteger();
-        final AtomicInteger prunedPositionsCount = new AtomicInteger();
+        final AtomicLong positionsCount = new AtomicLong();
+        final AtomicLong prunedPositionsCount = new AtomicLong();
         final GameStatus gameStatus = game.getGameStatus();
-        final int weightCorrectionFactor = gameStatus.isWhiteTurn() ? 1 : -1;
         final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, 0);
         if (moves.isIllegal() || moves.count() == 0)
             return MoveAndWeight.NO_MOVE; // No move possible
 
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
-        final int factor = 1;
+        final int factor = gameStatus.isWhiteTurn() ? 1 : -1;
+        final float materialDelta = factor * WeightingFunction.calculateMaterialWeight(workingBoard);
         float bestWeight = Float.NEGATIVE_INFINITY;
         int bestMove = 0;
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
 //            TODO: remove
+//            4 best moves: b6-b5, f5-c8, f5-d3, d5-a5
 //            if (move == 19287 || move == 28751 || move == 13647 || move == 19021)
 //                continue;
             positionsCount.incrementAndGet();
-            final byte piece = Move.getCapturedPiece(move);
             GameStatus nextGameStatus = gameStatus.makeMove(move);
             workingBoard.makeMove(move);
-            float weight = combinationMinSearch(1, bestWeight, Float.POSITIVE_INFINITY, factor * WeightingFunction.weightOfPiece[piece], -factor, nextGameStatus, workingBoard, positionsCount, prunedPositionsCount);
+            float newMaterialDelta = materialDelta + WeightingFunction.getMaterialWeightOfMove(move, 1);
+            float weight = combinationMinSearch(1, bestWeight, Float.POSITIVE_INFINITY, newMaterialDelta, factor, nextGameStatus, workingBoard, positionsCount, prunedPositionsCount);
             workingBoard.revertMove(move);
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
-                System.out.println("  " + ChessUtil.moveToString(move) + " ==> " + ChessUtil.weightToString(weightCorrectionFactor * weight));
+                System.out.println("  " + ChessUtil.moveToString(move) + " ==> " + ChessUtil.weightToString(factor * weight) + " (" + move + ")");
                 if (weight > bestWeight) {
                     bestWeight = weight;
                     bestMove = move;
@@ -218,7 +221,7 @@ public abstract class ChessEngine {
 
         System.out.println("#positions for combination check: " + positionsCount + ", #pruned: " + prunedPositionsCount);
         if (bestMove != 0) { // && gameStatus.getPositiveWeight(bestWeight) >= 0.9f) {
-            System.out.println("==> combination move: " + ChessUtil.moveToString(bestMove) + ", weight: " + ChessUtil.weightToString(bestWeight * weightCorrectionFactor));
+            System.out.println("==> combination move: " + ChessUtil.moveToString(bestMove) + ", weight: " + ChessUtil.weightToString(bestWeight * factor));
             return new MoveAndWeight(bestMove, bestWeight);
         }
 
@@ -226,16 +229,14 @@ public abstract class ChessEngine {
     }
 
     @SuppressWarnings("Duplicates")
-    private float combinationMaxSearch(final int depth, final float alphaWeight, final float betaWeight, final float materialDelta, final int factor, final GameStatus gameStatus, final Board workingBoard, final AtomicInteger positionsCount, final AtomicInteger prunedPositionsCount) {
+    private float combinationMaxSearch(final int depth, final float alphaWeight, final float betaWeight, final float materialDelta, final int factor, final GameStatus gameStatus, final Board workingBoard, final AtomicLong positionsCount, final AtomicLong prunedPositionsCount) {
         if (depth == MAX_COMBINATION_SEARCH_DEPTH) {
             final int lastMove = gameStatus.getLastMove();
 
-            final float positionWeight = materialDelta - factor * depth * 0.001f;
-
             if (Move.getCapturedPiece(lastMove) == 0)
-                return positionWeight;
+                return materialDelta;
 
-            return quiescenceSearch(Move.getToField(lastMove), depth, positionWeight, factor, gameStatus, workingBoard, positionsCount);
+            return quiescenceMaxSearch(Move.getToField(lastMove), depth, materialDelta, factor, gameStatus, workingBoard, positionsCount);
         }
 
         final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, depth);
@@ -249,13 +250,11 @@ public abstract class ChessEngine {
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
             positionsCount.incrementAndGet();
-            final byte piece = Move.getCapturedPiece(move);
-            // TODO: Consider pawn promotion in material weight calculation, too!
-            final float newMaterialDelta = materialDelta + factor * WeightingFunction.weightOfPiece[piece];
+            float newMaterialDelta = materialDelta + WeightingFunction.getMaterialWeightOfMove(move, depth);
 
             final GameStatus nextGameStatus = gameStatus.makeMove(move);
             workingBoard.makeMove(move);
-            final float weight = combinationMinSearch(depth + 1, bestWeight, betaWeight, newMaterialDelta, -factor, nextGameStatus, workingBoard, positionsCount, prunedPositionsCount);
+            final float weight = combinationMinSearch(depth + 1, bestWeight, betaWeight, newMaterialDelta, factor, nextGameStatus, workingBoard, positionsCount, prunedPositionsCount);
             workingBoard.revertMove(move);
 
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
@@ -278,7 +277,7 @@ public abstract class ChessEngine {
         // No legal move possible ==> Checkmate or stalemate
         if (Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator)) {
             // Checkmate
-            return (100 - depth) * factor * -WeightingFunction.CHECKMATE_WEIGHT;
+            return (100 - depth) * -WeightingFunction.CHECKMATE_WEIGHT;
         }
 
         // Stalemate
@@ -286,16 +285,14 @@ public abstract class ChessEngine {
     }
 
     @SuppressWarnings("Duplicates")
-    private float combinationMinSearch(final int depth, final float alphaWeight, final float betaWeight, final float materialDelta, final int factor, final GameStatus gameStatus, final Board workingBoard, final AtomicInteger positionsCount, final AtomicInteger prunedPositionsCount) {
+    private float combinationMinSearch(final int depth, final float alphaWeight, final float betaWeight, final float materialDelta, final int factor, final GameStatus gameStatus, final Board workingBoard, final AtomicLong positionsCount, final AtomicLong prunedPositionsCount) {
         if (depth == MAX_COMBINATION_SEARCH_DEPTH) {
             final int lastMove = gameStatus.getLastMove();
 
-            final float positionWeight = materialDelta - factor * depth * 0.001f;
-
             if (Move.getCapturedPiece(lastMove) == 0)
-                return positionWeight;
+                return materialDelta;
 
-            return quiescenceSearch(Move.getToField(lastMove), depth, positionWeight, factor, gameStatus, workingBoard, positionsCount);
+            return quiescenceMaxSearch(Move.getToField(lastMove), depth, materialDelta, factor, gameStatus, workingBoard, positionsCount);
         }
 
         final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, depth);
@@ -309,12 +306,11 @@ public abstract class ChessEngine {
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
             positionsCount.incrementAndGet();
-            final byte piece = Move.getCapturedPiece(move);
-            final float newMaterialDelta = materialDelta + factor * WeightingFunction.weightOfPiece[piece];
+            float newMaterialDelta = materialDelta - WeightingFunction.getMaterialWeightOfMove(move, depth);
 
             final GameStatus nextGameStatus = gameStatus.makeMove(move);
             workingBoard.makeMove(move);
-            final float weight = combinationMaxSearch(depth + 1, alphaWeight, bestWeight, newMaterialDelta, -factor, nextGameStatus, workingBoard, positionsCount, prunedPositionsCount);
+            final float weight = combinationMaxSearch(depth + 1, alphaWeight, bestWeight, newMaterialDelta, factor, nextGameStatus, workingBoard, positionsCount, prunedPositionsCount);
             workingBoard.revertMove(move);
 
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
@@ -338,7 +334,7 @@ public abstract class ChessEngine {
         // No legal move possible ==> Checkmate or stalemate
         if (Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator)) {
             // Checkmate
-            return (100 - depth) * factor * -WeightingFunction.CHECKMATE_WEIGHT;
+            return (100 - depth) * WeightingFunction.CHECKMATE_WEIGHT;
         }
 
         // Stalemate
@@ -347,10 +343,7 @@ public abstract class ChessEngine {
 
     private int maxDepth = 0;
 
-    private float quiescenceSearch(final int capturedOnField, final int depth, final float materialWeight, final int factor, final GameStatus gameStatus, final Board workingBoard, AtomicInteger positionsCount) {
-//        if (true)
-//            return materialWeight;
-
+    private float quiescenceMaxSearch(final int capturedOnField, final int depth, final float materialDelta, final int factor, final GameStatus gameStatus, final Board workingBoard, AtomicLong positionsCount) {
         if (depth > maxDepth) {
             maxDepth = depth;
             System.out.println("Max depth: " + maxDepth + " on field " + ChessUtil.fieldToString(capturedOnField));
@@ -361,20 +354,19 @@ public abstract class ChessEngine {
             return WeightingFunction.ILLEGAL_WEIGHT;
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
-        float bestWeight = materialWeight;
+        float bestWeight = materialDelta;
 
         for (int i = 0; i < countMoves; i++) {
             // Follow only moves, which capture on the same field, until no further capture is possible on that field
             if (capturedOnField == Move.getToField(plainMoves[i])) {
                 positionsCount.incrementAndGet();
                 final int move = plainMoves[i];
-                final byte piece = Move.getCapturedPiece(move);
-                float weight = materialWeight + factor * WeightingFunction.weightOfPiece[piece];
+                float newMaterialDelta = materialDelta + WeightingFunction.getMaterialWeightOfMove(move, depth);
                 GameStatus nextGameStatus = gameStatus.makeMove(move);
                 workingBoard.makeMove(move);
-                weight = quiescenceSearch(capturedOnField, depth + 1, weight, -factor, nextGameStatus, workingBoard, positionsCount);
+                float weight = quiescenceMinSearch(capturedOnField, depth + 1, newMaterialDelta, factor, nextGameStatus, workingBoard, positionsCount);
                 workingBoard.revertMove(move);
-                if (weight != WeightingFunction.ILLEGAL_WEIGHT && isBetterWeight(factor, weight, bestWeight)) {
+                if (weight != WeightingFunction.ILLEGAL_WEIGHT && weight > bestWeight) {
                     bestWeight = weight;
                 }
             }
@@ -383,7 +375,35 @@ public abstract class ChessEngine {
         return bestWeight;
     }
 
-    private static boolean isBetterWeight(final int factor, final float weight, final float bestWeight) {
-        return factor == 1 ? weight > bestWeight : weight < bestWeight;
+    private float quiescenceMinSearch(final int capturedOnField, final int depth, final float materialDelta, final int factor, final GameStatus gameStatus, final Board workingBoard, AtomicLong positionsCount) {
+        if (depth > maxDepth) {
+            maxDepth = depth;
+            System.out.println("Max depth: " + maxDepth + " on field " + ChessUtil.fieldToString(capturedOnField));
+        }
+
+        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, depth);
+        if (moves.isIllegal())
+            return WeightingFunction.ILLEGAL_WEIGHT;
+        final int[] plainMoves = moves.getMoves();
+        final int countMoves = moves.count();
+        float bestWeight = materialDelta;
+
+        for (int i = 0; i < countMoves; i++) {
+            // Follow only moves, which capture on the same field, until no further capture is possible on that field
+            if (capturedOnField == Move.getToField(plainMoves[i])) {
+                positionsCount.incrementAndGet();
+                final int move = plainMoves[i];
+                float newMaterialDelta = materialDelta - WeightingFunction.getMaterialWeightOfMove(move, depth);
+                GameStatus nextGameStatus = gameStatus.makeMove(move);
+                workingBoard.makeMove(move);
+                float weight = quiescenceMaxSearch(capturedOnField, depth + 1, newMaterialDelta, factor, nextGameStatus, workingBoard, positionsCount);
+                workingBoard.revertMove(move);
+                if (weight != WeightingFunction.ILLEGAL_WEIGHT && weight < bestWeight) {
+                    bestWeight = weight;
+                }
+            }
+        }
+
+        return bestWeight;
     }
 }
