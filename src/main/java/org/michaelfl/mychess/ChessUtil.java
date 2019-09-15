@@ -97,4 +97,18 @@ public final class ChessUtil {
 
         return String.valueOf(weight);
     }
+
+    public static String pathToString(int[] path) {
+        StringBuilder buf = new StringBuilder();
+
+        for (int i = 0; i < path.length; i++) {
+            if (path[i] == 0)
+                break;
+            if (i > 0)
+                buf.append(' ');
+            buf.append(moveToString(path[i]));
+        }
+
+        return buf.toString();
+    }
 }
