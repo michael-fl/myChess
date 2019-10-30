@@ -38,7 +38,7 @@ public abstract class ChessEngine {
 
     private final static int MAX_CHECKMATE_SEARCH_DEPTH = 10;
     private final static int MAX_COMBINATION_SEARCH_DEPTH = 9;
-    private final static int MAX_QUIESCENCE_SEARCH_DEPTH = 40;
+    private final static int MAX_QUIESCENCE_SEARCH_DEPTH = 20;
     private final static int NO_CHECKMATE = -1;
     private final static int ILLEGAL = -2;
 
@@ -49,6 +49,9 @@ public abstract class ChessEngine {
     protected final MovesCounter killerMoves = new MovesCounter(2);
     protected final MovesCounter badMoves = new MovesCounter(5);
     protected final MoveGenerator moveGenerator = new MoveGenerator(rand, killerMoves, badMoves);
+
+    private final AtomicLong positionsCount = new AtomicLong();
+    private final AtomicLong prunedPositionsCount = new AtomicLong();
 
     ChessEngine(Game game) {
         this.game = game;
@@ -184,9 +187,9 @@ public abstract class ChessEngine {
         final int[] workingPath = new int[bestPath.length];
         killerMoves.clear();
         badMoves.clear();
+        positionsCount.set(0);
+        prunedPositionsCount.set(0);
 
-        final AtomicLong positionsCount = new AtomicLong();
-        final AtomicLong prunedPositionsCount = new AtomicLong();
         final GameStatus gameStatus = game.getGameStatus();
         final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, 0);
         if (moves.isIllegal() || moves.count() == 0)
@@ -202,15 +205,11 @@ public abstract class ChessEngine {
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
             workingPath[0] = move;
-//            TODO: remove
-//            4 best moves: b6-b5, f5-c8, f5-d3, d5-a5
-//            if (move == 19287 || move == 28751 || move == 13647 || move == 19021)
-//                continue;
             positionsCount.incrementAndGet();
             GameStatus nextGameStatus = gameStatus.makeMove(move);
             workingBoard.makeMove(move);
             float newMaterialDelta = materialDelta + WeightingFunction.getMaterialWeightOfMove(move, 1);
-            float weight = combinationMinSearch(1, bestWeight, Float.POSITIVE_INFINITY, newMaterialDelta, factor, nextGameStatus, workingBoard, workingPath, positionsCount, prunedPositionsCount);
+            float weight = combinationMinSearch(1, MAX_COMBINATION_SEARCH_DEPTH, bestWeight, Float.POSITIVE_INFINITY, newMaterialDelta, factor, nextGameStatus, workingBoard, workingPath);
             workingBoard.revertMove(move);
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
                 System.out.println("  " + ChessUtil.moveToString(move) + " ==> " + ChessUtil.weightToString(factor * weight) + " (" + move + ") [" + ChessUtil.pathToString(workingPath) + "]");
@@ -236,10 +235,10 @@ public abstract class ChessEngine {
     }
 
     @SuppressWarnings("Duplicates")
-    private float combinationMaxSearch(final int depth, final float alphaWeight, final float betaWeight, final float materialDelta, final int factor, final GameStatus gameStatus, final Board workingBoard, final int[] bestPathOut, final AtomicLong positionsCount, final AtomicLong prunedPositionsCount) {
+    private float combinationMaxSearch(final int depth, final int maxDepth, final float alphaWeight, final float betaWeight, final float materialDelta, final int factor, final GameStatus gameStatus, final Board workingBoard, final int[] bestPathOut) {
         final int[] workingPath = new int[bestPathOut.length];
 
-        if (depth == MAX_COMBINATION_SEARCH_DEPTH) {
+        if (depth == maxDepth) {
             final int lastMove = gameStatus.getLastMove();
 
             if (Move.getCapturedPiece(lastMove) == 0) {
@@ -247,7 +246,7 @@ public abstract class ChessEngine {
                 return materialDelta;
             }
 
-            float weight = quiescenceMaxSearch(Move.getToField(lastMove), depth, materialDelta, factor, gameStatus, workingBoard, workingPath, positionsCount);
+            float weight = quiescenceMaxSearch(Move.getToField(lastMove), depth, maxDepth + MAX_QUIESCENCE_SEARCH_DEPTH, materialDelta, factor, gameStatus, workingBoard, workingPath);
             System.arraycopy(workingPath, depth, bestPathOut, depth, bestPathOut.length - depth);
             return weight;
         }
@@ -268,7 +267,7 @@ public abstract class ChessEngine {
 
             final GameStatus nextGameStatus = gameStatus.makeMove(move);
             workingBoard.makeMove(move);
-            final float weight = combinationMinSearch(depth + 1, bestWeight, betaWeight, newMaterialDelta, factor, nextGameStatus, workingBoard, workingPath, positionsCount, prunedPositionsCount);
+            final float weight = combinationMinSearch(depth + 1, maxDepth, bestWeight, betaWeight, newMaterialDelta, factor, nextGameStatus, workingBoard, workingPath);
             workingBoard.revertMove(move);
 
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
@@ -303,10 +302,10 @@ public abstract class ChessEngine {
     }
 
     @SuppressWarnings("Duplicates")
-    private float combinationMinSearch(final int depth, final float alphaWeight, final float betaWeight, final float materialDelta, final int factor, final GameStatus gameStatus, final Board workingBoard, final int[] bestPathOut, final AtomicLong positionsCount, final AtomicLong prunedPositionsCount) {
+    private float combinationMinSearch(final int depth, final int maxDepth, final float alphaWeight, final float betaWeight, final float materialDelta, final int factor, final GameStatus gameStatus, final Board workingBoard, final int[] bestPathOut) {
         final int[] workingPath = new int[bestPathOut.length];
 
-        if (depth == MAX_COMBINATION_SEARCH_DEPTH) {
+        if (depth == maxDepth) {
             final int lastMove = gameStatus.getLastMove();
 
             if (Move.getCapturedPiece(lastMove) == 0) {
@@ -314,7 +313,7 @@ public abstract class ChessEngine {
                 return materialDelta;
             }
 
-            float weight = quiescenceMinSearch(Move.getToField(lastMove), depth, materialDelta, factor, gameStatus, workingBoard, workingPath, positionsCount);
+            float weight = quiescenceMinSearch(Move.getToField(lastMove), depth, maxDepth + MAX_QUIESCENCE_SEARCH_DEPTH, materialDelta, factor, gameStatus, workingBoard, workingPath);
             System.arraycopy(workingPath, depth, bestPathOut, depth, bestPathOut.length - depth);
             return weight;
         }
@@ -335,7 +334,7 @@ public abstract class ChessEngine {
 
             final GameStatus nextGameStatus = gameStatus.makeMove(move);
             workingBoard.makeMove(move);
-            final float weight = combinationMaxSearch(depth + 1, alphaWeight, bestWeight, newMaterialDelta, factor, nextGameStatus, workingBoard, workingPath, positionsCount, prunedPositionsCount);
+            final float weight = combinationMaxSearch(depth + 1, maxDepth, alphaWeight, bestWeight, newMaterialDelta, factor, nextGameStatus, workingBoard, workingPath);
             workingBoard.revertMove(move);
 
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
@@ -373,17 +372,17 @@ public abstract class ChessEngine {
         return 0; // draw
     }
 
-    private int maxDepth = 0;
+    private int maximumReachedDepth = 0;
 
-    private float quiescenceMaxSearch(final int capturedOnField, final int depth, final float materialDelta, final int factor, final GameStatus gameStatus, final Board workingBoard, final int[] bestPathOut, AtomicLong positionsCount) {
+    private float quiescenceMaxSearch(final int capturedOnField, final int depth, final int maxDepth, final float materialDelta, final int factor, final GameStatus gameStatus, final Board workingBoard, final int[] bestPathOut) {
         final int[] workingPath = new int[bestPathOut.length];
         bestPathOut[depth] = 0;
-        if (depth > maxDepth) {
-            maxDepth = depth;
-            System.out.println("Max depth: " + maxDepth + " on field " + ChessUtil.fieldToString(capturedOnField));
+        if (depth > maximumReachedDepth) {
+            maximumReachedDepth = depth;
+            System.out.println("Max depth: " + maximumReachedDepth + " on field " + ChessUtil.fieldToString(capturedOnField));
         }
 
-        if (depth == MAX_QUIESCENCE_SEARCH_DEPTH) {
+        if (depth == maxDepth) {
             bestPathOut[depth] = 0;
             return materialDelta;
         }
@@ -404,7 +403,7 @@ public abstract class ChessEngine {
                 float newMaterialDelta = materialDelta + WeightingFunction.getMaterialWeightOfMove(move, depth);
                 GameStatus nextGameStatus = gameStatus.makeMove(move);
                 workingBoard.makeMove(move);
-                float weight = quiescenceMinSearch(capturedOnField, depth + 1, newMaterialDelta, factor, nextGameStatus, workingBoard, workingPath, positionsCount);
+                float weight = quiescenceMinSearch(capturedOnField, depth + 1, maxDepth, newMaterialDelta, factor, nextGameStatus, workingBoard, workingPath);
                 workingBoard.revertMove(move);
                 if (weight != WeightingFunction.ILLEGAL_WEIGHT && weight > bestWeight) {
                     bestWeight = weight;
@@ -416,18 +415,18 @@ public abstract class ChessEngine {
         return bestWeight;
     }
 
-    private float quiescenceMinSearch(final int capturedOnField, final int depth, final float materialDelta, final int factor, final GameStatus gameStatus, final Board workingBoard, final int[] bestPathOut, AtomicLong positionsCount) {
+    private float quiescenceMinSearch(final int capturedOnField, final int depth, final int maxDepth, final float materialDelta, final int factor, final GameStatus gameStatus, final Board workingBoard, final int[] bestPathOut) {
         final int[] workingPath = new int[bestPathOut.length];
         bestPathOut[depth] = 0;
 
-        if (depth == MAX_QUIESCENCE_SEARCH_DEPTH) {
+        if (depth == maxDepth) {
             bestPathOut[depth] = 0;
             return materialDelta;
         }
 
-        if (depth > maxDepth) {
-            maxDepth = depth;
-            System.out.println("Max depth: " + maxDepth + " on field " + ChessUtil.fieldToString(capturedOnField));
+        if (depth > maximumReachedDepth) {
+            maximumReachedDepth = depth;
+            System.out.println("Max depth: " + maximumReachedDepth + " on field " + ChessUtil.fieldToString(capturedOnField));
         }
 
         final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, depth);
@@ -446,7 +445,7 @@ public abstract class ChessEngine {
                 float newMaterialDelta = materialDelta - WeightingFunction.getMaterialWeightOfMove(move, depth);
                 GameStatus nextGameStatus = gameStatus.makeMove(move);
                 workingBoard.makeMove(move);
-                float weight = quiescenceMaxSearch(capturedOnField, depth + 1, newMaterialDelta, factor, nextGameStatus, workingBoard, workingPath, positionsCount);
+                float weight = quiescenceMaxSearch(capturedOnField, depth + 1, maxDepth, newMaterialDelta, factor, nextGameStatus, workingBoard, workingPath);
                 workingBoard.revertMove(move);
                 if (weight != WeightingFunction.ILLEGAL_WEIGHT && weight < bestWeight) {
                     bestWeight = weight;
