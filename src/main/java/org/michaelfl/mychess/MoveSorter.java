@@ -6,6 +6,7 @@ final class MoveSorter {
 
     private final MovesArray bucketCapturingLastPlayedOppositePiece = new MovesArray();
     private final MovesArray bucketKillerMoves = new MovesArray();
+    private final MovesArray bucketBadMoves = new MovesArray();
     private final MovesArray bucketCapturingPositiveWeight = new MovesArray();
     private final MovesArray bucketCapturingSameWeight = new MovesArray();
     private final MovesArray bucketCapturingNegativeWeight = new MovesArray();
@@ -13,28 +14,31 @@ final class MoveSorter {
     private final MovesArray bucketRemainingMoves = new MovesArray();
     private final MovesArray bucketKingMoves = new MovesArray();
 
-    private final Random rand;
-    private final KillerMoves killerMoves;
+    private final MovesCounter killerMoves;
+    private final MovesCounter badMoves;
     private GameStatus gameStatus;
     private int targetFieldOfLastOppositeMove;
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Board board;
     private short[] topKillerMoves;
+    private short[] topBadMoves;
 
-    MoveSorter(Random rand, KillerMoves killerMoves) {
-        this.rand = rand;
+    MoveSorter(Random rand, MovesCounter killerMoves, MovesCounter badMoves) {
         this.killerMoves = killerMoves;
+        this.badMoves = badMoves;
     }
 
     final void reset(GameStatus gameStatus, Board board, int depth) {
         this.gameStatus = gameStatus;
         this.board = board;
         this.topKillerMoves = killerMoves.getMovesOnDepth(depth).getTopMoves();
+        this.topBadMoves = badMoves.getMovesOnDepth(depth).getTopMoves();
 
         targetFieldOfLastOppositeMove = Move.getToField(gameStatus.getLastMove());
 
         bucketCapturingLastPlayedOppositePiece.clear();
         bucketKillerMoves.clear();
+        bucketBadMoves.clear();
         bucketCapturingPositiveWeight.clear();
         bucketCapturingSameWeight.clear();
         bucketCapturingNegativeWeight.clear();
@@ -46,6 +50,9 @@ final class MoveSorter {
     final void addMove(final int move, final int fromField, final int toField, final byte movingPiece, final byte capturedPiece) {
         if (isKillerMove(move)) {
             bucketKillerMoves.add(move);
+        } else //noinspection PointlessBooleanExpression,ConstantConditions
+            if (false && isBadMove(move)) {
+            bucketBadMoves.add(move);
         } else if (capturedPiece != 0) {
             final float deltaWeight = WeightingFunction.weightOfPiece[capturedPiece] - WeightingFunction.weightOfPiece[movingPiece];
             if (toField == targetFieldOfLastOppositeMove)
@@ -79,6 +86,18 @@ final class MoveSorter {
         return false;
     }
 
+    private boolean isBadMove(final int move) {
+        // Cut off captured piece and move type
+        final short m1 = (short) move;
+
+        for (short m2 : topBadMoves) {
+            if (m1 == m2)
+                return true;
+        }
+
+        return false;
+    }
+
     final Moves getSortedMoves() {
         final Moves moves = new Moves();
         final IntArray movesArray = moves.moves;
@@ -93,6 +112,7 @@ final class MoveSorter {
         movesArray.addAll(bucketForwardMoves);
         movesArray.addAll(bucketRemainingMoves);
         movesArray.addAll(bucketKingMoves);
+        movesArray.addAll(bucketBadMoves);
 
         return moves;
     }

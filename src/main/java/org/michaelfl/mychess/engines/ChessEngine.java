@@ -2,9 +2,7 @@ package org.michaelfl.mychess.engines;
 
 import org.michaelfl.mychess.*;
 
-import java.util.Arrays;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 @SuppressWarnings("Duplicates")
@@ -48,8 +46,9 @@ public abstract class ChessEngine {
 
     protected final WeightingFunction weightingFunction = new WeightingFunction();
     protected final Game game;
-    protected final KillerMoves killerMoves = new KillerMoves();
-    protected final MoveGenerator moveGenerator = new MoveGenerator(rand, killerMoves);
+    protected final MovesCounter killerMoves = new MovesCounter(2);
+    protected final MovesCounter badMoves = new MovesCounter(5);
+    protected final MoveGenerator moveGenerator = new MoveGenerator(rand, killerMoves, badMoves);
 
     ChessEngine(Game game) {
         this.game = game;
@@ -184,6 +183,7 @@ public abstract class ChessEngine {
         final int[] bestPath = new int[MAX_QUIESCENCE_SEARCH_DEPTH + 1];
         final int[] workingPath = new int[bestPath.length];
         killerMoves.clear();
+        badMoves.clear();
 
         final AtomicLong positionsCount = new AtomicLong();
         final AtomicLong prunedPositionsCount = new AtomicLong();
@@ -223,6 +223,7 @@ public abstract class ChessEngine {
 
             // Find and store current killer moves
             killerMoves.sample();
+            //badMoves.sample();
         }
 
         System.out.println("#positions for combination check: " + positionsCount + ", #pruned: " + prunedPositionsCount);
@@ -339,6 +340,9 @@ public abstract class ChessEngine {
 
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
                 haveValidMove = true;
+
+//                if (weight > materialDelta + 0.5f)
+//                    badMoves.addMove(move, depth);
 
                 // Alpha-Beta search pruning
                 if (weight <= alphaWeight) {

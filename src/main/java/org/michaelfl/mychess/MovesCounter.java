@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @SuppressWarnings("WeakerAccess")
-public final class KillerMoves {
+public final class MovesCounter {
 
-    final static int TOP_N = 2;
     private final static short[] EMPTY_MOVE_ARR = new short[0];
 
     @SuppressWarnings("WeakerAccess")
-    public final static class MoveSet {
+    public final class MoveSet {
         private final int[] moveCounts = new int[Short.MAX_VALUE];
         private short[] topMoves = EMPTY_MOVE_ARR;
 
@@ -35,7 +34,7 @@ public final class KillerMoves {
 
         /** Find the best moves and store them internally. */
         public void findAndStoreTopMoves() {
-            topMoves = findTopMoves(moveCounts);
+            topMoves = findTopMoves(nTop, moveCounts);
         }
 
         private int size() {
@@ -87,10 +86,15 @@ public final class KillerMoves {
         }
     }
 
-    private final ArrayList<MoveSet> killerMovesPerDepth = new ArrayList<>(50);
+    private final int nTop;
+    private final ArrayList<MoveSet> movesPerDepth = new ArrayList<>(50);
+
+    public MovesCounter(int nTop) {
+        this.nTop = nTop;
+    }
 
     public final void clear() {
-        for (MoveSet moveSet : killerMovesPerDepth) {
+        for (MoveSet moveSet : movesPerDepth) {
             moveSet.clear();
         }
     }
@@ -99,22 +103,22 @@ public final class KillerMoves {
         getMovesOnDepth(depth).add(move);
     }
 
-    /** Find and store current killer moves. */
+    /** Find and store current top moves. */
     public final void sample() {
-        for (var moveSet : killerMovesPerDepth) {
+        for (var moveSet : movesPerDepth) {
             moveSet.findAndStoreTopMoves();
         }
     }
 
     public final MoveSet getMovesOnDepth(int depth) {
-        if (killerMovesPerDepth.size() <= depth) {
-            final int n = depth - killerMovesPerDepth.size() + 1;
+        if (movesPerDepth.size() <= depth) {
+            final int n = depth - movesPerDepth.size() + 1;
             for (int i = n; i > 0; i--) {
-                killerMovesPerDepth.add(new MoveSet());
+                movesPerDepth.add(new MoveSet());
             }
         }
 
-        return killerMovesPerDepth.get(depth);
+        return movesPerDepth.get(depth);
     }
 
     /** Traditional (without sentinel) insertion sort, descending. */
@@ -138,17 +142,17 @@ public final class KillerMoves {
     }
 
     /** Get the 10 best moves. */
-    static short[] findTopMoves(final int[] moveCounts) {
+    static short[] findTopMoves(final int nTop, final int[] moveCounts) {
         final short moveCount = (short) moveCounts.length;
-        final short[] bestMoves = new short[TOP_N];
-        final int[] bestCounts = new int[TOP_N];
+        final short[] bestMoves = new short[nTop];
+        final int[] bestCounts = new int[nTop];
 
         initTopMoves(moveCounts, bestMoves, bestCounts);
 
         int minIndex = minIndex(bestCounts);
         int min = bestCounts[minIndex];
 
-        for (short i = (short) TOP_N; i < moveCount; i++) {
+        for (short i = (short) nTop; i < moveCount; i++) {
             if (moveCounts[i] > min) {
                 bestCounts[minIndex] = moveCounts[i];
                 bestMoves[minIndex] = i;
@@ -160,7 +164,7 @@ public final class KillerMoves {
         sortDescending(bestMoves, bestCounts);
 
 //        final int limit = 1000; // Math.max(bestCounts[0] * 2 / 3, 1000);
-//        for (var i = 0; i < TOP_N; i++) {
+//        for (var i = 0; i < nTop; i++) {
 //            if (bestCounts[i] < limit)
 //                bestMoves[i] = 0;
 //        }

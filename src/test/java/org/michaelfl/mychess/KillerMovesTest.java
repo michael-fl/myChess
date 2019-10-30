@@ -3,7 +3,7 @@ package org.michaelfl.mychess;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.michaelfl.mychess.KillerMoves.MoveSet;
+import org.michaelfl.mychess.MovesCounter.MoveSet;
 
 import java.util.*;
 
@@ -54,7 +54,7 @@ class KillerMovesTest {
             counts[i] = m.count;
         }
 
-        KillerMoves.sortDescending(moves, counts);
+        MovesCounter.sortDescending(moves, counts);
 
         expected.sort((m1, m2) -> m2.count - m1.count);
 
@@ -88,7 +88,7 @@ class KillerMovesTest {
             moveCounts[i] = expected.get(i).count;
         }
 
-        short[] topMoves = KillerMoves.findTopMoves(moveCounts);
+        short[] topMoves = MovesCounter.findTopMoves(10, moveCounts);
 
         expected.sort((m1, m2) -> m2.count - m1.count);
 
@@ -131,7 +131,7 @@ class KillerMovesTest {
             moveCounts[i] = mc.count;
         }
 
-        short[] topMoves = KillerMoves.findTopMoves(moveCounts);
+        short[] topMoves = MovesCounter.findTopMoves(10, moveCounts);
 
         expected.sort((m1, m2) -> m2.count - m1.count);
 
@@ -160,7 +160,7 @@ class KillerMovesTest {
 
         long dummy = 0;
         for (int i = 0; i < 100000; i++) {
-            short[] topMoves = KillerMoves.findTopMoves(moveCounts);
+            short[] topMoves = MovesCounter.findTopMoves(2, moveCounts);
             dummy += topMoves[0] + topMoves[topMoves.length - 1];
         }
         System.out.println(dummy);
@@ -168,7 +168,7 @@ class KillerMovesTest {
         dummy = 0;
         for (int i = 0; i < 100; i++) {
             long t1 = System.nanoTime();
-            short[] topMoves = KillerMoves.findTopMoves(moveCounts);
+            short[] topMoves = MovesCounter.findTopMoves(2, moveCounts);
             long t2 = System.nanoTime();
             dummy += topMoves[0] + topMoves[topMoves.length - 1];
             System.out.println("findTopMoves took " + (t2 - t1) / 1000 + "µs");
@@ -182,7 +182,7 @@ class KillerMovesTest {
         final int n = Short.MAX_VALUE;
         ArrayList<MoveAndCount> expected = prepareExpectedMoves(n);
 
-        KillerMoves killerMoves = new KillerMoves();
+        MovesCounter killerMoves = new MovesCounter(10);
         MoveSet moveSet = killerMoves.getMovesOnDepth(0);
 
         for (MoveAndCount mc : expected) {

@@ -51,12 +51,12 @@ public final class MoveGenerator {
     private boolean containsIllegalMove;
 
     public MoveGenerator(Random rand) {
-        this(rand, new KillerMoves());
+        this(rand, new MovesCounter(1), new MovesCounter(1));
     }
 
-    public MoveGenerator(Random rand, KillerMoves killerMoves) {
+    public MoveGenerator(Random rand, MovesCounter killerMoves, MovesCounter badMoves) {
         this.rand = rand;
-        this.moveSorter = new MoveSorter(rand, killerMoves);
+        this.moveSorter = new MoveSorter(rand, killerMoves, badMoves);
     }
 
     public Moves calculateMoves(GameStatus game, Board theBoard) {
