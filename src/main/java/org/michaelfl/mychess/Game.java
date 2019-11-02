@@ -1,6 +1,7 @@
 package org.michaelfl.mychess;
 
 import org.michaelfl.mychess.engines.ChessEngine;
+import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
 
 import java.io.BufferedReader;
@@ -58,7 +59,7 @@ public final class Game {
         return weight;
     }
 
-    public void setWeight(float weight) {
+    private void setWeight(float weight) {
         this.weight = weight;
     }
 
@@ -166,8 +167,13 @@ public final class Game {
         calculateAndSetGameResult();
     }
 
-    void makeMove(int move) {
-        // TODO deactivate in "production"
+    void makeMove(MoveAndWeight move) {
+        final int factor = getGameStatus().isWhiteTurn() ? 1 : -1;
+        setWeight(move.weight * factor); // Remember weight of current position
+        makeMove(move.move);
+    }
+
+    private void makeMove(int move) {
         board.validateMove(move);
 
         previousBoard = board.copy();
@@ -201,7 +207,7 @@ public final class Game {
         return gameResult;
     }
 
-    static GameResult checkCheckMateOrStaleMate(GameStatus gameStatus, Board board, MoveGenerator moveGenerator) {
+    private static GameResult checkCheckMateOrStaleMate(GameStatus gameStatus, Board board, MoveGenerator moveGenerator) {
         final byte[] rawBoard = board.getRawBoard();
 
         // Check the next theoretically possible moves
@@ -288,40 +294,24 @@ public final class Game {
     private void playAutoGameInternal() {
         getBoard().print();
 
-        int maxMoves = 0;
-        int totalMovesCount = 0;
-        int countGreater40 = 0;
-        int countGreater50 = 0;
         int moveNo = getMoveCount() + 1;
 
         int i = 0;
         for (; i <=1000; i++, moveNo++) {
-            int move = getEngine().nextMove();
-            if (move == 0) {
+            MoveAndWeight move = getEngine().nextMove();
+            if (move == MoveAndWeight.NO_MOVE) {
                 // No valid move possible ==> checkmate or stalemate
                 break;
             }
             makeMove(move);
-            System.out.println("Move #" + moveNo + ": " + ChessUtil.moveToString(move));
+            System.out.println("Move #" + moveNo + ": " + ChessUtil.moveToString(move.move));
 
             if (getBoard().isDrawByMaterial())
                 break;
-
-            int countPossibleMoves = getEngine().getCountPossibleMoves();
-            maxMoves = Math.max(maxMoves, countPossibleMoves);
-            totalMovesCount += countPossibleMoves;
-            if (countPossibleMoves > 40)
-                countGreater40++;
-            if (countPossibleMoves > 50)
-                countGreater50++;
         }
 
         GameResult gameResult = checkGameResult(new MoveGenerator(rand));
         setResult(gameResult);
-
-        int avgMoves = i > 0 ? totalMovesCount / i : 0;
-        System.out.println("Statistics: max moves: " + maxMoves + ", avg moves: " + avgMoves
-                + ", # >40: " + countGreater40 + ", # >50: " + countGreater50);
     }
 
     void print() {
