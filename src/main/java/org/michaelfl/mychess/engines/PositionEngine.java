@@ -5,7 +5,6 @@ import org.michaelfl.mychess.*;
 public final class PositionEngine extends ChessEngine {
 
     private WeightingFunction weightingFunction = new WeightingFunction();
-    private int countPossibleMoves = 0;
 
     public PositionEngine(Game game) {
         super(game);
@@ -13,12 +12,11 @@ public final class PositionEngine extends ChessEngine {
 
     @SuppressWarnings("Duplicates")
     @Override
-    protected int calculateNextMove() {
+    protected MoveAndWeight calculateNextMove() {
         Moves moves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard());
-        countPossibleMoves = moves.count();
 
         if (moves.isIllegal() || moves.count() == 0)
-            return 0; // No move possible
+            return MoveAndWeight.NO_MOVE; // No move possible
 
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
@@ -48,14 +46,9 @@ public final class PositionEngine extends ChessEngine {
 
         if (bestMove == -1) {
             // No legal move possible
-            return 0;
+            return MoveAndWeight.NO_MOVE;
         }
 
-        return plainMoves[bestMove];
-    }
-
-    @Override
-    public int getCountPossibleMoves() {
-        return countPossibleMoves;
+        return new MoveAndWeight(plainMoves[bestMove], bestWeight, new int[] { plainMoves[bestMove] });
     }
 }

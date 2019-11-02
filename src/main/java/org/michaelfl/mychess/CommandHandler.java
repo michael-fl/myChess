@@ -1,6 +1,7 @@
 package org.michaelfl.mychess;
 
 import org.michaelfl.mychess.Game.GameResult;
+import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
 
 import java.io.BufferedReader;
@@ -114,14 +115,14 @@ final class CommandHandler {
         }
 
         private void makeComputerMove() {
-            int move = game.getEngine().nextMove();
-            if (move == 0) {
+            MoveAndWeight move = game.getEngine().nextMove();
+            if (move == MoveAndWeight.NO_MOVE) {
                 System.err.println("No move possible!?");
                 return;
             }
 
             game.makeMove(move);
-            System.out.println("Move #" + game.getMoveCount() + ": " + ChessUtil.moveToString(move));
+            System.out.println("Move #" + game.getMoveCount() + ": " + ChessUtil.moveToString(move.move));
             game.calculateAndSetGameResult();
             game.print();
         }
@@ -240,8 +241,11 @@ final class CommandHandler {
                 System.err.println("Game is already over");
                 return;
             }
-            int move = game.getEngine().nextMove();
-            System.out.println(ChessUtil.moveToString(move));
+            MoveAndWeight move = game.getEngine().nextMove();
+            if (move == MoveAndWeight.NO_MOVE)
+                System.out.println("Illegal position. No move possible.");
+            else
+                System.out.println(ChessUtil.moveToString(move.move));
         }
     }
 
@@ -276,14 +280,12 @@ final class CommandHandler {
                 return;
             }
 
-            Float oldWeight = game.getWeight();
             MyChessEngine engine = new MyChessEngine(game);
-            int move = engine.nextMove();
-            if (move != 0)
-                System.out.println("weight: " + game.getWeight());
-            else
+            MoveAndWeight move = engine.nextMove();
+            if (move == MoveAndWeight.NO_MOVE)
                 System.out.println("Illegal position. No move possible.");
-            game.setWeight(oldWeight != null ? oldWeight : 0);
+            else
+                System.out.println(ChessUtil.moveToString(move.move));
         }
     }
 
@@ -325,9 +327,8 @@ final class CommandHandler {
             if (depth < 0) {
                 System.out.println("No checkmate found");
             } else {
-                int nextMove = game.getEngine().nextMove();
                 game.getBoard().print();
-                System.out.println(ChessUtil.moveToString(moveOut[0]) + " ==> Checkmate in " + depth + " moves. Next calculated move: " + ChessUtil.moveToString(nextMove));
+                System.out.println(ChessUtil.moveToString(moveOut[0]) + " ==> Checkmate in " + depth + " moves");
             }
         }
     }
@@ -347,16 +348,16 @@ final class CommandHandler {
             }
 
             long t1 = System.currentTimeMillis();
-            int move = game.getEngine().nextMove();
+            MoveAndWeight move = game.getEngine().nextMove();
             long t2 = System.currentTimeMillis();
-            if (move == 0) {
+            if (move == MoveAndWeight.NO_MOVE) {
                 System.err.println("No move possible!?");
                 return;
             }
 
             computerColor = game.getTurn();
             game.makeMove(move);
-            System.out.println("Move #" + game.getMoveCount() + ": " + ChessUtil.moveToString(move) + ", " + (t2 - t1) + "ms");
+            System.out.println("Move #" + game.getMoveCount() + ": " + ChessUtil.moveToString(move.move) + ", " + (t2 - t1) + "ms");
             game.calculateAndSetGameResult();
             game.print();
         }

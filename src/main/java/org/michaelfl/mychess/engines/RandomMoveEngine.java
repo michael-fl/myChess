@@ -7,19 +7,17 @@ import java.util.Random;
 public final class RandomMoveEngine extends ChessEngine {
 
     private final Random rand = new Random();
-    private int countPossibleMoves = -1;
 
     public RandomMoveEngine(Game game) {
         super(game);
     }
 
     @Override
-    protected int calculateNextMove() {
+    protected MoveAndWeight calculateNextMove() {
         Moves moves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard());
-        countPossibleMoves = moves.count();
 
         if (moves.isIllegal() || moves.count() == 0)
-            return 0; // No move possible
+            return MoveAndWeight.NO_MOVE; // No move possible
 
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
@@ -34,18 +32,13 @@ public final class RandomMoveEngine extends ChessEngine {
             Moves nextMoves = moveGenerator.calculateMoves(gameStatus, workingBoard);
 
             if (!nextMoves.isIllegal())
-                return move;
+                return new MoveAndWeight(move, 0, new int[] { move });
 
             workingBoard.revertMove(move);
             moveIndex = (moveIndex + 1) % countMoves; // try next move
         }
 
         // No legal move possible
-        return 0;
-    }
-
-    @Override
-    public int getCountPossibleMoves() {
-        return countPossibleMoves;
+        return MoveAndWeight.NO_MOVE;
     }
 }
