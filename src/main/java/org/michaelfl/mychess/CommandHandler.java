@@ -10,6 +10,7 @@ import java.util.List;
 
 final class CommandHandler {
 
+    @SuppressWarnings("InnerClassMayBeStatic")
     private abstract class Command {
         abstract boolean canHandle(String commandLine);
         abstract void handle(String commandLine);
@@ -122,9 +123,9 @@ final class CommandHandler {
             }
 
             game.makeMove(move);
-            System.out.println("Move #" + game.getMoveCount() + ": " + ChessUtil.moveToString(move.move));
             game.calculateAndSetGameResult();
             game.print();
+            System.out.println("Move #" + game.getMoveCount() + ": " + ChessUtil.moveToString(move.move));
         }
     }
 
@@ -320,10 +321,11 @@ final class CommandHandler {
                 return;
             }
 
+            MyChessEngine engine = new MyChessEngine(game);
             int[] moveOut = new int[1];
-            int depth = game.getEngine().findCheckmate(game.getTurn(), game.getGameStatus(), game.getBoard().copy(), moveOut);
+            int depth = engine.findCheckmate(game.getTurn(), game.getGameStatus(), game.getBoard().copy(), moveOut);
             if (depth < 0)
-                depth = game.getEngine().findCheckmate(game.getOppositeColor(), game.getGameStatus(), game.getBoard().copy(), moveOut);
+                depth = engine.findCheckmate(game.getOppositeColor(), game.getGameStatus(), game.getBoard().copy(), moveOut);
             if (depth < 0) {
                 System.out.println("No checkmate found");
             } else {
@@ -357,9 +359,9 @@ final class CommandHandler {
 
             computerColor = game.getTurn();
             game.makeMove(move);
-            System.out.println("Move #" + game.getMoveCount() + ": " + ChessUtil.moveToString(move.move) + ", " + (t2 - t1) + "ms");
             game.calculateAndSetGameResult();
             game.print();
+            System.out.println("Move #" + game.getMoveCount() + ": " + ChessUtil.moveToString(move.move) + ", " + (t2 - t1) + "ms");
         }
     }
 
