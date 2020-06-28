@@ -2,6 +2,7 @@ package org.michaelfl.mychess.engines;
 
 import org.michaelfl.mychess.Board;
 import org.michaelfl.mychess.Game;
+import org.michaelfl.mychess.GameConfig;
 import org.michaelfl.mychess.GameStatus;
 
 @SuppressWarnings("Duplicates")
@@ -9,14 +10,19 @@ public final class MyChessEngine extends ChessEngine {
 
     private final CombinationSearch combinationSearch;
     private final CheckmateSearch checkmateSearch;
-    private final PositionSearch positionSearch;
+    private PositionSearch positionSearch;
 
     public MyChessEngine(Game game) {
         super(game);
 
         combinationSearch = new CombinationSearch(this);
         checkmateSearch = new CheckmateSearch(this);
-        positionSearch = new PositionSearch(this);
+        positionSearch = new PositionSearch(this, game.getConfig());
+    }
+
+    @Override
+    public void setGameConfig(GameConfig config) {
+        positionSearch = new PositionSearch(this, game.getConfig());
     }
 
     @Override

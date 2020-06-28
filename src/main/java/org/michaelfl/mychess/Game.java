@@ -28,6 +28,7 @@ public final class Game {
     private List<GameStatus> statusStack = new ArrayList<>();
     private GameResult result = GameResult.ONGOING;
     private Float weight;
+    private GameConfig config = new GameConfig();
 
     Game() {
         statusStack.add(GameStatus.newGame());
@@ -42,6 +43,16 @@ public final class Game {
 
         // Check if game is over
         calculateAndSetGameResult();
+    }
+
+    public void setConfig(GameConfig config) {
+        this.config = config;
+
+        getEngine().setGameConfig(config);
+    }
+
+    public GameConfig getConfig() {
+        return config;
     }
 
     ChessEngine getEngine() {
