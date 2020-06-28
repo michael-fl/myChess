@@ -1,6 +1,7 @@
 package org.michaelfl.mychess.engines;
 
 import org.michaelfl.mychess.Game;
+import org.michaelfl.mychess.GameConfig;
 import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.MovesCounter;
 
@@ -32,6 +33,10 @@ public abstract class ChessEngine {
 
     ChessEngine(Game game) {
         this.game = game;
+    }
+
+    public void setGameConfig(GameConfig config) {
+
     }
 
     final Random getRandom() {

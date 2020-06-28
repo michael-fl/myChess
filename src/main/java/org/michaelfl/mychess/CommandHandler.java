@@ -364,6 +364,57 @@ final class CommandHandler {
         }
     }
 
+    private final class SetVariantsCommand extends Command {
+
+        private static final String PREFIX = "config variants ";
+
+        @Override
+        boolean canHandle(String commandLine) {
+            return commandLine.startsWith(PREFIX);
+        }
+
+        @Override
+        void handle(String commandLine) {
+            String variantsStr = commandLine.substring(PREFIX.length()).trim();
+            int variants = Integer.parseInt(variantsStr);
+            game.setConfig(game.getConfig().setNVariants(variants));
+        }
+    }
+
+    private final class SetDepthCommand extends Command {
+
+        private static final String PREFIX = "config depth ";
+
+        @Override
+        boolean canHandle(String commandLine) {
+            return commandLine.startsWith(PREFIX);
+        }
+
+        @Override
+        void handle(String commandLine) {
+            String variantsStr = commandLine.substring(PREFIX.length()).trim();
+            int depth = Integer.parseInt(variantsStr);
+            game.setConfig(game.getConfig().setMaxDepth(depth));
+        }
+    }
+
+    private final class SetIterationDepthCommand extends Command {
+
+        private static final String PREFIX = "config iteration-depth ";
+
+        @Override
+        boolean canHandle(String commandLine) {
+            return commandLine.startsWith(PREFIX);
+        }
+
+        @Override
+        void handle(String commandLine) {
+            String variantsStr = commandLine.substring(PREFIX.length()).trim();
+            int depth = Integer.parseInt(variantsStr);
+            game.setConfig(game.getConfig().setIterationDepth(depth));
+        }
+    }
+
     private final List<Command> commands = List.of(
             new QuitCommand(),
             new AutoGameCommand(),
@@ -380,12 +431,15 @@ final class CommandHandler {
             new WeightCommand(),
             new DeepWeightCommand(),
             new LoadCommand(),
-            new CheckmateSearchCommand()
+            new CheckmateSearchCommand(),
+            new SetVariantsCommand(),
+            new SetDepthCommand(),
+            new SetIterationDepthCommand()
     );
 
     private final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     private Game game;
-    private WeightingFunction weightingFunction = new WeightingFunction();
+    private final WeightingFunction weightingFunction = new WeightingFunction();
     private Integer computerColor;
 
     CommandHandler(Game game) {

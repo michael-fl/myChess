@@ -3,6 +3,7 @@ package org.michaelfl.mychess.engines;
 import org.michaelfl.mychess.Board;
 import org.michaelfl.mychess.ChessUtil;
 import org.michaelfl.mychess.Game;
+import org.michaelfl.mychess.GameConfig;
 import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.Move;
 import org.michaelfl.mychess.MoveGenerator;
@@ -18,12 +19,9 @@ import java.util.Comparator;
 @SuppressWarnings("DuplicatedCode")
 final class PositionSearch {
 
-    private final static int N_DEEPEN_LOOPS = 5;
-    private final static int N_VARIANTS = 4;
-    private final static int FIRST_ITERATION_DEPTH = 6;
-    private final static int SECOND_ITERATION_DEPTH = 6;
     private final static int MAX_QUIESCENCE_SEARCH_DEPTH = 20;
 
+    private final GameConfig gameConfig;
     private final MovesCounter killerMoves = new MovesCounter(2);
     private final MovesCounter badMoves = new MovesCounter(5);
     private final MoveGenerator moveGenerator;
@@ -34,8 +32,9 @@ final class PositionSearch {
     private int maximumReachedDepth = 0;
     private int weightFactor;
 
-    PositionSearch(MyChessEngine engine) {
-        moveGenerator = new MoveGenerator(engine.getRandom(), killerMoves, badMoves);
+    PositionSearch(MyChessEngine engine, GameConfig gameConfig) {
+        this.moveGenerator = new MoveGenerator(engine.getRandom(), killerMoves, badMoves);
+        this.gameConfig = gameConfig;
     }
 
     int getMaximumReachedDepth() {
@@ -58,12 +57,15 @@ final class PositionSearch {
             return MoveAndWeight.NO_MOVE; // No move possible
 
         final float materialWeight = weightFactor * WeightingFunction.calculateMaterialWeight(workingBoard);
-        final ArrayList<Integer> skipMoves = new ArrayList<>(N_VARIANTS);
-        final MoveAndWeight[] bestMoves = new MoveAndWeight[N_VARIANTS];
+        final int nVariants = gameConfig.getNVariants();
+        final int iterationDepth = gameConfig.getIterationDepth();
+        final int maxDepth = gameConfig.getMaxDepth();
+        final ArrayList<Integer> skipMoves = new ArrayList<>(nVariants);
+        final MoveAndWeight[] bestMoves = new MoveAndWeight[nVariants];
 
         Arrays.fill(bestMoves, MoveAndWeight.NO_MOVE);
 
-        for (int i = 0; i < N_VARIANTS; i++) {
+        for (int i = 0; i < nVariants; i++) {
             System.out.println("VARIANT " + (i+1) + "...");
             MoveAndWeight nextBestMove = findNextBestMove(gameStatus, workingBoard, moves, skipMoves, materialWeight);
             var m = bestMoves[i] = nextBestMove;
@@ -75,12 +77,10 @@ final class PositionSearch {
 
         System.out.println("#positions: " + positionsCount + ", #pruned: " + prunedPositionsCount);
 
-        for (int depth = 1; depth <= N_DEEPEN_LOOPS; depth++) {
-            System.out.println("DEPTH: " + depth);
-            for (int i = 0; i < N_VARIANTS; i++) {
-                if (bestMoves[i] == MoveAndWeight.NO_MOVE)
-                    break;
-                if (bestMoves[i].path[depth] != 0) {
+        for (int depth = 1; depth + iterationDepth < maxDepth; depth++) {
+            System.out.println("DEPTH: " + (depth + iterationDepth) + "/" + maxDepth);
+            for (int i = 0; i < nVariants; i++) {
+                if (bestMoves[i] != MoveAndWeight.NO_MOVE && bestMoves[i].path[depth] != 0) {
                     System.out.println("DEEPEN VARIANT " + (i + 1) + "...");
                     var m = bestMoves[i] = deepenPath(depth, gameStatus, workingBoard, bestMoves[i]);
                     System.out.println("move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight * weightFactor) + " [" + ChessUtil.pathToString(m.path) + "]");
@@ -92,11 +92,11 @@ final class PositionSearch {
             System.out.println("\nBEST MOVES:");
             sortByWeightDescending(bestMoves);
 
-            for (int i = 0; i < N_VARIANTS; i++) {
-                if (bestMoves[i] == MoveAndWeight.NO_MOVE)
-                    break;
-                MoveAndWeight m = bestMoves[i];
-                System.out.println((i + 1) + ". move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight * weightFactor) + " [" + ChessUtil.pathToString(m.path) + "]");
+            for (int i = 0; i < nVariants; i++) {
+                if (bestMoves[i] != MoveAndWeight.NO_MOVE) {
+                    MoveAndWeight m = bestMoves[i];
+                    System.out.println((i + 1) + ". move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight * weightFactor) + " [" + ChessUtil.pathToString(m.path) + "]");
+                }
             }
 
             return bestMoves[0];
@@ -126,6 +126,7 @@ final class PositionSearch {
         final int countMoves = moves.count();
         float bestWeight = Float.NEGATIVE_INFINITY;
         final float betaWeight = Float.POSITIVE_INFINITY;
+        final int iterationDepth = gameConfig.getIterationDepth();
         int bestMove = 0;
 
         for (int i = 0; i < countMoves; i++) {
@@ -139,7 +140,7 @@ final class PositionSearch {
             GameStatus nextGameStatus = gameStatus.makeMove(move);
             workingBoard.makeMove(move);
             float materialDelta = WeightingFunction.getMaterialWeightOfMove(move, 1);
-            float weight = minSearch(1, FIRST_ITERATION_DEPTH, bestWeight, betaWeight, materialWeight, materialDelta, nextGameStatus, workingBoard, workingPath, false);
+            float weight = minSearch(1, iterationDepth, bestWeight, betaWeight, materialWeight, materialDelta, nextGameStatus, workingBoard, workingPath, false);
             workingBoard.revertMove(move);
             //System.out.println("--> weight " + ChessUtil.weightToString(weight));
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
@@ -174,7 +175,7 @@ final class PositionSearch {
 
         float materialWeight = weightFactor * WeightingFunction.calculateMaterialWeight(workingBoard);
 
-        int maxDepth = continueOnDepth + SECOND_ITERATION_DEPTH;
+        int maxDepth = continueOnDepth + gameConfig.getIterationDepth();
         float weight;
         if (continueOnDepth % 2 == 0)
             weight = maxSearch(continueOnDepth, maxDepth, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, materialWeight, 0f, gameStatus, workingBoard, bestPathInOut, true);
