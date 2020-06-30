@@ -56,7 +56,6 @@ final class PositionSearch {
         if (moves.isIllegal() || moves.count() == 0)
             return MoveAndWeight.NO_MOVE; // No move possible
 
-        final float materialWeight = weightFactor * WeightingFunction.calculateMaterialWeight(workingBoard);
         final int nVariants = gameConfig.getNVariants();
         final int iterationDepth = gameConfig.getIterationDepth();
         final int maxDepth = gameConfig.getMaxDepth();
@@ -67,7 +66,7 @@ final class PositionSearch {
 
         for (int i = 0; i < nVariants; i++) {
             System.out.println("VARIANT " + (i+1) + "...");
-            MoveAndWeight nextBestMove = findNextBestMove(gameStatus, workingBoard, moves, skipMoves, materialWeight);
+            MoveAndWeight nextBestMove = findNextBestMove(gameStatus, workingBoard, moves, skipMoves);
             var m = bestMoves[i] = nextBestMove;
             if (nextBestMove == MoveAndWeight.NO_MOVE)
                 break;
@@ -118,10 +117,11 @@ final class PositionSearch {
     }
 
     @SuppressWarnings("Duplicates")
-    private MoveAndWeight findNextBestMove(GameStatus gameStatus, Board workingBoard, Moves moves, ArrayList<Integer> skipMoves, float materialWeight) {
+    private MoveAndWeight findNextBestMove(GameStatus gameStatus, Board workingBoard, Moves moves, ArrayList<Integer> skipMoves) {
         final int[] bestPath = new int[50];
         final int[] workingPath = new int[bestPath.length];
 
+        final float materialWeight = weightFactor * WeightingFunction.calculateMaterialWeight(workingBoard);
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
         float bestWeight = Float.NEGATIVE_INFINITY;
@@ -135,12 +135,15 @@ final class PositionSearch {
                 continue;
             //System.out.println("Working on move " + ChessUtil.moveToString(move));
 
+            final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, 1);
+            final float newMaterialDelta = WeightingFunction.getMaterialWeightOfMove(move, 1);
+            final float newMaterialWeight = materialWeight + moveWeight;
+
             workingPath[0] = move;
             positionsCount++;
             GameStatus nextGameStatus = gameStatus.makeMove(move);
             workingBoard.makeMove(move);
-            float materialDelta = WeightingFunction.getMaterialWeightOfMove(move, 1);
-            float weight = minSearch(1, iterationDepth, bestWeight, betaWeight, materialWeight, materialDelta, nextGameStatus, workingBoard, workingPath, false);
+            float weight = minSearch(1, iterationDepth, bestWeight, betaWeight, newMaterialWeight, newMaterialDelta, nextGameStatus, workingBoard, workingPath, false);
             workingBoard.revertMove(move);
             //System.out.println("--> weight " + ChessUtil.weightToString(weight));
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {

@@ -213,8 +213,8 @@ public final class WeightingFunction {
     }
 
     public static float getMaterialWeightOfMove(int move, int depth) {
-        final float pw = WeightingFunction.weightOfPiece[Move.getCapturedPiece(move)];
-        final float capturedWeight = pw != 0 ? pw - depth * 0.0001f : 0;
+        final float capturedWeight = WeightingFunction.weightOfPiece[Move.getCapturedPiece(move)];
+        //final float capturedWeight = pw != 0 ? pw - depth * 0.0001f : 0;
         final byte moveType = Move.getMoveType(move);
         if (moveType == Move.typeNormal)
             return capturedWeight;
