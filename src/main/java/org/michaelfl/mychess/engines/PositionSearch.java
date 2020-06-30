@@ -19,8 +19,6 @@ import java.util.Comparator;
 @SuppressWarnings("DuplicatedCode")
 final class PositionSearch {
 
-    private final static int MAX_QUIESCENCE_SEARCH_DEPTH = 20;
-
     private final GameConfig gameConfig;
     private final MovesCounter killerMoves = new MovesCounter(2);
     private final MovesCounter badMoves = new MovesCounter(5);
@@ -207,7 +205,7 @@ final class PositionSearch {
                 return calculatePositionWeight(gameStatus, workingBoard, materialWeight, materialDelta);
             }
 
-            float weight = quiescenceMaxSearch(Move.getToField(lastMove), depth, maxDepth + MAX_QUIESCENCE_SEARCH_DEPTH, materialWeight, materialDelta, gameStatus, workingBoard, workingPath);
+            float weight = quiescenceMaxSearch(Move.getToField(lastMove), depth, maxDepth + gameConfig.getMaxQuiescenceDepth(), materialWeight, materialDelta, gameStatus, workingBoard, workingPath);
             System.arraycopy(workingPath, depth, bestPathOut, depth, bestPathOut.length - depth);
             return weight;
         }
@@ -286,7 +284,7 @@ final class PositionSearch {
                 return calculatePositionWeight(gameStatus, workingBoard, materialWeight, materialDelta);
             }
 
-            float weight = quiescenceMinSearch(Move.getToField(lastMove), depth, maxDepth + MAX_QUIESCENCE_SEARCH_DEPTH, materialWeight, materialDelta, gameStatus, workingBoard, workingPath);
+            float weight = quiescenceMinSearch(Move.getToField(lastMove), depth, maxDepth + gameConfig.getMaxQuiescenceDepth(), materialWeight, materialDelta, gameStatus, workingBoard, workingPath);
             System.arraycopy(workingPath, depth, bestPathOut, depth, bestPathOut.length - depth);
             return weight;
         }
