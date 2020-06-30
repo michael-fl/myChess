@@ -8,6 +8,7 @@ public final class GameConfig {
     private final static int DEFAULT_MAX_DEPTH = 14;
     private final static int DEFAULT_N_VARIANTS = 4;
     private final static int DEFAULT_ITERATION_DEPTH = 6;
+    private final static int DEFAULT_MAX_QUIESCENCE_SEARCH_DEPTH = 20;
 
     private final int maxDepth;
     private final int iterationDepth;
@@ -43,6 +44,10 @@ public final class GameConfig {
 
     public final int getIterationDepth() {
         return iterationDepth;
+    }
+
+    public final int getMaxQuiescenceDepth() {
+        return DEFAULT_MAX_QUIESCENCE_SEARCH_DEPTH;
     }
 
     public final int getNVariants() {
