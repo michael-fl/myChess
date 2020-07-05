@@ -8,53 +8,30 @@ import org.michaelfl.mychess.GameStatus;
 @SuppressWarnings("Duplicates")
 public final class MyChessEngine extends ChessEngine {
 
-    private final CombinationSearch combinationSearch;
-    private final CheckmateSearch checkmateSearch;
-    private PositionSearch positionSearch;
-
     public MyChessEngine(Game game) {
         super(game);
-
-        combinationSearch = new CombinationSearch(this);
-        checkmateSearch = new CheckmateSearch(this);
-        positionSearch = new PositionSearch(this, game.getConfig());
     }
 
     @Override
-    public void setGameConfig(GameConfig config) {
-        positionSearch = new PositionSearch(this, game.getConfig());
-    }
-
-    @Override
-    protected MoveAndWeight calculateNextMove() {
-        final Board workingBoard = game.getBoard().copy();
-
+    protected MoveAndWeight calculateNextMove(NextMoveTask task) {
         // Phase 1: Checkmate search
         long t1 = System.currentTimeMillis();
-        MoveAndWeight move = checkmateSearch.findCheckmateMove(game, workingBoard);
+        MoveAndWeight move = CheckmateSearch.findCheckmateMove(this, game);
         long t2 = System.currentTimeMillis();
         System.out.println("Checkmate check took " + (t2 - t1) + "ms");
 
-        // Phase 2: Combination/material search
-        if (false && move == MoveAndWeight.NO_MOVE) {
-            t1 = System.currentTimeMillis();
-            move = combinationSearch.calculateNextMove(game, workingBoard);
-            t2 = System.currentTimeMillis();
-            System.out.println("Combination search took " + (t2 - t1) + "ms; maximum depth " + combinationSearch.getMaximumReachedDepth());
-        }
-
-        // Phase 3: Position search
+        // Phase 2: Position search
         if (move == MoveAndWeight.NO_MOVE) {
             t1 = System.currentTimeMillis();
-            move = positionSearch.calculateNextMove(game, workingBoard);
+            move = PositionSearch.calculateNextMove(this, task, game);
             t2 = System.currentTimeMillis();
-            System.out.println("Position search took " + (t2 - t1) + "ms; maximum depth " + positionSearch.getMaximumReachedDepth());
+            System.out.println("Position search took " + (t2 - t1) + "ms");
         }
 
         return move;
     }
 
-    public int findCheckmate(int forColor, GameStatus gameStatus, Board workingBoard, int[] moveOut) {
-        return checkmateSearch.findCheckmate(forColor, gameStatus, workingBoard, moveOut);
+    public int findCheckmate(int forColor, int[] moveOut) {
+        return CheckmateSearch.findCheckmate(this, game, forColor, moveOut);
     }
 }

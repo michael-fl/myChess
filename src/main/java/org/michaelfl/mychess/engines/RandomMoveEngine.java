@@ -13,7 +13,7 @@ public final class RandomMoveEngine extends ChessEngine {
     }
 
     @Override
-    protected MoveAndWeight calculateNextMove() {
+    protected MoveAndWeight calculateNextMove(NextMoveTask task) {
         Moves moves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard());
 
         if (moves.isIllegal() || moves.count() == 0)

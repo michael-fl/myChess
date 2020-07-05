@@ -1,11 +1,13 @@
 package org.michaelfl.mychess.engines;
 
 import org.michaelfl.mychess.Game;
-import org.michaelfl.mychess.GameConfig;
 import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.MovesCounter;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public abstract class ChessEngine {
 
@@ -30,23 +32,27 @@ public abstract class ChessEngine {
     private final MovesCounter badMoves = new MovesCounter(5);
     final Game game;
     final MoveGenerator moveGenerator = new MoveGenerator(rand, killerMoves, badMoves);
+    private final ExecutorService executor;
 
     ChessEngine(Game game) {
         this.game = game;
-    }
-
-    public void setGameConfig(GameConfig config) {
-
+        this.executor = Executors.newSingleThreadExecutor();
     }
 
     final Random getRandom() {
         return rand;
     }
 
-    public final MoveAndWeight nextMove() {
-        return calculateNextMove();
+    public final NextMoveTask nextMoveAsync() {
+        var task = new NextMoveTask();
+
+        Future<MoveAndWeight> result = executor.submit(() -> calculateNextMove(task));
+
+        task.setResultFuture(result);
+
+        return task;
     }
 
-    protected abstract MoveAndWeight calculateNextMove();
+    protected abstract MoveAndWeight calculateNextMove(NextMoveTask task);
 
 }

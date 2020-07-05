@@ -7,13 +7,16 @@ import org.michaelfl.mychess.engines.MyChessEngine;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 final class CommandHandler {
 
     @SuppressWarnings("InnerClassMayBeStatic")
     private abstract class Command {
         abstract boolean canHandle(String commandLine);
-        abstract void handle(String commandLine);
+        abstract void handle(String commandLine) throws Exception;
     }
 
     private final class QuitCommand extends Command {
@@ -87,7 +90,7 @@ final class CommandHandler {
         }
 
         @Override
-        void handle(String commandLine) {
+        void handle(String commandLine) throws InterruptedException, ExecutionException, TimeoutException {
             boolean isWhiteTurn = game.getTurn() == GameStatus.TURN_WHITE;
             MoveDescription move;
 
@@ -115,8 +118,8 @@ final class CommandHandler {
                 makeComputerMove();
         }
 
-        private void makeComputerMove() {
-            MoveAndWeight move = game.getEngine().nextMove();
+        private void makeComputerMove() throws InterruptedException, ExecutionException, TimeoutException {
+            MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(1, TimeUnit.HOURS);
             if (move == MoveAndWeight.NO_MOVE) {
                 System.err.println("No move possible!?");
                 return;
@@ -236,12 +239,12 @@ final class CommandHandler {
         }
 
         @Override
-        void handle(String commandLine) {
+        void handle(String commandLine) throws InterruptedException, ExecutionException, TimeoutException {
             if (game.getResult() != GameResult.ONGOING) {
                 System.err.println("Game is already over");
                 return;
             }
-            MoveAndWeight move = game.getEngine().nextMove();
+            MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(1, TimeUnit.HOURS);
             if (move == MoveAndWeight.NO_MOVE)
                 System.out.println("Illegal position. No move possible.");
             else
@@ -274,14 +277,14 @@ final class CommandHandler {
         }
 
         @Override
-        void handle(String commandLine) {
+        void handle(String commandLine) throws InterruptedException, ExecutionException, TimeoutException {
             if (game.getResult() != GameResult.ONGOING) {
                 System.err.println("Game is already over");
                 return;
             }
 
             MyChessEngine engine = new MyChessEngine(game);
-            MoveAndWeight move = engine.nextMove();
+            MoveAndWeight move = engine.nextMoveAsync().getResult(1, TimeUnit.HOURS);
             if (move == MoveAndWeight.NO_MOVE)
                 System.out.println("Illegal position. No move possible.");
             else
@@ -322,9 +325,9 @@ final class CommandHandler {
 
             MyChessEngine engine = new MyChessEngine(game);
             int[] moveOut = new int[1];
-            int depth = engine.findCheckmate(game.getTurn(), game.getGameStatus(), game.getBoard().copy(), moveOut);
+            int depth = engine.findCheckmate(game.getTurn(), moveOut);
             if (depth < 0)
-                depth = engine.findCheckmate(game.getOppositeColor(), game.getGameStatus(), game.getBoard().copy(), moveOut);
+                depth = engine.findCheckmate(game.getOppositeColor(), moveOut);
             if (depth < 0) {
                 System.out.println("No checkmate found");
             } else {
@@ -342,14 +345,14 @@ final class CommandHandler {
         }
 
         @Override
-        void handle(String commandLine) {
+        void handle(String commandLine) throws InterruptedException, ExecutionException, TimeoutException {
             if (game.getResult() != GameResult.ONGOING) {
                 System.err.println("Game is already over");
                 return;
             }
 
             long t1 = System.currentTimeMillis();
-            MoveAndWeight move = game.getEngine().nextMove();
+            MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(1, TimeUnit.HOURS);
             long t2 = System.currentTimeMillis();
             if (move == MoveAndWeight.NO_MOVE) {
                 System.err.println("No move possible!?");
