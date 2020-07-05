@@ -15,6 +15,7 @@ import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Objects;
 
 @SuppressWarnings("DuplicatedCode")
 final class PositionSearch {
@@ -32,7 +33,7 @@ final class PositionSearch {
 
     PositionSearch(MyChessEngine engine, GameConfig gameConfig) {
         this.moveGenerator = new MoveGenerator(engine.getRandom(), killerMoves, badMoves);
-        this.gameConfig = gameConfig;
+        this.gameConfig = Objects.requireNonNull(gameConfig, "no GameConfig");
     }
 
     int getMaximumReachedDepth() {

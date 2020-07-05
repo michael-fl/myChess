@@ -109,7 +109,7 @@ public final class Board {
         printSymbols[blackKing] = '\u265A';
     }
 
-    private final static IMove[] MOVE_FUNCTIONS = new IMove[Move.typePawnPromotionBishop + 1];
+    private final static IMove[] MOVE_FUNCTIONS = new IMove[Move.typeEnPassant + 1];
     static {
         MOVE_FUNCTIONS[Move.typeNormal]              = Board::makeNormalMove;
         MOVE_FUNCTIONS[Move.typeCastlingKingSide]    = Board::makeCastlingKingSideMove;
@@ -118,9 +118,10 @@ public final class Board {
         MOVE_FUNCTIONS[Move.typePawnPromotionKnight] = Board::makePawnPromotionMoveKnight;
         MOVE_FUNCTIONS[Move.typePawnPromotionRook]   = Board::makePawnPromotionMoveRook;
         MOVE_FUNCTIONS[Move.typePawnPromotionBishop] = Board::makePawnPromotionMoveBishop;
+        MOVE_FUNCTIONS[Move.typeEnPassant]           = Board::makeEnPassantMove;
     }
 
-    private final static IMove[] MOVE_REVERT_FUNCTIONS = new IMove[Move.typePawnPromotionBishop + 1];
+    private final static IMove[] MOVE_REVERT_FUNCTIONS = new IMove[Move.typeEnPassant + 1];
     static {
         MOVE_REVERT_FUNCTIONS[Move.typeNormal]              = Board::revertNormalMove;
         MOVE_REVERT_FUNCTIONS[Move.typeCastlingKingSide]    = Board::revertCastlingKingSideMove;
@@ -129,6 +130,7 @@ public final class Board {
         MOVE_REVERT_FUNCTIONS[Move.typePawnPromotionKnight] = Board::revertPawnPromotionMove;
         MOVE_REVERT_FUNCTIONS[Move.typePawnPromotionRook]   = Board::revertPawnPromotionMove;
         MOVE_REVERT_FUNCTIONS[Move.typePawnPromotionBishop] = Board::revertPawnPromotionMove;
+        MOVE_REVERT_FUNCTIONS[Move.typeEnPassant]           = Board::revertEnPassantMove;
     }
 
     private final byte[] board;
@@ -327,6 +329,19 @@ public final class Board {
         board[fromField] = empty;
     }
 
+    private static void makeEnPassantMove(byte[] board, int move) {
+        final byte fromField = Move.getFromField(move);
+        final byte toField = Move.getToField(move);
+
+        board[toField] = board[fromField];
+        board[fromField] = empty;
+        if (toField > fromField) { // white move
+            board[toField - Board.LENGTH] = empty;
+        } else { // black move
+            board[toField + Board.LENGTH] = empty;
+        }
+    }
+
     private static void makePawnPromotionMoveQueen(byte[] board, int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
@@ -395,8 +410,19 @@ public final class Board {
 
         board[fromField] = board[toField];
         board[toField] = Move.getCapturedPiece(move);
-        if (fromField == Board.c1 && board[fromField] == Board.blackRook) {
-            Board b = new Board(board);
+    }
+
+    private static void revertEnPassantMove(byte[] board, int move) {
+        final byte fromField = Move.getFromField(move);
+        final byte toField = Move.getToField(move);
+        final byte capturedPiece = Move.getCapturedPiece(move);
+
+        board[fromField] = board[toField];
+        board[toField] = empty;
+        if (toField > fromField) {
+            board[toField - Board.LENGTH] = capturedPiece;
+        } else {
+            board[toField + Board.LENGTH] = capturedPiece;
         }
     }
 

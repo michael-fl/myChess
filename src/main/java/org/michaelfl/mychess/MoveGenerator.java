@@ -39,7 +39,6 @@ public final class MoveGenerator {
         calculationFunctions[Board.blackKing]   = MoveGenerator::_calculateKingMoves;
     }
 
-    private final Random rand;
     private final MoveSorter moveSorter;
 
     private GameStatus game;
@@ -55,7 +54,6 @@ public final class MoveGenerator {
     }
 
     public MoveGenerator(Random rand, MovesCounter killerMoves, MovesCounter badMoves) {
-        this.rand = rand;
         this.moveSorter = new MoveSorter(rand, killerMoves, badMoves);
     }
 
@@ -124,9 +122,9 @@ public final class MoveGenerator {
         if (fieldToRow(field) == 4) {
             int lastMove = game.getLastMove();
             if (board[field - 1] == Board.blackPawn && Move.getToField(lastMove) == field - 1 && Move.getFromField(lastMove) == field - 1 + 2 * Board.LENGTH)
-                addWhitePawnMove(field, field - 1 + Board.LENGTH);
+                addWhiteEnPassantMove(field, field - 1 + Board.LENGTH);
             else if (board[field + 1] == Board.blackPawn && Move.getToField(lastMove) == field + 1 && Move.getFromField(lastMove) == field + 1 + 2 * Board.LENGTH)
-                addWhitePawnMove(field, field + 1 + Board.LENGTH);
+                addWhiteEnPassantMove(field, field + 1 + Board.LENGTH);
         }
     }
 
@@ -148,6 +146,14 @@ public final class MoveGenerator {
         } else {
             addMove(from, to, Board.blackPawn, board[to], Move.typeNormal);
         }
+    }
+
+    private void addWhiteEnPassantMove(int from, int to) {
+        addMove(from, to, Board.whitePawn, Board.blackPawn, Move.typeEnPassant);
+    }
+
+    private void addBlackEnPassantMove(int from, int to) {
+        addMove(from, to, Board.blackPawn, Board.whitePawn, Move.typeEnPassant);
     }
 
     private static int fieldToRow(int field) {
@@ -191,9 +197,9 @@ public final class MoveGenerator {
         if (fieldToRow(field) == 3) {
             int lastMove = game.getLastMove();
             if (board[field - 1] == Board.whitePawn && Move.getToField(lastMove) == field - 1 && Move.getFromField(lastMove) == field - 1 - 2 * Board.LENGTH)
-                addBlackPawnMove(field, field - 1 - Board.LENGTH);
+                addBlackEnPassantMove(field, field - 1 - Board.LENGTH);
             else if (board[field + 1] == Board.whitePawn && Move.getToField(lastMove) == field + 1 && Move.getFromField(lastMove) == field + 1 - 2 * Board.LENGTH)
-                addBlackPawnMove(field, field + 1 - Board.LENGTH);
+                addBlackEnPassantMove(field, field + 1 - Board.LENGTH);
         }
     }
 

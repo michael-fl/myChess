@@ -10,6 +10,7 @@ public final class Move {
     final static byte typePawnPromotionRook   = 4;
     final static byte typePawnPromotionKnight = 5;
     final static byte typePawnPromotionBishop = 6;
+    final static byte typeEnPassant = 7;
 
     private final int move;
 
