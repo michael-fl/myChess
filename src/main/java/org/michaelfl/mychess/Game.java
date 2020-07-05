@@ -19,6 +19,7 @@ public final class Game {
         ONGOING
     }
 
+    private GameConfig config = new GameConfig();
     private final Random rand = new Random();
     private final ChessEngine engineWhite = new MyChessEngine(this);
     private final ChessEngine engineBlack = new MyChessEngine(this);
@@ -28,7 +29,6 @@ public final class Game {
     private List<GameStatus> statusStack = new ArrayList<>();
     private GameResult result = GameResult.ONGOING;
     private Float weight;
-    private GameConfig config = new GameConfig();
 
     Game() {
         statusStack.add(GameStatus.newGame());
@@ -160,6 +160,11 @@ public final class Game {
             || (piece == Board.blackPawn && ChessUtil.getRowOfField(toField) == 0)) {
             // Sanity check: Pawn promotion symbol is missing ==> assume queen
             moveType = Move.typePawnPromotionQueen;
+        } else if ((piece == Board.whitePawn || piece == Board.blackPawn)
+                && ChessUtil.getColOfField(fromField) != ChessUtil.getColOfField(toField)
+                && capturedPiece == 0) {
+            moveType = Move.typeEnPassant;
+            capturedPiece = piece == Board.whitePawn ? Board.blackPawn : Board.whitePawn;
         }
 
         Move move = new Move(Move.create((byte) fromField, (byte) toField, capturedPiece, moveType));
