@@ -28,14 +28,21 @@ final class CheckmateSearch {
         }
     }
 
+    private final Game game;
     private final MoveGenerator moveGenerator;
 
-    CheckmateSearch(MyChessEngine engine) {
-        moveGenerator = new MoveGenerator(engine.getRandom());
+    private CheckmateSearch(ChessEngine engine, Game game) {
+        this.game = game;
+        this.moveGenerator = new MoveGenerator(engine.getRandom());
     }
 
-    MoveAndWeight findCheckmateMove(Game game, Board workingBoard) {
-        final GameStatus gameStatus = game.getGameStatus();
+    public static MoveAndWeight findCheckmateMove(ChessEngine engine, Game game) {
+        return new CheckmateSearch(engine, game).findCheckmateMove();
+    }
+
+    private MoveAndWeight findCheckmateMove() {
+        final var workingBoard = game.getBoard().copy();
+        final var gameStatus = game.getGameStatus();
         final int[] checkmateMove = new int[1];
 
         int checkmateDepth = findCheckmate(gameStatus.getOppositeColor(), gameStatus, workingBoard, checkmateMove);
@@ -55,7 +62,14 @@ final class CheckmateSearch {
         return MoveAndWeight.NO_MOVE;
     }
 
-    int findCheckmate(int forColor, GameStatus gameStatus, Board workingBoard, int[] moveOut) {
+    static int findCheckmate(ChessEngine engine, Game game, int forColor, int[] moveOut) {
+        var workingBoard = game.getBoard().copy();
+        var gameStatus = game.getGameStatus();
+
+        return new CheckmateSearch(engine, game).findCheckmate(forColor, gameStatus, workingBoard, moveOut);
+    }
+
+    private int findCheckmate(int forColor, GameStatus gameStatus, Board workingBoard, int[] moveOut) {
         CheckmateSearchContext context = new CheckmateSearchContext(workingBoard, gameStatus);
         int move = gameStatus.getTurn() == forColor ?
                 findCheckmateEscapeMove(context) :

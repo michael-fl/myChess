@@ -15,41 +15,40 @@ import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Objects;
+import java.util.concurrent.CancellationException;
 
 @SuppressWarnings("DuplicatedCode")
 final class PositionSearch {
 
+    private final NextMoveTask task;
+    private final Game game;
     private final GameConfig gameConfig;
     private final MovesCounter killerMoves = new MovesCounter(2);
     private final MovesCounter badMoves = new MovesCounter(5);
     private final MoveGenerator moveGenerator;
     private final WeightingFunction weightingFunction = new WeightingFunction();
+    private final int weightFactor;
 
     private long positionsCount;
     private long prunedPositionsCount;
     private int maximumReachedDepth = 0;
-    private int weightFactor;
 
-    PositionSearch(MyChessEngine engine, GameConfig gameConfig) {
+    private PositionSearch(ChessEngine engine, NextMoveTask task, Game game) {
+        this.task = task;
+        this.game = game;
         this.moveGenerator = new MoveGenerator(engine.getRandom(), killerMoves, badMoves);
-        this.gameConfig = Objects.requireNonNull(gameConfig, "no GameConfig");
+        this.gameConfig = game.getConfig();
+        this.weightFactor = game.getGameStatus().isWhiteTurn() ? 1 : -1;
     }
 
-    int getMaximumReachedDepth() {
-        return maximumReachedDepth;
+    public static MoveAndWeight calculateNextMove(ChessEngine engine, NextMoveTask task, Game game) {
+        return new PositionSearch(engine, task, game).calculateNextMove();
     }
 
     @SuppressWarnings("Duplicates")
-    MoveAndWeight calculateNextMove(Game game, Board workingBoard) {
+    private MoveAndWeight calculateNextMove() {
+        final Board workingBoard = game.getBoard().copy();
         final GameStatus gameStatus = game.getGameStatus();
-
-        killerMoves.clear();
-        badMoves.clear();
-        positionsCount = 0;
-        prunedPositionsCount = 0;
-        maximumReachedDepth = 0;
-        weightFactor = gameStatus.isWhiteTurn() ? 1 : -1;
 
         final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, 0);
         if (moves.isIllegal() || moves.count() == 0)
@@ -218,6 +217,10 @@ final class PositionSearch {
         final int countMoves = moves.count();
         float bestWeight = alphaWeight; // Float.NEGATIVE_INFINITY
         boolean haveValidMove = false;
+
+        if (task.isCanceled()) {
+            throw new CancellationException();
+        }
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];

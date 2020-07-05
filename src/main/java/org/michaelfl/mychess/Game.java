@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public final class Game {
 
@@ -47,8 +50,6 @@ public final class Game {
 
     public void setConfig(GameConfig config) {
         this.config = config;
-
-        getEngine().setGameConfig(config);
     }
 
     public GameConfig getConfig() {
@@ -307,14 +308,14 @@ public final class Game {
     }
 
     @SuppressWarnings("Duplicates")
-    private void playAutoGameInternal() {
+    private void playAutoGameInternal() throws InterruptedException, ExecutionException, TimeoutException {
         getBoard().print();
 
         int moveNo = getMoveCount() + 1;
 
         int i = 0;
         for (; i <=1000; i++, moveNo++) {
-            MoveAndWeight move = getEngine().nextMove();
+            MoveAndWeight move = getEngine().nextMoveAsync().getResult(1, TimeUnit.HOURS);
             if (move == MoveAndWeight.NO_MOVE) {
                 // No valid move possible ==> checkmate or stalemate
                 break;
