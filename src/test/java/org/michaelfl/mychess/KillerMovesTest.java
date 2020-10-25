@@ -148,8 +148,7 @@ class KillerMovesTest {
         assertEquals(expectedTopMoves, actualTopMoves, "Wrong top moves");
     }
 
-    @Test
-    @Disabled
+//    @Test
     void testPerformance() throws InterruptedException {
         final int n = Short.MAX_VALUE;
         int[] moveCounts = new int[n];

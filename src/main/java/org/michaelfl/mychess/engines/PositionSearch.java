@@ -94,7 +94,7 @@ final class PositionSearch {
             workingPath[0] = move;
             GameStatus nextGameStatus = gameStatus.makeMove(move);
             workingBoard.makeMove(move);
-            float weight = minSearch(1, maxDepth, bestWeight, betaWeight, newMaterialWeight, newMaterialDelta, nextGameStatus, workingBoard, workingPath, false);
+            float weight = minSearch(1, maxDepth, bestWeight, betaWeight, newMaterialWeight, newMaterialDelta, nextGameStatus, workingBoard, workingPath);
             workingBoard.revertMove(move);
             //System.out.println("--> weight " + ChessUtil.weightToString(weight));
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
@@ -118,7 +118,7 @@ final class PositionSearch {
     }
 
     @SuppressWarnings("Duplicates")
-    private float maxSearch(final int depth, final int maxDepth, final float alphaWeight, final float betaWeight, final float materialWeight, final float materialDelta, final GameStatus gameStatus, final Board workingBoard, final int[] bestPathOut, boolean doSamples) {
+    private float maxSearch(final int depth, final int maxDepth, final float alphaWeight, final float betaWeight, final float materialWeight, final float materialDelta, final GameStatus gameStatus, final Board workingBoard, final int[] bestPathOut) {
         positionsCount++;
 
         if (alphaWeight == Float.POSITIVE_INFINITY || betaWeight == Float.NEGATIVE_INFINITY) {
@@ -160,7 +160,7 @@ final class PositionSearch {
 
             final GameStatus nextGameStatus = gameStatus.makeMove(move);
             workingBoard.makeMove(move);
-            final float weight = minSearch(depth + 1, maxDepth, bestWeight, betaWeight, newMaterialWeight, newMaterialDelta, nextGameStatus, workingBoard, workingPath, false);
+            final float weight = minSearch(depth + 1, maxDepth, bestWeight, betaWeight, newMaterialWeight, newMaterialDelta, nextGameStatus, workingBoard, workingPath);
             workingBoard.revertMove(move);
 
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
@@ -170,6 +170,9 @@ final class PositionSearch {
                 if (weight >= betaWeight) {
                     prunedMovesCount += countMoves - i - 1;
                     System.arraycopy(workingPath, depth, bestPathOut, depth, bestPathOut.length - depth);
+                    if (Move.getCapturedPiece(move) == 0) {
+                        killerMoves.addMove(move, depth);
+                    }
                     return weight;
                 }
 
@@ -178,9 +181,6 @@ final class PositionSearch {
                     System.arraycopy(workingPath, depth, bestPathOut, depth, bestPathOut.length - depth);
                 }
             }
-
-            if (doSamples)
-                killerMoves.sample();
         }
 
         if (haveValidMove) {
@@ -202,7 +202,7 @@ final class PositionSearch {
     }
 
     @SuppressWarnings("Duplicates")
-    private float minSearch(final int depth, final int maxDepth, final float alphaWeight, final float betaWeight, final float materialWeight, final float materialDelta, final GameStatus gameStatus, final Board workingBoard, final int[] bestPathOut, boolean doSamples) {
+    private float minSearch(final int depth, final int maxDepth, final float alphaWeight, final float betaWeight, final float materialWeight, final float materialDelta, final GameStatus gameStatus, final Board workingBoard, final int[] bestPathOut) {
         positionsCount++;
 
         if (alphaWeight == Float.POSITIVE_INFINITY || betaWeight == Float.NEGATIVE_INFINITY) {
@@ -240,20 +240,19 @@ final class PositionSearch {
 
             final GameStatus nextGameStatus = gameStatus.makeMove(move);
             workingBoard.makeMove(move);
-            final float weight = maxSearch(depth + 1, maxDepth, alphaWeight, bestWeight, newMaterialWeight, newMaterialDelta, nextGameStatus, workingBoard, workingPath, false);
+            final float weight = maxSearch(depth + 1, maxDepth, alphaWeight, bestWeight, newMaterialWeight, newMaterialDelta, nextGameStatus, workingBoard, workingPath);
             workingBoard.revertMove(move);
 
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
                 haveValidMove = true;
 
-//                if (weight > materialDelta + 0.5f)
-//                    badMoves.addMove(move, depth);
-
                 // Alpha-Beta search pruning
                 if (weight <= alphaWeight) {
                     prunedMovesCount += countMoves - i - 1;
                     System.arraycopy(workingPath, depth, bestPathOut, depth, bestPathOut.length - depth);
-                    killerMoves.addMove(move, depth);
+                    if (Move.getCapturedPiece(move) == 0) {
+                        killerMoves.addMove(move, depth);
+                    }
                     return weight;
                 }
 
@@ -262,9 +261,6 @@ final class PositionSearch {
                     System.arraycopy(workingPath, depth, bestPathOut, depth, bestPathOut.length - depth);
                 }
             }
-
-            if (doSamples)
-                killerMoves.sample();
         }
 
         if (haveValidMove) {
