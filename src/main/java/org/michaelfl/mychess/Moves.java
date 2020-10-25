@@ -8,7 +8,7 @@ public final class Moves {
     private final static int INITIAL_MOVE_CAPACITY = 30;
     private final static int CAPACITY_INCREMENT = 10;
 
-    final IntArray moves;
+    public final IntArray moves;
 
     public Moves() {
         this(INITIAL_MOVE_CAPACITY);

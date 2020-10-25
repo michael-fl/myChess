@@ -6,8 +6,8 @@ public final class PositionEngine extends ChessEngine {
 
     private WeightingFunction weightingFunction = new WeightingFunction();
 
-    public PositionEngine(Game game) {
-        super(game);
+    public PositionEngine(EngineConfig config, Game game) {
+        super(config, game);
     }
 
     @SuppressWarnings("Duplicates")

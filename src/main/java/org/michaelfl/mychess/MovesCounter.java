@@ -28,7 +28,7 @@ public final class MovesCounter {
          * Get the currently known best moves.
          * Unless findAndStoreTopMoves was not called at least once, the returned array will be empty.
          */
-        short[] getTopMoves() {
+        public short[] getTopMoves() {
             return topMoves;
         }
 

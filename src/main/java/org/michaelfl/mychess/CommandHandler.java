@@ -1,6 +1,7 @@
 package org.michaelfl.mychess;
 
 import org.michaelfl.mychess.Game.GameResult;
+import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
 
@@ -283,7 +284,7 @@ final class CommandHandler {
                 return;
             }
 
-            MyChessEngine engine = new MyChessEngine(game);
+            ChessEngine engine = game.getEngine();
             MoveAndWeight move = engine.nextMoveAsync().getResult(1, TimeUnit.HOURS);
             if (move == MoveAndWeight.NO_MOVE)
                 System.out.println("Illegal position. No move possible.");
@@ -301,7 +302,7 @@ final class CommandHandler {
 
         @Override
         void handle(String commandLine) {
-            MoveGenerator gen = new MoveGenerator(game.getRandom());
+            MoveGenerator gen = new MoveGenerator(new MoveSorterImpl(game.getRandom()));
             Moves moves = gen.calculateMoves(game.getGameStatus(), game.getBoard());
             System.out.println("Possible moves: " + moves);
             weightingFunction.calculate(game.getGameStatus(), game.getBoard());
@@ -323,7 +324,7 @@ final class CommandHandler {
                 return;
             }
 
-            MyChessEngine engine = new MyChessEngine(game);
+            MyChessEngine engine = new MyChessEngine(new EngineConfig(6), game);
             int[] moveOut = new int[1];
             int depth = engine.findCheckmate(game.getTurn(), moveOut);
             if (depth < 0)
@@ -380,7 +381,8 @@ final class CommandHandler {
         void handle(String commandLine) {
             String variantsStr = commandLine.substring(PREFIX.length()).trim();
             int variants = Integer.parseInt(variantsStr);
-            game.setConfig(game.getConfig().setNVariants(variants));
+            //game.setConfig(game.getConfig().setNVariants(variants));
+            System.out.println("not implemented");
         }
     }
 
@@ -397,7 +399,8 @@ final class CommandHandler {
         void handle(String commandLine) {
             String variantsStr = commandLine.substring(PREFIX.length()).trim();
             int depth = Integer.parseInt(variantsStr);
-            game.setConfig(game.getConfig().setMaxDepth(depth));
+            //game.setConfig(game.getConfig().setMaxDepth(depth));
+            System.out.println("not implemented");
         }
     }
 
@@ -414,7 +417,8 @@ final class CommandHandler {
         void handle(String commandLine) {
             String variantsStr = commandLine.substring(PREFIX.length()).trim();
             int depth = Integer.parseInt(variantsStr);
-            game.setConfig(game.getConfig().setIterationDepth(depth));
+            //game.setConfig(game.getConfig().setIterationDepth(depth));
+            System.out.println("not implemented");
         }
     }
 

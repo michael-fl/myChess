@@ -6,7 +6,7 @@
 
   <groupId>michael-fl</groupId>
   <artifactId>my-chess</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.1.0-SNAPSHOT</version>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -32,6 +32,14 @@
         <version>3.8.0</version>
         <configuration>
           <release>11</release>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <mainClass>org.michaelfl.mychess.MyChessMain</mainClass>
         </configuration>
       </plugin>
     </plugins>

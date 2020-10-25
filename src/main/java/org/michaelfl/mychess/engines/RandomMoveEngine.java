@@ -8,8 +8,8 @@ public final class RandomMoveEngine extends ChessEngine {
 
     private final Random rand = new Random();
 
-    public RandomMoveEngine(Game game) {
-        super(game);
+    public RandomMoveEngine(EngineConfig config, Game game) {
+        super(config, game);
     }
 
     @Override
