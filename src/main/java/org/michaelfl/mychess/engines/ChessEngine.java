@@ -4,6 +4,7 @@ import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.MoveSorterImpl;
+import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.MovesCounter;
 
 import java.util.Random;
@@ -31,11 +32,10 @@ public abstract class ChessEngine {
 
     private final Random rand = new Random();
     private final MovesCounter killerMoves = new MovesCounter(2);
-    private final MovesCounter badMoves = new MovesCounter(5);
     private final ExecutorService executor;
     private final EngineConfig config;
     protected final Game game;
-    protected final MoveGenerator moveGenerator = new MoveGenerator(new MoveSorterImpl(rand, killerMoves, badMoves));
+    protected final MoveGenerator moveGenerator = new MoveGenerator(new MoveSorterImpl(rand, killerMoves));
 
     protected ChessEngine(EngineConfig config, Game game) {
         this.config = config;
@@ -61,6 +61,9 @@ public abstract class ChessEngine {
         return task;
     }
 
+    public Moves getPossibleMoves() {
+        return moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard());
+    }
     protected abstract MoveAndWeight calculateNextMove(NextMoveTask task);
 
 }

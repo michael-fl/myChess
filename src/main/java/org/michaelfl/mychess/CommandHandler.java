@@ -422,6 +422,24 @@ final class CommandHandler {
         }
     }
 
+    private final class PossibleMovesCommand extends Command {
+
+        @Override
+        boolean canHandle(String commandLine) {
+            return "moves".equals(commandLine);
+        }
+
+        @Override
+        void handle(String commandLine) throws InterruptedException, ExecutionException, TimeoutException {
+            if (game.getResult() != GameResult.ONGOING) {
+                System.err.println("Game is already over");
+                return;
+            }
+            Moves moves = game.getEngine().getPossibleMoves();
+            moves.print();
+        }
+    }
+
     private final List<Command> commands = List.of(
             new QuitCommand(),
             new AutoGameCommand(),
@@ -441,7 +459,8 @@ final class CommandHandler {
             new CheckmateSearchCommand(),
             new SetVariantsCommand(),
             new SetDepthCommand(),
-            new SetIterationDepthCommand()
+            new SetIterationDepthCommand(),
+            new PossibleMovesCommand()
     );
 
     private final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));

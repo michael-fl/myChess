@@ -141,7 +141,7 @@ public final class MovesCounter {
         }
     }
 
-    /** Get the 10 best moves. */
+    /** Get the n best moves. */
     static short[] findTopMoves(final int nTop, final int[] moveCounts) {
         final short moveCount = (short) moveCounts.length;
         final short[] bestMoves = new short[nTop];

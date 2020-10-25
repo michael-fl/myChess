@@ -22,25 +22,32 @@ final class PositionSearch {
     private final Game game;
     private final EngineConfig engineConfig;
     private final MovesCounter killerMoves = new MovesCounter(2);
-    private final MovesCounter badMoves = new MovesCounter(5);
     private final MoveGenerator moveGenerator;
     private final WeightingFunction weightingFunction = new WeightingFunction();
     private final int weightFactor;
 
     private long positionsCount;
-    private long prunedPositionsCount;
+    private long prunedMovesCount;
     private int maximumReachedDepth = 0;
 
     private PositionSearch(ChessEngine engine, NextMoveTask task, Game game) {
         this.task = task;
         this.game = game;
-        this.moveGenerator = new MoveGenerator(new MoveSorterImpl(engine.getRandom(), killerMoves, badMoves));
+        this.moveGenerator = new MoveGenerator(new MoveSorterImpl(engine.getRandom(), killerMoves));
         this.engineConfig = engine.getConfig();
         this.weightFactor = game.getGameStatus().isWhiteTurn() ? 1 : -1;
     }
 
     public static MoveAndWeight calculateNextMove(ChessEngine engine, NextMoveTask task, Game game) {
         return new PositionSearch(engine, task, game).calculateNextMove();
+    }
+
+    public static Moves getPossibleMoves(ChessEngine engine, Game game) {
+        return new PositionSearch(engine, new NextMoveTask(), game).getPossibleMoves();
+    }
+
+    private Moves getPossibleMoves() {
+        return moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard(), 0);
     }
 
     @SuppressWarnings("Duplicates")
@@ -54,7 +61,7 @@ final class PositionSearch {
 
         MoveAndWeight bestMove = findBestMove(gameStatus, workingBoard, moves);
 
-        System.out.println("#positions: " + positionsCount + ", #pruned: " + prunedPositionsCount);
+        System.out.println("#positions: " + positionsCount + ", #pruned: " + prunedMovesCount);
 
         System.out.println("move: " + ChessUtil.moveToString(bestMove.move) + ", weight: " + ChessUtil.weightToString(bestMove.weight * weightFactor) + " [" + ChessUtil.pathToString(bestMove.path) + "]");
 
@@ -74,6 +81,8 @@ final class PositionSearch {
         final int maxDepth = engineConfig.getMaxDepth();
         int bestMove = 0;
 
+        positionsCount++;
+
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
             //System.out.println("Working on move " + ChessUtil.moveToString(move));
@@ -83,7 +92,6 @@ final class PositionSearch {
             final float newMaterialWeight = materialWeight + moveWeight;
 
             workingPath[0] = move;
-            positionsCount++;
             GameStatus nextGameStatus = gameStatus.makeMove(move);
             workingBoard.makeMove(move);
             float weight = minSearch(1, maxDepth, bestWeight, betaWeight, newMaterialWeight, newMaterialDelta, nextGameStatus, workingBoard, workingPath, false);
@@ -100,8 +108,7 @@ final class PositionSearch {
 
             // Find and store current killer moves
             killerMoves.sample();
-            //badMoves.sample();
-            System.out.println((i + 1) + "/" + countMoves + ": " + ChessUtil.moveToString(bestMove) + ", weight=" + ChessUtil.weightToString(bestWeight));
+            System.out.println((i + 1) + "/" + countMoves + ": " + ChessUtil.moveToString(bestMove) + ", weight=" + ChessUtil.weightToString(bestWeight * weightFactor));
         }
 
         if (bestMove != 0)
@@ -112,6 +119,8 @@ final class PositionSearch {
 
     @SuppressWarnings("Duplicates")
     private float maxSearch(final int depth, final int maxDepth, final float alphaWeight, final float betaWeight, final float materialWeight, final float materialDelta, final GameStatus gameStatus, final Board workingBoard, final int[] bestPathOut, boolean doSamples) {
+        positionsCount++;
+
         if (alphaWeight == Float.POSITIVE_INFINITY || betaWeight == Float.NEGATIVE_INFINITY) {
             throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard.toString());
         }
@@ -145,7 +154,6 @@ final class PositionSearch {
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
             workingPath[depth] = move;
-            positionsCount++;
             final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
             final float newMaterialWeight = materialWeight + moveWeight;
             final float newMaterialDelta = materialDelta + moveWeight;
@@ -160,7 +168,7 @@ final class PositionSearch {
 
                 // Alpha-Beta search pruning
                 if (weight >= betaWeight) {
-                    prunedPositionsCount += countMoves - i - 1;
+                    prunedMovesCount += countMoves - i - 1;
                     System.arraycopy(workingPath, depth, bestPathOut, depth, bestPathOut.length - depth);
                     return weight;
                 }
@@ -195,6 +203,8 @@ final class PositionSearch {
 
     @SuppressWarnings("Duplicates")
     private float minSearch(final int depth, final int maxDepth, final float alphaWeight, final float betaWeight, final float materialWeight, final float materialDelta, final GameStatus gameStatus, final Board workingBoard, final int[] bestPathOut, boolean doSamples) {
+        positionsCount++;
+
         if (alphaWeight == Float.POSITIVE_INFINITY || betaWeight == Float.NEGATIVE_INFINITY) {
             throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard.toString());
         }
@@ -224,7 +234,6 @@ final class PositionSearch {
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
             workingPath[depth] = move;
-            positionsCount++;
             final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
             final float newMaterialWeight = materialWeight - moveWeight;
             final float newMaterialDelta = materialDelta - moveWeight;
@@ -242,7 +251,7 @@ final class PositionSearch {
 
                 // Alpha-Beta search pruning
                 if (weight <= alphaWeight) {
-                    prunedPositionsCount += countMoves - i - 1;
+                    prunedMovesCount += countMoves - i - 1;
                     System.arraycopy(workingPath, depth, bestPathOut, depth, bestPathOut.length - depth);
                     killerMoves.addMove(move, depth);
                     return weight;
@@ -277,6 +286,8 @@ final class PositionSearch {
     }
 
     private float quiescenceMaxSearch(final int capturedOnField, final int depth, final int maxDepth, final float materialWeight, final float materialDelta, final GameStatus gameStatus, final Board workingBoard, final int[] bestPathOut) {
+        positionsCount++;
+
         final int[] workingPath = new int[bestPathOut.length];
         bestPathOut[depth] = 0;
         if (depth > maximumReachedDepth)
@@ -297,7 +308,6 @@ final class PositionSearch {
         for (int i = 0; i < countMoves; i++) {
             // Follow only moves, which capture on the same field, until no further capture is possible on that field
             if (capturedOnField == Move.getToField(plainMoves[i])) {
-                positionsCount++;
                 final int move = plainMoves[i];
                 workingPath[depth] = move;
 
@@ -324,6 +334,8 @@ final class PositionSearch {
     }
 
     private float quiescenceMinSearch(final int capturedOnField, final int depth, final int maxDepth, final float materialWeight, final float materialDelta, final GameStatus gameStatus, final Board workingBoard, final int[] bestPathOut) {
+        positionsCount++;
+
         final int[] workingPath = new int[bestPathOut.length];
         bestPathOut[depth] = 0;
 
@@ -345,7 +357,6 @@ final class PositionSearch {
         for (int i = 0; i < countMoves; i++) {
             // Follow only moves, which capture on the same field, until no further capture is possible on that field
             if (capturedOnField == Move.getToField(plainMoves[i])) {
-                positionsCount++;
                 final int move = plainMoves[i];
                 workingPath[depth] = move;
 
