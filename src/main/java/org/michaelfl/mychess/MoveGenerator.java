@@ -13,8 +13,6 @@ package org.michaelfl.mychess;
 //    12 13         ...          22  23
 //    00 01         ...          10  11
 
-import java.util.Random;
-
 @SuppressWarnings({"StatementWithEmptyBody", "Duplicates", "PointlessArithmeticExpression"})
 public final class MoveGenerator {
 
@@ -49,12 +47,10 @@ public final class MoveGenerator {
     private int oppositeKing;
     private boolean containsIllegalMove;
 
-    public MoveGenerator(Random rand) {
-        this(rand, new MovesCounter(1), new MovesCounter(1));
-    }
+    //this(rand, new MovesCounter(1), new MovesCounter(1));
 
-    public MoveGenerator(Random rand, MovesCounter killerMoves, MovesCounter badMoves) {
-        this.moveSorter = new MoveSorter(rand, killerMoves, badMoves);
+    public MoveGenerator(MoveSorter moveSorter) {
+        this.moveSorter = moveSorter;
     }
 
     public Moves calculateMoves(GameStatus game, Board theBoard) {

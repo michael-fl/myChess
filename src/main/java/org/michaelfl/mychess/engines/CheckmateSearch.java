@@ -5,11 +5,12 @@ import org.michaelfl.mychess.ChessUtil;
 import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.MoveGenerator;
+import org.michaelfl.mychess.MoveSorterImpl;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.WeightingFunction;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 
-final class CheckmateSearch {
+public final class CheckmateSearch {
 
     private final static int MAX_CHECKMATE_SEARCH_DEPTH = 10;
     private final static int NO_CHECKMATE = -1;
@@ -33,7 +34,7 @@ final class CheckmateSearch {
 
     private CheckmateSearch(ChessEngine engine, Game game) {
         this.game = game;
-        this.moveGenerator = new MoveGenerator(engine.getRandom());
+        this.moveGenerator = new MoveGenerator(new MoveSorterImpl(engine.getRandom()));
     }
 
     public static MoveAndWeight findCheckmateMove(ChessEngine engine, Game game) {
@@ -62,7 +63,7 @@ final class CheckmateSearch {
         return MoveAndWeight.NO_MOVE;
     }
 
-    static int findCheckmate(ChessEngine engine, Game game, int forColor, int[] moveOut) {
+    public static int findCheckmate(ChessEngine engine, Game game, int forColor, int[] moveOut) {
         var workingBoard = game.getBoard().copy();
         var gameStatus = game.getGameStatus();
 

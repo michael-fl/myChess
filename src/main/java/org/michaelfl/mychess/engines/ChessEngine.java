@@ -1,7 +1,9 @@
 package org.michaelfl.mychess.engines;
 
+import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.MoveGenerator;
+import org.michaelfl.mychess.MoveSorterImpl;
 import org.michaelfl.mychess.MovesCounter;
 
 import java.util.Random;
@@ -20,7 +22,7 @@ public abstract class ChessEngine {
         @SuppressWarnings("WeakerAccess")
         public final int[] path;
 
-        MoveAndWeight(int move, float weight, int[] path) {
+        public MoveAndWeight(int move, float weight, int[] path) {
             this.move = move;
             this.weight = weight;
             this.path = path;
@@ -30,16 +32,22 @@ public abstract class ChessEngine {
     private final Random rand = new Random();
     private final MovesCounter killerMoves = new MovesCounter(2);
     private final MovesCounter badMoves = new MovesCounter(5);
-    final Game game;
-    final MoveGenerator moveGenerator = new MoveGenerator(rand, killerMoves, badMoves);
     private final ExecutorService executor;
+    private final EngineConfig config;
+    protected final Game game;
+    protected final MoveGenerator moveGenerator = new MoveGenerator(new MoveSorterImpl(rand, killerMoves, badMoves));
 
-    ChessEngine(Game game) {
+    protected ChessEngine(EngineConfig config, Game game) {
+        this.config = config;
         this.game = game;
         this.executor = Executors.newSingleThreadExecutor();
     }
 
-    final Random getRandom() {
+    public final EngineConfig getConfig() {
+        return config;
+    }
+
+    public final Random getRandom() {
         return rand;
     }
 

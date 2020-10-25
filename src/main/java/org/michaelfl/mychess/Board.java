@@ -267,7 +267,7 @@ public final class Board {
         return piece == whiteQueen || piece == blackQueen;
     }
 
-    static boolean isKing(byte piece) {
+    public static boolean isKing(byte piece) {
         return piece == whiteKing || piece == blackKing;
     }
 

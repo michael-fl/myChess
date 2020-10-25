@@ -1,15 +1,13 @@
 package org.michaelfl.mychess.engines;
 
-import org.michaelfl.mychess.Board;
+import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
-import org.michaelfl.mychess.GameConfig;
-import org.michaelfl.mychess.GameStatus;
 
 @SuppressWarnings("Duplicates")
 public final class MyChessEngine extends ChessEngine {
 
-    public MyChessEngine(Game game) {
-        super(game);
+    public MyChessEngine(EngineConfig config, Game game) {
+        super(config, game);
     }
 
     @Override

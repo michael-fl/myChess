@@ -3,9 +3,8 @@ package org.michaelfl.mychess;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
+import org.michaelfl.mychess.engines.v1.MyChessEngine1;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,14 +21,13 @@ public final class Game {
         ONGOING
     }
 
-    private GameConfig config = new GameConfig();
     private final Random rand = new Random();
-    private final ChessEngine engineWhite = new MyChessEngine(this);
-    private final ChessEngine engineBlack = new MyChessEngine(this);
+    private final ChessEngine engineWhite = new MyChessEngine1(new EngineConfig(14, 6, 4), this);
+    private final ChessEngine engineBlack = new MyChessEngine(new EngineConfig(8), this);
     private Board previousBoard;
-    private Board board = new Board();
-    private List<Move> moves = new ArrayList<>();
-    private List<GameStatus> statusStack = new ArrayList<>();
+    private final Board board = new Board();
+    private final List<Move> moves = new ArrayList<>();
+    private final List<GameStatus> statusStack = new ArrayList<>();
     private GameResult result = GameResult.ONGOING;
     private Float weight;
 
@@ -48,20 +46,12 @@ public final class Game {
         calculateAndSetGameResult();
     }
 
-    public void setConfig(GameConfig config) {
-        this.config = config;
-    }
-
-    public GameConfig getConfig() {
-        return config;
-    }
-
     ChessEngine getEngine() {
         return getTurn() == GameStatus.TURN_WHITE ? engineWhite : engineBlack;
     }
 
     GameResult calculateAndSetGameResult() {
-        MoveGenerator moveGenerator = new MoveGenerator(rand);
+        MoveGenerator moveGenerator = new MoveGenerator(new MoveSorterImpl(rand));
         GameResult gameResult = checkGameResult(moveGenerator);
         setResult(gameResult);
         return gameResult;
@@ -171,7 +161,7 @@ public final class Game {
         Move move = new Move(Move.create((byte) fromField, (byte) toField, capturedPiece, moveType));
 
         // Validate the move
-        MoveGenerator moveGenerator = new MoveGenerator(rand);
+        MoveGenerator moveGenerator = new MoveGenerator(new MoveSorterImpl(rand));
         Moves validMoves = moveGenerator.calculateMoves(getGameStatus(), board);
         if (!validMoves.contains(move.getMove())) {
             print();
@@ -299,7 +289,7 @@ public final class Game {
             System.out.println("Turn: " + (getTurn() == GameStatus.TURN_WHITE ? "white" : "black"));
             System.out.println("Moves: " + exportMoves());
             System.out.println("Status: " + getGameStatus());
-            MoveGenerator moveGenerator = new MoveGenerator(rand);
+            MoveGenerator moveGenerator = new MoveGenerator(new MoveSorterImpl(rand));
             Moves possibleMoves = moveGenerator.calculateMoves(getGameStatus(), getBoard());
             System.out.println("Possible moves: " + possibleMoves);
             System.out.flush();
@@ -321,13 +311,16 @@ public final class Game {
                 break;
             }
             makeMove(move);
+            getBoard().print();
             System.out.println("Move #" + moveNo + ": " + ChessUtil.moveToString(move.move));
 
             if (getBoard().isDrawByMaterial())
                 break;
+
+            Thread.sleep(20000);
         }
 
-        GameResult gameResult = checkGameResult(new MoveGenerator(rand));
+        GameResult gameResult = checkGameResult(new MoveGenerator(new MoveSorterImpl(rand)));
         setResult(gameResult);
     }
 

@@ -1,11 +1,11 @@
 package org.michaelfl.mychess;
 
-final class MovesArray extends IntArray {
+public final class MovesArray extends IntArray {
 
-    MovesArray() {
+    public MovesArray() {
     }
 
-    MovesArray(int initialCapacity) {
+    public MovesArray(int initialCapacity) {
         super(initialCapacity);
     }
 
