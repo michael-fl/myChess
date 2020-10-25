@@ -7,7 +7,8 @@ public final class MoveSorterImpl implements MoveSorter {
     private final MovesArray bucketKillerMoves = new MovesArray();
     private int bestMoveCapturingLastPlayedOppositePiece;
     private float bestWeightCapturingLastPlayedOppositePiece = Float.NEGATIVE_INFINITY;
-    private final SortableMovesBucket bucketCapturing = new SortableMovesBucket();
+    private final SortableMovesBucket bucketWinningCaptures = new SortableMovesBucket();
+    private final SortableMovesBucket bucketOtherCaptures = new SortableMovesBucket();
     private final MovesArray bucketForwardMoves = new MovesArray();
     private final MovesArray bucketRemainingMoves = new MovesArray();
     private final MovesArray bucketKingMoves = new MovesArray();
@@ -37,7 +38,8 @@ public final class MoveSorterImpl implements MoveSorter {
 
         bestMoveCapturingLastPlayedOppositePiece = 0;
         bestWeightCapturingLastPlayedOppositePiece = Float.NEGATIVE_INFINITY;
-        bucketCapturing.clear();
+        bucketWinningCaptures.clear();
+        bucketOtherCaptures.clear();
         bucketKillerMoves.clear();
         bucketForwardMoves.clear();
         bucketRemainingMoves.clear();
@@ -52,12 +54,12 @@ public final class MoveSorterImpl implements MoveSorter {
             final float deltaWeight = WeightingFunction.weightOfPiece[capturedPiece] - WeightingFunction.weightOfPiece[movingPiece];
             if (toField == targetFieldOfLastOppositeMove && deltaWeight > bestWeightCapturingLastPlayedOppositePiece) {
                 if (bestMoveCapturingLastPlayedOppositePiece != 0) {
-                    bucketCapturing.add(bestMoveCapturingLastPlayedOppositePiece, (int) bestWeightCapturingLastPlayedOppositePiece);
+                    getCapturesBucket(deltaWeight).add(bestMoveCapturingLastPlayedOppositePiece, (int) bestWeightCapturingLastPlayedOppositePiece);
                 }
                 bestMoveCapturingLastPlayedOppositePiece = move;
                 bestWeightCapturingLastPlayedOppositePiece = deltaWeight;
             } else {
-                bucketCapturing.add(move, (int) deltaWeight);
+                getCapturesBucket(deltaWeight).add(move, (int) deltaWeight);
             }
         } else if (Board.isKing(movingPiece)) {
             bucketKingMoves.add(move);
@@ -68,6 +70,10 @@ public final class MoveSorterImpl implements MoveSorter {
             else
                 bucketRemainingMoves.add(move);
         }
+    }
+
+    private SortableMovesBucket getCapturesBucket(float deltaWeight) {
+        return deltaWeight > 0 ? bucketWinningCaptures : bucketOtherCaptures;
     }
 
     private boolean isKillerMove(final int move) {
@@ -87,12 +93,15 @@ public final class MoveSorterImpl implements MoveSorter {
         final Moves moves = new Moves();
         final IntArray movesArray = moves.moves;
 
-        bucketCapturing.sort();
+        bucketWinningCaptures.sort();
+        bucketOtherCaptures.sort();
+
         if (bestMoveCapturingLastPlayedOppositePiece != 0) {
             movesArray.add(bestMoveCapturingLastPlayedOppositePiece);
         }
+        movesArray.addAll(bucketWinningCaptures.getMoves());
         movesArray.addAll(bucketKillerMoves);
-        movesArray.addAll(bucketCapturing.getMoves());
+        movesArray.addAll(bucketOtherCaptures.getMoves());
         movesArray.addAll(bucketForwardMoves);
         movesArray.addAll(bucketRemainingMoves);
         movesArray.addAll(bucketKingMoves);

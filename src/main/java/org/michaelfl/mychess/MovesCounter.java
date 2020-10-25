@@ -163,12 +163,6 @@ public final class MovesCounter {
 
         sortDescending(bestMoves, bestCounts);
 
-//        final int limit = 1000; // Math.max(bestCounts[0] * 2 / 3, 1000);
-//        for (var i = 0; i < nTop; i++) {
-//            if (bestCounts[i] < limit)
-//                bestMoves[i] = 0;
-//        }
-
         return Arrays.copyOf(bestMoves, bestMoves.length);
     }
 
