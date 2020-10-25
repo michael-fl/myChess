@@ -6,7 +6,7 @@ import java.util.Random;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class IntArray {
 
-    private final static int INITIAL_CAPACITY = 30;
+    public final static int INITIAL_CAPACITY = 30;
     private final static int CAPACITY_INCREMENT = 10;
 
     int[] array;

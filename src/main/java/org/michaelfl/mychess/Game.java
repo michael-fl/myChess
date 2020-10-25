@@ -22,8 +22,8 @@ public final class Game {
     }
 
     private final Random rand = new Random();
-    private final ChessEngine engineWhite = new MyChessEngine1(new EngineConfig(14, 6, 4), this);
-    private final ChessEngine engineBlack = new MyChessEngine(new EngineConfig(8), this);
+    private final ChessEngine engineWhite = new MyChessEngine(new EngineConfig(8), this);
+    private final ChessEngine engineBlack = new MyChessEngine1(new EngineConfig(14, 6, 4), this);
     private Board previousBoard;
     private final Board board = new Board();
     private final List<Move> moves = new ArrayList<>();

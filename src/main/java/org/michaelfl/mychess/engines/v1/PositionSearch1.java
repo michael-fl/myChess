@@ -2,8 +2,8 @@ package org.michaelfl.mychess.engines.v1;
 
 import org.michaelfl.mychess.Board;
 import org.michaelfl.mychess.ChessUtil;
-import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.EngineConfig;
+import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.Move;
 import org.michaelfl.mychess.MoveGenerator;
@@ -45,6 +45,14 @@ final class PositionSearch1 {
 
     public static MoveAndWeight calculateNextMove(ChessEngine engine, NextMoveTask task, Game game) {
         return new PositionSearch1(engine, task, game).calculateNextMove();
+    }
+
+    public static Moves getPossibleMoves(ChessEngine engine, Game game) {
+        return new PositionSearch1(engine, new NextMoveTask(), game).getPossibleMoves();
+    }
+
+    private Moves getPossibleMoves() {
+        return moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard(), 0);
     }
 
     @SuppressWarnings("Duplicates")

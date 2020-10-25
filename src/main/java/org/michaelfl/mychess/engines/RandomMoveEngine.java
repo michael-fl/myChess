@@ -1,6 +1,10 @@
 package org.michaelfl.mychess.engines;
 
-import org.michaelfl.mychess.*;
+import org.michaelfl.mychess.Board;
+import org.michaelfl.mychess.EngineConfig;
+import org.michaelfl.mychess.Game;
+import org.michaelfl.mychess.GameStatus;
+import org.michaelfl.mychess.Moves;
 
 import java.util.Random;
 
