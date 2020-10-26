@@ -30,7 +30,7 @@ public final class ChessUtil {
 
     public static int getRowOfField(int field) {
         int row = field / Board.LENGTH;
-        if (row < 2 || row > 9)
+        if (row < 2 || row > 9) // TODO check if those checks are actually required. Otherwise remove them.
             return -1;
         return row - 2;
     }
