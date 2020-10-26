@@ -37,6 +37,22 @@ public final class WeightingFunction {
         weightOfPiece[Board.blackKing]   = 0.0f;
     }
 
+    private final static float[] mobilityWeightOfPiece = new float[Board.blackKing + 1];
+    static {
+        mobilityWeightOfPiece[Board.whitePawn]   = 0.2f;
+        mobilityWeightOfPiece[Board.whiteKnight] = 0.5f;
+        mobilityWeightOfPiece[Board.whiteBishop] = 0.3f;
+        mobilityWeightOfPiece[Board.whiteRook]   = 0.1f;
+        mobilityWeightOfPiece[Board.whiteQueen]  = 0.05f;
+        mobilityWeightOfPiece[Board.whiteKing]   = 0.0f;
+        mobilityWeightOfPiece[Board.blackPawn]   = 0.2f;
+        mobilityWeightOfPiece[Board.blackKnight] = 0.5f;
+        mobilityWeightOfPiece[Board.blackBishop] = 0.3f;
+        mobilityWeightOfPiece[Board.blackRook]   = 0.1f;
+        mobilityWeightOfPiece[Board.blackQueen]  = 0.05f;
+        mobilityWeightOfPiece[Board.blackKing]   = 0.0f;
+    }
+
     /*
       8| 6 6 6 6 6 6 6 6
       7| 2 2 4 5 5 4 2 2
@@ -174,9 +190,9 @@ public final class WeightingFunction {
     private byte[] board;
     private final int[] chessCount = new int[2];
     private final float[] piecesWeight = new float[2];
-    private final int[] movesCount = new int[2];
+    private final float[] mobilityWeight = new float[2];
     private final float[] threadWeight = new float[2];
-    private final int[] fieldDominanceWeight = new int[2];
+    private final float[] fieldDominanceWeight = new float[2];
     private boolean containsIllegalMove;
     private final int[] castlingState = new int[2];
     private final int[] doublePawnCount = new int[2];
@@ -228,8 +244,8 @@ public final class WeightingFunction {
         this.chessCount[1] = 0;
         this.piecesWeight[0] = 0;
         this.piecesWeight[1] = 0;
-        this.movesCount[0] = 0;
-        this.movesCount[1] = 0;
+        this.mobilityWeight[0] = 0;
+        this.mobilityWeight[1] = 0;
         this.threadWeight[0] = 0;
         this.threadWeight[1] = 0;
         this.fieldDominanceWeight[0] = 0;
@@ -248,7 +264,7 @@ public final class WeightingFunction {
                 final int color = (piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE ? 0 : 1;
 
                 piecesWeight[color] += weightOfPiece[piece];
-                fieldDominanceWeight[color] += getWeightOfField(field, color);
+                fieldDominanceWeight[color] += getWeightOfField(piece, field, color);
 
                 calculationFunctions[piece].calculate(this, field, color);
             }
@@ -263,13 +279,14 @@ public final class WeightingFunction {
         if (containsIllegalMove)
             return ILLEGAL_WEIGHT;
 
-        return piecesWeight[0] - piecesWeight[1]
-                + (movesCount[0] - movesCount[1]) * mobilityFactor
+        return Math.round((
+                  (piecesWeight[0] - piecesWeight[1])
+                + (mobilityWeight[0] - mobilityWeight[1]) * mobilityFactor
                 + (threadWeight[0] - threadWeight[1]) * threadWeightFactor
                 + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) * fieldDominanceWeightFactor
                 + (castlingState[0] - castlingState[1]) * castlingFactor
                 + (chessCount[0] - chessCount[1]) * chessFactor
-                + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor;
+                + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) * 1000) / 1000f;
     }
 
     void print() {
@@ -279,12 +296,12 @@ public final class WeightingFunction {
     @Override
     public String toString() {
         return "piecesWeight:       w=" + piecesWeight[0] + ", b=" + piecesWeight[1] + ", delta=" + (piecesWeight[0] - piecesWeight[1]) + ", weight=" + (piecesWeight[0] - piecesWeight[1]) + '\n' +
-               "movesCount:         w=" + movesCount[0] + ", b=" + movesCount[1] + ", delta=" + (movesCount[0] - movesCount[1]) + ", weight=" + (movesCount[0] - movesCount[1]) * mobilityFactor + '\n' +
-               "chessCount:         w=" + chessCount[0] + ", b=" + chessCount[1] + ", delta=" + (chessCount[0] - chessCount[1]) + ", weight=" + (chessCount[0] - chessCount[1]) * chessFactor + '\n' +
+               "mobilityWeight:     w=" + mobilityWeight[0] + ", b=" + mobilityWeight[1] + ", delta=" + (mobilityWeight[0] - mobilityWeight[1]) + ", weight=" + (mobilityWeight[0] - mobilityWeight[1]) * mobilityFactor + '\n' +
                "threadWeight:       w=" + threadWeight[0] + ", b=" + threadWeight[1] + ", delta=" + (threadWeight[0] - threadWeight[1]) + ", weight=" + (threadWeight[0] - threadWeight[1]) * threadWeightFactor + '\n' +
                "fieldDominance:     w=" + fieldDominanceWeight[0] + ", b=" + fieldDominanceWeight[1] + ", delta=" + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) + ", weight=" + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) * fieldDominanceWeightFactor + '\n' +
                "castlingState:      w=" + castlingState[0] + ", b=" + castlingState[1] + ", delta=" + (castlingState[0] - castlingState[1]) + ", weight=" + (castlingState[0] - castlingState[1]) * castlingFactor + '\n' +
                "doublePawnCount:    w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + ", delta=" + (doublePawnCount[0] - doublePawnCount[1]) + ", weight=" + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor + '\n' +
+               "chessCount:         w=" + chessCount[0] + ", b=" + chessCount[1] + ", delta=" + (chessCount[0] - chessCount[1]) + ", weight=" + (chessCount[0] - chessCount[1]) * chessFactor + '\n' +
                "weight: " + calculatePositionWeight();
     }
 
@@ -292,16 +309,16 @@ public final class WeightingFunction {
         generator.calculateForWhitePawn(field, color);
     }
 
-    private static int getWeightOfField(int field, int color) {
+    private static float getWeightOfField(byte piece, int field, int color) {
         final byte[] weightOfField = color == 0 ? weightOfFieldForWhite : weightOfFieldForBlack;
-        return weightOfField[field];
+        return weightOfField[field] * mobilityWeightOfPiece[piece];
     }
 
     private void calculateForWhitePawn(int field, int color) {
         // single step
         int to = field + Board.LENGTH;
         if (board[to] == Board.empty)
-            movesCount[color]++;
+            mobilityWeight[color] += mobilityWeightOfPiece[Board.whitePawn];
         else if (board[to] == Board.whitePawn)
             doublePawnCount[color]++; // double pawn
 
@@ -309,23 +326,23 @@ public final class WeightingFunction {
         if (fieldToRow(field) == 1) {
             to = field + 2 * Board.LENGTH;
             if (board[to] == Board.empty && board[field + Board.LENGTH] == Board.empty)
-                movesCount[color]++;
+                mobilityWeight[color] += mobilityWeightOfPiece[Board.whitePawn];
         }
 
         // capture right
         to = field + Board.LENGTH + 1;
         if ((board[to] & GameStatus.TURN_BLACK) == GameStatus.TURN_BLACK) {
-            capture(field, to, color, board[to]);
+            capture(Board.whitePawn, field, to, color, board[to]);
         } else if (board[to] != Board.illegal) { // own color
-            fieldDominanceWeight[color] += getWeightOfField(to, color);
+            fieldDominanceWeight[color] += getWeightOfField(Board.whitePawn, to, color);
         }
 
         // capture left
         to = field + Board.LENGTH - 1;
         if ((board[to] & GameStatus.TURN_BLACK) == GameStatus.TURN_BLACK) {
-            capture(field, to, color, board[to]);
+            capture(Board.whitePawn, field, to, color, board[to]);
         } else if (board[to] != Board.illegal) { // own color
-            fieldDominanceWeight[color] += getWeightOfField(to, color);
+            fieldDominanceWeight[color] += getWeightOfField(Board.whitePawn, to, color);
         }
 
         // en passant
@@ -333,9 +350,9 @@ public final class WeightingFunction {
             int lastMove = game.getLastMove();
             if (lastMove != 0) {
                 if (board[field - 1] == Board.blackPawn && Move.getToField(lastMove) == field - 1 && Move.getFromField(lastMove) == field - 1 + 2 * Board.LENGTH)
-                    capture(field, field - 1, color, Board.blackPawn);
+                    capture(Board.whitePawn, field, field - 1, color, Board.blackPawn);
                 else if (board[field + 1] == Board.blackPawn && Move.getToField(lastMove) == field + 1 && Move.getFromField(lastMove) == field + 1 + 2 * Board.LENGTH)
-                    capture(field, field + 1, color, Board.blackPawn);
+                    capture(Board.whitePawn, field, field + 1, color, Board.blackPawn);
             }
         }
     }
@@ -352,7 +369,7 @@ public final class WeightingFunction {
         // single step
         int to = field - Board.LENGTH;
         if (board[to] == Board.empty)
-            movesCount[color]++;
+            mobilityWeight[color] += mobilityWeightOfPiece[Board.blackPawn];
         else if (board[to] == Board.blackPawn)
             doublePawnCount[color]++; // double pawn
 
@@ -360,32 +377,32 @@ public final class WeightingFunction {
         if (fieldToRow(field) == 6) {
             to = field - 2 * Board.LENGTH;
             if (board[to] == Board.empty && board[field - Board.LENGTH] == Board.empty)
-                movesCount[color]++;
+                mobilityWeight[color] += mobilityWeightOfPiece[Board.blackPawn];
         }
 
         // capture right
         to = field - Board.LENGTH + 1;
         if ((board[to] & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE) {
-            capture(field, to, color, board[to]);
+            capture(Board.blackPawn, field, to, color, board[to]);
         } else if (board[to] != Board.illegal) { // own color
-            fieldDominanceWeight[color] += getWeightOfField(to, color);
+            fieldDominanceWeight[color] += getWeightOfField(Board.blackPawn, to, color);
         }
 
         // capture left
         to = field - Board.LENGTH - 1;
         if ((board[to] & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE) {
-            capture(field, to, color, board[to]);
+            capture(Board.blackPawn, field, to, color, board[to]);
         } else if (board[to] != Board.illegal) { // own color
-            fieldDominanceWeight[color] += getWeightOfField(to, color);
+            fieldDominanceWeight[color] += getWeightOfField(Board.blackPawn, to, color);
         }
 
         // en passant
         if (fieldToRow(field) == 3) {
             int lastMove = game.getLastMove();
             if (board[field - 1] == Board.whitePawn && Move.getToField(lastMove) == field - 1 && Move.getFromField(lastMove) == field - 1 - 2 * Board.LENGTH)
-                capture(field, field - 1, color, Board.whitePawn);
+                capture(Board.blackPawn, field, field - 1, color, Board.whitePawn);
             else if (board[field + 1] == Board.whitePawn && Move.getToField(lastMove) == field + 1 && Move.getFromField(lastMove) == field + 1 - 2 * Board.LENGTH)
-                capture(field, field + 1, color, Board.whitePawn);
+                capture(Board.blackPawn, field, field + 1, color, Board.whitePawn);
         }
     }
 
@@ -394,14 +411,16 @@ public final class WeightingFunction {
     }
 
     private void calculateForKnight(int field, int color) {
-        move(field, field + 2 * Board.LENGTH + 1, color);
-        move(field, field + 1 * Board.LENGTH + 2, color);
-        move(field, field - 1 * Board.LENGTH + 2, color);
-        move(field, field - 2 * Board.LENGTH + 1, color);
-        move(field, field - 2 * Board.LENGTH - 1, color);
-        move(field, field - 1 * Board.LENGTH - 2, color);
-        move(field, field + 1 * Board.LENGTH - 2, color);
-        move(field, field + 2 * Board.LENGTH - 1, color);
+        final byte myPiece = board[field];
+
+        move(myPiece, field, field + 2 * Board.LENGTH + 1, color);
+        move(myPiece, field, field + 1 * Board.LENGTH + 2, color);
+        move(myPiece, field, field - 1 * Board.LENGTH + 2, color);
+        move(myPiece, field, field - 2 * Board.LENGTH + 1, color);
+        move(myPiece, field, field - 2 * Board.LENGTH - 1, color);
+        move(myPiece, field, field - 1 * Board.LENGTH - 2, color);
+        move(myPiece, field, field + 1 * Board.LENGTH - 2, color);
+        move(myPiece, field, field + 2 * Board.LENGTH - 1, color);
     }
 
     private static void _calculateForBishop(WeightingFunction generator, int field, int color) {
@@ -409,14 +428,16 @@ public final class WeightingFunction {
     }
 
     private void calculateForBishop(int field, int color) {
+        final byte myPiece = board[field];
+
         // move up-right
-        for (int to = field + Board.LENGTH + 1; move(field, to, color); to += Board.LENGTH + 1);
+        for (int to = field + Board.LENGTH + 1; move(myPiece, field, to, color); to += Board.LENGTH + 1);
         // move down-right
-        for (int to = field - Board.LENGTH + 1; move(field, to, color); to = to - Board.LENGTH + 1);
+        for (int to = field - Board.LENGTH + 1; move(myPiece, field, to, color); to = to - Board.LENGTH + 1);
         // move down-left
-        for (int to = field - Board.LENGTH - 1; move(field, to, color); to = to - Board.LENGTH - 1);
+        for (int to = field - Board.LENGTH - 1; move(myPiece, field, to, color); to = to - Board.LENGTH - 1);
         // move up-left
-        for (int to = field + Board.LENGTH - 1; move(field, to, color); to += Board.LENGTH - 1);
+        for (int to = field + Board.LENGTH - 1; move(myPiece, field, to, color); to += Board.LENGTH - 1);
     }
 
     private static void _calculateForRook(WeightingFunction generator, int field, int color) {
@@ -424,14 +445,16 @@ public final class WeightingFunction {
     }
 
     private void calculateForRook(int field, int color) {
+        final byte myPiece = board[field];
+
         // move up
-        for (int to = field + Board.LENGTH; move(field, to, color); to += Board.LENGTH);
+        for (int to = field + Board.LENGTH; move(myPiece, field, to, color); to += Board.LENGTH);
         // move down
-        for (int to = field - Board.LENGTH; move(field, to, color); to -= Board.LENGTH);
+        for (int to = field - Board.LENGTH; move(myPiece, field, to, color); to -= Board.LENGTH);
         // move left
-        for (int to = field - 1; move(field, to, color); to--);
+        for (int to = field - 1; move(myPiece, field, to, color); to--);
         // move right
-        for (int to = field + 1; move(field, to, color); to++);
+        for (int to = field + 1; move(myPiece, field, to, color); to++);
     }
 
     private static void _calculateForQueen(WeightingFunction generator, int field, int color) {
@@ -439,22 +462,24 @@ public final class WeightingFunction {
     }
 
     private void calculateForQueen(int field, int color) {
+        final byte myPiece = board[field];
+
         // move up
-        for (int to = field + Board.LENGTH; move(field, to, color); to += Board.LENGTH);
+        for (int to = field + Board.LENGTH; move(myPiece, field, to, color); to += Board.LENGTH);
         // move up-right
-        for (int to = field + Board.LENGTH + 1; move(field, to, color); to += Board.LENGTH + 1);
+        for (int to = field + Board.LENGTH + 1; move(myPiece, field, to, color); to += Board.LENGTH + 1);
         // move right
-        for (int to = field + 1; move(field, to, color); to++);
+        for (int to = field + 1; move(myPiece, field, to, color); to++);
         // move down-right
-        for (int to = field - Board.LENGTH + 1; move(field, to, color); to = to - Board.LENGTH + 1);
+        for (int to = field - Board.LENGTH + 1; move(myPiece, field, to, color); to = to - Board.LENGTH + 1);
         // move down
-        for (int to = field - Board.LENGTH; move(field, to, color); to -= Board.LENGTH);
+        for (int to = field - Board.LENGTH; move(myPiece, field, to, color); to -= Board.LENGTH);
         // move down-left
-        for (int to = field - Board.LENGTH - 1; move(field, to, color); to = to - Board.LENGTH - 1);
+        for (int to = field - Board.LENGTH - 1; move(myPiece, field, to, color); to = to - Board.LENGTH - 1);
         // move left
-        for (int to = field - 1; move(field, to, color); to--);
+        for (int to = field - 1; move(myPiece, field, to, color); to--);
         // move up-left
-        for (int to = field + Board.LENGTH - 1; move(field, to, color); to += Board.LENGTH - 1);
+        for (int to = field + Board.LENGTH - 1; move(myPiece, field, to, color); to += Board.LENGTH - 1);
     }
 
     private static void _calculateForKing(WeightingFunction generator, int field, int color) {
@@ -462,25 +487,27 @@ public final class WeightingFunction {
     }
 
     private void calculateForKing(int field, int color) {
+        final byte myPiece = board[field];
+
         // move up
-        move(field, field + Board.LENGTH, color);
+        move(myPiece, field, field + Board.LENGTH, color);
         // move up-right
-        move(field, field + Board.LENGTH + 1, color);
+        move(myPiece, field, field + Board.LENGTH + 1, color);
         // move right
-        move(field, field + 1, color);
+        move(myPiece, field, field + 1, color);
         // move down-right
-        move(field, field - Board.LENGTH + 1, color);
+        move(myPiece, field, field - Board.LENGTH + 1, color);
         // move down
-        move(field, field - Board.LENGTH, color);
+        move(myPiece, field, field - Board.LENGTH, color);
         // move down-left
-        move(field, field - Board.LENGTH - 1, color);
+        move(myPiece, field, field - Board.LENGTH - 1, color);
         // move left
-        move(field, field - 1, color);
+        move(myPiece, field, field - 1, color);
         // move up-left
-        move(field, field + Board.LENGTH - 1, color);
+        move(myPiece, field, field + Board.LENGTH - 1, color);
     }
 
-    private boolean move(final int from, final int to, int color) {
+    private boolean move(final byte movingPiece, final int from, final int to, int color) {
         final byte piece = board[to];
         final int oppositeColor = WeightingFunction.oppositeColor[color];
 
@@ -488,19 +515,19 @@ public final class WeightingFunction {
             return false;
 
         if (piece == Board.empty) {
-            movesCount[color]++;
-            fieldDominanceWeight[color] += getWeightOfField(to, color);
+            mobilityWeight[color] += mobilityWeightOfPiece[movingPiece];
+            fieldDominanceWeight[color] += getWeightOfField(movingPiece, to, color);
             return true;
         } else if ((piece & oppositeColor) == oppositeColor) {
-            capture(from, to, color, piece);
+            capture(movingPiece, from, to, color, piece);
             return false;
         } else { // own color
-            fieldDominanceWeight[color] += getWeightOfField(to, color);
+            fieldDominanceWeight[color] += getWeightOfField(movingPiece, to, color);
             return false;
         }
     }
 
-    private void capture(final int from, final int to, final int color, final byte piece) {
+    private void capture(final byte movingPiece, final int from, final int to, final int color, final byte piece) {
         if (piece == oppositeKing[color]) {
             if (turn == color) {
                 containsIllegalMove = true;
@@ -510,8 +537,8 @@ public final class WeightingFunction {
             }
         }
 
-        movesCount[color]++;
-        fieldDominanceWeight[color] += getWeightOfField(to, color);
+        mobilityWeight[color] += mobilityWeightOfPiece[movingPiece];
+        fieldDominanceWeight[color] += getWeightOfField(movingPiece, to, color);
         threadWeight[color] += weightOfPiece[piece];
     }
 
