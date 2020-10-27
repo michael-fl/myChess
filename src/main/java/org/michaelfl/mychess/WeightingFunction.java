@@ -181,6 +181,7 @@ public final class WeightingFunction {
     private final static float fieldDominanceWeightFactor = 0.01f;
     private final static float chessFactor = 0.25f;
     private final static float castlingFactor = 0.25f;
+    private final static float openingFactor = 0.1f;
     private final static float doublePawnFactor = -0.1f;
 
     private GameStatus game;
@@ -195,6 +196,7 @@ public final class WeightingFunction {
     private final float[] fieldDominanceWeight = new float[2];
     private boolean containsIllegalMove;
     private final int[] castlingState = new int[2];
+    private final int[] openingState = new int[2];
     private final int[] doublePawnCount = new int[2];
 
     public static float calculateMaterialWeight(Board theBoard) {
@@ -253,6 +255,8 @@ public final class WeightingFunction {
         this.containsIllegalMove = false;
         this.castlingState[0] = 0;
         this.castlingState[1] = 0;
+        this.openingState[0] = 0;
+        this.openingState[1] = 0;
         this.doublePawnCount[0] = 0;
         this.doublePawnCount[1] = 0;
 
@@ -271,6 +275,7 @@ public final class WeightingFunction {
         }
 
         calculateCastlingState();
+        calculateOpeningState();
 
         return calculatePositionWeight();
     }
@@ -279,12 +284,16 @@ public final class WeightingFunction {
         if (containsIllegalMove)
             return ILLEGAL_WEIGHT;
 
+        final int plyCount = game.getPlyCount();
+        final float openingFactorCorrection = plyCount > 20 ? (plyCount > 40 ? 0f : 0.5f) : 1.0f;
+
         return Math.round((
                   (piecesWeight[0] - piecesWeight[1])
                 + (mobilityWeight[0] - mobilityWeight[1]) * mobilityFactor
                 + (threadWeight[0] - threadWeight[1]) * threadWeightFactor
                 + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) * fieldDominanceWeightFactor
                 + (castlingState[0] - castlingState[1]) * castlingFactor
+                + (openingState[0] - openingState[1]) * openingFactor * openingFactorCorrection
                 + (chessCount[0] - chessCount[1]) * chessFactor
                 + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) * 1000) / 1000f;
     }
@@ -300,6 +309,7 @@ public final class WeightingFunction {
                "threadWeight:       w=" + threadWeight[0] + ", b=" + threadWeight[1] + ", delta=" + (threadWeight[0] - threadWeight[1]) + ", weight=" + (threadWeight[0] - threadWeight[1]) * threadWeightFactor + '\n' +
                "fieldDominance:     w=" + fieldDominanceWeight[0] + ", b=" + fieldDominanceWeight[1] + ", delta=" + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) + ", weight=" + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) * fieldDominanceWeightFactor + '\n' +
                "castlingState:      w=" + castlingState[0] + ", b=" + castlingState[1] + ", delta=" + (castlingState[0] - castlingState[1]) + ", weight=" + (castlingState[0] - castlingState[1]) * castlingFactor + '\n' +
+               "openingState:       w=" + openingState[0] + ", b=" + openingState[1] + ", delta=" + (openingState[0] - openingState[1]) + ", weight=" + (openingState[0] - openingState[1]) * openingFactor + '\n' +
                "doublePawnCount:    w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + ", delta=" + (doublePawnCount[0] - doublePawnCount[1]) + ", weight=" + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor + '\n' +
                "chessCount:         w=" + chessCount[0] + ", b=" + chessCount[1] + ", delta=" + (chessCount[0] - chessCount[1]) + ", weight=" + (chessCount[0] - chessCount[1]) * chessFactor + '\n' +
                "weight: " + calculatePositionWeight();
@@ -560,5 +570,41 @@ public final class WeightingFunction {
             castlingState[1] = -2;
         else
             castlingState[1] = -4;
+    }
+
+    private void calculateOpeningState() {
+        // white
+        int state = 0;
+        if (!game.hasWhiteCastled()) state--;
+        if (board[Board.b1] == Board.whiteKnight) state--;
+        if (board[Board.c1] == Board.whiteBishop) state--;
+        if (board[Board.f1] == Board.whiteBishop) state--;
+        if (board[Board.g1] == Board.whiteKnight) state--;
+        int movedPawnCount = 0;
+        if (board[Board.b2] != Board.whitePawn) movedPawnCount++;
+        if (board[Board.c2] != Board.whitePawn) movedPawnCount++;
+        if (board[Board.d2] != Board.whitePawn) movedPawnCount++;
+        if (board[Board.e2] != Board.whitePawn) movedPawnCount++;
+        if (board[Board.g2] != Board.whitePawn) movedPawnCount++;
+        if (movedPawnCount == 0) state -= 2;
+        else if (movedPawnCount == 1) state--;
+        openingState[0] = state;
+
+        // white
+        state = 0;
+        if (!game.hasBlackCastled()) state--;
+        if (board[Board.b8] == Board.blackKnight) state--;
+        if (board[Board.c8] == Board.blackBishop) state--;
+        if (board[Board.f8] == Board.blackBishop) state--;
+        if (board[Board.g8] == Board.blackKnight) state--;
+        movedPawnCount = 0;
+        if (board[Board.b7] != Board.blackPawn) movedPawnCount++;
+        if (board[Board.c7] != Board.blackPawn) movedPawnCount++;
+        if (board[Board.d7] != Board.blackPawn) movedPawnCount++;
+        if (board[Board.e7] != Board.blackPawn) movedPawnCount++;
+        if (board[Board.g7] != Board.blackPawn) movedPawnCount++;
+        if (movedPawnCount == 0) state -= 2;
+        else if (movedPawnCount == 1) state--;
+        openingState[1] = state;
     }
 }
