@@ -164,7 +164,8 @@ final class CommandHandler {
         void handle(String commandLine) {
             try {
                 //String notation = "[[b1-c3 c7-c5 e2-e4 b8-c6 f1-c4 e7-e6 d2-d3 g8-f6 c1-g5 f8-e7 g1-f3 e8-g8 d1-d2 a7-a6 e1-g1 b7-b5 c4-b3 h7-h6 g5-f6 e7-f6 d2-f4 e6-e5 f4-e3 c6-d4 b3-d5 a8-b8 a1-b1 c8-b7 d5-b7 b8-b7 b2-b4 c5-b4 c3-d5 d4-c2 e3-d2 c2-d4 d2-b4 d4-e2 g1-h1 e2-f4 b4-d6 f4-d5 f3-e5 f6-e5 d6-d5 f8-e8 f2-f4 e5-c7]]";
-                String notation =  "[[b1-c3 e7-e6 e2-e3 b8-c6 f1-b5 d8-g5 b5-c6 d7-c6 d1-f3 g5-f5 e3-e4 f5-e5]]";
+                //String notation = "[[b1-c3 e7-e6 e2-e3 b8-c6 f1-b5 d8-g5 b5-c6 d7-c6 d1-f3 g5-f5 e3-e4 f5-e5]]";
+                String notation = "[[g1-f3 g8-f6 e2-e3 d7-d6 b1-c3 c8-g4 h2-h3 g4-d7 f1-c4 e7-e6 e1-g1 d6-d5 c4-d3 f8-d6 b2-b3 b8-c6 c3-b5 c6-b4 b5-d6 c7-d6 c1-a3 b4-d3 c2-d3 d8-c7 a1-c1 c7-b6 a3-b2 e6-e5]]";
                 computerColor = null;
                 SimpleNotationImporter importer = new SimpleNotationImporter(notation);
                 game = importer.importGame();

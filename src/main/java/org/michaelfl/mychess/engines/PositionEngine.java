@@ -34,7 +34,6 @@ public final class PositionEngine extends ChessEngine {
         for (int i = 0; i < countMoves; i++) {
             // Make this move and calculate its weight; also check if it is a legal one
             int move = plainMoves[i];
-            // TODO: Pass GameStatus as result parameter to avoid allocation of many objects
             GameStatus gameStatus = game.getGameStatus().makeMove(move);
             workingBoard.makeMove(move);
 

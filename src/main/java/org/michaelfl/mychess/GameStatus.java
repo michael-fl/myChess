@@ -6,8 +6,9 @@ public final class GameStatus {
     @SuppressWarnings("WeakerAccess")
     public final static int TURN_BLACK = 16;
 
-    private int turn;
-    private int lastMove;
+    private final int plyCount;
+    private final int turn;
+    private final int lastMove;
     private boolean whiteHasCastled = false;
     private boolean blackHasCastled = false;
     private boolean whiteCastlingKingSidePossible = true;
@@ -15,12 +16,14 @@ public final class GameStatus {
     private boolean blackCastlingKingSidePossible = true;
     private boolean blackCastlingQueenSidePossible = true;
 
-    private GameStatus(int turn, int lastMove) {
+    private GameStatus(int plyCount, int turn, int lastMove) {
+        this.plyCount = plyCount;
         this.turn = turn;
         this.lastMove = lastMove;
     }
 
-    private GameStatus(int turn, int lastMove, GameStatus previousStatus) {
+    private GameStatus(int plyCount, int turn, int lastMove, GameStatus previousStatus) {
+        this.plyCount = plyCount;
         this.turn = turn;
         this.lastMove = lastMove;
 
@@ -33,7 +36,11 @@ public final class GameStatus {
     }
 
     static GameStatus newGame() {
-        return new GameStatus(TURN_WHITE, 0);
+        return new GameStatus(0, TURN_WHITE, 0);
+    }
+
+    public int getPlyCount() {
+        return plyCount;
     }
 
     public int getTurn() {
@@ -86,11 +93,11 @@ public final class GameStatus {
     }
 
     public GameStatus switchTurn() {
-        return new GameStatus(getOppositeColor(), 0, this);
+        return new GameStatus(0, getOppositeColor(), 0, this);
     }
 
     public GameStatus makeMove(int move) {
-        GameStatus newStatus = new GameStatus(getOppositeColor(), move, this);
+        GameStatus newStatus = new GameStatus(plyCount + 1, getOppositeColor(), move, this);
         newStatus.updateCastlingState(turn, move);
 
         return newStatus;
@@ -135,10 +142,6 @@ public final class GameStatus {
             else if (whiteCastlingKingSidePossible && toField == Board.h1)
                 whiteCastlingKingSidePossible = false;
         }
-    }
-
-    public boolean isBetterWeight(float w1, float w2) {
-        return turn == TURN_WHITE ? w1 > w2 : w2 > w1;
     }
 
     @Override
