@@ -17,9 +17,7 @@ package org.michaelfl.mychess;
 public final class WeightingFunction {
 
     public final static float ILLEGAL_WEIGHT = Float.NEGATIVE_INFINITY;
-    public final static float CHECKMATE_WEIGHT = 1.0e10f;
-    public final static float CHECKMATE_BLACK = CHECKMATE_WEIGHT;
-    public final static float CHECKMATE_WHITE = -CHECKMATE_BLACK;
+    public final static float CHECKMATE_WEIGHT = 1000f;
 
     public final static float[] weightOfPiece = new float[Board.blackKing + 1];
     static {
@@ -27,13 +25,13 @@ public final class WeightingFunction {
         weightOfPiece[Board.whiteKnight] = 3.0f;
         weightOfPiece[Board.whiteBishop] = 3.0f;
         weightOfPiece[Board.whiteRook]   = 5.0f;
-        weightOfPiece[Board.whiteQueen]  = 10.0f;
+        weightOfPiece[Board.whiteQueen]  = 9.0f;
         weightOfPiece[Board.whiteKing]   = 0.0f;
         weightOfPiece[Board.blackPawn]   = 1.0f;
         weightOfPiece[Board.blackKnight] = 3.0f;
         weightOfPiece[Board.blackBishop] = 3.0f;
         weightOfPiece[Board.blackRook]   = 5.0f;
-        weightOfPiece[Board.blackQueen]  = 10.0f;
+        weightOfPiece[Board.blackQueen]  = 9.0f;
         weightOfPiece[Board.blackKing]   = 0.0f;
     }
 
@@ -295,7 +293,7 @@ public final class WeightingFunction {
                 + (castlingState[0] - castlingState[1]) * castlingFactor
                 + (openingState[0] - openingState[1]) * openingFactor * openingFactorCorrection
                 + (chessCount[0] - chessCount[1]) * chessFactor
-                + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) * 1000) / 1000f;
+                + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) * 100) / 100f;
     }
 
     void print() {
@@ -327,16 +325,20 @@ public final class WeightingFunction {
     private void calculateForWhitePawn(int field, int color) {
         // single step
         int to = field + Board.LENGTH;
-        if (board[to] == Board.empty)
+        if (board[to] == Board.empty) {
             mobilityWeight[color] += mobilityWeightOfPiece[Board.whitePawn];
-        else if (board[to] == Board.whitePawn)
+            fieldDominanceWeight[color] += getWeightOfField(Board.whitePawn, to, color);
+        } else if (board[to] == Board.whitePawn) {
             doublePawnCount[color]++; // double pawn
+        }
 
         // double step
         if (fieldToRow(field) == 1) {
             to = field + 2 * Board.LENGTH;
-            if (board[to] == Board.empty && board[field + Board.LENGTH] == Board.empty)
+            if (board[to] == Board.empty && board[field + Board.LENGTH] == Board.empty) {
                 mobilityWeight[color] += mobilityWeightOfPiece[Board.whitePawn];
+                fieldDominanceWeight[color] += getWeightOfField(Board.whitePawn, to, color);
+            }
         }
 
         // capture right
@@ -378,16 +380,20 @@ public final class WeightingFunction {
     private void calculateForBlackPawn(int field, int color) {
         // single step
         int to = field - Board.LENGTH;
-        if (board[to] == Board.empty)
+        if (board[to] == Board.empty) {
             mobilityWeight[color] += mobilityWeightOfPiece[Board.blackPawn];
-        else if (board[to] == Board.blackPawn)
+            fieldDominanceWeight[color] += getWeightOfField(Board.blackPawn, to, color);
+        } else if (board[to] == Board.blackPawn) {
             doublePawnCount[color]++; // double pawn
+        }
 
         // double step
         if (fieldToRow(field) == 6) {
             to = field - 2 * Board.LENGTH;
-            if (board[to] == Board.empty && board[field - Board.LENGTH] == Board.empty)
+            if (board[to] == Board.empty && board[field - Board.LENGTH] == Board.empty) {
                 mobilityWeight[color] += mobilityWeightOfPiece[Board.blackPawn];
+                fieldDominanceWeight[color] += getWeightOfField(Board.blackPawn, to, color);
+            }
         }
 
         // capture right

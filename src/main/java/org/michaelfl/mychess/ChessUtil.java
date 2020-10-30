@@ -90,10 +90,10 @@ public final class ChessUtil {
     public static String weightToString(float weight) {
         if (weight == WeightingFunction.ILLEGAL_WEIGHT)
             return "illegal";
-        if (weight >= WeightingFunction.CHECKMATE_BLACK)
-            return "black checkmate";
-        if (weight <= WeightingFunction.CHECKMATE_WHITE)
-            return "white checkmate";
+        if (weight >= WeightingFunction.CHECKMATE_WEIGHT)
+            return "M" + (Math.round(weight - WeightingFunction.CHECKMATE_WEIGHT));
+        if (weight <= -WeightingFunction.CHECKMATE_WEIGHT)
+            return "-M" + (Math.round(-weight - WeightingFunction.CHECKMATE_WEIGHT));
 
         return String.valueOf(weight);
     }
