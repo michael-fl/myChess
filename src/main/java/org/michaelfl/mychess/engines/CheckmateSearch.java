@@ -48,15 +48,17 @@ public final class CheckmateSearch {
 
         int checkmateDepth = findCheckmate(gameStatus.getOppositeColor(), gameStatus, workingBoard, checkmateMove);
         if (checkmateDepth > 0) {
-            final float weight = (100 - checkmateDepth) * (gameStatus.isWhiteTurn() ? WeightingFunction.CHECKMATE_BLACK : WeightingFunction.CHECKMATE_WHITE);
-            System.out.println("==> opposite checkmate in " + checkmateDepth + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + weight);
+            final float factor = gameStatus.isWhiteTurn() ? 1.0f : -1.0f;
+            final float weight = (WeightingFunction.CHECKMATE_WEIGHT + checkmateDepth) * factor;
+            System.out.println("==> opposite checkmate in " + checkmateDepth + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + ChessUtil.weightToString(weight));
             return new MoveAndWeight(checkmateMove[0], weight, new int[0]);
         }
 
         checkmateDepth = findCheckmate(gameStatus.getTurn(), gameStatus, workingBoard, checkmateMove);
         if (checkmateDepth > 0) {
-            final float weight = (100 - checkmateDepth) * (gameStatus.isWhiteTurn() ? WeightingFunction.CHECKMATE_WHITE : WeightingFunction.CHECKMATE_BLACK);
-            System.out.println("==> I'm checkmate in " + checkmateDepth + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + weight);
+            final float factor = gameStatus.isWhiteTurn() ? -1.0f : 1.0f;
+            final float weight = (WeightingFunction.CHECKMATE_WEIGHT + checkmateDepth) * factor;
+            System.out.println("==> I'm checkmate in " + checkmateDepth + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + ChessUtil.weightToString(weight));
             return new MoveAndWeight(checkmateMove[0], weight, new int[0]);
         }
 

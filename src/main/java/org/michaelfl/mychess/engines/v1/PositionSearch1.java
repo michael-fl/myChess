@@ -275,8 +275,8 @@ final class PositionSearch1 {
         // No legal move possible ==> Checkmate or stalemate
         bestPathOut[depth] = 0;
         if (Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator)) {
-            // Checkmate
-            return (100 - depth) * -WeightingFunction.CHECKMATE_WEIGHT;
+            // Computer checkmate
+            return -(WeightingFunction.CHECKMATE_WEIGHT + depth);
         }
 
         // Stalemate
@@ -358,8 +358,8 @@ final class PositionSearch1 {
         // No legal move possible ==> Checkmate or stalemate
         bestPathOut[depth] = 0;
         if (Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator)) {
-            // Checkmate
-            return (100 - depth) * WeightingFunction.CHECKMATE_WEIGHT;
+            // Opposite checkmate
+            return WeightingFunction.CHECKMATE_WEIGHT + depth;
         }
 
         // Stalemate
