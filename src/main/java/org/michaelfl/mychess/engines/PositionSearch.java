@@ -63,7 +63,8 @@ final class PositionSearch {
 
         System.out.println("#positions: " + positionsCount + ", #pruned: " + prunedMovesCount);
 
-        System.out.println("move: " + ChessUtil.moveToString(bestMove.move) + ", weight: " + ChessUtil.weightToString(bestMove.weight * weightFactor) + " [" + ChessUtil.pathToString(bestMove.path) + "]");
+        MoveAndWeight m = bestMove.weightFactor(weightFactor);
+        System.out.println("move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight) + " [" + ChessUtil.pathToString(m.path) + "]");
 
         return bestMove;
     }
@@ -108,7 +109,7 @@ final class PositionSearch {
 
             // Find and store current killer moves
             killerMoves.sample();
-            System.out.println((i + 1) + "/" + countMoves + ": " + ChessUtil.moveToString(bestMove) + ", weight=" + ChessUtil.weightToString(bestWeight * weightFactor));
+            System.out.println((i + 1) + "/" + countMoves + ": " + ChessUtil.moveToString(bestMove) + ", weight=" + ChessUtil.weightToString(bestWeight, weightFactor));
         }
 
         if (bestMove != 0)
@@ -194,7 +195,7 @@ final class PositionSearch {
         bestPathOut[depth] = 0;
         if (Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator)) {
             // Computer checkmate
-            return -(WeightingFunction.CHECKMATE_WEIGHT + depth);
+            return -(WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth);
         }
 
         // Stalemate
@@ -274,7 +275,7 @@ final class PositionSearch {
         bestPathOut[depth] = 0;
         if (Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator)) {
             // Opposite checkmate
-            return WeightingFunction.CHECKMATE_WEIGHT + depth;
+            return WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth;
         }
 
         // Stalemate

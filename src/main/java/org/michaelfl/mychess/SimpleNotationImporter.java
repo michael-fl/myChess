@@ -18,6 +18,10 @@ final class SimpleNotationImporter {
     }
 
     Game importGame() {
+        return importGame(Game.standardConfig());
+    }
+
+    Game importGame(GameConfig config) {
         List<MoveDescription> moves = new ArrayList<>();
         String[] moveNotations = gameNotation.split(" ");
 
@@ -25,7 +29,7 @@ final class SimpleNotationImporter {
             moves.add(parseMove(moveNotation));
         }
 
-        return new Game(moves);
+        return new Game(config, moves);
     }
 
     private MoveDescription parseMove(String moveNotation) {

@@ -88,12 +88,17 @@ public final class ChessUtil {
     }
 
     public static String weightToString(float weight) {
+        return weightToString(weight, 1f);
+    }
+
+    public static String weightToString(float weight, float factor) {
         if (weight == WeightingFunction.ILLEGAL_WEIGHT)
             return "illegal";
-        if (weight >= WeightingFunction.CHECKMATE_WEIGHT)
-            return "M" + (Math.round(weight - WeightingFunction.CHECKMATE_WEIGHT));
-        if (weight <= -WeightingFunction.CHECKMATE_WEIGHT)
-            return "-M" + (Math.round(-weight - WeightingFunction.CHECKMATE_WEIGHT));
+        weight *= factor;
+        if (weight >= WeightingFunction.CHECKMATE_WEIGHT_LOW)
+            return "M" + (Math.round(WeightingFunction.CHECKMATE_WEIGHT_HIGH - weight));
+        if (weight <= -WeightingFunction.CHECKMATE_WEIGHT_LOW)
+            return "-M" + (Math.round(WeightingFunction.CHECKMATE_WEIGHT_HIGH + weight));
 
         return String.valueOf(weight);
     }

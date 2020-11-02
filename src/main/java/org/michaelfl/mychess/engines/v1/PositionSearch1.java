@@ -87,10 +87,14 @@ final class PositionSearch1 {
         for (int depth = 1; depth + iterationDepth < maxDepth; depth++) {
             System.out.println("DEPTH: " + (depth + iterationDepth) + "/" + maxDepth);
             for (int i = 0; i < nVariants; i++) {
-                if (bestMoves[i] != MoveAndWeight.NO_MOVE && bestMoves[i].path[depth] != 0) {
-                    System.out.println("DEEPEN VARIANT " + (i + 1) + "...");
-                    var m = bestMoves[i] = deepenPath(depth, gameStatus, workingBoard, bestMoves[i]);
-                    System.out.println("move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight * weightFactor) + " [" + ChessUtil.pathToString(m.path) + "]");
+                if (bestMoves[i] != MoveAndWeight.NO_MOVE) {
+                    if (bestMoves[i].path[depth] != 0) {
+                        System.out.println("DEEPEN VARIANT " + (i + 1) + "...");
+                        var m = bestMoves[i] = deepenPath(depth, gameStatus, workingBoard, bestMoves[i]);
+                        System.out.println("move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight * weightFactor) + " [" + ChessUtil.pathToString(m.path) + "]");
+                    } else {
+                        bestMoves[i].path[depth + 1] = 0;
+                    }
                 }
             }
         }
@@ -101,8 +105,8 @@ final class PositionSearch1 {
 
             for (int i = 0; i < nVariants; i++) {
                 if (bestMoves[i] != MoveAndWeight.NO_MOVE) {
-                    MoveAndWeight m = bestMoves[i];
-                    System.out.println((i + 1) + ". move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight * weightFactor) + " [" + ChessUtil.pathToString(m.path) + "]");
+                    MoveAndWeight m = bestMoves[i].weightFactor(weightFactor);
+                    System.out.println((i + 1) + ". move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight) + " [" + ChessUtil.pathToString(m.path) + "]");
                 }
             }
 
@@ -276,7 +280,7 @@ final class PositionSearch1 {
         bestPathOut[depth] = 0;
         if (Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator)) {
             // Computer checkmate
-            return -(WeightingFunction.CHECKMATE_WEIGHT + depth);
+            return -(WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth);
         }
 
         // Stalemate
@@ -359,7 +363,7 @@ final class PositionSearch1 {
         bestPathOut[depth] = 0;
         if (Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator)) {
             // Opposite checkmate
-            return WeightingFunction.CHECKMATE_WEIGHT + depth;
+            return WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth;
         }
 
         // Stalemate

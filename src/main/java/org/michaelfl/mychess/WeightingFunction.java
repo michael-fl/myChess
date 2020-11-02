@@ -17,7 +17,8 @@ package org.michaelfl.mychess;
 public final class WeightingFunction {
 
     public final static float ILLEGAL_WEIGHT = Float.NEGATIVE_INFINITY;
-    public final static float CHECKMATE_WEIGHT = 1000f;
+    public final static float CHECKMATE_WEIGHT_LOW = 1000f;
+    public final static float CHECKMATE_WEIGHT_HIGH = 2000f;
 
     public final static float[] weightOfPiece = new float[Board.blackKing + 1];
     static {
