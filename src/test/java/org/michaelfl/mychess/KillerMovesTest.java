@@ -1,11 +1,16 @@
 package org.michaelfl.mychess;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.MovesCounter.MoveSet;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -19,8 +24,8 @@ class KillerMovesTest {
     }
 
     private final static class MoveAndCount {
-        private short move;
-        private int count;
+        private final short move;
+        private final int count;
 
         MoveAndCount(short move, int count) {
             this.move = move;
@@ -149,7 +154,8 @@ class KillerMovesTest {
     }
 
 //    @Test
-    void testPerformance() throws InterruptedException {
+@SuppressWarnings("unused")
+void testPerformance() throws InterruptedException {
         final int n = Short.MAX_VALUE;
         int[] moveCounts = new int[n];
 

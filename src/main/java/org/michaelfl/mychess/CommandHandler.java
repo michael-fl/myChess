@@ -323,7 +323,7 @@ final class CommandHandler {
                 return;
             }
 
-            MyChessEngine engine = new MyChessEngine(new EngineConfig(6), game);
+            MyChessEngine engine = new MyChessEngine(new EngineConfig.Builder().build(), game);
             int[] moveOut = new int[1];
             int depth = engine.findCheckmate(game.getTurn(), moveOut);
             if (depth < 0)

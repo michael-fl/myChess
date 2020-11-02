@@ -6,6 +6,7 @@ import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.MoveSorterImpl;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.MovesCounter;
+import org.michaelfl.mychess.WeightingFunction;
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -27,6 +28,13 @@ public abstract class ChessEngine {
             this.move = move;
             this.weight = weight;
             this.path = path;
+        }
+
+        public MoveAndWeight weightFactor(float factor) {
+            if (weight == WeightingFunction.ILLEGAL_WEIGHT) {
+                return this;
+            }
+            return new MoveAndWeight(move, weight * factor, path);
         }
     }
 

@@ -10,29 +10,13 @@ public final class EngineConfig {
     private final int maxDepth;
     private final int iterationDepth;
     private final int nVariants;
+    private final boolean checkmateCheck;
 
-    public EngineConfig(int maxDepth) {
-        this.maxDepth = maxDepth;
-        this.iterationDepth = 0;
-        this.nVariants = 1;
-    }
-
-    public EngineConfig(int maxDepth, int iterationDepth, int nVariants) {
+    private EngineConfig(int maxDepth, int iterationDepth, int nVariants, boolean checkmateCheck) {
         this.maxDepth = maxDepth;
         this.iterationDepth = iterationDepth;
         this.nVariants = nVariants;
-    }
-
-    public EngineConfig setMaxDepth(int maxDepth) {
-        return new EngineConfig(maxDepth, this.iterationDepth, this.nVariants);
-    }
-
-    public EngineConfig setIterationDepth(int iterationDepth) {
-        return new EngineConfig(this.maxDepth, iterationDepth, this.nVariants);
-    }
-
-    public EngineConfig setNVariants(int nVariants) {
-        return new EngineConfig(this.maxDepth, this.iterationDepth, nVariants);
+        this.checkmateCheck = checkmateCheck;
     }
 
     public final int getMaxDepth() {
@@ -49,5 +33,40 @@ public final class EngineConfig {
 
     public final int getNVariants() {
         return nVariants;
+    }
+
+    public final boolean isCheckmateCheck() {
+        return checkmateCheck;
+    }
+
+    public final static class Builder {
+        private int maxDepth = 8;
+        private int iterationDepth = 0;
+        private int nVariants = 1;
+        private boolean checkmateCheck = true;
+
+        public Builder maxDepth(int maxDepth) {
+            this.maxDepth = maxDepth;
+            return this;
+        }
+
+        public Builder iterationDepth(int iterationDepth) {
+            this.iterationDepth = iterationDepth;
+            return this;
+        }
+
+        public Builder variants(int variants) {
+            this.nVariants = variants;
+            return this;
+        }
+
+        public Builder checkmateCheck(boolean checkmateCheck) {
+            this.checkmateCheck = checkmateCheck;
+            return this;
+        }
+
+        public EngineConfig build() {
+            return new EngineConfig(maxDepth, iterationDepth, nVariants, checkmateCheck);
+        }
     }
 }

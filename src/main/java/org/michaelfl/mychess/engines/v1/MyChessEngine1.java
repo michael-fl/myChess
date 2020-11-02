@@ -21,21 +21,27 @@ public final class MyChessEngine1 extends ChessEngine {
 
     @Override
     protected MoveAndWeight calculateNextMove(NextMoveTask task) {
+        MoveAndWeight move = MoveAndWeight.NO_MOVE;
+
         // Phase 1: Checkmate search
-        long t1 = System.currentTimeMillis();
-        MoveAndWeight move = CheckmateSearch.findCheckmateMove(this, game);
-        long t2 = System.currentTimeMillis();
-        System.out.println("Checkmate check took " + (t2 - t1) + "ms");
+        if (getConfig().isCheckmateCheck()) {
+            long t1 = System.currentTimeMillis();
+            move = CheckmateSearch.findCheckmateMove(this, game);
+            long t2 = System.currentTimeMillis();
+            System.out.println("Checkmate check took " + (t2 - t1) + "ms");
+        }
 
         // Phase 2: Position search
         if (move == MoveAndWeight.NO_MOVE) {
-            t1 = System.currentTimeMillis();
+            long t1 = System.currentTimeMillis();
             move = PositionSearch1.calculateNextMove(this, task, game);
-            t2 = System.currentTimeMillis();
+            long t2 = System.currentTimeMillis();
             System.out.println("Position search took " + (t2 - t1) + "ms");
         }
 
-        return move;
+        float weightFactor = game.getGameStatus().isWhiteTurn() ? 1 : -1;
+
+        return move.weightFactor(weightFactor);
     }
 
     public int findCheckmate(int forColor, int[] moveOut) {

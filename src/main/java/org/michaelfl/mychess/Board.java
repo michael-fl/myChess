@@ -147,7 +147,7 @@ public final class Board {
     //    24 25  26(a1) ...  33(h1)  34  35
     //    12 13         ...          22  23
     //    00 01         ...          10  11
-    Board() {
+    private Board() {
         board = new byte[LENGTH*LENGTH];
         Arrays.fill(board, illegal);
 
@@ -196,6 +196,10 @@ public final class Board {
 
     Board(byte[] board) {
         this.board = board;
+    }
+
+    static Board createNewGame() {
+        return new Board();
     }
 
     static Board createEmptyBoard() {

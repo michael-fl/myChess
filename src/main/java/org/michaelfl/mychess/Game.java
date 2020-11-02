@@ -22,21 +22,34 @@ public final class Game {
     }
 
     private final Random rand = new Random();
-    private final ChessEngine engineWhite = new MyChessEngine(new EngineConfig(8), this);
-    private final ChessEngine engineBlack = new MyChessEngine1(new EngineConfig(14, 6, 4), this);
+    private final ChessEngine engineWhite;
+    private final ChessEngine engineBlack;
     private Board previousBoard;
-    private final Board board = new Board();
+    private final Board board = Board.createNewGame();
     private final List<Move> moves = new ArrayList<>();
     private final List<GameStatus> statusStack = new ArrayList<>();
     private GameResult result = GameResult.ONGOING;
     private Float weight;
 
+    static GameConfig standardConfig() {
+        return new GameConfig(
+                MyChessEngine.class, new EngineConfig.Builder().maxDepth(8).build(),
+                MyChessEngine1.class, new EngineConfig.Builder().maxDepth(14).iterationDepth(6).variants(4).build());
+    }
+
     Game() {
+        this(standardConfig());
+    }
+
+    Game(GameConfig config) {
+        engineWhite = config.createEngineWhite(this);
+        engineBlack = config.createEngineBlack(this);
+
         statusStack.add(GameStatus.newGame());
     }
 
-    Game(List<MoveDescription> moves) {
-        statusStack.add(GameStatus.newGame());
+    Game(GameConfig config, List<MoveDescription> moves) {
+        this(config);
 
         for (MoveDescription move : moves) {
             makeMove(move);
@@ -258,10 +271,6 @@ public final class Game {
         // TODO MF: Calculate moves without sorting
         Moves nextMoves = moveGenerator.calculateMoves(gameStatus, board);
         return nextMoves.isIllegal();
-    }
-
-    public static void main(String[] args) {
-        new Game().playAutoGame();
     }
 
     void playAutoGame() {
