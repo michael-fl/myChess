@@ -109,6 +109,23 @@ public final class Board {
         printSymbols[blackKing] = '\u265A';
     }
 
+    public final static char[] fenSymbols = new char[22];
+    static {
+        Arrays.fill(fenSymbols, '?');
+        fenSymbols[whitePawn] = 'P';
+        fenSymbols[whiteKnight] = 'N';
+        fenSymbols[whiteBishop] = 'B';
+        fenSymbols[whiteRook] = 'R';
+        fenSymbols[whiteQueen] = 'Q';
+        fenSymbols[whiteKing] = 'K';
+        fenSymbols[blackPawn] = 'p';
+        fenSymbols[blackKnight] = 'n';
+        fenSymbols[blackBishop] = 'b';
+        fenSymbols[blackRook] = 'r';
+        fenSymbols[blackQueen] = 'q';
+        fenSymbols[blackKing] = 'k';
+    }
+
     private final static IMove[] MOVE_FUNCTIONS = new IMove[Move.typeEnPassant + 1];
     static {
         MOVE_FUNCTIONS[Move.typeNormal]              = Board::makeNormalMove;
@@ -212,6 +229,11 @@ public final class Board {
 
     public byte[] getRawBoard() {
         return board;
+    }
+
+    public byte getPieceAt(int col, int row) {
+        int index = ChessUtil.getFieldFromColAndRow(col, row);
+        return board[index];
     }
 
     @Override

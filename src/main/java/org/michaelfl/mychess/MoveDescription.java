@@ -37,4 +37,25 @@ final class MoveDescription {
     char getPawnPromotionSymbol() {
         return pawnPromotionSymbol;
     }
+
+    static MoveDescription fromString(String moveString, int turn) {
+        boolean isWhiteTurn = turn == GameStatus.TURN_WHITE;
+        MoveDescription move;
+
+        if ("O-O".equals(moveString) || "0-0".equals(moveString) || "OO".equals(moveString) || "00".equals(moveString)) {
+            move = isWhiteTurn ? MoveDescription.whiteCastlingKingSide : MoveDescription.blackCastlingKingSide;
+        } else if ("O-O-O".equals(moveString) || "0-0-0".equals(moveString) || "OOO".equals(moveString) || "000".equals(moveString)) {
+            move = isWhiteTurn ? MoveDescription.whiteCastlingQueenSide : MoveDescription.blackCastlingQueenSide;
+        } else {
+            int[] from = ChessUtil.getColAndRowFromString(moveString.substring(0, 2));
+            int offset = moveString.charAt(2) == '-' ? 1 : 0;
+            int[] to = ChessUtil.getColAndRowFromString(moveString.substring(2 + offset, 4 + offset));
+
+            char pawnPromotionSymbol = moveString.length() > 4 + offset ? Character.toUpperCase(moveString.charAt(4 + offset)) : 0;
+
+            move = new MoveDescription(from[0], from[1], to[0], to[1], pawnPromotionSymbol);
+        }
+
+        return move;
+    }
 }
