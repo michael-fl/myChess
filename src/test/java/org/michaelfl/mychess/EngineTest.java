@@ -304,7 +304,11 @@ class EngineTest {
             var game = importer.importGame(config);
 
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
-            assertEquals(expectedMove, ChessUtil.moveToString(move.move), "Unexpected move");
+            if (!expectedMove.equals(ChessUtil.moveToString(move.move))) {
+                game.print();
+                System.out.println(game.exportFEN());
+                fail("Wrong move: " + ChessUtil.moveToString(move.move) + ". Expected " + expectedMove);
+            }
 
             var weight = move.weight;
             if (weight < expectedMinWeight) {
