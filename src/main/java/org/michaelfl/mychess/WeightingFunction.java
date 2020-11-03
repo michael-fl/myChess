@@ -36,20 +36,20 @@ public final class WeightingFunction {
         weightOfPiece[Board.blackKing]   = 0.0f;
     }
 
-    private final static float[] mobilityWeightOfPiece = new float[Board.blackKing + 1];
+    private final static int[] mobilityWeightOfPiece = new int[Board.blackKing + 1];
     static {
-        mobilityWeightOfPiece[Board.whitePawn]   = 0.2f;
-        mobilityWeightOfPiece[Board.whiteKnight] = 0.5f;
-        mobilityWeightOfPiece[Board.whiteBishop] = 0.3f;
-        mobilityWeightOfPiece[Board.whiteRook]   = 0.1f;
-        mobilityWeightOfPiece[Board.whiteQueen]  = 0.05f;
-        mobilityWeightOfPiece[Board.whiteKing]   = 0.0f;
-        mobilityWeightOfPiece[Board.blackPawn]   = 0.2f;
-        mobilityWeightOfPiece[Board.blackKnight] = 0.5f;
-        mobilityWeightOfPiece[Board.blackBishop] = 0.3f;
-        mobilityWeightOfPiece[Board.blackRook]   = 0.1f;
-        mobilityWeightOfPiece[Board.blackQueen]  = 0.05f;
-        mobilityWeightOfPiece[Board.blackKing]   = 0.0f;
+        mobilityWeightOfPiece[Board.whitePawn]   = 20;
+        mobilityWeightOfPiece[Board.whiteKnight] = 50;
+        mobilityWeightOfPiece[Board.whiteBishop] = 30;
+        mobilityWeightOfPiece[Board.whiteRook]   = 10;
+        mobilityWeightOfPiece[Board.whiteQueen]  = 5;
+        mobilityWeightOfPiece[Board.whiteKing]   = 0;
+        mobilityWeightOfPiece[Board.blackPawn]   = 20;
+        mobilityWeightOfPiece[Board.blackKnight] = 50;
+        mobilityWeightOfPiece[Board.blackBishop] = 30;
+        mobilityWeightOfPiece[Board.blackRook]   = 10;
+        mobilityWeightOfPiece[Board.blackQueen]  = 5;
+        mobilityWeightOfPiece[Board.blackKing]   = 0;
     }
 
     /*
@@ -190,7 +190,7 @@ public final class WeightingFunction {
     private byte[] board;
     private final int[] chessCount = new int[2];
     private final float[] piecesWeight = new float[2];
-    private final float[] mobilityWeight = new float[2];
+    private final int[] mobilityWeight = new int[2];
     private final float[] threadWeight = new float[2];
     private final float[] fieldDominanceWeight = new float[2];
     private boolean containsIllegalMove;
@@ -288,7 +288,7 @@ public final class WeightingFunction {
 
         return Math.round((
                   (piecesWeight[0] - piecesWeight[1])
-                + (mobilityWeight[0] - mobilityWeight[1]) * mobilityFactor
+                + (mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor
                 + (threadWeight[0] - threadWeight[1]) * threadWeightFactor
                 + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) * fieldDominanceWeightFactor
                 + (castlingState[0] - castlingState[1]) * castlingFactor
@@ -304,7 +304,7 @@ public final class WeightingFunction {
     @Override
     public String toString() {
         return "piecesWeight:       w=" + piecesWeight[0] + ", b=" + piecesWeight[1] + ", delta=" + (piecesWeight[0] - piecesWeight[1]) + ", weight=" + (piecesWeight[0] - piecesWeight[1]) + '\n' +
-               "mobilityWeight:     w=" + mobilityWeight[0] + ", b=" + mobilityWeight[1] + ", delta=" + (mobilityWeight[0] - mobilityWeight[1]) + ", weight=" + (mobilityWeight[0] - mobilityWeight[1]) * mobilityFactor + '\n' +
+               "mobilityWeight:     w=" + mobilityWeight[0] + ", b=" + mobilityWeight[1] + ", delta=" + (mobilityWeight[0] - mobilityWeight[1]) + ", weight=" + (mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor + '\n' +
                "threadWeight:       w=" + threadWeight[0] + ", b=" + threadWeight[1] + ", delta=" + (threadWeight[0] - threadWeight[1]) + ", weight=" + (threadWeight[0] - threadWeight[1]) * threadWeightFactor + '\n' +
                "fieldDominance:     w=" + fieldDominanceWeight[0] + ", b=" + fieldDominanceWeight[1] + ", delta=" + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) + ", weight=" + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) * fieldDominanceWeightFactor + '\n' +
                "castlingState:      w=" + castlingState[0] + ", b=" + castlingState[1] + ", delta=" + (castlingState[0] - castlingState[1]) + ", weight=" + (castlingState[0] - castlingState[1]) * castlingFactor + '\n' +
@@ -320,7 +320,7 @@ public final class WeightingFunction {
 
     private static float getWeightOfField(byte piece, int field, int color) {
         final byte[] weightOfField = color == 0 ? weightOfFieldForWhite : weightOfFieldForBlack;
-        return weightOfField[field] * mobilityWeightOfPiece[piece];
+        return ((int) weightOfField[field] * mobilityWeightOfPiece[piece]) / 100f;
     }
 
     private void calculateForWhitePawn(int field, int color) {
