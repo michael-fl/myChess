@@ -119,6 +119,10 @@ public final class Game {
         return buf.toString();
     }
 
+    public String exportFEN() {
+        return Fen.exportFEN(this);
+    }
+
     public int getTurn() {
         return getGameStatus().getTurn();
     }

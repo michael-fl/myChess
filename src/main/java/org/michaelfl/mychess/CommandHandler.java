@@ -66,47 +66,34 @@ final class CommandHandler {
 
         @Override
         boolean canHandle(String commandLine) {
-            // "a2a3", "h7h8Q", "O-O", "0-0", "O-O-O", "0-0-0"
-            if (commandLine.length() < 3 || commandLine.length() > 5)
+            // "a2a3", "a2-a3", "h7h8Q", "h7-h8Q", "O-O", "0-0", "OO", "00", "O-O-O", "0-0-0", "OOO", "000"
+            if (commandLine.length() < 3 || commandLine.length() > 6)
                 return false;
 
             if (commandLine.charAt(0) == '0') {
-                return "0-0".equals(commandLine) || "0-0-0".equals(commandLine);
+                return "0-0".equals(commandLine) || "0-0-0".equals(commandLine) || "000".equals(commandLine);
             }
             if (commandLine.charAt(0) == 'O') {
-                return "O-O".equals(commandLine) || "O-O-O".equals(commandLine);
+                return "O-O".equals(commandLine) || "O-O-O".equals(commandLine) || "OOO".equals(commandLine);
             }
 
+            int off = commandLine.charAt(2) == '-' ? 1 : 0;
             if (!(commandLine.charAt(0) >= 'a' && commandLine.charAt(0) <= 'h'
                 && commandLine.charAt(1) >= '1' && commandLine.charAt(1) <= '8'
-                && commandLine.charAt(2) >= 'a' && commandLine.charAt(2) <= 'h'
-                && commandLine.charAt(3) >= '1' && commandLine.charAt(3) <= '8'))
+                && commandLine.charAt(2 + off) >= 'a' && commandLine.charAt(2 + off) <= 'h'
+                && commandLine.charAt(3 + off) >= '1' && commandLine.charAt(3 + off) <= '8'))
                 return false;
 
-            if (commandLine.length() == 4)
+            if (commandLine.length() == 4 + off)
                 return true;
 
-            char piece = Character.toUpperCase(commandLine.charAt(4));
+            char piece = Character.toUpperCase(commandLine.charAt(4 + off));
             return piece == 'Q' || piece == 'N' || piece == 'R' || piece == 'B';
         }
 
         @Override
         void handle(String commandLine) throws InterruptedException, ExecutionException, TimeoutException {
-            boolean isWhiteTurn = game.getTurn() == GameStatus.TURN_WHITE;
-            MoveDescription move;
-
-            if ("O-O".equals(commandLine) || "0-0".equals(commandLine)) {
-                move = isWhiteTurn ? MoveDescription.whiteCastlingKingSide : MoveDescription.blackCastlingKingSide;
-            } else if ("O-O-O".equals(commandLine) || "0-0-0".equals(commandLine)) {
-                move = isWhiteTurn ? MoveDescription.whiteCastlingQueenSide : MoveDescription.blackCastlingQueenSide;
-            } else {
-                int[] from = ChessUtil.getColAndRowFromString(commandLine.substring(0, 2));
-                int[] to = ChessUtil.getColAndRowFromString(commandLine.substring(2, 4));
-
-                char pawnPromotionSymbol = commandLine.length() > 4 ? Character.toUpperCase(commandLine.charAt(4)) : 0;
-
-                move = new MoveDescription(from[0], from[1], to[0], to[1], pawnPromotionSymbol);
-            }
+            MoveDescription move = MoveDescription.fromString(commandLine, game.getTurn());
 
             try {
                 game.makeMove(move);
@@ -439,6 +426,19 @@ final class CommandHandler {
         }
     }
 
+    private final class FenCommand extends Command {
+
+        @Override
+        boolean canHandle(String commandLine) {
+            return "fen".equals(commandLine);
+        }
+
+        @Override
+        void handle(String commandLine) {
+            System.out.println(game.exportFEN());
+        }
+    }
+
     private final List<Command> commands = List.of(
             new QuitCommand(),
             new AutoGameCommand(),
@@ -459,7 +459,8 @@ final class CommandHandler {
             new SetVariantsCommand(),
             new SetDepthCommand(),
             new SetIterationDepthCommand(),
-            new PossibleMovesCommand()
+            new PossibleMovesCommand(),
+            new FenCommand()
     );
 
     private final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
