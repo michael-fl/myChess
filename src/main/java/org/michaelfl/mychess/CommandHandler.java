@@ -278,7 +278,7 @@ final class CommandHandler {
             if (move == MoveAndWeight.NO_MOVE)
                 System.out.println("Illegal position. No move possible.");
             else
-                System.out.println(ChessUtil.moveToString(move.move));
+                System.out.println((game.getGameStatus().getPlyCount() / 2 + 1) + ". " + ChessUtil.moveToString(move.move));
         }
     }
 

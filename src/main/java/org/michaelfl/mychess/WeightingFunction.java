@@ -52,105 +52,6 @@ public final class WeightingFunction {
         mobilityWeightOfPiece[Board.blackKing]   = 0;
     }
 
-    /*
-      8| 6 6 6 6 6 6 6 6
-      7| 2 2 4 5 5 4 2 2
-      6| 1 2 3 4 4 3 2 1
-      5| 1 2 3 4 4 3 2 1
-      4| 0 0 2 4 4 2 0 0
-      3| 0 0 1 1 1 1 0 0
-      2| 0 0 0 0 0 0 0 0
-      1| 0 0 0 0 0 0 0 0
-         a b c d e f g h
-     */
-    private final static byte[] weightOfFieldForWhite = Board.createEmptyBoard().getRawBoard();
-    static {
-        weightOfFieldForWhite[Board.c3] = 1;
-        weightOfFieldForWhite[Board.d3] = 1;
-        weightOfFieldForWhite[Board.e3] = 1;
-        weightOfFieldForWhite[Board.f3] = 1;
-        weightOfFieldForWhite[Board.c4] = 2;
-        weightOfFieldForWhite[Board.d4] = 4;
-        weightOfFieldForWhite[Board.e4] = 4;
-        weightOfFieldForWhite[Board.f4] = 2;
-        weightOfFieldForWhite[Board.a5] = 1;
-        weightOfFieldForWhite[Board.b5] = 2;
-        weightOfFieldForWhite[Board.c5] = 3;
-        weightOfFieldForWhite[Board.d5] = 4;
-        weightOfFieldForWhite[Board.e5] = 4;
-        weightOfFieldForWhite[Board.f5] = 3;
-        weightOfFieldForWhite[Board.g5] = 2;
-        weightOfFieldForWhite[Board.h5] = 1;
-        weightOfFieldForWhite[Board.a6] = 1;
-        weightOfFieldForWhite[Board.b6] = 2;
-        weightOfFieldForWhite[Board.c6] = 3;
-        weightOfFieldForWhite[Board.d6] = 4;
-        weightOfFieldForWhite[Board.e6] = 4;
-        weightOfFieldForWhite[Board.f6] = 3;
-        weightOfFieldForWhite[Board.g6] = 2;
-        weightOfFieldForWhite[Board.h6] = 1;
-        weightOfFieldForWhite[Board.a7] = 2;
-        weightOfFieldForWhite[Board.b7] = 2;
-        weightOfFieldForWhite[Board.c7] = 4;
-        weightOfFieldForWhite[Board.d7] = 5;
-        weightOfFieldForWhite[Board.e7] = 5;
-        weightOfFieldForWhite[Board.f7] = 4;
-        weightOfFieldForWhite[Board.g7] = 2;
-        weightOfFieldForWhite[Board.h7] = 2;
-        weightOfFieldForWhite[Board.a8] = 6;
-        weightOfFieldForWhite[Board.b8] = 6;
-        weightOfFieldForWhite[Board.c8] = 6;
-        weightOfFieldForWhite[Board.d8] = 6;
-        weightOfFieldForWhite[Board.e8] = 6;
-        weightOfFieldForWhite[Board.f8] = 6;
-        weightOfFieldForWhite[Board.g8] = 6;
-        weightOfFieldForWhite[Board.h8] = 6;
-    }
-
-    private final static byte[] weightOfFieldForBlack = Board.createEmptyBoard().getRawBoard();
-    static {
-        weightOfFieldForBlack[Board.c6] = 1;
-        weightOfFieldForBlack[Board.d6] = 1;
-        weightOfFieldForBlack[Board.e6] = 1;
-        weightOfFieldForBlack[Board.f6] = 1;
-        weightOfFieldForBlack[Board.c5] = 2;
-        weightOfFieldForBlack[Board.d5] = 4;
-        weightOfFieldForBlack[Board.e5] = 4;
-        weightOfFieldForBlack[Board.f5] = 2;
-        weightOfFieldForBlack[Board.a4] = 1;
-        weightOfFieldForBlack[Board.b4] = 2;
-        weightOfFieldForBlack[Board.c4] = 3;
-        weightOfFieldForBlack[Board.d4] = 4;
-        weightOfFieldForBlack[Board.e4] = 4;
-        weightOfFieldForBlack[Board.f4] = 3;
-        weightOfFieldForBlack[Board.g4] = 2;
-        weightOfFieldForBlack[Board.h4] = 1;
-        weightOfFieldForBlack[Board.a3] = 1;
-        weightOfFieldForBlack[Board.b3] = 2;
-        weightOfFieldForBlack[Board.c3] = 3;
-        weightOfFieldForBlack[Board.d3] = 4;
-        weightOfFieldForBlack[Board.e3] = 4;
-        weightOfFieldForBlack[Board.f3] = 3;
-        weightOfFieldForBlack[Board.g3] = 2;
-        weightOfFieldForBlack[Board.h3] = 1;
-        weightOfFieldForBlack[Board.a2] = 2;
-        weightOfFieldForBlack[Board.b2] = 2;
-        weightOfFieldForBlack[Board.c2] = 4;
-        weightOfFieldForBlack[Board.d2] = 5;
-        weightOfFieldForBlack[Board.e2] = 5;
-        weightOfFieldForBlack[Board.f2] = 4;
-        weightOfFieldForBlack[Board.g2] = 2;
-        weightOfFieldForBlack[Board.h2] = 2;
-        weightOfFieldForBlack[Board.a1] = 6;
-        weightOfFieldForBlack[Board.b1] = 6;
-        weightOfFieldForBlack[Board.c1] = 6;
-        weightOfFieldForBlack[Board.d1] = 6;
-        weightOfFieldForBlack[Board.e1] = 6;
-        weightOfFieldForBlack[Board.f1] = 6;
-        weightOfFieldForBlack[Board.g1] = 6;
-        weightOfFieldForBlack[Board.h1] = 6;
-    }
-
     @FunctionalInterface
     private interface CalculateWeight {
         void calculate(WeightingFunction generator, int field, int color);
@@ -175,9 +76,9 @@ public final class WeightingFunction {
     private final static int[] oppositeColor = new int[] { GameStatus.TURN_BLACK, GameStatus.TURN_WHITE };
     private final static int[] oppositeKing = new int[] { Board.blackKing, Board.whiteKing };
 
-    private final static float mobilityFactor = 0.04f;
+    private final static float mobilityFactor = 0.1f;
+    private final static float positionFactor = 0.5f;
     private final static float threadWeightFactor = 0.02f;
-    private final static float fieldDominanceWeightFactor = 0.01f;
     private final static float chessFactor = 0.25f;
     private final static float castlingFactor = 0.25f;
     private final static float openingFactor = 0.1f;
@@ -191,8 +92,8 @@ public final class WeightingFunction {
     private final int[] chessCount = new int[2];
     private final float[] piecesWeight = new float[2];
     private final int[] mobilityWeight = new int[2];
+    private final int[] positionWeight = new int[2];
     private final float[] threadWeight = new float[2];
-    private final float[] fieldDominanceWeight = new float[2];
     private boolean containsIllegalMove;
     private final int[] castlingState = new int[2];
     private final int[] openingState = new int[2];
@@ -247,10 +148,10 @@ public final class WeightingFunction {
         this.piecesWeight[1] = 0;
         this.mobilityWeight[0] = 0;
         this.mobilityWeight[1] = 0;
+        this.positionWeight[0] = 0;
+        this.positionWeight[1] = 0;
         this.threadWeight[0] = 0;
         this.threadWeight[1] = 0;
-        this.fieldDominanceWeight[0] = 0;
-        this.fieldDominanceWeight[1] = 0;
         this.containsIllegalMove = false;
         this.castlingState[0] = 0;
         this.castlingState[1] = 0;
@@ -260,6 +161,7 @@ public final class WeightingFunction {
         this.doublePawnCount[1] = 0;
 
         final int stopField = Board.h8 + 1;
+        final boolean isEndGame = game.isEndGame();
 
         for (int field = Board.a1; field < stopField; field++) {
             final byte piece = board[field];
@@ -267,7 +169,9 @@ public final class WeightingFunction {
                 final int color = (piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE ? 0 : 1;
 
                 piecesWeight[color] += weightOfPiece[piece];
-                fieldDominanceWeight[color] += getWeightOfField(piece, field, color);
+                if (!(isEndGame && Board.isKing(piece))) {
+                    positionWeight[color] += PieceSquareTables.getPieceSquareWeight(piece, field);
+                }
 
                 calculationFunctions[piece].calculate(this, field, color);
             }
@@ -288,9 +192,9 @@ public final class WeightingFunction {
 
         return Math.round((
                   (piecesWeight[0] - piecesWeight[1])
+                + (positionWeight[0] - positionWeight[1]) / 100f * positionFactor
                 + (mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor
                 + (threadWeight[0] - threadWeight[1]) * threadWeightFactor
-                + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) * fieldDominanceWeightFactor
                 + (castlingState[0] - castlingState[1]) * castlingFactor
                 + (openingState[0] - openingState[1]) * openingFactor * openingFactorCorrection
                 + (chessCount[0] - chessCount[1]) * chessFactor
@@ -304,9 +208,9 @@ public final class WeightingFunction {
     @Override
     public String toString() {
         return "piecesWeight:       w=" + piecesWeight[0] + ", b=" + piecesWeight[1] + ", delta=" + (piecesWeight[0] - piecesWeight[1]) + ", weight=" + (piecesWeight[0] - piecesWeight[1]) + '\n' +
+               "positionWeight:     w=" + positionWeight[0] + ", b=" + positionWeight[1] + ", delta=" + (positionWeight[0] - positionWeight[1]) + ", weight=" + (positionWeight[0] - positionWeight[1]) / 100f * positionFactor + '\n' +
                "mobilityWeight:     w=" + mobilityWeight[0] + ", b=" + mobilityWeight[1] + ", delta=" + (mobilityWeight[0] - mobilityWeight[1]) + ", weight=" + (mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor + '\n' +
                "threadWeight:       w=" + threadWeight[0] + ", b=" + threadWeight[1] + ", delta=" + (threadWeight[0] - threadWeight[1]) + ", weight=" + (threadWeight[0] - threadWeight[1]) * threadWeightFactor + '\n' +
-               "fieldDominance:     w=" + fieldDominanceWeight[0] + ", b=" + fieldDominanceWeight[1] + ", delta=" + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) + ", weight=" + (fieldDominanceWeight[0] - fieldDominanceWeight[1]) * fieldDominanceWeightFactor + '\n' +
                "castlingState:      w=" + castlingState[0] + ", b=" + castlingState[1] + ", delta=" + (castlingState[0] - castlingState[1]) + ", weight=" + (castlingState[0] - castlingState[1]) * castlingFactor + '\n' +
                "openingState:       w=" + openingState[0] + ", b=" + openingState[1] + ", delta=" + (openingState[0] - openingState[1]) + ", weight=" + (openingState[0] - openingState[1]) * openingFactor + '\n' +
                "doublePawnCount:    w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + ", delta=" + (doublePawnCount[0] - doublePawnCount[1]) + ", weight=" + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor + '\n' +
@@ -318,17 +222,11 @@ public final class WeightingFunction {
         generator.calculateForWhitePawn(field, color);
     }
 
-    private static float getWeightOfField(byte piece, int field, int color) {
-        final byte[] weightOfField = color == 0 ? weightOfFieldForWhite : weightOfFieldForBlack;
-        return ((int) weightOfField[field] * mobilityWeightOfPiece[piece]) / 100f;
-    }
-
     private void calculateForWhitePawn(int field, int color) {
         // single step
         int to = field + Board.LENGTH;
         if (board[to] == Board.empty) {
             mobilityWeight[color] += mobilityWeightOfPiece[Board.whitePawn];
-            fieldDominanceWeight[color] += getWeightOfField(Board.whitePawn, to, color);
         } else if (board[to] == Board.whitePawn) {
             doublePawnCount[color]++; // double pawn
         }
@@ -338,7 +236,6 @@ public final class WeightingFunction {
             to = field + 2 * Board.LENGTH;
             if (board[to] == Board.empty && board[field + Board.LENGTH] == Board.empty) {
                 mobilityWeight[color] += mobilityWeightOfPiece[Board.whitePawn];
-                fieldDominanceWeight[color] += getWeightOfField(Board.whitePawn, to, color);
             }
         }
 
@@ -346,16 +243,12 @@ public final class WeightingFunction {
         to = field + Board.LENGTH + 1;
         if ((board[to] & GameStatus.TURN_BLACK) == GameStatus.TURN_BLACK) {
             capture(Board.whitePawn, field, to, color, board[to]);
-        } else if (board[to] != Board.illegal) { // own color
-            fieldDominanceWeight[color] += getWeightOfField(Board.whitePawn, to, color);
         }
 
         // capture left
         to = field + Board.LENGTH - 1;
         if ((board[to] & GameStatus.TURN_BLACK) == GameStatus.TURN_BLACK) {
             capture(Board.whitePawn, field, to, color, board[to]);
-        } else if (board[to] != Board.illegal) { // own color
-            fieldDominanceWeight[color] += getWeightOfField(Board.whitePawn, to, color);
         }
 
         // en passant
@@ -383,7 +276,6 @@ public final class WeightingFunction {
         int to = field - Board.LENGTH;
         if (board[to] == Board.empty) {
             mobilityWeight[color] += mobilityWeightOfPiece[Board.blackPawn];
-            fieldDominanceWeight[color] += getWeightOfField(Board.blackPawn, to, color);
         } else if (board[to] == Board.blackPawn) {
             doublePawnCount[color]++; // double pawn
         }
@@ -393,7 +285,6 @@ public final class WeightingFunction {
             to = field - 2 * Board.LENGTH;
             if (board[to] == Board.empty && board[field - Board.LENGTH] == Board.empty) {
                 mobilityWeight[color] += mobilityWeightOfPiece[Board.blackPawn];
-                fieldDominanceWeight[color] += getWeightOfField(Board.blackPawn, to, color);
             }
         }
 
@@ -401,16 +292,12 @@ public final class WeightingFunction {
         to = field - Board.LENGTH + 1;
         if ((board[to] & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE) {
             capture(Board.blackPawn, field, to, color, board[to]);
-        } else if (board[to] != Board.illegal) { // own color
-            fieldDominanceWeight[color] += getWeightOfField(Board.blackPawn, to, color);
         }
 
         // capture left
         to = field - Board.LENGTH - 1;
         if ((board[to] & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE) {
             capture(Board.blackPawn, field, to, color, board[to]);
-        } else if (board[to] != Board.illegal) { // own color
-            fieldDominanceWeight[color] += getWeightOfField(Board.blackPawn, to, color);
         }
 
         // en passant
@@ -533,13 +420,11 @@ public final class WeightingFunction {
 
         if (piece == Board.empty) {
             mobilityWeight[color] += mobilityWeightOfPiece[movingPiece];
-            fieldDominanceWeight[color] += getWeightOfField(movingPiece, to, color);
             return true;
         } else if ((piece & oppositeColor) == oppositeColor) {
             capture(movingPiece, from, to, color, piece);
             return false;
         } else { // own color
-            fieldDominanceWeight[color] += getWeightOfField(movingPiece, to, color);
             return false;
         }
     }
@@ -555,7 +440,6 @@ public final class WeightingFunction {
         }
 
         mobilityWeight[color] += mobilityWeightOfPiece[movingPiece];
-        fieldDominanceWeight[color] += getWeightOfField(movingPiece, to, color);
         threadWeight[color] += weightOfPiece[piece];
     }
 
