@@ -7,11 +7,11 @@ public final class SortableMovesBucket {
     private final MovesArray moves;
     private final IntArray weights;
 
-    SortableMovesBucket() {
+    public SortableMovesBucket() {
         this(IntArray.INITIAL_CAPACITY);
     }
 
-    SortableMovesBucket(int initialCapacity) {
+    public SortableMovesBucket(int initialCapacity) {
         moves = new MovesArray(initialCapacity);
         weights = new IntArray(initialCapacity);
     }

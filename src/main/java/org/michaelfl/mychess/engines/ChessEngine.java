@@ -3,7 +3,6 @@ package org.michaelfl.mychess.engines;
 import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.MoveGenerator;
-import org.michaelfl.mychess.MoveSorterImpl;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.MovesCounter;
 import org.michaelfl.mychess.WeightingFunction;
@@ -43,7 +42,7 @@ public abstract class ChessEngine {
     private final ExecutorService executor;
     private final EngineConfig config;
     protected final Game game;
-    protected final MoveGenerator moveGenerator = new MoveGenerator(new MoveSorterImpl(rand, killerMoves));
+    protected final MoveGenerator moveGenerator = new MoveGenerator(new MoveSorterImpl(killerMoves));
 
     protected ChessEngine(EngineConfig config, Game game) {
         this.config = config;

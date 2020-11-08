@@ -64,7 +64,7 @@ public final class Game {
     }
 
     GameResult calculateAndSetGameResult() {
-        MoveGenerator moveGenerator = new MoveGenerator(new MoveSorterImpl(rand));
+        MoveGenerator moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
         GameResult gameResult = checkGameResult(moveGenerator);
         setResult(gameResult);
         return gameResult;
@@ -178,7 +178,7 @@ public final class Game {
         Move move = new Move(Move.create((byte) fromField, (byte) toField, capturedPiece, moveType));
 
         // Validate the move
-        MoveGenerator moveGenerator = new MoveGenerator(new MoveSorterImpl(rand));
+        MoveGenerator moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
         Moves validMoves = moveGenerator.calculateMoves(getGameStatus(), board);
         if (!validMoves.contains(move.getMove())) {
             print();
@@ -302,7 +302,7 @@ public final class Game {
             System.out.println("Turn: " + (getTurn() == GameStatus.TURN_WHITE ? "white" : "black"));
             System.out.println("Moves: " + exportMoves());
             System.out.println("Status: " + getGameStatus());
-            MoveGenerator moveGenerator = new MoveGenerator(new MoveSorterImpl(rand));
+            MoveGenerator moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
             Moves possibleMoves = moveGenerator.calculateMoves(getGameStatus(), getBoard());
             System.out.println("Possible moves: " + possibleMoves);
             System.out.flush();
@@ -333,7 +333,7 @@ public final class Game {
             Thread.sleep(20000);
         }
 
-        GameResult gameResult = checkGameResult(new MoveGenerator(new MoveSorterImpl(rand)));
+        GameResult gameResult = checkGameResult(new MoveGenerator(MoveSorter.defaultImplementation()));
         setResult(gameResult);
     }
 
