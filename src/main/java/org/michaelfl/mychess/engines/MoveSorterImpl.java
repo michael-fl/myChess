@@ -9,10 +9,9 @@ import org.michaelfl.mychess.MoveSorter;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.MovesArray;
 import org.michaelfl.mychess.MovesCounter;
+import org.michaelfl.mychess.PieceSquareTables;
 import org.michaelfl.mychess.SortableMovesBucket;
 import org.michaelfl.mychess.WeightingFunction;
-
-import java.util.Random;
 
 public final class MoveSorterImpl implements MoveSorter {
 
@@ -21,8 +20,7 @@ public final class MoveSorterImpl implements MoveSorter {
     private float bestWeightCapturingLastPlayedOppositePiece = Float.NEGATIVE_INFINITY;
     private final SortableMovesBucket bucketWinningCaptures = new SortableMovesBucket();
     private final SortableMovesBucket bucketOtherCaptures = new SortableMovesBucket();
-    private final MovesArray bucketForwardMoves = new MovesArray();
-    private final MovesArray bucketRemainingMoves = new MovesArray();
+    private final SortableMovesBucket bucketRemainingMoves = new SortableMovesBucket();
     private final MovesArray bucketKingMoves = new MovesArray();
 
     private final MovesCounter killerMoves;
@@ -53,7 +51,6 @@ public final class MoveSorterImpl implements MoveSorter {
         bucketWinningCaptures.clear();
         bucketOtherCaptures.clear();
         bucketKillerMoves.clear();
-        bucketForwardMoves.clear();
         bucketRemainingMoves.clear();
         bucketKingMoves.clear();
     }
@@ -77,10 +74,13 @@ public final class MoveSorterImpl implements MoveSorter {
             bucketKingMoves.add(move);
         } else {
             final int rowDelta = ChessUtil.getRowOfField(toField) - ChessUtil.getRowOfField(fromField);
-            if ((gameStatus.isWhiteTurn() && rowDelta > 0) || (gameStatus.isBlackTurn() && rowDelta < 0))
-                bucketForwardMoves.add(move);
-            else
-                bucketRemainingMoves.add(move);
+            final boolean isBackwardMove = (gameStatus.isWhiteTurn() && rowDelta < 0) || (gameStatus.isBlackTurn() && rowDelta > 0);
+
+            final int srcWeight = PieceSquareTables.getPieceSquareWeight(movingPiece, fromField);
+            final int destWeight = PieceSquareTables.getPieceSquareWeight(movingPiece, toField);
+            final int weight = destWeight - srcWeight - (isBackwardMove ? 5 : 0);
+
+            bucketRemainingMoves.add(move, weight);
         }
     }
 
@@ -107,6 +107,7 @@ public final class MoveSorterImpl implements MoveSorter {
 
         bucketWinningCaptures.sort();
         bucketOtherCaptures.sort();
+        bucketRemainingMoves.sort();
 
         if (bestMoveCapturingLastPlayedOppositePiece != 0) {
             movesArray.add(bestMoveCapturingLastPlayedOppositePiece);
@@ -114,9 +115,8 @@ public final class MoveSorterImpl implements MoveSorter {
         movesArray.addAll(bucketWinningCaptures.getMoves());
         movesArray.addAll(bucketKillerMoves);
         movesArray.addAll(bucketOtherCaptures.getMoves());
-        movesArray.addAll(bucketForwardMoves);
-        movesArray.addAll(bucketRemainingMoves);
-        movesArray.addAll(bucketKingMoves);
+        movesArray.addAll(bucketRemainingMoves.getMoves());
+        movesArray.addAll(bucketKingMoves); // TODO: Change this in endgame
 
         return moves;
     }
