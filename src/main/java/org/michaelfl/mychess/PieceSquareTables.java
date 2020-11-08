@@ -7,7 +7,7 @@ import static org.michaelfl.mychess.Board.*;
  *
  * @author Michael Fleischhauer
  */
-final class PieceSquareTables {
+public final class PieceSquareTables {
 
     private PieceSquareTables() {
         throw new IllegalStateException("Utility class");
@@ -143,7 +143,7 @@ final class PieceSquareTables {
         return piece2table[piece];
     }
 
-    static int getPieceSquareWeight(final byte piece, final int field) {
+    public static int getPieceSquareWeight(final byte piece, final int field) {
         return piece2table[piece][field];
     }
 }
