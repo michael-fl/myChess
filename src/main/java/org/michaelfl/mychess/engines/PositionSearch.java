@@ -7,7 +7,6 @@ import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.Move;
 import org.michaelfl.mychess.MoveGenerator;
-import org.michaelfl.mychess.MoveSorterImpl;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.MovesCounter;
 import org.michaelfl.mychess.WeightingFunction;
@@ -33,7 +32,7 @@ final class PositionSearch {
     private PositionSearch(ChessEngine engine, NextMoveTask task, Game game) {
         this.task = task;
         this.game = game;
-        this.moveGenerator = new MoveGenerator(new MoveSorterImpl(engine.getRandom(), killerMoves));
+        this.moveGenerator = new MoveGenerator(new MoveSorterImpl(killerMoves));
         this.engineConfig = engine.getConfig();
         this.weightFactor = game.getGameStatus().isWhiteTurn() ? 1 : -1;
     }

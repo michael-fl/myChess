@@ -1,4 +1,16 @@
-package org.michaelfl.mychess;
+package org.michaelfl.mychess.engines;
+
+import org.michaelfl.mychess.Board;
+import org.michaelfl.mychess.ChessUtil;
+import org.michaelfl.mychess.GameStatus;
+import org.michaelfl.mychess.IntArray;
+import org.michaelfl.mychess.Move;
+import org.michaelfl.mychess.MoveSorter;
+import org.michaelfl.mychess.Moves;
+import org.michaelfl.mychess.MovesArray;
+import org.michaelfl.mychess.MovesCounter;
+import org.michaelfl.mychess.SortableMovesBucket;
+import org.michaelfl.mychess.WeightingFunction;
 
 import java.util.Random;
 
@@ -20,11 +32,11 @@ public final class MoveSorterImpl implements MoveSorter {
     private Board board;
     private short[] topKillerMoves;
 
-    public MoveSorterImpl(Random rand) {
-        this(rand, new MovesCounter(1));
+    public MoveSorterImpl() {
+        this(new MovesCounter(1));
     }
 
-    public MoveSorterImpl(Random rand, MovesCounter killerMoves) {
+    public MoveSorterImpl(MovesCounter killerMoves) {
         this.killerMoves = killerMoves;
     }
 

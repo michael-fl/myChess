@@ -5,7 +5,6 @@ import org.michaelfl.mychess.ChessUtil;
 import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.MoveGenerator;
-import org.michaelfl.mychess.MoveSorterImpl;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.WeightingFunction;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
@@ -34,7 +33,7 @@ public final class CheckmateSearch {
 
     private CheckmateSearch(ChessEngine engine, Game game) {
         this.game = game;
-        this.moveGenerator = new MoveGenerator(new MoveSorterImpl(engine.getRandom()));
+        this.moveGenerator = new MoveGenerator(new MoveSorterImpl());
     }
 
     public static MoveAndWeight findCheckmateMove(ChessEngine engine, Game game) {
