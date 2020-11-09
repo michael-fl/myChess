@@ -54,10 +54,14 @@ public final class MoveGenerator {
     }
 
     public Moves calculateMoves(GameStatus game, Board theBoard) {
-        return calculateMoves(game, theBoard, 0);
+        return calculateMoves(game, theBoard, 0, 0);
     }
 
     public Moves calculateMoves(GameStatus game, Board theBoard, int depth) {
+        return calculateMoves(game, theBoard, depth, 0);
+    }
+
+    public Moves calculateMoves(GameStatus game, Board theBoard, int depth, int knownBestMove) {
         final int turn = game.getTurn();
         this.game = game;
         this.theBoard = theBoard;
@@ -65,7 +69,7 @@ public final class MoveGenerator {
         this.oppositeColor = game.getOppositeColor();
         this.oppositeKing = turn == GameStatus.TURN_WHITE ? Board.blackKing : Board.whiteKing;
         this.containsIllegalMove = false;
-        this.moveSorter.reset(game, theBoard, depth);
+        this.moveSorter.reset(game, theBoard, depth, knownBestMove);
 
         final int stopField = 9 * Board.LENGTH + 10;
 

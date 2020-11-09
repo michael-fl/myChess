@@ -25,6 +25,7 @@ public final class MoveSorterImpl implements MoveSorter {
 
     private final MovesCounter killerMoves;
     private GameStatus gameStatus;
+    private int knownBestMove;
     private int targetFieldOfLastOppositeMove;
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Board board;
@@ -39,9 +40,10 @@ public final class MoveSorterImpl implements MoveSorter {
     }
 
     @Override
-    public final void reset(GameStatus gameStatus, Board board, int depth) {
+    public final void reset(GameStatus gameStatus, Board board, int depth, int knownBestMove) {
         this.gameStatus = gameStatus;
         this.board = board;
+        this.knownBestMove = knownBestMove;
         this.topKillerMoves = killerMoves.getMovesOnDepth(depth).getTopMoves();
 
         targetFieldOfLastOppositeMove = Move.getToField(gameStatus.getLastMove());
@@ -57,6 +59,9 @@ public final class MoveSorterImpl implements MoveSorter {
 
     @Override
     public final void addMove(final int move, final int fromField, final int toField, final byte movingPiece, final byte capturedPiece) {
+        if (move == knownBestMove) {
+            return;
+        }
         if (isKillerMove(move)) {
             bucketKillerMoves.add(move);
         } else if (capturedPiece != 0) {
@@ -109,6 +114,9 @@ public final class MoveSorterImpl implements MoveSorter {
         bucketOtherCaptures.sort();
         bucketRemainingMoves.sort();
 
+        if (knownBestMove != 0) {
+            movesArray.add(knownBestMove);
+        }
         if (bestMoveCapturingLastPlayedOppositePiece != 0) {
             movesArray.add(bestMoveCapturingLastPlayedOppositePiece);
         }

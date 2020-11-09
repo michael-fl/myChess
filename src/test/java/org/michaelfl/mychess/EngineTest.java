@@ -5,6 +5,7 @@ import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
 import org.michaelfl.mychess.engines.v1.MyChessEngine1;
 
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -354,6 +355,47 @@ class EngineTest {
         );
     }
 
+    // Bad position for black. Black must move Be6 - all other moves are even more worse.
+    // Weight: +2.86. Expected moves: 17....Be6 18.Bxb8 Rxb8 19.Nd5 Bd6 20.Nxf6+ gxf6 21.Rad1 Be5 22.Bd5 Bg4 23.f3 Bh5 24.c3 Kg7 25.g3 a5
+    // FEN: 1rbr2k1/4bppp/p4n2/1pp1B3/8/2N2B2/PPP2PPP/R3R1K1 b - - 0 17
+    @Test
+    void testPosition16() {
+        testPosition("[[b1-c3 e7-e5 g1-f3 b8-c6 d2-d4 e5-d4 f3-d4 c6-d4 d1-d4 g8-f6 e2-e4 d7-d6 c1-g5 f8-e7 f1-c4 e8-g8 e1-g1 f8-e8 f1-e1 c7-c6 g5-f4 b7-b5 c4-e2 a7-a6 e2-f3 c6-c5 d4-d3 a8-b8 e4-e5 d6-e5 d3-d8 e8-d8 f4-e5]]",
+                "e7-d6", // TODO: Should be "c8-e6", e7-d6 has weight > 5.0
+                1.7f,
+                3.0f,
+                new GameConfig(MyChessEngine.class, engineConfig(false))
+        );
+    }
+
+    // Bad position for black. Black must move Be6 - all other moves are even more worse.
+    // Weight: +2.86. Expected moves: 17....Be6 18.Bxb8 Rxb8 19.Nd5 Bd6 20.Nxf6+ gxf6 21.Rad1 Be5 22.Bd5 Bg4 23.f3 Bh5 24.c3 Kg7 25.g3 a5
+    // FEN: 1rbr2k1/4bppp/p4n2/1pp1B3/8/2N2B2/PPP2PPP/R3R1K1 b - - 0 17
+    @Test
+    void testPosition16v1() {
+        testPosition("[[b1-c3 e7-e5 g1-f3 b8-c6 d2-d4 e5-d4 f3-d4 c6-d4 d1-d4 g8-f6 e2-e4 d7-d6 c1-g5 f8-e7 f1-c4 e8-g8 e1-g1 f8-e8 f1-e1 c7-c6 g5-f4 b7-b5 c4-e2 a7-a6 e2-f3 c6-c5 d4-d3 a8-b8 e4-e5 d6-e5 d3-d8 e8-d8 f4-e5]]",
+                "e7-d6",
+                0.4f,
+                1.0f,
+                new GameConfig(MyChessEngine1.class, engineV1Config(false))
+        );
+    }
+
+    // Lost position for black. White wins material.
+    // Weight: > 7.0.
+    // Expected moves: 24.Rxd8+ Bxd8 25.Bxf6 gxf6 26.Re8+ Kg7 27.Rxd8 Be6 28.Be2 Bf5 29.Bd1 Rb7 30.f3 h5 31.c4 a5 32.Kf2
+    // Or:             24.Bxf6 Rxd1 25.Bxd1 Bf8 26.Bc3 Rb7 27.Re8 Bf5 28.Nc5 Rc7 29.b4 f6 30.Ra8 a5 31.Rxa5 Bxc5 32.Rxc5
+    // FEN: 2br2k1/4bppp/p4n2/4B3/Nr6/1P3B2/2P2PPP/3RR1K1 w - - 0 24
+    @Test
+    void testPosition17() {
+        testPosition("[[b1-c3 e7-e5 g1-f3 b8-c6 d2-d4 e5-d4 f3-d4 c6-d4 d1-d4 g8-f6 e2-e4 d7-d6 c1-g5 f8-e7 f1-c4 e8-g8 e1-g1 f8-e8 f1-e1 c7-c6 g5-f4 b7-b5 c4-e2 a7-a6 e2-f3 c6-c5 d4-d3 a8-b8 e4-e5 d6-e5 d3-d8 e8-d8 f4-e5 e7-d6 a1-d1 b8-b6 a2-a4 b5-a4 c3-a4 b6-b4 a4-c5 b4-b6 c5-a4 b6-b4 b2-b3 d6-e7]]",
+                Set.of("d1-d8", "e5-f6"),
+                4.0f, // OPT: Should be > 7
+                5.0f,
+                new GameConfig(MyChessEngine.class, engineConfig(false))
+        );
+    }
+
     @SuppressWarnings("SameParameterValue")
     static EngineConfig engineConfig(boolean doCheckmateCheck) {
         return new EngineConfig.Builder()
@@ -373,15 +415,19 @@ class EngineTest {
     }
 
     private void testPosition(String gameNotation, String expectedMove, float expectedMinWeight, float expectedMaxWeight, GameConfig config) {
+        testPosition(gameNotation, Set.of(expectedMove), expectedMinWeight, expectedMaxWeight, config);
+    }
+
+    private void testPosition(String gameNotation, Set<String> expectedMoves, float expectedMinWeight, float expectedMaxWeight, GameConfig config) {
         try {
             SimpleNotationImporter importer = new SimpleNotationImporter(gameNotation);
             var game = importer.importGame(config);
 
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
-            if (!expectedMove.equals(ChessUtil.moveToString(move.move))) {
+            if (!expectedMoves.contains(ChessUtil.moveToString(move.move))) {
                 game.print();
                 System.out.println(game.exportFEN());
-                fail("Wrong move: " + ChessUtil.moveToString(move.move) + ". Expected " + expectedMove);
+                fail("Wrong move: " + ChessUtil.moveToString(move.move) + ". Expected one of " + expectedMoves);
             }
 
             var weight = move.weight;
