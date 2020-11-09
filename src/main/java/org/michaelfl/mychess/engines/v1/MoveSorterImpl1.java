@@ -40,7 +40,7 @@ final class MoveSorterImpl1 implements MoveSorter {
     }
 
     @Override
-    public final void reset(GameStatus gameStatus, Board board, int depth) {
+    public final void reset(GameStatus gameStatus, Board board, int depth, int knownBestMove) {
         this.gameStatus = gameStatus;
         this.board = board;
         this.topKillerMoves = killerMoves.getMovesOnDepth(depth).getTopMoves();

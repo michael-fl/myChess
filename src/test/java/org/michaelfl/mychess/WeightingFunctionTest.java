@@ -196,6 +196,12 @@ class WeightingFunctionTest {
         testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1]]", 0.22f);
     }
 
+    // Terrible position for black (no mobility, pieces on bad, narrow positions)
+    @Test
+    void testPosition36() {
+        testPosition("[[b1-c3 e7-e5 g1-f3 b8-c6 d2-d4 d7-d6 d4-d5 c6-b4 a2-a3 b4-a6 e2-e4 a6-c5 c1-e3 b7-b6 b2-b4 c5-b7 f1-b5 c8-d7 d1-d3 g8-f6 b5-d7 d8-d7 d3-a6 d7-c8 a6-c4 f8-e7 c4-c6 f6-d7 c3-b5]]", 1.04f);
+    }
+
     private void testPosition(String gameNotation, float expectedWeight) {
         float w1 = Math.round(expectedWeight * 0.9f * 100f) / 100f;
         float w2 = Math.round(expectedWeight * 1.1f * 100f) / 100f;
