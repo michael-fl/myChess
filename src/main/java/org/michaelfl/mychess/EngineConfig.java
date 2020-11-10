@@ -43,7 +43,7 @@ public final class EngineConfig {
         private int maxDepth = 8;
         private int iterationDepth = 0;
         private int nVariants = 1;
-        private boolean checkmateCheck = true;
+        private boolean checkmateCheck = false;
 
         public Builder maxDepth(int maxDepth) {
             this.maxDepth = maxDepth;
