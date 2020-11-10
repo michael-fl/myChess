@@ -22,7 +22,7 @@ final class Fen {
         buf.append(' ');
         writeEnPassant(game, buf);
         buf.append(' ');
-        write50PliesRule(game, buf);
+        buf.append(game.getGameStatus().getHalfMoveClock());
         buf.append(' ');
         buf.append((game.getGameStatus().getPlyCount() / 2) + 1);
 
@@ -90,9 +90,5 @@ final class Fen {
         }
 
         buf.append('-');
-    }
-
-    private static void write50PliesRule(Game game, StringBuilder buf) {
-        buf.append(0); // TODO write50PliesRule
     }
 }

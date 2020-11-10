@@ -7,7 +7,6 @@ import org.michaelfl.mychess.engines.v1.MyChessEngine1;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -21,7 +20,6 @@ public final class Game {
         ONGOING
     }
 
-    private final Random rand = new Random();
     private final ChessEngine engineWhite;
     private final ChessEngine engineBlack;
     private Board previousBoard;
@@ -63,11 +61,10 @@ public final class Game {
         return getTurn() == GameStatus.TURN_WHITE ? engineWhite : engineBlack;
     }
 
-    GameResult calculateAndSetGameResult() {
+    public void calculateAndSetGameResult() {
         MoveGenerator moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
         GameResult gameResult = checkGameResult(moveGenerator);
         setResult(gameResult);
-        return gameResult;
     }
 
     public Float getWeight() {
@@ -86,7 +83,7 @@ public final class Game {
         return result;
     }
 
-    void setResult(GameResult result) {
+    private void setResult(GameResult result) {
         this.result = result;
     }
 
@@ -129,10 +126,6 @@ public final class Game {
 
     int getOppositeColor() {
         return getGameStatus().getOppositeColor();
-    }
-
-    Random getRandom() {
-        return rand;
     }
 
     void makeMove(MoveDescription moveDescr) {
@@ -202,10 +195,8 @@ public final class Game {
 
         previousBoard = board.copy();
 
-        board.makeMove(move);
+        GameStatus newStatus = getGameStatus().makeMove(board, move);
         moves.add(new Move(move));
-
-        GameStatus newStatus = getGameStatus().makeMove(move);
         statusStack.add(newStatus);
     }
 
@@ -225,8 +216,11 @@ public final class Game {
 
     private GameResult checkGameResult(MoveGenerator moveGenerator) {
         GameResult gameResult = checkCheckMateOrStaleMate(getGameStatus(), getBoard(), moveGenerator);
-        if (gameResult == GameResult.ONGOING && getBoard().isDrawByMaterial())
-            gameResult = GameResult.DRAW;
+        if (gameResult == GameResult.ONGOING) {
+            if (getGameStatus().getHalfMoveClock() >= 100 || getBoard().isDrawByMaterial()) {
+                gameResult = GameResult.DRAW;
+            }
+        }
 
         return gameResult;
     }
@@ -248,8 +242,7 @@ public final class Game {
         for (int i = 0; i < nPossibleMoves; i++) {
             System.arraycopy(rawBoard, 0, rawWorkingBoard, 0, rawBoard.length);
             final int nextMove = nextMoves.getMove(i);
-            workingBoard.makeMove(nextMove);
-            GameStatus nextGameStatus = gameStatus.makeMove(nextMove);
+            GameStatus nextGameStatus = gameStatus.makeMove(workingBoard, nextMove);
 
             Moves nextNextMoves = moveGenerator.calculateMoves(nextGameStatus, workingBoard);
             if (!nextNextMoves.isIllegal()) {
@@ -279,8 +272,9 @@ public final class Game {
 
     void playAutoGame() {
         try {
-            if (getResult() == GameResult.ONGOING)
+            if (getResult() == GameResult.ONGOING) {
                 playAutoGameInternal();
+            }
 
             getBoard().print();
             int turn = getTurn();
@@ -314,10 +308,7 @@ public final class Game {
     private void playAutoGameInternal() throws InterruptedException, ExecutionException, TimeoutException {
         getBoard().print();
 
-        int moveNo = getMoveCount() + 1;
-
-        int i = 0;
-        for (; i <=1000; i++, moveNo++) {
+        for (int i = 0; i < 500 && getResult() == GameResult.ONGOING; i++) {
             MoveAndWeight move = getEngine().nextMoveAsync().getResult(1, TimeUnit.HOURS);
             if (move == MoveAndWeight.NO_MOVE) {
                 // No valid move possible ==> checkmate or stalemate
@@ -325,15 +316,17 @@ public final class Game {
             }
             makeMove(move);
             getBoard().print();
-            System.out.println("Move #" + moveNo + ": " + ChessUtil.moveToString(move.move));
+            System.out.println("Move #" + (getGameStatus().getPlyCount() / 2 + 1) + ": " + ChessUtil.moveToString(move.move));
 
-            if (getBoard().isDrawByMaterial())
-                break;
-
-            Thread.sleep(20000);
+            if (move.path.length <= 1 || move.path[1] == 0) {
+                calculateAndSetGameResult();
+            }
         }
 
-        GameResult gameResult = checkGameResult(new MoveGenerator(MoveSorter.defaultImplementation()));
+        GameResult gameResult = getResult();
+        if (gameResult == GameResult.ONGOING) {
+            gameResult = GameResult.DRAW;
+        }
         setResult(gameResult);
     }
 

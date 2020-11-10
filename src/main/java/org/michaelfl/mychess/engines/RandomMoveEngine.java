@@ -31,8 +31,7 @@ public final class RandomMoveEngine extends ChessEngine {
         for (int i = 0; i < countMoves; i++) {
             // Make this move and check if it is a legal one
             int move = plainMoves[moveIndex];
-            GameStatus gameStatus = game.getGameStatus().makeMove(move);
-            workingBoard.makeMove(move);
+            GameStatus gameStatus = game.getGameStatus().makeMove(workingBoard, move);
             Moves nextMoves = moveGenerator.calculateMoves(gameStatus, workingBoard);
 
             if (!nextMoves.isIllegal())

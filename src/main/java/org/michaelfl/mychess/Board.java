@@ -285,6 +285,10 @@ public final class Board {
             throw new IllegalStateException("Illegal move: " + ChessUtil.moveToString(fromField, toField));
     }
 
+    static boolean isPawn(byte piece) {
+        return piece == whitePawn || piece == blackPawn;
+    }
+
     static boolean isKnight(byte piece) {
         return piece == whiteKnight || piece == blackKnight;
     }
