@@ -12,8 +12,10 @@ import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 public final class CheckmateSearch {
 
     private final static int MAX_CHECKMATE_SEARCH_DEPTH = 10;
-    private final static int NO_CHECKMATE = -1;
-    private final static int ILLEGAL = -2;
+    private final static int NO_CHECKMATE = 0;
+    private final static int ILLEGAL = -1;
+    private final static int CHECKMATE_WEIGHT_LOW = 1000;
+    private final static int CHECKMATE_WEIGHT_HIGH = 2000;
 
     private final static class CheckmateSearchContext {
         final Board workingBoard;
@@ -45,17 +47,15 @@ public final class CheckmateSearch {
         final var gameStatus = game.getGameStatus();
         final int[] checkmateMove = new int[1];
 
-        int checkmateDepth = findCheckmate(gameStatus.getOppositeColor(), gameStatus, workingBoard, checkmateMove);
-        if (checkmateDepth > 0) {
-            final float weight = WeightingFunction.CHECKMATE_WEIGHT_HIGH - checkmateDepth;
-            System.out.println("==> opposite checkmate in " + checkmateDepth + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + ChessUtil.weightToString(weight));
+        int weight = findCheckmate(gameStatus.getOppositeColor(), gameStatus, workingBoard, checkmateMove);
+        if (weight >= CHECKMATE_WEIGHT_LOW) {
+            System.out.println("==> opposite checkmate in " + (CHECKMATE_WEIGHT_HIGH - weight) + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + ChessUtil.weightToString(weight));
             return new MoveAndWeight(checkmateMove[0], weight, new int[0]);
         }
 
-        checkmateDepth = findCheckmate(gameStatus.getTurn(), gameStatus, workingBoard, checkmateMove);
-        if (checkmateDepth > 0) {
-            final float weight = -(WeightingFunction.CHECKMATE_WEIGHT_HIGH - checkmateDepth);
-            System.out.println("==> I'm checkmate in " + checkmateDepth + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + ChessUtil.weightToString(weight));
+        weight = findCheckmate(gameStatus.getTurn(), gameStatus, workingBoard, checkmateMove);
+        if (weight >= CHECKMATE_WEIGHT_LOW) {
+            System.out.println("==> I'm checkmate in " + (CHECKMATE_WEIGHT_HIGH - weight) + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + ChessUtil.weightToString(weight));
             return new MoveAndWeight(checkmateMove[0], weight, new int[0]);
         }
 
@@ -72,8 +72,8 @@ public final class CheckmateSearch {
     private int findCheckmate(int forColor, GameStatus gameStatus, Board workingBoard, int[] moveOut) {
         CheckmateSearchContext context = new CheckmateSearchContext(workingBoard, gameStatus);
         int move = gameStatus.getTurn() == forColor ?
-                findCheckmateEscapeMove(context) :
-                findCheckmateMove(context);
+                findCheckmateEscapeMove(context, Integer.MIN_VALUE, Integer.MAX_VALUE) :
+                findCheckmateMove(context, Integer.MIN_VALUE, Integer.MAX_VALUE);
         moveOut[0] = context.bestMove;
 
         if (move != 0)
@@ -82,18 +82,22 @@ public final class CheckmateSearch {
         return move;
     }
 
-    private int findCheckmateEscapeMove(CheckmateSearchContext context) {
+    // min search
+    private int findCheckmateEscapeMove(CheckmateSearchContext context, final int alphaWeight, final int betaWeight) {
         final GameStatus gameStatus = context.gameStatus;
         final Board workingBoard = context.workingBoard;
         final int depth = context.depth;
 
+        if (alphaWeight == Integer.MAX_VALUE || betaWeight == Integer.MIN_VALUE) {
+            throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard.toString());
+        }
+
         context.positionCount++;
 
         if (depth > MAX_CHECKMATE_SEARCH_DEPTH
-                || !Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator))
+                || !Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator)) {
             return NO_CHECKMATE;
-
-        int maxCheckmateDepth = -1;
+        }
 
         final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, depth);
         if (moves.isIllegal())
@@ -101,33 +105,54 @@ public final class CheckmateSearch {
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
         int bestMove = -1;
+        int bestWeight = betaWeight; // Integer.MAX_VALUE
+        boolean haveValidMove = false;
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
             context.gameStatus = gameStatus.makeMove(workingBoard, move);
             context.depth = depth + 1;
-            int checkmateDepth = findCheckmateMove(context);
+            int weight = findCheckmateMove(context, alphaWeight, bestWeight);
+            if (weight == Integer.MAX_VALUE || weight == Integer.MIN_VALUE) {
+                throw new IllegalStateException("depth=" + depth + ", weight=" + weight + "\n" + workingBoard.toString());
+            }
             workingBoard.revertMove(move);
-            if (checkmateDepth == NO_CHECKMATE)
-                return NO_CHECKMATE;
-            if (checkmateDepth != ILLEGAL && checkmateDepth > maxCheckmateDepth) {
-                maxCheckmateDepth = checkmateDepth;
-                bestMove = i;
+
+            if (weight != ILLEGAL) {
+                haveValidMove = true;
+
+                // Alpha-Beta search pruning
+                if (weight <= alphaWeight) {
+                    return weight;
+                }
+
+                if (weight < bestWeight) {
+                    bestWeight = weight;
+                    bestMove = i;
+                }
             }
         }
 
-        // Checkmate found
-        if (bestMove == -1)
-            return depth;
+        if (haveValidMove) {
+            if (bestMove != -1) {
+                context.bestMove = plainMoves[bestMove];
+            }
+            return bestWeight;
+        }
 
-        context.bestMove = plainMoves[bestMove];
-        return maxCheckmateDepth;
+        // Checkmate
+        return CHECKMATE_WEIGHT_HIGH - depth;
     }
 
-    private int findCheckmateMove(CheckmateSearchContext context) {
+    // max search
+    private int findCheckmateMove(CheckmateSearchContext context, final int alphaWeight, final int betaWeight) {
         final GameStatus gameStatus = context.gameStatus;
         final Board workingBoard = context.workingBoard;
         final int depth = context.depth;
+
+        if (alphaWeight == Integer.MAX_VALUE || betaWeight == Integer.MIN_VALUE) {
+            throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard.toString());
+        }
 
         context.positionCount++;
 
@@ -139,26 +164,42 @@ public final class CheckmateSearch {
             return ILLEGAL;
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
-        int minCheckmateDepth = Integer.MAX_VALUE;
         int bestMove = -1;
+        int bestWeight = alphaWeight; // Integer.MIN_VALUE
+        boolean haveValidMove = false;
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
             context.gameStatus = gameStatus.makeMove(workingBoard, move);
             context.depth = depth + 1;
-            int checkmateDepth = findCheckmateEscapeMove(context);
+            int weight = findCheckmateEscapeMove(context, bestWeight, betaWeight);
+            if (weight == Integer.MAX_VALUE || weight == Integer.MIN_VALUE) {
+                throw new IllegalStateException("depth=" + depth + ", weight=" + weight + "\n" + workingBoard.toString());
+            }
             workingBoard.revertMove(move);
 
-            if (checkmateDepth >= 0 && checkmateDepth < minCheckmateDepth) {
-                minCheckmateDepth = checkmateDepth;
-                bestMove = i;
+            if (weight != ILLEGAL) {
+                haveValidMove = true;
+
+                // Alpha-Beta search pruning
+                if (weight >= betaWeight) {
+                    return weight;
+                }
+
+                if (weight > bestWeight) {
+                    bestWeight = weight;
+                    bestMove = i;
+                }
             }
         }
 
-        if (minCheckmateDepth == Integer.MAX_VALUE)
-            return NO_CHECKMATE;
+        if (haveValidMove) {
+            if (bestMove != -1) {
+                context.bestMove = plainMoves[bestMove];
+            }
+            return bestWeight;
+        }
 
-        context.bestMove = plainMoves[bestMove];
-        return minCheckmateDepth;
+        return NO_CHECKMATE;
     }
 }
