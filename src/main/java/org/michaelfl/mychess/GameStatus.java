@@ -9,6 +9,7 @@ public final class GameStatus {
     private final int plyCount;
     private final int turn;
     private final int lastMove;
+    private final int halfMoveClock;
     private boolean whiteHasCastled = false;
     private boolean blackHasCastled = false;
     private boolean whiteCastlingKingSidePossible = true;
@@ -20,12 +21,14 @@ public final class GameStatus {
         this.plyCount = plyCount;
         this.turn = turn;
         this.lastMove = lastMove;
+        this.halfMoveClock = 0;
     }
 
-    private GameStatus(int plyCount, int turn, int lastMove, GameStatus previousStatus) {
+    private GameStatus(int plyCount, int turn, int lastMove, int halfMoveClock, GameStatus previousStatus) {
         this.plyCount = plyCount;
         this.turn = turn;
         this.lastMove = lastMove;
+        this.halfMoveClock = halfMoveClock;
 
         this.whiteHasCastled = previousStatus.whiteHasCastled;
         this.blackHasCastled = previousStatus.blackHasCastled;
@@ -45,6 +48,10 @@ public final class GameStatus {
 
     public int getTurn() {
         return turn;
+    }
+
+    public int getHalfMoveClock() {
+        return halfMoveClock;
     }
 
     public boolean isEndGame() {
@@ -97,13 +104,23 @@ public final class GameStatus {
     }
 
     public GameStatus switchTurn() {
-        return new GameStatus(0, getOppositeColor(), 0, this);
+        return new GameStatus(0, getOppositeColor(), 0, halfMoveClock, this);
     }
 
-    public GameStatus makeMove(int move) {
-        GameStatus newStatus = new GameStatus(plyCount + 1, getOppositeColor(), move, this);
+    public GameStatus makeMove(final Board workingBoard, final int move) {
+        // Reset halfMoveClock if a pawn was moved or a piece was captured
+        int newHalfMoveClock = 0;
+        if (Move.getCapturedPiece(move) == 0 && !Board.isPawn(workingBoard.get(Move.getFromField(move)))) {
+            newHalfMoveClock = halfMoveClock + 1;
+        }
+
+        final GameStatus newStatus = new GameStatus(plyCount + 1, getOppositeColor(), move, newHalfMoveClock, this);
         newStatus.updateCastlingState(turn, move);
 
+        // Make the move on the board
+        workingBoard.makeMove(move);
+
+        // Return new game status
         return newStatus;
     }
 

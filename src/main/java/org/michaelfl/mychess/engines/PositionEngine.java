@@ -34,8 +34,7 @@ public final class PositionEngine extends ChessEngine {
         for (int i = 0; i < countMoves; i++) {
             // Make this move and calculate its weight; also check if it is a legal one
             int move = plainMoves[i];
-            GameStatus gameStatus = game.getGameStatus().makeMove(move);
-            workingBoard.makeMove(move);
+            GameStatus gameStatus = game.getGameStatus().makeMove(workingBoard, move);
 
             float weight = weightingFunction.calculate(gameStatus, workingBoard);
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {

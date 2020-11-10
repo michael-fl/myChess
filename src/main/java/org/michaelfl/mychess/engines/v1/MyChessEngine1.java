@@ -2,6 +2,7 @@ package org.michaelfl.mychess.engines.v1;
 
 import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
+import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.engines.CheckmateSearch;
 import org.michaelfl.mychess.engines.ChessEngine;
@@ -23,6 +24,12 @@ public final class MyChessEngine1 extends ChessEngine {
     protected MoveAndWeight calculateNextMove(NextMoveTask task) {
         MoveAndWeight move = MoveAndWeight.NO_MOVE;
 
+        // First check if this game is already finished
+        game.calculateAndSetGameResult();
+        if (game.getResult() != GameResult.ONGOING) {
+            return move;
+        }
+
         // Phase 1: Checkmate search
         if (getConfig().isCheckmateCheck()) {
             long t1 = System.currentTimeMillis();
@@ -42,9 +49,5 @@ public final class MyChessEngine1 extends ChessEngine {
         float weightFactor = game.getGameStatus().isWhiteTurn() ? 1 : -1;
 
         return move.weightFactor(weightFactor);
-    }
-
-    public int findCheckmate(int forColor, int[] moveOut) {
-        return CheckmateSearch.findCheckmate(this, game, forColor, moveOut);
     }
 }

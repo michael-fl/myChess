@@ -104,8 +104,7 @@ public final class CheckmateSearch {
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
-            context.gameStatus = gameStatus.makeMove(move);
-            workingBoard.makeMove(move);
+            context.gameStatus = gameStatus.makeMove(workingBoard, move);
             context.depth = depth + 1;
             int checkmateDepth = findCheckmateMove(context);
             workingBoard.revertMove(move);
@@ -145,8 +144,7 @@ public final class CheckmateSearch {
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
-            context.gameStatus = gameStatus.makeMove(move);
-            workingBoard.makeMove(move);
+            context.gameStatus = gameStatus.makeMove(workingBoard, move);
             context.depth = depth + 1;
             int checkmateDepth = findCheckmateEscapeMove(context);
             workingBoard.revertMove(move);
