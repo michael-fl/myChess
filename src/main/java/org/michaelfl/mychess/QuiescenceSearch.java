@@ -22,89 +22,103 @@ public final class QuiescenceSearch {
 
     public float quiescenceMaxSearch(final GameStatus gameStatus, final Board workingBoard, final int capturedOnField, final int depth, final float materialWeight, final float materialDelta) {
         final int maxDepth = depth + maxQuiescenceDepth;
-        return quiescenceMaxSearch(gameStatus, workingBoard, capturedOnField, depth, maxDepth, materialWeight, materialDelta);
+        return quiescenceMaxSearch(gameStatus, workingBoard, depth, maxDepth, materialWeight, materialDelta, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
     }
 
     public float quiescenceMinSearch(final GameStatus gameStatus, final Board workingBoard, final int capturedOnField, final int depth, final float materialWeight, final float materialDelta) {
         final int maxDepth = depth + maxQuiescenceDepth;
-        return quiescenceMinSearch(gameStatus, workingBoard, capturedOnField, depth, maxDepth, materialWeight, materialDelta);
+        return quiescenceMinSearch(gameStatus, workingBoard, depth, maxDepth, materialWeight, materialDelta, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
     }
 
-    private float quiescenceMaxSearch(final GameStatus gameStatus, final Board workingBoard, final int capturedOnField, final int depth, final int maxDepth, final float materialWeight, final float materialDelta) {
+    private float quiescenceMaxSearch(final GameStatus gameStatus, final Board workingBoard, final int depth, final int maxDepth, final float materialWeight, final float materialDelta, final float alpha, final float beta) {
         statistics.incrPositionCount();
         statistics.reachedDepth(depth);
 
-        if (depth == maxDepth) {
-            return calculatePositionWeight(gameStatus, workingBoard, materialWeight, materialDelta);
+        float standPat = calculatePositionWeight(gameStatus, workingBoard, materialWeight, materialDelta);
+
+        if (standPat >= beta) {
+            return beta;
         }
+        if (depth == maxDepth) {
+            return standPat;
+        }
+        float bestWeight = Math.max(alpha, standPat);
 
         final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, depth, 0);
-        if (moves.isIllegal())
+        if (moves.isIllegal()) {
             return WeightingFunction.ILLEGAL_WEIGHT;
+        }
+
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
-        float bestWeight = calculatePositionWeight(gameStatus, workingBoard, materialWeight, materialDelta);
 
         for (int i = 0; i < countMoves; i++) {
-            // Follow only moves, which capture on the same field, until no further capture is possible on that field
-            if (capturedOnField == Move.getToField(plainMoves[i])) {
+            // Follow only moves, which are captures
+            if (Move.getCapturedPiece(plainMoves[i]) != 0) {
                 final int move = plainMoves[i];
-
                 final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
                 final float newMaterialWeight = materialWeight + moveWeight;
                 final float newMaterialDelta = materialDelta + moveWeight;
 
                 GameStatus nextGameStatus = gameStatus.makeMove(workingBoard, move);
-                float weight = quiescenceMinSearch(nextGameStatus, workingBoard, capturedOnField, depth + 1, maxDepth, newMaterialWeight, newMaterialDelta);
+                if (depth == 0)
+                    System.out.println();
+                float weight = quiescenceMinSearch(nextGameStatus, workingBoard, depth + 1, maxDepth, newMaterialWeight, newMaterialDelta, bestWeight, beta);
                 workingBoard.revertMove(move);
-                if (weight != WeightingFunction.ILLEGAL_WEIGHT && weight > bestWeight) {
-                    bestWeight = weight;
+                if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
+                    if (weight >= beta) {
+                        return beta; // beta cutoff
+                    }
+                    if (weight > bestWeight) {
+                        bestWeight = weight;
+                    }
                 }
             }
-        }
-
-        if (bestWeight == Float.POSITIVE_INFINITY || bestWeight == Float.NEGATIVE_INFINITY) {
-            throw new IllegalStateException("bestWeight=" + bestWeight + ", depth=" + depth + "\n" + workingBoard.toString());
         }
 
         return bestWeight;
     }
 
-    private float quiescenceMinSearch(final GameStatus gameStatus, final Board workingBoard, final int capturedOnField, final int depth, final int maxDepth, final float materialWeight, final float materialDelta) {
+    private float quiescenceMinSearch(final GameStatus gameStatus, final Board workingBoard, final int depth, final int maxDepth, final float materialWeight, final float materialDelta, final float alpha, final float beta) {
         statistics.incrPositionCount();
         statistics.reachedDepth(depth);
 
-        if (depth == maxDepth) {
-            return calculatePositionWeight(gameStatus, workingBoard, materialWeight, materialDelta);
+        float standPat = calculatePositionWeight(gameStatus, workingBoard, materialWeight, materialDelta);
+
+        if (standPat <= alpha) {
+            return alpha;
         }
+        if (depth == maxDepth) {
+            return standPat;
+        }
+        float bestWeight = Math.min(beta, standPat);
 
         final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, depth, 0);
         if (moves.isIllegal())
             return WeightingFunction.ILLEGAL_WEIGHT;
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
-        float bestWeight = calculatePositionWeight(gameStatus, workingBoard, materialWeight, materialDelta);
 
         for (int i = 0; i < countMoves; i++) {
-            // Follow only moves, which capture on the same field, until no further capture is possible on that field
-            if (capturedOnField == Move.getToField(plainMoves[i])) {
+            // Follow only moves, which are captures
+            if (Move.getCapturedPiece(plainMoves[i]) != 0) {
                 final int move = plainMoves[i];
-
                 final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
                 final float newMaterialWeight = materialWeight - moveWeight;
                 final float newMaterialDelta = materialDelta - moveWeight;
 
                 GameStatus nextGameStatus = gameStatus.makeMove(workingBoard, move);
-                float weight = quiescenceMaxSearch(nextGameStatus, workingBoard, capturedOnField, depth + 1, maxDepth, newMaterialWeight, newMaterialDelta);
+                float weight = quiescenceMaxSearch(nextGameStatus, workingBoard, depth + 1, maxDepth, newMaterialWeight, newMaterialDelta, alpha, bestWeight);
                 workingBoard.revertMove(move);
-                if (weight != WeightingFunction.ILLEGAL_WEIGHT && weight < bestWeight) {
-                    bestWeight = weight;
+                if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
+                    if (weight <= alpha) {
+                        return alpha; // alpha cutoff
+                    }
+                    if (weight < bestWeight) {
+                        bestWeight = weight;
+                    }
                 }
             }
-        }
-
-        if (bestWeight == Float.POSITIVE_INFINITY || bestWeight == Float.NEGATIVE_INFINITY) {
-            throw new IllegalStateException("bestWeight=" + bestWeight + ", depth=" + depth + "\n" + workingBoard.toString());
         }
 
         return bestWeight;
