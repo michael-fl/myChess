@@ -36,9 +36,6 @@ public final class ChessUtil {
     }
 
     public static int getColOfField(int field) {
-        int row = field / Board.LENGTH;
-        if (row < 2 || row > 9)
-            return -1;
         int col = field % Board.LENGTH;
         if (col < 2 || col > 9)
             return -1;
