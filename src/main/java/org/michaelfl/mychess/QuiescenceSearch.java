@@ -22,16 +22,27 @@ public final class QuiescenceSearch {
 
     public float quiescenceMaxSearch(final GameStatus gameStatus, final Board workingBoard, final int capturedOnField, final int depth, final float materialWeight, final float materialDelta) {
         final int maxDepth = depth + maxQuiescenceDepth;
-        return quiescenceMaxSearch(gameStatus, workingBoard, depth, maxDepth, materialWeight, materialDelta, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
+
+        statistics.startQuiescenceSearch();
+        float weight = quiescenceMaxSearch(gameStatus, workingBoard, depth, maxDepth, materialWeight, materialDelta, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
+        statistics.endQuiescenceSearch();
+
+        return weight;
     }
 
     public float quiescenceMinSearch(final GameStatus gameStatus, final Board workingBoard, final int capturedOnField, final int depth, final float materialWeight, final float materialDelta) {
         final int maxDepth = depth + maxQuiescenceDepth;
-        return quiescenceMinSearch(gameStatus, workingBoard, depth, maxDepth, materialWeight, materialDelta, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
+
+        statistics.startQuiescenceSearch();
+        float weight = quiescenceMinSearch(gameStatus, workingBoard, depth, maxDepth, materialWeight, materialDelta, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
+        statistics.endQuiescenceSearch();
+
+        return weight;
     }
 
     private float quiescenceMaxSearch(final GameStatus gameStatus, final Board workingBoard, final int depth, final int maxDepth, final float materialWeight, final float materialDelta, final float alpha, final float beta) {
         statistics.incrPositionCount();
+        statistics.incrQuiescencePositionsCount();
         statistics.reachedDepth(depth);
 
         float standPat = calculatePositionWeight(gameStatus, workingBoard, materialWeight, materialDelta);
@@ -52,9 +63,17 @@ public final class QuiescenceSearch {
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
 
+        int capturedOnField = Move.getToField(gameStatus.getLastMove());
+        if (Move.getCapturedPiece(gameStatus.getLastMove()) == 0) {
+            throw new IllegalStateException();
+        }
+
         for (int i = 0; i < countMoves; i++) {
-            // Follow only moves, which are captures
-            if (Move.getCapturedPiece(plainMoves[i]) != 0) {
+            // TODO: Follow only moves, which are captures. Unfortunately this increases computation time too much.
+            //if (Move.getCapturedPiece(plainMoves[i]) != 0) {
+
+            // Follow only moves, which capture on the same field, until no further capture is possible on that field
+            if (capturedOnField == Move.getToField(plainMoves[i])) {
                 final int move = plainMoves[i];
                 final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
                 final float newMaterialWeight = materialWeight + moveWeight;
@@ -81,6 +100,7 @@ public final class QuiescenceSearch {
 
     private float quiescenceMinSearch(final GameStatus gameStatus, final Board workingBoard, final int depth, final int maxDepth, final float materialWeight, final float materialDelta, final float alpha, final float beta) {
         statistics.incrPositionCount();
+        statistics.incrQuiescencePositionsCount();
         statistics.reachedDepth(depth);
 
         float standPat = calculatePositionWeight(gameStatus, workingBoard, materialWeight, materialDelta);
@@ -99,9 +119,17 @@ public final class QuiescenceSearch {
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
 
+        int capturedOnField = Move.getToField(gameStatus.getLastMove());
+        if (Move.getCapturedPiece(gameStatus.getLastMove()) == 0) {
+            throw new IllegalStateException();
+        }
+
         for (int i = 0; i < countMoves; i++) {
-            // Follow only moves, which are captures
-            if (Move.getCapturedPiece(plainMoves[i]) != 0) {
+            // OPT: Follow only moves, which are captures
+            // if (Move.getCapturedPiece(plainMoves[i]) != 0) {
+
+            // Follow only moves, which capture on the same field, until no further capture is possible on that field
+            if (capturedOnField == Move.getToField(plainMoves[i])) {
                 final int move = plainMoves[i];
                 final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
                 final float newMaterialWeight = materialWeight - moveWeight;
