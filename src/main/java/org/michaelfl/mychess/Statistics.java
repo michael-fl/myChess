@@ -56,6 +56,9 @@ public final class Statistics {
     }
 
     public final long getQuiescencePositionsCountAvg() {
+        if (quiescenceSearchesCount == 0) {
+            return 0;
+        }
         return quiescencePositionsCountTotal / quiescenceSearchesCount;
     }
 

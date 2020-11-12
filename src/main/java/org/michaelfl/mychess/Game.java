@@ -308,7 +308,7 @@ public final class Game {
     private void playAutoGameInternal() throws InterruptedException, ExecutionException, TimeoutException {
         getBoard().print();
 
-        for (int i = 0; i < 500 && getResult() == GameResult.ONGOING; i++) {
+        for (int i = 0; i < 1000 && getResult() == GameResult.ONGOING; i++) {
             MoveAndWeight move = getEngine().nextMoveAsync().getResult(1, TimeUnit.HOURS);
             if (move == MoveAndWeight.NO_MOVE) {
                 // No valid move possible ==> checkmate or stalemate
@@ -317,6 +317,7 @@ public final class Game {
             makeMove(move);
             getBoard().print();
             System.out.println("Move #" + (getGameStatus().getPlyCount() / 2 + 1) + ": " + ChessUtil.moveToString(move.move));
+            System.out.println("FEN: " + exportFEN());
 
             if (move.path.length <= 1 || move.path[1] == 0) {
                 calculateAndSetGameResult();
