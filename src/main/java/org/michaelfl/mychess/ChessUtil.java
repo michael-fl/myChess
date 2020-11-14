@@ -113,4 +113,17 @@ public final class ChessUtil {
 
         return buf.toString();
     }
+
+    /** Map the given piece to its corresponding number from 0 to 11. 0 = white pawn, 11 = black king. */
+    public static int getPieceNumber12(byte piece) {
+        return piece >= Board.blackPawn ? 6 + piece - Board.blackPawn : piece - Board.whitePawn;
+    }
+
+    /** Map the given field to its corresponding number from 0 to 63, where a1 = 0, b1 = 1, ... h8 = 63. */
+    public static int getFieldNumber64(int field) {
+        int row = field / Board.LENGTH - 2;
+        int col = field % Board.LENGTH - 2;
+
+        return row * 8 + col;
+    }
 }

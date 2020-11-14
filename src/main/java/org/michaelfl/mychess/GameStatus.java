@@ -74,32 +74,32 @@ public final class GameStatus {
         return lastMove;
     }
 
-    public boolean hasWhiteCastled() {
+    public final boolean hasWhiteCastled() {
         return whiteHasCastled;
     }
 
-    public boolean hasBlackCastled() {
+    public final boolean hasBlackCastled() {
         return blackHasCastled;
     }
 
-    public boolean isCastlingPossible() {
+    public final boolean isCastlingPossible() {
         return (turn == TURN_WHITE && (whiteCastlingKingSidePossible || whiteCastlingQueenSidePossible))
                 || (turn == TURN_BLACK && (blackCastlingKingSidePossible || blackCastlingQueenSidePossible));
     }
 
-    public boolean isWhiteCastlingKingSidePossible() {
+    public final boolean isWhiteCastlingKingSidePossible() {
         return whiteCastlingKingSidePossible;
     }
 
-    public boolean isWhiteCastlingQueenSidePossible() {
+    public final boolean isWhiteCastlingQueenSidePossible() {
         return whiteCastlingQueenSidePossible;
     }
 
-    public boolean isBlackCastlingKingSidePossible() {
+    public final boolean isBlackCastlingKingSidePossible() {
         return blackCastlingKingSidePossible;
     }
 
-    public boolean isBlackCastlingQueenSidePossible() {
+    public final boolean isBlackCastlingQueenSidePossible() {
         return blackCastlingQueenSidePossible;
     }
 
