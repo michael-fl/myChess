@@ -93,6 +93,7 @@ public final class MovesCounter {
         this.nTop = nTop;
     }
 
+    @SuppressWarnings("unused")
     public final void clear() {
         for (MoveSet moveSet : movesPerDepth) {
             moveSet.clear();

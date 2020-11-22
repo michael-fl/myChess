@@ -126,4 +126,16 @@ public final class ChessUtil {
 
         return row * 8 + col;
     }
+
+    public static int setBit(int bitSet, int bit, boolean set) {
+        return set ? bitSet | bit : bitSet & ~bit;
+    }
+
+    public static int setBit(int bitSet, int bit) {
+        return bitSet | bit;
+    }
+
+    public static int clearBit(int bitSet, int bit) {
+        return bitSet & ~bit;
+    }
 }

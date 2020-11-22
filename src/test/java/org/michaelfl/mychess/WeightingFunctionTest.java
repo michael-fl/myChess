@@ -12,10 +12,9 @@ class WeightingFunctionTest {
     @Test
     void testStartPosition() {
         var f = new WeightingFunction();
-        var gameStatus = GameStatus.newGame();
-        var board = Board.createEmptyBoard();
+        var board = Board.createNewGame();
 
-        var weight = f.calculate(gameStatus, board);
+        var weight = f.calculate(board);
         assertEquals(0.0f, weight, "Wrong weight");
     }
 
@@ -211,7 +210,7 @@ class WeightingFunctionTest {
         SimpleNotationImporter importer = new SimpleNotationImporter(gameNotation);
         var game = importer.importGame();
         var f = new WeightingFunction();
-        var weight = f.calculate(game.getGameStatus(), game.getBoard());
+        var weight = f.calculate(game.getBoard());
         assertTrue(weight >= expectedMinWeight, "Wrong weight: " + weight + ". Expected minimum of " + expectedMinWeight);
         assertTrue(weight <= expectedMaxWeight, "Wrong weight: " + weight + ". Expected maximum of " + expectedMaxWeight);
     }

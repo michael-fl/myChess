@@ -8,9 +8,10 @@ import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.WeightingFunction;
 
+@SuppressWarnings("unused")
 public final class PositionEngine extends ChessEngine {
 
-    private WeightingFunction weightingFunction = new WeightingFunction();
+    private final WeightingFunction weightingFunction = new WeightingFunction();
 
     public PositionEngine(EngineConfig config, Game game) {
         super(config, game);
@@ -19,7 +20,7 @@ public final class PositionEngine extends ChessEngine {
     @SuppressWarnings("Duplicates")
     @Override
     protected MoveAndWeight calculateNextMove(NextMoveTask task) {
-        Moves moves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard());
+        Moves moves = moveGenerator.calculateMoves(game.getBoard());
 
         if (moves.isIllegal() || moves.count() == 0)
             return MoveAndWeight.NO_MOVE; // No move possible
@@ -34,9 +35,9 @@ public final class PositionEngine extends ChessEngine {
         for (int i = 0; i < countMoves; i++) {
             // Make this move and calculate its weight; also check if it is a legal one
             int move = plainMoves[i];
-            GameStatus gameStatus = game.getGameStatus().makeMove(workingBoard, move);
+            workingBoard.makeMove(move);
 
-            float weight = weightingFunction.calculate(gameStatus, workingBoard);
+            float weight = weightingFunction.calculate(workingBoard);
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
                 System.out.println(ChessUtil.moveToString(move) + " ==> weight " + weight);
                 if ((isWhiteTurn && weight > bestWeight) || (!isWhiteTurn && weight < bestWeight)) {
@@ -45,7 +46,7 @@ public final class PositionEngine extends ChessEngine {
                 }
             }
 
-            workingBoard.revertMove(move);
+            workingBoard.revertMove();
         }
 
         if (bestMove == -1) {

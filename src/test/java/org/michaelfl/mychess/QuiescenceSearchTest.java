@@ -21,13 +21,13 @@ class QuiescenceSearchTest {
         var quiescenceSearch = new QuiescenceSearch(game, moveGenerator, weightingFunction, statistics, game.getEngine().getConfig().getMaxQuiescenceDepth());
         var workingBoard = game.getBoard().copy();
         var capturedOnField = Board.b4;
-        var weightFactor = game.getGameStatus().isWhiteTurn() ? 1 : -1;
+        var weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
         var materialWeight = weightFactor * WeightingFunction.calculateMaterialWeight(workingBoard);
 
         assertEquals(-3.0f, materialWeight, "test setup error");
         assertEquals(Board.blackBishop, Move.getCapturedPiece(game.getGameStatus().getLastMove()), "test setup error");
 
-        var weight = quiescenceSearch.quiescenceMaxSearch(game.getGameStatus(), workingBoard, capturedOnField, 0, materialWeight, 0f);
+        var weight = quiescenceSearch.quiescenceMaxSearch(workingBoard, capturedOnField, 0, materialWeight, 0f);
 
         assertTrue(Math.abs(weight) < 0.5f, "Unexpected weight: " + weight);
         assertTrue(statistics.getMaximumReachedDepth() >= 5, "Maximum search depth too low: " + statistics.getMaximumReachedDepth());

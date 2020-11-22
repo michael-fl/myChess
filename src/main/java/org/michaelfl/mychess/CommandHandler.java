@@ -255,7 +255,7 @@ final class CommandHandler {
                 System.err.println("No previous move");
                 return;
             }
-            System.out.println(game.getMoves().get(game.getMoveCount() - 1));
+            System.out.println(new Move(game.getGameStatus().getLastMove()));
         }
     }
 
@@ -278,7 +278,7 @@ final class CommandHandler {
             if (move == MoveAndWeight.NO_MOVE)
                 System.out.println("Illegal position. No move possible.");
             else
-                System.out.println((game.getGameStatus().getPlyCount() / 2 + 1) + ". " + ChessUtil.moveToString(move.move));
+                System.out.println(((game.getGameStatus().getPlyCount() + 1) / 2) + ". " + ChessUtil.moveToString(move.move));
         }
     }
 
@@ -291,7 +291,7 @@ final class CommandHandler {
 
         @Override
         void handle(String commandLine) {
-            weightingFunction.calculate(game.getGameStatus(), game.getBoard());
+            weightingFunction.calculate(game.getBoard());
             weightingFunction.print();
         }
     }
@@ -365,8 +365,8 @@ final class CommandHandler {
 
         @Override
         void handle(String commandLine) {
-            String variantsStr = commandLine.substring(PREFIX.length()).trim();
-            int variants = Integer.parseInt(variantsStr);
+            //String variantsStr = commandLine.substring(PREFIX.length()).trim();
+            //int variants = Integer.parseInt(variantsStr);
             //game.setConfig(game.getConfig().setNVariants(variants));
             System.out.println("not implemented");
         }
@@ -383,8 +383,8 @@ final class CommandHandler {
 
         @Override
         void handle(String commandLine) {
-            String variantsStr = commandLine.substring(PREFIX.length()).trim();
-            int depth = Integer.parseInt(variantsStr);
+            //String variantsStr = commandLine.substring(PREFIX.length()).trim();
+            //int depth = Integer.parseInt(variantsStr);
             //game.setConfig(game.getConfig().setMaxDepth(depth));
             System.out.println("not implemented");
         }
@@ -401,8 +401,8 @@ final class CommandHandler {
 
         @Override
         void handle(String commandLine) {
-            String variantsStr = commandLine.substring(PREFIX.length()).trim();
-            int depth = Integer.parseInt(variantsStr);
+            //String variantsStr = commandLine.substring(PREFIX.length()).trim();
+            //int depth = Integer.parseInt(variantsStr);
             //game.setConfig(game.getConfig().setIterationDepth(depth));
             System.out.println("not implemented");
         }
@@ -416,7 +416,7 @@ final class CommandHandler {
         }
 
         @Override
-        void handle(String commandLine) throws InterruptedException, ExecutionException, TimeoutException {
+        void handle(String commandLine) {
             if (game.getResult() != GameResult.ONGOING) {
                 System.err.println("Game is already over");
                 return;

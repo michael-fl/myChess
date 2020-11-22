@@ -8,7 +8,7 @@ import java.util.Random;
  */
 final class RandomNumbers {
 
-    // 781 random numbers used for Zobrist hashing
+    // 793 random numbers used for Zobrist hashing
     final static long[] RANDOM_NUMBERS = new long[] {
             3633093927745763006L,
             -1314957624451839613L,

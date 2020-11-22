@@ -3,6 +3,7 @@ package org.michaelfl.mychess.engines.v1;
 import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.Game.GameResult;
+import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.engines.CheckmateSearch;
 import org.michaelfl.mychess.engines.ChessEngine;
@@ -46,7 +47,7 @@ public final class MyChessEngine1 extends ChessEngine {
             System.out.println("Position search took " + (t2 - t1) + "ms");
         }
 
-        float weightFactor = game.getGameStatus().isWhiteTurn() ? 1 : -1;
+        float weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
 
         return move.weightFactor(weightFactor);
     }

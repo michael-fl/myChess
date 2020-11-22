@@ -53,12 +53,16 @@ public final class MoveGenerator {
         this.moveSorter = moveSorter;
     }
 
-    public Moves calculateMoves(GameStatus game, Board theBoard) {
-        return calculateMoves(game, theBoard, 0, 0);
+    public Moves calculateMoves(Board theBoard) {
+        return calculateMoves(theBoard.getGameStatus(), theBoard, 0, 0);
     }
 
-    public Moves calculateMoves(GameStatus game, Board theBoard, int depth) {
-        return calculateMoves(game, theBoard, depth, 0);
+    public Moves calculateMoves(Board theBoard, int depth) {
+        return calculateMoves(theBoard.getGameStatus(), theBoard, depth, 0);
+    }
+
+    public Moves calculateMoves(Board theBoard, int depth, int knownBestMove) {
+        return calculateMoves(theBoard.getGameStatus(), theBoard, depth, knownBestMove);
     }
 
     public Moves calculateMoves(GameStatus game, Board theBoard, int depth, int knownBestMove) {

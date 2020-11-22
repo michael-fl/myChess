@@ -69,8 +69,9 @@ public abstract class ChessEngine {
     }
 
     public Moves getPossibleMoves() {
-        return moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard());
+        return moveGenerator.calculateMoves(game.getBoard());
     }
+
     protected abstract MoveAndWeight calculateNextMove(NextMoveTask task);
 
 }
