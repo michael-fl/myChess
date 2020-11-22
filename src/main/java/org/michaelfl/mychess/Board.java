@@ -1,13 +1,17 @@
 package org.michaelfl.mychess;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import static org.michaelfl.mychess.ChessUtil.*;
 
 @SuppressWarnings({"WeakerAccess", "unused", "PointlessArithmeticExpression"})
 public final class Board {
 
     @FunctionalInterface
     private interface IMove {
-        void move(byte[] board, int move);
+        void move(Board board, int move);
     }
 
     public final static byte illegal = 64;
@@ -151,6 +155,8 @@ public final class Board {
     }
 
     private final byte[] board;
+    private final GameStatus[] statusStack;
+    private int stackSize;
 
     //    132           ...             143
     //    120           ...             131
@@ -166,6 +172,8 @@ public final class Board {
     //    00 01         ...          10  11
     private Board() {
         board = new byte[LENGTH*LENGTH];
+        statusStack = new GameStatus[2000];
+
         Arrays.fill(board, illegal);
 
         for (int row = 0; row < 8; row++) {
@@ -209,22 +217,26 @@ public final class Board {
         board[f8] = blackBishop;
         board[g8] = blackKnight;
         board[h8] = blackRook;
+
+        push(GameStatus.newGame());
     }
 
-    Board(byte[] board) {
-        this.board = board;
+    private Board(Board other) {
+        this.board = Arrays.copyOf(other.board, other.board.length);
+        this.statusStack = Arrays.copyOf(other.statusStack, other.statusStack.length);
+        this.stackSize = other.stackSize;
     }
 
     static Board createNewGame() {
         return new Board();
     }
 
-    static Board createEmptyBoard() {
-        return new Board(new byte[LENGTH*LENGTH]);
+    static byte[] createEmptyRawBoard() {
+        return new byte[LENGTH*LENGTH];
     }
 
     public Board copy() {
-        return new Board(Arrays.copyOf(board, board.length));
+        return new Board(this);
     }
 
     public byte[] getRawBoard() {
@@ -234,6 +246,85 @@ public final class Board {
     public byte getPieceAt(int col, int row) {
         int index = ChessUtil.getFieldFromColAndRow(col, row);
         return board[index];
+    }
+
+    private void push(GameStatus gameStatus) {
+        statusStack[stackSize++] = gameStatus;
+    }
+
+    private void pop() {
+        statusStack[--stackSize] = null;
+    }
+
+    public GameStatus getGameStatus() {
+        return statusStack[stackSize - 1];
+    }
+
+    public List<GameStatus> getGameStatusStackCopy() {
+        return new ArrayList<>(Arrays.asList(statusStack).subList(0, stackSize));
+    }
+
+    public String exportFEN() {
+        return Fen.exportFEN(this);
+    }
+
+    public void makeMove(final int move) {
+        final GameStatus gameStatus = getGameStatus();
+        final byte movedPiece = get(Move.getFromField(move));
+        final byte capturedPiece = Move.getCapturedPiece(move);
+
+        // Make the move on the board
+        MOVE_FUNCTIONS[Move.getMoveType(move)].move(this, move);
+
+        // Reset halfMoveClock if a pawn was moved or a piece was captured
+        int newHalfMoveClock = capturedPiece != 0 || Board.isPawn(movedPiece) ? 0 : gameStatus.getHalfMoveClock() + 1;
+
+        // Calculate new castling state
+        int newCastlingState = calculateNewCastlingState(gameStatus, move);
+
+        long newPositionHash = 0; // TODO: calculate position hash (in MOVE_FUNCTIONS)
+
+        // New game status
+        push(new GameStatus(gameStatus.getPlyCount() + 1, gameStatus.getOppositeColor(), move, newHalfMoveClock, newCastlingState, newPositionHash));
+    }
+
+    private int calculateNewCastlingState(GameStatus gameStatus, int move) {
+        int bitSet = gameStatus.getCastlingState();
+
+        final byte fromField = Move.getFromField(move);
+        final byte toField = Move.getToField(move);
+        final byte moveType = Move.getMoveType(move);
+
+        if (gameStatus.isWhiteCastlingPossible()) {
+            bitSet = setBit(bitSet, GameStatus.BIT_WHITE_CASTLING_KING_SIDE_POSSIBLE,
+                    gameStatus.isWhiteCastlingKingSidePossible()
+                            && get(e1) == Board.whiteKing
+                            && get(h1) == Board.whiteRook);
+            bitSet = setBit(bitSet, GameStatus.BIT_WHITE_CASTLING_QUEEN_SIDE_POSSIBLE,
+                    gameStatus.isWhiteCastlingQueenSidePossible()
+                            && get(e1) == Board.whiteKing
+                            && get(a1) == Board.whiteRook);
+
+            if (gameStatus.getTurn() == GameStatus.TURN_WHITE && (moveType == Move.typeCastlingKingSide || moveType == Move.typeCastlingQueenSide)) {
+                bitSet = setBit(bitSet, GameStatus.BIT_WHITE_HAS_CASTLED);
+            }
+        }
+        if (gameStatus.isBlackCastlingPossible()) {
+            bitSet = setBit(bitSet, GameStatus.BIT_BLACK_CASTLING_KING_SIDE_POSSIBLE,
+                    gameStatus.isBlackCastlingKingSidePossible()
+                            && get(e8) == Board.blackKing
+                            && get(h8) == Board.blackRook);
+            bitSet = setBit(bitSet, GameStatus.BIT_BLACK_CASTLING_QUEEN_SIDE_POSSIBLE,
+                    gameStatus.isBlackCastlingQueenSidePossible()
+                            && get(e8) == Board.blackKing
+                            && get(a8) == Board.blackRook);
+
+            if (gameStatus.getTurn() == GameStatus.TURN_BLACK && (moveType == Move.typeCastlingKingSide || moveType == Move.typeCastlingQueenSide)) {
+                bitSet = setBit(bitSet, GameStatus.BIT_BLACK_HAS_CASTLED);
+            }
+        }
+
+        return bitSet;
     }
 
     @Override
@@ -335,23 +426,11 @@ public final class Board {
                 && (piecesCount[blackKnight] == 0 || piecesCount[blackBishop] == 0);
     }
 
-    public void makeMove(int move) {
-        makeMove(board, move);
+    private static void makeNormalMove(Board board, int move) {
+        board._makeNormalMove(move);
     }
 
-    static void makeMove(byte[] board, int move) {
-        MOVE_FUNCTIONS[Move.getMoveType(move)].move(board, move);
-    }
-
-    public void revertMove(int move) {
-        revertMove(board, move);
-    }
-
-    static void revertMove(byte[] board, int move) {
-        MOVE_REVERT_FUNCTIONS[Move.getMoveType(move)].move(board, move);
-    }
-
-    private static void makeNormalMove(byte[] board, int move) {
+    private void _makeNormalMove(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
 
@@ -359,7 +438,11 @@ public final class Board {
         board[fromField] = empty;
     }
 
-    private static void makeEnPassantMove(byte[] board, int move) {
+    private static void makeEnPassantMove(Board board, int move) {
+        board._makeEnPassantMove(move);
+    }
+
+    private void _makeEnPassantMove(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
 
@@ -372,36 +455,60 @@ public final class Board {
         }
     }
 
-    private static void makePawnPromotionMoveQueen(byte[] board, int move) {
+    private static void makePawnPromotionMoveQueen(Board board, int move) {
+        board._makePawnPromotionMoveQueen(move);
+    }
+
+    private void _makePawnPromotionMoveQueen(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
+
         board[fromField] = empty;
         board[toField] = toField >= a8 ? Board.whiteQueen : Board.blackQueen;
     }
 
-    private static void makePawnPromotionMoveKnight(byte[] board, int move) {
+    private static void makePawnPromotionMoveKnight(Board board, int move) {
+        board._makePawnPromotionMoveKnight(move);
+    }
+
+    private void _makePawnPromotionMoveKnight(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
+
         board[fromField] = empty;
         board[toField] = toField >= a8 ? Board.whiteKnight : Board.blackKnight;
     }
 
-    private static void makePawnPromotionMoveRook(byte[] board, int move) {
+    private static void makePawnPromotionMoveRook(Board board, int move) {
+        board._makePawnPromotionMoveRook(move);
+    }
+
+    private void _makePawnPromotionMoveRook(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
+
         board[fromField] = empty;
         board[toField] = toField >= a8 ? Board.whiteRook : Board.blackRook;
     }
 
-    private static void makePawnPromotionMoveBishop(byte[] board, int move) {
+    private static void makePawnPromotionMoveBishop(Board board, int move) {
+        board._makePawnPromotionMoveBishop(move);
+    }
+
+    private void _makePawnPromotionMoveBishop(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
+
         board[fromField] = empty;
         board[toField] = toField >= a8 ? Board.whiteBishop : Board.blackBishop;
     }
 
+    private static void makeCastlingKingSideMove(Board board, int move) {
+        board._makeCastlingKingSideMove(move);
+    }
+
     @SuppressWarnings("Duplicates")
-    private static void makeCastlingKingSideMove(byte[] board, int move) {
+    private void _makeCastlingKingSideMove(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
 
@@ -417,8 +524,12 @@ public final class Board {
         }
     }
 
+    private static void makeCastlingQueenSideMove(Board board, int move) {
+        board._makeCastlingQueenSideMove(move);
+    }
+
     @SuppressWarnings("Duplicates")
-    private static void makeCastlingQueenSideMove(byte[] board, int move) {
+    private void _makeCastlingQueenSideMove(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
 
@@ -434,7 +545,21 @@ public final class Board {
         }
     }
 
-    private static void revertNormalMove(byte[] board, int move) {
+    public void revertMove() {
+        if (stackSize <= 1) {
+            throw new IllegalStateException("No move to revert");
+        }
+
+        int move = getGameStatus().getLastMove();
+        MOVE_REVERT_FUNCTIONS[Move.getMoveType(move)].move(this, move);
+        pop();
+    }
+
+    private static void revertNormalMove(Board board, int move) {
+        board._revertNormalMove(move);
+    }
+
+    private void _revertNormalMove(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
 
@@ -442,7 +567,11 @@ public final class Board {
         board[toField] = Move.getCapturedPiece(move);
     }
 
-    private static void revertEnPassantMove(byte[] board, int move) {
+    private static void revertEnPassantMove(Board board, int move) {
+        board._revertEnPassantMove(move);
+    }
+
+    private void _revertEnPassantMove(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
         final byte capturedPiece = Move.getCapturedPiece(move);
@@ -456,7 +585,11 @@ public final class Board {
         }
     }
 
-    private static void revertPawnPromotionMove(byte[] board, int move) {
+    private static void revertPawnPromotionMove(Board board, int move) {
+        board._revertPawnPromotionMove(move);
+    }
+
+    private void _revertPawnPromotionMove(int move) {
         byte fromField = Move.getFromField(move);
         byte toField = Move.getToField(move);
 
@@ -464,7 +597,11 @@ public final class Board {
         board[toField] = Move.getCapturedPiece(move);
     }
 
-    private static void revertCastlingKingSideMove(byte[] board, int move) {
+    private static void revertCastlingKingSideMove(Board board, int move) {
+        board._revertCastlingKingSideMove(move);
+    }
+
+    private void _revertCastlingKingSideMove(int move) {
         byte fromField = Move.getFromField(move);
         byte toField = Move.getToField(move);
 
@@ -480,7 +617,11 @@ public final class Board {
         }
     }
 
-    private static void revertCastlingQueenSideMove(byte[] board, int move) {
+    private static void revertCastlingQueenSideMove(Board board, int move) {
+        board._revertCastlingQueenSideMove(move);
+    }
+
+    private void _revertCastlingQueenSideMove(int move) {
         byte fromField = Move.getFromField(move);
         byte toField = Move.getToField(move);
 

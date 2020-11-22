@@ -3,6 +3,7 @@ package org.michaelfl.mychess;
 /**
  * @author Michael Fleischhauer
  */
+@SuppressWarnings("unused")
 public final class Statistics {
     private long positionsCount;
     private long prunedMovesCount;

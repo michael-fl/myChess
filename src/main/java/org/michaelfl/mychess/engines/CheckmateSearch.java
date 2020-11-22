@@ -3,12 +3,11 @@ package org.michaelfl.mychess.engines;
 import org.michaelfl.mychess.Board;
 import org.michaelfl.mychess.ChessUtil;
 import org.michaelfl.mychess.Game;
-import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.Moves;
-import org.michaelfl.mychess.WeightingFunction;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 
+@SuppressWarnings("DuplicatedCode")
 public final class CheckmateSearch {
 
     private final static int MAX_CHECKMATE_SEARCH_DEPTH = 10;
@@ -19,14 +18,12 @@ public final class CheckmateSearch {
 
     private final static class CheckmateSearchContext {
         final Board workingBoard;
-        GameStatus gameStatus;
         int depth;
         int bestMove;
         int positionCount;
 
-        CheckmateSearchContext(Board workingBoard, GameStatus gameStatus) {
+        CheckmateSearchContext(Board workingBoard) {
             this.workingBoard = workingBoard;
-            this.gameStatus = gameStatus;
         }
     }
 
@@ -47,13 +44,13 @@ public final class CheckmateSearch {
         final var gameStatus = game.getGameStatus();
         final int[] checkmateMove = new int[1];
 
-        int weight = findCheckmate(gameStatus.getOppositeColor(), gameStatus, workingBoard, checkmateMove);
+        int weight = findCheckmate(gameStatus.getOppositeColor(), workingBoard, checkmateMove);
         if (weight >= CHECKMATE_WEIGHT_LOW) {
             System.out.println("==> opposite checkmate in " + (CHECKMATE_WEIGHT_HIGH - weight) + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + ChessUtil.weightToString(weight));
             return new MoveAndWeight(checkmateMove[0], weight, new int[0]);
         }
 
-        weight = findCheckmate(gameStatus.getTurn(), gameStatus, workingBoard, checkmateMove);
+        weight = findCheckmate(gameStatus.getTurn(), workingBoard, checkmateMove);
         if (weight >= CHECKMATE_WEIGHT_LOW) {
             System.out.println("==> I'm checkmate in " + (CHECKMATE_WEIGHT_HIGH - weight) + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + ChessUtil.weightToString(weight));
             return new MoveAndWeight(checkmateMove[0], weight, new int[0]);
@@ -64,14 +61,13 @@ public final class CheckmateSearch {
 
     public static int findCheckmate(ChessEngine engine, Game game, int forColor, int[] moveOut) {
         var workingBoard = game.getBoard().copy();
-        var gameStatus = game.getGameStatus();
 
-        return new CheckmateSearch(engine, game).findCheckmate(forColor, gameStatus, workingBoard, moveOut);
+        return new CheckmateSearch(engine, game).findCheckmate(forColor, workingBoard, moveOut);
     }
 
-    private int findCheckmate(int forColor, GameStatus gameStatus, Board workingBoard, int[] moveOut) {
-        CheckmateSearchContext context = new CheckmateSearchContext(workingBoard, gameStatus);
-        int move = gameStatus.getTurn() == forColor ?
+    private int findCheckmate(int forColor, Board workingBoard, int[] moveOut) {
+        CheckmateSearchContext context = new CheckmateSearchContext(workingBoard);
+        int move = workingBoard.getGameStatus().getTurn() == forColor ?
                 findCheckmateEscapeMove(context, Integer.MIN_VALUE, Integer.MAX_VALUE) :
                 findCheckmateMove(context, Integer.MIN_VALUE, Integer.MAX_VALUE);
         moveOut[0] = context.bestMove;
@@ -84,7 +80,6 @@ public final class CheckmateSearch {
 
     // min search
     private int findCheckmateEscapeMove(CheckmateSearchContext context, final int alphaWeight, final int betaWeight) {
-        final GameStatus gameStatus = context.gameStatus;
         final Board workingBoard = context.workingBoard;
         final int depth = context.depth;
 
@@ -95,11 +90,11 @@ public final class CheckmateSearch {
         context.positionCount++;
 
         if (depth > MAX_CHECKMATE_SEARCH_DEPTH
-                || !Game.checkIsKingUnderChess(gameStatus, workingBoard, moveGenerator)) {
+                || !Game.checkIsKingUnderChess(workingBoard, moveGenerator)) {
             return NO_CHECKMATE;
         }
 
-        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, depth);
+        final Moves moves = moveGenerator.calculateMoves(workingBoard, depth);
         if (moves.isIllegal())
             return ILLEGAL;
         final int[] plainMoves = moves.getMoves();
@@ -110,13 +105,13 @@ public final class CheckmateSearch {
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
-            context.gameStatus = gameStatus.makeMove(workingBoard, move);
+            workingBoard.makeMove(move);
             context.depth = depth + 1;
             int weight = findCheckmateMove(context, alphaWeight, bestWeight);
             if (weight == Integer.MAX_VALUE || weight == Integer.MIN_VALUE) {
                 throw new IllegalStateException("depth=" + depth + ", weight=" + weight + "\n" + workingBoard.toString());
             }
-            workingBoard.revertMove(move);
+            workingBoard.revertMove();
 
             if (weight != ILLEGAL) {
                 haveValidMove = true;
@@ -146,7 +141,6 @@ public final class CheckmateSearch {
 
     // max search
     private int findCheckmateMove(CheckmateSearchContext context, final int alphaWeight, final int betaWeight) {
-        final GameStatus gameStatus = context.gameStatus;
         final Board workingBoard = context.workingBoard;
         final int depth = context.depth;
 
@@ -159,7 +153,7 @@ public final class CheckmateSearch {
         if (depth > MAX_CHECKMATE_SEARCH_DEPTH)
             return NO_CHECKMATE;
 
-        final Moves moves = moveGenerator.calculateMoves(gameStatus, workingBoard, depth);
+        final Moves moves = moveGenerator.calculateMoves(workingBoard, depth);
         if (moves.isIllegal())
             return ILLEGAL;
         final int[] plainMoves = moves.getMoves();
@@ -170,13 +164,13 @@ public final class CheckmateSearch {
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
-            context.gameStatus = gameStatus.makeMove(workingBoard, move);
+            workingBoard.makeMove(move);
             context.depth = depth + 1;
             int weight = findCheckmateEscapeMove(context, bestWeight, betaWeight);
             if (weight == Integer.MAX_VALUE || weight == Integer.MIN_VALUE) {
                 throw new IllegalStateException("depth=" + depth + ", weight=" + weight + "\n" + workingBoard.toString());
             }
-            workingBoard.revertMove(move);
+            workingBoard.revertMove();
 
             if (weight != ILLEGAL) {
                 haveValidMove = true;

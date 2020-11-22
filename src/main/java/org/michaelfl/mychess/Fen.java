@@ -9,22 +9,21 @@ final class Fen {
         throw new IllegalStateException("Utility class");
     }
 
-    static String exportFEN(Game game) {
-        Board board = game.getBoard();
-
+    static String exportFEN(Board board) {
+        GameStatus gameStatus = board.getGameStatus();
         StringBuilder buf = new StringBuilder();
 
         writePosition(board, buf);
         buf.append(' ');
-        buf.append(game.getTurn() == GameStatus.TURN_WHITE ? 'w' : 'b');
+        buf.append(gameStatus.getTurn() == GameStatus.TURN_WHITE ? 'w' : 'b');
         buf.append(' ');
-        writeCastlingState(game, buf);
+        writeCastlingState(gameStatus, buf);
         buf.append(' ');
-        writeEnPassant(game, buf);
+        writeEnPassant(board, buf);
         buf.append(' ');
-        buf.append(game.getGameStatus().getHalfMoveClock());
+        buf.append(gameStatus.getHalfMoveClock());
         buf.append(' ');
-        buf.append((game.getGameStatus().getPlyCount() / 2) + 1);
+        buf.append((gameStatus.getPlyCount() / 2) + 1);
 
         return buf.toString();
     }
@@ -54,8 +53,13 @@ final class Fen {
         }
     }
 
-    private static void writeCastlingState(Game game, StringBuilder buf) {
-        var gameStatus = game.getGameStatus();
+    public static String castlingState(GameStatus gameStatus) {
+        StringBuilder buf = new StringBuilder();
+        writeCastlingState(gameStatus, buf);
+        return buf.toString();
+    }
+
+    private static void writeCastlingState(GameStatus gameStatus, StringBuilder buf) {
         var orgLen = buf.length();
         if (gameStatus.isWhiteCastlingKingSidePossible()) {
             buf.append('K');
@@ -74,12 +78,13 @@ final class Fen {
         }
     }
 
-    private static void writeEnPassant(Game game, StringBuilder buf) {
-        var move = game.getGameStatus().getLastMove();
+    private static void writeEnPassant(Board board, StringBuilder buf) {
+        var gameStatus = board.getGameStatus();
+        var move = gameStatus.getLastMove();
         if (move != 0) {
             var fromField = Move.getFromField(move);
             var toField = Move.getToField(move);
-            var piece = game.getBoard().get(Move.getToField(move));
+            var piece = board.get(Move.getToField(move));
             if (piece == Board.whitePawn && ChessUtil.getRowOfField(fromField) == 1 && ChessUtil.getRowOfField(toField) == 3) {
                 buf.append(ChessUtil.fieldToString(fromField + Board.LENGTH));
                 return;

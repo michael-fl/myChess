@@ -151,7 +151,7 @@ class PieceSquareTablesTest {
         var table = PieceSquareTables.getPieceSquareTable(piece);
 
         assertNotNull(table, "No table");
-        assertEquals(Board.createEmptyBoard().getRawBoard().length, table.length, "Wrong board length");
+        assertEquals(Board.createEmptyRawBoard().length, table.length, "Wrong board length");
 
         int field = Board.a8;
         for (String weightStr : tableString.split(",")) {

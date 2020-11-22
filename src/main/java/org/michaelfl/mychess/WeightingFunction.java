@@ -137,8 +137,8 @@ public final class WeightingFunction {
             return 0;
     }
 
-    public float calculate(GameStatus game, Board theBoard) {
-        this.game = game;
+    public float calculate(Board theBoard) {
+        this.game = theBoard.getGameStatus();
         this.turn = game.getTurn() == GameStatus.TURN_WHITE ? 0 : 1;
         this.theBoard = theBoard;
         this.board = theBoard.getRawBoard();

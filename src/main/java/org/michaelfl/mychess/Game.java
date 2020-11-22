@@ -5,7 +5,6 @@ import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
 import org.michaelfl.mychess.engines.v1.MyChessEngine1;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -22,12 +21,8 @@ public final class Game {
 
     private final ChessEngine engineWhite;
     private final ChessEngine engineBlack;
-    private Board previousBoard;
     private final Board board = Board.createNewGame();
-    private final List<Move> moves = new ArrayList<>();
-    private final List<GameStatus> statusStack = new ArrayList<>();
     private GameResult result = GameResult.ONGOING;
-    private Float weight;
 
     static GameConfig standardConfig() {
         return new GameConfig(
@@ -42,8 +37,6 @@ public final class Game {
     Game(GameConfig config) {
         engineWhite = config.createEngineWhite(this);
         engineBlack = config.createEngineBlack(this);
-
-        statusStack.add(GameStatus.newGame());
     }
 
     Game(GameConfig config, List<MoveDescription> moves) {
@@ -67,16 +60,8 @@ public final class Game {
         setResult(gameResult);
     }
 
-    public Float getWeight() {
-        return weight;
-    }
-
-    private void setWeight(float weight) {
-        this.weight = weight;
-    }
-
     public GameStatus getGameStatus() {
-        return statusStack.get(statusStack.size() - 1);
+        return getBoard().getGameStatus();
     }
 
     public GameResult getResult() {
@@ -91,25 +76,18 @@ public final class Game {
         return board;
     }
 
-    Board getPreviousBoard() {
-        return previousBoard;
-    }
-
-    List<Move> getMoves() {
-        return moves;
-    }
-
     int getMoveCount() {
-        return moves.size();
+        return (getGameStatus().getPlyCount() + 1) / 2;
     }
 
     String exportMoves() {
         StringBuilder buf = new StringBuilder("[[");
 
-        for (Move move : moves) {
+        List<GameStatus> statusStack = board.getGameStatusStackCopy();
+        for (GameStatus gameStatus : statusStack.subList(1, statusStack.size())) {
             if (buf.length() > 2)
                 buf.append(' ');
-            buf.append(move.toString());
+            buf.append(new Move(gameStatus.getLastMove()).toString());
         }
 
         buf.append("]]");
@@ -117,7 +95,7 @@ public final class Game {
     }
 
     public String exportFEN() {
-        return Fen.exportFEN(this);
+        return board.exportFEN();
     }
 
     public int getTurn() {
@@ -172,7 +150,7 @@ public final class Game {
 
         // Validate the move
         MoveGenerator moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
-        Moves validMoves = moveGenerator.calculateMoves(getGameStatus(), board);
+        Moves validMoves = moveGenerator.calculateMoves(board);
         if (!validMoves.contains(move.getMove())) {
             print();
             System.out.println("Valid moves: " + validMoves);
@@ -185,37 +163,24 @@ public final class Game {
     }
 
     void makeMove(MoveAndWeight move) {
-        final int factor = getGameStatus().isWhiteTurn() ? 1 : -1;
-        setWeight(move.weight * factor); // Remember weight of current position
         makeMove(move.move);
     }
 
     private void makeMove(int move) {
         board.validateMove(move);
-
-        previousBoard = board.copy();
-
-        GameStatus newStatus = getGameStatus().makeMove(board, move);
-        moves.add(new Move(move));
-        statusStack.add(newStatus);
+        board.makeMove(move);
     }
 
     void revertMove() {
-        if (moves.isEmpty())
+        if (getGameStatus().getPlyCount() == 0)
             throw new IllegalStateException("No move to revert");
 
-        Move lastMove = moves.remove(moves.size() - 1);
-        board.revertMove(lastMove.getMove());
-        previousBoard = board.copy();
-        if (!moves.isEmpty())
-            previousBoard.revertMove(moves.get(moves.size() - 1).getMove());
-
-        statusStack.remove(statusStack.size() - 1);
+        board.revertMove();
         result = GameResult.ONGOING;
     }
 
     private GameResult checkGameResult(MoveGenerator moveGenerator) {
-        GameResult gameResult = checkCheckMateOrStaleMate(getGameStatus(), getBoard(), moveGenerator);
+        GameResult gameResult = checkCheckMateOrStaleMate(getBoard(), moveGenerator);
         if (gameResult == GameResult.ONGOING) {
             if (getGameStatus().getHalfMoveClock() >= 100 || getBoard().isDrawByMaterial()) {
                 gameResult = GameResult.DRAW;
@@ -225,26 +190,26 @@ public final class Game {
         return gameResult;
     }
 
-    private static GameResult checkCheckMateOrStaleMate(GameStatus gameStatus, Board board, MoveGenerator moveGenerator) {
+    private static GameResult checkCheckMateOrStaleMate(Board board, MoveGenerator moveGenerator) {
         final byte[] rawBoard = board.getRawBoard();
 
         // Check the next theoretically possible moves
-        Moves nextMoves = moveGenerator.calculateMoves(gameStatus, board);
+        Moves nextMoves = moveGenerator.calculateMoves(board);
         if (nextMoves.isIllegal())
             throw new IllegalArgumentException("Illegal chess position");
 
         // Test each of those moves and try to find a valid one
         boolean haveValidMove = false;
         final int nPossibleMoves = nextMoves.count();
-        final Board workingBoard = Board.createEmptyBoard();
+        final Board workingBoard = board.copy();
         final byte[] rawWorkingBoard = workingBoard.getRawBoard();
 
         for (int i = 0; i < nPossibleMoves; i++) {
             System.arraycopy(rawBoard, 0, rawWorkingBoard, 0, rawBoard.length);
             final int nextMove = nextMoves.getMove(i);
-            GameStatus nextGameStatus = gameStatus.makeMove(workingBoard, nextMove);
+            workingBoard.makeMove(nextMove);
 
-            Moves nextNextMoves = moveGenerator.calculateMoves(nextGameStatus, workingBoard);
+            Moves nextNextMoves = moveGenerator.calculateMoves(workingBoard);
             if (!nextNextMoves.isIllegal()) {
                 haveValidMove = true;
                 break;
@@ -255,18 +220,18 @@ public final class Game {
             return GameResult.ONGOING;
 
         // No valid move possible ==> Check if it is checkmate or stalemate
-        return checkIsKingUnderChess(gameStatus, board, moveGenerator) ? GameResult.CHECKMATE : GameResult.STALEMATE;
+        return checkIsKingUnderChess(board, moveGenerator) ? GameResult.CHECKMATE : GameResult.STALEMATE;
     }
 
-    public static boolean checkIsKingUnderChess(GameStatus gameStatus, Board board, MoveGenerator moveGenerator) {
+    public static boolean checkIsKingUnderChess(Board board, MoveGenerator moveGenerator) {
         // TODO MF: Optimize method checkIsKingUnderChess
         // Switch turn
-        gameStatus = gameStatus.switchTurn();
+        GameStatus gameStatus = board.getGameStatus().switchTurn();
 
         // Check the next theoretically possible moves. If those contain an illegal move (king can be captured),
         // the king was under chess.
         // TODO MF: Calculate moves without sorting
-        Moves nextMoves = moveGenerator.calculateMoves(gameStatus, board);
+        Moves nextMoves = moveGenerator.calculateMoves(gameStatus, board, 0, 0);
         return nextMoves.isIllegal();
     }
 
@@ -288,16 +253,11 @@ public final class Game {
         } catch (Throwable e) {
             e.printStackTrace();
 
-            Board prevBoard = getPreviousBoard();
-            if (prevBoard != null)
-                prevBoard.print();
             getBoard().print();
-
             System.out.println("Turn: " + (getTurn() == GameStatus.TURN_WHITE ? "white" : "black"));
             System.out.println("Moves: " + exportMoves());
-            System.out.println("Status: " + getGameStatus());
             MoveGenerator moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
-            Moves possibleMoves = moveGenerator.calculateMoves(getGameStatus(), getBoard());
+            Moves possibleMoves = moveGenerator.calculateMoves(getBoard());
             System.out.println("Possible moves: " + possibleMoves);
             System.out.flush();
             System.err.println("ERROR: " + e);
@@ -316,7 +276,7 @@ public final class Game {
             }
             makeMove(move);
             getBoard().print();
-            System.out.println("Move #" + (getGameStatus().getPlyCount() / 2 + 1) + ": " + ChessUtil.moveToString(move.move));
+            System.out.println("Move #" + ((getGameStatus().getPlyCount() + 1) / 2) + ": " + ChessUtil.moveToString(move.move));
             System.out.println("FEN: " + exportFEN());
 
             if (move.path.length <= 1 || move.path[1] == 0) {

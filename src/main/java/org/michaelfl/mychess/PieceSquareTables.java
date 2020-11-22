@@ -108,7 +108,7 @@ public final class PieceSquareTables {
     }
 
     private static byte[] createBoard(final String tableString) {
-        final byte[] table = createEmptyBoard().getRawBoard();
+        final byte[] table = Board.createEmptyRawBoard();
 
         int col = 0, row = 7;
         for (String s : tableString.split(",")) {
@@ -126,7 +126,7 @@ public final class PieceSquareTables {
     }
 
     private static byte[] invert(byte[] table) {
-        byte[] resultTable = Board.createEmptyBoard().getRawBoard();
+        byte[] resultTable = Board.createEmptyRawBoard();
 
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
