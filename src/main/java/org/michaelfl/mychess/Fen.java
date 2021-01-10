@@ -79,21 +79,12 @@ final class Fen {
     }
 
     private static void writeEnPassant(Board board, StringBuilder buf) {
-        var gameStatus = board.getGameStatus();
-        var move = gameStatus.getLastMove();
-        if (move != 0) {
-            var fromField = Move.getFromField(move);
-            var toField = Move.getToField(move);
-            var piece = board.get(Move.getToField(move));
-            if (piece == Board.whitePawn && ChessUtil.getRowOfField(fromField) == 1 && ChessUtil.getRowOfField(toField) == 3) {
-                buf.append(ChessUtil.fieldToString(fromField + Board.LENGTH));
-                return;
-            } else if (piece == Board.blackPawn && ChessUtil.getRowOfField(fromField) == 6 && ChessUtil.getRowOfField(toField) == 4) {
-                buf.append(ChessUtil.fieldToString(fromField - Board.LENGTH));
-                return;
-            }
-        }
+        var enPassantField = board.getGameStatus().getEnPassantField();
 
-        buf.append('-');
+        if (enPassantField == 0) {
+            buf.append('-');
+        } else {
+            buf.append(ChessUtil.fieldToString(enPassantField));
+        }
     }
 }

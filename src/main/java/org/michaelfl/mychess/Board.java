@@ -5,13 +5,19 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.michaelfl.mychess.ChessUtil.*;
+import static org.michaelfl.mychess.RandomNumbers.RANDOM_NUMBERS;
 
-@SuppressWarnings({"WeakerAccess", "unused", "PointlessArithmeticExpression"})
+@SuppressWarnings({"WeakerAccess", "unused", "PointlessArithmeticExpression", "DuplicatedCode"})
 public final class Board {
 
     @FunctionalInterface
     private interface IMove {
-        void move(Board board, int move);
+        long move(Board board, int move);
+    }
+
+    @FunctionalInterface
+    private interface IRevertMove {
+        void revert(Board board, int move);
     }
 
     public final static byte illegal = 64;
@@ -96,6 +102,10 @@ public final class Board {
     public final static int g8 = 9 * LENGTH + 2 + 6;
     public final static int h8 = 9 * LENGTH + 2 + 7;
 
+    private final static int TURN_INDEX = 12 * 64; // length = 1
+    private final static int CASTLING_RIGHTS_INDEX = 12 * 64 + 1; // length = 16
+    private final static int EN_PASSANT_INDEX = 12 * 64 + 17; // length = 8
+
     private final static char[] printSymbols = new char[22];
     static {
         Arrays.fill(printSymbols, '.');
@@ -142,7 +152,7 @@ public final class Board {
         MOVE_FUNCTIONS[Move.typeEnPassant]           = Board::makeEnPassantMove;
     }
 
-    private final static IMove[] MOVE_REVERT_FUNCTIONS = new IMove[Move.typeEnPassant + 1];
+    private final static IRevertMove[] MOVE_REVERT_FUNCTIONS = new IRevertMove[Move.typeEnPassant + 1];
     static {
         MOVE_REVERT_FUNCTIONS[Move.typeNormal]              = Board::revertNormalMove;
         MOVE_REVERT_FUNCTIONS[Move.typeCastlingKingSide]    = Board::revertCastlingKingSideMove;
@@ -273,19 +283,42 @@ public final class Board {
         final byte movedPiece = get(Move.getFromField(move));
         final byte capturedPiece = Move.getCapturedPiece(move);
 
+        final byte fromField = Move.getFromField(move);
+        final byte toField = Move.getToField(move);
+        final int movingPieceNo = ChessUtil.getPieceNumber12(board[fromField]);
+        final int toFieldNo = ChessUtil.getFieldNumber64(toField);
+
         // Make the move on the board
-        MOVE_FUNCTIONS[Move.getMoveType(move)].move(this, move);
+        long newPositionHash = MOVE_FUNCTIONS[Move.getMoveType(move)].move(this, move);
 
         // Reset halfMoveClock if a pawn was moved or a piece was captured
         int newHalfMoveClock = capturedPiece != 0 || Board.isPawn(movedPiece) ? 0 : gameStatus.getHalfMoveClock() + 1;
 
         // Calculate new castling state
         int newCastlingState = calculateNewCastlingState(gameStatus, move);
+        newPositionHash ^= RANDOM_NUMBERS[CASTLING_RIGHTS_INDEX + (gameStatus.getCastlingState() % 16)];
+        newPositionHash ^= RANDOM_NUMBERS[CASTLING_RIGHTS_INDEX + (newCastlingState % 16)];
 
-        long newPositionHash = 0; // TODO: calculate position hash (in MOVE_FUNCTIONS)
+        // Switch turn
+        newPositionHash ^= RANDOM_NUMBERS[TURN_INDEX];
+
+        // En passant right
+        byte enPassantField = getEnPassantField(movedPiece, fromField, toField);
 
         // New game status
-        push(new GameStatus(gameStatus.getPlyCount() + 1, gameStatus.getOppositeColor(), move, newHalfMoveClock, newCastlingState, newPositionHash));
+        push(new GameStatus(gameStatus.getPlyCount() + 1, gameStatus.getOppositeColor(), move, newHalfMoveClock, newCastlingState, enPassantField, newPositionHash));
+    }
+
+    static byte getEnPassantField(byte movedPiece, byte fromField, byte toField) {
+        // Check theoretical en passant right. The en-passant field is the "skipped" filed of a pawn double move.
+        if (movedPiece == Board.whitePawn && toField == fromField + 2 * Board.LENGTH) {
+            return (byte) (fromField + Board.LENGTH);
+        }
+        if (movedPiece == Board.blackPawn && toField == fromField - 2 * Board.LENGTH) {
+            return (byte) (fromField - Board.LENGTH);
+        }
+
+        return 0;
     }
 
     private int calculateNewCastlingState(GameStatus gameStatus, int move) {
@@ -426,91 +459,176 @@ public final class Board {
                 && (piecesCount[blackKnight] == 0 || piecesCount[blackBishop] == 0);
     }
 
-    private static void makeNormalMove(Board board, int move) {
-        board._makeNormalMove(move);
+    private static long makeNormalMove(Board board, int move) {
+        return board._makeNormalMove(move);
     }
 
-    private void _makeNormalMove(int move) {
+    private long _makeNormalMove(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
+
+        // Update position hash
+        final int movingPieceNo = ChessUtil.getPieceNumber12(board[fromField]);
+        final int toFieldNo = ChessUtil.getFieldNumber64(toField);
+        long newPositionHash = getGameStatus().getPositionHash();
+
+        // Remove moving piece from source field
+        newPositionHash ^= RANDOM_NUMBERS[movingPieceNo * 64 + ChessUtil.getFieldNumber64(fromField)];
+        // Remove captured piece from target field
+        if (board[toField] != Board.empty) {
+            final int capturedPieceNo = ChessUtil.getPieceNumber12(board[toField]);
+            newPositionHash ^= RANDOM_NUMBERS[capturedPieceNo * 64 + toFieldNo];
+        }
+        // Add moving piece to target field
+        newPositionHash ^= RANDOM_NUMBERS[movingPieceNo * 64 + toFieldNo];
+
+        // Update en passant field
+        int enPassantField = getGameStatus().getEnPassantField();
+        if (enPassantField != 0) {
+            newPositionHash ^= RANDOM_NUMBERS[EN_PASSANT_INDEX + enPassantField % Board.LENGTH - 2];
+        }
+        enPassantField = Board.getEnPassantField(board[fromField], fromField, toField);
+        if (enPassantField != 0) {
+            newPositionHash ^= RANDOM_NUMBERS[EN_PASSANT_INDEX + enPassantField % Board.LENGTH - 2];
+        }
 
         board[toField] = board[fromField];
         board[fromField] = empty;
+
+        return newPositionHash;
     }
 
-    private static void makeEnPassantMove(Board board, int move) {
-        board._makeEnPassantMove(move);
+    private static long makeEnPassantMove(Board board, int move) {
+        return board._makeEnPassantMove(move);
     }
 
-    private void _makeEnPassantMove(int move) {
+    private long _makeEnPassantMove(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
+
+        // Update position hash
+        final int movingPieceNo = ChessUtil.getPieceNumber12(board[fromField]);
+        final int toFieldNo = ChessUtil.getFieldNumber64(toField);
+        long newPositionHash = getGameStatus().getPositionHash();
+
+        // Remove pawn from source field
+        newPositionHash ^= RANDOM_NUMBERS[movingPieceNo * 64 + ChessUtil.getFieldNumber64(fromField)];
+        // Add pawn to target field
+        newPositionHash ^= RANDOM_NUMBERS[movingPieceNo * 64 + toFieldNo];
 
         board[toField] = board[fromField];
         board[fromField] = empty;
         if (toField > fromField) { // white move
             board[toField - Board.LENGTH] = empty;
+            // Remove captured pawn
+            newPositionHash ^= RANDOM_NUMBERS[ChessUtil.getPieceNumber12(blackPawn)  * 64 + ChessUtil.getFieldNumber64(toField - Board.LENGTH)];
         } else { // black move
             board[toField + Board.LENGTH] = empty;
+            // Remove captured pawn
+            newPositionHash ^= RANDOM_NUMBERS[ChessUtil.getPieceNumber12(whitePawn) * 64 + ChessUtil.getFieldNumber64(toField + Board.LENGTH)];
         }
+
+        return newPositionHash;
     }
 
-    private static void makePawnPromotionMoveQueen(Board board, int move) {
-        board._makePawnPromotionMoveQueen(move);
+    private static long makePawnPromotionMoveQueen(Board board, int move) {
+        return board._makePawnPromotionMoveQueen(move);
     }
 
-    private void _makePawnPromotionMoveQueen(int move) {
+    private long _makePawnPromotionMoveQueen(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
+        final byte targetPiece = toField >= a8 ? Board.whiteQueen : Board.blackQueen;
+
+        // Update position hash
+        long newPositionHash = calcPromotionPositionHash(fromField, toField, targetPiece);
 
         board[fromField] = empty;
-        board[toField] = toField >= a8 ? Board.whiteQueen : Board.blackQueen;
+        board[toField] = targetPiece;
+
+        return newPositionHash;
     }
 
-    private static void makePawnPromotionMoveKnight(Board board, int move) {
-        board._makePawnPromotionMoveKnight(move);
+    private long calcPromotionPositionHash(byte fromField, byte toField, byte targetPiece) {
+        final int toFieldNo = ChessUtil.getFieldNumber64(toField);
+        long newPositionHash = getGameStatus().getPositionHash();
+
+        // Remove pawn from source field
+        final int movingPieceNo = ChessUtil.getPieceNumber12(board[fromField]);
+        newPositionHash ^= RANDOM_NUMBERS[movingPieceNo * 64 + ChessUtil.getFieldNumber64(fromField)];
+        // Remove captured piece from target field
+        if (board[toField] != Board.empty) {
+            newPositionHash ^= RANDOM_NUMBERS[ChessUtil.getPieceNumber12(board[toField]) * 64 + toFieldNo];
+        }
+        // Add queen to target field
+        newPositionHash ^= RANDOM_NUMBERS[ChessUtil.getPieceNumber12(targetPiece) * 64 + toFieldNo];
+
+        return newPositionHash;
     }
 
-    private void _makePawnPromotionMoveKnight(int move) {
+    private static long makePawnPromotionMoveKnight(Board board, int move) {
+        return board._makePawnPromotionMoveKnight(move);
+    }
+
+    private long _makePawnPromotionMoveKnight(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
+        final byte targetPiece = toField >= a8 ? Board.whiteKnight : Board.blackKnight;
+
+        // Update position hash
+        long newPositionHash = calcPromotionPositionHash(fromField, toField, targetPiece);
 
         board[fromField] = empty;
-        board[toField] = toField >= a8 ? Board.whiteKnight : Board.blackKnight;
+        board[toField] = targetPiece;
+
+        return newPositionHash;
     }
 
-    private static void makePawnPromotionMoveRook(Board board, int move) {
-        board._makePawnPromotionMoveRook(move);
+    private static long makePawnPromotionMoveRook(Board board, int move) {
+        return board._makePawnPromotionMoveRook(move);
     }
 
-    private void _makePawnPromotionMoveRook(int move) {
+    private long _makePawnPromotionMoveRook(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
+        final byte targetPiece = toField >= a8 ? Board.whiteRook : Board.blackRook;
+
+        // Update position hash
+        long newPositionHash = calcPromotionPositionHash(fromField, toField, targetPiece);
 
         board[fromField] = empty;
-        board[toField] = toField >= a8 ? Board.whiteRook : Board.blackRook;
+        board[toField] = targetPiece;
+
+        return newPositionHash;
     }
 
-    private static void makePawnPromotionMoveBishop(Board board, int move) {
-        board._makePawnPromotionMoveBishop(move);
+    private static long makePawnPromotionMoveBishop(Board board, int move) {
+        return board._makePawnPromotionMoveBishop(move);
     }
 
-    private void _makePawnPromotionMoveBishop(int move) {
+    private long _makePawnPromotionMoveBishop(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
+        final byte targetPiece = toField >= a8 ? Board.whiteBishop : Board.blackBishop;
+
+        // Update position hash
+        long newPositionHash = calcPromotionPositionHash(fromField, toField, targetPiece);
 
         board[fromField] = empty;
-        board[toField] = toField >= a8 ? Board.whiteBishop : Board.blackBishop;
+        board[toField] = targetPiece;
+
+        return newPositionHash;
     }
 
-    private static void makeCastlingKingSideMove(Board board, int move) {
-        board._makeCastlingKingSideMove(move);
+    private static long makeCastlingKingSideMove(Board board, int move) {
+        return board._makeCastlingKingSideMove(move);
     }
 
     @SuppressWarnings("Duplicates")
-    private void _makeCastlingKingSideMove(int move) {
+    private long _makeCastlingKingSideMove(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
+        long newPositionHash = getGameStatus().getPositionHash();
 
         board[toField] =  board[fromField];
         board[fromField] = empty;
@@ -518,20 +636,35 @@ public final class Board {
         if (fromField == e1) {
             board[h1] = empty;
             board[f1] = whiteRook;
+
+            // Update hash
+            newPositionHash ^= RANDOM_NUMBERS[5 * 64 + ChessUtil.getFieldNumber64(e1)]; // white king
+            newPositionHash ^= RANDOM_NUMBERS[5 * 64 + ChessUtil.getFieldNumber64(g1)];
+            newPositionHash ^= RANDOM_NUMBERS[3 * 64 + ChessUtil.getFieldNumber64(h1)]; // white rook
+            newPositionHash ^= RANDOM_NUMBERS[3 * 64 + ChessUtil.getFieldNumber64(f1)];
         } else {
             board[h8] = empty;
             board[f8] = blackRook;
+
+            // Update hash
+            newPositionHash ^= RANDOM_NUMBERS[11 * 64 + ChessUtil.getFieldNumber64(e8)]; // black king
+            newPositionHash ^= RANDOM_NUMBERS[11 * 64 + ChessUtil.getFieldNumber64(g8)];
+            newPositionHash ^= RANDOM_NUMBERS[9 * 64 + ChessUtil.getFieldNumber64(h8)]; // black rook
+            newPositionHash ^= RANDOM_NUMBERS[9 * 64 + ChessUtil.getFieldNumber64(f8)];
         }
+
+        return newPositionHash;
     }
 
-    private static void makeCastlingQueenSideMove(Board board, int move) {
-        board._makeCastlingQueenSideMove(move);
+    private static long makeCastlingQueenSideMove(Board board, int move) {
+        return board._makeCastlingQueenSideMove(move);
     }
 
     @SuppressWarnings("Duplicates")
-    private void _makeCastlingQueenSideMove(int move) {
+    private long _makeCastlingQueenSideMove(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
+        long newPositionHash = getGameStatus().getPositionHash();
 
         board[toField] =  board[fromField];
         board[fromField] = empty;
@@ -539,10 +672,24 @@ public final class Board {
         if (fromField == e1) {
             board[a1] = empty;
             board[d1] = whiteRook;
+
+            // Update hash
+            newPositionHash ^= RANDOM_NUMBERS[5 * 64 + ChessUtil.getFieldNumber64(e1)]; // white king
+            newPositionHash ^= RANDOM_NUMBERS[5 * 64 + ChessUtil.getFieldNumber64(c1)];
+            newPositionHash ^= RANDOM_NUMBERS[3 * 64 + ChessUtil.getFieldNumber64(a1)]; // white rook
+            newPositionHash ^= RANDOM_NUMBERS[3 * 64 + ChessUtil.getFieldNumber64(d1)];
         } else {
             board[a8] = empty;
             board[d8] = blackRook;
+
+            // Update hash
+            newPositionHash ^= RANDOM_NUMBERS[11 * 64 + ChessUtil.getFieldNumber64(e8)]; // black king
+            newPositionHash ^= RANDOM_NUMBERS[11 * 64 + ChessUtil.getFieldNumber64(c8)];
+            newPositionHash ^= RANDOM_NUMBERS[9 * 64 + ChessUtil.getFieldNumber64(a8)]; // black rook
+            newPositionHash ^= RANDOM_NUMBERS[9 * 64 + ChessUtil.getFieldNumber64(d8)];
         }
+
+        return newPositionHash;
     }
 
     public void revertMove() {
@@ -551,7 +698,7 @@ public final class Board {
         }
 
         int move = getGameStatus().getLastMove();
-        MOVE_REVERT_FUNCTIONS[Move.getMoveType(move)].move(this, move);
+        MOVE_REVERT_FUNCTIONS[Move.getMoveType(move)].revert(this, move);
         pop();
     }
 
@@ -635,6 +782,33 @@ public final class Board {
             board[Board.d8] = Board.empty;
             board[Board.a8] = Board.blackRook;
         }
+    }
+
+    long calculatePositionHash() {
+        var hash = 0L;
+
+        for (int field = a1; field <= h8; field++) {
+            final byte piece = board[field];
+            if (piece != Board.empty && piece != Board.illegal) {
+                hash ^= RANDOM_NUMBERS[ChessUtil.getPieceNumber12(piece) * 64 + ChessUtil.getFieldNumber64(field)];
+            }
+        }
+
+        // Castling rights
+        hash ^= RANDOM_NUMBERS[CASTLING_RIGHTS_INDEX + (getGameStatus().getCastlingState() % 16)];
+
+        // Turn
+        if (getGameStatus().isBlackTurn()) {
+            hash ^= RANDOM_NUMBERS[TURN_INDEX];
+        }
+
+        // En passant file
+        int enPassantField = getGameStatus().getEnPassantField();
+        if (enPassantField != 0) {
+            hash ^= RANDOM_NUMBERS[EN_PASSANT_INDEX + enPassantField % Board.LENGTH - 2];
+        }
+
+        return hash;
     }
 
     public static void main(String[] args) {

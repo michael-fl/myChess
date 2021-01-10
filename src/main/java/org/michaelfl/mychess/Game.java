@@ -191,8 +191,6 @@ public final class Game {
     }
 
     private static GameResult checkCheckMateOrStaleMate(Board board, MoveGenerator moveGenerator) {
-        final byte[] rawBoard = board.getRawBoard();
-
         // Check the next theoretically possible moves
         Moves nextMoves = moveGenerator.calculateMoves(board);
         if (nextMoves.isIllegal())
@@ -202,18 +200,16 @@ public final class Game {
         boolean haveValidMove = false;
         final int nPossibleMoves = nextMoves.count();
         final Board workingBoard = board.copy();
-        final byte[] rawWorkingBoard = workingBoard.getRawBoard();
 
         for (int i = 0; i < nPossibleMoves; i++) {
-            System.arraycopy(rawBoard, 0, rawWorkingBoard, 0, rawBoard.length);
             final int nextMove = nextMoves.getMove(i);
             workingBoard.makeMove(nextMove);
-
             Moves nextNextMoves = moveGenerator.calculateMoves(workingBoard);
             if (!nextNextMoves.isIllegal()) {
                 haveValidMove = true;
                 break;
             }
+            workingBoard.revertMove();
         }
 
         if (haveValidMove)
@@ -293,6 +289,10 @@ public final class Game {
 
     void print() {
         getBoard().print();
+        var gameStatus = getGameStatus();
+        System.out.println("Moves: " + getMoveCount()
+                + ", halfMoveClock: " + gameStatus.getHalfMoveClock()
+                + ", castling: " + Fen.castlingState(gameStatus));
         if (getResult() == GameResult.CHECKMATE || getResult() == GameResult.STALEMATE)
             System.out.println("Result: " + (getTurn() == GameStatus.TURN_WHITE ? "white" : "black") + " " + getResult());
         else if (getResult() == GameResult.DRAW)
