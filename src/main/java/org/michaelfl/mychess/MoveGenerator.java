@@ -123,12 +123,11 @@ public final class MoveGenerator {
         }
 
         // en passant
-        if (fieldToRow(field) == 4) {
-            int lastMove = game.getLastMove();
-            if (board[field - 1] == Board.blackPawn && Move.getToField(lastMove) == field - 1 && Move.getFromField(lastMove) == field - 1 + 2 * Board.LENGTH)
-                addWhiteEnPassantMove(field, field - 1 + Board.LENGTH);
-            else if (board[field + 1] == Board.blackPawn && Move.getToField(lastMove) == field + 1 && Move.getFromField(lastMove) == field + 1 + 2 * Board.LENGTH)
-                addWhiteEnPassantMove(field, field + 1 + Board.LENGTH);
+        final byte enPassantField = game.getEnPassantField();
+        if (enPassantField != 0) {
+            if (enPassantField == field + Board.LENGTH - 1 || enPassantField == field + Board.LENGTH + 1) {
+                addWhiteEnPassantMove(field, enPassantField);
+            }
         }
     }
 
@@ -198,12 +197,11 @@ public final class MoveGenerator {
         }
 
         // en passant
-        if (fieldToRow(field) == 3) {
-            int lastMove = game.getLastMove();
-            if (board[field - 1] == Board.whitePawn && Move.getToField(lastMove) == field - 1 && Move.getFromField(lastMove) == field - 1 - 2 * Board.LENGTH)
-                addBlackEnPassantMove(field, field - 1 - Board.LENGTH);
-            else if (board[field + 1] == Board.whitePawn && Move.getToField(lastMove) == field + 1 && Move.getFromField(lastMove) == field + 1 - 2 * Board.LENGTH)
-                addBlackEnPassantMove(field, field + 1 - Board.LENGTH);
+        final byte enPassantField = game.getEnPassantField();
+        if (enPassantField != 0) {
+            if (enPassantField == field - Board.LENGTH - 1 || enPassantField == field - Board.LENGTH + 1) {
+                addBlackEnPassantMove(field, enPassantField);
+            }
         }
     }
 
