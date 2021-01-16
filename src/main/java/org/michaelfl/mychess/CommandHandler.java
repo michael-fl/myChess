@@ -108,7 +108,7 @@ final class CommandHandler {
 
         private void makeComputerMove() throws InterruptedException, ExecutionException, TimeoutException {
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(1, TimeUnit.HOURS);
-            if (move == MoveAndWeight.NO_MOVE) {
+            if (move.move == 0) {
                 System.err.println("No move possible!?");
                 return;
             }
@@ -235,7 +235,7 @@ final class CommandHandler {
                 return;
             }
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(1, TimeUnit.HOURS);
-            if (move == MoveAndWeight.NO_MOVE)
+            if (move.move == 0)
                 System.out.println("Illegal position. No move possible.");
             else
                 System.out.println(ChessUtil.moveToString(move.move));
@@ -275,7 +275,7 @@ final class CommandHandler {
 
             ChessEngine engine = game.getEngine();
             MoveAndWeight move = engine.nextMoveAsync().getResult(1, TimeUnit.HOURS);
-            if (move == MoveAndWeight.NO_MOVE)
+            if (move.move == 0)
                 System.out.println("Illegal position. No move possible.");
             else
                 System.out.println(((game.getGameStatus().getPlyCount() + 1) / 2) + ". " + ChessUtil.moveToString(move.move));
@@ -341,7 +341,7 @@ final class CommandHandler {
             long t1 = System.currentTimeMillis();
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(1, TimeUnit.HOURS);
             long t2 = System.currentTimeMillis();
-            if (move == MoveAndWeight.NO_MOVE) {
+            if (move.move == 0) {
                 System.err.println("No move possible!?");
                 return;
             }

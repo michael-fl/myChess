@@ -3,6 +3,7 @@ package org.michaelfl.mychess.engines;
 import org.michaelfl.mychess.Board;
 import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
+import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.Moves;
 
 import java.util.Random;
@@ -17,7 +18,7 @@ public final class RandomMoveEngine extends ChessEngine {
     }
 
     @Override
-    protected MoveAndWeight calculateNextMove(NextMoveTask task) {
+    public MoveAndWeight calculateNextMove(NextMoveTask task) {
         Moves moves = moveGenerator.calculateMoves(game.getBoard());
 
         if (moves.isIllegal() || moves.count() == 0)
@@ -35,7 +36,7 @@ public final class RandomMoveEngine extends ChessEngine {
             Moves nextMoves = moveGenerator.calculateMoves(workingBoard);
 
             if (!nextMoves.isIllegal())
-                return new MoveAndWeight(move, 0, new int[] { move });
+                return new MoveAndWeight(move, 0, GameResult.ONGOING, new int[] { move });
 
             workingBoard.revertMove();
             moveIndex = (moveIndex + 1) % countMoves; // try next move

@@ -3,6 +3,7 @@ package org.michaelfl.mychess.engines;
 import org.michaelfl.mychess.Board;
 import org.michaelfl.mychess.ChessUtil;
 import org.michaelfl.mychess.Game;
+import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
@@ -49,13 +50,13 @@ public final class CheckmateSearch {
         int weight = findCheckmate(gameStatus.getOppositeColor(), workingBoard, checkmateMove);
         if (weight >= CHECKMATE_WEIGHT_LOW) {
             log("==> opposite checkmate in " + (CHECKMATE_WEIGHT_HIGH - weight) + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + ChessUtil.weightToString(weight));
-            return new MoveAndWeight(checkmateMove[0], weight, new int[0]);
+            return new MoveAndWeight(checkmateMove[0], weight, GameResult.CHECKMATE, new int[0]);
         }
 
         weight = findCheckmate(gameStatus.getTurn(), workingBoard, checkmateMove);
         if (weight >= CHECKMATE_WEIGHT_LOW) {
             log("==> I'm checkmate in " + (CHECKMATE_WEIGHT_HIGH - weight) + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + ChessUtil.weightToString(weight));
-            return new MoveAndWeight(checkmateMove[0], weight, new int[0]);
+            return new MoveAndWeight(checkmateMove[0], weight, GameResult.CHECKMATE, new int[0]);
         }
 
         return MoveAndWeight.NO_MOVE;

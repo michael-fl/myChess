@@ -22,7 +22,7 @@ public final class MyChessEngine1 extends ChessEngine {
     }
 
     @Override
-    protected MoveAndWeight calculateNextMove(NextMoveTask task) {
+    public MoveAndWeight calculateNextMove(NextMoveTask task) {
         MoveAndWeight move = MoveAndWeight.NO_MOVE;
 
         // First check if this game is already finished

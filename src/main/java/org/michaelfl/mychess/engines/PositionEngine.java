@@ -4,6 +4,7 @@ import org.michaelfl.mychess.Board;
 import org.michaelfl.mychess.ChessUtil;
 import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
+import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.WeightingFunction;
@@ -19,7 +20,7 @@ public final class PositionEngine extends ChessEngine {
 
     @SuppressWarnings("Duplicates")
     @Override
-    protected MoveAndWeight calculateNextMove(NextMoveTask task) {
+    public MoveAndWeight calculateNextMove(NextMoveTask task) {
         Moves moves = moveGenerator.calculateMoves(game.getBoard());
 
         if (moves.isIllegal() || moves.count() == 0)
@@ -54,6 +55,6 @@ public final class PositionEngine extends ChessEngine {
             return MoveAndWeight.NO_MOVE;
         }
 
-        return new MoveAndWeight(plainMoves[bestMove], bestWeight, new int[] { plainMoves[bestMove] });
+        return new MoveAndWeight(plainMoves[bestMove], bestWeight, GameResult.ONGOING, new int[] { plainMoves[bestMove] });
     }
 }
