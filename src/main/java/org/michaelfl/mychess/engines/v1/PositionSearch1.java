@@ -4,6 +4,7 @@ import org.michaelfl.mychess.Board;
 import org.michaelfl.mychess.ChessUtil;
 import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
+import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.Move;
 import org.michaelfl.mychess.MoveGenerator;
@@ -115,7 +116,7 @@ final class PositionSearch1 {
     }
 
     private static void sortByWeightDescending(MoveAndWeight[] bestMoves) {
-        Arrays.sort(bestMoves, Comparator.comparingDouble(m -> m != MoveAndWeight.NO_MOVE ? -m.weight : Double.MAX_VALUE));
+        Arrays.sort(bestMoves, Comparator.comparingDouble(m -> m.move != 0 ? -m.weight : Double.MAX_VALUE));
     }
 
     private MoveAndWeight deepenPath(int startDepth, Board workingBoard, MoveAndWeight moveAndWeight) {
@@ -123,7 +124,7 @@ final class PositionSearch1 {
 
         float weight = continueSearch(path, startDepth, workingBoard);
 
-        return new MoveAndWeight(moveAndWeight.move, weight, path);
+        return new MoveAndWeight(moveAndWeight.move, weight, moveAndWeight.result, path);
     }
 
     @SuppressWarnings("Duplicates")
@@ -169,7 +170,7 @@ final class PositionSearch1 {
         }
 
         if (bestMove != 0)
-            return new MoveAndWeight(bestMove, bestWeight, bestPath);
+            return new MoveAndWeight(bestMove, bestWeight, GameResult.ONGOING, bestPath);
 
         return MoveAndWeight.NO_MOVE;
     }

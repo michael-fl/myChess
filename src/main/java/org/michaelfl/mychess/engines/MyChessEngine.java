@@ -20,15 +20,18 @@ public final class MyChessEngine extends ChessEngine {
     }
 
     @Override
-    protected MoveAndWeight calculateNextMove(NextMoveTask task) {
+    public MoveAndWeight calculateNextMove(NextMoveTask task) {
         MoveAndWeight move = MoveAndWeight.NO_MOVE;
 
         // First check if this game is already finished
-        game.calculateAndSetGameResult();
         if (game.getResult() != GameResult.ONGOING) {
             if (game.getResult() == GameResult.CHECKMATE) {
-                move = new MoveAndWeight(0, -WeightingFunction.CHECKMATE_WEIGHT_HIGH, new int[0]);
-            } // else DRAW (MoveAndWeight.NO_MOVE)
+                move = new MoveAndWeight(0, -WeightingFunction.CHECKMATE_WEIGHT_HIGH, GameResult.CHECKMATE, new int[0]);
+            } else {
+                move = new MoveAndWeight(0, 0f, game.getResult(), new int[0]);
+            }
+        } else if (game.getGameStatus().getHalfMoveClock() >= 100) {
+            move = new MoveAndWeight(0, 0f, GameResult.DRAW, new int[0]);
         } else {
             // Phase 1: Checkmate search
             if (getConfig().isCheckmateCheck()) {
@@ -39,7 +42,7 @@ public final class MyChessEngine extends ChessEngine {
             }
 
             // Phase 2: Position search
-            if (move == MoveAndWeight.NO_MOVE) {
+            if (move.move == 0) {
                 long t1 = System.currentTimeMillis();
                 move = PositionSearch.calculateNextMove(this, task, game);
                 long t2 = System.currentTimeMillis();

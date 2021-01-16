@@ -3,6 +3,7 @@ package org.michaelfl.mychess;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
+import org.michaelfl.mychess.engines.NextMoveTask;
 import org.michaelfl.mychess.engines.v1.MyChessEngine1;
 
 import java.util.List;
@@ -25,6 +26,8 @@ public final class Game {
 
     private final ChessEngine engineWhite;
     private final ChessEngine engineBlack;
+    private final ChessEngine statusEngine;
+
     private final Board board = Board.createNewGame();
     private GameResult result = GameResult.ONGOING;
 
@@ -41,6 +44,12 @@ public final class Game {
     Game(GameConfig config) {
         engineWhite = config.createEngineWhite(this);
         engineBlack = config.createEngineBlack(this);
+        statusEngine = new MyChessEngine(
+                new EngineConfig.Builder()
+                        .maxDepth(2)
+                        .checkmateCheck(false)
+                        .silent(true)
+                        .build(), this);
     }
 
     Game(GameConfig config, List<MoveDescription> moves) {
@@ -59,9 +68,13 @@ public final class Game {
     }
 
     public void calculateAndSetGameResult() {
-        MoveGenerator moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
-        GameResult gameResult = checkGameResult(moveGenerator);
-        setResult(gameResult);
+        MoveAndWeight move = statusEngine.calculateNextMove(new NextMoveTask());
+        if (move.path.length > 0 && move.path[0] != 0) {
+            // at least one move still possible ==> ongoing
+            setResult(GameResult.ONGOING);
+        } else {
+            setResult(move.result);
+        }
     }
 
     public GameStatus getGameStatus() {
@@ -183,17 +196,6 @@ public final class Game {
         result = GameResult.ONGOING;
     }
 
-    private GameResult checkGameResult(MoveGenerator moveGenerator) {
-        GameResult gameResult = checkCheckMateOrStaleMate(getBoard(), moveGenerator);
-        if (gameResult == GameResult.ONGOING) {
-            if (getGameStatus().getHalfMoveClock() >= 100 || getBoard().isDrawByMaterial()) {
-                gameResult = GameResult.DRAW;
-            }
-        }
-
-        return gameResult;
-    }
-
     private static GameResult checkCheckMateOrStaleMate(Board board, MoveGenerator moveGenerator) {
         // Check the next theoretically possible moves
         Moves nextMoves = moveGenerator.calculateMoves(board);
@@ -270,7 +272,7 @@ public final class Game {
 
         for (int i = 0; i < 1000 && getResult() == GameResult.ONGOING; i++) {
             MoveAndWeight move = getEngine().nextMoveAsync().getResult(1, TimeUnit.HOURS);
-            if (move == MoveAndWeight.NO_MOVE) {
+            if (move.move == 0) {
                 // No valid move possible ==> checkmate or stalemate
                 break;
             }
