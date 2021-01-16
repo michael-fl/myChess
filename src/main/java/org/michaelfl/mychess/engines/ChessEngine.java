@@ -33,6 +33,12 @@ public abstract class ChessEngine {
             if (weight == WeightingFunction.ILLEGAL_WEIGHT) {
                 return this;
             }
+            if (weight == 0f) {
+                return this;
+            }
+            if (weight == -0f) {
+                return new MoveAndWeight(move, 0f, path);
+            }
             return new MoveAndWeight(move, weight * factor, path);
         }
     }
@@ -74,4 +80,9 @@ public abstract class ChessEngine {
 
     protected abstract MoveAndWeight calculateNextMove(NextMoveTask task);
 
+    protected void log(String s) {
+        if (!config.isSilent()) {
+            System.out.println(s);
+        }
+    }
 }

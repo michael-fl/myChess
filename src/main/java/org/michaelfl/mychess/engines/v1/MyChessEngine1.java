@@ -36,7 +36,7 @@ public final class MyChessEngine1 extends ChessEngine {
             long t1 = System.currentTimeMillis();
             move = CheckmateSearch.findCheckmateMove(this, game);
             long t2 = System.currentTimeMillis();
-            System.out.println("Checkmate check took " + (t2 - t1) + "ms");
+            log("Checkmate check took " + (t2 - t1) + "ms");
         }
 
         // Phase 2: Position search
@@ -44,7 +44,7 @@ public final class MyChessEngine1 extends ChessEngine {
             long t1 = System.currentTimeMillis();
             move = PositionSearch1.calculateNextMove(this, task, game);
             long t2 = System.currentTimeMillis();
-            System.out.println("Position search took " + (t2 - t1) + "ms");
+            log("Position search took " + (t2 - t1) + "ms");
         }
 
         float weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;

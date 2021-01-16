@@ -11,12 +11,14 @@ public final class EngineConfig {
     private final int iterationDepth;
     private final int nVariants;
     private final boolean checkmateCheck;
+    private final boolean silent;
 
-    private EngineConfig(int maxDepth, int iterationDepth, int nVariants, boolean checkmateCheck) {
+    private EngineConfig(int maxDepth, int iterationDepth, int nVariants, boolean checkmateCheck, boolean silent) {
         this.maxDepth = maxDepth;
         this.iterationDepth = iterationDepth;
         this.nVariants = nVariants;
         this.checkmateCheck = checkmateCheck;
+        this.silent = silent;
     }
 
     public final int getMaxDepth() {
@@ -39,11 +41,16 @@ public final class EngineConfig {
         return checkmateCheck;
     }
 
+    public final boolean isSilent() {
+        return silent;
+    }
+
     public final static class Builder {
         private int maxDepth = 8;
         private int iterationDepth = 0;
         private int nVariants = 1;
         private boolean checkmateCheck = false;
+        private boolean silent = false;
 
         public Builder maxDepth(int maxDepth) {
             this.maxDepth = maxDepth;
@@ -65,8 +72,13 @@ public final class EngineConfig {
             return this;
         }
 
+        public Builder silent(boolean silent) {
+            this.silent = silent;
+            return this;
+        }
+
         public EngineConfig build() {
-            return new EngineConfig(maxDepth, iterationDepth, nVariants, checkmateCheck);
+            return new EngineConfig(maxDepth, iterationDepth, nVariants, checkmateCheck, silent);
         }
     }
 }

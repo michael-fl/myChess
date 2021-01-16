@@ -37,6 +37,7 @@ final class PositionSearch {
         this.engineConfig = engine.getConfig();
         this.quiescenceSearch = new QuiescenceSearch(game, moveGenerator, weightingFunction, statistics, engineConfig.getMaxQuiescenceDepth());
         this.weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
+        this.silent = engineConfig.isSilent();
     }
 
     public static MoveAndWeight calculateNextMove(ChessEngine engine, NextMoveTask task, Game game) {
@@ -57,15 +58,15 @@ final class PositionSearch {
             silent = true;
             bestMove = calculateNextMove(6, null);
             MoveAndWeight m2 = bestMove.weightFactor(weightFactor);
-            System.out.println("depth: 6, move: " + ChessUtil.moveToString(m2.move) + ", weight: " + ChessUtil.weightToString(m2.weight) + " [" + ChessUtil.pathToString(m2.path) + "]");
+            log("depth: 6, move: " + ChessUtil.moveToString(m2.move) + ", weight: " + ChessUtil.weightToString(m2.weight) + " [" + ChessUtil.pathToString(m2.path) + "]");
         }
 
-        silent = false;
+        silent = engineConfig.isSilent();
         bestMove = calculateNextMove(engineConfig.getMaxDepth(), bestMove);
         MoveAndWeight m2 = bestMove.weightFactor(weightFactor);
-        System.out.println("depth: " + engineConfig.getMaxDepth() + ", move: " + ChessUtil.moveToString(m2.move) + ", weight: " + ChessUtil.weightToString(m2.weight) + " [" + ChessUtil.pathToString(m2.path) + "]");
+        log("depth: " + engineConfig.getMaxDepth() + ", move: " + ChessUtil.moveToString(m2.move) + ", weight: " + ChessUtil.weightToString(m2.weight) + " [" + ChessUtil.pathToString(m2.path) + "]");
 
-        System.out.println("#positions: " + statistics.getPositionsCount() + ", #pruned: " + statistics.getPrunedMovesCount());
+        log("#positions: " + statistics.getPositionsCount() + ", #pruned: " + statistics.getPrunedMovesCount());
 
         return bestMove;
     }
@@ -91,7 +92,7 @@ final class PositionSearch {
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
-            //System.out.println("Working on move " + ChessUtil.moveToString(move));
+            //log("Working on move " + ChessUtil.moveToString(move));
 
             final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, 1);
             final float newMaterialDelta = WeightingFunction.getMaterialWeightOfMove(move, 1);
@@ -102,9 +103,9 @@ final class PositionSearch {
             float weight = minSearch(1, maxDepth, bestKnownPath, bestWeight, betaWeight, newMaterialWeight, newMaterialDelta, workingBoard, workingPath);
             bestKnownPath = null;
             workingBoard.revertMove();
-            //System.out.println("--> weight " + ChessUtil.weightToString(weight));
+            //log("--> weight " + ChessUtil.weightToString(weight));
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
-                //System.out.println("  " + ChessUtil.moveToString(move) + " ==> " + ChessUtil.weightToString(factor * weight) + " (" + move + ") [" + ChessUtil.pathToString(workingPath) + "]");
+                //log("  " + ChessUtil.moveToString(move) + " ==> " + ChessUtil.weightToString(factor * weight) + " (" + move + ") [" + ChessUtil.pathToString(workingPath) + "]");
                 if (weight > bestWeight) {
                     bestWeight = weight;
                     bestMove = move;
@@ -114,10 +115,8 @@ final class PositionSearch {
 
             // Find and store current killer moves
             killerMoves.sample();
-            if (!silent) {
-                System.out.println((i + 1) + "/" + countMoves + ": " + ChessUtil.moveToString(bestMove) + ", weight=" + ChessUtil.weightToString(bestWeight, weightFactor));
-                //System.out.println("quiescence: total=" + statistics.getQuiescencePositionsCount() + ", avg=" + statistics.getQuiescencePositionsCountAvg() + ", max=" + statistics.getQuiescencePositionsCountMax() + ", max depth: " + statistics.getMaximumReachedDepth());
-            }
+            log((i + 1) + "/" + countMoves + ": " + ChessUtil.moveToString(bestMove) + ", weight=" + ChessUtil.weightToString(bestWeight, weightFactor));
+            //log("quiescence: total=" + statistics.getQuiescencePositionsCount() + ", avg=" + statistics.getQuiescencePositionsCountAvg() + ", max=" + statistics.getQuiescencePositionsCountMax() + ", max depth: " + statistics.getMaximumReachedDepth());
         }
 
         if (bestMove != 0)
@@ -306,5 +305,11 @@ final class PositionSearch {
         }
         float weight = weightingFunction.calculate(workingBoard);
         return weight != WeightingFunction.ILLEGAL_WEIGHT ? weight * weightFactor : WeightingFunction.ILLEGAL_WEIGHT;
+    }
+
+    private void log(String s) {
+        if (!silent) {
+            System.out.println(s);
+        }
     }
 }

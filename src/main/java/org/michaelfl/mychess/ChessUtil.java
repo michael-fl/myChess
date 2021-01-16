@@ -135,6 +135,7 @@ public final class ChessUtil {
         return bitSet | bit;
     }
 
+    @SuppressWarnings("unused")
     public static int clearBit(int bitSet, int bit) {
         return bitSet & ~bit;
     }

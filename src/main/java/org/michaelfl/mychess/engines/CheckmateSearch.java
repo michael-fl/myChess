@@ -29,10 +29,12 @@ public final class CheckmateSearch {
 
     private final Game game;
     private final MoveGenerator moveGenerator;
+    private final boolean silent;
 
     private CheckmateSearch(ChessEngine engine, Game game) {
         this.game = game;
         this.moveGenerator = new MoveGenerator(new MoveSorterImpl());
+        this.silent = engine.getConfig().isSilent();
     }
 
     public static MoveAndWeight findCheckmateMove(ChessEngine engine, Game game) {
@@ -46,13 +48,13 @@ public final class CheckmateSearch {
 
         int weight = findCheckmate(gameStatus.getOppositeColor(), workingBoard, checkmateMove);
         if (weight >= CHECKMATE_WEIGHT_LOW) {
-            System.out.println("==> opposite checkmate in " + (CHECKMATE_WEIGHT_HIGH - weight) + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + ChessUtil.weightToString(weight));
+            log("==> opposite checkmate in " + (CHECKMATE_WEIGHT_HIGH - weight) + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + ChessUtil.weightToString(weight));
             return new MoveAndWeight(checkmateMove[0], weight, new int[0]);
         }
 
         weight = findCheckmate(gameStatus.getTurn(), workingBoard, checkmateMove);
         if (weight >= CHECKMATE_WEIGHT_LOW) {
-            System.out.println("==> I'm checkmate in " + (CHECKMATE_WEIGHT_HIGH - weight) + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + ChessUtil.weightToString(weight));
+            log("==> I'm checkmate in " + (CHECKMATE_WEIGHT_HIGH - weight) + ": " + ChessUtil.moveToString(checkmateMove[0]) + ", weight: " + ChessUtil.weightToString(weight));
             return new MoveAndWeight(checkmateMove[0], weight, new int[0]);
         }
 
@@ -73,7 +75,7 @@ public final class CheckmateSearch {
         moveOut[0] = context.bestMove;
 
         if (move != 0)
-            System.out.println("#positions for checkmate check: " + context.positionCount);
+            log("#positions for checkmate check: " + context.positionCount);
 
         return move;
     }
@@ -195,5 +197,11 @@ public final class CheckmateSearch {
         }
 
         return NO_CHECKMATE;
+    }
+
+    private void log(String s) {
+        if (!silent) {
+            System.out.println(s);
+        }
     }
 }

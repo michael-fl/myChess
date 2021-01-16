@@ -5,6 +5,7 @@ import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.Moves;
+import org.michaelfl.mychess.WeightingFunction;
 
 @SuppressWarnings("Duplicates")
 public final class MyChessEngine extends ChessEngine {
@@ -25,23 +26,25 @@ public final class MyChessEngine extends ChessEngine {
         // First check if this game is already finished
         game.calculateAndSetGameResult();
         if (game.getResult() != GameResult.ONGOING) {
-            return move;
-        }
+            if (game.getResult() == GameResult.CHECKMATE) {
+                move = new MoveAndWeight(0, -WeightingFunction.CHECKMATE_WEIGHT_HIGH, new int[0]);
+            } // else DRAW (MoveAndWeight.NO_MOVE)
+        } else {
+            // Phase 1: Checkmate search
+            if (getConfig().isCheckmateCheck()) {
+                long t1 = System.currentTimeMillis();
+                move = CheckmateSearch.findCheckmateMove(this, game); // TODO: return path from checkmate search
+                long t2 = System.currentTimeMillis();
+                log("Checkmate check took " + (t2 - t1) + "ms");
+            }
 
-        // Phase 1: Checkmate search
-        if (getConfig().isCheckmateCheck()) {
-            long t1 = System.currentTimeMillis();
-            move = CheckmateSearch.findCheckmateMove(this, game); // TODO: return path from checkmate search
-            long t2 = System.currentTimeMillis();
-            System.out.println("Checkmate check took " + (t2 - t1) + "ms");
-        }
-
-        // Phase 2: Position search
-        if (move == MoveAndWeight.NO_MOVE) {
-            long t1 = System.currentTimeMillis();
-            move = PositionSearch.calculateNextMove(this, task, game);
-            long t2 = System.currentTimeMillis();
-            System.out.println("Position search took " + (t2 - t1) + "ms");
+            // Phase 2: Position search
+            if (move == MoveAndWeight.NO_MOVE) {
+                long t1 = System.currentTimeMillis();
+                move = PositionSearch.calculateNextMove(this, task, game);
+                long t2 = System.currentTimeMillis();
+                log("Position search took " + (t2 - t1) + "ms");
+            }
         }
 
         float weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;

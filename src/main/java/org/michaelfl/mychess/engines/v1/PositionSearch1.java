@@ -71,25 +71,25 @@ final class PositionSearch1 {
         Arrays.fill(bestMoves, MoveAndWeight.NO_MOVE);
 
         for (int i = 0; i < nVariants; i++) {
-            System.out.println("VARIANT " + (i+1) + "...");
+            log("VARIANT " + (i+1) + "...");
             MoveAndWeight nextBestMove = findNextBestMove(workingBoard, moves, skipMoves);
             var m = bestMoves[i] = nextBestMove;
             if (nextBestMove == MoveAndWeight.NO_MOVE)
                 break;
-            System.out.println("move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight * weightFactor) + " [" + ChessUtil.pathToString(m.path) + "]");
+            log("move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight * weightFactor) + " [" + ChessUtil.pathToString(m.path) + "]");
             skipMoves.add(nextBestMove.move);
         }
 
-        System.out.println("#positions: " + positionsCount + ", #pruned: " + prunedPositionsCount);
+        log("#positions: " + positionsCount + ", #pruned: " + prunedPositionsCount);
 
         for (int depth = 1; depth + iterationDepth < maxDepth; depth++) {
-            System.out.println("DEPTH: " + (depth + iterationDepth) + "/" + maxDepth);
+            log("DEPTH: " + (depth + iterationDepth) + "/" + maxDepth);
             for (int i = 0; i < nVariants; i++) {
                 if (bestMoves[i] != MoveAndWeight.NO_MOVE) {
                     if (bestMoves[i].path[depth] != 0) {
-                        System.out.println("DEEPEN VARIANT " + (i + 1) + "...");
+                        log("DEEPEN VARIANT " + (i + 1) + "...");
                         var m = bestMoves[i] = deepenPath(depth, workingBoard, bestMoves[i]);
-                        System.out.println("move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight * weightFactor) + " [" + ChessUtil.pathToString(m.path) + "]");
+                        log("move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight * weightFactor) + " [" + ChessUtil.pathToString(m.path) + "]");
                     } else {
                         bestMoves[i].path[depth + 1] = 0;
                     }
@@ -98,13 +98,13 @@ final class PositionSearch1 {
         }
 
         if (bestMoves[0] != MoveAndWeight.NO_MOVE) {
-            System.out.println("\nBEST MOVES:");
+            log("\nBEST MOVES:");
             sortByWeightDescending(bestMoves);
 
             for (int i = 0; i < nVariants; i++) {
                 if (bestMoves[i] != MoveAndWeight.NO_MOVE) {
                     MoveAndWeight m = bestMoves[i].weightFactor(weightFactor);
-                    System.out.println((i + 1) + ". move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight) + " [" + ChessUtil.pathToString(m.path) + "]");
+                    log((i + 1) + ". move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight) + " [" + ChessUtil.pathToString(m.path) + "]");
                 }
             }
 
@@ -143,7 +143,7 @@ final class PositionSearch1 {
             final int move = plainMoves[i];
             if (skipMoves.contains(move))
                 continue;
-            //System.out.println("Working on move " + ChessUtil.moveToString(move));
+            //log("Working on move " + ChessUtil.moveToString(move));
 
             final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, 1);
             final float newMaterialDelta = WeightingFunction.getMaterialWeightOfMove(move, 1);
@@ -154,9 +154,9 @@ final class PositionSearch1 {
             workingBoard.makeMove(move);
             float weight = minSearch(1, iterationDepth, bestWeight, betaWeight, newMaterialWeight, newMaterialDelta, workingBoard, workingPath, false);
             workingBoard.revertMove();
-            //System.out.println("--> weight " + ChessUtil.weightToString(weight));
+            //log("--> weight " + ChessUtil.weightToString(weight));
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
-                //System.out.println("  " + ChessUtil.moveToString(move) + " ==> " + ChessUtil.weightToString(factor * weight) + " (" + move + ") [" + ChessUtil.pathToString(workingPath) + "]");
+                //log("  " + ChessUtil.moveToString(move) + " ==> " + ChessUtil.weightToString(factor * weight) + " (" + move + ") [" + ChessUtil.pathToString(workingPath) + "]");
                 if (weight > bestWeight) {
                     bestWeight = weight;
                     bestMove = move;
@@ -471,5 +471,9 @@ final class PositionSearch1 {
         }
         float weight = weightingFunction.calculate(workingBoard);
         return weight != WeightingFunction.ILLEGAL_WEIGHT ? weight * weightFactor : WeightingFunction.ILLEGAL_WEIGHT;
+    }
+
+    private void log(String s) {
+        System.out.println(s);
     }
 }

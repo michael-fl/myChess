@@ -39,7 +39,7 @@ public final class PositionEngine extends ChessEngine {
 
             float weight = weightingFunction.calculate(workingBoard);
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
-                System.out.println(ChessUtil.moveToString(move) + " ==> weight " + weight);
+                log(ChessUtil.moveToString(move) + " ==> weight " + weight);
                 if ((isWhiteTurn && weight > bestWeight) || (!isWhiteTurn && weight < bestWeight)) {
                     bestWeight = weight;
                     bestMove = i;
