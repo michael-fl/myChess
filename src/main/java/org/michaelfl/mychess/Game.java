@@ -16,7 +16,11 @@ public final class Game {
         CHECKMATE,
         STALEMATE,
         DRAW,
-        ONGOING
+        ONGOING;
+
+        public boolean isDraw() {
+            return this == DRAW || this == STALEMATE;
+        }
     }
 
     private final ChessEngine engineWhite;

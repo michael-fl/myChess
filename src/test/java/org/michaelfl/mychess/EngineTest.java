@@ -444,7 +444,7 @@ class EngineTest {
         }
     }
 
-    private static float checkmateIn(int depth) {
+    static float checkmateIn(int depth) {
         return WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth;
     }
 
