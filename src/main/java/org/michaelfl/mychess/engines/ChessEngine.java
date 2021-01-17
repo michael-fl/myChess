@@ -90,4 +90,8 @@ public abstract class ChessEngine {
             System.out.println(s);
         }
     }
+
+    protected boolean isThreefoldRepetition() {
+        return game.getBoard().isThreefoldRepetition();
+    }
 }
