@@ -816,4 +816,26 @@ public final class Board {
         board.print();
     }
 
+    public boolean isThreefoldRepetition() {
+        final GameStatus gameStatus = getGameStatus();
+        final int halfMoveClock = gameStatus.getHalfMoveClock();
+        if (halfMoveClock < 4 || stackSize < 4) {
+            return false;
+        }
+        final long hash = gameStatus.getPositionHash();
+        final int lowerLimit = Math.max(stackSize - 1 - halfMoveClock, 0);
+        int count = 0;
+
+        for (int i = stackSize - 3; i >= lowerLimit; i -= 2) {
+            if (hash == statusStack[i].getPositionHash()) {
+                count++;
+            }
+            if (count == 2) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
