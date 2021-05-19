@@ -116,7 +116,7 @@ final class CommandHandler {
             game.makeMove(move);
             game.calculateAndSetGameResult();
             game.print();
-            System.out.println("Move #" + game.getMoveCount() + ": " + ChessUtil.moveToString(move.move));
+            System.out.println("Move #" + game.getMoveCount() + ": " + ChessUtil.moveToString(move.move) + ", weight " + ChessUtil.weightToString(move.weight));
         }
     }
 
@@ -350,7 +350,7 @@ final class CommandHandler {
             game.makeMove(move);
             game.calculateAndSetGameResult();
             game.print();
-            System.out.println("Move #" + game.getMoveCount() + ": " + ChessUtil.moveToString(move.move) + ", " + (t2 - t1) + "ms");
+            System.out.println("Move #" + game.getMoveCount() + ": " + ChessUtil.moveToString(move.move) + ", weight " + ChessUtil.weightToString(move.weight) + ", " + (t2 - t1) + "ms");
         }
     }
 

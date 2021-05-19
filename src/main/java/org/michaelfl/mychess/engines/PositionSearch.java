@@ -80,10 +80,7 @@ final class PositionSearch {
 
         final Moves moves = moveGenerator.calculateMoves(workingBoard, 0, getMoveAtDepth(bestKnownPath, 0));
         if (moves.isIllegal()) {
-            return new MoveAndWeight(0, WeightingFunction.CHECKMATE_WEIGHT_HIGH, GameResult.CHECKMATE, new int[0]);
-        }
-        if (moves.count() == 0) {
-            return new MoveAndWeight(0, 0f, GameResult.STALEMATE, new int[0]);
+            throw new IllegalStateException("Illegal chess position");
         }
 
         final float materialWeight = weightFactor * WeightingFunction.calculateMaterialWeight(workingBoard);
