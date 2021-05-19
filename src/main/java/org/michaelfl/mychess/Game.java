@@ -33,8 +33,9 @@ public final class Game {
 
     static GameConfig standardConfig() {
         return new GameConfig(
-                MyChessEngine.class, new EngineConfig.Builder().maxDepth(8).build(),
-                MyChessEngine1.class, new EngineConfig.Builder().maxDepth(14).iterationDepth(6).variants(4).build());
+                MyChessEngine.class, new EngineConfig.Builder().maxDepth(8).build()
+                //MyChessEngine1.class, new EngineConfig.Builder().maxDepth(14).iterationDepth(6).variants(4).build()
+        );
     }
 
     Game() {
@@ -169,14 +170,17 @@ public final class Game {
         MoveGenerator moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
         Moves validMoves = moveGenerator.calculateMoves(board);
         if (!validMoves.contains(move.getMove())) {
-            print();
-            System.out.println("Valid moves: " + validMoves);
-            throw new IllegalStateException("Illegal move: " + move);
+            throw new IllegalStateException("Illegal move");
         }
 
         makeMove(move.getMove());
 
-        calculateAndSetGameResult();
+        try {
+            calculateAndSetGameResult();
+        } catch (IllegalStateException e) { // move was illegal
+            revertMove();
+            throw e;
+        }
     }
 
     void makeMove(MoveAndWeight move) {
