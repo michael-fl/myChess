@@ -23,6 +23,7 @@ class GameStatusTest {
                 new EngineConfig.Builder()
                         .maxDepth(2)
                         .checkmateCheck(false)
+                        .useHandicap(false)
                         .silent(true)
                         .build());
     }

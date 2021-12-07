@@ -11,13 +11,15 @@ public final class EngineConfig {
     private final int iterationDepth;
     private final int nVariants;
     private final boolean checkmateCheck;
+    private final boolean useHandicap;
     private final boolean silent;
 
-    private EngineConfig(int maxDepth, int iterationDepth, int nVariants, boolean checkmateCheck, boolean silent) {
+    private EngineConfig(int maxDepth, int iterationDepth, int nVariants, boolean checkmateCheck, boolean useHandicap, boolean silent) {
         this.maxDepth = maxDepth;
         this.iterationDepth = iterationDepth;
         this.nVariants = nVariants;
         this.checkmateCheck = checkmateCheck;
+        this.useHandicap = useHandicap;
         this.silent = silent;
     }
 
@@ -41,6 +43,10 @@ public final class EngineConfig {
         return checkmateCheck;
     }
 
+    public final boolean isUseHandicap() {
+        return useHandicap;
+    }
+
     public final boolean isSilent() {
         return silent;
     }
@@ -50,6 +56,7 @@ public final class EngineConfig {
         private int iterationDepth = 0;
         private int nVariants = 1;
         private boolean checkmateCheck = false;
+        private boolean useHandicap = true;
         private boolean silent = false;
 
         public Builder maxDepth(int maxDepth) {
@@ -72,13 +79,18 @@ public final class EngineConfig {
             return this;
         }
 
+        public Builder useHandicap(boolean useHandicap) {
+            this.useHandicap = useHandicap;
+            return this;
+        }
+
         public Builder silent(boolean silent) {
             this.silent = silent;
             return this;
         }
 
         public EngineConfig build() {
-            return new EngineConfig(maxDepth, iterationDepth, nVariants, checkmateCheck, silent);
+            return new EngineConfig(maxDepth, iterationDepth, nVariants, checkmateCheck, useHandicap, silent);
         }
     }
 }

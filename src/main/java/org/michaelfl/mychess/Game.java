@@ -49,6 +49,7 @@ public final class Game {
                 new EngineConfig.Builder()
                         .maxDepth(2)
                         .checkmateCheck(false)
+                        .useHandicap(false)
                         .silent(true)
                         .build(), this);
     }
@@ -184,7 +185,8 @@ public final class Game {
     }
 
     void makeMove(MoveAndWeight move) {
-        makeMove(move.move);
+        board.validateMove(move.move);
+        board.makeMove(move);
     }
 
     private void makeMove(int move) {
@@ -309,5 +311,6 @@ public final class Game {
             System.out.println("Result: DRAW");
         else
             System.out.println("Turn: " + (getTurn() == GameStatus.TURN_WHITE ? "white" : "black"));
+        System.out.println("Handicap: white=" + gameStatus.getHandicapWhite() + ", black=" + gameStatus.getHandicapBlack());
     }
 }
