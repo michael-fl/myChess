@@ -15,10 +15,15 @@ import org.michaelfl.mychess.Statistics;
 import org.michaelfl.mychess.WeightingFunction;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CancellationException;
 
 @SuppressWarnings("DuplicatedCode")
 final class PositionSearch {
+
+    private final float MAX_PER_MOVE_HANDICAP = 0.3f;
 
     private final NextMoveTask task;
     private final Game game;
@@ -30,6 +35,7 @@ final class PositionSearch {
     private final int weightFactor;
     private final Statistics statistics = new Statistics();
     private boolean silent;
+    private final Random rand = new Random();
 
     private PositionSearch(ChessEngine engine, NextMoveTask task, Game game) {
         this.task = task;
@@ -74,9 +80,9 @@ final class PositionSearch {
 
     @SuppressWarnings("Duplicates")
     private MoveAndWeight calculateNextMove(int maxDepth, MoveAndWeight bestKnownPath) {
+        final int maxPathLength = 50;
         final Board workingBoard = game.getBoard().copy();
-        final int[] bestPath = new int[50];
-        final int[] workingPath = new int[bestPath.length];
+        final int[] workingPath = new int[maxPathLength];
 
         final Moves moves = moveGenerator.calculateMoves(workingBoard, 0, getMoveAtDepth(bestKnownPath, 0));
         if (moves.isIllegal()) {
@@ -86,13 +92,15 @@ final class PositionSearch {
         final float materialWeight = weightFactor * WeightingFunction.calculateMaterialWeight(workingBoard);
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
-        final float betaWeight = Float.POSITIVE_INFINITY;
-        float bestWeight = Float.NEGATIVE_INFINITY;
-        GameResult bestResult = GameResult.ONGOING;
-        int bestMove = 0;
         final GameResult[] result = new GameResult[1];
-
+        final float[] weights = new float[countMoves];
+        final GameResult[] gameResults = new GameResult[countMoves];
+        final int[][] allPaths = new int[countMoves][maxPathLength];
+        float alphaWeight = Float.NEGATIVE_INFINITY;
         statistics.incrPositionCount();
+        final GameStatus gameStatus = game.getGameStatus();
+        final float handicap = gameStatus.getHandicap();
+        final boolean useAlphaPruning = !(engineConfig.isUseHandicap() && handicap > 0f);
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
@@ -104,32 +112,56 @@ final class PositionSearch {
 
             workingPath[0] = move;
             workingBoard.makeMove(move);
-            float weight = minSearch(1, maxDepth, bestKnownPath, bestWeight, betaWeight, newMaterialWeight, newMaterialDelta, workingBoard, result, workingPath);
+            float weight = minSearch(1, maxDepth, bestKnownPath, alphaWeight, Float.POSITIVE_INFINITY, newMaterialWeight, newMaterialDelta, workingBoard, result, workingPath);
             bestKnownPath = null;
             workingBoard.revertMove();
+            weights[i] = weight;
+            gameResults[i] = result[0];
+            System.arraycopy(workingPath, 0, allPaths[i], 0, maxPathLength);
+
             //log("--> weight " + ChessUtil.weightToString(weight));
-            if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
-                //log("  " + ChessUtil.moveToString(move) + " ==> " + ChessUtil.weightToString(factor * weight) + " (" + move + ") [" + ChessUtil.pathToString(workingPath) + "]");
-                if (weight > bestWeight) {
-                    bestWeight = weight;
-                    bestMove = move;
-                    bestResult = result[0];
-                    System.arraycopy(workingPath, 0, bestPath, 0, bestPath.length);
-                }
+            if (useAlphaPruning && weight > alphaWeight) {
+                alphaWeight = weight;
             }
 
             // Find and store current killer moves
             killerMoves.sample();
-            log((i + 1) + "/" + countMoves + ": " + ChessUtil.moveToString(bestMove) + ", weight=" + ChessUtil.weightToString(bestWeight, weightFactor));
+            log((i + 1) + "/" + countMoves + ": " + ChessUtil.moveToString(move) + ", weight=" + ChessUtil.weightToString(weight, weightFactor));
             //log("quiescence: total=" + statistics.getQuiescencePositionsCount() + ", avg=" + statistics.getQuiescencePositionsCountAvg() + ", max=" + statistics.getQuiescencePositionsCountMax() + ", max depth: " + statistics.getMaximumReachedDepth());
         }
 
-        if (bestMove != 0) {
-            return new MoveAndWeight(bestMove, bestWeight, bestResult, bestPath);
+        float bestWeight = Float.NEGATIVE_INFINITY;
+        int bestMoveIndex = -1;
+
+        for (int i = 0; i < countMoves; i++) {
+            if (weights[i] > bestWeight) {
+                bestWeight = weights[i];
+                bestMoveIndex = i;
+            }
+        }
+
+        if (bestMoveIndex >= 0) {
+            if (useAlphaPruning) {
+                // Return the best move
+                return new MoveAndWeight(plainMoves[bestMoveIndex], weights[bestMoveIndex], gameResults[bestMoveIndex], 0, allPaths[bestMoveIndex]);
+            }
+
+            List<MoveAndWeight> moveCandidates = new ArrayList<>(countMoves);
+            final float variance = Math.min(handicap, MAX_PER_MOVE_HANDICAP);
+            final float lowerWeightLimit = bestWeight - variance;
+            for (int i = 0; i < countMoves; i++) {
+                if (weights[i] >= lowerWeightLimit) {
+                    moveCandidates.add(new MoveAndWeight(plainMoves[i], weights[i], gameResults[i], bestWeight - weights[i], allPaths[i]));
+                }
+            }
+
+            // Choose one of the move candidates randomly
+            return moveCandidates.get(rand.nextInt(moveCandidates.size()));
+
         } else if (Game.checkIsKingUnderChess(workingBoard, moveGenerator)) {
-            return new MoveAndWeight(0, -WeightingFunction.CHECKMATE_WEIGHT_HIGH, GameResult.CHECKMATE, new int[0]);
+            return new MoveAndWeight(0, -WeightingFunction.CHECKMATE_WEIGHT_HIGH, GameResult.CHECKMATE, 0, new int[0]);
         } else {
-            return new MoveAndWeight(0, 0f, GameResult.STALEMATE, new int[0]);
+            return new MoveAndWeight(0, 0f, GameResult.STALEMATE, 0, new int[0]);
         }
     }
 

@@ -18,19 +18,25 @@ public abstract class ChessEngine {
 
     public final static class MoveAndWeight {
 
-        public final static MoveAndWeight NO_MOVE = new MoveAndWeight(0, 0, GameResult.ONGOING, new int[0]);
+        public final static MoveAndWeight NO_MOVE = new MoveAndWeight(0, 0, GameResult.ONGOING, 0, new int[0]);
 
         public final int move;
         public final float weight;
         public final GameResult result;
+        public final float bestMoveDelta;
 
         @SuppressWarnings("WeakerAccess")
         public final int[] path;
 
         public MoveAndWeight(int move, float weight, GameResult result, int[] path) {
+            this(move, weight, result, 0, path);
+        }
+
+        public MoveAndWeight(int move, float weight, GameResult result, float bestMoveDelta, int[] path) {
             this.move = move;
             this.weight = weight;
             this.result = result;
+            this.bestMoveDelta = bestMoveDelta;
             this.path = path;
         }
 
@@ -42,9 +48,9 @@ public abstract class ChessEngine {
                 return this;
             }
             if (weight == -0f) {
-                return new MoveAndWeight(move, 0f, result, path);
+                return new MoveAndWeight(move, 0f, result, bestMoveDelta, path);
             }
-            return new MoveAndWeight(move, weight * factor, result, path);
+            return new MoveAndWeight(move, weight * factor, result, bestMoveDelta, path);
         }
     }
 

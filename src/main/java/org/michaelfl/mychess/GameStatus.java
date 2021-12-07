@@ -2,6 +2,8 @@ package org.michaelfl.mychess;
 
 public final class GameStatus {
 
+    private final static float HANDICAP = 0.6f;
+
     public final static int BIT_WHITE_CASTLING_KING_SIDE_POSSIBLE = 1;
     public final static int BIT_WHITE_CASTLING_QUEEN_SIDE_POSSIBLE = 2;
     public final static int BIT_BLACK_CASTLING_KING_SIDE_POSSIBLE = 4;
@@ -23,12 +25,14 @@ public final class GameStatus {
     private final int castlingState;
     private final long positionHash;
     private final byte enPassantField;
+    private final float handicapWhite;
+    private final float handicapBlack;
 
     private GameStatus() {
-        this(0, TURN_WHITE, 0, 0, INITIAL_CASTLING_STATE, (byte) 0, INITIAL_POSITION_HASH);
+        this(0, TURN_WHITE, 0, 0, INITIAL_CASTLING_STATE, (byte) 0, INITIAL_POSITION_HASH, HANDICAP, HANDICAP);
     }
 
-    GameStatus(int plyCount, int turn, int lastMove, int halfMoveClock, int castlingState, byte enPassantField, long positionHash) {
+    GameStatus(int plyCount, int turn, int lastMove, int halfMoveClock, int castlingState, byte enPassantField, long positionHash, float handicapWhite, float handicapBlack) {
         this.plyCount = plyCount;
         this.turn = turn;
         this.lastMove = lastMove;
@@ -36,6 +40,8 @@ public final class GameStatus {
         this.castlingState = castlingState;
         this.positionHash = positionHash;
         this.enPassantField = enPassantField;
+        this.handicapWhite = handicapWhite;
+        this.handicapBlack = handicapBlack;
     }
 
     static GameStatus newGame() {
@@ -82,6 +88,18 @@ public final class GameStatus {
         return positionHash;
     }
 
+    public float getHandicapWhite() {
+        return handicapWhite;
+    }
+
+    public float getHandicapBlack() {
+        return handicapBlack;
+    }
+
+    public float getHandicap() {
+        return turn == GameStatus.TURN_WHITE ? handicapWhite : handicapBlack;
+    }
+
     public int getCastlingState() {
         return castlingState;
     }
@@ -124,7 +142,7 @@ public final class GameStatus {
     }
 
     public GameStatus switchTurn() {
-        return new GameStatus(plyCount, getOppositeColor(), 0, halfMoveClock, castlingState, (byte) 0, positionHash);
+        return new GameStatus(plyCount, getOppositeColor(), 0, halfMoveClock, castlingState, (byte) 0, positionHash, handicapWhite, handicapBlack);
     }
 
     @Override

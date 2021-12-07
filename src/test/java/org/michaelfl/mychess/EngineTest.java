@@ -1,5 +1,6 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
@@ -398,7 +399,7 @@ class EngineTest {
 
     // Assure that the white knight on f6 is not captured with the king pawn,
     // since this would weaken blacks kind position a lot
-    @Test
+    @Test @Disabled
     void dontCaptureWithKingPawn() {
         testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 e7-e5 d4-b3 b8-c6 b1-c3 g8-f6 f1-e2 c8-e6 e1-g1 f8-e7 c1-e3 e8-g8 e2-f3 a7-a5 c3-d5 a5-a4 b3-d2 e6-d5 e4-d5 c6-b4 c2-c4 d8-d7 a2-a3 b4-d3 a1-b1 f8-d8 d2-e4 d3-c5 e4-f6]]\n",
                 Set.of("e7-f6"),
@@ -413,6 +414,7 @@ class EngineTest {
         return new EngineConfig.Builder()
                 .maxDepth(8)
                 .checkmateCheck(doCheckmateCheck)
+                .useHandicap(false)
                 .build();
     }
 
@@ -423,6 +425,7 @@ class EngineTest {
                 .iterationDepth(6)
                 .variants(4)
                 .checkmateCheck(doCheckmateCheck)
+                .useHandicap(false)
                 .build();
     }
 

@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -278,7 +280,15 @@ public final class Board {
         return Fen.exportFEN(this);
     }
 
+    public void makeMove(final MoveAndWeight move) {
+        makeMove(move.move, move.bestMoveDelta);
+    }
+
     public void makeMove(final int move) {
+        makeMove(move, 0);
+    }
+
+    private void makeMove(final int move, final float bestMoveDelta) {
         final GameStatus gameStatus = getGameStatus();
         final byte movedPiece = get(Move.getFromField(move));
         final byte capturedPiece = Move.getCapturedPiece(move);
@@ -305,8 +315,20 @@ public final class Board {
         // En passant right
         byte enPassantField = getEnPassantField(movedPiece, fromField, toField);
 
+        float handicapWhite = 0;
+        float handicapBlack = 0;
+        if (gameStatus.getPlyCount() < 12) {
+            if (gameStatus.isWhiteTurn()) {
+                handicapWhite = gameStatus.getHandicapWhite() - bestMoveDelta;
+                handicapBlack = gameStatus.getHandicapBlack();
+            } else {
+                handicapWhite = gameStatus.getHandicapWhite();
+                handicapBlack = gameStatus.getHandicapBlack() - bestMoveDelta;
+            }
+        }
+
         // New game status
-        push(new GameStatus(gameStatus.getPlyCount() + 1, gameStatus.getOppositeColor(), move, newHalfMoveClock, newCastlingState, enPassantField, newPositionHash));
+        push(new GameStatus(gameStatus.getPlyCount() + 1, gameStatus.getOppositeColor(), move, newHalfMoveClock, newCastlingState, enPassantField, newPositionHash, handicapWhite, handicapBlack));
     }
 
     static byte getEnPassantField(byte movedPiece, byte fromField, byte toField) {
