@@ -1,32 +1,97 @@
 package org.michaelfl.mychess;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 final class MoveDescription {
 
-    final static MoveDescription whiteCastlingKingSide = new MoveDescription(4, 0, 6, 0);
-    final static MoveDescription whiteCastlingQueenSide = new MoveDescription(4, 0, 2, 0);
-    final static MoveDescription blackCastlingKingSide = new MoveDescription(4, 7, 6, 7);
-    final static MoveDescription blackCastlingQueenSide = new MoveDescription(4, 7, 2, 7);
+    private final static Pattern MOVE_PATTERN = Pattern.compile("^([PNBRQK])?([a-h])?([1-8])?([-x])?([a-h])([1-8])(=?[NBRQ])?(\\+|#|\\+\\+)?( ?e\\.p\\.)?(!|!!|!\\?|\\?!|\\?|\\?\\?)?$");
+    private final static Pattern CASTLING_PATTERN = Pattern.compile("^(0-0|O-O|0-0-0|O-O-O)(\\+|#|\\+\\+)?(!|!!|!\\?|\\?!|\\?|\\?\\?)?$");
+    private final static int GROUP_PIECE = 1;
+    private final static int GROUP_SRC_COL = 2;
+    private final static int GROUP_SRC_ROW = 3;
+    private final static int GROUP_SEPARATOR = 4;
+    private final static int GROUP_TARGET_COL = 5;
+    private final static int GROUP_TARGET_ROW = 6;
+    private final static int GROUP_PROMOTION = 7;
+    private final static int GROUP_CHESS = 8;
+    private final static int GROUP_EN_PASSSANT = 9;
+    private final static int GROUP_CASTLING = 1;
+    private final static int GROUP_CASTLING_CHESS = 2;
 
-    private final int fromCol;
-    private final int fromRow;
-    private final int toCol;
-    private final int toRow;
-    private final char pawnPromotionSymbol;
+    public final int turn;
+    public final byte piece;
+    public final int fromCol;
+    public final int fromRow;
+    public final int toCol;
+    public final int toRow;
+    public final byte pawnPromotionPiece;
+    public final Boolean isCapture;
+    public final Boolean isCheck;
+    public final Boolean isCheckmate;
+    public final Boolean isEnPassant;
 
 
-    MoveDescription(int fromCol, int fromRow, int toCol, int toRow) {
-        this(fromCol, fromRow, toCol, toRow, (char) 0);
-    }
-
-    MoveDescription(int fromCol, int fromRow, int toCol, int toRow, char pawnPromotionSymbol) {
+    MoveDescription(int turn, int fromCol, int fromRow, int toCol, int toRow, char pawnPromotionSymbol) {
+        this.turn = turn;
         this.fromCol = fromCol;
         this.fromRow = fromRow;
         this.toCol = toCol;
         this.toRow = toRow;
-        this.pawnPromotionSymbol = pawnPromotionSymbol;
+        this.pawnPromotionPiece = pawnPromotionSymbol == 0 ? 0 : ChessUtil.symbolToPiece(pawnPromotionSymbol, turn);
+        this.piece = 0;
+        this.isCapture = null;
+        this.isCheck = null;
+        this.isCheckmate = null;
+        this.isEnPassant = null;
+    }
+
+    MoveDescription(
+        int turn,
+        byte piece,
+        int fromCol,
+        int fromRow,
+        int toCol,
+        int toRow,
+        byte pawnPromotionPiece,
+        Boolean isCapture,
+        Boolean isCheck,
+        Boolean isCheckmate,
+        Boolean isEnPassant
+    ) {
+        if (turn <= 0) {
+            throw new IllegalArgumentException("turn not set");
+        }
+        if (toCol < 0) {
+            throw new IllegalArgumentException("toCol not set");
+        }
+        if (toRow < 0) {
+            throw new IllegalArgumentException("toRow not set");
+        }
+        if (piece <= 0) {
+            if (fromCol < 0 || fromRow < 0) {
+                throw new IllegalArgumentException("Source field must be set if no piece is defined");
+            }
+        }
+
+        this.turn = turn;
+        this.piece = piece;
+        this.fromCol = fromCol;
+        this.fromRow = fromRow;
+        this.toCol = toCol;
+        this.toRow = toRow;
+        this.pawnPromotionPiece = pawnPromotionPiece;
+        this.isCapture = isCapture;
+        this.isCheck = isCheck;
+        this.isCheckmate = isCheckmate;
+        this.isEnPassant = isEnPassant;
     }
 
     int getFromField() {
+        if (fromCol < 0 || fromRow < 0) {
+            throw new IllegalStateException("from field not defined");
+        }
+
         return ChessUtil.colAndRowToField(fromCol, fromRow);
     }
 
@@ -34,28 +99,168 @@ final class MoveDescription {
         return ChessUtil.colAndRowToField(toCol, toRow);
     }
 
-    char getPawnPromotionSymbol() {
-        return pawnPromotionSymbol;
-    }
-
     static MoveDescription fromString(String moveString, int turn) {
-        boolean isWhiteTurn = turn == GameStatus.TURN_WHITE;
-        MoveDescription move;
-
-        if ("O-O".equals(moveString) || "0-0".equals(moveString) || "OO".equals(moveString) || "00".equals(moveString)) {
-            move = isWhiteTurn ? MoveDescription.whiteCastlingKingSide : MoveDescription.blackCastlingKingSide;
-        } else if ("O-O-O".equals(moveString) || "0-0-0".equals(moveString) || "OOO".equals(moveString) || "000".equals(moveString)) {
-            move = isWhiteTurn ? MoveDescription.whiteCastlingQueenSide : MoveDescription.blackCastlingQueenSide;
-        } else {
-            int[] from = ChessUtil.getColAndRowFromString(moveString.substring(0, 2));
-            int offset = moveString.charAt(2) == '-' ? 1 : 0;
-            int[] to = ChessUtil.getColAndRowFromString(moveString.substring(2 + offset, 4 + offset));
-
-            char pawnPromotionSymbol = moveString.length() > 4 + offset ? Character.toUpperCase(moveString.charAt(4 + offset)) : 0;
-
-            move = new MoveDescription(from[0], from[1], to[0], to[1], pawnPromotionSymbol);
+        if (moveString.isEmpty()) {
+            throw new IllegalArgumentException("Empty move notation");
         }
 
-        return move;
+        boolean isWhiteTurn = turn == GameStatus.TURN_WHITE;
+        Builder builder = new Builder(turn);
+
+        if (moveString.charAt(0) == 'O' || moveString.charAt(0) == '0') {
+            var matcher = CASTLING_PATTERN.matcher(moveString);
+            if (!matcher.matches()) {
+                throw new IllegalArgumentException("Wrong move notation: " + moveString);
+            }
+
+            var castling = matcher.group(GROUP_CASTLING);
+            if ("0-0".equals(castling) || "O-O".equals(castling)) {
+                if (isWhiteTurn) {
+                    builder.piece = Board.whiteKing;
+                    builder.fromCol = 4;
+                    builder.fromRow = 0;
+                    builder.toCol = 6;
+                    builder.toRow = 0;
+                } else {
+                    builder.piece = Board.blackKing;
+                    builder.fromCol = 4;
+                    builder.fromRow = 7;
+                    builder.toCol = 6;
+                    builder.toRow = 7;
+                }
+            } else { // O-O-O
+                if (isWhiteTurn) {
+                    builder.piece = Board.whiteKing;
+                    builder.fromCol = 4;
+                    builder.fromRow = 0;
+                    builder.toCol = 2;
+                    builder.toRow = 0;
+                } else {
+                    builder.piece = Board.blackKing;
+                    builder.fromCol = 4;
+                    builder.fromRow = 7;
+                    builder.toCol = 2;
+                    builder.toRow = 7;
+                }
+            }
+
+            // Chess/checkmate symbol
+            parseChessOrCheckmateSymbol(GROUP_CASTLING_CHESS, matcher, builder);
+
+        } else {
+            var matcher = MOVE_PATTERN.matcher(moveString);
+            if (!matcher.matches()) {
+                throw new IllegalArgumentException("Wrong move notation: " + moveString);
+            }
+
+            // Symbol
+            var symbol = matcher.group(GROUP_PIECE);
+            if (symbol != null) {
+                builder.piece = ChessUtil.symbolToPiece(symbol.charAt(0), turn);
+            } else {
+                builder.piece = isWhiteTurn ? Board.whitePawn : Board.blackPawn;
+            }
+
+            // Source field
+            var srcCol = matcher.group(GROUP_SRC_COL);
+            if (srcCol != null) {
+                builder.fromCol = srcCol.charAt(0) - 'a';
+            }
+            var srcRow = matcher.group(GROUP_SRC_ROW);
+            if (srcRow != null) {
+                builder.fromRow = Integer.parseInt(srcRow) - 1;
+            }
+
+            // Separator
+            var sep = matcher.group(GROUP_SEPARATOR);
+            if (sep != null && sep.charAt(0) == 'x') {
+                builder.isCapture = true;
+            }
+
+            // Target field
+            var targetCol = matcher.group(GROUP_TARGET_COL);
+            if (targetCol != null) {
+                builder.toCol = targetCol.charAt(0) - 'a';
+            }
+            var targetRow = matcher.group(GROUP_TARGET_ROW);
+            if (targetRow != null) {
+                builder.toRow = Integer.parseInt(targetRow) - 1;
+            }
+
+            // Pawn promotion symbol
+            symbol = matcher.group(GROUP_PROMOTION);
+            if (symbol != null) {
+                if (symbol.startsWith("=")) {
+                    symbol = symbol.substring(1);
+                }
+                builder.pawnPromotionPiece = ChessUtil.symbolToPiece(symbol.charAt(0), turn);
+            }
+
+            // Chess/checkmate symbol
+            parseChessOrCheckmateSymbol(GROUP_CHESS, matcher, builder);
+
+            // En passant
+            var enPassant = matcher.group(GROUP_EN_PASSSANT);
+            if (enPassant != null) {
+                builder.isEnPassant = true;
+            }
+        }
+
+        return builder.build();
+    }
+
+    private static void parseChessOrCheckmateSymbol(int group, Matcher matcher, Builder builder) {
+        var symbol = matcher.group(group);
+        if (symbol != null) {
+            if ("+".equals(symbol) || "++".equals(symbol)) {
+                builder.isCheck = true;
+            } else if ("#".equals(symbol)) {
+                builder.isCheckmate = true;
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        return (piece != Board.whitePawn && piece != Board.blackPawn ? ChessUtil.pieceToString(piece) : "")
+                + (fromCol >= 0 ? (char) ('a' + fromCol) : "")
+                + (fromRow >= 0 ? fromRow + 1 : "")
+                + ChessUtil.fieldToString(getToField());
+    }
+
+    static final class Builder {
+        final int turn;
+        byte piece = -1;
+        int fromCol = -1;
+        int fromRow = -1;
+        int toCol = -1;
+        int toRow = -1;
+        byte pawnPromotionPiece = -1;
+        Boolean isCapture;
+        Boolean isCheck;
+        Boolean isCheckmate;
+        Boolean isEnPassant;
+
+        Builder(int turn) {
+            this.turn = turn;
+        }
+
+        Builder(MoveDescription moveDescr) {
+            this.turn = moveDescr.turn;
+            this.piece = moveDescr.piece;
+            this.fromCol = moveDescr.fromCol;
+            this.fromRow = moveDescr.fromRow;
+            this.toCol = moveDescr.toCol;
+            this.toRow = moveDescr.toRow;
+            this.pawnPromotionPiece = moveDescr.pawnPromotionPiece;
+            this.isCapture = moveDescr.isCapture;
+            this.isCheck = moveDescr.isCheck;
+            this.isCheckmate = moveDescr.isCheckmate;
+            this.isEnPassant = moveDescr.isEnPassant;
+        }
+
+        MoveDescription build() {
+            return new MoveDescription(turn, piece, fromCol, fromRow, toCol, toRow, pawnPromotionPiece, isCapture, isCheck, isCheckmate, isEnPassant);
+        }
     }
 }

@@ -158,7 +158,7 @@ final class PositionSearch {
             // Choose one of the move candidates randomly
             return moveCandidates.get(rand.nextInt(moveCandidates.size()));
 
-        } else if (Game.checkIsKingUnderChess(workingBoard, moveGenerator)) {
+        } else if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
             return new MoveAndWeight(0, -WeightingFunction.CHECKMATE_WEIGHT_HIGH, GameResult.CHECKMATE, 0, new int[0]);
         } else {
             return new MoveAndWeight(0, 0f, GameResult.STALEMATE, 0, new int[0]);
@@ -247,7 +247,7 @@ final class PositionSearch {
         }
 
         // No legal move possible ==> Checkmate or stalemate
-        if (Game.checkIsKingUnderChess(workingBoard, moveGenerator)) {
+        if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
             // Computer checkmate
             resultOut[0] = GameResult.CHECKMATE;
             return -(WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth);
@@ -328,7 +328,7 @@ final class PositionSearch {
         }
 
         // No legal move possible ==> Checkmate or stalemate
-        if (Game.checkIsKingUnderChess(workingBoard, moveGenerator)) {
+        if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
             // Opposite checkmate
             resultOut[0] = GameResult.CHECKMATE;
             return WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth;

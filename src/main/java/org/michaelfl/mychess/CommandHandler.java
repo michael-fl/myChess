@@ -66,29 +66,12 @@ final class CommandHandler {
 
         @Override
         boolean canHandle(String commandLine) {
-            // "a2a3", "a2-a3", "h7h8Q", "h7-h8Q", "O-O", "0-0", "OO", "00", "O-O-O", "0-0-0", "OOO", "000"
-            if (commandLine.length() < 3 || commandLine.length() > 6)
-                return false;
-
-            if (commandLine.charAt(0) == '0') {
-                return "0-0".equals(commandLine) || "0-0-0".equals(commandLine) || "000".equals(commandLine);
-            }
-            if (commandLine.charAt(0) == 'O') {
-                return "O-O".equals(commandLine) || "O-O-O".equals(commandLine) || "OOO".equals(commandLine);
-            }
-
-            int off = commandLine.charAt(2) == '-' ? 1 : 0;
-            if (!(commandLine.charAt(0) >= 'a' && commandLine.charAt(0) <= 'h'
-                && commandLine.charAt(1) >= '1' && commandLine.charAt(1) <= '8'
-                && commandLine.charAt(2 + off) >= 'a' && commandLine.charAt(2 + off) <= 'h'
-                && commandLine.charAt(3 + off) >= '1' && commandLine.charAt(3 + off) <= '8'))
-                return false;
-
-            if (commandLine.length() == 4 + off)
+            try {
+                MoveDescription.fromString(commandLine, game.getTurn());
                 return true;
-
-            char piece = Character.toUpperCase(commandLine.charAt(4 + off));
-            return piece == 'Q' || piece == 'N' || piece == 'R' || piece == 'B';
+            } catch(Exception e) {
+                return false;
+            }
         }
 
         @Override
@@ -99,7 +82,7 @@ final class CommandHandler {
                 game.makeMove(move);
                 game.print();
             } catch (IllegalStateException e) {
-                System.err.println("Illegal move");
+                System.err.println(e.getMessage());
             }
 
             if (computerColor != null && computerColor == game.getTurn() && game.getResult() == GameResult.ONGOING)

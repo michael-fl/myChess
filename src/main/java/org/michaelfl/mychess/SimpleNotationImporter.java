@@ -24,15 +24,17 @@ final class SimpleNotationImporter {
     Game importGame(GameConfig config) {
         List<MoveDescription> moves = new ArrayList<>();
         String[] moveNotations = gameNotation.split(" ");
+        boolean isWhiteTurn = true;
 
         for (String moveNotation : moveNotations) {
-            moves.add(parseMove(moveNotation));
+            moves.add(parseMove(isWhiteTurn ? GameStatus.TURN_WHITE : GameStatus.TURN_BLACK, moveNotation));
+            isWhiteTurn = !isWhiteTurn;
         }
 
         return new Game(config, moves);
     }
 
-    private MoveDescription parseMove(String moveNotation) {
+    private MoveDescription parseMove(int turn, String moveNotation) {
         if (moveNotation.length() < 5 || moveNotation.length() > 6 || moveNotation.charAt(2) != '-')
             throw new IllegalArgumentException("Illegal move notation: " + moveNotation);
         String fromFieldNotation = moveNotation.substring(0, 2);
@@ -44,7 +46,7 @@ final class SimpleNotationImporter {
         int[] from = ChessUtil.getColAndRowFromString(fromFieldNotation);
         int[] to   = ChessUtil.getColAndRowFromString(toFieldNotation);
 
-        return new MoveDescription(from[0], from[1], to[0], to[1], pawnPromotionSymbol);
+        return new MoveDescription(turn, from[0], from[1], to[0], to[1], pawnPromotionSymbol);
     }
 
     public static void main(String[] args) {

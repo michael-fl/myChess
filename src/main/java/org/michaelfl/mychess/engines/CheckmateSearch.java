@@ -93,7 +93,7 @@ public final class CheckmateSearch {
         context.positionCount++;
 
         if (depth > MAX_CHECKMATE_SEARCH_DEPTH
-                || !Game.checkIsKingUnderChess(workingBoard, moveGenerator)) {
+                || !Game.testIsKingChecked(workingBoard, moveGenerator)) {
             return NO_CHECKMATE;
         }
 

@@ -1,12 +1,14 @@
 package org.michaelfl.mychess;
 
+import org.michaelfl.mychess.MoveDescription.Builder;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
 import org.michaelfl.mychess.engines.NextMoveTask;
-import org.michaelfl.mychess.engines.v1.MyChessEngine1;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -106,7 +108,7 @@ public final class Game {
         for (GameStatus gameStatus : statusStack.subList(1, statusStack.size())) {
             if (buf.length() > 2)
                 buf.append(' ');
-            buf.append(new Move(gameStatus.getLastMove()).toString());
+            buf.append(new Move(gameStatus.getLastMove()));
         }
 
         buf.append("]]");
@@ -126,25 +128,88 @@ public final class Game {
     }
 
     void makeMove(MoveDescription moveDescr) {
+        var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
+
         if (getResult() != GameResult.ONGOING) {
             System.err.println("Game is already over");
             return;
         }
 
+        moveDescr = resolveMoveDescription(moveDescr, moveGenerator);
+        makeMoveResolved(moveDescr, moveGenerator);
+    }
+
+    private MoveDescription resolveMoveDescription(MoveDescription moveDescr, MoveGenerator moveGenerator) {
+        var builder = new Builder(moveDescr);
+        int toField = moveDescr.getToField();
+
+        if (builder.piece <= 0) {
+            builder.piece = board.get(moveDescr.getFromField());
+        }
+
+        if (builder.fromCol < 0 || builder.fromRow < 0) {
+            // Must resolve source field
+            var possibleMoves = getPossiblePieceMoves(builder.piece, toField, moveGenerator);
+            if (builder.fromCol >= 0) {
+                possibleMoves.removeIf(move -> Move.getFromCol(move) != builder.fromCol);
+            }
+            if (builder.fromRow >= 0) {
+                possibleMoves.removeIf(move -> Move.getFromRow(move) != builder.fromRow);
+            }
+            if (builder.pawnPromotionPiece > 0) {
+                possibleMoves.removeIf(move -> Move.getMoveType(move) != Move.typePawnPromotionQueen);
+            }
+            if (possibleMoves.isEmpty()) {
+                throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Impossible move.");
+            }
+            if (possibleMoves.size() != 1) {
+                throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Move is not unique.");
+            }
+
+            int move = possibleMoves.iterator().next();
+            builder.fromCol = Move.getFromCol(move);
+            builder.fromRow = Move.getFromRow(move);
+        }
+
+        // Verify isCapture
+        int capturedPiece = board.get(moveDescr.getToField());
+        builder.isCapture = capturedPiece != Board.empty;
+        if (moveDescr.isCapture != null && moveDescr.isCapture && !builder.isCapture) {
+            throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Move does not capture any piece.");
+        }
+
+        return builder.build();
+    }
+
+    private Set<Integer> getPossiblePieceMoves(byte piece, int toField, MoveGenerator moveGenerator) {
+        var result = new HashSet<Integer>();
+
+        int[] possibleMoves = moveGenerator.calculateMoves(board).getMoves();
+
+        for (int move : possibleMoves) {
+            if (toField == Move.getToField(move) && board.get(Move.getFromField(move)) == piece) {
+                result.add(move);
+            }
+        }
+
+        return result;
+    }
+
+    private void makeMoveResolved(MoveDescription moveDescr, MoveGenerator moveGenerator) {
         int fromField = moveDescr.getFromField();
         int toField = moveDescr.getToField();
         byte piece = board.get(fromField);
         byte capturedPiece = board.get(toField);
         byte moveType = Move.typeNormal;
-        char promotionSymbol = moveDescr.getPawnPromotionSymbol();
+        byte promotionPiece = moveDescr.pawnPromotionPiece;
 
-        if ('Q' == promotionSymbol)
+        if (Board.whiteQueen == promotionPiece || Board.blackQueen == promotionPiece)
             moveType = Move.typePawnPromotionQueen;
-        else if ('N' == promotionSymbol)
+        else if (Board.whiteKnight == promotionPiece || Board.blackKnight == promotionPiece)
             moveType = Move.typePawnPromotionKnight;
-        else if ('R' == promotionSymbol)
+        else if (Board.whiteRook == promotionPiece || Board.blackRook == promotionPiece)
             moveType = Move.typePawnPromotionRook;
-        else if ('B' == promotionSymbol)
+        else if (Board.whiteBishop == promotionPiece || Board.blackBishop == promotionPiece)
             moveType = Move.typePawnPromotionBishop;
         else if (piece == Board.whiteKing && fromField == Board.e1 && toField == Board.g1)
             moveType = Move.typeCastlingKingSide;
@@ -155,7 +220,7 @@ public final class Game {
         else if (piece == Board.blackKing && fromField == Board.e8 && toField == Board.c8)
             moveType = Move.typeCastlingQueenSide;
         else if ((piece == Board.whitePawn && ChessUtil.getRowOfField(toField) == 7)
-            || (piece == Board.blackPawn && ChessUtil.getRowOfField(toField) == 0)) {
+                || (piece == Board.blackPawn && ChessUtil.getRowOfField(toField) == 0)) {
             // Sanity check: Pawn promotion symbol is missing ==> assume queen
             moveType = Move.typePawnPromotionQueen;
         } else if ((piece == Board.whitePawn || piece == Board.blackPawn)
@@ -168,20 +233,56 @@ public final class Game {
         Move move = new Move(Move.create((byte) fromField, (byte) toField, capturedPiece, moveType));
 
         // Validate the move
-        MoveGenerator moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
         Moves validMoves = moveGenerator.calculateMoves(board);
-        if (!validMoves.contains(move.getMove())) {
-            throw new IllegalStateException("Illegal move");
+        Move moveToValidate = move;
+        if (moveType == Move.typePawnPromotionBishop || moveType == Move.typePawnPromotionRook) {
+            moveToValidate = new Move(Move.create((byte) fromField, (byte) toField, capturedPiece, Move.typePawnPromotionQueen));
+        }
+        if (!validMoves.contains(moveToValidate.getMove())) {
+            throw new IllegalMoveException("Illegal move: " + moveDescr);
         }
 
         makeMove(move.getMove());
 
         try {
             calculateAndSetGameResult();
-        } catch (IllegalStateException e) { // move was illegal
+            verifyMove(moveDescr, moveGenerator);
+
+        } catch (IllegalMoveException e) { // move was illegal
             revertMove();
             throw e;
         }
+    }
+
+    private void verifyMove(MoveDescription moveDescr, MoveGenerator moveGenerator) {
+        // Verify isCheck
+        if (moveDescr.isCheck != null && moveDescr.isCheck && !testIsKingChecked(board, moveGenerator)) {
+            throw new IllegalMoveException("Wrong move notation: " + moveDescr + "+. Move does not give check.");
+        }
+
+        // Verify isCheckmate
+        if (moveDescr.isCheckmate != null && moveDescr.isCheckmate && getResult() != GameResult.CHECKMATE) {
+            throw new IllegalMoveException("Wrong move notation: " + moveDescr + "+. Move does not set checkmate.");
+        }
+
+        // Verify pawn promotion
+        if (moveDescr.pawnPromotionPiece > 0) {
+            if (getGameStatus().getTurn() == GameStatus.TURN_BLACK) {
+                if (moveDescr.piece != Board.whitePawn
+                        || board.get(moveDescr.getToField()) != moveDescr.pawnPromotionPiece
+                        || moveDescr.toRow != 7) {
+                    throw new IllegalMoveException("Wrong move notation: " + moveDescr + "+. Not a pawn promotion.");
+                }
+            } else {
+                if (moveDescr.piece != Board.blackPawn
+                        || board.get(moveDescr.getToField()) != moveDescr.pawnPromotionPiece
+                        || moveDescr.toRow != 1) {
+                    throw new IllegalMoveException("Wrong move notation: " + moveDescr + "+. Not a pawn promotion.");
+                }
+            }
+        }
+
+        // TODO: Verify isEnPassant
     }
 
     void makeMove(MoveAndWeight move) {
@@ -202,37 +303,8 @@ public final class Game {
         result = GameResult.ONGOING;
     }
 
-    private static GameResult checkCheckMateOrStaleMate(Board board, MoveGenerator moveGenerator) {
-        // Check the next theoretically possible moves
-        Moves nextMoves = moveGenerator.calculateMoves(board);
-        if (nextMoves.isIllegal())
-            throw new IllegalArgumentException("Illegal chess position");
-
-        // Test each of those moves and try to find a valid one
-        boolean haveValidMove = false;
-        final int nPossibleMoves = nextMoves.count();
-        final Board workingBoard = board.copy();
-
-        for (int i = 0; i < nPossibleMoves; i++) {
-            final int nextMove = nextMoves.getMove(i);
-            workingBoard.makeMove(nextMove);
-            Moves nextNextMoves = moveGenerator.calculateMoves(workingBoard);
-            if (!nextNextMoves.isIllegal()) {
-                haveValidMove = true;
-                break;
-            }
-            workingBoard.revertMove();
-        }
-
-        if (haveValidMove)
-            return GameResult.ONGOING;
-
-        // No valid move possible ==> Check if it is checkmate or stalemate
-        return checkIsKingUnderChess(board, moveGenerator) ? GameResult.CHECKMATE : GameResult.STALEMATE;
-    }
-
-    public static boolean checkIsKingUnderChess(Board board, MoveGenerator moveGenerator) {
-        // TODO MF: Optimize method checkIsKingUnderChess
+    public static boolean testIsKingChecked(Board board, MoveGenerator moveGenerator) {
+        // TODO MF: Optimize method testIsKingChecked
         // Switch turn
         GameStatus gameStatus = board.getGameStatus().switchTurn();
 
