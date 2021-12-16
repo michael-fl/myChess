@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import java.util.Collection;
+
 public final class ChessUtil {
 
     private ChessUtil() {
@@ -71,9 +73,23 @@ public final class ChessUtil {
         return s;
     }
 
+    public static String movesToString(Collection<Integer> moves) {
+        StringBuilder buf = new StringBuilder();
+        buf.append(moves.size()).append("# ");
+
+        int i = 0;
+        for (var move : moves) {
+            if (i++ > 0)
+                buf.append(" ");
+            buf.append(ChessUtil.moveToString(move));
+        }
+
+        return buf.toString();
+    }
+
     public static String movesToString(int[] moves, int length) {
         StringBuilder buf = new StringBuilder();
-        buf.append(length).append('#');
+        buf.append(length).append("# ");
 
         for (int i = 0; i < length; i ++) {
             if (i > 0)
@@ -138,5 +154,40 @@ public final class ChessUtil {
     @SuppressWarnings("unused")
     public static int clearBit(int bitSet, int bit) {
         return bitSet & ~bit;
+    }
+
+    public static byte symbolToPiece(char symbol, int turn) {
+        final boolean isWhite = turn == GameStatus.TURN_WHITE;
+
+        switch (symbol) {
+            case 'P': return isWhite ? Board.whitePawn : Board.blackPawn;
+            case 'N': return isWhite ? Board.whiteKnight : Board.blackKnight;
+            case 'B': return isWhite ? Board.whiteBishop : Board.blackBishop;
+            case 'R': return isWhite ? Board.whiteRook : Board.blackRook;
+            case 'Q': return isWhite ? Board.whiteQueen : Board.blackQueen;
+            case 'K': return isWhite ? Board.whiteKing : Board.blackKing;
+            default:
+                throw new IllegalArgumentException("Unknown symbol: " + symbol);
+        }
+    }
+
+    public static String pieceToString(byte piece) {
+        switch (piece) {
+            case Board.empty: return "";
+            case Board.whitePawn:
+            case Board.blackPawn: return "P";
+            case Board.whiteKnight:
+            case Board.blackKnight: return "N";
+            case Board.whiteBishop:
+            case Board.blackBishop: return "B";
+            case Board.whiteRook:
+            case Board.blackRook: return "R";
+            case Board.whiteQueen:
+            case Board.blackQueen: return "Q";
+            case Board.whiteKing:
+            case Board.blackKing: return "K";
+            default:
+                throw new IllegalArgumentException("Unknown piece: " + piece);
+        }
     }
 }
