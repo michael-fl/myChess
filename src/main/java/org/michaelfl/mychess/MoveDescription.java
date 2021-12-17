@@ -1,5 +1,6 @@
 package org.michaelfl.mychess;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -97,6 +98,26 @@ final class MoveDescription {
 
     int getToField() {
         return ChessUtil.colAndRowToField(toCol, toRow);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MoveDescription that = (MoveDescription) o;
+        return turn == that.turn && piece == that.piece
+                && fromCol == that.fromCol && fromRow == that.fromRow
+                && toCol == that.toCol && toRow == that.toRow
+                && pawnPromotionPiece == that.pawnPromotionPiece
+                && Objects.equals(isCapture, that.isCapture)
+                && Objects.equals(isCheck, that.isCheck)
+                && Objects.equals(isCheckmate, that.isCheckmate)
+                && Objects.equals(isEnPassant, that.isEnPassant);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(turn, piece, fromCol, fromRow, toCol, toRow);
     }
 
     static MoveDescription fromString(String moveString, int turn) {
