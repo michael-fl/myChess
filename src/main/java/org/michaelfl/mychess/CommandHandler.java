@@ -422,6 +422,19 @@ final class CommandHandler {
         }
     }
 
+    private final class HashCommand extends Command {
+
+        @Override
+        boolean canHandle(String commandLine) {
+            return "hash".equals(commandLine);
+        }
+
+        @Override
+        void handle(String commandLine) {
+            System.out.println("hash: " + game.getBoard().getGameStatus().getPositionHash());
+        }
+    }
+
     private final List<Command> commands = List.of(
             new QuitCommand(),
             new AutoGameCommand(),
@@ -443,7 +456,8 @@ final class CommandHandler {
             new SetDepthCommand(),
             new SetIterationDepthCommand(),
             new PossibleMovesCommand(),
-            new FenCommand()
+            new FenCommand(),
+            new HashCommand()
     );
 
     private final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));

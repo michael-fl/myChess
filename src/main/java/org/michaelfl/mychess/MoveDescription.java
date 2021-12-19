@@ -246,7 +246,9 @@ final class MoveDescription {
         return (piece != Board.whitePawn && piece != Board.blackPawn ? ChessUtil.pieceToString(piece) : "")
                 + (fromCol >= 0 ? (char) ('a' + fromCol) : "")
                 + (fromRow >= 0 ? fromRow + 1 : "")
-                + ChessUtil.fieldToString(getToField());
+                + (isCapture != null && isCapture ? "x" : "")
+                + ChessUtil.fieldToString(getToField())
+                + (pawnPromotionPiece > 0 ? ChessUtil.pieceToString(pawnPromotionPiece) : "");
     }
 
     static final class Builder {

@@ -1,10 +1,16 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.Pgn.Result;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,7 +41,7 @@ class PgnTest {
             "Kg8 48.Kxh5 Rf8 49.Qe6+ Kh8 50.Kg5 a5 51.Qc4 1-0";
 
     @Test
-    void testPGN1() throws IOException {
+    void testPGN1() {
         testPGN(PGN_1, Result.WHITE_WINS, 101);
     }
 
@@ -62,7 +68,7 @@ class PgnTest {
             "Kg6 Kg4 61.f5 h4 62.Kxg7 Kxf5 0-1";
 
     @Test
-    void testPGN2() throws IOException {
+    void testPGN2() {
         testPGN(PGN_2, Result.BLACK_WINS, 124);
     }
 
@@ -87,7 +93,7 @@ class PgnTest {
             "41.Qf4 Qxf4 42.gxf4 Nc6 43.Kg3 b4 44.Bd2 a5 45.Kf3 c4 46.Ke4 1/2-1/2";
 
     @Test
-    void testPGN3() throws IOException {
+    void testPGN3() {
         testPGN(PGN_3, Result.DRAW, 91);
     }
 
@@ -112,7 +118,7 @@ class PgnTest {
             "42.Nf8+ Kh8 43.Qh7+ Nxh7 44.Ng6# 1-0";
 
     @Test
-    void testPGN4() throws IOException {
+    void testPGN4() {
         testPGN(PGN_4, Result.WHITE_WINS, 87);
     }
 
@@ -142,7 +148,7 @@ class PgnTest {
             "71.Kh3 Kc5 72.Rda6 Qb1 73.Kg2 Qb2+ 74.Kh3 Qb1 75.Kh4 Qd1 76.Kh3 Qh1# 0-1";
 
     @Test
-    void testPGN5() throws IOException {
+    void testPGN5() {
         testPGN(PGN_5, Result.BLACK_WINS, 152);
     }
 
@@ -175,17 +181,121 @@ class PgnTest {
             "Kh7 95.g8=N+ Kh8 96.Ng6# 1-0";
 
     @Test
-    void testPGN6() throws IOException {
+    void testPGN6() {
         testPGN(PGN_6, Result.WHITE_WINS, 191);
     }
 
-    private void testPGN(String pgnString, Result expectedResult, int expectedPlyCount) throws IOException {
+    static final String PGN_7 = "[Event \"Hastings Masters 2018-19\"]\n" +
+            "[Site \"Hastings ENG\"]\n" +
+            "[Date \"2018.12.31\"]\n" +
+            "[Round \"4.12\"]\n" +
+            "[White \"White, Stuart A\"]\n" +
+            "[Black \"Bates, Richard A\"]\n" +
+            "[Result \"1/2-1/2\"]\n" +
+            "[WhiteElo \"2096\"]\n" +
+            "[BlackElo \"2372\"]\n" +
+            "[ECO \"A13\"]\n" +
+            "[EventDate \"2018.12.28\"]\n" +
+            "\n" +
+            "1.c4 e6 2.Nc3 Bb4 3.Qb3 Nc6 4.Nf3 Nf6 5.a3 Bxc3 6.Qxc3 d6 7.b3 e5 8.Bb2\n" +
+            "O-O 9.e3 Re8 10.Be2 Bg4 11.h3 Bh5 12.d3 d5 13.cxd5 Nxd5 14.Qc5 f6 15.O-O\n" +
+            "Bf7 16.Qc2 Qd7 17.Nd2 Nd8 18.Rac1 Ne6 19.Ne4 b6 20.b4 a5 21.b5 a4 22.Qc6\n" +
+            "Qxc6 23.bxc6 f5 24.Nc3 Nc5 25.Nb5 Ra5 26.d4 exd4 27.Nxd4 f4 28.Nf5 Ne6 29.\n" +
+            "e4 Ne7 30.Nxe7+ Rxe7 31.Rfd1 Nc5 32.f3 Ra8 33.Bc3 Nb3 34.Rb1 Be6 35.Bb5\n" +
+            "Kf7 36.Kf2 g5 37.Rd3 h5 38.Rbd1 Nc5 39.Rd8 Re8 40.Rxa8 Rxa8 41.Rd4 Ke8 42.\n" +
+            "Rb4 Bb3 43.Rd4 Be6 44.Rd1 Kf7 1/2-1/2" +
+            "\n" +
+            "[Event \"4. IIFL Wealth Mumbai Op\"]\n" +
+            "[Site \"Mumbai IND\"]\n" +
+            "[Date \"2018.12.31\"]\n" +
+            "[Round \"2.30\"]\n" +
+            "[White \"Senthil, Maran K\"]\n" +
+            "[Black \"Deviatkin, Andrei\"]\n" +
+            "[Result \"1/2-1/2\"]\n" +
+            "[WhiteElo \"2197\"]\n" +
+            "[BlackElo \"2464\"]\n" +
+            "[ECO \"A04\"]\n" +
+            "[EventDate \"2018.12.30\"]\n" +
+            "\n" +
+            "1.Nf3 b6 2.e4 Bb7 3.Bc4 e6 4.Qe2 Bxe4 5.Qxe4 d5 6.Qe2 dxc4 7.O-O Nf6 8.\n" +
+            "Qxc4 c6 9.d4 Qc7 10.Re1 Bd6 11.Bg5 Nbd7 12.Nbd2 b5 13.Qe2 O-O 14.Ne4 Nxe4\n" +
+            "15.Qxe4 Nb6 16.Qg4 Nd5 17.h4 Rae8 18.Re2 a5 19.h5 a4 20.a3 Kh8 21.Rae1 h6\n" +
+            "22.Bd2 c5 23.c3 cxd4 24.Nxd4 Qc4 25.Qf3 Rb8 26.g4 Bc5 27.g5 hxg5 28.Bxg5\n" +
+            "Bxd4 29.cxd4 b4 30.h6 Rg8 31.Qxf7 Qc7 32.Qxe6 Nf4 33.Bxf4 Qxf4 34.Qe5 Qg4+\n" +
+            "35.Kh2 Rb6 36.Qg3 Rxh6+ 37.Kg2 Qxd4 38.Re4 Qxb2 39.Rxb4 Qc2 40.Ree4 Rf8\n" +
+            "41.Rh4 Qc6+ 42.Kg1 Rf6 43.Rxh6+ Rxh6 44.Rh4 1/2-1/2" +
+            "\n" +
+            "[Event \"Australian Open 2019\"]\n" +
+            "[Site \"Melbourne AUS\"]\n" +
+            "[Date \"2018.12.31\"]\n" +
+            "[Round \"9.5\"]\n" +
+            "[White \"Ikeda, Junta\"]\n" +
+            "[Black \"Ryjanova, Julia\"]\n" +
+            "[Result \"1-0\"]\n" +
+            "[WhiteElo \"2421\"]\n" +
+            "[BlackElo \"2308\"]\n" +
+            "[ECO \"A30\"]\n" +
+            "[EventDate \"2018.12.27\"]\n" +
+            "\n" +
+            "1.Nf3 Nf6 2.g3 b6 3.Bg2 Bb7 4.c4 c5 5.Nc3 g6 6.d4 cxd4 7.Qxd4 Nc6 8.Qf4\n" +
+            "Bg7 9.O-O Rc8 10.Rb1 d6 11.b3 O-O 12.Qh4 Nb8 13.Be3 a6 14.Rbc1 Nbd7 15.Bh3\n" +
+            "Rc7 16.g4 h5 17.gxh5 gxh5 18.Nd4 e6 19.f3 Ne5 20.Qg3 Kh7 21.Bg2 Rg8 22.Bg5\n" +
+            "Bh6 23.h4 Rc5 24.f4 Bxg2 25.Kxg2 Neg4 26.Qd3+ Kh8 27.Nf3 Qc7 28.Kh3 Ne8\n" +
+            "29.Ne4 Rf5 30.Ng3 Rxf4 31.Nxh5 Rf5 32.Kxg4 f6 33.Ng3 fxg5 34.hxg5 Rfxg5+\n" +
+            "35.Nxg5 Rxg5+ 36.Kh3 Qg7 37.Rf3 Rg6 38.Rcf1 Nf6 39.Qxd6 Bg5 40.Rh1 Bh4 41.\n" +
+            "Qb8+ Kh7 42.Kg2 Rh6 43.Qf4 Bg5 44.Rxh6+ Kxh6 45.Qe5 Qe7 46.Nf5+ 1-0";
+
+    @Test
+    void testPGN7() {
+        var pgnString = PGN_7;
+        var pgnList = new ArrayList<Pgn>();
+        Pgn.parse(pgnString).forEach(pgnList::add);
+        assertEquals(3, pgnList.size(), "3 PGNs expected");
+
+        var pgnStr1 = pgnString.substring(0, pgnString.indexOf("[Event \"4. IIFL Wealth Mumbai Op\"]"));
+        testPGN(pgnStr1, pgnList.get(0), Result.DRAW, 88);
+        var pgnStr2 = pgnString.substring(pgnString.indexOf("[Event \"4. IIFL Wealth Mumbai Op\"]"), pgnString.indexOf("[Event \"Australian Open 2019\"]"));
+        testPGN(pgnStr2, pgnList.get(1), Result.DRAW, 87);
+        var pgnStr3 = pgnString.substring(pgnString.indexOf("[Event \"Australian Open 2019\"]"));
+        testPGN(pgnStr3, pgnList.get(2), Result.WHITE_WINS, 91);
+    }
+
+    static final String PGN_8 = "[Event \"Varennes Open 2017\"]\n" +
+            "[Site \"Montreal CAN\"]\n" +
+            "[Date \"2017.10.07\"]\n" +
+            "[Round \"2.5\"]\n" +
+            "[White \"Hambleton, Aman\"]\n" +
+            "[Black \"Morella Cabrera, Julio Antonio\"]\n" +
+            "[Result \"*\"]\n" +
+            "[WhiteElo \"2479\"]\n" +
+            "[BlackElo \"2248\"]\n" +
+            "[ECO \"B37\"]\n" +
+            "[EventDate \"2017.10.06\"]\n" +
+            "\n" +
+            "1.Nf3 c5 2.c4 Nc6 3.Nc3 g6 4.d4 cxd4 5.Nxd4 Bg7 6.Nc2 Nf6 7.e4 d6 8.Be2\n" +
+            "O-O 9.O-O a5 10.Be3 a4 11.f3 Qa5 12.Rb1 Be6 13.Qd2 Nd7 14.Rfd1 Rfc8 15.Na3\n" +
+            "Qh5 16.Nd5 Bxd5 17.cxd5 Nd8 18.Bg5 f6 19.f4 Qxe2 20.Qxe2 fxg5 21.fxg5 Nf7\n" +
+            "22.Rbc1 Nc5 23.Nc4 Rd8 24.e5 b5 25.exd6 bxc4 26.dxe7 Re8 27.d6 Nd3 28.Rxc4\n" +
+            "Nxd6 29.Qxd3 Nxc4 30.Qxc4+ Kh8 31.Qf7 Bxb2 32.Qxe8+ *";
+
+    @Test
+    void testPGN8() {
+        testPGN(PGN_8, Result.UNKNOWN, 63);
+    }
+
+    private void testPGN(String pgnString, Result expectedResult, int expectedPlyCount) {
         var pgnList = new ArrayList<Pgn>();
         Pgn.parse(pgnString).forEach(pgnList::add);
 
         assertEquals(1, pgnList.size(), "should be exactly one PGN");
 
         var pgn = pgnList.get(0);
+
+        pgnString = pgnString.substring(pgnString.indexOf("1."));
+        testPGN(pgnString, pgn, expectedResult, expectedPlyCount);
+    }
+
+    private void testPGN(String pgnString, Pgn pgn, Result expectedResult, int expectedPlyCount) {
         assertEquals(expectedPlyCount, pgn.moves.size(), "wrong number of moves (plies)");
         assertEquals(expectedResult, pgn.result, "wrong game result");
 
@@ -193,6 +303,7 @@ class PgnTest {
         var tokens = pgnString.split("\\s");
         var moves = new ArrayList<MoveDescription>();
 
+        var plyCount = 0;
         for (int i = 0; i < tokens.length - 1; i++) {
             var token = tokens[i];
             int i1 = token.indexOf('.');
@@ -200,7 +311,12 @@ class PgnTest {
                 token = token.substring(i1 + 1);
             }
             if (!token.isEmpty()) {
-                moves.add(MoveDescription.fromString(token, moves.size() % 2 == 0 ? GameStatus.TURN_WHITE : GameStatus.TURN_BLACK));
+                if (token.startsWith("..")) {
+                    plyCount++;
+                    token = token.substring(2);
+                }
+                moves.add(MoveDescription.fromString(token, plyCount % 2 == 0 ? GameStatus.TURN_WHITE : GameStatus.TURN_BLACK));
+                plyCount++;
             }
         }
 
@@ -213,5 +329,51 @@ class PgnTest {
                 fail("Wrong move " + i + ": expected " + m1 + ", actual " + m2);
             }
         }
+    }
+
+    @Test
+    @Disabled
+    void testReadLargePGNFile() throws IOException {
+        var classLoader = getClass().getClassLoader();
+        var resource = classLoader.getResource("large.pgn");
+        assert resource != null;
+        var path = Path.of(resource.getFile());
+        var counter = new AtomicInteger();
+
+        try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.ISO_8859_1)) {
+            Pgn.parse(reader, false).forEach(pgn -> {
+                if (counter.incrementAndGet() % 1000 == 0) {
+                    System.out.println(counter);
+                }
+            });
+        }
+
+        assertEquals(276670, counter.get(), "wrong number of PGNs");
+    }
+
+    static final String PGN_9 = "[Event \"2. Bundesliga Mitte 2005/06 rounds 3-5\"]\n" +
+            "[Site \"AUT\"]\n" +
+            "[Date \"2006.??.??\"]\n" +
+            "[Round \"6.3\"]\n" +
+            "[White \"Jeric, Simon\"]\n" +
+            "[Black \"Jurkovic, Hrvoje\"]\n" +
+            "[Result \"0-1\"]\n" +
+            "[WhiteElo \"2328\"]\n" +
+            "[BlackElo \"2426\"]\n" +
+            "[ECO \"B22\"]\n" +
+            "[EventDate \"2006.02.03\"]\n" +
+            "[SetUp \"1\"]\n" +
+            "[FEN \"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1\"]\n" +
+            "\n" +
+            "1...c5 2.c3 Nf6 3.e5 Nd5 4.d4 cxd4 5.Nf3 Nc6 6.cxd4 d6 7.Bc4 Nb6 8.Bb3\n" +
+            "dxe5 9.d5 Na5 10.Nc3 Bg4 11.Be3 Nxb3 12.Qxb3 Bxf3 13.gxf3 g6 14.a4 Qd7 15.\n" +
+            "Bxb6 axb6 16.Qxb6 Bh6 17.Qb5 Qxb5 18.Nxb5 Kd7 19.Ke2 Rhc8 20.Kd3 Rc5 21.\n" +
+            "Nc3 Rac8 22.Rhe1 f5 23.Ra3 Bg7 24.Rb3 R8c7 25.Re3 Rc4 26.Ke2 Rh4 27.Rb6\n" +
+            "Kc8 28.Nb5 Rc2+ 29.Kd1 Rhc4 30.d6 Rc1+ 31.Kd2 R4c2+ 32.Kd3 exd6 33.Nxd6+\n" +
+            "Kc7 34.a5 Bh6 35.Re2 Rc5 36.Nb5+ Kb8 0-1";
+
+    @Test
+    void testPgnStartsWithBlack() {
+        testPGN(PGN_9, Result.BLACK_WINS, 71);
     }
 }

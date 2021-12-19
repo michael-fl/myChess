@@ -3,6 +3,7 @@ package org.michaelfl.mychess;
 /**
  * @author Michael Fleischhauer
  */
+@SuppressWarnings("FinalMethodInFinalClass")
 public final class EngineConfig {
 
     private final static int DEFAULT_MAX_QUIESCENCE_SEARCH_DEPTH = 20;
@@ -13,14 +14,18 @@ public final class EngineConfig {
     private final boolean checkmateCheck;
     private final boolean useHandicap;
     private final boolean silent;
+    private final boolean enableThreefoldRepetition;
+    private final boolean enableFiftyMovesRule;
 
-    private EngineConfig(int maxDepth, int iterationDepth, int nVariants, boolean checkmateCheck, boolean useHandicap, boolean silent) {
+    private EngineConfig(int maxDepth, int iterationDepth, int nVariants, boolean checkmateCheck, boolean useHandicap, boolean silent, boolean enableThreefoldRepetition, boolean enableFiftyMovesRule) {
         this.maxDepth = maxDepth;
         this.iterationDepth = iterationDepth;
         this.nVariants = nVariants;
         this.checkmateCheck = checkmateCheck;
         this.useHandicap = useHandicap;
         this.silent = silent;
+        this.enableThreefoldRepetition = enableThreefoldRepetition;
+        this.enableFiftyMovesRule = enableFiftyMovesRule;
     }
 
     public final int getMaxDepth() {
@@ -51,6 +56,14 @@ public final class EngineConfig {
         return silent;
     }
 
+    public final boolean isEnableThreefoldRepetition() {
+        return enableThreefoldRepetition;
+    }
+
+    public final boolean isEnableFiftyMovesRule() {
+        return enableFiftyMovesRule;
+    }
+
     public final static class Builder {
         private int maxDepth = 8;
         private int iterationDepth = 0;
@@ -58,6 +71,8 @@ public final class EngineConfig {
         private boolean checkmateCheck = false;
         private boolean useHandicap = true;
         private boolean silent = false;
+        private boolean enableThreefoldRepetition = true;
+        private boolean enableFiftyMovesRule = true;
 
         public Builder maxDepth(int maxDepth) {
             this.maxDepth = maxDepth;
@@ -89,8 +104,18 @@ public final class EngineConfig {
             return this;
         }
 
+        public Builder enableThreefoldRepetition(boolean enableThreefoldRepetition) {
+            this.enableThreefoldRepetition = enableThreefoldRepetition;
+            return this;
+        }
+
+        public Builder enableFiftyMovesRule(boolean enableFiftyMovesRule) {
+            this.enableFiftyMovesRule = enableFiftyMovesRule;
+            return this;
+        }
+
         public EngineConfig build() {
-            return new EngineConfig(maxDepth, iterationDepth, nVariants, checkmateCheck, useHandicap, silent);
+            return new EngineConfig(maxDepth, iterationDepth, nVariants, checkmateCheck, useHandicap, silent, enableThreefoldRepetition, enableFiftyMovesRule);
         }
     }
 }

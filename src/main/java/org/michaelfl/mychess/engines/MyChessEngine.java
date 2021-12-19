@@ -30,7 +30,7 @@ public final class MyChessEngine extends ChessEngine {
             } else {
                 move = new MoveAndWeight(0, 0f, game.getResult(), new int[0]);
             }
-        } else if (game.getGameStatus().getHalfMoveClock() >= 100 || isThreefoldRepetition()) {
+        } else if ((getConfig().isEnableFiftyMovesRule() && game.getGameStatus().getHalfMoveClock() >= 100) || isThreefoldRepetition()) {
             move = new MoveAndWeight(0, 0f, GameResult.DRAW, new int[0]);
         } else {
             // Phase 1: Checkmate search

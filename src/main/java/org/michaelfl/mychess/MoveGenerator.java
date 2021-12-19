@@ -324,13 +324,15 @@ public final class MoveGenerator {
         if (game.getTurn() == GameStatus.TURN_WHITE) {
             if (game.isWhiteCastlingKingSidePossible() && canDoWhiteCastlingKingSide()) {
                 addMove(Board.e1, Board.g1, Board.whiteKing, (byte) 0, Move.typeCastlingKingSide);
-            } else if (game.isWhiteCastlingQueenSidePossible() && canDoWhiteCastlingQueenSide()) {
+            }
+            if (game.isWhiteCastlingQueenSidePossible() && canDoWhiteCastlingQueenSide()) {
                 addMove(Board.e1, Board.c1, Board.whiteKing, (byte) 0, Move.typeCastlingQueenSide);
             }
         } else {
             if (game.isBlackCastlingKingSidePossible() && canDoBlackCastlingKingSide()) {
                 addMove(Board.e8, Board.g8, Board.blackKing, (byte) 0, Move.typeCastlingKingSide);
-            } else if (game.isBlackCastlingQueenSidePossible() && canDoBlackCastlingQueenSide()) {
+            }
+            if (game.isBlackCastlingQueenSidePossible() && canDoBlackCastlingQueenSide()) {
                 addMove(Board.e8, Board.c8, Board.blackKing, (byte) 0, Move.typeCastlingQueenSide);
             }
         }

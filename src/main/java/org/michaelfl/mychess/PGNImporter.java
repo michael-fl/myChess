@@ -1,26 +1,27 @@
 package org.michaelfl.mychess;
 
-import java.util.ArrayList;
+import org.michaelfl.mychess.engines.MyChessEngine;
 
 /**
  * @author Michael Fleischhauer
  */
 final class PGNImporter {
 
-    private final String pgn;
+    private final Pgn pgn;
 
-    PGNImporter(String pgn) {
+    PGNImporter(Pgn pgn) {
         this.pgn = pgn;
     }
 
     Game importGame() {
-        return importGame(Game.standardConfig());
+        var config = new GameConfig(
+                MyChessEngine.class,
+                new EngineConfig.Builder().enableThreefoldRepetition(false).enableFiftyMovesRule(false).build());
+
+        return importGame(config);
     }
 
     Game importGame(GameConfig config) {
-        var pgns = new ArrayList<Pgn>(1);
-        Pgn.parse(pgn).forEach(pgns::add);
-
-        return new Game(config, pgns.get(0).moves);
+        return new Game(config, pgn.moves);
     }
 }

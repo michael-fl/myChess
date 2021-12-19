@@ -35,8 +35,7 @@ public final class Game {
 
     static GameConfig standardConfig() {
         return new GameConfig(
-                MyChessEngine.class, new EngineConfig.Builder().maxDepth(8).build()
-                //MyChessEngine1.class, new EngineConfig.Builder().maxDepth(14).iterationDepth(6).variants(4).build()
+                MyChessEngine.class, new EngineConfig.Builder().build()
         );
     }
 
@@ -52,6 +51,8 @@ public final class Game {
                         .maxDepth(2)
                         .checkmateCheck(false)
                         .useHandicap(false)
+                        .enableThreefoldRepetition(engineWhite.getConfig().isEnableThreefoldRepetition())
+                        .enableFiftyMovesRule(engineWhite.getConfig().isEnableFiftyMovesRule())
                         .silent(true)
                         .build(), this);
     }
@@ -59,12 +60,20 @@ public final class Game {
     Game(GameConfig config, List<MoveDescription> moves) {
         this(config);
 
-        for (MoveDescription move : moves) {
-            makeMove(move);
-        }
+        try {
+            for (MoveDescription move : moves) {
+                makeMove(move);
+            }
 
-        // Check if game is over
-        calculateAndSetGameResult();
+            // OPT MF: Expensive hotspot method!
+            // Check if game is over
+            calculateAndSetGameResult();
+
+        } catch (RuntimeException e) {
+            board.print();
+            System.out.println(exportMoves());
+            throw e;
+        }
     }
 
     ChessEngine getEngine() {
@@ -131,8 +140,10 @@ public final class Game {
         var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
 
         if (getResult() != GameResult.ONGOING) {
-            System.err.println("Game is already over");
-            return;
+            board.print();
+            System.out.println(exportMoves());
+            System.out.println("Current move: " + moveDescr);
+            throw new IllegalStateException("Game is already over. State is " + getResult());
         }
 
         moveDescr = resolveMoveDescription(moveDescr, moveGenerator);
@@ -159,23 +170,26 @@ public final class Game {
             if (builder.pawnPromotionPiece > 0) {
                 possibleMoves.removeIf(move -> Move.getMoveType(move) != Move.typePawnPromotionQueen);
             }
+            if (possibleMoves.size() > 1) {
+                // Remove illegal moves
+                var workingBoard = board.copy();
+                possibleMoves.removeIf(move -> {
+                    workingBoard.makeMove(move);
+                    Moves nextMoves = moveGenerator.calculateMoves(workingBoard.getGameStatus(), workingBoard, 0, 0);
+                    workingBoard.revertMove();
+                    return nextMoves.isIllegal();
+                });
+            }
             if (possibleMoves.isEmpty()) {
                 throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Impossible move.");
             }
-            if (possibleMoves.size() != 1) {
+            if (possibleMoves.size() > 1) {
                 throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Move is not unique.");
             }
 
             int move = possibleMoves.iterator().next();
             builder.fromCol = Move.getFromCol(move);
             builder.fromRow = Move.getFromRow(move);
-        }
-
-        // Verify isCapture
-        int capturedPiece = board.get(moveDescr.getToField());
-        builder.isCapture = capturedPiece != Board.empty;
-        if (moveDescr.isCapture != null && moveDescr.isCapture && !builder.isCapture) {
-            throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Move does not capture any piece.");
         }
 
         return builder.build();
@@ -232,6 +246,11 @@ public final class Game {
 
         Move move = new Move(Move.create((byte) fromField, (byte) toField, capturedPiece, moveType));
 
+        // Verify isCapture
+        if (moveDescr.isCapture != null && moveDescr.isCapture && capturedPiece == Board.empty) {
+            throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Move does not capture any piece.");
+        }
+
         // Validate the move
         Moves validMoves = moveGenerator.calculateMoves(board);
         Move moveToValidate = move;
@@ -276,8 +295,9 @@ public final class Game {
             } else {
                 if (moveDescr.piece != Board.blackPawn
                         || board.get(moveDescr.getToField()) != moveDescr.pawnPromotionPiece
-                        || moveDescr.toRow != 1) {
-                    throw new IllegalMoveException("Wrong move notation: " + moveDescr + "+. Not a pawn promotion.");
+                        || moveDescr.toRow != 0) {
+                    board.print();
+                    throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Not a pawn promotion.");
                 }
             }
         }
@@ -309,7 +329,7 @@ public final class Game {
         GameStatus gameStatus = board.getGameStatus().switchTurn();
 
         // Check the next theoretically possible moves. If those contain an illegal move (king can be captured),
-        // the king was under chess.
+        // the king was under check.
         // TODO MF: Calculate moves without sorting
         Moves nextMoves = moveGenerator.calculateMoves(gameStatus, board, 0, 0);
         return nextMoves.isIllegal();
