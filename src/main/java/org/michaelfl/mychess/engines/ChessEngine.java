@@ -98,6 +98,6 @@ public abstract class ChessEngine {
     }
 
     protected boolean isThreefoldRepetition() {
-        return game.getBoard().isThreefoldRepetition();
+        return config.isEnableThreefoldRepetition() && game.getBoard().isThreefoldRepetition();
     }
 }

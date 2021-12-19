@@ -206,7 +206,7 @@ final class PositionSearch1 {
         if (alphaWeight == Float.POSITIVE_INFINITY || betaWeight == Float.NEGATIVE_INFINITY) {
             throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard.toString());
         }
-        if (gameStatus.getHalfMoveClock() >= 100) {
+        if (engineConfig.isEnableFiftyMovesRule() && gameStatus.getHalfMoveClock() >= 100) {
             bestPathOut[depth] = 0;
             return 0; // draw
         }
@@ -294,7 +294,7 @@ final class PositionSearch1 {
         if (alphaWeight == Float.POSITIVE_INFINITY || betaWeight == Float.NEGATIVE_INFINITY) {
             throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard.toString());
         }
-        if (gameStatus.getHalfMoveClock() >= 100) {
+        if (engineConfig.isEnableFiftyMovesRule() && gameStatus.getHalfMoveClock() >= 100) {
             bestPathOut[depth] = 0;
             return 0; // draw
         }

@@ -39,7 +39,8 @@ final class Pgn {
     enum Result {
         WHITE_WINS,
         BLACK_WINS,
-        DRAW
+        DRAW,
+        UNKNOWN
     }
 
     private final String notation;
@@ -58,20 +59,24 @@ final class Pgn {
     }
 
     static Stream<Pgn> parse(String pgn) throws IllegalPGNException {
-        return parse(new BufferedReader(new StringReader(pgn)));
+        return parse(pgn, false);
     }
 
-    static Stream<Pgn> parse(File pgnFile) throws IllegalPGNException {
+    static Stream<Pgn> parse(String pgn, boolean ignoreErrors) throws IllegalPGNException {
+        return parse(new BufferedReader(new StringReader(pgn)), ignoreErrors);
+    }
+
+    static Stream<Pgn> parse(File pgnFile, boolean ignoreErrors) throws IllegalPGNException {
         try {
-            return parse(new BufferedReader(new FileReader(pgnFile, StandardCharsets.UTF_8)));
+            return parse(new BufferedReader(new FileReader(pgnFile, StandardCharsets.UTF_8)), ignoreErrors);
         } catch (IOException e) {
             throw new IOExceptionWrapper(e);
         }
     }
 
-    private static Stream<Pgn> parse(BufferedReader pgnReader) throws IllegalPGNException {
+    static Stream<Pgn> parse(BufferedReader pgnReader, boolean ignoreErrors) throws IllegalPGNException {
         try {
-            return StreamSupport.stream(Spliterators.spliteratorUnknownSize(new PGNIterator(pgnReader), 0), false);
+            return StreamSupport.stream(Spliterators.spliteratorUnknownSize(new PGNIterator(pgnReader, ignoreErrors), 0), false);
         } catch (IOException e) {
             throw new IOExceptionWrapper(e);
         }
@@ -122,8 +127,13 @@ final class Pgn {
                     }
                     expectedMoveNo++;
                 } else if (i % 3 == 1) { // white move
-                    moves.add(MoveDescription.fromString(token, GameStatus.TURN_WHITE));
+                    if (!"..".equals(token)) {
+                        moves.add(MoveDescription.fromString(token, GameStatus.TURN_WHITE));
+                    }
                 } else if (i % 3 == 2) { // black move
+                    if ("..".equals(token)) {
+                        throw new IllegalPGNException("Wrong move notation: " + this);
+                    }
                     moves.add(MoveDescription.fromString(token, GameStatus.TURN_BLACK));
                 }
 
@@ -149,7 +159,7 @@ final class Pgn {
         }
 
         private static boolean isGameTerminationMarker(String token) {
-            return "1-0".equals(token) || "0-1".equals(token) || "1/2-1/2".equals(token);
+            return "1-0".equals(token) || "0-1".equals(token) || "1/2-1/2".equals(token) || "*".equals(token);
         }
 
         private Result parseGameTerminationMarker(String token) {
@@ -157,6 +167,7 @@ final class Pgn {
                 case "1-0": return Result.WHITE_WINS;
                 case "0-1": return Result.BLACK_WINS;
                 case "1/2-1/2": return Result.DRAW;
+                case "*": return Result.UNKNOWN;
                 default:
                     throw new IllegalPGNException("Illegal game termination marker: " + this);
             }
@@ -171,10 +182,12 @@ final class Pgn {
     private static class PGNIterator implements Iterator<Pgn> {
 
         private final LineReaderIterator lineIter;
+        private final boolean ignoreErrors;
         private Pgn nextPgn;
 
-        private PGNIterator(BufferedReader reader) throws IOException {
+        private PGNIterator(BufferedReader reader, boolean ignoreErrors) throws IOException {
             this.lineIter = new LineReaderIterator(reader);
+            this.ignoreErrors = ignoreErrors;
             this.nextPgn = readNextPgn();
         }
 
@@ -194,43 +207,53 @@ final class Pgn {
         }
 
         private Pgn readNextPgn() {
-            if (!lineIter.hasNext()) {
-                // EOF reached
+            while (true) {
+                var pgnBuilder = new Builder();
+                try {
+                    return readOnePgn(pgnBuilder);
+                } catch (RuntimeException e) {
+                    System.err.println(pgnBuilder);
+                    if (!ignoreErrors || !(e instanceof IllegalPGNException || e instanceof IllegalArgumentException)) {
+                        lineIter.close();
+                        throw e;
+                    } else {
+                        // ignore error and continue with next PGN
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        private Pgn readOnePgn(Builder pgnBuilder) {
+            var haveReadMoves = false;
+
+            while (lineIter.hasNext()) {
+                var line = lineIter.next();
+
+                if (line.startsWith("[")) {
+                    if (!line.endsWith("]")) {
+                        throw new IllegalPGNException("Tag pair not terminated with an ]: " + pgnBuilder);
+                    }
+                    if (haveReadMoves) {
+                        throw new IllegalPGNException("Game termination marker missing: " + pgnBuilder);
+                    }
+                    pgnBuilder.addTagPair(line);
+                } else {
+                    haveReadMoves = true;
+                    pgnBuilder.addMovesLine(line);
+                    if (line.endsWith("1-0") || line.endsWith("0-1") || line.endsWith("1/2-1/2") || line.endsWith("*")) {
+                        // Game termination marker found
+                        return pgnBuilder.build();
+                    }
+                }
+            }
+
+            if (!haveReadMoves) {
                 return null;
             }
 
-            try {
-                var pgnBuilder = new Builder();
-                var haveReadMoves = false;
-
-                while (lineIter.hasNext()) {
-                    var line = lineIter.next();
-
-                    if (line.startsWith("[")) {
-                        if (!line.endsWith("]")) {
-                            throw new IllegalPGNException("Tag pair not terminated with an ]: " + pgnBuilder);
-                        }
-                        if (haveReadMoves) {
-                            throw new IllegalPGNException("Game termination marker missing: " + pgnBuilder);
-                        }
-                        pgnBuilder.addTagPair(line);
-                    } else {
-                        haveReadMoves = true;
-                        pgnBuilder.addMovesLine(line);
-                        if (line.endsWith("1-0") || line.endsWith("0-1") || line.endsWith("1/2-1/2")) {
-                            // Game termination marker found
-                            return pgnBuilder.build();
-                        }
-                    }
-                }
-
-                // EOF reached without termination marker
-                throw new IllegalPGNException("Game termination marker missing: " + pgnBuilder);
-
-            } catch (RuntimeException e) {
-                lineIter.close();
-                throw e;
-            }
+            // EOF reached without termination marker
+            throw new IllegalPGNException("Game termination marker missing: " + pgnBuilder);
         }
     }
 
@@ -312,9 +335,11 @@ final class Pgn {
                     return token;
                 }
                 if (c == '.') {
-                    var token = buf.substring(pos, i + 1);
-                    pos = skipWhitespace(i + 1);
-                    return token;
+                    if (buf.charAt(i - 1) != '.' || buf.charAt(i + 1) != '.') {
+                        var token = buf.substring(pos, i + 1);
+                        pos = skipWhitespace(i + 1);
+                        return token;
+                    }
                 }
             }
 

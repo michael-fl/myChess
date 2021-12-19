@@ -106,6 +106,7 @@ public final class MovesCounter {
 
     /** Find and store current top moves. */
     public final void sample() {
+        // OPT MF: Expensive hotspot method!
         for (var moveSet : movesPerDepth) {
             moveSet.findAndStoreTopMoves();
         }
@@ -124,6 +125,7 @@ public final class MovesCounter {
 
     /** Traditional (without sentinel) insertion sort, descending. */
     static void sortDescending(final short[] moves, final int[] counts) {
+        // OPT MF: Expensive hotspot method!
         final int n = moves.length - 1;
 
         for (int i = 0, j = 0; i < n; j = ++i) {

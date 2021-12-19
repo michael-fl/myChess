@@ -183,7 +183,7 @@ final class PositionSearch {
         if (alphaWeight == Float.POSITIVE_INFINITY || betaWeight == Float.NEGATIVE_INFINITY) {
             throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard.toString());
         }
-        if (gameStatus.getHalfMoveClock() >= 100 || workingBoard.isThreefoldRepetition()) {
+        if ((engineConfig.isEnableFiftyMovesRule() && gameStatus.getHalfMoveClock() >= 100) || (engineConfig.isEnableThreefoldRepetition() && workingBoard.isThreefoldRepetition())) {
             resultOut[0] = GameResult.DRAW;
             return 0; // draw
         }
@@ -268,7 +268,7 @@ final class PositionSearch {
         if (alphaWeight == Float.POSITIVE_INFINITY || betaWeight == Float.NEGATIVE_INFINITY) {
             throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard.toString());
         }
-        if (gameStatus.getHalfMoveClock() >= 100 || workingBoard.isThreefoldRepetition()) {
+        if ((engineConfig.isEnableFiftyMovesRule() && gameStatus.getHalfMoveClock() >= 100) || (engineConfig.isEnableThreefoldRepetition() && workingBoard.isThreefoldRepetition())) {
             resultOut[0] = GameResult.DRAW;
             return 0; // draw
         }
