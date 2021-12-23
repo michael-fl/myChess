@@ -69,7 +69,7 @@ public final class EngineConfig {
         private int iterationDepth = 0;
         private int nVariants = 1;
         private boolean checkmateCheck = false;
-        private boolean useHandicap = true;
+        private boolean useHandicap = false;
         private boolean silent = false;
         private boolean enableThreefoldRepetition = true;
         private boolean enableFiftyMovesRule = true;

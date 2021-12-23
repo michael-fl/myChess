@@ -9,9 +9,6 @@ import org.michaelfl.mychess.engines.NextMoveTask;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 public final class Game {
 
@@ -76,6 +73,11 @@ public final class Game {
         }
     }
 
+    void shutdown() {
+        engineBlack.shutdown();
+        engineWhite.shutdown();
+    }
+
     ChessEngine getEngine() {
         return getTurn() == GameStatus.TURN_WHITE ? engineWhite : engineBlack;
     }
@@ -98,7 +100,7 @@ public final class Game {
         return result;
     }
 
-    private void setResult(GameResult result) {
+    void setResult(GameResult result) {
         this.result = result;
     }
 
@@ -146,11 +148,11 @@ public final class Game {
             throw new IllegalStateException("Game is already over. State is " + getResult());
         }
 
-        moveDescr = resolveMoveDescription(moveDescr, moveGenerator);
+        moveDescr = resolveMoveDescription(moveDescr, board, moveGenerator);
         makeMoveResolved(moveDescr, moveGenerator);
     }
 
-    private MoveDescription resolveMoveDescription(MoveDescription moveDescr, MoveGenerator moveGenerator) {
+    public static MoveDescription resolveMoveDescription(MoveDescription moveDescr, Board board, MoveGenerator moveGenerator) {
         var builder = new Builder(moveDescr);
         int toField = moveDescr.getToField();
 
@@ -160,7 +162,7 @@ public final class Game {
 
         if (builder.fromCol < 0 || builder.fromRow < 0) {
             // Must resolve source field
-            var possibleMoves = getPossiblePieceMoves(builder.piece, toField, moveGenerator);
+            var possibleMoves = getPossiblePieceMoves(builder.piece, toField, board, moveGenerator);
             if (builder.fromCol >= 0) {
                 possibleMoves.removeIf(move -> Move.getFromCol(move) != builder.fromCol);
             }
@@ -195,7 +197,7 @@ public final class Game {
         return builder.build();
     }
 
-    private Set<Integer> getPossiblePieceMoves(byte piece, int toField, MoveGenerator moveGenerator) {
+    private static Set<Integer> getPossiblePieceMoves(byte piece, int toField, Board board, MoveGenerator moveGenerator) {
         var result = new HashSet<Integer>();
 
         int[] possibleMoves = moveGenerator.calculateMoves(board).getMoves();
@@ -210,6 +212,39 @@ public final class Game {
     }
 
     private void makeMoveResolved(MoveDescription moveDescr, MoveGenerator moveGenerator) {
+        var move = moveDescriptionToMove(moveDescr, board);
+
+        var moveType = move.getMoveType();
+        var capturedPiece = move.getCapturedPiece();
+
+        // Verify isCapture
+        if (moveDescr.isCapture != null && moveDescr.isCapture && capturedPiece == Board.empty) {
+            throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Move does not capture any piece.");
+        }
+
+        // Validate the move
+        Moves validMoves = moveGenerator.calculateMoves(board);
+        Move moveToValidate = move;
+        if (moveType == Move.typePawnPromotionBishop || moveType == Move.typePawnPromotionRook) {
+            moveToValidate = new Move(Move.create(move.getFromField(), move.getToField(), capturedPiece, Move.typePawnPromotionQueen));
+        }
+        if (!validMoves.contains(moveToValidate.getMove())) {
+            throw new IllegalMoveException("Illegal move: " + moveDescr);
+        }
+
+        makeMove(move.getMove());
+
+        try {
+            calculateAndSetGameResult();
+            verifyMove(moveDescr, moveGenerator);
+
+        } catch (IllegalMoveException e) { // move was illegal
+            revertMove();
+            throw e;
+        }
+    }
+
+    public static Move moveDescriptionToMove(MoveDescription moveDescr, Board board) {
         int fromField = moveDescr.getFromField();
         int toField = moveDescr.getToField();
         byte piece = board.get(fromField);
@@ -244,33 +279,7 @@ public final class Game {
             capturedPiece = piece == Board.whitePawn ? Board.blackPawn : Board.whitePawn;
         }
 
-        Move move = new Move(Move.create((byte) fromField, (byte) toField, capturedPiece, moveType));
-
-        // Verify isCapture
-        if (moveDescr.isCapture != null && moveDescr.isCapture && capturedPiece == Board.empty) {
-            throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Move does not capture any piece.");
-        }
-
-        // Validate the move
-        Moves validMoves = moveGenerator.calculateMoves(board);
-        Move moveToValidate = move;
-        if (moveType == Move.typePawnPromotionBishop || moveType == Move.typePawnPromotionRook) {
-            moveToValidate = new Move(Move.create((byte) fromField, (byte) toField, capturedPiece, Move.typePawnPromotionQueen));
-        }
-        if (!validMoves.contains(moveToValidate.getMove())) {
-            throw new IllegalMoveException("Illegal move: " + moveDescr);
-        }
-
-        makeMove(move.getMove());
-
-        try {
-            calculateAndSetGameResult();
-            verifyMove(moveDescr, moveGenerator);
-
-        } catch (IllegalMoveException e) { // move was illegal
-            revertMove();
-            throw e;
-        }
+        return new Move(Move.create((byte) fromField, (byte) toField, capturedPiece, moveType));
     }
 
     private void verifyMove(MoveDescription moveDescr, MoveGenerator moveGenerator) {
@@ -333,62 +342,6 @@ public final class Game {
         // TODO MF: Calculate moves without sorting
         Moves nextMoves = moveGenerator.calculateMoves(gameStatus, board, 0, 0);
         return nextMoves.isIllegal();
-    }
-
-    void playAutoGame() {
-        try {
-            if (getResult() == GameResult.ONGOING) {
-                playAutoGameInternal();
-            }
-
-            getBoard().print();
-            int turn = getTurn();
-            System.out.println("Moves: " + exportMoves());
-            System.out.println("Turn: " + (turn == GameStatus.TURN_WHITE ? "white" : "black"));
-            if (getResult() == GameResult.CHECKMATE || getResult() == GameResult.STALEMATE)
-                System.out.println("Result: " + (turn == GameStatus.TURN_WHITE ? "white" : "black") + " " + getResult());
-            else
-                System.out.println("Result: " + getResult());
-
-        } catch (Throwable e) {
-            e.printStackTrace();
-
-            getBoard().print();
-            System.out.println("Turn: " + (getTurn() == GameStatus.TURN_WHITE ? "white" : "black"));
-            System.out.println("Moves: " + exportMoves());
-            MoveGenerator moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
-            Moves possibleMoves = moveGenerator.calculateMoves(getBoard());
-            System.out.println("Possible moves: " + possibleMoves);
-            System.out.flush();
-            System.err.println("ERROR: " + e);
-        }
-    }
-
-    @SuppressWarnings("Duplicates")
-    private void playAutoGameInternal() throws InterruptedException, ExecutionException, TimeoutException {
-        getBoard().print();
-
-        for (int i = 0; i < 1000 && getResult() == GameResult.ONGOING; i++) {
-            MoveAndWeight move = getEngine().nextMoveAsync().getResult(1, TimeUnit.HOURS);
-            if (move.move == 0) {
-                // No valid move possible ==> checkmate or stalemate
-                break;
-            }
-            makeMove(move);
-            getBoard().print();
-            System.out.println("Move #" + ((getGameStatus().getPlyCount() + 1) / 2) + ": " + ChessUtil.moveToString(move.move));
-            System.out.println("FEN: " + exportFEN());
-
-            if (move.path.length <= 1 || move.path[1] == 0) {
-                calculateAndSetGameResult();
-            }
-        }
-
-        GameResult gameResult = getResult();
-        if (gameResult == GameResult.ONGOING) {
-            gameResult = GameResult.DRAW;
-        }
-        setResult(gameResult);
     }
 
     void print() {

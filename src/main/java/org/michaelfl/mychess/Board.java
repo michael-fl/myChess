@@ -239,7 +239,7 @@ public final class Board {
         this.stackSize = other.stackSize;
     }
 
-    static Board createNewGame() {
+    public static Board createNewGame() {
         return new Board();
     }
 
@@ -278,6 +278,12 @@ public final class Board {
 
     public String exportFEN() {
         return Fen.exportFEN(this);
+    }
+
+    public String calculatePositionKey() {
+        var fen = exportFEN();
+        int i1 = fen.lastIndexOf(' ', fen.lastIndexOf(' ', fen.lastIndexOf(' ') - 1) - 1);
+        return fen.substring(0, i1);
     }
 
     public void makeMove(final MoveAndWeight move) {

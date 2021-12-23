@@ -58,19 +58,37 @@ public final class ChessUtil {
         if (move == 0)
             return "nil";
 
-        String s = moveToString(Move.getFromField(move), Move.getToField(move));
+        return moveToString(Move.getFromField(move), Move.getToField(move))
+                + getPawnPromotionSymbol(move);
+    }
 
+    private static String getPawnPromotionSymbol(int move) {
         byte moveType = Move.getMoveType(move);
         if (moveType == Move.typePawnPromotionKnight)
-            s += "N";
+            return "N";
         else if (moveType == Move.typePawnPromotionQueen)
-            s += "Q";
+            return "Q";
         else if (moveType == Move.typePawnPromotionRook)
-            s += "R";
+            return "R";
         else if (moveType == Move.typePawnPromotionBishop)
-            s += "B";
+            return "B";
 
-        return s;
+        return "";
+    }
+
+    public static String moveToString(Move move, Board board) {
+        return moveToString(move.getMove(), board);
+    }
+
+    public static String moveToString(int move, Board board) {
+        if (move == 0)
+            return "nil";
+        byte piece = board.get(Move.getFromField(move));
+        return (piece == Board.whitePawn || piece == Board.blackPawn ? "" : pieceToString(piece))
+                + fieldToString(Move.getFromField(move))
+                + (Move.getCapturedPiece(move) != 0 ? "x" : "")
+                + fieldToString(Move.getToField(move))
+                + getPawnPromotionSymbol(move);
     }
 
     public static String movesToString(Collection<Integer> moves) {

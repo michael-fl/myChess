@@ -22,8 +22,13 @@
       <version>${junit.jupiter.version}</version>
       <scope>test</scope>
     </dependency>
-  </dependencies>
 
+    <!-- MapDB -->
+    <dependency>
+      <groupId>org.mapdb</groupId>
+      <artifactId>mapdb</artifactId>
+      <version>3.0.8</version>
+    </dependency>  </dependencies>
   <build>
     <plugins>
       <plugin>

@@ -4,6 +4,7 @@ import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
+import org.michaelfl.mychess.openingdb.OpeningDB.PositionInfo;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -29,7 +30,8 @@ final class CommandHandler {
 
         @Override
         void handle(String commandLine) {
-            System.exit(0);
+            System.out.println("Will exit MyChess...");
+            game.shutdown();
         }
     }
 
@@ -43,8 +45,64 @@ final class CommandHandler {
         @Override
         void handle(String commandLine) {
             computerColor = null;
-            game.playAutoGame();
+            playAutoGame();
         }
+
+        private void playAutoGame() {
+            try {
+                if (game.getResult() == GameResult.ONGOING) {
+                    playAutoGameInternal();
+                }
+
+                game.getBoard().print();
+                int turn = game.getTurn();
+                System.out.println("Moves: " + game.exportMoves());
+                System.out.println("Turn: " + (turn == GameStatus.TURN_WHITE ? "white" : "black"));
+                if (game.getResult() == GameResult.CHECKMATE || game.getResult() == GameResult.STALEMATE)
+                    System.out.println("Result: " + (turn == GameStatus.TURN_WHITE ? "white" : "black") + " " + game.getResult());
+                else
+                    System.out.println("Result: " + game.getResult());
+
+            } catch (Throwable e) {
+                e.printStackTrace();
+
+                game.getBoard().print();
+                System.out.println("Turn: " + (game.getTurn() == GameStatus.TURN_WHITE ? "white" : "black"));
+                System.out.println("Moves: " + game.exportMoves());
+                MoveGenerator moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
+                Moves possibleMoves = moveGenerator.calculateMoves(game.getBoard());
+                System.out.println("Possible moves: " + possibleMoves);
+                System.out.flush();
+                System.err.println("ERROR: " + e);
+            }
+        }
+
+        private void playAutoGameInternal() throws InterruptedException, ExecutionException, TimeoutException {
+            game.getBoard().print();
+
+            for (int i = 0; i < 1000 && game.getResult() == GameResult.ONGOING; i++) {
+                MoveAndWeight move = game.getEngine().nextMoveAsync(env).getResult(1, TimeUnit.HOURS);
+                if (move.move == 0) {
+                    // No valid move possible ==> checkmate or stalemate
+                    break;
+                }
+                game.makeMove(move);
+                game.getBoard().print();
+                System.out.println("Move #" + ((game.getGameStatus().getPlyCount() + 1) / 2) + ": " + ChessUtil.moveToString(move.move));
+                System.out.println("FEN: " + game.exportFEN());
+
+                if (move.path.length <= 1 || move.path[1] == 0) {
+                    game.calculateAndSetGameResult();
+                }
+            }
+
+            GameResult gameResult = game.getResult();
+            if (gameResult == GameResult.ONGOING) {
+                gameResult = GameResult.DRAW;
+            }
+            game.setResult(gameResult);
+        }
+
     }
 
     private final class NewGameCommand extends Command {
@@ -90,7 +148,7 @@ final class CommandHandler {
         }
 
         private void makeComputerMove() throws InterruptedException, ExecutionException, TimeoutException {
-            MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(1, TimeUnit.HOURS);
+            MoveAndWeight move = game.getEngine().nextMoveAsync(env).getResult(1, TimeUnit.HOURS);
             if (move.move == 0) {
                 System.err.println("No move possible!?");
                 return;
@@ -217,7 +275,7 @@ final class CommandHandler {
                 System.err.println("Game is already over");
                 return;
             }
-            MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(1, TimeUnit.HOURS);
+            MoveAndWeight move = game.getEngine().nextMoveAsync(env).getResult(1, TimeUnit.HOURS);
             if (move.move == 0)
                 System.out.println("Illegal position. No move possible.");
             else
@@ -257,7 +315,7 @@ final class CommandHandler {
             }
 
             ChessEngine engine = game.getEngine();
-            MoveAndWeight move = engine.nextMoveAsync().getResult(1, TimeUnit.HOURS);
+            MoveAndWeight move = engine.nextMoveAsync(null).getResult(1, TimeUnit.HOURS);
             if (move.move == 0)
                 System.out.println("Illegal position. No move possible.");
             else
@@ -322,7 +380,7 @@ final class CommandHandler {
             }
 
             long t1 = System.currentTimeMillis();
-            MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(1, TimeUnit.HOURS);
+            MoveAndWeight move = game.getEngine().nextMoveAsync(env).getResult(1, TimeUnit.HOURS);
             long t2 = System.currentTimeMillis();
             if (move.move == 0) {
                 System.err.println("No move possible!?");
@@ -435,6 +493,46 @@ final class CommandHandler {
         }
     }
 
+    private final class OpeningCommand extends Command {
+
+        @Override
+        boolean canHandle(String commandLine) {
+            return "o".equals(commandLine);
+        }
+
+        @Override
+        void handle(String commandLine) {
+            var key = game.getBoard().calculatePositionKey();
+            var positionInfo = env.getOpeningDB().lookupPosition(key);
+
+            env.getOpeningDB().rollback();
+
+            if (positionInfo == null) {
+                System.out.println("No position found in opening DB.");
+            } else {
+                printOpeningVariants(positionInfo);
+            }
+        }
+
+        private void printOpeningVariants(PositionInfo positionInfo) {
+            var board = game.getBoard();
+            var buf = new StringBuilder();
+
+            buf.append("#Positions: ").append(positionInfo.count).append('\n');
+
+            for (var moveInfo : positionInfo.moves) {
+                buf.append(ChessUtil.moveToString(moveInfo.move, board)).append(' ')
+                        .append("#").append(moveInfo.getTotalCount()).append(' ')
+                        .append(moveInfo.getWinPercentage()).append("% win, ")
+                        .append(moveInfo.getDrawPercentage()).append("% draw, ")
+                        .append(moveInfo.getLossPercentage()).append("% loss")
+                        .append('\n');
+            }
+
+            System.out.println(buf);
+        }
+    }
+
     private final List<Command> commands = List.of(
             new QuitCommand(),
             new AutoGameCommand(),
@@ -457,19 +555,22 @@ final class CommandHandler {
             new SetIterationDepthCommand(),
             new PossibleMovesCommand(),
             new FenCommand(),
-            new HashCommand()
+            new HashCommand(),
+            new OpeningCommand()
     );
 
     private final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+    private final MyChessEnv env;
     private Game game;
     private final WeightingFunction weightingFunction = new WeightingFunction();
     private Integer computerColor;
 
-    CommandHandler(Game game) {
+    CommandHandler(MyChessEnv env, Game game) {
+        this.env = env;
         this.game = game;
     }
 
-    void nextCommand() {
+    boolean nextCommand() {
         try {
             do {
                 String line = in.readLine().trim();
@@ -477,7 +578,7 @@ final class CommandHandler {
                     for (Command command : commands) {
                         if (command.canHandle(line)) {
                             command.handle(line);
-                            return;
+                            return !(command instanceof QuitCommand);
                         }
                     }
 
@@ -486,6 +587,7 @@ final class CommandHandler {
             } while (true);
         } catch (Exception e) {
             e.printStackTrace();
+            return true;
         }
     }
 
