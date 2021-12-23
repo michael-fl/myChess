@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-final class MoveDescription {
+public final class MoveDescription {
 
     private final static Pattern MOVE_PATTERN = Pattern.compile("^([PNBRQK])?([a-h])?([1-8])?([-x])?([a-h])([1-8])(=?[NBRQ])?(\\+|#|\\+\\+)?( ?e\\.p\\.)?(!|!!|!\\?|\\?!|\\?|\\?\\?)?$");
     private final static Pattern CASTLING_PATTERN = Pattern.compile("^(0-0|O-O|0-0-0|O-O-O)(\\+|#|\\+\\+)?(!|!!|!\\?|\\?!|\\?|\\?\\?)?$");
@@ -88,7 +88,7 @@ final class MoveDescription {
         this.isEnPassant = isEnPassant;
     }
 
-    int getFromField() {
+    public int getFromField() {
         if (fromCol < 0 || fromRow < 0) {
             throw new IllegalStateException("from field not defined");
         }
@@ -96,7 +96,7 @@ final class MoveDescription {
         return ChessUtil.colAndRowToField(fromCol, fromRow);
     }
 
-    int getToField() {
+    public int getToField() {
         return ChessUtil.colAndRowToField(toCol, toRow);
     }
 
@@ -120,7 +120,7 @@ final class MoveDescription {
         return Objects.hash(turn, piece, fromCol, fromRow, toCol, toRow);
     }
 
-    static MoveDescription fromString(String moveString, int turn) {
+    public static MoveDescription fromString(String moveString, int turn) {
         if (moveString.isEmpty()) {
             throw new IllegalArgumentException("Empty move notation");
         }

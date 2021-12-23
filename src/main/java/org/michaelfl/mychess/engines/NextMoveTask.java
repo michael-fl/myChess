@@ -1,5 +1,6 @@
 package org.michaelfl.mychess.engines;
 
+import org.michaelfl.mychess.MyChessEnv;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 
 import java.util.concurrent.ExecutionException;
@@ -12,8 +13,17 @@ import java.util.concurrent.TimeoutException;
  */
 public final class NextMoveTask {
 
+    private final MyChessEnv env;
     private Future<MoveAndWeight> resultFuture;
     private volatile boolean isCanceled;
+
+    public NextMoveTask() {
+        this(null);
+    }
+
+    public NextMoveTask(MyChessEnv env) {
+        this.env = env != null ? env : new MyChessEnv();
+    }
 
     public void cancel() {
         isCanceled = true;

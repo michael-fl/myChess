@@ -7,6 +7,7 @@ import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.MovesCounter;
+import org.michaelfl.mychess.MyChessEnv;
 import org.michaelfl.mychess.WeightingFunction;
 
 import java.util.Random;
@@ -67,6 +68,10 @@ public abstract class ChessEngine {
         this.executor = Executors.newSingleThreadExecutor();
     }
 
+    public void shutdown() {
+        executor.shutdownNow();
+    }
+
     public final EngineConfig getConfig() {
         return config;
     }
@@ -76,7 +81,11 @@ public abstract class ChessEngine {
     }
 
     public final NextMoveTask nextMoveAsync() {
-        var task = new NextMoveTask();
+        return nextMoveAsync(null);
+    }
+
+    public final NextMoveTask nextMoveAsync(MyChessEnv env) {
+        var task = new NextMoveTask(env);
 
         Future<MoveAndWeight> result = executor.submit(() -> calculateNextMove(task));
 

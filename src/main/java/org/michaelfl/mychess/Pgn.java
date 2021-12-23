@@ -18,25 +18,25 @@ import java.util.stream.StreamSupport;
 /**
  * @author Michael Fleischhauer
  */
-final class Pgn {
+public final class Pgn {
 
-    static final class IllegalPGNException extends RuntimeException {
+    public static final class IllegalPGNException extends RuntimeException {
         IllegalPGNException(String message) {
             super(message);
         }
     }
 
-    static final class IOExceptionWrapper extends RuntimeException {
-        IOExceptionWrapper(IOException cause) {
+    public static final class IOExceptionWrapper extends RuntimeException {
+        public IOExceptionWrapper(IOException cause) {
             super(cause);
         }
 
-        IOException getIOException() {
+        public IOException getIOException() {
             return (IOException) getCause();
         }
     }
 
-    enum Result {
+    public enum Result {
         WHITE_WINS,
         BLACK_WINS,
         DRAW,
@@ -58,15 +58,15 @@ final class Pgn {
         return notation;
     }
 
-    static Stream<Pgn> parse(String pgn) throws IllegalPGNException {
+    public static Stream<Pgn> parse(String pgn) throws IllegalPGNException {
         return parse(pgn, false);
     }
 
-    static Stream<Pgn> parse(String pgn, boolean ignoreErrors) throws IllegalPGNException {
+    public static Stream<Pgn> parse(String pgn, boolean ignoreErrors) throws IllegalPGNException {
         return parse(new BufferedReader(new StringReader(pgn)), ignoreErrors);
     }
 
-    static Stream<Pgn> parse(File pgnFile, boolean ignoreErrors) throws IllegalPGNException {
+    public static Stream<Pgn> parse(File pgnFile, boolean ignoreErrors) throws IllegalPGNException {
         try {
             return parse(new BufferedReader(new FileReader(pgnFile, StandardCharsets.UTF_8)), ignoreErrors);
         } catch (IOException e) {
@@ -74,7 +74,7 @@ final class Pgn {
         }
     }
 
-    static Stream<Pgn> parse(BufferedReader pgnReader, boolean ignoreErrors) throws IllegalPGNException {
+    public static Stream<Pgn> parse(BufferedReader pgnReader, boolean ignoreErrors) throws IllegalPGNException {
         try {
             return StreamSupport.stream(Spliterators.spliteratorUnknownSize(new PGNIterator(pgnReader, ignoreErrors), 0), false);
         } catch (IOException e) {
