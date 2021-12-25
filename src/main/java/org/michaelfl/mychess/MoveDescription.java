@@ -248,7 +248,8 @@ public final class MoveDescription {
                 + (fromRow >= 0 ? fromRow + 1 : "")
                 + (isCapture != null && isCapture ? "x" : "")
                 + ChessUtil.fieldToString(getToField())
-                + (pawnPromotionPiece > 0 ? ChessUtil.pieceToString(pawnPromotionPiece) : "");
+                + (pawnPromotionPiece > 0 ? ChessUtil.pieceToString(pawnPromotionPiece) : "")
+                + (isCheck != null && isCheck ? "+" : "");
     }
 
     static final class Builder {

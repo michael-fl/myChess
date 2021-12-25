@@ -23,7 +23,7 @@ import java.util.concurrent.CancellationException;
 @SuppressWarnings("DuplicatedCode")
 final class PositionSearch {
 
-    private final float MAX_PER_MOVE_HANDICAP = 0.3f;
+    private static final float MAX_PER_MOVE_HANDICAP = 0.3f;
 
     private final NextMoveTask task;
     private final Game game;
@@ -181,7 +181,7 @@ final class PositionSearch {
         resultOut[0] = GameResult.ONGOING;
 
         if (alphaWeight == Float.POSITIVE_INFINITY || betaWeight == Float.NEGATIVE_INFINITY) {
-            throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard.toString());
+            throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard);
         }
         if ((engineConfig.isEnableFiftyMovesRule() && gameStatus.getHalfMoveClock() >= 100) || (engineConfig.isEnableThreefoldRepetition() && workingBoard.isThreefoldRepetition())) {
             resultOut[0] = GameResult.DRAW;
@@ -266,7 +266,7 @@ final class PositionSearch {
         resultOut[0] = GameResult.ONGOING;
 
         if (alphaWeight == Float.POSITIVE_INFINITY || betaWeight == Float.NEGATIVE_INFINITY) {
-            throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard.toString());
+            throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard);
         }
         if ((engineConfig.isEnableFiftyMovesRule() && gameStatus.getHalfMoveClock() >= 100) || (engineConfig.isEnableThreefoldRepetition() && workingBoard.isThreefoldRepetition())) {
             resultOut[0] = GameResult.DRAW;
@@ -322,7 +322,7 @@ final class PositionSearch {
 
         if (haveValidMove) {
             if (bestWeight == Float.POSITIVE_INFINITY || bestWeight == Float.NEGATIVE_INFINITY) {
-                throw new IllegalStateException("bestWeight=" + bestWeight + ", depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard.toString());
+                throw new IllegalStateException("bestWeight=" + bestWeight + ", depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard);
             }
             return bestWeight;
         }

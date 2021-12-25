@@ -4,10 +4,12 @@ import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
+import org.michaelfl.mychess.openingdb.OpeningDB.MoveInfo;
 import org.michaelfl.mychess.openingdb.OpeningDB.PositionInfo;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -140,7 +142,7 @@ final class CommandHandler {
                 game.makeMove(move);
                 game.print();
             } catch (IllegalStateException e) {
-                System.err.println(e.getMessage());
+                System.out.println("Illegal move");
             }
 
             if (computerColor != null && computerColor == game.getTurn() && game.getResult() == GameResult.ONGOING)
@@ -515,19 +517,22 @@ final class CommandHandler {
         }
 
         private void printOpeningVariants(PositionInfo positionInfo) {
-            var board = game.getBoard();
             var buf = new StringBuilder();
 
             buf.append("#Positions: ").append(positionInfo.count).append('\n');
 
-            for (var moveInfo : positionInfo.moves) {
-                buf.append(ChessUtil.moveToString(moveInfo.move, board)).append(' ')
-                        .append("#").append(moveInfo.getTotalCount()).append(' ')
-                        .append(moveInfo.getWinPercentage()).append("% win, ")
-                        .append(moveInfo.getDrawPercentage()).append("% draw, ")
-                        .append(moveInfo.getLossPercentage()).append("% loss")
-                        .append('\n');
-            }
+            positionInfo.moves
+                    .stream()
+                    .sorted(Comparator.comparingInt(MoveInfo::getTotalCount).reversed())
+                    .forEach(moveInfo -> {
+                        var moveDescr = game.moveToShortNotation(moveInfo.move);
+                        buf.append(String.format("%-6s", moveDescr)).append(' ')
+                                .append("#").append(String.format("%7d", moveInfo.getTotalCount())).append('\t')
+                                .append(String.format("%3d", moveInfo.getWinPercentage())).append("% win, ")
+                                .append(String.format("%3d", moveInfo.getDrawPercentage())).append("% draw, ")
+                                .append(String.format("%3d", moveInfo.getLossPercentage())).append("% loss")
+                                .append('\n');
+                    });
 
             System.out.println(buf);
         }
