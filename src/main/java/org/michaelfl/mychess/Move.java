@@ -98,6 +98,21 @@ public final class Move {
         return getMoveType(move);
     }
 
+    public byte getPawnPromotionPiece() {
+        switch (getMoveType()) {
+            case Move.typePawnPromotionQueen:
+                return getToRow() == 7 ? Board.whiteQueen : Board.blackQueen;
+            case Move.typePawnPromotionRook:
+                return getToRow() == 7 ? Board.whiteRook : Board.blackRook;
+            case Move.typePawnPromotionKnight:
+                return getToRow() == 7 ? Board.whiteKnight : Board.blackKnight;
+            case Move.typePawnPromotionBishop:
+                return getToRow() == 7 ? Board.whiteBishop : Board.blackBishop;
+        }
+
+        return 0;
+    }
+
     @Override
     public String toString() {
         return ChessUtil.moveToString(move);

@@ -244,6 +244,64 @@ public final class Game {
         }
     }
 
+    MoveDescription moveToShortNotation(Move move) {
+        var builder = new MoveDescription.Builder(getTurn());
+        var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
+
+        board.makeMove(move.getMove());
+        builder.isCheck = testIsKingChecked(getBoard(), moveGenerator);
+        board.revertMove();
+
+        builder.piece = board.get(move.getFromField());
+        builder.toCol = move.getToCol();
+        builder.toRow = move.getToRow();
+        if (move.getCapturedPiece() != Board.empty) {
+            builder.isCapture = true;
+            if (Board.isPawn(builder.piece)) {
+                builder.fromCol = move.getFromCol();
+            }
+        }
+
+        var pawnPromotionPiece = move.getPawnPromotionPiece();
+        if (pawnPromotionPiece > 0) {
+            builder.pawnPromotionPiece = pawnPromotionPiece;
+        }
+
+        try {
+            var moveDescr = builder.build();
+            resolveMoveDescription(moveDescr, board, moveGenerator);
+            return moveDescr;
+        } catch (RuntimeException e) {
+            // fall through
+        }
+
+        if (builder.fromCol == -1) {
+            builder.fromCol = move.getFromCol();
+            try {
+                var moveDescr = builder.build();
+                resolveMoveDescription(moveDescr, board, moveGenerator);
+                return moveDescr;
+            } catch (RuntimeException e) {
+                // fall through
+            }
+            builder.fromCol = -1;
+            builder.fromRow = move.getFromRow();
+            try {
+                var moveDescr = builder.build();
+                resolveMoveDescription(moveDescr, board, moveGenerator);
+                return moveDescr;
+            } catch (RuntimeException e) {
+                // fall through
+            }
+        }
+
+        builder.fromCol = move.getFromCol();
+        builder.fromRow = move.getFromRow();
+        var moveDescr = builder.build();
+        resolveMoveDescription(moveDescr, board, moveGenerator);
+        return moveDescr;
+    }
+
     public static Move moveDescriptionToMove(MoveDescription moveDescr, Board board) {
         int fromField = moveDescr.getFromField();
         int toField = moveDescr.getToField();
@@ -356,6 +414,8 @@ public final class Game {
             System.out.println("Result: DRAW");
         else
             System.out.println("Turn: " + (getTurn() == GameStatus.TURN_WHITE ? "white" : "black"));
-        System.out.println("Handicap: white=" + gameStatus.getHandicapWhite() + ", black=" + gameStatus.getHandicapBlack());
+        if (engineWhite.getConfig().isUseHandicap() || engineBlack.getConfig().isUseHandicap()) {
+            System.out.println("Handicap: white=" + gameStatus.getHandicapWhite() + ", black=" + gameStatus.getHandicapBlack());
+        }
     }
 }
