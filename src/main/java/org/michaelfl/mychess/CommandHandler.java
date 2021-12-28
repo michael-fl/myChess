@@ -150,16 +150,22 @@ final class CommandHandler {
         }
 
         private void makeComputerMove() throws InterruptedException, ExecutionException, TimeoutException {
+            long t1 = System.currentTimeMillis();
             MoveAndWeight move = game.getEngine().nextMoveAsync(env).getResult(1, TimeUnit.HOURS);
+            long t2 = System.currentTimeMillis();
             if (move.move == 0) {
                 System.err.println("No move possible!?");
                 return;
             }
 
+            var moveDescr = game.moveToShortNotation(new Move(move.move));
             game.makeMove(move);
             game.calculateAndSetGameResult();
             game.print();
-            System.out.println("Move #" + game.getMoveCount() + ": " + ChessUtil.moveToString(move.move) + ", weight " + ChessUtil.weightToString(move.weight));
+            System.out.println("Move #" + game.getMoveCount()
+                    + ": " + moveDescr
+                    + ", weight " + ChessUtil.weightToString(move.weight)
+                    + ", " + (t2 - t1) + "ms");
         }
     }
 
@@ -389,11 +395,15 @@ final class CommandHandler {
                 return;
             }
 
+            var moveDescr = game.moveToShortNotation(new Move(move.move));
             computerColor = game.getTurn();
             game.makeMove(move);
             game.calculateAndSetGameResult();
             game.print();
-            System.out.println("Move #" + game.getMoveCount() + ": " + ChessUtil.moveToString(move.move) + ", weight " + ChessUtil.weightToString(move.weight) + ", " + (t2 - t1) + "ms");
+            System.out.println("Move #" + game.getMoveCount()
+                    + ": " + moveDescr
+                    + ", weight " + ChessUtil.weightToString(move.weight)
+                    + ", " + (t2 - t1) + "ms");
         }
     }
 
@@ -506,8 +516,6 @@ final class CommandHandler {
         void handle(String commandLine) {
             var key = game.getBoard().calculatePositionKey();
             var positionInfo = env.getOpeningDB().lookupPosition(key);
-
-            env.getOpeningDB().rollback();
 
             if (positionInfo == null) {
                 System.out.println("No position found in opening DB.");

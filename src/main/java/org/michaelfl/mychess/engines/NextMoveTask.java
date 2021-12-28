@@ -25,6 +25,10 @@ public final class NextMoveTask {
         this.env = env != null ? env : new MyChessEnv();
     }
 
+    public MyChessEnv getEnv() {
+        return env;
+    }
+
     public void cancel() {
         isCanceled = true;
         resultFuture.cancel(false);

@@ -397,6 +397,18 @@ class EngineTest {
         );
     }
 
+    // Black checkmate in 5.
+    // FEN: 1r5r/k4ppp/2B1p3/pQ2Nq2/Pb1P4/6B1/5PPP/5RK1 w - - 3 26
+    @Test
+    void testPosition18() {
+        testPosition("[[e2-e4 d7-d5 e4-d5 d8-d5 b1-c3 d5-a5 d2-d4 g8-f6 g1-f3 c8-f5 c1-d2 b8-c6 f1-c4 c6-b4 a1-c1 e7-e6 a2-a3 b4-c2 c1-c2 f5-c2 d1-c2 a5-h5 c2-a4 c7-c6 d2-f4 h5-f5 f4-g3 f6-e4 e1-g1 e4-c3 b2-c3 a7-a6 a4-b3 b7-b5 c4-e2 e8-c8 f3-e5 c8-b7 e2-f3 d8-c8 a3-a4 b5-b4 b3-c4 a6-a5 c3-b4 f8-b4 f3-c6 b7-a7 c4-b5 c8-b8]]",
+                Set.of("c6-b7"),
+                6.0f, // OPT: Should be checkmate in 5
+                8.0f,
+                new GameConfig(MyChessEngine.class, engineConfig(false))
+        );
+    }
+
     // Assure that the white knight on f6 is not captured with the king pawn,
     // since this would weaken blacks kind position a lot
     @Test @Disabled
