@@ -244,6 +244,11 @@ public final class Game {
         }
     }
 
+    void makeMove(Move move) {
+        makeMove(move.getMove());
+        calculateAndSetGameResult();
+    }
+
     MoveDescription moveToShortNotation(Move move) {
         var builder = new MoveDescription.Builder(getTurn());
         var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());

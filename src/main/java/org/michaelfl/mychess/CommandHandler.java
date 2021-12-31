@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 final class CommandHandler {
 
@@ -126,47 +127,63 @@ final class CommandHandler {
 
         @Override
         boolean canHandle(String commandLine) {
-            try {
-                MoveDescription.fromString(commandLine, game.getTurn());
-                return true;
-            } catch(Exception e) {
-                return false;
+            return parseMove(commandLine) != null;
+        }
+
+        private MoveDescription parseMove(String s) {
+            if (s.length() >= 2) {
+                try {
+                    return MoveDescription.fromString(s, game.getTurn());
+                } catch (Exception e) {
+                    // fall through
+                }
+                if ("nbrqk".indexOf(s.charAt(0)) >= 0) {
+                    s = Character.toUpperCase(s.charAt(0)) + s.substring(1);
+                    try {
+                        return MoveDescription.fromString(s, game.getTurn());
+                    } catch (Exception e) {
+                        // fall through
+                    }
+                }
             }
+
+            return null;
         }
 
         @Override
         void handle(String commandLine) throws InterruptedException, ExecutionException, TimeoutException {
-            MoveDescription move = MoveDescription.fromString(commandLine, game.getTurn());
+            MoveDescription move = parseMove(commandLine);
 
             try {
                 game.makeMove(move);
                 game.print();
+
+                if (computerColor != null && computerColor == game.getTurn() && game.getResult() == GameResult.ONGOING) {
+                    makeComputerMove();
+                }
             } catch (IllegalStateException e) {
                 System.out.println("Illegal move");
             }
+        }
+    }
 
-            if (computerColor != null && computerColor == game.getTurn() && game.getResult() == GameResult.ONGOING)
-                makeComputerMove();
+    private void makeComputerMove() throws InterruptedException, ExecutionException, TimeoutException {
+        long t1 = System.currentTimeMillis();
+        MoveAndWeight move = game.getEngine().nextMoveAsync(env).getResult(1, TimeUnit.HOURS);
+        long t2 = System.currentTimeMillis();
+        if (move.move == 0) {
+            System.err.println("No move possible!?");
+            return;
         }
 
-        private void makeComputerMove() throws InterruptedException, ExecutionException, TimeoutException {
-            long t1 = System.currentTimeMillis();
-            MoveAndWeight move = game.getEngine().nextMoveAsync(env).getResult(1, TimeUnit.HOURS);
-            long t2 = System.currentTimeMillis();
-            if (move.move == 0) {
-                System.err.println("No move possible!?");
-                return;
-            }
-
-            var moveDescr = game.moveToShortNotation(new Move(move.move));
-            game.makeMove(move);
-            game.calculateAndSetGameResult();
-            game.print();
-            System.out.println("Move #" + game.getMoveCount()
-                    + ": " + moveDescr
-                    + ", weight " + ChessUtil.weightToString(move.weight)
-                    + ", " + (t2 - t1) + "ms");
-        }
+        var moveDescr = game.moveToShortNotation(new Move(move.move));
+        game.makeMove(move);
+        game.calculateAndSetGameResult();
+        game.print();
+        System.out.println("Move #" + game.getMoveCount()
+                + ": " + moveDescr
+                + ", weight " + ChessUtil.weightToString(move.weight)
+                + ", " + (t2 - t1) + "ms");
     }
 
     private final class ImportCommand extends Command {
@@ -529,12 +546,14 @@ final class CommandHandler {
 
             buf.append("#Positions: ").append(positionInfo.count).append('\n');
 
+            var moveNo = new AtomicInteger();
             positionInfo.moves
                     .stream()
                     .sorted(Comparator.comparingInt(MoveInfo::getTotalCount).reversed())
                     .forEach(moveInfo -> {
                         var moveDescr = game.moveToShortNotation(moveInfo.move);
-                        buf.append(String.format("%-6s", moveDescr)).append(' ')
+                        buf.append(String.format("%-3s", moveNo.incrementAndGet() + ".")).append(' ')
+                                .append(String.format("%-6s", moveDescr)).append(' ')
                                 .append("#").append(String.format("%7d", moveInfo.getTotalCount())).append('\t')
                                 .append(String.format("%3d", moveInfo.getWinPercentage())).append("% win, ")
                                 .append(String.format("%3d", moveInfo.getDrawPercentage())).append("% draw, ")
@@ -543,6 +562,49 @@ final class CommandHandler {
                     });
 
             System.out.println(buf);
+        }
+    }
+
+    private final class OpeningMoveCommand extends Command {
+
+        @Override
+        boolean canHandle(String commandLine) {
+            return commandLine.length() > 1
+                    && commandLine.startsWith("o")
+                    && Character.isDigit(commandLine.charAt(1));
+        }
+
+        @Override
+        void handle(String commandLine) throws ExecutionException, InterruptedException, TimeoutException {
+            var index = Integer.parseInt(commandLine.substring(1));
+            var key = game.getBoard().calculatePositionKey();
+            var positionInfo = env.getOpeningDB().lookupPosition(key);
+
+            if (index < 1) {
+                System.out.println("Move number must be > 0.");
+            } else if (positionInfo == null) {
+                System.out.println("No position found in opening DB.");
+            } else if (index > positionInfo.moves.size()) {
+                System.out.println("No such move in opening DB.");
+            } else {
+                var moveInfo = positionInfo.moves
+                        .stream()
+                        .sorted(Comparator.comparingInt(MoveInfo::getTotalCount).reversed())
+                        .skip(index - 1)
+                        .findFirst()
+                        .orElseThrow();
+
+                try {
+                    game.makeMove(moveInfo.move);
+                    game.print();
+
+                    if (computerColor != null && computerColor == game.getTurn() && game.getResult() == GameResult.ONGOING) {
+                        makeComputerMove();
+                    }
+                } catch (IllegalStateException e) {
+                    System.out.println("Illegal move");
+                }
+            }
         }
     }
 
@@ -569,7 +631,8 @@ final class CommandHandler {
             new PossibleMovesCommand(),
             new FenCommand(),
             new HashCommand(),
-            new OpeningCommand()
+            new OpeningCommand(),
+            new OpeningMoveCommand()
     );
 
     private final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
