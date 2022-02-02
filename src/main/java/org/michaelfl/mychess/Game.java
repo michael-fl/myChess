@@ -229,7 +229,7 @@ public final class Game {
             moveToValidate = new Move(Move.create(move.getFromField(), move.getToField(), capturedPiece, Move.typePawnPromotionQueen));
         }
         if (!validMoves.contains(moveToValidate.getMove())) {
-            throw new IllegalMoveException("Illegal move: " + moveDescr);
+            throw new IllegalMoveException(moveDescr);
         }
 
         makeMove(move.getMove());
@@ -241,6 +241,9 @@ public final class Game {
         } catch (IllegalMoveException e) { // move was illegal
             revertMove();
             throw e;
+        } catch (IllegalChessPositionException e) { // move was illegal
+            revertMove();
+            throw new IllegalMoveException(moveDescr);
         }
     }
 

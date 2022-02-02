@@ -6,6 +6,7 @@ import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.GameStatus;
+import org.michaelfl.mychess.IllegalChessPositionException;
 import org.michaelfl.mychess.Move;
 import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.Moves;
@@ -86,7 +87,7 @@ final class PositionSearch {
 
         final Moves moves = moveGenerator.calculateMoves(workingBoard, 0, getMoveAtDepth(bestKnownPath, 0));
         if (moves.isIllegal()) {
-            throw new IllegalStateException("Illegal chess position");
+            throw new IllegalChessPositionException(workingBoard);
         }
 
         final float materialWeight = weightFactor * WeightingFunction.calculateMaterialWeight(workingBoard);
