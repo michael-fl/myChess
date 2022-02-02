@@ -208,4 +208,18 @@ class MoveTest {
         assertEquals(Board.whitePawn, piece, "wrong piece");
     }
 
+    @Test
+    void testIllegalMoveIsReverted() {
+        var importer = new SimpleNotationImporter("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-e3 e7-e5 d4-f3 f8-e7 f1-c4 e8-g8 e1-g1 b8-c6 d1-e2 c8-g4 h2-h3 g4-f3 e2-f3 d8-c7 c4-b3 c7-d7 a1-d1 e7-d8 c3-d5 f6-d5 b3-d5 c6-b4 d5-b3 a8-c8 c2-c3 b4-c6 b3-d5 f8-e8 b2-b4 d8-f6 a2-a3 c6-e7 c3-c4 e7-d5 c4-d5 c8-c3 d1-a1 f6-g5 f1-c1 e8-c8 c1-e1 c8-c4 g1-h2 g5-h6 h3-h4 h6-e3 e1-e3 c3-e3 f3-e3 f7-f5 f2-f3 f5-e4 f3-e4 d7-g4 e3-g5 g4-g5 h4-g5 c4-e4 a1-c1 e4-g4 c1-c8 g8-f7 c8-c7 f7-g6 c7-b7 g4-d4 b7-a7 d4-d5 a7-a6 g6-g5 a3-a4 d5-d4 b4-b5 d4-h4]]");
+        var game = importer.importGame();
+
+        // make invalid move
+        assertThrows(IllegalMoveException.class, () -> game.makeMove(MoveDescription.fromString("g3", game.getTurn())));
+
+        // assure that move was not executed
+        var piece = game.getBoard().get(Board.g2);
+        assertEquals(Board.whitePawn, piece, "Wrong piece. Move not reverted.");
+        piece = game.getBoard().get(Board.g3);
+        assertEquals(Board.empty, piece, "Field should be empty. Move not reverted.");
+    }
 }
