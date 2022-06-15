@@ -5,7 +5,7 @@ import org.michaelfl.mychess.engines.MyChessEngine;
 /**
  * @author Michael Fleischhauer
  */
-final class PGNImporter {
+final class PGNImporter implements GameImporter {
 
     private final Pgn pgn;
 
@@ -13,7 +13,8 @@ final class PGNImporter {
         this.pgn = pgn;
     }
 
-    Game importGame() {
+    @Override
+    public Game importGame() {
         var config = new GameConfig(
                 MyChessEngine.class,
                 new EngineConfig.Builder().enableThreefoldRepetition(false).enableFiftyMovesRule(false).build());
@@ -21,7 +22,8 @@ final class PGNImporter {
         return importGame(config);
     }
 
-    Game importGame(GameConfig config) {
+    @Override
+    public Game importGame(GameConfig config) {
         return new Game(config, pgn.moves);
     }
 }
