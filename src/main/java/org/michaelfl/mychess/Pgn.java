@@ -40,6 +40,7 @@ public final class Pgn {
         WHITE_WINS,
         BLACK_WINS,
         DRAW,
+        ONGOING,
         UNKNOWN
     }
 
@@ -141,7 +142,8 @@ public final class Pgn {
             }
 
             if (result == null) {
-                throw new IllegalPGNException("Game termination marker missing: " + this);
+                // Game termination marker missing
+                result = Result.ONGOING;
             }
             if (moves.isEmpty()) {
                 throw new IllegalPGNException("No moves defined: " + this);
@@ -253,7 +255,7 @@ public final class Pgn {
             }
 
             // EOF reached without termination marker
-            throw new IllegalPGNException("Game termination marker missing: " + pgnBuilder);
+            return pgnBuilder.build();
         }
     }
 

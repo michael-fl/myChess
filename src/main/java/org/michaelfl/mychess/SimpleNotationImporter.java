@@ -3,7 +3,7 @@ package org.michaelfl.mychess;
 import java.util.ArrayList;
 import java.util.List;
 
-final class SimpleNotationImporter {
+final class SimpleNotationImporter implements GameImporter {
 
     private final String gameNotation;
 
@@ -17,11 +17,13 @@ final class SimpleNotationImporter {
         this.gameNotation = gameNotation;
     }
 
-    Game importGame() {
+    @Override
+    public Game importGame() {
         return importGame(Game.standardConfig());
     }
 
-    Game importGame(GameConfig config) {
+    @Override
+    public Game importGame(GameConfig config) {
         List<MoveDescription> moves = new ArrayList<>();
         String[] moveNotations = gameNotation.split(" ");
         boolean isWhiteTurn = true;
