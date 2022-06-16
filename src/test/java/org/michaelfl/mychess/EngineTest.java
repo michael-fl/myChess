@@ -238,6 +238,58 @@ class EngineTest {
         );
     }
 
+    // White has made a mistake with the rook move (correct move was Rc7)
+    // and now looses its advantage. The only expected black answer is Rg5.
+    // All other alternatives are catastrophic for black.
+    // FEN: 2R5/1p2bqBk/p2p4/3Ppr2/3p2Q1/P2P3P/1P3PP1/6K1 b - - 2 23
+    @Test
+    void testPosition19() {
+        var pgn = "1. c4 e5 2. Nc3 Nf6 3. a3 Nc6 4. e4 Nd4 5. Nf3 d6 6. h3 Be7 7. Be2 O-O 8. O-O\n" +
+                "h6 9. d3 a6 10. Be3 c5 11. Nd5 Be6 12. Nxd4 cxd4 13. Bd2 Nxd5 14. cxd5 Bd7 15. Rc1\n" +
+                "Rc8 16. Bg4 f5 17. Bxf5 Bxf5 18. exf5 Rxf5 19. Qg4 Rxc1 20. Rxc1 Qf8 21. Bxh6\n" +
+                "Kh7 22. Bxg7 Qf7 23. Rc8";
+        testPosition(pgn,
+                Set.of("Rg5"),
+                0.0f,
+                0.2f,
+                new GameConfig(MyChessEngine.class, engineConfig(false))
+        );
+    }
+
+    // Follow-on position of test 19. Black has made a huge mistake with the queen move and now has a lost position.
+    // Correct move was Rg5 (see test 19).
+    // FEN: 2R5/1p2b1Bk/p2p2q1/3Ppr2/3p2Q1/P2P3P/1P3PP1/6K1 w - - 3 24
+    @Test
+    void testPosition20() {
+        var pgn = "1. c4 e5 2. Nc3 Nf6 3. a3 Nc6 4. e4 Nd4 5. Nf3 d6 6. h3 Be7 7. Be2 O-O 8. O-O\n" +
+                "h6 9. d3 a6 10. Be3 c5 11. Nd5 Be6 12. Nxd4 cxd4 13. Bd2 Nxd5 14. cxd5 Bd7 15. Rc1\n" +
+                "Rc8 16. Bg4 f5 17. Bxf5 Bxf5 18. exf5 Rxf5 19. Qg4 Rxc1 20. Rxc1 Qf8 21. Bxh6\n" +
+                "Kh7 22. Bxg7 Qf7 23. Rc8 Qg6";
+        testPosition(pgn,
+                Set.of("Rh8+"),
+                8.0f,
+                15.0f,
+                new GameConfig(MyChessEngine.class, engineConfig(false))
+        );
+    }
+
+    // Follow-on position of test 19 (2 moves further). Position is already lost for black.
+    // In this situation there exists only one strong move for white.
+    // All other possibilities are really weak.
+    @Test
+    void testPosition21() {
+        var pgn = "1. c4 e5 2. Nc3 Nf6 3. a3 Nc6 4. e4 Nd4 5. Nf3 d6 6. h3 Be7 7. Be2 O-O 8. O-O\n" +
+                "h6 9. d3 a6 10. Be3 c5 11. Nd5 Be6 12. Nxd4 cxd4 13. Bd2 Nxd5 14. cxd5 Bd7 15. Rc1\n" +
+                "Rc8 16. Bg4 f5 17. Bxf5 Bxf5 18. exf5 Rxf5 19. Qg4 Rxc1 20. Rxc1 Qf8 21. Bxh6\n" +
+                "Kh7 22. Bxg7 Qf7 23. Rc8 Qg6 24.Rh8+ Kxg7";
+        testPosition(pgn,
+                Set.of("Rg8+"),
+                8.0f,
+                19.0f,
+                new GameConfig(MyChessEngine.class, engineConfig(false))
+        );
+    }
+
     @SuppressWarnings("SameParameterValue")
     static EngineConfig engineConfig(boolean doCheckmateCheck) {
         return new EngineConfig.Builder()
@@ -253,11 +305,11 @@ class EngineTest {
 
     static void testPosition(String gameNotation, Set<String> expectedMoves, float expectedMinWeight, float expectedMaxWeight, GameConfig config) {
         try {
-            SimpleNotationImporter importer = new SimpleNotationImporter(gameNotation);
+            GameImporter importer = GameImporter.importerFor(gameNotation);
             var game = importer.importGame(config);
 
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
-            if (!expectedMoves.contains(ChessUtil.moveToString(move.move))) {
+            if (!(expectedMoves.contains(ChessUtil.moveToString(move.move)) || expectedMoves.contains(game.moveToShortNotation(new Move(move.move)).toString()))) {
                 game.print();
                 System.out.println(game.exportFEN());
                 fail("Wrong move: " + ChessUtil.moveToString(move.move) + ". Expected one of " + expectedMoves);
