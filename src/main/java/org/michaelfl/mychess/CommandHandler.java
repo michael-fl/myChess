@@ -198,13 +198,7 @@ final class CommandHandler {
             try {
                 computerColor = null;
                 var gameNotation = commandLine.substring(commandLine.indexOf(' ') + 1);
-                GameImporter importer;
-                if (gameNotation.startsWith("[[")) {
-                    importer = new SimpleNotationImporter(gameNotation);
-                } else {
-                    var pgn = Pgn.parse(gameNotation).findFirst();
-                    importer = new PGNImporter(pgn.orElseThrow(() -> new IllegalArgumentException("No PGN given")));
-                }
+                GameImporter importer = GameImporter.importerFor(gameNotation);
                 game = importer.importGame();
                 game.print();
             } catch (RuntimeException e) {
