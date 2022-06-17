@@ -199,7 +199,6 @@ class EngineV1Test {
                 .iterationDepth(6)
                 .variants(4)
                 .checkmateCheck(doCheckmateCheck)
-                .useHandicap(false)
                 .build();
     }
 

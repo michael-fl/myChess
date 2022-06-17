@@ -47,7 +47,6 @@ public final class Game {
                 new EngineConfig.Builder()
                         .maxDepth(2)
                         .checkmateCheck(false)
-                        .useHandicap(false)
                         .enableThreefoldRepetition(engineWhite.getConfig().isEnableThreefoldRepetition())
                         .enableFiftyMovesRule(engineWhite.getConfig().isEnableFiftyMovesRule())
                         .silent(true)
@@ -422,8 +421,5 @@ public final class Game {
             System.out.println("Result: DRAW");
         else
             System.out.println("Turn: " + (getTurn() == GameStatus.TURN_WHITE ? "white" : "black"));
-        if (engineWhite.getConfig().isUseHandicap() || engineBlack.getConfig().isUseHandicap()) {
-            System.out.println("Handicap: white=" + gameStatus.getHandicapWhite() + ", black=" + gameStatus.getHandicapBlack());
-        }
     }
 }
