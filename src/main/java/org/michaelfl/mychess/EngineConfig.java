@@ -12,17 +12,15 @@ public final class EngineConfig {
     private final int iterationDepth;
     private final int nVariants;
     private final boolean checkmateCheck;
-    private final boolean useHandicap;
     private final boolean silent;
     private final boolean enableThreefoldRepetition;
     private final boolean enableFiftyMovesRule;
 
-    private EngineConfig(int maxDepth, int iterationDepth, int nVariants, boolean checkmateCheck, boolean useHandicap, boolean silent, boolean enableThreefoldRepetition, boolean enableFiftyMovesRule) {
+    private EngineConfig(int maxDepth, int iterationDepth, int nVariants, boolean checkmateCheck, boolean silent, boolean enableThreefoldRepetition, boolean enableFiftyMovesRule) {
         this.maxDepth = maxDepth;
         this.iterationDepth = iterationDepth;
         this.nVariants = nVariants;
         this.checkmateCheck = checkmateCheck;
-        this.useHandicap = useHandicap;
         this.silent = silent;
         this.enableThreefoldRepetition = enableThreefoldRepetition;
         this.enableFiftyMovesRule = enableFiftyMovesRule;
@@ -32,6 +30,7 @@ public final class EngineConfig {
         return maxDepth;
     }
 
+    // Only used by engine V1
     public final int getIterationDepth() {
         return iterationDepth;
     }
@@ -40,16 +39,13 @@ public final class EngineConfig {
         return DEFAULT_MAX_QUIESCENCE_SEARCH_DEPTH;
     }
 
+    // Only used by engine V1
     public final int getNVariants() {
         return nVariants;
     }
 
     public final boolean isCheckmateCheck() {
         return checkmateCheck;
-    }
-
-    public final boolean isUseHandicap() {
-        return useHandicap;
     }
 
     public final boolean isSilent() {
@@ -69,7 +65,6 @@ public final class EngineConfig {
         private int iterationDepth = 0;
         private int nVariants = 1;
         private boolean checkmateCheck = false;
-        private boolean useHandicap = false;
         private boolean silent = false;
         private boolean enableThreefoldRepetition = true;
         private boolean enableFiftyMovesRule = true;
@@ -94,11 +89,6 @@ public final class EngineConfig {
             return this;
         }
 
-        public Builder useHandicap(boolean useHandicap) {
-            this.useHandicap = useHandicap;
-            return this;
-        }
-
         public Builder silent(boolean silent) {
             this.silent = silent;
             return this;
@@ -115,7 +105,7 @@ public final class EngineConfig {
         }
 
         public EngineConfig build() {
-            return new EngineConfig(maxDepth, iterationDepth, nVariants, checkmateCheck, useHandicap, silent, enableThreefoldRepetition, enableFiftyMovesRule);
+            return new EngineConfig(maxDepth, iterationDepth, nVariants, checkmateCheck, silent, enableThreefoldRepetition, enableFiftyMovesRule);
         }
     }
 }

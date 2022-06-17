@@ -3,7 +3,6 @@ package org.michaelfl.mychess.engines;
 import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.Game.GameResult;
-import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.MovesCounter;

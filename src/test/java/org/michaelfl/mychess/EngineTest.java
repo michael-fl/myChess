@@ -295,7 +295,6 @@ class EngineTest {
         return new EngineConfig.Builder()
                 .maxDepth(8)
                 .checkmateCheck(doCheckmateCheck)
-                .useHandicap(false)
                 .build();
     }
 
