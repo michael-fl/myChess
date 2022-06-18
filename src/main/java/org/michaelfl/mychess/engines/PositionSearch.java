@@ -19,7 +19,40 @@ import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import java.util.concurrent.CancellationException;
 
 @SuppressWarnings("DuplicatedCode")
-final class PositionSearch {
+public final class PositionSearch {
+
+    public static final class SearchNodeContext {
+        public SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnownPath,
+                                 float alphaWeight, float betaWeight, float materialWeight, float materialDelta,
+                                 Board workingBoard) {
+            this.depth = depth;
+            this.maxDepth = maxDepth;
+            this.bestKnownPath = bestKnownPath;
+            this.alphaWeight = alphaWeight;
+            this.betaWeight = betaWeight;
+            this.materialWeight = materialWeight;
+            this.materialDelta = materialDelta;
+            this.workingBoard = workingBoard;
+        }
+
+        public final int depth;
+        public final int maxDepth;
+        public final MoveAndWeight bestKnownPath;
+        public final float alphaWeight;
+        public final float betaWeight;
+        public final float materialWeight;
+        public final float materialDelta;
+        public final Board workingBoard;
+    }
+
+    private static final class SearchNodeResult {
+        public GameResult result;
+        public final int[] bestPath;
+
+        SearchNodeResult(int[] bestPath) {
+            this.bestPath = bestPath;
+        }
+    }
 
     private final NextMoveTask task;
     private final Game game;
@@ -87,7 +120,7 @@ final class PositionSearch {
         final float materialWeight = weightFactor * WeightingFunction.calculateMaterialWeight(workingBoard);
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
-        final GameResult[] result = new GameResult[1];
+        final SearchNodeResult result = new SearchNodeResult(workingPath);
         final float[] weights = new float[countMoves];
         final GameResult[] gameResults = new GameResult[countMoves];
         final int[][] allPaths = new int[countMoves][maxPathLength];
@@ -104,11 +137,11 @@ final class PositionSearch {
 
             workingPath[0] = move;
             workingBoard.makeMove(move);
-            float weight = minSearch(1, maxDepth, bestKnownPath, alphaWeight, Float.POSITIVE_INFINITY, newMaterialWeight, newMaterialDelta, workingBoard, result, workingPath);
+            float weight = minSearch(new SearchNodeContext(1, maxDepth, bestKnownPath, alphaWeight, Float.POSITIVE_INFINITY, newMaterialWeight, newMaterialDelta, workingBoard), result);
             bestKnownPath = null;
             workingBoard.revertMove();
             weights[i] = weight;
-            gameResults[i] = result[0];
+            gameResults[i] = result.result;
             System.arraycopy(workingPath, 0, allPaths[i], 0, maxPathLength);
 
             //log("--> weight " + ChessUtil.weightToString(weight));
@@ -151,33 +184,35 @@ final class PositionSearch {
     }
 
     @SuppressWarnings("Duplicates")
-    private float maxSearch(final int depth, final int maxDepth, MoveAndWeight bestKnownPath, final float alphaWeight, final float betaWeight, final float materialWeight, final float materialDelta, final Board workingBoard, final GameResult[] resultOut, final int[] bestPathOut) {
-        final GameStatus gameStatus = workingBoard.getGameStatus();
+    private float maxSearch(final SearchNodeContext ctx, final SearchNodeResult result) {
+        final int depth = ctx.depth;
+        MoveAndWeight bestKnownPath = ctx.bestKnownPath;
+        final GameStatus gameStatus = ctx.workingBoard.getGameStatus();
         statistics.incrPositionCount();
-        bestPathOut[depth] = 0;
-        resultOut[0] = GameResult.ONGOING;
+        result.bestPath[depth] = 0;
+        result.result = GameResult.ONGOING;
 
-        if (alphaWeight == Float.POSITIVE_INFINITY || betaWeight == Float.NEGATIVE_INFINITY) {
-            throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard);
+        if (ctx.alphaWeight == Float.POSITIVE_INFINITY || ctx.betaWeight == Float.NEGATIVE_INFINITY) {
+            throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
         }
-        if ((engineConfig.isEnableFiftyMovesRule() && gameStatus.getHalfMoveClock() >= 100) || (engineConfig.isEnableThreefoldRepetition() && workingBoard.isThreefoldRepetition())) {
-            resultOut[0] = GameResult.DRAW;
+        if ((engineConfig.isEnableFiftyMovesRule() && gameStatus.getHalfMoveClock() >= 100) || (engineConfig.isEnableThreefoldRepetition() && ctx.workingBoard.isThreefoldRepetition())) {
+            result.result = GameResult.DRAW;
             return 0; // draw
         }
 
-        if (depth == maxDepth) {
-            return quiescenceSearch(depth, true, workingBoard, materialWeight, materialDelta);
+        if (depth == ctx.maxDepth) {
+            return quiescenceSearch(depth, true, ctx.workingBoard, ctx.materialWeight, ctx.materialDelta);
         }
 
-        final Moves moves = moveGenerator.calculateMoves(workingBoard, depth, getMoveAtDepth(bestKnownPath, depth));
+        final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard, depth, getMoveAtDepth(bestKnownPath, depth));
         if (moves.isIllegal())
             return WeightingFunction.ILLEGAL_WEIGHT;
-        final int[] workingPath = new int[bestPathOut.length];
+        final int[] workingPath = new int[result.bestPath.length];
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
-        float bestWeight = alphaWeight; // Float.NEGATIVE_INFINITY
+        float bestWeight = ctx.alphaWeight; // Float.NEGATIVE_INFINITY
         boolean haveValidMove = false;
-        final GameResult[] result = new GameResult[1];
+        final SearchNodeResult result2 = new SearchNodeResult(workingPath);
 
         if (task.isCanceled()) {
             throw new CancellationException();
@@ -187,21 +222,21 @@ final class PositionSearch {
             final int move = plainMoves[i];
             workingPath[depth] = move;
             final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
-            final float newMaterialWeight = materialWeight + moveWeight;
-            final float newMaterialDelta = materialDelta + moveWeight;
+            final float newMaterialWeight = ctx.materialWeight + moveWeight;
+            final float newMaterialDelta = ctx.materialDelta + moveWeight;
 
-            workingBoard.makeMove(move);
-            final float weight = minSearch(depth + 1, maxDepth, bestKnownPath, bestWeight, betaWeight, newMaterialWeight, newMaterialDelta, workingBoard, result, workingPath);
+            ctx.workingBoard.makeMove(move);
+            final float weight = minSearch(new SearchNodeContext(depth + 1, ctx.maxDepth, bestKnownPath, bestWeight, ctx.betaWeight, newMaterialWeight, newMaterialDelta, ctx.workingBoard), result2);
             bestKnownPath = null;
-            workingBoard.revertMove();
+            ctx.workingBoard.revertMove();
 
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
                 haveValidMove = true;
 
                 // Alpha-Beta search pruning
-                if (weight >= betaWeight) {
+                if (weight >= ctx.betaWeight) {
                     statistics.incrPrunedMovesCount(countMoves - i - 1);
-                    System.arraycopy(workingPath, depth, bestPathOut, depth, bestPathOut.length - depth);
+                    System.arraycopy(workingPath, depth, result.bestPath, depth, result.bestPath.length - depth);
                     if (Move.getCapturedPiece(move) == 0) {
                         killerMoves.addMove(move, depth);
                     }
@@ -210,8 +245,8 @@ final class PositionSearch {
 
                 if (weight > bestWeight) {
                     bestWeight = weight;
-                    resultOut[0] = result[0];
-                    System.arraycopy(workingPath, depth, bestPathOut, depth, bestPathOut.length - depth);
+                    result.result = result2.result;
+                    System.arraycopy(workingPath, depth, result.bestPath, depth, result.bestPath.length - depth);
                 }
             }
         }
@@ -219,71 +254,73 @@ final class PositionSearch {
         if (haveValidMove) {
             //noinspection ConstantConditions
             if (bestWeight == Float.POSITIVE_INFINITY || bestWeight == Float.NEGATIVE_INFINITY) {
-                throw new IllegalStateException("bestWeight=" + bestWeight + ", depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard.toString());
+                throw new IllegalStateException("bestWeight=" + bestWeight + ", depth=" + depth + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard.toString());
             }
             return bestWeight;
         }
 
         // No legal move possible ==> Checkmate or stalemate
-        if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
+        if (Game.testIsKingChecked(ctx.workingBoard, moveGenerator)) {
             // Computer checkmate
-            resultOut[0] = GameResult.CHECKMATE;
+            result.result = GameResult.CHECKMATE;
             return -(WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth);
         }
 
         // Stalemate
-        resultOut[0] = GameResult.STALEMATE;
+        result.result = GameResult.STALEMATE;
         return 0; // draw
     }
 
     @SuppressWarnings("Duplicates")
-    private float minSearch(final int depth, final int maxDepth, MoveAndWeight bestKnownPath, final float alphaWeight, final float betaWeight, final float materialWeight, final float materialDelta, final Board workingBoard, final GameResult[] resultOut, final int[] bestPathOut) {
-        final GameStatus gameStatus = workingBoard.getGameStatus();
+    private float minSearch(final SearchNodeContext ctx, final SearchNodeResult result) {
+        final int depth = ctx.depth;
+        MoveAndWeight bestKnownPath = ctx.bestKnownPath;
+        final GameStatus gameStatus = ctx.workingBoard.getGameStatus();
         statistics.incrPositionCount();
-        bestPathOut[depth] = 0;
-        resultOut[0] = GameResult.ONGOING;
+        result.bestPath[depth] = 0;
+        result.result = GameResult.ONGOING;
 
-        if (alphaWeight == Float.POSITIVE_INFINITY || betaWeight == Float.NEGATIVE_INFINITY) {
-            throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard);
+        if (ctx.alphaWeight == Float.POSITIVE_INFINITY || ctx.betaWeight == Float.NEGATIVE_INFINITY) {
+            throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
         }
-        if ((engineConfig.isEnableFiftyMovesRule() && gameStatus.getHalfMoveClock() >= 100) || (engineConfig.isEnableThreefoldRepetition() && workingBoard.isThreefoldRepetition())) {
-            resultOut[0] = GameResult.DRAW;
+        if ((engineConfig.isEnableFiftyMovesRule() && gameStatus.getHalfMoveClock() >= 100) || (engineConfig.isEnableThreefoldRepetition() && ctx.workingBoard.isThreefoldRepetition())) {
+            result.result = GameResult.DRAW;
             return 0; // draw
         }
 
-        if (depth == maxDepth) {
-            return quiescenceSearch(depth, false, workingBoard, materialWeight, materialDelta);
+        if (depth == ctx.maxDepth) {
+            return quiescenceSearch(depth, false, ctx.workingBoard, ctx.materialWeight, ctx.materialDelta);
         }
 
-        final Moves moves = moveGenerator.calculateMoves(workingBoard, depth, getMoveAtDepth(bestKnownPath, depth));
+        final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard, depth, getMoveAtDepth(bestKnownPath, depth));
         if (moves.isIllegal())
             return WeightingFunction.ILLEGAL_WEIGHT;
-        final int[] workingPath = new int[bestPathOut.length];
+        final int[] workingPath = new int[result.bestPath.length];
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
-        float bestWeight = betaWeight; // Float.POSITIVE_INFINITY
+        float bestWeight = ctx.betaWeight; // Float.POSITIVE_INFINITY
         boolean haveValidMove = false;
-        final GameResult[] result = new GameResult[1];
+        final SearchNodeResult result2 = new SearchNodeResult(workingPath);
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
             workingPath[depth] = move;
             final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
-            final float newMaterialWeight = materialWeight - moveWeight;
-            final float newMaterialDelta = materialDelta - moveWeight;
+            final float newMaterialWeight = ctx.materialWeight - moveWeight;
+            final float newMaterialDelta = ctx.materialDelta - moveWeight;
 
-            workingBoard.makeMove(move);
-            final float weight = maxSearch(depth + 1, maxDepth, bestKnownPath, alphaWeight, bestWeight, newMaterialWeight, newMaterialDelta, workingBoard, result, workingPath);
+            ctx.workingBoard.makeMove(move);
+            final float weight = maxSearch(new SearchNodeContext(depth + 1, ctx.maxDepth, bestKnownPath, ctx.alphaWeight, bestWeight, newMaterialWeight, newMaterialDelta, ctx.workingBoard), result2);
             bestKnownPath = null;
-            workingBoard.revertMove();
+            ctx.workingBoard.revertMove();
 
             if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
                 haveValidMove = true;
 
                 // Alpha-Beta search pruning
-                if (weight <= alphaWeight) {
+                if (weight <= ctx.alphaWeight) {
                     statistics.incrPrunedMovesCount(countMoves - i - 1);
-                    System.arraycopy(workingPath, depth, bestPathOut, depth, bestPathOut.length - depth);
+                    System.arraycopy(workingPath, depth, result.bestPath, depth, result.bestPath.length - depth);
                     if (Move.getCapturedPiece(move) == 0) {
                         killerMoves.addMove(move, depth);
                     }
@@ -292,8 +329,8 @@ final class PositionSearch {
 
                 if (weight < bestWeight) {
                     bestWeight = weight;
-                    resultOut[0] = result[0];
-                    System.arraycopy(workingPath, depth, bestPathOut, depth, bestPathOut.length - depth);
+                    result.result = result2.result;
+                    System.arraycopy(workingPath, depth, result.bestPath, depth, result.bestPath.length - depth);
                 }
             }
         }
@@ -301,20 +338,20 @@ final class PositionSearch {
         if (haveValidMove) {
             //noinspection ConstantConditions
             if (bestWeight == Float.POSITIVE_INFINITY || bestWeight == Float.NEGATIVE_INFINITY) {
-                throw new IllegalStateException("bestWeight=" + bestWeight + ", depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard);
+                throw new IllegalStateException("bestWeight=" + bestWeight + ", depth=" + depth + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
             }
             return bestWeight;
         }
 
         // No legal move possible ==> Checkmate or stalemate
-        if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
+        if (Game.testIsKingChecked(ctx.workingBoard, moveGenerator)) {
             // Opposite checkmate
-            resultOut[0] = GameResult.CHECKMATE;
+            result.result = GameResult.CHECKMATE;
             return WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth;
         }
 
         // Stalemate
-        resultOut[0] = GameResult.STALEMATE;
+        result.result = GameResult.STALEMATE;
         return 0; // draw
     }
 
