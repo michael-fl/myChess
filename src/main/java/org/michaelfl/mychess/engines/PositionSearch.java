@@ -21,28 +21,9 @@ import java.util.concurrent.CancellationException;
 @SuppressWarnings("DuplicatedCode")
 public final class PositionSearch {
 
-    public static final class SearchNodeContext {
-        public SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnownPath,
-                                 float alphaWeight, float betaWeight, float materialWeight, float materialDelta,
-                                 Board workingBoard) {
-            this.depth = depth;
-            this.maxDepth = maxDepth;
-            this.bestKnownPath = bestKnownPath;
-            this.alphaWeight = alphaWeight;
-            this.betaWeight = betaWeight;
-            this.materialWeight = materialWeight;
-            this.materialDelta = materialDelta;
-            this.workingBoard = workingBoard;
-        }
-
-        public final int depth;
-        public final int maxDepth;
-        public final MoveAndWeight bestKnownPath;
-        public final float alphaWeight;
-        public final float betaWeight;
-        public final float materialWeight;
-        public final float materialDelta;
-        public final Board workingBoard;
+    public record SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnownPath,
+                                    float alphaWeight, float betaWeight, float materialWeight, float materialDelta,
+                                    Board workingBoard) {
     }
 
     private static final class SearchNodeResult {
@@ -254,7 +235,7 @@ public final class PositionSearch {
         if (haveValidMove) {
             //noinspection ConstantConditions
             if (bestWeight == Float.POSITIVE_INFINITY || bestWeight == Float.NEGATIVE_INFINITY) {
-                throw new IllegalStateException("bestWeight=" + bestWeight + ", depth=" + depth + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard.toString());
+                throw new IllegalStateException("bestWeight=" + bestWeight + ", depth=" + depth + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
             }
             return bestWeight;
         }
@@ -336,7 +317,6 @@ public final class PositionSearch {
         }
 
         if (haveValidMove) {
-            //noinspection ConstantConditions
             if (bestWeight == Float.POSITIVE_INFINITY || bestWeight == Float.NEGATIVE_INFINITY) {
                 throw new IllegalStateException("bestWeight=" + bestWeight + ", depth=" + depth + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
             }
