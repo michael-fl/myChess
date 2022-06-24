@@ -26,7 +26,7 @@ public final class QuiescenceSearch {
         final int maxDepth = depth + maxQuiescenceDepth;
 
         statistics.startQuiescenceSearch();
-        float weight = quiescenceMaxSearch(new SearchNodeContext(depth, maxDepth, null, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, materialWeight, materialDelta, workingBoard));
+        float weight = quiescenceMaxSearch(new SearchNodeContext(depth, maxDepth, null, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, materialWeight, materialDelta, workingBoard, null));
         statistics.endQuiescenceSearch();
 
         return weight;
@@ -36,7 +36,7 @@ public final class QuiescenceSearch {
         final int maxDepth = depth + maxQuiescenceDepth;
 
         statistics.startQuiescenceSearch();
-        float weight = quiescenceMinSearch(new SearchNodeContext(depth, maxDepth, null, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, materialWeight, materialDelta, workingBoard));
+        float weight = quiescenceMinSearch(new SearchNodeContext(depth, maxDepth, null, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, materialWeight, materialDelta, workingBoard, null));
         statistics.endQuiescenceSearch();
 
         return weight;
@@ -87,7 +87,7 @@ public final class QuiescenceSearch {
                 ctx.workingBoard().makeMove(move);
                 if (depth == 0)
                     System.out.println();
-                float weight = quiescenceMinSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), null, bestWeight, ctx.betaWeight(),  newMaterialWeight, newMaterialDelta, ctx.workingBoard()));
+                float weight = quiescenceMinSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), null, bestWeight, ctx.betaWeight(),  newMaterialWeight, newMaterialDelta, ctx.workingBoard(), null));
                 ctx.workingBoard().revertMove();
                 if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
                     if (weight >= ctx.betaWeight()) {
@@ -144,7 +144,7 @@ public final class QuiescenceSearch {
                 final float newMaterialDelta = ctx.materialDelta() - moveWeight;
 
                 ctx.workingBoard().makeMove(move);
-                float weight = quiescenceMaxSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), null, ctx.alphaWeight(), bestWeight, newMaterialWeight, newMaterialDelta, ctx.workingBoard()));
+                float weight = quiescenceMaxSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), null, ctx.alphaWeight(), bestWeight, newMaterialWeight, newMaterialDelta, ctx.workingBoard(), null));
                 ctx.workingBoard().revertMove();
                 if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
                     if (weight <= ctx.alphaWeight()) {
