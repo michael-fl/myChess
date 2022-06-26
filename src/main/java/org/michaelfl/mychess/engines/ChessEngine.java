@@ -3,16 +3,21 @@ package org.michaelfl.mychess.engines;
 import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.Game.GameResult;
+import org.michaelfl.mychess.GameStatus;
+import org.michaelfl.mychess.Move;
 import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.MovesCounter;
 import org.michaelfl.mychess.MyChessEnv;
 import org.michaelfl.mychess.WeightingFunction;
+import org.michaelfl.mychess.openingdb.OpeningDB;
+import org.michaelfl.mychess.openingdb.OpeningDB.MoveInfo;
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 public abstract class ChessEngine {
 
@@ -97,7 +102,36 @@ public abstract class ChessEngine {
         return moveGenerator.calculateMoves(game.getBoard());
     }
 
-    public abstract MoveAndWeight calculateNextMove(NextMoveTask task);
+    public final MoveAndWeight calculateNextMove(NextMoveTask task) {
+        MoveAndWeight move = MoveAndWeight.NO_MOVE;
+        var openingDB = task.getEnv().getOpeningDB();
+
+        // First check if this game is already finished
+        if (game.getResult() != GameResult.ONGOING) {
+            if (game.getResult() == GameResult.CHECKMATE) {
+                move = new MoveAndWeight(0, -WeightingFunction.CHECKMATE_WEIGHT_HIGH, GameResult.CHECKMATE, new int[0]);
+            } else {
+                move = new MoveAndWeight(0, 0f, game.getResult(), new int[0]);
+            }
+        } else if ((getConfig().isEnableFiftyMovesRule() && game.getGameStatus().getHalfMoveClock() >= 100) || isThreefoldRepetition()) {
+            move = new MoveAndWeight(0, 0f, GameResult.DRAW, new int[0]);
+        } else if (openingDB != null) {
+            var m = getMoveFromOpeningDB(openingDB);
+            if (m != null) {
+                move = new MoveAndWeight(m.getMove(), 0f, GameResult.ONGOING, new int[] { move.move });
+            }
+        }
+
+        if (move == MoveAndWeight.NO_MOVE) {
+            move = calculateNextMoveSub(task);
+        }
+
+        float weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
+
+        return move.weightFactor(weightFactor);
+    }
+
+    protected abstract MoveAndWeight calculateNextMoveSub(NextMoveTask task);
 
     protected void log(String s) {
         if (!config.isSilent()) {
@@ -108,4 +142,37 @@ public abstract class ChessEngine {
     protected boolean isThreefoldRepetition() {
         return config.isEnableThreefoldRepetition() && game.getBoard().isThreefoldRepetition();
     }
+
+    private Move getMoveFromOpeningDB(OpeningDB openingDB) {
+        var key = game.getBoard().calculatePositionKey();
+        var positionInfo = openingDB.lookupPosition(key);
+        if (positionInfo == null) {
+            return null;
+        }
+
+        var candidates = positionInfo.moves
+                .stream()
+                .filter(
+                        m -> m.getTotalCount() >= 100
+                                && m.getWinPercentage() >= 20
+                                && m.getLossPercentage() < 45)
+                .collect(Collectors.toList());
+        if (candidates.isEmpty()) {
+            return null;
+        }
+
+        int sum = candidates.stream().mapToInt(MoveInfo::getTotalCount).sum();
+        int n = getRandom().nextInt(sum);
+
+        int i = 0;
+        for (var m : candidates) {
+            i += m.getTotalCount();
+            if (n < i) {
+                return m.move;
+            }
+        }
+
+        throw new IllegalStateException();
+    }
+
 }

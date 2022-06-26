@@ -2,8 +2,6 @@ package org.michaelfl.mychess.engines.v1;
 
 import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
-import org.michaelfl.mychess.Game.GameResult;
-import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.engines.CheckmateSearch;
 import org.michaelfl.mychess.engines.ChessEngine;
@@ -22,14 +20,8 @@ public final class MyChessEngine1 extends ChessEngine {
     }
 
     @Override
-    public MoveAndWeight calculateNextMove(NextMoveTask task) {
+    protected MoveAndWeight calculateNextMoveSub(NextMoveTask task) {
         MoveAndWeight move = MoveAndWeight.NO_MOVE;
-
-        // First check if this game is already finished
-        game.calculateAndSetGameResult();
-        if (game.getResult() != GameResult.ONGOING) {
-            return move;
-        }
 
         // Phase 1: Checkmate search
         if (getConfig().isCheckmateCheck()) {
@@ -47,8 +39,6 @@ public final class MyChessEngine1 extends ChessEngine {
             log("Position search took " + (t2 - t1) + "ms");
         }
 
-        float weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
-
-        return move.weightFactor(weightFactor);
+        return move;
     }
 }
