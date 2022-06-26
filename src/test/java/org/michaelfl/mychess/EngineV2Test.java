@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
-import org.michaelfl.mychess.engines.MyChessEngine;
+import org.michaelfl.mychess.engines.v2.MyChessEngine2;
 
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
@@ -16,10 +16,10 @@ import static org.junit.jupiter.api.Assertions.fail;
 /**
  * @author Michael Fleischhauer
  */
-class EngineTest {
+class EngineV2Test {
 
-    private static final Class<? extends ChessEngine> ENGINE = MyChessEngine.class;
-
+    private static final Class<? extends ChessEngine> ENGINE = MyChessEngine2.class;
+    
     // Lost position for black. Black must sacrifice a rook against night: Rxd5 (otherwise mate in 2)
     @Test
     void testPosition1() {
