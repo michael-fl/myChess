@@ -98,7 +98,8 @@ public final class PositionSearch {
         final Board workingBoard = game.getBoard().copy();
         final int[] workingPath = new int[maxPathLength];
 
-        final Moves moves = moveGenerator.calculateMoves(workingBoard, 0, getMoveAtDepth(bestKnownPath, 0));
+        final int bestKnownNextMove = getMoveAtDepth(bestKnownPath, 0);
+        final Moves moves = moveGenerator.calculateMoves(workingBoard, 0, bestKnownNextMove);
         if (moves.isIllegal()) {
             throw new IllegalChessPositionException(workingBoard);
         }
@@ -111,6 +112,10 @@ public final class PositionSearch {
         final int[][] allPaths = new int[countMoves][maxPathLength];
         float alphaWeight = Float.NEGATIVE_INFINITY;
         statistics.incrPositionCount();
+
+        if (countMoves > 0 && bestKnownNextMove != 0 && bestKnownNextMove != plainMoves[0]) {
+            throw new IllegalStateException("First move must be the best known move. Expected: " + new Move(bestKnownNextMove) + ", actual: " + new Move(plainMoves[0]) + ", depth: 0");
+        }
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
@@ -189,7 +194,8 @@ public final class PositionSearch {
             return new SearchNodeResult(bestResult, quiescenceSearch(depth, true, ctx.workingBoard, ctx.materialWeight, ctx.materialDelta));
         }
 
-        final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard, depth, getMoveAtDepth(bestKnownPath, depth));
+        final int bestKnownNextMove = getMoveAtDepth(bestKnownPath, depth);
+        final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard, depth, bestKnownNextMove);
         if (moves.isIllegal()) {
             return SearchNodeResult.ILLEGAL;
         }
@@ -198,6 +204,10 @@ public final class PositionSearch {
         final int countMoves = moves.count();
         float bestWeight = ctx.alphaWeight; // Float.NEGATIVE_INFINITY
         boolean haveValidMove = false;
+
+        if (countMoves > 0 && bestKnownNextMove != 0 && bestKnownNextMove != plainMoves[0]) {
+            throw new IllegalStateException("First move must be the best known move. Expected: " + new Move(bestKnownNextMove) + ", actual: " + new Move(plainMoves[0]) + ", depth: " + depth);
+        }
 
         if (task.isCanceled()) {
             throw new CancellationException();
@@ -276,7 +286,8 @@ public final class PositionSearch {
             return new SearchNodeResult(bestResult, quiescenceSearch(depth, false, ctx.workingBoard, ctx.materialWeight, ctx.materialDelta));
         }
 
-        final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard, depth, getMoveAtDepth(bestKnownPath, depth));
+        final int bestKnownNextMove = getMoveAtDepth(bestKnownPath, depth);
+        final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard, depth, bestKnownNextMove);
         if (moves.isIllegal()) {
             return SearchNodeResult.ILLEGAL;
         }
@@ -285,6 +296,10 @@ public final class PositionSearch {
         final int countMoves = moves.count();
         float bestWeight = ctx.betaWeight; // Float.POSITIVE_INFINITY
         boolean haveValidMove = false;
+
+        if (countMoves > 0 && bestKnownNextMove != 0 && bestKnownNextMove != plainMoves[0]) {
+            throw new IllegalStateException("First move must be the best known move. Expected: " + new Move(bestKnownNextMove) + ", actual: " + new Move(plainMoves[0]) + ", depth: " + depth);
+        }
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];

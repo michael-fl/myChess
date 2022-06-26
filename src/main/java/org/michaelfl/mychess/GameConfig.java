@@ -15,6 +15,10 @@ public class GameConfig {
     private final EngineConfig engineWhiteConfig;
     private final EngineConfig engineBlackConfig;
 
+    public GameConfig(EngineConfig engineConfig) {
+        this(MyChessEngine.class, engineConfig, MyChessEngine.class, engineConfig);
+    }
+
     public GameConfig(Class<? extends ChessEngine> engine, EngineConfig engineConfig) {
         this(engine, engineConfig, engine, engineConfig);
     }

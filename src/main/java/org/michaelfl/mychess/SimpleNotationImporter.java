@@ -13,6 +13,7 @@ final class SimpleNotationImporter implements GameImporter {
             gameNotation = gameNotation.substring(2);
         if (gameNotation.endsWith("]]"))
             gameNotation = gameNotation.substring(0, gameNotation.length() - 2);
+        gameNotation = gameNotation.trim();
 
         this.gameNotation = gameNotation;
     }
@@ -25,7 +26,7 @@ final class SimpleNotationImporter implements GameImporter {
     @Override
     public Game importGame(GameConfig config) {
         List<MoveDescription> moves = new ArrayList<>();
-        String[] moveNotations = gameNotation.split(" ");
+        String[] moveNotations = gameNotation.split("\\s+");
         boolean isWhiteTurn = true;
 
         for (String moveNotation : moveNotations) {

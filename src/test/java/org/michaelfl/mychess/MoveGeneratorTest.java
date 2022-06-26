@@ -3,6 +3,9 @@ package org.michaelfl.mychess;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -107,5 +110,106 @@ class MoveGeneratorTest {
                 fail("Move " + moveStr + " not expected");
             }
         }
+    }
+
+    private EngineConfig engineConfig() {
+        return new EngineConfig.Builder()
+                .maxDepth(8)
+                .checkmateCheck(false)
+                .build();
+    }
+
+    @Test
+    void testStartPosition() {
+        var game = new Game(new GameConfig(engineConfig()));
+
+        testMoves(game, "b1-c3 g1-f3 d2-d4 e2-e4 d2-d3 e2-e3 b1-a3 g1-h3 a2-a3 h2-h3 a2-a4 h2-h4 b2-b4 c2-c4 f2-f4 g2-g4 b2-b3 g2-g3 c2-c3 f2-f3");
+    }
+
+    @Test
+    void testBlackFirstMove() {
+        var game = new Game(new GameConfig(engineConfig()));
+        game.makeMove(MoveDescription.fromString("e4", GameStatus.TURN_WHITE));
+
+        testMoves(game, "b8-c6 g8-f6 d7-d5 e7-e5 d7-d6 e7-e6 b8-a6 g8-h6 a7-a6 h7-h6 a7-a5 h7-h5 b7-b5 c7-c5 f7-f5 g7-g5 b7-b6 g7-g6 c7-c6 f7-f6");
+    }
+
+    @Test
+    void testMoves1() {
+        var notation = """
+                1. c4 e5 2. Nc3 Nf6 3. a3 Nc6 4. e4 Nd4 5. Nf3 d6 6. h3 Be7 7. Be2 O-O 8. O-O
+                h6 9. d3 a6 10. Be3 c5 11. Nd5 Be6 12. Nxd4 cxd4 13. Bd2 Nxd5 14. cxd5 Bd7 15. Rc1
+                Rc8 16. Bg4 f5 17. Bxf5 Bxf5 18. exf5 Rxf5 19. Qg4 Rxc1 20. Rxc1 Qf8 21. Bxh6
+                Kh7 22. Bxg7 Qf7 23. Rc8
+                """;
+        testMoves(notation, "h7-g7 f5-f2 f7-g7 f7-d5 e7-f6 e5-e4 f7-f6 f7-e6 f5-f4 f5-f3 f5-g5 e7-g5 f7-g6 f5-f6 f5-h5 a6-a5 f7-h5 b7-b5 e7-h4 f7-e8 b7-b6 e7-f8 e7-d8 f7-f8 f7-g8 h7-h8 h7-h6 h7-g6 h7-g8");
+    }
+
+    @Test
+    void testMoves2() {
+        var notation = """
+                [[
+                b1-c3 d7-d6 e2-e4 e7-e5 g1-f3 g8-f6 d2-d4 d8-e7 c1-g5 b8-d7 f1-d3 d7-b6 g5-f6 e7-f6 c3-b5 f6-e7 d4-e5
+                d6-e5 e1-g1 a7-a6 b5-c3 e7-f6 c3-d5 b6-d5 e4-d5 c8-g4 d1-e2 g4-f3 g2-f3 e8-c8 e2-e4 c8-b8 a1-e1 f6-h6
+                g1-h1 f8-d6 f1-g1 h6-f6 e4-f5 f6-f5 d3-f5 g7-g6 f5-g4 h8-e8 e1-e2 d6-c5 c2-c4 c5-d4 g1-d1 d4-c5 d1-e1
+                f7-f5 g4-h3 c5-b4 e1-d1 e8-e7 a2-a3 b4-d6 b2-b4 e7-e8 c4-c5 d6-f8 e2-c2 f8-g7 h3-f1 e5-e4 f3-e4 f5-e4
+                b4-b5 a6-a5 f1-c4 g7-f6 d5-d6 c7-d6 d1-d6 f6-e5 d6-d5 e5-d4 c5-c6 b7-c6 b5-c6 b8-c7 d5-a5 e8-f8 a5-b5
+                f8-f2 c2-f2 d4-f2 c4-d5 e4-e3 b5-b7 c7-c8
+                ]]
+                """;
+
+        testMoves(notation, "b7-h7 c6-c7 h2-h3 d5-e6 b7-c7 b7-d7 b7-e7 b7-f7 b7-g7 h2-h4 a3-a4 d5-e4 d5-f3 d5-c4 d5-b3 b7-a7 d5-f7 d5-g2 b7-b8 b7-b6 b7-b5 b7-b4 b7-b3 b7-b2 b7-b1 d5-g8 d5-a2 h1-g1 h1-g2");
+    }
+
+    @Test
+    void testKnownBestMoveComesFirst() {
+        var game = new Game(new GameConfig(engineConfig()));
+
+        var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
+        int knowBestMove = Game.moveDescriptionToMove(MoveDescription.fromString("h2-h4", GameStatus.TURN_WHITE), game.getBoard()).getMove();
+        var moves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard(), 0, knowBestMove);
+
+        testMoves(game, "b1-c3 g1-f3 d2-d4 e2-e4 d2-d3 e2-e3 b1-a3 g1-h3 a2-a3 h2-h3 a2-a4 h2-h4 b2-b4 c2-c4 f2-f4 g2-g4 b2-b3 g2-g3 c2-c3 f2-f3");
+
+        assertEquals("h2-h4", ChessUtil.moveToString(moves.getMove(0)));
+    }
+
+    private void testMoves(String gameNotation, String expectedMovesStr) {
+        GameImporter importer = GameImporter.importerFor(gameNotation);
+        var config = new GameConfig(engineConfig());
+        var game = importer.importGame(config);
+
+        testMoves(game, expectedMovesStr);
+    }
+
+    private void testMoves(Game game, String expectedMovesStr) {
+        game.print();
+        var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
+        var moves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard(), 0, 0);
+        System.out.println(moves.toString());
+
+        assertNotNull(moves, "No moves returned");
+        assertTrue(moves.count() > 0, "No moves returned");
+
+        List<Integer> actualMoves = Arrays.stream(moves.getMoves()).limit(moves.count()).boxed().collect(Collectors.toList());
+
+        Set<Integer> expectedMoves = parseMoves(game, expectedMovesStr);
+        assertEquals(expectedMoves.size(), moves.count(), "Unexpected number of moves");
+
+        for (var move : expectedMoves) {
+            assertTrue(actualMoves.contains(move), "Expected move: " + new Move(move));
+        }
+
+        for (int move : actualMoves) {
+            assertTrue(expectedMoves.contains(move), "Unexpected move: " + new Move(move));
+        }
+    }
+
+    private Set<Integer> parseMoves(Game game, String moves) {
+        return Arrays.stream(moves.split(" "))
+                .map(moveStr -> MoveDescription.fromString(moveStr, game.getTurn()))
+                .map(moveDescription -> Game.moveDescriptionToMove(moveDescription, game.getBoard()))
+                .map(Move::getMove)
+                .collect(Collectors.toSet());
     }
 }
