@@ -74,22 +74,18 @@ public final class PositionSearch {
     }
 
     private MoveAndWeight calculateNextMove() {
-        MoveAndWeight bestMove = null;
-        if (engineConfig.getMaxDepth() > 6) {
-            silent = true;
-            bestMove = calculateNextMove(6, null);
-            MoveAndWeight m2 = bestMove.weightFactor(weightFactor);
-            log("depth: 6, move: " + ChessUtil.moveToString(m2.move) + ", weight: " + ChessUtil.weightToString(m2.weight) + " [" + ChessUtil.pathToString(m2.path) + "]");
+        MoveAndWeight bestPath = null;
+        final int maxDepth = engineConfig.getMaxDepth();
+
+        for (int depth = 1; depth <= maxDepth; depth++) {
+            log("Current depth: " + depth);
+            bestPath = calculateNextMove(depth, bestPath);
+            MoveAndWeight m = bestPath.weightFactor(weightFactor);
+            log("Depth: " + depth + ", move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight) + " [" + ChessUtil.pathToString(m.path) + "]");
+            log("#positions: " + statistics.getPositionsCount() + ", #pruned: " + statistics.getPrunedMovesCount());
         }
 
-        silent = engineConfig.isSilent();
-        bestMove = calculateNextMove(engineConfig.getMaxDepth(), bestMove);
-        MoveAndWeight m2 = bestMove.weightFactor(weightFactor);
-        log("depth: " + engineConfig.getMaxDepth() + ", move: " + ChessUtil.moveToString(m2.move) + ", weight: " + ChessUtil.weightToString(m2.weight) + " [" + ChessUtil.pathToString(m2.path) + "]");
-
-        log("#positions: " + statistics.getPositionsCount() + ", #pruned: " + statistics.getPrunedMovesCount());
-
-        return bestMove;
+        return bestPath;
     }
 
     @SuppressWarnings("Duplicates")
