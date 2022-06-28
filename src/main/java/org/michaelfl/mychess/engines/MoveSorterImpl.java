@@ -121,7 +121,7 @@ public final class MoveSorterImpl implements MoveSorter {
             movesArray.add(bestMoveCapturingLastPlayedOppositePiece);
         }
         movesArray.addAll(bucketWinningCaptures.getMoves());
-        movesArray.addAll(bucketKillerMoves);
+        movesArray.addAll(bucketKillerMoves); // TODO Killer moves seem to increase calculation time!?
         movesArray.addAll(bucketOtherCaptures.getMoves());
         movesArray.addAll(bucketRemainingMoves.getMoves());
         movesArray.addAll(bucketKingMoves); // TODO: Change this in endgame
