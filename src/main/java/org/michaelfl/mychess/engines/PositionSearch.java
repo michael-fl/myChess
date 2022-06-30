@@ -240,7 +240,7 @@ public final class PositionSearch {
                     if (Move.getCapturedPiece(move) == 0) {
                         killerMoves.addMove(move, depth);
                     }
-                    return new SearchNodeResult(result.result, weight, NodeState.BETA_CUTOFF);
+                    return new SearchNodeResult(result.result, ctx.betaWeight, NodeState.BETA_CUTOFF);
                 }
 
                 if (weight > bestResult.weight) {
@@ -325,7 +325,7 @@ public final class PositionSearch {
                     if (Move.getCapturedPiece(move) == 0) { // TODO Check if this is needed
                         killerMoves.addMove(move, depth);
                     }
-                    return new SearchNodeResult(result.result, weight, NodeState.ALPHA_CUTOFF);
+                    return new SearchNodeResult(result.result, ctx.alphaWeight, NodeState.ALPHA_CUTOFF);
                 }
 
                 if (weight < bestResult.weight) {
