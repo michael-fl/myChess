@@ -23,7 +23,23 @@ public final class PositionSearch {
 
     public record SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnownPath,
                                     float alphaWeight, float betaWeight, float materialWeight, float materialDelta,
-                                    Board workingBoard, int[] path) {
+                                    Board workingBoard, int[] pvTable) {
+
+        private int pvMaxLength() {
+            return maxDepth + 1;
+        }
+
+        public int pvIndex() {
+            return depth * pvMaxLength() + depth;
+        }
+
+        public int pvParentIndex() {
+            return (depth - 1) * pvMaxLength() + depth;
+        }
+
+        public void copyUpPV() {
+            System.arraycopy(pvTable, pvIndex(), pvTable, pvParentIndex(), pvMaxLength() - depth);
+        }
     }
 
     public enum NodeState {
@@ -97,9 +113,8 @@ public final class PositionSearch {
 
     @SuppressWarnings("Duplicates")
     private MoveAndWeight calculateNextMove(int maxDepth, MoveAndWeight bestKnownPath) {
-        final int maxPathLength = 50;
+        final int pvMaxLength = maxDepth + 1;
         final Board workingBoard = game.getBoard().copy();
-        final int[] workingPath = new int[maxPathLength];
 
         final int bestKnownNextMove = getMoveAtDepth(bestKnownPath, 0);
         final Moves moves = moveGenerator.calculateMoves(workingBoard, 0, bestKnownNextMove);
@@ -111,7 +126,8 @@ public final class PositionSearch {
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
         final SearchNodeResult[] results = new SearchNodeResult[countMoves];
-        final int[][] allPaths = new int[countMoves][maxPathLength];
+        final int[][] allPaths = new int[countMoves][pvMaxLength];
+        final int[] pvTable = new int[pvMaxLength * pvMaxLength];
         float alphaWeight = Float.NEGATIVE_INFINITY;
         statistics.incrPositionCount();
 
@@ -127,13 +143,13 @@ public final class PositionSearch {
             final float newMaterialDelta = WeightingFunction.getMaterialWeightOfMove(move, 1);
             final float newMaterialWeight = materialWeight + moveWeight;
 
-            workingPath[0] = move;
+            pvTable[0] = move;
             workingBoard.makeMove(move);
-            var result = minSearch(new SearchNodeContext(1, maxDepth, bestKnownPath, alphaWeight, Float.POSITIVE_INFINITY, newMaterialWeight, newMaterialDelta, workingBoard, workingPath));
+            var result = minSearch(new SearchNodeContext(1, maxDepth, bestKnownPath, alphaWeight, Float.POSITIVE_INFINITY, newMaterialWeight, newMaterialDelta, workingBoard, pvTable));
             bestKnownPath = null;
             workingBoard.revertMove();
             results[i] = result;
-            System.arraycopy(workingPath, 0, allPaths[i], 0, maxPathLength);
+            System.arraycopy(pvTable, 0, allPaths[i], 0, pvMaxLength);
 
             //log("--> weight " + ChessUtil.weightToString(weight));
             if (result.weight > alphaWeight) {
@@ -184,8 +200,9 @@ public final class PositionSearch {
         MoveAndWeight bestKnownPath = ctx.bestKnownPath;
         final GameStatus gameStatus = ctx.workingBoard.getGameStatus();
         statistics.incrPositionCount();
-        final var bestPath = ctx.path;
-        bestPath[depth] = 0;
+        final var pvTable = ctx.pvTable;
+        final int pvIndex = ctx.pvIndex();
+        pvTable[ctx.pvParentIndex() + depth] = 0;
         SearchNodeResult bestResult = new SearchNodeResult(GameResult.ONGOING, ctx.alphaWeight, NodeState.UNKNOWN);
 
         if (ctx.alphaWeight == Float.POSITIVE_INFINITY || ctx.betaWeight == Float.NEGATIVE_INFINITY) {
@@ -204,7 +221,6 @@ public final class PositionSearch {
         if (moves.isIllegal()) {
             return SearchNodeResult.ILLEGAL;
         }
-        final int[] workingPath = new int[ctx.path.length];
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
         boolean haveValidMove = false;
@@ -219,13 +235,13 @@ public final class PositionSearch {
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
-            workingPath[depth] = move;
             final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
             final float newMaterialWeight = ctx.materialWeight + moveWeight;
             final float newMaterialDelta = ctx.materialDelta + moveWeight;
 
+            pvTable[pvIndex] = move;
             ctx.workingBoard.makeMove(move);
-            var result = minSearch(new SearchNodeContext(depth + 1, ctx.maxDepth, bestKnownPath, bestResult.weight, ctx.betaWeight, newMaterialWeight, newMaterialDelta, ctx.workingBoard, workingPath));
+            var result = minSearch(new SearchNodeContext(depth + 1, ctx.maxDepth, bestKnownPath, bestResult.weight, ctx.betaWeight, newMaterialWeight, newMaterialDelta, ctx.workingBoard, pvTable));
             final float weight = result.weight;
             bestKnownPath = null;
             ctx.workingBoard.revertMove();
@@ -236,7 +252,7 @@ public final class PositionSearch {
                 // Alpha-Beta search pruning
                 if (weight >= ctx.betaWeight) {
                     statistics.incrPrunedMovesCount(countMoves - i - 1);
-                    System.arraycopy(workingPath, depth, bestPath, depth, bestPath.length - depth);
+                    ctx.copyUpPV();
                     if (Move.getCapturedPiece(move) == 0) {
                         killerMoves.addMove(move, depth);
                     }
@@ -245,7 +261,7 @@ public final class PositionSearch {
 
                 if (weight > bestResult.weight) {
                     bestResult = result;
-                    System.arraycopy(workingPath, depth, bestPath, depth, bestPath.length - depth);
+                    ctx.copyUpPV();
                 }
             }
         }
@@ -273,8 +289,9 @@ public final class PositionSearch {
         MoveAndWeight bestKnownPath = ctx.bestKnownPath;
         final GameStatus gameStatus = ctx.workingBoard.getGameStatus();
         statistics.incrPositionCount();
-        final var bestPath = ctx.path;
-        bestPath[depth] = 0;
+        final var pvTable = ctx.pvTable;
+        final int pvIndex = ctx.pvIndex();
+        pvTable[ctx.pvParentIndex() + depth] = 0;
         SearchNodeResult bestResult = new SearchNodeResult(GameResult.ONGOING, ctx.betaWeight, NodeState.UNKNOWN);
 
         if (ctx.alphaWeight == Float.POSITIVE_INFINITY || ctx.betaWeight == Float.NEGATIVE_INFINITY) {
@@ -293,7 +310,6 @@ public final class PositionSearch {
         if (moves.isIllegal()) {
             return SearchNodeResult.ILLEGAL;
         }
-        final int[] workingPath = new int[bestPath.length];
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
         boolean haveValidMove = false;
@@ -304,13 +320,13 @@ public final class PositionSearch {
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
-            workingPath[depth] = move;
             final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
             final float newMaterialWeight = ctx.materialWeight - moveWeight;
             final float newMaterialDelta = ctx.materialDelta - moveWeight;
 
+            pvTable[pvIndex] = move;
             ctx.workingBoard.makeMove(move);
-            var result = maxSearch(new SearchNodeContext(depth + 1, ctx.maxDepth, bestKnownPath, ctx.alphaWeight, bestResult.weight, newMaterialWeight, newMaterialDelta, ctx.workingBoard, workingPath));
+            var result = maxSearch(new SearchNodeContext(depth + 1, ctx.maxDepth, bestKnownPath, ctx.alphaWeight, bestResult.weight, newMaterialWeight, newMaterialDelta, ctx.workingBoard, pvTable));
             final float weight = result.weight;
             bestKnownPath = null;
             ctx.workingBoard.revertMove();
@@ -321,7 +337,7 @@ public final class PositionSearch {
                 // Alpha-Beta search pruning
                 if (weight <= ctx.alphaWeight) {
                     statistics.incrPrunedMovesCount(countMoves - i - 1);
-                    System.arraycopy(workingPath, depth, bestPath, depth, bestPath.length - depth);
+                    ctx.copyUpPV();
                     if (Move.getCapturedPiece(move) == 0) { // TODO Check if this is needed
                         killerMoves.addMove(move, depth);
                     }
@@ -330,7 +346,7 @@ public final class PositionSearch {
 
                 if (weight < bestResult.weight) {
                     bestResult = result;
-                    System.arraycopy(workingPath, depth, bestPath, depth, bestPath.length - depth);
+                    ctx.copyUpPV();
                 }
             }
         }
