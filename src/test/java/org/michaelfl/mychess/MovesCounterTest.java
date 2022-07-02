@@ -14,7 +14,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class KillerMovesTest {
+class MovesCounterTest {
 
     private static Random rand;
 

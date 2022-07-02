@@ -4,11 +4,11 @@ import org.michaelfl.mychess.Board;
 import org.michaelfl.mychess.ChessUtil;
 import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.IntArray;
+import org.michaelfl.mychess.KillerMoves;
 import org.michaelfl.mychess.Move;
 import org.michaelfl.mychess.MoveSorter;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.MovesArray;
-import org.michaelfl.mychess.MovesCounter;
 import org.michaelfl.mychess.PieceSquareTables;
 import org.michaelfl.mychess.SortableMovesBucket;
 import org.michaelfl.mychess.WeightingFunction;
@@ -23,19 +23,19 @@ public final class MoveSorterImpl implements MoveSorter {
     private final SortableMovesBucket bucketRemainingMoves = new SortableMovesBucket();
     private final MovesArray bucketKingMoves = new MovesArray();
 
-    private final MovesCounter killerMoves;
+    private final KillerMoves killerMoves;
     private GameStatus gameStatus;
     private int knownBestMove;
     private int targetFieldOfLastOppositeMove;
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Board board;
-    private short[] topKillerMoves;
+    private int depth;
 
     public MoveSorterImpl() {
-        this(new MovesCounter(1));
+        this(new KillerMoves());
     }
 
-    public MoveSorterImpl(MovesCounter killerMoves) {
+    public MoveSorterImpl(KillerMoves killerMoves) {
         this.killerMoves = killerMoves;
     }
 
@@ -43,8 +43,8 @@ public final class MoveSorterImpl implements MoveSorter {
     public final void reset(GameStatus gameStatus, Board board, int depth, int knownBestMove) {
         this.gameStatus = gameStatus;
         this.board = board;
+        this.depth = depth;
         this.knownBestMove = knownBestMove;
-        this.topKillerMoves = killerMoves.getMovesOnDepth(depth).getTopMoves();
 
         targetFieldOfLastOppositeMove = Move.getToField(gameStatus.getLastMove());
 
@@ -62,7 +62,7 @@ public final class MoveSorterImpl implements MoveSorter {
         if (move == knownBestMove) {
             return;
         }
-        if (isKillerMove(move)) {
+        if (killerMoves.isKillerMove(move, depth)) {
             bucketKillerMoves.add(move);
         } else if (capturedPiece != 0) {
             final float deltaWeight = WeightingFunction.weightOfPiece[capturedPiece] - WeightingFunction.weightOfPiece[movingPiece];
@@ -91,18 +91,6 @@ public final class MoveSorterImpl implements MoveSorter {
 
     private SortableMovesBucket getCapturesBucket(float deltaWeight) {
         return deltaWeight > 0 ? bucketWinningCaptures : bucketOtherCaptures;
-    }
-
-    private boolean isKillerMove(final int move) {
-        // Cut off captured piece and move type
-        final short m1 = (short) move;
-
-        for (short m2 : topKillerMoves) {
-            if (m1 == m2)
-                return true;
-        }
-
-        return false;
     }
 
     @Override

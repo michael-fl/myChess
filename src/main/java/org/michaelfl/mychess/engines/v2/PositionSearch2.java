@@ -16,7 +16,6 @@ import org.michaelfl.mychess.Statistics;
 import org.michaelfl.mychess.WeightingFunction;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
-import org.michaelfl.mychess.engines.MoveSorterImpl;
 import org.michaelfl.mychess.engines.NextMoveTask;
 
 import java.util.concurrent.CancellationException;
@@ -57,7 +56,7 @@ public final class PositionSearch2 {
     private PositionSearch2(ChessEngine engine, NextMoveTask task, Game game) {
         this.task = task;
         this.game = game;
-        this.moveGenerator = new MoveGenerator(new MoveSorterImpl(killerMoves));
+        this.moveGenerator = new MoveGenerator(new MoveSorterImpl2(killerMoves));
         this.engineConfig = engine.getConfig();
         this.quiescenceSearch = new QuiescenceSearch(game, moveGenerator, weightingFunction, statistics, engineConfig.getMaxQuiescenceDepth());
         this.weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
@@ -137,8 +136,6 @@ public final class PositionSearch2 {
                 alphaWeight = result.weight;
             }
 
-            // Find and store current killer moves
-            killerMoves.sample();
             log((i + 1) + "/" + countMoves + ": " + ChessUtil.moveToString(move) + ", weight=" + ChessUtil.weightToString(result.weight, weightFactor));
             //log("quiescence: total=" + statistics.getQuiescencePositionsCount() + ", avg=" + statistics.getQuiescencePositionsCountAvg() + ", max=" + statistics.getQuiescencePositionsCountMax() + ", max depth: " + statistics.getMaximumReachedDepth());
         }

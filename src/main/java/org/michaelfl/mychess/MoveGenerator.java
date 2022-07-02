@@ -47,8 +47,6 @@ public final class MoveGenerator {
     private int oppositeKing;
     private boolean containsIllegalMove;
 
-    //this(rand, new MovesCounter(1), new MovesCounter(1));
-
     public MoveGenerator(MoveSorter moveSorter) {
         this.moveSorter = moveSorter;
     }
