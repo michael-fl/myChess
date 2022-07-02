@@ -7,10 +7,10 @@ import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.IllegalChessPositionException;
+import org.michaelfl.mychess.KillerMoves;
 import org.michaelfl.mychess.Move;
 import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.Moves;
-import org.michaelfl.mychess.MovesCounter;
 import org.michaelfl.mychess.QuiescenceSearch;
 import org.michaelfl.mychess.Statistics;
 import org.michaelfl.mychess.WeightingFunction;
@@ -66,7 +66,7 @@ public final class PositionSearch {
     private final NextMoveTask task;
     private final Game game;
     private final EngineConfig engineConfig;
-    private final MovesCounter killerMoves = new MovesCounter(2);
+    private final KillerMoves killerMoves = new KillerMoves();
     private final MoveGenerator moveGenerator;
     private final WeightingFunction weightingFunction = new WeightingFunction();
     private final QuiescenceSearch quiescenceSearch;
@@ -156,8 +156,6 @@ public final class PositionSearch {
                 alphaWeight = result.weight;
             }
 
-            // Find and store current killer moves
-            killerMoves.sample();
             var weightLogStr = result.state == NodeState.COMPLETE ? ", weight=" + ChessUtil.weightToString(result.weight, weightFactor) : "";
             log((i + 1) + "/" + countMoves + ": " + ChessUtil.moveToString(move) + weightLogStr);
             //log("quiescence: total=" + statistics.getQuiescencePositionsCount() + ", avg=" + statistics.getQuiescencePositionsCountAvg() + ", max=" + statistics.getQuiescencePositionsCountMax() + ", max depth: " + statistics.getMaximumReachedDepth());
@@ -338,7 +336,7 @@ public final class PositionSearch {
                 if (weight <= ctx.alphaWeight) {
                     statistics.incrPrunedMovesCount(countMoves - i - 1);
                     ctx.copyUpPV();
-                    if (Move.getCapturedPiece(move) == 0) { // TODO Check if this is needed
+                    if (Move.getCapturedPiece(move) == 0) {
                         killerMoves.addMove(move, depth);
                     }
                     return new SearchNodeResult(result.result, ctx.alphaWeight, NodeState.ALPHA_CUTOFF);
