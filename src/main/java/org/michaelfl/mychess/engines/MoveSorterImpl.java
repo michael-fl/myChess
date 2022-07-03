@@ -1,7 +1,6 @@
 package org.michaelfl.mychess.engines;
 
 import org.michaelfl.mychess.Board;
-import org.michaelfl.mychess.ChessUtil;
 import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.IntArray;
 import org.michaelfl.mychess.KillerMoves;
@@ -24,7 +23,6 @@ public final class MoveSorterImpl implements MoveSorter {
     private final MovesArray bucketKingMoves = new MovesArray();
 
     private final KillerMoves killerMoves;
-    private GameStatus gameStatus;
     private int knownBestMove;
     private int targetFieldOfLastOppositeMove;
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
@@ -40,8 +38,7 @@ public final class MoveSorterImpl implements MoveSorter {
     }
 
     @Override
-    public final void reset(GameStatus gameStatus, Board board, int depth, int knownBestMove) {
-        this.gameStatus = gameStatus;
+    public void reset(GameStatus gameStatus, Board board, int depth, int knownBestMove) {
         this.board = board;
         this.depth = depth;
         this.knownBestMove = knownBestMove;
@@ -58,7 +55,7 @@ public final class MoveSorterImpl implements MoveSorter {
     }
 
     @Override
-    public final void addMove(final int move, final int fromField, final int toField, final byte movingPiece, final byte capturedPiece) {
+    public void addMove(final int move, final int fromField, final int toField, final byte movingPiece, final byte capturedPiece) {
         if (move == knownBestMove) {
             return;
         }
@@ -78,12 +75,9 @@ public final class MoveSorterImpl implements MoveSorter {
         } else if (Board.isKing(movingPiece)) {
             bucketKingMoves.add(move);
         } else {
-            final int rowDelta = ChessUtil.getRowOfField(toField) - ChessUtil.getRowOfField(fromField);
-            final boolean isBackwardMove = (gameStatus.isWhiteTurn() && rowDelta < 0) || (gameStatus.isBlackTurn() && rowDelta > 0);
-
             final int srcWeight = PieceSquareTables.getPieceSquareWeight(movingPiece, fromField);
             final int destWeight = PieceSquareTables.getPieceSquareWeight(movingPiece, toField);
-            final int weight = destWeight - srcWeight - (isBackwardMove ? 5 : 0);
+            final int weight = destWeight - srcWeight;
 
             bucketRemainingMoves.add(move, weight);
         }
@@ -94,7 +88,7 @@ public final class MoveSorterImpl implements MoveSorter {
     }
 
     @Override
-    public final Moves getSortedMoves() {
+    public Moves getSortedMoves() {
         final Moves moves = new Moves();
         final IntArray movesArray = moves.moves;
 
