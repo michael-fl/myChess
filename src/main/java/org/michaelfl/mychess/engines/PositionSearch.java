@@ -49,17 +49,22 @@ public final class PositionSearch {
         UNKNOWN
     }
 
-    public record SearchNodeResult(GameResult result, float weight, NodeState state) {
+    public record SearchNodeResult(GameResult result, float weight, NodeState state, boolean isTimeout) {
+        public final static SearchNodeResult TIMEOUT = new SearchNodeResult(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT, NodeState.UNKNOWN, true);
         public final static SearchNodeResult ILLEGAL = new SearchNodeResult(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT, NodeState.COMPLETE);
         public final static SearchNodeResult DRAW = new SearchNodeResult(GameResult.DRAW, 0, NodeState.COMPLETE);
         public final static SearchNodeResult STALEMATE = new SearchNodeResult(GameResult.STALEMATE, 0, NodeState.COMPLETE);
 
+        public SearchNodeResult(GameResult result, float weight, NodeState state) {
+            this(result, weight, state, false);
+        }
+
         public static SearchNodeResult checkmateSelf(int depth) {
-            return new SearchNodeResult(GameResult.CHECKMATE, -(WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth), NodeState.COMPLETE);
+            return new SearchNodeResult(GameResult.CHECKMATE, -(WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth), NodeState.COMPLETE, false);
         }
 
         public static SearchNodeResult checkmateOpposite(int depth) {
-            return new SearchNodeResult(GameResult.CHECKMATE, WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth, NodeState.COMPLETE);
+            return new SearchNodeResult(GameResult.CHECKMATE, WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth, NodeState.COMPLETE, false);
         }
     }
 
@@ -73,6 +78,8 @@ public final class PositionSearch {
     private final int weightFactor;
     private final Statistics statistics = new Statistics();
     private final boolean silent;
+    private final long timeout;
+    private boolean isTimeout;
 
     private PositionSearch(ChessEngine engine, NextMoveTask task, Game game) {
         this.task = task;
@@ -82,6 +89,7 @@ public final class PositionSearch {
         this.quiescenceSearch = new QuiescenceSearch(game, moveGenerator, weightingFunction, statistics, engineConfig.getMaxQuiescenceDepth());
         this.weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
         this.silent = engineConfig.isSilent();
+        this.timeout = System.currentTimeMillis() + engineConfig.getSecondsPerMove() * 1000L;
     }
 
     public static MoveAndWeight calculateNextMove(ChessEngine engine, NextMoveTask task, Game game) {
@@ -96,13 +104,20 @@ public final class PositionSearch {
         return moveGenerator.calculateMoves(game.getBoard());
     }
 
+    private boolean isTimeout() {
+        if (!isTimeout) {
+            isTimeout = statistics.getPositionsCount() % 10000 == 0 && System.currentTimeMillis() >= timeout;
+        }
+        return isTimeout;
+    }
+
     private MoveAndWeight calculateNextMove() {
         MoveAndWeight bestPath = null;
         final int maxDepth = engineConfig.getMaxDepth();
 
-        for (int depth = 1; depth <= maxDepth; depth++) {
+        for (int depth = 1; depth <= maxDepth && !isTimeout(); depth++) {
             log("Current depth: " + depth);
-            bestPath = calculateNextMove(depth, bestPath);
+            bestPath = calculateNextMove(depth, timeout, bestPath);
             MoveAndWeight m = bestPath.weightFactor(weightFactor);
             log("Depth: " + depth + ", move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight) + " [" + ChessUtil.pathToString(m.path) + "]");
             log("#positions: " + statistics.getPositionsCount() + ", #pruned: " + statistics.getPrunedMovesCount());
@@ -112,7 +127,8 @@ public final class PositionSearch {
     }
 
     @SuppressWarnings("Duplicates")
-    private MoveAndWeight calculateNextMove(int maxDepth, MoveAndWeight bestKnownPath) {
+    private MoveAndWeight calculateNextMove(final int maxDepth, final long timeout, MoveAndWeight bestKnownPath) {
+        final MoveAndWeight previousBestKnownPath = bestKnownPath;
         final int pvMaxLength = maxDepth + 1;
         final Board workingBoard = game.getBoard().copy();
 
@@ -146,6 +162,9 @@ public final class PositionSearch {
             pvTable[0] = move;
             workingBoard.makeMove(move);
             var result = minSearch(new SearchNodeContext(1, maxDepth, bestKnownPath, alphaWeight, Float.POSITIVE_INFINITY, newMaterialWeight, newMaterialDelta, workingBoard, pvTable));
+            if (result.isTimeout()) {
+                return previousBestKnownPath;
+            }
             bestKnownPath = null;
             workingBoard.revertMove();
             results[i] = result;
@@ -232,6 +251,10 @@ public final class PositionSearch {
         }
 
         for (int i = 0; i < countMoves; i++) {
+            if (isTimeout()) {
+                return SearchNodeResult.TIMEOUT;
+            }
+
             final int move = plainMoves[i];
             final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
             final float newMaterialWeight = ctx.materialWeight + moveWeight;
@@ -240,6 +263,9 @@ public final class PositionSearch {
             pvTable[pvIndex] = move;
             ctx.workingBoard.makeMove(move);
             var result = minSearch(new SearchNodeContext(depth + 1, ctx.maxDepth, bestKnownPath, bestResult.weight, ctx.betaWeight, newMaterialWeight, newMaterialDelta, ctx.workingBoard, pvTable));
+            if (result.isTimeout()) {
+                return SearchNodeResult.TIMEOUT;
+            }
             final float weight = result.weight;
             bestKnownPath = null;
             ctx.workingBoard.revertMove();
@@ -317,6 +343,9 @@ public final class PositionSearch {
         }
 
         for (int i = 0; i < countMoves; i++) {
+            if (isTimeout()) {
+                return SearchNodeResult.TIMEOUT;
+            }
             final int move = plainMoves[i];
             final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
             final float newMaterialWeight = ctx.materialWeight - moveWeight;
@@ -325,6 +354,9 @@ public final class PositionSearch {
             pvTable[pvIndex] = move;
             ctx.workingBoard.makeMove(move);
             var result = maxSearch(new SearchNodeContext(depth + 1, ctx.maxDepth, bestKnownPath, ctx.alphaWeight, bestResult.weight, newMaterialWeight, newMaterialDelta, ctx.workingBoard, pvTable));
+            if (result.isTimeout()) {
+                return SearchNodeResult.TIMEOUT;
+            }
             final float weight = result.weight;
             bestKnownPath = null;
             ctx.workingBoard.revertMove();

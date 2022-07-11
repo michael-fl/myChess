@@ -103,7 +103,7 @@ class EngineTest {
         testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f8-e8 e6-f7 e5-f7 h3-f5 h7-h6 c3-d5 a6-a5 h5-g6 a5-a4 d5-f6 d8-f6 g6-f6 f7-g5 f6-g6 d6-d5 d1-d5 e8-e7 g1-g5 h6-g5 f5-e6]]",
                 "e7-e6",
                 12.0f,
-                13.0f,
+                13.0f,  // TODO: M8
                 new GameConfig(ENGINE, engineConfig(false))
         );
     }
@@ -189,7 +189,7 @@ class EngineTest {
         );
     }
 
-    // Bad position for black. Black must move Be6 - all other moves are even more worse.
+    // Bad position for black. Black must move Be6 - all other moves are even worse.
     // Weight: +2.86. Expected moves: 17....Be6 18.Bxb8 Rxb8 19.Nd5 Bd6 20.Nxf6+ gxf6 21.Rad1 Be5 22.Bd5 Bg4 23.f3 Bh5 24.c3 Kg7 25.g3 a5
     // FEN: 1rbr2k1/4bppp/p4n2/1pp1B3/8/2N2B2/PPP2PPP/R3R1K1 b - - 0 17
     @Test
@@ -231,6 +231,7 @@ class EngineTest {
 
     // Assure that the white knight on f6 is not captured with the king pawn,
     // since this would weaken blacks kind position a lot
+    // TODO Test currently disabled
     @Test @Disabled
     void dontCaptureWithKingPawn() {
         testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 e7-e5 d4-b3 b8-c6 b1-c3 g8-f6 f1-e2 c8-e6 e1-g1 f8-e7 c1-e3 e8-g8 e2-f3 a7-a5 c3-d5 a5-a4 b3-d2 e6-d5 e4-d5 c6-b4 c2-c4 d8-d7 a2-a3 b4-d3 a1-b1 f8-d8 d2-e4 d3-c5 e4-f6]]\n",
