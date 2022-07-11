@@ -7,8 +7,10 @@ package org.michaelfl.mychess;
 public final class EngineConfig {
 
     private final static int DEFAULT_MAX_QUIESCENCE_SEARCH_DEPTH = 20;
+    private final static int DEFAULT_SECONDS_PER_MOVE = 60;
 
     private final int maxDepth;
+    private final int secondsPerMove;
     private final int iterationDepth;
     private final int nVariants;
     private final boolean checkmateCheck;
@@ -16,8 +18,9 @@ public final class EngineConfig {
     private final boolean enableThreefoldRepetition;
     private final boolean enableFiftyMovesRule;
 
-    private EngineConfig(int maxDepth, int iterationDepth, int nVariants, boolean checkmateCheck, boolean silent, boolean enableThreefoldRepetition, boolean enableFiftyMovesRule) {
+    private EngineConfig(int maxDepth, int secondsPerMove, int iterationDepth, int nVariants, boolean checkmateCheck, boolean silent, boolean enableThreefoldRepetition, boolean enableFiftyMovesRule) {
         this.maxDepth = maxDepth;
+        this.secondsPerMove = secondsPerMove;
         this.iterationDepth = iterationDepth;
         this.nVariants = nVariants;
         this.checkmateCheck = checkmateCheck;
@@ -28,6 +31,10 @@ public final class EngineConfig {
 
     public final int getMaxDepth() {
         return maxDepth;
+    }
+
+    public int getSecondsPerMove() {
+        return secondsPerMove;
     }
 
     // Only used by engine V1
@@ -61,7 +68,8 @@ public final class EngineConfig {
     }
 
     public final static class Builder {
-        private int maxDepth = 8;
+        private int maxDepth = Integer.MAX_VALUE;
+        private int secondsPerMove = DEFAULT_SECONDS_PER_MOVE;
         private int iterationDepth = 0;
         private int nVariants = 1;
         private boolean checkmateCheck = false;
@@ -71,6 +79,11 @@ public final class EngineConfig {
 
         public Builder maxDepth(int maxDepth) {
             this.maxDepth = maxDepth;
+            return this;
+        }
+
+        public Builder secondsPerMove(int secondsPerMove) {
+            this.secondsPerMove = secondsPerMove;
             return this;
         }
 
@@ -105,7 +118,7 @@ public final class EngineConfig {
         }
 
         public EngineConfig build() {
-            return new EngineConfig(maxDepth, iterationDepth, nVariants, checkmateCheck, silent, enableThreefoldRepetition, enableFiftyMovesRule);
+            return new EngineConfig(maxDepth, secondsPerMove, iterationDepth, nVariants, checkmateCheck, silent, enableThreefoldRepetition, enableFiftyMovesRule);
         }
     }
 }
