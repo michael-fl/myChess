@@ -48,7 +48,7 @@ public final class PositionSearch2 {
     private final MovesCounter killerMoves = new MovesCounter(2);
     private final MoveGenerator moveGenerator;
     private final WeightingFunction weightingFunction = new WeightingFunction();
-    private final QuiescenceSearch quiescenceSearch;
+    private final QuiescenceSearch2 quiescenceSearch;
     private final int weightFactor;
     private final Statistics statistics = new Statistics();
     private boolean silent;
@@ -58,7 +58,7 @@ public final class PositionSearch2 {
         this.game = game;
         this.moveGenerator = new MoveGenerator(new MoveSorterImpl2(killerMoves));
         this.engineConfig = engine.getConfig();
-        this.quiescenceSearch = new QuiescenceSearch(game, moveGenerator, weightingFunction, statistics, engineConfig.getMaxQuiescenceDepth());
+        this.quiescenceSearch = new QuiescenceSearch2(game, moveGenerator, weightingFunction, statistics, engineConfig.getMaxQuiescenceDepth());
         this.weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
         this.silent = engineConfig.isSilent();
     }
