@@ -54,7 +54,9 @@ class QuiescenceSearchTest {
         assertEquals(capturedPiece, Move.getCapturedPiece(game.getGameStatus().getLastMove()), "test setup error");
 
         var capturedOnField = Move.getToField(game.getGameStatus().getLastMove());
-        weight = weightFactor * quiescenceSearch.quiescenceMaxSearch(workingBoard, capturedOnField, 0, weightFactor * materialWeight, 0f);
+        var alpha = Float.NEGATIVE_INFINITY;
+        var beta = Float.POSITIVE_INFINITY;
+        weight = weightFactor * quiescenceSearch.quiescenceSearch(workingBoard, capturedOnField, 0, weightFactor, alpha, beta, weightFactor * materialWeight, 0f);
         System.out.println("Quiescence weight: " + weight);
 
         assertTrue(weight >= expectedWeightMin, "Unexpected weight: " + weight);
