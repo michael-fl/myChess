@@ -11,12 +11,11 @@ import org.michaelfl.mychess.Move;
 import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.MovesCounter;
-import org.michaelfl.mychess.QuiescenceSearch;
 import org.michaelfl.mychess.Statistics;
-import org.michaelfl.mychess.WeightingFunction;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.NextMoveTask;
+import org.michaelfl.mychess.engines.v1.WeightingFunction1;
 
 import java.util.concurrent.CancellationException;
 
@@ -29,16 +28,16 @@ public final class PositionSearch2 {
     }
 
     public record SearchNodeResult(GameResult result, float weight) {
-        public final static SearchNodeResult ILLEGAL = new SearchNodeResult(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT);
+        public final static SearchNodeResult ILLEGAL = new SearchNodeResult(GameResult.ONGOING, WeightingFunction1.ILLEGAL_WEIGHT);
         public final static SearchNodeResult DRAW = new SearchNodeResult(GameResult.DRAW, 0);
         public final static SearchNodeResult STALEMATE = new SearchNodeResult(GameResult.STALEMATE, 0);
 
         public static SearchNodeResult checkmateSelf(int depth) {
-            return new SearchNodeResult(GameResult.CHECKMATE, -(WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth));
+            return new SearchNodeResult(GameResult.CHECKMATE, -(WeightingFunction1.CHECKMATE_WEIGHT_HIGH - depth));
         }
 
         public static SearchNodeResult checkmateOpposite(int depth) {
-            return new SearchNodeResult(GameResult.CHECKMATE, WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth);
+            return new SearchNodeResult(GameResult.CHECKMATE, WeightingFunction1.CHECKMATE_WEIGHT_HIGH - depth);
         }
     }
 
@@ -47,7 +46,7 @@ public final class PositionSearch2 {
     private final EngineConfig engineConfig;
     private final MovesCounter killerMoves = new MovesCounter(2);
     private final MoveGenerator moveGenerator;
-    private final WeightingFunction weightingFunction = new WeightingFunction();
+    private final WeightingFunction1 weightingFunction = new WeightingFunction1();
     private final QuiescenceSearch2 quiescenceSearch;
     private final int weightFactor;
     private final Statistics statistics = new Statistics();
@@ -105,7 +104,7 @@ public final class PositionSearch2 {
             throw new IllegalChessPositionException(workingBoard);
         }
 
-        final float materialWeight = weightFactor * WeightingFunction.calculateMaterialWeight(workingBoard);
+        final float materialWeight = weightFactor * WeightingFunction1.calculateMaterialWeight(workingBoard);
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
         final float[] weights = new float[countMoves];
@@ -118,8 +117,8 @@ public final class PositionSearch2 {
             final int move = plainMoves[i];
             //log("Working on move " + ChessUtil.moveToString(move));
 
-            final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, 1);
-            final float newMaterialDelta = WeightingFunction.getMaterialWeightOfMove(move, 1);
+            final float moveWeight = WeightingFunction1.getMaterialWeightOfMove(move, 1);
+            final float newMaterialDelta = WeightingFunction1.getMaterialWeightOfMove(move, 1);
             final float newMaterialWeight = materialWeight + moveWeight;
 
             workingPath[0] = move;
@@ -154,7 +153,7 @@ public final class PositionSearch2 {
             // Return the best move
             return new MoveAndWeight(plainMoves[bestMoveIndex], weights[bestMoveIndex], gameResults[bestMoveIndex], 0, allPaths[bestMoveIndex]);
         } else if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
-            return new MoveAndWeight(0, -WeightingFunction.CHECKMATE_WEIGHT_HIGH, GameResult.CHECKMATE, 0, new int[0]);
+            return new MoveAndWeight(0, -WeightingFunction1.CHECKMATE_WEIGHT_HIGH, GameResult.CHECKMATE, 0, new int[0]);
         } else {
             return new MoveAndWeight(0, 0f, GameResult.STALEMATE, 0, new int[0]);
         }
@@ -206,7 +205,7 @@ public final class PositionSearch2 {
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
             workingPath[depth] = move;
-            final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
+            final float moveWeight = WeightingFunction1.getMaterialWeightOfMove(move, depth);
             final float newMaterialWeight = ctx.materialWeight + moveWeight;
             final float newMaterialDelta = ctx.materialDelta + moveWeight;
 
@@ -216,7 +215,7 @@ public final class PositionSearch2 {
             bestKnownPath = null;
             ctx.workingBoard.revertMove();
 
-            if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
+            if (weight != WeightingFunction1.ILLEGAL_WEIGHT) {
                 haveValidMove = true;
 
                 // Alpha-Beta search pruning
@@ -289,7 +288,7 @@ public final class PositionSearch2 {
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
             workingPath[depth] = move;
-            final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
+            final float moveWeight = WeightingFunction1.getMaterialWeightOfMove(move, depth);
             final float newMaterialWeight = ctx.materialWeight - moveWeight;
             final float newMaterialDelta = ctx.materialDelta - moveWeight;
 
@@ -299,7 +298,7 @@ public final class PositionSearch2 {
             bestKnownPath = null;
             ctx.workingBoard.revertMove();
 
-            if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
+            if (weight != WeightingFunction1.ILLEGAL_WEIGHT) {
                 haveValidMove = true;
 
                 // Alpha-Beta search pruning
@@ -354,7 +353,7 @@ public final class PositionSearch2 {
             return materialWeight;
         }
         float weight = weightingFunction.calculate(workingBoard);
-        return weight != WeightingFunction.ILLEGAL_WEIGHT ? weight * weightFactor : WeightingFunction.ILLEGAL_WEIGHT;
+        return weight != WeightingFunction1.ILLEGAL_WEIGHT ? weight * weightFactor : WeightingFunction1.ILLEGAL_WEIGHT;
     }
 
     private void log(String s) {

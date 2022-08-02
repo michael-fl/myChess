@@ -7,8 +7,8 @@ import org.michaelfl.mychess.Move;
 import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.Statistics;
-import org.michaelfl.mychess.WeightingFunction;
 import org.michaelfl.mychess.engines.PositionSearch.SearchNodeContext;
+import org.michaelfl.mychess.engines.v1.WeightingFunction1;
 
 /**
  * @author Michael Fleischhauer
@@ -17,12 +17,12 @@ import org.michaelfl.mychess.engines.PositionSearch.SearchNodeContext;
 public final class QuiescenceSearch2 {
 
     private final MoveGenerator moveGenerator;
-    private final WeightingFunction weightingFunction;
+    private final WeightingFunction1 weightingFunction;
     private final Statistics statistics;
     private final int maxQuiescenceDepth;
     private final int weightFactor;
 
-    public QuiescenceSearch2(Game game, MoveGenerator moveGenerator, WeightingFunction weightingFunction, Statistics statistics, int maxQuiescenceDepth) {
+    public QuiescenceSearch2(Game game, MoveGenerator moveGenerator, WeightingFunction1 weightingFunction, Statistics statistics, int maxQuiescenceDepth) {
         this.moveGenerator = moveGenerator;
         this.weightingFunction = weightingFunction;
         this.statistics = statistics;
@@ -70,7 +70,7 @@ public final class QuiescenceSearch2 {
 
         final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard(), depth);
         if (moves.isIllegal()) {
-            return WeightingFunction.ILLEGAL_WEIGHT;
+            return weightingFunction.ILLEGAL_WEIGHT;
         }
 
         final int[] plainMoves = moves.getMoves();
@@ -88,7 +88,7 @@ public final class QuiescenceSearch2 {
             // Follow only moves, which capture on the same field, until no further capture is possible on that field
             if (capturedOnField == Move.getToField(plainMoves[i])) {
                 final int move = plainMoves[i];
-                final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
+                final float moveWeight = weightingFunction.getMaterialWeightOfMove(move, depth);
                 final float newMaterialWeight = ctx.materialWeight() + moveWeight;
                 final float newMaterialDelta = ctx.materialDelta() + moveWeight;
 
@@ -97,7 +97,7 @@ public final class QuiescenceSearch2 {
                     System.out.println();
                 float weight = quiescenceMinSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), null, 1, bestWeight, ctx.betaWeight(),  newMaterialWeight, newMaterialDelta, ctx.workingBoard(), null));
                 ctx.workingBoard().revertMove();
-                if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
+                if (weight != weightingFunction.ILLEGAL_WEIGHT) {
                     if (weight >= ctx.betaWeight()) {
                         return ctx.betaWeight(); // beta cutoff
                     }
@@ -131,7 +131,7 @@ public final class QuiescenceSearch2 {
 
         final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard(), depth);
         if (moves.isIllegal())
-            return WeightingFunction.ILLEGAL_WEIGHT;
+            return weightingFunction.ILLEGAL_WEIGHT;
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
 
@@ -147,14 +147,14 @@ public final class QuiescenceSearch2 {
             // Follow only moves, which capture on the same field, until no further capture is possible on that field
             if (capturedOnField == Move.getToField(plainMoves[i])) {
                 final int move = plainMoves[i];
-                final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
+                final float moveWeight = weightingFunction.getMaterialWeightOfMove(move, depth);
                 final float newMaterialWeight = ctx.materialWeight() - moveWeight;
                 final float newMaterialDelta = ctx.materialDelta() - moveWeight;
 
                 ctx.workingBoard().makeMove(move);
                 float weight = quiescenceMaxSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), null, 1, ctx.alphaWeight(), bestWeight, newMaterialWeight, newMaterialDelta, ctx.workingBoard(), null));
                 ctx.workingBoard().revertMove();
-                if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
+                if (weight != weightingFunction.ILLEGAL_WEIGHT) {
                     if (weight <= ctx.alphaWeight()) {
                         return ctx.alphaWeight(); // alpha cutoff
                     }
@@ -173,6 +173,6 @@ public final class QuiescenceSearch2 {
             return materialWeight;
         }
         float weight = weightingFunction.calculate(workingBoard);
-        return weight != WeightingFunction.ILLEGAL_WEIGHT ? weight * weightFactor : WeightingFunction.ILLEGAL_WEIGHT;
+        return weight != weightingFunction.ILLEGAL_WEIGHT ? weight * weightFactor : weightingFunction.ILLEGAL_WEIGHT;
     }
 }

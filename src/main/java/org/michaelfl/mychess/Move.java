@@ -3,14 +3,14 @@ package org.michaelfl.mychess;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public final class Move {
 
-    final static byte typeNormal = 0;
-    final static byte typeCastlingKingSide    = 1;
-    final static byte typeCastlingQueenSide   = 2;
-    final static byte typePawnPromotionQueen  = 3;
-    final static byte typePawnPromotionRook   = 4;
-    final static byte typePawnPromotionKnight = 5;
-    final static byte typePawnPromotionBishop = 6;
-    final static byte typeEnPassant = 7;
+    public final static byte typeNormal = 0;
+    public final static byte typeCastlingKingSide    = 1;
+    public final static byte typeCastlingQueenSide   = 2;
+    public final static byte typePawnPromotionQueen  = 3;
+    public final static byte typePawnPromotionRook   = 4;
+    public final static byte typePawnPromotionKnight = 5;
+    public final static byte typePawnPromotionBishop = 6;
+    public final static byte typeEnPassant = 7;
 
     private final int move;
 
