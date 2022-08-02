@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
+import org.michaelfl.mychess.engines.v1.WeightingFunction1;
 import org.michaelfl.mychess.engines.v2.MyChessEngine2;
 
 import java.util.Set;
@@ -332,7 +333,7 @@ class EngineV2Test {
     }
 
     static float checkmateIn(int depth) {
-        return WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth;
+        return WeightingFunction1.CHECKMATE_WEIGHT_HIGH - depth;
     }
 
 }

@@ -9,7 +9,6 @@ import org.michaelfl.mychess.MoveSorter;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.MovesArray;
 import org.michaelfl.mychess.MovesCounter;
-import org.michaelfl.mychess.WeightingFunction;
 
 import java.util.Random;
 
@@ -67,7 +66,7 @@ final class MoveSorterImpl1 implements MoveSorter {
             if (false && isBadMove(move)) {
             bucketBadMoves.add(move);
         } else if (capturedPiece != 0) {
-            final float deltaWeight = WeightingFunction.weightOfPiece[capturedPiece] - WeightingFunction.weightOfPiece[movingPiece];
+            final float deltaWeight = WeightingFunction1.weightOfPiece[capturedPiece] - WeightingFunction1.weightOfPiece[movingPiece];
             if (toField == targetFieldOfLastOppositeMove)
                 bucketCapturingLastPlayedOppositePiece.add(move);
             else if (deltaWeight > 0)

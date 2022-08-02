@@ -11,7 +11,7 @@ import org.michaelfl.mychess.MovesArray;
 import org.michaelfl.mychess.MovesCounter;
 import org.michaelfl.mychess.PieceSquareTables;
 import org.michaelfl.mychess.SortableMovesBucket;
-import org.michaelfl.mychess.WeightingFunction;
+import org.michaelfl.mychess.engines.v1.WeightingFunction1;
 
 public final class MoveSorterImpl2 implements MoveSorter {
 
@@ -65,7 +65,7 @@ public final class MoveSorterImpl2 implements MoveSorter {
         if (isKillerMove(move)) {
             bucketKillerMoves.add(move);
         } else if (capturedPiece != 0) {
-            final float deltaWeight = WeightingFunction.weightOfPiece[capturedPiece] - WeightingFunction.weightOfPiece[movingPiece];
+            final float deltaWeight = WeightingFunction1.weightOfPiece[capturedPiece] - WeightingFunction1.weightOfPiece[movingPiece];
             if (toField == targetFieldOfLastOppositeMove && deltaWeight > bestWeightCapturingLastPlayedOppositePiece) {
                 if (bestMoveCapturingLastPlayedOppositePiece != 0) {
                     getCapturesBucket(deltaWeight).add(bestMoveCapturingLastPlayedOppositePiece, (int) bestWeightCapturingLastPlayedOppositePiece);
