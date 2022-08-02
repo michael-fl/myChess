@@ -73,15 +73,13 @@ public final class QuiescenceSearch {
                 final float newMaterialDelta = ctx.materialDelta() + moveWeight;
 
                 ctx.workingBoard().makeMove(move);
-                float weight = negate(quiescenceSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), null, -ctx.weightFactor(), -ctx.betaWeight(), -bestWeight, -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), null)));
+                float weight = -quiescenceSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), null, -ctx.weightFactor(), -ctx.betaWeight(), -bestWeight, -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), null));
                 ctx.workingBoard().revertMove();
-                if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
-                    if (weight >= ctx.betaWeight()) {
-                        return ctx.betaWeight(); // beta cutoff
-                    }
-                    if (weight > bestWeight) {
-                        bestWeight = weight;
-                    }
+                if (weight >= ctx.betaWeight()) {
+                    return ctx.betaWeight(); // beta cutoff
+                }
+                if (weight > bestWeight) {
+                    bestWeight = weight;
                 }
             }
         }
@@ -89,15 +87,10 @@ public final class QuiescenceSearch {
         return bestWeight;
     }
 
-    private float negate(float weight) {
-        return weight == WeightingFunction.ILLEGAL_WEIGHT ? WeightingFunction.ILLEGAL_WEIGHT : -weight;
-    }
-
     private float calculatePositionWeight(final Board workingBoard, final int weightFactor, final float materialWeight, final float materialDelta) {
         if (materialDelta > 2.0f || materialDelta < -2.0f) {
             return materialWeight;
         }
-        float weight = weightingFunction.calculate(workingBoard);
-        return weight != WeightingFunction.ILLEGAL_WEIGHT ? weight * weightFactor : WeightingFunction.ILLEGAL_WEIGHT;
+        return weightingFunction.calculate(workingBoard) * weightFactor;
     }
 }

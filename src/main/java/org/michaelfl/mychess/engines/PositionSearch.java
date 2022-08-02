@@ -50,15 +50,11 @@ public final class PositionSearch {
     }
 
     public record SearchNodeResult(GameResult result, float weight, NodeState state, boolean isTimeout, boolean isSingleton) {
-        public final static SearchNodeResult TIMEOUT = new SearchNodeResult(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT, NodeState.UNKNOWN, true, true);
-        public final static SearchNodeResult ILLEGAL = new SearchNodeResult(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT, NodeState.COMPLETE, false, true);
+        public final static SearchNodeResult TIMEOUT = new SearchNodeResult(GameResult.ONGOING, 0, NodeState.UNKNOWN, true, true);
         public final static SearchNodeResult DRAW = new SearchNodeResult(GameResult.DRAW, 0, NodeState.COMPLETE, false, true);
         public final static SearchNodeResult STALEMATE = new SearchNodeResult(GameResult.STALEMATE, 0, NodeState.COMPLETE, false, true);
 
         public static SearchNodeResult create(GameResult result, float weight, NodeState state) {
-            if (weight == WeightingFunction.ILLEGAL_WEIGHT) {
-                return ILLEGAL;
-            }
             return new SearchNodeResult(result, weight, state, false, false);
         }
 
@@ -198,10 +194,13 @@ public final class PositionSearch {
             }
         }
 
-        if (bestMoveIndex >= 0) {
-            // Return the best move
+        if (bestMoveIndex >= 0 && !WeightingFunction.isIllegalWeight(bestWeight)) {
+            // Found a legal move
             return new MoveAndWeight(plainMoves[bestMoveIndex], results[bestMoveIndex].weight, results[bestMoveIndex].result, 0, allPaths[bestMoveIndex]);
-        } else if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
+        }
+
+        // No legal move possible ==> checkmate or stalemate
+        if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
             return new MoveAndWeight(0, -WeightingFunction.CHECKMATE_WEIGHT_HIGH, GameResult.CHECKMATE, 0, new int[0]);
         } else {
             return new MoveAndWeight(0, 0f, GameResult.STALEMATE, 0, new int[0]);
@@ -238,11 +237,10 @@ public final class PositionSearch {
         final int bestKnownNextMove = getMoveAtDepth(bestKnownPath, depth);
         final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard, depth, bestKnownNextMove);
         if (moves.isIllegal()) {
-            return SearchNodeResult.ILLEGAL;
+            return SearchNodeResult.create(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT, NodeState.COMPLETE);
         }
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
-        boolean haveValidMove = false;
 
         if (countMoves > 0 && bestKnownNextMove != 0 && bestKnownNextMove != plainMoves[0]) {
             throw new IllegalStateException("First move must be the best known move. Expected: " + new Move(bestKnownNextMove) + ", actual: " + new Move(plainMoves[0]) + ", depth: " + depth);
@@ -272,27 +270,24 @@ public final class PositionSearch {
             bestKnownPath = null;
             ctx.workingBoard.revertMove();
 
-            if (weight != WeightingFunction.ILLEGAL_WEIGHT) {
-                haveValidMove = true;
-
-                // Alpha-Beta search pruning
-                if (weight >= ctx.betaWeight) {
-                    statistics.incrPrunedMovesCount(countMoves - i - 1);
-                    ctx.copyUpPV();
-                    if (Move.getCapturedPiece(move) == 0) {
-                        killerMoves.addMove(move, depth);
-                    }
-                    return SearchNodeResult.create(result.result, ctx.betaWeight, NodeState.BETA_CUTOFF);
+            // Alpha-Beta search pruning
+            if (weight >= ctx.betaWeight) {
+                statistics.incrPrunedMovesCount(countMoves - i - 1);
+                ctx.copyUpPV();
+                if (Move.getCapturedPiece(move) == 0) {
+                    killerMoves.addMove(move, depth);
                 }
+                return SearchNodeResult.create(result.result, ctx.betaWeight, NodeState.BETA_CUTOFF);
+            }
 
-                if (weight > bestResult.weight) {
-                    bestResult = result;
-                    ctx.copyUpPV();
-                }
+            if (weight > bestResult.weight) {
+                bestResult = result;
+                ctx.copyUpPV();
             }
         }
 
-        if (haveValidMove) {
+        if (!WeightingFunction.isIllegalWeight(bestResult.weight)) {
+            // Found a legal move
             if (bestResult.weight == Float.POSITIVE_INFINITY || bestResult.weight == Float.NEGATIVE_INFINITY) {
                 throw new IllegalStateException("bestWeight=" + bestResult.weight + ", depth=" + depth + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
             }
@@ -301,7 +296,7 @@ public final class PositionSearch {
 
         // No legal move possible ==> Checkmate or stalemate
         if (Game.testIsKingChecked(ctx.workingBoard, moveGenerator)) {
-            // Computer checkmate
+            // Checkmate
             return SearchNodeResult.checkmateSelf(depth);
         }
 
@@ -324,8 +319,7 @@ public final class PositionSearch {
         if (materialDelta > 2.0f || materialDelta < -2.0f) {
             return materialWeight;
         }
-        float weight = weightingFunction.calculate(workingBoard);
-        return weight != WeightingFunction.ILLEGAL_WEIGHT ? weight * weightFactor : WeightingFunction.ILLEGAL_WEIGHT;
+        return weightingFunction.calculate(workingBoard) * weightFactor;
     }
 
     private void log(String s) {

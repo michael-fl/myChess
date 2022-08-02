@@ -46,9 +46,6 @@ public abstract class ChessEngine {
         }
 
         public MoveAndWeight weightFactor(float factor) {
-            if (weight == WeightingFunction.ILLEGAL_WEIGHT) {
-                return this;
-            }
             if (weight == 0f) {
                 return this;
             }

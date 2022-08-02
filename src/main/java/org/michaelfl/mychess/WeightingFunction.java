@@ -16,7 +16,7 @@ package org.michaelfl.mychess;
 @SuppressWarnings({"StatementWithEmptyBody", "Duplicates", "PointlessArithmeticExpression"})
 public final class WeightingFunction {
 
-    public final static float ILLEGAL_WEIGHT = Float.NEGATIVE_INFINITY;
+    public final static float ILLEGAL_WEIGHT = 100000f;
     public final static float CHECKMATE_WEIGHT_LOW = 1000f;
     public final static float CHECKMATE_WEIGHT_HIGH = 2000f;
 
@@ -185,7 +185,7 @@ public final class WeightingFunction {
 
     private float calculatePositionWeight() {
         if (containsIllegalMove)
-            return ILLEGAL_WEIGHT;
+            return turn == 0 ? ILLEGAL_WEIGHT : -ILLEGAL_WEIGHT;
 
         final int plyCount = game.getPlyCount();
         final float openingFactorCorrection = plyCount > 20 ? (plyCount > 40 ? 0f : 0.5f) : 1.0f;
@@ -497,5 +497,9 @@ public final class WeightingFunction {
         if (movedPawnCount == 0) state -= 2;
         else if (movedPawnCount == 1) state--;
         openingState[1] = state;
+    }
+
+    public static boolean isIllegalWeight(float weigth) {
+        return weigth == ILLEGAL_WEIGHT || weigth == -ILLEGAL_WEIGHT;
     }
 }
