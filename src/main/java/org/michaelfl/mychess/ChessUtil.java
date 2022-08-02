@@ -123,7 +123,7 @@ public final class ChessUtil {
     }
 
     public static String weightToString(float weight, float factor) {
-        if (weight == WeightingFunction.ILLEGAL_WEIGHT)
+        if (WeightingFunction.isIllegalWeight(weight))
             return "illegal";
         weight *= factor;
         if (weight >= WeightingFunction.CHECKMATE_WEIGHT_LOW)
