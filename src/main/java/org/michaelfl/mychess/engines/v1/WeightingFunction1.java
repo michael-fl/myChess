@@ -17,13 +17,12 @@ import org.michaelfl.mychess.Board;
 import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.Move;
 import org.michaelfl.mychess.PieceSquareTables;
+import org.michaelfl.mychess.WeightingFunction;
 
 @SuppressWarnings({"StatementWithEmptyBody", "Duplicates", "PointlessArithmeticExpression"})
 public final class WeightingFunction1 {
 
     public final static float ILLEGAL_WEIGHT = Float.NEGATIVE_INFINITY;
-    public final static float CHECKMATE_WEIGHT_LOW = 1000f;
-    public final static float CHECKMATE_WEIGHT_HIGH = 2000f;
 
     public final static float[] weightOfPiece = new float[Board.blackKing + 1];
     static {
@@ -502,5 +501,13 @@ public final class WeightingFunction1 {
         if (movedPawnCount == 0) state -= 2;
         else if (movedPawnCount == 1) state--;
         openingState[1] = state;
+    }
+
+    public static float checkmateIn(int depth) {
+        return WeightingFunction.checkmateIn(depth);
+    }
+
+    public static int checkmateInCenti(int depth) {
+        return WeightingFunction.checkmateInCenti(depth);
     }
 }

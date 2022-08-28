@@ -22,9 +22,16 @@ import java.util.concurrent.CancellationException;
 @SuppressWarnings("DuplicatedCode")
 public final class PositionSearch {
 
+    /**
+     * If the player has gained/lost more than this threshold in material weight during the current search,
+     * only material weight on the board is considered in the evaluation function.
+     * Otherwise, the full evaluation of the position is done.
+     */
+    public static final int EVALUATE_MATERIAL_ONLY_THRESHOLD = 200;
+
     public record SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnownPath,
                                     int weightFactor,
-                                    float alphaWeight, float betaWeight, float materialWeight, float materialDelta,
+                                    int alphaWeight, int betaWeight, int materialWeight, int materialDelta,
                                     Board workingBoard, int[] pvTable) {
 
         private int pvMaxLength() {
@@ -44,35 +51,35 @@ public final class PositionSearch {
         }
     }
 
-    public record SearchNodeResult(GameResult result, float weight, boolean isTimeout) {
+    public record SearchNodeResult(GameResult result, int weight, boolean isTimeout) {
 
         public final static SearchNodeResult TIMEOUT = new SearchNodeResult(GameResult.ONGOING, 0, true);
-        public final static SearchNodeResult INVALID = new SearchNodeResult(GameResult.ONGOING, -WeightingFunction.ILLEGAL_WEIGHT, false);
+        public final static SearchNodeResult INVALID = new SearchNodeResult(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT_NEG, false);
 
-        public static SearchNodeResult create(GameResult result, float weight) {
+        public static SearchNodeResult create(GameResult result, int weight) {
             return new SearchNodeResult(result, weight, false);
         }
 
-        public static SearchNodeResult create(GameResult result, float weight, float alpha, float beta) {
+        public static SearchNodeResult create(GameResult result, int weight, int alpha, int beta) {
             return new SearchNodeResult(result, window(weight, alpha, beta), false);
         }
 
-        public static SearchNodeResult draw(float alpha, float beta) {
+        public static SearchNodeResult draw(int alpha, int beta) {
             return new SearchNodeResult(GameResult.DRAW, window(0, alpha, beta), false);
         }
 
-        private static float window(float weight, float alpha, float beta) {
+        private static int window(int weight, int alpha, int beta) {
             if (weight <= alpha) {
                 return alpha;
             }
             return Math.min(weight, beta);
         }
 
-        public static SearchNodeResult checkmateSelf(int depth, float alpha, float beta) {
-            return new SearchNodeResult(GameResult.CHECKMATE, window(-(WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth), alpha, beta), false);
+        public static SearchNodeResult checkmateSelf(int depth, int alpha, int beta) {
+            return new SearchNodeResult(GameResult.CHECKMATE, window(-WeightingFunction.checkmateInCenti(depth), alpha, beta), false);
         }
 
-        public static SearchNodeResult stalemate(int depth, float alpha, float beta) {
+        public static SearchNodeResult stalemate(int depth, int alpha, int beta) {
             return new SearchNodeResult(GameResult.STALEMATE, window(0, alpha, beta), false);
         }
 
@@ -154,13 +161,13 @@ public final class PositionSearch {
             throw new IllegalChessPositionException(workingBoard);
         }
 
-        final float materialWeight = weightFactor * WeightingFunction.calculateMaterialWeight(workingBoard);
+        final int materialWeight = weightFactor * WeightingFunction.calculateMaterialWeight(workingBoard);
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
         final SearchNodeResult[] results = new SearchNodeResult[countMoves];
         final int[][] allPaths = new int[countMoves][pvMaxLength];
         final int[] pvTable = new int[pvMaxLength * pvMaxLength];
-        float alphaWeight = Float.NEGATIVE_INFINITY;
+        int alphaWeight = WeightingFunction.MIN_ALPHA;
         statistics.incrPositionCount();
 
         Arrays.fill(results, SearchNodeResult.INVALID);
@@ -173,13 +180,13 @@ public final class PositionSearch {
             final int move = plainMoves[i];
             //log("Working on move " + ChessUtil.moveToString(move));
 
-            final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, 1);
-            final float newMaterialWeight = materialWeight + moveWeight;
+            final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move, 1);
+            final int newMaterialWeight = materialWeight + moveWeight;
             boolean logWeight = false;
 
             pvTable[0] = move;
             workingBoard.makeMove(move);
-            var result = alphaBetaSearch(new SearchNodeContext(1, maxDepth, bestKnownPath, -weightFactor, Float.NEGATIVE_INFINITY, -alphaWeight, -newMaterialWeight, -moveWeight, workingBoard, pvTable)).negate();
+            var result = alphaBetaSearch(new SearchNodeContext(1, maxDepth, bestKnownPath, -weightFactor, WeightingFunction.MIN_ALPHA, -alphaWeight, -newMaterialWeight, -moveWeight, workingBoard, pvTable)).negate();
             if (result.isTimeout()) {
                 return previousBestKnownPath;
             }
@@ -187,7 +194,7 @@ public final class PositionSearch {
             workingBoard.revertMove();
 
             // -ILLEGAL_WEIGHT is possible to be returned, but never +ILLEGAL_WEIGHT
-            if (result.weight > -WeightingFunction.ILLEGAL_WEIGHT) {
+            if (result.weight > WeightingFunction.ILLEGAL_WEIGHT_NEG) {
                 results[i] = result;
                 System.arraycopy(pvTable, 0, allPaths[i], 0, pvMaxLength);
 
@@ -202,7 +209,7 @@ public final class PositionSearch {
             //log("quiescence: total=" + statistics.getQuiescencePositionsCount() + ", avg=" + statistics.getQuiescencePositionsCountAvg() + ", max=" + statistics.getQuiescencePositionsCountMax() + ", max depth: " + statistics.getMaximumReachedDepth());
         }
 
-        float bestWeight = -WeightingFunction.ILLEGAL_WEIGHT;
+        int bestWeight = WeightingFunction.ILLEGAL_WEIGHT_NEG;
         int bestMoveIndex = -1;
 
         for (int i = 0; i < countMoves; i++) {
@@ -219,9 +226,9 @@ public final class PositionSearch {
 
         // No legal move possible ==> checkmate or stalemate
         if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
-            return new MoveAndWeight(0, -WeightingFunction.CHECKMATE_WEIGHT_HIGH, GameResult.CHECKMATE, new int[0]);
+            return new MoveAndWeight(0, -WeightingFunction.checkmateInCenti(), GameResult.CHECKMATE, new int[0]);
         } else {
-            return new MoveAndWeight(0, 0f, GameResult.STALEMATE, new int[0]);
+            return new MoveAndWeight(0, 0, GameResult.STALEMATE, new int[0]);
         }
     }
 
@@ -235,9 +242,9 @@ public final class PositionSearch {
 
     private SearchNodeResult alphaBetaSearch(final SearchNodeContext ctx) {
         var result = alphaBetaSearchI(ctx);
-        if (result.weight == -WeightingFunction.ILLEGAL_WEIGHT
-            || result.weight == Float.NEGATIVE_INFINITY
-            || result.weight == Float.POSITIVE_INFINITY) {
+        // ILLEGAL_WEIGHT_NEG <= weight < ILLEGAL_WEIGHT_POS
+        if (result.weight <= WeightingFunction.ILLEGAL_WEIGHT_NEG
+            || result.weight > WeightingFunction.ILLEGAL_WEIGHT_POS) {
                 // TODO remove
                 throw new IllegalStateException("Unexpected weight " + result.weight + " returned, depth=" + ctx.depth() + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
         }
@@ -272,7 +279,7 @@ public final class PositionSearch {
         final int bestKnownNextMove = getMoveAtDepth(bestKnownPath, depth);
         final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard, depth, bestKnownNextMove);
         if (moves.isIllegal()) {
-            return SearchNodeResult.create(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT, ctx.alphaWeight, ctx.betaWeight);
+            return SearchNodeResult.create(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT_POS, ctx.alphaWeight, ctx.betaWeight);
         }
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
@@ -293,9 +300,9 @@ public final class PositionSearch {
             }
 
             final int move = plainMoves[i];
-            final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
-            final float newMaterialWeight = ctx.materialWeight + moveWeight;
-            final float newMaterialDelta = ctx.materialDelta + moveWeight;
+            final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
+            final int newMaterialWeight = ctx.materialWeight + moveWeight;
+            final int newMaterialDelta = ctx.materialDelta + moveWeight;
 
             pvTable[pvIndex] = move;
             ctx.workingBoard.makeMove(move);
@@ -304,11 +311,11 @@ public final class PositionSearch {
             if (result.isTimeout()) {
                 return SearchNodeResult.TIMEOUT;
             }
-            final float weight = result.weight;
+            final int weight = result.weight;
             bestKnownPath = null;
 
             // -ILLEGAL_WEIGHT is possible to be returned, but never +ILLEGAL_WEIGHT
-            if (weight > -WeightingFunction.ILLEGAL_WEIGHT) {
+            if (weight > WeightingFunction.ILLEGAL_WEIGHT_NEG) {
                 haveValidMoves = true;
 
                 // Alpha-Beta search pruning
@@ -341,7 +348,7 @@ public final class PositionSearch {
                 SearchNodeResult.stalemate(ctx.depth(), alpha, ctx.betaWeight());
     }
 
-    private float quiescenceSearch(SearchNodeContext ctx) {
+    private int quiescenceSearch(SearchNodeContext ctx) {
         var workingBoard = ctx.workingBoard;
         final int lastMove = workingBoard.getGameStatus().getLastMove();
 
@@ -352,8 +359,8 @@ public final class PositionSearch {
         }
     }
 
-    private float calculatePositionWeight(final Board workingBoard, final int weightFactor, final float materialWeight, final float materialDelta) {
-        if (materialDelta > 2.0f || materialDelta < -2.0f) {
+    private int calculatePositionWeight(final Board workingBoard, final int weightFactor, final int materialWeight, final int materialDelta) {
+        if (materialDelta > EVALUATE_MATERIAL_ONLY_THRESHOLD || materialDelta < -EVALUATE_MATERIAL_ONLY_THRESHOLD) {
             return materialWeight;
         }
         return weightingFunction.calculate(workingBoard) * weightFactor;

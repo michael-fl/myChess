@@ -16,24 +16,28 @@ package org.michaelfl.mychess;
 @SuppressWarnings({"StatementWithEmptyBody", "Duplicates", "PointlessArithmeticExpression"})
 public final class WeightingFunction {
 
-    public final static float ILLEGAL_WEIGHT = 100000f;
-    public final static float CHECKMATE_WEIGHT_LOW = 1000f;
-    public final static float CHECKMATE_WEIGHT_HIGH = 2000f;
+    public final static int MIN_ALPHA = -Integer.MAX_VALUE;
+    public final static int MAX_BETA = Integer.MAX_VALUE;
+    public final static int ILLEGAL_WEIGHT_NEG = -1_000_000;
+    public final static int ILLEGAL_WEIGHT_POS = 1_000_000;
+    public final static int CHECKMATE_WEIGHT_LOW = 100_000;
+    public final static int CHECKMATE_WEIGHT_HIGH = 200_000;
 
-    public final static float[] weightOfPiece = new float[Board.blackKing + 1];
+    /** Piece weight in centi pawns. */
+    public final static int[] weightOfPiece = new int[Board.blackKing + 1];
     static {
-        weightOfPiece[Board.whitePawn]   = 1.0f;
-        weightOfPiece[Board.whiteKnight] = 3.0f;
-        weightOfPiece[Board.whiteBishop] = 3.0f;
-        weightOfPiece[Board.whiteRook]   = 5.0f;
-        weightOfPiece[Board.whiteQueen]  = 9.0f;
-        weightOfPiece[Board.whiteKing]   = 0.0f;
-        weightOfPiece[Board.blackPawn]   = 1.0f;
-        weightOfPiece[Board.blackKnight] = 3.0f;
-        weightOfPiece[Board.blackBishop] = 3.0f;
-        weightOfPiece[Board.blackRook]   = 5.0f;
-        weightOfPiece[Board.blackQueen]  = 9.0f;
-        weightOfPiece[Board.blackKing]   = 0.0f;
+        weightOfPiece[Board.whitePawn]   = 100;
+        weightOfPiece[Board.whiteKnight] = 300;
+        weightOfPiece[Board.whiteBishop] = 300;
+        weightOfPiece[Board.whiteRook]   = 500;
+        weightOfPiece[Board.whiteQueen]  = 900;
+        weightOfPiece[Board.whiteKing]   = 0;
+        weightOfPiece[Board.blackPawn]   = 100;
+        weightOfPiece[Board.blackKnight] = 300;
+        weightOfPiece[Board.blackBishop] = 300;
+        weightOfPiece[Board.blackRook]   = 500;
+        weightOfPiece[Board.blackQueen]  = 900;
+        weightOfPiece[Board.blackKing]   = 0;
     }
 
     private final static int[] mobilityWeightOfPiece = new int[Board.blackKing + 1];
@@ -93,15 +97,16 @@ public final class WeightingFunction {
     private final float[] piecesWeight = new float[2];
     private final int[] mobilityWeight = new int[2];
     private final int[] positionWeight = new int[2];
-    private final float[] threadWeight = new float[2];
+    private final int[] threadWeight = new int[2];
     private boolean containsIllegalMove;
     private final int[] castlingState = new int[2];
     private final int[] openingState = new int[2];
     private final int[] doublePawnCount = new int[2];
 
-    public static float calculateMaterialWeight(Board theBoard) {
+    /** Material weight (delta white - black) in centi pawns. */
+    public static int calculateMaterialWeight(Board theBoard) {
         final byte[] board = theBoard.getRawBoard();
-        final float[] piecesWeight = new float[2];
+        final int[] piecesWeight = new int[2];
 
         final int stopField = 9 * Board.LENGTH + 10;
 
@@ -117,14 +122,14 @@ public final class WeightingFunction {
         return piecesWeight[0] - piecesWeight[1];
     }
 
-    public static float getMaterialWeightOfMove(int move, int depth) {
-        final float capturedWeight = WeightingFunction.weightOfPiece[Move.getCapturedPiece(move)];
-        //final float capturedWeight = pw != 0 ? pw - depth * 0.0001f : 0;
+    /** Get matrial weight of move in centi pawns. */
+    public static int getMaterialWeightOfMove(int move, int depth) {
+        final int capturedWeight = WeightingFunction.weightOfPiece[Move.getCapturedPiece(move)];
         final byte moveType = Move.getMoveType(move);
         if (moveType == Move.typeNormal)
             return capturedWeight;
 
-        final float pawnWeight = weightOfPiece[Board.whitePawn];
+        final int pawnWeight = weightOfPiece[Board.whitePawn];
         if (moveType == Move.typePawnPromotionQueen)
             return weightOfPiece[Board.whiteQueen] - pawnWeight + capturedWeight;
         else if (moveType == Move.typePawnPromotionKnight)
@@ -137,7 +142,8 @@ public final class WeightingFunction {
             return 0;
     }
 
-    public float calculate(Board theBoard) {
+    /** Calculate weight of position in centi pawns. */
+    public int calculate(Board theBoard) {
         this.game = theBoard.getGameStatus();
         this.turn = game.getTurn() == GameStatus.TURN_WHITE ? 0 : 1;
         this.theBoard = theBoard;
@@ -183,39 +189,43 @@ public final class WeightingFunction {
         return calculatePositionWeight();
     }
 
-    private float calculatePositionWeight() {
+    private int calculatePositionWeight() {
         if (containsIllegalMove)
-            return turn == 0 ? ILLEGAL_WEIGHT : -ILLEGAL_WEIGHT;
+            return turn == 0 ? ILLEGAL_WEIGHT_POS : ILLEGAL_WEIGHT_NEG;
 
         final int plyCount = game.getPlyCount();
         final float openingFactorCorrection = plyCount > 20 ? (plyCount > 40 ? 0f : 0.5f) : 1.0f;
 
         return Math.round((
-                  (piecesWeight[0] - piecesWeight[1])
+                  (piecesWeight[0] - piecesWeight[1]) / 100f
                 + (positionWeight[0] - positionWeight[1]) / 100f * positionFactor
                 + (mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor
-                + (threadWeight[0] - threadWeight[1]) * threadWeightFactor
+                + (threadWeight[0] - threadWeight[1]) / 100f * threadWeightFactor
                 + (castlingState[0] - castlingState[1]) * castlingFactor
                 + (openingState[0] - openingState[1]) * openingFactor * openingFactorCorrection
                 + (chessCount[0] - chessCount[1]) * chessFactor
-                + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) * 100) / 100f;
+                + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) * 100);
     }
 
     void print() {
-        System.out.println(toString());
+        System.out.println(this);
     }
 
     @Override
     public String toString() {
-        return "piecesWeight:       w=" + piecesWeight[0] + ", b=" + piecesWeight[1] + ", delta=" + (piecesWeight[0] - piecesWeight[1]) + ", weight=" + (piecesWeight[0] - piecesWeight[1]) + '\n' +
-               "positionWeight:     w=" + positionWeight[0] + ", b=" + positionWeight[1] + ", delta=" + (positionWeight[0] - positionWeight[1]) + ", weight=" + (positionWeight[0] - positionWeight[1]) / 100f * positionFactor + '\n' +
-               "mobilityWeight:     w=" + mobilityWeight[0] + ", b=" + mobilityWeight[1] + ", delta=" + (mobilityWeight[0] - mobilityWeight[1]) + ", weight=" + (mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor + '\n' +
-               "threadWeight:       w=" + threadWeight[0] + ", b=" + threadWeight[1] + ", delta=" + (threadWeight[0] - threadWeight[1]) + ", weight=" + (threadWeight[0] - threadWeight[1]) * threadWeightFactor + '\n' +
-               "castlingState:      w=" + castlingState[0] + ", b=" + castlingState[1] + ", delta=" + (castlingState[0] - castlingState[1]) + ", weight=" + (castlingState[0] - castlingState[1]) * castlingFactor + '\n' +
-               "openingState:       w=" + openingState[0] + ", b=" + openingState[1] + ", delta=" + (openingState[0] - openingState[1]) + ", weight=" + (openingState[0] - openingState[1]) * openingFactor + '\n' +
-               "doublePawnCount:    w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + ", delta=" + (doublePawnCount[0] - doublePawnCount[1]) + ", weight=" + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor + '\n' +
-               "chessCount:         w=" + chessCount[0] + ", b=" + chessCount[1] + ", delta=" + (chessCount[0] - chessCount[1]) + ", weight=" + (chessCount[0] - chessCount[1]) * chessFactor + '\n' +
-               "weight: " + calculatePositionWeight();
+        return "piecesWeight:       w=" + piecesWeight[0] + ", b=" + piecesWeight[1] + ", delta=" + (piecesWeight[0] - piecesWeight[1]) + ", weight=" + round((piecesWeight[0] - piecesWeight[1]) / 100f) + '\n' +
+               "positionWeight:     w=" + positionWeight[0] + ", b=" + positionWeight[1] + ", delta=" + (positionWeight[0] - positionWeight[1]) + ", weight=" + round((positionWeight[0] - positionWeight[1]) / 100f * positionFactor) + '\n' +
+               "mobilityWeight:     w=" + mobilityWeight[0] + ", b=" + mobilityWeight[1] + ", delta=" + (mobilityWeight[0] - mobilityWeight[1]) + ", weight=" + round((mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor) + '\n' +
+               "threadWeight:       w=" + threadWeight[0] + ", b=" + threadWeight[1] + ", delta=" + (threadWeight[0] - threadWeight[1]) + ", weight=" + round((threadWeight[0] - threadWeight[1])  / 100f * threadWeightFactor) + '\n' +
+               "castlingState:      w=" + castlingState[0] + ", b=" + castlingState[1] + ", delta=" + (castlingState[0] - castlingState[1]) + ", weight=" + round((castlingState[0] - castlingState[1]) * castlingFactor) + '\n' +
+               "openingState:       w=" + openingState[0] + ", b=" + openingState[1] + ", delta=" + (openingState[0] - openingState[1]) + ", weight=" + round((openingState[0] - openingState[1]) * openingFactor) + '\n' +
+               "doublePawnCount:    w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + ", delta=" + (doublePawnCount[0] - doublePawnCount[1]) + ", weight=" + round((doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) + '\n' +
+               "chessCount:         w=" + chessCount[0] + ", b=" + chessCount[1] + ", delta=" + (chessCount[0] - chessCount[1]) + ", weight=" + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
+               "weight: " + calculatePositionWeight() / 100f;
+    }
+
+    private static float round(float v) {
+        return Math.round(v * 100f) / 100f;
     }
 
     private static void _calculateForWhitePawn(WeightingFunction generator, int field, int color) {
@@ -499,7 +509,51 @@ public final class WeightingFunction {
         openingState[1] = state;
     }
 
-    public static boolean isIllegalWeight(float weigth) {
-        return weigth == ILLEGAL_WEIGHT || weigth == -ILLEGAL_WEIGHT;
+    public static boolean isIllegalWeight(int weightCenti) {
+        return weightCenti == ILLEGAL_WEIGHT_NEG || weightCenti == ILLEGAL_WEIGHT_POS;
+    }
+
+    public static float checkmateIn(int depth) {
+        return (WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth) / 100f;
+    }
+
+    public static int checkmateInCenti(int depth) {
+        return WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth;
+    }
+
+    public static int checkmateInCenti() {
+        return WeightingFunction.CHECKMATE_WEIGHT_HIGH;
+    }
+
+    /** Returns true if given weight is a checkmate score (positive or negative). */
+    public static boolean isCheckmateWeight(float weight) {
+        final int w = (int) (Math.abs(weight) * 100);
+        return w >= CHECKMATE_WEIGHT_LOW && w <= CHECKMATE_WEIGHT_HIGH;
+    }
+
+    /** Returns true if given weight (in centi pawns) is a checkmate score (positive or negative). */
+    public static boolean isCheckmateWeight(int weightCenti) {
+        final int w = Math.abs(weightCenti);
+        return w >= CHECKMATE_WEIGHT_LOW && w <= CHECKMATE_WEIGHT_HIGH;
+    }
+
+    /**
+     * Returns the number of plies (depth) that corresponds to given checkmate score,
+     * i.e. mate in X half moves.
+     * Precondition: Given weight must be a checkmate score.
+     */
+    public static int checkmateWeightToPlies(float weight) {
+        final int w = (int) (Math.abs(weight) * 100);
+        return CHECKMATE_WEIGHT_HIGH - w;
+    }
+
+    /**
+     * Returns the number of plies (depth) that corresponds to given checkmate score (in centi pawns),
+     * i.e. mate in X half moves.
+     * Precondition: Given weight must be a checkmate score.
+     */
+    public static int checkmateWeightToPlies(int weightCenti) {
+        final int w = Math.abs(weightCenti);
+        return CHECKMATE_WEIGHT_HIGH - w;
     }
 }

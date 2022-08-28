@@ -6,6 +6,7 @@ import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.Moves;
+import org.michaelfl.mychess.WeightingFunction;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 
 @SuppressWarnings("DuplicatedCode")
@@ -71,8 +72,8 @@ public final class CheckmateSearch {
     private int findCheckmate(int forColor, Board workingBoard, int[] moveOut) {
         CheckmateSearchContext context = new CheckmateSearchContext(workingBoard);
         int move = workingBoard.getGameStatus().getTurn() == forColor ?
-                findCheckmateEscapeMove(context, Integer.MIN_VALUE, Integer.MAX_VALUE) :
-                findCheckmateMove(context, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                findCheckmateEscapeMove(context, WeightingFunction.MIN_ALPHA, WeightingFunction.MAX_BETA) :
+                findCheckmateMove(context, WeightingFunction.MIN_ALPHA, WeightingFunction.MAX_BETA);
         moveOut[0] = context.bestMove;
 
         if (move != 0)
@@ -86,7 +87,7 @@ public final class CheckmateSearch {
         final Board workingBoard = context.workingBoard;
         final int depth = context.depth;
 
-        if (alphaWeight == Integer.MAX_VALUE || betaWeight == Integer.MIN_VALUE) {
+        if (alphaWeight == WeightingFunction.MAX_BETA || betaWeight == WeightingFunction.MIN_ALPHA) {
             throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard.toString());
         }
 
@@ -103,7 +104,7 @@ public final class CheckmateSearch {
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
         int bestMove = -1;
-        int bestWeight = betaWeight; // Integer.MAX_VALUE
+        int bestWeight = betaWeight;
         boolean haveValidMove = false;
 
         for (int i = 0; i < countMoves; i++) {
@@ -111,7 +112,7 @@ public final class CheckmateSearch {
             workingBoard.makeMove(move);
             context.depth = depth + 1;
             int weight = findCheckmateMove(context, alphaWeight, bestWeight);
-            if (weight == Integer.MAX_VALUE || weight == Integer.MIN_VALUE) {
+            if (weight == WeightingFunction.MAX_BETA || weight == WeightingFunction.MIN_ALPHA) {
                 throw new IllegalStateException("depth=" + depth + ", weight=" + weight + "\n" + workingBoard.toString());
             }
             workingBoard.revertMove();
@@ -147,7 +148,7 @@ public final class CheckmateSearch {
         final Board workingBoard = context.workingBoard;
         final int depth = context.depth;
 
-        if (alphaWeight == Integer.MAX_VALUE || betaWeight == Integer.MIN_VALUE) {
+        if (alphaWeight == WeightingFunction.MAX_BETA || betaWeight == WeightingFunction.MIN_ALPHA) {
             throw new IllegalStateException("depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + workingBoard.toString());
         }
 
@@ -162,7 +163,7 @@ public final class CheckmateSearch {
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
         int bestMove = -1;
-        int bestWeight = alphaWeight; // Integer.MIN_VALUE
+        int bestWeight = alphaWeight;
         boolean haveValidMove = false;
 
         for (int i = 0; i < countMoves; i++) {
@@ -170,7 +171,7 @@ public final class CheckmateSearch {
             workingBoard.makeMove(move);
             context.depth = depth + 1;
             int weight = findCheckmateEscapeMove(context, bestWeight, betaWeight);
-            if (weight == Integer.MAX_VALUE || weight == Integer.MIN_VALUE) {
+            if (weight == WeightingFunction.MIN_ALPHA || weight == WeightingFunction.MAX_BETA) {
                 throw new IllegalStateException("depth=" + depth + ", weight=" + weight + "\n" + workingBoard.toString());
             }
             workingBoard.revertMove();

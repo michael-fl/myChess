@@ -9,6 +9,7 @@ import org.michaelfl.mychess.engines.MyChessEngine;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.michaelfl.mychess.WeightingFunction.checkmateIn;
 
 /**
  * @author Michael Fleischhauer
@@ -37,7 +38,7 @@ class GameStatusTest {
 
         MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
         assertEquals("d8-h4", ChessUtil.moveToString(move.move), "Unexpected move");
-        assertEquals(-EngineTest.checkmateIn(1), move.weight, "Should be checkmate in 1");
+        assertEquals(-checkmateIn(1), move.weight, "Should be checkmate in 1");
 
         game.makeMove(MoveDescription.fromString("d8-h4", game.getTurn()));
         assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "It must be white's turn");
@@ -45,7 +46,7 @@ class GameStatusTest {
 
         move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
         assertEquals(0, move.move, "No move should be possible, since game is finished");
-        assertEquals(-EngineTest.checkmateIn(0), move.weight, "Wrong weight");
+        assertEquals(-checkmateIn(0), move.weight, "Wrong weight");
     }
 
     @Test
@@ -58,7 +59,7 @@ class GameStatusTest {
 
         MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
         assertEquals("h5-f7", ChessUtil.moveToString(move.move), "Unexpected move");
-        assertEquals(EngineTest.checkmateIn(1), move.weight, "Should be checkmate in 1");
+        assertEquals(checkmateIn(1), move.weight, "Should be checkmate in 1");
 
         game.makeMove(MoveDescription.fromString("h5-f7", game.getTurn()));
         assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "It must be white's turn");
@@ -66,7 +67,7 @@ class GameStatusTest {
 
         move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
         assertEquals(0, move.move, "No move should be possible, since game is finished");
-        assertEquals(EngineTest.checkmateIn(0), move.weight, "Wrong weight");
+        assertEquals(checkmateIn(0), move.weight, "Wrong weight");
     }
 
     @Test

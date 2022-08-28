@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.michaelfl.mychess.WeightingFunction.checkmateIn;
 
 /**
  * @author Michael Fleischhauer
@@ -91,7 +92,7 @@ class EngineTest {
     void testPosition7() {
         testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f8-e8 e6-f7 e5-f7 h3-f5 h7-h6 c3-d5 a6-a5 h5-g6 a5-a4 d5-f6 d8-f6 g6-f6 f7-g5 f6-g6 d6-d5 d1-d5 e8-e7]]",
                 "g1-g5",
-                11.0f,
+                11.0f, // TODO M12
                 12.0f,
                 new GameConfig(ENGINE, engineConfig(false))
         );
@@ -147,7 +148,7 @@ class EngineTest {
         testPosition("[[e2-e4 e7-e5 g1-f3 b8-c6 f1-b5 a7-a6 b5-a4 b7-b5 a4-b3 g8-f6 e1-g1 a6-a5 d2-d4 a5-a4 b3-f7 e8-f7 d4-e5 f6-g8 f3-g5 f7-e8 b1-c3 b5-b4 d1-d5 g8-h6 c3-b5 a4-a3 f1-d1 c8-b7]]",
                 "g5-e6", // TODO: should be e5-e6
                 2.0f,
-                3.0f,
+                3.0f, // TODO should be 6
                 new GameConfig(ENGINE, engineConfig(false))
         );
     }
@@ -195,7 +196,7 @@ class EngineTest {
     @Test
     void testPosition16() {
         testPosition("[[b1-c3 e7-e5 g1-f3 b8-c6 d2-d4 e5-d4 f3-d4 c6-d4 d1-d4 g8-f6 e2-e4 d7-d6 c1-g5 f8-e7 f1-c4 e8-g8 e1-g1 f8-e8 f1-e1 c7-c6 g5-f4 b7-b5 c4-e2 a7-a6 e2-f3 c6-c5 d4-d3 a8-b8 e4-e5 d6-e5 d3-d8 e8-d8 f4-e5]]",
-                "e7-d6", // TODO: Should be "c8-e6", e7-d6 has weight > 5.0
+                "e7-d6", // TODO: Should be "c8-e6", e7-d6 has weight > 5.0 (add a test for that one as well)
                 1.7f,
                 3.0f,
                 new GameConfig(ENGINE, engineConfig(false))
@@ -330,10 +331,6 @@ class EngineTest {
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    static float checkmateIn(int depth) {
-        return WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth;
     }
 
 }

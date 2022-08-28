@@ -7,7 +7,7 @@ package org.michaelfl.mychess;
 public final class EngineConfig {
 
     private final static int DEFAULT_MAX_QUIESCENCE_SEARCH_DEPTH = 20;
-    private final static int DEFAULT_SECONDS_PER_MOVE = 60;
+    private final static int DEFAULT_SECONDS_PER_MOVE = 30;
 
     private final int maxDepth;
     private final int secondsPerMove;
