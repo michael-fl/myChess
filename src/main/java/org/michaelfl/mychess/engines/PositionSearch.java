@@ -16,6 +16,7 @@ import org.michaelfl.mychess.Statistics;
 import org.michaelfl.mychess.WeightingFunction;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 
+import java.util.Arrays;
 import java.util.concurrent.CancellationException;
 
 @SuppressWarnings("DuplicatedCode")
@@ -46,6 +47,7 @@ public final class PositionSearch {
     public record SearchNodeResult(GameResult result, float weight, boolean isTimeout, boolean isSingleton) {
 
         public final static SearchNodeResult TIMEOUT = new SearchNodeResult(GameResult.ONGOING, 0, true, true);
+        public final static SearchNodeResult INVALID = new SearchNodeResult(GameResult.ONGOING, -WeightingFunction.ILLEGAL_WEIGHT, false, false);
 
         public static SearchNodeResult create(GameResult result, float weight) {
             return new SearchNodeResult(result, weight, false, false);
@@ -161,6 +163,8 @@ public final class PositionSearch {
         float alphaWeight = Float.NEGATIVE_INFINITY;
         statistics.incrPositionCount();
 
+        Arrays.fill(results, SearchNodeResult.INVALID);
+
         if (countMoves > 0 && bestKnownNextMove != 0 && bestKnownNextMove != plainMoves[0]) {
             throw new IllegalStateException("First move must be the best known move. Expected: " + new Move(bestKnownNextMove) + ", actual: " + new Move(plainMoves[0]) + ", depth: 0");
         }
@@ -171,6 +175,7 @@ public final class PositionSearch {
 
             final float moveWeight = WeightingFunction.getMaterialWeightOfMove(move, 1);
             final float newMaterialWeight = materialWeight + moveWeight;
+            boolean logWeight = false;
 
             pvTable[0] = move;
             workingBoard.makeMove(move);
@@ -180,19 +185,24 @@ public final class PositionSearch {
             }
             bestKnownPath = null;
             workingBoard.revertMove();
-            results[i] = result;
-            System.arraycopy(pvTable, 0, allPaths[i], 0, pvMaxLength);
 
-            //log("--> weight " + ChessUtil.weightToString(weight));
-            if (result.weight > alphaWeight) {
-                alphaWeight = result.weight;
+            // -ILLEGAL_WEIGHT is possible to be returned, but never +ILLEGAL_WEIGHT
+            if (result.weight > -WeightingFunction.ILLEGAL_WEIGHT) {
+                results[i] = result;
+                System.arraycopy(pvTable, 0, allPaths[i], 0, pvMaxLength);
+
+                //log("--> weight " + ChessUtil.weightToString(weight));
+                if (result.weight > alphaWeight) {
+                    alphaWeight = result.weight;
+                    logWeight = true;
+                }
             }
 
-            log((i + 1) + "/" + countMoves + ": " + ChessUtil.moveToString(move) + ChessUtil.weightToString(result.weight, weightFactor));
+            log((i + 1) + "/" + countMoves + ": " + ChessUtil.moveToString(move) + (logWeight ? " " + ChessUtil.weightToString(result.weight, weightFactor) : ""));
             //log("quiescence: total=" + statistics.getQuiescencePositionsCount() + ", avg=" + statistics.getQuiescencePositionsCountAvg() + ", max=" + statistics.getQuiescencePositionsCountMax() + ", max depth: " + statistics.getMaximumReachedDepth());
         }
 
-        float bestWeight = Float.NEGATIVE_INFINITY;
+        float bestWeight = -WeightingFunction.ILLEGAL_WEIGHT;
         int bestMoveIndex = -1;
 
         for (int i = 0; i < countMoves; i++) {
@@ -202,7 +212,7 @@ public final class PositionSearch {
             }
         }
 
-        if (bestMoveIndex >= 0 && !WeightingFunction.isIllegalWeight(bestWeight)) {
+        if (bestMoveIndex >= 0) {
             // Found a legal move
             return new MoveAndWeight(plainMoves[bestMoveIndex], results[bestMoveIndex].weight, results[bestMoveIndex].result, 0, allPaths[bestMoveIndex]);
         }
@@ -246,9 +256,9 @@ public final class PositionSearch {
         pvTable[ctx.pvParentIndex() + depth] = 0;
         SearchNodeResult bestResult = SearchNodeResult.create(GameResult.ONGOING, ctx.alphaWeight);
 
-        if (ctx.alphaWeight() == WeightingFunction.ILLEGAL_WEIGHT || ctx.betaWeight() == -WeightingFunction.ILLEGAL_WEIGHT) {
+        if (WeightingFunction.isIllegalWeight(ctx.alphaWeight()) || WeightingFunction.isIllegalWeight(ctx.betaWeight())) {
             // TODO remove
-            throw new IllegalStateException("wrong +/-ILLEGAL_WEIGHT as alpha/beta; depth=" + depth + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
+            throw new IllegalStateException("ILLEGAL_WEIGHT as alpha/beta; depth=" + depth + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
         }
 
         if ((engineConfig.isEnableFiftyMovesRule() && gameStatus.getHalfMoveClock() >= 100) || (engineConfig.isEnableThreefoldRepetition() && ctx.workingBoard.isThreefoldRepetition())) {
@@ -266,10 +276,7 @@ public final class PositionSearch {
         }
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
-        if (countMoves == 0) {
-            // Very unlikely. No move possible at all, not even illegal ones ==> checkmate or stalemate
-            return checkmateOrStalemate(ctx);
-        }
+
         if (bestKnownNextMove != 0 && bestKnownNextMove != plainMoves[0]) {
             throw new IllegalStateException("First move must be the best known move. Expected: " + new Move(bestKnownNextMove) + ", actual: " + new Move(plainMoves[0]) + ", depth: " + depth);
         }
@@ -277,6 +284,8 @@ public final class PositionSearch {
         if (task.isCanceled()) {
             throw new CancellationException();
         }
+
+        boolean haveValidMoves = false;
 
         for (int i = 0; i < countMoves; i++) {
             if (isTimeout()) {
@@ -291,39 +300,35 @@ public final class PositionSearch {
             pvTable[pvIndex] = move;
             ctx.workingBoard.makeMove(move);
             var result = alphaBetaSearch(new SearchNodeContext(depth + 1, ctx.maxDepth, bestKnownPath, -ctx.weightFactor, -ctx.betaWeight, -bestResult.weight, -newMaterialWeight, -newMaterialDelta, ctx.workingBoard, pvTable)).negate();
-            // -ILLEGAL_WEIGHT is possible to be returned, but never +ILLEGAL_WEIGHT
+            ctx.workingBoard.revertMove();
             if (result.isTimeout()) {
                 return SearchNodeResult.TIMEOUT;
             }
             final float weight = result.weight;
             bestKnownPath = null;
-            ctx.workingBoard.revertMove();
 
-            // Alpha-Beta search pruning
-            if (weight >= ctx.betaWeight) {
-                statistics.incrPrunedMovesCount(countMoves - i - 1);
-                ctx.copyUpPV();
-                if (Move.getCapturedPiece(move) == 0) {
-                    killerMoves.addMove(move, depth);
+            // -ILLEGAL_WEIGHT is possible to be returned, but never +ILLEGAL_WEIGHT
+            if (weight > -WeightingFunction.ILLEGAL_WEIGHT) {
+                haveValidMoves = true;
+
+                // Alpha-Beta search pruning
+                if (weight >= ctx.betaWeight) {
+                    statistics.incrPrunedMovesCount(countMoves - i - 1);
+                    ctx.copyUpPV();
+                    if (Move.getCapturedPiece(move) == 0) {
+                        killerMoves.addMove(move, depth);
+                    }
+                    return SearchNodeResult.create(result.result, ctx.betaWeight);
                 }
-                return SearchNodeResult.create(result.result, ctx.betaWeight);
-            }
 
-            if (weight > bestResult.weight) {
-                bestResult = result;
-                ctx.copyUpPV();
+                if (weight > bestResult.weight) {
+                    bestResult = result;
+                    ctx.copyUpPV();
+                }
             }
         }
 
-        if (bestResult.weight == WeightingFunction.ILLEGAL_WEIGHT) {
-            // TODO remove
-            throw new IllegalStateException("bestWeight=" + bestResult.weight + ", depth=" + depth + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
-        } else if (bestResult.weight == -WeightingFunction.ILLEGAL_WEIGHT) {
-            // No legal move possible ==> checkmate or stalemate
-            return checkmateOrStalemate(ctx);
-        } else {
-            return bestResult;
-        }
+        return haveValidMoves ? bestResult : checkmateOrStalemate(ctx);
     }
 
     private SearchNodeResult checkmateOrStalemate(SearchNodeContext ctx) {
