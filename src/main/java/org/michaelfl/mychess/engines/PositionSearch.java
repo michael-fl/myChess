@@ -44,21 +44,21 @@ public final class PositionSearch {
         }
     }
 
-    public record SearchNodeResult(GameResult result, float weight, boolean isTimeout, boolean isSingleton) {
+    public record SearchNodeResult(GameResult result, float weight, boolean isTimeout) {
 
-        public final static SearchNodeResult TIMEOUT = new SearchNodeResult(GameResult.ONGOING, 0, true, true);
-        public final static SearchNodeResult INVALID = new SearchNodeResult(GameResult.ONGOING, -WeightingFunction.ILLEGAL_WEIGHT, false, false);
+        public final static SearchNodeResult TIMEOUT = new SearchNodeResult(GameResult.ONGOING, 0, true);
+        public final static SearchNodeResult INVALID = new SearchNodeResult(GameResult.ONGOING, -WeightingFunction.ILLEGAL_WEIGHT, false);
 
         public static SearchNodeResult create(GameResult result, float weight) {
-            return new SearchNodeResult(result, weight, false, false);
+            return new SearchNodeResult(result, weight, false);
         }
 
         public static SearchNodeResult create(GameResult result, float weight, float alpha, float beta) {
-            return new SearchNodeResult(result, window(weight, alpha, beta), false, false);
+            return new SearchNodeResult(result, window(weight, alpha, beta), false);
         }
 
         public static SearchNodeResult draw(float alpha, float beta) {
-            return new SearchNodeResult(GameResult.DRAW, window(0, alpha, beta), false, true);
+            return new SearchNodeResult(GameResult.DRAW, window(0, alpha, beta), false);
         }
 
         private static float window(float weight, float alpha, float beta) {
@@ -69,18 +69,18 @@ public final class PositionSearch {
         }
 
         public static SearchNodeResult checkmateSelf(int depth, float alpha, float beta) {
-            return new SearchNodeResult(GameResult.CHECKMATE, window(-(WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth), alpha, beta), false, false);
+            return new SearchNodeResult(GameResult.CHECKMATE, window(-(WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth), alpha, beta), false);
         }
 
         public static SearchNodeResult stalemate(int depth, float alpha, float beta) {
-            return new SearchNodeResult(GameResult.STALEMATE, window(0, alpha, beta), false, false);
+            return new SearchNodeResult(GameResult.STALEMATE, window(0, alpha, beta), false);
         }
 
         public SearchNodeResult negate() {
-            if (isSingleton) {
+            if (weight == 0) {
                 return this;
             }
-            return new SearchNodeResult(result, -weight, isTimeout, false);
+            return new SearchNodeResult(result, -weight, isTimeout);
         }
     }
 
