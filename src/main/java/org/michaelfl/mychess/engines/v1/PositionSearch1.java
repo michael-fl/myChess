@@ -280,7 +280,7 @@ final class PositionSearch1 {
         bestPathOut[depth] = 0;
         if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
             // Computer checkmate
-            return -(WeightingFunction1.CHECKMATE_WEIGHT_HIGH - depth);
+            return -WeightingFunction1.checkmateIn(depth);
         }
 
         // Stalemate
@@ -365,7 +365,7 @@ final class PositionSearch1 {
         bestPathOut[depth] = 0;
         if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
             // Opposite checkmate
-            return WeightingFunction1.CHECKMATE_WEIGHT_HIGH - depth;
+            return WeightingFunction1.checkmateIn(depth);
         }
 
         // Stalemate

@@ -9,7 +9,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.michaelfl.mychess.EngineTest.engineConfig;
+import static org.michaelfl.mychess.EngineTest.*;
+import static org.michaelfl.mychess.WeightingFunction.checkmateIn;
 
 /**
  * @author Michael Fleischhauer
@@ -64,8 +65,8 @@ class DeepWeightTest {
     @Test
     void testPosition06() {
         testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6]]",
-                0.05f,
-                0.25f,
+                0.20f,
+                0.30f,
                 new GameConfig(MyChessEngine.class, engineConfig(false))
         );
     }
@@ -73,8 +74,8 @@ class DeepWeightTest {
     @Test
     void testPosition07() {
         testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6]]",
-                0.05f,
-                0.25f,
+                0.20f,
+                0.30f,
                 new GameConfig(MyChessEngine.class, engineConfig(false))
         );
     }
@@ -106,6 +107,15 @@ class DeepWeightTest {
         );
     }
 
+    @Test
+    void testPosition11() {
+        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f8-e8 e6-f7 e5-f7 h3-f5 h7-h6 c3-d5 a6-a5 h5-g6 a5-a4 d5-f6 g8-f8]]",
+                checkmateIn(3),
+                checkmateIn(3),
+                new GameConfig(MyChessEngine.class, engineConfig(false))
+        );
+    }
+
     private void testPosition(String gameNotation, float expectedMinWeight, float expectedMaxWeight, GameConfig config) {
         try {
             SimpleNotationImporter importer = new SimpleNotationImporter(gameNotation);
@@ -119,7 +129,7 @@ class DeepWeightTest {
             }
             if (weight > expectedMaxWeight) {
                 game.print();
-                fail("Wrong weight: " + ChessUtil.weightToString(weight) + ". Expected maximum of " + ChessUtil.weightToString(expectedMinWeight));
+                fail("Wrong weight: " + ChessUtil.weightToString(weight) + ". Expected maximum of " + ChessUtil.weightToString(expectedMaxWeight));
             }
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException(e);

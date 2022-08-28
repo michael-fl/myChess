@@ -33,11 +33,11 @@ public final class PositionSearch2 {
         public final static SearchNodeResult STALEMATE = new SearchNodeResult(GameResult.STALEMATE, 0);
 
         public static SearchNodeResult checkmateSelf(int depth) {
-            return new SearchNodeResult(GameResult.CHECKMATE, -(WeightingFunction1.CHECKMATE_WEIGHT_HIGH - depth));
+            return new SearchNodeResult(GameResult.CHECKMATE, -WeightingFunction1.checkmateIn(depth));
         }
 
         public static SearchNodeResult checkmateOpposite(int depth) {
-            return new SearchNodeResult(GameResult.CHECKMATE, WeightingFunction1.CHECKMATE_WEIGHT_HIGH - depth);
+            return new SearchNodeResult(GameResult.CHECKMATE, WeightingFunction1.checkmateIn(depth));
         }
     }
 
@@ -153,7 +153,7 @@ public final class PositionSearch2 {
             // Return the best move
             return new MoveAndWeight(plainMoves[bestMoveIndex], weights[bestMoveIndex], gameResults[bestMoveIndex], allPaths[bestMoveIndex]);
         } else if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
-            return new MoveAndWeight(0, -WeightingFunction1.CHECKMATE_WEIGHT_HIGH, GameResult.CHECKMATE, new int[0]);
+            return new MoveAndWeight(0, -WeightingFunction1.checkmateIn(0), GameResult.CHECKMATE, new int[0]);
         } else {
             return new MoveAndWeight(0, 0f, GameResult.STALEMATE, new int[0]);
         }

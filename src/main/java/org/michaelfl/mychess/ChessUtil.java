@@ -118,20 +118,31 @@ public final class ChessUtil {
         return buf.toString();
     }
 
-    public static String weightToString(float weight) {
-        return weightToString(weight, 1f);
+    public static String weightToString(int weight) {
+        return weightToString(weight, 1);
     }
 
-    public static String weightToString(float weight, float factor) {
+    public static String weightToString(int weight, int factor) {
         if (WeightingFunction.isIllegalWeight(weight))
             return "illegal";
-        weight *= factor;
-        if (weight >= WeightingFunction.CHECKMATE_WEIGHT_LOW)
-            return "M" + (Math.round(WeightingFunction.CHECKMATE_WEIGHT_HIGH - weight));
-        if (weight <= -WeightingFunction.CHECKMATE_WEIGHT_LOW)
-            return "-M" + (Math.round(WeightingFunction.CHECKMATE_WEIGHT_HIGH + weight));
+        if (weight != 0) {
+            weight *= factor;
+        }
 
-        return String.valueOf(weight);
+        if (WeightingFunction.isCheckmateWeight(weight)) {
+            int plies = WeightingFunction.checkmateWeightToPlies(weight);
+            return (weight < 0 ? "-" : "") + "M" + plies;
+        }
+
+        return String.valueOf((float) weight / 100f);
+    }
+
+    public static String weightToString(float weight) {
+        return weightToString(weight, 1);
+    }
+
+    public static String weightToString(float weight, int factor) {
+        return weightToString(Math.round(weight * 100f), factor);
     }
 
     public static String pathToString(int[] path) {

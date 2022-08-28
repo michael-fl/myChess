@@ -5,6 +5,7 @@ import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.v1.MyChessEngine1;
 
 import static org.michaelfl.mychess.EngineTest.*;
+import static org.michaelfl.mychess.WeightingFunction.checkmateIn;
 
 /**
  * @author Michael Fleischhauer

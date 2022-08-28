@@ -30,7 +30,7 @@ class QuiescenceSearchTest {
     @Test
     void testPositionWithUnguardedNight2() {
         var gameNotation = "1.Nf3 e6 2.Nh4 d5 3.c3 a6 4.c4 b6 5.cxd5";
-        // TODO: -2.0 < expectedWeight < 3.0 !
+        // TODO: 2.0 < expectedWeight < 3.0 !
         quiescenceTest(gameNotation, Board.blackPawn, 1.0f, -0.6f, -0.5f, 1);
     }
 
@@ -44,23 +44,24 @@ class QuiescenceSearchTest {
         var quiescenceSearch = new QuiescenceSearch(game, moveGenerator, weightingFunction, statistics, game.getEngine().getConfig().getMaxQuiescenceDepth());
         var workingBoard = game.getBoard().copy();
         var weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
-        var materialWeight = WeightingFunction.calculateMaterialWeight(workingBoard);
-        assertEquals(expectedMaterialWeight, materialWeight, "test setup error");
+        var materialWeightCenti = WeightingFunction.calculateMaterialWeight(workingBoard);
+        assertEquals(expectedMaterialWeight, materialWeightCenti / 100f, "test setup error");
 
         var f = new WeightingFunction();
-        var weight = f.calculate(game.getBoard());
-        System.out.println("Position weight: " + weight);
+        var weightCenti = f.calculate(game.getBoard());
+        System.out.println("Position weight: " + weightCenti);
 
         assertEquals(capturedPiece, Move.getCapturedPiece(game.getGameStatus().getLastMove()), "test setup error");
 
         var capturedOnField = Move.getToField(game.getGameStatus().getLastMove());
-        var alpha = Float.NEGATIVE_INFINITY;
-        var beta = Float.POSITIVE_INFINITY;
-        weight = weightFactor * quiescenceSearch.quiescenceSearch(workingBoard, capturedOnField, 0, weightFactor, alpha, beta, weightFactor * materialWeight, 0f);
+        var alpha = WeightingFunction.MIN_ALPHA;
+        var beta = WeightingFunction.MAX_BETA;
+        weightCenti = weightFactor * quiescenceSearch.quiescenceSearch(workingBoard, capturedOnField, 0, weightFactor, alpha, beta, weightFactor * materialWeightCenti, 0);
+        float weight = weightCenti / 100f;
         System.out.println("Quiescence weight: " + weight);
 
-        assertTrue(weight >= expectedWeightMin, "Unexpected weight: " + weight);
-        assertTrue(weight <= expectedWeightMax, "Unexpected weight: " + weight);
+        assertTrue(weight >= expectedWeightMin, "Unexpected weight: " + weight + ", expected >= " + expectedWeightMin);
+        assertTrue(weight <= expectedWeightMax, "Unexpected weight: " + weight + ", expected <= " + expectedWeightMax);
         assertTrue(statistics.getMaximumReachedDepth() >= expectedMaximumReachedDepthMin, "Maximum search depth too low: " + statistics.getMaximumReachedDepth());
     }
 

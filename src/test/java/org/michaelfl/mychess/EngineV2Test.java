@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
-import org.michaelfl.mychess.engines.v1.WeightingFunction1;
 import org.michaelfl.mychess.engines.v2.MyChessEngine2;
 
 import java.util.Set;
@@ -13,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.michaelfl.mychess.WeightingFunction.checkmateIn;
 
 /**
  * @author Michael Fleischhauer
@@ -330,10 +330,6 @@ class EngineV2Test {
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    static float checkmateIn(int depth) {
-        return WeightingFunction1.CHECKMATE_WEIGHT_HIGH - depth;
     }
 
 }

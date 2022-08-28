@@ -32,6 +32,10 @@ public abstract class ChessEngine {
         @SuppressWarnings("WeakerAccess")
         public final int[] path;
 
+        public MoveAndWeight(int move, int weightCenti, GameResult result, int[] path) {
+            this(move, weightCenti / 100.0f, result, path);
+        }
+
         public MoveAndWeight(int move, float weight, GameResult result, int[] path) {
             this.move = move;
             this.weight = weight;
@@ -39,7 +43,7 @@ public abstract class ChessEngine {
             this.path = path;
         }
 
-        public MoveAndWeight weightFactor(float factor) {
+        public MoveAndWeight weightFactor(int factor) {
             if (weight == 0f) {
                 return this;
             }
@@ -97,16 +101,16 @@ public abstract class ChessEngine {
         // First check if this game is already finished
         if (game.getResult() != GameResult.ONGOING) {
             if (game.getResult() == GameResult.CHECKMATE) {
-                move = new MoveAndWeight(0, -WeightingFunction.CHECKMATE_WEIGHT_HIGH, GameResult.CHECKMATE, new int[0]);
+                move = new MoveAndWeight(0, -WeightingFunction.checkmateInCenti(), GameResult.CHECKMATE, new int[0]);
             } else {
-                move = new MoveAndWeight(0, 0f, game.getResult(), new int[0]);
+                move = new MoveAndWeight(0, 0, game.getResult(), new int[0]);
             }
         } else if ((getConfig().isEnableFiftyMovesRule() && game.getGameStatus().getHalfMoveClock() >= 100) || isThreefoldRepetition()) {
-            move = new MoveAndWeight(0, 0f, GameResult.DRAW, new int[0]);
+            move = new MoveAndWeight(0, 0, GameResult.DRAW, new int[0]);
         } else if (openingDB != null) {
             var m = getMoveFromOpeningDB(openingDB);
             if (m != null) {
-                move = new MoveAndWeight(m.getMove(), 0f, GameResult.ONGOING, new int[] { move.move });
+                move = new MoveAndWeight(m.getMove(), 0, GameResult.ONGOING, new int[] { move.move });
             }
         }
 
@@ -114,7 +118,7 @@ public abstract class ChessEngine {
             move = calculateNextMoveSub(task);
         }
 
-        float weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
+        int weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
 
         return move.weightFactor(weightFactor);
     }

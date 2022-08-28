@@ -145,7 +145,7 @@ class WeightingFunctionTest {
 
     @Test
     void testPosition26() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5]]", -0.58f);
+        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5]]", -0.50f);
     }
 
     @Test
@@ -210,7 +210,7 @@ class WeightingFunctionTest {
         SimpleNotationImporter importer = new SimpleNotationImporter(gameNotation);
         var game = importer.importGame();
         var f = new WeightingFunction();
-        var weight = f.calculate(game.getBoard());
+        var weight = f.calculate(game.getBoard()) / 100f;
         assertTrue(weight >= expectedMinWeight, "Wrong weight: " + weight + ". Expected minimum of " + expectedMinWeight);
         assertTrue(weight <= expectedMaxWeight, "Wrong weight: " + weight + ". Expected maximum of " + expectedMaxWeight);
     }
