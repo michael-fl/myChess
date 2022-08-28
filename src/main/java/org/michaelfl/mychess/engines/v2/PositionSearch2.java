@@ -151,11 +151,11 @@ public final class PositionSearch2 {
 
         if (bestMoveIndex >= 0) {
             // Return the best move
-            return new MoveAndWeight(plainMoves[bestMoveIndex], weights[bestMoveIndex], gameResults[bestMoveIndex], 0, allPaths[bestMoveIndex]);
+            return new MoveAndWeight(plainMoves[bestMoveIndex], weights[bestMoveIndex], gameResults[bestMoveIndex], allPaths[bestMoveIndex]);
         } else if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
-            return new MoveAndWeight(0, -WeightingFunction1.CHECKMATE_WEIGHT_HIGH, GameResult.CHECKMATE, 0, new int[0]);
+            return new MoveAndWeight(0, -WeightingFunction1.CHECKMATE_WEIGHT_HIGH, GameResult.CHECKMATE, new int[0]);
         } else {
-            return new MoveAndWeight(0, 0f, GameResult.STALEMATE, 0, new int[0]);
+            return new MoveAndWeight(0, 0f, GameResult.STALEMATE, new int[0]);
         }
     }
 

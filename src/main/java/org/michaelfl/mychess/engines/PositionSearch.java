@@ -214,14 +214,14 @@ public final class PositionSearch {
 
         if (bestMoveIndex >= 0) {
             // Found a legal move
-            return new MoveAndWeight(plainMoves[bestMoveIndex], results[bestMoveIndex].weight, results[bestMoveIndex].result, 0, allPaths[bestMoveIndex]);
+            return new MoveAndWeight(plainMoves[bestMoveIndex], results[bestMoveIndex].weight, results[bestMoveIndex].result, allPaths[bestMoveIndex]);
         }
 
         // No legal move possible ==> checkmate or stalemate
         if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
-            return new MoveAndWeight(0, -WeightingFunction.CHECKMATE_WEIGHT_HIGH, GameResult.CHECKMATE, 0, new int[0]);
+            return new MoveAndWeight(0, -WeightingFunction.CHECKMATE_WEIGHT_HIGH, GameResult.CHECKMATE, new int[0]);
         } else {
-            return new MoveAndWeight(0, 0f, GameResult.STALEMATE, 0, new int[0]);
+            return new MoveAndWeight(0, 0f, GameResult.STALEMATE, new int[0]);
         }
     }
 
