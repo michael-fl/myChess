@@ -49,9 +49,6 @@ public abstract class ChessEngine {
             if (weight == 0f) {
                 return this;
             }
-            if (weight == -0f) {
-                return new MoveAndWeight(move, 0f, result, bestMoveDelta, path);
-            }
             return new MoveAndWeight(move, weight * factor, result, bestMoveDelta, path);
         }
     }
