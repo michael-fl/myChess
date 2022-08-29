@@ -514,11 +514,11 @@ public final class WeightingFunction {
     }
 
     public static float checkmateIn(int depth) {
-        return (WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth) / 100f;
+        return (WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth * 100) / 100f;
     }
 
     public static int checkmateInCenti(int depth) {
-        return WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth;
+        return WeightingFunction.CHECKMATE_WEIGHT_HIGH - depth * 100;
     }
 
     public static int checkmateInCenti() {
@@ -544,7 +544,7 @@ public final class WeightingFunction {
      */
     public static int checkmateWeightToPlies(float weight) {
         final int w = (int) (Math.abs(weight) * 100);
-        return CHECKMATE_WEIGHT_HIGH - w;
+        return (CHECKMATE_WEIGHT_HIGH - w) / 100;
     }
 
     /**
@@ -554,6 +554,6 @@ public final class WeightingFunction {
      */
     public static int checkmateWeightToPlies(int weightCenti) {
         final int w = Math.abs(weightCenti);
-        return CHECKMATE_WEIGHT_HIGH - w;
+        return (CHECKMATE_WEIGHT_HIGH - w) / 100;
     }
 }
