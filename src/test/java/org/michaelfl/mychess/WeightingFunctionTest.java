@@ -10,6 +10,34 @@ import static org.junit.jupiter.api.Assertions.*;
 class WeightingFunctionTest {
 
     @Test
+    void testCheckmateInFunctions() {
+        assertEquals(WeightingFunction.CHECKMATE_WEIGHT_HIGH / 100f, WeightingFunction.checkmateIn(0), "wrong checkmate weight");
+        assertEquals((WeightingFunction.CHECKMATE_WEIGHT_HIGH - 100) / 100f, WeightingFunction.checkmateIn(1),"wrong checkmate weight");
+        assertEquals((WeightingFunction.CHECKMATE_WEIGHT_HIGH - 50 * 100) / 100f, WeightingFunction.checkmateIn(50), "wrong checkmate weight");
+
+        assertEquals(WeightingFunction.CHECKMATE_WEIGHT_HIGH, WeightingFunction.checkmateInCenti(0), "wrong checkmate weight");
+        assertEquals(WeightingFunction.CHECKMATE_WEIGHT_HIGH - 100, WeightingFunction.checkmateInCenti(1), "wrong checkmate weight");
+        assertEquals(WeightingFunction.CHECKMATE_WEIGHT_HIGH - 50 * 100, WeightingFunction.checkmateInCenti(50), "wrong checkmate weight");
+    }
+
+    @Test
+    void testCheckmateWeightToPliesFunctions() {
+        var w1 = WeightingFunction.checkmateIn(0);
+        assertEquals(0, WeightingFunction.checkmateWeightToPlies(w1), "wrong number of plies");
+        w1 = WeightingFunction.checkmateIn(1);
+        assertEquals(1, WeightingFunction.checkmateWeightToPlies(w1), "wrong number of plies");
+        w1 = WeightingFunction.checkmateIn(50);
+        assertEquals(50, WeightingFunction.checkmateWeightToPlies(w1), "wrong number of plies");
+
+        var w2 = WeightingFunction.checkmateInCenti(0);
+        assertEquals(0, WeightingFunction.checkmateWeightToPlies(w2), "wrong number of plies");
+        w2 = WeightingFunction.checkmateInCenti(1);
+        assertEquals(1, WeightingFunction.checkmateWeightToPlies(w2), "wrong number of plies");
+        w2 = WeightingFunction.checkmateInCenti(50);
+        assertEquals(50, WeightingFunction.checkmateWeightToPlies(w2), "wrong number of plies");
+    }
+
+    @Test
     void testStartPosition() {
         var f = new WeightingFunction();
         var board = Board.createNewGame();
