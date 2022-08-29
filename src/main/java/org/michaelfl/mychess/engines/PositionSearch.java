@@ -19,6 +19,8 @@ import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import java.util.Arrays;
 import java.util.concurrent.CancellationException;
 
+import static org.michaelfl.mychess.Assert.*;
+
 @SuppressWarnings("DuplicatedCode")
 public final class PositionSearch {
 
@@ -172,9 +174,8 @@ public final class PositionSearch {
 
         Arrays.fill(results, SearchNodeResult.INVALID);
 
-        if (countMoves > 0 && bestKnownNextMove != 0 && bestKnownNextMove != plainMoves[0]) {
-            throw new IllegalStateException("First move must be the best known move. Expected: " + new Move(bestKnownNextMove) + ", actual: " + new Move(plainMoves[0]) + ", depth: 0");
-        }
+        __assert(() -> !(countMoves > 0 && bestKnownNextMove != 0 && bestKnownNextMove != plainMoves[0]),
+                () -> "First move must be the best known move. Expected: " + new Move(bestKnownNextMove) + ", actual: " + new Move(plainMoves[0]) + ", depth: 0");
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
@@ -243,11 +244,8 @@ public final class PositionSearch {
     private SearchNodeResult alphaBetaSearch(final SearchNodeContext ctx) {
         var result = alphaBetaSearchI(ctx);
         // ILLEGAL_WEIGHT_NEG <= weight < ILLEGAL_WEIGHT_POS
-        if (result.weight <= WeightingFunction.ILLEGAL_WEIGHT_NEG
-            || result.weight > WeightingFunction.ILLEGAL_WEIGHT_POS) {
-                // TODO remove
-                throw new IllegalStateException("Unexpected weight " + result.weight + " returned, depth=" + ctx.depth() + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
-        }
+        __assert(() -> !(result.weight <= WeightingFunction.ILLEGAL_WEIGHT_NEG || result.weight > WeightingFunction.ILLEGAL_WEIGHT_POS),
+                () -> "Unexpected weight " + result.weight + " returned, depth=" + ctx.depth() + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
 
         return result;
     }
@@ -263,10 +261,8 @@ public final class PositionSearch {
         pvTable[ctx.pvParentIndex() + depth] = 0;
         SearchNodeResult bestResult = SearchNodeResult.create(GameResult.ONGOING, ctx.alphaWeight);
 
-        if (WeightingFunction.isIllegalWeight(ctx.alphaWeight()) || WeightingFunction.isIllegalWeight(ctx.betaWeight())) {
-            // TODO remove
-            throw new IllegalStateException("ILLEGAL_WEIGHT as alpha/beta; depth=" + depth + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
-        }
+        __assert(() -> !(WeightingFunction.isIllegalWeight(ctx.alphaWeight()) || WeightingFunction.isIllegalWeight(ctx.betaWeight())),
+                () -> "ILLEGAL_WEIGHT as alpha/beta; depth=" + depth + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
 
         if ((engineConfig.isEnableFiftyMovesRule() && gameStatus.getHalfMoveClock() >= 100) || (engineConfig.isEnableThreefoldRepetition() && ctx.workingBoard.isThreefoldRepetition())) {
             return SearchNodeResult.draw(ctx.alphaWeight(), ctx.betaWeight());
@@ -284,9 +280,8 @@ public final class PositionSearch {
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
 
-        if (bestKnownNextMove != 0 && bestKnownNextMove != plainMoves[0]) {
-            throw new IllegalStateException("First move must be the best known move. Expected: " + new Move(bestKnownNextMove) + ", actual: " + new Move(plainMoves[0]) + ", depth: " + depth);
-        }
+        __assert(() -> !(bestKnownNextMove != 0 && bestKnownNextMove != plainMoves[0]),
+                () -> "First move must be the best known move. Expected: " + new Move(bestKnownNextMove) + ", actual: " + new Move(plainMoves[0]) + ", depth: " + depth);
 
         if (task.isCanceled()) {
             throw new CancellationException();

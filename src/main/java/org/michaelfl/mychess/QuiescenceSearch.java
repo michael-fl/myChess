@@ -3,6 +3,8 @@ package org.michaelfl.mychess;
 import org.michaelfl.mychess.engines.PositionSearch;
 import org.michaelfl.mychess.engines.PositionSearch.SearchNodeContext;
 
+import static org.michaelfl.mychess.Assert.__assert;
+
 /**
  * @author Michael Fleischhauer
  */
@@ -35,10 +37,8 @@ public final class QuiescenceSearch {
         final int depth = ctx.depth();
         final GameStatus gameStatus = ctx.workingBoard().getGameStatus();
 
-        if (WeightingFunction.isIllegalWeight(ctx.alphaWeight()) || WeightingFunction.isIllegalWeight(ctx.betaWeight())) {
-            // TODO remove
-            throw new IllegalStateException("ILLEGAL_WEIGHT as alpha/beta; depth=" + depth + ", alphaWeight=" + ctx.alphaWeight() + ", betaWeight=" + ctx.betaWeight() + "\n" + ctx.workingBoard());
-        }
+        __assert(() -> !(WeightingFunction.isIllegalWeight(ctx.alphaWeight()) || WeightingFunction.isIllegalWeight(ctx.betaWeight())),
+                () -> "ILLEGAL_WEIGHT as alpha/beta; depth=" + depth + ", alphaWeight=" + ctx.alphaWeight() + ", betaWeight=" + ctx.betaWeight() + "\n" + ctx.workingBoard());
 
         statistics.incrPositionCount();
         statistics.incrQuiescencePositionsCount();
@@ -63,9 +63,7 @@ public final class QuiescenceSearch {
         final int countMoves = moves.count();
 
         int capturedOnField = Move.getToField(gameStatus.getLastMove());
-        if (Move.getCapturedPiece(gameStatus.getLastMove()) == 0) {
-            throw new IllegalStateException();
-        }
+        __assert(() -> Move.getCapturedPiece(gameStatus.getLastMove()) != 0);
 
         for (int i = 0; i < countMoves; i++) {
             // TODO: Follow only moves, which are captures. Unfortunately this increases computation time too much.
