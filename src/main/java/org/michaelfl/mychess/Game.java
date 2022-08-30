@@ -46,7 +46,6 @@ public final class Game {
         statusEngine = new MyChessEngine(
                 new EngineConfig.Builder()
                         .maxDepth(2)
-                        .checkmateCheck(false)
                         .enableThreefoldRepetition(engineWhite.getConfig().isEnableThreefoldRepetition())
                         .enableFiftyMovesRule(engineWhite.getConfig().isEnableFiftyMovesRule())
                         .silent(true)

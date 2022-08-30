@@ -21,7 +21,7 @@ class EngineV1Test {
                 "d2-d5",
                 4.5f,
                 5.5f,
-                new GameConfig(ENGINE, engineV1Config(false))
+                new GameConfig(ENGINE, engineV1Config())
         );
     }
 
@@ -32,7 +32,7 @@ class EngineV1Test {
                 "f8-c8",
                 2.4f,
                 4.2f,
-                new GameConfig(ENGINE, engineV1Config(false))
+                new GameConfig(ENGINE, engineV1Config())
         );
     }
 
@@ -43,7 +43,7 @@ class EngineV1Test {
                 "h3-e6",
                 0.4f,
                 0.6f,
-                new GameConfig(ENGINE, engineV1Config(false))
+                new GameConfig(ENGINE, engineV1Config())
         );
     }
 
@@ -54,7 +54,7 @@ class EngineV1Test {
                 "e6-f7",
                 2.5f,
                 4.0f,
-                new GameConfig(ENGINE, engineV1Config(false))
+                new GameConfig(ENGINE, engineV1Config())
         );
     }
 
@@ -65,7 +65,7 @@ class EngineV1Test {
                 "d5-f6",
                 11.0f,
                 12.0f,
-                new GameConfig(ENGINE, engineV1Config(false))
+                new GameConfig(ENGINE, engineV1Config())
         );
     }
 
@@ -76,7 +76,7 @@ class EngineV1Test {
                 "g6-g7",
                 checkmateIn(3),
                 checkmateIn(3),
-                new GameConfig(ENGINE, engineV1Config(false))
+                new GameConfig(ENGINE, engineV1Config())
         );
     }
 
@@ -87,7 +87,7 @@ class EngineV1Test {
                 "g1-g2",
                 14f,
                 checkmateIn(12),
-                new GameConfig(ENGINE, engineV1Config(false))
+                new GameConfig(ENGINE, engineV1Config())
         );
     }
 
@@ -98,7 +98,7 @@ class EngineV1Test {
                 "e7-e6",
                 checkmateIn(8),
                 checkmateIn(8),
-                new GameConfig(ENGINE, engineV1Config(false))
+                new GameConfig(ENGINE, engineV1Config())
         );
     }
 
@@ -109,7 +109,7 @@ class EngineV1Test {
                 "g8-h8",
                 checkmateIn(6),
                 checkmateIn(6),
-                new GameConfig(ENGINE, engineV1Config(false))
+                new GameConfig(ENGINE, engineV1Config())
         );
     }
 
@@ -120,7 +120,7 @@ class EngineV1Test {
                 "e7-f7",
                 checkmateIn(2),
                 checkmateIn(2),
-                new GameConfig(ENGINE, engineV1Config(false))
+                new GameConfig(ENGINE, engineV1Config())
         );
     }
 
@@ -131,7 +131,7 @@ class EngineV1Test {
                 "d4-e5",
                 1.5f,
                 2.5f,
-                new GameConfig(ENGINE, engineV1Config(false))
+                new GameConfig(ENGINE, engineV1Config())
         );
     }
 
@@ -142,7 +142,7 @@ class EngineV1Test {
                 "g5-e6",
                 3.0f,
                 4.0f,
-                new GameConfig(ENGINE, engineV1Config(false))
+                new GameConfig(ENGINE, engineV1Config())
         );
     }
 
@@ -154,7 +154,7 @@ class EngineV1Test {
                 "g1-h2",
                 10.0f, // OPT: Should be M13
                 11.0f,
-                new GameConfig(ENGINE, engineV1Config(false))
+                new GameConfig(ENGINE, engineV1Config())
         );
     }
 
@@ -166,7 +166,7 @@ class EngineV1Test {
                 "d2-d3",
                 checkmateIn(8),
                 checkmateIn(8),
-                new GameConfig(ENGINE, engineV1Config(false))
+                new GameConfig(ENGINE, engineV1Config())
         );
     }
 
@@ -179,7 +179,7 @@ class EngineV1Test {
                 "d5-e6",
                 9.0f, // OPT: Should be M15
                 11.0f,
-                new GameConfig(ENGINE, engineV1Config(false))
+                new GameConfig(ENGINE, engineV1Config())
         );
     }
 
@@ -192,17 +192,16 @@ class EngineV1Test {
                 "e7-d6",
                 0.4f,
                 1.0f,
-                new GameConfig(ENGINE, engineV1Config(false))
+                new GameConfig(ENGINE, engineV1Config())
         );
     }
 
     @SuppressWarnings("SameParameterValue")
-    static EngineConfig engineV1Config(boolean doCheckmateCheck) {
+    static EngineConfig engineV1Config() {
         return new EngineConfig.Builder()
                 .maxDepth(14)
                 .iterationDepth(6)
                 .variants(4)
-                .checkmateCheck(doCheckmateCheck)
                 .build();
     }
 

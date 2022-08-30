@@ -115,7 +115,6 @@ class MoveGeneratorTest {
     private EngineConfig engineConfig() {
         return new EngineConfig.Builder()
                 .maxDepth(8)
-                .checkmateCheck(false)
                 .build();
     }
 

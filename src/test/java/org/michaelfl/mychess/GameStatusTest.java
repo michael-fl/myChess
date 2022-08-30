@@ -23,7 +23,6 @@ class GameStatusTest {
         config = new GameConfig(MyChessEngine.class,
                 new EngineConfig.Builder()
                         .maxDepth(2)
-                        .checkmateCheck(false)
                         .silent(true)
                         .build());
     }

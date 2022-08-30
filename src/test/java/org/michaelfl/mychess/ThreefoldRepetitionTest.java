@@ -32,7 +32,7 @@ class ThreefoldRepetitionTest {
     void testFindDrawMove() throws Exception {
         String moves = "[[g2-g3 e7-e6 a2-a3 d8-h4 g3-h4 a7-a6 g1-f3 g8-f6 f3-g1 f6-g8 g1-f3 g8-f6 f3-g1]]";
         SimpleNotationImporter importer = new SimpleNotationImporter(moves);
-        var game = importer.importGame(new GameConfig(MyChessEngine.class, engineConfig(false)));
+        var game = importer.importGame(new GameConfig(MyChessEngine.class, engineConfig()));
 
         MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
         assertEquals("f6-g8", ChessUtil.moveToString(move.move), "Unexpected move");
