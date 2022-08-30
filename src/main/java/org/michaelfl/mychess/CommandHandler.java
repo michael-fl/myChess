@@ -363,34 +363,6 @@ final class CommandHandler {
         }
     }
 
-    private final class CheckmateSearchCommand extends Command {
-
-        @Override
-        boolean canHandle(String commandLine) {
-            return "cm".equals(commandLine) || "checkmate".equals(commandLine);
-        }
-
-        @Override
-        void handle(String commandLine) {
-            if (game.getResult() != GameResult.ONGOING) {
-                System.err.println("Game is already over");
-                return;
-            }
-
-            MyChessEngine engine = new MyChessEngine(new EngineConfig.Builder().build(), game);
-            int[] moveOut = new int[1];
-            int depth = engine.findCheckmate(game.getTurn(), moveOut);
-            if (depth < 0)
-                depth = engine.findCheckmate(game.getOppositeColor(), moveOut);
-            if (depth < 0) {
-                System.out.println("No checkmate found");
-            } else {
-                game.getBoard().print();
-                System.out.println(ChessUtil.moveToString(moveOut[0]) + " ==> Checkmate in " + depth + " moves");
-            }
-        }
-    }
-
     private final class GoCommand extends Command {
 
         @Override
@@ -625,7 +597,6 @@ final class CommandHandler {
             new WeightCommand(),
             new DeepWeightCommand(),
             new LoadCommand(),
-            new CheckmateSearchCommand(),
             new SetVariantsCommand(),
             new SetDepthCommand(),
             new SetIterationDepthCommand(),

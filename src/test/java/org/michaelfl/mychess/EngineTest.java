@@ -28,7 +28,7 @@ class EngineTest {
                 "d2-d5",
                 4.5f,
                 5.5f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -39,7 +39,7 @@ class EngineTest {
                 "f7-f1", // TODO
                 3.2f,
                 4.2f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -50,7 +50,7 @@ class EngineTest {
                 "h3-e6",
                 0.2f,
                 0.4f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -61,7 +61,7 @@ class EngineTest {
                 "c3-d5", // TODO
                 0.4f,
                 1.0f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -72,7 +72,7 @@ class EngineTest {
                 "d5-f6",
                 10.0f,
                 11.0f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -83,7 +83,7 @@ class EngineTest {
                 "g6-g7",
                 checkmateIn(3),
                 checkmateIn(3),
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -94,7 +94,7 @@ class EngineTest {
                 "g1-g5",
                 11.0f, // TODO M12
                 12.0f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -105,7 +105,7 @@ class EngineTest {
                 "e7-e6",
                 12.0f,
                 13.0f,  // TODO: M8
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -116,7 +116,7 @@ class EngineTest {
                 "g8-h8",
                 checkmateIn(6),
                 checkmateIn(6),
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -127,7 +127,7 @@ class EngineTest {
                 "e7-f7",
                 checkmateIn(2),
                 checkmateIn(2),
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -138,7 +138,7 @@ class EngineTest {
                 "b3-f7",
                 0.7f,
                 2.0f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -149,7 +149,7 @@ class EngineTest {
                 "g5-e6", // TODO: should be e5-e6
                 2.0f,
                 3.0f, // TODO should be 6
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -161,7 +161,7 @@ class EngineTest {
                 "b7-g7",
                 6.0f, // OPT: Should be M13
                 7.0f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -173,7 +173,7 @@ class EngineTest {
                 "d2-d3",
                 8.0f, // TODO: Should be M8
                 9.0f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -186,7 +186,7 @@ class EngineTest {
                 "d5-e6",
                 6.0f, // OPT: Should be M15
                 8.0f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -199,7 +199,7 @@ class EngineTest {
                 "e7-d6", // TODO: Should be "c8-e6", e7-d6 has weight > 5.0 (add a test for that one as well)
                 1.7f,
                 3.0f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -214,7 +214,7 @@ class EngineTest {
                 Set.of("d1-d8", "e5-f6"),
                 4.0f, // OPT: Should be > 7
                 5.0f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -226,7 +226,7 @@ class EngineTest {
                 Set.of("c6-b7"),
                 6.0f, // OPT: Should be checkmate in 5
                 8.0f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -239,7 +239,7 @@ class EngineTest {
                 Set.of("e7-f6"),
                 -0.5f,
                 0.5f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -257,7 +257,7 @@ class EngineTest {
                 Set.of("Rg5"),
                 0.0f,
                 0.2f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -274,7 +274,7 @@ class EngineTest {
                 Set.of("Rh8+"),
                 8.0f,
                 15.0f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
@@ -291,15 +291,14 @@ class EngineTest {
                 Set.of("Rg8+"),
                 8.0f,
                 19.0f,
-                new GameConfig(ENGINE, engineConfig(false))
+                new GameConfig(ENGINE, engineConfig())
         );
     }
 
     @SuppressWarnings("SameParameterValue")
-    static EngineConfig engineConfig(boolean doCheckmateCheck) {
+    static EngineConfig engineConfig() {
         return new EngineConfig.Builder()
                 .maxDepth(8)
-                .checkmateCheck(doCheckmateCheck)
                 .build();
     }
 
