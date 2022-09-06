@@ -170,6 +170,12 @@ public final class Board {
     private final GameStatus[] statusStack;
     private int stackSize;
 
+    public Board(byte[] rawBoard, GameStatus gameStatus) {
+        board = rawBoard;
+        statusStack = new GameStatus[2000];
+        push(gameStatus);
+    }
+
     //    132           ...             143
     //    120           ...             131
     //    84    110(a8) ... 117(h8) 118 119
@@ -183,16 +189,8 @@ public final class Board {
     //    12 13         ...          22  23
     //    00 01         ...          10  11
     private Board() {
-        board = new byte[LENGTH*LENGTH];
+        board = createEmptyRawBoard();
         statusStack = new GameStatus[2000];
-
-        Arrays.fill(board, illegal);
-
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                board[ChessUtil.getFieldFromColAndRow(col, row)] = empty;
-            }
-        }
 
         board[a1] = whiteRook;
         board[b1] = whiteKnight;
@@ -244,7 +242,43 @@ public final class Board {
     }
 
     static byte[] createEmptyRawBoard() {
-        return new byte[LENGTH*LENGTH];
+        final var board = new byte[LENGTH*LENGTH];
+        Arrays.fill(board, 0, 2 * LENGTH, illegal);
+        board[a1 - 2] = illegal;
+        board[a1 - 1] = illegal;
+        board[h1 + 1] = illegal;
+        board[h1 + 2] = illegal;
+        board[a2 - 2] = illegal;
+        board[a2 - 1] = illegal;
+        board[h2 + 1] = illegal;
+        board[h2 + 2] = illegal;
+        board[a3 - 2] = illegal;
+        board[a3 - 1] = illegal;
+        board[h3 + 1] = illegal;
+        board[h3 + 2] = illegal;
+        board[a4 - 2] = illegal;
+        board[a4 - 1] = illegal;
+        board[h4 + 1] = illegal;
+        board[h4 + 2] = illegal;
+        board[a5 - 2] = illegal;
+        board[a5 - 1] = illegal;
+        board[h5 + 1] = illegal;
+        board[h5 + 2] = illegal;
+        board[a6 - 2] = illegal;
+        board[a6 - 1] = illegal;
+        board[h6 + 1] = illegal;
+        board[h6 + 2] = illegal;
+        board[a7 - 2] = illegal;
+        board[a7 - 1] = illegal;
+        board[h7 + 1] = illegal;
+        board[h7 + 2] = illegal;
+        board[a8 - 2] = illegal;
+        board[a8 - 1] = illegal;
+        board[h8 + 1] = illegal;
+        board[h8 + 2] = illegal;
+        Arrays.fill(board, h8 + 2, h8 + 2 + 2 * LENGTH, illegal);
+
+        return board;
     }
 
     public Board copy() {
@@ -797,6 +831,10 @@ public final class Board {
     }
 
     long calculatePositionHash() {
+        return calculatePositionHash(board, getGameStatus());
+    }
+
+    static long calculatePositionHash(final byte[] board, final GameStatus gameStatus) {
         var hash = 0L;
 
         for (int field = a1; field <= h8; field++) {
@@ -807,15 +845,15 @@ public final class Board {
         }
 
         // Castling rights
-        hash ^= RANDOM_NUMBERS[CASTLING_RIGHTS_INDEX + (getGameStatus().getCastlingState() % 16)];
+        hash ^= RANDOM_NUMBERS[CASTLING_RIGHTS_INDEX + (gameStatus.getCastlingState() % 16)];
 
         // Turn
-        if (getGameStatus().isBlackTurn()) {
+        if (gameStatus.isBlackTurn()) {
             hash ^= RANDOM_NUMBERS[TURN_INDEX];
         }
 
         // En passant file
-        int enPassantField = getGameStatus().getEnPassantField();
+        int enPassantField = gameStatus.getEnPassantField();
         if (enPassantField != 0) {
             hash ^= RANDOM_NUMBERS[EN_PASSANT_INDEX + enPassantField % Board.LENGTH - 2];
         }
