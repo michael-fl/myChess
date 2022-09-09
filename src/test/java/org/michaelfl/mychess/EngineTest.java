@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.michaelfl.mychess.WeightingFunction.checkmateIn;
 
 /**
@@ -249,10 +249,12 @@ class EngineTest {
     // FEN: 2R5/1p2bqBk/p2p4/3Ppr2/3p2Q1/P2P3P/1P3PP1/6K1 b - - 2 23
     @Test
     void testPosition19() {
-        var pgn = "1. c4 e5 2. Nc3 Nf6 3. a3 Nc6 4. e4 Nd4 5. Nf3 d6 6. h3 Be7 7. Be2 O-O 8. O-O\n" +
-                "h6 9. d3 a6 10. Be3 c5 11. Nd5 Be6 12. Nxd4 cxd4 13. Bd2 Nxd5 14. cxd5 Bd7 15. Rc1\n" +
-                "Rc8 16. Bg4 f5 17. Bxf5 Bxf5 18. exf5 Rxf5 19. Qg4 Rxc1 20. Rxc1 Qf8 21. Bxh6\n" +
-                "Kh7 22. Bxg7 Qf7 23. Rc8";
+        var pgn = """
+                1. c4 e5 2. Nc3 Nf6 3. a3 Nc6 4. e4 Nd4 5. Nf3 d6 6. h3 Be7 7. Be2 O-O 8. O-O
+                h6 9. d3 a6 10. Be3 c5 11. Nd5 Be6 12. Nxd4 cxd4 13. Bd2 Nxd5 14. cxd5 Bd7 15. Rc1
+                Rc8 16. Bg4 f5 17. Bxf5 Bxf5 18. exf5 Rxf5 19. Qg4 Rxc1 20. Rxc1 Qf8 21. Bxh6
+                Kh7 22. Bxg7 Qf7 23. Rc8
+                """;
         testPosition(pgn,
                 Set.of("Rg5"),
                 0.0f,
@@ -266,10 +268,12 @@ class EngineTest {
     // FEN: 2R5/1p2b1Bk/p2p2q1/3Ppr2/3p2Q1/P2P3P/1P3PP1/6K1 w - - 3 24
     @Test
     void testPosition20() {
-        var pgn = "1. c4 e5 2. Nc3 Nf6 3. a3 Nc6 4. e4 Nd4 5. Nf3 d6 6. h3 Be7 7. Be2 O-O 8. O-O\n" +
-                "h6 9. d3 a6 10. Be3 c5 11. Nd5 Be6 12. Nxd4 cxd4 13. Bd2 Nxd5 14. cxd5 Bd7 15. Rc1\n" +
-                "Rc8 16. Bg4 f5 17. Bxf5 Bxf5 18. exf5 Rxf5 19. Qg4 Rxc1 20. Rxc1 Qf8 21. Bxh6\n" +
-                "Kh7 22. Bxg7 Qf7 23. Rc8 Qg6";
+        var pgn = """
+                1. c4 e5 2. Nc3 Nf6 3. a3 Nc6 4. e4 Nd4 5. Nf3 d6 6. h3 Be7 7. Be2 O-O 8. O-O
+                h6 9. d3 a6 10. Be3 c5 11. Nd5 Be6 12. Nxd4 cxd4 13. Bd2 Nxd5 14. cxd5 Bd7 15. Rc1
+                Rc8 16. Bg4 f5 17. Bxf5 Bxf5 18. exf5 Rxf5 19. Qg4 Rxc1 20. Rxc1 Qf8 21. Bxh6
+                Kh7 22. Bxg7 Qf7 23. Rc8 Qg6
+                """;
         testPosition(pgn,
                 Set.of("Rh8+"),
                 8.0f,
@@ -283,14 +287,55 @@ class EngineTest {
     // All other possibilities are really weak.
     @Test
     void testPosition21() {
-        var pgn = "1. c4 e5 2. Nc3 Nf6 3. a3 Nc6 4. e4 Nd4 5. Nf3 d6 6. h3 Be7 7. Be2 O-O 8. O-O\n" +
-                "h6 9. d3 a6 10. Be3 c5 11. Nd5 Be6 12. Nxd4 cxd4 13. Bd2 Nxd5 14. cxd5 Bd7 15. Rc1\n" +
-                "Rc8 16. Bg4 f5 17. Bxf5 Bxf5 18. exf5 Rxf5 19. Qg4 Rxc1 20. Rxc1 Qf8 21. Bxh6\n" +
-                "Kh7 22. Bxg7 Qf7 23. Rc8 Qg6 24.Rh8+ Kxg7";
+        var pgn = """
+                1. c4 e5 2. Nc3 Nf6 3. a3 Nc6 4. e4 Nd4 5. Nf3 d6 6. h3 Be7 7. Be2 O-O 8. O-O
+                h6 9. d3 a6 10. Be3 c5 11. Nd5 Be6 12. Nxd4 cxd4 13. Bd2 Nxd5 14. cxd5 Bd7 15. Rc1
+                Rc8 16. Bg4 f5 17. Bxf5 Bxf5 18. exf5 Rxf5 19. Qg4 Rxc1 20. Rxc1 Qf8 21. Bxh6
+                Kh7 22. Bxg7 Qf7 23. Rc8 Qg6 24.Rh8+ Kxg7
+                """;
         testPosition(pgn,
                 Set.of("Rg8+"),
                 8.0f,
                 19.0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Lost position for black. White should play Qf2, h5 or Qg3.
+    // Otherwise, the pawn on h4 will be lost and white looses the big advantage.
+    // Weight: 4.5 - 5
+    @Test
+    void testPosition22() {
+        var pgn = """
+                1. e4 c5 2. Nf3 e6 3. d4 cxd4 4. Nxd4 Bc5 5. Be3 Nf6 6. Nc3 Bb4 7. Bd2 Bxc3 8.
+                Bxc3 O-O 9. Bd3 e5 10. Nf5 d6 11. Qf3 Nc6 12. O-O-O g6 13. Nh6+ Kg7 14. Qe3 Ng4
+                15. Nxg4 Bxg4 16. f3 Be6 17. Kb1 Qc7 18. h4 h5 19. Rdg1 a5 20. g4 Rh8 21. gxh5
+                Rxh5 22. f4 f6 23. f5 Bf7 24. fxg6 Be6 25. Be2 Rh6 26. Bd2 Rah8
+                """;
+        testPosition(pgn,
+                Set.of("Qf2", "h5", "Qg3"),
+                1.7f, // TODO > 4.5
+                2.0f, // TODO 5.0
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // White (myself) has made a big mistake with the last move c3.
+    // The big advantage is lost, since black can ow capture the pawn on h4.
+    // Note: Correct moves for white are tested in testPosition22.
+    // Expected move: Rxh4, weight: 1.7
+    @Test
+    void testPosition23() {
+        var pgn = """
+                1. e4 c5 2. Nf3 e6 3. d4 cxd4 4. Nxd4 Bc5 5. Be3 Nf6 6. Nc3 Bb4 7. Bd2 Bxc3 8.
+                Bxc3 O-O 9. Bd3 e5 10. Nf5 d6 11. Qf3 Nc6 12. O-O-O g6 13. Nh6+ Kg7 14. Qe3 Ng4
+                15. Nxg4 Bxg4 16. f3 Be6 17. Kb1 Qc7 18. h4 h5 19. Rdg1 a5 20. g4 Rh8 21. gxh5
+                Rxh5 22. f4 f6 23. f5 Bf7 24. fxg6 Be6 25. Be2 Rh6 26. Bd2 Rah8 27. c3
+                """;
+        testPosition(pgn,
+                Set.of("Rxh4"),
+                -0.2f, // TODO 1.7
+                0f,
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -312,6 +357,13 @@ class EngineTest {
             var game = importer.importGame(config);
 
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
+
+            var expectedPathDepth = config.getEngineWhiteConfig().getMaxDepth();
+            if (WeightingFunction.isCheckmateWeight(expectedMinWeight)) {
+                expectedPathDepth = Math.min(expectedPathDepth, WeightingFunction.checkmateWeightToPlies(expectedMinWeight));
+            }
+            assertEquals(expectedPathDepth, pathLength(move.path), "Unexpected path length: " + ChessUtil.pathToString(move.path));
+
             if (!(expectedMoves.contains(ChessUtil.moveToString(move.move)) || expectedMoves.contains(game.moveToShortNotation(new Move(move.move)).toString()))) {
                 game.print();
                 System.out.println(game.exportFEN());
@@ -330,6 +382,14 @@ class EngineTest {
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static Object pathLength(int[] path) {
+        int len = 0;
+        //noinspection StatementWithEmptyBody
+        for (int i = 0; i < path.length && path[i] != 0; i++, len++) {
+        }
+        return len;
     }
 
 }
