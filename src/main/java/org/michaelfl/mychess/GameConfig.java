@@ -8,7 +8,7 @@ import org.michaelfl.mychess.engines.v2.MyChessEngine2;
 /**
  * @author Michael Fleischhauer
  */
-public class GameConfig {
+public final class GameConfig {
 
     private final Class<? extends ChessEngine> engineWhite;
     private final Class<? extends ChessEngine> engineBlack;
@@ -21,6 +21,22 @@ public class GameConfig {
 
     public GameConfig(Class<? extends ChessEngine> engine, EngineConfig engineConfig) {
         this(engine, engineConfig, engine, engineConfig);
+    }
+
+    public Class<? extends ChessEngine> getEngineWhite() {
+        return engineWhite;
+    }
+
+    public Class<? extends ChessEngine> getEngineBlack() {
+        return engineBlack;
+    }
+
+    public EngineConfig getEngineWhiteConfig() {
+        return engineWhiteConfig;
+    }
+
+    public EngineConfig getEngineBlackConfig() {
+        return engineBlackConfig;
     }
 
     public GameConfig(Class<? extends ChessEngine> engineWhite, EngineConfig engineWhiteConfig, Class<? extends ChessEngine> engineBlack, EngineConfig engineBlackConfig) {
