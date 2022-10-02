@@ -340,6 +340,46 @@ class EngineTest {
         );
     }
 
+    // One of my own chess.com games (playing black).
+    // Black has missed a winning opportunity: e5
+    // This will win material. Expected weight: -5.3
+    @Test
+    void testPosition24() {
+        var pgn = """
+                1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. d4 exd4 5. O-O Nxe4 6. Re1 d5 7. Bxd5 Qxd5
+                8. Nc3 Qh5 9. Nxe4 Be6 10. Ng3 Qd5 11. Ne2 O-O-O 12. Nf4 Qd7 13. Nxe6 fxe6
+                14. Bf4 h6 15. Qe2 Bb4 16. Red1 Rhe8 17. Rd3
+                """;
+        testPosition(pgn,
+                Set.of("e5"),
+                -2.1f, // TODO -5.3
+                -1.8f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // One of my own chess.com games (same as above) (playing black).
+    // White should play Rd2, the best move, although others are not that bad.
+    // Expected weight: -0.9
+    @Test
+    void testPosition25() {
+        var pgn = """
+                1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. d4 exd4 5. O-O Nxe4 6. Re1 d5 7. Bxd5 Qxd5 8.
+                Nc3 Qh5 9. Nxe4 Be6 10. Ng3 Qd5 11. Ne2 O-O-O 12. Nf4 Qd7 13. Nxe6 fxe6 14. Bf4
+                h6 15. Qe2 Bb4 16. Red1 Rhe8 17. Rd3 g5 18. Ne5 Nxe5 19. Bxe5 Qb5 20. c3 Bd6 21.
+                Bxd6 Rxd6 22. Qc2 e5 23. Rad1 Rc6 24. Qe2 Rce6 25. f3 e4 26. fxe4 Rxe4 27. Qc2
+                dxc3 28. Qxc3 Qb6+ 29. Kf1 Rf4+ 30. Rf3 Qb5+ 31. Qd3 Qxd3+ 32. Rxd3 Rxf3+ 33.
+                gxf3 Rd8 34. Re3 Rf8 35. Kg2 b6 36. Kg3 Rd8 37. Re2 h5 38. h4 gxh4+ 39. Kxh4 Rd5
+                40. Re7 Rf5 41. Re3 Kb7 42. Kg3 a5 43. f4 a4 44. Kf3 Rb5 45. Re2 Kc6
+                """;
+        testPosition(pgn,
+                Set.of("Kg3"), // TODO Rd2
+                -1.1f,
+                -0.8f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
     @SuppressWarnings("SameParameterValue")
     static EngineConfig engineConfig() {
         return new EngineConfig.Builder()
