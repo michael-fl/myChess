@@ -21,4 +21,24 @@ class GameTest {
 
         assertEquals(GameResult.CHECKMATE, game.getResult(), "game status should be black checkmate");
     }
+
+    @Test
+    void testToShortNotation() {
+        var moves = "e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f8-e8 e6-f7 e5-f7 h3-f5 h7-h6 c3-d5 a6-a5 h5-g6 a5-a4 d5-f6 d8-f6 g6-f6 f7-g5 f6-g6 d6-d5 d1-d5 e8-e7 g1-g5 h6-g5 f5-e6 e7-e6 g6-e6 g8-h8 d5-g5 g7-g6 e6-g6 a8-b8 g6-g7".split(" ");
+        var expectedShortMoves = "e4 c5 Nf3 d6 d4 cxd4 Nxd4 Nf6 Nc3 a6 Bg5 e6 f4 Be7 Qf3 Qc7 0-0-0 Nbd7 g4 b5 Bxf6 Nxf6 g5 Nd7 f5 Bxg5+ Kb1 Ne5 Qh5 Qd8 Nxe6 Bxe6 fxe6 0-0 Rg1 Bf6 Bh3 Re8 exf7+ Nxf7 Bf5 h6 Nd5 a5 Qg6 a4 Nxf6+ Qxf6 Qxf6 Ng5 Qg6 d5 Rxd5 Re7 Rxg5 hxg5 Be6+ Rxe6 Qxe6+ Kh8 Rxg5 g6 Qxg6 Rb8 Qg7#".split(" ");
+
+        var game = new Game();
+        var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
+
+        for (int i = 0; i < moves.length; i++) {
+            var moveDescr = MoveDescription.fromString(moves[i], game.getTurn());
+            moveDescr = Game.resolveMoveDescription(moveDescr, game.getBoard(), moveGenerator);
+            var move = Game.moveDescriptionToMove(moveDescr, game.getBoard());
+            var shortNotation = game.moveToShortNotation(move);
+
+            assertEquals(expectedShortMoves[i], shortNotation.toString(), "Wrong short move notation");
+
+            game.makeMove(moveDescr);
+        }
+    }
 }

@@ -80,14 +80,18 @@ public final class Game {
         return getTurn() == GameStatus.TURN_WHITE ? engineWhite : engineBlack;
     }
 
-    public void calculateAndSetGameResult() {
+    private GameResult calculateGameResult() {
         MoveAndWeight move = statusEngine.calculateNextMove(new NextMoveTask());
         if (move.path.length > 0 && move.path[0] != 0) {
             // at least one move still possible ==> ongoing
-            setResult(GameResult.ONGOING);
+            return GameResult.ONGOING;
         } else {
-            setResult(move.result);
+            return move.result;
         }
+    }
+
+    public void calculateAndSetGameResult() {
+        setResult(calculateGameResult());
     }
 
     public GameStatus getGameStatus() {
@@ -255,6 +259,7 @@ public final class Game {
         var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
 
         board.makeMove(move.getMove());
+        builder.isCheckmate = calculateGameResult() == GameResult.CHECKMATE;
         builder.isCheck = testIsKingChecked(getBoard(), moveGenerator);
         board.revertMove();
 
@@ -272,6 +277,10 @@ public final class Game {
         if (pawnPromotionPiece > 0) {
             builder.pawnPromotionPiece = pawnPromotionPiece;
         }
+
+        var moveType = Move.getMoveType(move.getMove());
+        builder.isCastlingKingSide = moveType == Move.typeCastlingKingSide;
+        builder.isCastlingQueenSide = moveType == Move.typeCastlingQueenSide;
 
         try {
             var moveDescr = builder.build();

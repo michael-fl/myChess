@@ -148,6 +148,12 @@ public final class PositionSearch {
             log("#positions: " + statistics.getPositionsCount() + ", #pruned: " + statistics.getPrunedMovesCount());
         }
 
+        // The last path component may be an illegal move (because this is not checked on the leaf nodes).
+        // Hence, we just shorten the path by one to avoid returning an invalid path.
+        if (bestPath != null && bestPath.path.length >= maxDepth) {
+            bestPath.path[maxDepth - 1] = 0;
+        }
+
         return bestPath;
     }
 
@@ -344,7 +350,7 @@ public final class PositionSearch {
     }
 
     private int quiescenceSearch(SearchNodeContext ctx) {
-        var workingBoard = ctx.workingBoard;
+        final var workingBoard = ctx.workingBoard;
         final int lastMove = workingBoard.getGameStatus().getLastMove();
 
         if (Move.getCapturedPiece(lastMove) == 0) {

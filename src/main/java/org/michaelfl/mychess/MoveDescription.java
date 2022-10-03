@@ -31,6 +31,8 @@ public final class MoveDescription {
     public final Boolean isCheck;
     public final Boolean isCheckmate;
     public final Boolean isEnPassant;
+    public final Boolean isCastlingKingSide;
+    public final Boolean isCastlingQueenSide;
 
 
     MoveDescription(int turn, int fromCol, int fromRow, int toCol, int toRow, char pawnPromotionSymbol) {
@@ -45,6 +47,8 @@ public final class MoveDescription {
         this.isCheck = null;
         this.isCheckmate = null;
         this.isEnPassant = null;
+        this.isCastlingKingSide = null;
+        this.isCastlingQueenSide = null;
     }
 
     MoveDescription(
@@ -58,7 +62,9 @@ public final class MoveDescription {
         Boolean isCapture,
         Boolean isCheck,
         Boolean isCheckmate,
-        Boolean isEnPassant
+        Boolean isEnPassant,
+        Boolean isCastlingKingSide,
+        Boolean isCastlingQueenSide
     ) {
         if (turn <= 0) {
             throw new IllegalArgumentException("turn not set");
@@ -86,6 +92,8 @@ public final class MoveDescription {
         this.isCheck = isCheck;
         this.isCheckmate = isCheckmate;
         this.isEnPassant = isEnPassant;
+        this.isCastlingKingSide = isCastlingKingSide;
+        this.isCastlingQueenSide = isCastlingQueenSide;
     }
 
     public int getFromField() {
@@ -136,6 +144,7 @@ public final class MoveDescription {
 
             var castling = matcher.group(GROUP_CASTLING);
             if ("0-0".equals(castling) || "O-O".equals(castling)) {
+                builder.isCastlingKingSide = true;
                 if (isWhiteTurn) {
                     builder.piece = Board.whiteKing;
                     builder.fromCol = 4;
@@ -150,6 +159,7 @@ public final class MoveDescription {
                     builder.toRow = 7;
                 }
             } else { // O-O-O
+                builder.isCastlingQueenSide = true;
                 if (isWhiteTurn) {
                     builder.piece = Board.whiteKing;
                     builder.fromCol = 4;
@@ -243,13 +253,21 @@ public final class MoveDescription {
 
     @Override
     public String toString() {
+        if (isCastlingKingSide != null && isCastlingKingSide) {
+            return "0-0";
+        }
+
+        if (isCastlingQueenSide != null && isCastlingQueenSide) {
+            return "0-0-0";
+        }
+
         return (piece != Board.whitePawn && piece != Board.blackPawn ? ChessUtil.pieceToString(piece) : "")
                 + (fromCol >= 0 ? (char) ('a' + fromCol) : "")
                 + (fromRow >= 0 ? fromRow + 1 : "")
                 + (isCapture != null && isCapture ? "x" : "")
                 + ChessUtil.fieldToString(getToField())
                 + (pawnPromotionPiece > 0 ? ChessUtil.pieceToString(pawnPromotionPiece) : "")
-                + (isCheck != null && isCheck ? "+" : "");
+                + (isCheckmate != null && isCheckmate ? "#" : (isCheck != null && isCheck ? "+" : ""));
     }
 
     static final class Builder {
@@ -264,6 +282,8 @@ public final class MoveDescription {
         Boolean isCheck;
         Boolean isCheckmate;
         Boolean isEnPassant;
+        Boolean isCastlingKingSide;
+        Boolean isCastlingQueenSide;
 
         Builder(int turn) {
             this.turn = turn;
@@ -281,10 +301,12 @@ public final class MoveDescription {
             this.isCheck = moveDescr.isCheck;
             this.isCheckmate = moveDescr.isCheckmate;
             this.isEnPassant = moveDescr.isEnPassant;
+            this.isCastlingKingSide = moveDescr.isCastlingKingSide;
+            this.isCastlingQueenSide = moveDescr.isCastlingQueenSide;
         }
 
         MoveDescription build() {
-            return new MoveDescription(turn, piece, fromCol, fromRow, toCol, toRow, pawnPromotionPiece, isCapture, isCheck, isCheckmate, isEnPassant);
+            return new MoveDescription(turn, piece, fromCol, fromRow, toCol, toRow, pawnPromotionPiece, isCapture, isCheck, isCheckmate, isEnPassant, isCastlingKingSide, isCastlingQueenSide);
         }
     }
 }
