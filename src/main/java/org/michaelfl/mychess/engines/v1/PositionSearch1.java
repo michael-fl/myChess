@@ -10,6 +10,7 @@ import org.michaelfl.mychess.Move;
 import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.MovesCounter;
+import org.michaelfl.mychess.WeightingFunction;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.NextMoveTask;
@@ -93,6 +94,15 @@ final class PositionSearch1 {
                     } else {
                         bestMoves[i].path[depth + 1] = 0;
                     }
+                }
+            }
+        }
+
+        for (int i = 0; i < nVariants; i++) {
+            if (bestMoves[i] != MoveAndWeight.NO_MOVE) {
+                MoveAndWeight m = bestMoves[i];
+                if (WeightingFunction.isCheckmateWeight(m.weight) && m.result != GameResult.CHECKMATE) {
+                    bestMoves[i] = new MoveAndWeight(m.move, m.weight, GameResult.CHECKMATE, m.path);
                 }
             }
         }

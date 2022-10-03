@@ -2,10 +2,14 @@ package org.michaelfl.mychess;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
+import org.michaelfl.mychess.engines.v1.MyChessEngine1;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -25,7 +29,8 @@ class EngineTest {
     @Test
     void testPosition1() {
         testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f7-e6 h3-e6 g8-h8 c3-d5 d8-e8 h5-h3 a8-a7 g1-g3 g7-g6 g3-c3 e5-d7 c3-c6 f6-e5 e6-g4 d7-c5 c6-c8 e8-f7 d1-f1 f8-c8 f1-f7 a7-f7 g4-c8 c5-e4 c2-c3 e4-d2 b1-c2 f7-f2 h3-h4 d2-e4 c2-c1 e4-c5 d5-b4 e5-f4 c1-d1 f2-d2 d1-e1 g6-g5 h4-h6 h8-g8 c8-e6 c5-e6 h6-e6 g8-g7 b4-d5]]",
-                "d2-d5",
+                Set.of("d2-d5"),
+                "d2-d5 e6-d5 g7-f6 d5-f3 h7-h6 f3-h3 f6-g7".split(" "), // + "h3-d7"
                 4.5f,
                 5.5f,
                 new GameConfig(ENGINE, engineConfig())
@@ -80,7 +85,8 @@ class EngineTest {
     @Test
     void testPosition6() {
         testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f8-e8 e6-f7 e5-f7 h3-f5 h7-h6 c3-d5 a6-a5 h5-g6 a5-a4 d5-f6 g8-f8]]",
-                "g6-g7",
+                Set.of("g6-g7"),
+                "g6-g7 f8-e7 f6-d5".split(" "),
                 checkmateIn(3),
                 checkmateIn(3),
                 new GameConfig(ENGINE, engineConfig())
@@ -91,7 +97,8 @@ class EngineTest {
     @Test
     void testPosition7() {
         testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f8-e8 e6-f7 e5-f7 h3-f5 h7-h6 c3-d5 a6-a5 h5-g6 a5-a4 d5-f6 d8-f6 g6-f6 f7-g5 f6-g6 d6-d5 d1-d5 e8-e7]]",
-                "g1-g5",
+                Set.of("g1-g5"),
+                "g1-g5 h6-g5 f5-e6 e7-e6 g6-e6 g8-h7 d5-g5".split(" "), // + "a8-e8"
                 11.0f, // TODO M12
                 12.0f,
                 new GameConfig(ENGINE, engineConfig())
@@ -113,7 +120,8 @@ class EngineTest {
     @Test
     void testPosition9() {
         testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f8-e8 e6-f7 e5-f7 h3-f5 h7-h6 c3-d5 a6-a5 h5-g6 a5-a4 d5-f6 d8-f6 g6-f6 f7-g5 f6-g6 d6-d5 d1-d5 e8-e7 g1-g5 h6-g5 f5-e6 e7-e6 g6-e6]]",
-                "g8-h8",
+                Set.of("g8-h8"),
+                "Kh8 Rxg5 g6 Qxg6 Rb8 Qg7#".split(" "),
                 checkmateIn(6),
                 checkmateIn(6),
                 new GameConfig(ENGINE, engineConfig())
@@ -124,7 +132,8 @@ class EngineTest {
     @Test
     void testPosition10() {
         testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f8-e8 e6-f7 e5-f7 h3-f5 h7-h6 c3-d5 a6-a5 h5-g6 a5-a4 d5-f6 d8-f6 g6-f6 f7-g5 f6-g6 d6-d5 d1-d5 e8-e7 g1-g5 h6-g5 f5-e6 g8-f8 d5-f5]]",
-                "e7-f7",
+                Set.of("e7-f7"),
+                "e7-f7 g6-f7".split(" "),
                 checkmateIn(2),
                 checkmateIn(2),
                 new GameConfig(ENGINE, engineConfig())
@@ -146,7 +155,8 @@ class EngineTest {
     @Test
     void testPosition12() {
         testPosition("[[e2-e4 e7-e5 g1-f3 b8-c6 f1-b5 a7-a6 b5-a4 b7-b5 a4-b3 g8-f6 e1-g1 a6-a5 d2-d4 a5-a4 b3-f7 e8-f7 d4-e5 f6-g8 f3-g5 f7-e8 b1-c3 b5-b4 d1-d5 g8-h6 c3-b5 a4-a3 f1-d1 c8-b7]]",
-                "g5-e6", // TODO: should be e5-e6
+                Set.of("g5-e6"), // TODO: should be e5-e6
+                "g5-e6 d7-e6 d5-e6 f8-e7 d1-d8 c6-d8 e6-c4".split(" "), // + "h6-g4"
                 2.0f,
                 3.0f, // TODO should be 6
                 new GameConfig(ENGINE, engineConfig())
@@ -170,7 +180,8 @@ class EngineTest {
     @Test
     void testPosition14() {
         testPosition("[[e2-e4 e7-e6 g1-f3 d7-d5 e4-d5 e6-d5 f1-b5 c8-d7 b5-d7 d8-d7 e1-g1 f8-d6 f1-e1 g8-e7 d1-e2 e8-g8 b1-c3 c7-c5 d2-d4 c5-d4 f3-d4 b8-c6 d4-f3 e7-f5 c1-d2 f5-d4 e2-d1 d6-c5 f3-d4 c5-d4 d1-f3 c6-b4 f3-d1 d7-f5 e1-e2 f5-c2 d1-c2 b4-c2 a1-c1 c2-b4 c3-b5 d4-b2 c1-b1 b4-d3 e2-e3 d3-f2 g1-f2 b2-f6 e3-d3 f8-c8 d3-d5 c8-c2 a2-a4 c2-a2 f2-f1 a2-a4 b5-c7 a8-b8 d5-d7 a4-a2 c7-d5 f6-d4 d5-e7 g8-f8 d2-b4 a2-f2 f1-e1 b8-e8 d7-d4 f2-g2 e1-f1 g2-h2 d4-e4 f7-f6 f1-g1 a7-a5 b4-d6 e8-d8 e7-f5 f8-f7 b1-b7 f7-g6 e4-f4 d8-d6 b7-g7 g6-h5 g1-h2 d6-d2 h2-h3]]",
-                "d2-d3",
+                Set.of("d2-d3"),
+                "d2-d3 f5-g3 h5-h6 g7-g8 d3-g3 g8-g3 f6-f5".split(" "), // + "f4-f5"
                 8.0f, // TODO: Should be M8
                 9.0f,
                 new GameConfig(ENGINE, engineConfig())
@@ -314,6 +325,7 @@ class EngineTest {
                 """;
         testPosition(pgn,
                 Set.of("Qf2", "h5", "Qg3"),
+                "e3-g3 c6-b4 d2-h6 h8-h6 c2-c4 c7-c6 g3-e3".split(" "), // + "h6-g6"
                 1.7f, // TODO > 4.5
                 2.0f, // TODO 5.0
                 new GameConfig(ENGINE, engineConfig())
@@ -392,19 +404,29 @@ class EngineTest {
     }
 
     static void testPosition(String gameNotation, Set<String> expectedMoves, float expectedMinWeight, float expectedMaxWeight, GameConfig config) {
+        testPosition(gameNotation, expectedMoves, null, expectedMinWeight, expectedMaxWeight, config);
+    }
+
+    static void testPosition(String gameNotation, Set<String> expectedMoves, String[] expectedPathOpt, float expectedMinWeight, float expectedMaxWeight, GameConfig config) {
         try {
             GameImporter importer = GameImporter.importerFor(gameNotation);
             var game = importer.importGame(config);
+            boolean isEngineV1 = game.getEngine() instanceof MyChessEngine1;
 
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
 
-            var expectedPathDepth = config.getEngineWhiteConfig().getMaxDepth();
+            var expectedPathDepth = config.getEngineWhiteConfig().getMaxDepth() - 1;
             if (WeightingFunction.isCheckmateWeight(expectedMinWeight)) {
                 expectedPathDepth = Math.min(expectedPathDepth, WeightingFunction.checkmateWeightToPlies(expectedMinWeight));
             }
-            assertEquals(expectedPathDepth, pathLength(move.path), "Unexpected path length: " + ChessUtil.pathToString(move.path));
+            if (!isEngineV1) {
+                assertEquals(expectedPathDepth, pathLength(move.path), "Unexpected path length: " + ChessUtil.pathToString(move.path));
+            }
+            if (expectedPathOpt != null) {
+                assertEquals(expectedPathDepth, expectedPathOpt.length, "Test setup error: Wrong length of expected path");
+            }
 
-            if (!(expectedMoves.contains(ChessUtil.moveToString(move.move)) || expectedMoves.contains(game.moveToShortNotation(new Move(move.move)).toString()))) {
+            if (notContainsMove(game, expectedMoves, move.move)) {
                 game.print();
                 System.out.println(game.exportFEN());
                 fail("Wrong move: " + ChessUtil.moveToString(move.move) + ". Expected one of " + expectedMoves);
@@ -419,9 +441,37 @@ class EngineTest {
                 game.print();
                 fail("Wrong weight: " + ChessUtil.weightToString(weight) + ". Expected maximum of " + ChessUtil.weightToString(expectedMaxWeight));
             }
+
+            if (!isEngineV1) {
+                for (int i = 0; i < expectedPathDepth; i++) {
+                    if (expectedPathOpt != null) {
+                        if (notContainsMove(game, Set.of(expectedPathOpt[i]), move.path[i])) {
+                            game.print();
+                            fail("Unexpected move at path depth " + i + ": " + game.moveToShortNotation(new Move(move.path[i])) + ", expected " + expectedPathOpt[i] + ", expected path=" + Arrays.toString(expectedPathOpt) + ", actual path=" + ChessUtil.pathToString(move.path));
+                        }
+                    }
+                    try {
+                        game.makeMove(new Move(move.path[i]));
+                    } catch (Exception e) {
+                        System.out.println("Failed to execute move " + ChessUtil.moveToString(move.path[i]));
+                        game.getBoard().print();
+                        throw e;
+                    }
+                }
+
+                if (WeightingFunction.isCheckmateWeight(expectedMinWeight)) {
+                    assertEquals(GameResult.CHECKMATE, game.getResult(), "Game result should be checkmate");
+                }
+                assertEquals(move.result, game.getResult(), "Unexpected game result");
+            }
+
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static boolean notContainsMove(Game game, Collection<String> moveStrings, int move) {
+        return !moveStrings.contains(ChessUtil.moveToString(move)) && !moveStrings.contains(game.moveToShortNotation(new Move(move)).toString());
     }
 
     private static Object pathLength(int[] path) {
