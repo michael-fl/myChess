@@ -447,7 +447,7 @@ class EngineTest {
                     if (expectedPathOpt != null) {
                         if (notContainsMove(game, Set.of(expectedPathOpt[i]), move.path[i])) {
                             game.print();
-                            fail("Unexpected move at path depth " + i + ": " + game.moveToShortNotation(new Move(move.path[i])) + ", expected " + expectedPathOpt[i] + ", expected path=" + Arrays.toString(expectedPathOpt) + ", actual path=" + ChessUtil.pathToString(move.path));
+                            fail("Unexpected move at path depth " + i + ": " + game.getBoard().moveToShortNotation(new Move(move.path[i])) + ", expected " + expectedPathOpt[i] + ", expected path=" + Arrays.toString(expectedPathOpt) + ", actual path=" + ChessUtil.pathToString(move.path));
                         }
                     }
                     try {
@@ -471,7 +471,7 @@ class EngineTest {
     }
 
     private static boolean notContainsMove(Game game, Collection<String> moveStrings, int move) {
-        return !moveStrings.contains(ChessUtil.moveToString(move)) && !moveStrings.contains(game.moveToShortNotation(new Move(move)).toString());
+        return !moveStrings.contains(ChessUtil.moveToString(move)) && !moveStrings.contains(game.getBoard().moveToShortNotation(new Move(move)).toString());
     }
 
     private static Object pathLength(int[] path) {

@@ -3,7 +3,6 @@ package org.michaelfl.mychess;
 import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
-import org.michaelfl.mychess.engines.MyChessEngine;
 import org.michaelfl.mychess.openingdb.OpeningDB.MoveInfo;
 import org.michaelfl.mychess.openingdb.OpeningDB.PositionInfo;
 
@@ -176,7 +175,7 @@ final class CommandHandler {
             return;
         }
 
-        var moveDescr = game.moveToShortNotation(new Move(move.move));
+        var moveDescr = game.getBoard().moveToShortNotation(new Move(move.move));
         game.makeMove(move);
         game.calculateAndSetGameResult();
         game.print();
@@ -385,7 +384,7 @@ final class CommandHandler {
                 return;
             }
 
-            var moveDescr = game.moveToShortNotation(new Move(move.move));
+            var moveDescr = game.getBoard().moveToShortNotation(new Move(move.move));
             computerColor = game.getTurn();
             game.makeMove(move);
             game.calculateAndSetGameResult();
@@ -524,7 +523,7 @@ final class CommandHandler {
                     .stream()
                     .sorted(Comparator.comparingInt(MoveInfo::getTotalCount).reversed())
                     .forEach(moveInfo -> {
-                        var moveDescr = game.moveToShortNotation(moveInfo.move);
+                        var moveDescr = game.getBoard().moveToShortNotation(moveInfo.move);
                         buf.append(String.format("%-3s", moveNo.incrementAndGet() + ".")).append(' ')
                                 .append(String.format("%-6s", moveDescr)).append(' ')
                                 .append("#").append(String.format("%7d", moveInfo.getTotalCount())).append('\t')

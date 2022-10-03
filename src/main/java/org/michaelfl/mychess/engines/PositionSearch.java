@@ -232,7 +232,7 @@ public final class PositionSearch {
         }
 
         // No legal move possible ==> checkmate or stalemate
-        if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
+        if (workingBoard.isKingChecked(moveGenerator)) {
             return new MoveAndWeight(0, -WeightingFunction.checkmateInCenti(), GameResult.CHECKMATE, new int[0]);
         } else {
             return new MoveAndWeight(0, 0, GameResult.STALEMATE, new int[0]);
@@ -344,7 +344,7 @@ public final class PositionSearch {
         if (alpha >= 0f) {
             return SearchNodeResult.create(GameResult.ONGOING, alpha);
         }
-        return Game.testIsKingChecked(ctx.workingBoard, moveGenerator) ?
+        return ctx.workingBoard.isKingChecked(moveGenerator) ?
                 SearchNodeResult.checkmateSelf(ctx.depth(), alpha, ctx.betaWeight()) :
                 SearchNodeResult.stalemate(ctx.depth(), alpha, ctx.betaWeight());
     }

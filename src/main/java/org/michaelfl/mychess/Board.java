@@ -1,10 +1,13 @@
 package org.michaelfl.mychess;
 
+import org.michaelfl.mychess.MoveDescription.Builder;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.michaelfl.mychess.ChessUtil.*;
 import static org.michaelfl.mychess.RandomNumbers.RANDOM_NUMBERS;
@@ -886,6 +889,210 @@ public final class Board {
         }
 
         return false;
+    }
+
+    public boolean isKingChecked(MoveGenerator moveGenerator) {
+        // TODO MF: Optimize method testIsKingChecked
+        // Switch turn
+        GameStatus gameStatus = getGameStatus().switchTurn();
+
+        // Check the next theoretically possible moves. If those contain an illegal move (king can be captured),
+        // the king was under check.
+        // TODO MF: Calculate moves without sorting
+        Moves nextMoves = moveGenerator.calculateMoves(gameStatus, this, 0, 0);
+        return nextMoves.isIllegal();
+    }
+
+    public boolean isCheckmate(MoveGenerator moveGenerator) {
+        if (!isKingChecked(moveGenerator)) {
+            return false;
+        }
+
+        Moves nextMoves = moveGenerator.calculateMoves(getGameStatus(), this, 0, 0);
+        if (nextMoves.isIllegal()) {
+            return false; // illegal chess position
+        }
+
+        // Try to find a move to escape the check
+        final int[] plainMoves = nextMoves.getMoves();
+        final int countMoves = nextMoves.count();
+
+        for (int i = 0; i < countMoves; i++) {
+            var move = plainMoves[i];
+            makeMove(move);
+
+            // Check the next theoretically possible moves. If those contain an illegal move (king can be captured),
+            // the king is still under check.
+            Moves nextMoves2 = moveGenerator.calculateMoves(getGameStatus(), this, 0, 0);
+            if (!nextMoves2.isIllegal()) {
+                revertMove();
+                return false;
+            }
+
+            revertMove();
+        }
+
+        return true;
+    }
+
+    public MoveDescription resolveMoveDescription(MoveDescription moveDescr, MoveGenerator moveGenerator) {
+        var builder = new Builder(moveDescr);
+        int toField = moveDescr.getToField();
+
+        if (builder.piece <= 0) {
+            builder.piece = get(moveDescr.getFromField());
+        }
+
+        if (builder.fromCol < 0 || builder.fromRow < 0) {
+            // Must resolve source field
+            var possibleMoves = getPossiblePieceMoves(builder.piece, toField, this, moveGenerator);
+            if (builder.fromCol >= 0) {
+                possibleMoves.removeIf(move -> Move.getFromCol(move) != builder.fromCol);
+            }
+            if (builder.fromRow >= 0) {
+                possibleMoves.removeIf(move -> Move.getFromRow(move) != builder.fromRow);
+            }
+            if (builder.pawnPromotionPiece > 0) {
+                possibleMoves.removeIf(move -> Move.getMoveType(move) != Move.typePawnPromotionQueen);
+            }
+            if (possibleMoves.size() > 1) {
+                // Remove illegal moves
+                var workingBoard = copy();
+                possibleMoves.removeIf(move -> {
+                    workingBoard.makeMove(move);
+                    Moves nextMoves = moveGenerator.calculateMoves(workingBoard.getGameStatus(), workingBoard, 0, 0);
+                    workingBoard.revertMove();
+                    return nextMoves.isIllegal();
+                });
+            }
+            if (possibleMoves.isEmpty()) {
+                throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Impossible move.");
+            }
+            if (possibleMoves.size() > 1) {
+                throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Move is not unique.");
+            }
+
+            int move = possibleMoves.iterator().next();
+            builder.fromCol = Move.getFromCol(move);
+            builder.fromRow = Move.getFromRow(move);
+        }
+
+        return builder.build();
+    }
+
+    private static Set<Integer> getPossiblePieceMoves(byte piece, int toField, Board board, MoveGenerator moveGenerator) {
+        var result = new HashSet<Integer>();
+
+        int[] possibleMoves = moveGenerator.calculateMoves(board).getMoves();
+
+        for (int move : possibleMoves) {
+            if (toField == Move.getToField(move) && board.get(Move.getFromField(move)) == piece) {
+                result.add(move);
+            }
+        }
+
+        return result;
+    }
+
+    public Move moveDescriptionToMove(MoveDescription moveDescr) {
+        int fromField = moveDescr.getFromField();
+        int toField = moveDescr.getToField();
+        byte piece = get(fromField);
+        byte capturedPiece = get(toField);
+        byte moveType = Move.typeNormal;
+        byte promotionPiece = moveDescr.pawnPromotionPiece;
+
+        if (Board.whiteQueen == promotionPiece || Board.blackQueen == promotionPiece)
+            moveType = Move.typePawnPromotionQueen;
+        else if (Board.whiteKnight == promotionPiece || Board.blackKnight == promotionPiece)
+            moveType = Move.typePawnPromotionKnight;
+        else if (Board.whiteRook == promotionPiece || Board.blackRook == promotionPiece)
+            moveType = Move.typePawnPromotionRook;
+        else if (Board.whiteBishop == promotionPiece || Board.blackBishop == promotionPiece)
+            moveType = Move.typePawnPromotionBishop;
+        else if (piece == Board.whiteKing && fromField == Board.e1 && toField == Board.g1)
+            moveType = Move.typeCastlingKingSide;
+        else if (piece == Board.whiteKing && fromField == Board.e1 && toField == Board.c1)
+            moveType = Move.typeCastlingQueenSide;
+        else if (piece == Board.blackKing && fromField == Board.e8 && toField == Board.g8)
+            moveType = Move.typeCastlingKingSide;
+        else if (piece == Board.blackKing && fromField == Board.e8 && toField == Board.c8)
+            moveType = Move.typeCastlingQueenSide;
+        else if ((piece == Board.whitePawn && ChessUtil.getRowOfField(toField) == 7)
+                || (piece == Board.blackPawn && ChessUtil.getRowOfField(toField) == 0)) {
+            // Sanity check: Pawn promotion symbol is missing ==> assume queen
+            moveType = Move.typePawnPromotionQueen;
+        } else if ((piece == Board.whitePawn || piece == Board.blackPawn)
+                && ChessUtil.getColOfField(fromField) != ChessUtil.getColOfField(toField)
+                && capturedPiece == 0) {
+            moveType = Move.typeEnPassant;
+            capturedPiece = piece == Board.whitePawn ? Board.blackPawn : Board.whitePawn;
+        }
+
+        return new Move(Move.create((byte) fromField, (byte) toField, capturedPiece, moveType));
+    }
+
+    public MoveDescription moveToShortNotation(Move move) {
+        var builder = new MoveDescription.Builder(getGameStatus().getTurn());
+        var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
+
+        makeMove(move.getMove());
+        builder.isCheckmate = isCheckmate(moveGenerator);
+        builder.isCheck = isKingChecked(moveGenerator);
+        revertMove();
+
+        builder.piece = get(move.getFromField());
+        builder.toCol = move.getToCol();
+        builder.toRow = move.getToRow();
+        if (move.getCapturedPiece() != Board.empty) {
+            builder.isCapture = true;
+            if (Board.isPawn(builder.piece)) {
+                builder.fromCol = move.getFromCol();
+            }
+        }
+
+        var pawnPromotionPiece = move.getPawnPromotionPiece();
+        if (pawnPromotionPiece > 0) {
+            builder.pawnPromotionPiece = pawnPromotionPiece;
+        }
+
+        var moveType = Move.getMoveType(move.getMove());
+        builder.isCastlingKingSide = moveType == Move.typeCastlingKingSide;
+        builder.isCastlingQueenSide = moveType == Move.typeCastlingQueenSide;
+
+        try {
+            var moveDescr = builder.build();
+            resolveMoveDescription(moveDescr, moveGenerator);
+            return moveDescr;
+        } catch (RuntimeException e) {
+            // fall through
+        }
+
+        if (builder.fromCol == -1) {
+            builder.fromCol = move.getFromCol();
+            try {
+                var moveDescr = builder.build();
+                resolveMoveDescription(moveDescr, moveGenerator);
+                return moveDescr;
+            } catch (RuntimeException e) {
+                // fall through
+            }
+            builder.fromCol = -1;
+            builder.fromRow = move.getFromRow();
+            try {
+                var moveDescr = builder.build();
+                resolveMoveDescription(moveDescr, moveGenerator);
+                return moveDescr;
+            } catch (RuntimeException e) {
+                // fall through
+            }
+        }
+
+        builder.fromCol = move.getFromCol();
+        builder.fromRow = move.getFromRow();
+        var moveDescr = builder.build();
+        resolveMoveDescription(moveDescr, moveGenerator);
+        return moveDescr;
     }
 
 }
