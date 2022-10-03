@@ -31,11 +31,17 @@ class GameTest {
         var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
 
         for (int i = 0; i < moves.length; i++) {
+            if ("Bxg5+".equals(expectedShortMoves[i])) {
+                System.out.println();
+            }
             var moveDescr = MoveDescription.fromString(moves[i], game.getTurn());
-            moveDescr = Game.resolveMoveDescription(moveDescr, game.getBoard(), moveGenerator);
-            var move = Game.moveDescriptionToMove(moveDescr, game.getBoard());
-            var shortNotation = game.moveToShortNotation(move);
+            moveDescr = game.getBoard().resolveMoveDescription(moveDescr, moveGenerator);
+            var move = game.getBoard().moveDescriptionToMove(moveDescr);
+            var shortNotation = game.getBoard().moveToShortNotation(move);
 
+            if (!expectedShortMoves[i].equals(shortNotation.toString())) {
+                System.out.println();
+            }
             assertEquals(expectedShortMoves[i], shortNotation.toString(), "Wrong short move notation");
 
             game.makeMove(moveDescr);

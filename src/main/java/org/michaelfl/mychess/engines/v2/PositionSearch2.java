@@ -152,7 +152,7 @@ public final class PositionSearch2 {
         if (bestMoveIndex >= 0) {
             // Return the best move
             return new MoveAndWeight(plainMoves[bestMoveIndex], weights[bestMoveIndex], gameResults[bestMoveIndex], allPaths[bestMoveIndex]);
-        } else if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
+        } else if (workingBoard.isKingChecked(moveGenerator)) {
             return new MoveAndWeight(0, -WeightingFunction1.checkmateIn(0), GameResult.CHECKMATE, new int[0]);
         } else {
             return new MoveAndWeight(0, 0f, GameResult.STALEMATE, new int[0]);
@@ -245,7 +245,7 @@ public final class PositionSearch2 {
         }
 
         // No legal move possible ==> Checkmate or stalemate
-        if (Game.testIsKingChecked(ctx.workingBoard, moveGenerator)) {
+        if (ctx.workingBoard.isKingChecked(moveGenerator)) {
             // Computer checkmate
             return SearchNodeResult.checkmateSelf(depth);
         }
@@ -327,7 +327,7 @@ public final class PositionSearch2 {
         }
 
         // No legal move possible ==> Checkmate or stalemate
-        if (Game.testIsKingChecked(ctx.workingBoard, moveGenerator)) {
+        if (ctx.workingBoard.isKingChecked(moveGenerator)) {
             // Opposite checkmate
             return SearchNodeResult.checkmateOpposite(depth);
         }

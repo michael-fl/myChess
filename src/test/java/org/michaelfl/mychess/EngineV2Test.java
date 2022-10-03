@@ -311,7 +311,7 @@ class EngineV2Test {
             var game = importer.importGame(config);
 
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
-            if (!(expectedMoves.contains(ChessUtil.moveToString(move.move)) || expectedMoves.contains(game.moveToShortNotation(new Move(move.move)).toString()))) {
+            if (!(expectedMoves.contains(ChessUtil.moveToString(move.move)) || expectedMoves.contains(game.getBoard().moveToShortNotation(new Move(move.move)).toString()))) {
                 game.print();
                 System.out.println(game.exportFEN());
                 fail("Wrong move: " + ChessUtil.moveToString(move.move) + ". Expected one of " + expectedMoves);

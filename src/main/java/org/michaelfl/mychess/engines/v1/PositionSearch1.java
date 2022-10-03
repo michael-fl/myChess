@@ -288,7 +288,7 @@ final class PositionSearch1 {
 
         // No legal move possible ==> Checkmate or stalemate
         bestPathOut[depth] = 0;
-        if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
+        if (workingBoard.isKingChecked(moveGenerator)) {
             // Computer checkmate
             return -WeightingFunction1.checkmateIn(depth);
         }
@@ -373,7 +373,7 @@ final class PositionSearch1 {
 
         // No legal move possible ==> Checkmate or stalemate
         bestPathOut[depth] = 0;
-        if (Game.testIsKingChecked(workingBoard, moveGenerator)) {
+        if (workingBoard.isKingChecked(moveGenerator)) {
             // Opposite checkmate
             return WeightingFunction1.checkmateIn(depth);
         }

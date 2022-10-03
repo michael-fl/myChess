@@ -1,9 +1,5 @@
 package org.michaelfl.mychess.openingdb;
 
-import org.mapdb.BTreeMap;
-import org.mapdb.DB;
-import org.mapdb.DBMaker;
-import org.mapdb.Serializer;
 import org.michaelfl.mychess.Board;
 import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.GameStatus;
@@ -130,8 +126,8 @@ final class OpeningDBImporter {
             int depth = 0;
 
             for (var moveDescr : pgn.moves) {
-                moveDescr = Game.resolveMoveDescription(moveDescr, board, moveGenerator);
-                var move = Game.moveDescriptionToMove(moveDescr, board);
+                moveDescr = board.resolveMoveDescription(moveDescr, moveGenerator);
+                var move = board.moveDescriptionToMove(moveDescr);
 
                 var key = board.calculatePositionKey();
                 var dbValue = new DBValue(positionMap.get(key));
