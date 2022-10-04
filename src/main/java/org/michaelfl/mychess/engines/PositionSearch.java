@@ -264,7 +264,6 @@ public final class PositionSearch {
         statistics.incrPositionCount();
         final var pvTable = ctx.pvTable;
         final int pvIndex = ctx.pvIndex();
-        pvTable[ctx.pvParentIndex() + depth] = 0;
         SearchNodeResult bestResult = SearchNodeResult.create(GameResult.ONGOING, ctx.alphaWeight);
 
         __assert(() -> !(WeightingFunction.isIllegalWeight(ctx.alphaWeight()) || WeightingFunction.isIllegalWeight(ctx.betaWeight())),
