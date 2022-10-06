@@ -392,6 +392,577 @@ class EngineTest {
         );
     }
 
+    // White is back in material, but has the far better position.
+    // There is only one good move for black: Qc8, expected weight 0.
+    // All other moves will lose (weight ~5) - those are tested in testPosition27 and testPosition28.
+    @Test
+    void testPosition26() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4
+                """;
+        testPosition(pgn,
+                "Qb8", // TODO Qc8
+                -2.5f, // TODO 0
+                -1.5f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 26. Black has made the wrong move.
+    // Expected weight is now 4.8
+    @Test
+    void testPosition27() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Qb8
+                """;
+        testPosition(pgn,
+                "Rf1", // TODO dxe7 !!!!!
+                -3.1f, // TODO 4.8 !!!!!
+                -2.9f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 26. Black has made the wrong move.
+    // Expected weight is now 5.7
+    @Test
+    void testPosition28() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                """;
+        testPosition(pgn,
+                "dxe7",
+                -2.2f, // TODO 5.7 !!!!!
+                -1.8f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 28.
+    // Expected weight is now 6
+    @Test
+    void testPosition29() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7
+                """;
+        testPosition(pgn,
+                "Nxe7",
+                -0.2f, // TODO 6 !!!!!
+                0.2f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 29.
+    // Expected weight is now 6.2
+    @Test
+    void testPosition30() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7
+                """;
+        testPosition(pgn,
+                "Rae1",
+                -1f, // TODO 6 !!!!!
+                -0.5f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 30.
+    // Expected weight is now 6.2
+    @Test
+    void testPosition31() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1
+                """;
+        testPosition(pgn,
+                "d5", // TODO Rf6
+                -0.6f, // TODO 7 !!!!!
+                0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 31.
+    // Expected weight is now 7.3
+    @Test
+    void testPosition32() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6
+                """;
+        testPosition(pgn,
+                "Rxe7+", // TODO Qc5
+                -0.8f, // TODO 7 !!!!!
+                -0.6f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 32.
+    // Expected weight is now 7.4
+    @Test
+    void testPosition33() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5
+                """;
+        testPosition(pgn,
+                "d6",
+                -0.8f, // TODO 7 !!!!!
+                -0.6f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 33.
+    // Expected weight is now 6.8
+    @Test
+    void testPosition34() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6
+                """;
+        testPosition(pgn,
+                "Rxe7+",
+                -1.2f, // TODO 6.8 !!!!!
+                -0.8f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 34.
+    // Expected weight is now 7.4
+    @Test
+    void testPosition35() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+
+                """;
+        testPosition(pgn,
+                "Kf8", // TODO Qxe7 !!! (Kf8 has weight 16)
+                1.5f, // TODO 7.4 !!!!!
+                2.5f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 35.
+    // Expected weight is now 7.5
+    @Test
+    void testPosition36() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7
+                """;
+        testPosition(pgn,
+                "Rxe7+",
+                1.5f, // TODO 7.5 !!!!!
+                2.5f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 36.
+    // Expected weight is now 7.4
+    @Test
+    void testPosition37() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+
+                """;
+        testPosition(pgn,
+                "Kxe7",
+                1.5f, // TODO 7.4 !!!!!
+                2.5f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 37.
+    // Expected weight is now 7.5
+    @Test
+    void testPosition38() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7
+                """;
+        testPosition(pgn,
+                "Qc7+",
+                0.8f, // TODO 7.5 !!!!!
+                1.5f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 38.
+    // Expected weight is now 7.6
+    @Test
+    void testPosition39() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+
+                """;
+        testPosition(pgn,
+                "Kf8",
+                1.8f, // TODO 7.6 !!!!!
+                2.5f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 39.
+    // Expected weight is now 7
+    @Test
+    void testPosition40() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+ Kf8
+                """;
+        testPosition(pgn,
+                "Qxb7",
+                0.8f, // TODO 7 !!!!!
+                1.5f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 40.
+    // Expected weight is now 7.7
+    @Test
+    void testPosition41() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+ Kf8 25.Qxb7
+                """;
+        testPosition(pgn,
+                "Re8",
+                3.0f, // TODO 7.7 !!!!!
+                4.0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 41.
+    // Expected weight is now 7.5
+    @Test
+    void testPosition42() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+ Kf8 25.Qxb7 Re8
+                """;
+        testPosition(pgn,
+                "h3",
+                2.8f, // TODO 7.5 !!!!!
+                4.0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 42.
+    // Expected weight is now 7.5
+    @Test
+    void testPosition43() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+ Kf8 25.Qxb7 Re8
+                26. h3
+                """;
+        testPosition(pgn,
+                "Re2", // TODO Set.of("d5", "h5", "Re1+"),
+                2.8f, // TODO 7.5 !!!!!
+                4.0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 43.
+    // Expected weight is now 7.6
+    @Test
+    void testPosition44() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+ Kf8 25.Qxb7 Re8
+                26. h3 d5
+                """;
+        testPosition(pgn,
+                Set.of("Qxd5", "Bxd5", "Qd7"),
+                4.0f, // TODO 7.6 !!!!!
+                5.0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 44.
+    // Expected weight is now 7.5
+    @Test
+    void testPosition45() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+ Kf8 25.Qxb7 Re8
+                26. h3 d5 27.Qxd5
+                """;
+        testPosition(pgn,
+                Set.of("Ree6", "Ke7", "Re1+"),
+                4.0f, // TODO 7.5 !!!!!
+                5.0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 45.
+    // Expected weight is now 7.9
+    @Test
+    void testPosition46() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+ Kf8 25.Qxb7 Re8
+                26. h3 d5 27.Qxd5 Ree6
+                """;
+        testPosition(pgn,
+                "Qxe6", // TODO Set.of("Kh2", "Qd8+", "Qa8+"),
+                4.0f, // TODO 7.9 !!!!!
+                5.0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 46.
+    // Expected weight is now 7.6
+    @Test
+    void testPosition47() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+ Kf8 25.Qxb7 Re8
+                26. h3 d5 27.Qxd5 Ree6 28.Qd8+
+                """;
+        testPosition(pgn,
+                "Re8",
+                4.0f, // TODO 7.6 !!!!!
+                5.0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 47.
+    // Expected weight is now 7.7
+    @Test
+    void testPosition48() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+ Kf8 25.Qxb7 Re8
+                26. h3 d5 27.Qxd5 Ree6 28.Qd8+ Re8
+                """;
+        testPosition(pgn,
+                Set.of("Qd4", "Qc7", "Qd5"),
+                4.0f, // TODO 7.7 !!!!!
+                5.0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 48.
+    // Expected weight is now 8
+    @Test
+    void testPosition49() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+ Kf8 25.Qxb7 Re8
+                26. h3 d5 27.Qxd5 Ree6 28.Qd8+ Re8 29.Qd4
+                """;
+        testPosition(pgn,
+                Set.of("Re7", "h6", "Re1+"),
+                3.5f, // TODO 8 !!!!!
+                5.0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 49.
+    // Expected weight is now 8
+    @Test
+    void testPosition50() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+ Kf8 25.Qxb7 Re8
+                26. h3 d5 27.Qxd5 Ree6 28.Qd8+ Re8 29.Qd4 Re7
+                """;
+        testPosition(pgn,
+                Set.of("Qc5", "Qd5", "Qd8+"),
+                3.5f, // TODO 8 !!!!!
+                5.0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 50.
+    // Expected weight is now 8
+    @Test
+    void testPosition51() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+ Kf8 25.Qxb7 Re8
+                26. h3 d5 27.Qxd5 Ree6 28.Qd8+ Re8 29.Qd4 Re7 30.Qc5
+                """;
+        testPosition(pgn,
+                Set.of("g6", "h6", "Rg6"),
+                3.5f, // TODO 8 !!!!!
+                5.0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 51.
+    // Expected weight is now 8
+    @Test
+    void testPosition52() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+ Kf8 25.Qxb7 Re8
+                26. h3 d5 27.Qxd5 Ree6 28.Qd8+ Re8 29.Qd4 Re7 30.Qc5 g6
+                """;
+        testPosition(pgn,
+                Set.of("Bd5", "Kh2", "Rf4"),
+                3.5f, // TODO 8 !!!!!
+                5.0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 52.
+    // Expected weight is now 8
+    @Test
+    void testPosition53() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+ Kf8 25.Qxb7 Re8
+                26. h3 d5 27.Qxd5 Ree6 28.Qd8+ Re8 29.Qd4 Re7 30.Qc5 g6 31.Bd5
+                """;
+        testPosition(pgn,
+                "g5", // TODO Set.of("h6", "h4", "a5"),
+                3.5f, // TODO 8 !!!!!
+                5.0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 53.
+    // Expected weight is now 9
+    @Test
+    void testPosition54() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+ Kf8 25.Qxb7 Re8
+                26. h3 d5 27.Qxd5 Ree6 28.Qd8+ Re8 29.Qd4 Re7 30.Qc5 g6 31.Bd5 h6
+                """;
+        testPosition(pgn,
+                "Bb3", // TODO Set.of("b4", "Kh2", "h4"),
+                3.5f, // TODO 9
+                5.0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Follow-on position of test 54.
+    // Expected weight is now 9.5
+    @Test
+    void testPosition55() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Qc5 d6 22.Rxe7+ Qxe7 23.Rxe7+ Kxe7 24.Qc7+ Kf8 25.Qxb7 Re8
+                26. h3 d5 27.Qxd5 Ree6 28.Qd8+ Re8 29.Qd4 Re7 30.Qc5 g6 31.Bd5 h6 32.b4 h5 33.h4 Rf5 34.Qd6
+                """;
+        testPosition(pgn,
+                "a5", // TODO Set.of("Rxd5", "Rf7"),
+                5.0f, // TODO 9.5
+                6.0f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // There is only one move for black (Qxe7) and the position will be equal again.
+    // Otherwise, mate in 10.
+    // Expected weight: -0.2
+    @Test
+    void testPosition56() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 10.Bb3 Ng6
+                11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Rf8
+                19.dxe7 Nxe7 20.Rae1 Rf6 21.Rxe7+
+                """;
+        testPosition(pgn,
+                "Qxe7",
+                0.1f, // TODO -0.2
+                0.3f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Black has made a mistake. The knight should have moved to e5 instead of a5.
+    // Expected weight: 3.7
+    @Test
+    void testPosition57() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 
+                10.Bb3 Ng6 11.Nd5 exd5 12.exd5 Na5
+                """;
+        testPosition(pgn,
+                "Re1",
+                -1.4f, // TODO 3.7 !!!!
+                -1f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Very strong position for white. Expected weight 4.
+    @Test
+    void testPosition58() {
+        var pgn = """
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5
+                10.Bb3 Ng6 11.Nd5 exd5 12.exd5 Na5 13.Re1 Be7 14.d6 Nxb3 15.axb3 Bb7 16.Bc5 Qc8
+                17.Rc1 O-O 18.dxe7 Re8 19.Bd6 Bc6 20.h4 Qb7 21.h5
+                """;
+        testPosition(pgn,
+                "Nh8", // TODO ""Nxe7"
+                0.5f, // TODO 4
+                1f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
     @SuppressWarnings("SameParameterValue")
     static EngineConfig engineConfig() {
         return new EngineConfig.Builder()
