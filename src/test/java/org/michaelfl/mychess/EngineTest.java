@@ -963,6 +963,41 @@ class EngineTest {
         );
     }
 
+    // White can win back a pawn and get an improved position. Nxd5 is the only good move for white.
+    // Expected weight: 1.7
+    @Test
+    void testPosition59() {
+        var pgn = """
+                1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Bc5 6. c3 Nxe4 7. d4 exd4
+                8. cxd4 Ba7 9. Re1 d5 10. Nc3 f5 11. Bf4 O-O
+                """;
+        testPosition(pgn,
+                "Nxd5",
+                0.5f, // TODO 1.7
+                1f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // Very good position for white. Expected move Rc6 (or Rc8).
+    // Expected weight: 3.3
+    @Test
+    void testPosition60() {
+        var pgn = """
+                1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 e5 5. Nb5 d6 6. c4 a6 7. N5c3 Nf6 8. Bd3
+                Be6 9. b3 g6 10. h3 Bg7 11. Na3 O-O 12. Nc2 Qd7 13. Nd5 Bxd5 14. cxd5 Na7 15. a4
+                b5 16. a5 Qc7 17. Bd2 Nc8 18. Rc1 Ne7 19. O-O Nd7 20. Ne1 Qd8 21. b4 Rc8 22. Nf3
+                f5 23. Ng5 Qe8 24. Ne6 Rf7 25. f3 Nf8 26. Nxg7 Kxg7 27. f4 Nd7 28. Qe2 fxe4 29.
+                Bxe4 Nf5 30. Bxf5 Rxf5
+                """;
+        testPosition(pgn,
+                Set.of("Rc6", "Rxc8"),
+                0f, // TODO 3.3
+                0.5f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
     @SuppressWarnings("SameParameterValue")
     static EngineConfig engineConfig() {
         return new EngineConfig.Builder()
