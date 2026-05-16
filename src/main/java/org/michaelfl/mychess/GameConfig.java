@@ -2,7 +2,6 @@ package org.michaelfl.mychess;
 
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.MyChessEngine;
-import org.michaelfl.mychess.engines.v2.MyChessEngine2;
 
 /**
  * @author Michael Fleischhauer
@@ -56,9 +55,6 @@ public final class GameConfig {
     private ChessEngine createEngine(Game game, Class<? extends ChessEngine> engineClass, EngineConfig engineConfig) {
         if (engineClass == MyChessEngine.class) {
             return new MyChessEngine(engineConfig, game);
-        }
-        if (engineClass == MyChessEngine2.class) {
-            return new MyChessEngine2(engineConfig, game);
         }
         throw new IllegalArgumentException("Unknown engine: " + engineClass);
     }
