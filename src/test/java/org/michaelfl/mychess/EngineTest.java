@@ -6,7 +6,6 @@ import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
-import org.michaelfl.mychess.engines.v1.MyChessEngine1;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -1017,7 +1016,6 @@ class EngineTest {
         try {
             GameImporter importer = GameImporter.importerFor(gameNotation);
             var game = importer.importGame(config);
-            boolean isEngineV1 = game.getEngine() instanceof MyChessEngine1;
 
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
 
@@ -1025,9 +1023,7 @@ class EngineTest {
             if (WeightingFunction.isCheckmateWeight(expectedMinWeight)) {
                 expectedPathDepth = Math.min(expectedPathDepth, WeightingFunction.checkmateWeightToPlies(expectedMinWeight));
             }
-            if (!isEngineV1) {
-                assertEquals(expectedPathDepth, pathLength(move.path), "Unexpected path length: " + ChessUtil.pathToString(move.path));
-            }
+            assertEquals(expectedPathDepth, pathLength(move.path), "Unexpected path length: " + ChessUtil.pathToString(move.path));
             if (expectedPathOpt != null) {
                 assertEquals(expectedPathDepth, expectedPathOpt.length, "Test setup error: Wrong length of expected path");
             }
@@ -1048,28 +1044,26 @@ class EngineTest {
                 fail("Wrong weight: " + ChessUtil.weightToString(weight) + ". Expected maximum of " + ChessUtil.weightToString(expectedMaxWeight));
             }
 
-            if (!isEngineV1) {
-                for (int i = 0; i < expectedPathDepth; i++) {
-                    if (expectedPathOpt != null) {
-                        if (notContainsMove(game, Set.of(expectedPathOpt[i]), move.path[i])) {
-                            game.print();
-                            fail("Unexpected move at path depth " + i + ": " + game.getBoard().moveToShortNotation(new Move(move.path[i])) + ", expected " + expectedPathOpt[i] + ", expected path=" + Arrays.toString(expectedPathOpt) + ", actual path=" + ChessUtil.pathToString(move.path));
-                        }
-                    }
-                    try {
-                        game.makeMove(new Move(move.path[i]));
-                    } catch (Exception e) {
-                        System.out.println("Failed to execute move " + ChessUtil.moveToString(move.path[i]));
-                        game.getBoard().print();
-                        throw e;
+            for (int i = 0; i < expectedPathDepth; i++) {
+                if (expectedPathOpt != null) {
+                    if (notContainsMove(game, Set.of(expectedPathOpt[i]), move.path[i])) {
+                        game.print();
+                        fail("Unexpected move at path depth " + i + ": " + game.getBoard().moveToShortNotation(new Move(move.path[i])) + ", expected " + expectedPathOpt[i] + ", expected path=" + Arrays.toString(expectedPathOpt) + ", actual path=" + ChessUtil.pathToString(move.path));
                     }
                 }
-
-                if (WeightingFunction.isCheckmateWeight(expectedMinWeight)) {
-                    assertEquals(GameResult.CHECKMATE, game.getResult(), "Game result should be checkmate");
+                try {
+                    game.makeMove(new Move(move.path[i]));
+                } catch (Exception e) {
+                    System.out.println("Failed to execute move " + ChessUtil.moveToString(move.path[i]));
+                    game.getBoard().print();
+                    throw e;
                 }
-                assertEquals(move.result, game.getResult(), "Unexpected game result");
             }
+
+            if (WeightingFunction.isCheckmateWeight(expectedMinWeight)) {
+                assertEquals(GameResult.CHECKMATE, game.getResult(), "Game result should be checkmate");
+            }
+            assertEquals(move.result, game.getResult(), "Unexpected game result");
 
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException(e);
