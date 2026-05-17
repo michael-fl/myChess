@@ -43,7 +43,7 @@ public final class NextMoveTask {
         this.resultFuture = resultFuture;
     }
 
-    public final boolean isCanceled() {
+    public boolean isCanceled() {
         return isCanceled;
     }
 }

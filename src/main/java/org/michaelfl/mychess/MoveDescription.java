@@ -4,21 +4,22 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings({"java:S5843"})
 public final class MoveDescription {
 
-    private final static Pattern MOVE_PATTERN = Pattern.compile("^([PNBRQK])?([a-h])?([1-8])?([-x])?([a-h])([1-8])(=?[NBRQ])?(\\+|#|\\+\\+)?( ?e\\.p\\.)?(!|!!|!\\?|\\?!|\\?|\\?\\?)?$");
-    private final static Pattern CASTLING_PATTERN = Pattern.compile("^(0-0|O-O|0-0-0|O-O-O)(\\+|#|\\+\\+)?(!|!!|!\\?|\\?!|\\?|\\?\\?)?$");
-    private final static int GROUP_PIECE = 1;
-    private final static int GROUP_SRC_COL = 2;
-    private final static int GROUP_SRC_ROW = 3;
-    private final static int GROUP_SEPARATOR = 4;
-    private final static int GROUP_TARGET_COL = 5;
-    private final static int GROUP_TARGET_ROW = 6;
-    private final static int GROUP_PROMOTION = 7;
-    private final static int GROUP_CHESS = 8;
-    private final static int GROUP_EN_PASSSANT = 9;
-    private final static int GROUP_CASTLING = 1;
-    private final static int GROUP_CASTLING_CHESS = 2;
+    private static final Pattern MOVE_PATTERN = Pattern.compile("^([PNBRQK])?([a-h])?([1-8])?([-x])?([a-h])([1-8])(=?[NBRQ])?(\\+|#|\\+\\+)?( ?e\\.p\\.)?(!|!!|!\\?|\\?!|\\?|\\?\\?)?$");
+    private static final Pattern CASTLING_PATTERN = Pattern.compile("^(0-0|O-O|0-0-0|O-O-O)(\\+|#|\\+\\+)?(!|!!|!\\?|\\?!|\\?|\\?\\?)?$");
+    private static final int GROUP_PIECE = 1;
+    private static final int GROUP_SRC_COL = 2;
+    private static final int GROUP_SRC_ROW = 3;
+    private static final int GROUP_SEPARATOR = 4;
+    private static final int GROUP_TARGET_COL = 5;
+    private static final int GROUP_TARGET_ROW = 6;
+    private static final int GROUP_PROMOTION = 7;
+    private static final int GROUP_CHESS = 8;
+    private static final int GROUP_EN_PASSSANT = 9;
+    private static final int GROUP_CASTLING = 1;
+    private static final int GROUP_CASTLING_CHESS = 2;
 
     public final int turn;
     public final byte piece;
@@ -75,10 +76,8 @@ public final class MoveDescription {
         if (toRow < 0) {
             throw new IllegalArgumentException("toRow not set");
         }
-        if (piece <= 0) {
-            if (fromCol < 0 || fromRow < 0) {
-                throw new IllegalArgumentException("Source field must be set if no piece is defined");
-            }
+        if (piece <= 0 && (fromCol < 0 || fromRow < 0)) {
+            throw new IllegalArgumentException("Source field must be set if no piece is defined");
         }
 
         this.turn = turn;

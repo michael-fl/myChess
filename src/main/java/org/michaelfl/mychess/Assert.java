@@ -1,5 +1,6 @@
 package org.michaelfl.mychess;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 /**
@@ -7,22 +8,26 @@ import java.util.function.Supplier;
  */
 public final class Assert {
 
-    private final static boolean ENABLED = true;
+    private static final boolean ENABLED = true;
 
-    public static void __assert(Supplier<Boolean> conditionFunction) {
-        if (ENABLED && !conditionFunction.get()) {
+    private Assert() {
+        throw new IllegalStateException("Utility class");
+    }
+
+    public static void __assert(BooleanSupplier conditionFunction) {
+        if (ENABLED && !conditionFunction.getAsBoolean()) {
             throw new AssertionError();
         }
     }
 
-    public static void __assert(Supplier<Boolean> conditionFunction, String message) {
-        if (ENABLED && !conditionFunction.get()) {
+    public static void __assert(BooleanSupplier conditionFunction, String message) {
+        if (ENABLED && !conditionFunction.getAsBoolean()) {
             throw new AssertionError(message);
         }
     }
 
-    public static void __assert(Supplier<Boolean> conditionFunction, Supplier<String> messageSupplier) {
-        if (ENABLED && !conditionFunction.get()) {
+    public static void __assert(BooleanSupplier conditionFunction, Supplier<String> messageSupplier) {
+        if (ENABLED && !conditionFunction.getAsBoolean()) {
             throw new AssertionError(messageSupplier.get());
         }
     }

@@ -18,7 +18,10 @@ import java.util.stream.StreamSupport;
 /**
  * @author Michael Fleischhauer
  */
+@SuppressWarnings("unused")
 public final class Pgn {
+
+    private static final String DRAW_TOKEN = "1/2-1/2";
 
     public static final class IllegalPGNException extends RuntimeException {
         IllegalPGNException(String message) {
@@ -89,7 +92,7 @@ public final class Pgn {
 
         void addMovesLine(String line) {
             if (startOfMoveTextSection == -1) {
-                if (buf.length() > 0) {
+                if (!buf.isEmpty()) {
                     buf.append('\n');
                 }
                 startOfMoveTextSection = buf.length();
@@ -157,18 +160,17 @@ public final class Pgn {
         }
 
         private static boolean isGameTerminationMarker(String token) {
-            return "1-0".equals(token) || "0-1".equals(token) || "1/2-1/2".equals(token) || "*".equals(token);
+            return "1-0".equals(token) || "0-1".equals(token) || DRAW_TOKEN.equals(token) || "*".equals(token);
         }
 
         private Result parseGameTerminationMarker(String token) {
-            switch (token) {
-                case "1-0": return Result.WHITE_WINS;
-                case "0-1": return Result.BLACK_WINS;
-                case "1/2-1/2": return Result.DRAW;
-                case "*": return Result.UNKNOWN;
-                default:
-                    throw new IllegalPGNException("Illegal game termination marker: " + this);
-            }
+            return switch (token) {
+                case "1-0" -> Result.WHITE_WINS;
+                case "0-1" -> Result.BLACK_WINS;
+                case DRAW_TOKEN -> Result.DRAW;
+                case "*" -> Result.UNKNOWN;
+                default -> throw new IllegalPGNException("Illegal game termination marker: " + this);
+            };
         }
 
         @Override
@@ -239,7 +241,7 @@ public final class Pgn {
                 } else {
                     haveReadMoves = true;
                     pgnBuilder.addMovesLine(line);
-                    if (line.endsWith("1-0") || line.endsWith("0-1") || line.endsWith("1/2-1/2") || line.endsWith("*")) {
+                    if (line.endsWith("1-0") || line.endsWith("0-1") || line.endsWith(DRAW_TOKEN) || line.endsWith("*")) {
                         // Game termination marker found
                         return pgnBuilder.build();
                     }
@@ -268,7 +270,7 @@ public final class Pgn {
         void close() {
             try {
                 reader.close();
-            } catch (IOException e) {
+            } catch (IOException _) {
                 // ignore
             }
         }
@@ -332,12 +334,10 @@ public final class Pgn {
                     pos = skipWhitespace(i + 1);
                     return token;
                 }
-                if (c == '.') {
-                    if (buf.charAt(i - 1) != '.' || buf.charAt(i + 1) != '.') {
-                        var token = buf.substring(pos, i + 1);
-                        pos = skipWhitespace(i + 1);
-                        return token;
-                    }
+                if (c == '.' && (buf.charAt(i - 1) != '.' || buf.charAt(i + 1) != '.')) {
+                    var token = buf.substring(pos, i + 1);
+                    pos = skipWhitespace(i + 1);
+                    return token;
                 }
             }
 

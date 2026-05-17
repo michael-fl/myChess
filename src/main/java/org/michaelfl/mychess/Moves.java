@@ -3,10 +3,10 @@ package org.michaelfl.mychess;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public final class Moves {
 
-    final static Moves ILLEGAL = new Moves(0);
+    static final Moves ILLEGAL = new Moves(0);
 
-    private final static int INITIAL_MOVE_CAPACITY = 30;
-    private final static int CAPACITY_INCREMENT = 10;
+    private static final int INITIAL_MOVE_CAPACITY = 30;
+    private static final int CAPACITY_INCREMENT = 10;
 
     public final IntArray moves;
 
@@ -22,23 +22,23 @@ public final class Moves {
         return this == ILLEGAL;
     }
 
-    public final void addMove(int move) {
+    public void addMove(int move) {
         moves.add(move);
     }
 
-    public final int count() {
+    public int count() {
         return moves.size();
     }
 
-    public final int[] getMoves() {
+    public int[] getMoves() {
         return moves.getArray();
     }
 
-    final int getMove(int moveIndex) {
+    int getMove(int moveIndex) {
         return moves.array[moveIndex];
     }
 
-    final boolean contains(int move) {
+    boolean contains(int move) {
         return moves.contains(move);
     }
 

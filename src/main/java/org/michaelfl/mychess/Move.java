@@ -1,22 +1,18 @@
 package org.michaelfl.mychess;
 
-@SuppressWarnings({"WeakerAccess", "unused"})
-public final class Move {
+import org.jspecify.annotations.NonNull;
 
-    public final static byte typeNormal = 0;
-    public final static byte typeCastlingKingSide    = 1;
-    public final static byte typeCastlingQueenSide   = 2;
-    public final static byte typePawnPromotionQueen  = 3;
-    public final static byte typePawnPromotionRook   = 4;
-    public final static byte typePawnPromotionKnight = 5;
-    public final static byte typePawnPromotionBishop = 6;
-    public final static byte typeEnPassant = 7;
+@SuppressWarnings({"WeakerAccess", "unused", "java:S115"})
+public record Move(int move) {
 
-    private final int move;
-
-    public Move(int move) {
-        this.move = move;
-    }
+    public static final byte typeNormal = 0;
+    public static final byte typeCastlingKingSide = 1;
+    public static final byte typeCastlingQueenSide = 2;
+    public static final byte typePawnPromotionQueen = 3;
+    public static final byte typePawnPromotionRook = 4;
+    public static final byte typePawnPromotionKnight = 5;
+    public static final byte typePawnPromotionBishop = 6;
+    public static final byte typeEnPassant = 7;
 
     static int create(byte fromField, byte toField, byte capturedPiece, byte moveType) {
         return BitOps.createWord(fromField, toField, capturedPiece, moveType);
@@ -24,10 +20,6 @@ public final class Move {
 
     static int create(int fromField, int toField, byte capturedPiece, byte moveType) {
         return BitOps.createWord((byte) fromField, (byte) toField, capturedPiece, moveType);
-    }
-
-    public int getMove() {
-        return move;
     }
 
     public static byte getFromField(int move) {
@@ -99,22 +91,18 @@ public final class Move {
     }
 
     public byte getPawnPromotionPiece() {
-        switch (getMoveType()) {
-            case Move.typePawnPromotionQueen:
-                return getToRow() == 7 ? Board.whiteQueen : Board.blackQueen;
-            case Move.typePawnPromotionRook:
-                return getToRow() == 7 ? Board.whiteRook : Board.blackRook;
-            case Move.typePawnPromotionKnight:
-                return getToRow() == 7 ? Board.whiteKnight : Board.blackKnight;
-            case Move.typePawnPromotionBishop:
-                return getToRow() == 7 ? Board.whiteBishop : Board.blackBishop;
-        }
+        return switch (getMoveType()) {
+            case Move.typePawnPromotionQueen -> getToRow() == 7 ? Board.whiteQueen : Board.blackQueen;
+            case Move.typePawnPromotionRook -> getToRow() == 7 ? Board.whiteRook : Board.blackRook;
+            case Move.typePawnPromotionKnight -> getToRow() == 7 ? Board.whiteKnight : Board.blackKnight;
+            case Move.typePawnPromotionBishop -> getToRow() == 7 ? Board.whiteBishop : Board.blackBishop;
+            default -> 0;
+        };
 
-        return 0;
     }
 
     @Override
-    public String toString() {
+    public @NonNull String toString() {
         return ChessUtil.moveToString(move);
     }
 }

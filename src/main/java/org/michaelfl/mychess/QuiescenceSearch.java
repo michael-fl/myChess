@@ -16,7 +16,7 @@ public final class QuiescenceSearch {
     private final Statistics statistics;
     private final int maxQuiescenceDepth;
 
-    public QuiescenceSearch(Game game, MoveGenerator moveGenerator, WeightingFunction weightingFunction, Statistics statistics, int maxQuiescenceDepth) {
+    public QuiescenceSearch(MoveGenerator moveGenerator, WeightingFunction weightingFunction, Statistics statistics, int maxQuiescenceDepth) {
         this.moveGenerator = moveGenerator;
         this.weightingFunction = weightingFunction;
         this.statistics = statistics;
@@ -67,12 +67,11 @@ public final class QuiescenceSearch {
 
         for (int i = 0; i < countMoves; i++) {
             // TODO: Follow only moves, which are captures. Unfortunately this increases computation time too much.
-            //if (Move.getCapturedPiece(plainMoves[i]) != 0) {
 
             // Follow only moves, which capture on the same field, until no further capture is possible on that field
             if (capturedOnField == Move.getToField(plainMoves[i])) {
                 final int move = plainMoves[i];
-                final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
+                final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move);
                 final int newMaterialWeight = ctx.materialWeight() + moveWeight;
                 final int newMaterialDelta = ctx.materialDelta() + moveWeight;
 

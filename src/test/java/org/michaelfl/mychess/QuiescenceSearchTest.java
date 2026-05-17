@@ -44,7 +44,7 @@ class QuiescenceSearchTest {
         var statistics = new Statistics();
         var weightingFunction = new WeightingFunction();
 
-        var quiescenceSearch = new QuiescenceSearch(game, moveGenerator, weightingFunction, statistics, game.getEngine().getConfig().getMaxQuiescenceDepth());
+        var quiescenceSearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics, game.getEngine().getConfig().getMaxQuiescenceDepth());
         var workingBoard = game.getBoard().copy();
         var weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
         var materialWeightCenti = WeightingFunction.calculateMaterialWeight(workingBoard);

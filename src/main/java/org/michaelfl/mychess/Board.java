@@ -12,7 +12,7 @@ import java.util.Set;
 import static org.michaelfl.mychess.ChessUtil.*;
 import static org.michaelfl.mychess.RandomNumbers.RANDOM_NUMBERS;
 
-@SuppressWarnings({"WeakerAccess", "unused", "PointlessArithmeticExpression", "DuplicatedCode"})
+@SuppressWarnings({"WeakerAccess", "unused", "PointlessArithmeticExpression", "DuplicatedCode", "java:S115"})
 public final class Board {
 
     @FunctionalInterface
@@ -25,93 +25,93 @@ public final class Board {
         void revert(Board board, int move);
     }
 
-    public final static byte illegal = 64;
-    public final static byte empty = 0;
-    public final static byte whitePawn = 8;
-    public final static byte whiteKnight = 9;
-    public final static byte whiteBishop = 10;
-    public final static byte whiteRook = 11;
-    public final static byte whiteQueen = 12;
-    public final static byte whiteKing = 13;
-    public final static byte blackPawn = 16;
-    public final static byte blackKnight = 17;
-    public final static byte blackBishop = 18;
-    public final static byte blackRook = 19;
-    public final static byte blackQueen = 20;
-    public final static byte blackKing = 21;
+    public static final byte illegal = 64;
+    public static final byte empty = 0;
+    public static final byte whitePawn = 8;
+    public static final byte whiteKnight = 9;
+    public static final byte whiteBishop = 10;
+    public static final byte whiteRook = 11;
+    public static final byte whiteQueen = 12;
+    public static final byte whiteKing = 13;
+    public static final byte blackPawn = 16;
+    public static final byte blackKnight = 17;
+    public static final byte blackBishop = 18;
+    public static final byte blackRook = 19;
+    public static final byte blackQueen = 20;
+    public static final byte blackKing = 21;
 
-    public final static int LENGTH = 12;
+    public static final int LENGTH = 12;
 
-    public final static int a1 = 2 * LENGTH + 2 + 0;
-    public final static int b1 = 2 * LENGTH + 2 + 1;
-    public final static int c1 = 2 * LENGTH + 2 + 2;
-    public final static int d1 = 2 * LENGTH + 2 + 3;
-    public final static int e1 = 2 * LENGTH + 2 + 4;
-    public final static int f1 = 2 * LENGTH + 2 + 5;
-    public final static int g1 = 2 * LENGTH + 2 + 6;
-    public final static int h1 = 2 * LENGTH + 2 + 7;
-    public final static int a2 = 3 * LENGTH + 2 + 0;
-    public final static int b2 = 3 * LENGTH + 2 + 1;
-    public final static int c2 = 3 * LENGTH + 2 + 2;
-    public final static int d2 = 3 * LENGTH + 2 + 3;
-    public final static int e2 = 3 * LENGTH + 2 + 4;
-    public final static int f2 = 3 * LENGTH + 2 + 5;
-    public final static int g2 = 3 * LENGTH + 2 + 6;
-    public final static int h2 = 3 * LENGTH + 2 + 7;
-    public final static int a3 = 4 * LENGTH + 2 + 0;
-    public final static int b3 = 4 * LENGTH + 2 + 1;
-    public final static int c3 = 4 * LENGTH + 2 + 2;
-    public final static int d3 = 4 * LENGTH + 2 + 3;
-    public final static int e3 = 4 * LENGTH + 2 + 4;
-    public final static int f3 = 4 * LENGTH + 2 + 5;
-    public final static int g3 = 4 * LENGTH + 2 + 6;
-    public final static int h3 = 4 * LENGTH + 2 + 7;
-    public final static int a4 = 5 * LENGTH + 2 + 0;
-    public final static int b4 = 5 * LENGTH + 2 + 1;
-    public final static int c4 = 5 * LENGTH + 2 + 2;
-    public final static int d4 = 5 * LENGTH + 2 + 3;
-    public final static int e4 = 5 * LENGTH + 2 + 4;
-    public final static int f4 = 5 * LENGTH + 2 + 5;
-    public final static int g4 = 5 * LENGTH + 2 + 6;
-    public final static int h4 = 5 * LENGTH + 2 + 7;
-    public final static int a5 = 6 * LENGTH + 2 + 0;
-    public final static int b5 = 6 * LENGTH + 2 + 1;
-    public final static int c5 = 6 * LENGTH + 2 + 2;
-    public final static int d5 = 6 * LENGTH + 2 + 3;
-    public final static int e5 = 6 * LENGTH + 2 + 4;
-    public final static int f5 = 6 * LENGTH + 2 + 5;
-    public final static int g5 = 6 * LENGTH + 2 + 6;
-    public final static int h5 = 6 * LENGTH + 2 + 7;
-    public final static int a6 = 7 * LENGTH + 2 + 0;
-    public final static int b6 = 7 * LENGTH + 2 + 1;
-    public final static int c6 = 7 * LENGTH + 2 + 2;
-    public final static int d6 = 7 * LENGTH + 2 + 3;
-    public final static int e6 = 7 * LENGTH + 2 + 4;
-    public final static int f6 = 7 * LENGTH + 2 + 5;
-    public final static int g6 = 7 * LENGTH + 2 + 6;
-    public final static int h6 = 7 * LENGTH + 2 + 7;
-    public final static int a7 = 8 * LENGTH + 2 + 0;
-    public final static int b7 = 8 * LENGTH + 2 + 1;
-    public final static int c7 = 8 * LENGTH + 2 + 2;
-    public final static int d7 = 8 * LENGTH + 2 + 3;
-    public final static int e7 = 8 * LENGTH + 2 + 4;
-    public final static int f7 = 8 * LENGTH + 2 + 5;
-    public final static int g7 = 8 * LENGTH + 2 + 6;
-    public final static int h7 = 8 * LENGTH + 2 + 7;
-    public final static int a8 = 9 * LENGTH + 2 + 0;
-    public final static int b8 = 9 * LENGTH + 2 + 1;
-    public final static int c8 = 9 * LENGTH + 2 + 2;
-    public final static int d8 = 9 * LENGTH + 2 + 3;
-    public final static int e8 = 9 * LENGTH + 2 + 4;
-    public final static int f8 = 9 * LENGTH + 2 + 5;
-    public final static int g8 = 9 * LENGTH + 2 + 6;
-    public final static int h8 = 9 * LENGTH + 2 + 7;
+    public static final int a1 = 2 * LENGTH + 2 + 0;
+    public static final int b1 = 2 * LENGTH + 2 + 1;
+    public static final int c1 = 2 * LENGTH + 2 + 2;
+    public static final int d1 = 2 * LENGTH + 2 + 3;
+    public static final int e1 = 2 * LENGTH + 2 + 4;
+    public static final int f1 = 2 * LENGTH + 2 + 5;
+    public static final int g1 = 2 * LENGTH + 2 + 6;
+    public static final int h1 = 2 * LENGTH + 2 + 7;
+    public static final int a2 = 3 * LENGTH + 2 + 0;
+    public static final int b2 = 3 * LENGTH + 2 + 1;
+    public static final int c2 = 3 * LENGTH + 2 + 2;
+    public static final int d2 = 3 * LENGTH + 2 + 3;
+    public static final int e2 = 3 * LENGTH + 2 + 4;
+    public static final int f2 = 3 * LENGTH + 2 + 5;
+    public static final int g2 = 3 * LENGTH + 2 + 6;
+    public static final int h2 = 3 * LENGTH + 2 + 7;
+    public static final int a3 = 4 * LENGTH + 2 + 0;
+    public static final int b3 = 4 * LENGTH + 2 + 1;
+    public static final int c3 = 4 * LENGTH + 2 + 2;
+    public static final int d3 = 4 * LENGTH + 2 + 3;
+    public static final int e3 = 4 * LENGTH + 2 + 4;
+    public static final int f3 = 4 * LENGTH + 2 + 5;
+    public static final int g3 = 4 * LENGTH + 2 + 6;
+    public static final int h3 = 4 * LENGTH + 2 + 7;
+    public static final int a4 = 5 * LENGTH + 2 + 0;
+    public static final int b4 = 5 * LENGTH + 2 + 1;
+    public static final int c4 = 5 * LENGTH + 2 + 2;
+    public static final int d4 = 5 * LENGTH + 2 + 3;
+    public static final int e4 = 5 * LENGTH + 2 + 4;
+    public static final int f4 = 5 * LENGTH + 2 + 5;
+    public static final int g4 = 5 * LENGTH + 2 + 6;
+    public static final int h4 = 5 * LENGTH + 2 + 7;
+    public static final int a5 = 6 * LENGTH + 2 + 0;
+    public static final int b5 = 6 * LENGTH + 2 + 1;
+    public static final int c5 = 6 * LENGTH + 2 + 2;
+    public static final int d5 = 6 * LENGTH + 2 + 3;
+    public static final int e5 = 6 * LENGTH + 2 + 4;
+    public static final int f5 = 6 * LENGTH + 2 + 5;
+    public static final int g5 = 6 * LENGTH + 2 + 6;
+    public static final int h5 = 6 * LENGTH + 2 + 7;
+    public static final int a6 = 7 * LENGTH + 2 + 0;
+    public static final int b6 = 7 * LENGTH + 2 + 1;
+    public static final int c6 = 7 * LENGTH + 2 + 2;
+    public static final int d6 = 7 * LENGTH + 2 + 3;
+    public static final int e6 = 7 * LENGTH + 2 + 4;
+    public static final int f6 = 7 * LENGTH + 2 + 5;
+    public static final int g6 = 7 * LENGTH + 2 + 6;
+    public static final int h6 = 7 * LENGTH + 2 + 7;
+    public static final int a7 = 8 * LENGTH + 2 + 0;
+    public static final int b7 = 8 * LENGTH + 2 + 1;
+    public static final int c7 = 8 * LENGTH + 2 + 2;
+    public static final int d7 = 8 * LENGTH + 2 + 3;
+    public static final int e7 = 8 * LENGTH + 2 + 4;
+    public static final int f7 = 8 * LENGTH + 2 + 5;
+    public static final int g7 = 8 * LENGTH + 2 + 6;
+    public static final int h7 = 8 * LENGTH + 2 + 7;
+    public static final int a8 = 9 * LENGTH + 2 + 0;
+    public static final int b8 = 9 * LENGTH + 2 + 1;
+    public static final int c8 = 9 * LENGTH + 2 + 2;
+    public static final int d8 = 9 * LENGTH + 2 + 3;
+    public static final int e8 = 9 * LENGTH + 2 + 4;
+    public static final int f8 = 9 * LENGTH + 2 + 5;
+    public static final int g8 = 9 * LENGTH + 2 + 6;
+    public static final int h8 = 9 * LENGTH + 2 + 7;
 
-    private final static int TURN_INDEX = 12 * 64; // length = 1
-    private final static int CASTLING_RIGHTS_INDEX = 12 * 64 + 1; // length = 16
-    private final static int EN_PASSANT_INDEX = 12 * 64 + 17; // length = 8
+    private static final int TURN_INDEX = 12 * 64; // length = 1
+    private static final int CASTLING_RIGHTS_INDEX = 12 * 64 + 1; // length = 16
+    private static final int EN_PASSANT_INDEX = 12 * 64 + 17; // length = 8
 
-    private final static char[] printSymbols = new char[22];
+    private static final char[] printSymbols = new char[22];
     static {
         Arrays.fill(printSymbols, '.');
         printSymbols[whitePawn] = '\u2659';
@@ -128,7 +128,7 @@ public final class Board {
         printSymbols[blackKing] = '\u265A';
     }
 
-    public final static char[] fenSymbols = new char[22];
+    static final char[] fenSymbols = new char[22];
     static {
         Arrays.fill(fenSymbols, '?');
         fenSymbols[whitePawn] = 'P';
@@ -145,7 +145,7 @@ public final class Board {
         fenSymbols[blackKing] = 'k';
     }
 
-    private final static IMove[] MOVE_FUNCTIONS = new IMove[Move.typeEnPassant + 1];
+    private static final IMove[] MOVE_FUNCTIONS = new IMove[Move.typeEnPassant + 1];
     static {
         MOVE_FUNCTIONS[Move.typeNormal]              = Board::makeNormalMove;
         MOVE_FUNCTIONS[Move.typeCastlingKingSide]    = Board::makeCastlingKingSideMove;
@@ -157,7 +157,7 @@ public final class Board {
         MOVE_FUNCTIONS[Move.typeEnPassant]           = Board::makeEnPassantMove;
     }
 
-    private final static IRevertMove[] MOVE_REVERT_FUNCTIONS = new IRevertMove[Move.typeEnPassant + 1];
+    private static final IRevertMove[] MOVE_REVERT_FUNCTIONS = new IRevertMove[Move.typeEnPassant + 1];
     static {
         MOVE_REVERT_FUNCTIONS[Move.typeNormal]              = Board::revertNormalMove;
         MOVE_REVERT_FUNCTIONS[Move.typeCastlingKingSide]    = Board::revertCastlingKingSideMove;
@@ -822,7 +822,7 @@ public final class Board {
         return hash;
     }
 
-    public static void main(String[] args) {
+    public static void main() {
         Board board = new Board();
         board.print();
     }
@@ -994,7 +994,7 @@ public final class Board {
         var builder = new MoveDescription.Builder(getGameStatus().getTurn());
         var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
 
-        makeMove(move.getMove());
+        makeMove(move.move());
         builder.isCheckmate = isCheckmate(moveGenerator);
         builder.isCheck = isKingChecked(moveGenerator);
         revertMove();
@@ -1014,7 +1014,7 @@ public final class Board {
             builder.pawnPromotionPiece = pawnPromotionPiece;
         }
 
-        var moveType = Move.getMoveType(move.getMove());
+        var moveType = Move.getMoveType(move.move());
         builder.isCastlingKingSide = moveType == Move.typeCastlingKingSide;
         builder.isCastlingQueenSide = moveType == Move.typeCastlingQueenSide;
 
@@ -1022,7 +1022,7 @@ public final class Board {
             var moveDescr = builder.build();
             resolveMoveDescription(moveDescr, moveGenerator);
             return moveDescr;
-        } catch (RuntimeException e) {
+        } catch (RuntimeException _) {
             // fall through
         }
 
@@ -1032,7 +1032,7 @@ public final class Board {
                 var moveDescr = builder.build();
                 resolveMoveDescription(moveDescr, moveGenerator);
                 return moveDescr;
-            } catch (RuntimeException e) {
+            } catch (RuntimeException _) {
                 // fall through
             }
             builder.fromCol = -1;
@@ -1041,7 +1041,7 @@ public final class Board {
                 var moveDescr = builder.build();
                 resolveMoveDescription(moveDescr, moveGenerator);
                 return moveDescr;
-            } catch (RuntimeException e) {
+            } catch (RuntimeException _) {
                 // fall through
             }
         }

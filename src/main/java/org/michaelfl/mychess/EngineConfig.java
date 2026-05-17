@@ -6,8 +6,8 @@ package org.michaelfl.mychess;
 @SuppressWarnings("FinalMethodInFinalClass")
 public final class EngineConfig {
 
-    private final static int DEFAULT_MAX_QUIESCENCE_SEARCH_DEPTH = 20;
-    private final static int DEFAULT_SECONDS_PER_MOVE = 30;
+    private static final int DEFAULT_MAX_QUIESCENCE_SEARCH_DEPTH = 20;
+    private static final int DEFAULT_SECONDS_PER_MOVE = 30;
 
     private final int maxDepth;
     private final int secondsPerMove;
@@ -47,7 +47,7 @@ public final class EngineConfig {
         return enableFiftyMovesRule;
     }
 
-    public final static class Builder {
+    public static final class Builder {
         private int maxDepth = Integer.MAX_VALUE;
         private int secondsPerMove = DEFAULT_SECONDS_PER_MOVE;
         private boolean silent = false;

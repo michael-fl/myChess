@@ -4,7 +4,6 @@ import org.mapdb.BTreeMap;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.Serializer;
-import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.Move;
 
 import java.util.ArrayList;

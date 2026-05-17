@@ -16,17 +16,17 @@ public final class SortableMovesBucket {
         weights = new IntArray(initialCapacity);
     }
 
-    public final void clear() {
+    public void clear() {
         moves.clear();
         weights.clear();
     }
 
-    public final void add(int move, int weight) {
+    public void add(int move, int weight) {
         moves.add(move);
         weights.add(weight);
     }
 
-    public final void sort() {
+    public void sort() {
         final int[] movesArr = moves.getArray();
         final int[] weightArr = weights.getArray();
         final int n = moves.size();

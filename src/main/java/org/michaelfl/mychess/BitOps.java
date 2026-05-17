@@ -7,7 +7,7 @@ public final class BitOps {
     }
 
     public static int createWord(byte b0, byte b1, byte b2, byte b3) {
-        return ((b0 & 0xFF)      ) +
+        return (b0 & 0xFF) +
                 ((b1 & 0xFF) <<  8) +
                 ((b2 & 0xFF) << 16) +
                 ((b3       ) << 24);

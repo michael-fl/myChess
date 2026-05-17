@@ -180,7 +180,7 @@ class MoveGeneratorTest {
         var game = new Game(new GameConfig(engineConfig()));
 
         var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
-        int knowBestMove = game.getBoard().moveDescriptionToMove(MoveDescription.fromString("h2-h4", GameStatus.TURN_WHITE)).getMove();
+        int knowBestMove = game.getBoard().moveDescriptionToMove(MoveDescription.fromString("h2-h4", GameStatus.TURN_WHITE)).move();
         var moves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard(), 0, knowBestMove);
 
         testMoves(game, "b1-c3 g1-f3 d2-d4 e2-e4 d2-d3 e2-e3 b1-a3 g1-h3 a2-a3 h2-h3 a2-a4 h2-h4 b2-b4 c2-c4 f2-f4 g2-g4 b2-b3 g2-g3 c2-c3 f2-f3");
@@ -223,7 +223,7 @@ class MoveGeneratorTest {
         return Arrays.stream(moves.split(" "))
                 .map(moveStr -> MoveDescription.fromString(moveStr, game.getTurn()))
                 .map(moveDescription -> game.getBoard().moveDescriptionToMove(moveDescription))
-                .map(Move::getMove)
+                .map(Move::move)
                 .collect(Collectors.toSet());
     }
 }

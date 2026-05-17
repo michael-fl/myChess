@@ -2,19 +2,19 @@ package org.michaelfl.mychess;
 
 public final class GameStatus {
 
-    public final static int BIT_WHITE_CASTLING_KING_SIDE_POSSIBLE = 1;
-    public final static int BIT_WHITE_CASTLING_QUEEN_SIDE_POSSIBLE = 2;
-    public final static int BIT_BLACK_CASTLING_KING_SIDE_POSSIBLE = 4;
-    public final static int BIT_BLACK_CASTLING_QUEEN_SIDE_POSSIBLE = 8;
-    public final static int BIT_WHITE_HAS_CASTLED = 16;
-    public final static int BIT_BLACK_HAS_CASTLED = 32;
+    public static final int BIT_WHITE_CASTLING_KING_SIDE_POSSIBLE = 1;
+    public static final int BIT_WHITE_CASTLING_QUEEN_SIDE_POSSIBLE = 2;
+    public static final int BIT_BLACK_CASTLING_KING_SIDE_POSSIBLE = 4;
+    public static final int BIT_BLACK_CASTLING_QUEEN_SIDE_POSSIBLE = 8;
+    public static final int BIT_WHITE_HAS_CASTLED = 16;
+    public static final int BIT_BLACK_HAS_CASTLED = 32;
 
-    private final static byte INITIAL_CASTLING_STATE = 15;
-    private final static long INITIAL_POSITION_HASH = -8376097377325274526L;
+    private static final byte INITIAL_CASTLING_STATE = 15;
+    private static final long INITIAL_POSITION_HASH = -8376097377325274526L;
 
-    public final static int TURN_WHITE = 8;
+    public static final int TURN_WHITE = 8;
     @SuppressWarnings("WeakerAccess")
-    public final static int TURN_BLACK = 16;
+    public static final int TURN_BLACK = 16;
 
     private final int plyCount;
     private final int turn;
@@ -86,40 +86,40 @@ public final class GameStatus {
         return castlingState;
     }
 
-    public final boolean isWhiteCastlingPossible() {
+    public boolean isWhiteCastlingPossible() {
         return !hasWhiteCastled() && (isWhiteCastlingKingSidePossible() || isWhiteCastlingQueenSidePossible());
     }
 
-    public final boolean isBlackCastlingPossible() {
+    public boolean isBlackCastlingPossible() {
         return !hasBlackCastled() && (isBlackCastlingKingSidePossible() || isBlackCastlingQueenSidePossible());
     }
 
-    public final boolean hasWhiteCastled() {
+    public boolean hasWhiteCastled() {
         return (castlingState & BIT_WHITE_HAS_CASTLED) == BIT_WHITE_HAS_CASTLED;
     }
 
-    public final boolean hasBlackCastled() {
+    public boolean hasBlackCastled() {
         return (castlingState & BIT_BLACK_HAS_CASTLED) == BIT_BLACK_HAS_CASTLED;
     }
 
-    public final boolean isCastlingPossible() {
+    public boolean isCastlingPossible() {
         return (turn == TURN_WHITE && (isWhiteCastlingKingSidePossible() || isWhiteCastlingQueenSidePossible()))
                 || (turn == TURN_BLACK && (isBlackCastlingKingSidePossible() || isBlackCastlingQueenSidePossible()));
     }
 
-    public final boolean isWhiteCastlingKingSidePossible() {
+    public boolean isWhiteCastlingKingSidePossible() {
         return (castlingState & BIT_WHITE_CASTLING_KING_SIDE_POSSIBLE) == BIT_WHITE_CASTLING_KING_SIDE_POSSIBLE;
     }
 
-    public final boolean isWhiteCastlingQueenSidePossible() {
+    public boolean isWhiteCastlingQueenSidePossible() {
         return (castlingState & BIT_WHITE_CASTLING_QUEEN_SIDE_POSSIBLE) == BIT_WHITE_CASTLING_QUEEN_SIDE_POSSIBLE;
     }
 
-    public final boolean isBlackCastlingKingSidePossible() {
+    public boolean isBlackCastlingKingSidePossible() {
         return (castlingState & BIT_BLACK_CASTLING_KING_SIDE_POSSIBLE) == BIT_BLACK_CASTLING_KING_SIDE_POSSIBLE;
     }
 
-    public final boolean isBlackCastlingQueenSidePossible() {
+    public boolean isBlackCastlingQueenSidePossible() {
         return (castlingState & BIT_BLACK_CASTLING_QUEEN_SIDE_POSSIBLE) == BIT_BLACK_CASTLING_QUEEN_SIDE_POSSIBLE;
     }
 

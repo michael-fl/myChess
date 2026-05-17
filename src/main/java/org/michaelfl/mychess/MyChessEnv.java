@@ -5,19 +5,10 @@ import org.michaelfl.mychess.openingdb.OpeningDB;
 /**
  * @author Michael Fleischhauer
  */
-public final class MyChessEnv {
-
-    private final OpeningDB openingDB;
+public record MyChessEnv(OpeningDB openingDB) {
 
     public MyChessEnv() {
-        this.openingDB = null;
+        this(null);
     }
 
-    public MyChessEnv(OpeningDB openingDB) {
-        this.openingDB = openingDB;
-    }
-
-    public OpeningDB getOpeningDB() {
-        return openingDB;
-    }
 }
