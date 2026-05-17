@@ -318,6 +318,7 @@ Each input line is offered to the commands in order; the first whose `canHandle(
 | `fen` | — | Full six-field FEN of the current position. |
 | `hash` | — | The Zobrist position hash as a decimal `long`. |
 | `export` | `exp` | The game's move list in `[[ … ]]` long-algebraic form. Round-trips with `import`. |
+| `pgn` | — | The game's move list converted to PGN move text (`1. e4 e5 2. Nf3 …`) via [`PGNConverter`](../src/main/java/org/michaelfl/mychess/PGNConverter.java). Re-importable through `import`, which dispatches to the PGN parser when the input is not in `[[ … ]]` form. |
 
 ### Engine queries
 
