@@ -15,7 +15,6 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.stream.Collectors;
 
 public abstract class ChessEngine {
 
@@ -90,7 +89,7 @@ public abstract class ChessEngine {
 
     public final MoveAndWeight calculateNextMove(NextMoveTask task) {
         MoveAndWeight move = MoveAndWeight.NO_MOVE;
-        var openingDB = task.getEnv().getOpeningDB();
+        var openingDB = task.getEnv().openingDB();
 
         // First check if this game is already finished
         if (game.getResult() != GameResult.ONGOING) {
@@ -104,7 +103,7 @@ public abstract class ChessEngine {
         } else if (openingDB != null) {
             var m = getMoveFromOpeningDB(openingDB);
             if (m != null) {
-                move = new MoveAndWeight(m.getMove(), 0, GameResult.ONGOING, new int[] { move.move });
+                move = new MoveAndWeight(m.move(), 0, GameResult.ONGOING, new int[] { move.move });
             }
         }
 
@@ -142,7 +141,7 @@ public abstract class ChessEngine {
                         m -> m.getTotalCount() >= 100
                                 && m.getWinPercentage() >= 20
                                 && m.getLossPercentage() < 45)
-                .collect(Collectors.toList());
+                .toList();
         if (candidates.isEmpty()) {
             return null;
         }

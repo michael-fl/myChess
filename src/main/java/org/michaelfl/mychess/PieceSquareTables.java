@@ -7,6 +7,7 @@ import static org.michaelfl.mychess.Board.*;
  *
  * @author Michael Fleischhauer
  */
+@SuppressWarnings("java:S115")
 public final class PieceSquareTables {
 
     private PieceSquareTables() {
@@ -14,84 +15,90 @@ public final class PieceSquareTables {
     }
 
     /* Pawn */
-    private final static String pawnTableWhiteString =
-            " 0,  0,  0,  0,  0,  0,  0,  0,\n" +
-            "50, 50, 50, 50, 50, 50, 50, 50,\n" +
-            "10, 10, 20, 30, 30, 20, 10, 10,\n" +
-            " 5,  5, 10, 25, 25, 10,  5,  5,\n" +
-            " 0,  0,  0, 20, 20,  0,  0,  0,\n" +
-            " 5, -5,-10,  0,  0,-10, -5,  5,\n" +
-            " 5, 10, 10,-20,-20, 10, 10,  5,\n" +
-            " 0,  0,  0,  0,  0,  0,  0,  0\n";
-    private final static byte[] pawnTableWhite = createBoard(pawnTableWhiteString);
-    private final static byte[] pawnTableBlack = invert(pawnTableWhite);
+    private static final String pawnTableWhiteString = """
+             0,  0,  0,  0,  0,  0,  0,  0,
+            50, 50, 50, 50, 50, 50, 50, 50,
+            10, 10, 20, 30, 30, 20, 10, 10,
+             5,  5, 10, 25, 25, 10,  5,  5,
+             0,  0,  0, 20, 20,  0,  0,  0,
+             5, -5,-10,  0,  0,-10, -5,  5,
+             5, 10, 10,-20,-20, 10, 10,  5,
+             0,  0,  0,  0,  0,  0,  0,  0
+            """;
+    private static final byte[] pawnTableWhite = createBoard(pawnTableWhiteString);
+    private static final byte[] pawnTableBlack = invert(pawnTableWhite);
 
     /* Knight */
-    private final static String knightTableWhiteString =
-            "-50,-40,-30,-30,-30,-30,-40,-50,\n" +
-            "-40,-20,  0,  0,  0,  0,-20,-40,\n" +
-            "-30,  0, 10, 15, 15, 10,  0,-30,\n" +
-            "-30,  5, 15, 20, 20, 15,  5,-30,\n" +
-            "-30,  0, 15, 20, 20, 15,  0,-30,\n" +
-            "-30,  5, 10, 15, 15, 10,  5,-30,\n" +
-            "-40,-20,  0,  5,  5,  0,-20,-40,\n" +
-            "-50,-40,-30,-30,-30,-30,-40,-50\n";
-    private final static byte[] knightTableWhite = createBoard(knightTableWhiteString);
-    private final static byte[] knightTableBlack = invert(knightTableWhite);
+    private static final String knightTableWhiteString = """
+            -50,-40,-30,-30,-30,-30,-40,-50,
+            -40,-20,  0,  0,  0,  0,-20,-40,
+            -30,  0, 10, 15, 15, 10,  0,-30,
+            -30,  5, 15, 20, 20, 15,  5,-30,
+            -30,  0, 15, 20, 20, 15,  0,-30,
+            -30,  5, 10, 15, 15, 10,  5,-30,
+            -40,-20,  0,  5,  5,  0,-20,-40,
+            -50,-40,-30,-30,-30,-30,-40,-50
+            """;
+    private static final byte[] knightTableWhite = createBoard(knightTableWhiteString);
+    private static final byte[] knightTableBlack = invert(knightTableWhite);
 
     /* Bishop */
-    private final static String bishopTableWhiteString =
-            "-20,-10,-10,-10,-10,-10,-10,-20,\n" +
-            "-10,  0,  0,  0,  0,  0,  0,-10,\n" +
-            "-10,  0,  5, 10, 10,  5,  0,-10,\n" +
-            "-10,  5,  5, 10, 10,  5,  5,-10,\n" +
-            "-10,  0, 10, 10, 10, 10,  0,-10,\n" +
-            "-10, 10, 10, 10, 10, 10, 10,-10,\n" +
-            "-10,  5,  0,  0,  0,  0,  5,-10,\n" +
-            "-20,-10,-10,-10,-10,-10,-10,-20";
-    private final static byte[] bishopTableWhite = createBoard(bishopTableWhiteString);
-    private final static byte[] bishopTableBlack = invert(bishopTableWhite);
+    private static final String bishopTableWhiteString = """
+            -20,-10,-10,-10,-10,-10,-10,-20,
+            -10,  0,  0,  0,  0,  0,  0,-10,
+            -10,  0,  5, 10, 10,  5,  0,-10,
+            -10,  5,  5, 10, 10,  5,  5,-10,
+            -10,  0, 10, 10, 10, 10,  0,-10,
+            -10, 10, 10, 10, 10, 10, 10,-10,
+            -10,  5,  0,  0,  0,  0,  5,-10,
+            -20,-10,-10,-10,-10,-10,-10,-20
+            """;
+    private static final byte[] bishopTableWhite = createBoard(bishopTableWhiteString);
+    private static final byte[] bishopTableBlack = invert(bishopTableWhite);
 
     /* Rook */
-    private final static String rookTableWhiteString =
-            "  0,  0,  0,  0,  0,  0,  0,  0,\n" +
-            "  5, 10, 10, 10, 10, 10, 10,  5,\n" +
-            " -5,  0,  0,  0,  0,  0,  0, -5,\n" +
-            " -5,  0,  0,  0,  0,  0,  0, -5,\n" +
-            " -5,  0,  0,  0,  0,  0,  0, -5,\n" +
-            " -5,  0,  0,  0,  0,  0,  0, -5,\n" +
-            " -5,  0,  0,  0,  0,  0,  0, -5,\n" +
-            "  0,  0,  0,  5,  5,  0,  0,  0";
-    private final static byte[] rookTableWhite = createBoard(rookTableWhiteString);
-    private final static byte[] rookTableBlack = invert(rookTableWhite);
+    private static final String rookTableWhiteString = """
+              0,  0,  0,  0,  0,  0,  0,  0,
+              5, 10, 10, 10, 10, 10, 10,  5,
+             -5,  0,  0,  0,  0,  0,  0, -5,
+             -5,  0,  0,  0,  0,  0,  0, -5,
+             -5,  0,  0,  0,  0,  0,  0, -5,
+             -5,  0,  0,  0,  0,  0,  0, -5,
+             -5,  0,  0,  0,  0,  0,  0, -5,
+              0,  0,  0,  5,  5,  0,  0,  0
+            """;
+    private static final byte[] rookTableWhite = createBoard(rookTableWhiteString);
+    private static final byte[] rookTableBlack = invert(rookTableWhite);
 
     /* Queen */
-    private final static String queenTableWhiteString =
-            "-20,-10,-10, -5, -5,-10,-10,-20,\n" +
-            "-10,  0,  0,  0,  0,  0,  0,-10,\n" +
-            "-10,  0,  5,  5,  5,  5,  0,-10,\n" +
-            " -5,  0,  5,  5,  5,  5,  0, -5,\n" +
-            "  0,  0,  5,  5,  5,  5,  0, -5,\n" +
-            "-10,  5,  5,  5,  5,  5,  0,-10,\n" +
-            "-10,  0,  5,  0,  0,  0,  0,-10,\n" +
-            "-20,-10,-10, -5, -5,-10,-10,-20";
-    private final static byte[] queenTableWhite = createBoard(queenTableWhiteString);
-    private final static byte[] queenTableBlack = invert(queenTableWhite);
+    private static final String queenTableWhiteString = """
+            -20,-10,-10, -5, -5,-10,-10,-20,
+            -10,  0,  0,  0,  0,  0,  0,-10,
+            -10,  0,  5,  5,  5,  5,  0,-10,
+             -5,  0,  5,  5,  5,  5,  0, -5,
+              0,  0,  5,  5,  5,  5,  0, -5,
+            -10,  5,  5,  5,  5,  5,  0,-10,
+            -10,  0,  5,  0,  0,  0,  0,-10,
+            -20,-10,-10, -5, -5,-10,-10,-20
+            """;
+    private static final byte[] queenTableWhite = createBoard(queenTableWhiteString);
+    private static final byte[] queenTableBlack = invert(queenTableWhite);
 
     /* King */
-    private final static String kingTableWhiteString =
-            "-30,-40,-40,-50,-50,-40,-40,-30,\n" +
-            "-30,-40,-40,-50,-50,-40,-40,-30,\n" +
-            "-30,-40,-40,-50,-50,-40,-40,-30,\n" +
-            "-30,-40,-40,-50,-50,-40,-40,-30,\n" +
-            "-20,-30,-30,-40,-40,-30,-30,-20,\n" +
-            "-10,-20,-20,-20,-20,-20,-20,-10,\n" +
-            " 20, 20,  0,  0,  0,  0, 20, 20,\n" +
-            " 20, 30, 10,  0,  0, 10, 30, 20";
-    private final static byte[] kingTableWhite = createBoard(kingTableWhiteString);
-    private final static byte[] kingTableBlack = invert(kingTableWhite);
+    private static final String kingTableWhiteString = """
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -20,-30,-30,-40,-40,-30,-30,-20,
+            -10,-20,-20,-20,-20,-20,-20,-10,
+             20, 20,  0,  0,  0,  0, 20, 20,
+             20, 30, 10,  0,  0, 10, 30, 20
+            """;
+    private static final byte[] kingTableWhite = createBoard(kingTableWhiteString);
+    private static final byte[] kingTableBlack = invert(kingTableWhite);
 
-    private final static byte[][] piece2table = new byte[blackKing + 1][];
+    private static final byte[][] piece2table = new byte[blackKing + 1][];
     static {
         piece2table[whitePawn] = pawnTableWhite;
         piece2table[whiteBishop] = bishopTableWhite;
@@ -110,7 +117,8 @@ public final class PieceSquareTables {
     private static byte[] createBoard(final String tableString) {
         final byte[] table = Board.createEmptyRawBoard();
 
-        int col = 0, row = 7;
+        int col = 0;
+        int row = 7;
         for (String s : tableString.split(",")) {
             byte weight = (byte) Integer.parseInt(s.trim());
             int field = ChessUtil.getFieldFromColAndRow(col, row);

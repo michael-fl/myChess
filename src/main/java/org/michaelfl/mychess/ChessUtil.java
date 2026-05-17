@@ -21,8 +21,8 @@ public final class ChessUtil {
             throw new IllegalArgumentException("Wrong field notation: " + fieldString);
 
         return new int[] {
-            (int) colChar - (int) 'a',
-            (int) rowChar - (int) '1'
+            colChar - 'a',
+            rowChar - '1'
         };
     }
 
@@ -77,7 +77,7 @@ public final class ChessUtil {
     }
 
     public static String moveToString(Move move, Board board) {
-        return moveToString(move.getMove(), board);
+        return moveToString(move.move(), board);
     }
 
     public static String moveToString(int move, Board board) {
@@ -134,7 +134,7 @@ public final class ChessUtil {
             return (weight < 0 ? "-" : "") + "M" + plies;
         }
 
-        return String.valueOf((float) weight / 100f);
+        return String.valueOf(weight / 100f);
     }
 
     public static String weightToString(float weight) {
@@ -183,35 +183,27 @@ public final class ChessUtil {
     public static byte symbolToPiece(char symbol, int turn) {
         final boolean isWhite = turn == GameStatus.TURN_WHITE;
 
-        switch (symbol) {
-            case 'P': return isWhite ? Board.whitePawn : Board.blackPawn;
-            case 'N': return isWhite ? Board.whiteKnight : Board.blackKnight;
-            case 'B': return isWhite ? Board.whiteBishop : Board.blackBishop;
-            case 'R': return isWhite ? Board.whiteRook : Board.blackRook;
-            case 'Q': return isWhite ? Board.whiteQueen : Board.blackQueen;
-            case 'K': return isWhite ? Board.whiteKing : Board.blackKing;
-            default:
-                throw new IllegalArgumentException("Unknown symbol: " + symbol);
-        }
+        return switch (symbol) {
+            case 'P' -> isWhite ? Board.whitePawn : Board.blackPawn;
+            case 'N' -> isWhite ? Board.whiteKnight : Board.blackKnight;
+            case 'B' -> isWhite ? Board.whiteBishop : Board.blackBishop;
+            case 'R' -> isWhite ? Board.whiteRook : Board.blackRook;
+            case 'Q' -> isWhite ? Board.whiteQueen : Board.blackQueen;
+            case 'K' -> isWhite ? Board.whiteKing : Board.blackKing;
+            default -> throw new IllegalArgumentException("Unknown symbol: " + symbol);
+        };
     }
 
     public static String pieceToString(byte piece) {
-        switch (piece) {
-            case Board.empty: return "";
-            case Board.whitePawn:
-            case Board.blackPawn: return "P";
-            case Board.whiteKnight:
-            case Board.blackKnight: return "N";
-            case Board.whiteBishop:
-            case Board.blackBishop: return "B";
-            case Board.whiteRook:
-            case Board.blackRook: return "R";
-            case Board.whiteQueen:
-            case Board.blackQueen: return "Q";
-            case Board.whiteKing:
-            case Board.blackKing: return "K";
-            default:
-                throw new IllegalArgumentException("Unknown piece: " + piece);
-        }
+        return switch (piece) {
+            case Board.empty -> "";
+            case Board.whitePawn, Board.blackPawn -> "P";
+            case Board.whiteKnight, Board.blackKnight -> "N";
+            case Board.whiteBishop, Board.blackBishop -> "B";
+            case Board.whiteRook, Board.blackRook -> "R";
+            case Board.whiteQueen, Board.blackQueen -> "Q";
+            case Board.whiteKing, Board.blackKing -> "K";
+            default -> throw new IllegalArgumentException("Unknown piece: " + piece);
+        };
     }
 }

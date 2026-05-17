@@ -13,30 +13,30 @@ public final class Statistics {
     private long quiescencePositionsCountMax;
     private long quiescenceSearchesCount;
 
-    public final void incrPositionCount() {
+    public void incrPositionCount() {
         positionsCount++;
     }
 
-    public final void incrQuiescencePositionsCount() {
+    public void incrQuiescencePositionsCount() {
         quiescencePositionsCountCurrent++;
     }
 
-    public final void incrPrunedMovesCount(int increment) {
+    public void incrPrunedMovesCount(int increment) {
         prunedMovesCount += increment;
     }
 
-    public final void reachedDepth(int depth) {
+    public void reachedDepth(int depth) {
         if (depth > maximumReachedDepth) {
             maximumReachedDepth = depth;
         }
     }
 
-    public final void startQuiescenceSearch() {
+    public void startQuiescenceSearch() {
         quiescenceSearchesCount++;
         quiescencePositionsCountCurrent = 0;
     }
 
-    public final void endQuiescenceSearch() {
+    public void endQuiescenceSearch() {
         if (quiescencePositionsCountCurrent > quiescencePositionsCountMax) {
             quiescencePositionsCountMax = quiescencePositionsCountCurrent;
         }
@@ -44,30 +44,30 @@ public final class Statistics {
         quiescencePositionsCountCurrent = 0;
     }
 
-    public final long getPositionsCount() {
+    public long getPositionsCount() {
         return positionsCount;
     }
 
-    public final long getQuiescencePositionsCount() {
+    public long getQuiescencePositionsCount() {
         return quiescencePositionsCountTotal;
     }
 
-    public final long getQuiescencePositionsCountMax() {
+    public long getQuiescencePositionsCountMax() {
         return quiescencePositionsCountMax;
     }
 
-    public final long getQuiescencePositionsCountAvg() {
+    public long getQuiescencePositionsCountAvg() {
         if (quiescenceSearchesCount == 0) {
             return 0;
         }
         return quiescencePositionsCountTotal / quiescenceSearchesCount;
     }
 
-    public final long getPrunedMovesCount() {
+    public long getPrunedMovesCount() {
         return prunedMovesCount;
     }
 
-    public final int getMaximumReachedDepth() {
+    public int getMaximumReachedDepth() {
         return maximumReachedDepth;
     }
 }

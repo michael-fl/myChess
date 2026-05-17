@@ -55,8 +55,8 @@ public final class PositionSearch {
 
     public record SearchNodeResult(GameResult result, int weight, boolean isTimeout) {
 
-        public final static SearchNodeResult TIMEOUT = new SearchNodeResult(GameResult.ONGOING, 0, true);
-        public final static SearchNodeResult INVALID = new SearchNodeResult(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT_NEG, false);
+        public static final SearchNodeResult TIMEOUT = new SearchNodeResult(GameResult.ONGOING, 0, true);
+        public static final SearchNodeResult INVALID = new SearchNodeResult(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT_NEG, false);
 
         public static SearchNodeResult create(GameResult result, int weight) {
             return new SearchNodeResult(result, weight, false);
@@ -81,7 +81,7 @@ public final class PositionSearch {
             return new SearchNodeResult(GameResult.CHECKMATE, window(-WeightingFunction.checkmateInCenti(depth), alpha, beta), false);
         }
 
-        public static SearchNodeResult stalemate(int depth, int alpha, int beta) {
+        public static SearchNodeResult stalemate(int alpha, int beta) {
             return new SearchNodeResult(GameResult.STALEMATE, window(0, alpha, beta), false);
         }
 
@@ -111,7 +111,7 @@ public final class PositionSearch {
         this.game = game;
         this.moveGenerator = new MoveGenerator(new MoveSorterImpl(killerMoves));
         this.engineConfig = engine.getConfig();
-        this.quiescenceSearch = new QuiescenceSearch(game, moveGenerator, weightingFunction, statistics, engineConfig.getMaxQuiescenceDepth());
+        this.quiescenceSearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics, engineConfig.getMaxQuiescenceDepth());
         this.weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
         this.silent = engineConfig.isSilent();
         this.timeout = System.currentTimeMillis() + engineConfig.getSecondsPerMove() * 1000L;
@@ -185,9 +185,8 @@ public final class PositionSearch {
 
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
-            //log("Working on move " + ChessUtil.moveToString(move));
 
-            final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move, 1);
+            final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move);
             final int newMaterialWeight = materialWeight + moveWeight;
             boolean logWeight = false;
 
@@ -205,7 +204,6 @@ public final class PositionSearch {
                 results[i] = result;
                 System.arraycopy(pvTable, 0, allPaths[i], 0, pvMaxLength);
 
-                //log("--> weight " + ChessUtil.weightToString(weight));
                 if (result.weight > alphaWeight) {
                     alphaWeight = result.weight;
                     logWeight = true;
@@ -213,7 +211,6 @@ public final class PositionSearch {
             }
 
             log((i + 1) + "/" + countMoves + ": " + ChessUtil.moveToString(move) + (logWeight ? " " + ChessUtil.weightToString(result.weight, weightFactor) : ""));
-            //log("quiescence: total=" + statistics.getQuiescencePositionsCount() + ", avg=" + statistics.getQuiescencePositionsCountAvg() + ", max=" + statistics.getQuiescencePositionsCountMax() + ", max depth: " + statistics.getMaximumReachedDepth());
         }
 
         int bestWeight = WeightingFunction.ILLEGAL_WEIGHT_NEG;
@@ -300,7 +297,7 @@ public final class PositionSearch {
             }
 
             final int move = plainMoves[i];
-            final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move, depth);
+            final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move);
             final int newMaterialWeight = ctx.materialWeight + moveWeight;
             final int newMaterialDelta = ctx.materialDelta + moveWeight;
 
@@ -345,7 +342,7 @@ public final class PositionSearch {
         }
         return ctx.workingBoard.isKingChecked(moveGenerator) ?
                 SearchNodeResult.checkmateSelf(ctx.depth(), alpha, ctx.betaWeight()) :
-                SearchNodeResult.stalemate(ctx.depth(), alpha, ctx.betaWeight());
+                SearchNodeResult.stalemate(alpha, ctx.betaWeight());
     }
 
     private int quiescenceSearch(SearchNodeContext ctx) {

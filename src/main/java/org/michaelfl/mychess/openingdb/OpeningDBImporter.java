@@ -1,7 +1,6 @@
 package org.michaelfl.mychess.openingdb;
 
 import org.michaelfl.mychess.Board;
-import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.GameStatus;
 import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.MoveSorter;
@@ -30,14 +29,16 @@ final class OpeningDBImporter {
 
     void importPGNs() throws IOException {
         var dir = Path.of("/Users/mf/_PRIVAT_/Schach/KingBase2019-pgn/");
-        Files.list(dir).forEach(pgnFile -> {
-            try {
-                System.out.println("Importing PGN file " + pgnFile);
-                importPGNFile(pgnFile);
-            } catch (IOException e) {
-                throw new IOExceptionWrapper(e);
-            }
-        });
+        try (var pathStream = Files.list(dir)) {
+            pathStream.forEach(pgnFile -> {
+                try {
+                    System.out.println("Importing PGN file " + pgnFile);
+                    importPGNFile(pgnFile);
+                } catch (IOException e) {
+                    throw new IOExceptionWrapper(e);
+                }
+            });
+        }
 
         cleanupPositionMap();
 
@@ -116,7 +117,7 @@ final class OpeningDBImporter {
     }
 
     private void importPgn(Pgn pgn) {
-        if (pgn.moves.get(0).turn == GameStatus.TURN_BLACK) {
+        if (pgn.moves.getFirst().turn == GameStatus.TURN_BLACK) {
             return; // skip PGNs starting with a black move
         }
 
@@ -131,10 +132,10 @@ final class OpeningDBImporter {
 
                 var key = board.calculatePositionKey();
                 var dbValue = new DBValue(positionMap.get(key));
-                dbValue.addMove(move.getMove(), moveDescr.turn, pgn.result);
+                dbValue.addMove(move.move(), moveDescr.turn, pgn.result);
                 positionMap.put(key, dbValue.getBuffer());
 
-                board.makeMove(move.getMove());
+                board.makeMove(move.move());
                 totalMovesCounter++;
 
                 if (++depth == maxDepth) {
@@ -151,7 +152,7 @@ final class OpeningDBImporter {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    static void main(String[] args) throws IOException {
         var importer = new OpeningDBImporter();
 
         importer.importPGNs();

@@ -21,7 +21,7 @@ public final class MoveGenerator {
         void calculateMoves(MoveGenerator generator, int field);
     }
 
-    private final static CalculateMoves[] calculationFunctions = new CalculateMoves[22];
+    private static final CalculateMoves[] calculationFunctions = new CalculateMoves[22];
     static {
         calculationFunctions[Board.whitePawn]   = MoveGenerator::_calculateWhitePawnMoves;
         calculationFunctions[Board.whiteKnight] = MoveGenerator::_calculateKnightMoves;
@@ -122,10 +122,8 @@ public final class MoveGenerator {
 
         // en passant
         final byte enPassantField = game.getEnPassantField();
-        if (enPassantField != 0) {
-            if (enPassantField == field + Board.LENGTH - 1 || enPassantField == field + Board.LENGTH + 1) {
-                addWhiteEnPassantMove(field, enPassantField);
-            }
+        if (enPassantField != 0 && (enPassantField == field + Board.LENGTH - 1 || enPassantField == field + Board.LENGTH + 1)) {
+            addWhiteEnPassantMove(field, enPassantField);
         }
     }
 
@@ -196,10 +194,8 @@ public final class MoveGenerator {
 
         // en passant
         final byte enPassantField = game.getEnPassantField();
-        if (enPassantField != 0) {
-            if (enPassantField == field - Board.LENGTH - 1 || enPassantField == field - Board.LENGTH + 1) {
-                addBlackEnPassantMove(field, enPassantField);
-            }
+        if (enPassantField != 0 && (enPassantField == field - Board.LENGTH - 1 || enPassantField == field - Board.LENGTH + 1)) {
+            addBlackEnPassantMove(field, enPassantField);
         }
     }
 
@@ -441,13 +437,9 @@ public final class MoveGenerator {
             return true;
 
         // check king
-        //noinspection RedundantIfStatement
-        if (board[field + Board.LENGTH - 1] == Board.blackKing
+        return (board[field + Board.LENGTH - 1] == Board.blackKing
                 || board[field + Board.LENGTH] == Board.blackKing
-                || board[field + Board.LENGTH + 1] == Board.blackKing)
-            return true;
-
-        return false;
+                || board[field + Board.LENGTH + 1] == Board.blackKing);
     }
 
     private boolean isBlackCastlingFieldUnderAttack(int field) {
@@ -509,13 +501,9 @@ public final class MoveGenerator {
             return true;
 
         // check king
-        //noinspection RedundantIfStatement
-        if (board[field - Board.LENGTH - 1] == Board.whiteKing
+        return (board[field - Board.LENGTH - 1] == Board.whiteKing
                 || board[field - Board.LENGTH] == Board.whiteKing
-                || board[field - Board.LENGTH + 1] == Board.whiteKing)
-            return true;
-
-        return false;
+                || board[field - Board.LENGTH + 1] == Board.whiteKing);
     }
 
     private void addMove(final int fromField, final int toField, final byte movingPiece, final byte capturedPiece, final byte moveType) {

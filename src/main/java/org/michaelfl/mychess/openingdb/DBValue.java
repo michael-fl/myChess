@@ -14,14 +14,14 @@ import java.util.Arrays;
  *
  * @author Michael Fleischhauer
  */
-final class DBValue {
+public final class DBValue {
 
-    private final static int MOVE_ENTRY_SIZE = 16;
-    private final static int OFFSET_POSITION_COUNT = 0;
-    private final static int OFFSET_MOVES = 4;
-    private final static int OFFSET_MOVE_COUNT_TOTAL = 4;
-    private final static int OFFSET_MOVE_COUNT_WIN = 8;
-    private final static int OFFSET_MOVE_COUNT_LOSS = 12;
+    private static final int MOVE_ENTRY_SIZE = 16;
+    private static final int OFFSET_POSITION_COUNT = 0;
+    private static final int OFFSET_MOVES = 4;
+    private static final int OFFSET_MOVE_COUNT_TOTAL = 4;
+    private static final int OFFSET_MOVE_COUNT_WIN = 8;
+    private static final int OFFSET_MOVE_COUNT_LOSS = 12;
 
     private byte[] buf;
 

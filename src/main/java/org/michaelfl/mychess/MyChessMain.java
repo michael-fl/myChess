@@ -4,7 +4,7 @@ import org.michaelfl.mychess.openingdb.OpeningDB;
 
 public final class MyChessMain {
 
-    public static void main(String[] args) {
+    static void main() {
         try (OpeningDB openingDB = OpeningDB.open()) {
             var env = new MyChessEnv(openingDB);
             var game = new Game();

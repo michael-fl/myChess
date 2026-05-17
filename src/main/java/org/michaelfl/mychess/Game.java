@@ -164,11 +164,11 @@ public final class Game {
         if (moveType == Move.typePawnPromotionBishop || moveType == Move.typePawnPromotionRook) {
             moveToValidate = new Move(Move.create(move.getFromField(), move.getToField(), capturedPiece, Move.typePawnPromotionQueen));
         }
-        if (!validMoves.contains(moveToValidate.getMove())) {
+        if (!validMoves.contains(moveToValidate.move())) {
             throw new IllegalMoveException(moveDescr);
         }
 
-        makeMove(move.getMove());
+        makeMove(move.move());
 
         try {
             calculateAndSetGameResult();
@@ -177,14 +177,14 @@ public final class Game {
         } catch (IllegalMoveException e) { // move was illegal
             revertMove();
             throw e;
-        } catch (IllegalChessPositionException e) { // move was illegal
+        } catch (IllegalChessPositionException _) { // move was illegal
             revertMove();
             throw new IllegalMoveException(moveDescr);
         }
     }
 
     void makeMove(Move move) {
-        makeMove(move.getMove());
+        makeMove(move.move());
         calculateAndSetGameResult();
     }
 

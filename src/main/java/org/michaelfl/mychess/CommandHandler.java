@@ -6,8 +6,6 @@ import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.openingdb.OpeningDB.MoveInfo;
 import org.michaelfl.mychess.openingdb.OpeningDB.PositionInfo;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -15,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@SuppressWarnings("CallToPrintStackTrace")
 final class CommandHandler {
 
     @SuppressWarnings("InnerClassMayBeStatic")
@@ -133,14 +132,14 @@ final class CommandHandler {
             if (s.length() >= 2) {
                 try {
                     return MoveDescription.fromString(s, game.getTurn());
-                } catch (Exception e) {
+                } catch (Exception _) {
                     // fall through
                 }
                 if ("nbrqk".indexOf(s.charAt(0)) >= 0) {
                     s = Character.toUpperCase(s.charAt(0)) + s.substring(1);
                     try {
                         return MoveDescription.fromString(s, game.getTurn());
-                    } catch (Exception e) {
+                    } catch (Exception _) {
                         // fall through
                     }
                 }
@@ -160,7 +159,7 @@ final class CommandHandler {
                 if (computerColor != null && computerColor == game.getTurn() && game.getResult() == GameResult.ONGOING) {
                     makeComputerMove();
                 }
-            } catch (IllegalStateException e) {
+            } catch (IllegalStateException _) {
                 System.out.println("Illegal move");
             }
         }
@@ -216,8 +215,6 @@ final class CommandHandler {
         @Override
         void handle(String commandLine) {
             try {
-                //String notation = "[[b1-c3 c7-c5 e2-e4 b8-c6 f1-c4 e7-e6 d2-d3 g8-f6 c1-g5 f8-e7 g1-f3 e8-g8 d1-d2 a7-a6 e1-g1 b7-b5 c4-b3 h7-h6 g5-f6 e7-f6 d2-f4 e6-e5 f4-e3 c6-d4 b3-d5 a8-b8 a1-b1 c8-b7 d5-b7 b8-b7 b2-b4 c5-b4 c3-d5 d4-c2 e3-d2 c2-d4 d2-b4 d4-e2 g1-h1 e2-f4 b4-d6 f4-d5 f3-e5 f6-e5 d6-d5 f8-e8 f2-f4 e5-c7]]";
-                //String notation = "[[b1-c3 e7-e6 e2-e3 b8-c6 f1-b5 d8-g5 b5-c6 d7-c6 d1-f3 g5-f5 e3-e4 f5-e5]]";
                 String notation = "[[g1-f3 g8-f6 e2-e3 d7-d6 b1-c3 c8-g4 h2-h3 g4-d7 f1-c4 e7-e6 e1-g1 d6-d5 c4-d3 f8-d6 b2-b3 b8-c6 c3-b5 c6-b4 b5-d6 c7-d6 c1-a3 b4-d3 c2-d3 d8-c7 a1-c1 c7-b6 a3-b2 e6-e5]]";
                 computerColor = null;
                 SimpleNotationImporter importer = new SimpleNotationImporter(notation);
@@ -424,14 +421,11 @@ final class CommandHandler {
 
         @Override
         void handle(String commandLine) {
-            //String variantsStr = commandLine.substring(PREFIX.length()).trim();
-            //int variants = Integer.parseInt(variantsStr);
-            //game.setConfig(game.getConfig().setNVariants(variants));
             System.out.println("not implemented");
         }
     }
 
-    private final class SetDepthCommand extends Command {
+    private final class SetDepthCommand extends CommandHandler.Command {
 
         private static final String PREFIX = "config depth ";
 
@@ -442,9 +436,6 @@ final class CommandHandler {
 
         @Override
         void handle(String commandLine) {
-            //String variantsStr = commandLine.substring(PREFIX.length()).trim();
-            //int depth = Integer.parseInt(variantsStr);
-            //game.setConfig(game.getConfig().setMaxDepth(depth));
             System.out.println("not implemented");
         }
     }
@@ -460,9 +451,6 @@ final class CommandHandler {
 
         @Override
         void handle(String commandLine) {
-            //String variantsStr = commandLine.substring(PREFIX.length()).trim();
-            //int depth = Integer.parseInt(variantsStr);
-            //game.setConfig(game.getConfig().setIterationDepth(depth));
             System.out.println("not implemented");
         }
     }
@@ -521,7 +509,7 @@ final class CommandHandler {
         @Override
         void handle(String commandLine) {
             var key = game.getBoard().calculatePositionKey();
-            var positionInfo = env.getOpeningDB().lookupPosition(key);
+            var positionInfo = env.openingDB() != null ? env.openingDB().lookupPosition(key) : null;
 
             if (positionInfo == null) {
                 System.out.println("No position found in opening DB.");
@@ -567,7 +555,7 @@ final class CommandHandler {
         void handle(String commandLine) throws ExecutionException, InterruptedException, TimeoutException {
             var index = Integer.parseInt(commandLine.substring(1));
             var key = game.getBoard().calculatePositionKey();
-            var positionInfo = env.getOpeningDB().lookupPosition(key);
+            var positionInfo = env.openingDB() != null ? env.openingDB().lookupPosition(key) : null;
 
             if (index < 1) {
                 System.out.println("Move number must be > 0.");
@@ -579,7 +567,7 @@ final class CommandHandler {
                 var moveInfo = positionInfo.moves
                         .stream()
                         .sorted(Comparator.comparingInt(MoveInfo::getTotalCount).reversed())
-                        .skip(index - 1)
+                        .skip(index - 1L)
                         .findFirst()
                         .orElseThrow();
 
@@ -590,7 +578,7 @@ final class CommandHandler {
                     if (computerColor != null && computerColor == game.getTurn() && game.getResult() == GameResult.ONGOING) {
                         makeComputerMove();
                     }
-                } catch (IllegalStateException e) {
+                } catch (IllegalStateException _) {
                     System.out.println("Illegal move");
                 }
             }
@@ -598,22 +586,22 @@ final class CommandHandler {
     }
 
     private final List<Command> commands = List.of(
-            new QuitCommand(),
-            new AutoGameCommand(),
-            new NewGameCommand(),
-            new MoveCommand(),
-            new ImportCommand(),
-            new PrintCommand(),
-            new BoardCommand(),
-            new ExportCommand(),
-            new PgnCommand(),
-            new RevertCommand(),
-            new TipCommand(),
-            new LastCommand(),
-            new GoCommand(),
-            new WeightCommand(),
-            new DeepWeightCommand(),
-            new LoadCommand(),
+            new CommandHandler.QuitCommand(),
+            new CommandHandler.AutoGameCommand(),
+            new CommandHandler.NewGameCommand(),
+            new CommandHandler.MoveCommand(),
+            new CommandHandler.ImportCommand(),
+            new CommandHandler.PrintCommand(),
+            new CommandHandler.BoardCommand(),
+            new CommandHandler.ExportCommand(),
+            new CommandHandler.PgnCommand(),
+            new CommandHandler.RevertCommand(),
+            new CommandHandler.TipCommand(),
+            new CommandHandler.LastCommand(),
+            new CommandHandler.GoCommand(),
+            new CommandHandler.WeightCommand(),
+            new CommandHandler.DeepWeightCommand(),
+            new CommandHandler.LoadCommand(),
             new SetVariantsCommand(),
             new SetDepthCommand(),
             new SetIterationDepthCommand(),
@@ -624,7 +612,6 @@ final class CommandHandler {
             new OpeningMoveCommand()
     );
 
-    private final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     private final MyChessEnv env;
     private Game game;
     private final WeightingFunction weightingFunction = new WeightingFunction();
@@ -638,7 +625,7 @@ final class CommandHandler {
     boolean nextCommand() {
         try {
             do {
-                String line = in.readLine().trim();
+                String line = IO.readln().trim();
                 if (!line.isEmpty()) {
                     for (Command command : commands) {
                         if (command.canHandle(line)) {

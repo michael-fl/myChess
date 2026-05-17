@@ -7,18 +7,18 @@ import static org.michaelfl.mychess.ChessUtil.setBit;
 /**
  * Encoding of a chess position, similar to a FEN, but much more compact.
  * It includes en passant file and castling rights.
- *
+ * <p>
  * Idea/algorithm taken from https://codegolf.stackexchange.com/questions/19397/smallest-chess-board-compression
- *
+ * <p>
  * Space: max. 192 bits (3 longs), depending on the number of pieces left on the board.
- *
+ * <p>
  * Layout:
- *
+ * <p>
  * 64 bits board layout       pieces, 4 bits per piece
  * 0=empty, 1=piece           a1, ... a8, b1 ... h8
  * 0 ...                63 64                     191
  * |                      |0000|0000| ... |0000|0000|
- *
+ * <p>
  * Piece types:
  *     | 0  | White Pawn (normal)
  *     | 1  | White Rook (has moved)
@@ -38,27 +38,26 @@ import static org.michaelfl.mychess.ChessUtil.setBit;
  *
  * @author Michael Fleischhauer
  */
+@SuppressWarnings("unused")
 final class PositionEncoding {
 
-    static final int SIZE_IN_LONGS = 3; // 192 / 64
+    private static final byte WHITE_KING_BLACKS_TURN = 6;
+    private static final byte WHITE_PAWN_EN_PASSANT = 7;
+    private static final byte BLACK_PAWN_EN_PASSANT = 14;
+    private static final byte WHITE_PAWN = 0;
+    private static final byte WHITE_ROOK = 1;
+    private static final byte WHITE_KING = 5;
+    private static final byte BLACK_PAWN = 8;
+    private static final byte BLACK_ROOK = 9;
+    private static final byte BLACK_KING = 13;
 
-    private final static byte WHITE_KING_BLACKS_TURN = 6;
-    private final static byte WHITE_PAWN_EN_PASSANT = 7;
-    private final static byte BLACK_PAWN_EN_PASSANT = 14;
-    private final static byte WHITE_PAWN = 0;
-    private final static byte WHITE_ROOK = 1;
-    private final static byte WHITE_KING = 5;
-    private final static byte BLACK_PAWN = 8;
-    private final static byte BLACK_ROOK = 9;
-    private final static byte BLACK_KING = 13;
+    private static final byte WHITE_KING_BLACKS_TURN_INDEX = 1;
+    private static final byte WHITE_PAWN_EN_PASSANT_INDEX = 2;
+    private static final byte BLACK_PAWN_EN_PASSANT_INDEX = 3;
+    private static final byte WHITE_ROOK_PRE_CASTLE_INDEX = WHITE_PAWN_EN_PASSANT_INDEX; // Use same piece code. When decoding, row will be used to distinguish between pawn and rook.
+    private static final byte BLACK_ROOK_PRE_CASTLE_INDEX = BLACK_PAWN_EN_PASSANT_INDEX;
 
-    private final static byte WHITE_KING_BLACKS_TURN_INDEX = 1;
-    private final static byte WHITE_PAWN_EN_PASSANT_INDEX = 2;
-    private final static byte BLACK_PAWN_EN_PASSANT_INDEX = 3;
-    private final static byte WHITE_ROOK_PRE_CASTLE_INDEX = WHITE_PAWN_EN_PASSANT_INDEX; // Use same piece code. When decoding, row will be used to distinguish between pawn and rook.
-    private final static byte BLACK_ROOK_PRE_CASTLE_INDEX = BLACK_PAWN_EN_PASSANT_INDEX;
-
-    private final static boolean[][] PIECE_BITMAP = new boolean[22][4];
+    private static final boolean[][] PIECE_BITMAP = new boolean[22][4];
     static {
         PIECE_BITMAP[WHITE_KING_BLACKS_TURN_INDEX] = new boolean[] {false, true, true, false}; // 0b0110 (6)
         PIECE_BITMAP[WHITE_PAWN_EN_PASSANT_INDEX] = new boolean[] {false, true, true, true}; // 0b0111 (7)
@@ -77,7 +76,7 @@ final class PositionEncoding {
         PIECE_BITMAP[Board.blackKing]   = new boolean[] {true, true, false, true};    // 0b1101 (13)
     }
 
-    private final static byte[] pieceMap = new byte[] {
+    private static final byte[] pieceMap = new byte[] {
             Board.whitePawn, // 0
             Board.whiteRook, // 1
             Board.whiteKnight, // 2
@@ -93,6 +92,10 @@ final class PositionEncoding {
             Board.blackQueen, // 12
             Board.blackKing // 13
     };
+
+    private PositionEncoding() {
+        throw new IllegalStateException("Utility class");
+    }
 
     static long[] encode(Board board) {
         final var b = board.getRawBoard();
@@ -223,7 +226,7 @@ final class PositionEncoding {
         return new Board(rawBoard, gameStatus);
     }
 
-    static private byte decodePiece(BitSet bitSet, int pieceBitIndex) {
+    private static byte decodePiece(BitSet bitSet, int pieceBitIndex) {
         byte piece = 0;
         if (bitSet.get(pieceBitIndex)) {
             piece += 8;

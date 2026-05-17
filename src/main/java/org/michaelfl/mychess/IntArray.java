@@ -5,8 +5,8 @@ import java.util.Arrays;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class IntArray {
 
-    public final static int INITIAL_CAPACITY = 30;
-    private final static int CAPACITY_INCREMENT = 10;
+    public static final int INITIAL_CAPACITY = 30;
+    private static final int CAPACITY_INCREMENT = 10;
 
     int[] array;
     int size;
