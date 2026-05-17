@@ -27,7 +27,15 @@ class EngineTest {
     // Lost position for black. Black must sacrifice a rook against night: Rxd5 (otherwise mate in 2)
     @Test
     void testPosition1() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f7-e6 h3-e6 g8-h8 c3-d5 d8-e8 h5-h3 a8-a7 g1-g3 g7-g6 g3-c3 e5-d7 c3-c6 f6-e5 e6-g4 d7-c5 c6-c8 e8-f7 d1-f1 f8-c8 f1-f7 a7-f7 g4-c8 c5-e4 c2-c3 e4-d2 b1-c2 f7-f2 h3-h4 d2-e4 c2-c1 e4-c5 d5-b4 e5-f4 c1-d1 f2-d2 d1-e1 g6-g5 h4-h6 h8-g8 c8-e6 c5-e6 h6-e6 g8-g7 b4-d5]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6 17. fxe6 O-O 18. Rg1 Bf6 19. Bh3 fxe6 20. Bxe6+ Kh8 21. Nd5 Qe8 22. Qh3 Ra7 23.
+                Rg3 g6 24. Rc3 Nd7 25. Rc6 Be5 26. Bg4 Nc5 27. Rc8 Qf7 28. Rf1 Rxc8 29. Rxf7 Rxf7 30. Bxc8
+                Nxe4 31. c3 Nd2+ 32. Kc2 Rf2 33. Qh4 Ne4+ 34. Kc1 Nc5 35. Nb4 Bf4+ 36. Kd1 Rd2+ 37. Ke1 g5
+                38. Qh6 Kg8 39. Be6+ Nxe6 40. Qxe6+ Kg7 41. Nd5
+                """;
+        testPosition(pgn,
                 Set.of("d2-d5"),
                 "d2-d5 e6-d5 g7-f6 d5-f3 h7-h6 f3-h3 f6-g7".split(" "), // + "h3-d7"
                 4.5f,
@@ -39,7 +47,13 @@ class EngineTest {
     // Only way: Black must play Rxc8 and white will win a rook in the end
     @Test
     void testPosition2() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f7-e6 h3-e6 g8-h8 c3-d5 d8-e8 h5-h3 a8-a7 g1-g3 g7-g6 g3-c3 e5-d7 c3-c6 f6-e5 e6-g4 d7-c5 c6-c8 e8-f7 d1-f1]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6 17. fxe6 O-O 18. Rg1 Bf6 19. Bh3 fxe6 20. Bxe6+ Kh8 21. Nd5 Qe8 22. Qh3 Ra7 23.
+                Rg3 g6 24. Rc3 Nd7 25. Rc6 Be5 26. Bg4 Nc5 27. Rc8 Qf7 28. Rf1
+                """;
+        testPosition(pgn,
                 "f7-f1", // TODO
                 3.2f,
                 4.2f,
@@ -50,7 +64,12 @@ class EngineTest {
     // White wins (back) a pawn and gives chess: Bxe6+
     @Test
     void testPosition3() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f7-e6]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6 17. fxe6 O-O 18. Rg1 Bf6 19. Bh3 fxe6
+                """;
+        testPosition(pgn,
                 "h3-e6",
                 0.2f,
                 0.4f,
@@ -61,7 +80,12 @@ class EngineTest {
     // Bad position for black (last move was a mistake). Expected move: exf7+, Weight: 7.34
     @Test
     void testPosition4() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f8-e8]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6 17. fxe6 O-O 18. Rg1 Bf6 19. Bh3 Re8
+                """;
+        testPosition(pgn,
                 "c3-d5", // TODO
                 0.4f,
                 1.0f,
@@ -72,7 +96,13 @@ class EngineTest {
     // Lost position for black. Expected move: Nxf6+, Weight: > 20, mate in 12
     @Test
     void testPosition5() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f8-e8 e6-f7 e5-f7 h3-f5 h7-h6 c3-d5 a6-a5 h5-g6 a5-a4]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6 17. fxe6 O-O 18. Rg1 Bf6 19. Bh3 Re8 20. exf7+ Nxf7 21. Bf5 h6 22. Nd5 a5 23.
+                Qg6 a4
+                """;
+        testPosition(pgn,
                 "d5-f6",
                 10.0f,
                 11.0f,
@@ -83,7 +113,13 @@ class EngineTest {
     // Mate in 2 (3 plies). Expected move: g6-g7
     @Test
     void testPosition6() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f8-e8 e6-f7 e5-f7 h3-f5 h7-h6 c3-d5 a6-a5 h5-g6 a5-a4 d5-f6 g8-f8]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6 17. fxe6 O-O 18. Rg1 Bf6 19. Bh3 Re8 20. exf7+ Nxf7 21. Bf5 h6 22. Nd5 a5 23.
+                Qg6 a4 24. Nxf6+ Kf8
+                """;
+        testPosition(pgn,
                 Set.of("g6-g7"),
                 "g6-g7 f8-e7 f6-d5".split(" "),
                 checkmateIn(3),
@@ -95,7 +131,13 @@ class EngineTest {
     // Black mate in 6 (12 plies). Expected move: Rxg5
     @Test
     void testPosition7() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f8-e8 e6-f7 e5-f7 h3-f5 h7-h6 c3-d5 a6-a5 h5-g6 a5-a4 d5-f6 d8-f6 g6-f6 f7-g5 f6-g6 d6-d5 d1-d5 e8-e7]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6 17. fxe6 O-O 18. Rg1 Bf6 19. Bh3 Re8 20. exf7+ Nxf7 21. Bf5 h6 22. Nd5 a5 23.
+                Qg6 a4 24. Nxf6+ Qxf6 25. Qxf6 Ng5 26. Qg6 d5 27. Rxd5 Re7
+                """;
+        testPosition(pgn,
                 Set.of("g1-g5"),
                 "g1-g5 h6-g5 f5-e6 e7-e6 g6-e6 g8-h7 d5-g5".split(" "), // + "a8-e8"
                 11.0f, // TODO M12
@@ -107,7 +149,13 @@ class EngineTest {
     // Black mate in 4 (8 plies). Expected move: Rxe6
     @Test
     void testPosition8() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f8-e8 e6-f7 e5-f7 h3-f5 h7-h6 c3-d5 a6-a5 h5-g6 a5-a4 d5-f6 d8-f6 g6-f6 f7-g5 f6-g6 d6-d5 d1-d5 e8-e7 g1-g5 h6-g5 f5-e6]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6 17. fxe6 O-O 18. Rg1 Bf6 19. Bh3 Re8 20. exf7+ Nxf7 21. Bf5 h6 22. Nd5 a5 23.
+                Qg6 a4 24. Nxf6+ Qxf6 25. Qxf6 Ng5 26. Qg6 d5 27. Rxd5 Re7 28. Rxg5 hxg5 29. Be6+
+                """;
+        testPosition(pgn,
                 "e7-e6",
                 12.0f,
                 13.0f,  // TODO: M8
@@ -118,7 +166,14 @@ class EngineTest {
     // Black mate in 3 (6 plies). Expected moves: Kh8 13.Rxg5 g6 14.Qxg6 Rd8 15.Rh5#
     @Test
     void testPosition9() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f8-e8 e6-f7 e5-f7 h3-f5 h7-h6 c3-d5 a6-a5 h5-g6 a5-a4 d5-f6 d8-f6 g6-f6 f7-g5 f6-g6 d6-d5 d1-d5 e8-e7 g1-g5 h6-g5 f5-e6 e7-e6 g6-e6]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6 17. fxe6 O-O 18. Rg1 Bf6 19. Bh3 Re8 20. exf7+ Nxf7 21. Bf5 h6 22. Nd5 a5 23.
+                Qg6 a4 24. Nxf6+ Qxf6 25. Qxf6 Ng5 26. Qg6 d5 27. Rxd5 Re7 28. Rxg5 hxg5 29. Be6+ Rxe6 30.
+                Qxe6+
+                """;
+        testPosition(pgn,
                 Set.of("g8-h8"),
                 "Kh8 Rxg5 g6 Qxg6 Rb8 Qg7#".split(" "),
                 checkmateIn(6),
@@ -130,7 +185,14 @@ class EngineTest {
     // Black mate in 1 (2 plies). Only possible move: Rf7
     @Test
     void testPosition10() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f8-e8 e6-f7 e5-f7 h3-f5 h7-h6 c3-d5 a6-a5 h5-g6 a5-a4 d5-f6 d8-f6 g6-f6 f7-g5 f6-g6 d6-d5 d1-d5 e8-e7 g1-g5 h6-g5 f5-e6 g8-f8 d5-f5]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6 17. fxe6 O-O 18. Rg1 Bf6 19. Bh3 Re8 20. exf7+ Nxf7 21. Bf5 h6 22. Nd5 a5 23.
+                Qg6 a4 24. Nxf6+ Qxf6 25. Qxf6 Ng5 26. Qg6 d5 27. Rxd5 Re7 28. Rxg5 hxg5 29. Be6+ Kf8 30.
+                Rf5+
+                """;
+        testPosition(pgn,
                 Set.of("e7-f7"),
                 "e7-f7 g6-f7".split(" "),
                 checkmateIn(2),
@@ -142,7 +204,10 @@ class EngineTest {
     // Expected move Bxf7+. Expected weight: 1.7
     @Test
     void testPosition11() {
-        testPosition("[[e2-e4 e7-e5 g1-f3 b8-c6 f1-b5 a7-a6 b5-a4 b7-b5 a4-b3 g8-f6 e1-g1 a6-a5 d2-d4 a5-a4]]",
+        var pgn = """
+                1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 b5 5. Bb3 Nf6 6. O-O a5 7. d4 a4
+                """;
+        testPosition(pgn,
                 "b3-f7",
                 0.7f,
                 2.0f,
@@ -153,7 +218,11 @@ class EngineTest {
     // Great position for white. Weight: 6.12, expected move e6.
     @Test
     void testPosition12() {
-        testPosition("[[e2-e4 e7-e5 g1-f3 b8-c6 f1-b5 a7-a6 b5-a4 b7-b5 a4-b3 g8-f6 e1-g1 a6-a5 d2-d4 a5-a4 b3-f7 e8-f7 d4-e5 f6-g8 f3-g5 f7-e8 b1-c3 b5-b4 d1-d5 g8-h6 c3-b5 a4-a3 f1-d1 c8-b7]]",
+        var pgn = """
+                1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 b5 5. Bb3 Nf6 6. O-O a5 7. d4 a4 8. Bxf7+ Kxf7 9.
+                dxe5 Ng8 10. Ng5+ Ke8 11. Nc3 b4 12. Qd5 Nh6 13. Nb5 a3 14. Rd1 Bb7
+                """;
+        testPosition(pgn,
                 Set.of("g5-e6"), // TODO: should be e5-e6
                 "g5-e6 d7-e6 d5-e6 f8-e7 d1-d8 c6-d8 e6-c4".split(" "), // + "h6-g4"
                 2.0f,
@@ -166,7 +235,15 @@ class EngineTest {
     // FEN: 8/1R4pp/3r1pk1/p4N2/5R2/8/7r/6K1 w - - 0 43
     @Test
     void testPosition13() {
-        testPosition("[[e2-e4 e7-e6 g1-f3 d7-d5 e4-d5 e6-d5 f1-b5 c8-d7 b5-d7 d8-d7 e1-g1 f8-d6 f1-e1 g8-e7 d1-e2 e8-g8 b1-c3 c7-c5 d2-d4 c5-d4 f3-d4 b8-c6 d4-f3 e7-f5 c1-d2 f5-d4 e2-d1 d6-c5 f3-d4 c5-d4 d1-f3 c6-b4 f3-d1 d7-f5 e1-e2 f5-c2 d1-c2 b4-c2 a1-c1 c2-b4 c3-b5 d4-b2 c1-b1 b4-d3 e2-e3 d3-f2 g1-f2 b2-f6 e3-d3 f8-c8 d3-d5 c8-c2 a2-a4 c2-a2 f2-f1 a2-a4 b5-c7 a8-b8 d5-d7 a4-a2 c7-d5 f6-d4 d5-e7 g8-f8 d2-b4 a2-f2 f1-e1 b8-e8 d7-d4 f2-g2 e1-f1 g2-h2 d4-e4 f7-f6 f1-g1 a7-a5 b4-d6 e8-d8 e7-f5 f8-f7 b1-b7 f7-g6 e4-f4 d8-d6]]",
+        var pgn = """
+                1. e4 e6 2. Nf3 d5 3. exd5 exd5 4. Bb5+ Bd7 5. Bxd7+ Qxd7 6. O-O Bd6 7. Re1+ Ne7 8. Qe2
+                O-O 9. Nc3 c5 10. d4 cxd4 11. Nxd4 Nbc6 12. Nf3 Nf5 13. Bd2 Nfd4 14. Qd1 Bc5 15. Nxd4 Bxd4
+                16. Qf3 Nb4 17. Qd1 Qf5 18. Re2 Qxc2 19. Qxc2 Nxc2 20. Rc1 Nb4 21. Nb5 Bxb2 22. Rb1 Nd3
+                23. Re3 Nxf2 24. Kxf2 Bf6 25. Rd3 Rfc8 26. Rxd5 Rc2 27. a4 Ra2 28. Kf1 Rxa4 29. Nc7 Rb8
+                30. Rd7 Ra2 31. Nd5 Bd4 32. Ne7+ Kf8 33. Bb4 Rf2+ 34. Ke1 Re8 35. Rxd4 Rxg2 36. Kf1 Rxh2
+                37. Re4 f6 38. Kg1 a5 39. Bd6 Rd8 40. Nf5+ Kf7 41. Rxb7+ Kg6 42. Rf4 Rxd6
+                """;
+        testPosition(pgn,
                 "b7-g7",
                 6.0f, // OPT: Should be M13
                 7.0f,
@@ -178,7 +255,16 @@ class EngineTest {
     // FEN: 8/6Rp/5p2/p4N1k/5R2/7K/3r4/8 b - - 0 45
     @Test
     void testPosition14() {
-        testPosition("[[e2-e4 e7-e6 g1-f3 d7-d5 e4-d5 e6-d5 f1-b5 c8-d7 b5-d7 d8-d7 e1-g1 f8-d6 f1-e1 g8-e7 d1-e2 e8-g8 b1-c3 c7-c5 d2-d4 c5-d4 f3-d4 b8-c6 d4-f3 e7-f5 c1-d2 f5-d4 e2-d1 d6-c5 f3-d4 c5-d4 d1-f3 c6-b4 f3-d1 d7-f5 e1-e2 f5-c2 d1-c2 b4-c2 a1-c1 c2-b4 c3-b5 d4-b2 c1-b1 b4-d3 e2-e3 d3-f2 g1-f2 b2-f6 e3-d3 f8-c8 d3-d5 c8-c2 a2-a4 c2-a2 f2-f1 a2-a4 b5-c7 a8-b8 d5-d7 a4-a2 c7-d5 f6-d4 d5-e7 g8-f8 d2-b4 a2-f2 f1-e1 b8-e8 d7-d4 f2-g2 e1-f1 g2-h2 d4-e4 f7-f6 f1-g1 a7-a5 b4-d6 e8-d8 e7-f5 f8-f7 b1-b7 f7-g6 e4-f4 d8-d6 b7-g7 g6-h5 g1-h2 d6-d2 h2-h3]]",
+        var pgn = """
+                1. e4 e6 2. Nf3 d5 3. exd5 exd5 4. Bb5+ Bd7 5. Bxd7+ Qxd7 6. O-O Bd6 7. Re1+ Ne7 8. Qe2
+                O-O 9. Nc3 c5 10. d4 cxd4 11. Nxd4 Nbc6 12. Nf3 Nf5 13. Bd2 Nfd4 14. Qd1 Bc5 15. Nxd4 Bxd4
+                16. Qf3 Nb4 17. Qd1 Qf5 18. Re2 Qxc2 19. Qxc2 Nxc2 20. Rc1 Nb4 21. Nb5 Bxb2 22. Rb1 Nd3
+                23. Re3 Nxf2 24. Kxf2 Bf6 25. Rd3 Rfc8 26. Rxd5 Rc2 27. a4 Ra2 28. Kf1 Rxa4 29. Nc7 Rb8
+                30. Rd7 Ra2 31. Nd5 Bd4 32. Ne7+ Kf8 33. Bb4 Rf2+ 34. Ke1 Re8 35. Rxd4 Rxg2 36. Kf1 Rxh2
+                37. Re4 f6 38. Kg1 a5 39. Bd6 Rd8 40. Nf5+ Kf7 41. Rxb7+ Kg6 42. Rf4 Rxd6 43. Rxg7+ Kh5
+                44. Kxh2 Rd2+ 45. Kh3
+                """;
+        testPosition(pgn,
                 Set.of("d2-d3"),
                 "d2-d3 f5-g3 h5-h6 g7-g8 d3-g3 g8-g3 f6-f5".split(" "), // + "f4-f5"
                 8.0f, // TODO: Should be M8
@@ -187,12 +273,20 @@ class EngineTest {
         );
     }
 
-    // Black mate in 8 (15 plies). Expected moves:  47.Be6+ Rd7 48.Rxd7 Bg3 49.hxg3 h5 50.Rg7+ Kb8 51.c7+ Kb7 52.c8=Q+ Kb6 53.Rb7+ Ka5 54.Qa8#
-    // [[b1-c3 d7-d6 e2-e4 e7-e5 g1-f3 g8-f6 d2-d4 d8-e7 c1-g5 b8-d7 f1-d3 d7-b6 g5-f6 e7-f6 c3-b5 f6-e7 d4-e5 d6-e5 e1-g1 a7-a6 b5-c3 e7-f6 c3-d5 b6-d5 e4-d5 c8-g4 d1-e2 g4-f3 g2-f3 e8-c8 e2-e4 c8-b8 a1-e1 f6-h6 g1-h1 f8-d6 f1-g1 h6-f6 e4-f5 f6-f5 d3-f5 g7-g6 f5-g4 h8-e8 e1-e2 d6-c5 c2-c4 c5-d4 g1-d1 d4-c5 d1-e1 f7-f5 g4-h3 c5-b4 e1-d1 e8-e7 a2-a3 b4-d6 b2-b4 e7-e8 c4-c5 d6-f8 e2-c2 f8-g7 h3-f1 e5-e4 f3-e4 f5-e4 b4-b5 a6-a5 f1-c4 g7-f6 d5-d6 c7-d6 d1-d6 f6-e5 d6-d5 e5-d4 c5-c6 b7-c6 b5-c6 b8-c7 d5-a5 e8-f8 a5-b5 f8-f2 c2-f2 d4-f2 c4-d5 e4-e3 b5-b7 c7-c8]]
+    // Black mate in 8 (15 plies). Expected moves: 47.Be6+ Rd7 48.Rxd7 Bg3 49.hxg3 h5 50.Rg7+ Kb8 51.c7+ Kb7 52.c8=Q+ Kb6 53.Rb7+ Ka5 54.Qa8#
     // FEN: 2kr4/1R5p/2P3p1/3B4/8/P3p3/5b1P/7K w - - 0 47
     @Test
     void testPosition15() {
-        testPosition("[[b1-c3 d7-d6 e2-e4 e7-e5 g1-f3 g8-f6 d2-d4 d8-e7 c1-g5 b8-d7 f1-d3 d7-b6 g5-f6 e7-f6 c3-b5 f6-e7 d4-e5 d6-e5 e1-g1 a7-a6 b5-c3 e7-f6 c3-d5 b6-d5 e4-d5 c8-g4 d1-e2 g4-f3 g2-f3 e8-c8 e2-e4 c8-b8 a1-e1 f6-h6 g1-h1 f8-d6 f1-g1 h6-f6 e4-f5 f6-f5 d3-f5 g7-g6 f5-g4 h8-e8 e1-e2 d6-c5 c2-c4 c5-d4 g1-d1 d4-c5 d1-e1 f7-f5 g4-h3 c5-b4 e1-d1 e8-e7 a2-a3 b4-d6 b2-b4 e7-e8 c4-c5 d6-f8 e2-c2 f8-g7 h3-f1 e5-e4 f3-e4 f5-e4 b4-b5 a6-a5 f1-c4 g7-f6 d5-d6 c7-d6 d1-d6 f6-e5 d6-d5 e5-d4 c5-c6 b7-c6 b5-c6 b8-c7 d5-a5 e8-f8 a5-b5 f8-f2 c2-f2 d4-f2 c4-d5 e4-e3 b5-b7 c7-c8]]",
+        var pgn = """
+                1. Nc3 d6 2. e4 e5 3. Nf3 Nf6 4. d4 Qe7 5. Bg5 Nbd7 6. Bd3 Nb6 7. Bxf6 Qxf6 8. Nb5 Qe7 9.
+                dxe5 dxe5 10. O-O a6 11. Nc3 Qf6 12. Nd5 Nxd5 13. exd5 Bg4 14. Qe2 Bxf3 15. gxf3 O-O-O 16.
+                Qe4 Kb8 17. Rae1 Qh6 18. Kh1 Bd6 19. Rg1 Qf6 20. Qf5 Qxf5 21. Bxf5 g6 22. Bg4 Rhe8 23. Re2
+                Bc5 24. c4 Bd4 25. Rd1 Bc5 26. Rde1 f5 27. Bh3 Bb4 28. Rd1 Re7 29. a3 Bd6 30. b4 Ree8 31.
+                c5 Bf8 32. Rc2 Bg7 33. Bf1 e4 34. fxe4 fxe4 35. b5 a5 36. Bc4 Bf6 37. d6 cxd6 38. Rxd6 Be5
+                39. Rd5 Bd4 40. c6 bxc6 41. bxc6 Kc7 42. Rxa5 Rf8 43. Rb5 Rxf2 44. Rxf2 Bxf2 45. Bd5 e3
+                46. Rb7+ Kc8
+                """;
+        testPosition(pgn,
                 "d5-e6",
                 6.0f, // OPT: Should be M15
                 8.0f,
@@ -205,7 +299,12 @@ class EngineTest {
     // FEN: 1rbr2k1/4bppp/p4n2/1pp1B3/8/2N2B2/PPP2PPP/R3R1K1 b - - 0 17
     @Test
     void testPosition16() {
-        testPosition("[[b1-c3 e7-e5 g1-f3 b8-c6 d2-d4 e5-d4 f3-d4 c6-d4 d1-d4 g8-f6 e2-e4 d7-d6 c1-g5 f8-e7 f1-c4 e8-g8 e1-g1 f8-e8 f1-e1 c7-c6 g5-f4 b7-b5 c4-e2 a7-a6 e2-f3 c6-c5 d4-d3 a8-b8 e4-e5 d6-e5 d3-d8 e8-d8 f4-e5]]",
+        var pgn = """
+                1. Nc3 e5 2. Nf3 Nc6 3. d4 exd4 4. Nxd4 Nxd4 5. Qxd4 Nf6 6. e4 d6 7. Bg5 Be7 8. Bc4 O-O 9.
+                O-O Re8 10. Rfe1 c6 11. Bf4 b5 12. Be2 a6 13. Bf3 c5 14. Qd3 Rb8 15. e5 dxe5 16. Qxd8 Rxd8
+                17. Bxe5
+                """;
+        testPosition(pgn,
                 "e7-d6", // TODO: Should be "c8-e6", e7-d6 has weight > 5.0 (add a test for that one as well)
                 1.7f,
                 3.0f,
@@ -220,7 +319,12 @@ class EngineTest {
     // FEN: 2br2k1/4bppp/p4n2/4B3/Nr6/1P3B2/2P2PPP/3RR1K1 w - - 0 24
     @Test
     void testPosition17() {
-        testPosition("[[b1-c3 e7-e5 g1-f3 b8-c6 d2-d4 e5-d4 f3-d4 c6-d4 d1-d4 g8-f6 e2-e4 d7-d6 c1-g5 f8-e7 f1-c4 e8-g8 e1-g1 f8-e8 f1-e1 c7-c6 g5-f4 b7-b5 c4-e2 a7-a6 e2-f3 c6-c5 d4-d3 a8-b8 e4-e5 d6-e5 d3-d8 e8-d8 f4-e5 e7-d6 a1-d1 b8-b6 a2-a4 b5-a4 c3-a4 b6-b4 a4-c5 b4-b6 c5-a4 b6-b4 b2-b3 d6-e7]]",
+        var pgn = """
+                1. Nc3 e5 2. Nf3 Nc6 3. d4 exd4 4. Nxd4 Nxd4 5. Qxd4 Nf6 6. e4 d6 7. Bg5 Be7 8. Bc4 O-O 9.
+                O-O Re8 10. Rfe1 c6 11. Bf4 b5 12. Be2 a6 13. Bf3 c5 14. Qd3 Rb8 15. e5 dxe5 16. Qxd8 Rxd8
+                17. Bxe5 Bd6 18. Rad1 Rb6 19. a4 bxa4 20. Nxa4 Rb4 21. Nxc5 Rb6 22. Na4 Rb4 23. b3 Be7
+                """;
+        testPosition(pgn,
                 Set.of("d1-d8", "e5-f6"),
                 4.0f, // OPT: Should be > 7
                 5.0f,
@@ -232,7 +336,13 @@ class EngineTest {
     // FEN: 1r5r/k4ppp/2B1p3/pQ2Nq2/Pb1P4/6B1/5PPP/5RK1 w - - 3 26
     @Test
     void testPosition18() {
-        testPosition("[[e2-e4 d7-d5 e4-d5 d8-d5 b1-c3 d5-a5 d2-d4 g8-f6 g1-f3 c8-f5 c1-d2 b8-c6 f1-c4 c6-b4 a1-c1 e7-e6 a2-a3 b4-c2 c1-c2 f5-c2 d1-c2 a5-h5 c2-a4 c7-c6 d2-f4 h5-f5 f4-g3 f6-e4 e1-g1 e4-c3 b2-c3 a7-a6 a4-b3 b7-b5 c4-e2 e8-c8 f3-e5 c8-b7 e2-f3 d8-c8 a3-a4 b5-b4 b3-c4 a6-a5 c3-b4 f8-b4 f3-c6 b7-a7 c4-b5 c8-b8]]",
+        var pgn = """
+                1. e4 d5 2. exd5 Qxd5 3. Nc3 Qa5 4. d4 Nf6 5. Nf3 Bf5 6. Bd2 Nc6 7. Bc4 Nb4 8. Rc1 e6 9.
+                a3 Nxc2+ 10. Rxc2 Bxc2 11. Qxc2 Qh5 12. Qa4+ c6 13. Bf4 Qf5 14. Bg3 Ne4 15. O-O Nxc3 16.
+                bxc3 a6 17. Qb3 b5 18. Be2 O-O-O 19. Ne5 Kb7 20. Bf3 Rc8 21. a4 b4 22. Qc4 a5 23. cxb4
+                Bxb4 24. Bxc6+ Ka7 25. Qb5 Rb8
+                """;
+        testPosition(pgn,
                 Set.of("c6-b7"),
                 6.0f, // OPT: Should be checkmate in 5
                 8.0f,
@@ -245,7 +355,12 @@ class EngineTest {
     // TODO Test currently disabled
     @Test @Disabled
     void dontCaptureWithKingPawn() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 e7-e5 d4-b3 b8-c6 b1-c3 g8-f6 f1-e2 c8-e6 e1-g1 f8-e7 c1-e3 e8-g8 e2-f3 a7-a5 c3-d5 a5-a4 b3-d2 e6-d5 e4-d5 c6-b4 c2-c4 d8-d7 a2-a3 b4-d3 a1-b1 f8-d8 d2-e4 d3-c5 e4-f6]]\n",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 e5 5. Nb3 Nc6 6. Nc3 Nf6 7. Be2 Be6 8. O-O Be7 9.
+                Be3 O-O 10. Bf3 a5 11. Nd5 a4 12. Nd2 Bxd5 13. exd5 Nb4 14. c4 Qd7 15. a3 Nd3 16. Rb1 Rfd8
+                17. Ne4 Nc5 18. Nxf6+
+                """;
+        testPosition(pgn,
                 Set.of("e7-f6"),
                 -0.5f,
                 0.5f,

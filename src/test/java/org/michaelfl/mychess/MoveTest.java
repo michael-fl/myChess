@@ -59,7 +59,9 @@ class MoveTest {
     @ParameterizedTest
     @ValueSource(strings = {"b1-c3", "b1c3", "Nb1-c3", "Nb1c3", "Nbc3", "N1c3", "e2-c3", "e2c3", "Ne2-c3", "Ne2c3", "Nec3", "N2c3"})
     void testKnightMoves2(String move) {
-        var importer = new SimpleNotationImporter("[[e2-e4 e7-e5 g1-e2 d7-d6]]");
+        var importer = GameImporter.importerFor("""
+                1. e4 e5 2. Ne2 d6
+                """);
         var game = importer.importGame();
         game.makeMove(MoveDescription.fromString(move, game.getTurn()));
         var piece = game.getBoard().get(Board.c3);
@@ -69,7 +71,9 @@ class MoveTest {
     @ParameterizedTest
     @ValueSource(strings = {"Nc3"})
     void testWrongKnightMoves2(String move) {
-        var importer = new SimpleNotationImporter("[[e2-e4 e7-e5 g1-e2 d7-d6]]");
+        var importer = GameImporter.importerFor("""
+                1. e4 e5 2. Ne2 d6
+                """);
         var game = importer.importGame();
         assertThrows(IllegalMoveException.class, () -> game.makeMove(MoveDescription.fromString(move, game.getTurn())));
     }
@@ -77,7 +81,9 @@ class MoveTest {
     @ParameterizedTest
     @ValueSource(strings = {"Nb1c3", "Nbc3", "Nd1c3", "Ndc3"})
     void testKnightMoves3(String move) {
-        var importer = new SimpleNotationImporter("[[f2-f3 e7-e6 g1-h3 d7-d6 h3-f2 c8-d7 e2-e3 f8-e7 d1-e2 g8-f6 f2-d1 e8-g8]]");
+        var importer = GameImporter.importerFor("""
+                1. f3 e6 2. Nh3 d6 3. Nf2 Bd7 4. e3 Be7 5. Qe2 Nf6 6. Nd1 O-O
+                """);
         var game = importer.importGame();
         game.makeMove(MoveDescription.fromString(move, game.getTurn()));
         var piece = game.getBoard().get(Board.c3);
@@ -87,28 +93,36 @@ class MoveTest {
     @ParameterizedTest
     @ValueSource(strings = {"Nc3", "N1c3"})
     void testWrongKnightMoves3(String move) {
-        var importer = new SimpleNotationImporter("[[f2-f3 e7-e6 g1-h3 d7-d6 h3-f2 c8-d7 e2-e3 f8-e7 d1-e2 g8-f6 f2-d1 e8-g8]]");
+        var importer = GameImporter.importerFor("""
+                1. f3 e6 2. Nh3 d6 3. Nf2 Bd7 4. e3 Be7 5. Qe2 Nf6 6. Nd1 O-O
+                """);
         var game = importer.importGame();
         assertThrows(IllegalMoveException.class, () -> game.makeMove(MoveDescription.fromString(move, game.getTurn())));
     }
     
     @Test
     void testCheckMove() {
-        var importer = new SimpleNotationImporter("[[e2-e4 e7-e5 d2-d3]]");
+        var importer = GameImporter.importerFor("""
+                1. e4 e5 2. d3
+                """);
         var game = importer.importGame();
         game.makeMove(MoveDescription.fromString("Bb4+", game.getTurn()));
     }
 
     @Test
     void testWrongCheckMove() {
-        var importer = new SimpleNotationImporter("[[e2-e4 e7-e5 d2-d3]]");
+        var importer = GameImporter.importerFor("""
+                1. e4 e5 2. d3
+                """);
         var game = importer.importGame();
         assertThrows(IllegalMoveException.class, () -> game.makeMove(MoveDescription.fromString("Bc5+", game.getTurn())));
     }
 
     @Test
     void testCheckmateMove() {
-        var importer = new SimpleNotationImporter("[[f2-f3 e7-e6 g2-g4]]");
+        var importer = GameImporter.importerFor("""
+                1. f3 e6 2. g4
+                """);
         var game = importer.importGame();
         game.makeMove(MoveDescription.fromString("Qh4#", game.getTurn()));
         assertEquals(GameResult.CHECKMATE, game.getResult());
@@ -116,7 +130,9 @@ class MoveTest {
 
     @Test
     void testWrongCheckmateMove() {
-        var importer = new SimpleNotationImporter("[[f2-f3 e7-e6 g2-g4]]");
+        var importer = GameImporter.importerFor("""
+                1. f3 e6 2. g4
+                """);
         var game = importer.importGame();
         assertThrows(IllegalMoveException.class, () -> game.makeMove(MoveDescription.fromString("Qg5#", game.getTurn())));
     }
@@ -124,7 +140,9 @@ class MoveTest {
     @ParameterizedTest
     @ValueSource(strings = {"d8Q", "d8=Q", "d7d8Q", "d7-d8=Q!"})
     void testPawnPromotionMoveQueen(String move) {
-        var importer = new SimpleNotationImporter("[[c2-c4 d7-d5 c4-d5 d8-d7 d5-d6 f7-f6 d2-d3 d7-c6 d6-d7 e8-f7]]");
+        var importer = GameImporter.importerFor("""
+                1. c4 d5 2. cxd5 Qd7 3. d6 f6 4. d3 Qc6 5. d7+ Kf7
+                """);
         var game = importer.importGame();
         game.makeMove(MoveDescription.fromString(move, game.getTurn()));
         var piece = game.getBoard().get(Board.d8);
@@ -134,7 +152,9 @@ class MoveTest {
     @ParameterizedTest
     @ValueSource(strings = {"d8R", "d8=R", "d7d8R", "d7-d8=R!"})
     void testPawnPromotionMoveRook(String move) {
-        var importer = new SimpleNotationImporter("[[c2-c4 d7-d5 c4-d5 d8-d7 d5-d6 f7-f6 d2-d3 d7-c6 d6-d7 e8-f7]]");
+        var importer = GameImporter.importerFor("""
+                1. c4 d5 2. cxd5 Qd7 3. d6 f6 4. d3 Qc6 5. d7+ Kf7
+                """);
         var game = importer.importGame();
         game.makeMove(MoveDescription.fromString(move, game.getTurn()));
         var piece = game.getBoard().get(Board.d8);
@@ -144,7 +164,9 @@ class MoveTest {
     @ParameterizedTest
     @ValueSource(strings = {"d8N", "d8=N", "d7d8N", "d7-d8=N!"})
     void testPawnPromotionMoveKnight(String move) {
-        var importer = new SimpleNotationImporter("[[c2-c4 d7-d5 c4-d5 d8-d7 d5-d6 f7-f6 d2-d3 d7-c6 d6-d7 e8-f7]]");
+        var importer = GameImporter.importerFor("""
+                1. c4 d5 2. cxd5 Qd7 3. d6 f6 4. d3 Qc6 5. d7+ Kf7
+                """);
         var game = importer.importGame();
         game.makeMove(MoveDescription.fromString(move, game.getTurn()));
         var piece = game.getBoard().get(Board.d8);
@@ -154,7 +176,9 @@ class MoveTest {
     @ParameterizedTest
     @ValueSource(strings = {"d8B", "d8=B", "d7d8B", "d7-d8=B!"})
     void testPawnPromotionMoveBishop(String move) {
-        var importer = new SimpleNotationImporter("[[c2-c4 d7-d5 c4-d5 d8-d7 d5-d6 f7-f6 d2-d3 d7-c6 d6-d7 e8-f7]]");
+        var importer = GameImporter.importerFor("""
+                1. c4 d5 2. cxd5 Qd7 3. d6 f6 4. d3 Qc6 5. d7+ Kf7
+                """);
         var game = importer.importGame();
         game.makeMove(MoveDescription.fromString(move, game.getTurn()));
         var piece = game.getBoard().get(Board.d8);
@@ -169,7 +193,11 @@ class MoveTest {
 
     @Test
     void testBlackCastlingKingSide() {
-        var importer = new SimpleNotationImporter("[[e2-e4 c7-c5 f1-e2 b8-c6 f2-f4 e7-e6 g1-f3 b7-b6 e1-g1 c8-b7 d2-d3 d8-c7 c2-c3 g8-f6 a2-a4 d7-d5 e4-e5 f6-d7 b1-a3 a7-a6 d1-e1 c6-e7 a3-c2 e7-f5 g2-g4 f5-e7 e1-g3 h7-h5 h2-h3 d5-d4 c3-c4 e7-c6 c1-d2 g7-g6 f3-g5 f8-e7 g5-e4]]");
+        var importer = GameImporter.importerFor("""
+                1. e4 c5 2. Be2 Nc6 3. f4 e6 4. Nf3 b6 5. O-O Bb7 6. d3 Qc7 7. c3 Nf6 8. a4 d5 9. e5 Nd7
+                10. Na3 a6 11. Qe1 Ne7 12. Nc2 Nf5 13. g4 Ne7 14. Qg3 h5 15. h3 d4 16. c4 Nc6 17. Bd2 g6
+                18. Ng5 Be7 19. Ne4
+                """);
         var game = importer.importGame();
         game.makeMove(MoveDescription.fromString("O-O", game.getTurn()));
         var piece = game.getBoard().get(Board.g8);
@@ -180,7 +208,11 @@ class MoveTest {
 
     @Test
     void testBlackCastlingQueenSide() {
-        var importer = new SimpleNotationImporter("[[e2-e4 c7-c5 f1-e2 b8-c6 f2-f4 e7-e6 g1-f3 b7-b6 e1-g1 c8-b7 d2-d3 d8-c7 c2-c3 g8-f6 a2-a4 d7-d5 e4-e5 f6-d7 b1-a3 a7-a6 d1-e1 c6-e7 a3-c2 e7-f5 g2-g4 f5-e7 e1-g3 h7-h5 h2-h3 d5-d4 c3-c4 e7-c6 c1-d2 g7-g6 f3-g5 f8-e7 g5-e4]]");
+        var importer = GameImporter.importerFor("""
+                1. e4 c5 2. Be2 Nc6 3. f4 e6 4. Nf3 b6 5. O-O Bb7 6. d3 Qc7 7. c3 Nf6 8. a4 d5 9. e5 Nd7
+                10. Na3 a6 11. Qe1 Ne7 12. Nc2 Nf5 13. g4 Ne7 14. Qg3 h5 15. h3 d4 16. c4 Nc6 17. Bd2 g6
+                18. Ng5 Be7 19. Ne4
+                """);
         var game = importer.importGame();
         game.makeMove(MoveDescription.fromString("O-O-O", game.getTurn()));
         var piece = game.getBoard().get(Board.c8);
@@ -191,7 +223,12 @@ class MoveTest {
 
     @Test
     void testPinMakesMoveUnique() {
-        var importer = new SimpleNotationImporter("[[e2-e4 c7-c5 g1-f3 b8-c6 d2-d4 c5-d4 f3-d4 d7-d6 f1-b5 c8-d7 e1-g1 g7-g6 b2-b3 f8-g7 c1-b2 g8-f6 b1-c3 e8-g8 f1-e1 a8-c8 d4-c6 b7-c6 b5-a6 c8-b8 e4-e5 f6-g4 e5-d6 e7-d6 a6-e2 d8-a5 c3-a4 g7-b2 a4-b2 a5-e5 e2-g4 d7-g4 d1-g4 e5-b2 g4-c4 c6-c5 a1-d1 b8-b4 c4-d5 b2-a2 d5-d6 a2-c2 d1-a1 b4-b3 a1-a7 b3-b1]]");
+        var importer = GameImporter.importerFor("""
+                1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 d6 5. Bb5 Bd7 6. O-O g6 7. b3 Bg7 8. Bb2 Nf6 9. Nc3
+                O-O 10. Re1 Rc8 11. Nxc6 bxc6 12. Ba6 Rb8 13. e5 Ng4 14. exd6 exd6 15. Be2 Qa5 16. Na4
+                Bxb2 17. Nxb2 Qe5 18. Bxg4 Bxg4 19. Qxg4 Qxb2 20. Qc4 c5 21. Rad1 Rb4 22. Qd5 Qxa2 23.
+                Qxd6 Qxc2 24. Ra1 Rxb3 25. Rxa7 Rb1
+                """);
         var game = importer.importGame();
         // two rook moves possible, but one is pinned
         game.makeMove(MoveDescription.fromString("Re7", game.getTurn()));
@@ -201,7 +238,9 @@ class MoveTest {
 
     @Test
     void testEnPassantMove() {
-        var importer = new SimpleNotationImporter("[[e2-e4 c7-c5 c2-c3 g8-f6 e4-e5 f6-d5 g1-f3 b8-c6 d2-d4 c5-d4 f1-c4 d5-b6 c4-b3 d7-d5]]");
+        var importer = GameImporter.importerFor("""
+                1. e4 c5 2. c3 Nf6 3. e5 Nd5 4. Nf3 Nc6 5. d4 cxd4 6. Bc4 Nb6 7. Bb3 d5
+                """);
         var game = importer.importGame();
         game.makeMove(MoveDescription.fromString("exd6", game.getTurn())); // en passant
         var piece = game.getBoard().get(Board.d6);
@@ -210,7 +249,14 @@ class MoveTest {
 
     @Test
     void testIllegalMoveIsReverted() {
-        var importer = new SimpleNotationImporter("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-e3 e7-e5 d4-f3 f8-e7 f1-c4 e8-g8 e1-g1 b8-c6 d1-e2 c8-g4 h2-h3 g4-f3 e2-f3 d8-c7 c4-b3 c7-d7 a1-d1 e7-d8 c3-d5 f6-d5 b3-d5 c6-b4 d5-b3 a8-c8 c2-c3 b4-c6 b3-d5 f8-e8 b2-b4 d8-f6 a2-a3 c6-e7 c3-c4 e7-d5 c4-d5 c8-c3 d1-a1 f6-g5 f1-c1 e8-c8 c1-e1 c8-c4 g1-h2 g5-h6 h3-h4 h6-e3 e1-e3 c3-e3 f3-e3 f7-f5 f2-f3 f5-e4 f3-e4 d7-g4 e3-g5 g4-g5 h4-g5 c4-e4 a1-c1 e4-g4 c1-c8 g8-f7 c8-c7 f7-g6 c7-b7 g4-d4 b7-a7 d4-d5 a7-a6 g6-g5 a3-a4 d5-d4 b4-b5 d4-h4]]");
+        var importer = GameImporter.importerFor("""
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Be3 e5 7. Nf3 Be7 8. Bc4 O-O 9. O-O
+                Nc6 10. Qe2 Bg4 11. h3 Bxf3 12. Qxf3 Qc7 13. Bb3 Qd7 14. Rad1 Bd8 15. Nd5 Nxd5 16. Bxd5
+                Nb4 17. Bb3 Rc8 18. c3 Nc6 19. Bd5 Re8 20. b4 Bf6 21. a3 Ne7 22. c4 Nxd5 23. cxd5 Rc3 24.
+                Ra1 Bg5 25. Rfc1 Rec8 26. Re1 R8c4 27. Kh2 Bh6 28. h4 Bxe3 29. Rxe3 Rxe3 30. Qxe3 f5 31.
+                f3 fxe4 32. fxe4 Qg4 33. Qg5 Qxg5 34. hxg5 Rxe4 35. Rc1 Rg4 36. Rc8+ Kf7 37. Rc7+ Kg6 38.
+                Rxb7 Rd4 39. Ra7 Rxd5 40. Rxa6 Kxg5 41. a4 Rd4 42. b5 Rh4+
+                """);
         var game = importer.importGame();
 
         // make invalid move

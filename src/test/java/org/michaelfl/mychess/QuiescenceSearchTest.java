@@ -12,7 +12,10 @@ class QuiescenceSearchTest {
 
     @Test
     void testPositionAfterCapture() {
-        var gameNotation = "[[e2-e4 e7-e5 g1-f3 b8-c6 b1-c3 g8-f6 d2-d3 f8-b4 c1-d2 d7-d6 c3-d5 a7-a5 f1-e2 a8-a6 e1-g1 a6-b6 d1-e1 h7-h6 d5-b4]]";
+        var gameNotation = """
+                1. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 4. d3 Bb4 5. Bd2 d6 6. Nd5 a5 7. Be2 Ra6 8. O-O Rb6 9. Qe1
+                h6 10. Nxb4
+                """;
         quiescenceTest(gameNotation, Board.blackBishop, 3.0f, 0, 0.5f, 5);
     }
 

@@ -13,8 +13,16 @@ class FiftyMovesRuleTest {
 
     @Test
     void testFiftyMovesRule() {
-        SimpleNotationImporter importer = new SimpleNotationImporter("[[e2-e4 e7-e5 d2-d3 d7-d6 f1-e2 g8-f6 g1-f3 d8-d7 b1-c3 e8-d8 e1-g1 h8-g8 a1-b1 g8-h8 c1-e3 d7-e8 b1-c1 b8-c6 f3-e1 c8-e6 d1-d2 d8-c8 c1-a1 c8-b8 a1-d1 f6-g8 d1-a1 g8-h6 e1-f3 h6-f5 f3-h4 f5-e7 h4-f3 e8-c8 f1-b1 c6-d4 c3-d1 e7-c6 f3-e1 f8-e7 g1-h1 h8-d8 h1-g1 d8-e8 g1-f1 e8-f8 f1-g1 f8-g8 g1-h1 c8-f8 e3-f4 e7-h4 e2-f3 e6-c4 d2-e3 d4-e6 d1-c3 c6-e7 f3-g4 e7-g6 e1-f3 g6-h8 f3-g1 e6-d8 e3-c1 c4-e6 g4-d1 e6-c8 f4-d2 h4-e7 d2-e1 f8-e8 c3-e2 e7-f8 e2-g3 e8-d7 g3-f1 d7-e8 f1-e3 e8-e6 e3-c4 e6-e8 c4-a5 e8-e6 a5-b3 e6-e8 b3-c5 e8-e7 c5-e6 e7-e8 e6-g5 e8-e7 g5-h3 e7-e6 h3-f4 e6-e8 f4-e2 e8-e6 e2-c3 e6-e8 c3-d5 d8-c6 g1-f3]]");
-        var game = importer.importGame();
+        GameImporter importer = GameImporter.importerFor("""
+                1. e4 e5 2. d3 d6 3. Be2 Nf6 4. Nf3 Qd7 5. Nc3 Kd8 6. O-O Rg8 7. Rb1 Rh8 8. Be3 Qe8 9. Rc1
+                Nc6 10. Ne1 Be6 11. Qd2 Kc8 12. Ra1 Kb8 13. Rd1 Ng8 14. Ra1 Nh6 15. Nf3 Nf5 16. Nh4 Nfe7
+                17. Nf3 Qc8 18. Rfb1 Nd4 19. Nd1 Nec6 20. Ne1 Be7 21. Kh1 Rd8 22. Kg1 Re8 23. Kf1 Rf8 24.
+                Kg1 Rg8 25. Kh1 Qf8 26. Bf4 Bh4 27. Bf3 Bc4 28. Qe3 Ne6 29. Nc3 Ne7 30. Bg4 Ng6 31. Nf3
+                Nh8 32. Ng1 Nd8 33. Qc1 Be6 34. Bd1 Bc8 35. Bd2 Be7 36. Be1 Qe8 37. Nce2 Bf8 38. Ng3 Qd7
+                39. Nf1 Qe8 40. Ne3 Qe6 41. Nc4 Qe8 42. Na5 Qe6 43. Nb3 Qe8 44. Nc5 Qe7 45. Ne6 Qe8 46.
+                Ng5 Qe7 47. N5h3 Qe6 48. Nf4 Qe8 49. Nfe2 Qe6 50. Nc3 Qe8 51. Nd5 Nc6 52. Nf3
+                """);
+        var game = importer.importGame(Game.standardConfig());
 
         var halfMoveClock = game.getGameStatus().getHalfMoveClock();
         assertEquals(99, halfMoveClock, "Wrong half move clock");
@@ -32,7 +40,15 @@ class FiftyMovesRuleTest {
 
     @Test
     void testDisableFiftyMovesRule() {
-        SimpleNotationImporter importer = new SimpleNotationImporter("[[e2-e4 e7-e5 d2-d3 d7-d6 f1-e2 g8-f6 g1-f3 d8-d7 b1-c3 e8-d8 e1-g1 h8-g8 a1-b1 g8-h8 c1-e3 d7-e8 b1-c1 b8-c6 f3-e1 c8-e6 d1-d2 d8-c8 c1-a1 c8-b8 a1-d1 f6-g8 d1-a1 g8-h6 e1-f3 h6-f5 f3-h4 f5-e7 h4-f3 e8-c8 f1-b1 c6-d4 c3-d1 e7-c6 f3-e1 f8-e7 g1-h1 h8-d8 h1-g1 d8-e8 g1-f1 e8-f8 f1-g1 f8-g8 g1-h1 c8-f8 e3-f4 e7-h4 e2-f3 e6-c4 d2-e3 d4-e6 d1-c3 c6-e7 f3-g4 e7-g6 e1-f3 g6-h8 f3-g1 e6-d8 e3-c1 c4-e6 g4-d1 e6-c8 f4-d2 h4-e7 d2-e1 f8-e8 c3-e2 e7-f8 e2-g3 e8-d7 g3-f1 d7-e8 f1-e3 e8-e6 e3-c4 e6-e8 c4-a5 e8-e6 a5-b3 e6-e8 b3-c5 e8-e7 c5-e6 e7-e8 e6-g5 e8-e7 g5-h3 e7-e6 h3-f4 e6-e8 f4-e2 e8-e6 e2-c3 e6-e8 c3-d5 d8-c6 g1-f3]]");
+        GameImporter importer = GameImporter.importerFor("""
+                1. e4 e5 2. d3 d6 3. Be2 Nf6 4. Nf3 Qd7 5. Nc3 Kd8 6. O-O Rg8 7. Rb1 Rh8 8. Be3 Qe8 9. Rc1
+                Nc6 10. Ne1 Be6 11. Qd2 Kc8 12. Ra1 Kb8 13. Rd1 Ng8 14. Ra1 Nh6 15. Nf3 Nf5 16. Nh4 Nfe7
+                17. Nf3 Qc8 18. Rfb1 Nd4 19. Nd1 Nec6 20. Ne1 Be7 21. Kh1 Rd8 22. Kg1 Re8 23. Kf1 Rf8 24.
+                Kg1 Rg8 25. Kh1 Qf8 26. Bf4 Bh4 27. Bf3 Bc4 28. Qe3 Ne6 29. Nc3 Ne7 30. Bg4 Ng6 31. Nf3
+                Nh8 32. Ng1 Nd8 33. Qc1 Be6 34. Bd1 Bc8 35. Bd2 Be7 36. Be1 Qe8 37. Nce2 Bf8 38. Ng3 Qd7
+                39. Nf1 Qe8 40. Ne3 Qe6 41. Nc4 Qe8 42. Na5 Qe6 43. Nb3 Qe8 44. Nc5 Qe7 45. Ne6 Qe8 46.
+                Ng5 Qe7 47. N5h3 Qe6 48. Nf4 Qe8 49. Nfe2 Qe6 50. Nc3 Qe8 51. Nd5 Nc6 52. Nf3
+                """);
         var config = new GameConfig(
                 MyChessEngine.class,
                 new EngineConfig.Builder().enableFiftyMovesRule(false).build()
