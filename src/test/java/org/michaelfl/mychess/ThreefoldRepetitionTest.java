@@ -19,9 +19,11 @@ class ThreefoldRepetitionTest {
 
     @Test
     void testIsDraw() {
-        String moves = "[[g2-g3 e7-e6 a2-a3 d8-h4 g3-h4 a7-a6 g1-f3 g8-f6 f3-g1 f6-g8 g1-f3 g8-f6 f3-g1]]";
-        SimpleNotationImporter importer = new SimpleNotationImporter(moves);
-        var game = importer.importGame();
+        String moves = """
+                1. g3 e6 2. a3 Qh4 3. gxh4 a6 4. Nf3 Nf6 5. Ng1 Ng8 6. Nf3 Nf6 7. Ng1
+                """;
+        GameImporter importer = GameImporter.importerFor(moves);
+        var game = importer.importGame(Game.standardConfig());
 
         assertEquals(GameResult.ONGOING, game.getResult(), "game must not be finished");
         game.makeMove(MoveDescription.fromString("f6-g8", game.getTurn()));
@@ -30,8 +32,10 @@ class ThreefoldRepetitionTest {
 
     @Test
     void testFindDrawMove() throws Exception {
-        String moves = "[[g2-g3 e7-e6 a2-a3 d8-h4 g3-h4 a7-a6 g1-f3 g8-f6 f3-g1 f6-g8 g1-f3 g8-f6 f3-g1]]";
-        SimpleNotationImporter importer = new SimpleNotationImporter(moves);
+        String moves = """
+                1. g3 e6 2. a3 Qh4 3. gxh4 a6 4. Nf3 Nf6 5. Ng1 Ng8 6. Nf3 Nf6 7. Ng1
+                """;
+        GameImporter importer = GameImporter.importerFor(moves);
         var game = importer.importGame(new GameConfig(MyChessEngine.class, engineConfig()));
 
         MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
@@ -42,8 +46,15 @@ class ThreefoldRepetitionTest {
 
     @Test
     void testIsDraw2() {
-        var importer = new SimpleNotationImporter("[[e2-e4 c7-c5 f1-e2 b8-c6 f2-f4 e7-e6 g1-f3 b7-b6 e1-g1 c8-b7 d2-d3 d8-c7 c2-c3 g8-f6 a2-a4 d7-d5 e4-e5 f6-d7 b1-a3 a7-a6 d1-e1 c6-e7 a3-c2 e7-f5 g2-g4 f5-e7 e1-g3 h7-h5 h2-h3 d5-d4 c3-c4 e7-c6 c1-d2 g7-g6 f3-g5 f8-e7 g5-e4 e8-c8 a4-a5 c6-a5 a1-a5 b6-a5 e2-f3 d7-b8 g3-g2 b8-c6 g4-g5 c6-b4 d2-b4 a5-b4 c2-a1 a6-a5 f3-d1 b7-c6 f1-e1 a5-a4 b2-b3 a4-a3 g2-a2 c8-b7 d1-f3 b7-b6 a1-c2 h5-h4 e1-e2 d8-f8 c2-e1 c6-b7 e2-g2 b7-c6 g2-e2 f8-a8 e2-g2 h8-g8 g2-g4 a8-f8 g4-g2 g8-h8 g2-g4 c6-b7 g4-g2]]");
-        var game = importer.importGame();
+        var importer = GameImporter.importerFor("""
+                1. e4 c5 2. Be2 Nc6 3. f4 e6 4. Nf3 b6 5. O-O Bb7 6. d3 Qc7 7. c3 Nf6 8. a4 d5 9. e5 Nd7
+                10. Na3 a6 11. Qe1 Ne7 12. Nc2 Nf5 13. g4 Ne7 14. Qg3 h5 15. h3 d4 16. c4 Nc6 17. Bd2 g6
+                18. Ng5 Be7 19. Ne4 O-O-O 20. a5 Nxa5 21. Rxa5 bxa5 22. Bf3 Nb8 23. Qg2 Nc6 24. g5 Nb4 25.
+                Bxb4 axb4 26. Na1 a5 27. Bd1 Bc6 28. Re1 a4 29. b3 a3 30. Qa2 Kb7 31. Bf3 Kb6 32. Nc2 h4
+                33. Re2 Rdf8 34. Ne1 Bb7 35. Rg2 Bc6 36. Re2 Ra8 37. Rg2 Rhg8 38. Rg4 Raf8 39. Rg2 Rh8 40.
+                Rg4 Bb7 41. Rg2
+                """);
+        var game = importer.importGame(Game.standardConfig());
         assertEquals(GameResult.ONGOING, game.getResult(), "game must not be finished");
         game.makeMove(MoveDescription.fromString("Bc6", game.getTurn()));
         assertEquals(GameResult.DRAW, game.getResult(), "game must be draw due to threefold repetition rule");
@@ -51,7 +62,14 @@ class ThreefoldRepetitionTest {
 
     @Test
     void testDisableThreefoldRepetition() {
-        var importer = new SimpleNotationImporter("[[e2-e4 c7-c5 f1-e2 b8-c6 f2-f4 e7-e6 g1-f3 b7-b6 e1-g1 c8-b7 d2-d3 d8-c7 c2-c3 g8-f6 a2-a4 d7-d5 e4-e5 f6-d7 b1-a3 a7-a6 d1-e1 c6-e7 a3-c2 e7-f5 g2-g4 f5-e7 e1-g3 h7-h5 h2-h3 d5-d4 c3-c4 e7-c6 c1-d2 g7-g6 f3-g5 f8-e7 g5-e4 e8-c8 a4-a5 c6-a5 a1-a5 b6-a5 e2-f3 d7-b8 g3-g2 b8-c6 g4-g5 c6-b4 d2-b4 a5-b4 c2-a1 a6-a5 f3-d1 b7-c6 f1-e1 a5-a4 b2-b3 a4-a3 g2-a2 c8-b7 d1-f3 b7-b6 a1-c2 h5-h4 e1-e2 d8-f8 c2-e1 c6-b7 e2-g2 b7-c6 g2-e2 f8-a8 e2-g2 h8-g8 g2-g4 a8-f8 g4-g2 g8-h8 g2-g4 c6-b7 g4-g2]]");
+        var importer = GameImporter.importerFor("""
+                1. e4 c5 2. Be2 Nc6 3. f4 e6 4. Nf3 b6 5. O-O Bb7 6. d3 Qc7 7. c3 Nf6 8. a4 d5 9. e5 Nd7
+                10. Na3 a6 11. Qe1 Ne7 12. Nc2 Nf5 13. g4 Ne7 14. Qg3 h5 15. h3 d4 16. c4 Nc6 17. Bd2 g6
+                18. Ng5 Be7 19. Ne4 O-O-O 20. a5 Nxa5 21. Rxa5 bxa5 22. Bf3 Nb8 23. Qg2 Nc6 24. g5 Nb4 25.
+                Bxb4 axb4 26. Na1 a5 27. Bd1 Bc6 28. Re1 a4 29. b3 a3 30. Qa2 Kb7 31. Bf3 Kb6 32. Nc2 h4
+                33. Re2 Rdf8 34. Ne1 Bb7 35. Rg2 Bc6 36. Re2 Ra8 37. Rg2 Rhg8 38. Rg4 Raf8 39. Rg2 Rh8 40.
+                Rg4 Bb7 41. Rg2
+                """);
         var config = new GameConfig(
                 MyChessEngine.class,
                 new EngineConfig.Builder().enableThreefoldRepetition(false).build());

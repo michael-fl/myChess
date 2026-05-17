@@ -12,7 +12,16 @@ class GameTest {
 
     @Test
     void testBlackCheckmate() {
-        SimpleNotationImporter importer = new SimpleNotationImporter("[[b1-c3 d7-d6 e2-e4 e7-e5 g1-f3 g8-f6 d2-d4 d8-e7 c1-g5 b8-d7 f1-d3 d7-b6 g5-f6 e7-f6 c3-b5 f6-e7 d4-e5 d6-e5 e1-g1 a7-a6 b5-c3 e7-f6 c3-d5 b6-d5 e4-d5 c8-g4 d1-e2 g4-f3 g2-f3 e8-c8 e2-e4 c8-b8 a1-e1 f6-h6 g1-h1 f8-d6 f1-g1 h6-f6 e4-f5 f6-f5 d3-f5 g7-g6 f5-g4 h8-e8 e1-e2 d6-c5 c2-c4 c5-d4 g1-d1 d4-c5 d1-e1 f7-f5 g4-h3 c5-b4 e1-d1 e8-e7 a2-a3 b4-d6 b2-b4 e7-e8 c4-c5 d6-f8 e2-c2 f8-g7 h3-f1 e5-e4 f3-e4 f5-e4 b4-b5 a6-a5 f1-c4 g7-f6 d5-d6 c7-d6 d1-d6 f6-e5 d6-d5 e5-d4 c5-c6 b7-c6 b5-c6 b8-c7 d5-a5 e8-f8 a5-b5 f8-f2 c2-f2 d4-f2 c4-d5 e4-e3 b5-b7 c7-c8 d5-e6 d8-d7 b7-d7 f2-g3 h2-g3 h7-h5 d7-g7 c8-b8 c6-c7 b8-b7 c7-c8Q b7-b6 g7-b7 b6-a5]]");
+        GameImporter importer = GameImporter.importerFor("""
+                1. Nc3 d6 2. e4 e5 3. Nf3 Nf6 4. d4 Qe7 5. Bg5 Nbd7 6. Bd3 Nb6 7. Bxf6 Qxf6 8. Nb5 Qe7 9.
+                dxe5 dxe5 10. O-O a6 11. Nc3 Qf6 12. Nd5 Nxd5 13. exd5 Bg4 14. Qe2 Bxf3 15. gxf3 O-O-O 16.
+                Qe4 Kb8 17. Rae1 Qh6 18. Kh1 Bd6 19. Rg1 Qf6 20. Qf5 Qxf5 21. Bxf5 g6 22. Bg4 Rhe8 23. Re2
+                Bc5 24. c4 Bd4 25. Rd1 Bc5 26. Rde1 f5 27. Bh3 Bb4 28. Rd1 Re7 29. a3 Bd6 30. b4 Ree8 31.
+                c5 Bf8 32. Rc2 Bg7 33. Bf1 e4 34. fxe4 fxe4 35. b5 a5 36. Bc4 Bf6 37. d6 cxd6 38. Rxd6 Be5
+                39. Rd5 Bd4 40. c6 bxc6 41. bxc6 Kc7 42. Rxa5 Rf8 43. Rb5 Rxf2 44. Rxf2 Bxf2 45. Bd5 e3
+                46. Rb7+ Kc8 47. Be6+ Rd7 48. Rxd7 Bg3 49. hxg3 h5 50. Rg7+ Kb8 51. c7+ Kb7 52. c8Q+ Kb6
+                53. Rb7+ Ka5
+                """);
         var game = importer.importGame();
 
         assertEquals(GameResult.ONGOING, game.getResult(), "game should not be finished yet");

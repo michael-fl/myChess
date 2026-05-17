@@ -48,185 +48,318 @@ class WeightingFunctionTest {
 
     @Test
     void testPosition01() {
-        testPosition("[[e2-e4]]", 0.5f);
+        var pgn = """
+                1. e4
+                """;
+        testPosition(pgn, 0.5f);
     }
 
     @Test
     void testPosition02() {
-        testPosition("[[e2-e4 c7-c5]]", 0.46f);
+        var pgn = """
+                1. e4 c5
+                """;
+        testPosition(pgn, 0.46f);
     }
 
     @Test
     void testPosition03() {
-        testPosition("[[e2-e4 c7-c5 g1-f3]]", 0.86f);
+        var pgn = """
+                1. e4 c5 2. Nf3
+                """;
+        testPosition(pgn, 0.86f);
     }
 
     @Test
     void testPosition04() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6]]", 0.48f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6
+                """;
+        testPosition(pgn, 0.48f);
     }
 
     @Test
     void testPosition05() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4]]", 0.97f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4
+                """;
+        testPosition(pgn, 0.97f);
     }
 
     @Test
     void testPosition06() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4]]", -0.18f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4
+                """;
+        testPosition(pgn, -0.18f);
     }
 
     @Test
     void testPosition07() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4]]", 1.07f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4
+                """;
+        testPosition(pgn, 1.07f);
     }
 
     @Test
     void testPosition08() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6]]", 0.53f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6
+                """;
+        testPosition(pgn, 0.53f);
     }
 
     @Test
     void testPosition09() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3]]", 0.95f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3
+                """;
+        testPosition(pgn, 0.95f);
     }
 
     @Test
     void testPosition10() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6]]", 1.03f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6
+                """;
+        testPosition(pgn, 1.03f);
     }
 
     @Test
     void testPosition11() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5]]", 1.37f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5
+                """;
+        testPosition(pgn, 1.37f);
     }
 
     @Test
     void testPosition12() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6]]", 1.39f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6
+                """;
+        testPosition(pgn, 1.39f);
     }
 
     @Test
     void testPosition13() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4]]", 1.2f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4
+                """;
+        testPosition(pgn, 1.2f);
     }
 
     @Test
     void testPosition14() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7]]", 1.04f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7
+                """;
+        testPosition(pgn, 1.04f);
     }
 
     @Test
     void testPosition15() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3]]", 1.11f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3
+                """;
+        testPosition(pgn, 1.11f);
     }
 
     @Test
     void testPosition16() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7]]", 0.95f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7
+                """;
+        testPosition(pgn, 0.95f);
     }
 
     @Test
     void testPosition17() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1]]", 1.32f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O
+                """;
+        testPosition(pgn, 1.32f);
     }
 
     @Test
     void testPosition18() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7]]", 0.92f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7
+                """;
+        testPosition(pgn, 0.92f);
     }
 
     @Test
     void testPosition19() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4]]", 0.91f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4
+                """;
+        testPosition(pgn, 0.91f);
     }
 
     @Test
     void testPosition20() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5]]", 0.9f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5
+                """;
+        testPosition(pgn, 0.9f);
     }
 
     @Test
     void testPosition21() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6]]", 4.05f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6
+                """;
+        testPosition(pgn, 4.05f);
     }
 
     @Test
     void testPosition22() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6]]", 0.95f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6
+                """;
+        testPosition(pgn, 0.95f);
     }
 
     @Test
     void testPosition23() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5]]", 1.1f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5
+                """;
+        testPosition(pgn, 1.1f);
     }
 
     @Test
     void testPosition24() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7]]", 0.9f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7
+                """;
+        testPosition(pgn, 0.9f);
     }
 
     @Test
     void testPosition25() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5]]", 0.93f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5
+                """;
+        testPosition(pgn, 0.93f);
     }
 
     @Test
     void testPosition26() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5]]", -0.50f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+
+                """;
+        testPosition(pgn, -0.50f);
     }
 
     @Test
     void testPosition27() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1]]", -0.19f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1
+                """;
+        testPosition(pgn, -0.19f);
     }
 
     @Test
     void testPosition28() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5]]", -0.54f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5
+                """;
+        testPosition(pgn, -0.54f);
     }
 
     // ** Unguarded bishop attacked by queen
     @Test
     void testPosition29() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5]]", -0.24f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5
+                """;
+        testPosition(pgn, -0.24f);
     }
 
     // ** White wins (back) a pawn with Nxe6
     @Test
     void testPosition30() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8]]", -0.07f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8
+                """;
+        testPosition(pgn, -0.07f);
     }
 
     @Test
     void testPosition31() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6]]", 1.11f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6
+                """;
+        testPosition(pgn, 1.11f);
     }
 
     @Test
     void testPosition32() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6]]", -2.73f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6
+                """;
+        testPosition(pgn, -2.73f);
     }
 
     @Test
     void testPosition33() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6]]", 0.57f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6 17. fxe6
+                """;
+        testPosition(pgn, 0.57f);
     }
 
     @Test
     void testPosition34() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8]]", 0.12f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6 17. fxe6 O-O
+                """;
+        testPosition(pgn, 0.12f);
     }
 
     @Test
     void testPosition35() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1]]", 0.22f);
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6 17. fxe6 O-O 18. Rg1
+                """;
+        testPosition(pgn, 0.22f);
     }
 
     // Terrible position for black (no mobility, pieces on bad, narrow positions)
     @Test
     void testPosition36() {
-        testPosition("[[b1-c3 e7-e5 g1-f3 b8-c6 d2-d4 d7-d6 d4-d5 c6-b4 a2-a3 b4-a6 e2-e4 a6-c5 c1-e3 b7-b6 b2-b4 c5-b7 f1-b5 c8-d7 d1-d3 g8-f6 b5-d7 d8-d7 d3-a6 d7-c8 a6-c4 f8-e7 c4-c6 f6-d7 c3-b5]]", 1.04f);
+        var pgn = """
+                1. Nc3 e5 2. Nf3 Nc6 3. d4 d6 4. d5 Nb4 5. a3 Na6 6. e4 Nc5 7. Be3 b6 8. b4 Nb7 9. Bb5+
+                Bd7 10. Qd3 Nf6 11. Bxd7+ Qxd7 12. Qa6 Qc8 13. Qc4 Be7 14. Qc6+ Nd7 15. Nb5
+                """;
+        testPosition(pgn, 1.04f);
     }
 
     private void testPosition(String gameNotation, float expectedWeight) {
@@ -235,7 +368,7 @@ class WeightingFunctionTest {
         float expectedMinWeight = expectedWeight >= 0 ? w1 : w2;
         float expectedMaxWeight = expectedWeight >= 0 ? w2 : w1;
 
-        SimpleNotationImporter importer = new SimpleNotationImporter(gameNotation);
+        GameImporter importer = GameImporter.importerFor(gameNotation);
         var game = importer.importGame();
         var f = new WeightingFunction();
         var weight = f.calculate(game.getBoard()) / 100f;

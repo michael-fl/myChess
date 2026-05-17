@@ -19,7 +19,10 @@ class DeepWeightTest {
 
     @Test
     void testPosition01() {
-        testPosition("[[e2-e4]]",
+        var pgn = """
+                1. e4
+                """;
+        testPosition(pgn,
                 0.3f,
                 0.5f,
                 new GameConfig(MyChessEngine.class, engineConfig())
@@ -28,7 +31,10 @@ class DeepWeightTest {
 
     @Test
     void testPosition02() {
-        testPosition("[[e2-e4 c7-c5]]",
+        var pgn = """
+                1. e4 c5
+                """;
+        testPosition(pgn,
                 0.3f,
                 0.5f,
                 new GameConfig(MyChessEngine.class, engineConfig())
@@ -37,7 +43,10 @@ class DeepWeightTest {
 
     @Test
     void testPosition03() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4
+                """;
+        testPosition(pgn,
                 0.2f,
                 0.4f,
                 new GameConfig(MyChessEngine.class, engineConfig())
@@ -46,7 +55,10 @@ class DeepWeightTest {
 
     @Test
     void testPosition04() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4
+                """;
+        testPosition(pgn,
                 0.60f,
                 0.70f,
                 new GameConfig(MyChessEngine.class, engineConfig())
@@ -55,7 +67,11 @@ class DeepWeightTest {
 
     @Test
     void testPosition05() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6
+                """;
+        testPosition(pgn,
                 0.0f,
                 0.1f,
                 new GameConfig(MyChessEngine.class, engineConfig())
@@ -64,7 +80,11 @@ class DeepWeightTest {
 
     @Test
     void testPosition06() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6
+                """;
+        testPosition(pgn,
                 0.20f,
                 0.30f,
                 new GameConfig(MyChessEngine.class, engineConfig())
@@ -73,7 +93,11 @@ class DeepWeightTest {
 
     @Test
     void testPosition07() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6
+                """;
+        testPosition(pgn,
                 0.20f,
                 0.30f,
                 new GameConfig(MyChessEngine.class, engineConfig())
@@ -82,7 +106,11 @@ class DeepWeightTest {
 
     @Test
     void testPosition08() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5
+                """;
+        testPosition(pgn,
                 0.60f,
                 0.70f,
                 new GameConfig(MyChessEngine.class, engineConfig())
@@ -91,7 +119,12 @@ class DeepWeightTest {
 
     @Test
     void testPosition09() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6 17. fxe6 O-O
+                """;
+        testPosition(pgn,
                 0.05f,
                 0.2f,
                 new GameConfig(MyChessEngine.class, engineConfig())
@@ -100,7 +133,12 @@ class DeepWeightTest {
 
     @Test
     void testPosition10() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6 17. fxe6 O-O 18. Rg1
+                """;
+        testPosition(pgn,
                 0.14f,
                 0.34f,
                 new GameConfig(MyChessEngine.class, engineConfig())
@@ -109,7 +147,13 @@ class DeepWeightTest {
 
     @Test
     void testPosition11() {
-        testPosition("[[e2-e4 c7-c5 g1-f3 d7-d6 d2-d4 c5-d4 f3-d4 g8-f6 b1-c3 a7-a6 c1-g5 e7-e6 f2-f4 f8-e7 d1-f3 d8-c7 e1-c1 b8-d7 g2-g4 b7-b5 g5-f6 d7-f6 g4-g5 f6-d7 f4-f5 e7-g5 c1-b1 d7-e5 f3-h5 c7-d8 d4-e6 c8-e6 f5-e6 e8-g8 h1-g1 g5-f6 f1-h3 f8-e8 e6-f7 e5-f7 h3-f5 h7-h6 c3-d5 a6-a5 h5-g6 a5-a4 d5-f6 g8-f8]]",
+        var pgn = """
+                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
+                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
+                Nxe6 Bxe6 17. fxe6 O-O 18. Rg1 Bf6 19. Bh3 Re8 20. exf7+ Nxf7 21. Bf5 h6 22. Nd5 a5 23.
+                Qg6 a4 24. Nxf6+ Kf8
+                """;
+        testPosition(pgn,
                 checkmateIn(3),
                 checkmateIn(3),
                 new GameConfig(MyChessEngine.class, engineConfig())
@@ -118,7 +162,7 @@ class DeepWeightTest {
 
     private void testPosition(String gameNotation, float expectedMinWeight, float expectedMaxWeight, GameConfig config) {
         try {
-            SimpleNotationImporter importer = new SimpleNotationImporter(gameNotation);
+            GameImporter importer = GameImporter.importerFor(gameNotation);
             var game = importer.importGame(config);
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
             var weight = move.weight;

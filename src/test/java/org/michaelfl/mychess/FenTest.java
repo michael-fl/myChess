@@ -29,7 +29,10 @@ class FenTest {
 
     @Test
     void testPosition1() {
-        SimpleNotationImporter importer = new SimpleNotationImporter("[[e2-e4 e7-e5 g1-f3 b8-c6 f1-b5 a7-a6 b5-a4 b7-b5 a4-b3 g8-f6 e1-g1 a6-a5 d2-d4 a5-a4 b3-f7 e8-f7 d4-e5 f6-g8 f3-g5 f7-e8 b1-c3 b5-b4 d1-d5 g8-h6 c3-b5 a4-a3 f1-d1 c8-b7]]");
+        GameImporter importer = GameImporter.importerFor("""
+                1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 b5 5. Bb3 Nf6 6. O-O a5 7. d4 a4 8. Bxf7+ Kxf7 9.
+                dxe5 Ng8 10. Ng5+ Ke8 11. Nc3 b4 12. Qd5 Nh6 13. Nb5 a3 14. Rd1 Bb7
+                """);
         var game = importer.importGame();
 
         String expectedFEN = "r2qkb1r/1bpp2pp/2n4n/1N1QP1N1/1p2P3/p7/PPP2PPP/R1BR2K1 w - - 2 15";
