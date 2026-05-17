@@ -30,10 +30,6 @@ public final class Pgn {
         public IOExceptionWrapper(IOException cause) {
             super(cause);
         }
-
-        public IOException getIOException() {
-            return (IOException) getCause();
-        }
     }
 
     public enum Result {

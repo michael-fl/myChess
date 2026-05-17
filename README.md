@@ -11,7 +11,7 @@ Yet another chess engine — just for fun.
 ```bash
 mvn compile          # build
 mvn exec:java        # start the REPL
-mvn test             # run the test suite (296 tests, ~2-3 min)
+mvn test             # run the test suite (290 tests, ~2-3 min)
 ```
 
 `mvn exec:java` launches the engine's **REPL** (*read-eval-print loop*) — an interactive text prompt on stdin/stdout. It prints the starting board and a `>` prompt, waits for a move or command, executes it, prints the resulting board, and loops. Type moves in long algebraic (`e2-e4`) or standard short algebraic (`Nf3`, `O-O`, `exd5`) — or commands. Sample session:
@@ -149,7 +149,7 @@ The project is also a study object for the supporting techniques typical of a cl
 - **No pondering** — the engine does not think on the opponent's time.
 - **No persistent learning** — only the static opening book is read; the engine does not write back game outcomes.
 
-The git history shows that earlier branches contained two alternative search engines, "engine V1" and "engine V2", both removed in recent commits. The codebase now contains exactly one engine, [`MyChessEngine`](src/main/java/org/michaelfl/mychess/engines/MyChessEngine.java), delegating to [`PositionSearch`](src/main/java/org/michaelfl/mychess/engines/PositionSearch.java). A handful of fields on [`EngineConfig`](src/main/java/org/michaelfl/mychess/EngineConfig.java) marked *"Only used by engine V1"* are dead weight left behind by that cleanup.
+The git history shows that earlier branches contained two alternative search engines, "engine V1" and "engine V2", both removed in recent commits. The codebase now contains exactly one engine, [`MyChessEngine`](src/main/java/org/michaelfl/mychess/engines/MyChessEngine.java), delegating to [`PositionSearch`](src/main/java/org/michaelfl/mychess/engines/PositionSearch.java).
 
 **Build & runtime requirements:**
 
@@ -158,7 +158,7 @@ The git history shows that earlier branches contained two alternative search eng
 - JUnit Jupiter 5.11 for tests.
 - MapDB 3.0.8 as the only runtime dependency.
 
-The test suite contains 296 passing tests (4 skipped) and serves as the executable specification for move generation, encoding, search correctness, and notation parsing.
+The test suite contains 290 passing tests (4 skipped) and serves as the executable specification for move generation, encoding, search correctness, and notation parsing.
 
 ### 1.3 Repository layout
 
@@ -197,7 +197,6 @@ myChess/
 │   │   ├── PGNImporter.java          # File-level PGN import
 │   │   ├── SimpleNotationImporter.java  # Long-algebraic move parser
 │   │   ├── GameImporter.java         # Replays a list of MoveDescriptions
-│   │   ├── MovesCounter.java         # Perft-style position counter
 │   │   ├── MyChessEnv.java           # Per-process environment (opening DB)
 │   │   ├── EngineConfig.java         # Search depth, time, rule toggles
 │   │   ├── Statistics.java           # Search node counters (for logging)
@@ -214,7 +213,7 @@ myChess/
 │   │       ├── OpeningDB.java            # MapDB BTreeMap wrapper
 │   │       ├── DBValue.java              # Binary record: (count, [move,total,win,loss]*)
 │   │       └── OpeningDBImporter.java    # PGN → DB ingest pipeline
-│   └── test/java/org/michaelfl/mychess/  # 296 tests covering generator, search,
+│   └── test/java/org/michaelfl/mychess/  # 290 tests covering generator, search,
 │                                          # FEN/PGN, evaluation, Zobrist, …
 └── target/                   # Maven output (git-ignored)
 ```
@@ -329,7 +328,7 @@ The three roles — *rules*, *engine*, *search* — are kept deliberately separa
 
 1. Owns the single-thread `ExecutorService` on which the search runs.
 2. Short-circuits trivial cases *before* delegating to the search: game already over, 50-move rule armed, threefold repetition, or a usable opening-book candidate.
-3. Holds engine-level state that persists across calls: the `EngineConfig` and the `Random` instance used for opening-book sampling. (The class also instantiates its own `KillerMoves` and `MoveGenerator`, but `MyChessEngine` and `PositionSearch` build fresh per-search instances rather than reusing those engine-level fields.)
+3. Holds engine-level state that persists across calls: the `EngineConfig` and the `Random` instance used for opening-book sampling.
 
 The abstract method `calculateNextMoveSub(NextMoveTask)` is the extension point. The only concrete implementation, [`MyChessEngine`](src/main/java/org/michaelfl/mychess/engines/MyChessEngine.java), delegates straight to `PositionSearch.calculateNextMove(...)`.
 

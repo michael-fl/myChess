@@ -26,14 +26,6 @@ public final class Moves {
         moves.add(move);
     }
 
-    public final int popMove() {
-        return moves.pop();
-    }
-
-    public final void revertMove() {
-        moves.pop();
-    }
-
     public final int count() {
         return moves.size();
     }

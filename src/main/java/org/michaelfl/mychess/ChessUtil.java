@@ -180,11 +180,6 @@ public final class ChessUtil {
         return bitSet | bit;
     }
 
-    @SuppressWarnings("unused")
-    public static int clearBit(int bitSet, int bit) {
-        return bitSet & ~bit;
-    }
-
     public static byte symbolToPiece(char symbol, int turn) {
         final boolean isWhite = turn == GameStatus.TURN_WHITE;
 

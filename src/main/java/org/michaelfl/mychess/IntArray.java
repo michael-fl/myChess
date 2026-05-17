@@ -1,7 +1,6 @@
 package org.michaelfl.mychess;
 
 import java.util.Arrays;
-import java.util.Random;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class IntArray {
@@ -61,19 +60,6 @@ public class IntArray {
         }
 
         return false;
-    }
-
-    public final void mayShuffle(final Random random) {
-        if (size < 4)
-            return;
-
-        // Implementing Fisher–Yates shuffle
-        for (int i = size - 1; i > 0; i--) {
-            final int index = random.nextInt(i + 1);
-            final int tmp = array[index];
-            array[index] = array[i];
-            array[i] = tmp;
-        }
     }
 
     @Override
