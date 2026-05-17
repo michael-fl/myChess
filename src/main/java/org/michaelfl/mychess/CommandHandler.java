@@ -268,6 +268,23 @@ final class CommandHandler {
         }
     }
 
+    private final class PgnCommand extends Command {
+
+        @Override
+        boolean canHandle(String commandLine) {
+            return "pgn".equals(commandLine);
+        }
+
+        @Override
+        void handle(String commandLine) {
+            if (game.getGameStatus().getPlyCount() == 0) {
+                System.out.println();
+                return;
+            }
+            System.out.println(PGNConverter.toPGN(game.exportMoves()));
+        }
+    }
+
     private final class RevertCommand extends Command {
 
         @Override
@@ -589,6 +606,7 @@ final class CommandHandler {
             new PrintCommand(),
             new BoardCommand(),
             new ExportCommand(),
+            new PgnCommand(),
             new RevertCommand(),
             new TipCommand(),
             new LastCommand(),

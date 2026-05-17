@@ -414,6 +414,7 @@ The interactive flow for the most common commands:
 | `auto` | Repeat `go` for both sides until `game.getResult() != ONGOING`, with a hard 1000-move safety bound |
 | `revert` / `r` | `Game.revertMove()` → pops one entry from the board's `GameStatus` stack, resets the result to `ONGOING` |
 | `fen` / `export` | `Game.exportFEN()` / `Game.exportMoves()` printed verbatim |
+| `pgn` | `PGNConverter.toPGN(game.exportMoves())` — current game as PGN move text |
 | `import <pgn>` / `imp <pgn>` | `PGNImporter` → list of `MoveDescription` → replay on a fresh `Game` |
 | `tip` | Like `go` but does not apply the move; prints the suggestion and the principal variation |
 | `o…` | Look up the current Zobrist position string in the opening DB and print all known moves with their win/draw/loss statistics |
