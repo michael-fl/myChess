@@ -1,0 +1,214 @@
+# 11. Testing
+
+The test suite is the executable specification for myChess: it pins down move generation, encoding, search behavior, evaluation ranges, notation parsing, and the rules for draws. It is also the way the engine's playing strength is regression-tested — most of `EngineTest` and `DeepWeightTest` are *position regressions*, where a particular game state must produce a particular move or score range.
+
+| Metric | Value |
+|---|---|
+| Test files | 22 |
+| Test methods (`@Test` + `@ParameterizedTest`) | 300 |
+| Currently passing | 296 |
+| Currently `@Disabled` | 4 |
+| Test source lines | ~3 640 |
+| Framework | JUnit Jupiter 5.11 |
+| Execution | `mvn test` (Maven Surefire 3.5.2) |
+
+Run from the project root:
+
+```bash
+mvn test                          # all tests
+mvn -Dtest=BoardTest test          # one class
+mvn -Dtest=BoardTest#testIsCheckmate1 test   # one method
+```
+
+JDK 25 must be active for `mvn test` (set `JAVA_HOME` if the system default differs — see [`README.md`](../README.md#13-repository-layout)).
+
+## 11.1 Suite structure
+
+### Conventions
+
+- **One test class per production class.** `BoardTest` ↔ `Board`, `WeightingFunctionTest` ↔ `WeightingFunction`, etc. Tests live in the matching package path: `src/test/java/org/michaelfl/mychess/<NameTest>.java`.
+- **Package-private visibility.** Most test classes are package-private (no modifier), giving them access to package-private production methods. Where needed (a helper used by other test classes — `EngineTest.engineConfig()`, `EngineTest.testPosition(...)`), the helper is package-private but the test class itself stays default-visible.
+- **JUnit Jupiter 5.** Mostly plain `@Test`, with a handful of `@ParameterizedTest` + `@ValueSource` cases in `MoveTest` and `MoveDescriptionTest`. No nesting (`@Nested`), no display names (`@DisplayName`). The style is direct: one method per asserted behavior, descriptive method names (`testIsDraw2`, `testIsCheckmate1`, `testWhiteEnPassantMove`).
+- **Assertions always carry messages.** All `assertEquals` / `assertTrue` / `assertFalse` calls pass a meaningful third (or appropriate) argument, in line with the project's global testing convention. Failures are self-explanatory in CI logs.
+- **No mocking.** The codebase has no third-party dependencies that would benefit from mocking, and `MoveGenerator`/`Board`/`Game` are all fast enough to use as-is. The engine is constructed end-to-end in every test that exercises search behavior.
+
+### Categories
+
+The 22 files cluster into five groups:
+
+| Group | Files | Lines | What it covers |
+|---|---|---|---|
+| **Data structures & encoding** | `BoardTest`, `ChessUtilTest`, `GameStatusTest`, `MoveTest`, `MoveDescriptionTest`, `SortableMovesBucketTest`, `PieceSquareTablesTest`, `PositionEncodingTest`, `MovesCounterTest` | ~1300 | Bit-packing, board layout, color/turn bit invariants, sortable bucket sort order, piece-square table inversion, mailbox indexing, notation parsing. |
+| **Move generation & rules** | `MoveGeneratorTest`, `GameTest`, `BoardTest` (overlap) | ~360 | Pseudo-legal generation, castling legality, en passant, check / checkmate / stalemate detection. |
+| **Search & evaluation** | `EngineTest`, `DeepWeightTest`, `WeightingFunctionTest`, `QuiescenceSearchTest`, `ZobristHashingTest` | ~1230 | Position regressions, evaluation component ranges, quiescence depth, Zobrist invariants. |
+| **Draw rules** | `ThreefoldRepetitionTest`, `FiftyMovesRuleTest` | ~115 | Detection + opt-out toggle for both rules. |
+| **Notation & I/O** | `FenTest`, `PgnTest`, `PGNImporterTest` | ~624 | FEN export, PGN parsing (strict + lenient modes), end-to-end PGN replay. |
+| **Database** | `openingdb/DBValueTest` | ~98 | Byte-layout encoding of `DBValue`, win/loss attribution. |
+
+### Position-as-string idiom
+
+Almost every test sets up a position by typing it as a `SimpleNotationImporter` `[[...]]` string or as a PGN text block:
+
+```java
+@Test
+void testBlackCheckmate() {
+    SimpleNotationImporter importer = new SimpleNotationImporter(
+        "[[b1-c3 d7-d6 e2-e4 e7-e5 g1-f3 g8-f6 d2-d4 d8-e7 c1-g5 ... c8-a8]]");
+    var game = importer.importGame();
+    assertEquals(GameResult.ONGOING, game.getResult(), "game should not be finished yet");
+    game.makeMove(MoveDescription.fromString("c8-a8", GameStatus.TURN_WHITE));
+    assertEquals(GameResult.CHECKMATE, game.getResult(), "game status should be black checkmate");
+}
+```
+
+Two flavors coexist:
+
+- **Long algebraic in `[[...]]` brackets** — for tests that need exact, unambiguous move sequences (move generation, hash invariants, the bulk of `EngineTest`).
+- **PGN text blocks via Java text blocks (`"""..."""`)** — for tests where the readability of standard PGN matters (`BoardTest`, some `EngineTest` cases like `testPosition32`).
+
+`GameImporter.importerFor(text)` auto-detects which: `[[`-prefix → `SimpleNotationImporter`, otherwise PGN. The test code routinely uses both depending on the author's preference for that particular case.
+
+### Cross-test sharing
+
+A small amount of helper code is shared across files via static imports from `EngineTest`:
+
+```java
+import static org.michaelfl.mychess.EngineTest.engineConfig;
+import static org.michaelfl.mychess.EngineTest.testPosition;
+```
+
+`EngineTest.engineConfig()` returns a standard depth-8 `EngineConfig`; `EngineTest.testPosition(...)` is the four-overload position-regression harness used by both `EngineTest` and `DeepWeightTest`. There is no top-level test base class; helpers are loose static functions.
+
+### Disabled tests (4)
+
+| File | Method | Reason |
+|---|---|---|
+| `EngineTest` | `dontCaptureWithKingPawn` | Open bug — the search picks a king-pawn capture in a position where the test author considers it strictly worse. Disabled until the evaluation function distinguishes "good" from "bad" pawn captures. |
+| `PGNImporterTest` | `testImportLargePGNFile` | Requires a large external PGN file not present in the repo. |
+| `PGNImporterTest` | `testImportMultipleLargePGNFiles` | Same. |
+| `PgnTest` | `testReadLargePGNFile` | Same. |
+
+The three large-file tests are useful for ad-hoc verification when populating an opening DB but are skipped in CI because the inputs are not checked in.
+
+### What is not tested
+
+Honest gaps in coverage:
+
+- **`isDrawByMaterial`** has no test of its own — and is never called from production code either (see [§ 8.5](game-lifecycle.md#85-insufficient-material)). Both gaps will close together when the method is wired in.
+- **`OpeningDB`** has no test. Only `DBValue` (the byte-layout encoder) is tested. The MapDB integration is exercised only by the live importer.
+- **`PositionSearch`'s `alphaBetaSearch`** is not unit-tested directly. Coverage is end-to-end via `EngineTest` and `DeepWeightTest` (which run the full engine), plus `QuiescenceSearchTest` for the quiescence layer in isolation.
+- **REPL command dispatch (`CommandHandler`)** has no tests. The commands are exercised manually via interactive runs.
+- **`NextMoveTask` cancellation paths** are not tested.
+
+## 11.2 Notable test cases
+
+A tour of the tests that earn their keep — either because they catch high-value invariants or because they document the engine's intended behavior in an exemplary way.
+
+### `EngineTest.testPositionN` (×33) — position regressions
+
+The bulk of the playing-strength regression suite. Each test loads a real-game position and asserts three things:
+
+```java
+testPosition(gameNotation,           // long-algebraic [[...]] or PGN text block
+             expectedMove,           // single move or Set<String> of acceptable moves
+             expectedPathOpt,        // optional: exact expected PV (move-by-move)
+             expectedMinWeight,      // weight range (in pawns) the search must produce
+             expectedMaxWeight,
+             new GameConfig(ENGINE, engineConfig()));   // depth 8, MyChessEngine
+```
+
+The harness (`EngineTest.testPosition(...)`) drives the search via `nextMoveAsync().getResult(5, TimeUnit.MINUTES)` — a generous timeout for slow CI machines without being unbounded. It then verifies:
+
+1. The chosen move is in the expected set (either short or long algebraic notation matches).
+2. The reported weight lies in `[expectedMinWeight, expectedMaxWeight]`.
+3. If `expectedPathOpt` is given, the full principal variation matches move-by-move.
+4. The PV length equals `maxDepth - 1` (or fewer for forced-mate lines, where it equals the ply-to-mate).
+5. Replaying the PV on the board produces a final `Game.result` that matches the search's reported result.
+
+The `testPosition` overloads cover everything from the first ply of an opening (`DeepWeightTest.testPosition01`) to mate-in-3 endings (`DeepWeightTest.testPosition11`, which uses `checkmateIn(3)` as both the min and max expected weight). The "TODO" annotations in the source (e.g. `0.5f, // TODO 1.7`) document where the current engine produces a measurably weaker evaluation than the test author believes correct — but rather than failing the test, the expected range is loosened to match reality, with the TODO as a marker that revisiting the evaluation could tighten it.
+
+### `ZobristHashingTest` (×8) — incremental-hash correctness
+
+Arguably the most load-bearing test in the suite: incorrect Zobrist updates would silently break threefold-repetition detection ([§ 8.3](game-lifecycle.md#83-threefold-repetition)) and opening-book key generation ([§ 9.2](opening-database.md#92-lookup-policy)).
+
+Three properties are verified:
+
+- **`testHashOfStartPosition`** — the starting-position hash, computed via incremental XOR-ing the 32 pieces' hash contributions plus the castling-rights entry, equals both `Board.calculatePositionHash()` (from-scratch) and `GameStatus.getPositionHash()` (incremental at engine start).
+- **`testIncrementalUpdate`** — replays a 100+-ply real game, asserting after *every* move that `calculatePositionHash()` (from scratch) equals `getPositionHash()` (maintained incrementally by `Board.makeMove`).
+- **`testIncrementalUpdateWithRevert`** — additionally calls `revertMove` after each `makeMove` and verifies the hash returns to the prior value, then `makeMove` again and verifies the hash is restored. This catches any asymmetry between forward and undo updates.
+
+Plus five tests for the en-passant hash contribution (`testWhiteEnPassantField`, `testBlackEnPassantField`, `testDifferentHashForDifferentPositions`, `testSameHashForSamePosition`, `testEnPassantMakesDifferenceForSamePosition`). The last is subtle: two move orders that arrive at the same piece arrangement must hash *differently* when one of them grants en-passant rights but the other doesn't.
+
+### `ThreefoldRepetitionTest` (×4) — engine plays into the draw
+
+```java
+@Test
+void testIsDraw() {
+    String moves = "[[g2-g3 e7-e6 a2-a3 d8-h4 g3-h4 a7-a6 g1-f3 g8-f6 f3-g1 f6-g8 g1-f3 g8-f6 f3-g1]]";
+    var game = new SimpleNotationImporter(moves).importGame();
+    assertEquals(GameResult.ONGOING, game.getResult(), "game must not be finished");
+    game.makeMove(MoveDescription.fromString("f6-g8", game.getTurn()));
+    assertEquals(GameResult.DRAW, game.getResult(), "game must be draw due to threefold repetition rule");
+}
+
+@Test
+void testFindDrawMove() throws Exception {
+    /* same setup */
+    var game = importer.importGame(new GameConfig(MyChessEngine.class, engineConfig()));
+    MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
+    assertEquals("f6-g8", ChessUtil.moveToString(move.move), "Unexpected move");
+    assertEquals(0f, move.weight, "Weight must be 0 (draw)");
+    assertEquals(GameResult.DRAW, move.result, "game must be draw due to threefold repetition rule");
+}
+```
+
+Two sides of the same property: detection (the rules layer correctly transitions to `DRAW`) and *engine behavior* (the search actively chooses the repeating move when it's the best option). `testDisableThreefoldRepetition` then verifies the opt-out: with `enableThreefoldRepetition(false)`, the same sequence stays `ONGOING`.
+
+`FiftyMovesRuleTest` follows the identical structure — detection + disable — for the 50-move rule, including verification that `halfMoveClock` reaches exactly 99 before and 100 after the triggering move.
+
+### `BoardTest.testIsCheckmateN` (×3) — classic mate patterns
+
+Three of the most famous quick-mate sequences in chess, each as a one-method test:
+
+| Test | Pattern | Final move |
+|---|---|---|
+| `testIsCheckmate1` | Scholar's mate (queen + bishop on f7) | `Qxf7` |
+| `testIsCheckmate2` | Fool's mate (white blunders, black mates on h4) | `Qh4` |
+| `testIsCheckmate3` | Smothered mate (knight delivers mate on d6) | `Nd6#` |
+
+Each asserts that mate is *not* detected before the final move and *is* detected after. They exercise the same `Board.isCheckmate(MoveGenerator)` path that PGN annotation (`#` suffix verification) uses.
+
+### `QuiescenceSearchTest` (×3) — capture-chain extension
+
+Tests the [quiescence search](search.md#64-quiescence-search) directly, bypassing the main alpha-beta. The harness:
+
+1. Loads a position whose last move was a capture.
+2. Asserts the material balance after the capture matches `expectedMaterialWeight`.
+3. Runs `QuiescenceSearch.quiescenceSearch(...)` standalone.
+4. Asserts the returned weight is in `[expectedWeightMin, expectedWeightMax]`.
+5. Asserts the maximum reached search depth is at least `expectedMaximumReachedDepthMin` — proof the extension actually fired.
+
+The two `testPositionWithUnguardedNight` tests are interesting: each sets up a scenario where the quiescence search *should* see an opportunity to recapture an unguarded knight. Both carry TODOs in the expected weight ranges (`// TODO: 0 < expectedWeight < 0.5 !`) — the engine currently does not exploit them perfectly, and the test documents the gap rather than masking it.
+
+### `PositionEncodingTest.testMultiplePositions` — round-trip over 100+ positions
+
+Replays the same 100-ply real game used in `ZobristHashingTest.testIncrementalUpdate`, but asserts a different invariant: after every move, `PositionEncoding.encode(board)` → `PositionEncoding.decode(...)` → `exportFEN()` produces the same FEN as the original `board.exportFEN()`. This locks down the binary serialization format used by the opening DB (see [§ 3.8](data-types.md#38-zobrist-hashing-and-positionencoding)).
+
+### `MoveGeneratorTest` — castling matrix
+
+Four explicit cases:
+
+- `testCastlingPossible1` — castling is legal; the engine must include `e1-g1` in the move list and accept the actual move.
+- `testCastlingNotPossible1`/`2`/`3` — three subtly different reasons castling is illegal (king in check on start, transit, or destination; opposing bishop covering a transit square). All three assert that `e1-g1` is *not* in the generated moves and that attempting it throws `IllegalStateException`.
+
+Plus two en-passant tests covering both colors, each verifying both the `enPassantField` state after the trigger move *and* the resulting capture move's presence in the generator's output.
+
+### `WeightingFunctionTest` (×39) — evaluation component coverage
+
+The single largest test file by method count. Each test pins down one component of the evaluation function for one specific position: a particular pawn structure produces a particular `doublePawnCount`, a particular development state produces a particular `openingState`, a king under attack produces a particular `chessCount`. Together they form the documented expected behavior for [Chapter 5](evaluation.md).
+
+Test names are very specific (`testWhiteWithDoublePawn`, `testStartPositionOpeningWeight`, `testBlackCastlingState`, …), so failures point straight at the responsible component without needing to read the test body.
+
+### `GameTest.testToShortNotation` — round-trip notation
+
+A single test exercising the full chain `long algebraic input → MoveDescription → resolve → make move → render back to short algebraic → assertEquals to expected PGN form`. Walks a 60+ move game, asserting at every ply that the produced short notation matches the expected PGN string (including `+`, `#`, `0-0-0`, promotion suffixes, capture `x`, disambiguation columns/rows). Pinning the entire forward+inverse notation pipeline in one test.
