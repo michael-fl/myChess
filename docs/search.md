@@ -572,8 +572,6 @@ private final KillerMoves killerMoves = new KillerMoves();
 
 Because `ChessEngine.calculateNextMoveSub` builds a new `PositionSearch` on every call, the killer table is reset between successive engine moves. It persists only across the iterative-deepening iterations *within* one move calculation, where the same depth values are revisited and killers from earlier (shallower) iterations stay useful for the deeper ones.
 
-(`ChessEngine` carries its own `KillerMoves` field used by the engine-level `MoveGenerator`, but `PositionSearch` constructs its own move generator from its own killer table and never touches the engine's instance during the search.)
-
 **An honest TODO.** The code-base carries a comment in `MoveSorterImpl.getSortedMoves`:
 
 ```java

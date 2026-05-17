@@ -462,50 +462,8 @@ public final class Board {
         return piece == whitePawn || piece == blackPawn;
     }
 
-    static boolean isKnight(byte piece) {
-        return piece == whiteKnight || piece == blackKnight;
-    }
-
-    static boolean isQueen(byte piece) {
-        return piece == whiteQueen || piece == blackQueen;
-    }
-
     public static boolean isKing(byte piece) {
         return piece == whiteKing || piece == blackKing;
-    }
-
-    boolean isDrawByMaterial() {
-        int countPieces = 0;
-        for (byte field : board) {
-            if (field != empty && field != illegal)
-                countPieces++;
-            if (countPieces > 6)
-                return false;
-        }
-
-        return checkDrawByMaterial();
-    }
-
-    private boolean checkDrawByMaterial() {
-        byte[] piecesCount = new byte[blackKing + 1];
-
-        for (byte field : board) {
-            if (field != empty && field != illegal)
-                piecesCount[field]++;
-        }
-
-        return piecesCount[whitePawn] == 0
-                && piecesCount[blackPawn] == 0
-                && piecesCount[whiteRook] == 0
-                && piecesCount[blackRook] == 0
-                && piecesCount[whiteQueen] == 0
-                && piecesCount[blackQueen] == 0
-                && piecesCount[whiteBishop] < 2
-                && piecesCount[blackBishop] < 2
-                && piecesCount[whiteKnight] < 3
-                && piecesCount[blackKnight] < 3
-                && (piecesCount[whiteKnight] == 0 || piecesCount[whiteBishop] == 0)
-                && (piecesCount[blackKnight] == 0 || piecesCount[blackBishop] == 0);
     }
 
     private static long makeNormalMove(Board board, int move) {

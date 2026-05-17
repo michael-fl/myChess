@@ -6,7 +6,7 @@ The test suite is the executable specification for myChess: it pins down move ge
 |---|---|
 | Test files | 22 |
 | Test methods (`@Test` + `@ParameterizedTest`) | 300 |
-| Currently passing | 296 |
+| Currently passing | 290 |
 | Currently `@Disabled` | 4 |
 | Test source lines | ~3 640 |
 | Framework | JUnit Jupiter 5.11 |
@@ -38,7 +38,7 @@ The 22 files cluster into five groups:
 
 | Group | Files | Lines | What it covers |
 |---|---|---|---|
-| **Data structures & encoding** | `BoardTest`, `ChessUtilTest`, `GameStatusTest`, `MoveTest`, `MoveDescriptionTest`, `SortableMovesBucketTest`, `PieceSquareTablesTest`, `PositionEncodingTest`, `MovesCounterTest` | ~1300 | Bit-packing, board layout, color/turn bit invariants, sortable bucket sort order, piece-square table inversion, mailbox indexing, notation parsing. |
+| **Data structures & encoding** | `BoardTest`, `ChessUtilTest`, `GameStatusTest`, `MoveTest`, `MoveDescriptionTest`, `SortableMovesBucketTest`, `PieceSquareTablesTest`, `PositionEncodingTest` | ~1300 | Bit-packing, board layout, color/turn bit invariants, sortable bucket sort order, piece-square table inversion, mailbox indexing, notation parsing. |
 | **Move generation & rules** | `MoveGeneratorTest`, `GameTest`, `BoardTest` (overlap) | ~360 | Pseudo-legal generation, castling legality, en passant, check / checkmate / stalemate detection. |
 | **Search & evaluation** | `EngineTest`, `DeepWeightTest`, `WeightingFunctionTest`, `QuiescenceSearchTest`, `ZobristHashingTest` | ~1230 | Position regressions, evaluation component ranges, quiescence depth, Zobrist invariants. |
 | **Draw rules** | `ThreefoldRepetitionTest`, `FiftyMovesRuleTest` | ~115 | Detection + opt-out toggle for both rules. |
@@ -94,7 +94,7 @@ The three large-file tests are useful for ad-hoc verification when populating an
 
 Honest gaps in coverage:
 
-- **`isDrawByMaterial`** has no test of its own — and is never called from production code either (see [§ 8.5](game-lifecycle.md#85-insufficient-material)). Both gaps will close together when the method is wired in.
+- **Insufficient-material draws** are not detected at all (see [§ 8.5](game-lifecycle.md#85-insufficient-material)). No test covers the case because the rule is not implemented.
 - **`OpeningDB`** has no test. Only `DBValue` (the byte-layout encoder) is tested. The MapDB integration is exercised only by the live importer.
 - **`PositionSearch`'s `alphaBetaSearch`** is not unit-tested directly. Coverage is end-to-end via `EngineTest` and `DeepWeightTest` (which run the full engine), plus `QuiescenceSearchTest` for the quiescence layer in isolation.
 - **REPL command dispatch (`CommandHandler`)** has no tests. The commands are exercised manually via interactive runs.

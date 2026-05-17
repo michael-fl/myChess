@@ -4,9 +4,7 @@ import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.GameStatus;
-import org.michaelfl.mychess.KillerMoves;
 import org.michaelfl.mychess.Move;
-import org.michaelfl.mychess.MoveGenerator;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.MyChessEnv;
 import org.michaelfl.mychess.WeightingFunction;
@@ -52,11 +50,9 @@ public abstract class ChessEngine {
     }
 
     private final Random rand = new Random();
-    private final KillerMoves killerMoves = new KillerMoves();
     private final ExecutorService executor;
     private final EngineConfig config;
     protected final Game game;
-    protected final MoveGenerator moveGenerator = new MoveGenerator(new MoveSorterImpl(killerMoves));
 
     protected ChessEngine(EngineConfig config, Game game) {
         this.config = config;
@@ -90,9 +86,7 @@ public abstract class ChessEngine {
         return task;
     }
 
-    public Moves getPossibleMoves() {
-        return moveGenerator.calculateMoves(game.getBoard());
-    }
+    public abstract Moves getPossibleMoves();
 
     public final MoveAndWeight calculateNextMove(NextMoveTask task) {
         MoveAndWeight move = MoveAndWeight.NO_MOVE;

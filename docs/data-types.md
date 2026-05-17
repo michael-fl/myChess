@@ -320,7 +320,7 @@ final int getMove(int moveIndex) {
 **[`Moves`](src/main/java/org/michaelfl/mychess/Moves.java)** — the result type of move generation. Wraps an `IntArray` and adds:
 
 - A sentinel singleton `Moves.ILLEGAL = new Moves(0)`, returned by the generator when the king-capture trick (see [§ 4.5](move-generation.md#45-pseudo-legal-moves-and-king-capture-detection)) detects that the *opponent's* previous move left their own king in check, i.e. the current position is illegal. Callers test with `moves.isIllegal()`, which is reference equality to the singleton.
-- `count()`, `getMoves()`, `contains(int)`, plus undo-friendly `popMove()`/`revertMove()` operations used by `MovesCounter` and tests.
+- `count()`, `getMoves()`, `contains(int)`, and `addMove(int)`.
 
 ## 3.7 `SortableMovesBucket`
 

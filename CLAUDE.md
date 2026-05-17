@@ -27,7 +27,7 @@ The REPL opens `db/openings.db` (MapDB) on start and creates it on first run if 
 
 ## Architecture
 
-Single Java package `org.michaelfl.mychess` plus two sub-packages: `engines` (search) and `openingdb` (MapDB-backed opening book). Recent history removed two earlier engine versions — only `MyChessEngine` remains, and lingering `EngineConfig` fields commented "Only used by engine V1" are dead config knobs.
+Single Java package `org.michaelfl.mychess` plus two sub-packages: `engines` (search) and `openingdb` (MapDB-backed opening book). Recent history removed two earlier engine versions — only `MyChessEngine` remains.
 
 ### Board representation (`Board.java`)
 
@@ -76,4 +76,3 @@ Moves are packed into a single `int` (`fromField | toField<<8 | capturedPiece<<1
 - **The `GameStatus` stack is the source of truth for reversibility.** Any mutation of board state inside `Board.makeMove` must have a matching undo in `revertMove`, or threefold-repetition and the search's `makeMove`/`revertMove` pairing will silently corrupt state.
 - **Invariants are encoded via `Assert.__assert(Supplier, Supplier)`** with lazy message construction so they're cheap when disabled — use the same pattern when adding new invariants in the search.
 - **The `engines/` package is a one-way dependency** on the root package, not vice-versa. Root-package classes (`Game`, `Board`, …) reference engines only through the abstract `ChessEngine` base class.
-- `EngineConfig.iterationDepth` and `EngineConfig.nVariants` are dead fields (marked "Only used by engine V1"). Don't wire new code to them — leave the dead config to a separate cleanup.

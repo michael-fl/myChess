@@ -21,20 +21,8 @@ public final class GameConfig {
         this(engine, engineConfig, engine, engineConfig);
     }
 
-    public Class<? extends ChessEngine> getEngineWhite() {
-        return engineWhite;
-    }
-
-    public Class<? extends ChessEngine> getEngineBlack() {
-        return engineBlack;
-    }
-
     public EngineConfig getEngineWhiteConfig() {
         return engineWhiteConfig;
-    }
-
-    public EngineConfig getEngineBlackConfig() {
-        return engineBlackConfig;
     }
 
     public GameConfig(Class<? extends ChessEngine> engineWhite, EngineConfig engineWhiteConfig, Class<? extends ChessEngine> engineBlack, EngineConfig engineBlackConfig) {

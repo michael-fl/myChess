@@ -182,76 +182,12 @@ So the engine both **claims the draw at the root** (refuses to make any move if 
 
 ## 8.5 Insufficient material
 
-**Status: implemented but not wired in.**
+**Status: not implemented.**
 
-[`Board.isDrawByMaterial()`](../src/main/java/org/michaelfl/mychess/Board.java#L477) exists and correctly detects positions where neither side has enough material to deliver checkmate:
-
-```java
-boolean isDrawByMaterial() {
-    int countPieces = 0;
-    for (byte field : board) {
-        if (field != empty && field != illegal)
-            countPieces++;
-        if (countPieces > 6)
-            return false;       // optimization: bail early if many pieces
-    }
-
-    return checkDrawByMaterial();
-}
-
-private boolean checkDrawByMaterial() {
-    byte[] piecesCount = new byte[blackKing + 1];
-
-    for (byte field : board) {
-        if (field != empty && field != illegal)
-            piecesCount[field]++;
-    }
-
-    return piecesCount[whitePawn] == 0
-            && piecesCount[blackPawn] == 0
-            && piecesCount[whiteRook] == 0
-            && piecesCount[blackRook] == 0
-            && piecesCount[whiteQueen] == 0
-            && piecesCount[blackQueen] == 0
-            && piecesCount[whiteBishop] < 2
-            && piecesCount[blackBishop] < 2
-            && piecesCount[whiteKnight] < 3
-            && piecesCount[blackKnight] < 3
-            && (piecesCount[whiteKnight] == 0 || piecesCount[whiteBishop] == 0)
-            && (piecesCount[blackKnight] == 0 || piecesCount[blackBishop] == 0);
-}
-```
-
-The classification matches FIDE Article 9.6 (mostly):
-
-| Position | `isDrawByMaterial()` says |
-|---|---|
-| K vs K | DRAW |
-| K + B vs K | DRAW |
-| K + N vs K | DRAW |
-| K + 2N vs K | DRAW (technically only forced if the lone king cooperates, but no forced mate exists) |
-| K + B vs K + B (same or opposite color) | DRAW |
-| K + N vs K + N | DRAW |
-| K + B vs K + N | DRAW |
-| Anything with a pawn, rook, queen | NOT a draw |
-| K + B + N vs K | NOT a draw (mate exists) |
-
-The two-pass design (count first, bail at 6 pieces, then bucketize) makes the check cheap on real game positions — almost every middlegame has more than 6 pieces.
-
-**The wiring gap.** The method has *no callers* anywhere in the codebase — not in `Game.calculateGameResult`, not in `ChessEngine.calculateNextMove`, not in `PositionSearch`, not in any test. It is dead code.
-
-The practical consequence is that myChess does **not** claim insufficient-material draws automatically. Such positions remain `ONGOING`, the search continues to evaluate them at a score of 0 (material balance), and the game ends only via:
+myChess does **not** claim insufficient-material draws automatically. Positions like K vs K, K + B vs K, or K + N vs K remain `ONGOING`, the search continues to evaluate them at a score of 0 (material balance), and the game ends only via:
 
 - the [fifty-move rule](#84-fifty-move-rule) eventually firing, or
 - the REPL's `auto` command hitting its 1000-move safety bound and forcing `DRAW`, or
 - a user typing `quit`.
 
-Wiring it in would be a one-liner in `ChessEngine.calculateNextMove` next to the existing 50-move and threefold checks:
-
-```java
-} else if (game.getBoard().isDrawByMaterial()) {
-    move = new MoveAndWeight(0, 0, GameResult.DRAW, new int[0]);
-}
-```
-
-…plus the parallel check inside `PositionSearch.alphaBetaSearchI` to prevent the search from trying to mate in K+B vs K positions where it can't. The reason this is not in place is most likely an oversight — the implementation predates the consolidation of the engine layer and was never connected up.
+An earlier `Board.isDrawByMaterial()` helper (covering K vs K, K + minor vs K, K + minor vs K + minor) lived in the codebase for a while but was never wired into `Game.calculateGameResult` or any search short-circuit. It was removed as dead code; reintroducing the check would mean adding a clause next to the existing 50-move and threefold checks in `ChessEngine.calculateNextMove`, plus a parallel check inside `PositionSearch.alphaBetaSearchI` to prevent the search from trying to mate in positions where it cannot.

@@ -2,14 +2,8 @@ package org.michaelfl.mychess.engines;
 
 import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
-import org.michaelfl.mychess.Move;
 import org.michaelfl.mychess.Moves;
-import org.michaelfl.mychess.openingdb.OpeningDB;
-import org.michaelfl.mychess.openingdb.OpeningDB.MoveInfo;
 
-import java.util.stream.Collectors;
-
-@SuppressWarnings("Duplicates")
 public final class MyChessEngine extends ChessEngine {
 
     public MyChessEngine(EngineConfig config, Game game) {
