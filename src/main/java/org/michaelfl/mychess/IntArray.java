@@ -2,6 +2,14 @@ package org.michaelfl.mychess;
 
 import java.util.Arrays;
 
+/**
+ * Growing {@code int[]} with manual size tracking. Used by the search hot path
+ * to avoid the allocation overhead of {@link java.util.ArrayList} for
+ * primitives; see {@link Moves} and {@link MovesArray} for the move-list
+ * specializations.
+ *
+ * @author Michael Fleischhauer
+ */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class IntArray {
 

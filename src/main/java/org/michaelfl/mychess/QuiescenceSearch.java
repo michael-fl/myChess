@@ -6,6 +6,10 @@ import org.michaelfl.mychess.engines.PositionSearch.SearchNodeContext;
 import static org.michaelfl.mychess.Assert.__assert;
 
 /**
+ * Tactical extension at search leaves: keeps capturing as long as the last
+ * move was a capture, capped by {@link EngineConfig#getMaxQuiescenceDepth()}.
+ * Avoids the horizon effect on hanging captures.
+ *
  * @author Michael Fleischhauer
  */
 @SuppressWarnings("DuplicatedCode")

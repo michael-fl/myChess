@@ -4,6 +4,12 @@ import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.Moves;
 
+/**
+ * {@link ChessEngine} implementation delegating both move generation and the
+ * negamax/alpha-beta search to {@link PositionSearch}.
+ *
+ * @author Michael Fleischhauer
+ */
 public final class MyChessEngine extends ChessEngine {
 
     public MyChessEngine(EngineConfig config, Game game) {

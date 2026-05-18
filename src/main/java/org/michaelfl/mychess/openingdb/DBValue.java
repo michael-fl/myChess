@@ -8,9 +8,14 @@ import org.michaelfl.mychess.Pgn.Result;
 import java.util.Arrays;
 
 /**
+ * Value blob stored in {@link OpeningDB}: a position-occurrence counter
+ * followed by per-move entries (move, total/win/loss counts).
+ *
+ * <pre>
  *   4byte    4byte    4byte    4byte    4byte    4byte    4byte    4byte    4byte
  * |position| move1  | count  | count  | count  | move2  | count  | count  | count  | ... | moveN  | count  | count  | count  |
  * | count  |        | total  | win    | loss   |        | total  | win    | loss   | ... |        | total  | win    | loss   |
+ * </pre>
  *
  * @author Michael Fleischhauer
  */

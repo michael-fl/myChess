@@ -12,6 +12,13 @@ import org.michaelfl.mychess.PieceSquareTables;
 import org.michaelfl.mychess.SortableMovesBucket;
 import org.michaelfl.mychess.WeightingFunction;
 
+/**
+ * Default {@link MoveSorter}. Emits moves in this order:
+ * known-best (PV), recapture of the last moved piece, winning captures,
+ * {@link KillerMoves}, other captures, quiet moves, king moves.
+ *
+ * @author Michael Fleischhauer
+ */
 public final class MoveSorterImpl implements MoveSorter {
 
     private final MovesArray bucketKillerMoves = new MovesArray();

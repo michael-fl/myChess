@@ -1,6 +1,10 @@
 package org.michaelfl.mychess;
 
 /**
+ * Builds a {@link Game} from a notation string. {@link #importerFor(String)}
+ * dispatches to {@link SimpleNotationImporter} for the {@code [[...]]} form
+ * or {@link PGNImporter} for standard PGN.
+ *
  * @author Michael Fleischhauer
  */
 public interface GameImporter {

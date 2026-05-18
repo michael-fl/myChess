@@ -4,6 +4,10 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 /**
+ * Compile-time toggleable invariant checks. Conditions are passed as
+ * {@link BooleanSupplier} and messages as {@link Supplier} so they are not
+ * evaluated when assertions are disabled — safe to use in hot paths.
+ *
  * @author Michael Fleischhauer
  */
 public final class Assert {

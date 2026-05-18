@@ -13,6 +13,14 @@ package org.michaelfl.mychess;
 //    12 13         ...          22  23
 //    00 01         ...          10  11
 
+/**
+ * Generates the pseudo-legal moves for the side to move and feeds them into a
+ * {@link MoveSorter} (default {@link org.michaelfl.mychess.engines.MoveSorterImpl}).
+ * Pinning, check and self-check filtering happen via the sorter's bucketing
+ * and the search's {@link Moves#isIllegal()} signal.
+ *
+ * @author Michael Fleischhauer
+ */
 @SuppressWarnings({"StatementWithEmptyBody", "Duplicates", "PointlessArithmeticExpression"})
 public final class MoveGenerator {
 

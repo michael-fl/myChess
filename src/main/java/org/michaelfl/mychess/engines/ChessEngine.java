@@ -16,6 +16,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+/**
+ * Abstract engine base: owns the single-thread executor behind
+ * {@link #nextMoveAsync}, the opening-book lookup with the thresholds
+ * (>=100 occurrences, >=20% wins, <45% losses) and the pre-search shortcuts
+ * for game-over / threefold / 50-move-rule. Subclasses (currently
+ * {@link MyChessEngine}) implement the actual search.
+ *
+ * @author Michael Fleischhauer
+ */
 public abstract class ChessEngine {
 
     public final static class MoveAndWeight {

@@ -4,6 +4,10 @@ import java.util.BitSet;
 import java.util.Random;
 
 /**
+ * Precomputed array of 793 random {@code long}s used as the Zobrist hashing
+ * table by {@link Board#calculatePositionKey()}. Values are fixed at build
+ * time so position hashes are stable across runs.
+ *
  * @author Michael Fleischhauer
  */
 final class RandomNumbers {

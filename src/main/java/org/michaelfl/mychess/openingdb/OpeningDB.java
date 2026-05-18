@@ -11,6 +11,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * MapDB-backed opening book: maps a Zobrist position key (as a string) to a
+ * {@link DBValue} blob with per-move win/draw/loss counts. Opened via
+ * {@link #open()} (default location) or {@link #openAt(String)} (used by
+ * tests). Must be closed to release the MapDB file lock.
+ *
  * @author Michael Fleischhauer
  */
 public final class OpeningDB implements AutoCloseable {

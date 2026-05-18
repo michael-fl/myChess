@@ -4,6 +4,14 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Symbolic, position-independent description of a move parsed from a notation
+ * string (algebraic, long-algebraic or castling). Resolved to a concrete
+ * packed move against the current position via
+ * {@link Board#resolveMoveDescription(MoveDescription, MoveGenerator)}.
+ *
+ * @author Michael Fleischhauer
+ */
 @SuppressWarnings({"java:S5843"})
 public final class MoveDescription {
 

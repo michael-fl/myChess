@@ -13,6 +13,16 @@ package org.michaelfl.mychess;
 //    12 13         ...          22  23
 //    00 01         ...          10  11
 
+/**
+ * Static position evaluation in centipawn units: material plus
+ * {@link PieceSquareTables} bonus plus per-piece capture/threat heuristics
+ * (pawn structure including en-passant target, king safety, ...). Returns a
+ * white-positive score that the engine negates at the boundary for black.
+ * The {@code CHECKMATE_*} and {@code ILLEGAL_*} constants are sentinel
+ * ranges above any normal material delta.
+ *
+ * @author Michael Fleischhauer
+ */
 @SuppressWarnings({"StatementWithEmptyBody", "Duplicates", "PointlessArithmeticExpression",
                    "java:S115", "java:S2386", "java:S3358"})
 public final class WeightingFunction {

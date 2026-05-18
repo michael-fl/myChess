@@ -1,5 +1,12 @@
 package org.michaelfl.mychess;
 
+/**
+ * Packs four bytes into one {@code int} and extracts them back.
+ * Used by {@link Move} for the from/to/captured/type fields and by
+ * {@link org.michaelfl.mychess.openingdb.DBValue} for serialized integer fields.
+ *
+ * @author Michael Fleischhauer
+ */
 public final class BitOps {
 
     private BitOps() {

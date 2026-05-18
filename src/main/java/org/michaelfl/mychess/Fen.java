@@ -1,6 +1,8 @@
 package org.michaelfl.mychess;
 
 /**
+ * Forsyth–Edwards Notation (FEN) import and export for {@link Board}.
+ *
  * @author Michael Fleischhauer
  */
 final class Fen {

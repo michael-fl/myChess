@@ -17,6 +17,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Builds an {@link OpeningDB} from a directory of PGN files: replays each
+ * game up to {@code maxMoveDepth} plies and attributes win/draw/loss to the
+ * move played in each position.
+ *
  * @author Michael Fleischhauer
  */
 final class OpeningDBImporter {

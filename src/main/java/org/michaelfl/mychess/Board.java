@@ -12,6 +12,15 @@ import java.util.Set;
 import static org.michaelfl.mychess.ChessUtil.*;
 import static org.michaelfl.mychess.RandomNumbers.RANDOM_NUMBERS;
 
+/**
+ * Mutable chess board with a 12x12 byte mailbox layout (illegal-square border)
+ * and a stack of {@link GameStatus} snapshots that makes every {@code makeMove}
+ * undoable in O(1) via {@code revertMove}. Owns Zobrist hashing and the
+ * resolution of symbolic moves ({@link MoveDescription}) into packed
+ * integer moves.
+ *
+ * @author Michael Fleischhauer
+ */
 @SuppressWarnings({"WeakerAccess", "unused", "PointlessArithmeticExpression", "DuplicatedCode", "java:S115"})
 public final class Board {
 

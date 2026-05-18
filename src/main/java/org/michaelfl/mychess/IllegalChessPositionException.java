@@ -1,6 +1,9 @@
 package org.michaelfl.mychess;
 
 /**
+ * Thrown when a {@link Board} state cannot legally arise in a real game
+ * (e.g. side-to-move could capture the opponent's king).
+ *
  * @author Michael Fleischhauer
  */
 public class IllegalChessPositionException extends IllegalStateException {

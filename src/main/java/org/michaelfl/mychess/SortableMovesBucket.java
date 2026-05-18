@@ -1,6 +1,10 @@
 package org.michaelfl.mychess;
 
 /**
+ * Pair of parallel {@link MovesArray}/{@link IntArray} (move and weight) with
+ * an insertion-sort that orders moves by descending weight. Used by
+ * {@link org.michaelfl.mychess.engines.MoveSorterImpl} per capture bucket.
+ *
  * @author Michael Fleischhauer
  */
 public final class SortableMovesBucket {
