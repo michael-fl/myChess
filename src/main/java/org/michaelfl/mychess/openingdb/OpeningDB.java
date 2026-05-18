@@ -62,12 +62,14 @@ public final class OpeningDB implements AutoCloseable {
         }
     }
 
+    private static final String DEFAULT_DB_PATH = "db/openings.db";
+
     private final DB db;
     private final BTreeMap<String, byte[]> dbMap;
 
-    private OpeningDB() {
+    private OpeningDB(String filePath) {
         db = DBMaker
-                .fileDB("db/openings.db")
+                .fileDB(filePath)
                 .transactionEnable()
                 .closeOnJvmShutdown()
                 .make();
@@ -80,7 +82,12 @@ public final class OpeningDB implements AutoCloseable {
     }
 
     public static OpeningDB open() {
-        return new OpeningDB();
+        return new OpeningDB(DEFAULT_DB_PATH);
+    }
+
+    /** Open an OpeningDB stored at the given file path. Intended for tests. */
+    public static OpeningDB openAt(String filePath) {
+        return new OpeningDB(filePath);
     }
 
     public PositionInfo lookupPosition(String key) {

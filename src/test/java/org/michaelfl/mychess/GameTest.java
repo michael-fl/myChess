@@ -3,7 +3,7 @@ package org.michaelfl.mychess;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.Game.GameResult;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Michael Fleischhauer
@@ -55,5 +55,98 @@ class GameTest {
 
             game.makeMove(moveDescr);
         }
+    }
+
+    // ---- Rollback and verification paths ----
+
+    @Test
+    void illegalMoveOnOngoingGameLeavesBoardUntouched() {
+        var game = new Game();
+        var fenBefore = game.exportFEN();
+        var hashBefore = game.getGameStatus().getPositionHash();
+
+        // e4 is legal, but "e7" by white at the start position is not a legal pawn move.
+        var bad = MoveDescription.fromString("e7", game.getTurn());
+        assertThrows(IllegalMoveException.class, () -> game.makeMove(bad),
+                "An impossible move must throw IllegalMoveException");
+
+        assertEquals(fenBefore, game.exportFEN(),
+                "After a rejected move the FEN must be unchanged");
+        assertEquals(hashBefore, game.getGameStatus().getPositionHash(),
+                "After a rejected move the Zobrist hash must be unchanged");
+        assertEquals(GameResult.ONGOING, game.getResult(),
+                "Result must still be ONGOING after a rejected move");
+    }
+
+    @Test
+    void verifyMoveRejectsBogusCheckAnnotation() {
+        // 1. e4 is a legal first move but is not a check. The "+" suffix must be rejected.
+        var game = new Game();
+        var bogus = MoveDescription.fromString("e4+", GameStatus.TURN_WHITE);
+
+        var ex = assertThrows(IllegalMoveException.class, () -> game.makeMove(bogus),
+                "Move with bogus check annotation must throw");
+        assertTrue(ex.getMessage().contains("does not give check"),
+                "Exception message should pinpoint the bogus check annotation: " + ex.getMessage());
+    }
+
+    @Test
+    void verifyMoveRejectsBogusCheckmateAnnotation() {
+        var game = new Game();
+        var bogus = MoveDescription.fromString("e4#", GameStatus.TURN_WHITE);
+
+        var ex = assertThrows(IllegalMoveException.class, () -> game.makeMove(bogus),
+                "Move with bogus checkmate annotation must throw");
+        assertTrue(ex.getMessage().toLowerCase().contains("checkmate")
+                        || ex.getMessage().toLowerCase().contains("check"),
+                "Exception message should reference the bogus annotation: " + ex.getMessage());
+    }
+
+    @Test
+    void makeMoveOnFinishedGameThrows() {
+        // Set up a Scholar's mate to terminate the game.
+        var game = GameImporter.importerFor("""
+                1. e4 e5 2. Bc4 Nc6 3. Qh5 Nf6 4. Qxf7#
+                """).importGame();
+        assertEquals(GameResult.CHECKMATE, game.getResult(),
+                "Game must be CHECKMATE after Scholar's mate");
+
+        var anyMove = MoveDescription.fromString("Kxf7", game.getTurn());
+        assertThrows(IllegalStateException.class, () -> game.makeMove(anyMove),
+                "Making a move on a finished game must throw IllegalStateException");
+    }
+
+    @Test
+    void revertOnEmptyStackThrows() {
+        var game = new Game();
+        assertThrows(IllegalStateException.class, () -> {
+            // revertMove() is package-private; reachable from same-package test.
+            var method = Game.class.getDeclaredMethod("revertMove");
+            method.setAccessible(true);
+            try {
+                method.invoke(game);
+            } catch (java.lang.reflect.InvocationTargetException ite) {
+                throw (RuntimeException) ite.getCause();
+            }
+        }, "Reverting before any move was made must throw IllegalStateException");
+    }
+
+    @Test
+    void revertAfterMate_restoresOngoingState() {
+        var game = GameImporter.importerFor("""
+                1. f3 e6 2. g4 Qh4
+                """).importGame();
+        assertEquals(GameResult.CHECKMATE, game.getResult(), "Fool's mate must terminate the game");
+
+        try {
+            var method = Game.class.getDeclaredMethod("revertMove");
+            method.setAccessible(true);
+            method.invoke(game);
+        } catch (Exception e) {
+            fail("Reflection on revertMove failed: " + e.getMessage());
+        }
+
+        assertEquals(GameResult.ONGOING, game.getResult(),
+                "Result must transition back to ONGOING after revert");
     }
 }

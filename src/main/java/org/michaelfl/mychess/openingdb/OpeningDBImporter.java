@@ -116,7 +116,7 @@ final class OpeningDBImporter {
         }
     }
 
-    private void importPgn(Pgn pgn) {
+    void importPgn(Pgn pgn) {
         if (pgn.moves.getFirst().turn == GameStatus.TURN_BLACK) {
             return; // skip PGNs starting with a black move
         }

@@ -351,9 +351,9 @@ class EngineTest {
     }
 
     // Assure that the white knight on f6 is not captured with the king pawn,
-    // since this would weaken blacks kind position a lot
-    // TODO Test currently disabled
-    @Test @Disabled
+    // since this would weaken blacks king position a lot
+    @Test @Disabled("Known engine weakness: it currently does not prefer the king-side pawn pickup. " +
+            "Re-enable once positional evaluation is tightened.")
     void dontCaptureWithKingPawn() {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 e5 5. Nb3 Nc6 6. Nc3 Nf6 7. Be2 Be6 8. O-O Be7 9.
