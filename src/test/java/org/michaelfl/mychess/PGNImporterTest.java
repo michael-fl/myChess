@@ -62,7 +62,7 @@ class PGNImporterTest {
     }
 
     @Test
-    @Disabled
+    @Disabled("Manual benchmark: requires a non-versioned 'large.pgn' test resource.")
     void testImportLargePGNFile() throws IOException {
         var classLoader = getClass().getClassLoader();
         var resource = classLoader.getResource("large.pgn");
@@ -75,7 +75,7 @@ class PGNImporterTest {
     }
 
     @Test
-    @Disabled
+    @Disabled("Manual benchmark: hard-coded path to a local KingBase PGN archive outside the repo.")
     void testImportMultipleLargePGNFiles() throws IOException {
         var dir = Path.of("/Users/mf/_PRIVAT_/Schach/KingBase2019-pgn/");
         Files.list(dir).forEach(pgnFile -> {

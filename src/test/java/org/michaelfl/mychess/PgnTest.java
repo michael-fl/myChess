@@ -332,7 +332,7 @@ class PgnTest {
     }
 
     @Test
-    @Disabled
+    @Disabled("Manual benchmark: requires a non-versioned 'large.pgn' test resource.")
     void testReadLargePGNFile() throws IOException {
         var classLoader = getClass().getClassLoader();
         var resource = classLoader.getResource("large.pgn");
