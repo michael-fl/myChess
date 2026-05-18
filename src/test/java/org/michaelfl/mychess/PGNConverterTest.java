@@ -2,8 +2,7 @@ package org.michaelfl.mychess;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Michael Fleischhauer
@@ -84,11 +83,9 @@ class PGNConverterTest {
         var pgn = PGNConverter.toPGN(legacy);
 
         var lines = pgn.split("\n");
-        assertEquals(true, lines.length >= 2,
-                "this 28-ply game must wrap onto multiple lines; got " + lines.length);
+        assertTrue(lines.length >= 2, "this 28-ply game must wrap onto multiple lines; got " + lines.length);
         for (var line : lines) {
-            assertEquals(true, line.length() <= 95,
-                    "no output line should exceed the wrap threshold; got len " + line.length() + ": " + line);
+            assertTrue(line.length() <= 95, "no output line should exceed the wrap threshold; got len " + line.length() + ": " + line);
         }
     }
 

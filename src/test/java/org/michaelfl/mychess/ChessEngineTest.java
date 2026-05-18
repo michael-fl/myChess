@@ -163,9 +163,10 @@ class ChessEngineTest {
     @Timeout(value = 30, unit = TimeUnit.SECONDS)
     void shutdown_rejectsFurtherSubmissions() {
         var game = new Game(new GameConfig(MyChessEngine.class, defaultConfig()));
+        var engine = game.getEngine();
         game.shutdown();
         assertThrows(RejectedExecutionException.class,
-                () -> game.getEngine().nextMoveAsync(),
+                engine::nextMoveAsync,
                 "Submitting after shutdown must be rejected");
     }
 }

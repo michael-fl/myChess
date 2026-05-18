@@ -1,9 +1,13 @@
 package org.michaelfl.mychess;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -44,52 +48,44 @@ class BoardTest {
         assertFalse(board.isKingChecked(moveGenerator), "King should no longer be checked");
     }
 
-    @Test
-    void testIsCheckmate_scholarsMate() {
-        var pgn = """
-                1. e4 e5
-                2. Qh5 Nc6
-                3. Bc4 Nf6??
-                """;
-        var game = GameImporter.importerFor(pgn).importGame();
-        var moveGenerator = newGen();
-        var board = game.getBoard();
-
-        assertFalse(board.isCheckmate(moveGenerator), "Should not yet be checkmate");
-        game.makeMove(MoveDescription.fromString("Qxf7", board.getGameStatus().getTurn()));
-        assertTrue(board.isCheckmate(moveGenerator), "Should be checkmate now");
+    static Stream<Arguments> checkmateCases() {
+        return Stream.of(
+                Arguments.of("Scholar's mate",
+                        """
+                        1. e4 e5
+                        2. Qh5 Nc6
+                        3. Bc4 Nf6??
+                        """,
+                        "Qxf7"),
+                Arguments.of("Fool's mate",
+                        """
+                        1. f3 e6
+                        2. g4
+                        """,
+                        "Qh4"),
+                Arguments.of("Smothered mate",
+                        """
+                        1. e4 c6 2. d4 d5
+                        3. Nc3 dxe4
+                        4. Nxe4 Nd7
+                        5. Qe2 Ngf6
+                        """,
+                        "Nd6#")
+        );
     }
 
-    @Test
-    void testIsCheckmate_foolsMate() {
-        var pgn = """
-                1. f3 e6
-                2. g4
-                """;
-        var game = GameImporter.importerFor(pgn).importGame();
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("checkmateCases")
+    void testIsCheckmate(String name, String setupPgn, String matingMove) {
+        var game = GameImporter.importerFor(setupPgn).importGame();
         var moveGenerator = newGen();
         var board = game.getBoard();
 
-        assertFalse(board.isCheckmate(moveGenerator), "Should not yet be checkmate");
-        game.makeMove(MoveDescription.fromString("Qh4", board.getGameStatus().getTurn()));
-        assertTrue(board.isCheckmate(moveGenerator), "Should be checkmate now");
-    }
-
-    @Test
-    void testIsCheckmate_smotheredMate() {
-        var pgn = """
-                1. e4 c6 2. d4 d5
-                3. Nc3 dxe4
-                4. Nxe4 Nd7
-                5. Qe2 Ngf6
-                """;
-        var game = GameImporter.importerFor(pgn).importGame();
-        var moveGenerator = newGen();
-        var board = game.getBoard();
-
-        assertFalse(board.isCheckmate(moveGenerator), "Should not yet be checkmate");
-        game.makeMove(MoveDescription.fromString("Nd6#", board.getGameStatus().getTurn()));
-        assertTrue(board.isCheckmate(moveGenerator), "Should be checkmate now");
+        assertFalse(board.isCheckmate(moveGenerator),
+                name + ": should not yet be checkmate");
+        game.makeMove(MoveDescription.fromString(matingMove, board.getGameStatus().getTurn()));
+        assertTrue(board.isCheckmate(moveGenerator),
+                name + ": should be checkmate after " + matingMove);
     }
 
     // ---------- make / revert symmetry per move type ----------

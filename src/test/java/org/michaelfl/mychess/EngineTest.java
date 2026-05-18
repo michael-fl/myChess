@@ -562,7 +562,7 @@ class EngineTest {
     @Test
     void testPosition29() {
         var pgn = """
-                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5 
+                1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 8.Bg5 f6 9.Be3 b5
                 10.Bb3 Ng6 11.Nd5 exd5 12.exd5 Na5
                 """;
         testPosition(pgn,
@@ -672,11 +672,9 @@ class EngineTest {
             }
 
             for (int i = 0; i < expectedPathDepth; i++) {
-                if (expectedPathOpt != null) {
-                    if (notContainsMove(game, Set.of(expectedPathOpt[i]), move.path[i])) {
-                        game.print();
-                        fail("Unexpected move at path depth " + i + ": " + game.getBoard().moveToShortNotation(new Move(move.path[i])) + ", expected " + expectedPathOpt[i] + ", expected path=" + Arrays.toString(expectedPathOpt) + ", actual path=" + ChessUtil.pathToString(move.path));
-                    }
+                if (expectedPathOpt != null && notContainsMove(game, Set.of(expectedPathOpt[i]), move.path[i])) {
+                    game.print();
+                    fail("Unexpected move at path depth " + i + ": " + game.getBoard().moveToShortNotation(new Move(move.path[i])) + ", expected " + expectedPathOpt[i] + ", expected path=" + Arrays.toString(expectedPathOpt) + ", actual path=" + ChessUtil.pathToString(move.path));
                 }
                 try {
                     game.makeMove(new Move(move.path[i]));
@@ -705,6 +703,7 @@ class EngineTest {
         int len = 0;
         //noinspection StatementWithEmptyBody
         for (int i = 0; i < path.length && path[i] != 0; i++, len++) {
+            // empty - only calculating len
         }
         return len;
     }

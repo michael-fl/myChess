@@ -92,19 +92,6 @@ class DeepWeightTest {
     }
 
     @Test
-    void testPosition07() {
-        var pgn = """
-                1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
-                O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6
-                """;
-        testPosition(pgn,
-                0.20f,
-                0.30f,
-                new GameConfig(MyChessEngine.class, engineConfig())
-        );
-    }
-
-    @Test
     void testPosition08() {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.

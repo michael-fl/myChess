@@ -11,7 +11,7 @@ import static org.michaelfl.mychess.RandomNumbers.RANDOM_NUMBERS;
  */
 class ZobristHashingTest {
 
-    private final static int CASTLING_RIGHTS_INDEX = 12 * 64 + 1; // length = 16
+    private static final int CASTLING_RIGHTS_INDEX = 12 * 64 + 1; // length = 16
 
     @Test
     void testHashOfStartPosition() {

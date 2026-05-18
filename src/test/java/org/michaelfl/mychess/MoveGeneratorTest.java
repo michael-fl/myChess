@@ -1,6 +1,8 @@
 package org.michaelfl.mychess;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -54,53 +56,79 @@ class MoveGeneratorTest {
     }
 
     @Test
-    void testCastlingPossible1() {
+    void testWhiteCanCastleKingSide() {
         var pgn = """
                 1. d3 c5 2. g3 Nf6 3. Bg2 e6 4. Nf3 Qb6
                 """;
-        testCastlingPossible(pgn);
+        assertCastlingPossible(pgn, "e1-g1");
     }
 
     @Test
-    void testCastlingNotPossible1() {
+    void testBlackCanCastleKingSide() {
         var pgn = """
-                1. e4 c6 2. f3 Qb6 3. Be2 Nf6 4. Nh3 e6
+                1. e4 e5 2. Nf3 Nf6 3. Bc4 Bc5 4. d3
                 """;
-        testCastlingNotPossible(pgn);
+        assertCastlingPossible(pgn, "e8-g8");
     }
 
     @Test
-    void testCastlingNotPossible2() {
+    void testWhiteCanCastleQueenSide() {
         var pgn = """
-                1. g3 b6 2. Bg2 Ba6 3. e4 e5 4. Nf3 Nf6
+                1. d4 d5 2. Nc3 Nc6 3. Bf4 Bf5 4. Qd2 Qd7
                 """;
-        testCastlingNotPossible(pgn);
+        assertCastlingPossible(pgn, "e1-c1");
+    }
+
+    @ParameterizedTest(name = "[{index}] {0}")
+    @ValueSource(strings = {
+            "1. e4 c6 2. f3 Qb6 3. Be2 Nf6 4. Nh3 e6",
+            "1. g3 b6 2. Bg2 Ba6 3. e4 e5 4. Nf3 Nf6",
+            "1. d3 c5 2. g3 Nf6 3. Bg2 e6 4. Nf3 Qa5+",
+    })
+    void testWhiteCannotCastleKingSide(String pgn) {
+        assertCastlingNotPossible(pgn, "e1-g1");
     }
 
     @Test
-    void testCastlingNotPossible3() {
+    void testWhiteCannotCastleQueenSide_piecesInTheWay() {
+        // After 4 plies, white's turn — Nb1, Bc1 and Qd1 still block the queen-side path.
         var pgn = """
-                1. d3 c5 2. g3 Nf6 3. Bg2 e6 4. Nf3 Qa5+
+                1. e4 e5 2. Nf3 Nf6
                 """;
-        testCastlingNotPossible(pgn);
+        assertCastlingNotPossible(pgn, "e1-c1");
     }
 
-    private void testCastlingPossible(String movesStr) {
+    @Test
+    void testBlackCannotCastleKingSide_piecesInTheWay() {
+        // After 1 ply, black's turn — Ng8 and Bf8 still on their starting squares.
+        var pgn = "1. e4";
+        assertCastlingNotPossible(pgn, "e8-g8");
+    }
+
+    @Test
+    void testBlackCannotCastleQueenSide_piecesInTheWay() {
+        // After 1 ply, black's turn — Nb8, Bc8 and Qd8 still on their starting squares.
+        var pgn = "1. d4";
+        assertCastlingNotPossible(pgn, "e8-c8");
+    }
+
+    private void assertCastlingPossible(String movesStr, String castlingMove) {
         var importer = GameImporter.importerFor(movesStr);
         var game = importer.importGame();
 
-        assertMovePossible("e1-g1", game);
+        assertMovePossible(castlingMove, game);
 
-        game.makeMove(MoveDescription.fromString("e1-g1", game.getTurn()));
+        game.makeMove(MoveDescription.fromString(castlingMove, game.getTurn()));
     }
 
-    private void testCastlingNotPossible(String movesStr) {
+    private void assertCastlingNotPossible(String movesStr, String castlingMove) {
         var importer = GameImporter.importerFor(movesStr);
         var game = importer.importGame();
 
-        assertMoveNotPossible("e1-g1", game);
+        assertMoveNotPossible(castlingMove, game);
 
-        var ex = assertThrows(IllegalStateException.class, () -> game.makeMove(MoveDescription.fromString("e1-g1", game.getTurn())));
+        var moveDescr = MoveDescription.fromString(castlingMove, game.getTurn());
+        var ex = assertThrows(IllegalStateException.class, () -> game.makeMove(moveDescr));
         assertTrue(ex.getMessage().contains("Illegal move"), "Unexpected exception message: " + ex.getMessage());
     }
 
@@ -205,7 +233,7 @@ class MoveGeneratorTest {
         assertNotNull(moves, "No moves returned");
         assertTrue(moves.count() > 0, "No moves returned");
 
-        List<Integer> actualMoves = Arrays.stream(moves.getMoves()).limit(moves.count()).boxed().collect(Collectors.toList());
+        List<Integer> actualMoves = Arrays.stream(moves.getMoves()).limit(moves.count()).boxed().toList();
 
         Set<Integer> expectedMoves = parseMoves(game, expectedMovesStr);
         assertEquals(expectedMoves.size(), moves.count(), "Unexpected number of moves");
