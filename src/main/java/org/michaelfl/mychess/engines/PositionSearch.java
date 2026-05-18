@@ -21,6 +21,14 @@ import java.util.concurrent.CancellationException;
 
 import static org.michaelfl.mychess.Assert.*;
 
+/**
+ * Iterative-deepening negamax alpha-beta search with PV reuse, killer-move
+ * heuristic and {@link QuiescenceSearch} extension. Cooperatively cancellable
+ * via {@link NextMoveTask} and time-bounded by
+ * {@link EngineConfig#getSecondsPerMove()}.
+ *
+ * @author Michael Fleischhauer
+ */
 @SuppressWarnings("DuplicatedCode")
 public final class PositionSearch {
 

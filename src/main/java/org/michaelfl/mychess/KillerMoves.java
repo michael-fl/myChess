@@ -1,6 +1,11 @@
 package org.michaelfl.mychess;
 
 /**
+ * Killer-move heuristic table: stores up to two non-capturing moves per
+ * search depth that previously caused a beta cutoff. Queried by
+ * {@link org.michaelfl.mychess.engines.MoveSorterImpl} to elevate them
+ * ahead of other quiet moves.
+ *
  * @author Michael Fleischhauer
  */
 public final class KillerMoves {

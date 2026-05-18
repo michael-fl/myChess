@@ -1,5 +1,13 @@
 package org.michaelfl.mychess;
 
+/**
+ * Immutable per-ply state snapshot owned by {@link Board}: side to move,
+ * castling-rights bitmask, en-passant target square, half-move clock, last
+ * move and Zobrist position hash. Pushed before every {@code makeMove} and
+ * popped on {@code revertMove}.
+ *
+ * @author Michael Fleischhauer
+ */
 public final class GameStatus {
 
     public static final int BIT_WHITE_CASTLING_KING_SIDE_POSSIBLE = 1;

@@ -1,6 +1,11 @@
 package org.michaelfl.mychess;
 
 /**
+ * Mutable counters collected during a search run: visited positions, pruned
+ * moves, max reached depth, and per-call quiescence aggregates. Read by
+ * {@link org.michaelfl.mychess.engines.PositionSearch} for its 10000-node
+ * timeout check.
+ *
  * @author Michael Fleischhauer
  */
 @SuppressWarnings("unused")

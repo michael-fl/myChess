@@ -3,6 +3,14 @@ package org.michaelfl.mychess;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * {@link GameImporter} for the project-internal long-algebraic
+ * {@code [[e2-e4 e7-e5 ...]]} format. Unlike {@link PGNImporter} it uses
+ * {@link Game#standardConfig()} so threefold-repetition and 50-move rules
+ * remain enabled.
+ *
+ * @author Michael Fleischhauer
+ */
 final class SimpleNotationImporter implements GameImporter {
 
     private final String gameNotation;

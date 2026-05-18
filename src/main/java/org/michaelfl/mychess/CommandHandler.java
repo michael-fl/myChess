@@ -13,6 +13,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * REPL dispatcher for {@link MyChessMain}. Reads one input line via
+ * {@code java.lang.IO.readln()}, finds the first {@code Command} subclass whose
+ * {@code canHandle} matches, and runs its {@code handle}. Anything that is not
+ * a known command is parsed as an algebraic move.
+ *
+ * @author Michael Fleischhauer
+ */
 @SuppressWarnings("CallToPrintStackTrace")
 final class CommandHandler {
 

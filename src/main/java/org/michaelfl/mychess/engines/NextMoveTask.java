@@ -9,6 +9,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
+ * Future-like handle for an asynchronous {@link ChessEngine#nextMoveAsync()}
+ * call. Cooperative cancellation: the search polls {@link #isCanceled()} and
+ * throws {@link java.util.concurrent.CancellationException}; carries the
+ * {@link MyChessEnv} into the search task.
+ *
  * @author Michael Fleischhauer
  */
 public final class NextMoveTask {

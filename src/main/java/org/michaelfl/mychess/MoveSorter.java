@@ -3,6 +3,10 @@ package org.michaelfl.mychess;
 import org.michaelfl.mychess.engines.MoveSorterImpl;
 
 /**
+ * Sink for generated moves that returns them in search-friendly order. The
+ * default implementation is {@link MoveSorterImpl}; instances are obtained
+ * via {@link #defaultImplementation()}.
+ *
  * @author Michael Fleischhauer
  */
 public interface MoveSorter {

@@ -1,6 +1,11 @@
 package org.michaelfl.mychess;
 
 /**
+ * Tuning parameters for a {@link org.michaelfl.mychess.engines.ChessEngine}:
+ * max search depth, seconds-per-move budget, log verbosity and whether the
+ * threefold-repetition / 50-move draw rules are honored. Built via
+ * {@link Builder}.
+ *
  * @author Michael Fleischhauer
  */
 @SuppressWarnings("FinalMethodInFinalClass")

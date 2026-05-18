@@ -2,6 +2,13 @@ package org.michaelfl.mychess;
 
 import java.util.Collection;
 
+/**
+ * Stateless conversions between board fields, pieces, packed moves and their
+ * string representations (field names like {@code "e4"}, piece symbols, move
+ * notation, evaluation weights).
+ *
+ * @author Michael Fleischhauer
+ */
 public final class ChessUtil {
 
     private ChessUtil() {

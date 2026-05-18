@@ -7,6 +7,15 @@ import org.michaelfl.mychess.engines.NextMoveTask;
 
 import java.util.List;
 
+/**
+ * Top-level chess game: a {@link Board} plus the two side engines and a status
+ * engine that detects checkmate/stalemate after every successful move. Provides
+ * {@link #makeMove}/{@link #revertMove} with automatic rollback on validation
+ * failures and exposes the asynchronous engine entry points via
+ * {@link #getEngine()}.
+ *
+ * @author Michael Fleischhauer
+ */
 public final class Game {
 
     public enum GameResult {

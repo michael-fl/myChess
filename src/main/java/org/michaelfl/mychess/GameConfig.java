@@ -4,6 +4,9 @@ import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.MyChessEngine;
 
 /**
+ * Engine wiring for a {@link Game}: which {@link ChessEngine} implementation
+ * plays white, which plays black, and the {@link EngineConfig} for each.
+ *
  * @author Michael Fleischhauer
  */
 public final class GameConfig {

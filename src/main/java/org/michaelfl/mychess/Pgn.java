@@ -16,6 +16,11 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
+ * Parsed PGN game: the seven-tag-roster headers plus a list of
+ * {@link MoveDescription}s. {@link #parse(String)} streams one or more games
+ * out of a string or {@link java.io.Reader}; consume the moves via
+ * {@link PGNImporter} to drive an actual {@link Game}.
+ *
  * @author Michael Fleischhauer
  */
 @SuppressWarnings("unused")

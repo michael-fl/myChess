@@ -2,6 +2,14 @@ package org.michaelfl.mychess;
 
 import org.jspecify.annotations.NonNull;
 
+/**
+ * Boxed wrapper around a packed move integer (from-field | to-field<<8 |
+ * captured-piece<<16 | move-type<<24) for printing, equality and the
+ * {@code typeXxx} constants. The search hot path uses raw {@code int}s and
+ * the static accessors here.
+ *
+ * @author Michael Fleischhauer
+ */
 @SuppressWarnings({"WeakerAccess", "unused", "java:S115"})
 public record Move(int move) {
 

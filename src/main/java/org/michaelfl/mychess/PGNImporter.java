@@ -3,6 +3,10 @@ package org.michaelfl.mychess;
 import org.michaelfl.mychess.engines.MyChessEngine;
 
 /**
+ * {@link GameImporter} that replays a parsed {@link Pgn} into a {@link Game}.
+ * The no-arg variant disables threefold-repetition and the 50-move rule so
+ * that draw-by-rule does not interrupt importing finished games.
+ *
  * @author Michael Fleischhauer
  */
 final class PGNImporter implements GameImporter {
