@@ -3,7 +3,6 @@ package org.michaelfl.mychess;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.michaelfl.mychess.engines.MyChessEngine;
-import org.michaelfl.mychess.engines.NextMoveTask;
 import org.michaelfl.mychess.engines.PositionSearch;
 
 import java.util.concurrent.TimeUnit;
@@ -67,7 +66,7 @@ class PositionSearchTest {
     @Test
     @Timeout(value = 30, unit = TimeUnit.SECONDS)
     void terminatesOnAlreadyOverGame() throws Exception {
-        // Set up a checkmate position so the search recognises the game is over.
+        // Set up a checkmate position so the search recognizes the game is over.
         var setup = """
                 1. e4 e5
                 2. Qh5 Nc6
@@ -88,8 +87,7 @@ class PositionSearchTest {
     @Timeout(value = 30, unit = TimeUnit.SECONDS)
     void getPossibleMovesAtStartReturnsTwentyMoves() {
         var game = new Game(new GameConfig(MyChessEngine.class, deepConfig(1)));
-        Moves moves = PositionSearch.getPossibleMoves(
-                (org.michaelfl.mychess.engines.ChessEngine) game.getEngine(), game);
+        Moves moves = PositionSearch.getPossibleMoves(game.getEngine(), game);
         assertEquals(20, moves.count(),
                 "From the start position there are exactly 20 legal moves for white");
     }

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -43,28 +42,7 @@ class SortableMovesBucketTest {
         assertEquals(move1, bucket.getMove(1));
     }
 
-    private static final class MoveAndWeight {
-        final int move;
-        final int weight;
-
-        private MoveAndWeight(int move, int weight) {
-            this.move = move;
-            this.weight = weight;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            MoveAndWeight that = (MoveAndWeight) o;
-            return move == that.move &&
-                    weight == that.weight;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(move, weight);
-        }
+    private record MoveAndWeight(int move, int weight) {
     }
 
     @Test

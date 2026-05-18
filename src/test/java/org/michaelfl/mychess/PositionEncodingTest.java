@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Michael Fleischhauer
  */
-public class PositionEncodingTest {
+class PositionEncodingTest {
     @Test
     void testStartPosition() {
         var game = new Game();

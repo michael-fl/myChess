@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.michaelfl.mychess.Game.GameResult;
-import org.michaelfl.mychess.engines.MyChessEngine;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,8 +26,9 @@ class MoveTest {
     @ValueSource(strings = {"e2-e5", "e2-f3", "e2xd3", "de4", "1e4", "e5"})
     void testWrongPawnMoves(String move) {
         var game = new Game();
+        var moveDescr = MoveDescription.fromString(move, game.getTurn());
 
-        assertThrows(IllegalMoveException.class, () -> game.makeMove(MoveDescription.fromString(move, game.getTurn())));
+        assertThrows(IllegalMoveException.class, () -> game.makeMove(moveDescr));
     }
 
     @ParameterizedTest
@@ -45,15 +45,22 @@ class MoveTest {
     @ValueSource(strings = {"bc3", "1c3", "Nc1c2", "Nb1"})
     void testWrongKnightMoves1(String move) {
         var game = new Game();
+        var moveDescr = MoveDescription.fromString(move, game.getTurn());
 
-        assertThrows(IllegalMoveException.class, () -> game.makeMove(MoveDescription.fromString(move, game.getTurn())));
+        assertThrows(IllegalMoveException.class, () -> game.makeMove(moveDescr));
+
+        assertEquals(Board.whiteKnight, game.getBoard().get(Board.b1),
+                "knight must stay on b1 after a rejected knight move");
+        assertEquals(Board.empty, game.getBoard().get(Board.c3),
+                "c3 must remain empty after a rejected knight move");
     }
 
     @Test
     void testWrongCapture() {
         var game = new Game();
+        var moveDescr = MoveDescription.fromString("Nb1xc3", game.getTurn());
 
-        assertThrows(IllegalMoveException.class, () -> game.makeMove(MoveDescription.fromString("Nb1xc3", game.getTurn())));
+        assertThrows(IllegalMoveException.class, () -> game.makeMove(moveDescr));
     }
 
     @ParameterizedTest
@@ -75,7 +82,8 @@ class MoveTest {
                 1. e4 e5 2. Ne2 d6
                 """);
         var game = importer.importGame();
-        assertThrows(IllegalMoveException.class, () -> game.makeMove(MoveDescription.fromString(move, game.getTurn())));
+        var moveDescr = MoveDescription.fromString(move, game.getTurn());
+        assertThrows(IllegalMoveException.class, () -> game.makeMove(moveDescr));
     }
 
     @ParameterizedTest
@@ -97,7 +105,8 @@ class MoveTest {
                 1. f3 e6 2. Nh3 d6 3. Nf2 Bd7 4. e3 Be7 5. Qe2 Nf6 6. Nd1 O-O
                 """);
         var game = importer.importGame();
-        assertThrows(IllegalMoveException.class, () -> game.makeMove(MoveDescription.fromString(move, game.getTurn())));
+        var moveDescr = MoveDescription.fromString(move, game.getTurn());
+        assertThrows(IllegalMoveException.class, () -> game.makeMove(moveDescr));
     }
     
     @Test
@@ -106,7 +115,14 @@ class MoveTest {
                 1. e4 e5 2. d3
                 """);
         var game = importer.importGame();
+
         game.makeMove(MoveDescription.fromString("Bb4+", game.getTurn()));
+
+        assertEquals(Board.blackBishop, game.getBoard().get(Board.b4),
+                "bishop should be on b4 after Bb4+");
+        var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
+        assertTrue(game.getBoard().isKingChecked(moveGenerator),
+                "white king must be in check after Bb4+");
     }
 
     @Test
@@ -115,7 +131,8 @@ class MoveTest {
                 1. e4 e5 2. d3
                 """);
         var game = importer.importGame();
-        assertThrows(IllegalMoveException.class, () -> game.makeMove(MoveDescription.fromString("Bc5+", game.getTurn())));
+        var moveDescr = MoveDescription.fromString("Bc5+", game.getTurn());
+        assertThrows(IllegalMoveException.class, () -> game.makeMove(moveDescr));
     }
 
     @Test
@@ -134,7 +151,8 @@ class MoveTest {
                 1. f3 e6 2. g4
                 """);
         var game = importer.importGame();
-        assertThrows(IllegalMoveException.class, () -> game.makeMove(MoveDescription.fromString("Qg5#", game.getTurn())));
+        var moveDescr = MoveDescription.fromString("Qg5#", game.getTurn());
+        assertThrows(IllegalMoveException.class, () -> game.makeMove(moveDescr));
     }
 
     @ParameterizedTest
@@ -188,7 +206,8 @@ class MoveTest {
     @Test
     void testWrongPawnPromotionMove() {
         var game = new Game();
-        assertThrows(IllegalMoveException.class, () -> game.makeMove(MoveDescription.fromString("e4=Q", game.getTurn())));
+        var moveDescr = MoveDescription.fromString("e4=Q", game.getTurn());
+        assertThrows(IllegalMoveException.class, () -> game.makeMove(moveDescr));
     }
 
     @Test
@@ -258,9 +277,10 @@ class MoveTest {
                 Rxb7 Rd4 39. Ra7 Rxd5 40. Rxa6 Kxg5 41. a4 Rd4 42. b5 Rh4+
                 """);
         var game = importer.importGame();
+        var moveDescr = MoveDescription.fromString("g3", game.getTurn());
 
         // make invalid move
-        assertThrows(IllegalMoveException.class, () -> game.makeMove(MoveDescription.fromString("g3", game.getTurn())));
+        assertThrows(IllegalMoveException.class, () -> game.makeMove(moveDescr));
 
         // assure that move was not executed
         var piece = game.getBoard().get(Board.g2);

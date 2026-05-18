@@ -119,16 +119,8 @@ class GameTest {
     @Test
     void revertOnEmptyStackThrows() {
         var game = new Game();
-        assertThrows(IllegalStateException.class, () -> {
-            // revertMove() is package-private; reachable from same-package test.
-            var method = Game.class.getDeclaredMethod("revertMove");
-            method.setAccessible(true);
-            try {
-                method.invoke(game);
-            } catch (java.lang.reflect.InvocationTargetException ite) {
-                throw (RuntimeException) ite.getCause();
-            }
-        }, "Reverting before any move was made must throw IllegalStateException");
+        assertThrows(IllegalStateException.class, game::revertMove,
+                "Reverting before any move was made must throw IllegalStateException");
     }
 
     @Test
@@ -138,13 +130,7 @@ class GameTest {
                 """).importGame();
         assertEquals(GameResult.CHECKMATE, game.getResult(), "Fool's mate must terminate the game");
 
-        try {
-            var method = Game.class.getDeclaredMethod("revertMove");
-            method.setAccessible(true);
-            method.invoke(game);
-        } catch (Exception e) {
-            fail("Reflection on revertMove failed: " + e.getMessage());
-        }
+        game.revertMove();
 
         assertEquals(GameResult.ONGOING, game.getResult(),
                 "Result must transition back to ONGOING after revert");
