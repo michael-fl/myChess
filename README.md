@@ -113,6 +113,7 @@ In separate files under [`docs/`](docs/):
 9. [Opening Database](docs/opening-database.md) *(stub)*
 10. [Notation and I/O](docs/notation.md) *(stub)*
 11. [Testing](docs/testing.md) *(stub)*
+12. [Roadmap: Improving Playing Strength](docs/roadmap.md) — concrete next steps with effort/Elo estimates.
 
 ---
 
@@ -230,6 +231,7 @@ myChess/
 | `openingdb/OpeningDB`, `openingdb/DBValue`, `openingdb/OpeningDBImporter` | [Opening Database](docs/opening-database.md) |
 | `Fen`, `Pgn`, `PGNImporter`, `SimpleNotationImporter`, `GameImporter`, `CommandHandler` | [Notation and I/O](docs/notation.md) |
 | `src/test/…` | [Testing](docs/testing.md) |
+| Planned strength improvements (not yet implemented) | [Roadmap](docs/roadmap.md) |
 
 **Key conventions:**
 
