@@ -33,7 +33,7 @@ public final class Game {
     private final ChessEngine engineBlack;
     private final ChessEngine statusEngine;
 
-    private final Board board = Board.createNewGame();
+    private final Board board;
     private GameResult result = GameResult.ONGOING;
 
     static GameConfig standardConfig() {
@@ -47,6 +47,16 @@ public final class Game {
     }
 
     Game(GameConfig config) {
+        this(config, Board.createNewGame());
+    }
+
+    /**
+     * Construct a game whose board is the given pre-built {@link Board}.
+     * Used by {@link Fen#importFEN(String)} and the REPL/UCI {@code position fen}
+     * commands to install an arbitrary starting position.
+     */
+    Game(GameConfig config, Board initialBoard) {
+        this.board = initialBoard;
         engineWhite = config.createEngineWhite(this);
         engineBlack = config.createEngineBlack(this);
         statusEngine = new MyChessEngine(
