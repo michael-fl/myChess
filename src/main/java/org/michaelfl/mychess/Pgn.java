@@ -217,13 +217,13 @@ public final class Pgn {
                 try {
                     return readOnePgn(pgnBuilder);
                 } catch (RuntimeException e) {
-                    System.err.println(pgnBuilder);
                     if (!ignoreErrors || !(e instanceof IllegalPGNException || e instanceof IllegalArgumentException)) {
                         lineIter.close();
+                        Log.error("PGN parse failed:\n" + pgnBuilder, e);
                         throw e;
                     } else {
                         // ignore error and continue with next PGN
-                        e.printStackTrace();
+                        Log.error("PGN parse error (ignored, continuing):\n" + pgnBuilder, e);
                     }
                 }
             }

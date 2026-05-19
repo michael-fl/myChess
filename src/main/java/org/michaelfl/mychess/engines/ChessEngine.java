@@ -4,6 +4,7 @@ import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.GameStatus;
+import org.michaelfl.mychess.Log;
 import org.michaelfl.mychess.Move;
 import org.michaelfl.mychess.Moves;
 import org.michaelfl.mychess.MyChessEnv;
@@ -129,7 +130,7 @@ public abstract class ChessEngine {
 
     protected void log(String s) {
         if (!config.isSilent()) {
-            System.out.println(s);
+            Log.info(s);
         }
     }
 
