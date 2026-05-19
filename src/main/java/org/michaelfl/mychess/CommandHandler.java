@@ -494,6 +494,27 @@ final class CommandHandler {
         }
     }
 
+    private final class LoadFenCommand extends Command {
+
+        @Override
+        boolean canHandle(String commandLine) {
+            return commandLine.startsWith("fen ");
+        }
+
+        @Override
+        void handle(String commandLine) {
+            String fen = commandLine.substring("fen ".length()).trim();
+            try {
+                var board = Fen.importFEN(fen);
+                computerColor = null;
+                game = new Game(Game.standardConfig(), board);
+                game.print();
+            } catch (IllegalArgumentException e) {
+                System.err.println("Could not load FEN: " + e.getMessage());
+            }
+        }
+    }
+
     private final class HashCommand extends Command {
 
         @Override
@@ -614,6 +635,7 @@ final class CommandHandler {
             new SetDepthCommand(),
             new SetIterationDepthCommand(),
             new PossibleMovesCommand(),
+            new LoadFenCommand(),
             new FenCommand(),
             new HashCommand(),
             new OpeningCommand(),
