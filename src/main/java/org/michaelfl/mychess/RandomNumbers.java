@@ -809,6 +809,14 @@ final class RandomNumbers {
             574153391197243458L
     };
 
+    /**
+     * Offline utility: regenerates the {@link #RANDOM_NUMBERS} table by writing
+     * 793 Java-source-formatted {@code long} literals to stdout. Output is meant
+     * to be copy-pasted into the array initializer above. Not invoked at runtime;
+     * run via {@code java org.michaelfl.mychess.RandomNumbers} only when the
+     * table needs to be regenerated. The stdout writes here are the utility's
+     * purpose, not stray debug output.
+     */
     static void main() {
         var rand = new Random();
         int nNumbers = 793;

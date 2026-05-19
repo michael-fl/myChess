@@ -81,8 +81,7 @@ public final class Game {
             calculateAndSetGameResult();
 
         } catch (RuntimeException e) {
-            board.print();
-            System.out.println(exportMoves());
+            Log.error("Game construction failed during move replay\n" + board + "\n" + exportMoves(), e);
             throw e;
         }
     }
@@ -156,9 +155,10 @@ public final class Game {
         var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
 
         if (getResult() != GameResult.ONGOING) {
-            board.print();
-            System.out.println(exportMoves());
-            System.out.println("Current move: " + moveDescr);
+            Log.error("Move on finished game: " + moveDescr
+                    + " | result=" + getResult()
+                    + "\n" + board
+                    + "\nhistory=" + exportMoves());
             throw new IllegalStateException("Game is already over. State is " + getResult());
         }
 
@@ -230,7 +230,7 @@ public final class Game {
                 if (moveDescr.piece != Board.blackPawn
                         || board.get(moveDescr.getToField()) != moveDescr.pawnPromotionPiece
                         || moveDescr.toRow != 0) {
-                    board.print();
+                    Log.error("Bogus promotion notation: " + moveDescr + "\n" + board);
                     throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Not a pawn promotion.");
                 }
             }
