@@ -15,4 +15,5 @@ buildNumber.properties
 *.iml
 
 db/
+mychess-stderr.log
 
