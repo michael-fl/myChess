@@ -25,12 +25,29 @@ public final class MyChessMain {
 
     private static void runUci() {
         Log.setMode(Log.Mode.UCI);
-        try (OpeningDB openingDB = OpeningDB.open();
-             BufferedReader in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8))) {
+
+        // The opening book is optional in UCI mode. If db/openings.db is missing
+        // or locked (e.g. another myChess instance holds it open) we proceed
+        // without it — the engine will fall through to search-only play.
+        OpeningDB openingDB = tryOpenOpeningDb();
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8))) {
             var env = new MyChessEnv(openingDB);
             new UciHandler(env, in).run();
         } catch (java.io.IOException e) {
             Log.error("UCI stdin/stdout failed", e);
+        } finally {
+            if (openingDB != null) {
+                openingDB.close();
+            }
+        }
+    }
+
+    private static OpeningDB tryOpenOpeningDb() {
+        try {
+            return OpeningDB.open();
+        } catch (RuntimeException e) {
+            Log.error("Opening book unavailable, running search-only: " + e.getMessage());
+            return null;
         }
     }
 
