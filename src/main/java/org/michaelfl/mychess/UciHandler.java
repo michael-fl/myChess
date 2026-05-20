@@ -43,8 +43,8 @@ final class UciHandler {
     /** Floor on per-move time so search has at least a fraction of a second. */
     private static final int MIN_BUDGET_MS = 50;
 
-    /** Ceiling on go infinite / go depth N max seconds (effectively unbounded). */
-    private static final int INFINITE_SECONDS = 24 * 60 * 60;
+    /** Ceiling on go infinite / go depth N (effectively unbounded). 24 h in ms. */
+    private static final int INFINITE_MILLIS = 24 * 60 * 60 * 1_000;
 
     private final MyChessEnv env;
     private final BufferedReader in;
@@ -192,7 +192,7 @@ final class UciHandler {
 
         var engineConfig = new EngineConfig.Builder()
                 .maxDepth(args.maxDepth)
-                .secondsPerMove(args.timeBudgetSeconds)
+                .millisPerMove(args.timeBudgetMillis)
                 .silent(true)
                 .build();
         var gameConfig = new GameConfig(MyChessEngine.class, engineConfig);
@@ -210,7 +210,7 @@ final class UciHandler {
         // Virtual threads are always daemons, so no explicit daemon flag.
         Thread watcher = Thread.ofVirtual()
                 .name("uci-search-watcher")
-                .start(() -> awaitAndEmitBestmove(game, task, args.timeBudgetSeconds));
+                .start(() -> awaitAndEmitBestmove(game, task, args.timeBudgetMillis));
         currentWatcher.set(watcher);
     }
 
@@ -220,10 +220,11 @@ final class UciHandler {
 
     // ---- Search lifecycle ----
 
-    private void awaitAndEmitBestmove(Game game, NextMoveTask task, int budgetSeconds) {
+    private void awaitAndEmitBestmove(Game game, NextMoveTask task, int budgetMillis) {
         int bestmove = 0;
         try {
-            MoveAndWeight result = task.getResult(budgetSeconds + 1L, TimeUnit.SECONDS);
+            // Give the watcher a 1-second grace period over the search budget.
+            MoveAndWeight result = task.getResult(budgetMillis + 1_000L, TimeUnit.MILLISECONDS);
             bestmove = result.move;
         } catch (ExecutionException e) {
             if (!(e.getCause() instanceof CancellationException)) {
@@ -303,7 +304,7 @@ final class UciHandler {
 
     // ---- Time management ----
 
-    private record GoArgs(int maxDepth, int timeBudgetSeconds) {}
+    private record GoArgs(int maxDepth, int timeBudgetMillis) {}
 
     /** Mutable intermediate holder for the raw {@code go ...} tokens. */
     private static final class RawGoTokens {
@@ -317,9 +318,9 @@ final class UciHandler {
 
     private static GoArgs parseGoArgs(String line, int turn) {
         RawGoTokens raw = readGoTokens(line);
-        int budgetSeconds = computeBudgetSeconds(raw, turn);
+        int budgetMillis = computeBudgetMillis(raw, turn);
 
-        return new GoArgs(raw.maxDepth, budgetSeconds);
+        return new GoArgs(raw.maxDepth, budgetMillis);
     }
 
     @SuppressWarnings("java:S127")
@@ -342,30 +343,28 @@ final class UciHandler {
         return raw;
     }
 
-    private static int computeBudgetSeconds(RawGoTokens raw, int turn) {
+    private static int computeBudgetMillis(RawGoTokens raw, int turn) {
         if (raw.infinite) {
-            return INFINITE_SECONDS;
+            return INFINITE_MILLIS;
         }
         if (raw.movetimeMs != null) {
-            return msToSeconds(raw.movetimeMs);
+            // Subtract a safety margin: the search checks isTimeout() only
+            // every 10 000 nodes, so a hard limit can overshoot by a few ms.
+            // Strict GUIs treat that as a time forfeit.
+            return Math.max(MIN_BUDGET_MS, raw.movetimeMs - TIME_SAFETY_MARGIN_MS);
         }
         if (raw.wtime != null && raw.btime != null) {
-            return computeClockBudgetSeconds(raw, turn);
+            return computeClockBudgetMillis(raw, turn);
         }
 
-        return INFINITE_SECONDS;   // depth-only or no args
+        return INFINITE_MILLIS;   // depth-only or no args
     }
 
-    private static int computeClockBudgetSeconds(RawGoTokens raw, int turn) {
+    private static int computeClockBudgetMillis(RawGoTokens raw, int turn) {
         int ourMs = (turn == GameStatus.TURN_WHITE) ? raw.wtime : raw.btime;
         int movesToGo = raw.movestogo != null ? raw.movestogo : DEFAULT_MOVES_TO_GO;
-        int budgetMs = Math.max(MIN_BUDGET_MS, ourMs / (movesToGo + 1) - TIME_SAFETY_MARGIN_MS);
 
-        return msToSeconds(budgetMs);
-    }
-
-    private static int msToSeconds(int ms) {
-        return Math.max(1, (ms + 999) / 1000);
+        return Math.max(MIN_BUDGET_MS, ourMs / (movesToGo + 1) - TIME_SAFETY_MARGIN_MS);
     }
 
     /**

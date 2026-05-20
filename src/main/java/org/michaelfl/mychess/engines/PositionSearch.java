@@ -26,7 +26,7 @@ import static org.michaelfl.mychess.Assert.*;
  * Iterative-deepening negamax alpha-beta search with PV reuse, killer-move
  * heuristic and {@link QuiescenceSearch} extension. Cooperatively cancellable
  * via {@link NextMoveTask} and time-bounded by
- * {@link EngineConfig#getSecondsPerMove()}.
+ * {@link EngineConfig#getMillisPerMove()}.
  *
  * @author Michael Fleischhauer
  */
@@ -123,7 +123,7 @@ public final class PositionSearch {
         this.quiescenceSearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics, engineConfig.getMaxQuiescenceDepth());
         this.weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
         this.silent = engineConfig.isSilent();
-        this.timeout = System.currentTimeMillis() + engineConfig.getSecondsPerMove() * 1000L;
+        this.timeout = System.currentTimeMillis() + engineConfig.getMillisPerMove();
     }
 
     public static MoveAndWeight calculateNextMove(ChessEngine engine, NextMoveTask task, Game game) {

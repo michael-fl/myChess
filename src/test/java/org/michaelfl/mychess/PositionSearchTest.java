@@ -94,11 +94,11 @@ class PositionSearchTest {
 
     @Test
     @Timeout(value = 30, unit = TimeUnit.SECONDS)
-    void searchHonorsSecondsPerMoveTimeout() throws Exception {
+    void searchHonorsMillisPerMoveTimeout() throws Exception {
         // Configure a 1-second budget with a very deep maxDepth — the timeout must trigger.
         var config = new EngineConfig.Builder()
                 .maxDepth(20)
-                .secondsPerMove(1)
+                .millisPerMove(1_000)
                 .silent(true)
                 .build();
         var game = GameImporter.importerFor("1. e4 e5 2. Nf3 Nc6").importGame(
@@ -111,7 +111,7 @@ class PositionSearchTest {
         assertNotNull(move, "Search must return a move from the previous completed depth");
         assertNotEquals(0, move.move, "Returned move must be a real move");
         assertTrue(elapsed < 10_000,
-                "Search must abort within a few seconds when secondsPerMove=1, actual: " + elapsed + "ms");
+                "Search must abort within a few seconds when millisPerMove=1000, actual: " + elapsed + "ms");
     }
 
     @Test
@@ -121,7 +121,7 @@ class PositionSearchTest {
         // future on the task), then verify the flag is observable.
         var config = new EngineConfig.Builder()
                 .maxDepth(20)
-                .secondsPerMove(60)
+                .millisPerMove(60_000)
                 .silent(true)
                 .build();
         var game = GameImporter.importerFor("1. e4 e5 2. Nf3 Nc6").importGame(

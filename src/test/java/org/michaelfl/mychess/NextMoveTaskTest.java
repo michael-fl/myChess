@@ -18,7 +18,7 @@ class NextMoveTaskTest {
     private static EngineConfig slowConfig() {
         return new EngineConfig.Builder()
                 .maxDepth(20)
-                .secondsPerMove(60)
+                .millisPerMove(60_000)
                 .silent(true)
                 .build();
     }
