@@ -148,13 +148,22 @@ public final class PositionSearch {
     private MoveAndWeight calculateNextMove() {
         MoveAndWeight bestPath = null;
         final int maxDepth = engineConfig.getMaxDepth();
+        final long startMs = System.currentTimeMillis();
 
         for (int depth = 1; depth <= maxDepth && !isTimeout(); depth++) {
             log("Current depth: " + depth);
             bestPath = calculateNextMove(depth, timeout, bestPath);
             MoveAndWeight m = bestPath.weightFactor(weightFactor);
+
             log("Depth: " + depth + ", move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight) + " [" + ChessUtil.pathToString(m.path) + "]");
             log("#positions: " + statistics.getPositionsCount() + ", #pruned: " + statistics.getPrunedMovesCount());
+
+            task.fireIteration(new IterationInfo(
+                    depth,
+                    statistics.getPositionsCount(),
+                    System.currentTimeMillis() - startMs,
+                    m.weight,
+                    Arrays.copyOf(m.path, m.path.length)));
         }
 
         // The last path component may be an illegal move (because this is not checked on the leaf nodes).

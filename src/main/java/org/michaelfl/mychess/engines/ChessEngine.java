@@ -16,6 +16,7 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.function.Consumer;
 
 /**
  * Abstract engine base: owns the single-thread executor behind
@@ -82,14 +83,25 @@ public abstract class ChessEngine {
     }
 
     public final NextMoveTask nextMoveAsync() {
-        return nextMoveAsync(null);
+        return nextMoveAsync(null, null);
     }
 
     public final NextMoveTask nextMoveAsync(MyChessEnv env) {
+        return nextMoveAsync(env, null);
+    }
+
+    /**
+     * Asynchronous move calculation with an optional listener that is invoked
+     * after every completed iterative-deepening iteration. Used by the UCI
+     * handler to emit {@code info depth N ...} lines as the search progresses.
+     */
+    public final NextMoveTask nextMoveAsync(MyChessEnv env, Consumer<IterationInfo> iterationListener) {
         var task = new NextMoveTask(env);
+        if (iterationListener != null) {
+            task.setIterationListener(iterationListener);
+        }
 
         Future<MoveAndWeight> result = executor.submit(() -> calculateNextMove(task));
-
         task.setResultFuture(result);
 
         return task;
