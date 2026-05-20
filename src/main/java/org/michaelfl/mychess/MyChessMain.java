@@ -3,6 +3,7 @@ package org.michaelfl.mychess;
 import org.michaelfl.mychess.openingdb.OpeningDB;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
@@ -29,22 +30,27 @@ public final class MyChessMain {
         // The opening book is optional in UCI mode. If db/openings.db is missing
         // or locked (e.g. another myChess instance holds it open) we proceed
         // without it — the engine will fall through to search-only play.
-        OpeningDB openingDB = tryOpenOpeningDb();
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8))) {
+        try (OpeningDB openingDB = tryOpenOpeningDb(); BufferedReader in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8))) {
             var env = new MyChessEnv(openingDB);
             new UciHandler(env, in).run();
         } catch (java.io.IOException e) {
             Log.error("UCI stdin/stdout failed", e);
-        } finally {
-            if (openingDB != null) {
-                openingDB.close();
-            }
         }
     }
 
+    /**
+     * Factory: returns an open {@link OpeningDB} or {@code null} if it cannot
+     * be opened (file missing or locked by another process). Ownership transfers
+     * to the caller, which is expected to close it — {@link #runUci} does so via
+     * try-with-resources.
+     */
+    @SuppressWarnings("java:S2095") // factory method — caller closes the returned resource
     private static OpeningDB tryOpenOpeningDb() {
         try {
-            return OpeningDB.open();
+            OpeningDB db = OpeningDB.open();
+            long size = new File("db/openings.db").length();
+            Log.info("[book] opened db/openings.db (" + size + " bytes)");
+            return db;
         } catch (RuntimeException e) {
             Log.error("Opening book unavailable, running search-only: " + e.getMessage());
             return null;

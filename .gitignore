@@ -17,3 +17,7 @@ buildNumber.properties
 db/
 mychess-stderr.log
 
+# Large non-versioned PGN test fixture, used by @Disabled benchmark tests
+# in PgnTest / PGNImporterTest and by the manual OpeningDB import workflow.
+src/test/resources/large.pgn
+

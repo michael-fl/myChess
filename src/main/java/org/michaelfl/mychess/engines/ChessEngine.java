@@ -59,6 +59,14 @@ public abstract class ChessEngine {
         }
     }
 
+    /**
+     * Maximum number of consecutive {@code [book] miss} log lines emitted before
+     * further misses are silenced. Reset to zero on any book hit. Process-wide
+     * so the throttling survives across the per-{@code go} engine instances.
+     */
+    private static final int MAX_LOGGED_BOOK_MISSES = 5;
+    private static int consecutiveBookMisses = 0;
+
     private final Random rand = new Random();
     private final ExecutorService executor;
     private final EngineConfig config;
@@ -128,6 +136,10 @@ public abstract class ChessEngine {
                 move = new MoveAndWeight(m.move(), 0, GameResult.ONGOING, new int[] { move.move });
             }
         }
+        // Note: when openingDB is null we silently fall through. The startup log
+        // in MyChessMain already reports the DB state once; per-call noise is
+        // dominated by the statusEngine (Game's mate/stalemate detector) which
+        // intentionally has no env attached.
 
         if (move == MoveAndWeight.NO_MOVE) {
             move = calculateNextMoveSub(task);
@@ -153,10 +165,20 @@ public abstract class ChessEngine {
     private Move getMoveFromOpeningDB(OpeningDB openingDB) {
         var key = game.getBoard().calculatePositionKey();
         var positionInfo = openingDB.lookupPosition(key);
+
         if (positionInfo == null) {
+            if (consecutiveBookMisses < MAX_LOGGED_BOOK_MISSES) {
+                Log.info("[book] miss — no entry for position key=" + key);
+            }
+            consecutiveBookMisses++;
             return null;
         }
 
+        // Lookup found the position in the DB — reset the miss streak. Any
+        // subsequent run of misses will start logging from scratch.
+        consecutiveBookMisses = 0;
+
+        int totalMoves = positionInfo.moves.size();
         var candidates = positionInfo.moves
                 .stream()
                 .filter(
@@ -164,7 +186,10 @@ public abstract class ChessEngine {
                                 && m.getWinPercentage() >= 20
                                 && m.getLossPercentage() < 45)
                 .toList();
+
         if (candidates.isEmpty()) {
+            Log.info("[book] hit but no candidates pass filter (>=100 games, >=20% wins, <45% losses)"
+                    + " — " + totalMoves + " moves in DB, all rejected. key=" + key);
             return null;
         }
 
@@ -175,6 +200,8 @@ public abstract class ChessEngine {
         for (var m : candidates) {
             i += m.getTotalCount();
             if (n < i) {
+                Log.info("[book] picked " + m.move + " from " + candidates.size()
+                        + "/" + totalMoves + " candidates (weighted random over " + sum + " games). key=" + key);
                 return m.move;
             }
         }
