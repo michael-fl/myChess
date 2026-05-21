@@ -40,6 +40,7 @@ public final class PositionSearch {
      */
     public static final int EVALUATE_MATERIAL_ONLY_THRESHOLD = 200;
 
+    @SuppressWarnings("java:S6218")
     public record SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnownPath,
                                     int weightFactor,
                                     int alphaWeight, int betaWeight, int materialWeight, int materialDelta,
@@ -149,10 +150,26 @@ public final class PositionSearch {
         MoveAndWeight bestPath = null;
         final int maxDepth = engineConfig.getMaxDepth();
         final long startMs = System.currentTimeMillis();
+        long previousIterationEndMs = startMs;
 
         for (int depth = 1; depth <= maxDepth && !isTimeout(); depth++) {
+            if (depth > 1 && shouldSkipIteration(depth)) {
+                break;
+            }
+
             log("Current depth: " + depth);
             bestPath = calculateNextMove(depth, timeout, bestPath);
+            long iterationEndMs = System.currentTimeMillis();
+            long iterationMs = iterationEndMs - previousIterationEndMs;
+            previousIterationEndMs = iterationEndMs;
+
+            if (isTimeout) {
+                IterationTimings.recordAbort(depth, iterationMs);
+                break;
+            }
+
+            IterationTimings.recordCompletion(depth, iterationMs);
+
             MoveAndWeight m = bestPath.weightFactor(weightFactor);
 
             log("Depth: " + depth + ", move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight) + " [" + ChessUtil.pathToString(m.path) + "]");
@@ -161,7 +178,7 @@ public final class PositionSearch {
             task.fireIteration(new IterationInfo(
                     depth,
                     statistics.getPositionsCount(),
-                    System.currentTimeMillis() - startMs,
+                    iterationEndMs - startMs,
                     m.weight,
                     Arrays.copyOf(m.path, m.path.length)));
         }
@@ -173,6 +190,37 @@ public final class PositionSearch {
         }
 
         return bestPath;
+    }
+
+    /**
+     * Skip-decision for the iterative-deepening loop: returns {@code true}
+     * if the estimated cost for {@code depth} exceeds the remaining time
+     * budget and the heuristic is allowed to act on it (enough samples,
+     * not currently due for a probing run). Records the skip as a side
+     * effect when it returns {@code true}.
+     */
+    private boolean shouldSkipIteration(int depth) {
+        if (!IterationTimings.hasEnoughSamplesForSkipDecision(depth)) {
+            return false;
+        }
+
+        long estimateMs = IterationTimings.getEstimatedMs(depth);
+        long remainingMs = timeout - System.currentTimeMillis();
+        if (estimateMs <= remainingMs) {
+            return false;
+        }
+
+        if (IterationTimings.isProbingDue(depth, estimateMs, remainingMs)) {
+            Log.info("[time] probe depth " + depth + ": est " + estimateMs
+                    + " ms > remaining " + remainingMs + " ms");
+            return false;
+        }
+
+        IterationTimings.recordSkip(depth);
+        Log.info("[time] skip depth " + depth + ": est " + estimateMs
+                + " ms > remaining " + remainingMs + " ms");
+
+        return true;
     }
 
     @SuppressWarnings("Duplicates")

@@ -33,17 +33,21 @@ public final class Log {
 
     /** Informational message. REPL mode: stdout. UCI mode: stderr. */
     public static void info(String msg) {
-        (mode == Mode.UCI ? System.err : System.out).println(msg);
+        var out = (mode == Mode.UCI) ? System.err : System.out;
+        out.println(msg);
+        out.flush();
     }
 
     /** Error or warning. Always stderr — irrelevant for the UCI protocol either way. */
     public static void error(String msg) {
         System.err.println(msg);
+        System.err.flush();
     }
 
     /** Error or warning with cause; prints the stack trace to stderr. */
     public static void error(String msg, Throwable t) {
         System.err.println(msg);
         t.printStackTrace(System.err);
+        System.err.flush();
     }
 }

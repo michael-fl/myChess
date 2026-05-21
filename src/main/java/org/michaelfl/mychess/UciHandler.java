@@ -139,6 +139,7 @@ final class UciHandler {
         cancelCurrentTask();
         shutdownCurrentGame();
         this.board = Board.createNewGame();
+        ChessEngine.resetIterationTimings();
     }
 
     private void handlePosition(String line) {
