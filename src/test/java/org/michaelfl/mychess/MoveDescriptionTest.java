@@ -16,10 +16,10 @@ class MoveDescriptionTest {
         var moveDesc = testMoveDescription("e2-e4", GameStatus.TURN_WHITE, Board.whitePawn, Board.e2, Board.e4);
 
         assertEquals(-1, moveDesc.pawnPromotionPiece, "pawnPromotionPiece should no be set");
-        assertNull(moveDesc.isCapture, "isCapture should be null");
-        assertNull(moveDesc.isCheck, "isChess should be null");
-        assertNull(moveDesc.isCheckmate, "isCheckmate should be null");
-        assertNull(moveDesc.isEnPassant, "isEnPassant should be null");
+        assertFalse(moveDesc.isCapture(), "isCapture should be unset");
+        assertFalse(moveDesc.isCheck(), "isCheck should be unset");
+        assertFalse(moveDesc.isCheckmate(), "isCheckmate should be unset");
+        assertFalse(moveDesc.isEnPassant(), "isEnPassant should be unset");
     }
 
     @Test
@@ -27,10 +27,10 @@ class MoveDescriptionTest {
         var moveDesc = testMoveDescription("Ng1-f3", GameStatus.TURN_WHITE, Board.whiteKnight, Board.g1, Board.f3);
 
         assertEquals(-1, moveDesc.pawnPromotionPiece, "pawnPromotionPiece should no be set");
-        assertNull(moveDesc.isCapture, "isCapture should be null");
-        assertNull(moveDesc.isCheck, "isChess should be null");
-        assertNull(moveDesc.isCheckmate, "isCheckmate should be null");
-        assertNull(moveDesc.isEnPassant, "isEnPassant should be null");
+        assertFalse(moveDesc.isCapture(), "isCapture should be unset");
+        assertFalse(moveDesc.isCheck(), "isCheck should be unset");
+        assertFalse(moveDesc.isCheckmate(), "isCheckmate should be unset");
+        assertFalse(moveDesc.isEnPassant(), "isEnPassant should be unset");
     }
 
     @Test
@@ -38,10 +38,10 @@ class MoveDescriptionTest {
         var moveDesc = testMoveDescription("d2-d4", GameStatus.TURN_WHITE, Board.whitePawn, Board.d2, Board.d4);
 
         assertEquals(-1, moveDesc.pawnPromotionPiece, "pawnPromotionPiece should no be set");
-        assertNull(moveDesc.isCapture, "isCapture should be null");
-        assertNull(moveDesc.isCheck, "isChess should be null");
-        assertNull(moveDesc.isCheckmate, "isCheckmate should be null");
-        assertNull(moveDesc.isEnPassant, "isEnPassant should be null");
+        assertFalse(moveDesc.isCapture(), "isCapture should be unset");
+        assertFalse(moveDesc.isCheck(), "isCheck should be unset");
+        assertFalse(moveDesc.isCheckmate(), "isCheckmate should be unset");
+        assertFalse(moveDesc.isEnPassant(), "isEnPassant should be unset");
     }
 
     @Test
@@ -49,11 +49,10 @@ class MoveDescriptionTest {
         var moveDesc = testMoveDescription("Qd1xd4", GameStatus.TURN_WHITE, Board.whiteQueen, Board.d1, Board.d4);
 
         assertEquals(-1, moveDesc.pawnPromotionPiece, "pawnPromotionPiece should no be set");
-        assertNotNull(moveDesc.isCapture, "isCapture should not be null");
-        assertTrue(moveDesc.isCapture, "isCapture should be true");
-        assertNull(moveDesc.isCheck, "isChess should be null");
-        assertNull(moveDesc.isCheckmate, "isCheckmate should be null");
-        assertNull(moveDesc.isEnPassant, "isEnPassant should be null");
+        assertTrue(moveDesc.isCapture(), "isCapture should be true");
+        assertFalse(moveDesc.isCheck(), "isCheck should be unset");
+        assertFalse(moveDesc.isCheckmate(), "isCheckmate should be unset");
+        assertFalse(moveDesc.isEnPassant(), "isEnPassant should be unset");
     }
 
     @Test
@@ -61,12 +60,10 @@ class MoveDescriptionTest {
         var moveDesc = testMoveDescription("c4xb3e.p.", GameStatus.TURN_BLACK, Board.blackPawn, Board.c4, Board.b3);
 
         assertEquals(-1, moveDesc.pawnPromotionPiece, "pawnPromotionPiece should no be set");
-        assertNotNull(moveDesc.isCapture, "isCapture should not be null");
-        assertTrue(moveDesc.isCapture, "isCapture should be true");
-        assertNull(moveDesc.isCheck, "isChess should be null");
-        assertNull(moveDesc.isCheckmate, "isCheckmate should be null");
-        assertNotNull(moveDesc.isEnPassant, "isEnPassant should not be null");
-        assertTrue(moveDesc.isEnPassant, "isEnPassant should be true");
+        assertTrue(moveDesc.isCapture(), "isCapture should be true");
+        assertFalse(moveDesc.isCheck(), "isCheck should be unset");
+        assertFalse(moveDesc.isCheckmate(), "isCheckmate should be unset");
+        assertTrue(moveDesc.isEnPassant(), "isEnPassant should be true");
     }
 
     @Test
@@ -74,12 +71,10 @@ class MoveDescriptionTest {
         var moveDesc = testMoveDescription("e5xf6 e.p.", GameStatus.TURN_WHITE, Board.whitePawn, Board.e5, Board.f6);
 
         assertEquals(-1, moveDesc.pawnPromotionPiece, "pawnPromotionPiece should no be set");
-        assertNotNull(moveDesc.isCapture, "isCapture should not be null");
-        assertTrue(moveDesc.isCapture, "isCapture should be true");
-        assertNull(moveDesc.isCheck, "isChess should be null");
-        assertNull(moveDesc.isCheckmate, "isCheckmate should be null");
-        assertNotNull(moveDesc.isEnPassant, "isEnPassant should not be null");
-        assertTrue(moveDesc.isEnPassant, "isEnPassant should be true");
+        assertTrue(moveDesc.isCapture(), "isCapture should be true");
+        assertFalse(moveDesc.isCheck(), "isCheck should be unset");
+        assertFalse(moveDesc.isCheckmate(), "isCheckmate should be unset");
+        assertTrue(moveDesc.isEnPassant(), "isEnPassant should be true");
     }
 
     @Test
@@ -87,10 +82,10 @@ class MoveDescriptionTest {
         var moveDesc = testMoveDescription("Bc1-g5", GameStatus.TURN_WHITE, Board.whiteBishop, Board.c1, Board.g5);
 
         assertEquals(-1, moveDesc.pawnPromotionPiece, "pawnPromotionPiece should no be set");
-        assertNull(moveDesc.isCapture, "isCapture should be null");
-        assertNull(moveDesc.isCheck, "isChess should be null");
-        assertNull(moveDesc.isCheckmate, "isCheckmate should be null");
-        assertNull(moveDesc.isEnPassant, "isEnPassant should be null");
+        assertFalse(moveDesc.isCapture(), "isCapture should be unset");
+        assertFalse(moveDesc.isCheck(), "isCheck should be unset");
+        assertFalse(moveDesc.isCheckmate(), "isCheckmate should be unset");
+        assertFalse(moveDesc.isEnPassant(), "isEnPassant should be unset");
     }
 
     @Test
@@ -98,11 +93,10 @@ class MoveDescriptionTest {
         var moveDesc = testMoveDescription("Qd4-e3+", GameStatus.TURN_BLACK, Board.blackQueen, Board.d4, Board.e3);
 
         assertEquals(-1, moveDesc.pawnPromotionPiece, "pawnPromotionPiece should no be set");
-        assertNull(moveDesc.isCapture, "isCapture should be null");
-        assertNotNull(moveDesc.isCheck, "isChess should not be null");
-        assertTrue(moveDesc.isCheck, "isChess should be true");
-        assertNull(moveDesc.isCheckmate, "isCheckmate should be null");
-        assertNull(moveDesc.isEnPassant, "isEnPassant should be null");
+        assertFalse(moveDesc.isCapture(), "isCapture should be unset");
+        assertTrue(moveDesc.isCheck(), "isCheck should be true");
+        assertFalse(moveDesc.isCheckmate(), "isCheckmate should be unset");
+        assertFalse(moveDesc.isEnPassant(), "isEnPassant should be unset");
     }
 
     @Test
@@ -110,12 +104,10 @@ class MoveDescriptionTest {
         var moveDesc = testMoveDescription("Qd1xh5++", GameStatus.TURN_WHITE, Board.whiteQueen, Board.d1, Board.h5);
 
         assertEquals(-1, moveDesc.pawnPromotionPiece, "pawnPromotionPiece should no be set");
-        assertNotNull(moveDesc.isCapture, "isCapture should be null");
-        assertTrue(moveDesc.isCapture, "isCapture should be true");
-        assertNotNull(moveDesc.isCheck, "isChess should not be null");
-        assertTrue(moveDesc.isCheck, "isChess should be true");
-        assertNull(moveDesc.isCheckmate, "isCheckmate should be null");
-        assertNull(moveDesc.isEnPassant, "isEnPassant should be null");
+        assertTrue(moveDesc.isCapture(), "isCapture should be true");
+        assertTrue(moveDesc.isCheck(), "isCheck should be true");
+        assertFalse(moveDesc.isCheckmate(), "isCheckmate should be unset");
+        assertFalse(moveDesc.isEnPassant(), "isEnPassant should be unset");
     }
 
     @Test
@@ -210,8 +202,7 @@ class MoveDescriptionTest {
         var moveDesc = testMoveDescription("xc8B", GameStatus.TURN_WHITE, Board.whitePawn, 0, Board.c8);
 
         assertEquals(Board.whiteBishop, moveDesc.pawnPromotionPiece, "wrong pawnPromotionPiece");
-        assertNotNull(moveDesc.isCapture, "isCapture should be null");
-        assertTrue(moveDesc.isCapture, "isCapture should be true");
+        assertTrue(moveDesc.isCapture(), "isCapture should be true");
     }
 
     @ParameterizedTest
@@ -226,10 +217,10 @@ class MoveDescriptionTest {
         var moveDesc = testMoveDescription(move, GameStatus.TURN_WHITE, Board.whiteKing, Board.e1, Board.g1);
 
         assertEquals(-1, moveDesc.pawnPromotionPiece, "pawnPromotionPiece should no be set");
-        assertNull(moveDesc.isCapture, "isCapture should be null");
-        assertNull(moveDesc.isCheck, "isChess should be null");
-        assertNull(moveDesc.isCheckmate, "isCheckmate should be null");
-        assertNull(moveDesc.isEnPassant, "isEnPassant should be null");
+        assertFalse(moveDesc.isCapture(), "isCapture should be unset");
+        assertFalse(moveDesc.isCheck(), "isCheck should be unset");
+        assertFalse(moveDesc.isCheckmate(), "isCheckmate should be unset");
+        assertFalse(moveDesc.isEnPassant(), "isEnPassant should be unset");
     }
 
     @ParameterizedTest
@@ -238,10 +229,10 @@ class MoveDescriptionTest {
         var moveDesc = testMoveDescription(move, GameStatus.TURN_BLACK, Board.blackKing, Board.e8, Board.g8);
 
         assertEquals(-1, moveDesc.pawnPromotionPiece, "pawnPromotionPiece should no be set");
-        assertNull(moveDesc.isCapture, "isCapture should be null");
-        assertNull(moveDesc.isCheck, "isChess should be null");
-        assertNull(moveDesc.isCheckmate, "isCheckmate should be null");
-        assertNull(moveDesc.isEnPassant, "isEnPassant should be null");
+        assertFalse(moveDesc.isCapture(), "isCapture should be unset");
+        assertFalse(moveDesc.isCheck(), "isCheck should be unset");
+        assertFalse(moveDesc.isCheckmate(), "isCheckmate should be unset");
+        assertFalse(moveDesc.isEnPassant(), "isEnPassant should be unset");
     }
 
     @ParameterizedTest
@@ -250,10 +241,10 @@ class MoveDescriptionTest {
         var moveDesc = testMoveDescription(move, GameStatus.TURN_WHITE, Board.whiteKing, Board.e1, Board.c1);
 
         assertEquals(-1, moveDesc.pawnPromotionPiece, "pawnPromotionPiece should no be set");
-        assertNull(moveDesc.isCapture, "isCapture should be null");
-        assertNull(moveDesc.isCheck, "isChess should be null");
-        assertNull(moveDesc.isCheckmate, "isCheckmate should be null");
-        assertNull(moveDesc.isEnPassant, "isEnPassant should be null");
+        assertFalse(moveDesc.isCapture(), "isCapture should be unset");
+        assertFalse(moveDesc.isCheck(), "isCheck should be unset");
+        assertFalse(moveDesc.isCheckmate(), "isCheckmate should be unset");
+        assertFalse(moveDesc.isEnPassant(), "isEnPassant should be unset");
     }
 
     @ParameterizedTest
@@ -262,10 +253,10 @@ class MoveDescriptionTest {
         var moveDesc = testMoveDescription(move, GameStatus.TURN_BLACK, Board.blackKing, Board.e8, Board.c8);
 
         assertEquals(-1, moveDesc.pawnPromotionPiece, "pawnPromotionPiece should no be set");
-        assertNull(moveDesc.isCapture, "isCapture should be null");
-        assertNull(moveDesc.isCheck, "isChess should be null");
-        assertNull(moveDesc.isCheckmate, "isCheckmate should be null");
-        assertNull(moveDesc.isEnPassant, "isEnPassant should be null");
+        assertFalse(moveDesc.isCapture(), "isCapture should be unset");
+        assertFalse(moveDesc.isCheck(), "isCheck should be unset");
+        assertFalse(moveDesc.isCheckmate(), "isCheckmate should be unset");
+        assertFalse(moveDesc.isEnPassant(), "isEnPassant should be unset");
     }
 
     @ParameterizedTest
@@ -293,10 +284,10 @@ class MoveDescriptionTest {
         var moveDesc = testMoveDescription(move, GameStatus.TURN_WHITE, Board.whitePawn, -1, Board.e8);
 
         assertEquals(Board.whiteQueen, moveDesc.pawnPromotionPiece, "wrong pawnPromotionPiece");
-        assertNull(moveDesc.isCapture, "isCapture should be null");
-        assertNull(moveDesc.isCheck, "isChess should be null");
-        assertNull(moveDesc.isCheckmate, "isCheckmate should be null");
-        assertNull(moveDesc.isEnPassant, "isEnPassant should be null");
+        assertFalse(moveDesc.isCapture(), "isCapture should be unset");
+        assertFalse(moveDesc.isCheck(), "isCheck should be unset");
+        assertFalse(moveDesc.isCheckmate(), "isCheckmate should be unset");
+        assertFalse(moveDesc.isEnPassant(), "isEnPassant should be unset");
     }
 
     @ParameterizedTest
@@ -305,11 +296,10 @@ class MoveDescriptionTest {
         var moveDesc = testMoveDescription(move, GameStatus.TURN_WHITE, Board.whitePawn, -1, Board.e8);
 
         assertEquals(Board.whiteQueen, moveDesc.pawnPromotionPiece, "wrong pawnPromotionPiece");
-        assertNull(moveDesc.isCapture, "isCapture should be null");
-        assertNotNull(moveDesc.isCheck, "isChess should not be null");
-        assertTrue(moveDesc.isCheck, "isChess should be true");
-        assertNull(moveDesc.isCheckmate, "isCheckmate should be null");
-        assertNull(moveDesc.isEnPassant, "isEnPassant should be null");
+        assertFalse(moveDesc.isCapture(), "isCapture should be unset");
+        assertTrue(moveDesc.isCheck(), "isCheck should be true");
+        assertFalse(moveDesc.isCheckmate(), "isCheckmate should be unset");
+        assertFalse(moveDesc.isEnPassant(), "isEnPassant should be unset");
     }
 
 }

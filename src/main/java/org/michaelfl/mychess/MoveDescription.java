@@ -1,5 +1,6 @@
 package org.michaelfl.mychess;
 
+import java.util.EnumSet;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,9 +11,14 @@ import java.util.regex.Pattern;
  * packed move against the current position via
  * {@link Board#resolveMoveDescription(MoveDescription, MoveGenerator)}.
  *
+ * <p>Optional attributes (capture / check / checkmate / en-passant / castling)
+ * are stored in a single {@link EnumSet} of {@link MoveFlag}. A flag's presence
+ * means "the notation said so (or the board exporter set it because the move
+ * actually has that property)"; absence means "not specified".
+ *
  * @author Michael Fleischhauer
  */
-@SuppressWarnings({"java:S5843"})
+@SuppressWarnings({"java:S5843", "java:3776"})
 public final class MoveDescription {
 
     private static final Pattern MOVE_PATTERN = Pattern.compile("^([PNBRQK])?([a-h])?([1-8])?([-x])?([a-h])([1-8])(=?[NBRQ])?(\\+|#|\\+\\+)?( ?e\\.p\\.)?(!|!!|!\\?|\\?!|\\?|\\?\\?)?$");
@@ -36,13 +42,7 @@ public final class MoveDescription {
     public final int toCol;
     public final int toRow;
     public final byte pawnPromotionPiece;
-    public final Boolean isCapture;
-    public final Boolean isCheck;
-    public final Boolean isCheckmate;
-    public final Boolean isEnPassant;
-    public final Boolean isCastlingKingSide;
-    public final Boolean isCastlingQueenSide;
-
+    private final EnumSet<MoveFlag> flags;
 
     MoveDescription(int turn, int fromCol, int fromRow, int toCol, int toRow, char pawnPromotionSymbol) {
         this.turn = turn;
@@ -52,12 +52,7 @@ public final class MoveDescription {
         this.toRow = toRow;
         this.pawnPromotionPiece = pawnPromotionSymbol == 0 ? 0 : ChessUtil.symbolToPiece(pawnPromotionSymbol, turn);
         this.piece = 0;
-        this.isCapture = null;
-        this.isCheck = null;
-        this.isCheckmate = null;
-        this.isEnPassant = null;
-        this.isCastlingKingSide = null;
-        this.isCastlingQueenSide = null;
+        this.flags = EnumSet.noneOf(MoveFlag.class);
     }
 
     MoveDescription(
@@ -68,12 +63,7 @@ public final class MoveDescription {
         int toCol,
         int toRow,
         byte pawnPromotionPiece,
-        Boolean isCapture,
-        Boolean isCheck,
-        Boolean isCheckmate,
-        Boolean isEnPassant,
-        Boolean isCastlingKingSide,
-        Boolean isCastlingQueenSide
+        EnumSet<MoveFlag> flags
     ) {
         if (turn <= 0) {
             throw new IllegalArgumentException("turn not set");
@@ -95,12 +85,7 @@ public final class MoveDescription {
         this.toCol = toCol;
         this.toRow = toRow;
         this.pawnPromotionPiece = pawnPromotionPiece;
-        this.isCapture = isCapture;
-        this.isCheck = isCheck;
-        this.isCheckmate = isCheckmate;
-        this.isEnPassant = isEnPassant;
-        this.isCastlingKingSide = isCastlingKingSide;
-        this.isCastlingQueenSide = isCastlingQueenSide;
+        this.flags = flags.isEmpty() ? EnumSet.noneOf(MoveFlag.class) : EnumSet.copyOf(flags);
     }
 
     public int getFromField() {
@@ -115,6 +100,34 @@ public final class MoveDescription {
         return ChessUtil.colAndRowToField(toCol, toRow);
     }
 
+    public boolean has(MoveFlag flag) {
+        return flags.contains(flag);
+    }
+
+    public boolean isCapture() {
+        return flags.contains(MoveFlag.CAPTURE);
+    }
+
+    public boolean isCheck() {
+        return flags.contains(MoveFlag.CHECK);
+    }
+
+    public boolean isCheckmate() {
+        return flags.contains(MoveFlag.CHECKMATE);
+    }
+
+    public boolean isEnPassant() {
+        return flags.contains(MoveFlag.EN_PASSANT);
+    }
+
+    public boolean isCastlingKingSide() {
+        return flags.contains(MoveFlag.CASTLING_KING_SIDE);
+    }
+
+    public boolean isCastlingQueenSide() {
+        return flags.contains(MoveFlag.CASTLING_QUEEN_SIDE);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -124,17 +137,15 @@ public final class MoveDescription {
                 && fromCol == that.fromCol && fromRow == that.fromRow
                 && toCol == that.toCol && toRow == that.toRow
                 && pawnPromotionPiece == that.pawnPromotionPiece
-                && Objects.equals(isCapture, that.isCapture)
-                && Objects.equals(isCheck, that.isCheck)
-                && Objects.equals(isCheckmate, that.isCheckmate)
-                && Objects.equals(isEnPassant, that.isEnPassant);
+                && flags.equals(that.flags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(turn, piece, fromCol, fromRow, toCol, toRow);
+        return Objects.hash(turn, piece, fromCol, fromRow, toCol, toRow, pawnPromotionPiece, flags);
     }
 
+    @SuppressWarnings({"java:S6541", "java:S3776"})
     public static MoveDescription fromString(String moveString, int turn) {
         if (moveString.isEmpty()) {
             throw new IllegalArgumentException("Empty move notation");
@@ -151,7 +162,7 @@ public final class MoveDescription {
 
             var castling = matcher.group(GROUP_CASTLING);
             if ("0-0".equals(castling) || "O-O".equals(castling)) {
-                builder.isCastlingKingSide = true;
+                builder.flags.add(MoveFlag.CASTLING_KING_SIDE);
                 if (isWhiteTurn) {
                     builder.piece = Board.whiteKing;
                     builder.fromCol = 4;
@@ -166,7 +177,7 @@ public final class MoveDescription {
                     builder.toRow = 7;
                 }
             } else { // O-O-O
-                builder.isCastlingQueenSide = true;
+                builder.flags.add(MoveFlag.CASTLING_QUEEN_SIDE);
                 if (isWhiteTurn) {
                     builder.piece = Board.whiteKing;
                     builder.fromCol = 4;
@@ -212,7 +223,7 @@ public final class MoveDescription {
             // Separator
             var sep = matcher.group(GROUP_SEPARATOR);
             if (sep != null && sep.charAt(0) == 'x') {
-                builder.isCapture = true;
+                builder.flags.add(MoveFlag.CAPTURE);
             }
 
             // Target field
@@ -240,7 +251,7 @@ public final class MoveDescription {
             // En passant
             var enPassant = matcher.group(GROUP_EN_PASSSANT);
             if (enPassant != null) {
-                builder.isEnPassant = true;
+                builder.flags.add(MoveFlag.EN_PASSANT);
             }
         }
 
@@ -251,30 +262,31 @@ public final class MoveDescription {
         var symbol = matcher.group(group);
         if (symbol != null) {
             if ("+".equals(symbol) || "++".equals(symbol)) {
-                builder.isCheck = true;
+                builder.flags.add(MoveFlag.CHECK);
             } else if ("#".equals(symbol)) {
-                builder.isCheckmate = true;
+                builder.flags.add(MoveFlag.CHECKMATE);
             }
         }
     }
 
     @Override
+    @SuppressWarnings("java:S3358")
     public String toString() {
-        if (isCastlingKingSide != null && isCastlingKingSide) {
+        if (isCastlingKingSide()) {
             return "0-0";
         }
 
-        if (isCastlingQueenSide != null && isCastlingQueenSide) {
+        if (isCastlingQueenSide()) {
             return "0-0-0";
         }
 
         return (piece != Board.whitePawn && piece != Board.blackPawn ? ChessUtil.pieceToString(piece) : "")
                 + (fromCol >= 0 ? (char) ('a' + fromCol) : "")
                 + (fromRow >= 0 ? fromRow + 1 : "")
-                + (isCapture != null && isCapture ? "x" : "")
+                + (isCapture() ? "x" : "")
                 + ChessUtil.fieldToString(getToField())
                 + (pawnPromotionPiece > 0 ? ChessUtil.pieceToString(pawnPromotionPiece) : "")
-                + (isCheckmate != null && isCheckmate ? "#" : (isCheck != null && isCheck ? "+" : ""));
+                + (isCheckmate() ? "#" : (isCheck() ? "+" : ""));
     }
 
     static final class Builder {
@@ -285,12 +297,7 @@ public final class MoveDescription {
         int toCol = -1;
         int toRow = -1;
         byte pawnPromotionPiece = -1;
-        Boolean isCapture;
-        Boolean isCheck;
-        Boolean isCheckmate;
-        Boolean isEnPassant;
-        Boolean isCastlingKingSide;
-        Boolean isCastlingQueenSide;
+        final EnumSet<MoveFlag> flags = EnumSet.noneOf(MoveFlag.class);
 
         Builder(int turn) {
             this.turn = turn;
@@ -304,16 +311,20 @@ public final class MoveDescription {
             this.toCol = moveDescr.toCol;
             this.toRow = moveDescr.toRow;
             this.pawnPromotionPiece = moveDescr.pawnPromotionPiece;
-            this.isCapture = moveDescr.isCapture;
-            this.isCheck = moveDescr.isCheck;
-            this.isCheckmate = moveDescr.isCheckmate;
-            this.isEnPassant = moveDescr.isEnPassant;
-            this.isCastlingKingSide = moveDescr.isCastlingKingSide;
-            this.isCastlingQueenSide = moveDescr.isCastlingQueenSide;
+            this.flags.addAll(moveDescr.flags);
+        }
+
+        /** Add {@code flag} if {@code present} is true; otherwise remove it. */
+        void setFlag(MoveFlag flag, boolean present) {
+            if (present) {
+                flags.add(flag);
+            } else {
+                flags.remove(flag);
+            }
         }
 
         MoveDescription build() {
-            return new MoveDescription(turn, piece, fromCol, fromRow, toCol, toRow, pawnPromotionPiece, isCapture, isCheck, isCheckmate, isEnPassant, isCastlingKingSide, isCastlingQueenSide);
+            return new MoveDescription(turn, piece, fromCol, fromRow, toCol, toRow, pawnPromotionPiece, flags);
         }
     }
 }

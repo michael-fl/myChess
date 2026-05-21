@@ -70,8 +70,9 @@ class OpeningDBImporterTest {
                 """);
         importer.importPgn(pgn);
 
-        assertEquals(importer.maxMoveDepth * 2, importer.totalMovesCounter,
-                "Importer must cap at maxMoveDepth*2 plies (32)");
+        // The importer caps at MAX_MOVE_DEPTH (16) full moves = 32 plies.
+        assertEquals(32, importer.totalMovesCounter,
+                "Importer must cap at 32 plies (16 full moves × 2)");
     }
 
     @Test
