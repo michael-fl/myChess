@@ -122,7 +122,7 @@ final class OpeningDBImporter {
     }
 
     void importPgn(Pgn pgn) {
-        if (pgn.moves.getFirst().turn == GameStatus.TURN_BLACK) {
+        if (pgn.moves.getFirst().turn() == GameStatus.TURN_BLACK) {
             return; // skip PGNs starting with a black move
         }
 
@@ -137,7 +137,7 @@ final class OpeningDBImporter {
 
                 var key = board.calculatePositionKey();
                 var dbValue = new DBValue(positionMap.get(key));
-                dbValue.addMove(move.move(), moveDescr.turn, pgn.result);
+                dbValue.addMove(move.move(), moveDescr.turn(), pgn.result);
                 positionMap.put(key, dbValue.getBuffer());
 
                 board.makeMove(move.move());

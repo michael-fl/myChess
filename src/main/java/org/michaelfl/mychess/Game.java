@@ -219,17 +219,17 @@ public final class Game {
         }
 
         // Verify pawn promotion
-        if (moveDescr.pawnPromotionPiece > 0) {
+        if (moveDescr.pawnPromotionPiece() > 0) {
             if (getGameStatus().getTurn() == GameStatus.TURN_BLACK) {
-                if (moveDescr.piece != Board.whitePawn
-                        || board.get(moveDescr.getToField()) != moveDescr.pawnPromotionPiece
-                        || moveDescr.toRow != 7) {
+                if (moveDescr.piece() != Board.whitePawn
+                        || board.get(moveDescr.getToField()) != moveDescr.pawnPromotionPiece()
+                        || moveDescr.toRow() != 7) {
                     throw new IllegalMoveException("Wrong move notation: " + moveDescr + "+. Not a pawn promotion.");
                 }
             } else {
-                if (moveDescr.piece != Board.blackPawn
-                        || board.get(moveDescr.getToField()) != moveDescr.pawnPromotionPiece
-                        || moveDescr.toRow != 0) {
+                if (moveDescr.piece() != Board.blackPawn
+                        || board.get(moveDescr.getToField()) != moveDescr.pawnPromotionPiece()
+                        || moveDescr.toRow() != 0) {
                     Log.error("Bogus promotion notation: " + moveDescr + "\n" + board);
                     throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Not a pawn promotion.");
                 }

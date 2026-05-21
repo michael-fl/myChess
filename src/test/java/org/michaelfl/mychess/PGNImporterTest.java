@@ -97,7 +97,7 @@ class PGNImporterTest {
 
         try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.ISO_8859_1)) {
             Pgn.parse(reader, true).forEach(pgn -> {
-                if (counter.incrementAndGet() > 0 && pgn.moves.getFirst().turn == GameStatus.TURN_WHITE) { // skip PGNs starting with black
+                if (counter.incrementAndGet() > 0 && pgn.moves.getFirst().turn() == GameStatus.TURN_WHITE) { // skip PGNs starting with black
                     var importer = new PGNImporter(pgn);
                     try {
                         importer.importGame();
