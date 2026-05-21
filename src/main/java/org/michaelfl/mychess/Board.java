@@ -1004,15 +1004,15 @@ public final class Board {
         var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
 
         makeMove(move.move());
-        builder.isCheckmate = isCheckmate(moveGenerator);
-        builder.isCheck = isKingChecked(moveGenerator);
+        builder.setFlag(MoveFlag.CHECKMATE, isCheckmate(moveGenerator));
+        builder.setFlag(MoveFlag.CHECK, isKingChecked(moveGenerator));
         revertMove();
 
         builder.piece = get(move.getFromField());
         builder.toCol = move.getToCol();
         builder.toRow = move.getToRow();
         if (move.getCapturedPiece() != Board.empty) {
-            builder.isCapture = true;
+            builder.flags.add(MoveFlag.CAPTURE);
             if (Board.isPawn(builder.piece)) {
                 builder.fromCol = move.getFromCol();
             }
@@ -1024,8 +1024,8 @@ public final class Board {
         }
 
         var moveType = Move.getMoveType(move.move());
-        builder.isCastlingKingSide = moveType == Move.typeCastlingKingSide;
-        builder.isCastlingQueenSide = moveType == Move.typeCastlingQueenSide;
+        builder.setFlag(MoveFlag.CASTLING_KING_SIDE, moveType == Move.typeCastlingKingSide);
+        builder.setFlag(MoveFlag.CASTLING_QUEEN_SIDE, moveType == Move.typeCastlingQueenSide);
 
         try {
             var moveDescr = builder.build();

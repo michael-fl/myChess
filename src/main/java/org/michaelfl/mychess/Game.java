@@ -173,7 +173,7 @@ public final class Game {
         var capturedPiece = move.getCapturedPiece();
 
         // Verify isCapture
-        if (moveDescr.isCapture != null && moveDescr.isCapture && capturedPiece == Board.empty) {
+        if (moveDescr.isCapture() && capturedPiece == Board.empty) {
             throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Move does not capture any piece.");
         }
 
@@ -209,12 +209,12 @@ public final class Game {
 
     private void verifyMove(MoveDescription moveDescr, MoveGenerator moveGenerator) {
         // Verify isCheck
-        if (moveDescr.isCheck != null && moveDescr.isCheck && !board.isKingChecked(moveGenerator)) {
+        if (moveDescr.isCheck() && !board.isKingChecked(moveGenerator)) {
             throw new IllegalMoveException("Wrong move notation: " + moveDescr + "+. Move does not give check.");
         }
 
         // Verify isCheckmate
-        if (moveDescr.isCheckmate != null && moveDescr.isCheckmate && getResult() != GameResult.CHECKMATE) {
+        if (moveDescr.isCheckmate() && getResult() != GameResult.CHECKMATE) {
             throw new IllegalMoveException("Wrong move notation: " + moveDescr + "+. Move does not set checkmate.");
         }
 

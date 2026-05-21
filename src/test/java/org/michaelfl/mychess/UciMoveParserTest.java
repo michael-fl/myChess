@@ -22,8 +22,8 @@ class UciMoveParserTest {
 
         assertNotNull(md, "parser must return a MoveDescription for e2e4");
         assertTrue(md.pawnPromotionPiece <= 0, "no promotion expected on normal pawn move");
-        assertFalse(Boolean.TRUE.equals(md.isCastlingKingSide), "not a kingside castling");
-        assertFalse(Boolean.TRUE.equals(md.isCastlingQueenSide), "not a queenside castling");
+        assertFalse(md.isCastlingKingSide(), "not a kingside castling");
+        assertFalse(md.isCastlingQueenSide(), "not a queenside castling");
     }
 
     @Test
@@ -94,9 +94,9 @@ class UciMoveParserTest {
         var md = UciMoveParser.parse("c1a1", board);
 
         assertNotNull(md, "non-king move should still parse");
-        assertFalse(Boolean.TRUE.equals(md.isCastlingKingSide),
+        assertFalse(md.isCastlingKingSide(),
                 "should not be flagged as kingside castling");
-        assertFalse(Boolean.TRUE.equals(md.isCastlingQueenSide),
+        assertFalse(md.isCastlingQueenSide(),
                 "should not be flagged as queenside castling");
     }
 
