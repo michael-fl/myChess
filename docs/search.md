@@ -313,10 +313,10 @@ Two distinct mechanisms control when the search stops: **timeout** (soft — ret
 **Timeout.** `PositionSearch` records its deadline at construction time:
 
 ```java
-this.timeout = System.currentTimeMillis() + engineConfig.getSecondsPerMove() * 1000L;
+this.timeout = System.currentTimeMillis() + engineConfig.getMillisPerMove();
 ```
 
-`EngineConfig.secondsPerMove` defaults to 30 seconds. The deadline is then polled by `isTimeout()`:
+`EngineConfig.millisPerMove` defaults to 30 000 ms. The deadline is then polled by `isTimeout()`:
 
 ```java
 private boolean isTimeout() {
@@ -370,6 +370,44 @@ The poll happens *after* move generation but *before* the move loop, so cancella
 Both mechanisms operate at node granularity. There is no thread interruption check (`Thread.interrupted()`) because the search does no blocking I/O — interruption would not do anything useful.
 
 **Concurrency story** for the executor and `NextMoveTask` data layout is in [§ 2.4](../README.md#24-concurrency-and-async-move-calculation) and [§ 3.10](data-types.md#310-nextmovetask-async-result-handle); this section is just about *what triggers the search to stop*.
+
+### 6.5.1 Skip-hopeless-iteration heuristic
+
+The vanilla deadline above tells the search *when* to abort mid-iteration, but it does not address a related waste: a deepening iteration that is almost certainly too expensive to complete in the remaining time still gets started, runs for the rest of the budget, and is then discarded mid-flight. Across a typical 30-second move that often costs 10–20 seconds of compute with no usable result — the bestmove handed back to the GUI is the one from the previous, completed iteration.
+
+`PositionSearch` therefore tracks rolling per-depth iteration times in [`IterationTimings`](../src/main/java/org/michaelfl/mychess/engines/IterationTimings.java) (a process-static simple moving average over the last `SMA_WINDOW_SIZE` samples per depth) and short-circuits the iterative-deepening loop in `calculateNextMove()` before starting the next iteration:
+
+```java
+if (depth > 1 && shouldSkipIteration(depth)) {
+    break;
+}
+```
+
+The decision is "skip" when all of the following hold:
+
+- the depth has at least `MIN_SAMPLES_FOR_SKIP` samples in the window (avoids reacting to a single early outlier),
+- `getEstimatedMs(depth) > remainingMs`,
+- `isProbingDue(depth, …)` returns false (see below).
+
+When the heuristic fires, the previous-iteration `bestmove` is returned immediately and the recovered time stays on the clock — feeding the next move's budget in clock-based time controls.
+
+**Probing.** To keep the SMA from freezing after one expensive sample (e.g. a depth-10 abort recorded as "expensive forever"), a probing override fires after `SKIPS_BETWEEN_PROBES` consecutive skips of the same depth: the iteration runs anyway, refreshing the window with current data. The probe is gated by `MIN_PROBE_REMAINING_RATIO` so it never starts with so little time left that it would just abort and pollute the SMA with a meaningless under-sampled result — instead the skip counter keeps growing and the probe fires the next time enough time is actually available.
+
+**Aborted iterations** are recorded as `max(currentEstimate, elapsedMs × ABORT_EXTRAPOLATION_FACTOR)`. An abort proves only that the iteration would have cost *at least* `elapsedMs`, never that it would have been cheaper than the prior average, so the floor prevents the SMA from being pulled down by a probe that aborted too early. Only `recordCompletion` — a real, ground-truth measurement — can lower the SMA.
+
+**Tuning knobs** live in [`EngineTuning`](../src/main/java/org/michaelfl/mychess/engines/EngineTuning.java) so they can be swept independently:
+
+| Knob | Default | Purpose |
+|---|---|---|
+| `SMA_WINDOW_SIZE` | 5 | Number of recent samples per depth |
+| `MIN_SAMPLES_FOR_SKIP` | 2 | Samples required before the heuristic fires |
+| `ABORT_EXTRAPOLATION_FACTOR` | 1.2 | Multiplier for the elapsed-at-abort floor |
+| `SKIPS_BETWEEN_PROBES` | 5 | Consecutive skips before a probe forces a run |
+| `MIN_PROBE_REMAINING_RATIO` | 0.7 | Min `remaining / estimate` for the probe to fire |
+
+**Lifetime.** State is process-static so it survives the per-`go` engine instances, and reset on `ucinewgame` via `ChessEngine.resetIterationTimings()` — a new game shouldn't inherit timing stats from a different position-complexity profile.
+
+This is a deliberately small subset of the broader work outlined in [roadmap § 12.12](roadmap.md#1212-real-time-management-heuristics--s--m--3060-elo): it addresses the single most visible waste (the always-aborted top iteration) without yet introducing soft/hard split budgets, panic mode, complexity scaling, or multi-phase awareness.
 
 ## 6.6 Checkmate and stalemate scoring
 

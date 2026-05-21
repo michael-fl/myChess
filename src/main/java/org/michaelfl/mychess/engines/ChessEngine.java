@@ -82,6 +82,17 @@ public abstract class ChessEngine {
         executor.shutdownNow();
     }
 
+    /**
+     * Drop all per-depth iteration-time statistics. Called by
+     * {@code UciHandler} on {@code ucinewgame} so a
+     * new game does not inherit stale stats from the previous one. Bridges
+     * package-private {@link IterationTimings} state to callers outside
+     * the {@code engines} package.
+     */
+    public static void resetIterationTimings() {
+        IterationTimings.reset();
+    }
+
     public final EngineConfig getConfig() {
         return config;
     }

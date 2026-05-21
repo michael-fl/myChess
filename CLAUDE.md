@@ -45,7 +45,7 @@ Moves are packed into a single `int` (`fromField | toField<<8 | capturedPiece<<1
 
 `MyChessEngine.calculateNextMoveSub` delegates to `PositionSearch`. The search is:
 
-- **Iterative deepening** from depth 1 up to `EngineConfig.maxDepth`, bounded by `secondsPerMove` (timeout checked every 10 000 nodes via `Statistics.getPositionsCount()`).
+- **Iterative deepening** from depth 1 up to `EngineConfig.maxDepth`, bounded by `millisPerMove` (timeout checked every 10 000 nodes via `Statistics.getPositionsCount()`). Before each iteration `PositionSearch.shouldSkipIteration` consults `IterationTimings` — a process-static per-depth SMA — and bails out early if the next deepening iteration is unlikely to complete in the remaining budget. A probing override with a remaining-time ratio gate keeps the SMA from freezing. All tuning knobs live in `engines/EngineTuning.java`.
 - **Negamax alpha-beta** with a principal-variation table flattened into a single `int[pvMaxLength * pvMaxLength]` indexed by `depth * pvMaxLength + depth`.
 - **Best-known-move ordering**: the previous iteration's PV is passed in as `bestKnownPath` and the `MoveSorterImpl` places it first; an `__assert` in `PositionSearch` enforces this invariant.
 - **Killer-move heuristic** via `KillerMoves` (only non-capturing moves that caused beta cut-offs).
