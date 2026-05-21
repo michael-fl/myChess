@@ -7,7 +7,7 @@ package org.michaelfl.mychess.engines;
  *
  * <p>Only knobs that a human is plausibly going to tune live here. Things
  * like UCI-protocol time margins ({@code UciHandler.TIME_SAFETY_MARGIN_MS})
- * or pure diagnostic counters ({@code ChessEngine.MAX_LOGGED_BOOK_MISSES})
+ * or pure diagnostic counters ({@code BookMissThrottle.MAX_LOGGED_MISSES})
  * stay where they're used.
  *
  * @author Michael Fleischhauer

@@ -29,9 +29,9 @@ import java.util.function.Consumer;
  */
 public abstract class ChessEngine {
 
-    public final static class MoveAndWeight {
+    public static final class MoveAndWeight {
 
-        public final static MoveAndWeight NO_MOVE = new MoveAndWeight(0, 0, GameResult.ONGOING, new int[0]);
+        public static final MoveAndWeight NO_MOVE = new MoveAndWeight(0, 0, GameResult.ONGOING, new int[0]);
 
         public final int move;
         public final float weight;
@@ -58,14 +58,6 @@ public abstract class ChessEngine {
             return new MoveAndWeight(move, weight * factor, result, path);
         }
     }
-
-    /**
-     * Maximum number of consecutive {@code [book] miss} log lines emitted before
-     * further misses are silenced. Reset to zero on any book hit. Process-wide
-     * so the throttling survives across the per-{@code go} engine instances.
-     */
-    private static final int MAX_LOGGED_BOOK_MISSES = 5;
-    private static int consecutiveBookMisses = 0;
 
     private final Random rand = new Random();
     private final ExecutorService executor;
@@ -128,6 +120,7 @@ public abstract class ChessEngine {
 
     public abstract Moves getPossibleMoves();
 
+    @SuppressWarnings({"java:S2095","java:S2589"})
     public final MoveAndWeight calculateNextMove(NextMoveTask task) {
         MoveAndWeight move = MoveAndWeight.NO_MOVE;
         var openingDB = task.getEnv().openingDB();
@@ -178,16 +171,15 @@ public abstract class ChessEngine {
         var positionInfo = openingDB.lookupPosition(key);
 
         if (positionInfo == null) {
-            if (consecutiveBookMisses < MAX_LOGGED_BOOK_MISSES) {
+            if (BookMissThrottle.recordMissAndShouldLog()) {
                 Log.info("[book] miss — no entry for position key=" + key);
             }
-            consecutiveBookMisses++;
             return null;
         }
 
         // Lookup found the position in the DB — reset the miss streak. Any
         // subsequent run of misses will start logging from scratch.
-        consecutiveBookMisses = 0;
+        BookMissThrottle.recordHit();
 
         int totalMoves = positionInfo.moves.size();
         var candidates = positionInfo.moves
