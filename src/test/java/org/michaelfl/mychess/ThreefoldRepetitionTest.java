@@ -37,9 +37,9 @@ class ThreefoldRepetitionTest {
         var game = importer.importGame(new GameConfig(MyChessEngine.class, engineConfig()));
 
         MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
-        assertEquals("f6-g8", ChessUtil.moveToString(move.move), "Unexpected move");
-        assertEquals(0f, move.weight, "Weight must be 0 (draw)");
-        assertEquals(GameResult.DRAW, move.result, "game must be draw due to threefold repetition rule");
+        assertEquals("f6-g8", ChessUtil.moveToString(move.move()), "Unexpected move");
+        assertEquals(0f, move.weight(), "Weight must be 0 (draw)");
+        assertEquals(GameResult.DRAW, move.result(), "game must be draw due to threefold repetition rule");
     }
 
     @Test

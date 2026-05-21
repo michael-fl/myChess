@@ -29,35 +29,23 @@ import java.util.function.Consumer;
  */
 public abstract class ChessEngine {
 
-    public static final class MoveAndWeight {
+    @SuppressWarnings("java:S6218")
+    public record MoveAndWeight(int move, float weight, GameResult result,
+                                @SuppressWarnings("WeakerAccess") int[] path) {
 
-        public static final MoveAndWeight NO_MOVE = new MoveAndWeight(0, 0, GameResult.ONGOING, new int[0]);
+            public static final MoveAndWeight NO_MOVE = new MoveAndWeight(0, 0, GameResult.ONGOING, new int[0]);
 
-        public final int move;
-        public final float weight;
-        public final GameResult result;
-
-        @SuppressWarnings("WeakerAccess")
-        public final int[] path;
-
-        public MoveAndWeight(int move, int weightCenti, GameResult result, int[] path) {
-            this(move, weightCenti / 100.0f, result, path);
-        }
-
-        public MoveAndWeight(int move, float weight, GameResult result, int[] path) {
-            this.move = move;
-            this.weight = weight;
-            this.result = result;
-            this.path = path;
-        }
-
-        public MoveAndWeight weightFactor(int factor) {
-            if (weight == 0f) {
-                return this;
+            public MoveAndWeight(int move, int weightCenti, GameResult result, int[] path) {
+                this(move, weightCenti / 100.0f, result, path);
             }
-            return new MoveAndWeight(move, weight * factor, result, path);
+
+            public MoveAndWeight weightFactor(int factor) {
+                if (weight == 0f) {
+                    return this;
+                }
+                return new MoveAndWeight(move, weight * factor, result, path);
+            }
         }
-    }
 
     private final Random rand = new Random();
     private final ExecutorService executor;

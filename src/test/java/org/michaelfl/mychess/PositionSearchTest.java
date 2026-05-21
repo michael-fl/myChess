@@ -40,10 +40,10 @@ class PositionSearchTest {
 
         var move = game.getEngine().nextMoveAsync().getResult(20, TimeUnit.SECONDS);
 
-        var san = game.getBoard().moveToShortNotation(new Move(move.move)).toString();
+        var san = game.getBoard().moveToShortNotation(new Move(move.move())).toString();
         assertEquals("Qxf7#", san, "Search must find the mate-in-1 move Qxf7#");
-        assertTrue(WeightingFunction.isCheckmateWeight(move.weight),
-                "Returned weight must be in the checkmate range, was " + move.weight);
+        assertTrue(WeightingFunction.isCheckmateWeight(move.weight()),
+                "Returned weight must be in the checkmate range, was " + move.weight());
     }
 
     @Test
@@ -56,7 +56,7 @@ class PositionSearchTest {
         var move = game.getEngine().nextMoveAsync().getResult(30, TimeUnit.SECONDS);
 
         int len = 0;
-        for (int i = 0; i < move.path.length && move.path[i] != 0; i++) {
+        for (int i = 0; i < move.path().length && move.path()[i] != 0; i++) {
             len++;
         }
         assertTrue(len <= 4, "Principal variation must not exceed maxDepth, got " + len);
@@ -78,8 +78,8 @@ class PositionSearchTest {
 
         var move = game.getEngine().nextMoveAsync().getResult(10, TimeUnit.SECONDS);
 
-        assertEquals(0, move.move, "No move can be played when the game is already mated");
-        assertEquals(Game.GameResult.CHECKMATE, move.result,
+        assertEquals(0, move.move(), "No move can be played when the game is already mated");
+        assertEquals(Game.GameResult.CHECKMATE, move.result(),
                 "Result must be CHECKMATE when the game is already over");
     }
 
@@ -109,7 +109,7 @@ class PositionSearchTest {
         long elapsed = System.currentTimeMillis() - t0;
 
         assertNotNull(move, "Search must return a move from the previous completed depth");
-        assertNotEquals(0, move.move, "Returned move must be a real move");
+        assertNotEquals(0, move.move(), "Returned move must be a real move");
         assertTrue(elapsed < 10_000,
                 "Search must abort within a few seconds when millisPerMove=1000, actual: " + elapsed + "ms");
     }

@@ -120,11 +120,6 @@ final class PositionEncoding {
                         piece = WHITE_KING_BLACKS_TURN_INDEX;
                     } else if (field == enPassantPawnField) {
                         // Encode en passant field by using a special pawn piece
-                        // TODO remove
-                        if (!((field >= Board.a4 && field <= Board.h4 && piece == Board.whitePawn) || (field >= Board.a5 && field <= Board.h5 && piece == Board.blackPawn))) {
-                            board.print();
-                            throw new IllegalStateException("field=" + ChessUtil.fieldToString(field) + ", piece=" + ChessUtil.pieceToString(piece));
-                        }
                         piece = piece == Board.whitePawn ? WHITE_PAWN_EN_PASSANT_INDEX : BLACK_PAWN_EN_PASSANT_INDEX;
                     } else if (piece == Board.whiteRook &&
                             ((field == Board.a1 && gameStatus.isWhiteCastlingQueenSidePossible())
@@ -151,13 +146,6 @@ final class PositionEncoding {
             }
         }
 
-        // TODO remove
-        if (fieldBitIndex != 64) {
-            throw new IllegalStateException("Wrong fieldBitIndex: " + fieldBitIndex);
-        }
-        if (pieceBitIndex > 192) {
-            throw new IllegalStateException("Wrong pieceBitIndex: " + pieceBitIndex);
-        }
         return bitSet.toLongArray();
     }
 

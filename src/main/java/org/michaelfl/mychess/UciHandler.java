@@ -226,7 +226,7 @@ final class UciHandler {
         try {
             // Give the watcher a 1-second grace period over the search budget.
             MoveAndWeight result = task.getResult(budgetMillis + 1_000L, TimeUnit.MILLISECONDS);
-            bestmove = result.move;
+            bestmove = result.move();
         } catch (ExecutionException e) {
             if (!(e.getCause() instanceof CancellationException)) {
                 Log.error("Search failed", e);

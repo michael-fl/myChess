@@ -97,11 +97,11 @@ public final class Game {
 
     private GameResult calculateGameResult() {
         MoveAndWeight move = statusEngine.calculateNextMove(new NextMoveTask());
-        if (move.path.length > 0 && move.path[0] != 0) {
+        if (move.path().length > 0 && move.path()[0] != 0) {
             // at least one move still possible ==> ongoing
             return GameResult.ONGOING;
         } else {
-            return move.result;
+            return move.result();
         }
     }
 
@@ -240,7 +240,7 @@ public final class Game {
     }
 
     void makeMove(MoveAndWeight move) {
-        board.validateMove(move.move);
+        board.validateMove(move.move());
         board.makeMove(move);
     }
 

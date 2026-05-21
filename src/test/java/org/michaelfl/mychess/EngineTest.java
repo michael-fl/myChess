@@ -650,18 +650,18 @@ class EngineTest {
             if (WeightingFunction.isCheckmateWeight(expectedMinWeight)) {
                 expectedPathDepth = Math.min(expectedPathDepth, WeightingFunction.checkmateWeightToPlies(expectedMinWeight));
             }
-            assertEquals(expectedPathDepth, pathLength(move.path), "Unexpected path length: " + ChessUtil.pathToString(move.path));
+            assertEquals(expectedPathDepth, pathLength(move.path()), "Unexpected path length: " + ChessUtil.pathToString(move.path()));
             if (expectedPathOpt != null) {
                 assertEquals(expectedPathDepth, expectedPathOpt.length, "Test setup error: Wrong length of expected path");
             }
 
-            if (notContainsMove(game, expectedMoves, move.move)) {
+            if (notContainsMove(game, expectedMoves, move.move())) {
                 game.print();
                 System.out.println(game.exportFEN());
-                fail("Wrong move: " + ChessUtil.moveToString(move.move) + ". Expected one of " + expectedMoves);
+                fail("Wrong move: " + ChessUtil.moveToString(move.move()) + ". Expected one of " + expectedMoves);
             }
 
-            var weight = move.weight;
+            var weight = move.weight();
             if (weight < expectedMinWeight) {
                 game.print();
                 fail("Wrong weight: " + ChessUtil.weightToString(weight) + ". Expected minimum of " + ChessUtil.weightToString(expectedMinWeight));
@@ -672,14 +672,14 @@ class EngineTest {
             }
 
             for (int i = 0; i < expectedPathDepth; i++) {
-                if (expectedPathOpt != null && notContainsMove(game, Set.of(expectedPathOpt[i]), move.path[i])) {
+                if (expectedPathOpt != null && notContainsMove(game, Set.of(expectedPathOpt[i]), move.path()[i])) {
                     game.print();
-                    fail("Unexpected move at path depth " + i + ": " + game.getBoard().moveToShortNotation(new Move(move.path[i])) + ", expected " + expectedPathOpt[i] + ", expected path=" + Arrays.toString(expectedPathOpt) + ", actual path=" + ChessUtil.pathToString(move.path));
+                    fail("Unexpected move at path depth " + i + ": " + game.getBoard().moveToShortNotation(new Move(move.path()[i])) + ", expected " + expectedPathOpt[i] + ", expected path=" + Arrays.toString(expectedPathOpt) + ", actual path=" + ChessUtil.pathToString(move.path()));
                 }
                 try {
-                    game.makeMove(new Move(move.path[i]));
+                    game.makeMove(new Move(move.path()[i]));
                 } catch (Exception e) {
-                    System.out.println("Failed to execute move " + ChessUtil.moveToString(move.path[i]));
+                    System.out.println("Failed to execute move " + ChessUtil.moveToString(move.path()[i]));
                     game.getBoard().print();
                     throw e;
                 }
@@ -688,7 +688,7 @@ class EngineTest {
             if (WeightingFunction.isCheckmateWeight(expectedMinWeight)) {
                 assertEquals(GameResult.CHECKMATE, game.getResult(), "Game result should be checkmate");
             }
-            assertEquals(move.result, game.getResult(), "Unexpected game result");
+            assertEquals(move.result(), game.getResult(), "Unexpected game result");
 
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException(e);

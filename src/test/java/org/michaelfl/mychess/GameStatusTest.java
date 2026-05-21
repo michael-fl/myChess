@@ -38,16 +38,16 @@ class GameStatusTest {
         assertEquals(GameResult.ONGOING, game.getResult(), "Game should not yet be finished");
 
         MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
-        assertEquals("d8-h4", ChessUtil.moveToString(move.move), "Unexpected move");
-        assertEquals(-checkmateIn(1), move.weight, "Should be checkmate in 1");
+        assertEquals("d8-h4", ChessUtil.moveToString(move.move()), "Unexpected move");
+        assertEquals(-checkmateIn(1), move.weight(), "Should be checkmate in 1");
 
         game.makeMove(MoveDescription.fromString("d8-h4", game.getTurn()));
         assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "It must be white's turn");
         assertEquals(GameResult.CHECKMATE, game.getResult(), "Black must be checkmate");
 
         move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
-        assertEquals(0, move.move, "No move should be possible, since game is finished");
-        assertEquals(-checkmateIn(0), move.weight, "Wrong weight");
+        assertEquals(0, move.move(), "No move should be possible, since game is finished");
+        assertEquals(-checkmateIn(0), move.weight(), "Wrong weight");
     }
 
     @Test
@@ -61,16 +61,16 @@ class GameStatusTest {
         assertEquals(GameResult.ONGOING, game.getResult(), "Game should not yet be finished");
 
         MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
-        assertEquals("h5-f7", ChessUtil.moveToString(move.move), "Unexpected move");
-        assertEquals(checkmateIn(1), move.weight, "Should be checkmate in 1");
+        assertEquals("h5-f7", ChessUtil.moveToString(move.move()), "Unexpected move");
+        assertEquals(checkmateIn(1), move.weight(), "Should be checkmate in 1");
 
         game.makeMove(MoveDescription.fromString("h5-f7", game.getTurn()));
         assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "It must be white's turn");
         assertEquals(GameResult.CHECKMATE, game.getResult(), "White must be checkmate");
 
         move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
-        assertEquals(0, move.move, "No move should be possible, since game is finished");
-        assertEquals(checkmateIn(0), move.weight, "Wrong weight");
+        assertEquals(0, move.move(), "No move should be possible, since game is finished");
+        assertEquals(checkmateIn(0), move.weight(), "Wrong weight");
     }
 
     @Test
@@ -86,8 +86,8 @@ class GameStatusTest {
         assertTrue(game.getResult().isDraw(), "Game should be draw due to stalemate");
 
         MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
-        assertEquals(0, move.move, "No move should be possible, since game is finished");
-        assertEquals(0f, move.weight, "Weight should be 0 (draw)");
+        assertEquals(0, move.move(), "No move should be possible, since game is finished");
+        assertEquals(0f, move.weight(), "Weight should be 0 (draw)");
     }
 
     @Test
@@ -103,7 +103,7 @@ class GameStatusTest {
         assertTrue(game.getResult().isDraw(), "Game should be draw due to stalemate");
 
         MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
-        assertEquals(0, move.move, "No move should be possible, since game is finished");
-        assertEquals(0f, move.weight, "Weight should be 0 (draw)");
+        assertEquals(0, move.move(), "No move should be possible, since game is finished");
+        assertEquals(0f, move.weight(), "Weight should be 0 (draw)");
     }
 }
