@@ -22,6 +22,7 @@ public final class NextMoveTask {
     private final MyChessEnv env;
     private Future<MoveAndWeight> resultFuture;
     private volatile boolean isCanceled;
+    @SuppressWarnings("java:S3077")
     private volatile Consumer<IterationInfo> iterationListener;
 
     public NextMoveTask() {

@@ -47,9 +47,9 @@ class ChessEngineTest {
 
         var move = game.getEngine().nextMoveAsync().getResult(10, TimeUnit.SECONDS);
 
-        assertEquals(Game.GameResult.CHECKMATE, move.result,
+        assertEquals(Game.GameResult.CHECKMATE, move.result(),
                 "Pre-search shortcut must return CHECKMATE on a finished game");
-        assertEquals(0, move.move, "No move is played when the game is mated");
+        assertEquals(0, move.move(), "No move is played when the game is mated");
     }
 
     @Test
@@ -69,9 +69,9 @@ class ChessEngineTest {
         game.makeMove(MoveDescription.fromString("c8-d7", game.getTurn()));
 
         var move = game.getEngine().nextMoveAsync().getResult(10, TimeUnit.SECONDS);
-        assertEquals(Game.GameResult.DRAW, move.result,
+        assertEquals(Game.GameResult.DRAW, move.result(),
                 "After 50-move rule fires, pre-search shortcut must return DRAW");
-        assertEquals(0, move.move, "No move is returned on the 50-move-rule shortcut");
+        assertEquals(0, move.move(), "No move is returned on the 50-move-rule shortcut");
     }
 
     @Test
@@ -84,7 +84,7 @@ class ChessEngineTest {
         game.makeMove(MoveDescription.fromString("f6-g8", game.getTurn()));
 
         var move = game.getEngine().nextMoveAsync().getResult(10, TimeUnit.SECONDS);
-        assertEquals(Game.GameResult.DRAW, move.result,
+        assertEquals(Game.GameResult.DRAW, move.result(),
                 "After threefold repetition, pre-search shortcut must return DRAW");
     }
 
@@ -123,9 +123,9 @@ class ChessEngineTest {
             var env = new MyChessEnv(db);
             var move = game.getEngine().nextMoveAsync(env).getResult(10, TimeUnit.SECONDS);
 
-            assertEquals(e2e4, move.move,
+            assertEquals(e2e4, move.move(),
                     "Engine must play the single qualifying book move");
-            assertEquals(0f, move.weight, "Book moves are returned with weight 0");
+            assertEquals(0f, move.weight(), "Book moves are returned with weight 0");
         }
     }
 
@@ -144,7 +144,7 @@ class ChessEngineTest {
             var env = new MyChessEnv(db);
             var move = game.getEngine().nextMoveAsync(env).getResult(20, TimeUnit.SECONDS);
 
-            assertNotEquals(0, move.move,
+            assertNotEquals(0, move.move(),
                     "Engine must fall through to search and return a real move");
         }
     }

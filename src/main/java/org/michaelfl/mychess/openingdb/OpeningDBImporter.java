@@ -25,11 +25,12 @@ import java.util.Map;
  */
 final class OpeningDBImporter {
 
+    private static final int MAX_MOVE_DEPTH = 16;
+
     final MoveGenerator moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
-    final int maxMoveDepth = 16;
     int pgnCounter = 0;
     int totalMovesCounter = 0;
-    final Map<String, byte[]> positionMap = new HashMap<>(100000);
+    final Map<String, byte[]> positionMap = HashMap.newHashMap(100000);
 
     void importPGNs() throws IOException {
         var dir = Path.of("/Users/mf/_PRIVAT_/Schach/KingBase2019-pgn/");
@@ -127,7 +128,7 @@ final class OpeningDBImporter {
 
         try {
             final var board = Board.createNewGame();
-            final int maxDepth = maxMoveDepth * 2;
+            final int maxDepth = MAX_MOVE_DEPTH * 2;
             int depth = 0;
 
             for (var moveDescr : pgn.moves) {
@@ -156,7 +157,7 @@ final class OpeningDBImporter {
         }
     }
 
-    static void main(String[] args) throws IOException {
+    static void main() throws IOException {
         var importer = new OpeningDBImporter();
 
         importer.importPGNs();

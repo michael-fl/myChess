@@ -152,7 +152,7 @@ class DeepWeightTest {
             GameImporter importer = GameImporter.importerFor(gameNotation);
             var game = importer.importGame(config);
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
-            var weight = move.weight;
+            var weight = move.weight();
 
             if (weight < expectedMinWeight) {
                 game.print();

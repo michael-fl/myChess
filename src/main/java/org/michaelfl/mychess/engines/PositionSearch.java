@@ -172,21 +172,21 @@ public final class PositionSearch {
 
             MoveAndWeight m = bestPath.weightFactor(weightFactor);
 
-            log("Depth: " + depth + ", move: " + ChessUtil.moveToString(m.move) + ", weight: " + ChessUtil.weightToString(m.weight) + " [" + ChessUtil.pathToString(m.path) + "]");
+            log("Depth: " + depth + ", move: " + ChessUtil.moveToString(m.move()) + ", weight: " + ChessUtil.weightToString(m.weight()) + " [" + ChessUtil.pathToString(m.path()) + "]");
             log("#positions: " + statistics.getPositionsCount() + ", #pruned: " + statistics.getPrunedMovesCount());
 
             task.fireIteration(new IterationInfo(
                     depth,
                     statistics.getPositionsCount(),
                     iterationEndMs - startMs,
-                    m.weight,
-                    Arrays.copyOf(m.path, m.path.length)));
+                    m.weight(),
+                    Arrays.copyOf(m.path(), m.path().length)));
         }
 
         // The last path component may be an illegal move (because this is not checked on the leaf nodes).
         // Hence, we just shorten the path by one to avoid returning an invalid path.
-        if (bestPath != null && bestPath.path.length >= maxDepth) {
-            bestPath.path[maxDepth - 1] = 0;
+        if (bestPath != null && bestPath.path().length >= maxDepth) {
+            bestPath.path()[maxDepth - 1] = 0;
         }
 
         return bestPath;
@@ -303,8 +303,8 @@ public final class PositionSearch {
     }
 
     private int getMoveAtDepth(MoveAndWeight m, int depth) {
-        if (m != null && m.path.length > depth) {
-            return m.path[depth];
+        if (m != null && m.path().length > depth) {
+            return m.path()[depth];
         }
 
         return 0;

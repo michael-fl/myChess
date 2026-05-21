@@ -333,7 +333,7 @@ public final class Board {
     }
 
     public void makeMove(final MoveAndWeight move) {
-        makeMove(move.move);
+        makeMove(move.move());
     }
 
     public void makeMove(final int move) {

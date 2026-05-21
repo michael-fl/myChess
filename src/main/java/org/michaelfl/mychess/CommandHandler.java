@@ -91,16 +91,16 @@ final class CommandHandler {
 
             for (int i = 0; i < 1000 && game.getResult() == GameResult.ONGOING; i++) {
                 MoveAndWeight move = game.getEngine().nextMoveAsync(env).getResult(1, TimeUnit.HOURS);
-                if (move.move == 0) {
+                if (move.move() == 0) {
                     // No valid move possible ==> checkmate or stalemate
                     break;
                 }
                 game.makeMove(move);
                 game.getBoard().print();
-                System.out.println("Move #" + ((game.getGameStatus().getPlyCount() + 1) / 2) + ": " + ChessUtil.moveToString(move.move));
+                System.out.println("Move #" + ((game.getGameStatus().getPlyCount() + 1) / 2) + ": " + ChessUtil.moveToString(move.move()));
                 System.out.println("FEN: " + game.exportFEN());
 
-                if (move.path.length <= 1 || move.path[1] == 0) {
+                if (move.path().length <= 1 || move.path()[1] == 0) {
                     game.calculateAndSetGameResult();
                 }
             }
@@ -177,18 +177,18 @@ final class CommandHandler {
         long t1 = System.currentTimeMillis();
         MoveAndWeight move = game.getEngine().nextMoveAsync(env).getResult(1, TimeUnit.HOURS);
         long t2 = System.currentTimeMillis();
-        if (move.move == 0) {
+        if (move.move() == 0) {
             System.err.println("No move possible!?");
             return;
         }
 
-        var moveDescr = game.getBoard().moveToShortNotation(new Move(move.move));
+        var moveDescr = game.getBoard().moveToShortNotation(new Move(move.move()));
         game.makeMove(move);
         game.calculateAndSetGameResult();
         game.print();
         System.out.println("Move #" + game.getMoveCount()
                 + ": " + moveDescr
-                + ", weight " + ChessUtil.weightToString(move.weight)
+                + ", weight " + ChessUtil.weightToString(move.weight())
                 + ", " + (t2 - t1) + "ms");
     }
 
@@ -323,10 +323,10 @@ final class CommandHandler {
                 return;
             }
             MoveAndWeight move = game.getEngine().nextMoveAsync(env).getResult(1, TimeUnit.HOURS);
-            if (move.move == 0)
+            if (move.move() == 0)
                 System.out.println("Illegal position. No move possible.");
             else
-                System.out.println(ChessUtil.moveToString(move.move));
+                System.out.println(ChessUtil.moveToString(move.move()));
         }
     }
 
@@ -363,10 +363,10 @@ final class CommandHandler {
 
             ChessEngine engine = game.getEngine();
             MoveAndWeight move = engine.nextMoveAsync(null).getResult(1, TimeUnit.HOURS);
-            if (move.move == 0)
+            if (move.move() == 0)
                 System.out.println("Illegal position. No move possible.");
             else
-                System.out.println(((game.getGameStatus().getPlyCount() + 1) / 2) + ". " + ChessUtil.moveToString(move.move));
+                System.out.println(((game.getGameStatus().getPlyCount() + 1) / 2) + ". " + ChessUtil.moveToString(move.move()));
         }
     }
 
@@ -401,19 +401,19 @@ final class CommandHandler {
             long t1 = System.currentTimeMillis();
             MoveAndWeight move = game.getEngine().nextMoveAsync(env).getResult(1, TimeUnit.HOURS);
             long t2 = System.currentTimeMillis();
-            if (move.move == 0) {
+            if (move.move() == 0) {
                 System.err.println("No move possible!?");
                 return;
             }
 
-            var moveDescr = game.getBoard().moveToShortNotation(new Move(move.move));
+            var moveDescr = game.getBoard().moveToShortNotation(new Move(move.move()));
             computerColor = game.getTurn();
             game.makeMove(move);
             game.calculateAndSetGameResult();
             game.print();
             System.out.println("Move #" + game.getMoveCount()
                     + ": " + moveDescr
-                    + ", weight " + ChessUtil.weightToString(move.weight)
+                    + ", weight " + ChessUtil.weightToString(move.weight())
                     + ", " + (t2 - t1) + "ms");
         }
     }
