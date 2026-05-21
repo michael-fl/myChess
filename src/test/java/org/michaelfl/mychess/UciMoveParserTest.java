@@ -21,7 +21,7 @@ class UciMoveParserTest {
         var md = UciMoveParser.parse("e2e4", board);
 
         assertNotNull(md, "parser must return a MoveDescription for e2e4");
-        assertTrue(md.pawnPromotionPiece <= 0, "no promotion expected on normal pawn move");
+        assertTrue(md.pawnPromotionPiece() <= 0, "no promotion expected on normal pawn move");
         assertFalse(md.isCastlingKingSide(), "not a kingside castling");
         assertFalse(md.isCastlingQueenSide(), "not a queenside castling");
     }
@@ -33,7 +33,7 @@ class UciMoveParserTest {
         var md = UciMoveParser.parse("b1c3", board);
 
         assertNotNull(md, "parser must return a MoveDescription for b1c3");
-        assertTrue(md.pawnPromotionPiece <= 0, "no promotion expected on knight move");
+        assertTrue(md.pawnPromotionPiece() <= 0, "no promotion expected on knight move");
     }
 
     // ---- parse: castling ----
@@ -121,7 +121,7 @@ class UciMoveParserTest {
             case "whiteKnight" -> Board.whiteKnight;
             default -> throw new IllegalStateException();
         };
-        assertEquals(expected, md.pawnPromotionPiece, "promotion piece must match suffix '" + uciMove + "'");
+        assertEquals(expected, md.pawnPromotionPiece(), "promotion piece must match suffix '" + uciMove + "'");
     }
 
     @ParameterizedTest
@@ -143,7 +143,7 @@ class UciMoveParserTest {
             case "blackKnight" -> Board.blackKnight;
             default -> throw new IllegalStateException();
         };
-        assertEquals(expected, md.pawnPromotionPiece, "promotion piece must match suffix '" + uciMove + "'");
+        assertEquals(expected, md.pawnPromotionPiece(), "promotion piece must match suffix '" + uciMove + "'");
     }
 
     // ---- parse: invalid input ----

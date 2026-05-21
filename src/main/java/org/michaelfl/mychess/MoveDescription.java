@@ -1,7 +1,9 @@
 package org.michaelfl.mychess;
 
+import org.jspecify.annotations.NonNull;
+
 import java.util.EnumSet;
-import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,14 +14,26 @@ import java.util.regex.Pattern;
  * {@link Board#resolveMoveDescription(MoveDescription, MoveGenerator)}.
  *
  * <p>Optional attributes (capture / check / checkmate / en-passant / castling)
- * are stored in a single {@link EnumSet} of {@link MoveFlag}. A flag's presence
+ * are stored in a single {@link Set} of {@link MoveFlag}. A flag's presence
  * means "the notation said so (or the board exporter set it because the move
  * actually has that property)"; absence means "not specified".
+ *
+ * <p>{@code flags} is defensively copied into an immutable set by the compact
+ * constructor; callers cannot mutate the internal state via the auto-generated
+ * accessor.
  *
  * @author Michael Fleischhauer
  */
 @SuppressWarnings({"java:S5843", "java:3776"})
-public final class MoveDescription {
+public record MoveDescription(
+        int turn,
+        byte piece,
+        int fromCol,
+        int fromRow,
+        int toCol,
+        int toRow,
+        byte pawnPromotionPiece,
+        Set<MoveFlag> flags) {
 
     private static final Pattern MOVE_PATTERN = Pattern.compile("^([PNBRQK])?([a-h])?([1-8])?([-x])?([a-h])([1-8])(=?[NBRQ])?(\\+|#|\\+\\+)?( ?e\\.p\\.)?(!|!!|!\\?|\\?!|\\?|\\?\\?)?$");
     private static final Pattern CASTLING_PATTERN = Pattern.compile("^(0-0|O-O|0-0-0|O-O-O)(\\+|#|\\+\\+)?(!|!!|!\\?|\\?!|\\?|\\?\\?)?$");
@@ -31,40 +45,11 @@ public final class MoveDescription {
     private static final int GROUP_TARGET_ROW = 6;
     private static final int GROUP_PROMOTION = 7;
     private static final int GROUP_CHESS = 8;
-    private static final int GROUP_EN_PASSSANT = 9;
+    private static final int GROUP_EN_PASSANT = 9;
     private static final int GROUP_CASTLING = 1;
     private static final int GROUP_CASTLING_CHESS = 2;
 
-    public final int turn;
-    public final byte piece;
-    public final int fromCol;
-    public final int fromRow;
-    public final int toCol;
-    public final int toRow;
-    public final byte pawnPromotionPiece;
-    private final EnumSet<MoveFlag> flags;
-
-    MoveDescription(int turn, int fromCol, int fromRow, int toCol, int toRow, char pawnPromotionSymbol) {
-        this.turn = turn;
-        this.fromCol = fromCol;
-        this.fromRow = fromRow;
-        this.toCol = toCol;
-        this.toRow = toRow;
-        this.pawnPromotionPiece = pawnPromotionSymbol == 0 ? 0 : ChessUtil.symbolToPiece(pawnPromotionSymbol, turn);
-        this.piece = 0;
-        this.flags = EnumSet.noneOf(MoveFlag.class);
-    }
-
-    MoveDescription(
-        int turn,
-        byte piece,
-        int fromCol,
-        int fromRow,
-        int toCol,
-        int toRow,
-        byte pawnPromotionPiece,
-        EnumSet<MoveFlag> flags
-    ) {
+    public MoveDescription {
         if (turn <= 0) {
             throw new IllegalArgumentException("turn not set");
         }
@@ -78,14 +63,20 @@ public final class MoveDescription {
             throw new IllegalArgumentException("Source field must be set if no piece is defined");
         }
 
-        this.turn = turn;
-        this.piece = piece;
-        this.fromCol = fromCol;
-        this.fromRow = fromRow;
-        this.toCol = toCol;
-        this.toRow = toRow;
-        this.pawnPromotionPiece = pawnPromotionPiece;
-        this.flags = flags.isEmpty() ? EnumSet.noneOf(MoveFlag.class) : EnumSet.copyOf(flags);
+        // Defensive immutable copy. Set.copyOf is a no-op when flags is already
+        // an immutable set (e.g. Set.of() from the alternative constructor).
+        flags = Set.copyOf(flags);
+    }
+
+    /**
+     * Convenience constructor for callers that only know the basic
+     * from/to coordinates and an optional promotion symbol — used by
+     * {@link SimpleNotationImporter} for plain long-algebraic input.
+     */
+    MoveDescription(int turn, int fromCol, int fromRow, int toCol, int toRow, char pawnPromotionSymbol) {
+        this(turn, (byte) 0, fromCol, fromRow, toCol, toRow,
+                pawnPromotionSymbol == 0 ? (byte) 0 : ChessUtil.symbolToPiece(pawnPromotionSymbol, turn),
+                Set.of());
     }
 
     public int getFromField() {
@@ -126,23 +117,6 @@ public final class MoveDescription {
 
     public boolean isCastlingQueenSide() {
         return flags.contains(MoveFlag.CASTLING_QUEEN_SIDE);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MoveDescription that = (MoveDescription) o;
-        return turn == that.turn && piece == that.piece
-                && fromCol == that.fromCol && fromRow == that.fromRow
-                && toCol == that.toCol && toRow == that.toRow
-                && pawnPromotionPiece == that.pawnPromotionPiece
-                && flags.equals(that.flags);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(turn, piece, fromCol, fromRow, toCol, toRow, pawnPromotionPiece, flags);
     }
 
     @SuppressWarnings({"java:S6541", "java:S3776"})
@@ -249,7 +223,7 @@ public final class MoveDescription {
             parseChessOrCheckmateSymbol(GROUP_CHESS, matcher, builder);
 
             // En passant
-            var enPassant = matcher.group(GROUP_EN_PASSSANT);
+            var enPassant = matcher.group(GROUP_EN_PASSANT);
             if (enPassant != null) {
                 builder.flags.add(MoveFlag.EN_PASSANT);
             }
@@ -271,7 +245,7 @@ public final class MoveDescription {
 
     @Override
     @SuppressWarnings("java:S3358")
-    public String toString() {
+    public @NonNull String toString() {
         if (isCastlingKingSide()) {
             return "0-0";
         }

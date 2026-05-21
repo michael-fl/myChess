@@ -967,7 +967,7 @@ public final class Board {
         byte piece = get(fromField);
         byte capturedPiece = get(toField);
         byte moveType = Move.typeNormal;
-        byte promotionPiece = moveDescr.pawnPromotionPiece;
+        byte promotionPiece = moveDescr.pawnPromotionPiece();
 
         if (Board.whiteQueen == promotionPiece || Board.blackQueen == promotionPiece)
             moveType = Move.typePawnPromotionQueen;
