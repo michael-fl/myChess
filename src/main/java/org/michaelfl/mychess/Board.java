@@ -858,20 +858,138 @@ public final class Board {
         return false;
     }
 
-    public boolean isKingChecked(MoveGenerator moveGenerator) {
-        // TODO MF: Optimize method testIsKingChecked
-        // Switch turn
-        GameStatus gameStatus = getGameStatus().switchTurn();
+    // ---- Attack detection ----
+    //
+    // These helpers answer "is square X currently attacked by side Y?" without
+    // enumerating or sorting moves. They walk outward from the target square
+    // in each geometric direction that could deliver an attack and short-circuit
+    // on the first attacker found — typically returning false after probing
+    // just a handful of squares. Significantly cheaper than running the full
+    // pseudo-legal move generator and inspecting Moves.isIllegal(), which is
+    // what an earlier implementation of isKingChecked used to do.
 
-        // Check the next theoretically possible moves. If those contain an illegal move (king can be captured),
-        // the king was under check.
-        // TODO MF: Calculate moves without sorting
-        Moves nextMoves = moveGenerator.calculateMoves(gameStatus, this, 0, 0);
-        return nextMoves.isIllegal();
+    private static final int[] KNIGHT_OFFSETS = {
+            2 * LENGTH + 1, 2 * LENGTH - 1, -2 * LENGTH + 1, -2 * LENGTH - 1,
+            LENGTH + 2, LENGTH - 2, -LENGTH + 2, -LENGTH - 2
+    };
+
+    private static final int[] KING_ADJACENCY_OFFSETS = {
+            LENGTH, LENGTH + 1, 1, -LENGTH + 1, -LENGTH, -LENGTH - 1, -1, LENGTH - 1
+    };
+
+    private static final int[] DIAGONAL_RAY_DIRS = {
+            LENGTH + 1, LENGTH - 1, -LENGTH + 1, -LENGTH - 1
+    };
+
+    private static final int[] ORTHOGONAL_RAY_DIRS = {
+            LENGTH, -LENGTH, 1, -1
+    };
+
+    /**
+     * Returns true if the given board field is currently attacked by any
+     * piece of {@code attackerColor}. The field need not contain a piece;
+     * this is a pure square-attack query and short-circuits on the first
+     * attacker found.
+     *
+     * @param field         field index in the 12×12 raw board layout
+     * @param attackerColor either {@link GameStatus#TURN_WHITE} or
+     *                      {@link GameStatus#TURN_BLACK}
+     */
+    public boolean isFieldAttackedBy(int field, int attackerColor) {
+        final boolean attackerIsWhite = attackerColor == GameStatus.TURN_WHITE;
+
+        // Pawn attacks. A white pawn attacks up-diagonally, so attackers of
+        // 'field' sit one rank below 'field' on either diagonal; conversely
+        // for black. Off-board source squares land on the illegal-border ring,
+        // which never equals whitePawn/blackPawn — no bounds check needed.
+        if (attackerIsWhite) {
+            if (board[field - LENGTH - 1] == whitePawn || board[field - LENGTH + 1] == whitePawn) {
+                return true;
+            }
+        } else if (board[field + LENGTH - 1] == blackPawn || board[field + LENGTH + 1] == blackPawn) {
+            return true;
+        }
+
+        final byte attackerKnight = attackerIsWhite ? whiteKnight : blackKnight;
+        for (int off : KNIGHT_OFFSETS) {
+            if (board[field + off] == attackerKnight) {
+                return true;
+            }
+        }
+
+        // King adjacency. Two kings can never be legally adjacent, but during
+        // pseudo-legal search a king move into the opposing king's reach is a
+        // self-check that must be detected.
+        final byte attackerKing = attackerIsWhite ? whiteKing : blackKing;
+        for (int off : KING_ADJACENCY_OFFSETS) {
+            if (board[field + off] == attackerKing) {
+                return true;
+            }
+        }
+
+        final byte attackerBishop = attackerIsWhite ? whiteBishop : blackBishop;
+        final byte attackerQueen = attackerIsWhite ? whiteQueen : blackQueen;
+        for (int dir : DIAGONAL_RAY_DIRS) {
+            int to = field + dir;
+            while (board[to] == empty) {
+                to += dir;
+            }
+            // First non-empty square along the ray: either an attacker, a
+            // blocker (any other piece), or the illegal-border byte. Only an
+            // attacking bishop / queen of the right colour counts as a hit.
+            final byte piece = board[to];
+            if (piece == attackerBishop || piece == attackerQueen) {
+                return true;
+            }
+        }
+
+        final byte attackerRook = attackerIsWhite ? whiteRook : blackRook;
+        for (int dir : ORTHOGONAL_RAY_DIRS) {
+            int to = field + dir;
+            while (board[to] == empty) {
+                to += dir;
+            }
+            final byte piece = board[to];
+            if (piece == attackerRook || piece == attackerQueen) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /** Returns true if the side to move's king is currently in check. */
+    public boolean isKingChecked() {
+        final int myColor = getGameStatus().getTurn();
+        final byte myKing = (myColor == GameStatus.TURN_WHITE) ? whiteKing : blackKing;
+        final int enemyColor = getGameStatus().getOppositeColor();
+        return isFieldAttackedBy(findKingField(myKing), enemyColor);
+    }
+
+    /**
+     * Returns true if the side to move could legally capture the opposing
+     * king on its next move — equivalently, if the previous move was an
+     * illegal self-check. Intended as a fast legality probe at search leaves,
+     * where no full move list is otherwise needed.
+     */
+    public boolean canCaptureOpposingKing() {
+        final int myColor = getGameStatus().getTurn();
+        final int enemyColor = getGameStatus().getOppositeColor();
+        final byte enemyKing = (enemyColor == GameStatus.TURN_WHITE) ? whiteKing : blackKing;
+        return isFieldAttackedBy(findKingField(enemyKing), myColor);
+    }
+
+    private int findKingField(byte king) {
+        for (int field = a1; field <= h8; field++) {
+            if (board[field] == king) {
+                return field;
+            }
+        }
+        throw new IllegalStateException("King not found on board: " + king);
     }
 
     public boolean isCheckmate(MoveGenerator moveGenerator) {
-        if (!isKingChecked(moveGenerator)) {
+        if (!isKingChecked()) {
             return false;
         }
 
@@ -1005,7 +1123,7 @@ public final class Board {
 
         makeMove(move.move());
         builder.setFlag(MoveFlag.CHECKMATE, isCheckmate(moveGenerator));
-        builder.setFlag(MoveFlag.CHECK, isKingChecked(moveGenerator));
+        builder.setFlag(MoveFlag.CHECK, isKingChecked());
         revertMove();
 
         builder.piece = get(move.getFromField());

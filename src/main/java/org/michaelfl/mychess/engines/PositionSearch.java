@@ -81,6 +81,14 @@ public final class PositionSearch {
         }
 
         private static int window(int weight, int alpha, int beta) {
+            // ILLEGAL_WEIGHT_POS is a sentinel signaling "previous move was a
+            // self-check"; it must survive [alpha, beta] clamping or the
+            // search loses the ability to reject the offending move. The
+            // negative counterpart never appears as a positive return value
+            // here, but we treat it symmetrically for consistency.
+            if (WeightingFunction.isIllegalWeight(weight)) {
+                return weight;
+            }
             if (weight <= alpha) {
                 return alpha;
             }
@@ -158,7 +166,7 @@ public final class PositionSearch {
             }
 
             log("Current depth: " + depth);
-            bestPath = calculateNextMove(depth, timeout, bestPath);
+            bestPath = calculateNextMove(depth, bestPath);
             long iterationEndMs = System.currentTimeMillis();
             long iterationMs = iterationEndMs - previousIterationEndMs;
             previousIterationEndMs = iterationEndMs;
@@ -224,7 +232,7 @@ public final class PositionSearch {
     }
 
     @SuppressWarnings("Duplicates")
-    private MoveAndWeight calculateNextMove(final int maxDepth, final long timeout, MoveAndWeight bestKnownPath) {
+    private MoveAndWeight calculateNextMove(final int maxDepth, MoveAndWeight bestKnownPath) {
         final MoveAndWeight previousBestKnownPath = bestKnownPath;
         final int pvMaxLength = maxDepth + 1;
         final Board workingBoard = game.getBoard().copy();
@@ -295,7 +303,7 @@ public final class PositionSearch {
         }
 
         // No legal move possible ==> checkmate or stalemate
-        if (workingBoard.isKingChecked(moveGenerator)) {
+        if (workingBoard.isKingChecked()) {
             return new MoveAndWeight(0, -WeightingFunction.checkmateInCenti(), GameResult.CHECKMATE, new int[0]);
         } else {
             return new MoveAndWeight(0, 0, GameResult.STALEMATE, new int[0]);
@@ -336,10 +344,19 @@ public final class PositionSearch {
             return SearchNodeResult.draw(ctx.alphaWeight(), ctx.betaWeight());
         }
 
+        // Leaf: a cheap "can my side capture the opposing king?" probe is
+        // enough to detect that the previous move was an illegal self-check
+        // — no need to generate (and sort) the full pseudo-legal move list
+        // since we don't iterate at the leaf anyway.
         if (depth == ctx.maxDepth) {
+            if (ctx.workingBoard.canCaptureOpposingKing()) {
+                return SearchNodeResult.create(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT_POS, ctx.alphaWeight, ctx.betaWeight);
+            }
             return SearchNodeResult.create(GameResult.ONGOING, quiescenceSearch(ctx), ctx.alphaWeight(), ctx.betaWeight());
         }
 
+        // Non-leaf: full move generation is needed for the iteration; check
+        // legality on the resulting Moves.ILLEGAL sentinel.
         final int bestKnownNextMove = getMoveAtDepth(bestKnownPath, depth);
         final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard, depth, bestKnownNextMove);
         if (moves.isIllegal()) {
@@ -406,7 +423,7 @@ public final class PositionSearch {
         if (alpha >= 0f) {
             return SearchNodeResult.create(GameResult.ONGOING, alpha);
         }
-        return ctx.workingBoard.isKingChecked(moveGenerator) ?
+        return ctx.workingBoard.isKingChecked() ?
                 SearchNodeResult.checkmateSelf(ctx.depth(), alpha, ctx.betaWeight()) :
                 SearchNodeResult.stalemate(alpha, ctx.betaWeight());
     }

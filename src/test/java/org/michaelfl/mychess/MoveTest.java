@@ -120,8 +120,7 @@ class MoveTest {
 
         assertEquals(Board.blackBishop, game.getBoard().get(Board.b4),
                 "bishop should be on b4 after Bb4+");
-        var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
-        assertTrue(game.getBoard().isKingChecked(moveGenerator),
+        assertTrue(game.getBoard().isKingChecked(),
                 "white king must be in check after Bb4+");
     }
 
