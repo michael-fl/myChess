@@ -287,6 +287,94 @@ final class UciHandler {
         }
 
         writeLine(sb.toString());
+
+        validatePv(pv);
+    }
+
+    /**
+     * Diagnostic guard: replay the PV from the search's root position and
+     * log the offending FEN, ply index, and full PV on the first illegal
+     * move encountered. Helps track down PV-table corruption bugs that
+     * cutechess flags as {@code "Illegal PV move … from myChess"}.
+     *
+     * <p>Catches two failure modes:
+     * <ul>
+     * <li><b>Not pseudo-legal</b> — the PV move is not in
+     *     {@link MoveGenerator#calculateMoves(Board)} for the current
+     *     position. Covers moves with no piece on the source square,
+     *     captures of own pieces, blocked sliders, etc.</li>
+     * <li><b>Leaves own king in check</b> — the PV move is pseudo-legal
+     *     but, once applied, lets the opponent capture our king. The
+     *     generator surfaces this on the NEXT ply by returning
+     *     {@link Moves#ILLEGAL}.</li>
+     * </ul>
+     *
+     * <p>No-op on success — does not throw, does not alter the search,
+     * does not modify {@link #board}.
+     */
+    private void validatePv(int[] pv) {
+        if (pv.length == 0 || pv[0] == 0) {
+            return;
+        }
+
+        var probe = board.copy();
+        var moveGen = new MoveGenerator(MoveSorter.defaultImplementation());
+        Moves pseudoLegal = moveGen.calculateMoves(probe);
+
+        int lastAppliedMove = 0;
+        int lastAppliedPly = -1;
+
+        for (int i = 0; i < pv.length; i++) {
+            int move = pv[i];
+            if (move == 0) {
+                break;
+            }
+
+            if (pseudoLegal.isIllegal()) {
+                logIllegalPv("ply " + lastAppliedPly + " (" + UciMoveParser.toUci(lastAppliedMove)
+                        + ") leaves own king in check", pv, probe);
+                return;
+            }
+
+            if (!pseudoLegal.contains(move)) {
+                logIllegalPv("ply " + i + " (" + UciMoveParser.toUci(move)
+                        + ") is not pseudo-legal", pv, probe);
+                return;
+            }
+
+            probe.makeMove(move);
+            pseudoLegal = moveGen.calculateMoves(probe);
+            lastAppliedMove = move;
+            lastAppliedPly = i;
+        }
+
+        if (pseudoLegal.isIllegal()) {
+            logIllegalPv("ply " + lastAppliedPly + " (" + UciMoveParser.toUci(lastAppliedMove)
+                    + ") leaves own king in check", pv, probe);
+        }
+    }
+
+    private void logIllegalPv(String detail, int[] pv, Board atPosition) {
+        Log.error("[pv-validate] " + detail
+                + " — PV: " + formatPv(pv)
+                + " — root FEN: " + Fen.exportFEN(board)
+                + " — illegal at FEN: " + Fen.exportFEN(atPosition));
+    }
+
+    private static String formatPv(int[] pv) {
+        var sb = new StringBuilder();
+        for (int m : pv) {
+            if (m == 0) {
+                break;
+            }
+            if (sb.length() > 0) {
+                sb.append(' ');
+            }
+
+            sb.append(UciMoveParser.toUci(m));
+        }
+
+        return sb.toString();
     }
 
     private void cancelCurrentTask() {

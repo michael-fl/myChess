@@ -46,10 +46,18 @@ public final class MyChessMain {
      */
     @SuppressWarnings("java:S2095") // factory method — caller closes the returned resource
     private static OpeningDB tryOpenOpeningDb() {
+        // Pre-check existence: MapDB's fileDB(...).make() would silently
+        // create an empty database file if it's missing, which would mask
+        // the intentional "book disabled by removing the file" workflow.
+        var dbFile = new File(OpeningDB.DEFAULT_DB_PATH);
+        if (!dbFile.exists()) {
+            Log.info("[book] " + OpeningDB.DEFAULT_DB_PATH + " not found — running search-only");
+            return null;
+        }
+
         try {
             OpeningDB db = OpeningDB.open();
-            long size = new File("db/openings.db").length();
-            Log.info("[book] opened db/openings.db (" + size + " bytes)");
+            Log.info("[book] opened " + OpeningDB.DEFAULT_DB_PATH + " (" + dbFile.length() + " bytes)");
             return db;
         } catch (RuntimeException e) {
             Log.error("Opening book unavailable, running search-only: " + e.getMessage());

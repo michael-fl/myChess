@@ -67,7 +67,7 @@ public final class OpeningDB implements AutoCloseable {
         }
     }
 
-    private static final String DEFAULT_DB_PATH = "db/openings.db";
+    public static final String DEFAULT_DB_PATH = "db/openings.db";
 
     private final DB db;
     private final BTreeMap<String, byte[]> dbMap;
