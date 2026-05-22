@@ -207,7 +207,7 @@ public final class WeightingFunction {
         final int plyCount = game.getPlyCount();
         final float openingFactorCorrection = plyCount > 20 ? (plyCount > 40 ? 0f : 0.5f) : 1.0f;
 
-        return Math.round((
+        return roundSymmetric((
                   (piecesWeight[0] - piecesWeight[1]) / 100f
                 + (positionWeight[0] - positionWeight[1]) / 100f * positionFactor
                 + (mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor
@@ -216,6 +216,19 @@ public final class WeightingFunction {
                 + (openingState[0] - openingState[1]) * openingFactor * openingFactorCorrection
                 + (chessCount[0] - chessCount[1]) * chessFactor
                 + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) * 100);
+    }
+
+    /**
+     * Round half-values away from zero in both directions, so the rounding
+     * is antisymmetric: {@code roundSymmetric(-x) == -roundSymmetric(x)}.
+     * Java's {@link Math#round(float)} rounds halves toward positive
+     * infinity, which would turn an inner-eval pair of +45.5 / -45.5 into
+     * +46 / -45 and silently break the white-vs-black antisymmetry of the
+     * evaluation. See {@code MirrorEvalTest} for the invariant this
+     * preserves.
+     */
+    private static int roundSymmetric(float value) {
+        return value >= 0f ? Math.round(value) : -Math.round(-value);
     }
 
     void print() {

@@ -205,10 +205,10 @@ engines combined is also well above the typical ~0.55 first-move advantage
 in engine matches — this asymmetry is structural to myChess, not a
 property of chess.
 
-### Two leading hypotheses
+### Initial hypotheses (subsequently re-prioritised — see below)
 
 1. **`WeightingFunction` / `PieceSquareTables` are not cleanly antisymmetric
-   under colour flip.** PSTs that aren't mirrored across the board centre
+   under color flip.** PSTs that aren't mirrored across the board center
    for Black, mobility or king-safety terms with a sign error, or any
    weight that doesn't satisfy `eval(swap_colors(board)) == -eval(board)`
    would systematically push the engine to underrate Black's position and
@@ -216,47 +216,230 @@ property of chess.
 2. **The `g4-g5` self-check bug fires preferentially on the Black side.**
    The confirmed PV bug occurred in a search where myChess was Black, and
    the failing line involved a king-on-the-rim middlegame that Black
-   reaches more readily than White in the openings this match samples. If
-   the underlying search defect interacts with Black-typical structures,
-   Black play would degrade systematically. Fixing the self-check filter
-   should reduce — but not necessarily eliminate — the asymmetry; the
-   residual is then hypothesis 1.
+   reaches more readily than White in the openings this match samples.
 
 Not mutually exclusive. The match data alone can't tell them apart.
+
+### Re-analysis after test01 and code audit (2026-05-23)
+
+**The color asymmetry is much more likely a setup effect than an engine
+defect.** Two independent observations point that way:
+
+#### Both engines underperform as Black by the same margin
+
+Full 40-game test01 numbers:
+
+| Side                 | Score |     W-L-D |
+|----------------------|------:|----------:|
+| myChess as White     | 0.825 | 16- 3- 1  |
+| myChess as Black     | 0.225 |  4-15- 1  |
+| SF-1600 as White     | 0.775 | 15- 4- 1  |
+| SF-1600 as Black     | 0.175 |  3-16- 1  |
+
+Both engines have a per-side score difference of **exactly 0.60**
+(0.825−0.225 = 0.775−0.175 = 0.60), which corresponds to roughly **±500
+Elo of White advantage** in this setup. The normal first-move
+advantage in engine matches is 50–80 Elo. If the asymmetry were a
+property of *myChess*, only myChess would show it. Both engines
+showing the same magnitude points at the *match setup*:
+
+- **`8moves_v3.pgn`** is the Stockfish-testing opening suite,
+  deliberately weighted toward *unbalanced* lines (~+0.5 to +1.0 for
+  White at the book exit) so that engine matches produce decisive
+  results faster. This is the right tool for ranking two engines
+  against each other, but it badly distorts the absolute by-color
+  split — exactly what we are observing.
+- **`-resign movecount=5 score=600`** is symmetric in form but
+  asymmetric in effect: it cuts off Black-defensive endgames in which
+  a stronger Black might still be able to hold, faster than it cuts
+  off the symmetric White-attacking conversion.
+- **The 40/20 TC at ~1600-strength engines** lets the side with
+  initiative exploit it; subtle Black defensive resources need more
+  search depth than either engine has.
+
+The per-engine head-to-head score is also illuminating: myChess
+0.525 vs SF-1600 0.475 — *myChess outscores SF-1600 in both colors
+individually*. The "Black weakness" therefore is not myChess being
+weaker than SF — it is both engines being weaker as Black against
+the same biased setup.
+
+#### Code audit of `WeightingFunction` and `PieceSquareTables` (2026-05-23)
+
+Line-by-line read; no asymmetric term found:
+
+- **Piece-square tables.** `pawnTableBlack = invert(pawnTableWhite)`
+  and analogously for every other piece. `invert(...)` does a pure
+  rank flip (`row → 7-row`, file unchanged). Mathematically correct.
+- **Material and mobility weights.** `weightOfPiece[whiteX] ==
+  weightOfPiece[blackX]` and `mobilityWeightOfPiece[whiteX] ==
+  mobilityWeightOfPiece[blackX]` for every piece kind.
+- **Final score formula.** Every term in `calculatePositionWeight`
+  is `(arr[0] - arr[1]) * factor` — i.e. `white − black` with a
+  shared factor. No per-color weighting.
+- **`calculateForWhitePawn` vs `calculateForBlackPawn`.** Direct
+  side-by-side comparison: single-step / double-step gates / capture
+  diagonals / en-passant trigger ranks all use the correct mirrored
+  offsets (`+LENGTH` ↔ `-LENGTH`, gate `row==1` for White ↔
+  `row==6` for Black, gate `row==4` for EP ↔ `row==3` for EP, et
+  cetera). All checked.
+- **`calculateCastlingState` and `calculateOpeningState`** have
+  mirrored blocks for both colors covering the same files.
+  `isEndGame` and `openingFactorCorrection` are color-neutral
+  (depend on material count and ply count).
+
+If this audit is correct, **hypothesis 1 above is essentially
+ruled out**. Hypothesis 2 is also unlikely to be the main driver,
+since the illegal-PV bug fires roughly equally in games where
+myChess plays White as in games where myChess plays Black (per the
+test01 distribution — game 9, 31, 37, 39 are the four worst
+offenders, and all four have myChess on the White side).
+
+### Verifying the audit with `MirrorEvalTest`
+
+A parameterised JUnit test
+(`src/test/java/org/michaelfl/mychess/MirrorEvalTest.java`) checks
+the antisymmetry invariant directly: for each of 10 positions —
+starting position, asymmetric openings, material imbalances,
+castling-rights mismatch, en-passant-marker positions, mid-game
+positions — the test imports the FEN, constructs a mirror FEN
+(piece-letter case swap, rank reversal, castling KQ ↔ kq, EP rank
+flip, side-to-move flip), imports the mirror, evaluates both, and
+asserts `eval == -mirrorEval`.
+
+If the test goes green, the eval is proven antisymmetric and the
+"Black weakness" is conclusively *not* an evaluation bug — only
+setup remains. If it goes red, the failing position gives a precise
+pointer to the asymmetric term.
+
+#### Result of running the test (2026-05-23)
+
+**7 of 10 cases green, 3 fail with `eval + mirrorEval = +1`.**
+
+Concretely:
+
+| Case                                | eval | mirrorEval | sum |
+|-------------------------------------|----:|----------:|----:|
+| Sicilian: 1. e4 c5                  |  46 |       −45 |  +1 |
+| en-passant target set               |  50 |       −49 |  +1 |
+| mixed middlegame with mobility imb. | 321 |      −320 |  +1 |
+
+All three failures are the same off-by-one: original eval rounds
+up, mirror rounds down. The other seven positions — including the
+starting position, after `1. e4`, the white-up-a-queen and
+black-up-a-rook+bishop material imbalances, doubled-pawn position,
+castling-rights asymmetry, and the King's Indian-like middlegame —
+pass exactly.
+
+The cause is the final `Math.round(...)` in
+`WeightingFunction.calculatePositionWeight()`:
+
+```java
+return Math.round((  (piecesWeight[0] - piecesWeight[1]) / 100f
+                   + ...
+                   + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
+                  ) * 100);
+```
+
+The float expression inside is provably antisymmetric (the seven
+passing cases would not pass otherwise). The `Math.round` outside
+is not antisymmetric: Java's `Math.round` rounds halves toward
+positive infinity, so `Math.round(45.5)` is `46` but
+`Math.round(-45.5)` is `-45` (not `-46`). When the inner value
+falls exactly on a `.5` boundary, the original and the mirror
+round in *different* directions and the sum is `+1` instead of
+`0`.
+
+#### Consequence
+
+The full eval **is** structurally antisymmetric. The only remaining
+asymmetry is a **±0.5 cp** rounding artefact in the final value,
+present in roughly one in three positions where the inner float
+happens to land on a `.5` boundary. On the centipawn scale this is
+below the granularity that alpha-beta pruning, move ordering, or
+quiescence cutoffs care about. It cannot explain the ~500 Elo per-
+side asymmetry observed in test01.
+
+**The hypothesis "Black weakness in test01 = evaluation asymmetry"
+is therefore conclusively ruled out.** The asymmetry is a
+property of the match setup (`8moves_v3.pgn` book heavily favoring
+White, plus the resign / TC interaction), confirmed independently
+by both engines showing the same 0.60 score gap by color.
+
+#### Mini-fix (planned, see commit log)
+
+Replace `Math.round(value)` in `calculatePositionWeight` with an
+antisymmetric rounding (`value >= 0f ? Math.round(value) :
+-Math.round(-value)` — rounds halves *away from zero* in both
+directions). One-line change. Expected impact on playing strength:
+nil to negligible — the affected positions shift by ±1 cp, well
+below any pruning threshold. The fix's value is documentary: it
+turns `MirrorEvalTest` into a permanently-green invariant that
+prevents future eval changes from introducing a real color
+asymmetry without anyone noticing.
 
 ### Pointers
 
 - Evaluation: `src/main/java/org/michaelfl/mychess/WeightingFunction.java`,
-  `src/main/java/org/michaelfl/mychess/PieceSquareTables.java` —
-  inspect for any value table that isn't built / read symmetrically for
-  the two sides.
-- Match artefacts (in-progress at the time of writing):
-  `mychess-vs-sf1600.pgn`, `mychess-stderr.log`.
+  `src/main/java/org/michaelfl/mychess/PieceSquareTables.java`.
+- Mirror invariant test: `src/test/java/org/michaelfl/mychess/MirrorEvalTest.java`.
+- Match artefacts: `test01-mychess-vs-sf1600.pgn`,
+  `test01-mychess-stderr.log`, `test01-cutechess-stdout.log`.
 
-## Planned investigations (after the current match completes)
+### What "fixing the Black weakness" looks like in practice
 
-1. **Sweep `mychess-stderr.log` for `[pv-validate]` entries.** cutechess's
-   `(3)`-and-counting warning counter showed multiple illegal-PV hits
-   during the run, so the in-engine validator should have logged
-   several. Each entry contains the search-root FEN, the offending ply
-   index, and the full PV — enough to build a FEN-based regression test
-   per occurrence, independent of `GameImporter` move replay. Goal: lock
-   down several instances of the bug class with separate tests, so a fix
-   in `PositionSearch` / `QuiescenceSearch` can be verified
-   breadth-first instead of relying on a single example.
-2. **Filter PGN for Black-side disasters.** Scan `mychess-vs-sf1600.pgn`
-   for games myChess lost as Black with sudden score jumps in the
-   move-comment evaluations (e.g. `{≈0/d}` to `{-3.5/d}` within a single
-   ply). For each suspect position, capture the FEN myChess scored from
-   plus its reported score, then evaluate the **mirror position** (swap
-   colours and ranks) with the same engine and compare. A large
-   asymmetry between `eval(position)` and `-eval(mirror(position))` is
-   direct evidence for hypothesis 1 in the colour-asymmetry section
-   above — any positions that don't mirror cleanly become either an
-   evaluation fix candidate or a second-class bug entry of their own.
+Given the re-analysis, the way to make Black scores more reasonable
+in matches is no longer "find the eval bug" but "fix the measurement
+setup":
 
-Both items will produce either new regression tests (case 1) or new
-entries in this file (case 2) — not features.
+1. Run a follow-up match with a **balanced** opening book — e.g.
+   the Noomen / Silver suites of ~equal openings, or a short
+   3-move book that lets engines diverge organically.
+2. Or run a **self-play** match (`myChess` vs `myChess`) under the
+   same `8moves_v3.pgn` book: if the side-to-move advantage there is
+   also ~500 Elo, the book is the cause; if it is ~50–80 Elo
+   (normal), the bias was indeed engine-related and we go back to
+   the eval audit.
+3. Once the setup is fixed, the SPRT against `SF-1600` will give a
+   meaningful engine-strength estimate.
+
+## Planned investigations
+
+Updated 2026-05-23 to reflect the illegal-PV fix in commit `26b33e5`
+and the color-asymmetry re-analysis above. The original plan from
+before the fix has been superseded: the
+"sweep `mychess-stderr.log` for `[pv-validate]` entries" item is
+moot because the in-engine validator never made it into the test01
+binary (the test ran on the previous, unfixed engine), and the
+"filter PGN for Black-side disasters → mirror-eval" item is now
+served by the targeted `MirrorEvalTest` rather than by scanning
+match data.
+
+The remaining open work, in order:
+
+1. **Run `MirrorEvalTest`.** Single decisive check on whether the
+   evaluation is antisymmetric. Green ⇒ Black weakness is not an
+   eval bug, only setup; close the eval track. Red ⇒ failing
+   position points at the specific asymmetric term to fix.
+2. **Run a follow-up cutechess match (test02) with the post-fix
+   binary.** Two purposes:
+   a. Confirm that the `[pv-validate]` hook is silent — i.e. the
+      structural fix in commit `26b33e5` eliminates the illegal-PV
+      class in practice, not just on the three regression
+      positions.
+   b. Re-measure the per-side scores against `SF-1600`. If the
+      0.825/0.225 split persists, the cause is the book (as
+      hypothesised); if it shrinks, the illegal-PV fix was also
+      contributing to the Black weakness (less likely given the
+      bug fired in both colors).
+3. **If step 2 still shows a heavy book bias, switch to a balanced
+   opening suite** (e.g. Noomen / Silver, or a short 3-move book)
+   for a clean engine-strength reading.
+4. **Lock down the remaining illegal-PV shapes not yet covered by
+   regression tests** — length-1 promotion (`f7f8q`), length-2
+   forcing-move tails (`Rxe8+ h2f3` etc.), and the repetitive
+   king-shuffle endings. With the fix in place these should not
+   reproduce; the tests document the bug class as closed rather
+   than catching live failures.
 
 ## Test01 findings (full 40-game run, 2026-05-22)
 
@@ -317,7 +500,7 @@ becomes much less plausible. Hypothesis 1 (`WeightingFunction` /
 
 Sampling the 129 warnings, several distinct shapes appear:
 
-1. **Self-check escape ignored.** The bug we already analysed. PV ends
+1. **Self-check escape ignored.** The bug we already analyzed. PV ends
    with a quiet move that fails to address a check delivered earlier in
    the PV. Example from game 1 / round 1:
    `Ra2+ Bf2 Rfxf2+ Kg3 Rf3+ Kh4 Rxf4 g4g5` — ply 7's `g4g5` does not
@@ -385,14 +568,20 @@ misses tactics" issue alone — depths are 9–11 for myChess vs 23–30 for
 SF, which would explain a few centipawns of disagreement, not eight or
 nine pawns.
 
-A 5- to 9-pawn systematic underestimation by myChess of losing
-positions on the Black side, while myChess **on the White side**
-correctly identifies the same kinds of positions as winning by similar
-margins (see SF's mirrored scores in winning Black-vs-myChess-as-Black
-games — myChess as White routinely reports `+5..+9` when SF mirrors
-report `−5..−9`), is direct evidence for an asymmetric evaluation. The
-sign asymmetry under colour flip is exactly what hypothesis 1
-predicts.
+The initial reading of this gap (in an earlier revision of this
+document) was that it pointed at an asymmetric evaluation. After the
+code audit recorded above in **Re-analysis after test01 and code
+audit (2026-05-23)**, the more economical explanation is just
+**search depth**: SF at d24+ sees a multi-ply forced sequence into a
+clearly losing position for Black; myChess at d10 hits the search
+horizon and falls back on a static eval of a position that, viewed
+in isolation, is "down material but defendable". A 5–9 pawn gap
+between a d10 static eval and a d24 tactical resolution of the same
+position is not unusual for a hand-written engine without
+transposition table, null-move pruning or extensions. The
+`MirrorEvalTest` referenced above is the precise way to confirm or
+refute this — if it runs green, no asymmetric term exists and this
+particular discrepancy must come from depth.
 
 ### Suggested ordering for the follow-up work
 
@@ -418,25 +607,22 @@ strength comparison.
      not-yet-covered shapes (length-1 promotion, length-2 forcing
      tails, repetitive king shuffles) before declaring the bug
      class closed.
-2. **Black-eval asymmetry — most likely the bigger ELO lever.**
-   - Pick 3–5 positions from round 3 (the table above) where myChess
-     as Black reports a small negative and SF as White reports a
-     large positive.
-   - For each, build a unit test that evaluates the position with
-     myChess and then evaluates the mirrored position (swap colours
-     and ranks 1↔8) with myChess. If the two scores aren't
-     sign-flipped equal (modulo small mobility / king-safety
-     differences), the eval has an asymmetry — bisect into
-     `WeightingFunction` term by term to find which contributes the
-     gap.
-   - Closely audit `PieceSquareTables` for non-mirrored entries.
-     Antisymmetric construction (`white[sq] = -black[mirror(sq)]`)
-     should be a tested invariant.
+2. **Black-eval asymmetry — investigation, no longer assumed.** The
+   code audit + per-engine score symmetry (see
+   "Re-analysis after test01 and code audit (2026-05-23)") shifted
+   this from "bigger ELO lever" to "still worth verifying, probably
+   not the answer". Concrete steps:
+   - Run `MirrorEvalTest` (already written) — if green, the eval is
+     proven antisymmetric and the Black-vs-White gap in matches is
+     setup/depth, not evaluation. Close this track.
+   - If red, the failing position points at the asymmetric term.
+     Bisect `WeightingFunction` term by term from there.
 
-Once the PV-bug is silent, re-run a test02 SPRT match with the same
-parameters as test01 to get a clean colour-asymmetry signal that
-isn't contaminated by illegal-PV moves leaking into actual play.
-That cleaner signal is the input for the Black-eval work in step 2.
+Once the PV-bug is silent, a follow-up SPRT match with a balanced
+opening book (Noomen / Silver, or no book at all) gives the clean
+per-engine score. If `myChess`-vs-`SF-1600` at a balanced setup is
+close to even, the test01 result is explained entirely by book bias
+and there is nothing further to investigate on the Black side.
 
 ## Reproducers in `IllegalPvRegressionTest`
 
@@ -459,7 +645,7 @@ both classes inside `PositionSearch`; it doesn't.
 
 The three reproducers cover **three different search depths** at which
 the bug first surfaces (8, 3, 4), suggesting it is not depth-tied.
-They cover both colours. None of them are flaky in repeated runs;
+They cover both colors. None of them are flaky in repeated runs;
 search is deterministic enough at these inputs that the same PVs come
 out every time.
 
