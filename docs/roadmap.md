@@ -274,6 +274,32 @@ Search optimizations (TT, LMR, null-move, …) make the engine *think faster*. T
 
 This entry intentionally comes *after* the search optimizations in the recommended order — without TT and friends the engine is too slow for the budget tuning to matter; with them, even modest time management improvements show up clearly.
 
+## 12.13 Switch alpha-beta from fail-hard to fail-soft — **S, no direct Elo, enables aspiration / TT tightening**
+
+[`PositionSearch.SearchNodeResult.window()`](../src/main/java/org/michaelfl/mychess/engines/PositionSearch.java) implements the classical *fail-hard* convention: every node clamps its return value to the calling node's `[alpha, beta]` window. Switching to *fail-soft* — return the true value, unclamped — is the same algorithm logically (alpha-beta pruning makes the same decisions in both variants), but it gives callers more information at the boundary:
+
+- **Fail-low** (true score `< alpha`): exposes *how far below* α the position is, not just "≤ α".
+- **Fail-high** (true score `> beta`): exposes *how far above* β it is.
+
+That extra information is what makes [§ 12.8 aspiration windows](#128-aspiration-windows--s--2040-elo) cheaper (a tighter re-search range on a fail), and what lets a future transposition table store a sharper upper / lower bound instead of just `≤ alpha` / `≥ beta`.
+
+### What it takes to implement
+
+- Remove the clamping in `window()` — change it to a no-op or delete `window()` and the two `create(...)` overloads that call it. Single change, single file. Compile-clean.
+- Audit the consumers of search results to make sure they don't assume `weight ∈ [alpha, beta]`:
+  - `alphaBetaSearchI` itself uses `weight >= beta` for cutoff and `weight > bestResult.weight` for best-update — both correct for any `weight`, no change.
+  - `calculateNextMove` (root) compares `weight > ILLEGAL_WEIGHT_NEG` to filter illegal moves and picks the maximum — also correct for any `weight`.
+  - `quiescenceSearch` (both layers) returns raw weights already; no change.
+- The `ILLEGAL_WEIGHT_POS` sentinel pass-through added during the 2026-05-22 illegal-PV fix becomes redundant — the sentinel would naturally survive fail-soft and the special-case can be deleted.
+
+### Why this isn't done today
+
+- No direct Elo. Pure refactor; the value is unlocked only when § 12.1 (TT) or § 12.8 (aspiration) are added.
+- The bug fix that motivated this entry already works under fail-hard via the targeted sentinel exception — the structural cleanup can wait.
+- Best done **together with TT introduction**, because that's where the additional bound information starts paying off.
+
+Expected performance impact: nil to marginal (one fewer comparison per leaf, but otherwise identical work). Expected stability impact: nil if the consumer audit above holds (move ordering and PV construction don't depend on the window-clamping).
+
 ---
 
 ## Suggested implementation order
@@ -282,7 +308,7 @@ This entry intentionally comes *after* the search optimizations in the recommend
 |---|---|---|---|
 | 1 | [§ 12.9 UCI minimal](#129-uci-protocol--m-12-days-no-elo-directly-but-unblocks-gui--measurement) — FEN importer + `UciHandler` + HIARCS/Stockfish baseline gauntlet | M (1–2 days) | — (GUI + baseline measurement) |
 | 2 | [§ 12.10 In-process harness](#1210-in-process-measurement-harness--sm-no-elo-but-adds-fast-per-change-diagnostics) — node-count bench + WAC EPD runner (self-play loop optional, covered by cutechess-cli from step 1) | S | — (per-change diagnostics) |
-| 3 | [§ 12.1 Transposition table](#121-transposition-table--s--m--150300-elo) | M | +150 – +300 |
+| 3 | [§ 12.1 Transposition table](#121-transposition-table--s--m--150300-elo) + [§ 12.13 fail-soft alpha-beta](#1213-switch-alpha-beta-from-fail-hard-to-fail-soft--s-no-direct-elo-enables-aspiration--tt-tightening) | M | +150 – +300 |
 | 4 | [§ 12.3 LMR](#123-late-move-reductions-lmr--s--50100-elo) + [§ 12.5 history](#125-history-heuristic--s--3050-elo) | S | +250 – +450 |
 | 5 | [§ 12.2 Null-move pruning](#122-null-move-pruning--s--50100-elo) | S | +300 – +550 |
 | 6 | [§ 12.4 Check extensions](#124-check-extensions--s--1530-elo) + [§ 12.8 aspiration](#128-aspiration-windows--s--2040-elo) | S | +340 – +620 |

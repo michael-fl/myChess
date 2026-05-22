@@ -191,7 +191,7 @@ public final class Game {
 
         try {
             calculateAndSetGameResult();
-            verifyMove(moveDescr, moveGenerator);
+            verifyMove(moveDescr);
 
         } catch (IllegalMoveException e) { // move was illegal
             revertMove();
@@ -207,9 +207,9 @@ public final class Game {
         calculateAndSetGameResult();
     }
 
-    private void verifyMove(MoveDescription moveDescr, MoveGenerator moveGenerator) {
+    private void verifyMove(MoveDescription moveDescr) {
         // Verify isCheck
-        if (moveDescr.isCheck() && !board.isKingChecked(moveGenerator)) {
+        if (moveDescr.isCheck() && !board.isKingChecked()) {
             throw new IllegalMoveException("Wrong move notation: " + moveDescr + "+. Move does not give check.");
         }
 

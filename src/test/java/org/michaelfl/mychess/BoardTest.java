@@ -27,6 +27,136 @@ class BoardTest {
         return move.move();
     }
 
+    /**
+     * Exhaustive directional coverage for the attack detector behind
+     * {@link Board#isKingChecked()} and {@link Board#canCaptureOpposingKing()}.
+     * For each piece type, every direction from which that piece can deliver
+     * an attack is exercised by a dedicated FEN.
+     *
+     * <p>Most cases follow the pattern <em>black attacker → white king, white
+     * to move</em>: that makes {@code isKingChecked} the truthy assertion
+     * (white's king is under attack) and {@code canCaptureOpposingKing} the
+     * falsy one (white's only piece is its king, which doesn't reach the
+     * remote black king). King-adjacency cases trip both methods because
+     * both kings then attack each other. A few sanity cases exercise the
+     * other colour, the no-attack baseline, and a slider blocked by an
+     * intervening piece.
+     */
+    static Stream<Arguments> attackDetectionCases() {
+        return Stream.of(
+                // ---- Pawn (direction-dependent on colour) ----
+                Arguments.of("black pawn d5 attacks white king e4 (down-left)",
+                        "k7/8/8/3p4/4K3/8/8/8 w - - 0 1", true, false),
+                Arguments.of("black pawn f5 attacks white king e4 (down-right)",
+                        "k7/8/8/5p2/4K3/8/8/8 w - - 0 1", true, false),
+                Arguments.of("white pawn d4 attacks black king e5 (up-right)",
+                        "8/8/8/4k3/3P4/8/8/K7 b - - 0 1", true, false),
+                Arguments.of("white pawn f4 attacks black king e5 (up-left)",
+                        "8/8/8/4k3/5P2/8/8/K7 b - - 0 1", true, false),
+
+                // ---- Knight (all 8 L-shapes around e4) ----
+                Arguments.of("black knight d6 attacks white king e4",
+                        "k7/8/3n4/8/4K3/8/8/8 w - - 0 1", true, false),
+                Arguments.of("black knight f6 attacks white king e4",
+                        "k7/8/5n2/8/4K3/8/8/8 w - - 0 1", true, false),
+                Arguments.of("black knight g5 attacks white king e4",
+                        "k7/8/8/6n1/4K3/8/8/8 w - - 0 1", true, false),
+                Arguments.of("black knight g3 attacks white king e4",
+                        "k7/8/8/8/4K3/6n1/8/8 w - - 0 1", true, false),
+                Arguments.of("black knight f2 attacks white king e4",
+                        "k7/8/8/8/4K3/8/5n2/8 w - - 0 1", true, false),
+                Arguments.of("black knight d2 attacks white king e4",
+                        "k7/8/8/8/4K3/8/3n4/8 w - - 0 1", true, false),
+                Arguments.of("black knight c3 attacks white king e4",
+                        "k7/8/8/8/4K3/2n5/8/8 w - - 0 1", true, false),
+                Arguments.of("black knight c5 attacks white king e4",
+                        "k7/8/8/2n5/4K3/8/8/8 w - - 0 1", true, false),
+
+                // ---- Bishop (all 4 diagonals from e4) ----
+                Arguments.of("black bishop a8 attacks white king e4 (up-left diagonal)",
+                        "b6k/8/8/8/4K3/8/8/8 w - - 0 1", true, false),
+                Arguments.of("black bishop h7 attacks white king e4 (up-right diagonal)",
+                        "k7/7b/8/8/4K3/8/8/8 w - - 0 1", true, false),
+                Arguments.of("black bishop h1 attacks white king e4 (down-right diagonal)",
+                        "k7/8/8/8/4K3/8/8/7b w - - 0 1", true, false),
+                Arguments.of("black bishop b1 attacks white king e4 (down-left diagonal)",
+                        "k7/8/8/8/4K3/8/8/1b6 w - - 0 1", true, false),
+
+                // ---- Rook (all 4 orthogonals from e4) ----
+                Arguments.of("black rook e8 attacks white king e4 (up the file)",
+                        "4r2k/8/8/8/4K3/8/8/8 w - - 0 1", true, false),
+                Arguments.of("black rook e1 attacks white king e4 (down the file)",
+                        "k7/8/8/8/4K3/8/8/4r3 w - - 0 1", true, false),
+                Arguments.of("black rook h4 attacks white king e4 (rank, from the right)",
+                        "k7/8/8/8/4K2r/8/8/8 w - - 0 1", true, false),
+                Arguments.of("black rook a4 attacks white king e4 (rank, from the left)",
+                        "7k/8/8/8/r3K3/8/8/8 w - - 0 1", true, false),
+
+                // ---- Queen (all 8 directions from e4) ----
+                Arguments.of("black queen a8 attacks white king e4 (up-left diagonal)",
+                        "q6k/8/8/8/4K3/8/8/8 w - - 0 1", true, false),
+                Arguments.of("black queen h7 attacks white king e4 (up-right diagonal)",
+                        "k7/7q/8/8/4K3/8/8/8 w - - 0 1", true, false),
+                Arguments.of("black queen h1 attacks white king e4 (down-right diagonal)",
+                        "k7/8/8/8/4K3/8/8/7q w - - 0 1", true, false),
+                Arguments.of("black queen b1 attacks white king e4 (down-left diagonal)",
+                        "k7/8/8/8/4K3/8/8/1q6 w - - 0 1", true, false),
+                Arguments.of("black queen e8 attacks white king e4 (up the file)",
+                        "4q2k/8/8/8/4K3/8/8/8 w - - 0 1", true, false),
+                Arguments.of("black queen e1 attacks white king e4 (down the file)",
+                        "k7/8/8/8/4K3/8/8/4q3 w - - 0 1", true, false),
+                Arguments.of("black queen h4 attacks white king e4 (rank, from the right)",
+                        "k7/8/8/8/4K2q/8/8/8 w - - 0 1", true, false),
+                Arguments.of("black queen a4 attacks white king e4 (rank, from the left)",
+                        "7k/8/8/8/q3K3/8/8/8 w - - 0 1", true, false),
+
+                // ---- King adjacency (all 8 squares around e4) ----
+                Arguments.of("kings touching: black king d5 (up-left of e4)",
+                        "8/8/8/3k4/4K3/8/8/8 w - - 0 1", true, true),
+                Arguments.of("kings touching: black king e5 (up of e4)",
+                        "8/8/8/4k3/4K3/8/8/8 w - - 0 1", true, true),
+                Arguments.of("kings touching: black king f5 (up-right of e4)",
+                        "8/8/8/5k2/4K3/8/8/8 w - - 0 1", true, true),
+                Arguments.of("kings touching: black king d4 (left of e4)",
+                        "8/8/8/8/3kK3/8/8/8 w - - 0 1", true, true),
+                Arguments.of("kings touching: black king f4 (right of e4)",
+                        "8/8/8/8/4Kk2/8/8/8 w - - 0 1", true, true),
+                Arguments.of("kings touching: black king d3 (down-left of e4)",
+                        "8/8/8/8/4K3/3k4/8/8 w - - 0 1", true, true),
+                Arguments.of("kings touching: black king e3 (down of e4)",
+                        "8/8/8/8/4K3/4k3/8/8 w - - 0 1", true, true),
+                Arguments.of("kings touching: black king f3 (down-right of e4)",
+                        "8/8/8/8/4K3/5k2/8/8 w - - 0 1", true, true),
+
+                // ---- Colour sanity: white piece attacking black king ----
+                Arguments.of("white queen h8 attacks black king e8 (rank, from the right)",
+                        "4k2Q/8/8/8/8/8/8/4K3 b - - 0 1", true, false),
+                Arguments.of("white knight d6 attacks black king e8",
+                        "4k3/8/3N4/8/8/8/8/4K3 b - - 0 1", true, false),
+                Arguments.of("white bishop a4 attacks black king e8 (up-right diagonal)",
+                        "4k3/8/8/8/B7/8/8/4K3 b - - 0 1", true, false),
+
+                // ---- canCaptureOpposingKing positive: side to move can capture opposing king ----
+                Arguments.of("queen on e2: side-to-move (black) can capture white king e1",
+                        "4k3/8/8/8/8/8/4q3/4K3 b - - 0 1", false, true),
+
+                // ---- Negative / edge cases ----
+                Arguments.of("bare kings, no attacks",
+                        "4k3/8/8/8/8/8/8/4K3 w - - 0 1", false, false),
+                Arguments.of("diagonal slider blocked by intervening piece",
+                        "k7/8/8/b7/8/2P5/8/4K3 w - - 0 1", false, false),
+                Arguments.of("file slider blocked by intervening piece",
+                        "k3r3/8/8/8/4P3/8/8/4K3 w - - 0 1", false, false));
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("attackDetectionCases")
+    void attackDetection(String name, String fen, boolean isCheck, boolean canCaptureKing) {
+        var board = Fen.importFEN(fen);
+        assertEquals(isCheck, board.isKingChecked(), name + " — isKingChecked");
+        assertEquals(canCaptureKing, board.canCaptureOpposingKing(), name + " — canCaptureOpposingKing");
+    }
+
     @Test
     void testIsKingChecked() {
         var pgn = """
@@ -37,15 +167,14 @@ class BoardTest {
                 """;
         var game = GameImporter.importerFor(pgn).importGame();
 
-        var moveGenerator = newGen();
         var board = game.getBoard();
-        assertFalse(board.isKingChecked(moveGenerator), "King should not yet be checked");
+        assertFalse(board.isKingChecked(), "King should not yet be checked");
 
         game.makeMove(MoveDescription.fromString("Rh8+", board.getGameStatus().getTurn()));
-        assertTrue(board.isKingChecked(moveGenerator), "King should now be checked");
+        assertTrue(board.isKingChecked(), "King should now be checked");
 
         game.makeMove(MoveDescription.fromString("Kxg7", board.getGameStatus().getTurn()));
-        assertFalse(board.isKingChecked(moveGenerator), "King should no longer be checked");
+        assertFalse(board.isKingChecked(), "King should no longer be checked");
     }
 
     static Stream<Arguments> checkmateCases() {

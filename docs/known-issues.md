@@ -463,6 +463,117 @@ They cover both colours. None of them are flaky in repeated runs;
 search is deterministic enough at these inputs that the same PVs come
 out every time.
 
+### Root cause and fix (2026-05-22)
+
+Two interacting bugs in `PositionSearch` together let illegal PV moves
+escape the search:
+
+1. **`SearchNodeResult.window()` clamped the `ILLEGAL_WEIGHT_POS`
+   sentinel.** The sentinel value (`1_000_000`) is far above any normal
+   alpha/beta bound; `window(ILLEGAL_WEIGHT_POS, alpha, beta)` returns
+   `min(1_000_000, beta) = beta` whenever `beta < 1_000_000`, which is
+   essentially always at deep nodes. The intended ILLEGAL signal was
+   silently rewritten as a normal "win for the side that played the
+   illegal move" weight, propagating up and contaminating the PV.
+2. **The leaf path in `PositionSearch.quiescenceSearch` skipped
+   legality detection.** At `depth == maxDepth`, when the last move
+   was not a capture, the code went straight to
+   `calculatePositionWeight`, which has a material-only shortcut that
+   bypasses `WeightingFunction.calculate`. That shortcut is the only
+   path with no ILLEGAL detection — and the three regression cases
+   all happen to land in it (each preceded by a material-shifting
+   capture, so `materialDelta` exceeds the 200 cp shortcut threshold
+   by the time the leaf is reached).
+
+**Fix** (`PositionSearch.java`):
+
+- `window()` passes any `isIllegalWeight(weight)` value through
+  unchanged instead of clamping. The `ILLEGAL_WEIGHT_POS` sentinel
+  now survives the fail-hard convention and propagates up correctly.
+- In `alphaBetaSearchI`, the `moveGenerator.calculateMoves(...)`
+  call plus the `moves.isIllegal()` early-return are pulled in
+  front of the `depth == ctx.maxDepth` leaf shortcut, so the check
+  runs uniformly at every depth — including the leaf, where it
+  previously was skipped because the search short-circuited to
+  `quiescenceSearch` first. The parent then rejects the illegal
+  candidate move via the existing `weight > ILLEGAL_WEIGHT_NEG`
+  guard.
+
+All three `IllegalPvRegressionTest` cases now pass deterministically;
+the full test suite is green.
+
+### Latent: `QuiescenceSearch.quiescenceSearch` stand-pat-before-legality
+
+Not reproduced by any current regression test but structurally the
+same family of bug: the inner quiescence search
+(`src/main/java/org/michaelfl/mychess/QuiescenceSearch.java`)
+computes its stand-pat eval and may return immediately on a
+beta cutoff *before* it consults `moves.isIllegal()`:
+
+```java
+int standPat = calculatePositionWeight(...);
+
+if (standPat >= ctx.betaWeight()) {
+    return ctx.betaWeight();        // returns without legality check
+}
+if (depth == ctx.maxDepth()) {
+    return standPat;                // returns without legality check
+}
+
+final Moves moves = moveGenerator.calculateMoves(...);
+if (moves.isIllegal()) { ... }      // check only reached if neither shortcut fired
+```
+
+If the previous move was a self-check **and** the position
+nevertheless evaluates statically at or above β, the offending move
+slips through. The current bug fix in `PositionSearch.alphaBetaSearchI`
+catches the case at the *outer* leaf entry (because the legality
+check runs before quiescence is entered at all), so this inner path
+is only exercised when the outer leaf delegates to the capture
+branch of quiescence. In that case the outer legality check has
+already cleared the position as legal, so the inner shortcut is safe
+*for that specific entry*.
+
+However, the inner quiescence then recurses on its own captures and
+re-enters itself at deeper plies, and *those* deeper entries have
+no outer guard. A self-check that occurs further down a capture
+chain inside the inner quiescence is not protected by the outer fix.
+The reason no current regression test reproduces this is that the
+capture chains in the three reproducers all terminate before such a
+scenario, and the static evals on the way don't accidentally trip
+the β-cutoff with an illegal position underneath.
+
+**Suggested follow-up when next touching the search:** reorder the
+inner `QuiescenceSearch.quiescenceSearch` to do `calculateMoves` and
+the `isIllegal` check *first*, then compute stand-pat. Performance
+cost is one move-list generation per quiescence node that would
+otherwise have hit the early cutoff — typically modest in
+quiescence-dominated late-tactical positions.
+
+### Side effect: two tactical `EngineTest` expectations needed updating (resolved)
+
+Immediately after the fix landed, the full suite showed two
+failures in `EngineTest` — both because the engine's tactical choice
+changed once the search no longer relied on illegal-move noise:
+
+- `testPosition2`: expected `f7-f1` (Qxf1), engine now picks `f8-c8`
+  (Rxc8). The test source already carried a `// TODO` marker on the
+  expected move. Stockfish at depth 24 confirms `f8-c8` is the
+  objectively better move (cp −425 from Black's POV vs cp −446 for
+  `f7-f1`).
+- `testPosition7`: expected `g1-g5` as the first move of a mating
+  combination. The position has multiple distinct mating lines at
+  sufficient depth — Stockfish d24 finds `g1-g5` (M8), `g1-d1`
+  (M11), and `d5-d6` (M13). At myChess's depth 8 the mate is not
+  visible end-to-end; pre-fix the search picked `g1-g5` via the
+  illegal-move bias, post-fix it picks `d5-d6` — still a winning
+  move, just a slower mate.
+
+Both tests were updated:
+`testPosition2` now expects `f8-c8`; `testPosition7` accepts any of
+`{g1-g5, d5-d6, g1-d1}` and no longer pins a specific PV path.
+Full suite is back to green (481/481, 4 skipped).
+
 ### Shapes not yet covered
 
 The test01 run produced several other PV shapes that were not turned
