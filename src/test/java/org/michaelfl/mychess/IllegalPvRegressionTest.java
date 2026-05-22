@@ -105,12 +105,87 @@ class IllegalPvRegressionTest {
                 "cutechess game 5 / Round 3 — PV moves a pinned Black bishop f8-d6, exposing king on e8 to rook on h8");
     }
 
-    /**
-     * Replay {@code gameMoves} via {@link GameImporter}, configure myChess at
-     * {@code maxDepth}, capture every iteration's PV and the final PV, and
-     * assert each is legal in the search-root position. Identical structure
-     * across all regression cases.
-     */
+    // ---- test02 cases ----
+    // Captured directly via the in-engine validatePv hook in the test02
+    // cutechess run (2026-05-22). Each FEN is the search root at the moment
+    // the engine emitted the illegal PV; depth is the iteration at which the
+    // hook fired, taken from test02-mychess-stderr.log.
+    //
+    // Two failure classes show up:
+    //
+    //   - "not pseudo-legal" — the int-packed move at this PV slot does not
+    //     match any move the MoveGenerator produces for the replayed
+    //     position. Note that the from/to part of the move *would* be
+    //     pseudo-legal on its own; the mismatch is in the encoded
+    //     capturedPiece byte (or moveType), which only differs if the slot
+    //     was written by an earlier sibling exploration whose board state
+    //     differed at the target square. I.e., a stale pvTable entry that
+    //     was never overwritten in the current branch.
+    //
+    //   - "leaves own king in check" — the move is pseudo-legal in its slot,
+    //     but applying it leaves the moving side's king capturable. In every
+    //     test02 case I traced, the immediately preceding PV move was a
+    //     forced check (often forced mate) under which all of the moving
+    //     side's responses were illegal. The search reaches
+    //     PositionSearch.checkmateOrStalemate, which returns without calling
+    //     copyUpPV — so the parent node's pvTable row retains whatever a
+    //     previous sibling exploration had written into the same slots.
+    //
+    // Both classes share the same underlying defect: pvTable slots beyond
+    // pvIndex(d) are not cleared between sibling iterations at depth d,
+    // and a terminal (mate/stalemate) sub-tree at depth d+1 does not
+    // overwrite them.
+
+    @Test
+    @Timeout(value = 180, unit = TimeUnit.SECONDS)
+    void notPseudoLegal_h7g6_test02() throws Exception {
+        runPvLegalityCheckFromFen(
+                "5N1k/1qN2Qpp/p3p3/1b6/2p5/2PP4/PP3PPP/R4RK1 w - - 1 23",
+                8,
+                "test02 — PV ply 7 (h7-g6): int-packed move not in MoveGenerator's pseudo-legal list "
+                        + "for the replayed position; from/to is plausible, mismatch is in the "
+                        + "capturedPiece / moveType byte, indicating a stale pvTable slot");
+    }
+
+    @Test
+    @Timeout(value = 180, unit = TimeUnit.SECONDS)
+    void selfCheckEvasion_d3d2_test02() throws Exception {
+        runPvLegalityCheckFromFen(
+                "7k/2N2Qpp/p3N3/1b6/2p5/2PP4/PP3PqP/R4RK1 w - - 0 24",
+                6,
+                "test02 — PV ply 5 (d3-d2): pseudo-legal in itself but leaves Black king in check. "
+                        + "The PV's ply 4 (Qf7-g7+) is in fact checkmate for Black "
+                        + "(Kxg7? attacked by Ne6, Kg8? attacked by Qg7, no block or capture), "
+                        + "so depth-5 search hits checkmateOrStalemate without calling copyUpPV "
+                        + "and the d3-d2 in slot 5 comes from a previous sibling exploration");
+    }
+
+    @Test
+    @Timeout(value = 120, unit = TimeUnit.SECONDS)
+    void notPseudoLegal_d8c7_test02() throws Exception {
+        runPvLegalityCheckFromFen(
+                "3k4/1R3p2/2rN4/1P4pp/8/4P3/P4rPP/4n1RK w - - 0 32",
+                4,
+                "test02 — PV ply 3 (d8-c7): Black king on d8 moving to empty c7 is pseudo-legal as a "
+                        + "from/to pair; the int-mismatch is in the encoded capturedPiece byte. "
+                        + "MoveGenerator produces d8-c7 with capturedPiece=0 (c7 empty in the replayed "
+                        + "position); the engine's pvTable slot stores d8-c7 with a non-zero "
+                        + "capturedPiece from a sibling exploration where c7 held a White piece");
+    }
+
+    @Test
+    @Timeout(value = 240, unit = TimeUnit.SECONDS)
+    void selfCheckEvasion_f6g5_test02() throws Exception {
+        runPvLegalityCheckFromFen(
+                "2r2r2/p1P2p1k/p7/3R2p1/7p/3BQ2P/8/6K1 b - - 0 54",
+                9,
+                "test02 — PV ply 8 (f6-g5): pseudo-legal but leaves Black king on h8 attacked by Qh7. "
+                        + "Same illegal end position is reached by four consecutive PVs from search "
+                        + "roots at Black moves 54, 55, 56, 57 — the engine keeps re-emitting it as "
+                        + "the position drifts closer to the suspected stale pvTable cell");
+    }
+
+    /** Replay {@code gameMoves} via {@link GameImporter}. */
     private static void runPvLegalityCheck(String gameMoves, int maxDepth, String label)
             throws Exception {
         var config = new EngineConfig.Builder()
@@ -120,6 +195,27 @@ class IllegalPvRegressionTest {
         var game = GameImporter.importerFor(gameMoves).importGame(
                 new GameConfig(MyChessEngine.class, config));
 
+        runPvLegalityCheckOnGame(game, label);
+    }
+
+    /** Import a FEN directly — used for cases where the regression source is
+     * an in-engine validatePv log entry rather than a game move list. */
+    private static void runPvLegalityCheckFromFen(String fen, int maxDepth, String label)
+            throws Exception {
+        var config = new EngineConfig.Builder()
+                .maxDepth(maxDepth)
+                .silent(true)
+                .build();
+        var board = Fen.importFEN(fen);
+        var game = new Game(new GameConfig(MyChessEngine.class, config), board);
+
+        runPvLegalityCheckOnGame(game, label);
+    }
+
+    /** Capture every iteration's PV and the final PV, and assert each is
+     * legal in the search-root position. Used by both setup paths. */
+    private static void runPvLegalityCheckOnGame(Game game, String label)
+            throws Exception {
         var rootBoard = game.getBoard().copy();
 
         List<int[]> iterationPvs = new ArrayList<>();
@@ -160,13 +256,15 @@ class IllegalPvRegressionTest {
 
             if (pseudoLegal.isIllegal()) {
                 fail(context + ": ply " + lastAppliedPly + " move " + new Move(lastAppliedMove)
-                        + " leaves own king in check — full PV: " + formatPv(pv));
+                        + " leaves own king in check — full PV: " + formatPv(pv) + "\n"
+                        + board);
             }
 
             if (!pseudoLegal.contains(packed)) {
                 fail(context + ": ply " + i + " move " + new Move(packed)
                         + " is not pseudo-legal in position " + Fen.exportFEN(board)
-                        + " — full PV: " + formatPv(pv));
+                        + " — full PV: " + formatPv(pv) + "\n"
+                        + board);
             }
 
             board.makeMove(packed);
@@ -177,7 +275,8 @@ class IllegalPvRegressionTest {
 
         if (pseudoLegal.isIllegal()) {
             fail(context + ": ply " + lastAppliedPly + " move " + new Move(lastAppliedMove)
-                    + " leaves own king in check — full PV: " + formatPv(pv));
+                    + " leaves own king in check — full PV: " + formatPv(pv) + "\n"
+                    + board);
         }
     }
 
