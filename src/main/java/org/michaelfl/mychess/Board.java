@@ -936,7 +936,7 @@ public final class Board {
             }
             // First non-empty square along the ray: either an attacker, a
             // blocker (any other piece), or the illegal-border byte. Only an
-            // attacking bishop / queen of the right colour counts as a hit.
+            // attacking bishop / queen of the right color counts as a hit.
             final byte piece = board[to];
             if (piece == attackerBishop || piece == attackerQueen) {
                 return true;
