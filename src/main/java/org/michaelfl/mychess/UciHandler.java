@@ -204,11 +204,13 @@ final class UciHandler {
         cancelCurrentTask();
         shutdownCurrentGame();
 
-        // Snapshot for the per-move [move] status log: color and full-move
-        // number are derived from the position at search start, not from any
-        // intermediate state inside the search.
+        // Snapshot for the per-move [move] / [go] status logs: color and
+        // full-move number are derived from the position at search start,
+        // not from any intermediate state inside the search.
         final int turnAtStart = board.getGameStatus().getTurn();
         final int plyCountAtStart = board.getGameStatus().getPlyCount();
+
+        logGoStatus(args, turnAtStart, plyCountAtStart);
 
         var engineConfig = new EngineConfig.Builder()
                 .maxDepth(args.maxDepth)
@@ -220,9 +222,9 @@ final class UciHandler {
         var game = new Game(gameConfig, board);
         currentGame.set(game);
 
-        long searchStartMs = System.currentTimeMillis();
+        long goStartMs = System.currentTimeMillis();
         ChessEngine engine = game.getEngine();
-        NextMoveTask task = engine.nextMoveAsync(env, info -> emitInfo(info, searchStartMs));
+        NextMoveTask task = engine.nextMoveAsync(env, info -> emitInfo(info, goStartMs));
         currentTask.set(task);
 
         // Spawn a virtual thread to wait on the search result; the main UCI
@@ -230,7 +232,8 @@ final class UciHandler {
         // Virtual threads are always daemons, so no explicit daemon flag.
         Thread watcher = Thread.ofVirtual()
                 .name("uci-search-watcher")
-                .start(() -> awaitAndEmitBestmove(game, task, args.timeBudgetMillis, turnAtStart, plyCountAtStart));
+                .start(() -> awaitAndEmitBestmove(game, task, args.timeBudgetMillis,
+                        turnAtStart, plyCountAtStart, goStartMs));
         currentWatcher.set(watcher);
     }
 
@@ -241,7 +244,7 @@ final class UciHandler {
     // ---- Search lifecycle ----
 
     private void awaitAndEmitBestmove(Game game, NextMoveTask task, int budgetMillis,
-                                      int turnAtStart, int plyCountAtStart) {
+                                      int turnAtStart, int plyCountAtStart, long goStartMs) {
         MoveAndWeight result = null;
         try {
             try {
@@ -267,7 +270,7 @@ final class UciHandler {
             float bestWeight = (result != null) ? result.weight() : lastIterationWeight.get();
 
             writeLine("bestmove " + (bestmove == 0 ? "0000" : UciMoveParser.toUci(bestmove)));
-            logMoveStatus(bestmove, bestWeight, turnAtStart, plyCountAtStart);
+            logMoveStatus(bestmove, bestWeight, turnAtStart, plyCountAtStart, goStartMs);
         } finally {
             game.shutdown();
             currentTask.compareAndSet(task, null);
@@ -329,7 +332,7 @@ final class UciHandler {
      * several games stream their move records into the same file.
      *
      * <p>Format:
-     * <pre>{@code [move] game=<8-char> color=<W|B> move=<N> uci=<...> evalW=<...>}</pre>
+     * <pre>{@code [move] game=<8-char> color=<W|B> move=<N> uci=<...> evalW=<...> elapsed=<ms>}</pre>
      *
      * <ul>
      *   <li>{@code game} — first 8 chars of a UUID regenerated on every
@@ -346,13 +349,17 @@ final class UciHandler {
      *       is consistent across both engine roles. Plain centipawns in
      *       pawn units (e.g. {@code +0.30}) for normal evals;
      *       {@code +M3} / {@code -M3} for mate-in-N-full-moves scores.</li>
+     *   <li>{@code elapsed} — wall-clock milliseconds from {@code go}
+     *       receipt to {@code bestmove} emission. Compare with the
+     *       budget logged on the matching {@code [go]} line to spot
+     *       overshoots that the cancellation path failed to prevent.</li>
      * </ul>
      *
      * <p>No log line is written when no move was actually played
      * (search returned {@code 0} — checkmate / stalemate at the root, or
      * the search aborted before producing any iteration).
      */
-    private void logMoveStatus(int bestmove, float weight, int turnAtStart, int plyCountAtStart) {
+    private void logMoveStatus(int bestmove, float weight, int turnAtStart, int plyCountAtStart, long goStartMs) {
         if (bestmove == 0) {
             return;
         }
@@ -362,11 +369,48 @@ final class UciHandler {
         String uciMove = UciMoveParser.toUci(bestmove);
         float evalWhitePov = (turnAtStart == GameStatus.TURN_WHITE) ? weight : -weight;
         String evalStr = formatEvalForLog(evalWhitePov);
-        String shortGameId = gameId.length() >= 8 ? gameId.substring(0, 8) : gameId;
+        String shortGameId = shortGameId();
+        long elapsedMs = System.currentTimeMillis() - goStartMs;
 
         Log.info(String.format(Locale.ROOT,
-                "[move] game=%s color=%s move=%d uci=%s evalW=%s",
-                shortGameId, color, fullMoveNumber, uciMove, evalStr));
+                "[move] game=%s color=%s move=%d uci=%s evalW=%s elapsed=%d",
+                shortGameId, color, fullMoveNumber, uciMove, evalStr, elapsedMs));
+    }
+
+    /**
+     * Companion to {@link #logMoveStatus} that records the GUI's clock
+     * inputs at the moment a {@code go} arrived, plus the budget we
+     * derived from them. Paired with the matching {@code [move]} line's
+     * {@code elapsed} field, this lets us reconstruct the full
+     * input/output of each search slot from the log alone — essential
+     * for diagnosing time-forfeit episodes after the fact.
+     *
+     * <p>Format:
+     * <pre>{@code [go] game=<8-char> color=<W|B> move=<N> wtime=<ms|-> btime=<ms|-> movestogo=<n|-> movetime=<ms|-> budget=<ms>}</pre>
+     *
+     * <p>Missing fields are emitted as {@code -}, so the line shape is
+     * stable regardless of which {@code go} sub-mode the GUI sent.
+     */
+    private void logGoStatus(GoArgs args, int turnAtStart, int plyCountAtStart) {
+        String color = (turnAtStart == GameStatus.TURN_WHITE) ? "W" : "B";
+        int fullMoveNumber = (plyCountAtStart / 2) + 1;
+
+        Log.info(String.format(Locale.ROOT,
+                "[go] game=%s color=%s move=%d wtime=%s btime=%s movestogo=%s movetime=%s budget=%d",
+                shortGameId(), color, fullMoveNumber,
+                formatNullable(args.wtime()),
+                formatNullable(args.btime()),
+                formatNullable(args.movestogo()),
+                formatNullable(args.movetimeMs()),
+                args.timeBudgetMillis()));
+    }
+
+    private String shortGameId() {
+        return gameId.length() >= 8 ? gameId.substring(0, 8) : gameId;
+    }
+
+    private static String formatNullable(Integer value) {
+        return value == null ? "-" : value.toString();
     }
 
     private static String formatEvalForLog(float weight) {
@@ -480,7 +524,15 @@ final class UciHandler {
 
     // ---- Time management ----
 
-    private record GoArgs(int maxDepth, int timeBudgetMillis) {}
+    /**
+     * Decoded {@code go} command. {@code wtime}/{@code btime}/{@code movestogo}/
+     * {@code movetimeMs} are kept as nullable carry-throughs from the raw
+     * tokens so that {@link #handleGo} can log them verbatim in the
+     * {@code [go]} diagnostic line for post-mortem time-budget analysis.
+     */
+    private record GoArgs(int maxDepth, int timeBudgetMillis,
+                          Integer wtime, Integer btime, Integer movestogo,
+                          Integer movetimeMs) {}
 
     /** Mutable intermediate holder for the raw {@code go ...} tokens. */
     private static final class RawGoTokens {
@@ -496,7 +548,8 @@ final class UciHandler {
         RawGoTokens raw = readGoTokens(line);
         int budgetMillis = computeBudgetMillis(raw, turn);
 
-        return new GoArgs(raw.maxDepth, budgetMillis);
+        return new GoArgs(raw.maxDepth, budgetMillis,
+                raw.wtime, raw.btime, raw.movestogo, raw.movetimeMs);
     }
 
     @SuppressWarnings("java:S127")
