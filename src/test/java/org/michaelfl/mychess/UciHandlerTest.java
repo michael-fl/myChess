@@ -6,14 +6,24 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 import java.io.PrintStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,6 +62,7 @@ class UciHandlerTest {
         System.setOut(originalOut);
         System.setErr(originalErr);
         Log.setMode(Log.Mode.REPL);
+        originalErr.print(capturedErr.toString(StandardCharsets.UTF_8));
     }
 
     // ---- Handshake ----
@@ -126,6 +137,205 @@ class UciHandlerTest {
         // the watcher must still emit a properly-formatted bestmove line.
         runHandler("position startpos\ngo depth 1\nstop\nquit\n")
                 .expect(BESTMOVE_OR_NULL_REGEX);
+    }
+
+    // ---- self-play ----
+
+    /**
+     * Drives 8 self-play plies from the start position over the UCI handler,
+     * simulating what a GUI like cutechess does between moves:
+     * {@code position startpos moves <accumulated>}, {@code go movetime N},
+     * read {@code bestmove}, append, repeat.
+     *
+     * <p>Each emitted bestmove is replayed on a shadow {@link Game} so that an
+     * illegal move at any ply surfaces as an {@link IllegalMoveException}
+     * rather than slipping through unnoticed (the handler itself would just
+     * log a stderr warning and keep going from a stale board).
+     */
+    @Test
+    @Timeout(value = 60, unit = TimeUnit.SECONDS)
+    void selfPlay_eightPliesFromStartpos_producesOnlyLegalMoves() {
+        final int plies = 8;
+        final int movetimeMillis = 200;
+
+        var shadow = new Game(Game.standardConfig(), Board.createNewGame());
+        try {
+            var moves = new StringBuilder();
+
+            for (int ply = 1; ply <= plies; ply++) {
+                capturedOut.reset();
+
+                String posCmd = moves.isEmpty()
+                        ? "position startpos\n"
+                        : "position startpos moves " + moves + "\n";
+                var response = runHandler(posCmd + "go movetime " + movetimeMillis + "\nquit\n");
+
+                final int finalPly = ply;
+                String bestmoveLine = response.lines().stream()
+                        .filter(l -> l.startsWith("bestmove "))
+                        .findFirst()
+                        .orElseThrow(() -> new AssertionError(
+                                "no bestmove emitted at ply " + finalPly
+                                        + "; full output:\n" + String.join("\n", response.lines())));
+
+                String uci = bestmoveLine.substring("bestmove ".length());
+                assertTrue(uci.matches("[a-h][1-8][a-h][1-8][qrbn]?"),
+                        "ill-formed bestmove at ply " + ply + ": '" + bestmoveLine + "'");
+
+                MoveDescription md = UciMoveParser.parse(uci, shadow.getBoard());
+                shadow.makeMove(md);
+
+                if (!moves.isEmpty()) {
+                    moves.append(' ');
+                }
+                moves.append(uci);
+            }
+        } finally {
+            shadow.shutdown();
+        }
+    }
+
+    /**
+     * Variant of {@link #selfPlay_eightPliesFromStartpos_producesOnlyLegalMoves}
+     * that runs all 8 plies through a <em>single</em> UCI handler — the way
+     * cutechess or any real GUI does it — instead of spinning up a fresh
+     * handler per move.
+     *
+     * <p>The handler runs in a virtual worker thread reading from a piped
+     * stdin; the test thread writes commands into that pipe and reads
+     * protocol output line-by-line from a second pipe redirected from
+     * {@code System.out}. Between {@code go} commands the test blocks until
+     * the {@code bestmove} line for the just-issued search arrives, then
+     * appends and continues.
+     *
+     * <p>Beyond the legality check, the test asserts that all 8 {@code [move]}
+     * stderr log lines emitted during the session share the same
+     * {@code game=…} identifier — the marker that distinguishes one
+     * persistent UCI session from a sequence of separate handler instances.
+     */
+    @Test
+    @Timeout(value = 60, unit = TimeUnit.SECONDS)
+    void selfPlay_eightPliesInSingleSession_keepsGameIdStable() throws Exception {
+        final int plies = 8;
+        final int movetimeMillis = 200;
+        final int pipeBufferBytes = 64 * 1024;
+        final long perPlyTimeoutMillis = 10_000L;
+        final long pollIntervalMillis = 10L;
+
+        // Only stdin goes through a pipe — the test thread is the sole writer
+        // and stays alive for the whole session. Stdout deliberately re-uses
+        // the @BeforeEach-supplied ByteArrayOutputStream and is polled
+        // line-by-line: PipedInputStream tracks the writing thread and would
+        // throw "Write end dead" the moment the search-executor thread
+        // terminates between iterations, even while the watcher thread is
+        // still actively writing.
+        var stdinSink = new PipedOutputStream();
+        var stdinSource = new PipedInputStream(stdinSink, pipeBufferBytes);
+        var handlerStdin = new BufferedReader(new InputStreamReader(stdinSource, StandardCharsets.UTF_8));
+        var testStdinWriter = new BufferedWriter(new OutputStreamWriter(stdinSink, StandardCharsets.UTF_8));
+
+        Thread worker = Thread.ofVirtual().name("uci-session-test").start(() ->
+                new UciHandler(new MyChessEnv(), handlerStdin).run());
+
+        var shadow = new Game(Game.standardConfig(), Board.createNewGame());
+        int[] outCursor = { 0 };
+        try {
+            var moves = new StringBuilder();
+
+            for (int ply = 1; ply <= plies; ply++) {
+                String posCmd = moves.isEmpty()
+                        ? "position startpos\n"
+                        : "position startpos moves " + moves + "\n";
+                testStdinWriter.write(posCmd);
+                testStdinWriter.write("go movetime " + movetimeMillis + "\n");
+                testStdinWriter.flush();
+
+                String bestmoveLine = pollForBestmove(capturedOut, outCursor,
+                        perPlyTimeoutMillis, pollIntervalMillis);
+                assertNotNull(bestmoveLine, "no bestmove emitted at ply " + ply);
+
+                String uci = bestmoveLine.substring("bestmove ".length());
+                assertTrue(uci.matches("[a-h][1-8][a-h][1-8][qrbn]?"),
+                        "ill-formed bestmove at ply " + ply + ": '" + bestmoveLine + "'");
+
+                MoveDescription md = UciMoveParser.parse(uci, shadow.getBoard());
+                shadow.makeMove(md);
+
+                if (!moves.isEmpty()) {
+                    moves.append(' ');
+                }
+                moves.append(uci);
+            }
+
+            testStdinWriter.write("quit\n");
+            testStdinWriter.flush();
+            worker.join();
+
+            // Stability of the gameId across the session is the discriminator
+            // between this single-session test and the multi-handler variant.
+            Pattern moveLogPattern = Pattern.compile("^\\[move] game=(\\S+) .*");
+            List<String> idsPerPly = capturedErr.toString(StandardCharsets.UTF_8).lines()
+                    .map(moveLogPattern::matcher)
+                    .filter(Matcher::matches)
+                    .map(m -> m.group(1))
+                    .toList();
+            assertEquals(plies, idsPerPly.size(),
+                    "expected one [move] log line per ply, got " + idsPerPly.size());
+            Set<String> uniqueIds = new HashSet<>(idsPerPly);
+            assertEquals(1, uniqueIds.size(),
+                    "expected one stable gameId across the session, got " + uniqueIds);
+            assertFalse(worker.isAlive(), "worker shouldn't be alive");
+        } finally {
+            shadow.shutdown();
+            try {
+                testStdinWriter.close();
+            } catch (java.io.IOException _) {
+                // Best-effort: pipe may already be closed by the handler's own shutdown.
+            }
+            worker.join(5_000L);
+        }
+    }
+
+    /**
+     * Poll {@code buf} starting at {@code cursor[0]} until a line starting
+     * with {@code "bestmove "} appears or the timeout elapses. The cursor
+     * is advanced past every line consumed (including non-matching ones)
+     * so that the next call resumes correctly.
+     *
+     * @return the matched line (without trailing newline), or {@code null} on timeout
+     */
+    private static String pollForBestmove(ByteArrayOutputStream buf, int[] cursor,
+                                          long timeoutMillis, long pollIntervalMillis)
+            throws InterruptedException {
+        long deadlineNanos = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(timeoutMillis);
+
+        while (System.nanoTime() < deadlineNanos) {
+            byte[] snapshot = buf.toByteArray();
+            while (cursor[0] < snapshot.length) {
+                int newlineIdx = indexOf(snapshot, (byte) '\n', cursor[0]);
+                if (newlineIdx < 0) {
+                    break; // partial line — wait for more bytes
+                }
+                String line = new String(snapshot, cursor[0],
+                        newlineIdx - cursor[0], StandardCharsets.UTF_8).stripTrailing();
+                cursor[0] = newlineIdx + 1;
+                if (line.startsWith("bestmove ")) {
+                    return line;
+                }
+            }
+
+            Thread.sleep(pollIntervalMillis);
+        }
+        return null;
+    }
+
+    private static int indexOf(byte[] arr, byte target, int from) {
+        for (int i = from; i < arr.length; i++) {
+            if (arr[i] == target) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     // ---- ucinewgame ----
