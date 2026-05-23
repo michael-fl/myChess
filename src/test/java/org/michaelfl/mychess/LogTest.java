@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -97,6 +98,31 @@ class LogTest {
         assertFalse(capturedOut.toString().contains("uci-msg"), "first message not on stdout");
         assertTrue(capturedOut.toString().contains("repl-msg"), "second message on stdout");
         assertFalse(capturedErr.toString().contains("repl-msg"), "second message not on stderr");
+    }
+
+    @Test
+    void info_lineStartsWithMillisecondTimestamp() {
+        Log.setMode(Log.Mode.REPL);
+        Log.info(SAMPLE_MESSAGE);
+
+        String line = capturedOut.toString().lines().findFirst().orElse("");
+        // yyyy-MM-dd HH:mm:ss.SSS plus a single space, then the message
+        Pattern prefixPattern = Pattern.compile("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3} .*");
+        assertTrue(prefixPattern.matcher(line).matches(),
+                "info line must start with `yyyy-MM-dd HH:mm:ss.SSS ` timestamp, got: " + line);
+        assertTrue(line.endsWith(SAMPLE_MESSAGE),
+                "after the timestamp the message must follow verbatim, got: " + line);
+    }
+
+    @Test
+    void error_lineStartsWithMillisecondTimestamp() {
+        Log.setMode(Log.Mode.UCI);
+        Log.error("boom");
+
+        String line = capturedErr.toString().lines().findFirst().orElse("");
+        Pattern prefixPattern = Pattern.compile("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3} boom$");
+        assertTrue(prefixPattern.matcher(line).matches(),
+                "error line must start with timestamp followed by message, got: " + line);
     }
 
     @Test

@@ -273,8 +273,10 @@ class UciHandlerTest {
 
             // Stability of the gameId across the session is the discriminator
             // between this single-session test and the multi-handler variant.
-            Pattern moveLogPattern = Pattern.compile("^\\[move] game=(\\S+) .*");
-            List<String> idsPerPly = capturedErr.toString(StandardCharsets.UTF_8).lines()
+            // `.*` prefix tolerates the leading timestamp that Log prepends.
+            String stderr = capturedErr.toString(StandardCharsets.UTF_8);
+            Pattern moveLogPattern = Pattern.compile(".*\\[move] game=(\\S+) .*");
+            List<String> idsPerPly = stderr.lines()
                     .map(moveLogPattern::matcher)
                     .filter(Matcher::matches)
                     .map(m -> m.group(1))
@@ -284,6 +286,22 @@ class UciHandlerTest {
             Set<String> uniqueIds = new HashSet<>(idsPerPly);
             assertEquals(1, uniqueIds.size(),
                     "expected one stable gameId across the session, got " + uniqueIds);
+
+            // Every [move] must carry an elapsed=<ms> field for post-mortem
+            // time-management analysis, and there must be a matching [go]
+            // log line per ply (same count). Both lines tolerate the
+            // timestamp prefix that Log now prepends.
+            long elapsedFieldCount = stderr.lines()
+                    .filter(l -> l.matches(".*\\[move] .*\\belapsed=\\d+.*"))
+                    .count();
+            assertEquals(plies, elapsedFieldCount,
+                    "every [move] log line must carry an elapsed=<ms> field");
+
+            long goLineCount = stderr.lines()
+                    .filter(l -> l.matches(".*\\[go] game=\\S+ color=[WB] move=\\d+ .*budget=\\d+.*"))
+                    .count();
+            assertEquals(plies, goLineCount,
+                    "expected one [go] log line per ply, got " + goLineCount);
             assertFalse(worker.isAlive(), "worker shouldn't be alive");
         } finally {
             shadow.shutdown();
