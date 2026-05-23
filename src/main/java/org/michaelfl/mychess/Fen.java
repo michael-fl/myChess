@@ -34,7 +34,7 @@ final class Fen {
         readPosition(fields[0], rawBoard);
 
         int turn = parseTurn(fields[1]);
-        int castlingState = parseCastlingState(fields[2]);
+        CastlingState castling = parseCastlingState(fields[2], rawBoard);
         byte enPassantField = parseEnPassantField(fields[3]);
         int halfMoveClock = parseNonNegativeInt(fields[4], "half-move clock");
         int fullMoveNumber = parseNonNegativeInt(fields[5], "full-move number");
@@ -46,12 +46,20 @@ final class Fen {
 
         // Build a draft status (hash=0) just to feed into Board.calculatePositionHash,
         // which only reads castling/turn/enPassant from the GameStatus, not the hash itself.
-        var draftStatus = new GameStatus(plyCount, turn, 0, halfMoveClock, castlingState, enPassantField, 0L);
+        var draftStatus = new GameStatus(plyCount, turn, 0, halfMoveClock, castling.bits(), enPassantField, 0L);
         long positionHash = Board.calculatePositionHash(rawBoard, draftStatus);
-        var gameStatus = new GameStatus(plyCount, turn, 0, halfMoveClock, castlingState, enPassantField, positionHash);
+        var gameStatus = new GameStatus(plyCount, turn, 0, halfMoveClock, castling.bits(), enPassantField, positionHash);
 
-        return new Board(rawBoard, gameStatus);
+        return new Board(rawBoard, gameStatus, castling.rookFiles());
     }
+
+    /** Decoded castling field: the {@code GameStatus} bit mask plus the
+     *  matching {@code Board.castlingRookFiles} array. */
+    @SuppressWarnings("java:S6218")
+    private record CastlingState(int bits, byte[] rookFiles) {}
+
+    /** One castling-rights character resolved against the board. */
+    private record SlotRook(CastlingSlot slot, int rookFile) {}
 
     private static void readPosition(String positionField, byte[] rawBoard) {
         var rows = positionField.split("/");
@@ -103,23 +111,124 @@ final class Fen {
         };
     }
 
-    private static int parseCastlingState(String castlingField) {
+    /**
+     * Parses the FEN castling-rights field for both notations supported by
+     * the X-FEN / Shredder-FEN conventions:
+     *
+     * <ul>
+     *   <li>{@code K}/{@code Q}/{@code k}/{@code q} — classical: identifies
+     *       the rook by direction (outermost rook on the relevant side of
+     *       the king), as used in standard chess and X-FEN.</li>
+     *   <li>{@code A}-{@code H} / {@code a}-{@code h} — Shredder: identifies
+     *       the rook by its file letter directly. This is what 960-aware
+     *       GUIs like cutechess emit.</li>
+     * </ul>
+     *
+     * <p>Returns both the {@link GameStatus} bit mask and the
+     * {@code Board.castlingRookFiles} array populated with the resolved
+     * file per slot. Unused slots stay at their defaults (a-/h-file).
+     *
+     * @throws IllegalArgumentException for an unrecognized character, a
+     *         missing king on the back rank, a missing matching rook, or
+     *         a letter that would collide with the king's own file.
+     */
+    private static CastlingState parseCastlingState(String castlingField, byte[] rawBoard) {
+        byte[] rookFiles = Board.defaultCastlingRookFiles();
         if ("-".equals(castlingField)) {
-            return 0;
+            return new CastlingState(0, rookFiles);
         }
-        int state = 0;
 
+        int bits = 0;
         for (int i = 0; i < castlingField.length(); i++) {
-            switch (castlingField.charAt(i)) {
-                case 'K' -> state |= GameStatus.BIT_WHITE_CASTLING_KING_SIDE_POSSIBLE;
-                case 'Q' -> state |= GameStatus.BIT_WHITE_CASTLING_QUEEN_SIDE_POSSIBLE;
-                case 'k' -> state |= GameStatus.BIT_BLACK_CASTLING_KING_SIDE_POSSIBLE;
-                case 'q' -> state |= GameStatus.BIT_BLACK_CASTLING_QUEEN_SIDE_POSSIBLE;
-                default -> throw new IllegalArgumentException("Invalid castling-rights char '" + castlingField.charAt(i) + "' in FEN");
+            SlotRook resolved = resolveCastlingChar(castlingField.charAt(i), rawBoard);
+            bits |= resolved.slot().bitMask();
+            rookFiles[resolved.slot().ordinal()] = (byte) resolved.rookFile();
+        }
+
+        return new CastlingState(bits, rookFiles);
+    }
+
+    private static SlotRook resolveCastlingChar(char ch, byte[] rawBoard) {
+        char upper = Character.toUpperCase(ch);
+        validateCastlingRightsChar(upper);
+
+        boolean isWhite = Character.isUpperCase(ch);
+        int backRow = isWhite ? 0 : 7;
+        byte rookPiece = isWhite ? Board.whiteRook : Board.blackRook;
+        byte kingPiece = isWhite ? Board.whiteKing : Board.blackKing;
+
+        int kingFile = findKingFile(rawBoard, kingPiece, backRow);
+        if (kingFile < 0) {
+            throw new IllegalArgumentException("FEN castling-right '" + ch + "' but no king on back rank");
+        }
+
+        int rookFile = findRookFile(ch, rawBoard, upper, rookPiece, backRow, kingFile);
+        boolean kingside = rookFile > kingFile;
+
+        return new SlotRook(CastlingSlot.slotFor(isWhite, kingside), rookFile);
+    }
+
+    private static int findRookFile(char ch, byte[] rawBoard, char upper, byte rookPiece, int backRow, int kingFile) {
+        int rookFile;
+        if (upper == 'K' || upper == 'Q') {
+            int direction = (upper == 'K') ? +1 : -1;
+            rookFile = findCastlingRookFile(rawBoard, rookPiece, backRow, kingFile, direction);
+            if (rookFile < 0) {
+                throw new IllegalArgumentException("FEN castling-right '" + ch + "' but no matching rook on back rank");
+            }
+        } else {
+            rookFile = upper - 'A';
+            if (rookFile == kingFile) {
+                throw new IllegalArgumentException(
+                        "FEN castling-right '" + ch + "' targets the king's own file");
+            }
+            if (rawBoard[ChessUtil.getFieldFromColAndRow(rookFile, backRow)] != rookPiece) {
+                throw new IllegalArgumentException(
+                        "FEN castling-right '" + ch + "' but no rook on " + (char) ('a' + rookFile) + (backRow + 1));
             }
         }
 
-        return state;
+        return rookFile;
+    }
+
+    private static void validateCastlingRightsChar(char ch) {
+        if (ch != 'K' && ch != 'Q' && (ch < 'A' || ch > 'H')) {
+            throw new IllegalArgumentException("Invalid castling-rights char '" + ch + "' in FEN");
+        }
+    }
+
+    private static int findKingFile(byte[] rawBoard, byte kingPiece, int row) {
+        for (int col = 0; col < 8; col++) {
+            if (rawBoard[ChessUtil.getFieldFromColAndRow(col, row)] == kingPiece) {
+                return col;
+            }
+        }
+
+        return -1;
+    }
+
+    /**
+     * Returns the file of the first rook found while scanning outward from
+     * the king along the back rank in the given {@code direction}, or
+     * {@code -1} if no such rook exists.
+     *
+     * <p>For every starting position (standard or 960) and every realistic
+     * mid-game position this is equivalent to X-FEN's "outermost rook on
+     * the kingside / queenside of the king" rule, because each side of the
+     * king carries at most one rook. The only case where the two diverge
+     * is a pawn-promotion artifact (an extra rook between king and the
+     * original castling rook) — and that case is exactly the X-FEN
+     * ambiguity that Shredder notation exists to resolve, so we lose
+     * nothing by taking the simpler "first rook in this direction" route.
+     */
+    private static int findCastlingRookFile(byte[] rawBoard, byte rookPiece, int row, int kingFile, int direction) {
+        for (int col = kingFile + direction; col >= 0 && col <= 7; col += direction) {
+            if (rawBoard[ChessUtil.getFieldFromColAndRow(col, row)] == rookPiece) {
+                return col;
+            }
+        }
+
+        return -1;
     }
 
     private static byte parseEnPassantField(String enPassantField) {

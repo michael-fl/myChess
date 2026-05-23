@@ -182,9 +182,25 @@ public final class Board {
     private final GameStatus[] statusStack;
     private int stackSize;
 
+    /**
+     * Starting files of the four castling rooks, indexed by
+     * {@link CastlingSlot#ordinal()}:
+     * {@code [WQ, WK, BQ, BK]}. A file value is in {@code [0, 7]} or
+     * {@code -1} if no castling right of this slot ever existed for this
+     * game (e.g. an asymmetric 960 setup; never the case in standard 960).
+     * Set once at construction time — game-constant, not reverted on
+     * {@code revertMove}.
+     */
+    private final byte[] castlingRookFiles;
+
     public Board(byte[] rawBoard, GameStatus gameStatus) {
-        board = rawBoard;
-        statusStack = new GameStatus[2000];
+        this(rawBoard, gameStatus, defaultCastlingRookFiles());
+    }
+
+    public Board(byte[] rawBoard, GameStatus gameStatus, byte[] castlingRookFiles) {
+        this.board = rawBoard;
+        this.statusStack = new GameStatus[2000];
+        this.castlingRookFiles = castlingRookFiles;
         push(gameStatus);
     }
 
@@ -203,6 +219,7 @@ public final class Board {
     private Board() {
         board = createEmptyRawBoard();
         statusStack = new GameStatus[2000];
+        castlingRookFiles = defaultCastlingRookFiles();
 
         board[a1] = whiteRook;
         board[b1] = whiteKnight;
@@ -247,10 +264,31 @@ public final class Board {
         this.board = Arrays.copyOf(other.board, other.board.length);
         this.statusStack = Arrays.copyOf(other.statusStack, other.statusStack.length);
         this.stackSize = other.stackSize;
+        this.castlingRookFiles = Arrays.copyOf(other.castlingRookFiles, other.castlingRookFiles.length);
     }
 
     public static Board createNewGame() {
         return new Board();
+    }
+
+    /**
+     * Returns a fresh array {@code { 0, 7, 0, 7 }} encoding the standard
+     * chess castling-rook files (a-file queenside, h-file kingside, both
+     * colors). Indexed by {@link CastlingSlot#ordinal()}. A new instance
+     * is returned per call so the caller can safely mutate it.
+     */
+    public static byte[] defaultCastlingRookFiles() {
+        return new byte[] { 0, 7, 0, 7 };
+    }
+
+    /**
+     * Returns the back-rank file (0..7) of the rook that backs the given
+     * castling slot. The value is meaningful only while the matching
+     * castling-right bit in {@link GameStatus#getCastlingState()} is set;
+     * a value of {@code -1} indicates the slot never existed for this game.
+     */
+    public int getCastlingRookFile(CastlingSlot slot) {
+        return castlingRookFiles[slot.ordinal()];
     }
 
     static byte[] createEmptyRawBoard() {
