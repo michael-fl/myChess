@@ -496,3 +496,73 @@ public static final class MoveAndWeight {
 `path` is the *principal variation* extracted from the search's PV table — the best line of play the search found, of length up to `maxDepth + 1`. The first entry is the move the engine is about to play, the next is the expected opponent reply, and so on. The REPL's `tip`, `weight`, and `dw` commands print this in human-readable form via `ChessUtil.pathToString(path)`.
 
 The full concurrency story — single-thread executor, cooperative cancellation, timeout-vs-cancellation split, and the iterative-deepening fallback — is in [§ 2.4](../README.md#24-concurrency-and-async-move-calculation) and [§ 6.5](search.md#65-time-management-and-cancellation).
+
+## 3.11 Principal-variation table
+
+The search builds its principal variation (PV) — the sequence of moves it currently believes both sides will play — into a triangular `int[]` shared by every recursion within one iterative-deepening iteration. The structural details are encapsulated in [`SearchNodeContext`](../src/main/java/org/michaelfl/mychess/engines/PositionSearch.java), a record nested in `PositionSearch`. This section documents the layout and the index / propagation helpers; the *search-side* behaviour (when `copyUpPV` is called, how `bestKnownPath` is threaded through) lives in [§ 6.3](search.md#63-principal-variation-table) and [§ 7.1](search.md#71-best-known-move-pv-ordering).
+
+### Layout
+
+`pvTable` is a single flat `int[]` of length `pvMaxLength * pvMaxLength`, where `pvMaxLength = maxDepth + 1`. It is logically a square matrix indexed by depth: row `d` starts at index `d * pvMaxLength` and holds the PV that a node at depth `d` is building. Only the upper triangle is ever filled with moves — row `d`'s diagonal slot is at column `d`, and slots to the left of the diagonal stay empty.
+
+The example below shows a fully populated table for `maxDepth = 4` (so `pvMaxLength = 5`, five columns and five rows). Moves `M0 .. M3` are the four PV plies. The rightmost column (column 4) is never written by anyone and so always reads as `0`; that final `0` serves as a zero-terminator for PV-consuming code that walks the PV until it hits a `0`. Row 4 corresponds to the leaf (`depth == maxDepth`) — the leaf takes the static-eval shortcut and never writes its own diagonal, so row 4 is empty too.
+
+```
+   col          0    1    2    3    4
+             +----+----+----+----+----+
+   row 0     | M0 | M1 | M2 | M3 |  0 |   <- root PV: 4 moves + 0-terminator
+             +----+----+----+----+----+
+   row 1     |    | M1 | M2 | M3 |  0 |
+             +----+----+----+----+----+
+   row 2     |    |    | M2 | M3 |  0 |
+             +----+----+----+----+----+
+   row 3     |    |    |    | M3 |  0 |   <- only this depth's diagonal move
+             +----+----+----+----+----+
+   row 4     |    |    |    |    |  0 |   <- leaf row: never written
+             +----+----+----+----+----+
+```
+
+The diagonal slot of row `d` (column `d`, addressed by `pvIndex()`) holds the move currently being considered at depth `d`. The search rewrites it at the top of every move-loop iteration. Slots `d+1 .. maxDepth-1` to the right of the diagonal hold the sub-PV continuing from that candidate; deeper nodes fill them via `copyUpPV()` (below). Slots to the left of the diagonal are written by shallower nodes (or, for row 0, by the root's direct `pvTable[0] = move`).
+
+### Index helpers
+
+| Method | Returns | What it addresses |
+|---|---|---|
+| `pvMaxLength()` | `maxDepth + 1` | The matrix side length. One more than the maximum PV length; the extra slot acts as the 0-terminator. |
+| `pvIndex()` | `depth * pvMaxLength() + depth` | The diagonal slot at this depth — where this depth's currently-considered move is stored. |
+| `pvParentIndex()` | `(depth - 1) * pvMaxLength() + depth` | Column `d` of row `d-1` — the slot in the parent's row directly to the right of the parent's own diagonal. Both `copyUpPV` and `truncateParentPv` write here. |
+
+### Propagation: `copyUpPV` and `truncateParentPv`
+
+Two operations move data between rows.
+
+**`copyUpPV()`** — "I found a good continuation". Copies this depth's row slots `d .. maxDepth` (the diagonal move plus its already-filled sub-PV) into the parent's row at the same column range. Called whenever a recursive child improves the parent's best so far (on a new best move, or on a beta cutoff).
+
+Example, `copyUpPV()` called at depth 2 of a `maxDepth = 4` search. The trailing column 4 stays at the `0` terminator throughout:
+
+```
+   col           0    1    2    3    4
+               +----+----+----+----+----+
+   row 1 before |    | M1 | ?? | ?? |  0 |   <- parent's M1 in slot 1; slots 2..3 not
+               +----+----+----+----+----+      yet set in this iteration
+   row 2       |    |    | M2 | M3 |  0 |   <- depth 2's M2 in slot 2; M3 already
+               +----+----+----+----+----+      filled in by an earlier copyUpPV from
+                                              depth 3
+
+                       || copy row 2, slots 2..4 --> row 1, slots 2..4
+                       v
+
+               +----+----+----+----+----+
+   row 1 after |    | M1 | M2 | M3 |  0 |   <- row 1 now reads as the PV
+               +----+----+----+----+----+      [M1, M2, M3] from depth 1's perspective
+```
+
+By induction up the chain, row 0 contains the complete principal variation `[M0, M1, ..., M_{maxDepth-1}]` when the search returns to the root.
+
+**`truncateParentPv()`** — "I have no continuation". Writes zeros into the same parent-row range that `copyUpPV` would write into. Called at every return path that produces a parent-acceptable (non-`ILLEGAL_WEIGHT_NEG`) weight without further moves to propagate: terminal mate / stalemate, draw by 50-move or threefold repetition, and the leaf static-eval return at `depth == maxDepth`. Without it, the parent's subsequent `copyUpPV` would carry forward stale slots written by an earlier sibling's deeper exploration — the regression cases in [`IllegalPvRegressionTest`](../src/test/java/org/michaelfl/mychess/IllegalPvRegressionTest.java) (the `*_test02` methods) reproduce exactly that failure mode.
+
+### Why the diagonal layout?
+
+A naive alternative is to store each row's PV starting at column 0 instead of at column `d` (left-justify the upper triangle). Both layouts hold the same information. The diagonal layout chosen here has one practical advantage: the source range of `copyUpPV` (row `d`, columns `d..maxDepth`) sits in memory directly above its destination (row `d-1`, columns `d..maxDepth`) — same column range, with stride `pvMaxLength`. `copyUpPV` is therefore a single `System.arraycopy` with no per-element offset arithmetic, and `truncateParentPv` is similarly a single `Arrays.fill`.
+
+The cost is the ~½ of the array that sits in the lower-left triangle and is never used. With `maxDepth ≤ ~20` this wastes at most a few hundred ints per iteration — fine.
