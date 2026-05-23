@@ -31,6 +31,6 @@ LOG="$DIR/mychess-stderr.log"
 printf '\n--- %s myChess UCI started (pid %d) ---\n' "$(date '+%Y-%m-%d %H:%M:%S')" $$ >> "$LOG"
 
 exec "$JAVA_HOME/bin/java" \
-    -cp "target/classes:target/dependency/*" \
+    -cp "test:test/*" \
     org.michaelfl.mychess.MyChessMain uci \
     2> >(tee -a "$LOG" >&2)
