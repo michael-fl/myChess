@@ -147,45 +147,9 @@ This is what makes iterative deepening robust under a hard time budget: there is
 
 ## 6.3 Principal variation table
 
-The principal variation (PV) is the sequence of moves the search currently believes is best. The classical data structure for collecting it from a recursive search is a **triangular table**: row `d` of the table holds the PV starting at depth `d`, and is one entry shorter than row `d-1`.
+The principal variation (PV) is the sequence of moves the search currently believes both sides will play. It is collected via a triangular `int[]` shared across every recursion in one iterative-deepening iteration. The **data layout, index arithmetic, and propagation operations** (`copyUpPV`, `truncateParentPv`) are documented in detail in [§ 3.11 Principal-variation table](data-types.md#311-principal-variation-table). This section covers only the *search-side* usage: when each operation is called, how the final PV is extracted at the root, and how it is threaded into the next deepening iteration.
 
-myChess flattens this triangular structure into a single 1D array, with both axes sized to `maxDepth + 1`:
-
-```java
-final int   pvMaxLength = maxDepth + 1;
-final int[] pvTable     = new int[pvMaxLength * pvMaxLength];   // one allocation per iteration
-```
-
-Index arithmetic is provided by the context record:
-
-```java
-public record SearchNodeContext(int depth, int maxDepth, …, int[] pvTable) {
-
-    private int pvMaxLength() { return maxDepth + 1; }
-
-    public int pvIndex()         { return  depth      * pvMaxLength() + depth;     }
-    public int pvParentIndex()   { return (depth - 1) * pvMaxLength() + depth;     }
-
-    public void copyUpPV() {
-        System.arraycopy(pvTable, pvIndex(), pvTable, pvParentIndex(), pvMaxLength() - depth);
-    }
-}
-```
-
-The conceptual layout is a 2D grid `pvTable[d][k]` flattened in row-major order. Row `d` holds the current best line from depth `d` onward, with the move at depth `d` at column `d`, the move at depth `d+1` at column `d+1`, and so on. Earlier columns in row `d` are unused — they belong to ancestors:
-
-```
-                   col 0  col 1  col 2  col 3  col 4
-row 0 (depth 0):    [m0,  m1,    m2,    m3,    m4 ]   ← full PV from root
-row 1 (depth 1):    [ _ , m1',   m2',   m3',   m4']   ← PV after parent chose m0
-row 2 (depth 2):    [ _ ,  _ ,   m2'',  m3'',  m4'']
-row 3 (depth 3):    [ _ ,  _ ,    _ ,   m3''', m4''']
-row 4 (depth 4):    [ _ ,  _ ,    _ ,    _ ,   m4'''']
-```
-
-The triangular shape comes from the fact that depth `d`'s PV can only contain moves at depths `d, d+1, … maxDepth`. The lower-left triangle is wasted (~½ the array), but the flat layout avoids `int[][]` array-of-arrays overhead and keeps everything in one cache-friendly chunk.
-
-**Writing the PV.** At each node, before recursing into a candidate move, the search writes that move into its own PV slot:
+**Writing the PV inside `alphaBetaSearchI`.** At the top of each move-loop iteration the search writes the candidate into its own diagonal slot:
 
 ```java
 pvTable[pvIndex] = move;                    // tentatively claim this move
@@ -194,17 +158,11 @@ var result = alphaBetaSearch(...).negate();
 ctx.workingBoard.revertMove();
 ```
 
-If the child establishes itself as the new best move (either by beating `bestResult.weight` or by causing a beta cutoff), `ctx.copyUpPV()` runs:
+If the child establishes itself as the new best move (either by beating `bestResult.weight` or by causing a beta cutoff), `ctx.copyUpPV()` runs and propagates this row's PV one level up.
 
-```java
-public void copyUpPV() {
-    System.arraycopy(pvTable, pvIndex(), pvTable, pvParentIndex(), pvMaxLength() - depth);
-}
-```
+If the child instead returns a parent-acceptable result *without* a continuation — terminal mate / stalemate, a 50-move or threefold-repetition draw, or the leaf static-eval return — the child calls `ctx.truncateParentPv()` from inside its own return path. That writes zeros into the same parent-row range, so the parent's later `copyUpPV` carries a clean "this branch stops here" signal up the chain rather than stale data from an earlier sibling's deeper exploration. The four `*_test02` cases in [`IllegalPvRegressionTest`](../src/test/java/org/michaelfl/mychess/IllegalPvRegressionTest.java) reproduce the regression that would re-appear without this call.
 
-This copies the child's PV row into the *parent's row*, starting at the parent's slot for "this child move". After unwinding back to the root, row 0 holds the full principal variation from move 1 down to the deepest leaf the search reached.
-
-**Extraction at the root.** The root layer keeps per-move PV copies in `allPaths[i]` so the final returned `MoveAndWeight` can carry a private copy of the chosen line:
+**Extraction at the root.** The root iterates the move list itself (in `PositionSearch.calculateNextMove(int, MoveAndWeight)`, not in `alphaBetaSearchI`) and keeps per-candidate PV copies in `allPaths[i]` so the returned `MoveAndWeight` can carry a private copy of the chosen line:
 
 ```java
 final int[][] allPaths = new int[countMoves][pvMaxLength];
@@ -215,7 +173,7 @@ return new MoveAndWeight(plainMoves[bestMoveIndex], results[bestMoveIndex].weigh
                          results[bestMoveIndex].result, allPaths[bestMoveIndex]);
 ```
 
-The PV is then handed to the next iterative-deepening iteration as `bestKnownPath`, where its first entry is used by `MoveSorterImpl` as the "PV move" placed first in every node's move ordering (see [§ 7.1](#71-best-known-move-pv-ordering)). An assertion inside the search enforces that the generator actually puts the requested PV move first:
+**Threading into the next iterative-deepening iteration.** The PV that just finished is handed to the next iteration as `bestKnownPath`; its first entry is used by `MoveSorterImpl` as the "PV move" placed first in every node's move ordering (see [§ 7.1](#71-best-known-move-pv-ordering)). An assertion inside the search enforces that the generator actually puts the requested PV move first:
 
 ```java
 __assert(() -> !(countMoves > 0 && bestKnownNextMove != 0 && bestKnownNextMove != plainMoves[0]),

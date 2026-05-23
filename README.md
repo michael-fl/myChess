@@ -76,6 +76,7 @@ In separate files under [`docs/`](docs/):
    8. [Zobrist hashing and `PositionEncoding`](docs/data-types.md#38-zobrist-hashing-and-positionencoding)
    9. [`MoveDescription` (symbolic moves)](docs/data-types.md#39-movedescription-symbolic-moves)
    10. [`NextMoveTask` (async result handle)](docs/data-types.md#310-nextmovetask-async-result-handle)
+   11. [Principal-variation table](docs/data-types.md#311-principal-variation-table)
 4. [Move Generation](docs/move-generation.md) — pseudo-legal generation per piece, castling, en passant, king-capture detection, ordering hook.
    1. [Generator structure](docs/move-generation.md#41-generator-structure)
    2. [Per-piece movement](docs/move-generation.md#42-per-piece-movement)
@@ -115,6 +116,7 @@ In separate files under [`docs/`](docs/):
 11. [Testing](docs/testing.md) *(stub)*
 12. [Roadmap: Improving Playing Strength](docs/roadmap.md) — concrete next steps with effort/Elo estimates.
 13. [Known issues](docs/known-issues.md) — open bugs and ongoing investigations.
+14. [Measuring playing strength with cutechess](docs/elo-testing.md) — the cutechess-cli match setup, SPRT parameters, opening-book choices, and how to read the output.
 
 ---
 
