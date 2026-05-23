@@ -7,6 +7,8 @@ import org.michaelfl.mychess.engines.MyChessEngine;
 import org.michaelfl.mychess.engines.NextMoveTask;
 
 import java.io.BufferedReader;
+import java.util.Locale;
+import java.util.UUID;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -53,6 +55,15 @@ final class UciHandler {
     private final AtomicReference<NextMoveTask> currentTask = new AtomicReference<>();
     private final AtomicReference<Game> currentGame = new AtomicReference<>();
     private final AtomicReference<Thread> currentWatcher = new AtomicReference<>();
+
+    /**
+     * Per-game identifier emitted on every {@code [move]} status line so that
+     * concurrent cutechess games (e.g. {@code -concurrency 2}) can be told
+     * apart in a shared {@code mychess-stderr.log}. Regenerated on every
+     * {@code ucinewgame}; a fresh value at constructor time covers the case
+     * where the GUI omits {@code ucinewgame} before the first game.
+     */
+    private String gameId = UUID.randomUUID().toString();
 
     /** Time the run-loop's finally block waits for an in-flight watcher to emit bestmove. */
     private static final long QUIT_GRACE_MS = 5_000L;
@@ -140,6 +151,7 @@ final class UciHandler {
         shutdownCurrentGame();
         this.board = Board.createNewGame();
         ChessEngine.resetIterationTimings();
+        this.gameId = UUID.randomUUID().toString();
     }
 
     private void handlePosition(String line) {
@@ -191,6 +203,12 @@ final class UciHandler {
         cancelCurrentTask();
         shutdownCurrentGame();
 
+        // Snapshot for the per-move [move] status log: color and full-move
+        // number are derived from the position at search start, not from any
+        // intermediate state inside the search.
+        final int turnAtStart = board.getGameStatus().getTurn();
+        final int plyCountAtStart = board.getGameStatus().getPlyCount();
+
         var engineConfig = new EngineConfig.Builder()
                 .maxDepth(args.maxDepth)
                 .millisPerMove(args.timeBudgetMillis)
@@ -211,7 +229,7 @@ final class UciHandler {
         // Virtual threads are always daemons, so no explicit daemon flag.
         Thread watcher = Thread.ofVirtual()
                 .name("uci-search-watcher")
-                .start(() -> awaitAndEmitBestmove(game, task, args.timeBudgetMillis));
+                .start(() -> awaitAndEmitBestmove(game, task, args.timeBudgetMillis, turnAtStart, plyCountAtStart));
         currentWatcher.set(watcher);
     }
 
@@ -221,43 +239,55 @@ final class UciHandler {
 
     // ---- Search lifecycle ----
 
-    private void awaitAndEmitBestmove(Game game, NextMoveTask task, int budgetMillis) {
-        int bestmove = 0;
+    private void awaitAndEmitBestmove(Game game, NextMoveTask task, int budgetMillis,
+                                      int turnAtStart, int plyCountAtStart) {
+        MoveAndWeight result = null;
         try {
-            // Give the watcher a 1-second grace period over the search budget.
-            MoveAndWeight result = task.getResult(budgetMillis + 1_000L, TimeUnit.MILLISECONDS);
-            bestmove = result.move();
-        } catch (ExecutionException e) {
-            if (!(e.getCause() instanceof CancellationException)) {
-                Log.error("Search failed", e);
+            try {
+                // Give the watcher a 1-second grace period over the search budget.
+                result = task.getResult(budgetMillis + 1_000L, TimeUnit.MILLISECONDS);
+            } catch (ExecutionException e) {
+                if (!(e.getCause() instanceof CancellationException)) {
+                    Log.error("Search failed", e);
+                }
+            } catch (CancellationException _) {
+                // Expected on `stop` / shutdown — fall through to the fallback.
+            } catch (TimeoutException _) {
+                task.cancel();
+            } catch (InterruptedException _) {
+                Thread.currentThread().interrupt();
             }
-            bestmove = lastIterationFirstMove.get();
-        } catch (CancellationException _) {
-            bestmove = lastIterationFirstMove.get();
-        } catch (TimeoutException _) {
-            task.cancel();
-            bestmove = lastIterationFirstMove.get();
-        } catch (InterruptedException _) {
-            Thread.currentThread().interrupt();
-            bestmove = lastIterationFirstMove.get();
-        } finally {
-            writeLine("bestmove " + (bestmove == 0 ? "0000" : UciMoveParser.toUci(bestmove)));
-            game.shutdown();
 
+            // On any of the above catches `result` stays null, and we fall back
+            // to the most recent iteration's best move/weight tracked by
+            // emitInfo. Without a completed iteration these stay at their
+            // initial 0/0f, which surfaces as a "bestmove 0000" reply.
+            int bestmove   = (result != null) ? result.move()   : lastIterationFirstMove.get();
+            float bestWeight = (result != null) ? result.weight() : lastIterationWeight.get();
+
+            writeLine("bestmove " + (bestmove == 0 ? "0000" : UciMoveParser.toUci(bestmove)));
+            logMoveStatus(bestmove, bestWeight, turnAtStart, plyCountAtStart);
+        } finally {
+            game.shutdown();
             currentTask.compareAndSet(task, null);
             currentGame.compareAndSet(game, null);
             currentWatcher.compareAndSet(Thread.currentThread(), null);
             lastIterationFirstMove.set(0);
+            lastIterationWeight.set(0f);
         }
     }
 
     /** Best move from the most recent iteration that completed, for stop/timeout fallback. */
     private final AtomicReference<Integer> lastIterationFirstMove = new AtomicReference<>(0);
 
+    /** Weight from the most recent iteration that completed, for stop/timeout fallback. */
+    private final AtomicReference<Float> lastIterationWeight = new AtomicReference<>(0f);
+
     private void emitInfo(IterationInfo info, long searchStartMs) {
         int[] pv = info.pv();
         if (pv.length > 0 && pv[0] != 0) {
             lastIterationFirstMove.set(pv[0]);
+            lastIterationWeight.set(info.weight());
         }
 
         var sb = new StringBuilder();
@@ -289,6 +319,62 @@ final class UciHandler {
         writeLine(sb.toString());
 
         validatePv(pv);
+    }
+
+    /**
+     * One-line status entry written to stderr per move myChess plays.
+     * Intended for skimming a {@code mychess-stderr.log} during long
+     * cutechess matches, especially under {@code -concurrency > 1} where
+     * several games stream their move records into the same file.
+     *
+     * <p>Format:
+     * <pre>{@code [move] game=<8-char> color=<W|B> move=<N> uci=<...> evalW=<...>}</pre>
+     *
+     * <ul>
+     *   <li>{@code game} — first 8 chars of a UUID regenerated on every
+     *       {@code ucinewgame}, so concurrent games can be told apart.</li>
+     *   <li>{@code color} — {@code W} or {@code B}, derived from whose
+     *       turn it was at search start (always our own turn, since the
+     *       GUI only asks an engine to move on its own turn).</li>
+     *   <li>{@code move} — full move number in PGN convention
+     *       ({@code (plyCount / 2) + 1}); both halves of move N report
+     *       {@code N}.</li>
+     *   <li>{@code uci} — the played move in UCI notation.</li>
+     *   <li>{@code evalW} — the search's reported eval, *always from
+     *       White's perspective* (negated when we play Black) so the sign
+     *       is consistent across both engine roles. Plain centipawns in
+     *       pawn units (e.g. {@code +0.30}) for normal evals;
+     *       {@code +M3} / {@code -M3} for mate-in-N-full-moves scores.</li>
+     * </ul>
+     *
+     * <p>No log line is written when no move was actually played
+     * (search returned {@code 0} — checkmate / stalemate at the root, or
+     * the search aborted before producing any iteration).
+     */
+    private void logMoveStatus(int bestmove, float weight, int turnAtStart, int plyCountAtStart) {
+        if (bestmove == 0) {
+            return;
+        }
+
+        String color = (turnAtStart == GameStatus.TURN_WHITE) ? "W" : "B";
+        int fullMoveNumber = (plyCountAtStart / 2) + 1;
+        String uciMove = UciMoveParser.toUci(bestmove);
+        float evalWhitePov = (turnAtStart == GameStatus.TURN_WHITE) ? weight : -weight;
+        String evalStr = formatEvalForLog(evalWhitePov);
+        String shortGameId = gameId.length() >= 8 ? gameId.substring(0, 8) : gameId;
+
+        Log.info(String.format(Locale.ROOT,
+                "[move] game=%s color=%s move=%d uci=%s evalW=%s",
+                shortGameId, color, fullMoveNumber, uciMove, evalStr));
+    }
+
+    private static String formatEvalForLog(float weight) {
+        if (WeightingFunction.isCheckmateWeight(weight)) {
+            int plies = WeightingFunction.checkmateWeightToPlies(weight);
+            int fullMoves = (plies + 1) / 2;
+            return (weight >= 0 ? "+M" : "-M") + fullMoves;
+        }
+        return String.format(Locale.ROOT, "%+.2f", weight);
     }
 
     /**
@@ -367,7 +453,7 @@ final class UciHandler {
             if (m == 0) {
                 break;
             }
-            if (sb.length() > 0) {
+            if (!sb.isEmpty()) {
                 sb.append(' ');
             }
 
