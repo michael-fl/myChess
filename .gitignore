@@ -21,3 +21,7 @@ mychess-stderr.log
 # in PgnTest / PGNImporterTest and by the manual OpeningDB import workflow.
 src/test/resources/large.pgn
 
+test/
+test*
+.claude/
+

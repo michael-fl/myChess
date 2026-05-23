@@ -139,6 +139,7 @@ final class UciHandler {
     private void handleUci() {
         writeLine("id name " + ENGINE_NAME);
         writeLine("id author " + ENGINE_AUTHOR);
+        writeLine("option name UCI_Chess960 type check default false");
         writeLine("uciok");
     }
 
