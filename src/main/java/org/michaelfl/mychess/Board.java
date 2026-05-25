@@ -364,6 +364,10 @@ public final class Board {
         return Fen.exportFEN(this);
     }
 
+    public String exportShredderFEN() {
+        return Fen.exportShredderFEN(this);
+    }
+
     public String calculatePositionKey() {
         var fen = exportFEN();
         int i1 = fen.lastIndexOf(' ', fen.lastIndexOf(' ', fen.lastIndexOf(' ') - 1) - 1);
@@ -418,38 +422,54 @@ public final class Board {
     }
 
     private int calculateNewCastlingState(GameStatus gameStatus, int move) {
+        if (gameStatus.hasWhiteCastled() && gameStatus.hasBlackCastled()) {
+            return gameStatus.getCastlingState();
+        }
+
         int bitSet = gameStatus.getCastlingState();
 
-        final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
         final byte moveType = Move.getMoveType(move);
 
         if (gameStatus.isWhiteCastlingPossible()) {
-            bitSet = setBit(bitSet, GameStatus.BIT_WHITE_CASTLING_KING_SIDE_POSSIBLE,
-                    gameStatus.isWhiteCastlingKingSidePossible()
-                            && get(e1) == Board.whiteKing
-                            && get(h1) == Board.whiteRook);
-            bitSet = setBit(bitSet, GameStatus.BIT_WHITE_CASTLING_QUEEN_SIDE_POSSIBLE,
-                    gameStatus.isWhiteCastlingQueenSidePossible()
-                            && get(e1) == Board.whiteKing
-                            && get(a1) == Board.whiteRook);
-
             if (gameStatus.getTurn() == GameStatus.TURN_WHITE && (moveType == Move.typeCastlingKingSide || moveType == Move.typeCastlingQueenSide)) {
                 bitSet = setBit(bitSet, GameStatus.BIT_WHITE_HAS_CASTLED);
+                bitSet = setBit(bitSet, GameStatus.BIT_WHITE_CASTLING_KING_SIDE_POSSIBLE, false);
+                bitSet = setBit(bitSet, GameStatus.BIT_WHITE_CASTLING_QUEEN_SIDE_POSSIBLE, false);
+            } else {
+                byte piece = get(toField);
+                if (piece == Board.whiteKing) {
+                    bitSet = setBit(bitSet, GameStatus.BIT_WHITE_CASTLING_KING_SIDE_POSSIBLE, false);
+                    bitSet = setBit(bitSet, GameStatus.BIT_WHITE_CASTLING_QUEEN_SIDE_POSSIBLE, false);
+                } else {
+                    int kFile = getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE);
+                    int qFile = getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE);
+                    bitSet = setBit(bitSet, GameStatus.BIT_WHITE_CASTLING_KING_SIDE_POSSIBLE,
+                            gameStatus.isWhiteCastlingKingSidePossible() && get(ChessUtil.getFieldFromColAndRow(kFile, 0)) == Board.whiteRook);
+                    bitSet = setBit(bitSet, GameStatus.BIT_WHITE_CASTLING_QUEEN_SIDE_POSSIBLE,
+                            gameStatus.isWhiteCastlingQueenSidePossible() && get(ChessUtil.getFieldFromColAndRow(qFile, 0)) == Board.whiteRook);
+                }
             }
         }
-        if (gameStatus.isBlackCastlingPossible()) {
-            bitSet = setBit(bitSet, GameStatus.BIT_BLACK_CASTLING_KING_SIDE_POSSIBLE,
-                    gameStatus.isBlackCastlingKingSidePossible()
-                            && get(e8) == Board.blackKing
-                            && get(h8) == Board.blackRook);
-            bitSet = setBit(bitSet, GameStatus.BIT_BLACK_CASTLING_QUEEN_SIDE_POSSIBLE,
-                    gameStatus.isBlackCastlingQueenSidePossible()
-                            && get(e8) == Board.blackKing
-                            && get(a8) == Board.blackRook);
 
+        if (gameStatus.isBlackCastlingPossible()) {
             if (gameStatus.getTurn() == GameStatus.TURN_BLACK && (moveType == Move.typeCastlingKingSide || moveType == Move.typeCastlingQueenSide)) {
                 bitSet = setBit(bitSet, GameStatus.BIT_BLACK_HAS_CASTLED);
+                bitSet = setBit(bitSet, GameStatus.BIT_BLACK_CASTLING_KING_SIDE_POSSIBLE, false);
+                bitSet = setBit(bitSet, GameStatus.BIT_BLACK_CASTLING_QUEEN_SIDE_POSSIBLE, false);
+            } else {
+                byte piece = get(toField);
+                if (piece == Board.blackKing) {
+                    bitSet = setBit(bitSet, GameStatus.BIT_BLACK_CASTLING_KING_SIDE_POSSIBLE, false);
+                    bitSet = setBit(bitSet, GameStatus.BIT_BLACK_CASTLING_QUEEN_SIDE_POSSIBLE, false);
+                } else {
+                    int kFile = getCastlingRookFile(CastlingSlot.BLACK_KINGSIDE);
+                    int qFile = getCastlingRookFile(CastlingSlot.BLACK_QUEENSIDE);
+                    bitSet = setBit(bitSet, GameStatus.BIT_BLACK_CASTLING_KING_SIDE_POSSIBLE,
+                            gameStatus.isBlackCastlingKingSidePossible() && get(ChessUtil.getFieldFromColAndRow(kFile, 7)) == Board.blackRook);
+                    bitSet = setBit(bitSet, GameStatus.BIT_BLACK_CASTLING_QUEEN_SIDE_POSSIBLE,
+                            gameStatus.isBlackCastlingQueenSidePossible() && get(ChessUtil.getFieldFromColAndRow(qFile, 7)) == Board.blackRook);
+                }
             }
         }
 

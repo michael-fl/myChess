@@ -16,7 +16,10 @@ import java.nio.charset.StandardCharsets;
  */
 public final class MyChessMain {
 
+    private static final String VERSION = "3.1.0";
+
     static void main(String[] args) {
+        System.err.println("Starting MyChess v" + VERSION);
         if (args.length > 0 && "uci".equalsIgnoreCase(args[0])) {
             runUci();
         } else {

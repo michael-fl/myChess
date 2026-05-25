@@ -243,4 +243,150 @@ class FenTest {
                 () -> Fen.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0"),
                 "full-move number 0 must throw");
     }
+
+    // ---- exportFEN / exportShredderFEN: caller-chosen castling notation ----
+    //
+    // After the heuristic was removed there are two explicit paths:
+    //   - exportFEN(Board)         → classical KQkq letters (board-agnostic).
+    //   - exportShredderFEN(Board) → Shredder file letters derived from
+    //                                Board.castlingRookFiles.
+    // Callers pick whichever the consumer (GUI, persistence layer, ...) wants.
+
+    @Test
+    void exportFen_classical_standardChessStartPosition_emitsKQkq() {
+        var board = Fen.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+
+        assertEquals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+                Fen.exportFEN(board),
+                "exportFEN must always emit classical KQkq letters on a standard-chess board");
+    }
+
+    @Test
+    void exportFen_classical_chess960Position_stillEmitsKQkqLetters() {
+        // exportFEN ignores rook files entirely — it only looks at the four
+        // castling-right bits in GameStatus and emits K/Q/k/q accordingly.
+        // For a 960 board with all four rights alive that still yields KQkq.
+        // Acceptable X-FEN output for non-960-aware consumers; full
+        // disambiguation requires exportShredderFEN.
+        var board = Fen.importFEN("rkbbnrnq/pppppppp/8/8/8/8/PPPPPPPP/RKBBNRNQ w FAfa - 0 1");
+
+        assertEquals("rkbbnrnq/pppppppp/8/8/8/8/PPPPPPPP/RKBBNRNQ w KQkq - 0 1",
+                Fen.exportFEN(board),
+                "exportFEN on a 960 board still emits classical KQkq letters");
+    }
+
+    @Test
+    void exportShredderFen_standardChessStartPosition_emitsHAha() {
+        // Standard chess has rook files {0,7} → Shredder letters 'A' and 'H'.
+        // Even though KQkq would be more idiomatic, exportShredderFEN always
+        // emits the file-letter form — that is the contract of the method name.
+        var board = Fen.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+
+        assertEquals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w HAha - 0 1",
+                Fen.exportShredderFEN(board),
+                "exportShredderFEN must emit 'HAha' on standard chess (rook files a/h)");
+    }
+
+    @Test
+    void exportShredderFen_scharnaglId0_emitsHFhf() {
+        // BBQNNRKR — king on g1, rooks on f1 and h1
+        String shredderFen = "bbqnnrkr/pppppppp/8/8/8/8/PPPPPPPP/BBQNNRKR w HFhf - 0 1";
+        var board = Fen.importFEN(shredderFen);
+
+        assertEquals(shredderFen, Fen.exportShredderFEN(board),
+                "Scharnagl ID 0 must round-trip with Shredder castling 'HFhf'");
+    }
+
+    @Test
+    void exportShredderFen_scharnaglId404_emitsHAha() {
+        // RBBQNNKR — king on g1, rooks on a1 and h1. Rook files happen to
+        // match standard-chess defaults {0,7}, but the king is NOT on e1.
+        // This is the exact case that defeated the old heuristic-based
+        // exporter (which decided "looks like standard chess, emit KQkq").
+        // With the explicit method, Shredder export must produce 'HAha'.
+        String shredderFen = "rbbqnnkr/pppppppp/8/8/8/8/PPPPPPPP/RBBQNNKR w HAha - 0 1";
+        var board = Fen.importFEN(shredderFen);
+
+        assertEquals(shredderFen, Fen.exportShredderFEN(board),
+                "Scharnagl ID 404 (king on g, rooks on a/h) must produce 'HAha' under Shredder export");
+    }
+
+    @Test
+    void exportShredderFen_scharnaglId959_emitsCAca() {
+        // RKRNNQBB — king on b1, rooks on a1 and c1
+        String shredderFen = "rkrnnqbb/pppppppp/8/8/8/8/PPPPPPPP/RKRNNQBB w CAca - 0 1";
+        var board = Fen.importFEN(shredderFen);
+
+        assertEquals(shredderFen, Fen.exportShredderFEN(board),
+                "Scharnagl ID 959 must round-trip with Shredder castling 'CAca'");
+    }
+
+    @Test
+    void exportShredderFen_cutechessSamplePosition_emitsFAfa() {
+        // RKBBNRNQ — king on b1, rooks on a1 and f1
+        String shredderFen = "rkbbnrnq/pppppppp/8/8/8/8/PPPPPPPP/RKBBNRNQ w FAfa - 0 1";
+        var board = Fen.importFEN(shredderFen);
+
+        assertEquals(shredderFen, Fen.exportShredderFEN(board),
+                "cutechess sample 960 position must round-trip with Shredder castling 'FAfa'");
+    }
+
+    @Test
+    void exportShredderFen_allChess960StartPositions_roundTrip() {
+        // Bulk round-trip: each of the 960 Scharnagl positions, imported and
+        // re-exported through the Shredder writer, must reproduce the
+        // original Shredder FEN byte-for-byte. This includes the previously
+        // problematic cases like ID 404 where rook files match defaults
+        // but the king is on a non-e file.
+        for (int id = 0; id < Chess960StartPositions.COUNT; id++) {
+            String fen = Chess960StartPositions.fenById(id);
+            var board = Fen.importFEN(fen);
+
+            assertEquals(fen, Fen.exportShredderFEN(board),
+                    "Scharnagl ID " + id + " must round-trip Shredder-clean");
+        }
+    }
+
+    @Test
+    void castlingStateShredder_partialRights_emitsOnlyAliveSlots() {
+        // Drop white queenside by clearing that single bit on a 960 board;
+        // the resulting Shredder field should be three letters (HFhf minus 'F').
+        String fullRightsFen = "bbqnnrkr/pppppppp/8/8/8/8/PPPPPPPP/BBQNNRKR w HFhf - 0 1";
+        var board = Fen.importFEN(fullRightsFen);
+        var original = board.getGameStatus();
+
+        int reducedState = original.getCastlingState() & ~GameStatus.BIT_WHITE_CASTLING_QUEEN_SIDE_POSSIBLE;
+        var reducedStatus = new GameStatus(
+                original.getPlyCount(),
+                original.getTurn(),
+                original.getLastMove(),
+                original.getHalfMoveClock(),
+                reducedState,
+                original.getEnPassantField(),
+                original.getPositionHash());
+
+        assertEquals("Hhf", Fen.castlingStateShredder(reducedStatus, board),
+                "missing white-queenside slot must drop 'F' from 'HFhf'");
+    }
+
+    @Test
+    void castlingStateShredder_noRights_emitsDash() {
+        // Same 960 back rank but castling rights manually set to "-".
+        // Verifies the dash fallback fires through the Shredder writer too.
+        var board = Fen.importFEN("bbqnnrkr/pppppppp/8/8/8/8/PPPPPPPP/BBQNNRKR w - - 0 1");
+
+        assertEquals("-", Fen.castlingStateShredder(board.getGameStatus(), board),
+                "no castling rights on a 960 board must emit '-' from the Shredder writer");
+    }
+
+    @Test
+    void castlingState_classical_unchangedByShredderAddition() {
+        // The single-argument castlingState(GameStatus) overload is unchanged
+        // and remains the classical KQkq emitter; the two paths are now
+        // sibling APIs, not heuristically dispatched.
+        var board = Fen.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+
+        assertEquals("KQkq", Fen.castlingState(board.getGameStatus()),
+                "single-arg castlingState must still emit the classical letters");
+    }
 }

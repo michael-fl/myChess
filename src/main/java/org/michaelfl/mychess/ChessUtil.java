@@ -213,4 +213,18 @@ public final class ChessUtil {
             default -> throw new IllegalArgumentException("Unknown piece: " + piece);
         };
     }
+
+    public static int findColOfPieceOnRow(Board board, int piece, int row) {
+        final byte[] rawBoard = board.getRawBoard();
+        final int startField = getFieldFromColAndRow(0, row);
+        final int stopField = startField + 8;
+
+        for (int field = startField; field < stopField; field++) {
+            if (rawBoard[field] == piece) {
+                return getColOfField(field);
+            }
+        }
+
+        return -1;
+    }
 }

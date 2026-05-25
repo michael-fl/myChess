@@ -118,14 +118,23 @@ final class CommandHandler {
 
         @Override
         boolean canHandle(String commandLine) {
-            return "new".equals(commandLine);
+            return "new".equals(commandLine) || commandLine.startsWith("new ");
         }
 
         @Override
         void handle(String commandLine) {
             computerColor = null;
-            game = new Game();
-            game.print();
+
+            var args = commandLine.split(" ");
+            if (args.length == 1) {
+                game = new Game(); // start standard chess game
+                game.print();
+            } else if (args.length == 2 && args[1].equals("960")) {
+                game = Game.new960(); // start chess960 game
+                game.print();
+            } else {
+                System.err.println("Invalid command line. Only \"new\" or \"new 960\" are supported.");
+            }
         }
     }
 
