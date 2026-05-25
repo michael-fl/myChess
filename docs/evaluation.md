@@ -200,6 +200,26 @@ if (fieldToRow(field) == 1) {
 
 **Scale factor.** `mobilityFactor = 0.1` — a single extra knight move is worth 5 centipawns, a single extra queen move is worth 0.5 centipawns.
 
+### Tuning observations
+
+The six per-piece weights are hand-tuned heuristics, never ELO-validated. They are listed as a candidate in [roadmap § 12.7](roadmap.md#127-evaluation-upgrades--m--50100-elo-combined). The inverse-scaling intent is clear once you look at the maximum contribution a single piece can produce, which is remarkably uniform across the four "real" mobility types:
+
+| Piece  | Per-move | Typical max moves    | Max contribution (raw) |
+|--------|---------:|---------------------:|-----------------------:|
+| Pawn   | 20       | 2  (single + double) |  40                    |
+| Knight | 50       | 8  (centralized)     | 400                    |
+| Bishop | 30       | 13 (long diagonal)   | 390                    |
+| Rook   | 10       | 14 (open file/rank)  | 140                    |
+| Queen  | 5        | 27 (full board)      | 135                    |
+| King   | 0        | —                    | 0                      |
+
+Two values look weakly justified compared to standard chess-engine literature:
+
+- **Pawn = 20** is high. The per-move bonus treats "pawn can advance" as a structural good in 20-cp units, which conflates *"pawn isn't blocked"* with *"pawn is well-placed"* — not the same thing. Structural pawn metrics (passed / isolated / doubled, see § 5.7 and the roadmap's passed-pawn bullet) would discriminate better.
+- **Rook = 10** is flat across all rook placements. A rook on an open file deserves more bonus than one shuffling behind its own pawns; the linear per-move weight makes no such distinction. Modern engines use per-square mobility tables or explicit open-file bonuses to capture this.
+
+Knight, bishop, queen, and king values, on the other hand, match standard engine intuition: knights and bishops are the most mobility-sensitive (short-range / blockable), the queen is already so mobile by nature that extra moves add little marginal value, and the king should not be encouraged to wander during the middlegame.
+
 ## 5.4 Threat weight
 
 The "threat" component scores how much enemy material this side is *attacking*. Computed in the same `move(...)` / `capture(...)` helpers as mobility, but on the capture branch:
