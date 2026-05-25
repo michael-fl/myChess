@@ -181,4 +181,100 @@ class ChessUtilTest {
         assertEquals(0b1001, ChessUtil.setBit(0b1001, 0b1000),
                 "setBit must be idempotent when the bit is already set");
     }
+
+    // ---- findColOfPieceOnRow ----
+
+    @Test
+    void findColOfPieceOnRow_whiteKingOnBackRank_returnsColumn4() {
+        var board = Board.createNewGame();
+
+        assertEquals(4, ChessUtil.findColOfPieceOnRow(board, Board.whiteKing, 0),
+                "white king starts on the e-file (column 4)");
+    }
+
+    @Test
+    void findColOfPieceOnRow_blackKingOnBackRank_returnsColumn4() {
+        var board = Board.createNewGame();
+
+        assertEquals(4, ChessUtil.findColOfPieceOnRow(board, Board.blackKing, 7),
+                "black king starts on the e-file (column 4)");
+    }
+
+    @Test
+    void findColOfPieceOnRow_whiteQueenOnBackRank_returnsColumn3() {
+        var board = Board.createNewGame();
+
+        assertEquals(3, ChessUtil.findColOfPieceOnRow(board, Board.whiteQueen, 0),
+                "white queen starts on the d-file (column 3)");
+    }
+
+    @Test
+    void findColOfPieceOnRow_blackQueenOnBackRank_returnsColumn3() {
+        var board = Board.createNewGame();
+
+        assertEquals(3, ChessUtil.findColOfPieceOnRow(board, Board.blackQueen, 7),
+                "black queen starts on the d-file (column 3)");
+    }
+
+    @Test
+    void findColOfPieceOnRow_aFileRook_returnsColumn0() {
+        // Column 0 is the a-file; the queenside rook starts there. The
+        // method's "not found" sentinel is also 0 (Board.empty), so a
+        // legitimate hit at column 0 is the case where the sentinel choice
+        // is most ambiguous.
+        var board = Board.createNewGame();
+
+        assertEquals(0, ChessUtil.findColOfPieceOnRow(board, Board.whiteRook, 0),
+                "white queenside rook starts on the a-file (column 0)");
+    }
+
+    @Test
+    void findColOfPieceOnRow_multipleMatches_returnsFirstFromLeft() {
+        // Standard chess has white rooks on both a1 (col 0) and h1 (col 7).
+        // The method must return the leftmost match — column 0 — as the
+        // "first hit wins" semantics implied by a left-to-right scan.
+        var board = Board.createNewGame();
+
+        assertEquals(0, ChessUtil.findColOfPieceOnRow(board, Board.whiteRook, 0),
+                "first matching column wins (a-file before h-file)");
+    }
+
+    @Test
+    void findColOfPieceOnRow_pieceNotOnRow_returnsBoardEmpty() {
+        // White king is on row 0 (rank 1), never on row 3 in the start
+        // position. The documented "not found" return is Board.empty.
+        var board = Board.createNewGame();
+
+        assertEquals(Board.empty, ChessUtil.findColOfPieceOnRow(board, Board.whiteKing, 3),
+                "no white king on the middle of the board ⇒ Board.empty");
+    }
+
+    @Test
+    void findColOfPieceOnRow_chess960Position_findsKingAtNonStandardFile() {
+        // RKBBNRNQ — white king on b1 (column 1), not e1.
+        var board = Fen.importFEN("rkbbnrnq/pppppppp/8/8/8/8/PPPPPPPP/RKBBNRNQ w FAfa - 0 1");
+
+        assertEquals(1, ChessUtil.findColOfPieceOnRow(board, Board.whiteKing, 0),
+                "cutechess sample 960 position: white king on column 1");
+    }
+
+    @Test
+    void findColOfPieceOnRow_chess960Position_findsBlackKingMirrored() {
+        // Same 960 position; black king mirrors on b8 (column 1, row 7).
+        var board = Fen.importFEN("rkbbnrnq/pppppppp/8/8/8/8/PPPPPPPP/RKBBNRNQ w FAfa - 0 1");
+
+        assertEquals(1, ChessUtil.findColOfPieceOnRow(board, Board.blackKing, 7),
+                "cutechess sample 960 position: black king on column 1");
+    }
+
+    @Test
+    void findColOfPieceOnRow_pieceOnDifferentRow_returnsBoardEmpty() {
+        // Black king is on row 7, not row 0. Searching row 0 for the black
+        // king must report not-found, not silently confuse with the white
+        // king that does sit on row 0.
+        var board = Board.createNewGame();
+
+        assertEquals(Board.empty, ChessUtil.findColOfPieceOnRow(board, Board.blackKing, 0),
+                "black king is not on row 0 in the start position");
+    }
 }

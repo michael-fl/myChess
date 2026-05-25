@@ -334,6 +334,33 @@ class BoardTest {
     }
 
     @Test
+    void blackCastlingRightsClearedWhenKingMoves() {
+        var game = GameImporter.importerFor("1. e4 e5 2. Nf3 Ke7").importGame();
+        var castlingState = game.getBoard().getGameStatus().getCastlingState();
+        assertEquals(0,
+                castlingState & GameStatus.BIT_BLACK_CASTLING_KING_SIDE_POSSIBLE,
+                "black king-side castling must be cleared after Ke7");
+        assertEquals(0,
+                castlingState & GameStatus.BIT_BLACK_CASTLING_QUEEN_SIDE_POSSIBLE,
+                "black queen-side castling must be cleared after Ke7");
+        assertNotEquals(0,
+                castlingState & GameStatus.BIT_WHITE_CASTLING_KING_SIDE_POSSIBLE,
+                "white king-side castling must still be possible");
+    }
+
+    @Test
+    void blackCastlingRightsClearedWhenRookMoves() {
+        var game = GameImporter.importerFor("1. a4 a5 2. Nf3 Ra6").importGame();
+        var castlingState = game.getBoard().getGameStatus().getCastlingState();
+        assertEquals(0,
+                castlingState & GameStatus.BIT_BLACK_CASTLING_QUEEN_SIDE_POSSIBLE,
+                "black queen-side castling must be cleared after a-rook moved");
+        assertNotEquals(0,
+                castlingState & GameStatus.BIT_BLACK_CASTLING_KING_SIDE_POSSIBLE,
+                "black king-side castling must still be possible");
+    }
+
+    @Test
     void castlingHasCastledFlagSetAfterCastling() {
         var game = GameImporter.importerFor("""
                 1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. Nc3 Nf6 5. O-O

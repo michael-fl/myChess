@@ -260,6 +260,14 @@ final class Fen {
     }
 
     static String exportFEN(Board board) {
+        return exportFEN(board, false);
+    }
+
+    static String exportShredderFEN(Board board) {
+        return exportFEN(board, true);
+    }
+
+    private static String exportFEN(Board board, boolean isShredder) {
         GameStatus gameStatus = board.getGameStatus();
         StringBuilder buf = new StringBuilder();
 
@@ -267,7 +275,11 @@ final class Fen {
         buf.append(' ');
         buf.append(gameStatus.getTurn() == GameStatus.TURN_WHITE ? 'w' : 'b');
         buf.append(' ');
-        writeCastlingState(gameStatus, buf);
+        if (isShredder) {
+            writeCastlingStateShredder(gameStatus, board, buf);
+        } else {
+            writeCastlingStateStandard(gameStatus, buf);
+        }
         buf.append(' ');
         writeEnPassant(board, buf);
         buf.append(' ');
@@ -305,11 +317,17 @@ final class Fen {
 
     public static String castlingState(GameStatus gameStatus) {
         StringBuilder buf = new StringBuilder();
-        writeCastlingState(gameStatus, buf);
+        writeCastlingStateStandard(gameStatus, buf);
         return buf.toString();
     }
 
-    private static void writeCastlingState(GameStatus gameStatus, StringBuilder buf) {
+    public static String castlingStateShredder(GameStatus gameStatus, Board board) {
+        StringBuilder buf = new StringBuilder();
+        writeCastlingStateShredder(gameStatus, board, buf);
+        return buf.toString();
+    }
+
+    private static void writeCastlingStateStandard(GameStatus gameStatus, StringBuilder buf) {
         var orgLen = buf.length();
         if (gameStatus.isWhiteCastlingKingSidePossible()) {
             buf.append('K');
@@ -326,6 +344,34 @@ final class Fen {
         if (buf.length() == orgLen) {
             buf.append('-');
         }
+    }
+
+    private static void writeCastlingStateShredder(GameStatus gameStatus, Board board, StringBuilder buf) {
+        var orgLen = buf.length();
+
+        if (gameStatus.isWhiteCastlingKingSidePossible()) {
+            int file = board.getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE);
+            buf.append(getCastlingFileChar(file));
+        }
+        if (gameStatus.isWhiteCastlingQueenSidePossible()) {
+            int file = board.getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE);
+            buf.append(getCastlingFileChar(file));
+        }
+        if (gameStatus.isBlackCastlingKingSidePossible()) {
+            int file = board.getCastlingRookFile(CastlingSlot.BLACK_KINGSIDE);
+            buf.append(Character.toLowerCase(getCastlingFileChar(file)));
+        }
+        if (gameStatus.isBlackCastlingQueenSidePossible()) {
+            int file = board.getCastlingRookFile(CastlingSlot.BLACK_QUEENSIDE);
+            buf.append(Character.toLowerCase(getCastlingFileChar(file)));
+        }
+        if (buf.length() == orgLen) {
+            buf.append('-');
+        }
+    }
+
+    private static char getCastlingFileChar(int file) {
+        return (char) ('A' + file);
     }
 
     private static void writeEnPassant(Board board, StringBuilder buf) {
