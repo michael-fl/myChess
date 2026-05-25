@@ -64,6 +64,7 @@ In [`QuiescenceSearch`](../src/main/java/org/michaelfl/mychess/QuiescenceSearch.
 - **King safety beyond castling** — count enemy attackers on the 3×3 square ring around the own king, weighted by attacker type. The pseudo-move scan in `WeightingFunction` already enumerates attackers; add a per-square attacker-count side table.
 - **Proper endgame detection** — replace [`GameStatus.isEndGame() { return plyCount > 60; }`](../src/main/java/org/michaelfl/mychess/GameStatus.java) with a material-based criterion (e.g. `total non-pawn material < threshold`). This alone fixes the endgame king-PST cutoff in [§ 5.2](evaluation.md#52-piece-square-tables) and makes [§ 12.2 null-move pruning](#122-null-move-pruning--s--50100-elo) safer.
 - **Tapered evaluation** — separate midgame and endgame piece-square tables, interpolated by remaining non-pawn material. Two tables per piece type, one extra multiply per PST lookup. Requires the proper endgame detection above.
+- **Mobility weight retuning** — the six per-piece-type weights in `WeightingFunction.mobilityWeightOfPiece` are hand-tuned heuristics that have never been ELO-validated (see [§ 5.3 tuning observations](evaluation.md#tuning-observations) for the analysis). Pawn = 20 is high (conflates "not blocked" with "well-placed"); rook = 10 is flat across positions where an open-file rook should outscore a back-rank shuffle. A short SPSA-style sweep, or even a handful of candidate-tuple gauntlets, would likely yield 10–30 Elo without any new feature work.
 
 ## 12.8 Aspiration windows — **S, ≈ 20–40 Elo**
 
