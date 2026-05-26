@@ -372,12 +372,18 @@ public final class PositionSearch {
             log("Depth: " + depth + ", move: " + ChessUtil.moveToString(m.move()) + ", weight: " + ChessUtil.weightToString(m.weight()) + " [" + ChessUtil.pathToString(m.path()) + "]");
             log("#positions: " + statistics.getPositionsCount() + ", #pruned: " + statistics.getPrunedMovesCount());
 
+            // IterationInfo is documented to carry the raw negamax score
+            // (positive = side-to-move advantage), which is what UCI's
+            // `score cp` expects. Use bestPath.weight() directly — the
+            // White-POV value `m.weight()` would be wrong here when
+            // playing Black and made cutechess's resign-threshold fire
+            // on winning positions.
             task.fireIteration(new IterationInfo(
                     depth,
                     statistics.getPositionsCount(),
                     iterationEndMs - startMs,
-                    m.weight(),
-                    Arrays.copyOf(m.path(), m.path().length)));
+                    bestPath.weight(),
+                    Arrays.copyOf(bestPath.path(), bestPath.path().length)));
         }
 
         // The last path component may be an illegal move (because this is not checked on the leaf nodes).

@@ -224,7 +224,7 @@ final class UciHandler {
 
         long goStartMs = System.currentTimeMillis();
         ChessEngine engine = game.getEngine();
-        NextMoveTask task = engine.nextMoveAsync(env, info -> emitInfo(info, goStartMs));
+        NextMoveTask task = engine.nextMoveAsync(env, info -> emitInfo(info, goStartMs, turnAtStart));
         currentTask.set(task);
 
         // Spawn a virtual thread to wait on the search result; the main UCI
@@ -266,11 +266,23 @@ final class UciHandler {
             // to the most recent iteration's best move/weight tracked by
             // emitInfo. Without a completed iteration these stay at their
             // initial 0/0f, which surfaces as a "bestmove 0000" reply.
+            //
+            // POV normalization: `lastIterationWeight` is the raw
+            // negamax score (side-to-move POV — see PositionSearch /
+            // IterationInfo). `result.weight()` has the White-POV factor
+            // applied by ChessEngine.calculateNextMove. Convert the
+            // completed-result branch back to side-to-move POV so the
+            // logging downstream sees one consistent convention.
             int bestmove   = (result != null) ? result.move()   : lastIterationFirstMove.get();
-            float bestWeight = (result != null) ? result.weight() : lastIterationWeight.get();
+            float bestWeightStm;
+            if (result != null) {
+                bestWeightStm = (turnAtStart == GameStatus.TURN_WHITE) ? result.weight() : -result.weight();
+            } else {
+                bestWeightStm = lastIterationWeight.get();
+            }
 
             writeLine("bestmove " + (bestmove == 0 ? "0000" : UciMoveParser.toUci(bestmove)));
-            logMoveStatus(bestmove, bestWeight, turnAtStart, plyCountAtStart, goStartMs);
+            logMoveStatus(bestmove, bestWeightStm, turnAtStart, plyCountAtStart, goStartMs);
         } finally {
             game.shutdown();
             currentTask.compareAndSet(task, null);
@@ -287,17 +299,25 @@ final class UciHandler {
     /** Weight from the most recent iteration that completed, for stop/timeout fallback. */
     private final AtomicReference<Float> lastIterationWeight = new AtomicReference<>(0f);
 
-    private void emitInfo(IterationInfo info, long searchStartMs) {
+    private void emitInfo(IterationInfo info, long searchStartMs, int turnAtStart) {
         int[] pv = info.pv();
         if (pv.length > 0 && pv[0] != 0) {
             lastIterationFirstMove.set(pv[0]);
             lastIterationWeight.set(info.weight());
         }
 
+        // info.weight() is the raw negamax score in pawn units — positive
+        // means the side to move is winning. UCI's `score cp` and
+        // `score mate` use exactly that convention, so emit info.weight()
+        // unmodified here. White-POV (only used in the [iter] log line
+        // below for cross-side comparison) is the same value negated when
+        // we play Black.
+        long elapsedMs = System.currentTimeMillis() - searchStartMs;
+
         var sb = new StringBuilder();
         sb.append("info depth ").append(info.depth());
         sb.append(" nodes ").append(info.nodes());
-        sb.append(" time ").append(System.currentTimeMillis() - searchStartMs);
+        sb.append(" time ").append(elapsedMs);
 
         if (WeightingFunction.isCheckmateWeight(info.weight())) {
             int plies = WeightingFunction.checkmateWeightToPlies(info.weight());
@@ -322,7 +342,39 @@ final class UciHandler {
 
         writeLine(sb.toString());
 
+        logIterStatus(info, elapsedMs, turnAtStart);
+
         validatePv(pv);
+    }
+
+    /**
+     * Per-iteration stderr log written alongside each {@code info ...}
+     * line. Captures the same score in both conventions so a future
+     * PGN-vs-stderr correlation is trivial:
+     *
+     * <pre>{@code [iter] game=<8-char> color=<W|B> depth=<D> nodes=<N> elapsed=<ms> evalStm=<X> evalW=<Y> pv=<first-move-uci>}</pre>
+     *
+     * <ul>
+     *   <li>{@code evalStm} — score as actually sent via UCI
+     *       ({@code score cp} / {@code score mate}). cutechess writes
+     *       this value into the PGN move comment, and its
+     *       {@code -resign} adjudication tests against this number.</li>
+     *   <li>{@code evalW} — same score in pawn units from White's
+     *       perspective. Negated relative to {@code evalStm} when we
+     *       play Black. Lets you compare consecutive moves across both
+     *       sides on a single yardstick.</li>
+     * </ul>
+     */
+    private void logIterStatus(IterationInfo info, long elapsedMs, int turnAtStart) {
+        String color = (turnAtStart == GameStatus.TURN_WHITE) ? "W" : "B";
+        float evalStm = info.weight();
+        float evalWhitePov = (turnAtStart == GameStatus.TURN_WHITE) ? evalStm : -evalStm;
+        String firstMove = (info.pv().length > 0 && info.pv()[0] != 0) ? UciMoveParser.toUci(info.pv()[0]) : "-";
+
+        Log.info(String.format(Locale.ROOT,
+                "[iter] game=%s color=%s depth=%d nodes=%d elapsed=%d evalStm=%s evalW=%s pv=%s",
+                shortGameId(), color, info.depth(), info.nodes(), elapsedMs,
+                formatEvalForLog(evalStm), formatEvalForLog(evalWhitePov), firstMove));
     }
 
     /**
@@ -332,7 +384,7 @@ final class UciHandler {
      * several games stream their move records into the same file.
      *
      * <p>Format:
-     * <pre>{@code [move] game=<8-char> color=<W|B> move=<N> uci=<...> evalW=<...> elapsed=<ms>}</pre>
+     * <pre>{@code [move] game=<8-char> color=<W|B> move=<N> uci=<...> evalStm=<...> evalW=<...> elapsed=<ms>}</pre>
      *
      * <ul>
      *   <li>{@code game} — first 8 chars of a UUID regenerated on every
@@ -344,22 +396,31 @@ final class UciHandler {
      *       ({@code (plyCount / 2) + 1}); both halves of move N report
      *       {@code N}.</li>
      *   <li>{@code uci} — the played move in UCI notation.</li>
-     *   <li>{@code evalW} — the search's reported eval, *always from
-     *       White's perspective* (negated when we play Black) so the sign
-     *       is consistent across both engine roles. Plain centipawns in
-     *       pawn units (e.g. {@code +0.30}) for normal evals;
-     *       {@code +M3} / {@code -M3} for mate-in-N-full-moves scores.</li>
+     *   <li>{@code evalStm} — score as emitted via UCI
+     *       ({@code score cp} / {@code score mate}), i.e. from the
+     *       side-to-move's perspective. This is the number cutechess
+     *       writes into the PGN move comment and tests against the
+     *       {@code -resign} threshold. Identical to {@code evalW} when
+     *       we play White; negated when we play Black.</li>
+     *   <li>{@code evalW} — same score in pawn units from White's
+     *       perspective, so the sign is consistent across both engine
+     *       roles. Use this when comparing consecutive moves across
+     *       sides.</li>
      *   <li>{@code elapsed} — wall-clock milliseconds from {@code go}
      *       receipt to {@code bestmove} emission. Compare with the
      *       budget logged on the matching {@code [go]} line to spot
      *       overshoots that the cancellation path failed to prevent.</li>
      * </ul>
      *
+     * <p>Eval format: plain centipawns in pawn units (e.g. {@code +0.30})
+     * for normal evals; {@code +M3} / {@code -M3} for mate-in-N-full-moves
+     * scores.
+     *
      * <p>No log line is written when no move was actually played
      * (search returned {@code 0} — checkmate / stalemate at the root, or
      * the search aborted before producing any iteration).
      */
-    private void logMoveStatus(int bestmove, float weight, int turnAtStart, int plyCountAtStart, long goStartMs) {
+    private void logMoveStatus(int bestmove, float weightStm, int turnAtStart, int plyCountAtStart, long goStartMs) {
         if (bestmove == 0) {
             return;
         }
@@ -367,14 +428,15 @@ final class UciHandler {
         String color = (turnAtStart == GameStatus.TURN_WHITE) ? "W" : "B";
         int fullMoveNumber = (plyCountAtStart / 2) + 1;
         String uciMove = UciMoveParser.toUci(bestmove);
-        float evalWhitePov = (turnAtStart == GameStatus.TURN_WHITE) ? weight : -weight;
-        String evalStr = formatEvalForLog(evalWhitePov);
+        float evalWhitePov = (turnAtStart == GameStatus.TURN_WHITE) ? weightStm : -weightStm;
+        String evalStmStr = formatEvalForLog(weightStm);
+        String evalWhiteStr = formatEvalForLog(evalWhitePov);
         String shortGameId = shortGameId();
         long elapsedMs = System.currentTimeMillis() - goStartMs;
 
         Log.info(String.format(Locale.ROOT,
-                "[move] game=%s color=%s move=%d uci=%s evalW=%s elapsed=%d",
-                shortGameId, color, fullMoveNumber, uciMove, evalStr, elapsedMs));
+                "[move] game=%s color=%s move=%d uci=%s evalStm=%s evalW=%s elapsed=%d",
+                shortGameId, color, fullMoveNumber, uciMove, evalStmStr, evalWhiteStr, elapsedMs));
     }
 
     /**
