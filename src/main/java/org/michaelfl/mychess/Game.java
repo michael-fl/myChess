@@ -34,7 +34,6 @@ public final class Game {
     private final ChessEngine statusEngine;
 
     private final Board board;
-    private final boolean is960;
 
     private GameResult result = GameResult.ONGOING;
 
@@ -68,7 +67,6 @@ public final class Game {
                         .enableFiftyMovesRule(engineWhite.getConfig().isEnableFiftyMovesRule())
                         .silent(true)
                         .build(), this);
-        is960 = isChess960Position(initialBoard);
     }
 
     Game(GameConfig config, List<MoveDescription> moves) {
@@ -89,157 +87,14 @@ public final class Game {
         }
     }
 
-    /**
-     * Returns {@code true} if the given board represents a Chess960
-     * (Fischer Random) position, {@code false} for standard chess.
-     *
-     * <p>The detector works in three stages, in order of decreasing
-     * cheapness and decreasing decisiveness:
-     *
-     * <ol>
-     *   <li><b>Rook-file check.</b> If either of the white castling-rook
-     *       starting files in {@link Board#getCastlingRookFile} deviates
-     *       from the standard-chess defaults ({@code a} for queenside,
-     *       {@code h} for kingside), the position is 960. Catches the
-     *       vast majority of Scharnagl positions immediately.</li>
-     *   <li><b>King-file check.</b> If a side still has a castling right
-     *       alive but its king does not sit on the {@code e}-file, the
-     *       position is 960. Catches the remainder of Scharnagl positions
-     *       whose rook files happen to match standard chess but whose
-     *       king sits elsewhere.</li>
-     *   <li><b>Structural fallback.</b> If both fast checks fail and the
-     *       board still looks like a starting position (pawns on the
-     *       second/seventh rank, non-pawns on the back ranks, all other
-     *       squares empty), the position is 960 iff its back-rank
-     *       arrangement differs from standard chess. Catches the small
-     *       set of Scharnagl positions (e.g. ID 414, {@code RQNNKBBR})
-     *       with both rook files at {@code a}/{@code h} and king on
-     *       {@code e}.</li>
-     * </ol>
-     *
-     * <p>Once any of the three stages returns a verdict the result is
-     * cached on the {@link Game} for the rest of its life-cycle — a
-     * game's variant identity does not change mid-play.
-     *
-     * <p><b>Known limitation, intentional.</b> A 960 game with rook files
-     * {@code {0, 7}} and king on {@code e1}/{@code e8} that has already
-     * left the starting position (pawns advanced, pieces developed) will
-     * be classified as standard chess by this detector. This is not a
-     * defect: such a position is rules-equivalent to standard chess in
-     * every relevant aspect (castling targets {@code g1}/{@code c1}
-     * resp. {@code g8}/{@code c8}, identical path squares, the same
-     * X-FEN castling-bit semantics, the same UCI move encodings), so
-     * playing it as standard chess produces correct moves and a
-     * correct FEN. The detector intentionally does not carry around
-     * the original starting-board metadata that would be needed to
-     * preserve the 960-flag past the opening.
-     */
-    @SuppressWarnings("java:S1066")
-    static boolean isChess960Position(Board board) {
-        var gameStatus = board.getGameStatus();
-
-        // If the rook's start fields are non-standard, it's obviously a chess960 position
-        if (board.getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE) != 0
-                || board.getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE) != 7) {
-            return true; // Rooks start on non-standard fields ==> 960
-        }
-
-        // If either side can still castle, but the king's position is non-standard, it's obviously a chess960 position
-        if (gameStatus.isWhiteCastlingQueenSidePossible() || gameStatus.isWhiteCastlingKingSidePossible()) {
-            if (ChessUtil.findColOfPieceOnRow(board, Board.whiteKing, 0) != 4) {
-                return true; // White king starts on non-standard field ==> 960
-            }
-        }
-
-        if (gameStatus.isBlackCastlingQueenSidePossible() || gameStatus.isBlackCastlingKingSidePossible()) {
-            if (ChessUtil.findColOfPieceOnRow(board, Board.blackKing, 7) != 4) {
-                return true; // Black king starts on non-standard field ==> 960
-            }
-        }
-
-        // Now we can only guess...
-
-        if (!seemsToBeStartPosition(board)) {
-            return false;
-        }
-
-        return !isStandardStartPosition(board);
-    }
-
-    private static boolean seemsToBeStartPosition(Board board) {
-        // All pawns still on second row?
-        if (!(allPawnsOnStartPos(board, Board.whitePawn, 1) && allPawnsOnStartPos(board, Board.blackPawn, 6))) {
-            return false;
-        }
-
-        // Other pieces still on backrow?
-        if (!(allNonPawnsOnStartPos(board, GameStatus.TURN_WHITE, 0) && allNonPawnsOnStartPos(board, GameStatus.TURN_BLACK, 7))) {
-            return false;
-        }
-
-        // Remaining fields must all be empty
-        return allNonStartFieldsEmpty(board);
-    }
-
-    private static boolean allNonPawnsOnStartPos(Board board, int color, int row) {
-        for (int col = 0; col < 8; col++) {
-            byte piece = board.getPieceAt(col, row);
-            if (Board.isPawn(piece)) {
-                return false;
-            }
-            if ((piece & color) != color) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private static boolean allPawnsOnStartPos(Board board, byte pawnPiece, int row) {
-        for (int col = 0; col < 8; col++) {
-            if (board.getPieceAt(col, row) != pawnPiece) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private static boolean allNonStartFieldsEmpty(Board board) {
-        final byte[] rawBoard = board.getRawBoard();
-        final int startField = ChessUtil.getFieldFromColAndRow(0, 2);
-        final int endField = ChessUtil.getFieldFromColAndRow(7, 5);
-
-        for (int i = startField; i <= endField; i++) {
-            if (rawBoard[i] != Board.illegal && rawBoard[i] != Board.empty) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    static boolean isStandardStartPosition(Board board) {
-        final byte[] rawBoard = board.getRawBoard();
-        final byte[] standardRawBoard = Board.createNewGame().getRawBoard();
-
-        for (int i = 0; i < rawBoard.length; i++) {
-            if (rawBoard[i] != standardRawBoard[i]) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     public static Game new960() {
         var board = Fen.importFEN(Chess960StartPositions.randomFen());
 
         return new Game(standardConfig(), board);
     }
 
-    boolean is960() {
-        return is960;
+    public boolean is960() {
+        return board.isChess960();
     }
 
     void shutdown() {

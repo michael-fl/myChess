@@ -224,8 +224,7 @@ public final class ChessUtil {
      * a-file. With Chess960 a king or rook may actually start on the a-file —
      * using {@code 0} as "not found" would silently confuse the two cases.
      */
-    public static int findColOfPieceOnRow(Board board, int piece, int row) {
-        final byte[] rawBoard = board.getRawBoard();
+    public static int findColOfPieceOnRow(byte[] rawBoard, int piece, int row) {
         final int startField = getFieldFromColAndRow(0, row);
         final int stopField = startField + 8;
 

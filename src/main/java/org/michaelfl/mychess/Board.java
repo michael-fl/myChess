@@ -180,6 +180,8 @@ public final class Board {
 
     private final byte[] board;
     private final GameStatus[] statusStack;
+    private final boolean is960;
+
     private int stackSize;
 
     /**
@@ -202,6 +204,7 @@ public final class Board {
         this.statusStack = new GameStatus[2000];
         this.castlingRookFiles = castlingRookFiles;
         push(gameStatus);
+        this.is960 = isChess960Position();
     }
 
     //    132           ...             143
@@ -219,6 +222,7 @@ public final class Board {
     private Board() {
         board = createEmptyRawBoard();
         statusStack = new GameStatus[2000];
+        is960 = false;
         castlingRookFiles = defaultCastlingRookFiles();
 
         board[a1] = whiteRook;
@@ -263,6 +267,7 @@ public final class Board {
     private Board(Board other) {
         this.board = Arrays.copyOf(other.board, other.board.length);
         this.statusStack = Arrays.copyOf(other.statusStack, other.statusStack.length);
+        this.is960 = other.is960;
         this.stackSize = other.stackSize;
         this.castlingRookFiles = Arrays.copyOf(other.castlingRookFiles, other.castlingRookFiles.length);
     }
@@ -342,6 +347,14 @@ public final class Board {
     public byte getPieceAt(int col, int row) {
         int index = ChessUtil.getFieldFromColAndRow(col, row);
         return board[index];
+    }
+
+    public boolean isStandardChess() {
+        return !isChess960();
+    }
+
+    public boolean isChess960() {
+        return is960;
     }
 
     private void push(GameStatus gameStatus) {
@@ -1238,4 +1251,145 @@ public final class Board {
         return moveDescr;
     }
 
+    /**
+     * Returns {@code true} if the given board represents a Chess960
+     * (Fischer Random) position, {@code false} for standard chess.
+     *
+     * <p>The detector works in three stages, in order of decreasing
+     * cheapness and decreasing decisiveness:
+     *
+     * <ol>
+     *   <li><b>Rook-file check.</b> If either of the white castling-rook
+     *       starting files in {@link Board#getCastlingRookFile} deviates
+     *       from the standard-chess defaults ({@code a} for queenside,
+     *       {@code h} for kingside), the position is 960. Catches the
+     *       vast majority of Scharnagl positions immediately.</li>
+     *   <li><b>King-file check.</b> If a side still has a castling right
+     *       alive but its king does not sit on the {@code e}-file, the
+     *       position is 960. Catches the remainder of Scharnagl positions
+     *       whose rook files happen to match standard chess but whose
+     *       king sits elsewhere.</li>
+     *   <li><b>Structural fallback.</b> If both fast checks fail and the
+     *       board still looks like a starting position (pawns on the
+     *       second/seventh rank, non-pawns on the back ranks, all other
+     *       squares empty), the position is 960 iff its back-rank
+     *       arrangement differs from standard chess. Catches the small
+     *       set of Scharnagl positions (e.g. ID 414, {@code RQNNKBBR})
+     *       with both rook files at {@code a}/{@code h} and king on
+     *       {@code e}.</li>
+     * </ol>
+     *
+     * <p>Once any of the three stages returns a verdict the result is
+     * cached on the {@link Game} for the rest of its life-cycle — a
+     * game's variant identity does not change mid-play.
+     *
+     * <p><b>Known limitation, intentional.</b> A 960 game with rook files
+     * {@code {0, 7}} and king on {@code e1}/{@code e8} that has already
+     * left the starting position (pawns advanced, pieces developed) will
+     * be classified as standard chess by this detector. This is not a
+     * defect: such a position is rules-equivalent to standard chess in
+     * every relevant aspect (castling targets {@code g1}/{@code c1}
+     * resp. {@code g8}/{@code c8}, identical path squares, the same
+     * X-FEN castling-bit semantics, the same UCI move encodings), so
+     * playing it as standard chess produces correct moves and a
+     * correct FEN. The detector intentionally does not carry around
+     * the original starting-board metadata that would be needed to
+     * preserve the 960-flag past the opening.
+     */
+    @SuppressWarnings("java:S1066")
+    boolean isChess960Position() {
+        System.out.println("CALCULATING 960 POSITION");
+        var gameStatus = getGameStatus();
+
+        // If the rook's start fields are non-standard, it's obviously a chess960 position
+        if (getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE) != 0
+                || getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE) != 7) {
+            return true; // Rooks start on non-standard fields ==> 960
+        }
+
+        // If either side can still castle, but the king's position is non-standard, it's obviously a chess960 position
+        if (gameStatus.isWhiteCastlingQueenSidePossible() || gameStatus.isWhiteCastlingKingSidePossible()) {
+            if (ChessUtil.findColOfPieceOnRow(getRawBoard(), Board.whiteKing, 0) != 4) {
+                return true; // White king starts on non-standard field ==> 960
+            }
+        }
+
+        if (gameStatus.isBlackCastlingQueenSidePossible() || gameStatus.isBlackCastlingKingSidePossible()) {
+            if (ChessUtil.findColOfPieceOnRow(getRawBoard(), Board.blackKing, 7) != 4) {
+                return true; // Black king starts on non-standard field ==> 960
+            }
+        }
+
+        // Now we can only guess...
+
+        if (!seemsToBeStartPosition()) {
+            return false;
+        }
+
+        return !isStandardStartPosition();
+    }
+
+    private boolean seemsToBeStartPosition() {
+        // All pawns still on second row?
+        if (!(allPawnsOnStartPos(Board.whitePawn, 1) && allPawnsOnStartPos(Board.blackPawn, 6))) {
+            return false;
+        }
+
+        // Other pieces still on backrow?
+        if (!(allNonPawnsOnStartPos(GameStatus.TURN_WHITE, 0) && allNonPawnsOnStartPos(GameStatus.TURN_BLACK, 7))) {
+            return false;
+        }
+
+        // Remaining fields must all be empty
+        return allNonStartFieldsEmpty();
+    }
+
+    private boolean allNonPawnsOnStartPos(int color, int row) {
+        for (int col = 0; col < 8; col++) {
+            byte piece = getPieceAt(col, row);
+            if (Board.isPawn(piece)) {
+                return false;
+            }
+            if ((piece & color) != color) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean allPawnsOnStartPos(byte pawnPiece, int row) {
+        for (int col = 0; col < 8; col++) {
+            if (getPieceAt(col, row) != pawnPiece) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean allNonStartFieldsEmpty() {
+        final byte[] rawBoard = getRawBoard();
+
+        for (int i = Board.a3; i <= Board.h6; i++) {
+            if (rawBoard[i] != Board.illegal && rawBoard[i] != Board.empty) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    boolean isStandardStartPosition() {
+        final byte[] rawBoard = getRawBoard();
+        final byte[] standardRawBoard = Board.createNewGame().getRawBoard();
+
+        for (int i = 0; i < rawBoard.length; i++) {
+            if (rawBoard[i] != standardRawBoard[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
