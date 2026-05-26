@@ -125,38 +125,98 @@ state per snapshot.
 
 ## Phase plan
 
-| Phase | Status   | Scope                                                        | What it unlocks                                              |
-|-------|----------|--------------------------------------------------------------|--------------------------------------------------------------|
-| 1     | done     | FEN import for Shredder-FEN castling rights                  | Engine loads any 960 position; can play it without castling. |
-| 2     | pending  | Generalize castling move generation, `Board.makeMove` undo   | Engine plays full 960 — including castling.                  |
-| 3     | pending  | UCI castle move notation (`e1h1` form, in / out)             | Round-trip with cutechess and other 960-aware GUIs works.    |
-| 4     | pending  | FEN export in Shredder style when files deviate from default | FEN round-trip closes for 960.                               |
-| 5     | pending  | Test consolidation and edge cases                            | 960 mirror-eval, opening-DB hooks, full round-trip suite.    |
-| 6     | pending  | Evaluation adjustments for 960                               | Eval no longer penalizes 960-legitimate piece placements.    |
+| Phase | Status        | Scope                                                        | What it unlocks                                              |
+|-------|---------------|--------------------------------------------------------------|--------------------------------------------------------------|
+| 1     | done          | FEN import + export for Shredder-FEN castling rights, auto-detection cached on `Board` | Engine loads, exports, and recognises any 960 position; can play it without castling. |
+| 2     | in progress   | Generalize castling move generation, `Board.makeMove` undo   | Engine plays full 960 — including castling.                  |
+| 3     | pending       | UCI castle move notation (`e1h1` form, in / out)             | Round-trip with cutechess and other 960-aware GUIs works.    |
+| 4     | done in P1    | FEN export in Shredder style when files deviate from default | FEN round-trip closes for 960. Landed alongside Phase 1.     |
+| 5     | partial       | Test consolidation and edge cases                            | 960 mirror-eval, opening-DB hooks, full round-trip suite.    |
+| 6     | pending       | Evaluation adjustments for 960                               | Eval no longer penalizes 960-legitimate piece placements.    |
 
-### Phase 1 — FEN import (done — commit 89871df)
+### Phase 1 — FEN import, export, auto-detection (done — commits 89871df, b8bac8c, 4ea58d2)
 
 1. Introduce `Board.castlingRookFiles` and `CastlingSlot` enum.
 2. `Board.createNewGame()` initializes to `{ 0, 7, 0, 7 }`.
 3. `Fen.parseCastlingState` accepts both the classical `K/Q/k/q` letters
    *and* Shredder letters `A–H` (white) / `a–h` (black). Both branches set
    the existing castling bits and populate `castlingRookFiles`.
-4. Tests:
-   - `FenChess960ImportTest` — a handful of 960 FENs including the
+4. **Phase 4 also landed here:** `Fen.exportShredderFEN` plus a Shredder
+   fallback inside `exportFEN` when any rook file deviates from
+   `{ 0, 7, 0, 7 }`. Standard chess still emits classical `KQkq` for
+   backward compatibility.
+5. **Variant auto-detection (extension beyond the original plan):**
+   `Board.isChess960Position` walks a three-stage detector (rook-file
+   check → king-file-with-alive-castling check → structural fallback
+   against the standard back rank). Result is cached at construction
+   time in the final `is960` field and exposed via `isChess960()` /
+   `isStandardChess()`. The flag survives the copy constructor, which
+   is pinned by `BoardTest.is960_isCarriedByCopyConstructor`. Moved
+   from `Game` to `Board` in commit 4ea58d2 so callers in the
+   move-generator hot path can ask `board.isStandardChess()` without
+   re-running the detector. **Known limitation, intentional:** a 960
+   game with rook files `{ 0, 7 }` and king on `e1`/`e8` that has
+   already left the starting position is classified as standard
+   chess. Such a position is rules-equivalent to standard chess in
+   every relevant aspect, so the misclassification is harmless.
+6. Tests:
+   - `FenChess960ImportTest` — Shredder import including the
      `rkbbnrnq/.../RKBBNRNQ w FAfa` position seen from Cute Chess.
-   - Regression test: standard FEN imports produce bit-identical `Board`
-     state to today, including default rook files.
+   - `BoardTest` — `isChess960Position_*`, `isStandardStartPosition_*`,
+     plus the `Board.copy()` is-960 carry-over regression.
+   - `Chess960StartPositionsTest` — exhaustive walk through all 960
+     Scharnagl positions.
+   - Standard FEN imports produce bit-identical `Board` state to before.
 
-### Phase 2 — castling move generation
+### Phase 2 — castling move generation (in progress)
 
-1. Replace literal king and rook squares in `MoveGenerator` with lookups
-   driven by king position (already on the board) and
-   `Board.castlingRookFiles[slot]`.
-2. Generalize the "all path squares empty" and "no path square attacked"
-   checks to use the slot's actual king path and rook path.
-3. Update `Board.makeMove` and `revertMove` for `typeCastlingKingSide` /
-   `typeCastlingQueenSide` to use the slot's rook source and target.
-4. Key edge cases to cover in tests:
+**Done:**
+
+1. `MoveGenerator.calculateCastlingMoves(int kingField)` now takes the
+   king's actual source field and dispatches to standard / 960 helpers
+   via `theBoard.isStandardChess()`. The four `canDoXxxCastlingYyy960`
+   helpers use `castlingRookFiles[slot]` to find the partner rook and
+   verify path clearance against the *actual* back-rank squares, not
+   the hardcoded standard-chess paths. (commit 155ee56)
+2. The `MoveGenerator.game` field was renamed to `gameStatus` along the
+   way — cosmetic, matches its type and removes ambiguity with the
+   `Game` class. (commit 155ee56)
+3. `isCastlingPathEmpty` now takes the **field** of the castle partner
+   instead of the piece type — signature is
+   `(int startField, int targetField, int counterpartField)` and the
+   skip predicate is `f != counterpartField`. The previous
+   piece-type check accepted *any* own rook on the path, which let a
+   non-partner rook (e.g. the queenside rook that had moved onto the
+   kingside-castle path) pass as harmless. Pinned by the four
+   `Chess960CastlingTest.{king,queen}sideCastle_isIllegalWhenOwn…RookSitsOnKingsPath_{white,black}`
+   regression tests added in commit e1a28a1.
+
+**Pending** (next implementation steps):
+
+1. **`Board.makeMove` / `revertMove` still hardcode `e1`/`e8`/`h1`/`a1`
+   and the corresponding rook target squares.** See
+   `_makeCastlingKingSideMove` (and three siblings) at
+   `Board.java:715-779`: the dispatch `if (fromField == e1) { … } else { … }`
+   assumes any non-`e1` source is a black king on `e8`, which silently
+   corrupts the board when a white 960 king castles from, say, `b1`.
+   The four `BoardTest.makeCastling{KingSide,QueenSide}Move_{white,black}_chess960_*`
+   tests pin the bug: the two white cases fail with a board mismatch
+   (rook left on its source square, phantom rook conjured on the
+   wrong back rank); the two black cases happen to leave a
+   board-correct result because the hard-coded `h8/f8` / `a8/d8`
+   squares coincide with the test setup's rook files, so the
+   incremental Zobrist update is the only visible failure
+   (`getPositionHash()` diverges from a fresh
+   `calculatePositionHash()`). Fix: route on `Move.getMoveType`
+   (already in the packed move) plus the slot's
+   `castlingRookFiles[]` entry to compute the rook source and
+   target from the king's actual `fromField`, and update the
+   Zobrist hash off those same dynamic fields.
+
+**Key edge cases to keep covered** (all exercised by
+`Chess960CastlingTest`'s 120-case parameterised matrix plus the
+four non-partner-rook spot tests):
+
    - King and rook adjacent on the back rank.
    - Rook source square equals king target square (rook needs to vacate it).
    - Rook target square equals king source square (mutually overlapping).
@@ -175,21 +235,46 @@ state per snapshot.
 3. `UciHandler` tracks the `UCI_Chess960` option state set via `setoption`
    and threads it into the parser/formatter calls.
 
-### Phase 4 — FEN export
+### Phase 4 — FEN export (done — landed during Phase 1, commit b8bac8c)
 
-1. `Fen.exportFEN` detects whether all four `castlingRookFiles` entries match
-   the standard defaults; if so, emit `KQkq` for backward compatibility.
-2. Otherwise emit Shredder letters derived from the actual rook files.
+Landed earlier than the plan called for, as a natural companion to
+the Shredder import work:
 
-### Phase 5 — Tests and integration
+1. `Fen.exportShredderFEN` always emits Shredder letters.
+2. `Fen.exportFEN` detects whether all four `castlingRookFiles` entries
+   match the standard defaults; if so it keeps emitting `KQkq` for
+   backward compatibility, otherwise it falls back to the Shredder
+   form.
 
-1. Mirror-eval test on a small set of 960 starting positions, equivalent to
-   the existing `MirrorEvalTest` for standard chess.
-2. Verify that the opening-DB lookup path tolerates 960 positions (it should,
-   since lookups are pure Zobrist-keyed) — the existing DB will simply miss
-   on 960 starts, which is the desired behavior.
+`Board.exportShredderFEN()` is wired up; the REPL's `pgn` / status-line
+display picks the right form via `is960()`.
+
+### Phase 5 — Tests and integration (partial)
+
+**Done:**
+
+1. `FenChess960ImportTest` — round-trip and edge-case coverage for
+   Shredder/X-FEN castling parsing.
+2. `Chess960StartPositionsTest` — exhaustive table walk plus the
+   helpers that drive auto-detection tests.
+3. `Chess960CastlingTest` — 120 parameterised castling cases plus
+   spot tests for king-in-check, attacked king-path, attacked rook,
+   attacked rook-only path squares, and the four failing tests for
+   the non-partner-rook-in-path bug (waiting on the Phase 2 fix).
+
+**Pending:**
+
+1. Mirror-eval test on a small set of 960 starting positions, equivalent
+   to the existing `MirrorEvalTest` for standard chess. `MirrorEvalTest`
+   itself has no 960 cases today.
+2. Verify that the opening-DB lookup path tolerates 960 positions (it
+   should, since lookups are pure Zobrist-keyed) — the existing DB
+   will simply miss on 960 starts, which is the desired behavior.
 3. End-to-end FEN round-trip: import 960 FEN, play a move, export FEN,
    import again — Zobrist hash matches the first import after one undo.
+4. End-to-end engine self-play on a non-standard Scharnagl position via
+   the UCI handler — gated on Phase 2 (`Board.makeMove` fix) and Phase 3
+   (UCI parser/formatter for the king-to-rook-source form).
 
 ### Phase 6 — Evaluation adjustments for 960
 
@@ -295,10 +380,18 @@ playing strength in standard chess if we are not careful.
 
 ## Open items / pending decisions
 
-- **Branching.** Phases are small enough to keep on `master` with green tests
-  between each. A feature branch becomes attractive if ELO measurement runs
-  start to overlap with development of phase 2 (where engine play behavior
-  changes).
+- **Branching.** Phases continue to land on `master` with green tests
+  between each (modulo the four `BoardTest.makeCastling*Side_*_chess960_*`
+  Phase-2 regression tests, which are red on purpose and pin the
+  remaining `Board.makeMove` gap). The earlier worry about
+  ELO-measurement overlap did not materialize: the no-resign
+  calibration runs against Stockfish use standard openings only,
+  so Phase-2 churn on the 960 castling path does not affect
+  those numbers.
+- **`no-opening-weight` experiment branch.** Still unmerged. The +163
+  ELO claim it once produced was measured before the UCI sign-bug was
+  fixed and is therefore not trustworthy. Whether to keep, re-measure,
+  or drop the branch belongs in the Phase-6 conversation.
 
 ## Notes
 
