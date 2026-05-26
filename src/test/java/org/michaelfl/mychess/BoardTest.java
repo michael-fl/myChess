@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -435,5 +436,143 @@ class BoardTest {
 
         assertNotEquals(original.exportFEN(), copy.exportFEN(),
                 "Mutating the copy must not affect the original FEN");
+    }
+
+    // ---------- isChess960Position ----------
+    //
+    // Direct unit tests for the detector that decides whether a given Board
+    // represents a 960 game. Covers the three positive paths documented in
+    // the implementation (non-default rook files, custom king file with live
+    // castling rights, ambiguity-resolution via isStandardStartPosition) and
+    // the standard-chess negative paths.
+
+    @Test
+    void isChess960Position_standardChessStartPosition_returnsFalse() {
+        var board = Board.createNewGame();
+
+        assertFalse(board.isChess960Position(),
+                "the standard chess start position is not a 960 game");
+    }
+
+    @Test
+    void isChess960Position_standardChessAfterE2E4_returnsFalse() {
+        var game = GameImporter.importerFor("1. e4").importGame();
+
+        assertFalse(game.getBoard().isChess960Position(),
+                "standard chess mid-game (after 1. e4) is not a 960 game");
+    }
+
+    @Test
+    void isChess960Position_standardChessAfterCastling_returnsFalse() {
+        // After both sides have castled the castling-right hints are gone,
+        // so the detector has to fall back on the structural heuristic.
+        var game = GameImporter.importerFor("""
+                1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. O-O Nf6 5. Nc3 O-O
+                """).importGame();
+
+        assertFalse(game.getBoard().isChess960Position(),
+                "a standard-chess mid-game position with both sides castled is not a 960 game");
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(strings = {
+            "rkbbnrnq/pppppppp/8/8/8/8/PPPPPPPP/RKBBNRNQ w FAfa - 0 1",   // cutechess sample
+            "bbqnnrkr/pppppppp/8/8/8/8/PPPPPPPP/BBQNNRKR w HFhf - 0 1",   // Scharnagl ID 0, rooks on f/h
+            "rkrnnqbb/pppppppp/8/8/8/8/PPPPPPPP/RKRNNQBB w CAca - 0 1",   // Scharnagl ID 959, rooks on a/c
+            "rbbqnnkr/pppppppp/8/8/8/8/PPPPPPPP/RBBQNNKR w HAha - 0 1"    // Scharnagl ID 404: rook files
+                                                                          // happen to be {0, 7}, king on g
+    })
+    void isChess960Position_chess960StartPositions_returnsTrue(String fen) {
+        var board = Fen.importFEN(fen);
+
+        assertTrue(board.isChess960Position(),
+                "FEN must be detected as 960: " + fen);
+    }
+
+    @Test
+    void isChess960Position_allChess960StartPositions_returnsTrueExceptId518() {
+        // Walks every Scharnagl-numbered start position. Standard chess
+        // (ID 518) is the single exception that must return false; the
+        // remaining 959 must all return true.
+        for (int id = 0; id < Chess960StartPositions.COUNT; id++) {
+            String fen = Chess960StartPositions.fenById(id);
+            var board = Fen.importFEN(fen);
+
+            boolean expected = id != Chess960StartPositions.STANDARD_CHESS_ID;
+            assertEquals(expected, board.isChess960Position(),
+                    "Scharnagl ID " + id + " (" + fen + ")");
+        }
+    }
+
+    // ---------- isStandardStartPosition ----------
+    //
+    // Byte-for-byte equality check against Board.createNewGame(). Covers the
+    // obvious positive and negative paths, plus a sanity check that every
+    // 960 starting position with rooks at the standard a-/h-files is still
+    // rejected (because of the rest of the back rank differing).
+
+    @Test
+    void isStandardStartPosition_freshStandardGame_returnsTrue() {
+        var board = Board.createNewGame();
+
+        assertTrue(board.isStandardStartPosition(),
+                "Board.createNewGame() must satisfy isStandardStartPosition");
+    }
+
+    @Test
+    void isStandardStartPosition_importedStandardStartFen_returnsTrue() {
+        var board = Fen.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+
+        assertTrue(board.isStandardStartPosition(),
+                "FEN-imported standard chess start position must match");
+    }
+
+    @Test
+    void isStandardStartPosition_afterFirstMove_returnsFalse() {
+        var game = GameImporter.importerFor("1. e4").importGame();
+
+        assertFalse(game.getBoard().isStandardStartPosition(),
+                "any move played ⇒ no longer the start position");
+    }
+
+    @Test
+    void isStandardStartPosition_chess960StartPosition_returnsFalse() {
+        var board = Fen.importFEN("rkbbnrnq/pppppppp/8/8/8/8/PPPPPPPP/RKBBNRNQ w FAfa - 0 1");
+
+        assertFalse(board.isStandardStartPosition(),
+                "a 960 start position has a different back rank ⇒ not the standard start");
+    }
+
+    @Test
+    void isStandardStartPosition_allChess960StartPositions_returnsFalseExceptId518() {
+        // Every Scharnagl position EXCEPT the standard chess one (ID 518)
+        // must be rejected by isStandardStartPosition. ID 518 itself must
+        // be accepted, since it IS standard chess.
+        for (int id = 0; id < Chess960StartPositions.COUNT; id++) {
+            String fen = Chess960StartPositions.fenById(id);
+            var board = Fen.importFEN(fen);
+
+            boolean expected = id == Chess960StartPositions.STANDARD_CHESS_ID;
+            assertEquals(expected, board.isStandardStartPosition(),
+                    "Scharnagl ID " + id + " (" + fen + ")");
+        }
+    }
+
+    // ---------- is960 cached flag ----------
+
+    @Test
+    void is960_isCarriedByCopyConstructor() {
+        // The is960 flag is computed once in Board's main constructor and
+        // stored as a final field. The copy constructor must carry it over
+        // verbatim — without that, every Board.copy() (used by the engine's
+        // root-of-search snapshot) would silently drop the variant signal
+        // and route castling through the standard-chess code path, corrupting
+        // move generation on a 960 game.
+        var original = Fen.importFEN("rkbbnrnq/pppppppp/8/8/8/8/PPPPPPPP/RKBBNRNQ w FAfa - 0 1");
+        assertTrue(original.isChess960(), "precondition: imported 960 FEN must be detected as 960");
+
+        var copy = original.copy();
+
+        assertTrue(copy.isChess960(), "Board.copy() must preserve the is960 flag");
     }
 }
