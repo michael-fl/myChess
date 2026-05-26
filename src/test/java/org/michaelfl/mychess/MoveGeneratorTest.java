@@ -112,6 +112,157 @@ class MoveGeneratorTest {
         assertCastlingNotPossible(pgn, "e8-c8");
     }
 
+    // ---- Chess960 castling, direct MoveGenerator checks ----
+    //
+    // These exercise calculateMoves(board) against sparse 960 positions
+    // built from FEN — only K + 2R on the back rank, lone enemy king (or
+    // a deliberately placed attacker) on rank 8. The PGN/GameImporter
+    // route can't reach 960 starting positions, so the setup goes through
+    // Fen.importFEN + the Game constructor's auto-detection.
+    //
+    // Until the 960 castling rules land in MoveGenerator, every test
+    // here is expected to fail — the current code emits castling moves
+    // from the hard-coded e1/e8 squares regardless of where the king
+    // actually stands, so the king-on-b1 / king-on-g1 setups below
+    // simply don't produce the expected from/to-field pairs.
+
+    @Test
+    void testWhiteCanCastleKingSide_chess960() {
+        // 960 layout: white king on b1, queenside rook on a1, kingside rook on h1.
+        // Black king on e8 — off the a-/h-file so the open white-rook files
+        // do not put it in check (would make the position illegal with white
+        // to move). Kingside castle moves the king b1 → g1 (rook h1 → f1).
+        var game = chess960Game("4k3/8/8/8/8/8/8/RK5R w HA - 0 1");
+
+        assertCastlingMoveGenerated(game, Move.typeCastlingKingSide, Board.b1, Board.g1);
+    }
+
+    @Test
+    void testWhiteCanCastleQueenSide_chess960() {
+        // 960 layout: white king on g1, queenside rook on a1, kingside rook on h1.
+        // Black king on e8 to keep the position legal (same reasoning as above).
+        // Queenside castle moves the king g1 → c1 (rook a1 → d1).
+        var game = chess960Game("4k3/8/8/8/8/8/8/R5KR w HA - 0 1");
+
+        assertCastlingMoveGenerated(game, Move.typeCastlingQueenSide, Board.g1, Board.c1);
+    }
+
+    @Test
+    void testBlackCanCastleKingSide_chess960() {
+        // Mirror of the white kingside test: black king on b8, rooks on
+        // a8 and h8. White king parked on d1 — not on either of the open
+        // black-rook files and not adjacent to the black king.
+        var game = chess960Game("rk5r/8/8/8/8/8/8/3K4 b ha - 0 1");
+
+        assertCastlingMoveGenerated(game, Move.typeCastlingKingSide, Board.b8, Board.g8);
+    }
+
+    @Test
+    void testCannotCastleWhenKingInCheck_chess960() {
+        // White king on b1, queenside rook on a1, kingside rook on h1.
+        // Black rook on b8 attacks the white king via the open b-file
+        // (the intended check). Black king on e8 stays off both
+        // white-rook files. Castling out of check is illegal — neither
+        // side may castle.
+        //
+        // Note on assertion semantics: the queenside-castle move from
+        // king-on-b1 is encoded as b1 → c1, which shares its from/to
+        // pair with a perfectly legal ordinary king move (the king can
+        // step out of check via Kc1 since c1 isn't attacked by the b8
+        // rook). The earlier string-only "b1-c1"-match falsely flagged
+        // the legal regular move as the forbidden castle. Disambiguate
+        // by matching on Move.typeCastling* as well.
+        var game = chess960Game("1r2k3/8/8/8/8/8/8/RK5R w HA - 0 1");
+
+        assertCastlingMoveNotGenerated(game, Move.typeCastlingKingSide, Board.b1, Board.g1);
+        assertCastlingMoveNotGenerated(game, Move.typeCastlingQueenSide, Board.b1, Board.c1);
+    }
+
+    @Test
+    void testCannotCastleWhenKingPathSquareAttacked_chess960() {
+        // White king on b1 wants to castle kingside (king path b1, c1,
+        // d1, e1, f1, g1). Black rook on f8 attacks f1 via the open
+        // f-file. The king would cross an attacked square → illegal.
+        // Black king on e8, adjacent to its own f8 rook; off the
+        // white-rook files.
+        var game = chess960Game("4kr2/8/8/8/8/8/8/RK5R w HA - 0 1");
+
+        assertCastlingMoveNotGenerated(game, Move.typeCastlingKingSide, Board.b1, Board.g1);
+    }
+
+    @Test
+    void testCanCastleWhenRookOnlyPathSquareAttacked_chess960() {
+        // White king on g1, queenside rook on a1, kingside rook on h1.
+        // Queenside castle: king g1 → c1 (path g1, f1, e1, d1, c1)
+        //                   rook a1 → d1 (path a1, b1, c1, d1).
+        // The only square the rook crosses without the king is b1
+        // (a-file is the rook's own source square).
+        // Black rook on b8 attacks b1 via the open b-file — the king
+        // never crosses b1, so Chess960 rules keep castling legal.
+        // Black king on e8 again to keep the position legal.
+        var game = chess960Game("1r2k3/8/8/8/8/8/8/R5KR w HA - 0 1");
+
+        assertCastlingMoveGenerated(game, Move.typeCastlingQueenSide, Board.g1, Board.c1);
+    }
+
+    /**
+     * Disambiguates castling from regular king moves that happen to share
+     * the same from/to fields (e.g. king on b1 castling queenside to c1
+     * vs. king on b1 stepping to c1 as a normal one-square move). Matches
+     * on Move.typeCastling* in addition to from/to.
+     */
+    private static boolean isCastlingMoveGenerated(Game game, byte castlingType, int fromField, int toField) {
+        var moves = new MoveGenerator(MoveSorter.defaultImplementation()).calculateMoves(game.getBoard());
+        int[] moveArray = moves.getMoves();
+        for (int i = 0; i < moves.count(); i++) {
+            int move = moveArray[i];
+            if (Move.getMoveType(move) == castlingType
+                    && Move.getFromField(move) == fromField
+                    && Move.getToField(move) == toField) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static void assertCastlingMoveGenerated(Game game, byte castlingType, int fromField, int toField) {
+        assertTrue(isCastlingMoveGenerated(game, castlingType, fromField, toField),
+                () -> "Expected castling move " + ChessUtil.moveToString(fromField, toField)
+                        + " (type=" + castlingType + ") to be generated. Generated moves:\n"
+                        + dumpGeneratedMoves(game));
+    }
+
+    private static void assertCastlingMoveNotGenerated(Game game, byte castlingType, int fromField, int toField) {
+        assertFalse(isCastlingMoveGenerated(game, castlingType, fromField, toField),
+                () -> "Castling move " + ChessUtil.moveToString(fromField, toField)
+                        + " (type=" + castlingType + ") must not be generated. Generated moves:\n"
+                        + dumpGeneratedMoves(game));
+    }
+
+    private static String dumpGeneratedMoves(Game game) {
+        var moves = new MoveGenerator(MoveSorter.defaultImplementation()).calculateMoves(game.getBoard());
+        int[] moveArray = moves.getMoves();
+        var sb = new StringBuilder();
+        for (int i = 0; i < moves.count(); i++) {
+            int move = moveArray[i];
+            sb.append("  [").append(i).append("] ")
+                    .append(ChessUtil.moveToString(move))
+                    .append(" type=").append(Move.getMoveType(move))
+                    .append(" from=").append(Move.getFromField(move) & 0xFF)
+                    .append(" to=").append(Move.getToField(move) & 0xFF)
+                    .append('\n');
+        }
+        return sb.toString();
+    }
+
+    /** Build a {@link Game} from a 960 FEN. The 960 auto-detection in
+     *  {@link Game#Game(GameConfig, Board)} picks up the variant from the
+     *  imported board's castling-rook files / king position. */
+    private static Game chess960Game(String fen) {
+        return new Game(Game.standardConfig(), Fen.importFEN(fen));
+    }
+
     private void assertCastlingPossible(String movesStr, String castlingMove) {
         var importer = GameImporter.importerFor(movesStr);
         var game = importer.importGame();
@@ -142,7 +293,7 @@ class MoveGeneratorTest {
             }
         }
 
-        fail("Move " + moveStr + " expected");
+        fail("Move " + moveStr + " expected; got " + moves);
     }
 
     private void assertMoveNotPossible(String moveStr, Game game) {

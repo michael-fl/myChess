@@ -47,7 +47,7 @@ public final class MoveGenerator {
 
     private final MoveSorter moveSorter;
 
-    private GameStatus game;
+    private GameStatus gameStatus;
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Board theBoard; // For debugger only
     private byte[] board;
@@ -73,7 +73,7 @@ public final class MoveGenerator {
 
     public Moves calculateMoves(GameStatus game, Board theBoard, int depth, int knownBestMove) {
         final int turn = game.getTurn();
-        this.game = game;
+        this.gameStatus = game;
         this.theBoard = theBoard;
         this.board = theBoard.getRawBoard();
         this.oppositeColor = game.getOppositeColor();
@@ -129,7 +129,7 @@ public final class MoveGenerator {
         }
 
         // en passant
-        final byte enPassantField = game.getEnPassantField();
+        final byte enPassantField = gameStatus.getEnPassantField();
         if (enPassantField != 0 && (enPassantField == field + Board.LENGTH - 1 || enPassantField == field + Board.LENGTH + 1)) {
             addWhiteEnPassantMove(field, enPassantField);
         }
@@ -201,7 +201,7 @@ public final class MoveGenerator {
         }
 
         // en passant
-        final byte enPassantField = game.getEnPassantField();
+        final byte enPassantField = gameStatus.getEnPassantField();
         if (enPassantField != 0 && (enPassantField == field - Board.LENGTH - 1 || enPassantField == field - Board.LENGTH + 1)) {
             addBlackEnPassantMove(field, enPassantField);
         }
@@ -308,8 +308,8 @@ public final class MoveGenerator {
         move(piece, field, field + Board.LENGTH - 1);
 
         // castling
-        if (game.isCastlingPossible())
-            calculateCastlingMoves();
+        if (gameStatus.isCastlingPossible())
+            calculateCastlingMoves(field);
     }
 
     private boolean move(final byte piece, final int from, final int to) {
@@ -322,25 +322,33 @@ public final class MoveGenerator {
         return capturedPiece == 0;
     }
 
-    private void calculateCastlingMoves() {
-        if (game.getTurn() == GameStatus.TURN_WHITE) {
-            if (game.isWhiteCastlingKingSidePossible() && canDoWhiteCastlingKingSide()) {
-                addMove(Board.e1, Board.g1, Board.whiteKing, (byte) 0, Move.typeCastlingKingSide);
+    private void calculateCastlingMoves(int kingField) {
+        if (gameStatus.getTurn() == GameStatus.TURN_WHITE) {
+            if (gameStatus.isWhiteCastlingKingSidePossible() && canDoWhiteCastlingKingSide(kingField)) {
+                addMove(kingField, Board.g1, Board.whiteKing, (byte) 0, Move.typeCastlingKingSide);
             }
-            if (game.isWhiteCastlingQueenSidePossible() && canDoWhiteCastlingQueenSide()) {
-                addMove(Board.e1, Board.c1, Board.whiteKing, (byte) 0, Move.typeCastlingQueenSide);
+            if (gameStatus.isWhiteCastlingQueenSidePossible() && canDoWhiteCastlingQueenSide(kingField)) {
+                addMove(kingField, Board.c1, Board.whiteKing, (byte) 0, Move.typeCastlingQueenSide);
             }
         } else {
-            if (game.isBlackCastlingKingSidePossible() && canDoBlackCastlingKingSide()) {
-                addMove(Board.e8, Board.g8, Board.blackKing, (byte) 0, Move.typeCastlingKingSide);
+            if (gameStatus.isBlackCastlingKingSidePossible() && canDoBlackCastlingKingSide(kingField)) {
+                addMove(kingField, Board.g8, Board.blackKing, (byte) 0, Move.typeCastlingKingSide);
             }
-            if (game.isBlackCastlingQueenSidePossible() && canDoBlackCastlingQueenSide()) {
-                addMove(Board.e8, Board.c8, Board.blackKing, (byte) 0, Move.typeCastlingQueenSide);
+            if (gameStatus.isBlackCastlingQueenSidePossible() && canDoBlackCastlingQueenSide(kingField)) {
+                addMove(kingField, Board.c8, Board.blackKing, (byte) 0, Move.typeCastlingQueenSide);
             }
         }
     }
 
-    private boolean canDoWhiteCastlingKingSide() {
+    private boolean canDoWhiteCastlingKingSide(int kingField) {
+        return theBoard.isStandardChess() ? canDoWhiteCastlingKingSideStandard() : canDoWhiteCastlingKingSide960(kingField);
+    }
+
+    private boolean canDoWhiteCastlingQueenSide(int kingField) {
+        return theBoard.isStandardChess() ? canDoWhiteCastlingQueenSideStandard() : canDoWhiteCastlingQueenSide960(kingField);
+    }
+
+    private boolean canDoWhiteCastlingKingSideStandard() {
         // The fields between king and rook must be empty
         if (board[Board.f1] != Board.empty || board[Board.g1] != Board.empty)
             return false;
@@ -349,10 +357,9 @@ public final class MoveGenerator {
         return !(isWhiteCastlingFieldUnderAttack(Board.e1)
                 || isWhiteCastlingFieldUnderAttack(Board.f1)
                 || isWhiteCastlingFieldUnderAttack(Board.g1));
-
     }
 
-    private boolean canDoWhiteCastlingQueenSide() {
+    private boolean canDoWhiteCastlingQueenSideStandard() {
         // The fields between king and rook must be empty
         if (board[Board.d1] != Board.empty || board[Board.c1] != Board.empty || board[Board.b1] != Board.empty)
             return false;
@@ -363,7 +370,47 @@ public final class MoveGenerator {
                 || isWhiteCastlingFieldUnderAttack(Board.c1));
     }
 
-    private boolean canDoBlackCastlingKingSide() {
+    private boolean canDoWhiteCastlingKingSide960(int kingField) {
+        // The fields between king start field and target field must be empty (except own rook)
+        if (!isCastlingPathEmpty(kingField, Board.g1, Board.whiteRook)) {
+            return false;
+        }
+
+        // The fields between rook start field and target field must be empty (except own king)
+        int rookField = ChessUtil.getFieldFromColAndRow(theBoard.getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE), 0);
+        if (!isCastlingPathEmpty(rookField, Board.f1, Board.whiteKing)) {
+            return false;
+        }
+
+        // Neither of king's start field, crossed fields and target field must be under attack
+        return !isWhiteCastlingKingPathUnderAttack(kingField, Board.g1);
+    }
+
+    private boolean canDoWhiteCastlingQueenSide960(int kingField) {
+        // The fields between king start field and target field must be empty (except own rook)
+        if (!isCastlingPathEmpty(kingField, Board.c1, Board.whiteRook)) {
+            return false;
+        }
+
+        // The fields between rook start field and target field must be empty (except own king)
+        int rookField = ChessUtil.getFieldFromColAndRow(theBoard.getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE), 0);
+        if (!isCastlingPathEmpty(rookField, Board.d1, Board.whiteKing)) {
+            return false;
+        }
+
+        // Neither of king's start field, crossed fields and target field must be under attack
+        return !isWhiteCastlingKingPathUnderAttack(kingField, Board.c1);
+    }
+
+    private boolean canDoBlackCastlingKingSide(int kingField) {
+        return theBoard.isStandardChess() ? canDoBlackCastlingKingSideStandard() : canDoBlackCastlingKingSide960(kingField);
+    }
+
+    private boolean canDoBlackCastlingQueenSide(int kingField) {
+        return theBoard.isStandardChess() ? canDoBlackCastlingQueenSideStandard() : canDoBlackCastlingQueenSide960(kingField);
+    }
+
+    private boolean canDoBlackCastlingKingSideStandard() {
         // The fields between king and rook must be empty
         if (board[Board.f8] != Board.empty || board[Board.g8] != Board.empty)
             return false;
@@ -372,10 +419,9 @@ public final class MoveGenerator {
         return !(isBlackCastlingFieldUnderAttack(Board.e8)
                 || isBlackCastlingFieldUnderAttack(Board.f8)
                 || isBlackCastlingFieldUnderAttack(Board.g8));
-
     }
 
-    private boolean canDoBlackCastlingQueenSide() {
+    private boolean canDoBlackCastlingQueenSideStandard() {
         // The fields between king and rook must be empty
         if (board[Board.d8] != Board.empty || board[Board.c8] != Board.empty || board[Board.b8] != Board.empty)
             return false;
@@ -384,6 +430,88 @@ public final class MoveGenerator {
         return !(isBlackCastlingFieldUnderAttack(Board.e8)
                 || isBlackCastlingFieldUnderAttack(Board.d8)
                 || isBlackCastlingFieldUnderAttack(Board.c8));
+    }
+
+    private boolean canDoBlackCastlingKingSide960(int kingField) {
+        // The fields between king start field and target field must be empty (except own rook)
+        if (!isCastlingPathEmpty(kingField, Board.g8, Board.blackRook)) {
+            return false;
+        }
+
+        // The fields between rook start field and target field must be empty (except own king)
+        int rookField = ChessUtil.getFieldFromColAndRow(theBoard.getCastlingRookFile(CastlingSlot.BLACK_KINGSIDE), 7);
+        if (!isCastlingPathEmpty(rookField, Board.f8, Board.blackKing)) {
+            return false;
+        }
+
+        // Neither of king's start field, crossed fields and target field must be under attack
+        return !isBlackCastlingKingPathUnderAttack(kingField, Board.g8);
+    }
+
+    private boolean canDoBlackCastlingQueenSide960(int kingField) {
+        // The fields between king start field and target field must be empty (except own rook)
+        if (!isCastlingPathEmpty(kingField, Board.c8, Board.blackRook)) {
+            return false;
+        }
+
+        // The fields between rook start field and target field must be empty (except own king)
+        int rookField = ChessUtil.getFieldFromColAndRow(theBoard.getCastlingRookFile(CastlingSlot.BLACK_QUEENSIDE), 7);
+        if (!isCastlingPathEmpty(rookField, Board.d8, Board.blackKing)) {
+            return false;
+        }
+
+        // Neither of king's start field, crossed fields and target field must be under attack
+        return !isBlackCastlingKingPathUnderAttack(kingField, Board.c8);
+    }
+
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private boolean isCastlingPathEmpty(final int startField, final int targetField, byte counterpartPiece) {
+        if (startField != targetField) {
+            int delta = startField < targetField ? 1 : -1;
+
+            for (int f = startField + delta; f != targetField; f += delta) {
+                if (board[f] != Board.empty && board[f] != counterpartPiece) {
+                    return false;
+                }
+            }
+
+            //noinspection RedundantIfStatement
+            if (board[targetField] != Board.empty && board[targetField] != counterpartPiece) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private boolean isWhiteCastlingKingPathUnderAttack(final int startField, final int targetField) {
+        if (startField != targetField) {
+            int delta = startField < targetField ? 1 : -1;
+
+            for (int f = startField; f != targetField; f += delta) {
+                if (isWhiteCastlingFieldUnderAttack(f)) {
+                    return true;
+                }
+            }
+        }
+
+        return isWhiteCastlingFieldUnderAttack(targetField);
+    }
+
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private boolean isBlackCastlingKingPathUnderAttack(final int startField, final int targetField) {
+        if (startField != targetField) {
+            int delta = startField < targetField ? 1 : -1;
+
+            for (int f = startField; f != targetField; f += delta) {
+                if (isBlackCastlingFieldUnderAttack(f)) {
+                    return true;
+                }
+            }
+        }
+
+        return isBlackCastlingFieldUnderAttack(targetField);
     }
 
     private boolean isWhiteCastlingFieldUnderAttack(int field) {
