@@ -65,6 +65,14 @@ final class UciHandler {
      */
     private String gameId = UUID.randomUUID().toString();
 
+    /**
+     * Wall-clock millis at the start of the current game — set on the same
+     * {@code ucinewgame} (or constructor) event as {@link #gameId}. Used by
+     * {@link #logMoveStatus} to emit a {@code gameElapsed=<ms>} field so the
+     * cumulative game duration is visible without diffing log timestamps.
+     */
+    private long gameStartMs = System.currentTimeMillis();
+
     /** Time the run-loop's finally block waits for an in-flight watcher to emit bestmove. */
     private static final long QUIT_GRACE_MS = 5_000L;
 
@@ -153,6 +161,7 @@ final class UciHandler {
         this.board = Board.createNewGame();
         ChessEngine.resetIterationTimings();
         this.gameId = UUID.randomUUID().toString();
+        this.gameStartMs = System.currentTimeMillis();
     }
 
     private void handlePosition(String line) {
@@ -384,7 +393,7 @@ final class UciHandler {
      * several games stream their move records into the same file.
      *
      * <p>Format:
-     * <pre>{@code [move] game=<8-char> color=<W|B> move=<N> uci=<...> evalStm=<...> evalW=<...> elapsed=<ms>}</pre>
+     * <pre>{@code [move] game=<8-char> color=<W|B> move=<N> uci=<...> evalStm=<...> evalW=<...> elapsed=<ms> gameElapsed=<M:SS>}</pre>
      *
      * <ul>
      *   <li>{@code game} — first 8 chars of a UUID regenerated on every
@@ -410,6 +419,11 @@ final class UciHandler {
      *       receipt to {@code bestmove} emission. Compare with the
      *       budget logged on the matching {@code [go]} line to spot
      *       overshoots that the cancellation path failed to prevent.</li>
+     *   <li>{@code gameElapsed} — wall-clock duration since the game's
+     *       {@code ucinewgame} (or process start, if the GUI skipped
+     *       that), formatted as {@code M:SS}. Cumulative game duration
+     *       without having to diff log timestamps; the last
+     *       {@code [move]} line of a game gives its total length.</li>
      * </ul>
      *
      * <p>Eval format: plain centipawns in pawn units (e.g. {@code +0.30})
@@ -432,11 +446,13 @@ final class UciHandler {
         String evalStmStr = formatEvalForLog(weightStm);
         String evalWhiteStr = formatEvalForLog(evalWhitePov);
         String shortGameId = shortGameId();
-        long elapsedMs = System.currentTimeMillis() - goStartMs;
+        long now = System.currentTimeMillis();
+        long elapsedMs = now - goStartMs;
+        String gameElapsedStr = formatElapsedMinSec(now - gameStartMs);
 
         Log.info(String.format(Locale.ROOT,
-                "[move] game=%s color=%s move=%d uci=%s evalStm=%s evalW=%s elapsed=%d",
-                shortGameId, color, fullMoveNumber, uciMove, evalStmStr, evalWhiteStr, elapsedMs));
+                "[move] game=%s color=%s move=%d uci=%s evalStm=%s evalW=%s elapsed=%d gameElapsed=%s",
+                shortGameId, color, fullMoveNumber, uciMove, evalStmStr, evalWhiteStr, elapsedMs, gameElapsedStr));
     }
 
     /**
@@ -482,6 +498,19 @@ final class UciHandler {
             return (weight >= 0 ? "+M" : "-M") + fullMoves;
         }
         return String.format(Locale.ROOT, "%+.2f", weight);
+    }
+
+    /**
+     * Renders an elapsed duration as {@code M:SS} (e.g. {@code 5:23},
+     * {@code 47:18}, {@code 105:09}). Minutes have no width cap so durations
+     * past 99 min stay readable; seconds are always two digits.
+     */
+    private static String formatElapsedMinSec(long elapsedMs) {
+        long totalSec = (elapsedMs + 500) / 1000;
+        long minutes = totalSec / 60;
+        long seconds = totalSec % 60;
+
+        return String.format(Locale.ROOT, "%d:%02d", minutes, seconds);
     }
 
     /**
