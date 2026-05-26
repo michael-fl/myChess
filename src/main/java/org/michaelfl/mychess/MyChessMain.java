@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
  */
 public final class MyChessMain {
 
-    private static final String VERSION = "3.1.0";
+    private static final String VERSION = "3.1.1";
 
     static void main(String[] args) {
         System.err.println("Starting MyChess v" + VERSION);
@@ -69,7 +69,7 @@ public final class MyChessMain {
     }
 
     private static void runRepl() {
-        try (OpeningDB openingDB = OpeningDB.open()) {
+        try (OpeningDB openingDB = tryOpenOpeningDb()) {
             var env = new MyChessEnv(openingDB);
             var game = new Game();
             CommandHandler scanner = new CommandHandler(env, game);
