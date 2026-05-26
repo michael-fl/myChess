@@ -240,13 +240,14 @@ class ChessUtilTest {
     }
 
     @Test
-    void findColOfPieceOnRow_pieceNotOnRow_returnsBoardEmpty() {
+    void findColOfPieceOnRow_pieceNotOnRow_returnsMinusOne() {
         // White king is on row 0 (rank 1), never on row 3 in the start
-        // position. The documented "not found" return is Board.empty.
+        // position. The not-found sentinel is -1 (not Board.empty, which
+        // would collide with the valid column index 0 = a-file).
         var board = Board.createNewGame();
 
-        assertEquals(Board.empty, ChessUtil.findColOfPieceOnRow(board, Board.whiteKing, 3),
-                "no white king on the middle of the board ⇒ Board.empty");
+        assertEquals(-1, ChessUtil.findColOfPieceOnRow(board, Board.whiteKing, 3),
+                "no white king on the middle of the board ⇒ -1");
     }
 
     @Test
@@ -268,13 +269,13 @@ class ChessUtilTest {
     }
 
     @Test
-    void findColOfPieceOnRow_pieceOnDifferentRow_returnsBoardEmpty() {
+    void findColOfPieceOnRow_pieceOnDifferentRow_returnsMinusOne() {
         // Black king is on row 7, not row 0. Searching row 0 for the black
-        // king must report not-found, not silently confuse with the white
-        // king that does sit on row 0.
+        // king must report not-found (-1), not silently confuse with the
+        // white king that does sit on row 0.
         var board = Board.createNewGame();
 
-        assertEquals(Board.empty, ChessUtil.findColOfPieceOnRow(board, Board.blackKing, 0),
+        assertEquals(-1, ChessUtil.findColOfPieceOnRow(board, Board.blackKing, 0),
                 "black king is not on row 0 in the start position");
     }
 }

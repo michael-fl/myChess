@@ -214,6 +214,16 @@ public final class ChessUtil {
         };
     }
 
+    /**
+     * Returns the column (0..7) of the first occurrence of {@code piece} on the
+     * given {@code row} (0..7, row 0 = rank 1), or {@code -1} if {@code piece}
+     * is not present in that row.
+     *
+     * <p>The sentinel is {@code -1}, not {@code Board.empty}: {@code Board.empty}
+     * equals {@code 0}, which collides with the valid column index for the
+     * a-file. With Chess960 a king or rook may actually start on the a-file —
+     * using {@code 0} as "not found" would silently confuse the two cases.
+     */
     public static int findColOfPieceOnRow(Board board, int piece, int row) {
         final byte[] rawBoard = board.getRawBoard();
         final int startField = getFieldFromColAndRow(0, row);
