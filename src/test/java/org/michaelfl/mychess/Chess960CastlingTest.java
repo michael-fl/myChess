@@ -285,4 +285,87 @@ class Chess960CastlingTest {
         assertTrue(canCastle(board, Move.typeCastlingQueenSide),
                 "castling queenside must remain legal when only a rook-only path square (b1) is attacked");
     }
+
+    // ---- Mid-game: own non-partner rook in the king's castling path ----
+    //
+    // The starting-position parameterised tests above assume both rooks
+    // sit on their original squares. During a game a rook can move
+    // anywhere — including onto a square the king has to cross during
+    // a castle with the OTHER rook. Chess960 rules: the king's path
+    // must be empty except for the castle's own partner rook. Another
+    // own rook in the way blocks the castle, identical to any other
+    // own piece in the way.
+    //
+    // These tests pin that rule. They expose the case where the
+    // MoveGenerator's path-clearance check treats "own rook" generically
+    // as the castle partner and silently allows the castle.
+
+    @Test
+    void kingsideCastle_isIllegalWhenOwnQueensideRookSitsOnKingsPath_white() {
+        // 960 mid-game: white king on b1, queenside rook moved from a1
+        // to e1, kingside rook still on h1. The kingside castle would
+        // be king b1 → g1, rook h1 → f1 — but the king must cross e1,
+        // which is occupied by the (non-partner) queenside rook.
+        // Castling rights: only H (kingside, with rook on h1); the
+        // queenside right is gone since the a1 rook has left its
+        // origin square.
+        // Black king on a8 keeps the position legal — neither white
+        // rook attacks a8, and the white king on b1 is not in check.
+        Board board = Fen.importFEN("k7/8/8/8/8/8/8/1K2R2R w H - 0 1");
+
+        assertFalse(canCastle(board, Move.typeCastlingKingSide),
+                "kingside castle must be blocked: an own non-partner rook (e1) "
+                        + "sits on the king's path b1..g1");
+    }
+
+    @Test
+    void queensideCastle_isIllegalWhenOwnKingsideRookSitsOnKingsPath_white() {
+        // 960 mid-game mirror: white king on g1, queenside rook still on
+        // a1, kingside rook moved from h1 to e1. The queenside castle
+        // would be king g1 → c1, rook a1 → d1 — but the king must cross
+        // e1, occupied by the (non-partner) kingside rook.
+        // Castling rights: only A (queenside, with rook on a1); the
+        // kingside right is gone since the h1 rook has left its origin.
+        // Black king on h8 keeps the position legal — no white piece
+        // attacks h8, and g1 is not in check.
+        Board board = Fen.importFEN("7k/8/8/8/8/8/8/R3R1K1 w A - 0 1");
+
+        assertFalse(canCastle(board, Move.typeCastlingQueenSide),
+                "queenside castle must be blocked: an own non-partner rook (e1) "
+                        + "sits on the king's path g1..c1");
+    }
+
+    @Test
+    void kingsideCastle_isIllegalWhenOwnQueensideRookSitsOnKingsPath_black() {
+        // Mirror of the white kingside case for black: black king on b8,
+        // queenside rook moved from a8 to e8, kingside rook still on h8.
+        // Black's kingside castle would be king b8 → g8, rook h8 → f8
+        // — but the king must cross e8, occupied by the (non-partner)
+        // queenside rook.
+        // Castling rights: only h (kingside black, rook on h8).
+        // White king on a1 — far from any attack by the black rooks
+        // (e8 covers the e-file, h8 the h-file) or the black king.
+        Board board = Fen.importFEN("1k2r2r/8/8/8/8/8/8/K7 b h - 0 1");
+
+        assertFalse(canCastle(board, Move.typeCastlingKingSide),
+                "kingside castle must be blocked: an own non-partner rook (e8) "
+                        + "sits on the king's path b8..g8");
+    }
+
+    @Test
+    void queensideCastle_isIllegalWhenOwnKingsideRookSitsOnKingsPath_black() {
+        // Mirror of the white queenside case for black: black king on
+        // g8, queenside rook still on a8, kingside rook moved from h8
+        // to e8. Queenside castle would be king g8 → c8, rook a8 → d8
+        // — king must cross e8, occupied by the (non-partner) kingside
+        // rook.
+        // Castling rights: only a (queenside black, rook on a8).
+        // White king on h1 — outside the file/rank coverage of either
+        // black rook (a-file resp. e-file).
+        Board board = Fen.importFEN("r3r1k1/8/8/8/8/8/8/7K b a - 0 1");
+
+        assertFalse(canCastle(board, Move.typeCastlingQueenSide),
+                "queenside castle must be blocked: an own non-partner rook (e8) "
+                        + "sits on the king's path g8..c8");
+    }
 }
