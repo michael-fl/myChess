@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.michaelfl.mychess.Assert.__assert;
 import static org.michaelfl.mychess.ChessUtil.*;
 import static org.michaelfl.mychess.RandomNumbers.RANDOM_NUMBERS;
 
@@ -725,12 +724,6 @@ public final class Board {
     private long _makeCastlingKingSideMove(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
-        // TODO remove
-        __assert(() -> {
-            var piece = get(fromField);
-            return getGameStatus().isWhiteTurn() ? piece == Board.whiteKing : piece == Board.blackKing;
-        }, () -> "Wrong kingside castling source field: " + ChessUtil.moveToString(move));
-        __assert(() -> getGameStatus().isWhiteTurn() ? toField == Board.g1 : toField == Board.g8, () -> "Wrong kingside castling target field: " + ChessUtil.moveToString(move));
 
         long newPositionHash = getGameStatus().getPositionHash();
 
@@ -772,12 +765,6 @@ public final class Board {
     private long _makeCastlingQueenSideMove(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
-        // TODO remove
-        __assert(() -> {
-            var piece = get(fromField);
-            return getGameStatus().isWhiteTurn() ? piece == Board.whiteKing : piece == Board.blackKing;
-        }, () -> "Wrong queenside castling source field: " + ChessUtil.moveToString(move));
-        __assert(() -> getGameStatus().isWhiteTurn() ? toField == Board.c1 : toField == Board.c8, () -> "Wrong queenside castling target field: " + ChessUtil.moveToString(move));
 
         long newPositionHash = getGameStatus().getPositionHash();
 
@@ -874,12 +861,12 @@ public final class Board {
         board[fromField] = board[toField];
         board[toField] = Board.empty;
 
-        if (fromField == Board.e1) {
+        if (toField == Board.g1) {
             board[Board.f1] = Board.empty;
-            board[Board.h1] = Board.whiteRook;
+            board[ChessUtil.getFieldFromColAndRow(getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE), 0)] = Board.whiteRook;
         } else {
             board[Board.f8] = Board.empty;
-            board[Board.h8] = Board.blackRook;
+            board[ChessUtil.getFieldFromColAndRow(getCastlingRookFile(CastlingSlot.BLACK_KINGSIDE), 7)] = Board.blackRook;
         }
     }
 
@@ -894,12 +881,12 @@ public final class Board {
         board[fromField] = board[toField];
         board[toField] = Board.empty;
 
-        if (fromField == Board.e1) {
+        if (toField == Board.c1) {
             board[Board.d1] = Board.empty;
-            board[Board.a1] = Board.whiteRook;
+            board[ChessUtil.getFieldFromColAndRow(getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE), 0)] = Board.whiteRook;
         } else {
             board[Board.d8] = Board.empty;
-            board[Board.a8] = Board.blackRook;
+            board[ChessUtil.getFieldFromColAndRow(getCastlingRookFile(CastlingSlot.BLACK_QUEENSIDE), 7)] = Board.blackRook;
         }
     }
 
@@ -1127,12 +1114,18 @@ public final class Board {
         var builder = new Builder(moveDescr);
         int toField = moveDescr.getToField();
 
-        if (builder.piece <= 0) {
-            builder.piece = get(moveDescr.getFromField());
+        if (moveDescr.isCastlingKingSide()) {
+            builder.setFlag(MoveFlag.CASTLING_KING_SIDE, true);
+        }
+        if (moveDescr.isCastlingQueenSide()) {
+            builder.setFlag(MoveFlag.CASTLING_QUEEN_SIDE, true);
         }
 
         if (builder.fromCol < 0 || builder.fromRow < 0) {
             // Must resolve source field
+            if (builder.piece <= 0) {
+                throw new IllegalMoveException("Cannot resolve move without piece information");
+            }
             var possibleMoves = getPossiblePieceMoves(builder.piece, toField, this, moveGenerator);
             if (builder.fromCol >= 0) {
                 possibleMoves.removeIf(move -> Move.getFromCol(move) != builder.fromCol);
@@ -1157,7 +1150,13 @@ public final class Board {
                 throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Impossible move.");
             }
             if (possibleMoves.size() > 1) {
-                throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Move is not unique.");
+                // If multiple legal moves share the same from/to and differ only in moveType, prefer the typeNormal interpretation.
+                // Castle has dedicated notations (O-O / king-to-rook); any explicit king-to-target notation means the plain king step.
+                possibleMoves.removeIf(move ->
+                        Move.getMoveType(move) == Move.typeCastlingKingSide || Move.getMoveType(move) == Move.typeCastlingQueenSide);
+                if (possibleMoves.size() != 1) {
+                    throw new IllegalMoveException("Wrong move notation: " + moveDescr + ". Move is not unique.");
+                }
             }
 
             int move = possibleMoves.iterator().next();
@@ -1165,7 +1164,64 @@ public final class Board {
             builder.fromRow = Move.getFromRow(move);
         }
 
+        builder.piece = get(ChessUtil.colAndRowToField(builder.fromCol, builder.fromRow)); // set or overwrite piece info (it may be set with pawn as default)
+
+        if (isChess960()) {
+            resolve960MoveDescription(builder);
+        }
+
         return builder.build();
+    }
+
+    @SuppressWarnings("java:S1066")
+    private void resolve960MoveDescription(Builder builder) {
+        final int fromField = ChessUtil.colAndRowToField(builder.fromCol, builder.fromRow);
+        final int toField = ChessUtil.colAndRowToField(builder.toCol, builder.toRow);
+        final byte piece = get(fromField);
+        final byte capturedPiece = get(toField);
+        final boolean isWhiteTurn = builder.turn == GameStatus.TURN_WHITE;
+
+        // Check for Chess960 castling moves
+        if ((builder.hasFlag(MoveFlag.CASTLING_KING_SIDE) || builder.hasFlag(MoveFlag.CASTLING_QUEEN_SIDE)) && !isKing(piece)) {
+            if (isWhiteTurn) {
+                builder.fromCol = ChessUtil.findColOfPieceOnRow(board, Board.whiteKing, 0);
+            } else {
+                builder.fromCol = ChessUtil.findColOfPieceOnRow(board, Board.blackKing, 7);
+            }
+        }
+        if (piece == Board.whiteKing && ChessUtil.getRowOfField(fromField) == 0) {
+            if (capturedPiece == Board.whiteRook && ChessUtil.getColOfField(toField) == getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE)) {
+                builder.setFlag(MoveFlag.CASTLING_KING_SIDE, true);
+                builder.toCol = 6;
+            } else if (capturedPiece == Board.whiteRook && ChessUtil.getColOfField(toField) == getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE)) {
+                builder.setFlag(MoveFlag.CASTLING_QUEEN_SIDE, true);
+                builder.toCol = 2;
+            } else if (toField == Board.g1) {
+                if (fromField != Board.f1 && fromField != Board.h1) {
+                    builder.setFlag(MoveFlag.CASTLING_KING_SIDE, true);
+                }
+            } else if (toField == Board.c1) {
+                if (fromField != Board.b1 && fromField != Board.d1) {
+                    builder.setFlag(MoveFlag.CASTLING_QUEEN_SIDE, true);
+                }
+            }
+        } else if (piece == Board.blackKing && ChessUtil.getRowOfField(fromField) == 7) {
+            if (capturedPiece == Board.blackRook && ChessUtil.getColOfField(toField) == getCastlingRookFile(CastlingSlot.BLACK_KINGSIDE)) {
+                builder.setFlag(MoveFlag.CASTLING_KING_SIDE, true);
+                builder.toCol = 6;
+            } else if (capturedPiece == Board.blackRook && ChessUtil.getColOfField(toField) == getCastlingRookFile(CastlingSlot.BLACK_QUEENSIDE)) {
+                builder.setFlag(MoveFlag.CASTLING_QUEEN_SIDE, true);
+                builder.toCol = 2;
+            } else if (toField == Board.g8) {
+                if (fromField != Board.f8 && fromField != Board.h8) {
+                    builder.setFlag(MoveFlag.CASTLING_KING_SIDE, true);
+                }
+            } else if (toField == Board.c8) {
+                if (fromField != Board.b8 && fromField != Board.d8) {
+                    builder.setFlag(MoveFlag.CASTLING_QUEEN_SIDE, true);
+                }
+            }
+        }
     }
 
     private static Set<Integer> getPossiblePieceMoves(byte piece, int toField, Board board, MoveGenerator moveGenerator) {
@@ -1187,8 +1243,15 @@ public final class Board {
         int toField = moveDescr.getToField();
         byte piece = get(fromField);
         byte capturedPiece = get(toField);
-        byte moveType = Move.typeNormal;
+        byte moveType = -1;
         byte promotionPiece = moveDescr.pawnPromotionPiece();
+
+        if (moveDescr.isCastlingKingSide()) {
+            moveType = Move.typeCastlingKingSide;
+        }
+        if (moveDescr.isCastlingQueenSide()) {
+            moveType = Move.typeCastlingQueenSide;
+        }
 
         if (Board.whiteQueen == promotionPiece || Board.blackQueen == promotionPiece)
             moveType = Move.typePawnPromotionQueen;
@@ -1215,6 +1278,10 @@ public final class Board {
                 && capturedPiece == 0) {
             moveType = Move.typeEnPassant;
             capturedPiece = piece == Board.whitePawn ? Board.blackPawn : Board.whitePawn;
+        }
+
+        if (moveType < 0) {
+            moveType = Move.typeNormal;
         }
 
         return new Move(Move.create((byte) fromField, (byte) toField, capturedPiece, moveType));

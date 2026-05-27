@@ -297,6 +297,10 @@ public record MoveDescription(
             }
         }
 
+        boolean hasFlag(MoveFlag flag) {
+            return flags.contains(flag);
+        }
+
         MoveDescription build() {
             return new MoveDescription(turn, piece, fromCol, fromRow, toCol, toRow, pawnPromotionPiece, flags);
         }
