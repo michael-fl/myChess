@@ -292,18 +292,24 @@ display picks the right form via `is960()`.
    four make + four revert round-trip tests with explicit board /
    hash assertions on the king's actual square. All green after
    commit a2b85cf.
+6. **`MirrorEvalTest` extended to 960 starting positions** — the
+   `mirrorCastlingField` helper generalised to swap case on any
+   letter (covers Shredder-FEN `A-H` / `a-h` in addition to the
+   classical `KQkq`), then four Scharnagl starts added to the
+   parameterised matrix (518 in Shredder form, 0 `BBQNNRKR`, 959
+   `RKRNNQBB`, and the `RKBBNRNQ` cutechess sample). All green —
+   confirms `WeightingFunction.calculate` stays antisymmetric on
+   non-standard back ranks, so an asymmetric eval term introduced
+   by future Phase-6 changes would be caught immediately.
 
 **Pending:**
 
-1. Mirror-eval test on a small set of 960 starting positions, equivalent
-   to the existing `MirrorEvalTest` for standard chess. `MirrorEvalTest`
-   itself has no 960 cases today.
-2. Verify that the opening-DB lookup path tolerates 960 positions (it
+1. Verify that the opening-DB lookup path tolerates 960 positions (it
    should, since lookups are pure Zobrist-keyed) — the existing DB
    will simply miss on 960 starts, which is the desired behavior.
-3. End-to-end FEN round-trip: import 960 FEN, play a move, export FEN,
+2. End-to-end FEN round-trip: import 960 FEN, play a move, export FEN,
    import again — Zobrist hash matches the first import after one undo.
-4. End-to-end engine self-play on a non-standard Scharnagl position via
+3. End-to-end engine self-play on a non-standard Scharnagl position via
    the UCI handler — gated on Phase 3's remaining outbound-formatter
    work, so the engine emits castles in the form 960-aware GUIs
    expect.
