@@ -128,8 +128,8 @@ state per snapshot.
 | Phase | Status        | Scope                                                        | What it unlocks                                              |
 |-------|---------------|--------------------------------------------------------------|--------------------------------------------------------------|
 | 1     | done          | FEN import + export for Shredder-FEN castling rights, auto-detection cached on `Board` | Engine loads, exports, and recognises any 960 position; can play it without castling. |
-| 2     | in progress   | Generalize castling move generation, `Board.makeMove` undo   | Engine plays full 960 — including castling.                  |
-| 3     | pending       | UCI castle move notation (`e1h1` form, in / out)             | Round-trip with cutechess and other 960-aware GUIs works.    |
+| 2     | done          | Generalize castling move generation, `Board.makeMove` undo   | Engine plays full 960 — including castling.                  |
+| 3     | partial (inbound done) | UCI castle move notation (`e1h1` form, in / out)    | Round-trip with cutechess and other 960-aware GUIs works.    |
 | 4     | done in P1    | FEN export in Shredder style when files deviate from default | FEN round-trip closes for 960. Landed alongside Phase 1.     |
 | 5     | partial       | Test consolidation and edge cases                            | 960 mirror-eval, opening-DB hooks, full round-trip suite.    |
 | 6     | pending       | Evaluation adjustments for 960                               | Eval no longer penalizes 960-legitimate piece placements.    |
@@ -168,9 +168,7 @@ state per snapshot.
      Scharnagl positions.
    - Standard FEN imports produce bit-identical `Board` state to before.
 
-### Phase 2 — castling move generation (in progress)
-
-**Done:**
+### Phase 2 — castling move generation (done — commits 155ee56, e1a28a1, a2b85cf)
 
 1. `MoveGenerator.calculateCastlingMoves(int kingField)` now takes the
    king's actual source field and dispatches to standard / 960 helpers
@@ -178,11 +176,11 @@ state per snapshot.
    helpers use `castlingRookFiles[slot]` to find the partner rook and
    verify path clearance against the *actual* back-rank squares, not
    the hardcoded standard-chess paths. (commit 155ee56)
-2. The `MoveGenerator.game` field was renamed to `gameStatus` along the
-   way — cosmetic, matches its type and removes ambiguity with the
-   `Game` class. (commit 155ee56)
-3. `isCastlingPathEmpty` now takes the **field** of the castle partner
-   instead of the piece type — signature is
+2. The `MoveGenerator.game` field was renamed to `gameStatus` along
+   the way — cosmetic, matches its type and removes ambiguity with
+   the `Game` class. (commit 155ee56)
+3. `isCastlingPathEmpty` now takes the **field** of the castle
+   partner instead of the piece type — signature is
    `(int startField, int targetField, int counterpartField)` and the
    skip predicate is `f != counterpartField`. The previous
    piece-type check accepted *any* own rook on the path, which let a
@@ -190,28 +188,15 @@ state per snapshot.
    kingside-castle path) pass as harmless. Pinned by the four
    `Chess960CastlingTest.{king,queen}sideCastle_isIllegalWhenOwn…RookSitsOnKingsPath_{white,black}`
    regression tests added in commit e1a28a1.
-
-**Pending** (next implementation steps):
-
-1. **`Board.makeMove` / `revertMove` still hardcode `e1`/`e8`/`h1`/`a1`
-   and the corresponding rook target squares.** See
-   `_makeCastlingKingSideMove` (and three siblings) at
-   `Board.java:715-779`: the dispatch `if (fromField == e1) { … } else { … }`
-   assumes any non-`e1` source is a black king on `e8`, which silently
-   corrupts the board when a white 960 king castles from, say, `b1`.
-   The four `BoardTest.makeCastling{KingSide,QueenSide}Move_{white,black}_chess960_*`
-   tests pin the bug: the two white cases fail with a board mismatch
-   (rook left on its source square, phantom rook conjured on the
-   wrong back rank); the two black cases happen to leave a
-   board-correct result because the hard-coded `h8/f8` / `a8/d8`
-   squares coincide with the test setup's rook files, so the
-   incremental Zobrist update is the only visible failure
-   (`getPositionHash()` diverges from a fresh
-   `calculatePositionHash()`). Fix: route on `Move.getMoveType`
-   (already in the packed move) plus the slot's
-   `castlingRookFiles[]` entry to compute the rook source and
-   target from the king's actual `fromField`, and update the
-   Zobrist hash off those same dynamic fields.
+4. **`Board.makeMove` / `revertMove` now use dynamic king/rook
+   squares.** The earlier `if (fromField == e1) { … } else { … }`
+   dispatch has been replaced; the make/revert helpers now read the
+   king's actual source from the move and the rook's source from
+   `castlingRookFiles[slot]`, and update the Zobrist hash off those
+   same fields. The four
+   `BoardTest.makeCastling{KingSide,QueenSide}Move_{white,black}_chess960_*`
+   and the four `revertCastling{KingSide,QueenSide}Move_*_chess960_isRoundTripIdentity`
+   tests pinned the bug and are now green. (commit a2b85cf)
 
 **Key edge cases to keep covered** (all exercised by
 `Chess960CastlingTest`'s 120-case parameterised matrix plus the
@@ -225,15 +210,51 @@ four non-partner-rook spot tests):
      between rook source and rook target must be empty *except* the king
      source square.
 
-### Phase 3 — UCI castle move notation
+### Phase 3 — UCI castle move notation (partial — inbound done)
 
-1. `UciMoveParser.parse` accepts the king-to-rook-source form
-   (`e1h1` = kingside, `e1a1` = queenside) in addition to the legacy
-   king-destination form (`e1g1`, `e1c1`).
-2. `UciMoveParser.toUci` emits the king-to-rook-source form when the
-   `UCI_Chess960` option is on, the king-destination form otherwise.
-3. `UciHandler` tracks the `UCI_Chess960` option state set via `setoption`
-   and threads it into the parser/formatter calls.
+**Done** (in the same a2b85cf commit batch as Phase 2):
+
+1. **Inbound castle-notation resolution** is centralised in a new
+   `Board.resolve960MoveDescription` helper, called from
+   `Board.resolveMoveDescription` whenever `isChess960()` returns
+   true. It normalises three notation flavours to the canonical
+   castle Move (toCol = 6 for kingside, 2 for queenside, fromCol =
+   actual king's file):
+   - **SAN castle** — `O-O` / `O-O-O`. `MoveDescription.fromString`
+     produces a description with a hard-coded `fromCol = 4` (e-file)
+     and the right `CASTLING_*_SIDE` flag; the resolver detects the
+     flag on a non-king source square and rewrites `fromCol` to the
+     king's actual file via `findColOfPieceOnRow`.
+   - **UCI 960 king-to-rook** — `b1h1`, `g1a1`, etc. The resolver
+     sees an own-rook on the to-square at the kingside / queenside
+     rook file and rewrites `toCol` to the FIDE castle target
+     (g-file resp. c-file) and sets the matching castle flag.
+   - **Long-algebraic king-to-target multi-square** — `b1-g1`,
+     `g1-c1`, etc. The resolver recognises the king-target square
+     plus the geometric impossibility of a one-step king move and
+     sets the castle flag.
+2. `BoardTest.notationToMove_*` covers the inbound chain
+   (`fromString → resolveMoveDescription → moveDescriptionToMove`)
+   for every (color × side × {standard chess, 960 adjacent, 960
+   distant}) combination, 20 chain tests in total. All green.
+
+**Pending:**
+
+1. **Outbound formatter**: `UciMoveParser.toUci` still emits the
+   king-destination form (`e1g1`/`e1c1`) for castles. When
+   `UCI_Chess960` is set, it should emit the king-to-rook-source
+   form (`e1h1`/`e1a1`) so 960-aware GUIs receive what they expect.
+2. **`UciHandler` option tracking**: the `UCI_Chess960` option is
+   declared (`UciHandler.java:150`) but its value is not yet read
+   back from `setoption` and threaded to the parser/formatter.
+   With this, `UciMoveParser.toUci` can switch its output format
+   per game.
+
+Note on inbound: because the resolver already handles all three
+inbound notations regardless of the `UCI_Chess960` flag, GUIs can
+*already* send king-to-rook castles to myChess in either form —
+the engine doesn't need the flag to *receive* castles correctly.
+The flag only matters for the *outbound* direction.
 
 ### Phase 4 — FEN export (done — landed during Phase 1, commit b8bac8c)
 
@@ -259,8 +280,18 @@ display picks the right form via `is960()`.
    helpers that drive auto-detection tests.
 3. `Chess960CastlingTest` — 120 parameterised castling cases plus
    spot tests for king-in-check, attacked king-path, attacked rook,
-   attacked rook-only path squares, and the four failing tests for
-   the non-partner-rook-in-path bug (waiting on the Phase 2 fix).
+   attacked rook-only path squares, and the four non-partner-rook
+   regression tests. All green after Phase 2 closed.
+4. **`BoardTest` castle-notation chain tests** — `notationToMove_*`
+   (20 tests) exercise the production chain `fromString →
+   resolveMoveDescription → moveDescriptionToMove` for every castle
+   notation flavour. Replaced 32 earlier isolated tests that bypassed
+   `resolveMoveDescription`; the consolidated tests reflect what
+   real callers actually do.
+5. **`BoardTest` `makeCastling*` and `revertCastling*` 960 tests** —
+   four make + four revert round-trip tests with explicit board /
+   hash assertions on the king's actual square. All green after
+   commit a2b85cf.
 
 **Pending:**
 
@@ -273,8 +304,9 @@ display picks the right form via `is960()`.
 3. End-to-end FEN round-trip: import 960 FEN, play a move, export FEN,
    import again — Zobrist hash matches the first import after one undo.
 4. End-to-end engine self-play on a non-standard Scharnagl position via
-   the UCI handler — gated on Phase 2 (`Board.makeMove` fix) and Phase 3
-   (UCI parser/formatter for the king-to-rook-source form).
+   the UCI handler — gated on Phase 3's remaining outbound-formatter
+   work, so the engine emits castles in the form 960-aware GUIs
+   expect.
 
 ### Phase 6 — Evaluation adjustments for 960
 
@@ -380,14 +412,14 @@ playing strength in standard chess if we are not careful.
 
 ## Open items / pending decisions
 
-- **Branching.** Phases continue to land on `master` with green tests
-  between each (modulo the four `BoardTest.makeCastling*Side_*_chess960_*`
-  Phase-2 regression tests, which are red on purpose and pin the
-  remaining `Board.makeMove` gap). The earlier worry about
-  ELO-measurement overlap did not materialize: the no-resign
-  calibration runs against Stockfish use standard openings only,
-  so Phase-2 churn on the 960 castling path does not affect
-  those numbers.
+- **Branching.** Phases continue to land on `master` with green
+  tests between each. After commit a2b85cf the previously red
+  Phase-2 regression tests are green; the only remaining 960-
+  related red marker would surface if Phase 3's outbound-formatter
+  work introduced a regression. The earlier worry about ELO-
+  measurement overlap did not materialize: the no-resign
+  calibration runs against Stockfish / Pulse use standard openings
+  only, so 960-castle changes don't touch those numbers.
 - **`no-opening-weight` experiment branch.** Still unmerged. The +163
   ELO claim it once produced was measured before the UCI sign-bug was
   fixed and is therefore not trustworthy. Whether to keep, re-measure,
