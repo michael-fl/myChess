@@ -402,6 +402,108 @@ class BoardTest {
                 "Exception message should hint at ambiguity: " + ex.getMessage());
     }
 
+    @Test
+    void resolveMoveDescription_chess960_shortAlgebraicKingStep_resolvesToNormalKingMove() {
+        // 960 position with white king on f1, queenside rook on a1,
+        // kingside rook on h1. Black king parked on e8 (no attacks
+        // reach white's back rank). White to move.
+        //
+        // In this position the MoveGenerator legally emits TWO king
+        // moves to g1:
+        //   (a) the normal one-square king step f1 → g1, and
+        //   (b) the kingside castle, which in this 960 setup also
+        //       lands the king on g1 with the same from-square
+        //       (king stays on g1, rook h1 → f1).
+        //
+        // Convention: any explicit "king-to-target" notation —
+        // short-algebraic "Kg1", long-algebraic "f1-g1" — resolves
+        // to the normal king move. Castle has dedicated notations
+        // (SAN "O-O", UCI 960 "f1h1") that carriers of castle-intent
+        // are expected to use. resolveMoveDescription must therefore
+        // pick the typeNormal interpretation, not throw an
+        // ambiguity exception.
+        var board = Fen.importFEN("4k3/8/8/8/8/8/8/R4K1R w HA - 0 1");
+        var moveDescr = MoveDescription.fromString("Kg1", GameStatus.TURN_WHITE);
+
+        var resolved = board.resolveMoveDescription(moveDescr, newGen());
+        var move = board.moveDescriptionToMove(resolved);
+
+        assertEquals(Move.typeNormal, Move.getMoveType(move.move()),
+                "short-algebraic Kg1 in a 960 position where the same from/to "
+                        + "could also describe the castle must resolve to a normal "
+                        + "king move: " + ChessUtil.moveToString(move.move()));
+    }
+
+    @Test
+    void resolveMoveDescription_chess960_longAlgebraicKingStep_resolvesToNormalKingMove() {
+        // Same 960 position. The long-algebraic notation "f1-g1"
+        // — fromCol/fromRow explicit — also resolves to the normal
+        // one-square king step. Same convention as the short
+        // notation: explicit king-to-target = normal king move, even
+        // in the 960 corner case where the geometry could in
+        // principle also encode the kingside castle.
+        var board = Fen.importFEN("4k3/8/8/8/8/8/8/R4K1R w HA - 0 1");
+        var moveDescr = MoveDescription.fromString("f1-g1", GameStatus.TURN_WHITE);
+
+        var resolved = board.resolveMoveDescription(moveDescr, newGen());
+        var move = board.moveDescriptionToMove(resolved);
+
+        assertEquals(Move.typeNormal, Move.getMoveType(move.move()),
+                "long-algebraic f1-g1 in a 960 position where the same from/to "
+                        + "could also describe the castle must resolve to a normal "
+                        + "king move: " + ChessUtil.moveToString(move.move()));
+    }
+
+    @Test
+    void makeMove_chess960LongAlgebraicKingMove_recognisedAsCastle() {
+        // 960 position: white king on b1, queenside rook on a1,
+        // kingside rook on h1, lone black king on e8. White to
+        // move. In this position b1-g1 is *unambiguous* — a normal
+        // king move can only travel one square, so the only legal
+        // interpretation of king-from-b1-to-g1 is the kingside
+        // castle (king to g1, kingside rook from h1 to f1).
+        //
+        // The engine must therefore accept "b1-g1" as the long-
+        // algebraic form of the castle and execute it correctly:
+        // king ends on g1, kingside rook ends on f1, both source
+        // squares empty.
+        var game = new Game(Game.standardConfig(),
+                Fen.importFEN("4k3/8/8/8/8/8/8/RK5R w HA - 0 1"));
+        var moveDescr = MoveDescription.fromString("b1-g1", game.getTurn());
+
+        game.makeMove(moveDescr);
+
+        var board = game.getBoard();
+        assertEquals(Board.whiteKing, board.get(Board.g1), "king must land on g1");
+        assertEquals(Board.whiteRook, board.get(Board.f1), "kingside rook must land on f1");
+        assertEquals(Board.empty, board.get(Board.b1), "king's source square b1 must be empty");
+        assertEquals(Board.empty, board.get(Board.h1), "kingside rook source h1 must be empty");
+        assertEquals(Board.whiteRook, board.get(Board.a1), "queenside rook a1 stays put");
+    }
+
+    @Test
+    void makeMove_chess960LongAlgebraicQueenSideKingMove_recognisedAsCastle() {
+        // Queenside mirror of the previous test: white king on g1,
+        // queenside rook on a1, kingside rook on h1. The only legal
+        // king move from g1 to c1 is the queenside castle (a normal
+        // king step can travel one square at most, so g1-c1 cannot
+        // be anything else). The engine must accept "g1-c1" as the
+        // long-algebraic form of the castle and execute it
+        // correctly: king ends on c1, queenside rook ends on d1.
+        var game = new Game(Game.standardConfig(),
+                Fen.importFEN("4k3/8/8/8/8/8/8/R5KR w HA - 0 1"));
+        var moveDescr = MoveDescription.fromString("g1-c1", game.getTurn());
+
+        game.makeMove(moveDescr);
+
+        var board = game.getBoard();
+        assertEquals(Board.whiteKing, board.get(Board.c1), "king must land on c1");
+        assertEquals(Board.whiteRook, board.get(Board.d1), "queenside rook must land on d1");
+        assertEquals(Board.empty, board.get(Board.g1), "king's source square g1 must be empty");
+        assertEquals(Board.empty, board.get(Board.a1), "queenside rook source a1 must be empty");
+        assertEquals(Board.whiteRook, board.get(Board.h1), "kingside rook h1 stays put");
+    }
+
     // ---------- status-stack snapshot ----------
 
     @Test
@@ -591,7 +693,7 @@ class BoardTest {
     //
     // Each test below asserts both:
     //   1) the expected post-move board state (king on g/c file, rook
-    //      on f/d file, source squares empty);
+    //      on f/d file, source squares empty)
     //   2) hash consistency — getPositionHash() must equal a fresh
     //      calculatePositionHash() off the same raw board + game status.
     //
@@ -689,5 +791,402 @@ class BoardTest {
         long fresh = Board.calculatePositionHash(board.getRawBoard(), board.getGameStatus());
         assertEquals(fresh, stored, "incremental Zobrist update must match a fresh recomputation — "
                 + "with king on b8 the update must use b8 (not the hard-coded e8) as the king's source square");
+    }
+
+
+    // ---------- notation → Move pipeline (resolveMoveDescription + moveDescriptionToMove) ----------
+    //
+    // In production every call to board.moveDescriptionToMove is
+    // preceded by board.resolveMoveDescription (see Game.makeMove and
+    // OpeningDBImporter — the two only callers). The realistic
+    // input → output chain is therefore:
+    //
+    //   MoveDescription.fromString(notation, turn)
+    //     → board.resolveMoveDescription(moveDescr, moveGenerator)
+    //       → board.moveDescriptionToMove(resolved)
+    //         → Move
+    //
+    // These tests exercise that full chain for every castle-notation
+    // flavour the engine understands, in lieu of testing
+    // moveDescriptionToMove in isolation (which would test a path no
+    // real caller takes):
+    //
+    //   • SAN castle              : "O-O" / "O-O-O" — no square hint
+    //   • UCI 960 king-to-rook    : "b1h1" / "g1a1" — king moves to
+    //                                                 own rook
+    //   • Long-algebraic king-to-target multi-square:
+    //                               "b1-g1" / "g1-c1" — king takes a
+    //                                                   multi-square
+    //                                                   step to the
+    //                                                   castle landing
+    //
+    // For each, the test asserts on moveType, from-field and to-field
+    // of the resulting Move. The from/to assertions specifically
+    // expose bugs where any stage of the chain hardcodes a square
+    // that doesn't match the board state (e.g. fromString's
+    // hardcoded e1/e8 source for SAN castles).
+
+    private static void assertNotationProducesMove(String fen, String notation,
+            byte expectedMoveType, int expectedFromField, int expectedToField) {
+        var board = Fen.importFEN(fen);
+        var moveDescr = MoveDescription.fromString(notation, board.getGameStatus().getTurn());
+        var resolved = board.resolveMoveDescription(moveDescr, newGen());
+        var move = board.moveDescriptionToMove(resolved);
+
+        String diag = " (notation '" + notation + "', resolved to " + ChessUtil.moveToString(move.move()) + ")";
+        assertEquals(expectedMoveType, Move.getMoveType(move.move()), "moveType" + diag);
+        assertEquals(expectedFromField, Move.getFromField(move.move()), "from-field" + diag);
+        assertEquals(expectedToField, Move.getToField(move.move()), "to-field" + diag);
+    }
+
+    // -- SAN castle, standard chess (smoke) -------------------------
+
+    @Test
+    void notationToMove_OO_white_standardChess_isKingsideCastle() {
+        assertNotationProducesMove("4k3/8/8/8/8/8/8/R3K2R w KQ - 0 1",
+                "O-O", Move.typeCastlingKingSide, Board.e1, Board.g1);
+    }
+
+    @Test
+    void notationToMove_OOO_white_standardChess_isQueensideCastle() {
+        assertNotationProducesMove("4k3/8/8/8/8/8/8/R3K2R w KQ - 0 1",
+                "O-O-O", Move.typeCastlingQueenSide, Board.e1, Board.c1);
+    }
+
+    @Test
+    void notationToMove_OO_black_standardChess_isKingsideCastle() {
+        assertNotationProducesMove("r3k2r/8/8/8/8/8/8/4K3 b kq - 0 1",
+                "O-O", Move.typeCastlingKingSide, Board.e8, Board.g8);
+    }
+
+    @Test
+    void notationToMove_OOO_black_standardChess_isQueensideCastle() {
+        assertNotationProducesMove("r3k2r/8/8/8/8/8/8/4K3 b kq - 0 1",
+                "O-O-O", Move.typeCastlingQueenSide, Board.e8, Board.c8);
+    }
+
+    // -- SAN castle, chess960 (adjacent and distant variants) -------
+
+    // King on g1, kingside rook on h1 — king stays on g1 after castle.
+    @Test
+    void notationToMove_OO_white_chess960KingAdjacentRook_isKingsideCastle() {
+        assertNotationProducesMove("4k3/8/8/8/8/8/8/R5KR w HA - 0 1",
+                "O-O", Move.typeCastlingKingSide, Board.g1, Board.g1);
+    }
+
+    // King on b1, kingside rook on h1.
+    @Test
+    void notationToMove_OO_white_chess960KingDistantRook_isKingsideCastle() {
+        assertNotationProducesMove("4k3/8/8/8/8/8/8/RK5R w HA - 0 1",
+                "O-O", Move.typeCastlingKingSide, Board.b1, Board.g1);
+    }
+
+    // King on b1, queenside rook on a1.
+    @Test
+    void notationToMove_OOO_white_chess960KingAdjacentRook_isQueensideCastle() {
+        assertNotationProducesMove("4k3/8/8/8/8/8/8/RK5R w HA - 0 1",
+                "O-O-O", Move.typeCastlingQueenSide, Board.b1, Board.c1);
+    }
+
+    // King on g1, queenside rook on a1.
+    @Test
+    void notationToMove_OOO_white_chess960KingDistantRook_isQueensideCastle() {
+        assertNotationProducesMove("4k3/8/8/8/8/8/8/R5KR w HA - 0 1",
+                "O-O-O", Move.typeCastlingQueenSide, Board.g1, Board.c1);
+    }
+
+    @Test
+    void notationToMove_OO_black_chess960KingAdjacentRook_isKingsideCastle() {
+        assertNotationProducesMove("r5kr/8/8/8/8/8/8/4K3 b ha - 0 1",
+                "O-O", Move.typeCastlingKingSide, Board.g8, Board.g8);
+    }
+
+    @Test
+    void notationToMove_OO_black_chess960KingDistantRook_isKingsideCastle() {
+        assertNotationProducesMove("rk5r/8/8/8/8/8/8/4K3 b ha - 0 1",
+                "O-O", Move.typeCastlingKingSide, Board.b8, Board.g8);
+    }
+
+    @Test
+    void notationToMove_OOO_black_chess960KingAdjacentRook_isQueensideCastle() {
+        assertNotationProducesMove("rk5r/8/8/8/8/8/8/4K3 b ha - 0 1",
+                "O-O-O", Move.typeCastlingQueenSide, Board.b8, Board.c8);
+    }
+
+    @Test
+    void notationToMove_OOO_black_chess960KingDistantRook_isQueensideCastle() {
+        assertNotationProducesMove("r5kr/8/8/8/8/8/8/4K3 b ha - 0 1",
+                "O-O-O", Move.typeCastlingQueenSide, Board.g8, Board.c8);
+    }
+
+    // -- UCI 960 king-to-rook (4 tests) -----------------------------
+    //
+    // Input notation puts the rook's square in the to-position
+    // ("b1h1" = king on b1 → own kingside rook on h1). The resulting
+    // Move's toField must be the king's actual destination (g1 for
+    // kingside, c1 for queenside) — NOT the rook's square — so that
+    // castle moves from this path are encoded identically to those
+    // emitted by the MoveGenerator (which uses g1/c1 by construction).
+
+    @Test
+    void notationToMove_kingToKingsideRook_white_chess960_isKingsideCastle() {
+        assertNotationProducesMove("4k3/8/8/8/8/8/8/RK5R w HA - 0 1",
+                "b1h1", Move.typeCastlingKingSide, Board.b1, Board.g1);
+    }
+
+    @Test
+    void notationToMove_kingToQueensideRook_white_chess960_isQueensideCastle() {
+        assertNotationProducesMove("4k3/8/8/8/8/8/8/R5KR w HA - 0 1",
+                "g1a1", Move.typeCastlingQueenSide, Board.g1, Board.c1);
+    }
+
+    @Test
+    void notationToMove_kingToKingsideRook_black_chess960_isKingsideCastle() {
+        assertNotationProducesMove("rk5r/8/8/8/8/8/8/4K3 b ha - 0 1",
+                "b8h8", Move.typeCastlingKingSide, Board.b8, Board.g8);
+    }
+
+    @Test
+    void notationToMove_kingToQueensideRook_black_chess960_isQueensideCastle() {
+        assertNotationProducesMove("r5kr/8/8/8/8/8/8/4K3 b ha - 0 1",
+                "g8a8", Move.typeCastlingQueenSide, Board.g8, Board.c8);
+    }
+
+    // -- Long-algebraic king-target multi-square 960 (4 tests) ------
+
+    @Test
+    void notationToMove_longAlgebraicMultiSquare_white_kingside_chess960_isKingsideCastle() {
+        assertNotationProducesMove("4k3/8/8/8/8/8/8/RK5R w HA - 0 1",
+                "b1-g1", Move.typeCastlingKingSide, Board.b1, Board.g1);
+    }
+
+    @Test
+    void notationToMove_longAlgebraicMultiSquare_white_queenside_chess960_isQueensideCastle() {
+        assertNotationProducesMove("4k3/8/8/8/8/8/8/R5KR w HA - 0 1",
+                "g1-c1", Move.typeCastlingQueenSide, Board.g1, Board.c1);
+    }
+
+    @Test
+    void notationToMove_longAlgebraicMultiSquare_black_kingside_chess960_isKingsideCastle() {
+        assertNotationProducesMove("rk5r/8/8/8/8/8/8/4K3 b ha - 0 1",
+                "b8-g8", Move.typeCastlingKingSide, Board.b8, Board.g8);
+    }
+
+    @Test
+    void notationToMove_longAlgebraicMultiSquare_black_queenside_chess960_isQueensideCastle() {
+        assertNotationProducesMove("r5kr/8/8/8/8/8/8/4K3 b ha - 0 1",
+                "g8-c8", Move.typeCastlingQueenSide, Board.g8, Board.c8);
+    }
+
+    // ---------- Board.revertMove for Chess960 castling ----------
+    //
+    // _revertCastlingKingSideMove and _revertCastlingQueenSideMove
+    // (Board.java:870-904) dispatch on `fromField == Board.e1` to tell
+    // white from black, and they hardcode the rook restoration squares
+    // (h1/f1, a1/d1, h8/f8, a8/d8). In a 960 game with a non-e king,
+    // the dispatch sends the move into the wrong colour branch and the
+    // rook restoration touches squares that have nothing to do with the
+    // actual castle.
+    //
+    // Each test performs a round-trip: snapshot the raw board + position
+    // hash, makeMove, revertMove, then assert the board (full raw byte
+    // array) and hash are byte-identical to the snapshot. With the
+    // current buggy code make and revert do NOT mirror each other on
+    // 960 boards, so the round-trip leaves phantom pieces on the
+    // unrelated back rank and / or a hash that disagrees with the
+    // resulting raw board.
+
+    @Test
+    void revertCastlingKingSideMove_white_chess960_isRoundTripIdentity() {
+        var board = Fen.importFEN("4k3/8/8/8/8/8/8/RK5R w HA - 0 1");
+        byte[] originalBoard = Arrays.copyOf(board.getRawBoard(), board.getRawBoard().length);
+        long originalHash = board.getGameStatus().getPositionHash();
+        int castleMove = Move.create(Board.b1, Board.g1, Board.empty, Move.typeCastlingKingSide);
+
+        board.makeMove(castleMove);
+        board.revertMove();
+
+        assertArrayEquals(originalBoard, board.getRawBoard(),
+                "makeMove + revertMove must restore the raw board byte-for-byte");
+        assertEquals(originalHash, board.getGameStatus().getPositionHash(),
+                "makeMove + revertMove must restore the position hash");
+    }
+
+    @Test
+    void revertCastlingQueenSideMove_white_chess960_isRoundTripIdentity() {
+        var board = Fen.importFEN("4k3/8/8/8/8/8/8/RK5R w HA - 0 1");
+        byte[] originalBoard = Arrays.copyOf(board.getRawBoard(), board.getRawBoard().length);
+        long originalHash = board.getGameStatus().getPositionHash();
+        int castleMove = Move.create(Board.b1, Board.c1, Board.empty, Move.typeCastlingQueenSide);
+
+        board.makeMove(castleMove);
+        board.revertMove();
+
+        assertArrayEquals(originalBoard, board.getRawBoard(),
+                "makeMove + revertMove must restore the raw board byte-for-byte");
+        assertEquals(originalHash, board.getGameStatus().getPositionHash(),
+                "makeMove + revertMove must restore the position hash");
+    }
+
+    @Test
+    void revertCastlingKingSideMove_black_chess960_isRoundTripIdentity() {
+        var board = Fen.importFEN("rk5r/8/8/8/8/8/8/4K3 b ha - 0 1");
+        byte[] originalBoard = Arrays.copyOf(board.getRawBoard(), board.getRawBoard().length);
+        long originalHash = board.getGameStatus().getPositionHash();
+        int castleMove = Move.create(Board.b8, Board.g8, Board.empty, Move.typeCastlingKingSide);
+
+        board.makeMove(castleMove);
+        board.revertMove();
+
+        assertArrayEquals(originalBoard, board.getRawBoard(),
+                "makeMove + revertMove must restore the raw board byte-for-byte");
+        assertEquals(originalHash, board.getGameStatus().getPositionHash(),
+                "makeMove + revertMove must restore the position hash");
+    }
+
+    @Test
+    void revertCastlingQueenSideMove_black_chess960_isRoundTripIdentity() {
+        var board = Fen.importFEN("rk5r/8/8/8/8/8/8/4K3 b ha - 0 1");
+        byte[] originalBoard = Arrays.copyOf(board.getRawBoard(), board.getRawBoard().length);
+        long originalHash = board.getGameStatus().getPositionHash();
+        int castleMove = Move.create(Board.b8, Board.c8, Board.empty, Move.typeCastlingQueenSide);
+
+        board.makeMove(castleMove);
+        board.revertMove();
+
+        assertArrayEquals(originalBoard, board.getRawBoard(),
+                "makeMove + revertMove must restore the raw board byte-for-byte");
+        assertEquals(originalHash, board.getGameStatus().getPositionHash(),
+                "makeMove + revertMove must restore the position hash");
+    }
+
+    // ---------- SAN castling notation (O-O / O-O-O) ----------
+    //
+    // SAN castling is intent-only — "O-O" / "O-O-O" don't carry any
+    // square information, so the same notation must work in standard
+    // chess AND in any 960 starting configuration. Both pairs of
+    // tests below use the same notation; only the board setup
+    // changes between standard and 960.
+
+    @Test
+    void makeMove_standardChess_shortCastleNotation_executesKingsideCastle() {
+        // Standard chess: king on e1, rooks on a1/h1. "O-O" must
+        // produce king on g1, kingside rook on f1.
+        var game = new Game(Game.standardConfig(),
+                Fen.importFEN("4k3/8/8/8/8/8/8/R3K2R w KQ - 0 1"));
+        assertFalse(game.getBoard().isChess960(),
+                "precondition: this FEN must be detected as standard chess");
+
+        game.makeMove(MoveDescription.fromString("O-O", game.getTurn()));
+
+        var board = game.getBoard();
+        assertEquals(Board.whiteKing, board.get(Board.g1), "king must land on g1");
+        assertEquals(Board.whiteRook, board.get(Board.f1), "kingside rook must land on f1");
+        assertEquals(Board.empty, board.get(Board.e1), "king's source square e1 must be empty");
+        assertEquals(Board.empty, board.get(Board.h1), "kingside rook source h1 must be empty");
+    }
+
+    @Test
+    void makeMove_chess960_shortCastleNotation_executesKingsideCastle() {
+        // 960: king on b1, rooks on a1/h1. "O-O" must still produce
+        // king on g1 and kingside rook on f1 — same SAN notation,
+        // different king source.
+        var game = new Game(Game.standardConfig(),
+                Fen.importFEN("4k3/8/8/8/8/8/8/RK5R w HA - 0 1"));
+        assertTrue(game.getBoard().isChess960(),
+                "precondition: this FEN must be detected as a 960 position");
+
+        game.makeMove(MoveDescription.fromString("O-O", game.getTurn()));
+
+        var board = game.getBoard();
+        assertEquals(Board.whiteKing, board.get(Board.g1), "king must land on g1");
+        assertEquals(Board.whiteRook, board.get(Board.f1), "kingside rook must land on f1");
+        assertEquals(Board.empty, board.get(Board.b1), "king's source square b1 must be empty");
+        assertEquals(Board.empty, board.get(Board.h1), "kingside rook source h1 must be empty");
+    }
+
+    @Test
+    void makeMove_standardChess_longCastleNotation_executesQueensideCastle() {
+        // Standard chess: king on e1, rooks on a1/h1. "O-O-O" must
+        // produce king on c1, queenside rook on d1.
+        var game = new Game(Game.standardConfig(),
+                Fen.importFEN("4k3/8/8/8/8/8/8/R3K2R w KQ - 0 1"));
+        assertFalse(game.getBoard().isChess960(),
+                "precondition: this FEN must be detected as standard chess");
+
+        game.makeMove(MoveDescription.fromString("O-O-O", game.getTurn()));
+
+        var board = game.getBoard();
+        assertEquals(Board.whiteKing, board.get(Board.c1), "king must land on c1");
+        assertEquals(Board.whiteRook, board.get(Board.d1), "queenside rook must land on d1");
+        assertEquals(Board.empty, board.get(Board.e1), "king's source square e1 must be empty");
+        assertEquals(Board.empty, board.get(Board.a1), "queenside rook source a1 must be empty");
+    }
+
+    @Test
+    void makeMove_chess960_longCastleNotation_executesQueensideCastle() {
+        // 960: king on b1, rooks on a1/h1. "O-O-O" must produce
+        // king on c1 (one square right of b1), queenside rook on d1.
+        var game = new Game(Game.standardConfig(),
+                Fen.importFEN("4k3/8/8/8/8/8/8/RK5R w HA - 0 1"));
+        assertTrue(game.getBoard().isChess960(),
+                "precondition: this FEN must be detected as a 960 position");
+
+        game.makeMove(MoveDescription.fromString("O-O-O", game.getTurn()));
+
+        var board = game.getBoard();
+        assertEquals(Board.whiteKing, board.get(Board.c1), "king must land on c1");
+        assertEquals(Board.whiteRook, board.get(Board.d1), "queenside rook must land on d1");
+        assertEquals(Board.empty, board.get(Board.b1), "king's source square b1 must be empty");
+        assertEquals(Board.empty, board.get(Board.a1), "queenside rook source a1 must be empty");
+    }
+
+    // ---------- UCI Chess960 king-to-rook castling notation ----------
+    //
+    // UCI's Chess960 convention encodes a castle as king-source →
+    // own-rook-source (the rook the castle is paired with). The
+    // destination is the rook's *starting* square, not its
+    // post-castle square, so the notation is unambiguous: a king
+    // cannot legally capture its own rook, so any king-move that
+    // lands on an own rook is necessarily a castle, and the side
+    // (king/queenside) is determined by which rook the move targets.
+
+    @Test
+    void makeMove_chess960_kingToKingsideRookNotation_executesKingsideCastle() {
+        // 960: king on b1, queenside rook on a1, kingside rook on
+        // h1. "b1h1" = king moves to its own kingside rook = castle
+        // kingside. Resulting position: king on g1, kingside rook on
+        // f1.
+        var game = new Game(Game.standardConfig(),
+                Fen.importFEN("4k3/8/8/8/8/8/8/RK5R w HA - 0 1"));
+        var moveDescr = MoveDescription.fromString("b1h1", game.getTurn());
+
+        game.makeMove(moveDescr);
+
+        var board = game.getBoard();
+        assertEquals(Board.whiteKing, board.get(Board.g1), "king must land on g1");
+        assertEquals(Board.whiteRook, board.get(Board.f1), "kingside rook must land on f1");
+        assertEquals(Board.empty, board.get(Board.b1), "king's source square b1 must be empty");
+        assertEquals(Board.empty, board.get(Board.h1), "kingside rook source h1 must be empty");
+        assertEquals(Board.whiteRook, board.get(Board.a1), "queenside rook a1 stays put");
+    }
+
+    @Test
+    void makeMove_chess960_kingToQueensideRookNotation_executesQueensideCastle() {
+        // 960: same setup. "b1a1" = king moves to its own queenside
+        // rook = castle queenside. Resulting position: king on c1,
+        // queenside rook on d1.
+        var game = new Game(Game.standardConfig(),
+                Fen.importFEN("4k3/8/8/8/8/8/8/RK5R w HA - 0 1"));
+        var moveDescr = MoveDescription.fromString("b1a1", game.getTurn());
+
+        game.makeMove(moveDescr);
+
+        var board = game.getBoard();
+        assertEquals(Board.whiteKing, board.get(Board.c1), "king must land on c1");
+        assertEquals(Board.whiteRook, board.get(Board.d1), "queenside rook must land on d1");
+        assertEquals(Board.empty, board.get(Board.b1), "king's source square b1 must be empty");
+        assertEquals(Board.empty, board.get(Board.a1), "queenside rook source a1 must be empty");
+        assertEquals(Board.whiteRook, board.get(Board.h1), "kingside rook h1 stays put");
     }
 }
