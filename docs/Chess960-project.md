@@ -301,15 +301,24 @@ display picks the right form via `is960()`.
    confirms `WeightingFunction.calculate` stays antisymmetric on
    non-standard back ranks, so an asymmetric eval term introduced
    by future Phase-6 changes would be caught immediately.
+7. **End-to-end FEN round-trip for 960 positions** — two
+   `BoardTest.fenRoundTrip_chess960_*_preservesHash` tests assert
+   that `import FEN → makeMove → exportFEN → re-import` reproduces
+   the in-memory post-move Zobrist hash byte-for-byte. One test
+   covers the 960 kingside castle (`b1→g1` with rook `h1→f1` on
+   `4k3/8/8/8/8/8/8/RK5R w HA - 0 1`); the other covers a non-castle
+   knight move on the cutechess sample (`RKBBNRNQ w FAfa`) so the
+   Shredder export path runs with the full set of back-rank
+   castling rights still alive. Together they pin Shredder-letter
+   serialisation against any future regression in the FEN export
+   path.
 
 **Pending:**
 
 1. Verify that the opening-DB lookup path tolerates 960 positions (it
    should, since lookups are pure Zobrist-keyed) — the existing DB
    will simply miss on 960 starts, which is the desired behavior.
-2. End-to-end FEN round-trip: import 960 FEN, play a move, export FEN,
-   import again — Zobrist hash matches the first import after one undo.
-3. End-to-end engine self-play on a non-standard Scharnagl position via
+2. End-to-end engine self-play on a non-standard Scharnagl position via
    the UCI handler — gated on Phase 3's remaining outbound-formatter
    work, so the engine emits castles in the form 960-aware GUIs
    expect.
