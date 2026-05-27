@@ -28,4 +28,10 @@ src/test/resources/large.pgn
 /test/
 /test*-*
 .claude/
+/engines/
+/versions/
+
+/myChess-notes*
+/myChess-stderr*
+
 

@@ -575,4 +575,119 @@ class BoardTest {
 
         assertTrue(copy.isChess960(), "Board.copy() must preserve the is960 flag");
     }
+
+    // ---------- Board.makeMove for Chess960 castling ----------
+    //
+    // The four _makeCastlingXxxSideMove implementations in Board today
+    // dispatch on `fromField == e1` to tell white from black, and they
+    // hard-code the rook squares as h1/f1 / a1/d1 (white) and h8/f8 /
+    // a8/d8 (black). In a 960 game where the king starts on a non-e
+    // file, the dispatch sends the white move into the black branch
+    // (and vice versa); even when the rook squares happen to coincide
+    // with the standard chess defaults, the incremental Zobrist update
+    // still XORs in/out keys for e1/e8/h1/h8 instead of the actual
+    // king and rook source squares — so the stored position hash
+    // diverges from a fresh recomputation off the resulting board.
+    //
+    // Each test below asserts both:
+    //   1) the expected post-move board state (king on g/c file, rook
+    //      on f/d file, source squares empty);
+    //   2) hash consistency — getPositionHash() must equal a fresh
+    //      calculatePositionHash() off the same raw board + game status.
+    //
+    // For the two black tests the buggy code happens to leave a
+    // board-correct result (the hard-coded h8/f8 and a8/d8 squares
+    // coincide with the test setup's rook files), so assertion (2)
+    // is the failure mode there. Assertion (1) still pins the
+    // expected board for documentation and for the case where a
+    // future bug breaks the board too.
+
+    @Test
+    void makeCastlingKingSideMove_white_chess960_movesKingAndKingsideRook() {
+        // 960 layout: white king on b1, queenside rook on a1, kingside
+        // rook on h1. After kingside castling, king must sit on g1
+        // and the kingside rook on f1; the queenside rook stays.
+        var board = Fen.importFEN("4k3/8/8/8/8/8/8/RK5R w HA - 0 1");
+        int castleMove = Move.create(Board.b1, Board.g1, Board.empty, Move.typeCastlingKingSide);
+
+        board.makeMove(castleMove);
+
+        assertEquals(Board.empty, board.get(Board.b1), "king's source square b1 must be empty");
+        assertEquals(Board.whiteKing, board.get(Board.g1), "king must be on g1");
+        assertEquals(Board.empty, board.get(Board.h1), "kingside rook source h1 must be empty");
+        assertEquals(Board.whiteRook, board.get(Board.f1), "kingside rook must be on f1");
+        assertEquals(Board.whiteRook, board.get(Board.a1), "queenside rook a1 stays");
+        assertEquals(Board.blackKing, board.get(Board.e8), "black king e8 untouched");
+        assertEquals(Board.empty, board.get(Board.f8), "f8 must remain empty — no rook should be conjured on black's back rank");
+
+        long stored = board.getGameStatus().getPositionHash();
+        long fresh = Board.calculatePositionHash(board.getRawBoard(), board.getGameStatus());
+        assertEquals(fresh, stored, "incremental Zobrist update must match a fresh recomputation");
+    }
+
+    @Test
+    void makeCastlingQueenSideMove_white_chess960_movesKingAndQueensideRook() {
+        // Same 960 layout, but castle queenside. King b1 → c1, queenside
+        // rook a1 → d1, kingside rook h1 stays.
+        var board = Fen.importFEN("4k3/8/8/8/8/8/8/RK5R w HA - 0 1");
+        int castleMove = Move.create(Board.b1, Board.c1, Board.empty, Move.typeCastlingQueenSide);
+
+        board.makeMove(castleMove);
+
+        assertEquals(Board.empty, board.get(Board.b1), "king's source square b1 must be empty");
+        assertEquals(Board.whiteKing, board.get(Board.c1), "king must be on c1");
+        assertEquals(Board.empty, board.get(Board.a1), "queenside rook source a1 must be empty");
+        assertEquals(Board.whiteRook, board.get(Board.d1), "queenside rook must be on d1");
+        assertEquals(Board.whiteRook, board.get(Board.h1), "kingside rook h1 stays");
+        assertEquals(Board.blackKing, board.get(Board.e8), "black king e8 untouched");
+        assertEquals(Board.empty, board.get(Board.d8), "d8 must remain empty — no rook should be conjured on black's back rank");
+
+        long stored = board.getGameStatus().getPositionHash();
+        long fresh = Board.calculatePositionHash(board.getRawBoard(), board.getGameStatus());
+        assertEquals(fresh, stored, "incremental Zobrist update must match a fresh recomputation");
+    }
+
+    @Test
+    void makeCastlingKingSideMove_black_chess960_movesKingAndKingsideRook() {
+        // Mirror layout for black: king on b8, rooks on a8 / h8.
+        // Black kingside castle puts king on g8, kingside rook on f8.
+        var board = Fen.importFEN("rk5r/8/8/8/8/8/8/4K3 b ha - 0 1");
+        int castleMove = Move.create(Board.b8, Board.g8, Board.empty, Move.typeCastlingKingSide);
+
+        board.makeMove(castleMove);
+
+        assertEquals(Board.empty, board.get(Board.b8), "king's source square b8 must be empty");
+        assertEquals(Board.blackKing, board.get(Board.g8), "king must be on g8");
+        assertEquals(Board.empty, board.get(Board.h8), "kingside rook source h8 must be empty");
+        assertEquals(Board.blackRook, board.get(Board.f8), "kingside rook must be on f8");
+        assertEquals(Board.blackRook, board.get(Board.a8), "queenside rook a8 stays");
+        assertEquals(Board.whiteKing, board.get(Board.e1), "white king e1 untouched");
+
+        long stored = board.getGameStatus().getPositionHash();
+        long fresh = Board.calculatePositionHash(board.getRawBoard(), board.getGameStatus());
+        assertEquals(fresh, stored, "incremental Zobrist update must match a fresh recomputation — "
+                + "with king on b8 the update must use b8 (not the hard-coded e8) as the king's source square");
+    }
+
+    @Test
+    void makeCastlingQueenSideMove_black_chess960_movesKingAndQueensideRook() {
+        // Same black 960 layout, castle queenside. King b8 → c8,
+        // queenside rook a8 → d8, kingside rook h8 stays.
+        var board = Fen.importFEN("rk5r/8/8/8/8/8/8/4K3 b ha - 0 1");
+        int castleMove = Move.create(Board.b8, Board.c8, Board.empty, Move.typeCastlingQueenSide);
+
+        board.makeMove(castleMove);
+
+        assertEquals(Board.empty, board.get(Board.b8), "king's source square b8 must be empty");
+        assertEquals(Board.blackKing, board.get(Board.c8), "king must be on c8");
+        assertEquals(Board.empty, board.get(Board.a8), "queenside rook source a8 must be empty");
+        assertEquals(Board.blackRook, board.get(Board.d8), "queenside rook must be on d8");
+        assertEquals(Board.blackRook, board.get(Board.h8), "kingside rook h8 stays");
+        assertEquals(Board.whiteKing, board.get(Board.e1), "white king e1 untouched");
+
+        long stored = board.getGameStatus().getPositionHash();
+        long fresh = Board.calculatePositionHash(board.getRawBoard(), board.getGameStatus());
+        assertEquals(fresh, stored, "incremental Zobrist update must match a fresh recomputation — "
+                + "with king on b8 the update must use b8 (not the hard-coded e8) as the king's source square");
+    }
 }

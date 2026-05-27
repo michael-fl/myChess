@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static org.michaelfl.mychess.Assert.__assert;
 import static org.michaelfl.mychess.ChessUtil.*;
 import static org.michaelfl.mychess.RandomNumbers.RANDOM_NUMBERS;
 
@@ -119,6 +120,15 @@ public final class Board {
     private static final int TURN_INDEX = 12 * 64; // length = 1
     private static final int CASTLING_RIGHTS_INDEX = 12 * 64 + 1; // length = 16
     private static final int EN_PASSANT_INDEX = 12 * 64 + 17; // length = 8
+
+    // Piece-number constants for direct indexing into RANDOM_NUMBERS.
+    // Equivalent to ChessUtil.getPieceNumber12(<piece byte>), surfaced as
+    // compile-time constants so the castling-hash code can compose the
+    // RANDOM_NUMBERS index inline without going through the helper.
+    private static final int WHITE_ROOK_NO = 3;
+    private static final int WHITE_KING_NO = 5;
+    private static final int BLACK_ROOK_NO = 9;
+    private static final int BLACK_KING_NO = 11;
 
     private static final char[] printSymbols = new char[22];
     static {
@@ -715,29 +725,40 @@ public final class Board {
     private long _makeCastlingKingSideMove(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
+        // TODO remove
+        __assert(() -> {
+            var piece = get(fromField);
+            return getGameStatus().isWhiteTurn() ? piece == Board.whiteKing : piece == Board.blackKing;
+        }, () -> "Wrong kingside castling source field: " + ChessUtil.moveToString(move));
+        __assert(() -> getGameStatus().isWhiteTurn() ? toField == Board.g1 : toField == Board.g8, () -> "Wrong kingside castling target field: " + ChessUtil.moveToString(move));
+
         long newPositionHash = getGameStatus().getPositionHash();
 
         board[toField] =  board[fromField];
         board[fromField] = empty;
 
-        if (fromField == e1) {
-            board[h1] = empty;
+        if (ChessUtil.getRowOfField(fromField) == 0) { // White
+            final int rookFile = getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE);
+            final int rookField = ChessUtil.getFieldFromColAndRow(rookFile, 0);
+            board[rookField] = empty;
             board[f1] = whiteRook;
 
             // Update hash
-            newPositionHash ^= RANDOM_NUMBERS[5 * 64 + ChessUtil.getFieldNumber64(e1)]; // white king
-            newPositionHash ^= RANDOM_NUMBERS[5 * 64 + ChessUtil.getFieldNumber64(g1)];
-            newPositionHash ^= RANDOM_NUMBERS[3 * 64 + ChessUtil.getFieldNumber64(h1)]; // white rook
-            newPositionHash ^= RANDOM_NUMBERS[3 * 64 + ChessUtil.getFieldNumber64(f1)];
-        } else {
-            board[h8] = empty;
+            newPositionHash ^= RANDOM_NUMBERS[WHITE_KING_NO * 64 + ChessUtil.getFieldNumber64(fromField)]; // remove king
+            newPositionHash ^= RANDOM_NUMBERS[WHITE_KING_NO * 64 + ChessUtil.getFieldNumber64(g1)];        // add king
+            newPositionHash ^= RANDOM_NUMBERS[WHITE_ROOK_NO * 64 + ChessUtil.getFieldNumber64(rookField)]; // remove rook
+            newPositionHash ^= RANDOM_NUMBERS[WHITE_ROOK_NO * 64 + ChessUtil.getFieldNumber64(f1)];        // add rook
+        } else { // Black
+            final int rookFile = getCastlingRookFile(CastlingSlot.BLACK_KINGSIDE);
+            final int rookField = ChessUtil.getFieldFromColAndRow(rookFile, 7);
+            board[rookField] = empty;
             board[f8] = blackRook;
 
             // Update hash
-            newPositionHash ^= RANDOM_NUMBERS[11 * 64 + ChessUtil.getFieldNumber64(e8)]; // black king
-            newPositionHash ^= RANDOM_NUMBERS[11 * 64 + ChessUtil.getFieldNumber64(g8)];
-            newPositionHash ^= RANDOM_NUMBERS[9 * 64 + ChessUtil.getFieldNumber64(h8)]; // black rook
-            newPositionHash ^= RANDOM_NUMBERS[9 * 64 + ChessUtil.getFieldNumber64(f8)];
+            newPositionHash ^= RANDOM_NUMBERS[BLACK_KING_NO * 64 + ChessUtil.getFieldNumber64(fromField)]; // remove king
+            newPositionHash ^= RANDOM_NUMBERS[BLACK_KING_NO * 64 + ChessUtil.getFieldNumber64(g8)];        // add king
+            newPositionHash ^= RANDOM_NUMBERS[BLACK_ROOK_NO * 64 + ChessUtil.getFieldNumber64(rookField)]; // remove rook
+            newPositionHash ^= RANDOM_NUMBERS[BLACK_ROOK_NO * 64 + ChessUtil.getFieldNumber64(f8)];        // add rook
         }
 
         return newPositionHash;
@@ -751,29 +772,40 @@ public final class Board {
     private long _makeCastlingQueenSideMove(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
+        // TODO remove
+        __assert(() -> {
+            var piece = get(fromField);
+            return getGameStatus().isWhiteTurn() ? piece == Board.whiteKing : piece == Board.blackKing;
+        }, () -> "Wrong queenside castling source field: " + ChessUtil.moveToString(move));
+        __assert(() -> getGameStatus().isWhiteTurn() ? toField == Board.c1 : toField == Board.c8, () -> "Wrong queenside castling target field: " + ChessUtil.moveToString(move));
+
         long newPositionHash = getGameStatus().getPositionHash();
 
         board[toField] =  board[fromField];
         board[fromField] = empty;
 
-        if (fromField == e1) {
-            board[a1] = empty;
+        if (ChessUtil.getRowOfField(fromField) == 0) { // White
+            final int rookFile = getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE);
+            final int rookField = ChessUtil.getFieldFromColAndRow(rookFile, 0);
+            board[rookField] = empty;
             board[d1] = whiteRook;
 
             // Update hash
-            newPositionHash ^= RANDOM_NUMBERS[5 * 64 + ChessUtil.getFieldNumber64(e1)]; // white king
-            newPositionHash ^= RANDOM_NUMBERS[5 * 64 + ChessUtil.getFieldNumber64(c1)];
-            newPositionHash ^= RANDOM_NUMBERS[3 * 64 + ChessUtil.getFieldNumber64(a1)]; // white rook
-            newPositionHash ^= RANDOM_NUMBERS[3 * 64 + ChessUtil.getFieldNumber64(d1)];
-        } else {
-            board[a8] = empty;
+            newPositionHash ^= RANDOM_NUMBERS[WHITE_KING_NO * 64 + ChessUtil.getFieldNumber64(fromField)]; // remove king
+            newPositionHash ^= RANDOM_NUMBERS[WHITE_KING_NO * 64 + ChessUtil.getFieldNumber64(c1)];        // add king
+            newPositionHash ^= RANDOM_NUMBERS[WHITE_ROOK_NO * 64 + ChessUtil.getFieldNumber64(rookField)]; // remove rook
+            newPositionHash ^= RANDOM_NUMBERS[WHITE_ROOK_NO * 64 + ChessUtil.getFieldNumber64(d1)];        // add rook
+        } else { // Black
+            final int rookFile = getCastlingRookFile(CastlingSlot.BLACK_QUEENSIDE);
+            final int rookField = ChessUtil.getFieldFromColAndRow(rookFile, 7);
+            board[rookField] = empty;
             board[d8] = blackRook;
 
             // Update hash
-            newPositionHash ^= RANDOM_NUMBERS[11 * 64 + ChessUtil.getFieldNumber64(e8)]; // black king
-            newPositionHash ^= RANDOM_NUMBERS[11 * 64 + ChessUtil.getFieldNumber64(c8)];
-            newPositionHash ^= RANDOM_NUMBERS[9 * 64 + ChessUtil.getFieldNumber64(a8)]; // black rook
-            newPositionHash ^= RANDOM_NUMBERS[9 * 64 + ChessUtil.getFieldNumber64(d8)];
+            newPositionHash ^= RANDOM_NUMBERS[BLACK_KING_NO * 64 + ChessUtil.getFieldNumber64(fromField)]; // remove king
+            newPositionHash ^= RANDOM_NUMBERS[BLACK_KING_NO * 64 + ChessUtil.getFieldNumber64(c8)];        // add king
+            newPositionHash ^= RANDOM_NUMBERS[BLACK_ROOK_NO * 64 + ChessUtil.getFieldNumber64(rookField)]; // remove rook
+            newPositionHash ^= RANDOM_NUMBERS[BLACK_ROOK_NO * 64 + ChessUtil.getFieldNumber64(d8)];        // add rook
         }
 
         return newPositionHash;
@@ -1298,7 +1330,6 @@ public final class Board {
      */
     @SuppressWarnings("java:S1066")
     boolean isChess960Position() {
-        System.out.println("CALCULATING 960 POSITION");
         var gameStatus = getGameStatus();
 
         // If the rook's start fields are non-standard, it's obviously a chess960 position

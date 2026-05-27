@@ -210,6 +210,32 @@ class MoveTest {
     }
 
     @Test
+    void testWhiteCastlingKingSide() {
+        var importer = GameImporter.importerFor("""
+                1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 Nf6 5. Nc3 d6 6. Bg5 h6
+                """);
+        var game = importer.importGame();
+        game.makeMove(MoveDescription.fromString("O-O", game.getTurn()));
+        var piece = game.getBoard().get(Board.g1);
+        assertEquals(Board.whiteKing, piece, "wrong piece");
+        piece = game.getBoard().get(Board.f1);
+        assertEquals(Board.whiteRook, piece, "wrong piece");
+    }
+
+    @Test
+    void testWhiteCastlingQueenSide() {
+        var importer = GameImporter.importerFor("""
+                1. d4 d5 2. Nc3 Nc6 3. Bf4 Bf5 4. Qd2 Qd7 5. e3 e6 6. Nf3 Nf6
+                """);
+        var game = importer.importGame();
+        game.makeMove(MoveDescription.fromString("O-O-O", game.getTurn()));
+        var piece = game.getBoard().get(Board.c1);
+        assertEquals(Board.whiteKing, piece, "wrong piece");
+        piece = game.getBoard().get(Board.d1);
+        assertEquals(Board.whiteRook, piece, "wrong piece");
+    }
+
+    @Test
     void testBlackCastlingKingSide() {
         var importer = GameImporter.importerFor("""
                 1. e4 c5 2. Be2 Nc6 3. f4 e6 4. Nf3 b6 5. O-O Bb7 6. d3 Qc7 7. c3 Nf6 8. a4 d5 9. e5 Nd7
