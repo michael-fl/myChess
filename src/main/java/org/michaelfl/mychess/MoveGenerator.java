@@ -371,14 +371,15 @@ public final class MoveGenerator {
     }
 
     private boolean canDoWhiteCastlingKingSide960(int kingField) {
+        int rookField = ChessUtil.getFieldFromColAndRow(theBoard.getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE), 0);
+
         // The fields between king start field and target field must be empty (except own rook)
-        if (!isCastlingPathEmpty(kingField, Board.g1, Board.whiteRook)) {
+        if (!isCastlingPathEmpty(kingField, Board.g1, rookField)) {
             return false;
         }
 
         // The fields between rook start field and target field must be empty (except own king)
-        int rookField = ChessUtil.getFieldFromColAndRow(theBoard.getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE), 0);
-        if (!isCastlingPathEmpty(rookField, Board.f1, Board.whiteKing)) {
+        if (!isCastlingPathEmpty(rookField, Board.f1, kingField)) {
             return false;
         }
 
@@ -387,14 +388,15 @@ public final class MoveGenerator {
     }
 
     private boolean canDoWhiteCastlingQueenSide960(int kingField) {
+        int rookField = ChessUtil.getFieldFromColAndRow(theBoard.getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE), 0);
+
         // The fields between king start field and target field must be empty (except own rook)
-        if (!isCastlingPathEmpty(kingField, Board.c1, Board.whiteRook)) {
+        if (!isCastlingPathEmpty(kingField, Board.c1, rookField)) {
             return false;
         }
 
         // The fields between rook start field and target field must be empty (except own king)
-        int rookField = ChessUtil.getFieldFromColAndRow(theBoard.getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE), 0);
-        if (!isCastlingPathEmpty(rookField, Board.d1, Board.whiteKing)) {
+        if (!isCastlingPathEmpty(rookField, Board.d1, kingField)) {
             return false;
         }
 
@@ -433,14 +435,15 @@ public final class MoveGenerator {
     }
 
     private boolean canDoBlackCastlingKingSide960(int kingField) {
+        int rookField = ChessUtil.getFieldFromColAndRow(theBoard.getCastlingRookFile(CastlingSlot.BLACK_KINGSIDE), 7);
+
         // The fields between king start field and target field must be empty (except own rook)
-        if (!isCastlingPathEmpty(kingField, Board.g8, Board.blackRook)) {
+        if (!isCastlingPathEmpty(kingField, Board.g8, rookField)) {
             return false;
         }
 
         // The fields between rook start field and target field must be empty (except own king)
-        int rookField = ChessUtil.getFieldFromColAndRow(theBoard.getCastlingRookFile(CastlingSlot.BLACK_KINGSIDE), 7);
-        if (!isCastlingPathEmpty(rookField, Board.f8, Board.blackKing)) {
+        if (!isCastlingPathEmpty(rookField, Board.f8, kingField)) {
             return false;
         }
 
@@ -449,14 +452,15 @@ public final class MoveGenerator {
     }
 
     private boolean canDoBlackCastlingQueenSide960(int kingField) {
+        int rookField = ChessUtil.getFieldFromColAndRow(theBoard.getCastlingRookFile(CastlingSlot.BLACK_QUEENSIDE), 7);
+
         // The fields between king start field and target field must be empty (except own rook)
-        if (!isCastlingPathEmpty(kingField, Board.c8, Board.blackRook)) {
+        if (!isCastlingPathEmpty(kingField, Board.c8, kingField)) {
             return false;
         }
 
         // The fields between rook start field and target field must be empty (except own king)
-        int rookField = ChessUtil.getFieldFromColAndRow(theBoard.getCastlingRookFile(CastlingSlot.BLACK_QUEENSIDE), 7);
-        if (!isCastlingPathEmpty(rookField, Board.d8, Board.blackKing)) {
+        if (!isCastlingPathEmpty(rookField, Board.d8, kingField)) {
             return false;
         }
 
@@ -465,18 +469,18 @@ public final class MoveGenerator {
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    private boolean isCastlingPathEmpty(final int startField, final int targetField, byte counterpartPiece) {
+    private boolean isCastlingPathEmpty(final int startField, final int targetField, final int counterpartField) {
         if (startField != targetField) {
             int delta = startField < targetField ? 1 : -1;
 
             for (int f = startField + delta; f != targetField; f += delta) {
-                if (board[f] != Board.empty && board[f] != counterpartPiece) {
+                if (board[f] != Board.empty && f != counterpartField) {
                     return false;
                 }
             }
 
             //noinspection RedundantIfStatement
-            if (board[targetField] != Board.empty && board[targetField] != counterpartPiece) {
+            if (board[targetField] != Board.empty && targetField != counterpartField) {
                 return false;
             }
         }
