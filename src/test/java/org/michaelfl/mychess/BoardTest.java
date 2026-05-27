@@ -1189,4 +1189,66 @@ class BoardTest {
         assertEquals(Board.empty, board.get(Board.a1), "queenside rook source a1 must be empty");
         assertEquals(Board.whiteRook, board.get(Board.h1), "kingside rook h1 stays put");
     }
+
+    // ---------- End-to-end FEN round-trip for Chess960 ----------
+    //
+    // Closes the loop on Phase 1 (FEN export) and Phase 2 (960
+    // makeMove): take a 960 position, play a move, export the
+    // resulting state as FEN, re-import that FEN into a fresh
+    // Board, and assert the re-imported board's Zobrist hash
+    // matches the in-memory post-move hash.
+    //
+    // Any FEN-level information loss (Shredder castling letters,
+    // en-passant file, half-move clock, …) would surface here as a
+    // hash mismatch.
+
+    @Test
+    void fenRoundTrip_chess960_kingsideCastle_preservesHash() {
+        // 960 setup: white king on b1, queenside rook on a1, kingside
+        // rook on h1, lone black king on e8. White to move.
+        String initialFen = "4k3/8/8/8/8/8/8/RK5R w HA - 0 1";
+        var board = Fen.importFEN(initialFen);
+
+        assertTrue(board.isChess960(),
+                "precondition: imported position must be detected as a 960 game");
+
+        // Play the 960 kingside castle: king b1 → g1, kingside rook h1 → f1.
+        int castleMove = Move.create(Board.b1, Board.g1, Board.empty, Move.typeCastlingKingSide);
+        board.makeMove(castleMove);
+        long postMoveHash = board.getGameStatus().getPositionHash();
+
+        // Round-trip the post-move position via FEN.
+        String exportedFen = board.exportFEN();
+        long reimportedHash = Fen.importFEN(exportedFen).getGameStatus().getPositionHash();
+
+        assertEquals(postMoveHash, reimportedHash,
+                "FEN export + re-import must preserve the post-castle Zobrist hash. "
+                        + "Exported FEN: '" + exportedFen + "'");
+    }
+
+    @Test
+    void fenRoundTrip_chess960_nonCastleMove_preservesHash() {
+        // 960 starting position (cutechess sample) — exercises the
+        // round-trip for a non-castle move so that the Shredder export
+        // path runs with the full set of back-rank castling rights
+        // (FAfa) still alive after the move.
+        String initialFen = "rkbbnrnq/pppppppp/8/8/8/8/PPPPPPPP/RKBBNRNQ w FAfa - 0 1";
+        var board = Fen.importFEN(initialFen);
+
+        assertTrue(board.isChess960(),
+                "precondition: imported position must be detected as a 960 game");
+
+        // Play 1. Ng1-f3 — no captures, no castling-rights changes,
+        // no en-passant square set.
+        int knightMove = Move.create(Board.g1, Board.f3, Board.empty, Move.typeNormal);
+        board.makeMove(knightMove);
+        long postMoveHash = board.getGameStatus().getPositionHash();
+
+        String exportedFen = board.exportFEN();
+        long reimportedHash = Fen.importFEN(exportedFen).getGameStatus().getPositionHash();
+
+        assertEquals(postMoveHash, reimportedHash,
+                "FEN export + re-import must preserve the Zobrist hash. "
+                        + "Exported FEN: '" + exportedFen + "'");
+    }
 }
