@@ -87,7 +87,39 @@ class MirrorEvalTest {
                 Arguments.of("FEN5", "2br2k1/4bppp/p4n2/4B3/Nr6/1P3B2/2P2PPP/3RR1K1 w - - 0 24"),
                 Arguments.of("FEN6", "1r5r/k4ppp/2B1p3/pQ2Nq2/Pb1P4/6B1/5PPP/5RK1 w - - 3 26"),
                 Arguments.of("FEN7", "2R5/1p2bqBk/p2p4/3Ppr2/3p2Q1/P2P3P/1P3PP1/6K1 b - - 2 23"),
-                Arguments.of("FEN8", "2R5/1p2b1Bk/p2p2q1/3Ppr2/3p2Q1/P2P3P/1P3PP1/6K1 w - - 3 24"));
+                Arguments.of("FEN8", "2R5/1p2b1Bk/p2p2q1/3Ppr2/3p2Q1/P2P3P/1P3PP1/6K1 w - - 3 24"),
+
+                // -- Chess960 starting positions -------------------------
+                //
+                // Each 960 start is structurally symmetric (rank 1 white
+                // pieces have the same files as rank 8 black pieces) and
+                // the castling rights mirror cleanly under case swap, so
+                // the antisymmetry check exercises the eval on
+                // non-standard back ranks without depending on any
+                // mid-game state.
+
+                // Scharnagl ID 518 (= standard chess) in Shredder-FEN form.
+                // Same shape as the very first test case above, but
+                // exercises the Shredder-letter castling path.
+                Arguments.of("Chess960 Scharnagl 518 (Shredder FEN)",
+                        "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w HAha - 0 1"),
+
+                // Scharnagl ID 0 — extreme: BBQNNRKR. King on g, kingside
+                // rook on h, queenside rook on f.
+                Arguments.of("Chess960 Scharnagl 0 (BBQNNRKR)",
+                        "bbqnnrkr/pppppppp/8/8/8/8/PPPPPPPP/BBQNNRKR w HFhf - 0 1"),
+
+                // Scharnagl ID 959 — extreme other end: RKRNNQBB. King on
+                // b, queenside rook on a, kingside rook on c (closely
+                // adjacent castling).
+                Arguments.of("Chess960 Scharnagl 959 (RKRNNQBB)",
+                        "rkrnnqbb/pppppppp/8/8/8/8/PPPPPPPP/RKRNNQBB w CAca - 0 1"),
+
+                // RKBBNRNQ — the cutechess sample 960 position used
+                // throughout the rest of the test suite. King on b,
+                // queenside rook on a, kingside rook on f.
+                Arguments.of("Chess960 RKBBNRNQ (cutechess sample)",
+                        "rkbbnrnq/pppppppp/8/8/8/8/PPPPPPPP/RKBBNRNQ w FAfa - 0 1"));
     }
 
     @ParameterizedTest(name = "{0}")
@@ -162,22 +194,26 @@ class MirrorEvalTest {
         return sb.toString();
     }
 
+    /**
+     * Mirrors a castling-rights FEN field by swapping the case of each
+     * letter: {@code K↔k}, {@code Q↔q}, and for Shredder/X-FEN
+     * {@code A-H ↔ a-h}. Castle rights belong to the side whose pieces
+     * sit on the back rank, so a 180° board rotation that swaps colors
+     * must also swap the case of every right.
+     */
     private static String mirrorCastlingField(String castling) {
         if ("-".equals(castling)) {
             return "-";
         }
         var sb = new StringBuilder();
-        if (castling.indexOf('k') >= 0) {
-            sb.append('K');
-        }
-        if (castling.indexOf('q') >= 0) {
-            sb.append('Q');
-        }
-        if (castling.indexOf('K') >= 0) {
-            sb.append('k');
-        }
-        if (castling.indexOf('Q') >= 0) {
-            sb.append('q');
+        for (char c : castling.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                sb.append(Character.toLowerCase(c));
+            } else if (Character.isLowerCase(c)) {
+                sb.append(Character.toUpperCase(c));
+            } else {
+                sb.append(c);
+            }
         }
 
         return sb.isEmpty() ? "-" : sb.toString();
