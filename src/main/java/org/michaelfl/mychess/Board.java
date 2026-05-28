@@ -727,8 +727,10 @@ public final class Board {
 
         long newPositionHash = getGameStatus().getPositionHash();
 
-        board[toField] =  board[fromField];
-        board[fromField] = empty;
+        if (fromField != toField) {
+            board[toField] = board[fromField];
+            board[fromField] = empty;
+        }
 
         if (ChessUtil.getRowOfField(fromField) == 0) { // White
             final int rookFile = getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE);
@@ -768,8 +770,10 @@ public final class Board {
 
         long newPositionHash = getGameStatus().getPositionHash();
 
-        board[toField] =  board[fromField];
-        board[fromField] = empty;
+        if (fromField != toField) {
+            board[toField] = board[fromField];
+            board[fromField] = empty;
+        }
 
         if (ChessUtil.getRowOfField(fromField) == 0) { // White
             final int rookFile = getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE);
@@ -858,8 +862,10 @@ public final class Board {
         byte fromField = Move.getFromField(move);
         byte toField = Move.getToField(move);
 
-        board[fromField] = board[toField];
-        board[toField] = Board.empty;
+        if (fromField != toField) {
+            board[fromField] = board[toField];
+            board[toField] = Board.empty;
+        }
 
         if (toField == Board.g1) {
             board[Board.f1] = Board.empty;
@@ -878,8 +884,10 @@ public final class Board {
         byte fromField = Move.getFromField(move);
         byte toField = Move.getToField(move);
 
-        board[fromField] = board[toField];
-        board[toField] = Board.empty;
+        if (fromField != toField) {
+            board[fromField] = board[toField];
+            board[toField] = Board.empty;
+        }
 
         if (toField == Board.c1) {
             board[Board.d1] = Board.empty;
