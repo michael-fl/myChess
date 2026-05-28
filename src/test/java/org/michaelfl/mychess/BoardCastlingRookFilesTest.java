@@ -55,7 +55,7 @@ class BoardCastlingRookFilesTest {
     void threeArgConstructor_storesGivenRookFiles() {
         byte[] custom = new byte[] { 1, 5, 2, 6 };
         Board board = new Board(Board.createEmptyRawBoard(),
-                GameStatus.newGame(), custom);
+                GameStatus.newGame(), custom, false);
 
         assertEquals(1, board.getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE), "WQ custom");
         assertEquals(5, board.getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE),  "WK custom");
@@ -77,7 +77,7 @@ class BoardCastlingRookFilesTest {
     void copy_carriesRookFilesIntoTheCopy() {
         byte[] custom = new byte[] { 2, 4, 2, 4 };
         Board original = new Board(Board.createEmptyRawBoard(),
-                GameStatus.newGame(), custom);
+                GameStatus.newGame(), custom, false);
 
         Board copy = original.copy();
         assertEquals(2, copy.getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE), "WQ on copy");
@@ -90,7 +90,7 @@ class BoardCastlingRookFilesTest {
     void copy_rookFilesAreDeepCopied_noSharedMutation() {
         byte[] custom = new byte[] { 2, 4, 2, 4 };
         Board original = new Board(Board.createEmptyRawBoard(),
-                GameStatus.newGame(), custom);
+                GameStatus.newGame(), custom, false);
 
         Board copy = original.copy();
 

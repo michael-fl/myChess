@@ -15,6 +15,7 @@ import java.io.PipedOutputStream;
 import java.io.PrintStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -105,6 +105,78 @@ class UciHandlerTest {
     void goAfterPositionFen_fromGivenPosition_emitsLegalBestmove() {
         runHandler("position fen " + START_FEN + "\ngo depth 2\nquit\n")
                 .expect(BESTMOVE_LINE_REGEX);
+    }
+
+    // ---- position sent as a bare current FEN (no moves list) ----
+
+    /**
+     * The UCI spec does not require a GUI to send
+     * {@code position [startpos|fen <start>] moves <history>}; it may
+     * equally send only the FEN of the <em>current</em> position with no
+     * {@code moves} list on every position command. This test drives a
+     * Chess960 game that way — a fresh full FEN per ply — and asserts the
+     * engine keeps recognizing it as a 960 game (the value behind
+     * {@link Game#is960()}, i.e. {@link Board#isChess960()}) after each
+     * command.
+     *
+     * <p>The start RBBNKNQR is the worst case for FEN-only 960 detection:
+     * its rooks sit on the standard a/h files and its king on e, so the
+     * rook-file and king-file checks in {@link Board#isChess960Position}
+     * never fire, and the only structural evidence — the non-standard back
+     * rank — is read by that heuristic only from a pristine start position
+     * ({@code seemsToBeStartPosition}). The pure FEN heuristic would
+     * therefore flag the initial FEN but lose the flag after the very
+     * first move, even though the untouched back rank still spells out a
+     * non-standard setup.
+     *
+     * <p>The engine nevertheless keeps the flag, because the GUI's
+     * {@code setoption name UCI_Chess960 value true} (sent below) is
+     * authoritative: the handler then imports every position via
+     * {@code Fen.importChess960FEN}, which forces the board's 960 flag
+     * regardless of structure. The FEN heuristic is only the fallback for
+     * when that option is absent (e.g. the REPL). This test guards exactly
+     * that contract — once the option is set, bare-FEN play stays a 960
+     * game for the whole session.
+     *
+     * <p>960 detection is not observable over the UCI protocol, so the
+     * handler is stepped command-by-command and its internal board is read
+     * through the package-private {@link UciHandler#getBoard()}.
+     */
+    @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
+    void position_bareCurrentFenPerPly_keepsChess960Detection() {
+        String start960Fen = "rbbnknqr/pppppppp/8/8/8/8/PPPPPPPP/RBBNKNQR w KQkq - 0 1";
+
+        // Build a realistic sequence of "current position" FENs by playing
+        // a few pawn moves on a shadow game and exporting the FEN after
+        // each — exactly the full-position strings a GUI would send.
+        var currentFens = new ArrayList<String>();
+        var shadow = new Game(Game.standardConfig(), Fen.importFEN(start960Fen));
+        try {
+            currentFens.add(shadow.exportFEN());
+            for (String uci : List.of("d2d4", "d7d5", "e2e3")) {
+                shadow.makeMove(UciMoveParser.parse(uci, shadow.getBoard()));
+                currentFens.add(shadow.exportFEN());
+            }
+        } finally {
+            shadow.shutdown();
+        }
+
+        // Drive a single UCI session line-by-line and inspect the engine's board after each
+        // command without spawning a search.
+        var handler = new UciHandler(new MyChessEnv(), new BufferedReader(new StringReader("")));
+
+        handler.handleLine("uci");
+        handler.handleLine("setoption name UCI_Chess960 value true");
+        handler.handleLine("ucinewgame");
+
+        for (String fen : currentFens) {
+            handler.handleLine("position fen " + fen);
+
+            assertTrue(handler.getBoard().isChess960(),
+                    "engine must still recognize a 960 game when the position arrives as a bare "
+                            + "current FEN with no moves list; FEN: " + fen);
+        }
     }
 
     // ---- info lines (score, depth, pv) ----
@@ -322,6 +394,7 @@ class UciHandlerTest {
      *
      * @return the matched line (without trailing newline), or {@code null} on timeout
      */
+    @SuppressWarnings("java:S2925")
     private static String pollForBestmove(ByteArrayOutputStream buf, int[] cursor,
                                           long timeoutMillis, long pollIntervalMillis)
             throws InterruptedException {
@@ -342,6 +415,7 @@ class UciHandlerTest {
                 }
             }
 
+            //noinspection BusyWait
             Thread.sleep(pollIntervalMillis);
         }
         return null;
