@@ -793,6 +793,99 @@ class BoardTest {
                 + "with king on b8 the update must use b8 (not the hard-coded e8) as the king's source square");
     }
 
+    @Test
+    void makeCastlingQueenSideMove_black_chess960_kingStaysWhenTargetEqualsSource() {
+        // Degenerate 960 case: the king already sits on its castle
+        // landing square. With the king on the c-file, a queenside
+        // castle has king target == king source (c8 → c8); only the
+        // rook actually moves (b8 → d8). This is the geometry of the
+        // Scharnagl start "qrkrnbbn" (king on c, rooks on b / d) that
+        // crashed a live cutechess 960 game: deep in the search the
+        // black king was lost off the board, and a later
+        // canCaptureOpposingKing → findKingField threw
+        // "King not found on board: 21".
+        var board = Fen.importFEN("1rk5/8/8/8/8/8/8/4K3 b b - 0 1");
+        int castleMove = Move.create(Board.c8, Board.c8, Board.empty, Move.typeCastlingQueenSide);
+
+        board.makeMove(castleMove);
+
+        assertEquals(Board.blackKing, board.get(Board.c8),
+                "king must remain on c8 — its castle target equals its source square, so it must not vanish");
+        assertEquals(Board.empty, board.get(Board.b8), "queenside rook source b8 must be empty");
+        assertEquals(Board.blackRook, board.get(Board.d8), "queenside rook must be on d8");
+        assertEquals(Board.whiteKing, board.get(Board.e1), "white king e1 untouched");
+
+        long stored = board.getGameStatus().getPositionHash();
+        long fresh = Board.calculatePositionHash(board.getRawBoard(), board.getGameStatus());
+        assertEquals(fresh, stored, "incremental Zobrist update must match a fresh recomputation");
+    }
+
+    @Test
+    void makeCastlingKingSideMove_white_chess960_kingStaysWhenTargetEqualsSource() {
+        // Kingside mirror of the degenerate "king target == king source"
+        // case: with the king on the g-file, a kingside castle has king
+        // target == king source (g1 → g1); only the kingside rook moves
+        // (h1 → f1). Same from == to geometry as the queenside / c-file
+        // case above — covered here in the other color and on the other
+        // side so a fix (or a regression) on either path is caught.
+        var board = Fen.importFEN("4k3/8/8/8/8/8/8/6KR w H - 0 1");
+        int castleMove = Move.create(Board.g1, Board.g1, Board.empty, Move.typeCastlingKingSide);
+
+        board.makeMove(castleMove);
+
+        assertEquals(Board.whiteKing, board.get(Board.g1),
+                "king must remain on g1 — its castle target equals its source square, so it must not vanish");
+        assertEquals(Board.empty, board.get(Board.h1), "kingside rook source h1 must be empty");
+        assertEquals(Board.whiteRook, board.get(Board.f1), "kingside rook must be on f1");
+        assertEquals(Board.blackKing, board.get(Board.e8), "black king e8 untouched");
+
+        long stored = board.getGameStatus().getPositionHash();
+        long fresh = Board.calculatePositionHash(board.getRawBoard(), board.getGameStatus());
+        assertEquals(fresh, stored, "incremental Zobrist update must match a fresh recomputation");
+    }
+
+    @Test
+    void makeCastlingQueenSideMove_white_chess960_kingStaysWhenTargetEqualsSource() {
+        // White queenside variant of the degenerate "king target ==
+        // king source" case: king on the c-file, queenside castle keeps
+        // it on c1 (c1 → c1) and only the rook moves (b1 → d1).
+        var board = Fen.importFEN("4k3/8/8/8/8/8/8/1RK5 w B - 0 1");
+        int castleMove = Move.create(Board.c1, Board.c1, Board.empty, Move.typeCastlingQueenSide);
+
+        board.makeMove(castleMove);
+
+        assertEquals(Board.whiteKing, board.get(Board.c1),
+                "king must remain on c1 — its castle target equals its source square, so it must not vanish");
+        assertEquals(Board.empty, board.get(Board.b1), "queenside rook source b1 must be empty");
+        assertEquals(Board.whiteRook, board.get(Board.d1), "queenside rook must be on d1");
+        assertEquals(Board.blackKing, board.get(Board.e8), "black king e8 untouched");
+
+        long stored = board.getGameStatus().getPositionHash();
+        long fresh = Board.calculatePositionHash(board.getRawBoard(), board.getGameStatus());
+        assertEquals(fresh, stored, "incremental Zobrist update must match a fresh recomputation");
+    }
+
+    @Test
+    void makeCastlingKingSideMove_black_chess960_kingStaysWhenTargetEqualsSource() {
+        // Black kingside variant of the degenerate "king target ==
+        // king source" case: king on the g-file, kingside castle keeps
+        // it on g8 (g8 → g8) and only the rook moves (h8 → f8).
+        var board = Fen.importFEN("6kr/8/8/8/8/8/8/4K3 b h - 0 1");
+        int castleMove = Move.create(Board.g8, Board.g8, Board.empty, Move.typeCastlingKingSide);
+
+        board.makeMove(castleMove);
+
+        assertEquals(Board.blackKing, board.get(Board.g8),
+                "king must remain on g8 — its castle target equals its source square, so it must not vanish");
+        assertEquals(Board.empty, board.get(Board.h8), "kingside rook source h8 must be empty");
+        assertEquals(Board.blackRook, board.get(Board.f8), "kingside rook must be on f8");
+        assertEquals(Board.whiteKing, board.get(Board.e1), "white king e1 untouched");
+
+        long stored = board.getGameStatus().getPositionHash();
+        long fresh = Board.calculatePositionHash(board.getRawBoard(), board.getGameStatus());
+        assertEquals(fresh, stored, "incremental Zobrist update must match a fresh recomputation");
+    }
+
 
     // ---------- notation → Move pipeline (resolveMoveDescription + moveDescriptionToMove) ----------
     //
