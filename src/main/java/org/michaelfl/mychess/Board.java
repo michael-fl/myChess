@@ -205,15 +205,15 @@ public final class Board {
     private final byte[] castlingRookFiles;
 
     public Board(byte[] rawBoard, GameStatus gameStatus) {
-        this(rawBoard, gameStatus, defaultCastlingRookFiles());
+        this(rawBoard, gameStatus, defaultCastlingRookFiles(), false);
     }
 
-    public Board(byte[] rawBoard, GameStatus gameStatus, byte[] castlingRookFiles) {
+    public Board(byte[] rawBoard, GameStatus gameStatus, byte[] castlingRookFiles, boolean is960) {
         this.board = rawBoard;
         this.statusStack = new GameStatus[2000];
         this.castlingRookFiles = castlingRookFiles;
         push(gameStatus);
-        this.is960 = isChess960Position();
+        this.is960 = is960 || isChess960Position();
     }
 
     //    132           ...             143

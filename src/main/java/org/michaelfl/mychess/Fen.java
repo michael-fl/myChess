@@ -22,6 +22,14 @@ final class Fen {
      *         could not have legally reached this position) is performed.
      */
     static Board importFEN(String fen) {
+        return Fen.importFEN(fen, false);
+    }
+
+    static Board importChess960FEN(String fen) {
+        return Fen.importFEN(fen, true);
+    }
+
+    private static Board importFEN(String fen, boolean is960) {
         if (fen == null) {
             throw new IllegalArgumentException("FEN must not be null");
         }
@@ -50,7 +58,7 @@ final class Fen {
         long positionHash = Board.calculatePositionHash(rawBoard, draftStatus);
         var gameStatus = new GameStatus(plyCount, turn, 0, halfMoveClock, castling.bits(), enPassantField, positionHash);
 
-        return new Board(rawBoard, gameStatus, castling.rookFiles());
+        return new Board(rawBoard, gameStatus, castling.rookFiles(), is960);
     }
 
     /** Decoded castling field: the {@code GameStatus} bit mask plus the

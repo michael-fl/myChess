@@ -52,6 +52,7 @@ final class UciHandler {
     private final BufferedReader in;
 
     private Board board;
+    private boolean is960;
     private final AtomicReference<NextMoveTask> currentTask = new AtomicReference<>();
     private final AtomicReference<Game> currentGame = new AtomicReference<>();
     private final AtomicReference<Thread> currentWatcher = new AtomicReference<>();
@@ -95,6 +96,10 @@ final class UciHandler {
         }
     }
 
+    Board getBoard() {
+        return board;
+    }
+
     /**
      * Tear down the handler: give any in-flight search watcher a chance to
      * emit its {@code bestmove} (capped by {@link #QUIT_GRACE_MS}), then
@@ -124,7 +129,7 @@ final class UciHandler {
     }
 
     /** @return {@code false} when {@code quit} was received. */
-    private boolean handleLine(String line) {
+    boolean handleLine(String line) {
         if (line.isEmpty()) {
             return true;
         }
@@ -133,6 +138,7 @@ final class UciHandler {
         return switch (first) {
             case "uci" -> { handleUci(); yield true; }
             case "isready" -> { handleIsReady(); yield true; }
+            case "setoption" -> { handleSetOption(line); yield true; }
             case "ucinewgame" -> { handleNewGame(); yield true; }
             case "position" -> { handlePosition(line); yield true; }
             case "go" -> { handleGo(line); yield true; }
@@ -153,6 +159,15 @@ final class UciHandler {
 
     private void handleIsReady() {
         writeLine("readyok");
+    }
+
+    private void handleSetOption(String line) {
+        if (line.equals("setoption name UCI_Chess960 value true")) {
+            // Enable Chess960 game
+            this.is960 = true;
+        } else if (line.equals("setoption name UCI_Chess960 value false")) {
+            this.is960 = false;
+        }
     }
 
     private void handleNewGame() {
@@ -176,7 +191,10 @@ final class UciHandler {
             newBoard = Board.createNewGame();
         } else if (stem.startsWith("fen ")) {
             try {
-                newBoard = Fen.importFEN(stem.substring("fen ".length()));
+                var fen = stem.substring("fen ".length());
+                newBoard = is960 ?
+                        Fen.importChess960FEN(fen) :
+                        Fen.importFEN(fen);
             } catch (IllegalArgumentException e) {
                 Log.error("Failed to parse FEN in position command: " + e.getMessage());
                 return;
