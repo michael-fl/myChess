@@ -30,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author Michael Fleischhauer
  */
+@SuppressWarnings("SameParameterValue")
 class UciHandlerTest {
 
     private static final String START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -177,6 +178,103 @@ class UciHandlerTest {
                     "engine must still recognize a 960 game when the position arrives as a bare "
                             + "current FEN with no moves list; FEN: " + fen);
         }
+    }
+
+    // ---- outbound 960 castle formatter (currently broken — Phase 3 pending) ----
+
+    //
+    // With UCI_Chess960 set, castles must be emitted in king-captures-rook
+    // form (e1h1 / e8h8 kingside, e1a1 / e8a8 queenside) — not the
+    // king-destination form (e1g1, e1c1, …) — so strict 960-aware GUIs
+    // accept them. UciMoveParser.toUci(int) currently takes only the packed
+    // move and has no board / 960 context, so it always emits the
+    // king-destination form regardless of the option.
+    //
+    // The four tests below cover all color × side combinations (W/B × K/Q)
+    // by driving deterministic depth-7 searches in positions whose
+    // principal variation reliably contains the corresponding castle. All
+    // four are currently red — pinned to the remaining Phase 3
+    // outbound-formatter work; cf. docs/Chess960-project.md.
+
+    /** Italian-like position with both sides poised to castle kingside; used by the two kingside tests. */
+    private static final String KINGSIDE_TEST_FEN =
+            "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 1";
+
+    @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
+    void infoPv_whiteKingsideCastle_emittedInKingDestinationForm_violatesChess960OutboundContract() {
+        var input = """
+                uci
+                setoption name UCI_Chess960 value true
+                position fen %s
+                go depth 7
+                """.formatted(KINGSIDE_TEST_FEN);
+
+        assertDeepestPvContains(input, "e1h1", "white's kingside castle");
+    }
+
+    @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
+    void infoPv_blackKingsideCastle_emittedInKingDestinationForm_violatesChess960OutboundContract() {
+        var input = """
+                uci
+                setoption name UCI_Chess960 value true
+                position fen %s
+                go depth 7
+                """.formatted(KINGSIDE_TEST_FEN);
+
+        assertDeepestPvContains(input, "e8h8", "black's kingside castle");
+    }
+
+    @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
+    void infoPv_whiteQueensideCastle_emittedInKingDestinationForm_violatesChess960OutboundContract() {
+        // f1 bishop blocks white's kingside castle, so white queenside-castles in the PV.
+        var input = """
+                uci
+                setoption name UCI_Chess960 value true
+                position fen r3kb1r/pppq1ppp/2npbn2/4p3/4P3/2NPBN2/PPPQ1PPP/R3KB1R w KQkq - 0 1
+                go depth 7
+                """;
+
+        assertDeepestPvContains(input, "e1a1", "white's queenside castle");
+    }
+
+    @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
+    void infoPv_blackQueensideCastle_emittedInKingDestinationForm_violatesChess960OutboundContract() {
+        // Same structural setup as the white queenside test, but black to move: the f8 bishop
+        // blocks black's kingside castle, so black queenside-castles in the PV.
+        var input = """
+                uci
+                setoption name UCI_Chess960 value true
+                position fen r3kb1r/pppq1ppp/2npbn2/4p3/4P3/2NPBN2/PPPQ1PPP/R3KB1R b KQkq - 1 1
+                go depth 7
+                """;
+
+        assertDeepestPvContains(input, "e8a8", "black's queenside castle");
+    }
+
+    /**
+     * Drive the UCI handler with {@code input}, find the deepest emitted
+     * {@code info ... pv ...} line, and assert it contains
+     * {@code expectedCastleUci} (the king-captures-rook castle token).
+     * {@code castleDescription} is woven into the failure message for
+     * readability.
+     */
+    private void assertDeepestPvContains(String input, String expectedCastleUci, String castleDescription) {
+        var response = runHandler(input);
+
+        String deepestPv = response.lines().stream()
+                .filter(l -> l.startsWith("info ") && l.contains(" pv "))
+                .reduce((_, b) -> b)
+                .orElseThrow(() -> new AssertionError(
+                        "no info pv lines emitted; full output:\n" + String.join("\n", response.lines())));
+
+        assertTrue(deepestPv.contains(expectedCastleUci),
+                "deepest info pv must report " + castleDescription + " as " + expectedCastleUci
+                        + " (king-captures-rook), not the king-destination form, when UCI_Chess960 is set. "
+                        + "Got: " + deepestPv);
     }
 
     // ---- info lines (score, depth, pv) ----

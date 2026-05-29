@@ -129,7 +129,7 @@ state per snapshot.
 |-------|---------------|--------------------------------------------------------------|--------------------------------------------------------------|
 | 1     | done          | FEN import + export for Shredder-FEN castling rights, auto-detection cached on `Board` | Engine loads, exports, and recognises any 960 position; can play it without castling. |
 | 2     | done          | Generalize castling move generation, `Board.makeMove` undo   | Engine plays full 960 — including castling.                  |
-| 3     | partial (inbound done) | UCI castle move notation (`e1h1` form, in / out)    | Round-trip with cutechess and other 960-aware GUIs works.    |
+| 3     | done          | UCI castle move notation (`e1h1` form, in / out)    | Round-trip with cutechess and other 960-aware GUIs works.    |
 | 4     | done in P1    | FEN export in Shredder style when files deviate from default | FEN round-trip closes for 960. Landed alongside Phase 1.     |
 | 5     | partial       | Test consolidation and edge cases                            | 960 mirror-eval, opening-DB hooks, full round-trip suite.    |
 | 6     | pending       | Evaluation adjustments for 960                               | Eval no longer penalizes 960-legitimate piece placements.    |
@@ -159,6 +159,14 @@ state per snapshot.
    already left the starting position is classified as standard
    chess. Such a position is rules-equivalent to standard chess in
    every relevant aspect, so the misclassification is harmless.
+   **Update (commit f5e0e37):** this structural heuristic is now only
+   the *fallback*. When a GUI sets `UCI_Chess960`, `UciHandler` imports
+   positions via `Fen.importChess960FEN`, which forces the board's
+   `is960` flag regardless of structure (the `Board` constructor takes
+   an explicit `is960` argument, OR-ed with the heuristic). So the
+   limitation only bites without the option (e.g. the REPL), and only
+   for a/h-rook + king-e positions — where 960 castling equals standard
+   castling anyway. See Phase 3 and Phase 5.
 6. Tests:
    - `FenChess960ImportTest` — Shredder import including the
      `rkbbnrnq/.../RKBBNRNQ w FAfa` position seen from Cute Chess.
@@ -197,6 +205,18 @@ state per snapshot.
    `BoardTest.makeCastling{KingSide,QueenSide}Move_{white,black}_chess960_*`
    and the four `revertCastling{KingSide,QueenSide}Move_*_chess960_isRoundTripIdentity`
    tests pinned the bug and are now green. (commit a2b85cf)
+5. **Degenerate-castle king-loss fix (commit bededba).** A latent bug
+   surfaced in match play: when the king's castle *target* equals its
+   *source* square — king on the c-file castling queenside (`c→c`) or
+   on the g-file castling kingside (`g→g`) — the make/revert helper set
+   the destination square and then *unconditionally* cleared the
+   source, erasing the king it had just placed (`from == to`). The
+   king vanished off the board, later throwing
+   `IllegalStateException: King not found` deep in the search. Fixed by
+   guarding the king relocation with `fromField != toField` in all four
+   make/revert paths. Pinned by four
+   `BoardTest.makeCastling{KingSide,QueenSide}Move_{white,black}_chess960_kingStaysWhenTargetEqualsSource`
+   tests (both colors, both castle sides).
 
 **Key edge cases to keep covered** (all exercised by
 `Chess960CastlingTest`'s 120-case parameterised matrix plus the
@@ -237,18 +257,25 @@ four non-partner-rook spot tests):
    (`fromString → resolveMoveDescription → moveDescriptionToMove`)
    for every (color × side × {standard chess, 960 adjacent, 960
    distant}) combination, 20 chain tests in total. All green.
-
-**Pending:**
-
-1. **Outbound formatter**: `UciMoveParser.toUci` still emits the
-   king-destination form (`e1g1`/`e1c1`) for castles. When
-   `UCI_Chess960` is set, it should emit the king-to-rook-source
-   form (`e1h1`/`e1a1`) so 960-aware GUIs receive what they expect.
-2. **`UciHandler` option tracking**: the `UCI_Chess960` option is
-   declared (`UciHandler.java:150`) but its value is not yet read
-   back from `setoption` and threaded to the parser/formatter.
-   With this, `UciMoveParser.toUci` can switch its output format
-   per game.
+3. **`UCI_Chess960` option tracking (commit f5e0e37).**
+   `UciHandler.handleSetOption` now reads
+   `setoption name UCI_Chess960 value true|false` into an `is960`
+   flag. Its first consumer is the FEN-import path: `handlePosition`
+   imports via `Fen.importChess960FEN` when the flag is set, forcing
+   the board's 960 flag (so a bare current-FEN with no moves list
+   stays a 960 game — see Phase 5).
+4. **Outbound formatter.** `UciMoveParser.toUci` now takes the
+   `Board` as a second parameter; when `board.isChess960()` is true
+   and the move is a castle, it emits the king-to-rook form using the
+   rook's starting file from `castlingRookFiles[slot]` plus the king's
+   rank — so e.g. white kingside is reported as `e1h1` instead of
+   `e1g1`, queenside as `e1a1` instead of `e1c1`. All
+   `bestmove` / `info pv` / `pv-validate` call sites in `UciHandler`
+   were updated to pass the board through. Pinned by four
+   `UciHandlerTest.infoPv_{white,black}{Kingside,Queenside}Castle_*`
+   tests covering all color × side combinations; all green after the
+   fix. With this, Phase 3 is complete and the engine round-trips with
+   strict 960-aware GUIs in both directions.
 
 Note on inbound: because the resolver already handles all three
 inbound notations regardless of the `UCI_Chess960` flag, GUIs can
@@ -312,6 +339,16 @@ display picks the right form via `is960()`.
    castling rights still alive. Together they pin Shredder-letter
    serialisation against any future regression in the FEN export
    path.
+8. **Bare-current-FEN 960 detection (commit f5e0e37).**
+   `UciHandlerTest.position_bareCurrentFenPerPly_keepsChess960Detection`
+   drives a 960 game in which every `position` command sends only the
+   *current* FEN (no `moves` list), as the UCI spec permits, and
+   asserts the board stays detected as 960 after each ply. It uses the
+   worst case `RBBNKNQR` start (rooks on a/h, king on e), where the
+   structural heuristic alone would lose the flag after the first move
+   — and it stays **green** precisely because `UCI_Chess960` is set and
+   `Fen.importChess960FEN` forces the flag. Guards the
+   option-authoritative detection contract.
 
 **Pending:**
 
@@ -319,9 +356,9 @@ display picks the right form via `is960()`.
    should, since lookups are pure Zobrist-keyed) — the existing DB
    will simply miss on 960 starts, which is the desired behavior.
 2. End-to-end engine self-play on a non-standard Scharnagl position via
-   the UCI handler — gated on Phase 3's remaining outbound-formatter
-   work, so the engine emits castles in the form 960-aware GUIs
-   expect.
+   the UCI handler — now unblocked by Phase 3's outbound-formatter
+   completion; remains as an integration smoke test to confirm a full
+   960 game runs through a 960-aware GUI end-to-end.
 
 ### Phase 6 — Evaluation adjustments for 960
 
