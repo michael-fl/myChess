@@ -53,14 +53,26 @@ final class UciMoveParser {
     }
 
     /** Convert a packed-int move to UCI notation. */
-    static String toUci(int packedMove) {
+    static String toUci(int packedMove, Board board) {
         byte fromField = Move.getFromField(packedMove);
         byte toField = Move.getToField(packedMove);
         byte moveType = Move.getMoveType(packedMove);
 
         var sb = new StringBuilder();
         sb.append(ChessUtil.fieldToString(fromField));
-        sb.append(ChessUtil.fieldToString(toField));
+
+        // In chess960 castling in UCI notation must be written as kingField-rookField
+        if (board.isChess960() && moveType == Move.typeCastlingKingSide) {
+            int rookFile = board.getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE);
+            int row = ChessUtil.getRowOfField(fromField);
+            sb.append(String.valueOf((char) ('a' + rookFile)) + (row + 1));
+        } else if (board.isChess960() && moveType == Move.typeCastlingQueenSide) {
+            int rookFile = board.getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE);
+            int row = ChessUtil.getRowOfField(fromField);
+            sb.append(String.valueOf((char) ('a' + rookFile)) + (row + 1));
+        } else {
+            sb.append(ChessUtil.fieldToString(toField));
+        }
 
         switch (moveType) {
             case Move.typePawnPromotionQueen -> sb.append('q');

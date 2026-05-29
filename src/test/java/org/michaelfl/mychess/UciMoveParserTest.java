@@ -177,9 +177,10 @@ class UciMoveParserTest {
 
     @Test
     void toUci_normalMove_returnsPlainFourCharString() {
+        var board = new Game().getBoard();
         int packed = Move.create((byte) Board.e2, (byte) Board.e4, Board.empty, Move.typeNormal);
 
-        assertEquals("e2e4", UciMoveParser.toUci(packed));
+        assertEquals("e2e4", UciMoveParser.toUci(packed, board));
     }
 
     @ParameterizedTest
@@ -190,6 +191,7 @@ class UciMoveParserTest {
             "typePawnPromotionKnight, d7d8n"
     })
     void toUci_promotion_appendsCorrectSuffix(String typeName, String expectedUci) {
+        var board = new Game().getBoard();
         byte type = switch (typeName) {
             case "typePawnPromotionQueen" -> Move.typePawnPromotionQueen;
             case "typePawnPromotionRook" -> Move.typePawnPromotionRook;
@@ -199,26 +201,28 @@ class UciMoveParserTest {
         };
         int packed = Move.create((byte) Board.d7, (byte) Board.d8, Board.empty, type);
 
-        assertEquals(expectedUci, UciMoveParser.toUci(packed));
+        assertEquals(expectedUci, UciMoveParser.toUci(packed, board));
     }
 
     @Test
     void toUci_castling_emitsKingMoveWithoutSuffix() {
         // UCI convention: castling is written as the king's from/to fields, no
         // suffix. The Move type bits stay typeCastlingKingSide but don't show.
+        var board = new Game().getBoard();
         int packedKing = Move.create((byte) Board.e1, (byte) Board.g1, Board.empty, Move.typeCastlingKingSide);
         int packedQueen = Move.create((byte) Board.e1, (byte) Board.c1, Board.empty, Move.typeCastlingQueenSide);
 
-        assertEquals("e1g1", UciMoveParser.toUci(packedKing));
-        assertEquals("e1c1", UciMoveParser.toUci(packedQueen));
+        assertEquals("e1g1", UciMoveParser.toUci(packedKing, board));
+        assertEquals("e1c1", UciMoveParser.toUci(packedQueen, board));
     }
 
     @Test
     void toUci_enPassant_emitsDiagonalPawnMoveWithoutSuffix() {
         // UCI: en passant looks like an ordinary diagonal pawn move. No suffix.
+        var board = new Game().getBoard();
         int packed = Move.create((byte) Board.e5, (byte) Board.d6, Board.blackPawn, Move.typeEnPassant);
 
-        assertEquals("e5d6", UciMoveParser.toUci(packed));
+        assertEquals("e5d6", UciMoveParser.toUci(packed, board));
     }
 
     // ---- round-trip: parse → board apply → toUci of packed ----
@@ -232,7 +236,7 @@ class UciMoveParserTest {
 
         // Last move on the status stack should produce the same UCI string.
         int lastMove = game.getGameStatus().getLastMove();
-        assertEquals("e2e4", UciMoveParser.toUci(lastMove),
+        assertEquals("e2e4", UciMoveParser.toUci(lastMove, game.getBoard()),
                 "round-trip parse → makeMove → toUci should reproduce the UCI string");
     }
 

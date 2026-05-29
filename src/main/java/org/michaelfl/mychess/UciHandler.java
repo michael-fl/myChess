@@ -308,7 +308,7 @@ final class UciHandler {
                 bestWeightStm = lastIterationWeight.get();
             }
 
-            writeLine("bestmove " + (bestmove == 0 ? "0000" : UciMoveParser.toUci(bestmove)));
+            writeLine("bestmove " + (bestmove == 0 ? "0000" : UciMoveParser.toUci(bestmove, board)));
             logMoveStatus(bestmove, bestWeightStm, turnAtStart, plyCountAtStart, goStartMs);
         } finally {
             game.shutdown();
@@ -363,7 +363,7 @@ final class UciHandler {
                     break;
                 }
 
-                sb.append(' ').append(UciMoveParser.toUci(packed));
+                sb.append(' ').append(UciMoveParser.toUci(packed, board));
             }
         }
 
@@ -396,7 +396,7 @@ final class UciHandler {
         String color = (turnAtStart == GameStatus.TURN_WHITE) ? "W" : "B";
         float evalStm = info.weight();
         float evalWhitePov = (turnAtStart == GameStatus.TURN_WHITE) ? evalStm : -evalStm;
-        String firstMove = (info.pv().length > 0 && info.pv()[0] != 0) ? UciMoveParser.toUci(info.pv()[0]) : "-";
+        String firstMove = (info.pv().length > 0 && info.pv()[0] != 0) ? UciMoveParser.toUci(info.pv()[0], board) : "-";
 
         Log.info(String.format(Locale.ROOT,
                 "[iter] game=%s color=%s depth=%d nodes=%d elapsed=%d evalStm=%s evalW=%s pv=%s",
@@ -459,7 +459,7 @@ final class UciHandler {
 
         String color = (turnAtStart == GameStatus.TURN_WHITE) ? "W" : "B";
         int fullMoveNumber = (plyCountAtStart / 2) + 1;
-        String uciMove = UciMoveParser.toUci(bestmove);
+        String uciMove = UciMoveParser.toUci(bestmove, board);
         float evalWhitePov = (turnAtStart == GameStatus.TURN_WHITE) ? weightStm : -weightStm;
         String evalStmStr = formatEvalForLog(weightStm);
         String evalWhiteStr = formatEvalForLog(evalWhitePov);
@@ -571,13 +571,13 @@ final class UciHandler {
             }
 
             if (pseudoLegal.isIllegal()) {
-                logIllegalPv("ply " + lastAppliedPly + " (" + UciMoveParser.toUci(lastAppliedMove)
+                logIllegalPv("ply " + lastAppliedPly + " (" + UciMoveParser.toUci(lastAppliedMove, board)
                         + ") leaves own king in check", pv, probe);
                 return;
             }
 
             if (!pseudoLegal.contains(move)) {
-                logIllegalPv("ply " + i + " (" + UciMoveParser.toUci(move)
+                logIllegalPv("ply " + i + " (" + UciMoveParser.toUci(move, board)
                         + ") is not pseudo-legal", pv, probe);
                 return;
             }
@@ -589,7 +589,7 @@ final class UciHandler {
         }
 
         if (pseudoLegal.isIllegal()) {
-            logIllegalPv("ply " + lastAppliedPly + " (" + UciMoveParser.toUci(lastAppliedMove)
+            logIllegalPv("ply " + lastAppliedPly + " (" + UciMoveParser.toUci(lastAppliedMove, board)
                     + ") leaves own king in check", pv, probe);
         }
     }
@@ -601,7 +601,7 @@ final class UciHandler {
                 + " — illegal at FEN: " + Fen.exportFEN(atPosition));
     }
 
-    private static String formatPv(int[] pv) {
+    private String formatPv(int[] pv) {
         var sb = new StringBuilder();
         for (int m : pv) {
             if (m == 0) {
@@ -611,7 +611,7 @@ final class UciHandler {
                 sb.append(' ');
             }
 
-            sb.append(UciMoveParser.toUci(m));
+            sb.append(UciMoveParser.toUci(m, board));
         }
 
         return sb.toString();
