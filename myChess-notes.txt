@@ -1,0 +1,253 @@
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+      -engine name=myChess cmd=./mychess-uci.sh proto=uci \
+      -engine name=SF-1600 cmd=stockfish proto=uci \
+            option.UCI_LimitStrength=true option.UCI_Elo=1600 \
+      -each tc=40/1200 \
+      -rounds 20 -games 2 -repeat \
+      -sprt elo0=-50 elo1=50 alpha=0.05 beta=0.05 \
+      -openings file=2moves_v2.pgn format=pgn order=random plies=4 \
+      -concurrency 2 -ratinginterval 2 \
+      -recover \
+      -draw movenumber=40 movecount=8 score=10 \
+      -resign movecount=5 score=600 \
+      -pgnout mychess-vs-sf1600.pgn
+      
+      -openings file=8moves_v3.pgn format=pgn order=random plies=16 \
+      -openings file=2moves_v2.pgn format=pgn order=random plies=4
+      
+Test 06:
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+        -engine name=myChess cmd=./mychess-uci.sh proto=uci \
+        -engine name=SF-1750 cmd=stockfish proto=uci \
+              option.UCI_LimitStrength=true option.UCI_Elo=1750 \
+        -each tc=40/1200 \
+        -rounds 40 -games 2 -repeat \
+        -sprt elo0=-50 elo1=50 alpha=0.05 beta=0.05 \
+        -openings file=2moves_v2.pgn format=pgn order=random plies=4 \
+        -concurrency 2 -ratinginterval 2 \
+        -recover \
+        -draw movenumber=40 movecount=8 score=10 \
+        -resign movecount=5 score=600 \
+        -pgnout mychess-vs-sf1750.pgn
+        
+Test 07:
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+        -engine name=myChess cmd=./mychess-uci.sh proto=uci \
+        -engine name=SF-1900 cmd=stockfish proto=uci \
+              option.UCI_LimitStrength=true option.UCI_Elo=1900 \
+        -each tc=40/1200 \
+        -rounds 40 -games 2 -repeat \
+        -sprt elo0=-50 elo1=50 alpha=0.05 beta=0.05 \
+        -openings file=2moves_v2.pgn format=pgn order=random plies=4 \
+        -concurrency 2 -ratinginterval 2 \
+        -recover \
+        -draw movenumber=40 movecount=8 score=10 \
+        -resign movecount=5 score=600 \
+        -pgnout mychess-vs-sf1900.pgn
+
+Test 08:
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+          -engine name=myChess cmd=./mychess-uci.sh proto=uci \
+          -engine name=SF-1700 cmd=stockfish proto=uci \
+                option.UCI_LimitStrength=true option.UCI_Elo=1700 \
+          -each tc=40/1200 \
+          -rounds 40 -games 2 -repeat \
+          -sprt elo0=-50 elo1=50 alpha=0.05 beta=0.05 \
+          -openings file=2moves_v2.pgn format=pgn order=random plies=4 \
+          -concurrency 2 -ratinginterval 2 \
+          -recover \
+          -draw movenumber=50 movecount=10 score=40 \
+          -pgnout mychess-vs-sf1700.pgn
+
+Test 09:
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+          -engine name=myChess cmd=./mychess-uci.sh proto=uci \
+          -engine name=SF-1900 cmd=stockfish proto=uci \
+                option.UCI_LimitStrength=true option.UCI_Elo=1900 \
+          -each tc=40/1200 \
+          -rounds 40 -games 2 -repeat \
+          -sprt elo0=-50 elo1=50 alpha=0.05 beta=0.05 \
+          -openings file=2moves_v2.pgn format=pgn order=random plies=4 \
+          -concurrency 2 -ratinginterval 2 \
+          -recover \
+          -draw movenumber=50 movecount=10 score=40 \
+          -pgnout mychess-vs-sf1900.pgn
+            
+Test 10 (myChess 3.1.1 vs Pulse ~2000):
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+    -engine name=myChess cmd=./versions/3.1/mychess-uci.sh proto=uci \
+    -engine name=Pulse-2000 cmd=./engines/pulse/pulse.sh proto=uci \
+    -each tc=40/1200 \
+    -rounds 40 -games 2 -repeat \
+    -sprt elo0=-50 elo1=50 alpha=0.05 beta=0.05 \
+    -openings file=2moves_v2.pgn format=pgn order=random plies=4 \
+    -concurrency 2 -ratinginterval 2 \
+    -recover \
+    -draw movenumber=50 movecount=10 score=40 \
+    -pgnout mychess-vs-pulse2000.pgn
+    
+Test 11 (myChess 3.1.1 vs Maia ~1900)
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+      -engine name=myChess   cmd=./versions/3.1/mychess-uci.sh proto=uci tc=40/1200 \
+      -engine name=maia-1900 cmd=./engines/maia/maia-1900.sh  proto=uci tc=inf nodes=1 \
+      -rounds 50 -games 2 -repeat \
+      -openings file=2moves_v2.pgn format=pgn order=random plies=4 \
+      -concurrency 2 -ratinginterval 5 \
+      -recover \
+      -draw movenumber=50 movecount=10 score=40 \
+      -resign movecount=5 score=800 \
+      -pgnout test-results/test11-mychess-vs-maia1900.pgn
+      
+Test 12 (myChess 3.1.1 vs Pulse 1.7.3 ~1505 ELO, 2 minutes)
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+      -engine name=myChess cmd=./versions/3.1/mychess-uci.sh proto=uci \
+      -engine name=Pulse   cmd=./engines/pulse/pulse.sh      proto=uci \
+      -each tc=40/120 \
+      -rounds 200 -games 2 -repeat \
+      -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+      -concurrency 4 -ratinginterval 20 \
+      -recover \
+      -draw movenumber=40 movecount=8 score=20 \
+      -resign movecount=4 score=600 \
+      -pgnout test-results/test12-mychess-vs-pulse.pgn
+      
+Test13 (myChess 3.1.1 vs TSCP 1.81 ~1607 ELO, 2 minutes)
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+      -engine name=myChess cmd=./versions/3.1/mychess-uci.sh proto=uci \
+      -engine name=TSCP    cmd=./engines/tscp/tscp.sh        proto=xboard \
+      -each tc=40/120 \
+      -rounds 200 -games 2 -repeat \
+      -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+      -concurrency 4 -ratinginterval 20 \
+      -recover \
+      -draw movenumber=40 movecount=8 score=20 \
+      -resign movecount=4 score=600 \
+      -pgnout test-results/test13-mychess-vs-tscp.pgn
+
+Test 14 (myChess vs DoctorB 1.2.1 ~1325 ELO, 2 minutes)
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+      -engine name=myChess  cmd=./versions/3.1/mychess-uci.sh proto=uci \
+      -engine name=DoctorB  cmd=./engines/DoctorB/doctorb.sh  proto=uci \
+      -each tc=40/120 \
+      -rounds 200 -games 2 -repeat \
+      -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+      -concurrency 4 -ratinginterval 20 \
+      -recover \
+      -draw movenumber=40 movecount=8 score=20 \
+      -resign movecount=4 score=600 \
+      -pgnout test-results/test14-mychess-vs-doctorb.pgn
+
+
+Vollständige Bracket-Geometrie (CCRL Blitz, aktiv gepflegt, https://computerchess.org.uk/404/rating_list_all.html)
+
+
+  ┌──────────────────┬────────────┬──────────────────────┬─────────────────────────┬────────────────────────┐
+  │      Engine      │ CCRL Blitz │ Δ zu myChess (~1441) │ Score-Erwartung myChess │          Test          │
+  ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
+  │ TSCP 1.81        │ 1607       │ +166                 │ ~28 %                   │ Test 13 ✓ läuft/fertig │
+  ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
+  │ Pulse 1.7.1      │ 1505       │ +64                  │ ~41 %                   │ Test 12 ✓ fertig       │
+  ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
+  │ myChess          │ ~1441      │ –                    │ –                       │ –                      │
+  ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
+  │ DoctorB 1.2.1    │ 1326       │ −115                 │ ~66 %                   │ Test 14 ✓ läuft        │
+  ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
+  │ ~~Zagreus v5.0~~ │ ~~2167~~   │ ~~+726~~             │ ~~~1 %~~                │ gestrichen             │
+  ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
+  │ ~~Monochrome~~   │ ~~1427~~   │ ~~−14~~              │ –                       │ nicht gebaut           │
+  └──────────────────┴────────────┴──────────────────────┴─────────────────────────┴────────────────────────┘
+  
+
+myChess vs myChess:
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+      -engine name=base         cmd=./versions/3.2-base/mychess-uci.sh         proto=uci \
+      -engine name=openingstate cmd=./versions/3.2-openingstate/mychess-uci.sh proto=uci \
+      -each tc=40/120 \
+      -rounds 1000 -games 2 -repeat \
+      -sprt elo0=0 elo1=5 alpha=0.05 beta=0.05 \
+      -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+      -concurrency 4 -ratinginterval 20 \
+      -recover \
+      -draw movenumber=40 movecount=8 score=40 \
+      -resign movecount=4 score=600 \
+      -pgnout test-results/test13-base-vs-openingstate.pgn
+      
+            
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+      -engine name=myChess  cmd=./versions/3.1/mychess-uci.sh proto=uci \
+      -engine name=Pulse    cmd=./engines/pulse/pulse.sh      proto=uci \
+      -engine name=Sungorus cmd=./engines/sungorus/sungorus.sh proto=uci \
+      -engine name=Belofte  cmd=./engines/belofte/belofte.sh  proto=uci \
+      -each tc=40/60 \
+      -tournament gauntlet \
+      -rounds 100 -games 2 -repeat \
+      -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+      -concurrency 4 -ratinginterval 20 \
+      -recover \
+      -draw movenumber=40 movecount=8 score=20 \
+      -resign movecount=4 score=600 \
+      -pgnout test-results/test13-gauntlet.pgn \
+      2>&1 | tee test-results/test13-cutechess-stdout.log.txt
+
+  - -tournament gauntlet → myChess (erste Engine) spielt gegen jede der anderen; die Referenzen spielen nicht gegeneinander (brauchen sie nicht — ihre Ratings sind externe Anker). -rounds 100 -games 2 = 200
+  Partien je Gegner.
+  - TC 40/60 (~1,5 s/Zug) ist ein guter Kompromiss; willst du näher an einer bestimmten CCRL-Liste messen, nimm deren TC.
+
+  Auswertung mit Ordo
+
+  ordo -p test-results/test13-gauntlet.pgn -a 0 -A "Pulse" -W
+  → Du setzt die bekannten CCRL-Ratings der Referenzen als Anker (Ordo erlaubt mehrere fixierte Ratings) und liest myChess' Elo ± Fehler ab. Mit zwei Ankern, die myChess einklammern, ist die Zahl belastbar.
+      
+      
+<myChess Dev(3): id author Michael Fleischhauer
+<myChess Dev(3): option name UCI_Chess960 type check default false
+<myChess Dev(3): uciok
+>myChess Dev(3): isready
+<myChess Dev(3): readyok
+>myChess Dev(3): debug on
+>myChess Dev(3): ucinewgame
+>myChess Dev(3): position startpos
+
+<myChess Dev(4): id name myChess
+<myChess Dev(4): id author Michael Fleischhauer
+<myChess Dev(4): option name UCI_Chess960 type check default false
+<myChess Dev(4): uciok
+>myChess Dev(4): isready
+<myChess Dev(4): readyok
+>myChess Dev(4): setoption name UCI_Chess960 value true
+>myChess Dev(4): debug on
+>myChess Dev(4): ucinewgame
+>myChess Dev(4): position fen nbqrnkbr/pppppppp/8/8/8/8/PPPPPPPP/NBQRNKBR w HDhd - 0 1
+      
+2. Test 08: master+Bugfix vs SF-1700. Mit der gerade besprochenen cutechess-Zeile. Liefert den echten Baseline-ELO-Punkt von myChess. Bei SPRT-H1-Akzept weißt du, dass myChess ≥ SF-1700; bei H0, dass myChess ≤
+   SF-1750 (oder so). Ein Daten-Anker, auf dem alles Weitere aufsetzen kann.
+
+  3. Test 09: master+Bugfix vs no-opening-weight+Bugfix direkt. Engine-vs-Engine A/B, kein Stockfish dazwischen. Das ist SPRT-effizienter als zwei separate vs-SF-Messungen, weil der gemeinsame Gegner (SF) als
+  Varianz-Quelle wegfällt. SPRT-Parameter z. B. elo0=-5 elo1=5 alpha=0.05 beta=0.05 — das testet, ob die Branches messbar unterschiedlich sind, mit relativ engem Indifferenzkorridor.
+
+  Mit (2) und (3) hast du dann zwei unabhängige Datenpunkte: absolute Verortung gegen einen externen Anker UND die saubere Delta-Messung zwischen master und no-opening-weight. Wenn (3) zeigt, dass
+  no-opening-weight gleich oder schlechter ist, hast du das Experiment ehrlich falsifiziert — bevor du noch mehr Zeit in die Branch-Hypothese steckst. Wenn (3) zeigt, dass no-opening-weight wirklich besser ist
+  (selbst nur +20–50 ELO), kannst du den Branch mit gutem Gewissen mergen.
+
+      
+Stellungsanalyse über Stockfish:
+--------------------------------
+{
+    echo "uci"
+    echo "isready"
+    echo "position fen 2R2r1k/r4q1p/p2p2p1/1pnNb3/4P1B1/7Q/PPP4P/1K3R2 b - - 9 28"
+    echo "go depth 24"
+    sleep 5
+    echo "quit"
+} | stockfish | tail -5
+
+{
+    echo "position fen 2R2r1k/r4q1p/p2p2p1/1pnNb3/4P1B1/7Q/PPP4P/1K3R2 b - - 9 28"
+    echo "go depth 24"
+    sleep 5
+} | stockfish | grep -E "^info depth 24|^bestmove"
+
+
+
+Logik von moveDescriptionToMove --> resolveMoveDescription
+

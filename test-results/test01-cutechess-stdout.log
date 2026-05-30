@@ -1,0 +1,545 @@
+mf@mf myChess % /Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+      -engine name=myChess cmd=./mychess-uci.sh proto=uci \
+      -engine name=SF-1600 cmd=stockfish proto=uci \
+            option.UCI_LimitStrength=true option.UCI_Elo=1600 \
+      -each tc=40/1200 \
+      -rounds 20 -games 2 -repeat \
+      -sprt elo0=-50 elo1=50 alpha=0.05 beta=0.05 \
+      -openings file=8moves_v3.pgn format=pgn order=random plies=16 \
+      -concurrency 2 -ratinginterval 2 \
+      -recover \
+      -draw movenumber=40 movecount=8 score=10 \
+      -resign movecount=5 score=600 \
+      -pgnout mychess-vs-sf1600.pgn
+
+Indexing opening suite...
+Started game 1 of 40 (myChess vs SF-1600)
+Started game 2 of 40 (SF-1600 vs myChess)
+^CTerminating process of engine SF-1600(1)
+Terminating process of engine SF-1600(2)
+Finished game 1 (myChess vs SF-1600): * {No result}
+Score of myChess vs SF-1600: 0 - 0 - 0  [nan] 0
+Terminating process of engine myChess(3)
+Finished game 2 (SF-1600 vs myChess): * {No result}
+Score of myChess vs SF-1600: 0 - 0 - 0  [nan] 0
+Elo difference: nan +/- nan, LOS: nan %, DrawRatio: nan %
+SPRT: llr -5.55e-17 (-0.0%), lbound -2.94, ubound 2.94
+
+Player: myChess
+   "No result": 2
+Player: SF-1600
+   "No result": 2
+Finished match
+mf@mf myChess % /Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+      -engine name=myChess cmd=./mychess-uci.sh proto=uci \
+      -engine name=SF-1600 cmd=stockfish proto=uci \
+            option.UCI_LimitStrength=true option.UCI_Elo=1600 \
+      -each tc=40/1200 \
+      -rounds 20 -games 2 -repeat \
+      -sprt elo0=-50 elo1=50 alpha=0.05 beta=0.05 \
+      -openings file=8moves_v3.pgn format=pgn order=random plies=16 \
+      -concurrency 2 -ratinginterval 2 \
+      -recover \
+      -draw movenumber=40 movecount=8 score=10 \
+      -resign movecount=5 score=600 \
+      -pgnout mychess-vs-sf1600.pgn
+
+Indexing opening suite...
+Started game 2 of 40 (SF-1600 vs myChess)
+Started game 1 of 40 (myChess vs SF-1600)
+Warning: Illegal PV move g4g5 from myChess (3)
+Warning: PV: Ra2+ Bf2 Rfxf2+ Kg3 Rf3+ Kh4 Rxf4 g4g5
+Finished game 2 (SF-1600 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 0 - 1 - 0  [0.000] 1
+Started game 3 of 40 (myChess vs SF-1600)
+Warning: Illegal PV move h2f3 from myChess (0)
+Warning: PV: Rxe8+ h2f3
+Warning: Illegal PV move h2f3 from myChess (0)
+Warning: PV: Rxe8+ Kf7 Re7+ h2f3
+Warning: Illegal PV move g6h7 from myChess (0)
+Warning: PV: Rxe8+ Kh7 Qxh2+ Kg6 d6 f4 d7 f3 d8=Q g6h7
+Finished game 1 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 1 - 1 - 0  [0.500] 2
+...      myChess playing White: 1 - 0 - 0  [1.000] 1
+...      myChess playing Black: 0 - 1 - 0  [0.000] 1
+...      White vs Black: 2 - 0 - 0  [1.000] 2
+Elo difference: 0.0 +/- nan, LOS: 50.0 %, DrawRatio: 0.0 %
+SPRT: llr -2.78e-17 (-0.0%), lbound -2.94, ubound 2.94
+Started game 4 of 40 (SF-1600 vs myChess)
+Warning: Illegal PV move b8c6 from myChess (0)
+Warning: PV: Kxh7 Qc2+ b8c6
+Finished game 4 (SF-1600 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 1 - 2 - 0  [0.333] 3
+Started game 5 of 40 (myChess vs SF-1600)
+Finished game 3 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 2 - 2 - 0  [0.500] 4
+...      myChess playing White: 2 - 0 - 0  [1.000] 2
+...      myChess playing Black: 0 - 2 - 0  [0.000] 2
+...      White vs Black: 4 - 0 - 0  [1.000] 4
+Elo difference: 0.0 +/- 786.2, LOS: 50.0 %, DrawRatio: 0.0 %
+SPRT: llr -3.89e-16 (-0.0%), lbound -2.94, ubound 2.94
+Started game 6 of 40 (SF-1600 vs myChess)
+Warning: Illegal PV move f8d6 from myChess (0)
+Warning: PV: Bh6 Nc5 Rxc5 f8d6
+Warning: Illegal PV move c6c5 from myChess (0)
+Warning: PV: Bxb4+ c6c5
+Warning: Illegal PV move c7d7 from myChess (0)
+Warning: PV: e6+ Kc7 e7 Qxg2 Nxg5 Qxg5 e8=Q c7d7
+Finished game 5 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 3 - 2 - 0  [0.600] 5
+Started game 7 of 40 (myChess vs SF-1600)
+Warning: Illegal PV move c6d4 from myChess (3)
+Warning: PV: Kh8 Qxh6+ Kg8 Nxh5 Qe7 Nxf6+ c6d4
+Warning: Illegal PV move f6g6 from myChess (3)
+Warning: PV: Qxe7 Nxe7 Bd8 Qg8+ Kf6 Nc6 h4 Nxd8 Rb8 Kh2 f6g6
+Warning: Illegal PV move e8f7 from myChess (3)
+Warning: PV: Kf8 Qf6+ Ke8 Nd5 Bd6 Qxd6 Rd8 Qe6+ e8f7
+Finished game 7 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 4 - 2 - 0  [0.667] 6
+...      myChess playing White: 4 - 0 - 0  [1.000] 4
+...      myChess playing Black: 0 - 2 - 0  [0.000] 2
+...      White vs Black: 6 - 0 - 0  [1.000] 6
+Elo difference: 120.4 +/- nan, LOS: 79.3 %, DrawRatio: 0.0 %
+SPRT: llr 0.62 (21.1%), lbound -2.94, ubound 2.94
+Started game 8 of 40 (SF-1600 vs myChess)
+Finished game 8 (SF-1600 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 4 - 3 - 0  [0.571] 7
+Started game 9 of 40 (myChess vs SF-1600)
+Warning: Illegal PV move g5g6 from myChess (3)
+Warning: PV: Rc7 g5 Bf8 Kg8 Kb8 Kxf8 Rc8+ g5g6
+Warning: Illegal PV move e2c2 from myChess (0)
+Warning: PV: gxf3 Nxf3 Qe2 Nxh2+ e2c2
+Warning: Illegal PV move c7c8 from myChess (3)
+Warning: PV: a5 g6 Ka6 Qd6+ Kb7 Qxc7+ Kxc7 g7 a4 g8=Q c7c8
+Warning: Illegal PV move e1e2 from myChess (0)
+Warning: PV: Ke1 exd3 f4 Qg2 Rf1 Nf5 e1e2
+Warning: Illegal PV move h1e1 from myChess (0)
+Warning: PV: Ke2 Qf5 Qc2 exd3+ h1e1
+Warning: Illegal PV move a4a3 from myChess (3)
+Warning: PV: Kb5 g6 Ka4 g7 Kxa3 g8=Q Ka4 Qe6 Kb5 Qf6 a4 Qf5+ a4a3
+Warning: Illegal PV move a3a2 from myChess (3)
+Warning: PV: Kb5 g6 Ka4 g7 Kxa3 g8=Q Kb4 Qe6 a4 Qf6 a3 Qf4+ Kb5 Qf5+ a3a2
+Warning: Illegal PV move b5b6 from myChess (3)
+Warning: PV: Ka4 g6 Kxa3 g7 a4 g8=Q Kb4 Qa2 a3 Qc2 a2 Qxa2 Kb5 Qb3+ b5b6
+Warning: Illegal PV move h1e1 from myChess (0)
+Warning: PV: Qc2 exd3+ h1e1
+Warning: Illegal PV move f8e8 from myChess (0)
+Warning: PV: Qd1 d4 Nc5 dxe3 fxe3 e5 Qb3+ f8e8
+Warning: Illegal PV move f8e8 from myChess (0)
+Warning: PV: Nc5 dxe3 fxe3 e5 Qb3+ f8e8
+Warning: Illegal PV move d1d3 from myChess (0)
+Warning: PV: Nc5 dxe3 fxe3 Nd4+ Kd2 Qf2+ Kc1 Qxe3+ d1d3
+Warning: Illegal PV move b1b3 from myChess (0)
+Warning: PV: Kg2 Rxe4 Rf1 e5 Kg1 Rg4+ b1b3
+Warning: Illegal PV move b4b5 from myChess (0)
+Warning: PV: Kg2 Rxe4 Qd1 Qxa2 Qd3 Qd5 Rd1 Re2+ b4b5
+Warning: Illegal PV move f1e1 from myChess (0)
+Warning: PV: Nf6+ Kh8 Ne4 Rxe4 Rg2 e5 f1e1
+Warning: Illegal PV move f1e1 from myChess (0)
+Warning: PV: Ne4 Rxe4 Qb2 e5 f1e1
+Warning: Illegal PV move e1f1 from myChess (3)
+Warning: PV: a2 Kd4 Kc2 Qxa2+ Kd1 Ke3 Ke1 Qe2# e1f1
+Warning: Illegal PV move h7f5 from myChess (0)
+Warning: PV: Ke1 Nxg4 Qc2 Rxb4 Qxh7 Qxf2+ h7f5
+Warning: Illegal PV move b1b3 from myChess (0)
+Warning: PV: Rg1 Qxg1+ b1b3
+Warning: Illegal PV move f4f7 from myChess (0)
+Warning: PV: Ke2 Qxb1 Kxe3 Qxa2 Rf4+ Kg8 Ke4 Qc4+ f4f7
+Warning: Illegal PV move e8f8 from myChess (3)
+Warning: PV: Kf5 Kd5 Kf6 Qe5+ Kf7 Qg5 Kf8 Ke6 Ke8 Qe7# e8f8
+Warning: Illegal PV move e8f8 from myChess (3)
+Warning: PV: Ke5 Qg4 Kf6 Kd6 Kf7 Qg5 Kf8 Ke6 Ke8 Qe7# e8f8
+Warning: Illegal PV move e8f7 from myChess (3)
+Warning: PV: Kf6 Qe4 Kf7 Kd6 Kf8 Qh7 Ke8 Qe7# e8f7
+Warning: Illegal PV move h8h7 from myChess (3)
+Warning: PV: Kg6 Qe6+ Kg7 Ke7 Kh7 Kf8 Kh8 Qg8# h8h7
+Warning: Illegal PV move h7h8 from myChess (3)
+Warning: PV: Kg7 Qf3 Kg8 Ke7 Kh8 Kf8 Kh7 Qh5# h7h8
+Warning: Illegal PV move h8h7 from myChess (3)
+Warning: PV: Kh6 Ke6 Kh7 Kf7 Kh8 Qh5# h8h7
+Warning: Illegal PV move h5g4 from myChess (3)
+Warning: PV: Kh5 Ke7 Kh6 Kf6 Kh5 Qg5# h5g4
+Warning: Illegal PV move h6g5 from myChess (3)
+Warning: PV: Kh6 Ke7 Kh5 Kf7 Kh6 Qg6# h6g5
+Warning: Illegal PV move h7h8 from myChess (3)
+Warning: PV: Kh7 Ke6 Kh8 Kf7 Kh7 Qg7# h7h8
+Warning: Illegal PV move h7h8 from myChess (3)
+Warning: PV: Kh8 Kf6 Kh7 Qg7# h7h8
+Warning: Illegal PV move h8h7 from myChess (3)
+Warning: PV: Kh7 Kf7 Kh8 Qg7# h8h7
+Warning: Illegal PV move h7h8 from myChess (3)
+Warning: PV: Kh8 Kf6 Kh7 Qg7# h7h8
+Warning: Illegal PV move h8h7 from myChess (3)
+Warning: PV: Kh7 Kf6 Kh8 Qg7# h8h7
+Warning: Illegal PV move h7h8 from myChess (3)
+Warning: PV: Kh8 Kf6 Kh7 Qg7# h7h8
+Warning: Illegal PV move h8h7 from myChess (3)
+Warning: PV: Kh7 Kf6 Kh8 Qg7# h8h7
+Warning: Illegal PV move h6h7 from myChess (3)
+Warning: PV: Kh6 Qg6# h6h7
+Finished game 6 (SF-1600 vs myChess): 1-0 {White mates}
+Score of myChess vs SF-1600: 4 - 4 - 0  [0.500] 8
+...      myChess playing White: 4 - 0 - 0  [1.000] 4
+...      myChess playing Black: 0 - 4 - 0  [0.000] 4
+...      White vs Black: 8 - 0 - 0  [1.000] 8
+Elo difference: 0.0 +/- 295.9, LOS: 50.0 %, DrawRatio: 0.0 %
+SPRT: llr -5.55e-16 (-0.0%), lbound -2.94, ubound 2.94
+Started game 10 of 40 (SF-1600 vs myChess)
+Finished game 9 (myChess vs SF-1600): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1600: 4 - 5 - 0  [0.444] 9
+Started game 11 of 40 (myChess vs SF-1600)
+Warning: Illegal PV move e3e2 from myChess (3)
+Warning: PV: O-O Qc2 Rxf4 e3e2
+Warning: Illegal PV move c1d1 from myChess (3)
+Warning: PV: O-O f3 Qxf4+ Kd3 Qxc1 Rxc1 Rxf3+ c1d1
+Finished game 10 (SF-1600 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 4 - 6 - 0  [0.400] 10
+...      myChess playing White: 4 - 1 - 0  [0.800] 5
+...      myChess playing Black: 0 - 5 - 0  [0.000] 5
+...      White vs Black: 9 - 1 - 0  [0.900] 10
+Elo difference: -70.4 +/- 268.9, LOS: 26.4 %, DrawRatio: 0.0 %
+SPRT: llr -0.602 (-20.5%), lbound -2.94, ubound 2.94
+Started game 12 of 40 (SF-1600 vs myChess)
+Warning: Illegal PV move d2e4 from myChess (0)
+Warning: PV: Bc4 Qxd4 Qxc2 Qxf2+ d2e4
+Warning: Illegal PV move a2a3 from myChess (0)
+Warning: PV: bxc4 Rd4 Nd5 Rxc4 Kf2 Rc2+ a2a3
+Warning: Illegal PV move c4b2 from myChess (3)
+Warning: PV: Rf2# c4b2
+Finished game 12 (SF-1600 vs myChess): 0-1 {Black mates}
+Score of myChess vs SF-1600: 5 - 6 - 0  [0.455] 11
+Started game 13 of 40 (myChess vs SF-1600)
+Warning: Illegal PV move c6c5 from myChess (3)
+Warning: PV: Bxd8 Bxd3 Qxd3 fxg6 Bxf6 Nxf6 Qxg6+ c6c5
+Finished game 13 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 6 - 6 - 0  [0.500] 12
+...      myChess playing White: 5 - 1 - 0  [0.833] 6
+...      myChess playing Black: 1 - 5 - 0  [0.167] 6
+...      White vs Black: 10 - 2 - 0  [0.833] 12
+Elo difference: 0.0 +/- 222.4, LOS: 50.0 %, DrawRatio: 0.0 %
+SPRT: llr -4.72e-16 (-0.0%), lbound -2.94, ubound 2.94
+Started game 14 of 40 (SF-1600 vs myChess)
+Finished game 11 (myChess vs SF-1600): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1600: 6 - 7 - 0  [0.462] 13
+Started game 15 of 40 (myChess vs SF-1600)
+Finished game 15 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 7 - 7 - 0  [0.500] 14
+...      myChess playing White: 6 - 2 - 0  [0.750] 8
+...      myChess playing Black: 1 - 5 - 0  [0.167] 6
+...      White vs Black: 11 - 3 - 0  [0.786] 14
+Elo difference: 0.0 +/- 201.7, LOS: 50.0 %, DrawRatio: 0.0 %
+SPRT: llr -2.5e-16 (-0.0%), lbound -2.94, ubound 2.94
+Started game 16 of 40 (SF-1600 vs myChess)
+Warning: Illegal PV move a2b3 from myChess (3)
+Warning: PV: Rxf4+ a2b3
+Finished game 14 (SF-1600 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 7 - 8 - 0  [0.467] 15
+Started game 17 of 40 (myChess vs SF-1600)
+Warning: Illegal PV move h6g7 from myChess (0)
+Warning: PV: Qf1+ Ka2 Qc4+ Ka1 Qf1+ Ka2 Qc4+ h6g7
+Warning: Illegal PV move h6g7 from myChess (0)
+Warning: PV: Qc4+ Ka1 Qf1+ Ka2 Qc4+ h6g7
+Warning: Illegal PV move h6g7 from myChess (0)
+Warning: PV: Qf1+ Ka2 Qc4+ h6g7
+Finished game 17 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 8 - 8 - 0  [0.500] 16
+...      myChess playing White: 7 - 2 - 0  [0.778] 9
+...      myChess playing Black: 1 - 6 - 0  [0.143] 7
+...      White vs Black: 13 - 3 - 0  [0.813] 16
+Elo difference: 0.0 +/- 185.9, LOS: 50.0 %, DrawRatio: 0.0 %
+SPRT: llr 1.14e-15 (0.0%), lbound -2.94, ubound 2.94
+Started game 18 of 40 (SF-1600 vs myChess)
+Warning: Illegal PV move h6g7 from myChess (0)
+Warning: PV: Qc4+ h6g7
+Finished game 16 (SF-1600 vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs SF-1600: 8 - 8 - 1  [0.500] 17
+Started game 19 of 40 (myChess vs SF-1600)
+Warning: Illegal PV move e6e5 from myChess (3)
+Warning: PV: Nxd3 Rxh6+ e6e5
+Finished game 18 (SF-1600 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 8 - 9 - 1  [0.472] 18
+...      myChess playing White: 7 - 2 - 0  [0.778] 9
+...      myChess playing Black: 1 - 7 - 1  [0.167] 9
+...      White vs Black: 14 - 3 - 1  [0.806] 18
+Elo difference: -19.3 +/- 168.1, LOS: 40.4 %, DrawRatio: 5.6 %
+SPRT: llr -0.312 (-10.6%), lbound -2.94, ubound 2.94
+Started game 20 of 40 (SF-1600 vs myChess)
+Warning: Illegal PV move e3e2 from myChess (0)
+Warning: PV: Rc7 fxe3 Rxd7+ Ke8 Bg6+ Kf8 Nxe6+ e3e2
+Warning: Illegal PV move a6a5 from myChess (0)
+Warning: PV: gxf3 d4 Rxd7+ a6a5
+Warning: Illegal PV move a6a5 from myChess (0)
+Warning: PV: Rxd7+ Ke8 Bg6+ Kf8 Nxe6+ Kg8 Rd8# a6a5
+Finished game 19 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 9 - 9 - 1  [0.500] 19
+Started game 21 of 40 (myChess vs SF-1600)
+Finished game 21 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 10 - 9 - 1  [0.525] 20
+...      myChess playing White: 9 - 2 - 0  [0.818] 11
+...      myChess playing Black: 1 - 7 - 1  [0.167] 9
+...      White vs Black: 16 - 3 - 1  [0.825] 20
+Elo difference: 17.4 +/- 158.6, LOS: 59.1 %, DrawRatio: 5.0 %
+SPRT: llr 0.309 (10.5%), lbound -2.94, ubound 2.94
+Started game 22 of 40 (SF-1600 vs myChess)
+Finished game 20 (SF-1600 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1600: 11 - 9 - 1  [0.548] 21
+Started game 23 of 40 (myChess vs SF-1600)
+Finished game 22 (SF-1600 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 11 - 10 - 1  [0.523] 22
+...      myChess playing White: 9 - 2 - 0  [0.818] 11
+...      myChess playing Black: 2 - 8 - 1  [0.227] 11
+...      White vs Black: 17 - 4 - 1  [0.795] 22
+Elo difference: 15.8 +/- 150.6, LOS: 58.6 %, DrawRatio: 4.5 %
+SPRT: llr 0.307 (10.4%), lbound -2.94, ubound 2.94
+Started game 24 of 40 (SF-1600 vs myChess)
+Warning: Illegal PV move d3d4 from myChess (3)
+Warning: PV: Bxb7 Kd7 Bxe5 Re8 Bxa8 Rxe5+ d3d4
+Finished game 23 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 12 - 10 - 1  [0.543] 23
+Started game 25 of 40 (myChess vs SF-1600)
+Warning: Illegal PV move d2e3 from myChess (0)
+Warning: PV: Rxh1 c6 f1=Q h5 Rxh5 d2e3
+Warning: Illegal PV move c5c6 from myChess (0)
+Warning: PV: f1=Q Bf3 Qf2+ Be2 Qxe2# c5c6
+Finished game 24 (SF-1600 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 12 - 11 - 1  [0.521] 24
+...      myChess playing White: 10 - 2 - 0  [0.833] 12
+...      myChess playing Black: 2 - 9 - 1  [0.208] 12
+...      White vs Black: 19 - 4 - 1  [0.813] 24
+Elo difference: 14.5 +/- 143.7, LOS: 58.3 %, DrawRatio: 4.2 %
+SPRT: llr 0.306 (10.4%), lbound -2.94, ubound 2.94
+Started game 26 of 40 (SF-1600 vs myChess)
+Warning: Illegal PV move f4f3 from myChess (3)
+Warning: PV: Rxe8+ f4f3
+Warning: Illegal PV move f4f3 from myChess (3)
+Warning: PV: Rxe8+ Kh7 Re7+ f4f3
+Warning: Illegal PV move c3d4 from myChess (3)
+Warning: PV: Rxe8+ Kf7 Nc7 f3 Rd7+ c3d4
+Warning: Illegal PV move c3d4 from myChess (3)
+Warning: PV: Rxe8+ Kf7 Nc7 f3 Rd7+ Kg6 Rg8+ c3d4
+Warning: Illegal PV move c3d4 from myChess (3)
+Warning: PV: Rxe8+ Kf7 Nc7 f3 Rd7+ Kg6 Rg8+ Kh6 Rh8+ c3d4
+Finished game 25 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 13 - 11 - 1  [0.540] 25
+Started game 27 of 40 (myChess vs SF-1600)
+Warning: Illegal PV move c1e3 from myChess (0)
+Warning: PV: dxe5 Qxb7 Ng4 e4 Qxh2# c1e3
+Warning: Illegal PV move e2e3 from myChess (0)
+Warning: PV: f2+ Kxf2 Ng4+ Kg1 Qxh2# e2e3
+Finished game 26 (SF-1600 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1600: 14 - 11 - 1  [0.558] 26
+...      myChess playing White: 11 - 2 - 0  [0.846] 13
+...      myChess playing Black: 3 - 9 - 1  [0.269] 13
+...      White vs Black: 20 - 5 - 1  [0.788] 26
+Elo difference: 40.3 +/- 138.9, LOS: 72.6 %, DrawRatio: 3.8 %
+SPRT: llr 0.914 (31.0%), lbound -2.94, ubound 2.94
+Started game 28 of 40 (SF-1600 vs myChess)
+Warning: Illegal PV move d8d7 from myChess (3)
+Warning: PV: Qxf3 Nf7 Qxb7 fxe5 Qc6+ Ke7 Qc5+ d8d7
+Warning: Illegal PV move a5a4 from myChess (3)
+Warning: PV: Qe2 Bg7 Bxg7+ a5a4
+Warning: Illegal PV move h8f7 from myChess (3)
+Warning: PV: Be6 Nxh8 Bxd7+ Kxd7 Rad1+ h8f7
+Warning: Illegal PV move g6g5 from myChess (3)
+Warning: PV: Bxd7+ Kxd7 Be5 Nxe5 Qxe5 a4 Rad1+ g6g5
+Finished game 27 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 15 - 11 - 1  [0.574] 27
+Started game 29 of 40 (myChess vs SF-1600)
+Finished game 28 (SF-1600 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 15 - 12 - 1  [0.554] 28
+...      myChess playing White: 12 - 2 - 0  [0.857] 14
+...      myChess playing Black: 3 - 10 - 1  [0.250] 14
+...      White vs Black: 22 - 5 - 1  [0.804] 28
+Elo difference: 37.4 +/- 133.3, LOS: 71.8 %, DrawRatio: 3.6 %
+SPRT: llr 0.91 (30.9%), lbound -2.94, ubound 2.94
+Started game 30 of 40 (SF-1600 vs myChess)
+Warning: Illegal PV move c4c3 from myChess (0)
+Warning: PV: Bxe2 cxb7+ c4c3
+Warning: Illegal PV move f4f5 from myChess (0)
+Warning: PV: Qe3+ Kh1 Bf3+ Bg2 Qxe1# f4f5
+Finished game 30 (SF-1600 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 15 - 13 - 1  [0.534] 29
+Started game 31 of 40 (myChess vs SF-1600)
+Warning: Illegal PV move f7f8q from myChess (3)
+Warning: PV:  f7f8q
+Warning: Illegal PV move f7f8q from myChess (3)
+Warning: PV: Kc3 Ra3+ f7f8q
+Warning: Illegal PV move f7f8q from myChess (3)
+Warning: PV:  f7f8q
+Warning: Illegal PV move f7f8q from myChess (3)
+Warning: PV: Kd2 Ra2+ f7f8q
+Warning: Illegal PV move f7f8q from myChess (3)
+Warning: PV:  f7f8q
+Warning: Illegal PV move f7f8q from myChess (3)
+Warning: PV: Ke3 Ra3+ f7f8q
+Warning: Illegal PV move a7f7 from myChess (3)
+Warning: PV: Ke1 Ra1+ Kf2 Ra2+ Ke1 Ra8 f8=Q+ a7f7
+Warning: Illegal PV move h2g1 from myChess (0)
+Warning: PV: fxg3 Qh5+ Kg1 Qh1+ Kxh1 Rxf1+ Kh2 Rh1# h2g1
+Warning: Illegal PV move f7f8q from myChess (3)
+Warning: PV:  f7f8q
+Warning: Illegal PV move f7f8q from myChess (3)
+Warning: PV: Kd2 Ra2+ f7f8q
+Warning: Illegal PV move g1f2 from myChess (3)
+Warning: PV: Kf2 Ra2+ Ke1 Ra8 Rg8 Ra1+ g1f2
+Warning: Illegal PV move g1f2 from myChess (3)
+Warning: PV: Kf2 Ra2+ Ke1 Ra8 Rg8 Ra1+ g1f2
+Warning: Illegal PV move f7f8q from myChess (3)
+Warning: PV:  f7f8q
+Warning: Illegal PV move a1a2 from myChess (3)
+Warning: PV: Ke1 Ra8 f8=Q+ a1a2
+Warning: Illegal PV move a8f8 from myChess (3)
+Warning: PV: Ke1 Bc4 f8=Q+ a8f8
+Warning: Illegal PV move g1f2 from myChess (3)
+Warning: PV: Ke1 Ra8 Rg8 Ra1+ g1f2
+Warning: Illegal PV move g1f2 from myChess (3)
+Warning: PV: Ke1 Ra8 Rg8 Ra1+ g1f2
+Warning: Illegal PV move e3e4 from myChess (0)
+Warning: PV: Kg2 Rf8 Rxd6 Bxf3+ e3e4
+Warning: Illegal PV move g5g8 from myChess (3)
+Warning: PV: Kg1 Ra1+ Kf2 Rf1+ g5g8
+Warning: Illegal PV move f7f8q from myChess (3)
+Warning: PV:  f7f8q
+Warning: Illegal PV move f7f8q from myChess (3)
+Warning: PV: Kh2 Ra2+ f7f8q
+Warning: Illegal PV move g5g8 from myChess (3)
+Warning: PV: Kf2 Rf1+ g5g8
+Warning: Illegal PV move g5g8 from myChess (3)
+Warning: PV: Kf2 Rf1+ g5g8
+Finished game 29 (myChess vs SF-1600): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs SF-1600: 15 - 13 - 2  [0.533] 30
+...      myChess playing White: 12 - 2 - 1  [0.833] 15
+...      myChess playing Black: 3 - 11 - 1  [0.233] 15
+...      White vs Black: 23 - 5 - 2  [0.800] 30
+Elo difference: 23.2 +/- 125.4, LOS: 64.7 %, DrawRatio: 6.7 %
+SPRT: llr 0.625 (21.2%), lbound -2.94, ubound 2.94
+Started game 32 of 40 (SF-1600 vs myChess)
+Warning: Illegal PV move c6c5 from myChess (0)
+Warning: PV: Qd3 Qh3 Qd4+ Kg8 Qxh8+ Qxh8 Rxd6 Qe5 Rd8+ c6c5
+Warning: Illegal PV move f6e6 from myChess (0)
+Warning: PV: Qf6 Rh1+ Kf2 Rh2+ Kg1 Rh1+ Kf2 Rh2+ Kg1 Rh1+ f6e6
+Warning: Illegal PV move f6e6 from myChess (0)
+Warning: PV: Kf2 Rh2+ Kg1 Rh1+ Kf2 Rh2+ Kg1 Rh1+ f6e6
+Warning: Illegal PV move c1d2 from myChess (3)
+Warning: PV: Bf1 Kxf1 b5 axb5 Bxd4+ c1d2
+Finished game 31 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 16 - 13 - 2  [0.548] 31
+Started game 33 of 40 (myChess vs SF-1600)
+Warning: Illegal PV move g3g4 from myChess (3)
+Warning: PV: Rf8+ Nf7 Rxf7+ Ke3 Nxa4 b4 Nc3 Qg5 Rf8 g3g4
+Warning: Illegal PV move g3g4 from myChess (3)
+Warning: PV: Rxf7+ g3g4
+Warning: Illegal PV move b2c3 from myChess (3)
+Warning: PV: Qf1+ Kd2 Qg2+ Kc1 Rf1# b2c3
+Warning: Illegal PV move e1d1 from myChess (3)
+Warning: PV: Qg2 bxc3 Rf1# e1d1
+Finished game 32 (SF-1600 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1600: 17 - 13 - 2  [0.563] 32
+...      myChess playing White: 13 - 2 - 1  [0.844] 16
+...      myChess playing Black: 4 - 11 - 1  [0.281] 16
+...      White vs Black: 24 - 6 - 2  [0.781] 32
+Elo difference: 43.7 +/- 122.3, LOS: 76.7 %, DrawRatio: 6.3 %
+SPRT: llr 1.24 (42.3%), lbound -2.94, ubound 2.94
+Started game 34 of 40 (SF-1600 vs myChess)
+Finished game 34 (SF-1600 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 17 - 14 - 2  [0.545] 33
+Started game 35 of 40 (myChess vs SF-1600)
+Finished game 33 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 18 - 14 - 2  [0.559] 34
+...      myChess playing White: 14 - 2 - 1  [0.853] 17
+...      myChess playing Black: 4 - 12 - 1  [0.265] 17
+...      White vs Black: 26 - 6 - 2  [0.794] 34
+Elo difference: 41.1 +/- 118.5, LOS: 76.0 %, DrawRatio: 5.9 %
+SPRT: llr 1.24 (42.1%), lbound -2.94, ubound 2.94
+Started game 36 of 40 (SF-1600 vs myChess)
+Warning: Illegal PV move a3c5 from myChess (3)
+Warning: PV: c4 bxc4 Qa3 Bxd4 Bd5 Bxf2 Rxg2 Qxg2# a3c5
+Warning: Illegal PV move d3d4 from myChess (0)
+Warning: PV: Ne3 Qd2 Qxg2 Bxf7+ Kxf7 c4 Bg4# d3d4
+Finished game 36 (SF-1600 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 18 - 15 - 2  [0.543] 35
+Started game 37 of 40 (myChess vs SF-1600)
+Warning: Illegal PV move a6a7 from myChess (3)
+Warning: PV: Bd5 Bxg1 Rb1 Nd3 Nxe5 Qxh2# a6a7
+Warning: Illegal PV move g1h3 from myChess (3)
+Warning: PV: Bd5 Rxg1+ Nxg1 Qg2# g1h3
+Warning: Illegal PV move a6a7 from myChess (3)
+Warning: PV: Be6 fxe6 Rad1 Bxg1 Rxg1 Rxg1+ Kxg1 Qg2# a6a7
+Warning: Illegal PV move e4f5 from myChess (3)
+Warning: PV: a7 Rxg1+ Nxg1 Qg2# e4f5
+Warning: Illegal PV move a7a8q from myChess (3)
+Warning: PV: Nxg1 Rxg1+ a7a8q
+Warning: Illegal PV move e4f5 from myChess (3)
+Warning: PV: Rxg1 Rxg1+ Nxg1 Qg2# e4f5
+Warning: Illegal PV move a7a8q from myChess (3)
+Warning: PV:  a7a8q
+Warning: Illegal PV move e4f5 from myChess (3)
+Warning: PV: Nxg1 Qg2# e4f5
+Finished game 35 (myChess vs SF-1600): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1600: 18 - 16 - 2  [0.528] 36
+...      myChess playing White: 14 - 3 - 1  [0.806] 18
+...      myChess playing Black: 4 - 13 - 1  [0.250] 18
+...      White vs Black: 27 - 7 - 2  [0.778] 36
+Elo difference: 19.3 +/- 114.3, LOS: 63.4 %, DrawRatio: 5.6 %
+SPRT: llr 0.617 (20.9%), lbound -2.94, ubound 2.94
+Started game 38 of 40 (SF-1600 vs myChess)
+Finished game 37 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 19 - 16 - 2  [0.541] 37
+Started game 39 of 40 (myChess vs SF-1600)
+Warning: Illegal PV move e7f5 from myChess (3)
+Warning: PV: Rxe6 Ne7+ Kh8 Qxe6 Nxe6 Rxe6 Qxg4 d5 Qf3+ e7f5
+Warning: Illegal PV move b6b5 from myChess (3)
+Warning: PV: Rxe6 Ne7+ Kh8 Nf5 Rxe2 Nxg3 Rxd2 Re8+ Kg7 Nf5+ b6b5
+Warning: Illegal PV move b6b5 from myChess (3)
+Warning: PV: Kh8 Nf5 Rxe2 Nxg3 Rxd2 Re8+ Kg7 Nf5+ b6b5
+Warning: Illegal PV move e2d3 from myChess (0)
+Warning: PV: Ke1 Bxd4 Qf8# e2d3
+Warning: Illegal PV move d4e3 from myChess (0)
+Warning: PV: Ke1 Qg1+ Kxe2 Qg4+ d4e3
+Warning: Illegal PV move e8c6 from myChess (0)
+Warning: PV: Kxe2 Qg4+ e8c6
+Warning: Illegal PV move g8e6 from myChess (0)
+Warning: PV: Kd2 Qg5+ f4 Qxf4+ Qxf4 Bc4 Qf8+ Bg8 Bxg7# g8e6
+Finished game 38 (SF-1600 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 19 - 17 - 2  [0.526] 38
+...      myChess playing White: 15 - 3 - 1  [0.816] 19
+...      myChess playing Black: 4 - 14 - 1  [0.237] 19
+...      White vs Black: 29 - 7 - 2  [0.789] 38
+Elo difference: 18.3 +/- 111.2, LOS: 63.1 %, DrawRatio: 5.3 %
+SPRT: llr 0.614 (20.9%), lbound -2.94, ubound 2.94
+Started game 40 of 40 (SF-1600 vs myChess)
+Warning: Illegal PV move e2d1 from myChess (0)
+Warning: PV: Qf8# e2d1
+Finished game 39 (myChess vs SF-1600): 1-0 {White mates}
+Score of myChess vs SF-1600: 20 - 17 - 2  [0.538] 39
+Warning: Illegal PV move c3c4 from myChess (3)
+Warning: PV: b1=Q g4 Qe4 g5 Qxh4 gxh6 gxh6 c3c4
+Warning: Illegal PV move c5b4 from myChess (3)
+Warning: PV: Rd2 Kc5 Qb5# c5b4
+Finished game 40 (SF-1600 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 20 - 18 - 2  [0.525] 40
+...      myChess playing White: 16 - 3 - 1  [0.825] 20
+...      myChess playing Black: 4 - 15 - 1  [0.225] 20
+...      White vs Black: 31 - 7 - 2  [0.800] 40
+Elo difference: 17.4 +/- 108.3, LOS: 62.7 %, DrawRatio: 5.0 %
+SPRT: llr 0.612 (20.8%), lbound -2.94, ubound 2.94
+
+Player: myChess
+   "Draw by 3-fold repetition": 2
+   "Loss: Black wins by adjudication": 3
+   "Loss: White mates": 1
+   "Loss: White wins by adjudication": 14
+   "Win: Black mates": 1
+   "Win: Black wins by adjudication": 3
+   "Win: White mates": 1
+   "Win: White wins by adjudication": 15
+Player: SF-1600
+   "Draw by 3-fold repetition": 2
+   "Loss: Black mates": 1
+   "Loss: Black wins by adjudication": 3
+   "Loss: White mates": 1
+   "Loss: White wins by adjudication": 15
+   "Win: Black wins by adjudication": 3
+   "Win: White mates": 1
+   "Win: White wins by adjudication": 14
+Finished match

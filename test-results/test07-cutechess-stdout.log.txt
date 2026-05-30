@@ -1,0 +1,285 @@
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+        -engine name=myChess cmd=./mychess-uci.sh proto=uci \
+        -engine name=SF-1900 cmd=stockfish proto=uci \
+              option.UCI_LimitStrength=true option.UCI_Elo=1900 \
+        -each tc=40/1200 \
+        -rounds 40 -games 2 -repeat \
+        -sprt elo0=-50 elo1=50 alpha=0.05 beta=0.05 \
+        -openings file=2moves_v2.pgn format=pgn order=random plies=4 \
+        -concurrency 2 -ratinginterval 2 \
+        -recover \
+        -draw movenumber=40 movecount=8 score=10 \
+        -resign movecount=5 score=600 \
+        -pgnout mychess-vs-sf1900.pgn
+Indexing opening suite...
+Started game 2 of 80 (SF-1900 vs myChess)
+Started game 1 of 80 (myChess vs SF-1900)
+Finished game 2 (SF-1900 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 0 - 1 - 0  [0.000] 1
+Started game 3 of 80 (myChess vs SF-1900)
+Finished game 1 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 1 - 1 - 0  [0.500] 2
+...      myChess playing White: 1 - 0 - 0  [1.000] 1
+...      myChess playing Black: 0 - 1 - 0  [0.000] 1
+...      White vs Black: 2 - 0 - 0  [1.000] 2
+Elo difference: 0.0 +/- nan, LOS: 50.0 %, DrawRatio: 0.0 %
+SPRT: llr -2.78e-17 (-0.0%), lbound -2.94, ubound 2.94
+Started game 4 of 80 (SF-1900 vs myChess)
+Finished game 3 (myChess vs SF-1900): 1-0 {White mates}
+Score of myChess vs SF-1900: 2 - 1 - 0  [0.667] 3
+Started game 5 of 80 (myChess vs SF-1900)
+Finished game 5 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 3 - 1 - 0  [0.750] 4
+...      myChess playing White: 3 - 0 - 0  [1.000] 3
+...      myChess playing Black: 0 - 1 - 0  [0.000] 1
+...      White vs Black: 4 - 0 - 0  [1.000] 4
+Elo difference: 190.8 +/- nan, LOS: 84.1 %, DrawRatio: 0.0 %
+SPRT: llr 0.643 (21.8%), lbound -2.94, ubound 2.94
+Started game 6 of 80 (SF-1900 vs myChess)
+Finished game 4 (SF-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1900: 4 - 1 - 0  [0.800] 5
+Started game 7 of 80 (myChess vs SF-1900)
+Finished game 6 (SF-1900 vs myChess): 1-0 {White mates}
+Score of myChess vs SF-1900: 4 - 2 - 0  [0.667] 6
+...      myChess playing White: 3 - 0 - 0  [1.000] 3
+...      myChess playing Black: 1 - 2 - 0  [0.333] 3
+...      White vs Black: 5 - 1 - 0  [0.833] 6
+Elo difference: 120.4 +/- nan, LOS: 79.3 %, DrawRatio: 0.0 %
+SPRT: llr 0.62 (21.1%), lbound -2.94, ubound 2.94
+Started game 8 of 80 (SF-1900 vs myChess)
+Finished game 7 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 5 - 2 - 0  [0.714] 7
+Started game 9 of 80 (myChess vs SF-1900)
+Finished game 8 (SF-1900 vs myChess): 1-0 {White mates}
+Score of myChess vs SF-1900: 5 - 3 - 0  [0.625] 8
+...      myChess playing White: 4 - 0 - 0  [1.000] 4
+...      myChess playing Black: 1 - 3 - 0  [0.250] 4
+...      White vs Black: 7 - 1 - 0  [0.875] 8
+Elo difference: 88.7 +/- 353.8, LOS: 76.0 %, DrawRatio: 0.0 %
+SPRT: llr 0.609 (20.7%), lbound -2.94, ubound 2.94
+Started game 10 of 80 (SF-1900 vs myChess)
+Finished game 9 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 6 - 3 - 0  [0.667] 9
+Started game 11 of 80 (myChess vs SF-1900)
+Finished game 10 (SF-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1900: 7 - 3 - 0  [0.700] 10
+...      myChess playing White: 5 - 0 - 0  [1.000] 5
+...      myChess playing Black: 2 - 3 - 0  [0.400] 5
+...      White vs Black: 8 - 2 - 0  [0.800] 10
+Elo difference: 147.2 +/- 385.0, LOS: 89.7 %, DrawRatio: 0.0 %
+SPRT: llr 1.21 (41.1%), lbound -2.94, ubound 2.94
+Started game 12 of 80 (SF-1900 vs myChess)
+Finished game 11 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 8 - 3 - 0  [0.727] 11
+Started game 13 of 80 (myChess vs SF-1900)
+Finished game 12 (SF-1900 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 8 - 4 - 0  [0.667] 12
+...      myChess playing White: 6 - 0 - 0  [1.000] 6
+...      myChess playing Black: 2 - 4 - 0  [0.333] 6
+...      White vs Black: 10 - 2 - 0  [0.833] 12
+Elo difference: 120.4 +/- 263.9, LOS: 87.6 %, DrawRatio: 0.0 %
+SPRT: llr 1.2 (40.7%), lbound -2.94, ubound 2.94
+Started game 14 of 80 (SF-1900 vs myChess)
+Finished game 13 (myChess vs SF-1900): 1-0 {White mates}
+Score of myChess vs SF-1900: 9 - 4 - 0  [0.692] 13
+Started game 15 of 80 (myChess vs SF-1900)
+Finished game 14 (SF-1900 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 9 - 5 - 0  [0.643] 14
+...      myChess playing White: 7 - 0 - 0  [1.000] 7
+...      myChess playing Black: 2 - 5 - 0  [0.286] 7
+...      White vs Black: 12 - 2 - 0  [0.857] 14
+Elo difference: 102.1 +/- 222.8, LOS: 85.7 %, DrawRatio: 0.0 %
+SPRT: llr 1.19 (40.5%), lbound -2.94, ubound 2.94
+Started game 16 of 80 (SF-1900 vs myChess)
+Finished game 15 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 10 - 5 - 0  [0.667] 15
+Started game 17 of 80 (myChess vs SF-1900)
+Finished game 17 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 11 - 5 - 0  [0.688] 16
+...      myChess playing White: 9 - 0 - 0  [1.000] 9
+...      myChess playing Black: 2 - 5 - 0  [0.286] 7
+...      White vs Black: 14 - 2 - 0  [0.875] 16
+Elo difference: 137.0 +/- 219.3, LOS: 93.3 %, DrawRatio: 0.0 %
+SPRT: llr 1.78 (60.6%), lbound -2.94, ubound 2.94
+Started game 18 of 80 (SF-1900 vs myChess)
+Finished game 16 (SF-1900 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 11 - 6 - 0  [0.647] 17
+Started game 19 of 80 (myChess vs SF-1900)
+Finished game 19 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 12 - 6 - 0  [0.667] 18
+...      myChess playing White: 10 - 0 - 0  [1.000] 10
+...      myChess playing Black: 2 - 6 - 0  [0.250] 8
+...      White vs Black: 16 - 2 - 0  [0.889] 18
+Elo difference: 120.4 +/- 194.2, LOS: 92.1 %, DrawRatio: 0.0 %
+SPRT: llr 1.78 (60.3%), lbound -2.94, ubound 2.94
+Started game 20 of 80 (SF-1900 vs myChess)
+Finished game 18 (SF-1900 vs myChess): 1-0 {White mates}
+Score of myChess vs SF-1900: 12 - 7 - 0  [0.632] 19
+Started game 21 of 80 (myChess vs SF-1900)
+Finished game 21 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 13 - 7 - 0  [0.650] 20
+...      myChess playing White: 11 - 0 - 0  [1.000] 11
+...      myChess playing Black: 2 - 7 - 0  [0.222] 9
+...      White vs Black: 18 - 2 - 0  [0.900] 20
+Elo difference: 107.5 +/- 177.3, LOS: 91.0 %, DrawRatio: 0.0 %
+SPRT: llr 1.77 (60.2%), lbound -2.94, ubound 2.94
+Started game 22 of 80 (SF-1900 vs myChess)
+Finished game 20 (SF-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1900: 14 - 7 - 0  [0.667] 21
+Started game 23 of 80 (myChess vs SF-1900)
+Finished game 23 (myChess vs SF-1900): 1-0 {White mates}
+Score of myChess vs SF-1900: 15 - 7 - 0  [0.682] 22
+...      myChess playing White: 12 - 0 - 0  [1.000] 12
+...      myChess playing Black: 3 - 7 - 0  [0.300] 10
+...      White vs Black: 19 - 3 - 0  [0.864] 22
+Elo difference: 132.4 +/- 174.3, LOS: 95.6 %, DrawRatio: 0.0 %
+SPRT: llr 2.36 (80.1%), lbound -2.94, ubound 2.94
+Started game 24 of 80 (SF-1900 vs myChess)
+Finished game 22 (SF-1900 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 15 - 8 - 0  [0.652] 23
+Started game 25 of 80 (myChess vs SF-1900)
+Finished game 24 (SF-1900 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 15 - 9 - 0  [0.625] 24
+...      myChess playing White: 12 - 0 - 0  [1.000] 12
+...      myChess playing Black: 3 - 9 - 0  [0.250] 12
+...      White vs Black: 21 - 3 - 0  [0.875] 24
+Elo difference: 88.7 +/- 154.7, LOS: 89.0 %, DrawRatio: 0.0 %
+SPRT: llr 1.76 (59.9%), lbound -2.94, ubound 2.94
+Started game 26 of 80 (SF-1900 vs myChess)
+Finished game 26 (SF-1900 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 15 - 10 - 0  [0.600] 25
+Started game 27 of 80 (myChess vs SF-1900)
+Finished game 25 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 16 - 10 - 0  [0.615] 26
+...      myChess playing White: 13 - 0 - 0  [1.000] 13
+...      myChess playing Black: 3 - 10 - 0  [0.231] 13
+...      White vs Black: 23 - 3 - 0  [0.885] 26
+Elo difference: 81.6 +/- 146.5, LOS: 88.0 %, DrawRatio: 0.0 %
+SPRT: llr 1.76 (59.8%), lbound -2.94, ubound 2.94
+Started game 28 of 80 (SF-1900 vs myChess)
+Finished game 27 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 17 - 10 - 0  [0.630] 27
+Started game 29 of 80 (myChess vs SF-1900)
+Finished game 29 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 18 - 10 - 0  [0.643] 28
+...      myChess playing White: 15 - 0 - 0  [1.000] 15
+...      myChess playing Black: 3 - 10 - 0  [0.231] 13
+...      White vs Black: 25 - 3 - 0  [0.893] 28
+Elo difference: 102.1 +/- 143.7, LOS: 93.5 %, DrawRatio: 0.0 %
+SPRT: llr 2.35 (79.6%), lbound -2.94, ubound 2.94
+Started game 30 of 80 (SF-1900 vs myChess)
+Finished game 28 (SF-1900 vs myChess): 1-0 {White mates}
+Score of myChess vs SF-1900: 18 - 11 - 0  [0.621] 29
+Started game 31 of 80 (myChess vs SF-1900)
+Finished game 31 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 19 - 11 - 0  [0.633] 30
+...      myChess playing White: 16 - 0 - 0  [1.000] 16
+...      myChess playing Black: 3 - 11 - 0  [0.214] 14
+...      White vs Black: 27 - 3 - 0  [0.900] 30
+Elo difference: 94.9 +/- 137.0, LOS: 92.8 %, DrawRatio: 0.0 %
+SPRT: llr 2.34 (79.5%), lbound -2.94, ubound 2.94
+Started game 32 of 80 (SF-1900 vs myChess)
+Finished game 30 (SF-1900 vs myChess): 1-0 {White mates}
+Score of myChess vs SF-1900: 19 - 12 - 0  [0.613] 31
+Started game 33 of 80 (myChess vs SF-1900)
+Finished game 32 (SF-1900 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 19 - 13 - 0  [0.594] 32
+...      myChess playing White: 16 - 0 - 0  [1.000] 16
+...      myChess playing Black: 3 - 13 - 0  [0.188] 16
+...      White vs Black: 29 - 3 - 0  [0.906] 32
+Elo difference: 65.9 +/- 128.6, LOS: 85.6 %, DrawRatio: 0.0 %
+SPRT: llr 1.75 (59.6%), lbound -2.94, ubound 2.94
+Started game 34 of 80 (SF-1900 vs myChess)
+Finished game 33 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 20 - 13 - 0  [0.606] 33
+Started game 35 of 80 (myChess vs SF-1900)
+Finished game 34 (SF-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1900: 21 - 13 - 0  [0.618] 34
+...      myChess playing White: 17 - 0 - 0  [1.000] 17
+...      myChess playing Black: 4 - 13 - 0  [0.235] 17
+...      White vs Black: 30 - 4 - 0  [0.882] 34
+Elo difference: 83.3 +/- 126.2, LOS: 91.5 %, DrawRatio: 0.0 %
+SPRT: llr 2.34 (79.4%), lbound -2.94, ubound 2.94
+Started game 36 of 80 (SF-1900 vs myChess)
+Finished game 35 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 22 - 13 - 0  [0.629] 35
+Started game 37 of 80 (myChess vs SF-1900)
+Finished game 36 (SF-1900 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 22 - 14 - 0  [0.611] 36
+...      myChess playing White: 18 - 0 - 0  [1.000] 18
+...      myChess playing Black: 4 - 14 - 0  [0.222] 18
+...      White vs Black: 32 - 4 - 0  [0.889] 36
+Elo difference: 78.5 +/- 121.7, LOS: 90.9 %, DrawRatio: 0.0 %
+SPRT: llr 2.33 (79.3%), lbound -2.94, ubound 2.94
+Started game 38 of 80 (SF-1900 vs myChess)
+Finished game 38 (SF-1900 vs myChess): 1-0 {White mates}
+Score of myChess vs SF-1900: 22 - 15 - 0  [0.595] 37
+Started game 39 of 80 (myChess vs SF-1900)
+Finished game 39 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 23 - 15 - 0  [0.605] 38
+...      myChess playing White: 19 - 0 - 0  [1.000] 19
+...      myChess playing Black: 4 - 15 - 0  [0.211] 19
+...      White vs Black: 34 - 4 - 0  [0.895] 38
+Elo difference: 74.3 +/- 117.7, LOS: 90.3 %, DrawRatio: 0.0 %
+SPRT: llr 2.33 (79.2%), lbound -2.94, ubound 2.94
+Started game 40 of 80 (SF-1900 vs myChess)
+Finished game 37 (myChess vs SF-1900): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1900: 23 - 16 - 0  [0.590] 39
+Started game 41 of 80 (myChess vs SF-1900)
+Finished game 40 (SF-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1900: 24 - 16 - 0  [0.600] 40
+...      myChess playing White: 19 - 1 - 0  [0.950] 20
+...      myChess playing Black: 5 - 15 - 0  [0.250] 20
+...      White vs Black: 34 - 6 - 0  [0.850] 40
+Elo difference: 70.4 +/- 114.2, LOS: 89.7 %, DrawRatio: 0.0 %
+SPRT: llr 2.33 (79.2%), lbound -2.94, ubound 2.94
+Started game 42 of 80 (SF-1900 vs myChess)
+Finished game 41 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 25 - 16 - 0  [0.610] 41
+Started game 43 of 80 (myChess vs SF-1900)
+Finished game 42 (SF-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1900: 26 - 16 - 0  [0.619] 42
+...      myChess playing White: 20 - 1 - 0  [0.952] 21
+...      myChess playing Black: 6 - 15 - 0  [0.286] 21
+...      White vs Black: 35 - 7 - 0  [0.833] 42
+Elo difference: 84.3 +/- 112.5, LOS: 93.9 %, DrawRatio: 0.0 %
+SPRT: llr 2.91 (98.9%), lbound -2.94, ubound 2.94
+Started game 44 of 80 (SF-1900 vs myChess)
+Finished game 44 (SF-1900 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 26 - 17 - 0  [0.605] 43
+Started game 45 of 80 (myChess vs SF-1900)
+Finished game 43 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 27 - 17 - 0  [0.614] 44
+...      myChess playing White: 21 - 1 - 0  [0.955] 22
+...      myChess playing Black: 6 - 16 - 0  [0.273] 22
+...      White vs Black: 37 - 7 - 0  [0.841] 44
+Elo difference: 80.4 +/- 109.3, LOS: 93.4 %, DrawRatio: 0.0 %
+SPRT: llr 2.91 (98.9%), lbound -2.94, ubound 2.94
+Started game 46 of 80 (SF-1900 vs myChess)
+Finished game 45 (myChess vs SF-1900): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1900: 28 - 17 - 0  [0.622] 45
+Finished game 46 (SF-1900 vs myChess): * {No result}
+Score of myChess vs SF-1900: 28 - 17 - 0  [0.622] 45
+...      myChess playing White: 22 - 1 - 0  [0.957] 23
+...      myChess playing Black: 6 - 16 - 0  [0.273] 22
+...      White vs Black: 38 - 7 - 0  [0.844] 45
+Elo difference: 86.7 +/- 108.6, LOS: 94.9 %, DrawRatio: 0.0 %
+SPRT: llr 3.2 (108.8%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Player: myChess
+   "Loss: Black wins by adjudication": 1
+   "Loss: White mates": 6
+   "Loss: White wins by adjudication": 10
+   "No result": 1
+   "Win: Black wins by adjudication": 6
+   "Win: White mates": 3
+   "Win: White wins by adjudication": 19
+Player: SF-1900
+   "Loss: Black wins by adjudication": 6
+   "Loss: White mates": 3
+   "Loss: White wins by adjudication": 19
+   "No result": 1
+   "Win: Black wins by adjudication": 1
+   "Win: White mates": 6
+   "Win: White wins by adjudication": 10
+Finished match
