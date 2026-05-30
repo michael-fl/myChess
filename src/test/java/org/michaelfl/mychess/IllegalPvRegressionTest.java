@@ -1,5 +1,6 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.michaelfl.mychess.engines.MyChessEngine;
@@ -32,6 +33,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Michael Fleischhauer
  */
+@Tag("slow")
 class IllegalPvRegressionTest {
 
     /**

@@ -9,13 +9,21 @@ Maven project, Java 25, JUnit Jupiter 5.
 The build is configured via `maven.compiler.release` in `pom.xml`. Run with `JAVA_HOME` pointing to a JDK 25 (the system default JDK may be older — Maven uses `JAVA_HOME` to pick the compiler).
 
 ```sh
-mvn compile                     # compile
-mvn test                        # run all tests
-mvn -Dtest=BoardTest test       # run one test class
-mvn -Dtest=BoardTest#methodName test
-mvn exec:java                   # launch REPL (org.michaelfl.mychess.MyChessMain)
-mvn package                     # build jar in target/
+mvn compile                                  # compile
+mvn test                                     # run all tests (~6 min)
+mvn test -DexcludedGroups=slow               # fast tests only (~20 s)
+mvn -Dtest=BoardTest test                    # run one test class
+mvn -Dtest=BoardTest#methodName test         # run one test method
+mvn exec:java                                # launch REPL (org.michaelfl.mychess.MyChessMain)
+mvn package                                  # build jar in target/
 ```
+
+Tests that take more than ~10 s on this machine are annotated with JUnit 5's
+`@Tag("slow")` so they can be skipped during iterative development. Currently
+tagged: `BlunderTest`, `EngineTest`, `IllegalPvRegressionTest`, `DeepWeightTest`
+— together ~98 % of full-suite wall-clock. Add the tag at the class level when
+a new test reliably crosses the 10 s mark on a fresh JVM; prefer method-level
+tags only when a class has a clear fast/slow split.
 
 The REPL opens `db/openings.db` (MapDB) on start and creates it on first run if missing. `db/` is git-ignored.
 
