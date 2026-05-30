@@ -1283,6 +1283,136 @@ class BoardTest {
         assertEquals(Board.whiteRook, board.get(Board.h1), "kingside rook h1 stays put");
     }
 
+    // ---------- Degenerate king-to-rook castle: king target == king source ----------
+    //
+    // When the king starts on the castle's destination file (c-file
+    // for queenside, g-file for kingside), the king does not move at
+    // all during the castle — only the rook does. With UCI_Chess960
+    // active, cutechess sends back the engine's own outbound castle
+    // ("c8a8" = king c8 → own queenside rook a8) on the next
+    // `position fen ... moves ...` command, and that string must
+    // replay cleanly against the engine's own board.
+    //
+    // The four tests below cover all four quadrants (W/B × K/Q) of
+    // the degenerate case. They drive `Game.makeMove(MoveDescription)`
+    // — not Board.makeMove(int) directly — so they exercise the
+    // resolveMoveDescription → moveDescriptionToMove → validate-against-
+    // MoveGenerator pipeline that the live UCI replay also takes.
+    //
+    // Regression context: a live cutechess Chess960 game on the
+    // RNKBQNBR starting position (king on c-file) lost on move 9
+    // because Black's queenside castle "c8a8", emitted by the
+    // engine itself, was rejected by Game.makeMoveResolved on the
+    // next position-command replay. moveDescriptionToMove packed the
+    // castle move with capturedPiece = get(toField) = blackKing
+    // (non-zero), while MoveGenerator emits the same castle with
+    // capturedPiece = 0 — Moves.contains is an exact-int compare,
+    // so the validation rejected the move.
+
+    @Test
+    void makeMove_chess960_kingToRookNotation_degenerateBlackQueenside_replaysWithoutException() {
+        // Black king starts on c8 — its own queenside castle target.
+        // "c8a8" (king → own queenside rook) is the canonical UCI
+        // Chess960 form. This is the exact ply-16 from the live
+        // cutechess game that the engine then failed to replay on
+        // ply 17, causing a 1-0 loss on illegal-move forfeit.
+        var game = new Game(Game.standardConfig(),
+                Fen.importFEN("r1k5/8/8/8/8/8/8/4K3 b a - 0 1"));
+        assertTrue(game.getBoard().isChess960(),
+                "precondition: imported position must be detected as a 960 game");
+
+        game.makeMove(UciMoveParser.parse("c8a8", game.getBoard()));
+
+        var board = game.getBoard();
+        assertEquals(Board.blackKing, board.get(Board.c8),
+                "king stays on c8 — its queenside-castle target equals its source square");
+        assertEquals(Board.blackRook, board.get(Board.d8),
+                "queenside rook lands on d8");
+        assertEquals(Board.empty, board.get(Board.a8),
+                "queenside rook source a8 is empty");
+        assertFalse(board.getGameStatus().isBlackCastlingQueenSidePossible(),
+                "black queenside castle right is revoked after castling");
+        assertFalse(board.getGameStatus().isBlackCastlingKingSidePossible(),
+                "black kingside castle right is revoked after castling");
+        assertTrue(board.getGameStatus().hasBlackCastled(),
+                "hasBlackCastled flag is set after castling");
+    }
+
+    @Test
+    void makeMove_chess960_kingToRookNotation_degenerateWhiteQueenside_replaysWithoutException() {
+        // White mirror: king starts on c1, queenside rook on a1.
+        // "c1a1" is the king-to-rook castle; king target c1 equals
+        // king source c1, only the rook moves a1 → d1.
+        var game = new Game(Game.standardConfig(),
+                Fen.importFEN("4k3/8/8/8/8/8/8/R1K5 w A - 0 1"));
+        assertTrue(game.getBoard().isChess960(),
+                "precondition: imported position must be detected as a 960 game");
+
+        game.makeMove(UciMoveParser.parse("c1a1", game.getBoard()));
+
+        var board = game.getBoard();
+        assertEquals(Board.whiteKing, board.get(Board.c1),
+                "king stays on c1 — its queenside-castle target equals its source square");
+        assertEquals(Board.whiteRook, board.get(Board.d1),
+                "queenside rook lands on d1");
+        assertEquals(Board.empty, board.get(Board.a1),
+                "queenside rook source a1 is empty");
+        assertFalse(board.getGameStatus().isWhiteCastlingQueenSidePossible(),
+                "white queenside castle right is revoked after castling");
+        assertTrue(board.getGameStatus().hasWhiteCastled(),
+                "hasWhiteCastled flag is set after castling");
+    }
+
+    @Test
+    void makeMove_chess960_kingToRookNotation_degenerateBlackKingside_replaysWithoutException() {
+        // Black kingside variant: king starts on g8, kingside rook
+        // on h8. "g8h8" is the king-to-rook castle; king target g8
+        // equals king source g8, only the rook moves h8 → f8.
+        var game = new Game(Game.standardConfig(),
+                Fen.importFEN("6kr/8/8/8/8/8/8/4K3 b h - 0 1"));
+        assertTrue(game.getBoard().isChess960(),
+                "precondition: imported position must be detected as a 960 game");
+
+        game.makeMove(UciMoveParser.parse("g8h8", game.getBoard()));
+
+        var board = game.getBoard();
+        assertEquals(Board.blackKing, board.get(Board.g8),
+                "king stays on g8 — its kingside-castle target equals its source square");
+        assertEquals(Board.blackRook, board.get(Board.f8),
+                "kingside rook lands on f8");
+        assertEquals(Board.empty, board.get(Board.h8),
+                "kingside rook source h8 is empty");
+        assertFalse(board.getGameStatus().isBlackCastlingKingSidePossible(),
+                "black kingside castle right is revoked after castling");
+        assertTrue(board.getGameStatus().hasBlackCastled(),
+                "hasBlackCastled flag is set after castling");
+    }
+
+    @Test
+    void makeMove_chess960_kingToRookNotation_degenerateWhiteKingside_replaysWithoutException() {
+        // White kingside variant: king starts on g1, kingside rook
+        // on h1. "g1h1" is the king-to-rook castle; king target g1
+        // equals king source g1, only the rook moves h1 → f1.
+        var game = new Game(Game.standardConfig(),
+                Fen.importFEN("4k3/8/8/8/8/8/8/6KR w H - 0 1"));
+        assertTrue(game.getBoard().isChess960(),
+                "precondition: imported position must be detected as a 960 game");
+
+        game.makeMove(UciMoveParser.parse("g1h1", game.getBoard()));
+
+        var board = game.getBoard();
+        assertEquals(Board.whiteKing, board.get(Board.g1),
+                "king stays on g1 — its kingside-castle target equals its source square");
+        assertEquals(Board.whiteRook, board.get(Board.f1),
+                "kingside rook lands on f1");
+        assertEquals(Board.empty, board.get(Board.h1),
+                "kingside rook source h1 is empty");
+        assertFalse(board.getGameStatus().isWhiteCastlingKingSidePossible(),
+                "white kingside castle right is revoked after castling");
+        assertTrue(board.getGameStatus().hasWhiteCastled(),
+                "hasWhiteCastled flag is set after castling");
+    }
+
     // ---------- End-to-end FEN round-trip for Chess960 ----------
     //
     // Closes the loop on Phase 1 (FEN export) and Phase 2 (960

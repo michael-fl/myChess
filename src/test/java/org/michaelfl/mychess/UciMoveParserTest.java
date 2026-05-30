@@ -100,6 +100,79 @@ class UciMoveParserTest {
                 "should not be flagged as queenside castling");
     }
 
+    // ---- parse: Chess960 king-to-rook castling notation ----
+    //
+    // In Chess960 (UCI_Chess960 = true) cutechess and other 960-aware
+    // GUIs encode castles as king-source → own-rook-source ("king-
+    // captures-rook" form). The column distance between king and rook
+    // can be anything from 1 (king on g-file, rook on h-file) to 7,
+    // so the standard chess "king moves exactly two files" heuristic
+    // is insufficient. The parser must recognize king-to-own-rook on
+    // the same row as a castle for any column distance, or otherwise
+    // the engine fails to replay its own outbound castle moves in the
+    // next position command — exactly the failure mode that lost a
+    // live cutechess Chess960 game on move 9 (king on c-file, queenside
+    // castle "c8a8" → col diff 2 happens to work; the kingside
+    // counterpart "c8h8" → col diff 5 does not).
+
+    @Test
+    void parse_chess960_kingToAdjacentKingsideRook_returnsKingsideCastle() {
+        // Black king on g8, kingside rook on h8 — col diff 1, the
+        // smallest possible. "g8h8" is the king-to-rook castle.
+        var board = Fen.importFEN("6kr/8/8/8/8/8/8/4K3 b h - 0 1");
+
+        var md = UciMoveParser.parse("g8h8", board);
+
+        assertTrue(md.isCastlingKingSide(),
+                "king moving onto its own kingside rook on the same row must be parsed as a kingside castle");
+        assertFalse(md.isCastlingQueenSide(),
+                "must not be parsed as queenside castle");
+    }
+
+    @Test
+    void parse_chess960_kingToAdjacentQueensideRook_returnsQueensideCastle() {
+        // White king on b1, queenside rook on a1 — col diff 1. "b1a1"
+        // is the king-to-rook castle in Chess960 UCI notation.
+        var board = Fen.importFEN("4k3/8/8/8/8/8/8/RK6 w A - 0 1");
+
+        var md = UciMoveParser.parse("b1a1", board);
+
+        assertTrue(md.isCastlingQueenSide(),
+                "king moving onto its own queenside rook on the same row must be parsed as a queenside castle");
+        assertFalse(md.isCastlingKingSide(),
+                "must not be parsed as kingside castle");
+    }
+
+    @Test
+    void parse_chess960_kingToFarKingsideRook_returnsKingsideCastle() {
+        // Black king on b8, kingside rook on h8 — col diff 6, well
+        // beyond the standard-chess heuristic. "b8h8" is the king-to-
+        // rook castle.
+        var board = Fen.importFEN("1k5r/8/8/8/8/8/8/4K3 b h - 0 1");
+
+        var md = UciMoveParser.parse("b8h8", board);
+
+        assertTrue(md.isCastlingKingSide(),
+                "king moving onto its own kingside rook on the same row must be parsed as a kingside castle");
+        assertFalse(md.isCastlingQueenSide(),
+                "must not be parsed as queenside castle");
+    }
+
+    @Test
+    void parse_chess960_kingToFarQueensideRook_returnsQueensideCastle() {
+        // White king on g1, queenside rook on a1 — col diff 6, the
+        // kingside mirror of the previous test. "g1a1" is the king-
+        // to-rook castle.
+        var board = Fen.importFEN("4k3/8/8/8/8/8/8/R5K1 w A - 0 1");
+
+        var md = UciMoveParser.parse("g1a1", board);
+
+        assertTrue(md.isCastlingQueenSide(),
+                "king moving onto its own queenside rook on the same row must be parsed as a queenside castle");
+        assertFalse(md.isCastlingKingSide(),
+                "must not be parsed as kingside castle");
+    }
+
     // ---- parse: promotion ----
 
     @ParameterizedTest

@@ -38,7 +38,7 @@ final class UciMoveParser {
 
         int turn = isWhitePiece(piece) ? GameStatus.TURN_WHITE : GameStatus.TURN_BLACK;
 
-        if (isKing(piece) && isCastlingDistance(fromStr, toStr)) {
+        if (isKing(piece) && isCastlingMove(fromStr, toStr, board, turn)) {
             boolean kingSide = toStr.charAt(0) > fromStr.charAt(0);
             return MoveDescription.fromString(kingSide ? "O-O" : "O-O-O", turn);
         }
@@ -93,13 +93,44 @@ final class UciMoveParser {
         return piece >= Board.whitePawn && piece <= Board.whiteKing;
     }
 
-    private static boolean isCastlingDistance(String fromStr, String toStr) {
-        if (!fromStr.substring(1).equals(toStr.substring(1))) {
+    /**
+     * Detect whether a king-from/to pair encodes a castle.
+     *
+     * <p>Accepts two forms:
+     * <ul>
+     *   <li><b>Standard chess</b> — king moves exactly two files on the
+     *       same row ({@code e1g1}, {@code e1c1}, …).</li>
+     *   <li><b>Chess960 king-to-rook</b> — king moves to an own rook on
+     *       the same row ({@code c8a8}, {@code g8h8}, {@code b1h1}, …).
+     *       Any column distance from 1 to 7 is valid; the rook may be
+     *       on either side of the king. Selected by 960-aware GUIs
+     *       when {@code UCI_Chess960} is set.</li>
+     * </ul>
+     *
+     * <p>The board context is needed for the 960 form so the parser can
+     * tell a king-captures-own-rook castle apart from an illegal king
+     * step onto an empty / enemy / non-rook square.
+     */
+    private static boolean isCastlingMove(String fromStr, String toStr, Board board, int turn) {
+        if (fromStr.charAt(1) != toStr.charAt(1)) {
             return false;
         }
 
         int colDiff = Math.abs(toStr.charAt(0) - fromStr.charAt(0));
-        return colDiff == 2;
+        if (colDiff == 2) {
+            return true;
+        }
+
+        if (colDiff < 1) {
+            return false;
+        }
+
+        byte targetPiece = board.get(fieldFromString(toStr));
+        return isOwnRook(targetPiece, turn);
+    }
+
+    private static boolean isOwnRook(byte piece, int turn) {
+        return turn == GameStatus.TURN_WHITE ? piece == Board.whiteRook : piece == Board.blackRook;
     }
 
     private static int fieldFromString(String s) {

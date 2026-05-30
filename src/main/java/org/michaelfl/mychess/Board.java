@@ -1292,6 +1292,10 @@ public final class Board {
             moveType = Move.typeNormal;
         }
 
+        if (moveType == Move.typeCastlingKingSide || moveType == Move.typeCastlingQueenSide) {
+            capturedPiece = 0;
+        }
+
         return new Move(Move.create((byte) fromField, (byte) toField, capturedPiece, moveType));
     }
 
