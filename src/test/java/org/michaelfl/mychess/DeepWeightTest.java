@@ -1,5 +1,6 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
@@ -15,6 +16,7 @@ import static org.michaelfl.mychess.WeightingFunction.checkmateIn;
 /**
  * @author Michael Fleischhauer
  */
+@Tag("slow")
 class DeepWeightTest {
 
     @Test
