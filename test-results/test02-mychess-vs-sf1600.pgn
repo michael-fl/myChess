@@ -1,0 +1,255 @@
+[Event "?"]
+[Site "?"]
+[Date "2026.05.22"]
+[Round "1"]
+[White "myChess"]
+[Black "SF-1600"]
+[Result "1-0"]
+[ECO "B50"]
+[GameDuration "00:23:30"]
+[GameEndTime "2026-05-22T18:41:54.177 MESZ"]
+[GameStartTime "2026-05-22T18:18:23.327 MESZ"]
+[Opening "Sicilian"]
+[PlyCount "48"]
+[Termination "adjudication"]
+[TimeControl "40/1200"]
+
+1. e4 {book} c5 {book} 2. Nf3 {book} d6 {book} 3. c3 {book} Nf6 {book}
+4. Be2 {book} e6 {book} 5. O-O {book} Be7 {book} 6. d3 {book} O-O {book}
+7. Bg5 {book} b6 {book} 8. Nbd2 {book} Bb7 {book} 9. Nc4 {+0.05/8 36s}
+Kh8 {+0.34/29 48s} 10. e5 {+0.26/8 36s} Ne8 {+0.32/30 56s}
+11. Bxe7 {+0.29/8 5.5s} Qxe7 {-0.40/28 59s} 12. Qa4 {+0.24/8 4.4s}
+a6 {+0.24/23 23s} 13. Nxb6 {+1.82/9 38s} Bc6 {-2.02/28 68s}
+14. Qf4 {+3.40/9 38s} dxe5 {-3.43/30 166s} 15. Nxe5 {+3.00/9 38s}
+Qb7 {-3.84/30 108s} 16. Nxa8 {+3.35/8 38s} Nf6 {-4.63/23 58s}
+17. Bf3 {+3.54/8 38s} Nd5 {-4.93/27 57s} 18. Bxd5 {+6.16/9 25s}
+Bxd5 {-4.87/24 56s} 19. Nc7 {+6.42/9 27s} Nd7 {-4.93/23 44s}
+20. Nxd7 {+9.00/8 40s} Bc6 {-8.14/26 96s} 21. Nxf8 {+13.00/8 40s}
+c4 {-8.95/24 35s} 22. Qxf7 {+18.00/8 40s} Bb5 {-M14/84 28s}
+23. Nfxe6 {+M7/9 23s} Qxg2+ {-M6/245 0.012s} 24. Kxg2 {+M5/12 41s}
+Bc6+ {-M4/245 0.008s, White wins by adjudication} 1-0
+
+[Event "?"]
+[Site "?"]
+[Date "2026.05.22"]
+[Round "1"]
+[White "SF-1600"]
+[Black "myChess"]
+[Result "1-0"]
+[ECO "B50"]
+[GameDuration "00:32:04"]
+[GameEndTime "2026-05-22T18:50:27.391 MESZ"]
+[GameStartTime "2026-05-22T18:18:23.327 MESZ"]
+[Opening "Sicilian"]
+[PlyCount "64"]
+[Termination "adjudication"]
+[TimeControl "40/1200"]
+
+1. e4 {book} c5 {book} 2. Nf3 {book} d6 {book} 3. c3 {book} Nf6 {book}
+4. Be2 {book} e6 {book} 5. O-O {book} Be7 {book} 6. d3 {book} O-O {book}
+7. Bg5 {book} b6 {book} 8. Nbd2 {book} Bb7 {book} 9. Re1 {0.00/35 167s}
+Nc6 {-0.03/9 36s} 10. Qb1 {+0.18/24 22s} Ng4 {+0.17/8 36s}
+11. h4 {+0.17/31 101s} Bxg5 {+0.07/8 7.0s} 12. Nxg5 {-0.43/29 104s}
+Nge5 {-0.01/8 5.7s} 13. a4 {-0.33/24 35s} h6 {-0.11/8 7.6s}
+14. Ngf3 {-0.48/27 33s} Nxf3+ {-0.01/8 7.4s} 15. Bxf3 {-0.47/28 52s}
+Qxh4 {-1.17/9 41s} 16. a5 {-1.59/30 126s} Nxa5 {-1.71/8 41s}
+17. g3 {-2.06/27 61s} Qf6 {-2.16/9 41s} 18. Qd1 {-2.11/26 45s} Nc6 {-1.93/8 41s}
+19. Qe2 {-2.07/23 28s} Rfb8 {-1.91/8 10s} 20. Qe3 {-2.33/29 88s}
+b5 {-2.15/9 40s} 21. Nb3 {-2.57/27 72s} e5 {-1.95/8 42s} 22. Bd1 {-2.69/21 16s}
+a5 {-2.24/9 42s} 23. Rf1 {-2.99/25 43s} Bc8 {-2.33/9 26s} 24. Nd2 {-3.15/24 25s}
+Bh3 {-2.34/9 38s} 25. f4 {-3.02/21 16s} Bxf1 {-4.27/9 43s}
+26. Nxf1 {-4.51/26 43s} b4 {-4.30/9 43s} 27. f5 {-4.16/24 17s}
+bxc3 {-4.33/9 25s} 28. Bg4 {-4.26/24 18s} cxb2 {-8.00/9 27s}
+29. Ra2 {-8.09/23 26s} b1=Q {-14.00/9 46s} 30. Rf2 {-9.04/22 19s}
+a4 {-15.83/9 41s} 31. Kh2 {-9.60/21 14s} a3 {-18.00/9 25s}
+32. Kg2 {-9.59/21 10s} a2 {-19.00/9 28s, White wins by adjudication} 1-0
+
+[Event "?"]
+[Site "?"]
+[Date "2026.05.22"]
+[Round "2"]
+[White "myChess"]
+[Black "SF-1600"]
+[Result "1-0"]
+[ECO "A30"]
+[GameDuration "00:33:24"]
+[GameEndTime "2026-05-22T19:15:18.292 MESZ"]
+[GameStartTime "2026-05-22T18:41:54.188 MESZ"]
+[Opening "English"]
+[PlyCount "65"]
+[TimeControl "40/1200"]
+[Variation "Symmetrical variation"]
+
+1. c4 {book} c5 {book} 2. Nf3 {book} Nf6 {book} 3. Nc3 {book} g6 {book}
+4. e3 {book} Bg7 {book} 5. d4 {book} O-O {book} 6. dxc5 {book} Na6 {book}
+7. Rb1 {book} Nxc5 {book} 8. b4 {book} Nfe4 {book} 9. Nxe4 {-0.43/9 36s}
+Nxe4 {+0.44/28 49s} 10. Rb3 {-0.13/9 36s} d5 {+2.07/26 26s}
+11. Qxd5 {+0.06/9 33s} Bf5 {+1.10/30 60s} 12. Bb2 {+0.13/9 36s}
+Qxd5 {+1.44/27 26s} 13. cxd5 {0.00/10 36s} Rac8 {+1.25/36 136s}
+14. Be2 {-0.09/9 19s} Nc3 {+1.38/29 41s} 15. Ra3 {-0.07/9 28s}
+Rfd8 {+3.49/25 21s} 16. Rxa7 {-0.63/9 29s} Nxd5 {+3.97/25 59s}
+17. Bd4 {-0.06/9 32s} Bxd4 {+4.47/29 88s} 18. Nxd4 {-0.91/10 38s}
+Rc1+ {+3.61/29 56s} 19. Bd1 {-1.37/10 30s} e5 {+3.72/28 52s}
+20. Nxf5 {+0.08/9 38s} Nf4 {+3.75/31 56s} 21. O-O {+1.59/10 38s}
+h5 {-2.64/29 49s} 22. Ne7+ {+4.34/10 38s} Kf8 {-5.02/28 68s}
+23. Bf3 {+2.97/10 38s} Nd3 {-5.10/28 50s} 24. Rxb7 {+4.84/10 38s}
+Ne1 {-5.10/24 37s} 25. Kh1 {+5.78/9 38s} Rd2 {-4.43/20 21s} 26. b5 {+5.47/9 38s}
+Rxf2 {-4.12/24 66s} 27. Rg1 {+3.16/10 38s} e4 {-4.25/24 42s}
+28. Bxe4 {+5.47/10 38s} g5 {-5.20/24 55s} 29. Nf5 {+7.72/9 38s}
+Ke8 {-7.10/25 40s} 30. Bc6+ {+8.00/10 19s} Kd8 {-M56/29 26s}
+31. Nd6 {+M5/10 40s} Rxc6 {-M4/245 0.009s} 32. bxc6 {+M3/11 40s}
+f5 {-M2/245 0.004s} 33. Rd7# {+M1/10 40s, White mates} 1-0
+
+[Event "?"]
+[Site "?"]
+[Date "2026.05.22"]
+[Round "2"]
+[White "SF-1600"]
+[Black "myChess"]
+[Result "1-0"]
+[ECO "A30"]
+[GameDuration "00:58:37"]
+[GameEndTime "2026-05-22T19:49:04.915 MESZ"]
+[GameStartTime "2026-05-22T18:50:27.393 MESZ"]
+[Opening "English"]
+[PlyCount "115"]
+[TimeControl "40/1200"]
+[Variation "Symmetrical variation"]
+
+1. c4 {book} c5 {book} 2. Nf3 {book} Nf6 {book} 3. Nc3 {book} g6 {book}
+4. e3 {book} Bg7 {book} 5. d4 {book} O-O {book} 6. dxc5 {book} Na6 {book}
+7. Rb1 {book} Nxc5 {book} 8. b4 {book} Nfe4 {book} 9. Nxe4 {-0.37/28 61s}
+Nxe4 {0.00/9 36s} 10. Qc2 {-0.46/27 55s} Bc3+ {-0.31/8 36s}
+11. Bd2 {-0.48/32 143s} Bxd2+ {-0.38/9 36s} 12. Nxd2 {-0.23/29 38s}
+Nxd2 {-0.23/9 15s} 13. Qxd2 {-0.17/30 53s} d6 {-0.15/9 11s}
+14. Be2 {-0.10/30 34s} Bf5 {-0.13/9 14s} 15. Ra1 {-0.08/30 46s}
+Qc7 {-0.19/9 23s} 16. a4 {-0.11/25 16s} e5 {-0.08/8 39s} 17. a5 {+0.04/30 36s}
+Rfd8 {-0.25/9 31s} 18. O-O {+0.08/27 35s} Be4 {-0.21/9 36s}
+19. Rfc1 {+0.11/25 41s} Qe7 {-0.21/9 23s} 20. a6 {-0.02/28 41s}
+bxa6 {-0.52/9 26s} 21. Qa2 {+0.14/25 28s} Rdb8 {-0.81/8 42s}
+22. Qd2 {0.00/30 49s} Bb7 {-0.50/8 42s} 23. Bf1 {0.00/34 38s} Rd8 {-1.06/9 36s}
+24. Rd1 {0.00/32 27s} Qg5 {-1.13/9 39s} 25. Ra5 {+0.02/28 38s} h5 {-0.77/8 42s}
+26. h3 {+0.02/28 30s} Bf3 {-0.75/8 7.6s} 27. Rc1 {+0.21/23 16s}
+Bb7 {-1.04/9 44s} 28. Qc3 {0.00/35 26s} Bc8 {-0.95/9 36s} 29. Qa1 {+1.65/24 19s}
+h4 {-1.08/9 44s} 30. c5 {+0.27/29 64s} d5 {-1.05/9 20s} 31. e4 {+1.81/24 35s}
+dxe4 {-1.56/9 26s} 32. c6 {+0.93/28 47s} e3 {-1.63/9 26s}
+33. Rxe5 {+1.86/29 65s} exf2+ {-0.87/10 52s} 34. Kxf2 {+1.78/28 37s}
+Qf4+ {-1.04/10 52s} 35. Kg1 {+2.23/30 24s} Qxb4 {-1.64/9 52s}
+36. c7 {+3.59/25 24s} Qb6+ {+0.31/10 37s} 37. Rcc5 {+3.67/23 23s}
+Rf8 {-1.73/9 55s} 38. Qc3 {+1.79/21 10s} Bb7 {-1.64/9 55s}
+39. Re2 {+3.25/18 1.8s} Qd6 {-0.87/9 55s} 40. Rb2 {+2.95/8 0.038s}
+Bc8 {-0.81/9 22s} 41. Re2 {+4.38/25 79s} Kh7 {-0.30/8 31s}
+42. Rc4 {+6.35/24 25s} g5 {-1.00/9 25s} 43. Rc6 {+7.09/26 74s} Qg3 {-0.79/9 17s}
+44. Re3 {+M25/28 86s} Qf4 {+0.18/9 10s} 45. Rf3 {+10.75/27 58s}
+Qa4 {+0.53/9 9.7s} 46. Rcf6 {+M17/39 25s} Bxh3 {+2.00/9 19s}
+47. gxh3 {+M9/55 20s} Qd7 {+5.00/9 18s} 48. Be2 {+M13/46 21s} Rac8 {+2.13/9 15s}
+49. Qe3 {+M15/63 22s} Qd5 {+4.00/9 7.9s} 50. Bd3+ {+M19/43 31s}
+Kh8 {+8.00/10 15s} 51. Rh6+ {+M13/55 19s} Kg7 {+2.41/9 3.2s}
+52. Rh7+ {+M13/35 201s} Kg8 {+5.00/9 2.7s} 53. Rf5 {+M11/29 52s}
+Kxh7 {+8.00/9 4.2s} 54. Rxd5+ {+M9/35 138s} Kh8 {+M7/9 4.6s}
+55. Rxg5 {+M7/245 9.0s} f6 {+M5/9 1.8s} 56. Qe4 {+M5/245 0.062s}
+Rxc7 {+M3/10 8.1s} 57. Qxh4+ {+M3/245 5.9s} Rh7 {+M1/12 44s}
+58. Qxh7# {+M1/55 103s, White mates} 1-0
+
+[Event "?"]
+[Site "?"]
+[Date "2026.05.22"]
+[Round "3"]
+[White "myChess"]
+[Black "SF-1600"]
+[Result "1-0"]
+[ECO "A20"]
+[GameDuration "00:32:21"]
+[GameEndTime "2026-05-22T19:47:40.186 MESZ"]
+[GameStartTime "2026-05-22T19:15:18.294 MESZ"]
+[Opening "English Opening"]
+[PlyCount "64"]
+[Termination "adjudication"]
+[TimeControl "40/1200"]
+
+1. c4 {book} e5 {book} 2. g3 {book} Nf6 {book} 3. Bg2 {book} Nc6 {book}
+4. Nc3 {book} Bc5 {book} 5. Nf3 {book} d6 {book} 6. d3 {book} h6 {book}
+7. a3 {book} a6 {book} 8. b4 {book} Ba7 {book} 9. e4 {-0.55/8 36s}
+O-O {+0.16/34 185s} 10. O-O {-0.37/9 36s} a5 {+0.14/27 33s}
+11. bxa5 {+0.01/9 36s} Be6 {+0.48/23 16s} 12. Bd2 {-0.27/8 13s}
+Re8 {+0.32/32 161s} 13. Nd5 {+0.39/8 10s} Nd4 {-0.23/29 79s}
+14. Rb1 {+0.97/9 38s} Bc8 {-0.18/25 21s} 15. Nxd4 {+0.79/8 38s}
+Nxd5 {-0.53/30 57s} 16. Nc6 {+1.36/9 38s} bxc6 {-1.39/34 120s}
+17. cxd5 {+1.00/9 38s} Bd7 {-0.44/22 12s} 18. Qc2 {+0.83/8 38s}
+Bd4 {-0.57/28 45s} 19. dxc6 {+2.00/9 34s} Be6 {-1.91/29 73s}
+20. Bc3 {+2.03/9 32s} Ra6 {-1.11/25 37s} 21. Bb4 {+1.59/8 39s} h5 {-1.01/24 22s}
+22. Qa4 {+1.93/9 35s} h4 {+0.22/21 11s} 23. gxh4 {+1.94/9 39s}
+Qxh4 {+1.52/22 12s} 24. Bd2 {+1.92/9 32s} Rc8 {+1.85/26 41s}
+25. Rb7 {+2.05/9 39s} g6 {+1.18/29 69s} 26. Qb5 {+2.14/9 18s} Bh3 {+4.73/23 19s}
+27. Bxh3 {+5.00/10 41s} Kg7 {0.00/25 36s} 28. Bxc8 {+10.00/10 41s}
+f5 {-6.71/21 43s} 29. Rxc7+ {+13.00/10 41s} Kf8 {-7.65/22 31s}
+30. Bxf5 {+15.00/10 31s} Qd8 {-15.93/28 8.6s} 31. Bh6+ {+20.00/9 22s}
+Kg8 {-M8/245 1.3s} 32. Qd5+ {+M7/9 43s}
+Kh8 {-M6/245 0.012s, White wins by adjudication} 1-0
+
+[Event "?"]
+[Site "?"]
+[Date "2026.05.22"]
+[Round "3"]
+[White "SF-1600"]
+[Black "myChess"]
+[Result "*"]
+[ECO "A20"]
+[GameDuration "00:28:27"]
+[GameEndTime "2026-05-22T20:16:07.317 MESZ"]
+[GameStartTime "2026-05-22T19:47:40.201 MESZ"]
+[Opening "English Opening"]
+[PlyCount "58"]
+[Termination "unterminated"]
+[TimeControl "40/1200"]
+
+1. c4 {book} e5 {book} 2. g3 {book} Nf6 {book} 3. Bg2 {book} Nc6 {book}
+4. Nc3 {book} Bc5 {book} 5. Nf3 {book} d6 {book} 6. d3 {book} h6 {book}
+7. a3 {book} a6 {book} 8. b4 {book} Ba7 {book} 9. Bb2 {+0.19/34 184s}
+O-O {-0.26/8 36s} 10. Rb1 {+0.20/27 57s} Bd4 {-0.44/8 36s}
+11. O-O {+0.89/23 15s} Bxc3 {-0.36/8 4.8s} 12. Bxc3 {+0.77/27 50s}
+Bg4 {-0.35/8 5.5s} 13. Rc1 {+1.04/25 42s} Qc8 {-0.42/8 7.2s}
+14. e4 {+0.63/26 53s} Qe6 {-0.48/8 4.6s} 15. Qd2 {+0.65/23 26s}
+Kh8 {-0.44/8 9.7s} 16. Nh4 {+0.93/25 42s} Kh7 {-0.38/8 42s}
+17. f4 {+1.31/21 13s} Qe8 {-0.18/8 14s} 18. d4 {+1.71/25 45s} exd4 {-0.57/8 43s}
+19. Bxd4 {+1.48/27 45s} Nxe4 {-0.47/8 7.4s} 20. Qd3 {+0.12/32 130s}
+f5 {-0.27/8 11s} 21. Bb2 {+2.39/25 31s} g5 {-1.57/9 47s} 22. Rce1 {+2.87/27 75s}
+gxh4 {-2.66/9 47s} 23. Rxe4 {+2.96/26 30s} Nxb4 {-1.07/9 47s}
+24. axb4 {+5.06/24 42s} Qf7 {+1.33/9 47s} 25. Rfe1 {+5.64/23 27s}
+fxe4 {-2.00/9 47s} 26. Rxe4 {+M21/26 30s} Bf5 {-3.21/9 47s}
+27. g4 {+4.00/27 41s} d5 {-2.49/10 47s} 28. cxd5 {+4.96/26 34s}
+Bxe4 {-2.28/10 47s} 29. Qxe4+ {+5.90/25 34s} Kg8 {-3.06/10 47s, No result} *
+
+[Event "?"]
+[Site "?"]
+[Date "2026.05.22"]
+[Round "4"]
+[White "myChess"]
+[Black "SF-1600"]
+[Result "*"]
+[ECO "A48"]
+[GameDuration "00:27:02"]
+[GameEndTime "2026-05-22T20:16:07.317 MESZ"]
+[GameStartTime "2026-05-22T19:49:04.946 MESZ"]
+[Opening "King's Indian"]
+[PlyCount "55"]
+[Termination "unterminated"]
+[TimeControl "40/1200"]
+[Variation "London system"]
+
+1. d4 {book} Nf6 {book} 2. Nf3 {book} g6 {book} 3. Bf4 {book} Bg7 {book}
+4. e3 {book} d6 {book} 5. h3 {book} O-O {book} 6. Be2 {book} c5 {book}
+7. Nbd2 {book} cxd4 {book} 8. exd4 {book} Nc6 {book} 9. O-O {-0.14/8 36s}
+Qb6 {+0.14/28 50s} 10. Nc4 {-0.03/8 36s} Qd8 {-0.42/30 93s}
+11. Qd2 {+0.01/8 20s} b5 {-0.18/23 25s} 12. Ne3 {+0.20/8 37s} Qb6 {-0.28/27 78s}
+13. d5 {+0.21/8 16s} Ne4 {-0.04/23 29s} 14. Qd3 {+1.33/9 38s} Nd4 {-0.09/29 47s}
+15. Nxd4 {+0.78/9 38s} Qxd4 {-0.20/27 67s} 16. Bh6 {+0.30/8 13s}
+Qxd3 {+0.59/31 55s} 17. cxd3 {0.00/10 39s} Nc3 {+1.52/31 56s}
+18. bxc3 {+0.19/10 39s} Bxh6 {+0.10/31 58s} 19. f4 {+0.39/9 39s}
+a5 {+1.49/30 112s} 20. d4 {+0.61/9 39s} Ba6 {+1.12/30 78s}
+21. Rab1 {+0.73/9 27s} b4 {+1.15/28 31s} 22. Bxa6 {+0.64/9 34s}
+Rxa6 {+0.38/27 52s} 23. cxb4 {+0.55/9 40s} axb4 {+0.72/27 40s}
+24. Rb2 {+0.46/9 14s} Rc8 {+1.16/27 37s} 25. Kh2 {+0.39/9 17s}
+Bg7 {+1.21/24 14s} 26. Rd1 {+0.36/9 19s} Bf6 {+0.99/27 37s}
+27. Nc2 {+0.43/9 26s} Ra5 {+0.90/30 65s} 28. Nxb4 {+0.81/9 24s, No result} *
+

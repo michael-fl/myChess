@@ -1,0 +1,1504 @@
+mf@mf myChess % /Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+      -engine name=myChess   cmd=./versions/3.1/mychess-uci.sh proto=uci tc=40/1200 \
+      -engine name=maia-1900 cmd=./engines/maia/maia-1900.sh  proto=uci tc=inf nodes=1 \
+      -rounds 50 -games 2 -repeat \
+      -openings file=2moves_v2.pgn format=pgn order=random plies=4 \
+      -concurrency 2 -ratinginterval 5 \
+      -recover \
+      -draw movenumber=50 movecount=10 score=40 \
+      -resign movecount=5 score=800 \
+      -pgnout test-results/test11-mychess-vs-maia1900.pgn
+
+Indexing opening suite...
+Started game 1 of 100 (myChess vs maia-1900)
+Started game 2 of 100 (maia-1900 vs myChess)
+Finished game 2 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 1 - 0 - 0  [1.000] 1
+Started game 3 of 100 (myChess vs maia-1900)
+Finished game 1 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 2 - 0 - 0  [1.000] 2
+Started game 4 of 100 (maia-1900 vs myChess)
+Finished game 3 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 3 - 0 - 0  [1.000] 3
+Started game 5 of 100 (myChess vs maia-1900)
+Finished game 5 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 4 - 0 - 0  [1.000] 4
+Started game 6 of 100 (maia-1900 vs myChess)
+Finished game 4 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 5 - 0 - 0  [1.000] 5
+...      myChess playing White: 3 - 0 - 0  [1.000] 3
+...      myChess playing Black: 2 - 0 - 0  [1.000] 2
+...      White vs Black: 3 - 2 - 0  [0.600] 5
+Elo difference: inf +/- nan, LOS: 98.7 %, DrawRatio: 0.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 7 of 100 (myChess vs maia-1900)
+Finished game 6 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 6 - 0 - 0  [1.000] 6
+Started game 8 of 100 (maia-1900 vs myChess)
+Finished game 7 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 7 - 0 - 0  [1.000] 7
+Started game 9 of 100 (myChess vs maia-1900)
+Finished game 8 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 8 - 0 - 0  [1.000] 8
+Started game 10 of 100 (maia-1900 vs myChess)
+Finished game 10 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 9 - 0 - 0  [1.000] 9
+Started game 11 of 100 (myChess vs maia-1900)
+Finished game 11 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 10 - 0 - 0  [1.000] 10
+...      myChess playing White: 5 - 0 - 0  [1.000] 5
+...      myChess playing Black: 5 - 0 - 0  [1.000] 5
+...      White vs Black: 5 - 5 - 0  [0.500] 10
+Elo difference: inf +/- nan, LOS: 99.9 %, DrawRatio: 0.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 12 of 100 (maia-1900 vs myChess)
+Finished game 9 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 11 - 0 - 0  [1.000] 11
+Started game 13 of 100 (myChess vs maia-1900)
+Finished game 12 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 12 - 0 - 0  [1.000] 12
+Started game 14 of 100 (maia-1900 vs myChess)
+Finished game 14 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 13 - 0 - 0  [1.000] 13
+Started game 15 of 100 (myChess vs maia-1900)
+Finished game 13 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 14 - 0 - 0  [1.000] 14
+Started game 16 of 100 (maia-1900 vs myChess)
+Finished game 15 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 15 - 0 - 0  [1.000] 15
+...      myChess playing White: 8 - 0 - 0  [1.000] 8
+...      myChess playing Black: 7 - 0 - 0  [1.000] 7
+...      White vs Black: 8 - 7 - 0  [0.533] 15
+Elo difference: inf +/- nan, LOS: 100.0 %, DrawRatio: 0.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 17 of 100 (myChess vs maia-1900)
+Finished game 16 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 16 - 0 - 0  [1.000] 16
+Started game 18 of 100 (maia-1900 vs myChess)
+Finished game 17 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 17 - 0 - 0  [1.000] 17
+Started game 19 of 100 (myChess vs maia-1900)
+Finished game 19 (myChess vs maia-1900): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs maia-1900: 17 - 0 - 1  [0.972] 18
+Started game 20 of 100 (maia-1900 vs myChess)
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Warning: Illegal PV move f3g2 from myChess (3)
+Warning: PV:  f3g2
+Finished game 18 (maia-1900 vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs maia-1900: 17 - 0 - 2  [0.947] 19
+Started game 21 of 100 (myChess vs maia-1900)
+Finished game 20 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 18 - 0 - 2  [0.950] 20
+...      myChess playing White: 9 - 0 - 1  [0.950] 10
+...      myChess playing Black: 9 - 0 - 1  [0.950] 10
+...      White vs Black: 9 - 9 - 2  [0.500] 20
+Elo difference: 511.5 +/- nan, LOS: 100.0 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 22 of 100 (maia-1900 vs myChess)
+Finished game 22 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 19 - 0 - 2  [0.952] 21
+Started game 23 of 100 (myChess vs maia-1900)
+Finished game 21 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 20 - 0 - 2  [0.955] 22
+Started game 24 of 100 (maia-1900 vs myChess)
+Finished game 24 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 21 - 0 - 2  [0.957] 23
+Started game 25 of 100 (myChess vs maia-1900)
+Finished game 23 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 22 - 0 - 2  [0.958] 24
+Started game 26 of 100 (maia-1900 vs myChess)
+Finished game 25 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 23 - 0 - 2  [0.960] 25
+...      myChess playing White: 12 - 0 - 1  [0.962] 13
+...      myChess playing Black: 11 - 0 - 1  [0.958] 12
+...      White vs Black: 12 - 11 - 2  [0.520] 25
+Elo difference: 552.1 +/- nan, LOS: 100.0 %, DrawRatio: 8.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 27 of 100 (myChess vs maia-1900)
+Finished game 26 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 24 - 0 - 2  [0.962] 26
+Started game 28 of 100 (maia-1900 vs myChess)
+Finished game 27 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 25 - 0 - 2  [0.963] 27
+Started game 29 of 100 (myChess vs maia-1900)
+Finished game 28 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 26 - 0 - 2  [0.964] 28
+Started game 30 of 100 (maia-1900 vs myChess)
+Finished game 29 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 27 - 0 - 2  [0.966] 29
+Started game 31 of 100 (myChess vs maia-1900)
+Finished game 31 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 28 - 0 - 2  [0.967] 30
+...      myChess playing White: 15 - 0 - 1  [0.969] 16
+...      myChess playing Black: 13 - 0 - 1  [0.964] 14
+...      White vs Black: 15 - 13 - 2  [0.533] 30
+Elo difference: 585.0 +/- nan, LOS: 100.0 %, DrawRatio: 6.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 32 of 100 (maia-1900 vs myChess)
+Finished game 30 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 29 - 0 - 2  [0.968] 31
+Started game 33 of 100 (myChess vs maia-1900)
+Finished game 32 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 30 - 0 - 2  [0.969] 32
+Started game 34 of 100 (maia-1900 vs myChess)
+Finished game 33 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 31 - 0 - 2  [0.970] 33
+Started game 35 of 100 (myChess vs maia-1900)
+Finished game 34 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 32 - 0 - 2  [0.971] 34
+Started game 36 of 100 (maia-1900 vs myChess)
+Finished game 35 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 33 - 0 - 2  [0.971] 35
+...      myChess playing White: 17 - 0 - 1  [0.972] 18
+...      myChess playing Black: 16 - 0 - 1  [0.971] 17
+...      White vs Black: 17 - 16 - 2  [0.514] 35
+Elo difference: 612.6 +/- nan, LOS: 100.0 %, DrawRatio: 5.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 37 of 100 (myChess vs maia-1900)
+Finished game 37 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 34 - 0 - 2  [0.972] 36
+Started game 38 of 100 (maia-1900 vs myChess)
+Finished game 36 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 35 - 0 - 2  [0.973] 37
+Started game 39 of 100 (myChess vs maia-1900)
+Finished game 38 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 36 - 0 - 2  [0.974] 38
+Started game 40 of 100 (maia-1900 vs myChess)
+Finished game 39 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 37 - 0 - 2  [0.974] 39
+Started game 41 of 100 (myChess vs maia-1900)
+Finished game 40 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 38 - 0 - 2  [0.975] 40
+...      myChess playing White: 19 - 0 - 1  [0.975] 20
+...      myChess playing Black: 19 - 0 - 1  [0.975] 20
+...      White vs Black: 19 - 19 - 2  [0.500] 40
+Elo difference: 636.4 +/- nan, LOS: 100.0 %, DrawRatio: 5.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 42 of 100 (maia-1900 vs myChess)
+Finished game 41 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 39 - 0 - 2  [0.976] 41
+Started game 43 of 100 (myChess vs maia-1900)
+Finished game 42 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 40 - 0 - 2  [0.976] 42
+Started game 44 of 100 (maia-1900 vs myChess)
+Finished game 43 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 41 - 0 - 2  [0.977] 43
+Started game 45 of 100 (myChess vs maia-1900)
+Finished game 45 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 42 - 0 - 2  [0.977] 44
+Started game 46 of 100 (maia-1900 vs myChess)
+Finished game 44 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 43 - 0 - 2  [0.978] 45
+...      myChess playing White: 22 - 0 - 1  [0.978] 23
+...      myChess playing Black: 21 - 0 - 1  [0.977] 22
+...      White vs Black: 22 - 21 - 2  [0.511] 45
+Elo difference: 657.4 +/- nan, LOS: 100.0 %, DrawRatio: 4.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 47 of 100 (myChess vs maia-1900)
+Finished game 46 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 44 - 0 - 2  [0.978] 46
+Started game 48 of 100 (maia-1900 vs myChess)
+Finished game 47 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 45 - 0 - 2  [0.979] 47
+Started game 49 of 100 (myChess vs maia-1900)
+Finished game 49 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 46 - 0 - 2  [0.979] 48
+Started game 50 of 100 (maia-1900 vs myChess)
+Finished game 48 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 47 - 0 - 2  [0.980] 49
+Started game 51 of 100 (myChess vs maia-1900)
+Finished game 51 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 48 - 0 - 2  [0.980] 50
+...      myChess playing White: 25 - 0 - 1  [0.981] 26
+...      myChess playing Black: 23 - 0 - 1  [0.979] 24
+...      White vs Black: 25 - 23 - 2  [0.520] 50
+Elo difference: 676.1 +/- nan, LOS: 100.0 %, DrawRatio: 4.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 52 of 100 (maia-1900 vs myChess)
+Finished game 50 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 49 - 0 - 2  [0.980] 51
+Started game 53 of 100 (myChess vs maia-1900)
+Finished game 52 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 50 - 0 - 2  [0.981] 52
+Started game 54 of 100 (maia-1900 vs myChess)
+Finished game 53 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 51 - 0 - 2  [0.981] 53
+Started game 55 of 100 (myChess vs maia-1900)
+Finished game 55 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 52 - 0 - 2  [0.981] 54
+Started game 56 of 100 (maia-1900 vs myChess)
+Finished game 54 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 53 - 0 - 2  [0.982] 55
+...      myChess playing White: 27 - 0 - 1  [0.982] 28
+...      myChess playing Black: 26 - 0 - 1  [0.981] 27
+...      White vs Black: 27 - 26 - 2  [0.509] 55
+Elo difference: 693.0 +/- nan, LOS: 100.0 %, DrawRatio: 3.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 57 of 100 (myChess vs maia-1900)
+Finished game 56 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 54 - 0 - 2  [0.982] 56
+Started game 58 of 100 (maia-1900 vs myChess)
+Finished game 58 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 55 - 0 - 2  [0.982] 57
+Started game 59 of 100 (myChess vs maia-1900)
+Finished game 59 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 56 - 0 - 2  [0.983] 58
+Started game 60 of 100 (maia-1900 vs myChess)
+Finished game 57 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 57 - 0 - 2  [0.983] 59
+Started game 61 of 100 (myChess vs maia-1900)
+Finished game 60 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 58 - 0 - 2  [0.983] 60
+...      myChess playing White: 29 - 0 - 1  [0.983] 30
+...      myChess playing Black: 29 - 0 - 1  [0.983] 30
+...      White vs Black: 29 - 29 - 2  [0.500] 60
+Elo difference: 708.3 +/- nan, LOS: 100.0 %, DrawRatio: 3.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 62 of 100 (maia-1900 vs myChess)
+Finished game 62 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 59 - 0 - 2  [0.984] 61
+Started game 63 of 100 (myChess vs maia-1900)
+Finished game 61 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 60 - 0 - 2  [0.984] 62
+Started game 64 of 100 (maia-1900 vs myChess)
+Finished game 63 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 61 - 0 - 2  [0.984] 63
+Started game 65 of 100 (myChess vs maia-1900)
+Finished game 64 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 62 - 0 - 2  [0.984] 64
+Started game 66 of 100 (maia-1900 vs myChess)
+Finished game 66 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 63 - 0 - 2  [0.985] 65
+...      myChess playing White: 31 - 0 - 1  [0.984] 32
+...      myChess playing Black: 32 - 0 - 1  [0.985] 33
+...      White vs Black: 31 - 32 - 2  [0.492] 65
+Elo difference: 722.5 +/- nan, LOS: 100.0 %, DrawRatio: 3.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 67 of 100 (myChess vs maia-1900)
+Finished game 67 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 64 - 0 - 2  [0.985] 66
+Started game 68 of 100 (maia-1900 vs myChess)
+Finished game 65 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 65 - 0 - 2  [0.985] 67
+Started game 69 of 100 (myChess vs maia-1900)
+Finished game 68 (maia-1900 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 65 - 1 - 2  [0.971] 68
+Started game 70 of 100 (maia-1900 vs myChess)
+Finished game 69 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 66 - 1 - 2  [0.971] 69
+Started game 71 of 100 (myChess vs maia-1900)
+Finished game 70 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 67 - 1 - 2  [0.971] 70
+...      myChess playing White: 34 - 0 - 1  [0.986] 35
+...      myChess playing Black: 33 - 1 - 1  [0.957] 35
+...      White vs Black: 35 - 33 - 2  [0.514] 70
+Elo difference: 612.6 +/- nan, LOS: 100.0 %, DrawRatio: 2.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 72 of 100 (maia-1900 vs myChess)
+Finished game 71 (myChess vs maia-1900): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs maia-1900: 67 - 1 - 3  [0.965] 71
+Started game 73 of 100 (myChess vs maia-1900)
+Finished game 72 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 68 - 1 - 3  [0.965] 72
+Started game 74 of 100 (maia-1900 vs myChess)
+Finished game 73 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 69 - 1 - 3  [0.966] 73
+Started game 75 of 100 (myChess vs maia-1900)
+Finished game 74 (maia-1900 vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs maia-1900: 69 - 1 - 4  [0.959] 74
+Started game 76 of 100 (maia-1900 vs myChess)
+Finished game 76 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 70 - 1 - 4  [0.960] 75
+...      myChess playing White: 35 - 0 - 2  [0.973] 37
+...      myChess playing Black: 35 - 1 - 2  [0.947] 38
+...      White vs Black: 36 - 35 - 4  [0.507] 75
+Elo difference: 552.1 +/- 257.3, LOS: 100.0 %, DrawRatio: 5.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 77 of 100 (myChess vs maia-1900)
+Finished game 75 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 71 - 1 - 4  [0.961] 76
+Started game 78 of 100 (maia-1900 vs myChess)
+Finished game 77 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 72 - 1 - 4  [0.961] 77
+Started game 79 of 100 (myChess vs maia-1900)
+Finished game 78 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 73 - 1 - 4  [0.962] 78
+Started game 80 of 100 (maia-1900 vs myChess)
+Finished game 79 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 74 - 1 - 4  [0.962] 79
+Started game 81 of 100 (myChess vs maia-1900)
+Finished game 81 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 75 - 1 - 4  [0.963] 80
+...      myChess playing White: 39 - 0 - 2  [0.976] 41
+...      myChess playing Black: 36 - 1 - 2  [0.949] 39
+...      White vs Black: 40 - 36 - 4  [0.525] 80
+Elo difference: 563.7 +/- 258.5, LOS: 100.0 %, DrawRatio: 5.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 82 of 100 (maia-1900 vs myChess)
+Finished game 80 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 76 - 1 - 4  [0.963] 81
+Started game 83 of 100 (myChess vs maia-1900)
+Finished game 82 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 77 - 1 - 4  [0.963] 82
+Started game 84 of 100 (maia-1900 vs myChess)
+Finished game 84 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 78 - 1 - 4  [0.964] 83
+Started game 85 of 100 (myChess vs maia-1900)
+Finished game 85 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 79 - 1 - 4  [0.964] 84
+Started game 86 of 100 (maia-1900 vs myChess)
+Finished game 86 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 80 - 1 - 4  [0.965] 85
+...      myChess playing White: 40 - 0 - 2  [0.976] 42
+...      myChess playing Black: 40 - 1 - 2  [0.953] 43
+...      White vs Black: 41 - 40 - 4  [0.506] 85
+Elo difference: 574.7 +/- 259.5, LOS: 100.0 %, DrawRatio: 4.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 87 of 100 (myChess vs maia-1900)
+Finished game 87 (myChess vs maia-1900): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs maia-1900: 80 - 1 - 5  [0.959] 86
+Started game 88 of 100 (maia-1900 vs myChess)
+Finished game 88 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 81 - 1 - 5  [0.960] 87
+Started game 89 of 100 (myChess vs maia-1900)
+Finished game 83 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 82 - 1 - 5  [0.960] 88
+Started game 90 of 100 (maia-1900 vs myChess)
+Finished game 90 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 83 - 1 - 5  [0.961] 89
+Started game 91 of 100 (myChess vs maia-1900)
+Finished game 89 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 84 - 1 - 5  [0.961] 90
+...      myChess playing White: 42 - 0 - 3  [0.967] 45
+...      myChess playing Black: 42 - 1 - 2  [0.956] 45
+...      White vs Black: 43 - 42 - 5  [0.506] 90
+Elo difference: 557.2 +/- 203.0, LOS: 100.0 %, DrawRatio: 5.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 92 of 100 (maia-1900 vs myChess)
+Finished game 92 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 85 - 1 - 5  [0.962] 91
+Started game 93 of 100 (myChess vs maia-1900)
+Finished game 91 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 86 - 1 - 5  [0.962] 92
+Started game 94 of 100 (maia-1900 vs myChess)
+Finished game 94 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 87 - 1 - 5  [0.962] 93
+Started game 95 of 100 (myChess vs maia-1900)
+Finished game 93 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 88 - 1 - 5  [0.963] 94
+Started game 96 of 100 (maia-1900 vs myChess)
+Finished game 95 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 89 - 1 - 5  [0.963] 95
+...      myChess playing White: 45 - 0 - 3  [0.969] 48
+...      myChess playing Black: 44 - 1 - 2  [0.957] 47
+...      White vs Black: 46 - 44 - 5  [0.511] 95
+Elo difference: 566.9 +/- 203.4, LOS: 100.0 %, DrawRatio: 5.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 97 of 100 (myChess vs maia-1900)
+Finished game 96 (maia-1900 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs maia-1900: 90 - 1 - 5  [0.964] 96
+Started game 98 of 100 (maia-1900 vs myChess)
+Finished game 97 (myChess vs maia-1900): 1-0 {White wins by adjudication}
+Score of myChess vs maia-1900: 91 - 1 - 5  [0.964] 97
+Started game 99 of 100 (myChess vs maia-1900)
+Finished game 99 (myChess vs maia-1900): 1-0 {White mates}
+Score of myChess vs maia-1900: 92 - 1 - 5  [0.964] 98
+Started game 100 of 100 (maia-1900 vs myChess)
+Finished game 98 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 93 - 1 - 5  [0.965] 99
+Finished game 100 (maia-1900 vs myChess): 0-1 {Black mates}
+Score of myChess vs maia-1900: 94 - 1 - 5  [0.965] 100
+...      myChess playing White: 47 - 0 - 3  [0.970] 50
+...      myChess playing Black: 47 - 1 - 2  [0.960] 50
+...      White vs Black: 48 - 47 - 5  [0.505] 100
+Elo difference: 576.2 +/- 203.8, LOS: 100.0 %, DrawRatio: 5.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+
+Player: myChess
+   "Draw by 3-fold repetition": 5
+   "Loss: White wins by adjudication": 1
+   "Win: Black mates": 24
+   "Win: Black wins by adjudication": 23
+   "Win: White mates": 23
+   "Win: White wins by adjudication": 24
+Player: maia-1900
+   "Draw by 3-fold repetition": 5
+   "Loss: Black mates": 24
+   "Loss: Black wins by adjudication": 23
+   "Loss: White mates": 23
+   "Loss: White wins by adjudication": 24
+   "Win: White wins by adjudication": 1
+Finished match

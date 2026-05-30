@@ -1,0 +1,93 @@
+mf@mf myChess % /Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+      -engine name=myChess cmd=./mychess-uci.sh proto=uci \
+      -engine name=SF-1600 cmd=stockfish proto=uci \
+            option.UCI_LimitStrength=true option.UCI_Elo=1600 \
+      -each tc=40/1200 \
+      -rounds 20 -games 2 -repeat \
+      -sprt elo0=-50 elo1=50 alpha=0.05 beta=0.05 \
+      -openings file=8moves_v3.pgn format=pgn order=random plies=16 \
+      -concurrency 2 -ratinginterval 2 \
+      -recover \
+      -draw movenumber=40 movecount=8 score=10 \
+      -resign movecount=5 score=600 \
+      -pgnout mychess-vs-sf1600.pgn
+
+Indexing opening suite...
+Started game 1 of 40 (myChess vs SF-1600)
+Started game 2 of 40 (SF-1600 vs myChess)
+Warning: Illegal PV move h7g6 from myChess (0)
+Warning: PV: Nfxe6 Qxg2+ Kxg2 Bc6+ Kg3 g6 Qg7# h7g6
+Warning: Illegal PV move d3d2 from myChess (0)
+Warning: PV: Kxg2 Bc6+ Kg3 cxd3 Qxg7# d3d2
+Finished game 1 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 1 - 0 - 0  [1.000] 1
+Started game 3 of 40 (myChess vs SF-1600)
+Finished game 2 (SF-1600 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 1 - 1 - 0  [0.500] 2
+...      myChess playing White: 1 - 0 - 0  [1.000] 1
+...      myChess playing Black: 0 - 1 - 0  [0.000] 1
+...      White vs Black: 2 - 0 - 0  [1.000] 2
+Elo difference: 0.0 +/- nan, LOS: 50.0 %, DrawRatio: 0.0 %
+SPRT: llr -2.78e-17 (-0.0%), lbound -2.94, ubound 2.94
+Started game 4 of 40 (SF-1600 vs myChess)
+Warning: Illegal PV move f2a2 from myChess (0)
+Warning: PV: Nd6 Rxc6 bxc6 Nd3 Rd7# f2a2
+Warning: Illegal PV move d8c7 from myChess (0)
+Warning: PV: bxc6 Nd3 Rd7# d8c7
+Warning: Illegal PV move d8c7 from myChess (0)
+Warning: PV: Rd7# d8c7
+Finished game 3 (myChess vs SF-1600): 1-0 {White mates}
+Score of myChess vs SF-1600: 2 - 1 - 0  [0.667] 3
+Started game 5 of 40 (myChess vs SF-1600)
+Warning: Illegal PV move f6g5 from myChess (3)
+Warning: PV: Kh8 Rxg5 f6 Qe4 Rxc7 Qxh4+ Rh7 Qxh7# f6g5
+Warning: Illegal PV move f6g5 from myChess (3)
+Warning: PV: f6 Qd4 Rxc7 Qxh4+ Rh7 Qxh7# f6g5
+Warning: Illegal PV move f6g5 from myChess (3)
+Warning: PV: Rxc7 Qxh4+ Rh7 Qxh7# f6g5
+Warning: Illegal PV move f6g5 from myChess (3)
+Warning: PV: Rh7 Qxh7# f6g5
+Warning: Illegal PV move d4f2 from myChess (0)
+Warning: PV: Qd5+ Kh8 Rh7+ Kxh7 Qf7+ Kxh6 Qxg6# d4f2
+Finished game 5 (myChess vs SF-1600): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1600: 3 - 1 - 0  [0.750] 4
+...      myChess playing White: 3 - 0 - 0  [1.000] 3
+...      myChess playing Black: 0 - 1 - 0  [0.000] 1
+...      White vs Black: 4 - 0 - 0  [1.000] 4
+Elo difference: 190.8 +/- nan, LOS: 84.1 %, DrawRatio: 0.0 %
+SPRT: llr 0.643 (21.8%), lbound -2.94, ubound 2.94
+Started game 6 of 40 (SF-1600 vs myChess)
+Finished game 4 (SF-1600 vs myChess): 1-0 {White mates}
+Score of myChess vs SF-1600: 3 - 2 - 0  [0.600] 5
+Started game 7 of 40 (myChess vs SF-1600)
+^CTerminating process of engine SF-1600(2)
+Terminating process of engine SF-1600(1)
+Finished game 6 (SF-1600 vs myChess): * {No result}
+Score of myChess vs SF-1600: 3 - 2 - 0  [0.600] 5
+...      myChess playing White: 3 - 0 - 0  [1.000] 3
+...      myChess playing Black: 0 - 2 - 0  [0.000] 2
+...      White vs Black: 5 - 0 - 0  [1.000] 5
+Elo difference: 70.4 +/- nan, LOS: 67.3 %, DrawRatio: 0.0 %
+SPRT: llr 0.312 (10.6%), lbound -2.94, ubound 2.94
+Finished game 7 (myChess vs SF-1600): * {No result}
+Score of myChess vs SF-1600: 3 - 2 - 0  [0.600] 5
+...      myChess playing White: 3 - 0 - 0  [1.000] 3
+...      myChess playing Black: 0 - 2 - 0  [0.000] 2
+...      White vs Black: 5 - 0 - 0  [1.000] 5
+Elo difference: 70.4 +/- nan, LOS: 67.3 %, DrawRatio: 0.0 %
+SPRT: llr 0.312 (10.6%), lbound -2.94, ubound 2.94
+
+Player: myChess
+   "Loss: White mates": 1
+   "Loss: White wins by adjudication": 1
+   "No result": 2
+   "Win: White mates": 1
+   "Win: White wins by adjudication": 2
+Player: SF-1600
+   "Loss: White mates": 1
+   "Loss: White wins by adjudication": 2
+   "No result": 2
+   "Win: White mates": 1
+   "Win: White wins by adjudication": 1
+Finished match
+mf@mf myChess %

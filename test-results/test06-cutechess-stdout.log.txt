@@ -1,0 +1,210 @@
+mf@mf myChess % /Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+        -engine name=myChess cmd=./mychess-uci.sh proto=uci \
+        -engine name=SF-1750 cmd=stockfish proto=uci \
+              option.UCI_LimitStrength=true option.UCI_Elo=1750 \
+        -each tc=40/1200 \
+        -rounds 40 -games 2 -repeat \
+        -sprt elo0=-50 elo1=50 alpha=0.05 beta=0.05 \
+        -openings file=2moves_v2.pgn format=pgn order=random plies=4 \
+        -concurrency 2 -ratinginterval 2 \
+        -recover \
+        -draw movenumber=40 movecount=8 score=10 \
+        -resign movecount=5 score=600 \
+        -pgnout mychess-vs-sf1750.pgn
+
+Indexing opening suite...
+Started game 1 of 80 (myChess vs SF-1750)
+Started game 2 of 80 (SF-1750 vs myChess)
+Finished game 1 (myChess vs SF-1750): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 1 - 0 - 0  [1.000] 1
+Started game 3 of 80 (myChess vs SF-1750)
+Finished game 3 (myChess vs SF-1750): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 2 - 0 - 0  [1.000] 2
+...      myChess playing White: 2 - 0 - 0  [1.000] 2
+...      White vs Black: 2 - 0 - 0  [1.000] 2
+Elo difference: inf +/- nan, LOS: 92.1 %, DrawRatio: 0.0 %
+SPRT: llr 0.733 (24.9%), lbound -2.94, ubound 2.94
+Started game 4 of 80 (SF-1750 vs myChess)
+Finished game 2 (SF-1750 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 2 - 1 - 0  [0.667] 3
+Started game 5 of 80 (myChess vs SF-1750)
+Finished game 4 (SF-1750 vs myChess): 1-0 {White mates}
+Score of myChess vs SF-1750: 2 - 2 - 0  [0.500] 4
+...      myChess playing White: 2 - 0 - 0  [1.000] 2
+...      myChess playing Black: 0 - 2 - 0  [0.000] 2
+...      White vs Black: 4 - 0 - 0  [1.000] 4
+Elo difference: 0.0 +/- 786.2, LOS: 50.0 %, DrawRatio: 0.0 %
+SPRT: llr -3.89e-16 (-0.0%), lbound -2.94, ubound 2.94
+Started game 6 of 80 (SF-1750 vs myChess)
+Finished game 5 (myChess vs SF-1750): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 3 - 2 - 0  [0.600] 5
+Started game 7 of 80 (myChess vs SF-1750)
+Finished game 7 (myChess vs SF-1750): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1750: 3 - 3 - 0  [0.500] 6
+...      myChess playing White: 3 - 1 - 0  [0.750] 4
+...      myChess playing Black: 0 - 2 - 0  [0.000] 2
+...      White vs Black: 5 - 1 - 0  [0.833] 6
+Elo difference: 0.0 +/- 380.7, LOS: 50.0 %, DrawRatio: 0.0 %
+SPRT: llr 4.16e-16 (0.0%), lbound -2.94, ubound 2.94
+Started game 8 of 80 (SF-1750 vs myChess)
+Finished game 8 (SF-1750 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1750: 4 - 3 - 0  [0.571] 7
+Started game 9 of 80 (myChess vs SF-1750)
+Finished game 6 (SF-1750 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 4 - 4 - 0  [0.500] 8
+...      myChess playing White: 3 - 1 - 0  [0.750] 4
+...      myChess playing Black: 1 - 3 - 0  [0.250] 4
+...      White vs Black: 6 - 2 - 0  [0.750] 8
+Elo difference: 0.0 +/- 295.9, LOS: 50.0 %, DrawRatio: 0.0 %
+SPRT: llr -5.55e-16 (-0.0%), lbound -2.94, ubound 2.94
+Started game 10 of 80 (SF-1750 vs myChess)
+Finished game 9 (myChess vs SF-1750): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 5 - 4 - 0  [0.556] 9
+Started game 11 of 80 (myChess vs SF-1750)
+Finished game 10 (SF-1750 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 5 - 5 - 0  [0.500] 10
+...      myChess playing White: 4 - 1 - 0  [0.800] 5
+...      myChess playing Black: 1 - 4 - 0  [0.200] 5
+...      White vs Black: 8 - 2 - 0  [0.800] 10
+Elo difference: 0.0 +/- 251.3, LOS: 50.0 %, DrawRatio: 0.0 %
+SPRT: llr -9.71e-16 (-0.0%), lbound -2.94, ubound 2.94
+Started game 12 of 80 (SF-1750 vs myChess)
+Finished game 12 (SF-1750 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 5 - 6 - 0  [0.455] 11
+Started game 13 of 80 (myChess vs SF-1750)
+Finished game 11 (myChess vs SF-1750): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 6 - 6 - 0  [0.500] 12
+...      myChess playing White: 5 - 1 - 0  [0.833] 6
+...      myChess playing Black: 1 - 5 - 0  [0.167] 6
+...      White vs Black: 10 - 2 - 0  [0.833] 12
+Elo difference: 0.0 +/- 222.4, LOS: 50.0 %, DrawRatio: 0.0 %
+SPRT: llr -4.72e-16 (-0.0%), lbound -2.94, ubound 2.94
+Started game 14 of 80 (SF-1750 vs myChess)
+Finished game 13 (myChess vs SF-1750): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 7 - 6 - 0  [0.538] 13
+Started game 15 of 80 (myChess vs SF-1750)
+Finished game 15 (myChess vs SF-1750): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 8 - 6 - 0  [0.571] 14
+...      myChess playing White: 7 - 1 - 0  [0.875] 8
+...      myChess playing Black: 1 - 5 - 0  [0.167] 6
+...      White vs Black: 12 - 2 - 0  [0.857] 14
+Elo difference: 50.0 +/- 206.4, LOS: 70.4 %, DrawRatio: 0.0 %
+SPRT: llr 0.595 (20.2%), lbound -2.94, ubound 2.94
+Started game 16 of 80 (SF-1750 vs myChess)
+Finished game 14 (SF-1750 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 8 - 7 - 0  [0.533] 15
+Started game 17 of 80 (myChess vs SF-1750)
+Finished game 16 (SF-1750 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 8 - 8 - 0  [0.500] 16
+...      myChess playing White: 7 - 1 - 0  [0.875] 8
+...      myChess playing Black: 1 - 7 - 0  [0.125] 8
+...      White vs Black: 14 - 2 - 0  [0.875] 16
+Elo difference: 0.0 +/- 185.9, LOS: 50.0 %, DrawRatio: 0.0 %
+SPRT: llr 1.14e-15 (0.0%), lbound -2.94, ubound 2.94
+Started game 18 of 80 (SF-1750 vs myChess)
+Finished game 18 (SF-1750 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1750: 9 - 8 - 0  [0.529] 17
+Started game 19 of 80 (myChess vs SF-1750)
+Finished game 17 (myChess vs SF-1750): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 10 - 8 - 0  [0.556] 18
+...      myChess playing White: 8 - 1 - 0  [0.889] 9
+...      myChess playing Black: 2 - 7 - 0  [0.222] 9
+...      White vs Black: 15 - 3 - 0  [0.833] 18
+Elo difference: 38.8 +/- 175.3, LOS: 68.1 %, DrawRatio: 0.0 %
+SPRT: llr 0.591 (20.1%), lbound -2.94, ubound 2.94
+Started game 20 of 80 (SF-1750 vs myChess)
+Finished game 19 (myChess vs SF-1750): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 11 - 8 - 0  [0.579] 19
+Started game 21 of 80 (myChess vs SF-1750)
+Finished game 20 (SF-1750 vs myChess): 0-1 {Black mates}
+Score of myChess vs SF-1750: 12 - 8 - 0  [0.600] 20
+...      myChess playing White: 9 - 1 - 0  [0.900] 10
+...      myChess playing Black: 3 - 7 - 0  [0.300] 10
+...      White vs Black: 16 - 4 - 0  [0.800] 20
+Elo difference: 70.4 +/- 168.9, LOS: 81.4 %, DrawRatio: 0.0 %
+SPRT: llr 1.18 (40.1%), lbound -2.94, ubound 2.94
+Started game 22 of 80 (SF-1750 vs myChess)
+Finished game 21 (myChess vs SF-1750): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 13 - 8 - 0  [0.619] 21
+Started game 23 of 80 (myChess vs SF-1750)
+Finished game 22 (SF-1750 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1750: 14 - 8 - 0  [0.636] 22
+...      myChess playing White: 10 - 1 - 0  [0.909] 11
+...      myChess playing Black: 4 - 7 - 0  [0.364] 11
+...      White vs Black: 17 - 5 - 0  [0.773] 22
+Elo difference: 97.2 +/- 164.7, LOS: 90.0 %, DrawRatio: 0.0 %
+SPRT: llr 1.77 (60.0%), lbound -2.94, ubound 2.94
+Started game 24 of 80 (SF-1750 vs myChess)
+Finished game 23 (myChess vs SF-1750): 1-0 {White mates}
+Score of myChess vs SF-1750: 15 - 8 - 0  [0.652] 23
+Started game 25 of 80 (myChess vs SF-1750)
+Finished game 24 (SF-1750 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 15 - 9 - 0  [0.625] 24
+...      myChess playing White: 11 - 1 - 0  [0.917] 12
+...      myChess playing Black: 4 - 8 - 0  [0.333] 12
+...      White vs Black: 19 - 5 - 0  [0.792] 24
+Elo difference: 88.7 +/- 154.7, LOS: 89.0 %, DrawRatio: 0.0 %
+SPRT: llr 1.76 (59.9%), lbound -2.94, ubound 2.94
+Started game 26 of 80 (SF-1750 vs myChess)
+Finished game 25 (myChess vs SF-1750): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 16 - 9 - 0  [0.640] 25
+Started game 27 of 80 (myChess vs SF-1750)
+Finished game 26 (SF-1750 vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 16 - 10 - 0  [0.615] 26
+...      myChess playing White: 12 - 1 - 0  [0.923] 13
+...      myChess playing Black: 4 - 9 - 0  [0.308] 13
+...      White vs Black: 21 - 5 - 0  [0.808] 26
+Elo difference: 81.6 +/- 146.5, LOS: 88.0 %, DrawRatio: 0.0 %
+SPRT: llr 1.76 (59.8%), lbound -2.94, ubound 2.94
+Started game 28 of 80 (SF-1750 vs myChess)
+Finished game 27 (myChess vs SF-1750): 1-0 {White mates}
+Score of myChess vs SF-1750: 17 - 10 - 0  [0.630] 27
+Started game 29 of 80 (myChess vs SF-1750)
+Finished game 28 (SF-1750 vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs SF-1750: 18 - 10 - 0  [0.643] 28
+...      myChess playing White: 13 - 1 - 0  [0.929] 14
+...      myChess playing Black: 5 - 9 - 0  [0.357] 14
+...      White vs Black: 22 - 6 - 0  [0.786] 28
+Elo difference: 102.1 +/- 143.7, LOS: 93.5 %, DrawRatio: 0.0 %
+SPRT: llr 2.35 (79.6%), lbound -2.94, ubound 2.94
+Started game 30 of 80 (SF-1750 vs myChess)
+Finished game 29 (myChess vs SF-1750): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 19 - 10 - 0  [0.655] 29
+Started game 31 of 80 (myChess vs SF-1750)
+Finished game 30 (SF-1750 vs myChess): 0-1 {Black mates}
+Score of myChess vs SF-1750: 20 - 10 - 0  [0.667] 30
+...      myChess playing White: 14 - 1 - 0  [0.933] 15
+...      myChess playing Black: 6 - 9 - 0  [0.400] 15
+...      White vs Black: 23 - 7 - 0  [0.767] 30
+Elo difference: 120.4 +/- 141.5, LOS: 96.6 %, DrawRatio: 0.0 %
+SPRT: llr 2.93 (99.5%), lbound -2.94, ubound 2.94
+Started game 32 of 80 (SF-1750 vs myChess)
+Finished game 31 (myChess vs SF-1750): 1-0 {White wins by adjudication}
+Score of myChess vs SF-1750: 21 - 10 - 0  [0.677] 31
+Finished game 32 (SF-1750 vs myChess): * {No result}
+Score of myChess vs SF-1750: 21 - 10 - 0  [0.677] 31
+...      myChess playing White: 15 - 1 - 0  [0.938] 16
+...      myChess playing Black: 6 - 9 - 0  [0.400] 15
+...      White vs Black: 24 - 7 - 0  [0.774] 31
+Elo difference: 128.9 +/- 140.6, LOS: 97.6 %, DrawRatio: 0.0 %
+SPRT: llr 3.22 (109.4%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Player: myChess
+   "Loss: Black wins by adjudication": 1
+   "Loss: White mates": 1
+   "Loss: White wins by adjudication": 8
+   "No result": 1
+   "Win: Black mates": 2
+   "Win: Black wins by adjudication": 4
+   "Win: White mates": 2
+   "Win: White wins by adjudication": 13
+Player: SF-1750
+   "Loss: Black mates": 2
+   "Loss: Black wins by adjudication": 4
+   "Loss: White mates": 2
+   "Loss: White wins by adjudication": 13
+   "No result": 1
+   "Win: Black wins by adjudication": 1
+   "Win: White mates": 1
+   "Win: White wins by adjudication": 8
+Finished match
