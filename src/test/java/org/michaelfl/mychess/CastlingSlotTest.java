@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Direct unit tests for the {@link CastlingSlot} enum: ordinal layout
- * (which doubles as the index into {@code Board.castlingRookFiles}),
- * the {@link GameStatus#getCastlingState()} bit-mask wiring, and the
+ * Direct unit tests for the {@link CastlingSlot} enum: ordinal layout,
+ * the {@link GameStatus#getCastlingState()} bit-mask wiring, the
+ * {@link CastlingSlot#getKingQueenSideIndex()} side index, and the
  * {@link CastlingSlot#slotFor(boolean, boolean)} dispatch helper.
  *
  * @author Michael Fleischhauer
@@ -20,6 +20,14 @@ class CastlingSlotTest {
         assertEquals(1, CastlingSlot.WHITE_KINGSIDE.ordinal(),  "WK ordinal");
         assertEquals(2, CastlingSlot.BLACK_QUEENSIDE.ordinal(), "BQ ordinal");
         assertEquals(3, CastlingSlot.BLACK_KINGSIDE.ordinal(),  "BK ordinal");
+    }
+
+    @Test
+    void getKingQueenSideIndex_returnsSameValueForBothColorsOfEachSide() {
+        assertEquals(1, CastlingSlot.WHITE_KINGSIDE.getKingQueenSideIndex(),  "WHITE_KINGSIDE → 1");
+        assertEquals(1, CastlingSlot.BLACK_KINGSIDE.getKingQueenSideIndex(),  "BLACK_KINGSIDE → 1");
+        assertEquals(0, CastlingSlot.WHITE_QUEENSIDE.getKingQueenSideIndex(), "WHITE_QUEENSIDE → 0");
+        assertEquals(0, CastlingSlot.BLACK_QUEENSIDE.getKingQueenSideIndex(), "BLACK_QUEENSIDE → 0");
     }
 
     @Test

@@ -27,8 +27,9 @@ class BoardCastlingRookFilesTest {
 
     @Test
     void defaultCastlingRookFiles_returnsStandardLayout() {
-        assertArrayEquals(new byte[] { 0, 7, 0, 7 }, Board.defaultCastlingRookFiles(),
-                "standard-chess defaults a-file (queenside) / h-file (kingside) for both colors");
+        assertArrayEquals(new byte[] { 0, 7 }, Board.defaultCastlingRookFiles(),
+                "standard-chess defaults a-file (queenside, idx 0) / h-file (kingside, idx 1), "
+                        + "symmetric across both colors per the Chess960 starting-position invariant");
     }
 
     @Test
@@ -53,14 +54,21 @@ class BoardCastlingRookFilesTest {
 
     @Test
     void threeArgConstructor_storesGivenRookFiles() {
-        byte[] custom = new byte[] { 1, 5, 2, 6 };
+        // The 2-entry array stores one rook file per side
+        // (queenside / kingside) — both colors share the same values
+        // because Chess960 mirrors Black's back rank from White's. Both
+        // the white-* and black-* slot lookups must therefore return
+        // the same per-side file.
+        byte[] custom = new byte[] { 1, 5 };
         Board board = new Board(Board.createEmptyRawBoard(),
                 GameStatus.newGame(), custom, false);
 
         assertEquals(1, board.getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE), "WQ custom");
         assertEquals(5, board.getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE),  "WK custom");
-        assertEquals(2, board.getCastlingRookFile(CastlingSlot.BLACK_QUEENSIDE), "BQ custom");
-        assertEquals(6, board.getCastlingRookFile(CastlingSlot.BLACK_KINGSIDE),  "BK custom");
+        assertEquals(1, board.getCastlingRookFile(CastlingSlot.BLACK_QUEENSIDE),
+                "BQ must mirror WQ — single per-side storage");
+        assertEquals(5, board.getCastlingRookFile(CastlingSlot.BLACK_KINGSIDE),
+                "BK must mirror WK — single per-side storage");
     }
 
     @Test
@@ -75,7 +83,7 @@ class BoardCastlingRookFilesTest {
 
     @Test
     void copy_carriesRookFilesIntoTheCopy() {
-        byte[] custom = new byte[] { 2, 4, 2, 4 };
+        byte[] custom = new byte[] { 2, 4 };
         Board original = new Board(Board.createEmptyRawBoard(),
                 GameStatus.newGame(), custom, false);
 
@@ -88,7 +96,7 @@ class BoardCastlingRookFilesTest {
 
     @Test
     void copy_rookFilesAreDeepCopied_noSharedMutation() {
-        byte[] custom = new byte[] { 2, 4, 2, 4 };
+        byte[] custom = new byte[] { 2, 4 };
         Board original = new Board(Board.createEmptyRawBoard(),
                 GameStatus.newGame(), custom, false);
 

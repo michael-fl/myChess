@@ -132,25 +132,57 @@ final class Fen {
      *       GUIs like cutechess emit.</li>
      * </ul>
      *
-     * <p>Returns both the {@link GameStatus} bit mask and the
-     * {@code Board.castlingRookFiles} array populated with the resolved
-     * file per slot. Unused slots stay at their defaults (a-/h-file).
+     * <p>Returns both the {@link GameStatus} bit mask and the 2-entry
+     * {@code Board.castlingRookFiles} array (queenside-rook file at
+     * index 0, kingside-rook file at index 1, symmetric across both
+     * colors). Unused sides stay at their defaults (a-/h-file).
+     *
+     * <p>The Chess960 starting-position symmetry — Black's back rank
+     * mirrors White's — implies the kingside-rook file is the same for
+     * both colors, and likewise the queenside-rook file. The parser
+     * enforces this: if both an upper- and lower-case castling letter
+     * resolve to the same side but to different files (e.g.
+     * {@code "Hg"} declaring white's kingside rook on h but black's on
+     * g), an {@code IllegalArgumentException} is thrown.
      *
      * @throws IllegalArgumentException for an unrecognized character, a
-     *         missing king on the back rank, a missing matching rook, or
-     *         a letter that would collide with the king's own file.
+     *         missing king on the back rank, a missing matching rook, a
+     *         letter that would collide with the king's own file, or an
+     *         asymmetric kingside/queenside rook-file specification.
      */
     private static CastlingState parseCastlingState(String castlingField, byte[] rawBoard) {
-        byte[] rookFiles = Board.defaultCastlingRookFiles();
         if ("-".equals(castlingField)) {
-            return new CastlingState(0, rookFiles);
+            return new CastlingState(0, Board.defaultCastlingRookFiles());
         }
 
+        // -1 sentinel = "not yet set by any letter in the field". Filled
+        // in with defaults at the end for sides not mentioned.
+        byte[] rookFiles = { -1, -1 };
         int bits = 0;
         for (int i = 0; i < castlingField.length(); i++) {
-            SlotRook resolved = resolveCastlingChar(castlingField.charAt(i), rawBoard);
+            char ch = castlingField.charAt(i);
+            SlotRook resolved = resolveCastlingChar(ch, rawBoard);
             bits |= resolved.slot().bitMask();
-            rookFiles[resolved.slot().ordinal()] = (byte) resolved.rookFile();
+
+            int sideIdx = resolved.slot().getKingQueenSideIndex();
+            byte newFile = (byte) resolved.rookFile();
+            byte existing = rookFiles[sideIdx];
+            if (existing != -1 && existing != newFile) {
+                throw new IllegalArgumentException(
+                        "FEN castling field '" + castlingField + "' specifies asymmetric "
+                                + (sideIdx == 1 ? "kingside" : "queenside")
+                                + " rook files across colors: file "
+                                + (char) ('a' + existing) + " vs file " + (char) ('a' + newFile)
+                                + ". Chess960 requires Black's back rank to mirror White's.");
+            }
+            rookFiles[sideIdx] = newFile;
+        }
+
+        if (rookFiles[0] == -1) {
+            rookFiles[0] = 0;
+        }
+        if (rookFiles[1] == -1) {
+            rookFiles[1] = 7;
         }
 
         return new CastlingState(bits, rookFiles);
