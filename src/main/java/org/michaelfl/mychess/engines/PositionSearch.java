@@ -269,6 +269,15 @@ public final class PositionSearch {
             return new SearchNodeResult(GameResult.DRAW, window(0, alpha, beta), false);
         }
 
+        /**
+         * Sentinel result for "previous move left own king capturable". The
+         * ILLEGAL_WEIGHT_POS weight survives any [alpha, beta] clamping at
+         * the parent (see {@link #window}); no alpha/beta is needed here.
+         */
+        public static SearchNodeResult illegal() {
+            return new SearchNodeResult(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT_POS, false);
+        }
+
         private static int window(int weight, int alpha, int beta) {
             // ILLEGAL_WEIGHT_POS is a sentinel signaling "previous move was a
             // self-check"; it must survive [alpha, beta] clamping or the
@@ -537,6 +546,10 @@ public final class PositionSearch {
 
         if ((engineConfig.isEnableFiftyMovesRule() && gameStatus.getHalfMoveClock() >= 100) || (engineConfig.isEnableThreefoldRepetition() && ctx.workingBoard.isThreefoldRepetition())) {
             ctx.truncateParentPv();
+            if (ctx.workingBoard().canCaptureOpposingKing()) {
+                // ILLEGAL
+                return SearchNodeResult.illegal();
+            }
             return SearchNodeResult.draw(ctx.alphaWeight(), ctx.betaWeight());
         }
 
@@ -548,7 +561,7 @@ public final class PositionSearch {
             if (ctx.workingBoard.canCaptureOpposingKing()) {
                 // ILLEGAL — parent will reject this branch and skip its own
                 // copyUpPV, so the parent's row stays as-is. No truncate needed.
-                return SearchNodeResult.create(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT_POS, ctx.alphaWeight, ctx.betaWeight);
+                return SearchNodeResult.illegal();
             }
             ctx.truncateParentPv();
             return SearchNodeResult.create(GameResult.ONGOING, quiescenceSearch(ctx), ctx.alphaWeight(), ctx.betaWeight());
@@ -559,7 +572,7 @@ public final class PositionSearch {
         final int bestKnownNextMove = getMoveAtDepth(bestKnownPath, depth);
         final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard, depth, bestKnownNextMove);
         if (moves.isIllegal()) {
-            return SearchNodeResult.create(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT_POS, ctx.alphaWeight, ctx.betaWeight);
+            return SearchNodeResult.illegal();
         }
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
