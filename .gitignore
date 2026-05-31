@@ -25,7 +25,10 @@ src/test/resources/large.pgn
 # used to freeze a classpath while a long-running match is in flight,
 # plus the testNN-* logs and PGNs the user saves per match. Both
 # patterns are leading-slash-anchored so they do NOT swallow src/test/.
-/test/
-/test*-*
 .claude/
+/engines/
+/versions/
+
+/myChess-stderr*
+
 
