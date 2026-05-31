@@ -187,6 +187,67 @@ class IllegalPvRegressionTest {
                         + "the position drifts closer to the suspected stale pvTable cell");
     }
 
+    // ---- test14 case (myChess vs DoctorB, 2026-05-30/31) ----
+    // Captured from the e5f6 illegal-move forfeit (Round 79, game UUID
+    // c53ccf90 in mychess-stderr.log). The bug manifests as a runaway
+    // iterative-deepening loop: each depth iteration completes in ~2 ms
+    // visiting only ~21 nodes, then emits the same stale PV (e5f6) until
+    // the watcher's budget+1s grace fires and the cancellation fallback
+    // ships the lastIterationFirstMove (= e5f6) as bestmove — which is
+    // pseudo-legal but exposes Black's king on e4 to White's rook on the
+    // 5th rank after the bishop moves off e5.
+    //
+    // Hypothesis: the 50-moves-rule shortcut in PositionSearch.subSearch
+    // (line 538) fires BEFORE the canCaptureOpposingKing check that
+    // detects "previous move was a self-check". When halfMoveClock >= 100
+    // is reached one ply after a self-check move, the recursive call
+    // returns DRAW=0 instead of ILLEGAL_WEIGHT_POS, so the parent
+    // happily accepts the self-check-leaving move. Triggered here
+    // because the KRBK endgame has dragged halfMoveClock up to 99 at
+    // the root, so any non-pawn, non-capture move pushes it to 100 at
+    // the next ply.
+    //
+    // The actual game's depth-1 iteration already emits the illegal PV
+    // (nodes=21, eval=+0.00, pv=e5f6 — see test14-mychess-stderr.log at
+    // 00:04:15.376), so the regression test runs at depth 1.
+    private static final String GAME_TEST14_BLACK_KRBK_ENDGAME_50MOVE_BUG = """
+            1. c4 f5 2. h3 c6 3. d4 d5 4. e3 Nf6 5. Bd3 e5 6. dxe5 dxc4 7. Bxc4 Qxd1+
+            8. Kxd1 Ne4 9. Ke1 Nd7 10. Nf3 b5 11. Bd3 Ndc5 12. Bc2 Bb7 13. Nd4 g6
+            14. Rg1 O-O-O 15. Nd2 Rd5 16. N2f3 Kb8 17. Rb1 Be7 18. Bd2 Nd7 19. Bb3 Nxd2
+            20. Kxd2 Rc5 21. Ne6 Nxe5 22. Nxc5 Nxf3+ 23. gxf3 Bxc5 24. Kc1 Be7 25. e4 Bh4
+            26. Rf1 fxe4 27. fxe4 Rf8 28. e5 c5 29. e6 Be4 30. Ra1 c4 31. Bc2 Bc6 32. Re1 Kc7
+            33. Re2 Kd6 34. Be4 Bxe4 35. Rxe4 Bg5+ 36. Kd1 Rxf2 37. Ke1 Rf3 38. Rd1+ Rd3
+            39. Rxd3+ cxd3 40. h4 Bf6 41. Kd2 g5 42. hxg5 Bxg5+ 43. Kxd3 Bf6 44. Kc2 a5
+            45. Kb1 h5 46. Kc2 h4 47. Re1 a4 48. a3 Bg5 49. Kb1 h3 50. Rh1 Kxe6 51. Rxh3 Bf4
+            52. Rh5 Be5 53. Rh7 Kd5 54. Rh5 Ke6 55. Rg5 Kd6 56. Rf5 Ke6 57. Rh5 Kd5 58. Rf5 Ke6
+            59. Rh5 Kd5 60. Kc2 Kd6 61. Rg5 Kd5 62. Kb1 Kd6 63. Ka2 Ke6 64. Rh5 Kd6 65. Rf5 Ke6
+            66. Rh5 Kd6 67. b4 Kd5 68. Kb1 Kd4 69. Rh6 Kd3 70. Rc6 Bd4 71. Rc8 Be3 72. Ka2 Bd4
+            73. Kb1 Be3 74. Rc7 Bf2 75. Rc2 Bb6 76. Rc6 Bd4 77. Rc7 Bf2 78. Ka2 Be3 79. Rc8 Bf2
+            80. Rc5 Bg3 81. Rxb5 Bc7 82. Rb7 Be5 83. Rb5 Bc7 84. Rb7 Be5 85. Ra7 Ke4 86. Rxa4 Kd4
+            87. Ra7 Kc4 88. Rb7 Bd6 89. b5 Bc5 90. Kb2 Bd4+ 91. Kc2 Bc5 92. Kd1 Bxa3 93. Kc2 Bc5
+            94. Rb8 Ba7 95. Rb7 Bc5 96. Rb8 Ba7 97. Ra8 Bc5 98. Ra5 Kb4 99. Ra6 Kxb5 100. Rh6 Kc4
+            101. Rh7 Bd6 102. Rh5 Be7 103. Kb1 Bf6 104. Ra5 Kd3 105. Rf5 Bd4 106. Rf7 Be5
+            107. Kc1 Kd4 108. Kb1 Kd5 109. Kc2 Kd4 110. Kb1 Kd5 111. Ka2 Kd6 112. Rh7 Kd5
+            113. Kb1 Ke6 114. Kc2 Kd5 115. Kb1 Ke6 116. Ra7 Bd4 117. Rc7 Be5 118. Rh7 Kf5
+            119. Rh6 Ke4 120. Re6 Kd5 121. Re8 Bf6 122. Kc2 Kc4 123. Re6 Bg7 124. Re7 Bf6
+            125. Re8 Bg7 126. Re7 Bf6 127. Rf7 Be5 128. Rd7 Bf4 129. Kb1 Be5 130. Re7 Kd5
+            131. Re8 Bf6 132. Kc1 Be5 133. Re7 Kd6 134. Rf7 Ke6 135. Rh7 Kd5 136. Re7 Kd6
+            137. Rh7 Ke6 138. Kb1 Bd4 139. Rb7 Be5 140. Ra7 Bd4 141. Rb7 Be5 142. Kc1 Bd4
+            143. Kd1 Be5 144. Kc2 Bf6 145. Rh7 Kd5 146. Kb1 Be5 147. Re7 Kd4 148. Re8 Ke4
+            149. Re7
+            """;
+
+    @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
+    void selfCheckEvasion_test14_blackKrbkEndgame50MoveBug() throws Exception {
+        runPvLegalityCheck(GAME_TEST14_BLACK_KRBK_ENDGAME_50MOVE_BUG, 1,
+                "test14 / Round 79 — KRBK endgame, halfMoveClock approaching 50-move limit. "
+                        + "Black bishop on e5 cannot move to f6 because doing so exposes "
+                        + "Black king on e4 to White rook on the 5th rank. Search emits "
+                        + "e5f6 anyway because the 50-moves-rule shortcut returns DRAW from "
+                        + "the recursive call before the self-check detection can fire.");
+    }
+
     /** Replay {@code gameMoves} via {@link GameImporter}. */
     private static void runPvLegalityCheck(String gameMoves, int maxDepth, String label)
             throws Exception {
