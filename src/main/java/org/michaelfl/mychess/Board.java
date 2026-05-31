@@ -194,13 +194,18 @@ public final class Board {
     private int stackSize;
 
     /**
-     * Starting files of the four castling rooks, indexed by
-     * {@link CastlingSlot#ordinal()}:
-     * {@code [WQ, WK, BQ, BK]}. A file value is in {@code [0, 7]} or
-     * {@code -1} if no castling right of this slot ever existed for this
-     * game (e.g. an asymmetric 960 setup; never the case in standard 960).
-     * Set once at construction time — game-constant, not reverted on
-     * {@code revertMove}.
+     * Starting files of the castling rooks, indexed by
+     * {@code 0 = queenside, 1 = kingside}.
+     *
+     * <p>Chess960 guarantees the starting position is symmetric across
+     * the colors — Black's back rank is by definition the mirror of
+     * White's, so the queenside rook of both colors starts on the same
+     * file, and similarly for the kingside rook. Storing one file per
+     * side (rather than one per side × color) makes that invariant
+     * explicit in the data layout; the FEN parser enforces it on input.
+     *
+     * <p>A file value is in {@code [0, 7]}. Set once at construction
+     * time — game-constant, not reverted on {@code revertMove}.
      */
     private final byte[] castlingRookFiles;
 
@@ -286,23 +291,33 @@ public final class Board {
     }
 
     /**
-     * Returns a fresh array {@code { 0, 7, 0, 7 }} encoding the standard
-     * chess castling-rook files (a-file queenside, h-file kingside, both
-     * colors). Indexed by {@link CastlingSlot#ordinal()}. A new instance
-     * is returned per call so the caller can safely mutate it.
+     * Returns a fresh 2-entry array {@code { 0, 7 }} encoding the
+     * standard chess castling-rook files (a-file queenside, h-file
+     * kingside). Indexed by {@code 0 = queenside, 1 = kingside}, mirrored
+     * across both colors per the Chess960 symmetry invariant. A new
+     * instance is returned per call so the caller can safely mutate it.
      */
     public static byte[] defaultCastlingRookFiles() {
-        return new byte[] { 0, 7, 0, 7 };
+        return new byte[] { 0, 7 };
     }
 
     /**
      * Returns the back-rank file (0..7) of the rook that backs the given
      * castling slot. The value is meaningful only while the matching
-     * castling-right bit in {@link GameStatus#getCastlingState()} is set;
-     * a value of {@code -1} indicates the slot never existed for this game.
+     * castling-right bit in {@link GameStatus#getCastlingState()} is set.
+     *
+     * <p>The color half of {@code slot} is ignored: the value for
+     * {@link CastlingSlot#WHITE_KINGSIDE} and
+     * {@link CastlingSlot#BLACK_KINGSIDE} is the same (the kingside-rook
+     * file), and likewise the two queenside variants return the same
+     * value. This follows from the Chess960 starting-position symmetry —
+     * Black's back rank mirrors White's, so the rook files are paired by
+     * side, not by color. The four-valued {@link CastlingSlot} enum
+     * carries other per-color information (e.g. {@link CastlingSlot#bitMask})
+     * that this lookup ignores.
      */
     public int getCastlingRookFile(CastlingSlot slot) {
-        return castlingRookFiles[slot.ordinal()];
+        return castlingRookFiles[slot.getKingQueenSideIndex()];
     }
 
     static byte[] createEmptyRawBoard() {

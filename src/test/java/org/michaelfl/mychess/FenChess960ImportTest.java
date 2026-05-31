@@ -170,6 +170,36 @@ class FenChess960ImportTest {
                 "Shredder letter without matching rook must throw");
     }
 
+    /**
+     * Chess960 starting positions are mirrored across the colors —
+     * Black's back rank is by definition the mirror of White's, so the
+     * kingside-rook file is the same for both colors, and likewise the
+     * queenside file. {@code Board.castlingRookFiles} encodes that
+     * invariant as a single per-side value; the FEN parser must reject
+     * any input that contradicts it.
+     *
+     * <p>Both cases below construct a Shredder-FEN where the two
+     * castling letters for the same side (queenside or kingside)
+     * declare rooks on different files for the two colors.
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {
+            // White kingside rook on h1 (H), black kingside rook on g8 (g).
+            "4k1r1/8/8/8/8/8/8/4K2R w Hg - 0 1",
+            // White queenside rook on a1 (A), black queenside rook on b8 (b).
+            "1r2k3/8/8/8/8/8/8/R3K3 w Ab - 0 1"
+    })
+    void asymmetricRookFiles_acrossColors_throws(String fen) {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> Fen.importFEN(fen),
+                "FEN with mismatched queenside/kingside rook files across colors "
+                        + "must throw — Chess960 mirrors Black's back rank from White's");
+
+        assertTrue(ex.getMessage().contains("asymmetric"),
+                "exception message should name the invariant ('asymmetric ... rook files'); got: "
+                        + ex.getMessage());
+    }
+
     @Test
     void classicalRightOnPositionWithoutRook_throws() {
         // King on e1 but no rook on either side → "K" cannot resolve
