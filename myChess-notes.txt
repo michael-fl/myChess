@@ -137,6 +137,20 @@ Test 14 (myChess vs DoctorB 1.2.1 ~1325 ELO, 2 minutes)
       -resign movecount=4 score=600 \
       -pgnout test-results/test14-mychess-vs-doctorb.pgn
 
+Test 15 (myChess vs Purple Panda 14 ~1445 ELO, 2 minutes)
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+        -engine name=myChess     cmd=./versions/3.1.2/mychess-uci.sh          proto=uci \
+        -engine name=PurplePanda cmd=./engines/PurplePanda/purplepanda.sh     proto=uci \
+        -each tc=40/120 \
+        -rounds 200 -games 2 -repeat \
+        -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+        -concurrency 4 -ratinginterval 20 \
+        -recover \
+        -draw movenumber=40 movecount=8 score=20 \
+        -resign movecount=4 score=600 \
+        -pgnout test-results/test15-mychess-vs-purplepanda.pgn \
+        | tee test-results/test15-cutechess-stdout.log
+
 
 Vollständige Bracket-Geometrie (CCRL Blitz, aktiv gepflegt, https://computerchess.org.uk/404/rating_list_all.html)
 
@@ -148,30 +162,37 @@ Vollständige Bracket-Geometrie (CCRL Blitz, aktiv gepflegt, https://computerche
   ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
   │ Pulse 1.7.1      │ 1505       │ +64                  │ ~41 %                   │ Test 12 ✓ fertig       │
   ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
-  │ myChess          │ ~1441      │ –                    │ –                       │ –                      │
+  │ Purple Panda 14  │ 1445       │ +4                   │ ?                       │ Test 15 (offen)        │
+  ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
+  │ myChess          │ ~1443      │ –                    │ –                       │ –                      │
   ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
   │ DoctorB 1.2.1    │ 1326       │ −115                 │ ~66 %                   │ Test 14 ✓ läuft        │
   ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
   │ ~~Zagreus v5.0~~ │ ~~2167~~   │ ~~+726~~             │ ~~~1 %~~                │ gestrichen             │
-  ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
-  │ ~~Monochrome~~   │ ~~1427~~   │ ~~−14~~              │ –                       │ nicht gebaut           │
   └──────────────────┴────────────┴──────────────────────┴─────────────────────────┴────────────────────────┘
   
 
 myChess vs myChess:
 /Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
-      -engine name=base         cmd=./versions/3.2-base/mychess-uci.sh         proto=uci \
-      -engine name=openingstate cmd=./versions/3.2-openingstate/mychess-uci.sh proto=uci \
-      -each tc=40/120 \
-      -rounds 1000 -games 2 -repeat \
-      -sprt elo0=0 elo1=5 alpha=0.05 beta=0.05 \
-      -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
-      -concurrency 4 -ratinginterval 20 \
-      -recover \
-      -draw movenumber=40 movecount=8 score=40 \
-      -resign movecount=4 score=600 \
-      -pgnout test-results/test13-base-vs-openingstate.pgn
+        -engine name=base         cmd=./versions/3.2-base/mychess-uci.sh         proto=uci \
+        -engine name=openingstate cmd=./versions/3.2-openingstate/mychess-uci.sh proto=uci \
+        -each tc=40/60 \
+        -rounds 400 -games 2 -repeat \
+        -sprt elo0=0 elo1=15 alpha=0.05 beta=0.05 \
+        -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+        -concurrency 4 -ratinginterval 20 \
+        -recover \
+        -draw movenumber=40 movecount=8 score=20 \
+        -resign movecount=4 score=600 \
+        -pgnout test-results/sprt-3.2-openingstate.pgn \
+        | tee test-results/sprt-3.2-openingstate-stdout.log
       
+elo1=5  --> Wenn keine Verbesserung erwartet
+elo1=15 --> Deutliche Verbesserung erwartet
+       
+3. Der c4c2-Bug (und d5e6 in beiden Arms) bleibt als Restproblem stehen. Wenn Test 15 mit Purple Panda durch ist, könntest du eine Session dem Game-Replay-mit-Searches-Test-Helper widmen (die "Option C" aus
+   vorhin), um die residuale Bug-Klasse anzugreifen.
+ 
             
 /Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
       -engine name=myChess  cmd=./versions/3.1/mychess-uci.sh proto=uci \
