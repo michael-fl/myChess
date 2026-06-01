@@ -750,7 +750,9 @@ public final class Board {
         if (ChessUtil.getRowOfField(fromField) == 0) { // White
             final int rookFile = getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE);
             final int rookField = ChessUtil.getFieldFromColAndRow(rookFile, 0);
-            board[rookField] = empty;
+            if (toField != rookField) {
+                board[rookField] = empty;
+            }
             board[f1] = whiteRook;
 
             // Update hash
@@ -761,7 +763,9 @@ public final class Board {
         } else { // Black
             final int rookFile = getCastlingRookFile(CastlingSlot.BLACK_KINGSIDE);
             final int rookField = ChessUtil.getFieldFromColAndRow(rookFile, 7);
-            board[rookField] = empty;
+            if (toField != rookField) {
+                board[rookField] = empty;
+            }
             board[f8] = blackRook;
 
             // Update hash
@@ -793,7 +797,9 @@ public final class Board {
         if (ChessUtil.getRowOfField(fromField) == 0) { // White
             final int rookFile = getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE);
             final int rookField = ChessUtil.getFieldFromColAndRow(rookFile, 0);
-            board[rookField] = empty;
+            if (toField != rookField) {
+                board[rookField] = empty;
+            }
             board[d1] = whiteRook;
 
             // Update hash
@@ -804,7 +810,9 @@ public final class Board {
         } else { // Black
             final int rookFile = getCastlingRookFile(CastlingSlot.BLACK_QUEENSIDE);
             final int rookField = ChessUtil.getFieldFromColAndRow(rookFile, 7);
-            board[rookField] = empty;
+            if (toField != rookField) {
+                board[rookField] = empty;
+            }
             board[d8] = blackRook;
 
             // Update hash
@@ -883,10 +891,14 @@ public final class Board {
         }
 
         if (toField == Board.g1) {
-            board[Board.f1] = Board.empty;
+            if (Board.f1 != fromField) {
+                board[Board.f1] = Board.empty;
+            }
             board[ChessUtil.getFieldFromColAndRow(getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE), 0)] = Board.whiteRook;
         } else {
-            board[Board.f8] = Board.empty;
+            if (Board.f8 != fromField) {
+                board[Board.f8] = Board.empty;
+            }
             board[ChessUtil.getFieldFromColAndRow(getCastlingRookFile(CastlingSlot.BLACK_KINGSIDE), 7)] = Board.blackRook;
         }
     }
@@ -905,10 +917,14 @@ public final class Board {
         }
 
         if (toField == Board.c1) {
-            board[Board.d1] = Board.empty;
+            if (Board.d1 != fromField) {
+                board[Board.d1] = Board.empty;
+            }
             board[ChessUtil.getFieldFromColAndRow(getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE), 0)] = Board.whiteRook;
         } else {
-            board[Board.d8] = Board.empty;
+            if (Board.d8 != fromField) {
+                board[Board.d8] = Board.empty;
+            }
             board[ChessUtil.getFieldFromColAndRow(getCastlingRookFile(CastlingSlot.BLACK_QUEENSIDE), 7)] = Board.blackRook;
         }
     }
