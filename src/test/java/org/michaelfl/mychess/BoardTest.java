@@ -1153,6 +1153,231 @@ class BoardTest {
                 "makeMove + revertMove must restore the position hash");
     }
 
+    // ---------- revertCastling: rook destination == king source ----------
+    //
+    // Second-generation 960 castle-overlap defect (after the bededba
+    // "king target == king source" fix, which covered the c-file king /
+    // g-file king degenerate cases). Here the king moves normally but
+    // the rook ends up on the king's STARTING square. Concretely:
+    //   * Kingside with king on f-file, kingside rook anywhere right
+    //     of f: king f → g, rook ? → f. f is both the king's source
+    //     and the rook's destination.
+    //   * Queenside symmetric: king on d-file, queenside rook anywhere
+    //     left of d: king d → c, rook ? → d. d overlaps.
+    //
+    // The make path is fine: it moves the king (clearing the source)
+    // before placing the rook on its destination. The revert path
+    // restores the king first (writing the king on f1/d1/f8/d8) and
+    // then unconditionally clears the rook's destination (f1/d1/f8/d8)
+    // — wiping out the king that step 1 just restored. The next
+    // search-internal query of canCaptureOpposingKing → findKingField
+    // throws "King not found on board: 13" (= the whiteKing piece
+    // byte). Discovered as the cause of the "engine plays instantly
+    // after a few moves" symptom in a live cutechess GUI game on the
+    // RBNNQKBR Scharnagl starting position.
+    //
+    // Each test does the same round-trip the bededba family did
+    // (snapshot raw board + hash, makeMove, revertMove, assertEquals).
+    // With the buggy revert the post-revert byte array is missing the
+    // king on the f-file (kingside tests) or d-file (queenside tests).
+
+    @Test
+    void revertCastlingKingSideMove_white_chess960_rookDestEqualsKingSource() {
+        // 960 setup: king on f1, kingside rook on h1. Kingside castle
+        // sends king f1 → g1 and rook h1 → f1, so the rook's
+        // destination (f1) overlaps with the king's source (f1).
+        var board = Fen.importFEN("4k3/8/8/8/8/8/8/5K1R w H - 0 1");
+        byte[] originalBoard = Arrays.copyOf(board.getRawBoard(), board.getRawBoard().length);
+        long originalHash = board.getGameStatus().getPositionHash();
+        int castleMove = Move.create(Board.f1, Board.g1, Board.empty, Move.typeCastlingKingSide);
+
+        board.makeMove(castleMove);
+        board.revertMove();
+
+        assertArrayEquals(originalBoard, board.getRawBoard(),
+                "makeMove + revertMove must restore the raw board byte-for-byte — "
+                        + "the rook-destination clearance in revert must not wipe out the king "
+                        + "that was just restored to the same square");
+        assertEquals(originalHash, board.getGameStatus().getPositionHash(),
+                "makeMove + revertMove must restore the position hash");
+    }
+
+    @Test
+    void revertCastlingQueenSideMove_white_chess960_rookDestEqualsKingSource() {
+        // 960 setup: king on d1, queenside rook on a1. Queenside castle
+        // sends king d1 → c1 and rook a1 → d1, so the rook's
+        // destination (d1) overlaps with the king's source (d1).
+        var board = Fen.importFEN("4k3/8/8/8/8/8/8/R2K4 w A - 0 1");
+        byte[] originalBoard = Arrays.copyOf(board.getRawBoard(), board.getRawBoard().length);
+        long originalHash = board.getGameStatus().getPositionHash();
+        int castleMove = Move.create(Board.d1, Board.c1, Board.empty, Move.typeCastlingQueenSide);
+
+        board.makeMove(castleMove);
+        board.revertMove();
+
+        assertArrayEquals(originalBoard, board.getRawBoard(),
+                "makeMove + revertMove must restore the raw board byte-for-byte — "
+                        + "the rook-destination clearance in revert must not wipe out the king "
+                        + "that was just restored to the same square");
+        assertEquals(originalHash, board.getGameStatus().getPositionHash(),
+                "makeMove + revertMove must restore the position hash");
+    }
+
+    @Test
+    void revertCastlingKingSideMove_black_chess960_rookDestEqualsKingSource() {
+        // Black mirror: king on f8, kingside rook on h8.
+        var board = Fen.importFEN("5k1r/8/8/8/8/8/8/4K3 b h - 0 1");
+        byte[] originalBoard = Arrays.copyOf(board.getRawBoard(), board.getRawBoard().length);
+        long originalHash = board.getGameStatus().getPositionHash();
+        int castleMove = Move.create(Board.f8, Board.g8, Board.empty, Move.typeCastlingKingSide);
+
+        board.makeMove(castleMove);
+        board.revertMove();
+
+        assertArrayEquals(originalBoard, board.getRawBoard(),
+                "makeMove + revertMove must restore the raw board byte-for-byte — "
+                        + "the rook-destination clearance in revert must not wipe out the king "
+                        + "that was just restored to the same square");
+        assertEquals(originalHash, board.getGameStatus().getPositionHash(),
+                "makeMove + revertMove must restore the position hash");
+    }
+
+    @Test
+    void revertCastlingQueenSideMove_black_chess960_rookDestEqualsKingSource() {
+        // Black mirror: king on d8, queenside rook on a8.
+        var board = Fen.importFEN("r2k4/8/8/8/8/8/8/4K3 b a - 0 1");
+        byte[] originalBoard = Arrays.copyOf(board.getRawBoard(), board.getRawBoard().length);
+        long originalHash = board.getGameStatus().getPositionHash();
+        int castleMove = Move.create(Board.d8, Board.c8, Board.empty, Move.typeCastlingQueenSide);
+
+        board.makeMove(castleMove);
+        board.revertMove();
+
+        assertArrayEquals(originalBoard, board.getRawBoard(),
+                "makeMove + revertMove must restore the raw board byte-for-byte — "
+                        + "the rook-destination clearance in revert must not wipe out the king "
+                        + "that was just restored to the same square");
+        assertEquals(originalHash, board.getGameStatus().getPositionHash(),
+                "makeMove + revertMove must restore the position hash");
+    }
+
+    // ---------- makeCastling: rook source == king destination ----------
+    //
+    // Symmetric companion to the "rook destination == king source"
+    // revert defect: the make path has the analogous overlap problem
+    // when the rook's STARTING square equals the king's DESTINATION
+    // square. In 960 setups with the castling rook directly next to
+    // the king (e.g., RBBNNKRQ: king on f1, kingside rook on g1, Scharnagl-legal —
+    // queenside-rook left of king, both bishops on opposite-color
+    // squares, knights and queen filling out the remaining squares),
+    // a kingside castle is the swap K f→g, R g→f. Both squares
+    // involved are simultaneously a source AND a destination.
+    //
+    // The current make-path order is: king-move first
+    // (board[toField] = board[fromField]; board[fromField] = empty),
+    // then rook-handling (board[rookSource] = empty; board[rookDest]
+    // = whiteRook). The first step writes the king onto g1 — which
+    // is the rook's source — overwriting the rook. The rook-source
+    // clear then sets g1 = empty, wiping out the king that was just
+    // placed there. The final state is f1 = R, g1 = empty: the king
+    // has disappeared from the board.
+    //
+    // The bededba "king-target-equals-source" fix (degenerate cases:
+    // king on c/g file, rook on a/h) does not cover this geometry,
+    // and the rook-destination-equals-king-source fix from the prior
+    // commit only adjusted the revert path. Same diagnosis pattern
+    // (canCaptureOpposingKing → findKingField → "King not found on
+    // board: <pieceByte>") would surface this if it fires deep in a
+    // search.
+    //
+    // Each test sets up the overlap geometry, executes the castle,
+    // and asserts post-make that BOTH pieces land on their intended
+    // squares (king on g1/c1/g8/c8, rook on f1/d1/f8/d8). Additionally
+    // verifies the Zobrist hash via a fresh-recomputation cross-check.
+
+    @Test
+    void makeCastlingKingSideMove_white_chess960_rookSourceEqualsKingDest() {
+        // 960 geometry: king on f1, kingside rook on g1 — directly
+        // adjacent. Kingside castle is the swap K f1 → g1 / R g1 → f1.
+        var board = Fen.importFEN("4k3/8/8/8/8/8/8/5KR1 w G - 0 1");
+        int castleMove = Move.create(Board.f1, Board.g1, Board.empty, Move.typeCastlingKingSide);
+
+        board.makeMove(castleMove);
+
+        assertEquals(Board.whiteKing, board.get(Board.g1),
+                "king must land on g1 — the rook-source clearance must not wipe out "
+                        + "the king that just moved there");
+        assertEquals(Board.whiteRook, board.get(Board.f1),
+                "kingside rook must land on f1 (the king's former square)");
+
+        long stored = board.getGameStatus().getPositionHash();
+        long fresh = Board.calculatePositionHash(board.getRawBoard(), board.getGameStatus());
+        assertEquals(fresh, stored,
+                "incremental Zobrist update must match a fresh recomputation — the hash "
+                        + "must not encode a king on f1 or empty g1");
+    }
+
+    @Test
+    void makeCastlingQueenSideMove_white_chess960_rookSourceEqualsKingDest() {
+        // 960 geometry: king on d1, queenside rook on c1. Queenside
+        // castle is the swap K d1 → c1 / R c1 → d1.
+        var board = Fen.importFEN("4k3/8/8/8/8/8/8/2RK4 w C - 0 1");
+        int castleMove = Move.create(Board.d1, Board.c1, Board.empty, Move.typeCastlingQueenSide);
+
+        board.makeMove(castleMove);
+
+        assertEquals(Board.whiteKing, board.get(Board.c1),
+                "king must land on c1 — the rook-source clearance must not wipe out "
+                        + "the king that just moved there");
+        assertEquals(Board.whiteRook, board.get(Board.d1),
+                "queenside rook must land on d1 (the king's former square)");
+
+        long stored = board.getGameStatus().getPositionHash();
+        long fresh = Board.calculatePositionHash(board.getRawBoard(), board.getGameStatus());
+        assertEquals(fresh, stored,
+                "incremental Zobrist update must match a fresh recomputation");
+    }
+
+    @Test
+    void makeCastlingKingSideMove_black_chess960_rookSourceEqualsKingDest() {
+        // Black mirror: king on f8, kingside rook on g8.
+        var board = Fen.importFEN("5kr1/8/8/8/8/8/8/4K3 b g - 0 1");
+        int castleMove = Move.create(Board.f8, Board.g8, Board.empty, Move.typeCastlingKingSide);
+
+        board.makeMove(castleMove);
+
+        assertEquals(Board.blackKing, board.get(Board.g8),
+                "king must land on g8 — the rook-source clearance must not wipe out "
+                        + "the king that just moved there");
+        assertEquals(Board.blackRook, board.get(Board.f8),
+                "kingside rook must land on f8 (the king's former square)");
+
+        long stored = board.getGameStatus().getPositionHash();
+        long fresh = Board.calculatePositionHash(board.getRawBoard(), board.getGameStatus());
+        assertEquals(fresh, stored,
+                "incremental Zobrist update must match a fresh recomputation");
+    }
+
+    @Test
+    void makeCastlingQueenSideMove_black_chess960_rookSourceEqualsKingDest() {
+        // Black mirror: king on d8, queenside rook on c8.
+        var board = Fen.importFEN("2rk4/8/8/8/8/8/8/4K3 b c - 0 1");
+        int castleMove = Move.create(Board.d8, Board.c8, Board.empty, Move.typeCastlingQueenSide);
+
+        board.makeMove(castleMove);
+
+        assertEquals(Board.blackKing, board.get(Board.c8),
+                "king must land on c8 — the rook-source clearance must not wipe out "
+                        + "the king that just moved there");
+        assertEquals(Board.blackRook, board.get(Board.d8),
+                "queenside rook must land on d8 (the king's former square)");
+
+        long stored = board.getGameStatus().getPositionHash();
+        long fresh = Board.calculatePositionHash(board.getRawBoard(), board.getGameStatus());
+        assertEquals(fresh, stored,
+                "incremental Zobrist update must match a fresh recomputation");
+    }
+
     // ---------- SAN castling notation (O-O / O-O-O) ----------
     //
     // SAN castling is intent-only — "O-O" / "O-O-O" don't carry any
