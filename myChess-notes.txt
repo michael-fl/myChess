@@ -162,15 +162,52 @@ Vollständige Bracket-Geometrie (CCRL Blitz, aktiv gepflegt, https://computerche
   ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
   │ Pulse 1.7.1      │ 1505       │ +64                  │ ~41 %                   │ Test 12 ✓ fertig       │
   ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
-  │ Purple Panda 14  │ 1445       │ +4                   │ ?                       │ Test 15 (offen)        │
+  │ myChess          │ 1440       │ –                    │ –                       │ –                      │
   ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
-  │ myChess          │ ~1443      │ –                    │ –                       │ –                      │
+  │ Purple Panda 14  │ 1445 (1282)│ +4                   │ ?                       │ Test 15 ✓ fertig       │
   ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
-  │ DoctorB 1.2.1    │ 1326       │ −115                 │ ~66 %                   │ Test 14 ✓ läuft        │
+  │ DoctorB 1.2.1    │ 1326 (1181)│ −115                 │ ~66 %                   │ Test 14 ✓ fertig       │
   ├──────────────────┼────────────┼──────────────────────┼─────────────────────────┼────────────────────────┤
   │ ~~Zagreus v5.0~~ │ ~~2167~~   │ ~~+726~~             │ ~~~1 %~~                │ gestrichen             │
   └──────────────────┴────────────┴──────────────────────┴─────────────────────────┴────────────────────────┘
   
+--
+ORDO
+
+# 1. Alle Anker-Matches in einen PGN-Stream konkatenieren
+  cat test-results/test12-mychess-vs-pulse.pgn \
+      test-results/test13-mychess-vs-tscp.pgn \
+      test-results/test14-mychess-vs-doctorb.pgn \
+      test-results/test15-mychess-vs-purplepanda.pgn \
+      > /tmp/bracket.pgn
+
+  # 2. Anker-Datei: feste CCRL-Blitz-Ratings für die drei verlässlichen Engines
+  cat > /tmp/anchors.csv <<'EOF'
+  "Pulse",1505
+  "TSCP",1607
+  "PurplePanda",1445
+  EOF
+  # DoctorB wird BEWUSST nicht fixiert — Ordo berechnet seine implizierte Stärke aus dem Match;
+  # wenn die deutlich unter CCRL 1326 landet, ist das die quantitative Bestätigung des Port-Issues.
+
+  # 3. Ordo aufrufen
+  /Users/mf/_PRIVAT_/New-Stuff/ordo/ordo \
+      -p /tmp/bracket.pgn \
+      -m /tmp/anchors.csv \
+      -o test-results/ordo-mychess-bracket.txt \
+      -c test-results/ordo-mychess-bracket.csv
+
+  Output: Text-Tabelle mit myChess' bester Schätzung ± Uncertainty, plus eine CSV-Variante für Excel/Numbers. myChess' Wert sollte irgendwo zwischen ~1440 und ~1470 landen — wenn Ordo zu höheren Werten neigt,
+  ist das Style-Bias-Argument für die schwächeren Anker (Purple Panda, DoctorB) bestätigt; landet es tiefer, schlägt der TSCP-Anker durch.
+
+  Mit -y statt -m könntest du auch jedem Anker eine Unsicherheit mitgeben (CCRL-eigene Konfidenzintervalle) — falls dir später wichtig wird, das einzubeziehen, helfe ich gerne mit den genauen Werten.
+
+--
+
+Falls du Purple Panda in zukünftigen Matches nochmal verwendest, lohnt sich ein Mini-Patch in engine.h: die 4 cout-Lines durch eine #ifdef DIAGNOSTICS-Klammerung oder einfach Auskommentieren. Spielstärke
+  ändert sich nicht — die Diagnose-Lines sind Tooling, nicht Suche. Dann verschwinden die Stalls.
+
+--
 
 myChess vs myChess:
 /Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
@@ -187,8 +224,9 @@ myChess vs myChess:
         -pgnout test-results/sprt-3.2-openingstate.pgn \
         | tee test-results/sprt-3.2-openingstate-stdout.log
       
-elo1=5  --> Wenn keine Verbesserung erwartet
+elo1=5  --> Wenn keine oder kleine Verbesserung erwartet
 elo1=15 --> Deutliche Verbesserung erwartet
+elo0=-3 elo1=3 --> Will nur „nicht schlechter" zeigen (Refactoring)
        
 3. Der c4c2-Bug (und d5e6 in beiden Arms) bleibt als Restproblem stehen. Wenn Test 15 mit Purple Panda durch ist, könntest du eine Session dem Game-Replay-mit-Searches-Test-Helper widmen (die "Option C" aus
    vorhin), um die residuale Bug-Klasse anzugreifen.
