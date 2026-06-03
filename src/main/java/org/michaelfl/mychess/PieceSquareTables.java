@@ -3,7 +3,12 @@ package org.michaelfl.mychess;
 import static org.michaelfl.mychess.Board.*;
 
 /**
- * Tables taken from https://www.chessprogramming.org/Simplified_Evaluation_Function.
+ * Per-piece, per-square positional bonuses. Tables are adapted from the
+ * <a href="https://www.chessprogramming.org/Simplified_Evaluation_Function">chessprogramming.org
+ * <em>Simplified Evaluation Function</em></a>, with one local modification in the white
+ * pawn table — see {@link #pawnTableWhiteString} for details. The black tables are
+ * derived from the white tables via vertical {@link #invert(byte[])} (rank 1 &harr; 8 etc.),
+ * which preserves the evaluation's color antisymmetry asserted by {@code MirrorEvalTest}.
  *
  * @author Michael Fleischhauer
  */
@@ -14,15 +19,30 @@ public final class PieceSquareTables {
         throw new IllegalStateException("Utility class");
     }
 
-    /* Pawn */
+    /**
+     * White pawn table. Deviates from the Simplified Evaluation Function on five squares:
+     * <ul>
+     *   <li>{@code b2}, {@code c2}, {@code g2}: {@code +10} &rarr; {@code 0}</li>
+     *   <li>{@code b3}, {@code g3}: {@code -5} &rarr; {@code 0}</li>
+     * </ul>
+     * The original Simplified values rewarded those pawns for staying on their starting
+     * squares and penalized the first step to {@code b3}/{@code g3}, which discouraged
+     * queenside expansion and fianchetto preparation. The retired
+     * {@code WeightingFunction.calculateOpeningState} heuristic compensated for this with
+     * an opposite-signed bonus on the same squares; once that heuristic was removed
+     * (commit on branch {@code version-3.2-no-opening-weight}), the conflicting Simplified
+     * values had to go too. SPRT-confirmed Elo-neutral against the pre-refactor version
+     * over 800 games (+5.6 &plusmn; 21.2, LOS 69.9%). See roadmap &sect; 12.7 for the
+     * planned full migration to PeSTO.
+     */
     private static final String pawnTableWhiteString = """
              0,  0,  0,  0,  0,  0,  0,  0,
             50, 50, 50, 50, 50, 50, 50, 50,
             10, 10, 20, 30, 30, 20, 10, 10,
              5,  5, 10, 25, 25, 10,  5,  5,
              0,  0,  0, 20, 20,  0,  0,  0,
-             5, -5,-10,  0,  0,-10, -5,  5,
-             5, 10, 10,-20,-20, 10, 10,  5,
+             5,  0,-10,  0,  0,-10,  0,  5,
+             5,  0,  0,-20,-20, 10,  0,  5,
              0,  0,  0,  0,  0,  0,  0,  0
             """;
     private static final byte[] pawnTableWhite = createBoard(pawnTableWhiteString);
