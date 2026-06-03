@@ -224,10 +224,25 @@ myChess vs myChess:
         -pgnout test-results/sprt-3.2-openingstate.pgn \
         | tee test-results/sprt-3.2-openingstate-stdout.log
       
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+        -engine name=base         cmd=./versions/3.2.1-no-opening-weight/mychess-uci.sh         proto=uci \
+        -engine name=openingstate cmd=./versions/3.2.1/mychess-uci.sh proto=uci \
+        -each tc=40/60 \
+        -rounds 400 -games 2 -repeat \
+        -sprt elo0=0 elo1=15 alpha=0.05 beta=0.05 \
+        -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+        -concurrency 4 -ratinginterval 20 \
+        -recover \
+        -draw movenumber=40 movecount=8 score=20 \
+        -resign movecount=4 score=600 \
+        -pgnout test-results/sprt-3.2.1-no-opening-weight.pgn \
+        | tee test-results/sprt-3.2.1-no-opening-weight-stdout.log
+
 elo1=5  --> Wenn keine oder kleine Verbesserung erwartet
 elo1=15 --> Deutliche Verbesserung erwartet
 elo0=-3 elo1=3 --> Will nur „nicht schlechter" zeigen (Refactoring)
-       
+elo0=-15 elo1=0 --> Deutliche Verschlechterung erwartet
+
 3. Der c4c2-Bug (und d5e6 in beiden Arms) bleibt als Restproblem stehen. Wenn Test 15 mit Purple Panda durch ist, könntest du eine Session dem Game-Replay-mit-Searches-Test-Helper widmen (die "Option C" aus
    vorhin), um die residuale Bug-Klasse anzugreifen.
  
@@ -309,4 +324,139 @@ Stellungsanalyse über Stockfish:
 
 
 Logik von moveDescriptionToMove --> resolveMoveDescription
+
+--
+
+Was calculateOpeningState tat
+
+  Pro Seite wurde ein state ∈ [0, -7] aufaddiert aus drei Komponenten:
+
+  ┌──────────────────────────────────────┬─────────────────────────────┬────────────────────────────────┐
+  │              Komponente              │           Strafe            │       Was sie ausdrückt        │
+  ├──────────────────────────────────────┼─────────────────────────────┼────────────────────────────────┤
+  │ Nicht rochiert                       │ -1                          │ König nicht in Sicherheit      │
+  ├──────────────────────────────────────┼─────────────────────────────┼────────────────────────────────┤
+  │ Springer auf b1/g1, Läufer auf c1/f1 │ -1 je Stück                 │ Leichtfiguren nicht entwickelt │
+  ├──────────────────────────────────────┼─────────────────────────────┼────────────────────────────────┤
+  │ Bauern b2/c2/d2/e2/g2 ungezogen      │ -2 (keiner), -1 (nur einer) │ Stellung blockiert             │
+  └──────────────────────────────────────┴─────────────────────────────┴────────────────────────────────┘
+
+  Mit Faktor 0.1 ergibt das im Worst-Case −0.7 Bauern Strafe. Die openingFactorCorrection skaliert das zusätzlich: Vollwert bis Plie 20, halb bis Plie 40, danach 0. Es ist also explizit ein Entwicklungs-Treiber
+  für die Eröffnung.
+
+  Überlappung mit anderen Eval-Komponenten
+
+  1. Rochade — doppelt abgedeckt. castlingState (Faktor 0.25) gibt bereits −1/−2/−4 je nach Rechten. openingState legt nochmal −1 obendrauf, solange nicht rochiert wurde. Effektiv hat die Rochade früher das
+  Doppelte gezogen.
+
+  2. Leichtfiguren — durch PSTs gut abgedeckt. PST-Werte auf Startfeldern:
+  - Springer b1/g1: −40 je
+  - Läufer c1/f1: −10 je
+
+  Nach positionFactor = 0.5 heißt das: Springerentwicklung b1→c3 bringt PST-mäßig ca. (−40 → +10) × 0.5/100 = +0.25 Bauern. Das ist viel mehr als die +0.1 aus dem openingState. Hier war der openingState-Anteil
+  redundant — deine Hypothese stimmt für diesen Teil.
+
+  3. Bauern b2/c2/d2/e2/g2 — widersprechen den PSTs. Das ist der kritische Punkt:
+
+  White-Bauern-PST, Rang 2: a2=5, b2=10, c2=10, d2=-20, e2=-20, f2=10, g2=10, h2=5
+
+  Die PSTs belohnen b2/c2/g2 fürs Stehenbleiben (+10 je), bestrafen aber d2/e2 fürs Stehenbleiben (−20 je). calculateOpeningState bestraft dagegen alle fünf Bauern fürs Stehenbleiben.
+
+  Das heißt: für b2/c2/g2 war der openingState der einzige Signalgeber, der die Engine überhaupt dazu brachte, Flügelbauern zu ziehen (Fianchetto auf g3, c4-Push, b3-Fianchetto). Die PSTs alleine sagen der
+  Engine: "Lass b2/c2/g2 stehen."
+
+  Wahrscheinliche Ursache der Regression
+
+  Drei plausible Mechanismen, in absteigender Wirksamkeit:
+
+  1. Flügelbauern bewegen sich gar nicht mehr. Mit der Entfernung gibt es null Anreiz, b/c/g-Bauern zu ziehen. Die Engine spielt jetzt vermutlich ausschließlich e4/d4-Eröffnungen ohne Fianchetto, ohne c4-Push,
+  ohne b3-Entwicklung. Das verarmt das Eröffnungsspiel.
+  2. Rochade-Anreiz halbiert. Statt bis zu −1.0 + −0.1 = ~−1.1 Bauern zieht "nicht rochiert" nur noch maximal −1.0. Das verzögert die Rochade systematisch.
+  3. Auch die eigene Strafe wird weniger gewichtet im Vergleich zu Material — bei EVALUATE_MATERIAL_ONLY_THRESHOLD = 200 cp Pruning bedeutet das, dass kurze taktische Material-Verluste die Entwicklungsstrafe
+  leichter überstimmen.
+
+  Empfehlung
+
+  - Bestätigt: Der Leichtfigur-Anteil von openingState war redundant zu den PSTs — eine sinnvolle Vereinfachung.
+  - Nicht redundant: Die Bauern-Heuristik für b/c/g und die Rochade-Verdopplung. Diese beiden tragen den Großteil der Spielstärke.
+
+  Wenn du den Refactor retten willst, ohne die ganze Methode zurückzunehmen, würde ich einen von beiden Wegen vorschlagen:
+
+  - A) PSTs anpassen — die Bauern-Werte auf Rang 2 für b2/c2/g2 von +10 auf 0 oder −5 senken. Dann erzeugt der PST allein den Push-Anreiz, und es bleibt eine einzelne Eval-Quelle.
+  - B) Schlankes Reststück behalten — openingState durch eine kürzere Version ersetzen, die nur noch (a) den Bauern-Push für b/c/g und (b) eventuell die Rochade-Verdopplung enthält. Springer/Läufer rauslassen.
+
+  Variante A ist sauberer (eine Wahrheit), Variante B näher am Original-Verhalten und damit weniger Risiko, andere Tuning-Annahmen umzuwerfen.
+  
+  
+  Einverstanden. Zwei Punkte vorab zur Klärung, dann kann ich loslegen sobald der laufende Test durch ist:
+
+  1. Welche Bauern-Werte konkret?
+
+  Aktuelle Rang-2-Werte: a2=5, b2=10, c2=10, d2=-20, e2=-20, f2=10, g2=10, h2=5.
+
+  Vorschlag für Variante A — minimaler Eingriff, nur die drei "auffälligen" Belohnungen kappen:
+
+  a2=5, b2=0, c2=0, d2=-20, e2=-20, f2=10, g2=0, h2=5
+
+  Begründung:
+  - b2/c2/g2 auf 0 (statt +10): kein Anreiz mehr fürs Stehenbleiben, aber auch noch keine aktive Strafe. Das entspricht ungefähr dem, was openingState im Worst-Case bewirkt hat (−2 × 0.1 = −0.2 ≈ ein +10-Wegfall
+  mit positionFactor 0.5 → ca. 0.05 pro Bauer).
+  - f2 bleibt bei +10: f2-Push schwächt die Königsstellung nach kurzer Rochade — openingState hat das auch nicht gefördert.
+  - d2/e2 unverändert: stark negativ, wie bisher.
+  - a2/h2 unverändert: openingState hat diese auch ignoriert.
+
+  Alternative: aggressivere Werte (b2/c2/g2 auf −5) — dann simuliert es eher den Vollwert von openingState. Aber Risiko, dass die Engine zu früh die Flanken aufreißt.
+
+  2. Vergleichsbaseline & Konfiguration
+
+  - Gegner: versions/3.2.1/ (mit calculateOpeningState), gleicher Aufbau wie der jetzt laufende Test.
+  - SPRT-Bounds: Diesmal elo0=-5 elo1=5 oder elo0=-10 elo1=10? Wenn das Ziel "kein Verlust gegenüber Original" ist, reicht ein enger Test um 0.
+  - Sonst gleiche TC, gleiches Openings-PGN, gleiche Cutechess-Flags wie der jetzt laufende Test.
+
+  Sag mir bei beiden Punkten Bescheid (oder ob du mit meinen Vorschlägen mitgehst), dann implementiere ich Variante A in PieceSquareTables.java sobald der aktuelle SPRT-Lauf durch ist. Den laufenden Test stören
+  wir nicht.
+
+--
+
+Piece Square Tables
+
+Ja, mehrere — aber mit einem wichtigen Vorbehalt: praktisch alle moderneren Referenzen sind tapered (getrennte Mittelspiel- und Endspiel-Tabellen, linear interpoliert nach Spielphase). Ein direkter Drop-in für
+  myChess (eine einzige Tabelle pro Figur) ist nur Michniewskis "Simplified" — das ist der Default für genau diesen Anwendungsfall.
+
+  Die gängigen Alternativen:
+
+  ┌────────────────────────────────┬────────────────────────────────┬────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │             Quelle             │              Stil              │  Tapered?  │                                                  Bemerkung                                                   │
+  ├────────────────────────────────┼────────────────────────────────┼────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Michniewski "Simplified"       │ Hand-tuned, Lehrbuch           │ nein       │ Was du heute hast                                                                                            │
+  ├────────────────────────────────┼────────────────────────────────┼────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ PeSTO (Ronald Friederich)      │ Hand-tuned, weit verbreitet    │ ja (MG/EG) │ De-facto-Standard für moderne Tutorial-Engines; auf chessprogramming.org unter "PeSTO's Evaluation Function" │
+  ├────────────────────────────────┼────────────────────────────────┼────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Rofchade                       │ Hand-tuned, ähnlich PeSTO      │ ja (MG/EG) │ Andere Stilrichtung, etwas defensivere Bauern-Werte                                                          │
+  ├────────────────────────────────┼────────────────────────────────┼────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Texel-Tuning (Peter Österlund) │ Aus eigenen Partien auto-tuned │ ja         │ Methode, nicht feste Tabellen — du erzeugst PSTs aus einem Partien-Korpus per Logistik-Regression            │
+  ├────────────────────────────────┼────────────────────────────────┼────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Sungorus / Maverick / Demolito │ Diverse                        │ meist ja   │ Open-Source-Engines, aus deren Source extrahierbar                                                           │
+  └────────────────────────────────┴────────────────────────────────┴────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+  Konkret für myChess sehe ich zwei sinnvolle Pfade:
+
+  Kurzfristig (passend zu Variante A): Bei Simplified bleiben und nur b2/c2/g2 anpassen. Macht den Test sauber — eine einzige Variable ändert sich, du misst genau den Effekt des fehlenden openingState.
+
+  Mittelfristig (eigener Schritt nach diesem Experiment): Auf PeSTO migrieren. Das bedeutet aber:
+  1. Zwei Tabellen pro Figur statt einer.
+  2. Eine Spielphasen-Funktion (z.B. linear über verbleibendes Material gewichtet).
+  3. Im calculatePositionWeight zwischen MG- und EG-Tabellen interpolieren.
+  4. Die Endspiel-Sonderbehandlung isEndGame für den König (!(isEndGame && isKing(piece))) wird damit überflüssig — die Königs-Endspiel-Tabelle übernimmt das natürlich.
+
+  Das ist ein eigenständiges Refactoring (~halber Tag plus Messlauf) und sollte nicht mit Variante A vermischt werden. Sonst kannst du den jeweiligen Beitrag zur Spielstärke nicht trennen.
+
+  Mein Vorschlag: erst Variante A durchziehen wie geplant, dann (falls Interesse) als separates Folge-Experiment den PeSTO-Migrationsschritt. Soll ich dir bei Zeiten dafür mal Quellen mit den konkreten
+  PeSTO-Zahlen heraussuchen, oder bleiben wir erstmal beim aktuellen Plan?
+  
+--
+
+- Bauen, nach versions/3.2.1-pst-a2/ deployen.
+  - Cutechess gegen versions/3.2.1/ mit gleichen Flags wie der vorherige Test (engl. nur Pfade und PGN-Name anpassen). Beim SPRT würde ich elo0=-5 elo1=10 vorschlagen — Ziel ist "mindestens kein Verlust, gerne
+  kleiner Gewinn".
 
