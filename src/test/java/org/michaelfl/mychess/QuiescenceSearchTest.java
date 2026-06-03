@@ -34,7 +34,7 @@ class QuiescenceSearchTest {
     void testPositionWithUnguardedNight2() {
         var gameNotation = "1.Nf3 e6 2.Nh4 d5 3.c3 a6 4.c4 b6 5.cxd5";
         // TODO: 2.0 < expectedWeight < 3.0 !
-        quiescenceTest(gameNotation, Board.blackPawn, 1.0f, -0.6f, -0.5f, 1);
+        quiescenceTest(gameNotation, Board.blackPawn, 1.0f, -0.65f, -0.5f, 1);
     }
 
     void quiescenceTest(String gameNotation, byte capturedPiece, float expectedMaterialWeight, float expectedWeightMin, float expectedWeightMax, int expectedMaximumReachedDepthMin) {

@@ -75,7 +75,7 @@ It returns the material change a move causes (captured-piece value, adjusted for
 
 ## 5.2 Piece-square tables
 
-[`PieceSquareTables`](src/main/java/org/michaelfl/mychess/PieceSquareTables.java) holds the per-piece per-square positional bonuses adapted from the [chessprogramming.org *Simplified Evaluation Function*](https://www.chessprogramming.org/Simplified_Evaluation_Function). For every piece type, a 64-value table assigns a bonus or penalty to each square. Examples:
+[`PieceSquareTables`](src/main/java/org/michaelfl/mychess/PieceSquareTables.java) holds the per-piece per-square positional bonuses adapted from the [chessprogramming.org *Simplified Evaluation Function*](https://www.chessprogramming.org/Simplified_Evaluation_Function), with one local modification (see footnote below). For every piece type, a 64-value table assigns a bonus or penalty to each square. Examples:
 
 **Pawn (white perspective, 8th rank at top):**
 
@@ -85,10 +85,12 @@ It returns the material change a move causes (captured-piece value, adjusted for
 10, 10, 20, 30, 30, 20, 10, 10,
  5,  5, 10, 25, 25, 10,  5,  5,
  0,  0,  0, 20, 20,  0,  0,  0,
- 5, -5,-10,  0,  0,-10, -5,  5,
- 5, 10, 10,-20,-20, 10, 10,  5,   ← 2nd rank: penalty for blocking c/d/e/f files
+ 5,  0,-10,  0,  0,-10,  0,  5,
+ 5,  0,  0,-20,-20, 10,  0,  5,   ← 2nd rank: −20 on d2/e2 forces central pawns forward; b2/c2/g2 zeroed (see below)
  0,  0,  0,  0,  0,  0,  0,  0
 ```
+
+Local deviation from Simplified: the original table rewards b2/c2/g2 with +10 (and b3/g3 with −5) — bonuses that discouraged queenside and fianchetto development. They were removed when the old hand-rolled `calculateOpeningState` heuristic in [`WeightingFunction`](../src/main/java/org/michaelfl/mychess/WeightingFunction.java) was retired (it had its own +10 cp pawn-move bonus for those same files, which conflicted with the PST). A future PeSTO migration ([roadmap § 12.7](roadmap.md#127-evaluation-upgrades--m--50100-elo-combined)) would replace the entire table set.
 
 **Knight (white):** −50 in corners (worst squares for a knight), +15 to +20 in the central 4×4 (best squares — d4/e4/d5/e5 score +20, the surrounding ring +15).
 
