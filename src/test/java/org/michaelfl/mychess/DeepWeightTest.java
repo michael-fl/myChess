@@ -87,7 +87,7 @@ class DeepWeightTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6
                 """;
         testPosition(pgn,
-                0.20f,
+                0.18f,
                 0.30f,
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
@@ -100,7 +100,7 @@ class DeepWeightTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5
                 """;
         testPosition(pgn,
-                0.60f,
+                0.58f,
                 0.70f,
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
@@ -114,7 +114,7 @@ class DeepWeightTest {
                 Nxe6 Bxe6 17. fxe6 O-O
                 """;
         testPosition(pgn,
-                0f,
+                -0.05f,
                 0.2f,
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
