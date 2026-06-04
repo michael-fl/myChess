@@ -62,7 +62,7 @@ In negamax form both bounds are passed as positive numbers from the side-to-move
 //  child receives                            = (-β, -bestSoFar)
 ```
 
-The window starts at the root as `(MIN_ALPHA, +∞)` (no upper cap on the root). Children start with `(-betaWeight, -ctx.alphaWeight)`.
+The window starts at the root as `(MIN_ALPHA, +∞)` (no upper cap on the root). Children start with `(-betaWeight, -alphaLocal)` where `alphaLocal = max(parent's α, bestResult.weight)` — i.e. the running α inside the move loop, never below the parent's α.
 
 **The beta cutoff** in `alphaBetaSearchI`:
 
@@ -73,7 +73,7 @@ if (weight >= ctx.betaWeight) {
     if (Move.getCapturedPiece(move) == 0) {
         killerMoves.addMove(move, depth);     // see § 7.2
     }
-    return SearchNodeResult.create(result.result, ctx.betaWeight);
+    return result;
 }
 ```
 
@@ -83,7 +83,7 @@ When a cutoff happens, three things are recorded:
 2. **PV update.** Even though we're cutting off, the PV table is updated so the calling code can still print *a* principal variation (though it may be truncated).
 3. **Killer move registration.** If the cutting move was a quiet move (no capture), it gets remembered in the per-depth `KillerMoves` table for ordering at sibling positions of the same depth (see [§ 7.2](#72-killer-moves)).
 
-The result returned on cutoff is `betaWeight` rather than the actual `weight`, which is the standard "fail-soft becomes fail-hard" choice — it slightly under-reports scores but plays better with iterative-deepening re-ordering.
+**Fail-soft.** The returned value on a beta cutoff is the actual `result.weight` that triggered it, not `ctx.betaWeight`. Fail-soft exposes *how far* above β the cutoff went — the same alpha-beta tree is explored as under fail-hard, but the unclamped value lets the caller (and a future [transposition table](roadmap.md#121-transposition-table--s--m--150300-elo)) record a tighter lower bound. Symmetrically, when no move improves on α the returned `bestResult.weight` may fall below α — fail-hard would have clamped it. The same principle applies in `QuiescenceSearch`: stand-pat cutoffs return the actual stand-pat value and capture cutoffs return the actual weight, both unclamped. See [roadmap § 12.13](roadmap.md#1213-switch-alpha-beta-from-fail-hard-to-fail-soft--s-no-direct-elo-enables-aspiration--tt-tightening) for the design rationale and how it unlocks aspiration windows and TT-bound sharpening.
 
 **Search-node context** is a `record`:
 
@@ -424,23 +424,12 @@ public static int checkmateWeightToPlies(int weightCenti) {
 **Stalemate score.** Stalemate is a draw, so the score is exactly 0:
 
 ```java
-public static SearchNodeResult stalemate(int depth, int alpha, int beta) {
-    return new SearchNodeResult(GameResult.STALEMATE, window(0, alpha, beta), false);
+public static SearchNodeResult stalemate() {
+    return new SearchNodeResult(GameResult.STALEMATE, 0, false);
 }
 ```
 
-`depth` is passed only so the result can be window-clamped consistently with the checkmate branch; it does not affect the value (a draw is a draw regardless of when it happens).
-
-**Window clamping.** The `window(weight, alpha, beta)` helper clamps the returned weight to the parent's `[alpha, beta]` window:
-
-```java
-private static int window(int weight, int alpha, int beta) {
-    if (weight <= alpha) return alpha;
-    return Math.min(weight, beta);
-}
-```
-
-This makes the search **fail-hard** at terminal nodes: the value never escapes the parent's bounds. It is the same idiom as returning `betaWeight` on a beta cutoff in the main loop (see [§ 6.1](#61-negamax--alpha-beta-foundation)) — sacrificing some scoring precision for a more stable α/β interaction with the iterative-deepening re-search.
+**Fail-soft at terminal nodes.** Terminal-node factories (`checkmateSelf`, `stalemate`, `draw`) return the true score without any α/β clamping. This is consistent with the [main-loop fail-soft behavior](#61-negamax--alpha-beta-foundation): the value is allowed to escape the parent's window, and the caller (or a future [transposition table](roadmap.md#121-transposition-table--s--m--150300-elo)) records a sharper bound. Conversion from a previous fail-hard `window(weight, α, β)` helper happened as part of [roadmap § 12.13](roadmap.md#1213-switch-alpha-beta-from-fail-hard-to-fail-soft--s-no-direct-elo-enables-aspiration--tt-tightening).
 
 **Where does the search realize the game is over at the *root*, not at an interior node?** Two places intercept this *before* the search ever runs:
 

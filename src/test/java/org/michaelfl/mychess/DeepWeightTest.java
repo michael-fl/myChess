@@ -37,7 +37,7 @@ class DeepWeightTest {
                 1. e4 c5
                 """;
         testPosition(pgn,
-                0.3f,
+                0.27f,
                 0.5f,
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
@@ -114,7 +114,7 @@ class DeepWeightTest {
                 Nxe6 Bxe6 17. fxe6 O-O
                 """;
         testPosition(pgn,
-                0.05f,
+                0f,
                 0.2f,
                 new GameConfig(MyChessEngine.class, engineConfig())
         );

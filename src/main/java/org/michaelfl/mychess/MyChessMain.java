@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
  */
 public final class MyChessMain {
 
-    private static final String VERSION = "3.2.2";
+    private static final String VERSION = "3.3.0";
 
     static void main(String[] args) {
         System.err.println("Starting MyChess v" + VERSION);

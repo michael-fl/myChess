@@ -250,15 +250,7 @@ class BlunderTest {
 
         var result = searchCurrentPosition(game);
 
-        // TODO move should be avoided
-        boolean avoided = false;
-        try {
-            assertEngineAvoids(result, Board.e7, Board.g7, "25...Rg7");
-            avoided = true;
-        } catch (AssertionFailedError _) {
-            // expected for now
-        }
-        assertFalse(avoided);
+        assertEngineAvoids(result, Board.e7, Board.g7, "25...Rg7");
     }
 
     /**

@@ -50,13 +50,27 @@ public final class QuiescenceSearch {
 
         int standPat = calculatePositionWeight(ctx.workingBoard(), ctx.weightFactor(), ctx.materialWeight(), ctx.materialDelta());
 
-        if (standPat >= ctx.betaWeight()) {
-            return ctx.betaWeight();
-        }
-        if (depth == ctx.maxDepth()) {
+        // Fail-soft stand-pat cutoff: return the actual stand-pat value, not
+        // the beta bound. Caller (and a future TT) get a tighter lower bound.
+        //
+        // Self-check probe: an illegal previous move can push materialDelta
+        // past EVALUATE_MATERIAL_ONLY_THRESHOLD so calculatePositionWeight
+        // returns the raw materialWeight (skipping the eval's
+        // containsIllegalMove sentinel). Without this probe we would hand
+        // the parent a legitimate-looking score for an illegal move. Limited
+        // to the two early-return paths below; the capture loop is already
+        // protected by moves.isIllegal() after calculateMoves.
+        if (standPat >= ctx.betaWeight() || depth == ctx.maxDepth()) {
+            if (ctx.workingBoard().canCaptureOpposingKing()) {
+                return WeightingFunction.ILLEGAL_WEIGHT_POS;
+            }
             return standPat;
         }
-        int bestWeight = Math.max(ctx.alphaWeight(), standPat);
+
+        // Fail-soft: bestWeight tracks the true best score (may be below
+        // ctx.alphaWeight). The alpha-beta cutoff threshold for children is
+        // computed as max(alpha, bestWeight) at the call site.
+        int bestWeight = standPat;
 
         final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard(), depth);
         if (moves.isIllegal()) {
@@ -79,14 +93,17 @@ public final class QuiescenceSearch {
                 final int newMaterialWeight = ctx.materialWeight() + moveWeight;
                 final int newMaterialDelta = ctx.materialDelta() + moveWeight;
 
+                final int alphaLocal = Math.max(ctx.alphaWeight(), bestWeight);
+
                 ctx.workingBoard().makeMove(move);
-                int weight = -quiescenceSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), null, -ctx.weightFactor(), -ctx.betaWeight(), -bestWeight, -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), null));
+                int weight = -quiescenceSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), null, -ctx.weightFactor(), -ctx.betaWeight(), -alphaLocal, -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), null));
                 ctx.workingBoard().revertMove();
 
                 // -ILLEGAL_WEIGHT is possible to be returned, but never +ILLEGAL_WEIGHT
                 if (weight > WeightingFunction.ILLEGAL_WEIGHT_NEG) {
+                    // Fail-soft beta cutoff: return actual weight.
                     if (weight >= ctx.betaWeight()) {
-                        return ctx.betaWeight(); // beta cutoff
+                        return weight;
                     }
                     if (weight > bestWeight) {
                         bestWeight = weight;
