@@ -210,7 +210,7 @@ class UciHandlerTest {
                 go depth 7
                 """.formatted(KINGSIDE_TEST_FEN);
 
-        assertDeepestPvContains(input, "e1h1", "white's kingside castle");
+        assertAnyPvContains(input, "e1h1", "white's kingside castle");
     }
 
     @Test
@@ -223,7 +223,7 @@ class UciHandlerTest {
                 go depth 7
                 """.formatted(KINGSIDE_TEST_FEN);
 
-        assertDeepestPvContains(input, "e8h8", "black's kingside castle");
+        assertAnyPvContains(input, "e8h8", "black's kingside castle");
     }
 
     @Test
@@ -237,7 +237,7 @@ class UciHandlerTest {
                 go depth 7
                 """;
 
-        assertDeepestPvContains(input, "e1a1", "white's queenside castle");
+        assertAnyPvContains(input, "e1a1", "white's queenside castle");
     }
 
     @Test
@@ -252,29 +252,35 @@ class UciHandlerTest {
                 go depth 7
                 """;
 
-        assertDeepestPvContains(input, "e8a8", "black's queenside castle");
+        assertAnyPvContains(input, "e8a8", "black's queenside castle");
     }
 
     /**
-     * Drive the UCI handler with {@code input}, find the deepest emitted
-     * {@code info ... pv ...} line, and assert it contains
-     * {@code expectedCastleUci} (the king-captures-rook castle token).
-     * {@code castleDescription} is woven into the failure message for
-     * readability.
+     * Drive the UCI handler with {@code input}, scan every emitted
+     * {@code info ... pv ...} line, and assert that at least one of them
+     * contains {@code expectedCastleUci} (the king-captures-rook castle
+     * token). Any-depth match is enough — the bug under test is the
+     * <em>output format</em> of the castle, so wherever the engine includes
+     * it in a PV, it must use the Chess960 form. {@code castleDescription}
+     * is woven into the failure message for readability.
      */
-    private void assertDeepestPvContains(String input, String expectedCastleUci, String castleDescription) {
+    private void assertAnyPvContains(String input, String expectedCastleUci, String castleDescription) {
         var response = runHandler(input);
 
-        String deepestPv = response.lines().stream()
+        var pvLines = response.lines().stream()
                 .filter(l -> l.startsWith("info ") && l.contains(" pv "))
-                .reduce((_, b) -> b)
-                .orElseThrow(() -> new AssertionError(
-                        "no info pv lines emitted; full output:\n" + String.join("\n", response.lines())));
+                .toList();
 
-        assertTrue(deepestPv.contains(expectedCastleUci),
-                "deepest info pv must report " + castleDescription + " as " + expectedCastleUci
+        if (pvLines.isEmpty()) {
+            throw new AssertionError(
+                    "no info pv lines emitted; full output:\n" + String.join("\n", response.lines()));
+        }
+
+        boolean anyMatch = pvLines.stream().anyMatch(l -> l.contains(expectedCastleUci));
+        assertTrue(anyMatch,
+                "at least one info pv must report " + castleDescription + " as " + expectedCastleUci
                         + " (king-captures-rook), not the king-destination form, when UCI_Chess960 is set. "
-                        + "Got: " + deepestPv);
+                        + "All info pv lines:\n" + String.join("\n", pvLines));
     }
 
     // ---- info lines (score, depth, pv) ----

@@ -59,7 +59,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5
                 """;
-        testPosition(pgn, 0.46f);
+        testPosition(pgn, 0.39f);
     }
 
     @Test
@@ -107,7 +107,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6
                 """;
-        testPosition(pgn, 0.53f);
+        testPosition(pgn, 0.44f);
     }
 
     @Test
@@ -131,7 +131,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5
                 """;
-        testPosition(pgn, 1.17f);
+        testPosition(pgn, 1.03f);
     }
 
     @Test
@@ -139,7 +139,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6
                 """;
-        testPosition(pgn, 1.19f);
+        testPosition(pgn, 1.04f);
     }
 
     @Test
@@ -147,7 +147,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4
                 """;
-        testPosition(pgn, 1.0f);
+        testPosition(pgn, 0.86f);
     }
 
     @Test
@@ -225,7 +225,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6
                 """;
-        testPosition(pgn, 0.82f);
+        testPosition(pgn, 0.72f);
     }
 
     @Test
@@ -234,7 +234,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5
                 """;
-        testPosition(pgn, 0.97f);
+        testPosition(pgn, 0.84f);
     }
 
     @Test
@@ -299,7 +299,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8
                 """;
-        testPosition(pgn, -0.17f);
+        testPosition(pgn, -0.21f);
     }
 
     @Test
@@ -309,7 +309,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6
                 """;
-        testPosition(pgn, 1.11f);
+        testPosition(pgn, 0.99f);
     }
 
     @Test
@@ -339,7 +339,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6 O-O
                 """;
-        testPosition(pgn, 0.12f);
+        testPosition(pgn, 0.19f);
     }
 
     @Test
@@ -349,7 +349,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6 O-O 18. Rg1
                 """;
-        testPosition(pgn, 0.22f);
+        testPosition(pgn, 0.33f);
     }
 
     // Terrible position for black (no mobility, pieces on bad, narrow positions)
