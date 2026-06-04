@@ -4,8 +4,10 @@ import org.michaelfl.mychess.openingdb.OpeningDB;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Properties;
 
 /**
  * Entry point: opens the {@link OpeningDB} and dispatches to either the
@@ -16,7 +18,26 @@ import java.nio.charset.StandardCharsets;
  */
 public final class MyChessMain {
 
-    private static final String VERSION = "3.3.0";
+    /**
+     * Build-time version, populated from {@code <version>} in {@code pom.xml}
+     * via Maven resource filtering of {@code version.properties}. The
+     * {@code "dev"} fallback only ever fires if the resource is missing — for
+     * example when running classes outside a Maven build (rare).
+     */
+    private static final String VERSION = loadVersion();
+
+    private static String loadVersion() {
+        try (var in = MyChessMain.class.getResourceAsStream("/version.properties")) {
+            if (in == null) {
+                return "dev";
+            }
+            var props = new Properties();
+            props.load(in);
+            return props.getProperty("version", "dev");
+        } catch (IOException e) {
+            return "dev";
+        }
+    }
 
     static void main(String[] args) {
         System.err.println("Starting MyChess v" + VERSION);

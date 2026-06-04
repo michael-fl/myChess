@@ -31,6 +31,16 @@
       <version>3.0.8</version>
     </dependency>  </dependencies>
   <build>
+    <resources>
+      <!-- Filter src/main/resources so version.properties picks up
+           ${project.version} from this pom at build time. Other resources
+           (e.g. chess960_fens.csv) contain no placeholders, so filtering
+           passes them through unchanged. -->
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
