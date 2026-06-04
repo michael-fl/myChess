@@ -56,17 +56,17 @@ public final class WeightingFunction {
 
     private static final int[] mobilityWeightOfPiece = new int[Board.blackKing + 1];
     static {
-        mobilityWeightOfPiece[Board.whitePawn]   = 20;
-        mobilityWeightOfPiece[Board.whiteKnight] = 50;
+        mobilityWeightOfPiece[Board.whitePawn]   = 5;
+        mobilityWeightOfPiece[Board.whiteKnight] = 40;
         mobilityWeightOfPiece[Board.whiteBishop] = 30;
-        mobilityWeightOfPiece[Board.whiteRook]   = 10;
-        mobilityWeightOfPiece[Board.whiteQueen]  = 5;
+        mobilityWeightOfPiece[Board.whiteRook]   = 20;
+        mobilityWeightOfPiece[Board.whiteQueen]  = 3;
         mobilityWeightOfPiece[Board.whiteKing]   = 0;
-        mobilityWeightOfPiece[Board.blackPawn]   = 20;
-        mobilityWeightOfPiece[Board.blackKnight] = 50;
+        mobilityWeightOfPiece[Board.blackPawn]   = 5;
+        mobilityWeightOfPiece[Board.blackKnight] = 40;
         mobilityWeightOfPiece[Board.blackBishop] = 30;
-        mobilityWeightOfPiece[Board.blackRook]   = 10;
-        mobilityWeightOfPiece[Board.blackQueen]  = 5;
+        mobilityWeightOfPiece[Board.blackRook]   = 20;
+        mobilityWeightOfPiece[Board.blackQueen]  = 3;
         mobilityWeightOfPiece[Board.blackKing]   = 0;
     }
 
@@ -388,15 +388,16 @@ public final class WeightingFunction {
 
     private void calculateForRook(int field, int color) {
         final byte myPiece = board[field];
+        final int rankWeight = mobilityWeightOfPiece[myPiece] / 2;
 
-        // move up
+        // move up — file mobility (full weight)
         for (int to = field + Board.LENGTH; move(myPiece, field, to, color); to += Board.LENGTH);
-        // move down
+        // move down — file mobility (full weight)
         for (int to = field - Board.LENGTH; move(myPiece, field, to, color); to -= Board.LENGTH);
-        // move left
-        for (int to = field - 1; move(myPiece, field, to, color); to--);
-        // move right
-        for (int to = field + 1; move(myPiece, field, to, color); to++);
+        // move left — rank mobility (half weight)
+        for (int to = field - 1; move(myPiece, field, to, color, rankWeight); to--);
+        // move right — rank mobility (half weight)
+        for (int to = field + 1; move(myPiece, field, to, color, rankWeight); to++);
     }
 
     private static void _calculateForQueen(WeightingFunction generator, int field, int color) {
@@ -449,8 +450,12 @@ public final class WeightingFunction {
         move(myPiece, field, field + Board.LENGTH - 1, color);
     }
 
-    @SuppressWarnings({"unused", "java:S1117"})
     private boolean move(final byte movingPiece, final int from, final int to, int color) {
+        return move(movingPiece, from, to, color, mobilityWeightOfPiece[movingPiece]);
+    }
+
+    @SuppressWarnings({"unused", "java:S1117"})
+    private boolean move(final byte movingPiece, final int from, final int to, final int color, final int weight) {
         final byte piece = board[to];
         final int oppositeColor = WeightingFunction.oppositeColor[color];
 
@@ -458,10 +463,10 @@ public final class WeightingFunction {
             return false;
 
         if (piece == Board.empty) {
-            mobilityWeight[color] += mobilityWeightOfPiece[movingPiece];
+            mobilityWeight[color] += weight;
             return true;
         } else if ((piece & oppositeColor) == oppositeColor) {
-            capture(movingPiece, color, piece);
+            capture(color, piece, weight);
             return false;
         } else { // own color
             return false;
@@ -469,6 +474,10 @@ public final class WeightingFunction {
     }
 
     private void capture(final byte movingPiece, final int color, final byte piece) {
+        capture(color, piece, mobilityWeightOfPiece[movingPiece]);
+    }
+
+    private void capture(final int color, final byte piece, final int weight) {
         if (piece == oppositeKing[color]) {
             if (turn == color) {
                 containsIllegalMove = true;
@@ -478,7 +487,7 @@ public final class WeightingFunction {
             }
         }
 
-        mobilityWeight[color] += mobilityWeightOfPiece[movingPiece];
+        mobilityWeight[color] += weight;
         threadWeight[color] += weightOfPiece[piece];
     }
 
