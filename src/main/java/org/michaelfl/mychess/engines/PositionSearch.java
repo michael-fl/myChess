@@ -257,48 +257,37 @@ public final class PositionSearch {
         public static final SearchNodeResult TIMEOUT = new SearchNodeResult(GameResult.ONGOING, 0, true);
         public static final SearchNodeResult INVALID = new SearchNodeResult(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT_NEG, false);
 
+        /**
+         * Initial "no result yet" placeholder used as the starting value of
+         * {@code bestResult} in {@code alphaBetaSearchI}. Any real return
+         * value (in {@code (ILLEGAL_WEIGHT_NEG, ILLEGAL_WEIGHT_POS]}) is
+         * strictly greater, so the first valid move always replaces it.
+         */
+        public static final SearchNodeResult INITIAL = new SearchNodeResult(GameResult.ONGOING, WeightingFunction.MIN_ALPHA, false);
+
         public static SearchNodeResult create(GameResult result, int weight) {
             return new SearchNodeResult(result, weight, false);
         }
 
-        public static SearchNodeResult create(GameResult result, int weight, int alpha, int beta) {
-            return new SearchNodeResult(result, window(weight, alpha, beta), false);
-        }
-
-        public static SearchNodeResult draw(int alpha, int beta) {
-            return new SearchNodeResult(GameResult.DRAW, window(0, alpha, beta), false);
+        public static SearchNodeResult draw() {
+            return new SearchNodeResult(GameResult.DRAW, 0, false);
         }
 
         /**
          * Sentinel result for "previous move left own king capturable". The
-         * ILLEGAL_WEIGHT_POS weight survives any [alpha, beta] clamping at
-         * the parent (see {@link #window}); no alpha/beta is needed here.
+         * {@code ILLEGAL_WEIGHT_POS} weight is preserved unchanged through
+         * the rest of the search — fail-soft does not clamp it.
          */
         public static SearchNodeResult illegal() {
             return new SearchNodeResult(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT_POS, false);
         }
 
-        private static int window(int weight, int alpha, int beta) {
-            // ILLEGAL_WEIGHT_POS is a sentinel signaling "previous move was a
-            // self-check"; it must survive [alpha, beta] clamping or the
-            // search loses the ability to reject the offending move. The
-            // negative counterpart never appears as a positive return value
-            // here, but we treat it symmetrically for consistency.
-            if (WeightingFunction.isIllegalWeight(weight)) {
-                return weight;
-            }
-            if (weight <= alpha) {
-                return alpha;
-            }
-            return Math.min(weight, beta);
+        public static SearchNodeResult checkmateSelf(int depth) {
+            return new SearchNodeResult(GameResult.CHECKMATE, -WeightingFunction.checkmateInCenti(depth), false);
         }
 
-        public static SearchNodeResult checkmateSelf(int depth, int alpha, int beta) {
-            return new SearchNodeResult(GameResult.CHECKMATE, window(-WeightingFunction.checkmateInCenti(depth), alpha, beta), false);
-        }
-
-        public static SearchNodeResult stalemate(int alpha, int beta) {
-            return new SearchNodeResult(GameResult.STALEMATE, window(0, alpha, beta), false);
+        public static SearchNodeResult stalemate() {
+            return new SearchNodeResult(GameResult.STALEMATE, 0, false);
         }
 
         public SearchNodeResult negate() {
@@ -539,7 +528,10 @@ public final class PositionSearch {
         statistics.incrPositionCount();
         final var pvTable = ctx.pvTable;
         final int pvIndex = ctx.pvIndex();
-        SearchNodeResult bestResult = SearchNodeResult.create(GameResult.ONGOING, ctx.alphaWeight);
+        // Fail-soft: bestResult starts below any legal weight; the first valid
+        // move always replaces it, so the eventual return value is the true
+        // best score even when it falls below ctx.alphaWeight.
+        SearchNodeResult bestResult = SearchNodeResult.INITIAL;
 
         __assert(() -> !(WeightingFunction.isIllegalWeight(ctx.alphaWeight()) || WeightingFunction.isIllegalWeight(ctx.betaWeight())),
                 () -> "ILLEGAL_WEIGHT as alpha/beta; depth=" + depth + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
@@ -550,7 +542,7 @@ public final class PositionSearch {
                 // ILLEGAL
                 return SearchNodeResult.illegal();
             }
-            return SearchNodeResult.draw(ctx.alphaWeight(), ctx.betaWeight());
+            return SearchNodeResult.draw();
         }
 
         // Leaf: a cheap "can my side capture the opposing king?" probe is
@@ -564,7 +556,7 @@ public final class PositionSearch {
                 return SearchNodeResult.illegal();
             }
             ctx.truncateParentPv();
-            return SearchNodeResult.create(GameResult.ONGOING, quiescenceSearch(ctx), ctx.alphaWeight(), ctx.betaWeight());
+            return SearchNodeResult.create(GameResult.ONGOING, quiescenceSearch(ctx));
         }
 
         // Non-leaf: full move generation is needed for the iteration; check
@@ -596,9 +588,14 @@ public final class PositionSearch {
             final int newMaterialWeight = ctx.materialWeight + moveWeight;
             final int newMaterialDelta = ctx.materialDelta + moveWeight;
 
+            // alpha-beta cutoff threshold for the child: never below the
+            // parent's alpha (fail-soft may pull bestResult.weight below it
+            // when the first move fails low).
+            final int alphaLocal = Math.max(ctx.alphaWeight, bestResult.weight);
+
             pvTable[pvIndex] = move;
             ctx.workingBoard.makeMove(move);
-            var result = alphaBetaSearch(new SearchNodeContext(depth + 1, ctx.maxDepth, bestKnownPath, -ctx.weightFactor, -ctx.betaWeight, -bestResult.weight, -newMaterialWeight, -newMaterialDelta, ctx.workingBoard, pvTable)).negate();
+            var result = alphaBetaSearch(new SearchNodeContext(depth + 1, ctx.maxDepth, bestKnownPath, -ctx.weightFactor, -ctx.betaWeight, -alphaLocal, -newMaterialWeight, -newMaterialDelta, ctx.workingBoard, pvTable)).negate();
             ctx.workingBoard.revertMove();
             if (result.isTimeout()) {
                 return SearchNodeResult.TIMEOUT;
@@ -610,14 +607,17 @@ public final class PositionSearch {
             if (weight > WeightingFunction.ILLEGAL_WEIGHT_NEG) {
                 haveValidMoves = true;
 
-                // Alpha-Beta search pruning
+                // Alpha-Beta search pruning — fail-soft: return the actual
+                // weight that triggered the cutoff, not the beta bound. The
+                // unclamped value lets the caller (and a future TT) record a
+                // tighter lower bound on this position's true score.
                 if (weight >= ctx.betaWeight) {
                     statistics.incrPrunedMovesCount(countMoves - i - 1);
                     ctx.copyUpPV();
                     if (Move.getCapturedPiece(move) == 0) {
                         killerMoves.addMove(move, depth);
                     }
-                    return SearchNodeResult.create(result.result, ctx.betaWeight);
+                    return result;
                 }
 
                 if (weight > bestResult.weight) {
@@ -632,18 +632,15 @@ public final class PositionSearch {
 
     private SearchNodeResult checkmateOrStalemate(SearchNodeContext ctx) {
         // Reached when the move loop found no legal moves at this depth.
-        // All three return paths produce a parent-acceptable weight without
-        // any further PV moves to propagate, so the parent's row d..end
-        // must be cleared to truncate the PV here.
+        // Fail-soft: return the true checkmate/stalemate score regardless of
+        // the alpha-beta window — the caller (and a future TT) gets a sharp
+        // bound instead of a window-clamped one. The PV is truncated because
+        // there is no continuation.
         ctx.truncateParentPv();
 
-        var alpha = ctx.alphaWeight();
-        if (alpha >= 0f) {
-            return SearchNodeResult.create(GameResult.ONGOING, alpha);
-        }
         return ctx.workingBoard.isKingChecked() ?
-                SearchNodeResult.checkmateSelf(ctx.depth(), alpha, ctx.betaWeight()) :
-                SearchNodeResult.stalemate(alpha, ctx.betaWeight());
+                SearchNodeResult.checkmateSelf(ctx.depth()) :
+                SearchNodeResult.stalemate();
     }
 
     private int quiescenceSearch(SearchNodeContext ctx) {

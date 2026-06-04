@@ -37,6 +37,40 @@ class QuiescenceSearchTest {
         quiescenceTest(gameNotation, Board.blackPawn, 1.0f, -0.65f, -0.5f, 1);
     }
 
+    /**
+     * Fail-soft regression: a beta-cutoff must return the actual position
+     * score, not the beta bound. Fail-hard would clamp the return to beta;
+     * fail-soft returns the unclamped value so a future TT can store a
+     * tighter lower bound (see roadmap § 12.13).
+     */
+    @Test
+    void quiescenceFailSoft_betaCutoffReturnsUnclampedWeight() {
+        // After 1.Nf3 e5 2.Nxe5, white is a pawn up and no black piece attacks
+        // e5 — quiescence has no captures to follow, so stand-pat decides.
+        var gameNotation = "1.Nf3 e5 2.Nxe5";
+        var importer = GameImporter.importerFor(gameNotation);
+        var game = importer.importGame();
+        var moveGenerator = new MoveGenerator(new MoveSorterImpl());
+        var statistics = new Statistics();
+        var weightingFunction = new WeightingFunction();
+        var qsearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics, game.getEngine().getConfig().getMaxQuiescenceDepth());
+
+        var workingBoard = game.getBoard().copy();
+        int weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
+        int materialCenti = weightFactor * WeightingFunction.calculateMaterialWeight(workingBoard);
+        int capturedOnField = Move.getToField(game.getGameStatus().getLastMove());
+
+        int wide = qsearch.quiescenceSearch(workingBoard, capturedOnField, 0, weightFactor,
+                WeightingFunction.MIN_ALPHA, WeightingFunction.MAX_BETA, materialCenti, 0);
+
+        int tightBeta = wide - 100;
+        int tight = qsearch.quiescenceSearch(workingBoard, capturedOnField, 0, weightFactor,
+                WeightingFunction.MIN_ALPHA, tightBeta, materialCenti, 0);
+
+        assertEquals(wide, tight, "fail-soft must return the true stand-pat weight even when beta-cutoff fires; got " + tight + " with beta=" + tightBeta + ", true=" + wide);
+        assertTrue(tight > tightBeta, "returned weight must exceed the tight beta bound (fail-hard would clamp to " + tightBeta + ")");
+    }
+
     void quiescenceTest(String gameNotation, byte capturedPiece, float expectedMaterialWeight, float expectedWeightMin, float expectedWeightMax, int expectedMaximumReachedDepthMin) {
         var importer = GameImporter.importerFor(gameNotation);
         var game = importer.importGame();
