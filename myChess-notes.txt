@@ -456,7 +456,9 @@ Ja, mehrere — aber mit einem wichtigen Vorbehalt: praktisch alle moderneren Re
   
 --
 
-- Bauen, nach versions/3.2.1-pst-a2/ deployen.
-  - Cutechess gegen versions/3.2.1/ mit gleichen Flags wie der vorherige Test (engl. nur Pfade und PGN-Name anpassen). Beim SPRT würde ich elo0=-5 elo1=10 vorschlagen — Ziel ist "mindestens kein Verlust, gerne
-  kleiner Gewinn".
-
+* mobilityFactor = 0.1f --> 0.2f --> schlecht
+* mobilityFactor = 0.1f --> 0.15f --> neutral
+* threadWeightFactor = 0.02f --> 0.17f
+chessFactor --> testweise raus
+doublePawnFactor --> stattdessen bessere Bewertung der Bauernstruktur (mehrere Bauern auf derselben Linie, Singulaner)
+EVALUATE_MATERIAL_ONLY_THRESHOLD --> testweise ausschalten
