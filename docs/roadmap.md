@@ -287,6 +287,46 @@ The alpha-beta search tree is identical to fail-hard (same cutoff conditions, sa
 
 Regression test: [`QuiescenceSearchTest.quiescenceFailSoft_betaCutoffReturnsUnclampedWeight`](../src/test/java/org/michaelfl/mychess/QuiescenceSearchTest.java) constructs a stand-pat position, runs quiescence with both wide and tight β, and asserts the tight call returns the unclamped stand-pat (a fail-hard implementation would clamp to β).
 
+## 12.14 Color asymmetry: investigate the W>B bias linked to mobility — **S–M, ≈ 30–50 Elo (estimated)**
+
+Across five cutechess matches during the spring 2026 mobility-tuning sessions (positionFactor x2, mobilityFactor x2, mobility-rebalance, no-mobility, mobility-factor=0.15) a striking pattern emerged: in every match where the engine had any form of mobility weighting enabled, **myChess scored noticeably better as white than as black** — typically 40–65 Elo difference between colors. The single experiment where the asymmetry disappeared was the no-mobility ablation; with mobility re-enabled (at any factor in [0.1, 0.2]) the W>B gap returned, including in the strongest form (~65 Elo) at factor 0.15.
+
+This is unusual. The engine's static eval is supposed to be color-antisymmetric (`eval(p) == -eval(mirror(p))`), and [`MirrorEvalTest`](../src/test/java/org/michaelfl/mychess/MirrorEvalTest.java) enforces that invariant. If self-play matches reproduce the same pattern, it implies a side-to-move-dependent bias somewhere in the eval or search machinery that the existing mirror test doesn't catch — and if that bias is fixed, white and black should play equally well, recovering the typical ~25 Elo of pure first-move advantage but not 60+. That's the size of the gap on the table.
+
+### Why this is worth pursuing
+
+- **Real Elo.** 30–50 Elo is in the same league as null-move pruning or LMR.
+- **Cheap to investigate.** The first three steps below are pure measurement and code reading; no risky changes until the cause is understood.
+- **Possibly a correctness bug, not a tuning issue.** If a mobility-counting path treats the side to move differently from the other side, that's a defect — not a parameter to twiddle.
+
+### Investigation plan
+
+**Step 1 — confirm via self-play (½ day, no code change):**
+Run a cutechess self-play match `myChess-3.4.0` vs `myChess-3.4.0` (literally the same binary on both sides), 800 games on the same balanced opening set used previously. The cross-version matches between two *different* engine builds could leak color preference through opening-book asymmetries or the relative-strength gap. A same-binary match isolates the engine itself. Expected outcome under a hidden bias: white scores noticeably > 50%, black noticeably < 50%, total well above the 52–53% white-first-move baseline.
+
+**Step 2 — bisect with no-mobility build (½ day):**
+Repeat step 1 using the no-mobility build (the [`version-3.4`](https://example/branch) branch's `d324ecd` revert as the binary). If the asymmetry disappears in this self-play but persists in step 1, the mobility code is the proximate cause. If the asymmetry persists in both, it's elsewhere (PSTs, castling, threat weight, …) and the no-mobility correlation was coincidence over five matches.
+
+**Step 3 — code audit on `WeightingFunction` for side-of-move dependencies (1 day):**
+
+Likely places where a side-to-move asymmetry could leak into a "should-be-symmetric" mobility count:
+
+- [`calculateForWhitePawn` vs `calculateForBlackPawn`](../src/main/java/org/michaelfl/mychess/WeightingFunction.java) — pawn move generators are written separately per color. Subtle off-by-one in en-passant or double-step handling could give white more "available moves" than black on otherwise mirror positions. Add a focused test: build a position, mirror it via the existing `MirrorEvalTest` helper, compare *per-component* (mobility, threats, chess count, etc.), not just the final weight.
+- [`capture()` handling of `oppositeKing`](../src/main/java/org/michaelfl/mychess/WeightingFunction.java) — `containsIllegalMove` is set when `turn == color`. If the threshold for "side to move can capture opposing king" fires asymmetrically (e.g., in pinned positions, en-passant pins), white might get an extra threat credit black doesn't.
+- The **6th-rank vs 3rd-rank pawn check** in `calculateForWhitePawn` / `calculateForBlackPawn` (en-passant detection) — uses `lastMove`. If the en-passant trigger condition is slightly different for the two colors (a different rank check), one side gets a phantom capture credit.
+
+**Step 4 — fix and verify (½–1 day):**
+Once a candidate source is identified, write a unit test that captures the asymmetric output for a specific mirrored position pair. Fix the code. Re-run step 1's self-play. The W/B gap should drop to ~25 Elo (pure first-move advantage) instead of 60+.
+
+### What this is *not*
+
+- Not a tuning step (no factor is being adjusted).
+- Not a refactor for its own sake — only act once step 1 confirms the asymmetry reproduces in same-binary self-play. If step 1 shows ~50/50, the previously observed W>B pattern was an artifact of comparing different engine versions (opening book, draw adjudication, …) and the whole investigation is dropped.
+
+### Why this slot in the roadmap
+
+This entry is independent of the search-optimization chain (§§ 12.1–12.8) and the eval upgrades (§ 12.7). The investigation can run in parallel with any of them. Recommended trigger: after the in-process measurement harness (§ 12.10) is in place — a node-count bench for the eval delta and a 100-position EPD pair makes the bisection in step 3 much cheaper than full cutechess matches.
+
 ---
 
 ## Suggested implementation order
