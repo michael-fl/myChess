@@ -96,7 +96,7 @@ public final class WeightingFunction {
 
     private static final float mobilityFactor = 0.1f;
     private static final float positionFactor = 0.5f;
-    private static final float threadWeightFactor = 0.02f;
+    private static final float threadWeightFactor = 0.05f;
     private static final float chessFactor = 0.25f;
     private static final float castlingFactor = 0.25f;
     private static final float doublePawnFactor = -0.1f;
