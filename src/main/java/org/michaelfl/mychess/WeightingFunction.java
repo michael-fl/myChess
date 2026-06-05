@@ -99,7 +99,7 @@ public final class WeightingFunction {
     private static final float threadWeightFactor = 0.02f;
     private static final float chessFactor = 0.25f;
     private static final float castlingFactor = 0.25f;
-    private static final float doublePawnFactor = -0.1f;
+    private static final float pawnStructureFactor = 0.5f;
 
     private GameStatus game;
     private int turn; // 0 = white, 1 = black
@@ -113,7 +113,8 @@ public final class WeightingFunction {
     private final int[] threadWeight = new int[2];
     private boolean containsIllegalMove;
     private final int[] castlingState = new int[2];
-    private final int[] doublePawnCount = new int[2];
+    private final int[] pawnCount = new int[2];
+    private final int[] pawnStructureCount = new int[2];
 
     /** Material weight (delta white - black) in centi pawns. */
     public static int calculateMaterialWeight(Board theBoard) {
@@ -170,8 +171,10 @@ public final class WeightingFunction {
         this.containsIllegalMove = false;
         this.castlingState[0] = 0;
         this.castlingState[1] = 0;
-        this.doublePawnCount[0] = 0;
-        this.doublePawnCount[1] = 0;
+        this.pawnCount[0] = 0;
+        this.pawnCount[1] = 0;
+        this.pawnStructureCount[0] = 0;
+        this.pawnStructureCount[1] = 0;
 
         final int stopField = Board.h8 + 1;
         final boolean isEndGame = game.isEndGame();
@@ -199,14 +202,31 @@ public final class WeightingFunction {
         if (containsIllegalMove)
             return turn == 0 ? ILLEGAL_WEIGHT_POS : ILLEGAL_WEIGHT_NEG;
 
-        return roundSymmetric((
-                  (piecesWeight[0] - piecesWeight[1]) / 100f
+        float weight = (piecesWeight[0] - piecesWeight[1]) / 100f
                 + (positionWeight[0] - positionWeight[1]) / 100f * positionFactor
                 + (mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor
                 + (threadWeight[0] - threadWeight[1]) / 100f * threadWeightFactor
                 + (castlingState[0] - castlingState[1]) * castlingFactor
-                + (chessCount[0] - chessCount[1]) * chessFactor
-                + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) * 100);
+                + (chessCount[0] - chessCount[1]) * chessFactor;
+
+        // Calculate weight of pawn structure
+        float whitePawnStructureWeight = getPawnStructureWeight(0);
+        float blackPawnStructureWeight = getPawnStructureWeight(1);
+
+        weight = weight + (whitePawnStructureWeight - blackPawnStructureWeight) * pawnStructureFactor;
+
+        return roundSymmetric(weight * 100.0f);
+    }
+
+    private float getPawnStructureWeight(int color) {
+        final int count = pawnCount[color];
+        float pawnStructureWeight = 0;
+
+        if (count > 1) {
+            final int maxStructureCount = 2 * (count - 1);
+            pawnStructureWeight = ((float) pawnStructureCount[color]) / maxStructureCount;
+        }
+        return pawnStructureWeight;
     }
 
     /**
@@ -228,13 +248,13 @@ public final class WeightingFunction {
 
     @Override
     public String toString() {
-        return "piecesWeight:       w=" + piecesWeight[0] + ", b=" + piecesWeight[1] + DELTA_STR + (piecesWeight[0] - piecesWeight[1]) + WEIGHT_STR + round((piecesWeight[0] - piecesWeight[1]) / 100f) + '\n' +
-               "positionWeight:     w=" + positionWeight[0] + ", b=" + positionWeight[1] + DELTA_STR + (positionWeight[0] - positionWeight[1]) + WEIGHT_STR + round((positionWeight[0] - positionWeight[1]) / 100f * positionFactor) + '\n' +
-               "mobilityWeight:     w=" + mobilityWeight[0] + ", b=" + mobilityWeight[1] + DELTA_STR + (mobilityWeight[0] - mobilityWeight[1]) + WEIGHT_STR + round((mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor) + '\n' +
-               "threadWeight:       w=" + threadWeight[0] + ", b=" + threadWeight[1] + DELTA_STR + (threadWeight[0] - threadWeight[1]) + WEIGHT_STR + round((threadWeight[0] - threadWeight[1])  / 100f * threadWeightFactor) + '\n' +
-               "castlingState:      w=" + castlingState[0] + ", b=" + castlingState[1] + DELTA_STR + (castlingState[0] - castlingState[1]) + WEIGHT_STR + round((castlingState[0] - castlingState[1]) * castlingFactor) + '\n' +
-               "doublePawnCount:    w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + DELTA_STR + (doublePawnCount[0] - doublePawnCount[1]) + WEIGHT_STR + round((doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) + '\n' +
-               "chessCount:         w=" + chessCount[0] + ", b=" + chessCount[1] + DELTA_STR + (chessCount[0] - chessCount[1]) + WEIGHT_STR + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
+        return "piecesWeight:        w=" + piecesWeight[0] + ", b=" + piecesWeight[1] + DELTA_STR + (piecesWeight[0] - piecesWeight[1]) + WEIGHT_STR + round((piecesWeight[0] - piecesWeight[1]) / 100f) + '\n' +
+               "positionWeight:      w=" + positionWeight[0] + ", b=" + positionWeight[1] + DELTA_STR + (positionWeight[0] - positionWeight[1]) + WEIGHT_STR + round((positionWeight[0] - positionWeight[1]) / 100f * positionFactor) + '\n' +
+               "mobilityWeight:      w=" + mobilityWeight[0] + ", b=" + mobilityWeight[1] + DELTA_STR + (mobilityWeight[0] - mobilityWeight[1]) + WEIGHT_STR + round((mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor) + '\n' +
+               "threadWeight:        w=" + threadWeight[0] + ", b=" + threadWeight[1] + DELTA_STR + (threadWeight[0] - threadWeight[1]) + WEIGHT_STR + round((threadWeight[0] - threadWeight[1])  / 100f * threadWeightFactor) + '\n' +
+               "castlingState:       w=" + castlingState[0] + ", b=" + castlingState[1] + DELTA_STR + (castlingState[0] - castlingState[1]) + WEIGHT_STR + round((castlingState[0] - castlingState[1]) * castlingFactor) + '\n' +
+               "pawnStructureFactor: w=" + pawnStructureCount[0] + ", b=" + pawnStructureCount[1] + DELTA_STR + (pawnStructureCount[0] - pawnStructureCount[1]) + WEIGHT_STR + round((pawnStructureCount[0] - pawnStructureCount[1]) * pawnStructureFactor) + '\n' +
+               "chessCount:          w=" + chessCount[0] + ", b=" + chessCount[1] + DELTA_STR + (chessCount[0] - chessCount[1]) + WEIGHT_STR + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
                "weight: " + calculatePositionWeight() / 100f;
     }
 
@@ -252,8 +272,6 @@ public final class WeightingFunction {
         int to = field + Board.LENGTH;
         if (board[to] == Board.empty) {
             mobilityWeight[color] += mobilityWeightOfPiece[Board.whitePawn];
-        } else if (board[to] == Board.whitePawn) {
-            doublePawnCount[color]++; // double pawn
         }
 
         // double step
@@ -291,6 +309,35 @@ public final class WeightingFunction {
                 }
             }
         }
+
+        // Pawn structure analysis
+
+        pawnCount[color]++;
+
+        // Has a left pawn neighbor (max distance 2 ranks)?
+        if (board[field - 2 * Board.LENGTH - 1] == Board.whitePawn
+                || board[field - Board.LENGTH - 1] == Board.whitePawn
+                || board[field - 1] == Board.whitePawn
+                || board[field + Board.LENGTH - 1] == Board.whitePawn
+                || board[field + 2 * Board.LENGTH - 1] == Board.whitePawn) {
+            pawnStructureCount[color]++;
+        }
+        // Has a right pawn neighbor (max distance 2 ranks)?
+        if (board[field - 2 * Board.LENGTH + 1] == Board.whitePawn
+                || board[field - Board.LENGTH + 1] == Board.whitePawn
+                || board[field + 1] == Board.whitePawn
+                || board[field + Board.LENGTH + 1] == Board.whitePawn
+                || board[field + 2 * Board.LENGTH + 1] == Board.whitePawn) {
+            pawnStructureCount[color]++;
+        }
+
+        // Is a double pawn?
+        for (var f = field + Board.LENGTH; board[f] != Board.illegal; f += Board.LENGTH) {
+            if (board[f] == Board.whitePawn) {
+                pawnStructureCount[color] -= 2;
+                break;
+            }
+        }
     }
 
     private static int fieldToRow(int field) {
@@ -307,8 +354,6 @@ public final class WeightingFunction {
         int to = field - Board.LENGTH;
         if (board[to] == Board.empty) {
             mobilityWeight[color] += mobilityWeightOfPiece[Board.blackPawn];
-        } else if (board[to] == Board.blackPawn) {
-            doublePawnCount[color]++; // double pawn
         }
 
         // double step
@@ -344,6 +389,35 @@ public final class WeightingFunction {
                         && Move.getFromField(lastMove) == field + 1 - 2 * Board.LENGTH) {
                     capture(Board.blackPawn, color, Board.whitePawn);
                 }
+            }
+        }
+
+        // Pawn structure analysis
+
+        pawnCount[color]++;
+
+        // Has a left pawn neighbor (max distance 2 ranks)?
+        if (board[field - 2 * Board.LENGTH - 1] == Board.blackPawn
+                || board[field - Board.LENGTH - 1] == Board.blackPawn
+                || board[field - 1] == Board.blackPawn
+                || board[field + Board.LENGTH - 1] == Board.blackPawn
+                || board[field + 2 * Board.LENGTH - 1] == Board.blackPawn) {
+            pawnStructureCount[color]++;
+        }
+        // Has a right pawn neighbor (max distance 2 ranks)?
+        if (board[field - 2 * Board.LENGTH + 1] == Board.blackPawn
+                || board[field - Board.LENGTH + 1] == Board.blackPawn
+                || board[field + 1] == Board.blackPawn
+                || board[field + Board.LENGTH + 1] == Board.blackPawn
+                || board[field + 2 * Board.LENGTH + 1] == Board.blackPawn) {
+            pawnStructureCount[color]++;
+        }
+
+        // Is a double pawn?
+        for (var f = field - Board.LENGTH; board[f] != Board.illegal; f -= Board.LENGTH) {
+            if (board[f] == Board.blackPawn) {
+                pawnStructureCount[color] -= 2;
+                break;
             }
         }
     }
