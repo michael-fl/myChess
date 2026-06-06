@@ -41,6 +41,19 @@ public final class PositionSearch {
     public static final int EVALUATE_MATERIAL_ONLY_THRESHOLD = 200;
 
     /**
+     * Hard cap on the iterative-deepening target depth. UCI's
+     * {@code go depth ...} accepts arbitrary integers and a missing
+     * {@code depth} keyword defaults to {@code Integer.MAX_VALUE}; with no
+     * cap the iteration loop has been observed to run to depth 10000+ on
+     * pathological positions where every node early-returns (50-move /
+     * threefold draws), consuming the full time budget on busy-loop work
+     * and allocating {@code (maxDepth+1)^2} sized PV tables per iteration.
+     * 64 is well beyond what myChess actually reaches in any practical
+     * time control (typical ≈ 8–12 plies).
+     */
+    public static final int MAX_SEARCH_DEPTH = 64;
+
+    /**
      * Per-node state for one invocation of
      * {@link PositionSearch#alphaBetaSearchI(SearchNodeContext)}: current
      * search depth, alpha-beta window, side-to-move sign, running material
@@ -343,7 +356,10 @@ public final class PositionSearch {
 
     private MoveAndWeight calculateNextMove() {
         MoveAndWeight bestPath = null;
-        final int maxDepth = engineConfig.getMaxDepth();
+        // Clamp to MAX_SEARCH_DEPTH so a UCI `go depth 5000` (or the default
+        // Integer.MAX_VALUE for depth-unlimited go commands) cannot drive the
+        // iteration loop into a runaway — see MAX_SEARCH_DEPTH JavaDoc.
+        final int maxDepth = Math.min(engineConfig.getMaxDepth(), MAX_SEARCH_DEPTH);
         final long startMs = System.currentTimeMillis();
         long previousIterationEndMs = startMs;
 
