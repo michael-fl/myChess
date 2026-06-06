@@ -287,11 +287,29 @@ The alpha-beta search tree is identical to fail-hard (same cutoff conditions, sa
 
 Regression test: [`QuiescenceSearchTest.quiescenceFailSoft_betaCutoffReturnsUnclampedWeight`](../src/test/java/org/michaelfl/mychess/QuiescenceSearchTest.java) constructs a stand-pat position, runs quiescence with both wide and tight β, and asserts the tight call returns the unclamped stand-pat (a fail-hard implementation would clamp to β).
 
-## 12.14 Color asymmetry: investigate the W>B bias linked to mobility — **S–M, ≈ 30–50 Elo (estimated)**
+## 12.14 Color asymmetry: investigate the W>B bias seen in cross-version matches — **S, evidence weakening**
+
+> **Update June 2026:** the original "W>B bias is a real engine defect worth 30–50 Elo" hypothesis has lost support after three additional cutechess matches. The cross-version-artifact explanation is now the more plausible reading. See the *updated interpretation* section below.
 
 Across five cutechess matches during the spring 2026 mobility-tuning sessions (positionFactor x2, mobilityFactor x2, mobility-rebalance, no-mobility, mobility-factor=0.15) a striking pattern emerged: in every match where the engine had any form of mobility weighting enabled, **myChess scored noticeably better as white than as black** — typically 40–65 Elo difference between colors. The single experiment where the asymmetry disappeared was the no-mobility ablation; with mobility re-enabled (at any factor in [0.1, 0.2]) the W>B gap returned, including in the strongest form (~65 Elo) at factor 0.15.
 
 This is unusual. The engine's static eval is supposed to be color-antisymmetric (`eval(p) == -eval(mirror(p))`), and [`MirrorEvalTest`](../src/test/java/org/michaelfl/mychess/MirrorEvalTest.java) enforces that invariant. If self-play matches reproduce the same pattern, it implies a side-to-move-dependent bias somewhere in the eval or search machinery that the existing mirror test doesn't catch — and if that bias is fixed, white and black should play equally well, recovering the typical ~25 Elo of pure first-move advantage but not 60+. That's the size of the gap on the table.
+
+### Updated interpretation (June 2026)
+
+Three follow-up cutechess matches against `myChess-3.4.0` muddy the original picture:
+
+| Variant vs 3.4.0 | W/B for myChess-new | Elo vs 3.4.0 |
+|---|---|---|
+| no-mobility | 0.491 / 0.504 (~3 Elo) | −1.7 ± 21.4 (neutral) |
+| threadWeightFactor 0.17 | 0.452 / 0.448 (~3 Elo) | −34.8 ± 25.6 (regression) |
+| threadWeightFactor 0.05 | 0.507 / 0.501 (~4 Elo) | +3.0 ± 20.8 (neutral) |
+
+In all three, the W/B asymmetry is small or absent — even though only the no-mobility build actually disables a major eval component. The threadWeight variants leave mobility fully intact. Under the original "asymmetric mobility code" hypothesis, those should still show W>B; they don't.
+
+What separates the asymmetric-W>B and the symmetric-W=B experiments more cleanly is **whether the variant is meaningfully different in Elo from 3.4.0**: the asymmetric ones (positionFactor doubled, mobilityFactor doubled, mobility rebalance, factor 0.15) all showed real-but-modest strength changes; the symmetric ones (no-mobility, threadWeight 0.05, threadWeight 0.17) either matched 3.4.0 closely or differed only via a strong regression. That pattern fits **cross-version-artifact** much better than **systematic engine defect**: when both engines play near-identical chess, the opening set distributes wins symmetrically between colors; when one engine has a slight edge, that edge concentrates into one color through whatever asymmetric pairing the book introduces.
+
+The investigation plan below remains valid but **its premise is shakier than originally written**. Run step 1 only if interested in a definitive closure — otherwise the time is better spent on the search optimizations in §§ 12.1–12.8, which are documented Elo wins.
 
 ### Why this is worth pursuing
 
