@@ -308,6 +308,15 @@ final class UciHandler {
                 bestWeightStm = lastIterationWeight.get();
             }
 
+            if (bestmove != 0 && !isLegalInCurrentBoard(bestmove)) {
+                int fallback = firstLegalInCurrentBoard();
+                Log.error("[bestmove-validate] selected " + UciMoveParser.toUci(bestmove, board)
+                        + " is illegal in current position — falling back to "
+                        + (fallback == 0 ? "0000" : UciMoveParser.toUci(fallback, board))
+                        + " — root FEN: " + Fen.exportFEN(board));
+                bestmove = fallback;
+            }
+
             writeLine("bestmove " + (bestmove == 0 ? "0000" : UciMoveParser.toUci(bestmove, board)));
             logMoveStatus(bestmove, bestWeightStm, turnAtStart, plyCountAtStart, goStartMs);
         } finally {
@@ -333,6 +342,13 @@ final class UciHandler {
             lastIterationWeight.set(info.weight());
         }
 
+        // Validate FIRST so we never write an illegal PV to UCI. validatePv
+        // also logs a [pv-validate] diagnostic on failure (its original
+        // purpose); the new contract is that its boolean result gates the
+        // subsequent writeLine. The [iter] stderr line still goes out
+        // unconditionally so post-mortem analysis sees the bad iteration.
+        boolean pvOk = validatePv(pv);
+
         // info.weight() is the raw negamax score in pawn units — positive
         // means the side to move is winning. UCI's `score cp` and
         // `score mate` use exactly that convention, so emit info.weight()
@@ -341,37 +357,37 @@ final class UciHandler {
         // we play Black.
         long elapsedMs = System.currentTimeMillis() - searchStartMs;
 
-        var sb = new StringBuilder();
-        sb.append("info depth ").append(info.depth());
-        sb.append(" nodes ").append(info.nodes());
-        sb.append(" time ").append(elapsedMs);
+        if (pvOk) {
+            var sb = new StringBuilder();
+            sb.append("info depth ").append(info.depth());
+            sb.append(" nodes ").append(info.nodes());
+            sb.append(" time ").append(elapsedMs);
 
-        if (WeightingFunction.isCheckmateWeight(info.weight())) {
-            int plies = WeightingFunction.checkmateWeightToPlies(info.weight());
-            int moves = (plies + 1) / 2;
-            int signed = info.weight() >= 0 ? moves : -moves;
-            sb.append(" score mate ").append(signed);
-        } else {
-            int cp = Math.round(info.weight() * 100f);
-            sb.append(" score cp ").append(cp);
-        }
-
-        if (pv.length > 0 && pv[0] != 0) {
-            sb.append(" pv");
-            for (int packed : pv) {
-                if (packed == 0) {
-                    break;
-                }
-
-                sb.append(' ').append(UciMoveParser.toUci(packed, board));
+            if (WeightingFunction.isCheckmateWeight(info.weight())) {
+                int plies = WeightingFunction.checkmateWeightToPlies(info.weight());
+                int moves = (plies + 1) / 2;
+                int signed = info.weight() >= 0 ? moves : -moves;
+                sb.append(" score mate ").append(signed);
+            } else {
+                int cp = Math.round(info.weight() * 100f);
+                sb.append(" score cp ").append(cp);
             }
-        }
 
-        writeLine(sb.toString());
+            if (pv.length > 0 && pv[0] != 0) {
+                sb.append(" pv");
+                for (int packed : pv) {
+                    if (packed == 0) {
+                        break;
+                    }
+
+                    sb.append(' ').append(UciMoveParser.toUci(packed, board));
+                }
+            }
+
+            writeLine(sb.toString());
+        }
 
         logIterStatus(info, elapsedMs, turnAtStart);
-
-        validatePv(pv);
     }
 
     /**
@@ -552,9 +568,62 @@ final class UciHandler {
      * <p>No-op on success — does not throw, does not alter the search,
      * does not modify {@link #board}.
      */
-    private void validatePv(int[] pv) {
+    /**
+     * Last-resort check for the {@code bestmove} the engine wants to emit:
+     * must be pseudo-legal in the current {@link #board} and must not leave
+     * our king capturable on the next ply. Same legality contract as
+     * {@link #validatePv(int[])} but for a single move. Used to filter the
+     * outbound {@code bestmove} line so cutechess never receives an
+     * illegal move under any circumstance.
+     */
+    private boolean isLegalInCurrentBoard(int move) {
+        var probe = board.copy();
+        var moveGen = new MoveGenerator(MoveSorter.defaultImplementation());
+        var pseudoLegal = moveGen.calculateMoves(probe);
+        if (pseudoLegal.isIllegal() || !pseudoLegal.contains(move)) {
+            return false;
+        }
+        probe.makeMove(move);
+        return !probe.canCaptureOpposingKing();
+    }
+
+    /**
+     * Pick the first move from the current {@link #board}'s pseudo-legal
+     * set that does not leave our king capturable on the next ply.
+     * Fallback used when the engine's chosen {@code bestmove} fails
+     * {@link #isLegalInCurrentBoard(int)}. Returns {@code 0} when no legal
+     * move exists (checkmate / stalemate at the root), which surfaces as
+     * {@code bestmove 0000} per UCI convention.
+     */
+    private int firstLegalInCurrentBoard() {
+        var moveGen = new MoveGenerator(MoveSorter.defaultImplementation());
+        var pseudoLegal = moveGen.calculateMoves(board.copy());
+        if (pseudoLegal.isIllegal()) {
+            return 0;
+        }
+        int[] moves = pseudoLegal.getMoves();
+        for (int i = 0; i < pseudoLegal.count(); i++) {
+            int candidate = moves[i];
+            var probe = board.copy();
+            probe.makeMove(candidate);
+            if (!probe.canCaptureOpposingKing()) {
+                return candidate;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * @return {@code true} if every PV move is pseudo-legal from the root
+     *         and none leaves the own king capturable on the next ply.
+     *         Empty PVs return {@code true} (nothing to validate). On any
+     *         failure a {@code [pv-validate]} stderr diagnostic is logged
+     *         and {@code false} is returned so the caller can skip the
+     *         outbound UCI {@code info pv ...} line.
+     */
+    private boolean validatePv(int[] pv) {
         if (pv.length == 0 || pv[0] == 0) {
-            return;
+            return true;
         }
 
         var probe = board.copy();
@@ -573,13 +642,13 @@ final class UciHandler {
             if (pseudoLegal.isIllegal()) {
                 logIllegalPv("ply " + lastAppliedPly + " (" + UciMoveParser.toUci(lastAppliedMove, board)
                         + ") leaves own king in check", pv, probe);
-                return;
+                return false;
             }
 
             if (!pseudoLegal.contains(move)) {
                 logIllegalPv("ply " + i + " (" + UciMoveParser.toUci(move, board)
                         + ") is not pseudo-legal", pv, probe);
-                return;
+                return false;
             }
 
             probe.makeMove(move);
@@ -591,7 +660,10 @@ final class UciHandler {
         if (pseudoLegal.isIllegal()) {
             logIllegalPv("ply " + lastAppliedPly + " (" + UciMoveParser.toUci(lastAppliedMove, board)
                     + ") leaves own king in check", pv, probe);
+            return false;
         }
+
+        return true;
     }
 
     private void logIllegalPv(String detail, int[] pv, Board atPosition) {
