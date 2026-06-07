@@ -283,6 +283,39 @@ class UciHandlerTest {
                         + "All info pv lines:\n" + String.join("\n", pvLines));
     }
 
+    // ---- validatePv: position-mismatch guard ----
+
+    /**
+     * Regression test for the validatePv guard added in 2026-06-07 after a
+     * cutechess SPRT run surfaced {@code Illegal PV move …} warnings: when
+     * the engine's iteration listener still emits an {@code info pv …}
+     * line after the UCI thread has already processed the next game's
+     * {@code position fen …} command, the PV holds moves that were legal
+     * in the *old* board but no longer in the *new* one. {@code validatePv}
+     * detects exactly this mismatch and returns {@code false} so the
+     * caller can suppress the outbound UCI line.
+     */
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void validatePv_pvLegalInOriginalButNotCurrentBoard_returnsFalse() {
+        var handler = new UciHandler(new MyChessEnv(),
+                new BufferedReader(new StringReader("")));
+
+        // Board A: after 1.e4 e5 2.Nf3 Nc6 3.Bb5 d6 4.O-O Nf6 5.Re1 — black to move
+        // with a black knight on f6 and d7 empty, so Nf6-d7 is legal.
+        handler.handleLine("position fen "
+                + "r1bqkb1r/ppp2ppp/2np1n2/1B2p3/4P3/5N2/PPPP1PPP/RNBQR1K1 b kq - 5 5");
+        int nf6d7 = Move.create(Board.f6, Board.d7, Board.empty, Move.typeNormal);
+        assertTrue(handler.validatePv(new int[]{nf6d7}),
+                "Nf6-d7 must validate in board A where f6 holds a black knight");
+
+        // Board B: standard starting position — no knight on f6, the same PV
+        // can no longer be replayed.
+        handler.handleLine("position startpos");
+        assertFalse(handler.validatePv(new int[]{nf6d7}),
+                "Nf6-d7 must fail validation once the board has changed and f6 is empty");
+    }
+
     // ---- info lines (score, depth, pv) ----
 
     @Test

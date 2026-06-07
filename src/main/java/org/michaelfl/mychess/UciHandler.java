@@ -620,8 +620,11 @@ final class UciHandler {
      *         failure a {@code [pv-validate]} stderr diagnostic is logged
      *         and {@code false} is returned so the caller can skip the
      *         outbound UCI {@code info pv ...} line.
+     *
+     * <p>Package-private to enable focused unit testing of the
+     * board-mismatch detection.
      */
-    private boolean validatePv(int[] pv) {
+    boolean validatePv(int[] pv) {
         if (pv.length == 0 || pv[0] == 0) {
             return true;
         }

@@ -159,6 +159,50 @@ class ChessEngineTest {
         assertNotNull(task.getEnv(), "Task must always carry an env (real or empty)");
     }
 
+    /**
+     * Regression test for the depth cap added in 2026-06-06 after cutechess
+     * SPRT runs surfaced engine traces with {@code [iter] depth=5500+ pv=…}
+     * patterns: in K+R-vs-K endgames with a half-move clock about to roll
+     * over the 50-move-rule threshold, every {@code alphaBetaSearchI} node
+     * at depth ≥ 1 early-returns {@code draw=0}. The iterative-deepening
+     * loop then spins at ~1 ms per iteration to whatever {@code maxDepth}
+     * is set; UCI's {@code go} without an explicit depth keyword passes
+     * {@code Integer.MAX_VALUE}, so the runaway is unbounded by depth and
+     * only stops on timeout. The cap in
+     * {@link org.michaelfl.mychess.engines.PositionSearch#MAX_SEARCH_DEPTH}
+     * limits this to a sane ceiling.
+     */
+    @Test
+    @Timeout(value = 15, unit = TimeUnit.SECONDS)
+    void depthCap_fiftyMovesAboutToTrigger_searchHonorsMaxSearchDepth() throws Exception {
+        // K+R vs K, half-move clock at 99: any white non-capture/non-pawn move
+        // crosses 100 at depth 1 inside alphaBetaSearchI and the search returns
+        // draw immediately at every node.
+        var board = Fen.importFEN("4k3/8/8/8/8/8/3R4/4K3 w - - 99 60");
+        var config = new EngineConfig.Builder()
+                .maxDepth(Integer.MAX_VALUE)
+                .millisPerMove(2000)
+                .silent(true)
+                .build();
+        var game = new Game(new GameConfig(MyChessEngine.class, config), board);
+        try {
+            var maxDepthReached = new java.util.concurrent.atomic.AtomicInteger();
+            var task = game.getEngine().nextMoveAsync(new MyChessEnv(), info ->
+                    maxDepthReached.updateAndGet(prev -> Math.max(prev, info.depth())));
+            task.getResult(10, TimeUnit.SECONDS);
+
+            assertTrue(maxDepthReached.get() > 0,
+                    "search must have run at least one iteration; observed "
+                            + maxDepthReached.get());
+            assertTrue(maxDepthReached.get() <= org.michaelfl.mychess.engines.PositionSearch.MAX_SEARCH_DEPTH,
+                    "iterative-deepening must respect MAX_SEARCH_DEPTH = "
+                            + org.michaelfl.mychess.engines.PositionSearch.MAX_SEARCH_DEPTH
+                            + "; observed " + maxDepthReached.get());
+        } finally {
+            game.shutdown();
+        }
+    }
+
     @Test
     @Timeout(value = 30, unit = TimeUnit.SECONDS)
     void shutdown_rejectsFurtherSubmissions() {
