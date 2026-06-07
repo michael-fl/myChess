@@ -99,7 +99,21 @@ public final class WeightingFunction {
     private static final float threadWeightFactor = 0.02f;
     private static final float chessFactor = 0.25f;
     private static final float castlingFactor = 0.25f;
+    /**
+     * Connection-quality factor for the (normalized in [0, 1]) pawn
+     * structure score returned by {@link #getPawnStructureWeight(int)}.
+     * Applied independently from the doubled-pawn penalty so that the
+     * two can be tuned without coupling.
+     */
     private static final float pawnStructureFactor = 0.5f;
+    /**
+     * Per-doubled-pair penalty in pawn units, applied directly in the
+     * final-weight formula (NOT scaled by {@link #pawnStructureFactor}).
+     * The standard chess-theory value is around -0.15 pawns per doubled
+     * pair; kept decoupled so that re-tuning {@code pawnStructureFactor}
+     * does not silently drift the doubled-pawn penalty.
+     */
+    private static final float doublePawnFactor = -0.15f;
 
     private GameStatus game;
     private int turn; // 0 = white, 1 = black
@@ -114,7 +128,10 @@ public final class WeightingFunction {
     private boolean containsIllegalMove;
     private final int[] castlingState = new int[2];
     private final int[] pawnCount = new int[2];
-    private final int[] pawnStructureCount = new int[2];
+    /** Raw count of adjacent-file pawn neighbors (within ±2 ranks), each side. Counted from BOTH pawns, so a connected pair contributes 2. */
+    private final int[] connectionsCount = new int[2];
+    /** Number of doubled pawn PAIRS (counted once per pair), each side. */
+    private final int[] doublePawnCount = new int[2];
 
     /** Material weight (delta white - black) in centi pawns. */
     public static int calculateMaterialWeight(Board theBoard) {
@@ -173,8 +190,10 @@ public final class WeightingFunction {
         this.castlingState[1] = 0;
         this.pawnCount[0] = 0;
         this.pawnCount[1] = 0;
-        this.pawnStructureCount[0] = 0;
-        this.pawnStructureCount[1] = 0;
+        this.connectionsCount[0] = 0;
+        this.connectionsCount[1] = 0;
+        this.doublePawnCount[0] = 0;
+        this.doublePawnCount[1] = 0;
 
         final int stopField = Board.h8 + 1;
         final boolean isEndGame = game.isEndGame();
@@ -209,24 +228,34 @@ public final class WeightingFunction {
                 + (castlingState[0] - castlingState[1]) * castlingFactor
                 + (chessCount[0] - chessCount[1]) * chessFactor;
 
-        // Calculate weight of pawn structure
+        // Pawn structure: connection-quality (normalized, in [0, 1]) and
+        // doubled-pawn penalty kept as two separate eval terms so each can
+        // be tuned independently.
         float whitePawnStructureWeight = getPawnStructureWeight(0);
         float blackPawnStructureWeight = getPawnStructureWeight(1);
 
-        weight = weight + (whitePawnStructureWeight - blackPawnStructureWeight) * pawnStructureFactor;
+        weight = weight
+                + (whitePawnStructureWeight - blackPawnStructureWeight) * pawnStructureFactor
+                + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor;
 
         return roundSymmetric(weight * 100.0f);
     }
 
+    /**
+     * Pure connection-quality score in [0, 1]: connections divided by the
+     * maximum theoretical number (= 2 × (pawnCount − 1) for a fully
+     * connected chain). Invariant to pawn count — a fully connected 4-pawn
+     * chain scores the same as a fully connected 8-pawn chain. The
+     * doubled-pawn penalty is intentionally NOT included here so that it
+     * is not scaled with {@link #pawnStructureFactor} downstream.
+     */
     private float getPawnStructureWeight(int color) {
         final int count = pawnCount[color];
-        float pawnStructureWeight = 0;
-
-        if (count > 1) {
-            final int maxStructureCount = 2 * (count - 1);
-            pawnStructureWeight = ((float) pawnStructureCount[color]) / maxStructureCount;
+        if (count < 2) {
+            return 0f;
         }
-        return pawnStructureWeight;
+        final int maxConnections = 2 * (count - 1);
+        return ((float) connectionsCount[color]) / maxConnections;
     }
 
     /**
@@ -253,7 +282,10 @@ public final class WeightingFunction {
                "mobilityWeight:      w=" + mobilityWeight[0] + ", b=" + mobilityWeight[1] + DELTA_STR + (mobilityWeight[0] - mobilityWeight[1]) + WEIGHT_STR + round((mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor) + '\n' +
                "threadWeight:        w=" + threadWeight[0] + ", b=" + threadWeight[1] + DELTA_STR + (threadWeight[0] - threadWeight[1]) + WEIGHT_STR + round((threadWeight[0] - threadWeight[1])  / 100f * threadWeightFactor) + '\n' +
                "castlingState:       w=" + castlingState[0] + ", b=" + castlingState[1] + DELTA_STR + (castlingState[0] - castlingState[1]) + WEIGHT_STR + round((castlingState[0] - castlingState[1]) * castlingFactor) + '\n' +
-               "pawnStructureFactor: w=" + pawnStructureCount[0] + ", b=" + pawnStructureCount[1] + DELTA_STR + (pawnStructureCount[0] - pawnStructureCount[1]) + WEIGHT_STR + round((pawnStructureCount[0] - pawnStructureCount[1]) * pawnStructureFactor) + '\n' +
+               "pawnCount:           w=" + pawnCount[0] + ", b=" + pawnCount[1] + '\n' +
+               "connectionsCount:    w=" + connectionsCount[0] + ", b=" + connectionsCount[1] + '\n' +
+               "pawnStructure:       w=" + round(getPawnStructureWeight(0)) + ", b=" + round(getPawnStructureWeight(1)) + WEIGHT_STR + round((getPawnStructureWeight(0) - getPawnStructureWeight(1)) * pawnStructureFactor) + '\n' +
+               "doublePawnCount:     w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + DELTA_STR + (doublePawnCount[0] - doublePawnCount[1]) + WEIGHT_STR + round((doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) + '\n' +
                "chessCount:          w=" + chessCount[0] + ", b=" + chessCount[1] + DELTA_STR + (chessCount[0] - chessCount[1]) + WEIGHT_STR + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
                "weight: " + calculatePositionWeight() / 100f;
     }
@@ -315,29 +347,40 @@ public final class WeightingFunction {
         pawnCount[color]++;
 
         // Has a left pawn neighbor (max distance 2 ranks)?
-        if (board[field - 2 * Board.LENGTH - 1] == Board.whitePawn
-                || board[field - Board.LENGTH - 1] == Board.whitePawn
-                || board[field - 1] == Board.whitePawn
-                || board[field + Board.LENGTH - 1] == Board.whitePawn
-                || board[field + 2 * Board.LENGTH - 1] == Board.whitePawn) {
-            pawnStructureCount[color]++;
-        }
-        // Has a right pawn neighbor (max distance 2 ranks)?
-        if (board[field - 2 * Board.LENGTH + 1] == Board.whitePawn
-                || board[field - Board.LENGTH + 1] == Board.whitePawn
-                || board[field + 1] == Board.whitePawn
-                || board[field + Board.LENGTH + 1] == Board.whitePawn
-                || board[field + 2 * Board.LENGTH + 1] == Board.whitePawn) {
-            pawnStructureCount[color]++;
+        if (hasLeftPawnNeighbor(field, Board.whitePawn)) {
+            connectionsCount[color]++;
         }
 
-        // Is a double pawn?
+        // Has a right pawn neighbor (max distance 2 ranks)?
+        if (hasRightPawnNeighbor(field, Board.whitePawn)) {
+            connectionsCount[color]++;
+        }
+
+        // Is a doubled pawn? Searching ahead (toward 8th rank for white)
+        // means only the LOWER pawn in a pair finds its partner, so each
+        // pair is counted exactly once.
         for (var f = field + Board.LENGTH; board[f] != Board.illegal; f += Board.LENGTH) {
             if (board[f] == Board.whitePawn) {
-                pawnStructureCount[color] -= 2;
+                doublePawnCount[color]++;
                 break;
             }
         }
+    }
+
+    private boolean hasLeftPawnNeighbor(final int field, final byte pawnPiece) {
+        return board[field - 2 * Board.LENGTH - 1] == pawnPiece
+                || board[field - Board.LENGTH - 1] == pawnPiece
+                || board[field - 1] == pawnPiece
+                || board[field + Board.LENGTH - 1] == pawnPiece
+                || board[field + 2 * Board.LENGTH - 1] == pawnPiece;
+    }
+
+    private boolean hasRightPawnNeighbor(final int field, final byte pawnPiece) {
+        return board[field - 2 * Board.LENGTH + 1] == pawnPiece
+                || board[field - Board.LENGTH + 1] == pawnPiece
+                || board[field + 1] == pawnPiece
+                || board[field + Board.LENGTH + 1] == pawnPiece
+                || board[field + 2 * Board.LENGTH + 1] == pawnPiece;
     }
 
     private static int fieldToRow(int field) {
@@ -397,26 +440,21 @@ public final class WeightingFunction {
         pawnCount[color]++;
 
         // Has a left pawn neighbor (max distance 2 ranks)?
-        if (board[field - 2 * Board.LENGTH - 1] == Board.blackPawn
-                || board[field - Board.LENGTH - 1] == Board.blackPawn
-                || board[field - 1] == Board.blackPawn
-                || board[field + Board.LENGTH - 1] == Board.blackPawn
-                || board[field + 2 * Board.LENGTH - 1] == Board.blackPawn) {
-            pawnStructureCount[color]++;
-        }
-        // Has a right pawn neighbor (max distance 2 ranks)?
-        if (board[field - 2 * Board.LENGTH + 1] == Board.blackPawn
-                || board[field - Board.LENGTH + 1] == Board.blackPawn
-                || board[field + 1] == Board.blackPawn
-                || board[field + Board.LENGTH + 1] == Board.blackPawn
-                || board[field + 2 * Board.LENGTH + 1] == Board.blackPawn) {
-            pawnStructureCount[color]++;
+        if (hasLeftPawnNeighbor(field, Board.blackPawn)) {
+            connectionsCount[color]++;
         }
 
-        // Is a double pawn?
+        // Has a right pawn neighbor (max distance 2 ranks)?
+        if (hasRightPawnNeighbor(field, Board.blackPawn)) {
+            connectionsCount[color]++;
+        }
+
+        // Is a doubled pawn? Searching ahead (toward 1st rank for black)
+        // means only the HIGHER pawn in a pair finds its partner, so each
+        // pair is counted exactly once.
         for (var f = field - Board.LENGTH; board[f] != Board.illegal; f -= Board.LENGTH) {
             if (board[f] == Board.blackPawn) {
-                pawnStructureCount[color] -= 2;
+                doublePawnCount[color]++;
                 break;
             }
         }
