@@ -336,6 +336,14 @@ final class UciHandler {
     private final AtomicReference<Float> lastIterationWeight = new AtomicReference<>(0f);
 
     private void emitInfo(IterationInfo info, long searchStartMs, int turnAtStart) {
+        var game = currentGame.get();
+        if (game == null || game.getGeneration() != info.generation()) {
+            Log.info(String.format("[stale-iter] dropping info from gen=%d (current=%s)",
+                    info.generation(),
+                    game == null ? "null" : Integer.toString(game.getGeneration())));
+            return; // Outdated event
+        }
+
         int[] pv = info.pv();
         if (pv.length > 0 && pv[0] != 0) {
             lastIterationFirstMove.set(pv[0]);

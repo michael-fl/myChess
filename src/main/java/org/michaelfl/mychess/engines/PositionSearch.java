@@ -393,6 +393,7 @@ public final class PositionSearch {
             // playing Black and made cutechess's resign-threshold fire
             // on winning positions.
             task.fireIteration(new IterationInfo(
+                    game.getGeneration(),
                     depth,
                     statistics.getPositionsCount(),
                     iterationEndMs - startMs,
