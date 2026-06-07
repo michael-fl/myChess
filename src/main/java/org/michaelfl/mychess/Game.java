@@ -6,6 +6,7 @@ import org.michaelfl.mychess.engines.MyChessEngine;
 import org.michaelfl.mychess.engines.NextMoveTask;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Top-level chess game: a {@link Board} plus the two side engines and a status
@@ -29,6 +30,9 @@ public final class Game {
         }
     }
 
+    private static final AtomicInteger NEXT_GENERATION_ID = new AtomicInteger(1);
+
+    private final int generation = NEXT_GENERATION_ID.getAndIncrement();
     private final ChessEngine engineWhite;
     private final ChessEngine engineBlack;
     private final ChessEngine statusEngine;
@@ -100,6 +104,10 @@ public final class Game {
     void shutdown() {
         engineBlack.shutdown();
         engineWhite.shutdown();
+    }
+
+    public int getGeneration() {
+        return generation;
     }
 
     ChessEngine getEngine() {
