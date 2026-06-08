@@ -104,8 +104,15 @@ public final class WeightingFunction {
      * structure score returned by {@link #getPawnStructureWeight(int)}.
      * Applied independently from the doubled-pawn penalty so that the
      * two can be tuned without coupling.
+     *
+     * <p>TODO: also worth trying a narrower neighbor window in
+     * {@link #hasLeftPawnNeighbor}/{@link #hasRightPawnNeighbor} — the
+     * current ±2-rank reach treats pawns two ranks apart as "connected",
+     * which is wider than the conventional chess definition (adjacent file
+     * + same/one rank back). A tighter ±1 window would yield a stricter
+     * "true chain" signal at the cost of fewer total connections.
      */
-    private static final float pawnStructureFactor = 0.5f;
+    private static final float pawnStructureFactor = 1.0f;
     /**
      * Per-doubled-pair penalty in pawn units, applied directly in the
      * final-weight formula (NOT scaled by {@link #pawnStructureFactor}).

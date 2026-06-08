@@ -25,7 +25,7 @@ class QuiescenceSearchTest {
     void testPositionWithUnguardedNight1() {
         var gameNotation = "1.c3 e6 2.Nf3 d6 3.a3 Nc6 4.Nh4 Nb4 5.d3 c5 6.axb4";
         // TODO: 0 < expectedWeight < 0.5 !
-        quiescenceTest(gameNotation, Board.blackKnight, 3.0f, 2.7f, 2.9f, 2);
+        quiescenceTest(gameNotation, Board.blackKnight, 3.0f, 2.6f, 2.9f, 2);
     }
 
     // A good quiescence search should detect that the white knight is not protected
