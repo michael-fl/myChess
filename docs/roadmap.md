@@ -287,9 +287,9 @@ The alpha-beta search tree is identical to fail-hard (same cutoff conditions, sa
 
 Regression test: [`QuiescenceSearchTest.quiescenceFailSoft_betaCutoffReturnsUnclampedWeight`](../src/test/java/org/michaelfl/mychess/QuiescenceSearchTest.java) constructs a stand-pat position, runs quiescence with both wide and tight β, and asserts the tight call returns the unclamped stand-pat (a fail-hard implementation would clamp to β).
 
-## 12.14 Color asymmetry: investigate the W>B bias seen in cross-version matches — **S, evidence weakening**
+## 12.14 Color asymmetry: investigate the W>B bias seen in cross-version matches — **likely closed, evidence points to per-experiment cause**
 
-> **Update June 2026:** the original "W>B bias is a real engine defect worth 30–50 Elo" hypothesis has lost support after three additional cutechess matches. The cross-version-artifact explanation is now the more plausible reading. See the *updated interpretation* section below.
+> **Update June 2026 (revised twice):** the original "W>B is a real engine defect worth 30–50 Elo" hypothesis is now superseded by direct evidence. The pawn-structure v2 experiment showed that **fixing a single disproportionate-penalty in one eval term (doubled-pawn penalty scaling with `1/(N−1)` instead of constant) made the W>B asymmetry vanish completely**. The asymmetry is not an engine-wide defect; it is a *symptom* that appears whenever an experimental eval change introduces a position-class imbalance the opening set happens to expose asymmetrically. See the *latest evidence* section.
 
 Across five cutechess matches during the spring 2026 mobility-tuning sessions (positionFactor x2, mobilityFactor x2, mobility-rebalance, no-mobility, mobility-factor=0.15) a striking pattern emerged: in every match where the engine had any form of mobility weighting enabled, **myChess scored noticeably better as white than as black** — typically 40–65 Elo difference between colors. The single experiment where the asymmetry disappeared was the no-mobility ablation; with mobility re-enabled (at any factor in [0.1, 0.2]) the W>B gap returned, including in the strongest form (~65 Elo) at factor 0.15.
 
@@ -310,6 +310,22 @@ In all three, the W/B asymmetry is small or absent — even though only the no-m
 What separates the asymmetric-W>B and the symmetric-W=B experiments more cleanly is **whether the variant is meaningfully different in Elo from 3.4.0**: the asymmetric ones (positionFactor doubled, mobilityFactor doubled, mobility rebalance, factor 0.15) all showed real-but-modest strength changes; the symmetric ones (no-mobility, threadWeight 0.05, threadWeight 0.17) either matched 3.4.0 closely or differed only via a strong regression. That pattern fits **cross-version-artifact** much better than **systematic engine defect**: when both engines play near-identical chess, the opening set distributes wins symmetrically between colors; when one engine has a slight edge, that edge concentrates into one color through whatever asymmetric pairing the book introduces.
 
 The investigation plan below remains valid but **its premise is shakier than originally written**. Run step 1 only if interested in a definitive closure — otherwise the time is better spent on the search optimizations in §§ 12.1–12.8, which are documented Elo wins.
+
+### Latest evidence (June 2026, v2 of the pawn-structure heuristic)
+
+The pawn-structure feature went through two formulations against `myChess-3.5.1`:
+
+| Variant | Doubled-pawn penalty | Elo vs 3.5.1 | W as W / W as B | W>B gap |
+|---|---|---|---|---|
+| v1 (combined / normalized) | scales as `1/(N−1)` — −1.00 at N=2, −0.14 at N=8 | −18.7 ± 21.5 (LOS 4.4%) | 0.510 / 0.436 | ~37 Elo |
+| **v2 (split / absolute)** | **constant −0.15 per pair** | **−3.5 ± 21.7 (LOS 37.7%)** | **0.494 / 0.496** | **~0 Elo** |
+
+The only change between v1 and v2 is how the doubled-pawn penalty scales — both versions use the same connection-quality formula and the same pawn-count detection. The W>B gap vanishes completely under v2, even though v2 still differs measurably from the baseline (−3.5 Elo). This is decisive evidence:
+
+- The asymmetry is **not** a generic engine defect that appears whenever the eval changes from the baseline. v2 changes the eval from baseline (otherwise the −3.5 Elo would also be zero) but shows no asymmetry.
+- The asymmetry is specifically triggered by **position-class imbalances in the eval formula**. v1's `1/(N−1)`-scaled doubled-pawn penalty hits low-pawn-count positions (endgames, post-trade middlegames) much harder than high-pawn-count positions. The cutechess `2moves_v2.pgn` opening set apparently puts black in those low-count positions more often, so black's structural penalty under v1 was disproportionately large.
+
+**Net implication for this entry: the investigation can be closed.** The asymmetry is real but it is a *diagnostic signal*, not a defect: when a new heuristic shows a large W>B gap, that's a red flag for an asymmetric position-class penalty inside the heuristic. Use it that way going forward — not as a target to fix in its own right, but as a litmus test for new eval components.
 
 ### Why this is worth pursuing
 
