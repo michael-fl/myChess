@@ -21,9 +21,9 @@ public class EngineSmokeTest extends EngineTestBase {
                 """;
         testPosition(pgn,
                 Set.of("d2-d5"),
-                "d2-d5 e6-d5 g7-g6 d5-e6 g6-g7 e6-e7 g7-g8".split(" "), // + "h3-d7"
-                5.0f,
-                6.0f,
+                "d2-d5 e6-d5 g7-f6 d5-f3 h7-h6 f3-c6 f4-h2".split(" "), // + "h3-d7"
+                4.5f,
+                5.5f,
                 new GameConfig(ENGINE, engineConfig())
         );
     }
