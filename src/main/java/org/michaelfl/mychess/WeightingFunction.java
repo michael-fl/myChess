@@ -112,7 +112,7 @@ public final class WeightingFunction {
      * + same/one rank back). A tighter ±1 window would yield a stricter
      * "true chain" signal at the cost of fewer total connections.
      */
-    private static final float pawnStructureFactor = 0.3f;
+    private static final float pawnStructureFactor = 0.5f;
     /**
      * Per-doubled-pair penalty in pawn units, applied directly in the
      * final-weight formula (NOT scaled by {@link #pawnStructureFactor}).
