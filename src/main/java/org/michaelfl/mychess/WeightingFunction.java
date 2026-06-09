@@ -99,7 +99,14 @@ public final class WeightingFunction {
     private static final float threadWeightFactor = 0.02f;
     private static final float chessFactor = 0.25f;
     private static final float castlingFactor = 0.25f;
-    private static final float doublePawnFactor = -0.1f;
+    /**
+     * Per-doubled-pair penalty in pawn units, applied directly in the
+     * final-weight formula.
+     *
+     * <p>The standard chess-theory value is around -0.15 pawns per doubled
+     * pair; we use that value here.
+     */
+    private static final float doublePawnFactor = -0.15f;
 
     private GameStatus game;
     private int turn; // 0 = white, 1 = black
@@ -246,14 +253,11 @@ public final class WeightingFunction {
         generator.calculateForWhitePawn(field, color);
     }
 
-    @SuppressWarnings("java:S1871")
     private void calculateForWhitePawn(int field, int color) {
         // single step
         int to = field + Board.LENGTH;
         if (board[to] == Board.empty) {
             mobilityWeight[color] += mobilityWeightOfPiece[Board.whitePawn];
-        } else if (board[to] == Board.whitePawn) {
-            doublePawnCount[color]++; // double pawn
         }
 
         // double step
@@ -291,6 +295,16 @@ public final class WeightingFunction {
                 }
             }
         }
+
+        // Is a doubled pawn? Searching ahead (toward 8th rank for white)
+        // means only the LOWER pawn in a pair finds its partner, so each
+        // pair is counted exactly once.
+        for (var f = field + Board.LENGTH; board[f] != Board.illegal; f += Board.LENGTH) {
+            if (board[f] == Board.whitePawn) {
+                doublePawnCount[color]++;
+                break;
+            }
+        }
     }
 
     private static int fieldToRow(int field) {
@@ -301,14 +315,11 @@ public final class WeightingFunction {
         generator.calculateForBlackPawn(field, color);
     }
 
-    @SuppressWarnings("java:S1871")
     private void calculateForBlackPawn(int field, int color) {
         // single step
         int to = field - Board.LENGTH;
         if (board[to] == Board.empty) {
             mobilityWeight[color] += mobilityWeightOfPiece[Board.blackPawn];
-        } else if (board[to] == Board.blackPawn) {
-            doublePawnCount[color]++; // double pawn
         }
 
         // double step
@@ -344,6 +355,16 @@ public final class WeightingFunction {
                         && Move.getFromField(lastMove) == field + 1 - 2 * Board.LENGTH) {
                     capture(Board.blackPawn, color, Board.whitePawn);
                 }
+            }
+        }
+
+        // Is a doubled pawn? Searching ahead (toward 1st rank for black)
+        // means only the UPPER pawn in a pair finds its partner, so each
+        // pair is counted exactly once.
+        for (var f = field - Board.LENGTH; board[f] != Board.illegal; f -= Board.LENGTH) {
+            if (board[f] == Board.blackPawn) {
+                doublePawnCount[color]++;
+                break;
             }
         }
     }

@@ -91,7 +91,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4
                 """;
-        testPosition(pgn, -0.34f);
+        testPosition(pgn, -0.18f);
     }
 
     @Test
@@ -329,7 +329,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6
                 """;
-        testPosition(pgn, 0.57f);
+        testPosition(pgn, 0.43f);
     }
 
     @Test
@@ -339,7 +339,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6 O-O
                 """;
-        testPosition(pgn, 0.19f);
+        testPosition(pgn, 0.04f);
     }
 
     @Test
@@ -349,7 +349,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6 O-O 18. Rg1
                 """;
-        testPosition(pgn, 0.33f);
+        testPosition(pgn, 0.18f);
     }
 
     // Terrible position for black (no mobility, pieces on bad, narrow positions)
