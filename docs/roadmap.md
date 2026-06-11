@@ -345,6 +345,46 @@ Once a candidate source is identified, write a unit test that captures the asymm
 
 This entry is independent of the search-optimization chain (§§ 12.1–12.8) and the eval upgrades (§ 12.7). The investigation can run in parallel with any of them. Recommended trigger: after the in-process measurement harness (§ 12.10) is in place — a node-count bench for the eval delta and a 100-position EPD pair makes the bisection in step 3 much cheaper than full cutechess matches.
 
+## 12.15 ~~Pawn-structure connection-quality term~~ — **investigated, not productive**
+
+*Investigated June 2026 across seven SPRT measurements. The "connection-quality" pawn-structure heuristic (count own-color pawn neighbors per pawn, normalize to [0, 1] via `2 * (pawnCount - 1)`, apply as scaled eval delta) is consistently not strength-positive in any tested configuration. The branches `pawn-structure` and `pawn-structure-narrow` remain in the repository as research archives but are not merged.*
+
+### What was measured
+
+Seven SPRT runs against the then-current master (3.5.1 for the first six, 3.5.2 for the last two), 400–800 games each, TC 40/60, SPRT bounds `elo0=-3, elo1=10, α=β=0.05`:
+
+| Run | Config | Window | Factor | Doubled-pawn baseline | Pooled Elo |
+|---|---|---|---|---|---|
+| v1 | combined formula (doubled-pawn folded into structure score) | ±2 ranks | 0.5 | old (−0.10, adjacent-only) | −18.7 ± ~22 |
+| v2 (1st run) | split formula | ±2 ranks | 0.5 | old | −3.5 ± 21.7 |
+| v2.1 (confirm) | split formula | ±2 ranks | 0.5 | old | −26.3 ± 22.5 |
+| v3 | split formula | ±2 ranks | 1.0 | old | −26.4 ± 22.4 |
+| v4 | split formula | ±2 ranks | 0.3 | old | −34.8 ± 25.5 |
+| narrow (1st run) | split formula | **±1 rank** | 0.5 | new (−0.15, full-file scan) | +9.1 ± 21.2 |
+| narrow-2 (confirm) | split formula | **±1 rank** | 0.5 | new | −4.3 ± 21.6 |
+
+Pooled narrow (1600 games): roughly **+2.5 ± 15 Elo, LOS ~60%** — statistically indistinguishable from neutral.
+
+The doubled-pawn detection improvement (full-file scan + theory-conformant `-0.15` penalty, see [§ 12.7 / commit `40a5ec7`](../src/main/java/org/michaelfl/mychess/WeightingFunction.java)) was isolated separately in an 800-game SPRT and came out **−5.6 ± 21.3 (LOS 30%)**. Merged anyway because it fixes a correctness bug in the old adjacent-only detection (non-adjacent doubled pairs like a3+a5 were silently missed) and the −0.15 value is the chess-theory standard.
+
+### What we learned
+
+1. **The ±2-rank neighbor window is too wide.** Five SPRT runs with the ±2-rank definition (v1–v4) were all clearly negative. The window includes pawn pairs that cannot actually defend each other (e.g. a3 and b5), so the "connection" signal is noisy and counts non-defending pairs as positive structure.
+
+2. **The ±1-rank window is meaningfully better** (~24 Elo swing relative to ±2) but the resulting strength change against the new 3.5.2 baseline is too small to be worth the eval-code complexity (~80 lines, two more array reads per pawn per eval call).
+
+3. **The non-monotonic factor-strength curve in v2/v3/v4** (factor 0.3, 0.5, 1.0 all negative, with 0.3 the worst) was an artifact of the v2 single-run measurement being on the high tail of the variance distribution. The v2.1 confirmation (−26 vs the original −3.5 at identical config) demonstrated that single 400–800-game SPRT runs at the connection-quality signal magnitude have CI bands too wide to support fine-grained factor tuning conclusions.
+
+4. **The connection-quality concept itself does not seem tractable in this design.** Any future pawn-structure work in myChess should target qualitatively different features (passed pawns, isolated pawns, backward pawns, king pawn shelter, weak squares) rather than tuning further variants of "count pawn neighbors and add a fraction of the count".
+
+### Cross-cutting observation: W/B asymmetry was unreliable
+
+Run-to-run W/B asymmetry varied dramatically at the 400-games-per-color sample size: v2 showed ~0 gap, v2.1 showed ~23 Elo gap, v4 showed ~38 Elo gap, narrow showed ~30 Elo gap, narrow-2 showed ~14 Elo gap — all with the same engine pair and the same opening set. This *further* undermines the §12.14 "W>B is a real engine defect" hypothesis: at the sample sizes used in that section's evidence, color asymmetry is dominated by variance, not signal. **A definitive §12.14 investigation would need either much larger sample sizes (≥ 2000 games per match) or color-balanced opening-pair scheduling.**
+
+### Why this slot in the roadmap
+
+Documents the closure so the heuristic family isn't unwittingly re-attempted. The two research branches (`pawn-structure`, `pawn-structure-narrow`) are kept for reference. If pawn-structure work resumes, start from a different feature family — see point 4 above.
+
 ---
 
 ## Suggested implementation order
