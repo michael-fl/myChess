@@ -96,7 +96,6 @@ public final class WeightingFunction {
 
     private static final float mobilityFactor = 0.1f;
     private static final float positionFactor = 0.5f;
-    private static final float threadWeightFactor = 0.02f;
     private static final float chessFactor = 0.25f;
     private static final float castlingFactor = 0.25f;
     /**
@@ -117,7 +116,6 @@ public final class WeightingFunction {
     private final float[] piecesWeight = new float[2];
     private final int[] mobilityWeight = new int[2];
     private final int[] positionWeight = new int[2];
-    private final int[] threadWeight = new int[2];
     private boolean containsIllegalMove;
     private final int[] castlingState = new int[2];
     private final int[] doublePawnCount = new int[2];
@@ -172,8 +170,6 @@ public final class WeightingFunction {
         this.mobilityWeight[1] = 0;
         this.positionWeight[0] = 0;
         this.positionWeight[1] = 0;
-        this.threadWeight[0] = 0;
-        this.threadWeight[1] = 0;
         this.containsIllegalMove = false;
         this.castlingState[0] = 0;
         this.castlingState[1] = 0;
@@ -210,7 +206,6 @@ public final class WeightingFunction {
                   (piecesWeight[0] - piecesWeight[1]) / 100f
                 + (positionWeight[0] - positionWeight[1]) / 100f * positionFactor
                 + (mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor
-                + (threadWeight[0] - threadWeight[1]) / 100f * threadWeightFactor
                 + (castlingState[0] - castlingState[1]) * castlingFactor
                 + (chessCount[0] - chessCount[1]) * chessFactor
                 + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) * 100);
@@ -238,7 +233,6 @@ public final class WeightingFunction {
         return "piecesWeight:       w=" + piecesWeight[0] + ", b=" + piecesWeight[1] + DELTA_STR + (piecesWeight[0] - piecesWeight[1]) + WEIGHT_STR + round((piecesWeight[0] - piecesWeight[1]) / 100f) + '\n' +
                "positionWeight:     w=" + positionWeight[0] + ", b=" + positionWeight[1] + DELTA_STR + (positionWeight[0] - positionWeight[1]) + WEIGHT_STR + round((positionWeight[0] - positionWeight[1]) / 100f * positionFactor) + '\n' +
                "mobilityWeight:     w=" + mobilityWeight[0] + ", b=" + mobilityWeight[1] + DELTA_STR + (mobilityWeight[0] - mobilityWeight[1]) + WEIGHT_STR + round((mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor) + '\n' +
-               "threadWeight:       w=" + threadWeight[0] + ", b=" + threadWeight[1] + DELTA_STR + (threadWeight[0] - threadWeight[1]) + WEIGHT_STR + round((threadWeight[0] - threadWeight[1])  / 100f * threadWeightFactor) + '\n' +
                "castlingState:      w=" + castlingState[0] + ", b=" + castlingState[1] + DELTA_STR + (castlingState[0] - castlingState[1]) + WEIGHT_STR + round((castlingState[0] - castlingState[1]) * castlingFactor) + '\n' +
                "doublePawnCount:    w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + DELTA_STR + (doublePawnCount[0] - doublePawnCount[1]) + WEIGHT_STR + round((doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) + '\n' +
                "chessCount:         w=" + chessCount[0] + ", b=" + chessCount[1] + DELTA_STR + (chessCount[0] - chessCount[1]) + WEIGHT_STR + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
@@ -504,12 +498,10 @@ public final class WeightingFunction {
                 containsIllegalMove = true;
             } else {
                 chessCount[color]++;
-                threadWeight[color] += 4; // ok, give some weight to the attacked king as well (since weightOfPiece(king) is 0)
             }
         }
 
         mobilityWeight[color] += weight;
-        threadWeight[color] += weightOfPiece[piece];
     }
 
     private void calculateCastlingState() {
