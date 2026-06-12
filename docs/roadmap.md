@@ -427,11 +427,60 @@ This is now the **third** investigation in §§ 12.15–12.16 where a single 800
 - **Color-balanced opening pairs** (Gauntlet-style: every opening played from both sides by both engines). Halves the W/B-variance contribution to the run-to-run drift.
 - **Treat single-run "promising" results as hypothesis-generating, not decision-grade.** A second independent run is mandatory before merging anything in the ±10-Elo band.
 
+**SPRT with a large game budget is self-tuning sample size.** A 1600-game budget does not mean every match runs 1600 games. If the true effect is large enough to cross either SPRT bound, the match terminates early — and we save the remaining budget. If the true effect sits inside the ±10-Elo band, the match runs to the limit and we read the pooled point estimate off the final score. §12.17 (`chessFactor` removal) demonstrates this: 1600-game budget, real effect ≈ −14 Elo, SPRT terminated cleanly at 1199 games (75% of budget). The three earlier 800-game runs in §§ 12.15–12.16 ran into their limit precisely because their true effects sat inside that ±10 band — a 1600-game budget would have produced the same "indistinguishable from neutral" verdict, just from one match instead of two.
+
 A small-effect SPRT bench probably belongs in [§ 12.10 (in-process measurement harness)](#1210-in-process-measurement-harness--sm-no-elo-but-adds-fast-per-change-diagnostics) — fixed seeds, color-balanced pairs, fast turnaround so that the ±15 CI is the default, not the exception.
 
 ### Why this slot in the roadmap
 
 Documents the closure so the `threadWeight` removal isn't unwittingly re-attempted. The `no-thread-weight` research branch stays in the repository for reference. The methodology lesson above is the more durable takeaway — it shapes how we should run *any* future investigation in the small-Elo band.
+
+## 12.17 ~~Remove `chessFactor` term from the evaluation function~~ — **investigated, term confirmed productive**
+
+*Investigated June 2026 with a single 1600-game-budget SPRT against `myChess-3.5.2`. Removing the `chessFactor` "can-give-check" bonus produced a clear, statistically significant Elo regression. The term stays in the evaluation. The `no-chess-factor` branch is kept as a research archive.*
+
+### What the term did
+
+`chessCount[color]` was incremented inside `capture()` whenever the per-piece move scan found that the side could "capture" the opposing king — i.e., the side could play a check on the next ply. Multiplied by `chessFactor = 0.25f` in the final eval sum, this was a flat **+0.25 pawn unit bonus per available check** at the eval leaf. The hypothesis — analogous to §12.16 — was that quiescence search already covers forcing moves and the bonus might be redundant or noise.
+
+### What was measured
+
+One 1600-game-budget SPRT against `myChess-3.5.2`, TC 40/60, SPRT bounds `elo0=-3, elo1=10, α=β=0.05`:
+
+| Run | W-L-D | Elo | LOS | SPRT |
+|---|---|---|---|---|
+| 1 | 421-468-310 (1199 games) | **−13.6 ± 16.9** | 5.7% | **H0 accepted at lbound** (llr −2.98, terminated at 75% budget) |
+
+W/B split:
+- White: 221-220-159 → ~+1 Elo (essentially neutral)
+- Black: 200-248-151 → ~−28 Elo (clear regression)
+- W/B gap: 29 Elo — concentrated almost entirely on the Black side.
+
+This is the **cleanest negative result** in the eval-removal investigation series so far: SPRT terminated cleanly (no game-limit fallback), CI is ±17 instead of the ±21 from 800-game runs, the regression is bigger than the CI by a factor of ~2.5 (compared to roughly 1.0 for the threadWeight and pawn-structure-narrow point estimates), and no confirmation run is needed.
+
+### What we learned
+
+1. **`chessFactor` is genuinely contributing strength.** Unlike `threadWeight` (§12.16, removal was pooled-neutral), removing the check-bonus loses measurable Elo. The two terms are not symmetric in their value despite both being "soft attack signals."
+
+2. **QSearch and `chessFactor` are complementary, not redundant.** Quiescence search in myChess follows captures only — it does not extend on checks (no check-extension feature is implemented; see [§ 12.4](#124-check-extensions--s--1530-elo)). So a leaf node where the side *could* give check next ply has no way to surface that information to alpha-beta unless the static eval encodes it. `chessFactor = 0.25` is effectively a cheap proxy for the missing check-extension: it nudges the search toward lines with forcing moves available, which often correlate with king-attack themes the rest of the eval doesn't directly capture.
+
+3. **Cost/benefit is the inverse of §12.16.** `threadWeight` cost ~10 lines and delivered pooled-neutral Elo (so removal was defensible on simplification grounds, just not necessary). `chessFactor` costs ~5 lines and delivers ~+14 Elo (so removal would be a clear regression, simplification argument loses). The two terms look superficially similar in the code but play very different roles.
+
+4. **Possible follow-up: ~~remove~~ *upgrade* the term.** If `chessFactor` is a poor man's check-extension, then implementing [§ 12.4 (check extensions)](#124-check-extensions--s--1530-elo) properly might subsume the term and possibly add another +5–15 Elo on top. The natural sequence is: keep `chessFactor` for now → implement check extensions → re-run the removal experiment with extensions in place → expect the regression to shrink or vanish (if extensions fully cover the signal).
+
+### Methodology — SPRT self-tunes with adequate budget
+
+This run also confirms the §12.16 takeaway about budget sizing in practice. With a 1600-game-budget SPRT:
+
+- Real effect ≈ −14 Elo (larger than the SPRT's `elo0 = −3` lower threshold by margin) → terminated at 1199 games, 75% of budget.
+- A confirmation run would not have changed the verdict — the original run already crossed the bound.
+- No "noise floor" misleading us: the LOS of 5.7% with a 16.9-Elo CI is not the "noise" range we saw in §§ 12.15–12.16.
+
+This is the budget-policy this section's table should be read against: 1600 is the **maximum**, not the typical, and real effects come in well before that.
+
+### Why this slot in the roadmap
+
+Documents the closure: `chessFactor` is not a candidate for removal. The `no-chess-factor` branch stays in the repository as a research archive so the same experiment isn't accidentally re-attempted. The more interesting open question — whether implementing [§ 12.4 check extensions](#124-check-extensions--s--1530-elo) would let us *then* drop `chessFactor` for free — is captured as a sequencing note in point 4 above.
 
 ---
 
