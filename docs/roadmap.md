@@ -385,6 +385,54 @@ Run-to-run W/B asymmetry varied dramatically at the 400-games-per-color sample s
 
 Documents the closure so the heuristic family isn't unwittingly re-attempted. The two research branches (`pawn-structure`, `pawn-structure-narrow`) are kept for reference. If pawn-structure work resumes, start from a different feature family — see point 4 above.
 
+## 12.16 ~~Remove `threadWeight` term from the evaluation function~~ — **investigated, not productive**
+
+*Investigated June 2026 across two SPRT measurements. Removing the `threadWeight` "soft-material" term (the per-capture-target bonus scaled by `threadWeightFactor`, originally `0.02`) gave a roughly neutral, slightly negative pooled result and is not merged. The branch `no-thread-weight` is kept as a research archive.*
+
+### What the term did
+
+`threadWeight[color]` accumulated, during the per-piece eval scan, a small bonus for every potential capture target the side could threaten — roughly `weightOfPiece[capturedPiece]` per pseudo-legal capture, plus `+4` for any move that put the opposing king in check. Multiplied by `threadWeightFactor = 0.02f` in the final sum. Conceptually a coarse approximation of "side-to-move can take stuff," which a working quiescence search ([`QuiescenceSearch`](../src/main/java/org/michaelfl/mychess/QuiescenceSearch.java)) already covers more precisely. The hypothesis was: with QSearch in place, `threadWeight` is redundant or actively noise, and removing it should be neutral-to-positive.
+
+### What was measured
+
+Two 800-game SPRT runs against `myChess-3.5.2`, TC 40/60, SPRT bounds `elo0=-3, elo1=10, α=β=0.05`:
+
+| Run | W-L-D | Elo | LOS | SPRT |
+|---|---|---|---|---|
+| 1 | 325-298-177 | +11.7 ± 21.3 | 86.0% | did not terminate (llr +0.91) |
+| 2 | 290-344-166 | **−23.5 ± 21.5** | 1.6% | **H0 accepted at lbound** (llr −2.93) |
+| **Pooled (1600)** | **615-642-343** | **~−6 ± 15** | **~22%** | — |
+
+Two independent measurements of the same configuration differed by **35 Elo**. Run 1 looked like a clear win; run 2 was a clear regression. Pooled estimate is approximately neutral with a mild negative lean.
+
+### What we learned
+
+1. **The term is not measurably harmful at factor `0.02`.** The earlier impression that "less `threadWeight` = better" came from a single factor-`0.17` measurement that was clearly a regression. With factor `0.05` at ~neutral and factor `0.00` (this experiment) also at ~neutral, the whole bottom half of the factor range is statistically indistinguishable. Only large factors clearly hurt.
+2. **No clear case for removal.** The simplification argument (~10 fewer lines, two fewer increments per `capture()` call) would be defensible if the change were Elo-neutral or positive. With a pooled point estimate of −6 Elo, the code shrink does not justify the potential strength loss.
+3. **`threadWeight` and `QSearch` are not fully redundant after all.** If they were, removing `threadWeight` should be exactly neutral. The slight pooled regression hints that `threadWeight` still contributes some useful signal at the leaf (presumably positions just past the QSearch horizon where a potential capture should weigh into the static eval), even if that signal is weak.
+
+### Methodology lesson — small-effect SPRT noise floor
+
+This is now the **third** investigation in §§ 12.15–12.16 where a single 800-game SPRT measurement was misleading by ≥ 13 Elo at our usual CI of ±21:
+
+| Investigation | Run 1 (point est.) | Run 2 (point est.) | Δ |
+|---|---|---|---|
+| pawn-structure v2 (split, ±2 rank, factor 0.5) | −3.5 | −26.3 | 23 Elo |
+| pawn-structure narrow (split, ±1 rank, factor 0.5) | +9.1 | −4.3 | 13 Elo |
+| no-thread-weight (this entry) | +11.7 | −23.5 | **35 Elo** |
+
+**Implication for future small-effect investigations:** when the true Elo effect is plausibly in the ±10 band, an 800-game SPRT is the wrong instrument. Concrete options for next time:
+
+- **Default to 1600+ games** per measurement when the expected effect is small. CI shrinks from ±21 to ~±15; SPRT also has more chances to terminate cleanly.
+- **Color-balanced opening pairs** (Gauntlet-style: every opening played from both sides by both engines). Halves the W/B-variance contribution to the run-to-run drift.
+- **Treat single-run "promising" results as hypothesis-generating, not decision-grade.** A second independent run is mandatory before merging anything in the ±10-Elo band.
+
+A small-effect SPRT bench probably belongs in [§ 12.10 (in-process measurement harness)](#1210-in-process-measurement-harness--sm-no-elo-but-adds-fast-per-change-diagnostics) — fixed seeds, color-balanced pairs, fast turnaround so that the ±15 CI is the default, not the exception.
+
+### Why this slot in the roadmap
+
+Documents the closure so the `threadWeight` removal isn't unwittingly re-attempted. The `no-thread-weight` research branch stays in the repository for reference. The methodology lesson above is the more durable takeaway — it shapes how we should run *any* future investigation in the small-Elo band.
+
 ---
 
 ## Suggested implementation order
