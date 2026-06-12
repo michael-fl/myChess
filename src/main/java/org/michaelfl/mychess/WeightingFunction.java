@@ -97,7 +97,6 @@ public final class WeightingFunction {
     private static final float mobilityFactor = 0.1f;
     private static final float positionFactor = 0.5f;
     private static final float threadWeightFactor = 0.02f;
-    private static final float chessFactor = 0.25f;
     private static final float castlingFactor = 0.25f;
     /**
      * Per-doubled-pair penalty in pawn units, applied directly in the
@@ -113,7 +112,6 @@ public final class WeightingFunction {
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Board theBoard; // For debugger only
     private byte[] board;
-    private final int[] chessCount = new int[2];
     private final float[] piecesWeight = new float[2];
     private final int[] mobilityWeight = new int[2];
     private final int[] positionWeight = new int[2];
@@ -164,8 +162,6 @@ public final class WeightingFunction {
         this.turn = game.getTurn() == GameStatus.TURN_WHITE ? 0 : 1;
         this.theBoard = theBoard;
         this.board = theBoard.getRawBoard();
-        this.chessCount[0] = 0;
-        this.chessCount[1] = 0;
         this.piecesWeight[0] = 0;
         this.piecesWeight[1] = 0;
         this.mobilityWeight[0] = 0;
@@ -212,7 +208,6 @@ public final class WeightingFunction {
                 + (mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor
                 + (threadWeight[0] - threadWeight[1]) / 100f * threadWeightFactor
                 + (castlingState[0] - castlingState[1]) * castlingFactor
-                + (chessCount[0] - chessCount[1]) * chessFactor
                 + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) * 100);
     }
 
@@ -241,7 +236,6 @@ public final class WeightingFunction {
                "threadWeight:       w=" + threadWeight[0] + ", b=" + threadWeight[1] + DELTA_STR + (threadWeight[0] - threadWeight[1]) + WEIGHT_STR + round((threadWeight[0] - threadWeight[1])  / 100f * threadWeightFactor) + '\n' +
                "castlingState:      w=" + castlingState[0] + ", b=" + castlingState[1] + DELTA_STR + (castlingState[0] - castlingState[1]) + WEIGHT_STR + round((castlingState[0] - castlingState[1]) * castlingFactor) + '\n' +
                "doublePawnCount:    w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + DELTA_STR + (doublePawnCount[0] - doublePawnCount[1]) + WEIGHT_STR + round((doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) + '\n' +
-               "chessCount:         w=" + chessCount[0] + ", b=" + chessCount[1] + DELTA_STR + (chessCount[0] - chessCount[1]) + WEIGHT_STR + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
                "weight: " + calculatePositionWeight() / 100f;
     }
 
@@ -503,7 +497,6 @@ public final class WeightingFunction {
             if (turn == color) {
                 containsIllegalMove = true;
             } else {
-                chessCount[color]++;
                 threadWeight[color] += 4; // ok, give some weight to the attacked king as well (since weightOfPiece(king) is 0)
             }
         }
