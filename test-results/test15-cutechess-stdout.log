@@ -1,0 +1,1355 @@
+Indexing opening suite...
+Started game 2 of 400 (PurplePanda vs myChess)
+Started game 1 of 400 (myChess vs PurplePanda)
+Started game 3 of 400 (myChess vs PurplePanda)
+Started game 4 of 400 (PurplePanda vs myChess)
+Finished game 4 (PurplePanda vs myChess): 0-1 {Black mates}
+Score of myChess vs PurplePanda: 1 - 0 - 0  [1.000] 1
+Started game 5 of 400 (myChess vs PurplePanda)
+Finished game 1 (myChess vs PurplePanda): 1-0 {White mates}
+Score of myChess vs PurplePanda: 2 - 0 - 0  [1.000] 2
+Started game 6 of 400 (PurplePanda vs myChess)
+Finished game 2 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 2 - 1 - 0  [0.667] 3
+Started game 7 of 400 (myChess vs PurplePanda)
+Finished game 5 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 2 - 2 - 0  [0.500] 4
+Started game 8 of 400 (PurplePanda vs myChess)
+Finished game 7 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 3 - 2 - 0  [0.600] 5
+Started game 9 of 400 (myChess vs PurplePanda)
+Finished game 3 (myChess vs PurplePanda): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess vs PurplePanda: 3 - 2 - 1  [0.583] 6
+Started game 10 of 400 (PurplePanda vs myChess)
+Finished game 6 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 3 - 2 - 2  [0.571] 7
+Started game 11 of 400 (myChess vs PurplePanda)
+Finished game 10 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 3 - 3 - 2  [0.500] 8
+Started game 12 of 400 (PurplePanda vs myChess)
+Finished game 8 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 3 - 4 - 2  [0.444] 9
+Started game 13 of 400 (myChess vs PurplePanda)
+Finished game 11 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 3 - 5 - 2  [0.400] 10
+Started game 14 of 400 (PurplePanda vs myChess)
+Finished game 9 (myChess vs PurplePanda): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess vs PurplePanda: 3 - 5 - 3  [0.409] 11
+Started game 15 of 400 (myChess vs PurplePanda)
+Finished game 13 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 3 - 6 - 3  [0.375] 12
+Started game 16 of 400 (PurplePanda vs myChess)
+Finished game 14 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 3 - 7 - 3  [0.346] 13
+Started game 17 of 400 (myChess vs PurplePanda)
+Finished game 15 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 4 - 7 - 3  [0.393] 14
+Started game 18 of 400 (PurplePanda vs myChess)
+Finished game 18 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 5 - 7 - 3  [0.433] 15
+Started game 19 of 400 (myChess vs PurplePanda)
+Finished game 12 (PurplePanda vs myChess): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess vs PurplePanda: 5 - 7 - 4  [0.438] 16
+Started game 20 of 400 (PurplePanda vs myChess)
+Finished game 17 (myChess vs PurplePanda): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 5 - 7 - 5  [0.441] 17
+Started game 21 of 400 (myChess vs PurplePanda)
+Finished game 20 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 6 - 7 - 5  [0.472] 18
+Started game 22 of 400 (PurplePanda vs myChess)
+Finished game 22 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 7 - 7 - 5  [0.500] 19
+Started game 23 of 400 (myChess vs PurplePanda)
+Finished game 16 (PurplePanda vs myChess): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess vs PurplePanda: 7 - 7 - 6  [0.500] 20
+...      myChess playing White: 3 - 3 - 3  [0.500] 9
+...      myChess playing Black: 4 - 4 - 3  [0.500] 11
+...      White vs Black: 7 - 7 - 6  [0.500] 20
+Elo difference: 0.0 +/- 133.4, LOS: 50.0 %, DrawRatio: 30.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 24 of 400 (PurplePanda vs myChess)
+Finished game 21 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 7 - 8 - 6  [0.476] 21
+Started game 25 of 400 (myChess vs PurplePanda)
+Finished game 19 (myChess vs PurplePanda): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess vs PurplePanda: 7 - 8 - 7  [0.477] 22
+Started game 26 of 400 (PurplePanda vs myChess)
+Finished game 24 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 7 - 8 - 8  [0.478] 23
+Started game 27 of 400 (myChess vs PurplePanda)
+Finished game 26 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 8 - 8 - 8  [0.500] 24
+Started game 28 of 400 (PurplePanda vs myChess)
+Finished game 23 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 8 - 9 - 8  [0.480] 25
+Started game 29 of 400 (myChess vs PurplePanda)
+Finished game 27 (myChess vs PurplePanda): 1-0 {White mates}
+Score of myChess vs PurplePanda: 9 - 9 - 8  [0.500] 26
+Started game 30 of 400 (PurplePanda vs myChess)
+Finished game 29 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 9 - 10 - 8  [0.481] 27
+Started game 31 of 400 (myChess vs PurplePanda)
+Finished game 28 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 9 - 11 - 8  [0.464] 28
+Started game 32 of 400 (PurplePanda vs myChess)
+Finished game 25 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 9 - 12 - 8  [0.448] 29
+Started game 33 of 400 (myChess vs PurplePanda)
+Finished game 31 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 10 - 12 - 8  [0.467] 30
+Started game 34 of 400 (PurplePanda vs myChess)
+Finished game 33 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 11 - 12 - 8  [0.484] 31
+Started game 35 of 400 (myChess vs PurplePanda)
+Finished game 34 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 12 - 12 - 8  [0.500] 32
+Started game 36 of 400 (PurplePanda vs myChess)
+Finished game 32 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 12 - 13 - 8  [0.485] 33
+Started game 37 of 400 (myChess vs PurplePanda)
+Finished game 30 (PurplePanda vs myChess): 1/2-1/2 {Draw by adjudication}
+Score of myChess vs PurplePanda: 12 - 13 - 9  [0.485] 34
+Started game 38 of 400 (PurplePanda vs myChess)
+Finished game 38 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 13 - 13 - 9  [0.500] 35
+Started game 39 of 400 (myChess vs PurplePanda)
+Finished game 35 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 14 - 13 - 9  [0.514] 36
+Started game 40 of 400 (PurplePanda vs myChess)
+Finished game 37 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 15 - 13 - 9  [0.527] 37
+Started game 41 of 400 (myChess vs PurplePanda)
+Finished game 36 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 16 - 13 - 9  [0.539] 38
+Started game 42 of 400 (PurplePanda vs myChess)
+Finished game 39 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 17 - 13 - 9  [0.551] 39
+Started game 43 of 400 (myChess vs PurplePanda)
+Finished game 42 (PurplePanda vs myChess): 0-1 {Black mates}
+Score of myChess vs PurplePanda: 18 - 13 - 9  [0.563] 40
+...      myChess playing White: 9 - 7 - 4  [0.550] 20
+...      myChess playing Black: 9 - 6 - 5  [0.575] 20
+...      White vs Black: 15 - 16 - 9  [0.487] 40
+Elo difference: 43.7 +/- 97.8, LOS: 81.5 %, DrawRatio: 22.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 44 of 400 (PurplePanda vs myChess)
+Finished game 40 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 19 - 13 - 9  [0.573] 41
+Started game 45 of 400 (myChess vs PurplePanda)
+Finished game 45 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 20 - 13 - 9  [0.583] 42
+Started game 46 of 400 (PurplePanda vs myChess)
+Finished game 43 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 21 - 13 - 9  [0.593] 43
+Started game 47 of 400 (myChess vs PurplePanda)
+Finished game 41 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 22 - 13 - 9  [0.602] 44
+Started game 48 of 400 (PurplePanda vs myChess)
+Finished game 46 (PurplePanda vs myChess): 0-1 {Black mates}
+Score of myChess vs PurplePanda: 23 - 13 - 9  [0.611] 45
+Started game 49 of 400 (myChess vs PurplePanda)
+Finished game 44 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 24 - 13 - 9  [0.620] 46
+Started game 50 of 400 (PurplePanda vs myChess)
+Finished game 47 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 24 - 14 - 9  [0.606] 47
+Started game 51 of 400 (myChess vs PurplePanda)
+Finished game 48 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 25 - 14 - 9  [0.615] 48
+Started game 52 of 400 (PurplePanda vs myChess)
+Finished game 49 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 26 - 14 - 9  [0.622] 49
+Started game 53 of 400 (myChess vs PurplePanda)
+Finished game 51 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 27 - 14 - 9  [0.630] 50
+Started game 54 of 400 (PurplePanda vs myChess)
+Finished game 53 (myChess vs PurplePanda): 1-0 {White mates}
+Score of myChess vs PurplePanda: 28 - 14 - 9  [0.637] 51
+Started game 55 of 400 (myChess vs PurplePanda)
+Finished game 52 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 28 - 14 - 10  [0.635] 52
+Started game 56 of 400 (PurplePanda vs myChess)
+Finished game 54 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 29 - 14 - 10  [0.642] 53
+Started game 57 of 400 (myChess vs PurplePanda)
+Finished game 50 (PurplePanda vs myChess): 1/2-1/2 {Draw by adjudication}
+Score of myChess vs PurplePanda: 29 - 14 - 11  [0.639] 54
+Started game 58 of 400 (PurplePanda vs myChess)
+Finished game 56 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 30 - 14 - 11  [0.645] 55
+Started game 59 of 400 (myChess vs PurplePanda)
+Finished game 55 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 31 - 14 - 11  [0.652] 56
+Started game 60 of 400 (PurplePanda vs myChess)
+Finished game 59 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 32 - 14 - 11  [0.658] 57
+Started game 61 of 400 (myChess vs PurplePanda)
+Finished game 57 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 33 - 14 - 11  [0.664] 58
+Started game 62 of 400 (PurplePanda vs myChess)
+Finished game 61 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 34 - 14 - 11  [0.669] 59
+Started game 63 of 400 (myChess vs PurplePanda)
+Finished game 60 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 34 - 15 - 11  [0.658] 60
+...      myChess playing White: 19 - 8 - 4  [0.677] 31
+...      myChess playing Black: 15 - 7 - 7  [0.638] 29
+...      White vs Black: 26 - 23 - 11  [0.525] 60
+Elo difference: 113.9 +/- 84.7, LOS: 99.7 %, DrawRatio: 18.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 64 of 400 (PurplePanda vs myChess)
+Terminating process of engine PurplePanda(2)
+Finished game 63 (myChess vs PurplePanda): 1-0 {Black's connection stalls}
+Score of myChess vs PurplePanda: 35 - 15 - 11  [0.664] 61
+Started game 65 of 400 (myChess vs PurplePanda)
+Terminating process of engine PurplePanda(5)
+Finished game 58 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 36 - 15 - 11  [0.669] 62
+Started game 66 of 400 (PurplePanda vs myChess)
+Terminating process of engine PurplePanda(6)
+Finished game 62 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 37 - 15 - 11  [0.675] 63
+Started game 67 of 400 (myChess vs PurplePanda)
+Terminating process of engine PurplePanda(1)
+Finished game 64 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 38 - 15 - 11  [0.680] 64
+Started game 68 of 400 (PurplePanda vs myChess)
+Finished game 65 (myChess vs PurplePanda): 1-0 {White mates}
+Score of myChess vs PurplePanda: 39 - 15 - 11  [0.685] 65
+Started game 69 of 400 (myChess vs PurplePanda)
+Finished game 66 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 40 - 15 - 11  [0.689] 66
+Started game 70 of 400 (PurplePanda vs myChess)
+Finished game 67 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 41 - 15 - 11  [0.694] 67
+Started game 71 of 400 (myChess vs PurplePanda)
+Finished game 69 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 42 - 15 - 11  [0.699] 68
+Started game 72 of 400 (PurplePanda vs myChess)
+Finished game 68 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 42 - 16 - 11  [0.688] 69
+Started game 73 of 400 (myChess vs PurplePanda)
+Finished game 73 (myChess vs PurplePanda): 1-0 {White mates}
+Score of myChess vs PurplePanda: 43 - 16 - 11  [0.693] 70
+Started game 74 of 400 (PurplePanda vs myChess)
+Finished game 71 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 43 - 17 - 11  [0.683] 71
+Started game 75 of 400 (myChess vs PurplePanda)
+Finished game 72 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 44 - 17 - 11  [0.688] 72
+Started game 76 of 400 (PurplePanda vs myChess)
+Finished game 70 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 45 - 17 - 11  [0.692] 73
+Started game 77 of 400 (myChess vs PurplePanda)
+Finished game 74 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 45 - 18 - 11  [0.682] 74
+Started game 78 of 400 (PurplePanda vs myChess)
+Finished game 76 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 45 - 19 - 11  [0.673] 75
+Started game 79 of 400 (myChess vs PurplePanda)
+Finished game 75 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 45 - 20 - 11  [0.664] 76
+Started game 80 of 400 (PurplePanda vs myChess)
+Finished game 78 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 45 - 21 - 11  [0.656] 77
+Started game 81 of 400 (myChess vs PurplePanda)
+Finished game 79 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 46 - 21 - 11  [0.660] 78
+Started game 82 of 400 (PurplePanda vs myChess)
+Finished game 77 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 47 - 21 - 11  [0.665] 79
+Started game 83 of 400 (myChess vs PurplePanda)
+Finished game 80 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 48 - 21 - 11  [0.669] 80
+...      myChess playing White: 26 - 10 - 4  [0.700] 40
+...      myChess playing Black: 22 - 11 - 7  [0.637] 40
+...      White vs Black: 37 - 32 - 11  [0.531] 80
+Elo difference: 122.0 +/- 75.8, LOS: 99.9 %, DrawRatio: 13.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 84 of 400 (PurplePanda vs myChess)
+Finished game 83 (myChess vs PurplePanda): 1-0 {White mates}
+Score of myChess vs PurplePanda: 49 - 21 - 11  [0.673] 81
+Started game 85 of 400 (myChess vs PurplePanda)
+Finished game 81 (myChess vs PurplePanda): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 49 - 21 - 12  [0.671] 82
+Started game 86 of 400 (PurplePanda vs myChess)
+Finished game 85 (myChess vs PurplePanda): 1-0 {White mates}
+Score of myChess vs PurplePanda: 50 - 21 - 12  [0.675] 83
+Started game 87 of 400 (myChess vs PurplePanda)
+Finished game 86 (PurplePanda vs myChess): 0-1 {Black mates}
+Score of myChess vs PurplePanda: 51 - 21 - 12  [0.679] 84
+Started game 88 of 400 (PurplePanda vs myChess)
+Finished game 82 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 52 - 21 - 12  [0.682] 85
+Started game 89 of 400 (myChess vs PurplePanda)
+Finished game 84 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 53 - 21 - 12  [0.686] 86
+Started game 90 of 400 (PurplePanda vs myChess)
+Finished game 87 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 54 - 21 - 12  [0.690] 87
+Started game 91 of 400 (myChess vs PurplePanda)
+Finished game 90 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 54 - 21 - 13  [0.688] 88
+Started game 92 of 400 (PurplePanda vs myChess)
+Finished game 88 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 55 - 21 - 13  [0.691] 89
+Started game 93 of 400 (myChess vs PurplePanda)
+Finished game 89 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 56 - 21 - 13  [0.694] 90
+Started game 94 of 400 (PurplePanda vs myChess)
+Finished game 92 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 57 - 21 - 13  [0.698] 91
+Started game 95 of 400 (myChess vs PurplePanda)
+Finished game 91 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 57 - 22 - 13  [0.690] 92
+Started game 96 of 400 (PurplePanda vs myChess)
+Finished game 93 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 57 - 23 - 13  [0.683] 93
+Started game 97 of 400 (myChess vs PurplePanda)
+Finished game 95 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 58 - 23 - 13  [0.686] 94
+Started game 98 of 400 (PurplePanda vs myChess)
+Finished game 94 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 58 - 24 - 13  [0.679] 95
+Started game 99 of 400 (myChess vs PurplePanda)
+Finished game 96 (PurplePanda vs myChess): 0-1 {Black mates}
+Score of myChess vs PurplePanda: 59 - 24 - 13  [0.682] 96
+Started game 100 of 400 (PurplePanda vs myChess)
+Finished game 97 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 59 - 25 - 13  [0.675] 97
+Started game 101 of 400 (myChess vs PurplePanda)
+Finished game 101 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 59 - 26 - 13  [0.668] 98
+Started game 102 of 400 (PurplePanda vs myChess)
+Finished game 99 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 60 - 26 - 13  [0.672] 99
+Started game 103 of 400 (myChess vs PurplePanda)
+Finished game 100 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 61 - 26 - 13  [0.675] 100
+...      myChess playing White: 32 - 14 - 5  [0.676] 51
+...      myChess playing Black: 29 - 12 - 8  [0.673] 49
+...      White vs Black: 44 - 43 - 13  [0.505] 100
+Elo difference: 127.0 +/- 68.2, LOS: 100.0 %, DrawRatio: 13.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 104 of 400 (PurplePanda vs myChess)
+Finished game 102 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 61 - 27 - 13  [0.668] 101
+Started game 105 of 400 (myChess vs PurplePanda)
+Finished game 98 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 62 - 27 - 13  [0.672] 102
+Started game 106 of 400 (PurplePanda vs myChess)
+Finished game 103 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 62 - 28 - 13  [0.665] 103
+Started game 107 of 400 (myChess vs PurplePanda)
+Finished game 104 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 63 - 28 - 13  [0.668] 104
+Started game 108 of 400 (PurplePanda vs myChess)
+Finished game 106 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 64 - 28 - 13  [0.671] 105
+Started game 109 of 400 (myChess vs PurplePanda)
+Finished game 105 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 65 - 28 - 13  [0.675] 106
+Started game 110 of 400 (PurplePanda vs myChess)
+Finished game 110 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 65 - 28 - 14  [0.673] 107
+Started game 111 of 400 (myChess vs PurplePanda)
+Finished game 111 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 66 - 28 - 14  [0.676] 108
+Started game 112 of 400 (PurplePanda vs myChess)
+Finished game 107 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 67 - 28 - 14  [0.679] 109
+Started game 113 of 400 (myChess vs PurplePanda)
+Finished game 109 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 68 - 28 - 14  [0.682] 110
+Started game 114 of 400 (PurplePanda vs myChess)
+Finished game 113 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 69 - 28 - 14  [0.685] 111
+Started game 115 of 400 (myChess vs PurplePanda)
+Finished game 114 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 70 - 28 - 14  [0.688] 112
+Started game 116 of 400 (PurplePanda vs myChess)
+Finished game 108 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 71 - 28 - 14  [0.690] 113
+Started game 117 of 400 (myChess vs PurplePanda)
+Finished game 112 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 72 - 28 - 14  [0.693] 114
+Started game 118 of 400 (PurplePanda vs myChess)
+Finished game 115 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 73 - 28 - 14  [0.696] 115
+Started game 119 of 400 (myChess vs PurplePanda)
+Finished game 117 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 73 - 29 - 14  [0.690] 116
+Started game 120 of 400 (PurplePanda vs myChess)
+Finished game 118 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 74 - 29 - 14  [0.692] 117
+Started game 121 of 400 (myChess vs PurplePanda)
+Finished game 116 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 74 - 29 - 15  [0.691] 118
+Started game 122 of 400 (PurplePanda vs myChess)
+Finished game 120 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 75 - 29 - 15  [0.693] 119
+Started game 123 of 400 (myChess vs PurplePanda)
+Finished game 119 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 75 - 30 - 15  [0.688] 120
+...      myChess playing White: 38 - 17 - 5  [0.675] 60
+...      myChess playing Black: 37 - 13 - 10  [0.700] 60
+...      White vs Black: 51 - 54 - 15  [0.487] 120
+Elo difference: 137.0 +/- 62.9, LOS: 100.0 %, DrawRatio: 12.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 124 of 400 (PurplePanda vs myChess)
+Finished game 123 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 75 - 31 - 15  [0.682] 121
+Started game 125 of 400 (myChess vs PurplePanda)
+Finished game 122 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 75 - 32 - 15  [0.676] 122
+Started game 126 of 400 (PurplePanda vs myChess)
+Finished game 124 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 75 - 33 - 15  [0.671] 123
+Started game 127 of 400 (myChess vs PurplePanda)
+Finished game 121 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 75 - 34 - 15  [0.665] 124
+Started game 128 of 400 (PurplePanda vs myChess)
+Finished game 127 (myChess vs PurplePanda): 1-0 {White mates}
+Score of myChess vs PurplePanda: 76 - 34 - 15  [0.668] 125
+Started game 129 of 400 (myChess vs PurplePanda)
+Finished game 126 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 76 - 35 - 15  [0.663] 126
+Started game 130 of 400 (PurplePanda vs myChess)
+Finished game 129 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 77 - 35 - 15  [0.665] 127
+Started game 131 of 400 (myChess vs PurplePanda)
+Finished game 125 (myChess vs PurplePanda): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess vs PurplePanda: 77 - 35 - 16  [0.664] 128
+Started game 132 of 400 (PurplePanda vs myChess)
+Terminating process of engine PurplePanda(11)
+Finished game 128 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 78 - 35 - 16  [0.667] 129
+Started game 133 of 400 (myChess vs PurplePanda)
+Terminating process of engine PurplePanda(8)
+Finished game 131 (myChess vs PurplePanda): 1-0 {Black's connection stalls}
+Score of myChess vs PurplePanda: 79 - 35 - 16  [0.669] 130
+Started game 134 of 400 (PurplePanda vs myChess)
+Terminating process of engine PurplePanda(9)
+Finished game 132 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 80 - 35 - 16  [0.672] 131
+Started game 135 of 400 (myChess vs PurplePanda)
+Finished game 133 (myChess vs PurplePanda): 1-0 {White mates}
+Score of myChess vs PurplePanda: 81 - 35 - 16  [0.674] 132
+Started game 136 of 400 (PurplePanda vs myChess)
+Terminating process of engine PurplePanda(10)
+Finished game 130 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 82 - 35 - 16  [0.677] 133
+Started game 137 of 400 (myChess vs PurplePanda)
+Finished game 135 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 83 - 35 - 16  [0.679] 134
+Started game 138 of 400 (PurplePanda vs myChess)
+Finished game 138 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 84 - 35 - 16  [0.681] 135
+Started game 139 of 400 (myChess vs PurplePanda)
+Finished game 137 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 85 - 35 - 16  [0.684] 136
+Started game 140 of 400 (PurplePanda vs myChess)
+Finished game 136 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 85 - 35 - 17  [0.682] 137
+Started game 141 of 400 (myChess vs PurplePanda)
+Finished game 134 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 85 - 36 - 17  [0.678] 138
+Started game 142 of 400 (PurplePanda vs myChess)
+Finished game 139 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 86 - 36 - 17  [0.680] 139
+Started game 143 of 400 (myChess vs PurplePanda)
+Finished game 140 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 86 - 37 - 17  [0.675] 140
+...      myChess playing White: 45 - 19 - 6  [0.686] 70
+...      myChess playing Black: 41 - 18 - 11  [0.664] 70
+...      White vs Black: 63 - 60 - 17  [0.511] 140
+Elo difference: 127.0 +/- 57.7, LOS: 100.0 %, DrawRatio: 12.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 144 of 400 (PurplePanda vs myChess)
+Finished game 142 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 86 - 38 - 17  [0.670] 141
+Started game 145 of 400 (myChess vs PurplePanda)
+Finished game 141 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 86 - 39 - 17  [0.665] 142
+Started game 146 of 400 (PurplePanda vs myChess)
+Finished game 146 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 87 - 39 - 17  [0.668] 143
+Started game 147 of 400 (myChess vs PurplePanda)
+Finished game 143 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 87 - 40 - 17  [0.663] 144
+Started game 148 of 400 (PurplePanda vs myChess)
+Finished game 147 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 88 - 40 - 17  [0.666] 145
+Started game 149 of 400 (myChess vs PurplePanda)
+Finished game 145 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 88 - 41 - 17  [0.661] 146
+Started game 150 of 400 (PurplePanda vs myChess)
+Finished game 149 (myChess vs PurplePanda): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 88 - 41 - 18  [0.660] 147
+Started game 151 of 400 (myChess vs PurplePanda)
+Finished game 148 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 89 - 41 - 18  [0.662] 148
+Started game 152 of 400 (PurplePanda vs myChess)
+Finished game 144 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 89 - 41 - 19  [0.661] 149
+Started game 153 of 400 (myChess vs PurplePanda)
+Finished game 150 (PurplePanda vs myChess): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess vs PurplePanda: 89 - 41 - 20  [0.660] 150
+Started game 154 of 400 (PurplePanda vs myChess)
+Finished game 153 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 89 - 42 - 20  [0.656] 151
+Started game 155 of 400 (myChess vs PurplePanda)
+Finished game 154 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 90 - 42 - 20  [0.658] 152
+Started game 156 of 400 (PurplePanda vs myChess)
+Finished game 151 (myChess vs PurplePanda): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess vs PurplePanda: 90 - 42 - 21  [0.657] 153
+Started game 157 of 400 (myChess vs PurplePanda)
+Finished game 156 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 91 - 42 - 21  [0.659] 154
+Started game 158 of 400 (PurplePanda vs myChess)
+Finished game 152 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 91 - 43 - 21  [0.655] 155
+Started game 159 of 400 (myChess vs PurplePanda)
+Finished game 158 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 91 - 44 - 21  [0.651] 156
+Started game 160 of 400 (PurplePanda vs myChess)
+Finished game 155 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 91 - 45 - 21  [0.646] 157
+Started game 161 of 400 (myChess vs PurplePanda)
+Finished game 159 (myChess vs PurplePanda): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess vs PurplePanda: 91 - 45 - 22  [0.646] 158
+Started game 162 of 400 (PurplePanda vs myChess)
+Finished game 160 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 92 - 45 - 22  [0.648] 159
+Started game 163 of 400 (myChess vs PurplePanda)
+Finished game 161 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 92 - 46 - 22  [0.644] 160
+...      myChess playing White: 46 - 25 - 9  [0.631] 80
+...      myChess playing Black: 46 - 21 - 13  [0.656] 80
+...      White vs Black: 67 - 71 - 22  [0.487] 160
+Elo difference: 102.8 +/- 52.2, LOS: 100.0 %, DrawRatio: 13.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 164 of 400 (PurplePanda vs myChess)
+Finished game 157 (myChess vs PurplePanda): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 92 - 46 - 23  [0.643] 161
+Started game 165 of 400 (myChess vs PurplePanda)
+Finished game 162 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 93 - 46 - 23  [0.645] 162
+Started game 166 of 400 (PurplePanda vs myChess)
+Finished game 164 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 94 - 46 - 23  [0.647] 163
+Started game 167 of 400 (myChess vs PurplePanda)
+Finished game 165 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 95 - 46 - 23  [0.649] 164
+Started game 168 of 400 (PurplePanda vs myChess)
+Finished game 163 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 95 - 47 - 23  [0.645] 165
+Started game 169 of 400 (myChess vs PurplePanda)
+Finished game 166 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 96 - 47 - 23  [0.648] 166
+Started game 170 of 400 (PurplePanda vs myChess)
+Finished game 168 (PurplePanda vs myChess): 0-1 {Black mates}
+Score of myChess vs PurplePanda: 97 - 47 - 23  [0.650] 167
+Started game 171 of 400 (myChess vs PurplePanda)
+Finished game 169 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 98 - 47 - 23  [0.652] 168
+Started game 172 of 400 (PurplePanda vs myChess)
+Finished game 171 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 99 - 47 - 23  [0.654] 169
+Started game 173 of 400 (myChess vs PurplePanda)
+Finished game 172 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 100 - 47 - 23  [0.656] 170
+Started game 174 of 400 (PurplePanda vs myChess)
+Finished game 167 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 101 - 47 - 23  [0.658] 171
+Started game 175 of 400 (myChess vs PurplePanda)
+Finished game 170 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 102 - 47 - 23  [0.660] 172
+Started game 176 of 400 (PurplePanda vs myChess)
+Finished game 173 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 102 - 48 - 23  [0.656] 173
+Started game 177 of 400 (myChess vs PurplePanda)
+Finished game 176 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 103 - 48 - 23  [0.658] 174
+Started game 178 of 400 (PurplePanda vs myChess)
+Finished game 174 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 103 - 49 - 23  [0.654] 175
+Started game 179 of 400 (myChess vs PurplePanda)
+Finished game 175 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 103 - 50 - 23  [0.651] 176
+Started game 180 of 400 (PurplePanda vs myChess)
+Finished game 180 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 104 - 50 - 23  [0.653] 177
+Started game 181 of 400 (myChess vs PurplePanda)
+Finished game 177 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 105 - 50 - 23  [0.654] 178
+Started game 182 of 400 (PurplePanda vs myChess)
+Finished game 178 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 105 - 51 - 23  [0.651] 179
+Started game 183 of 400 (myChess vs PurplePanda)
+Finished game 179 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 106 - 51 - 23  [0.653] 180
+...      myChess playing White: 52 - 28 - 10  [0.633] 90
+...      myChess playing Black: 54 - 23 - 13  [0.672] 90
+...      White vs Black: 75 - 82 - 23  [0.481] 180
+Elo difference: 109.7 +/- 49.8, LOS: 100.0 %, DrawRatio: 12.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 184 of 400 (PurplePanda vs myChess)
+Finished game 181 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 107 - 51 - 23  [0.655] 181
+Started game 185 of 400 (myChess vs PurplePanda)
+Finished game 184 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 107 - 52 - 23  [0.651] 182
+Started game 186 of 400 (PurplePanda vs myChess)
+Finished game 185 (myChess vs PurplePanda): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 107 - 52 - 24  [0.650] 183
+Started game 187 of 400 (myChess vs PurplePanda)
+Finished game 186 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 108 - 52 - 24  [0.652] 184
+Started game 188 of 400 (PurplePanda vs myChess)
+Finished game 182 (PurplePanda vs myChess): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess vs PurplePanda: 108 - 52 - 25  [0.651] 185
+Started game 189 of 400 (myChess vs PurplePanda)
+Finished game 188 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 109 - 52 - 25  [0.653] 186
+Started game 190 of 400 (PurplePanda vs myChess)
+Finished game 189 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 109 - 53 - 25  [0.650] 187
+Started game 191 of 400 (myChess vs PurplePanda)
+Finished game 191 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 110 - 53 - 25  [0.652] 188
+Started game 192 of 400 (PurplePanda vs myChess)
+Finished game 187 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 110 - 54 - 25  [0.648] 189
+Started game 193 of 400 (myChess vs PurplePanda)
+Finished game 193 (myChess vs PurplePanda): 1-0 {White mates}
+Score of myChess vs PurplePanda: 111 - 54 - 25  [0.650] 190
+Started game 194 of 400 (PurplePanda vs myChess)
+Terminating process of engine PurplePanda(14)
+Finished game 183 (myChess vs PurplePanda): 1-0 {Black's connection stalls}
+Score of myChess vs PurplePanda: 112 - 54 - 25  [0.652] 191
+Started game 195 of 400 (myChess vs PurplePanda)
+Terminating process of engine PurplePanda(12)
+Finished game 192 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 113 - 54 - 25  [0.654] 192
+Started game 196 of 400 (PurplePanda vs myChess)
+Terminating process of engine PurplePanda(13)
+Finished game 190 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 114 - 54 - 25  [0.655] 193
+Started game 197 of 400 (myChess vs PurplePanda)
+Terminating process of engine PurplePanda(15)
+Finished game 194 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 115 - 54 - 25  [0.657] 194
+Started game 198 of 400 (PurplePanda vs myChess)
+Finished game 195 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 116 - 54 - 25  [0.659] 195
+Started game 199 of 400 (myChess vs PurplePanda)
+Finished game 198 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 117 - 54 - 25  [0.661] 196
+Started game 200 of 400 (PurplePanda vs myChess)
+Finished game 196 (PurplePanda vs myChess): 1/2-1/2 {Draw by adjudication}
+Score of myChess vs PurplePanda: 117 - 54 - 26  [0.660] 197
+Started game 201 of 400 (myChess vs PurplePanda)
+Finished game 201 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 118 - 54 - 26  [0.662] 198
+Started game 202 of 400 (PurplePanda vs myChess)
+Finished game 199 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 119 - 54 - 26  [0.663] 199
+Started game 203 of 400 (myChess vs PurplePanda)
+Finished game 200 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 119 - 54 - 27  [0.662] 200
+...      myChess playing White: 59 - 30 - 11  [0.645] 100
+...      myChess playing Black: 60 - 24 - 16  [0.680] 100
+...      White vs Black: 83 - 90 - 27  [0.482] 200
+Elo difference: 117.2 +/- 47.2, LOS: 100.0 %, DrawRatio: 13.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 204 of 400 (PurplePanda vs myChess)
+Finished game 197 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 119 - 55 - 27  [0.659] 201
+Started game 205 of 400 (myChess vs PurplePanda)
+Finished game 204 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 120 - 55 - 27  [0.661] 202
+Started game 206 of 400 (PurplePanda vs myChess)
+Finished game 203 (myChess vs PurplePanda): 0-1 {Black mates}
+Score of myChess vs PurplePanda: 120 - 56 - 27  [0.658] 203
+Started game 207 of 400 (myChess vs PurplePanda)
+Finished game 205 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 121 - 56 - 27  [0.659] 204
+Started game 208 of 400 (PurplePanda vs myChess)
+Finished game 206 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 122 - 56 - 27  [0.661] 205
+Started game 209 of 400 (myChess vs PurplePanda)
+Finished game 207 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 122 - 57 - 27  [0.658] 206
+Started game 210 of 400 (PurplePanda vs myChess)
+Finished game 202 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 122 - 58 - 27  [0.655] 207
+Started game 211 of 400 (myChess vs PurplePanda)
+Finished game 209 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 122 - 59 - 27  [0.651] 208
+Started game 212 of 400 (PurplePanda vs myChess)
+Finished game 208 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 122 - 60 - 27  [0.648] 209
+Started game 213 of 400 (myChess vs PurplePanda)
+Finished game 210 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 123 - 60 - 27  [0.650] 210
+Started game 214 of 400 (PurplePanda vs myChess)
+Finished game 214 (PurplePanda vs myChess): 0-1 {Black mates}
+Score of myChess vs PurplePanda: 124 - 60 - 27  [0.652] 211
+Started game 215 of 400 (myChess vs PurplePanda)
+Finished game 212 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 124 - 61 - 27  [0.649] 212
+Started game 216 of 400 (PurplePanda vs myChess)
+Finished game 211 (myChess vs PurplePanda): 1/2-1/2 {Draw by adjudication}
+Score of myChess vs PurplePanda: 124 - 61 - 28  [0.648] 213
+Started game 217 of 400 (myChess vs PurplePanda)
+Finished game 215 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 125 - 61 - 28  [0.650] 214
+Started game 218 of 400 (PurplePanda vs myChess)
+Finished game 213 (myChess vs PurplePanda): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess vs PurplePanda: 125 - 61 - 29  [0.649] 215
+Started game 219 of 400 (myChess vs PurplePanda)
+Finished game 216 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 126 - 61 - 29  [0.650] 216
+Started game 220 of 400 (PurplePanda vs myChess)
+Finished game 218 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 126 - 62 - 29  [0.647] 217
+Started game 221 of 400 (myChess vs PurplePanda)
+Finished game 219 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 127 - 62 - 29  [0.649] 218
+Started game 222 of 400 (PurplePanda vs myChess)
+Finished game 217 (myChess vs PurplePanda): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 127 - 62 - 30  [0.648] 219
+Started game 223 of 400 (myChess vs PurplePanda)
+Finished game 220 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 128 - 62 - 30  [0.650] 220
+...      myChess playing White: 62 - 34 - 14  [0.627] 110
+...      myChess playing Black: 66 - 28 - 16  [0.673] 110
+...      White vs Black: 90 - 100 - 30  [0.477] 220
+Elo difference: 107.5 +/- 44.6, LOS: 100.0 %, DrawRatio: 13.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 224 of 400 (PurplePanda vs myChess)
+Finished game 221 (myChess vs PurplePanda): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess vs PurplePanda: 128 - 62 - 31  [0.649] 221
+Started game 225 of 400 (myChess vs PurplePanda)
+Finished game 222 (PurplePanda vs myChess): 1/2-1/2 {Draw by adjudication}
+Score of myChess vs PurplePanda: 128 - 62 - 32  [0.649] 222
+Started game 226 of 400 (PurplePanda vs myChess)
+Finished game 224 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 129 - 62 - 32  [0.650] 223
+Started game 227 of 400 (myChess vs PurplePanda)
+Finished game 225 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 130 - 62 - 32  [0.652] 224
+Started game 228 of 400 (PurplePanda vs myChess)
+Finished game 228 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 131 - 62 - 32  [0.653] 225
+Started game 229 of 400 (myChess vs PurplePanda)
+Finished game 227 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 132 - 62 - 32  [0.655] 226
+Started game 230 of 400 (PurplePanda vs myChess)
+Finished game 223 (myChess vs PurplePanda): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 132 - 62 - 33  [0.654] 227
+Started game 231 of 400 (myChess vs PurplePanda)
+Finished game 229 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 133 - 62 - 33  [0.656] 228
+Started game 232 of 400 (PurplePanda vs myChess)
+Finished game 226 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 134 - 62 - 33  [0.657] 229
+Started game 233 of 400 (myChess vs PurplePanda)
+Finished game 232 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 135 - 62 - 33  [0.659] 230
+Started game 234 of 400 (PurplePanda vs myChess)
+Finished game 230 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 135 - 63 - 33  [0.656] 231
+Started game 235 of 400 (myChess vs PurplePanda)
+Finished game 234 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 136 - 63 - 33  [0.657] 232
+Started game 236 of 400 (PurplePanda vs myChess)
+Finished game 231 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 137 - 63 - 33  [0.659] 233
+Started game 237 of 400 (myChess vs PurplePanda)
+Finished game 237 (myChess vs PurplePanda): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 137 - 63 - 34  [0.658] 234
+Started game 238 of 400 (PurplePanda vs myChess)
+Finished game 233 (myChess vs PurplePanda): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess vs PurplePanda: 137 - 63 - 35  [0.657] 235
+Started game 239 of 400 (myChess vs PurplePanda)
+Finished game 236 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 137 - 63 - 36  [0.657] 236
+Started game 240 of 400 (PurplePanda vs myChess)
+Finished game 239 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 138 - 63 - 36  [0.658] 237
+Started game 241 of 400 (myChess vs PurplePanda)
+Finished game 241 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 139 - 63 - 36  [0.660] 238
+Started game 242 of 400 (PurplePanda vs myChess)
+Finished game 240 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 140 - 63 - 36  [0.661] 239
+Started game 243 of 400 (myChess vs PurplePanda)
+Finished game 238 (PurplePanda vs myChess): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess vs PurplePanda: 140 - 63 - 37  [0.660] 240
+...      myChess playing White: 68 - 34 - 18  [0.642] 120
+...      myChess playing Black: 72 - 29 - 19  [0.679] 120
+...      White vs Black: 97 - 106 - 37  [0.481] 240
+Elo difference: 115.5 +/- 42.4, LOS: 100.0 %, DrawRatio: 15.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 244 of 400 (PurplePanda vs myChess)
+Finished game 235 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 141 - 63 - 37  [0.662] 241
+Started game 245 of 400 (myChess vs PurplePanda)
+Finished game 242 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 142 - 63 - 37  [0.663] 242
+Started game 246 of 400 (PurplePanda vs myChess)
+Finished game 246 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 143 - 63 - 37  [0.665] 243
+Started game 247 of 400 (myChess vs PurplePanda)
+Finished game 243 (myChess vs PurplePanda): 1-0 {White mates}
+Score of myChess vs PurplePanda: 144 - 63 - 37  [0.666] 244
+Started game 248 of 400 (PurplePanda vs myChess)
+Finished game 245 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 144 - 64 - 37  [0.663] 245
+Started game 249 of 400 (myChess vs PurplePanda)
+Finished game 244 (PurplePanda vs myChess): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess vs PurplePanda: 144 - 64 - 38  [0.663] 246
+Started game 250 of 400 (PurplePanda vs myChess)
+Finished game 249 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 145 - 64 - 38  [0.664] 247
+Started game 251 of 400 (myChess vs PurplePanda)
+Finished game 250 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 146 - 64 - 38  [0.665] 248
+Started game 252 of 400 (PurplePanda vs myChess)
+Terminating process of engine PurplePanda(16)
+Finished game 248 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 147 - 64 - 38  [0.667] 249
+Started game 253 of 400 (myChess vs PurplePanda)
+Terminating process of engine PurplePanda(17)
+Finished game 252 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 148 - 64 - 38  [0.668] 250
+Started game 254 of 400 (PurplePanda vs myChess)
+Terminating process of engine PurplePanda(19)
+Finished game 251 (myChess vs PurplePanda): 1-0 {Black's connection stalls}
+Score of myChess vs PurplePanda: 149 - 64 - 38  [0.669] 251
+Started game 255 of 400 (myChess vs PurplePanda)
+Terminating process of engine PurplePanda(18)
+Finished game 247 (myChess vs PurplePanda): 1-0 {Black's connection stalls}
+Score of myChess vs PurplePanda: 150 - 64 - 38  [0.671] 252
+Started game 256 of 400 (PurplePanda vs myChess)
+Finished game 254 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 151 - 64 - 38  [0.672] 253
+Started game 257 of 400 (myChess vs PurplePanda)
+Finished game 255 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 151 - 65 - 38  [0.669] 254
+Started game 258 of 400 (PurplePanda vs myChess)
+Finished game 257 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 152 - 65 - 38  [0.671] 255
+Started game 259 of 400 (myChess vs PurplePanda)
+Finished game 259 (myChess vs PurplePanda): 1-0 {White mates}
+Score of myChess vs PurplePanda: 153 - 65 - 38  [0.672] 256
+Started game 260 of 400 (PurplePanda vs myChess)
+Finished game 258 (PurplePanda vs myChess): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess vs PurplePanda: 153 - 65 - 39  [0.671] 257
+Started game 261 of 400 (myChess vs PurplePanda)
+Finished game 256 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 153 - 66 - 39  [0.669] 258
+Started game 262 of 400 (PurplePanda vs myChess)
+Finished game 261 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 153 - 67 - 39  [0.666] 259
+Started game 263 of 400 (myChess vs PurplePanda)
+Finished game 253 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 154 - 67 - 39  [0.667] 260
+...      myChess playing White: 76 - 37 - 18  [0.649] 131
+...      myChess playing Black: 78 - 30 - 21  [0.686] 129
+...      White vs Black: 106 - 115 - 39  [0.483] 260
+Elo difference: 120.9 +/- 41.1, LOS: 100.0 %, DrawRatio: 15.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 264 of 400 (PurplePanda vs myChess)
+Finished game 262 (PurplePanda vs myChess): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess vs PurplePanda: 154 - 67 - 40  [0.667] 261
+Started game 265 of 400 (myChess vs PurplePanda)
+Finished game 263 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 155 - 67 - 40  [0.668] 262
+Started game 266 of 400 (PurplePanda vs myChess)
+Finished game 260 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 156 - 67 - 40  [0.669] 263
+Started game 267 of 400 (myChess vs PurplePanda)
+Finished game 264 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 157 - 67 - 40  [0.670] 264
+Started game 268 of 400 (PurplePanda vs myChess)
+Finished game 266 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 158 - 67 - 40  [0.672] 265
+Started game 269 of 400 (myChess vs PurplePanda)
+Finished game 267 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 159 - 67 - 40  [0.673] 266
+Started game 270 of 400 (PurplePanda vs myChess)
+Finished game 269 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 160 - 67 - 40  [0.674] 267
+Started game 271 of 400 (myChess vs PurplePanda)
+Finished game 268 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 160 - 67 - 41  [0.674] 268
+Started game 272 of 400 (PurplePanda vs myChess)
+Finished game 265 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 161 - 67 - 41  [0.675] 269
+Started game 273 of 400 (myChess vs PurplePanda)
+Finished game 272 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 162 - 67 - 41  [0.676] 270
+Started game 274 of 400 (PurplePanda vs myChess)
+Finished game 271 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 163 - 67 - 41  [0.677] 271
+Started game 275 of 400 (myChess vs PurplePanda)
+Finished game 273 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 164 - 67 - 41  [0.678] 272
+Started game 276 of 400 (PurplePanda vs myChess)
+Finished game 274 (PurplePanda vs myChess): 0-1 {Black mates}
+Score of myChess vs PurplePanda: 165 - 67 - 41  [0.679] 273
+Started game 277 of 400 (myChess vs PurplePanda)
+Finished game 270 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 166 - 67 - 41  [0.681] 274
+Started game 278 of 400 (PurplePanda vs myChess)
+Finished game 276 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 167 - 67 - 41  [0.682] 275
+Started game 279 of 400 (myChess vs PurplePanda)
+Finished game 275 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 167 - 68 - 41  [0.679] 276
+Started game 280 of 400 (PurplePanda vs myChess)
+Finished game 277 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 167 - 69 - 41  [0.677] 277
+Started game 281 of 400 (myChess vs PurplePanda)
+Finished game 278 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 168 - 69 - 41  [0.678] 278
+Started game 282 of 400 (PurplePanda vs myChess)
+Finished game 279 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 169 - 69 - 41  [0.679] 279
+Started game 283 of 400 (myChess vs PurplePanda)
+Finished game 282 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 170 - 69 - 41  [0.680] 280
+...      myChess playing White: 83 - 39 - 18  [0.657] 140
+...      myChess playing Black: 87 - 30 - 23  [0.704] 140
+...      White vs Black: 113 - 126 - 41  [0.477] 280
+Elo difference: 131.2 +/- 40.0, LOS: 100.0 %, DrawRatio: 14.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 284 of 400 (PurplePanda vs myChess)
+Finished game 280 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 171 - 69 - 41  [0.681] 281
+Started game 285 of 400 (myChess vs PurplePanda)
+Finished game 281 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 172 - 69 - 41  [0.683] 282
+Started game 286 of 400 (PurplePanda vs myChess)
+Finished game 285 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 172 - 70 - 41  [0.680] 283
+Started game 287 of 400 (myChess vs PurplePanda)
+Finished game 284 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 172 - 71 - 41  [0.678] 284
+Started game 288 of 400 (PurplePanda vs myChess)
+Finished game 286 (PurplePanda vs myChess): 0-1 {Black mates}
+Score of myChess vs PurplePanda: 173 - 71 - 41  [0.679] 285
+Started game 289 of 400 (myChess vs PurplePanda)
+Finished game 288 (PurplePanda vs myChess): 0-1 {Black mates}
+Score of myChess vs PurplePanda: 174 - 71 - 41  [0.680] 286
+Started game 290 of 400 (PurplePanda vs myChess)
+Finished game 287 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 175 - 71 - 41  [0.681] 287
+Started game 291 of 400 (myChess vs PurplePanda)
+Finished game 283 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 176 - 71 - 41  [0.682] 288
+Started game 292 of 400 (PurplePanda vs myChess)
+Finished game 289 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 177 - 71 - 41  [0.683] 289
+Started game 293 of 400 (myChess vs PurplePanda)
+Finished game 290 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 178 - 71 - 41  [0.684] 290
+Started game 294 of 400 (PurplePanda vs myChess)
+Finished game 291 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 179 - 71 - 41  [0.686] 291
+Started game 295 of 400 (myChess vs PurplePanda)
+Finished game 293 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 180 - 71 - 41  [0.687] 292
+Started game 296 of 400 (PurplePanda vs myChess)
+Finished game 292 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 180 - 71 - 42  [0.686] 293
+Started game 297 of 400 (myChess vs PurplePanda)
+Finished game 294 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 181 - 71 - 42  [0.687] 294
+Started game 298 of 400 (PurplePanda vs myChess)
+Finished game 297 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 182 - 71 - 42  [0.688] 295
+Started game 299 of 400 (myChess vs PurplePanda)
+Finished game 295 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 183 - 71 - 42  [0.689] 296
+Started game 300 of 400 (PurplePanda vs myChess)
+Finished game 298 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 184 - 71 - 42  [0.690] 297
+Started game 301 of 400 (myChess vs PurplePanda)
+Finished game 299 (myChess vs PurplePanda): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 184 - 71 - 43  [0.690] 298
+Started game 302 of 400 (PurplePanda vs myChess)
+Finished game 296 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 184 - 71 - 44  [0.689] 299
+Started game 303 of 400 (myChess vs PurplePanda)
+Finished game 300 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 185 - 71 - 44  [0.690] 300
+...      myChess playing White: 91 - 40 - 19  [0.670] 150
+...      myChess playing Black: 94 - 31 - 25  [0.710] 150
+...      White vs Black: 122 - 134 - 44  [0.480] 300
+Elo difference: 139.0 +/- 38.9, LOS: 100.0 %, DrawRatio: 14.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 304 of 400 (PurplePanda vs myChess)
+Finished game 302 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 186 - 71 - 44  [0.691] 301
+Started game 305 of 400 (myChess vs PurplePanda)
+Finished game 305 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 187 - 71 - 44  [0.692] 302
+Started game 306 of 400 (PurplePanda vs myChess)
+Finished game 303 (myChess vs PurplePanda): 1-0 {White mates}
+Score of myChess vs PurplePanda: 188 - 71 - 44  [0.693] 303
+Started game 307 of 400 (myChess vs PurplePanda)
+Finished game 301 (myChess vs PurplePanda): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess vs PurplePanda: 188 - 71 - 45  [0.692] 304
+Started game 308 of 400 (PurplePanda vs myChess)
+Finished game 304 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 189 - 71 - 45  [0.693] 305
+Started game 309 of 400 (myChess vs PurplePanda)
+Finished game 309 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 189 - 72 - 45  [0.691] 306
+Started game 310 of 400 (PurplePanda vs myChess)
+Finished game 308 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 190 - 72 - 45  [0.692] 307
+Started game 311 of 400 (myChess vs PurplePanda)
+Finished game 307 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 191 - 72 - 45  [0.693] 308
+Started game 312 of 400 (PurplePanda vs myChess)
+Terminating process of engine PurplePanda(20)
+Finished game 312 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 192 - 72 - 45  [0.694] 309
+Started game 313 of 400 (myChess vs PurplePanda)
+Finished game 311 (myChess vs PurplePanda): 1-0 {White mates}
+Score of myChess vs PurplePanda: 193 - 72 - 45  [0.695] 310
+Started game 314 of 400 (PurplePanda vs myChess)
+Terminating process of engine PurplePanda(21)
+Finished game 314 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 194 - 72 - 45  [0.696] 311
+Started game 315 of 400 (myChess vs PurplePanda)
+Finished game 313 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 194 - 73 - 45  [0.694] 312
+Started game 316 of 400 (PurplePanda vs myChess)
+Terminating process of engine PurplePanda(22)
+Finished game 310 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 195 - 73 - 45  [0.695] 313
+Started game 317 of 400 (myChess vs PurplePanda)
+Finished game 315 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 196 - 73 - 45  [0.696] 314
+Started game 318 of 400 (PurplePanda vs myChess)
+Terminating process of engine PurplePanda(23)
+Finished game 306 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 197 - 73 - 45  [0.697] 315
+Started game 319 of 400 (myChess vs PurplePanda)
+Finished game 316 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 198 - 73 - 45  [0.698] 316
+Started game 320 of 400 (PurplePanda vs myChess)
+Finished game 317 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 199 - 73 - 45  [0.699] 317
+Started game 321 of 400 (myChess vs PurplePanda)
+Finished game 319 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 200 - 73 - 45  [0.700] 318
+Started game 322 of 400 (PurplePanda vs myChess)
+Finished game 320 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 201 - 73 - 45  [0.701] 319
+Started game 323 of 400 (myChess vs PurplePanda)
+Finished game 321 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 202 - 73 - 45  [0.702] 320
+...      myChess playing White: 99 - 42 - 20  [0.677] 161
+...      myChess playing Black: 103 - 31 - 25  [0.726] 159
+...      White vs Black: 130 - 145 - 45  [0.477] 320
+Elo difference: 148.5 +/- 38.1, LOS: 100.0 %, DrawRatio: 14.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 324 of 400 (PurplePanda vs myChess)
+Finished game 323 (myChess vs PurplePanda): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 202 - 73 - 46  [0.701] 321
+Started game 325 of 400 (myChess vs PurplePanda)
+Finished game 318 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 203 - 73 - 46  [0.702] 322
+Started game 326 of 400 (PurplePanda vs myChess)
+Finished game 322 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 203 - 74 - 46  [0.700] 323
+Started game 327 of 400 (myChess vs PurplePanda)
+Finished game 324 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 204 - 74 - 46  [0.701] 324
+Started game 328 of 400 (PurplePanda vs myChess)
+Finished game 328 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 205 - 74 - 46  [0.702] 325
+Started game 329 of 400 (myChess vs PurplePanda)
+Finished game 329 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 205 - 75 - 46  [0.699] 326
+Started game 330 of 400 (PurplePanda vs myChess)
+Finished game 326 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 206 - 75 - 46  [0.700] 327
+Started game 331 of 400 (myChess vs PurplePanda)
+Finished game 325 (myChess vs PurplePanda): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess vs PurplePanda: 206 - 75 - 47  [0.700] 328
+Started game 332 of 400 (PurplePanda vs myChess)
+Finished game 330 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 207 - 75 - 47  [0.701] 329
+Started game 333 of 400 (myChess vs PurplePanda)
+Finished game 331 (myChess vs PurplePanda): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 207 - 75 - 48  [0.700] 330
+Started game 334 of 400 (PurplePanda vs myChess)
+Finished game 333 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 208 - 75 - 48  [0.701] 331
+Started game 335 of 400 (myChess vs PurplePanda)
+Finished game 332 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 208 - 76 - 48  [0.699] 332
+Started game 336 of 400 (PurplePanda vs myChess)
+Finished game 327 (myChess vs PurplePanda): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess vs PurplePanda: 208 - 76 - 49  [0.698] 333
+Started game 337 of 400 (myChess vs PurplePanda)
+Finished game 334 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 208 - 76 - 50  [0.698] 334
+Started game 338 of 400 (PurplePanda vs myChess)
+Finished game 336 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 209 - 76 - 50  [0.699] 335
+Started game 339 of 400 (myChess vs PurplePanda)
+Finished game 337 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 209 - 77 - 50  [0.696] 336
+Started game 340 of 400 (PurplePanda vs myChess)
+Finished game 338 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 210 - 77 - 50  [0.697] 337
+Started game 341 of 400 (myChess vs PurplePanda)
+Finished game 339 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 210 - 78 - 50  [0.695] 338
+Started game 342 of 400 (PurplePanda vs myChess)
+Finished game 340 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 211 - 78 - 50  [0.696] 339
+Started game 343 of 400 (myChess vs PurplePanda)
+Finished game 342 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 211 - 79 - 50  [0.694] 340
+...      myChess playing White: 100 - 45 - 24  [0.663] 169
+...      myChess playing Black: 111 - 34 - 26  [0.725] 171
+...      White vs Black: 134 - 156 - 50  [0.468] 340
+Elo difference: 142.4 +/- 36.6, LOS: 100.0 %, DrawRatio: 14.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 344 of 400 (PurplePanda vs myChess)
+Finished game 341 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 212 - 79 - 50  [0.695] 341
+Started game 345 of 400 (myChess vs PurplePanda)
+Finished game 335 (myChess vs PurplePanda): 1/2-1/2 {Draw by adjudication}
+Score of myChess vs PurplePanda: 212 - 79 - 51  [0.694] 342
+Started game 346 of 400 (PurplePanda vs myChess)
+Finished game 343 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 213 - 79 - 51  [0.695] 343
+Started game 347 of 400 (myChess vs PurplePanda)
+Finished game 346 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 214 - 79 - 51  [0.696] 344
+Started game 348 of 400 (PurplePanda vs myChess)
+Finished game 344 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 214 - 80 - 51  [0.694] 345
+Started game 349 of 400 (myChess vs PurplePanda)
+Finished game 345 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 215 - 80 - 51  [0.695] 346
+Started game 350 of 400 (PurplePanda vs myChess)
+Finished game 347 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 216 - 80 - 51  [0.696] 347
+Started game 351 of 400 (myChess vs PurplePanda)
+Finished game 348 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 217 - 80 - 51  [0.697] 348
+Started game 352 of 400 (PurplePanda vs myChess)
+Finished game 350 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 217 - 81 - 51  [0.695] 349
+Started game 353 of 400 (myChess vs PurplePanda)
+Finished game 351 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 218 - 81 - 51  [0.696] 350
+Started game 354 of 400 (PurplePanda vs myChess)
+Finished game 353 (myChess vs PurplePanda): 1-0 {White mates}
+Score of myChess vs PurplePanda: 219 - 81 - 51  [0.697] 351
+Started game 355 of 400 (myChess vs PurplePanda)
+Finished game 352 (PurplePanda vs myChess): 0-1 {Black mates}
+Score of myChess vs PurplePanda: 220 - 81 - 51  [0.697] 352
+Started game 356 of 400 (PurplePanda vs myChess)
+Finished game 354 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 221 - 81 - 51  [0.698] 353
+Started game 357 of 400 (myChess vs PurplePanda)
+Finished game 357 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 222 - 81 - 51  [0.699] 354
+Started game 358 of 400 (PurplePanda vs myChess)
+Finished game 356 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 223 - 81 - 51  [0.700] 355
+Started game 359 of 400 (myChess vs PurplePanda)
+Finished game 355 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 224 - 81 - 51  [0.701] 356
+Started game 360 of 400 (PurplePanda vs myChess)
+Finished game 360 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 225 - 81 - 51  [0.702] 357
+Started game 361 of 400 (myChess vs PurplePanda)
+Finished game 349 (myChess vs PurplePanda): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess vs PurplePanda: 225 - 81 - 52  [0.701] 358
+Started game 362 of 400 (PurplePanda vs myChess)
+Finished game 358 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 226 - 81 - 52  [0.702] 359
+Started game 363 of 400 (myChess vs PurplePanda)
+Finished game 361 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 227 - 81 - 52  [0.703] 360
+...      myChess playing White: 109 - 45 - 26  [0.678] 180
+...      myChess playing Black: 118 - 36 - 26  [0.728] 180
+...      White vs Black: 145 - 163 - 52  [0.475] 360
+Elo difference: 149.5 +/- 35.8, LOS: 100.0 %, DrawRatio: 14.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 364 of 400 (PurplePanda vs myChess)
+Finished game 362 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 227 - 82 - 52  [0.701] 361
+Started game 365 of 400 (myChess vs PurplePanda)
+Finished game 359 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 228 - 82 - 52  [0.702] 362
+Started game 366 of 400 (PurplePanda vs myChess)
+Finished game 363 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 228 - 83 - 52  [0.700] 363
+Started game 367 of 400 (myChess vs PurplePanda)
+Finished game 364 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 229 - 83 - 52  [0.701] 364
+Started game 368 of 400 (PurplePanda vs myChess)
+Finished game 365 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 230 - 83 - 52  [0.701] 365
+Started game 369 of 400 (myChess vs PurplePanda)
+Finished game 366 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 231 - 83 - 52  [0.702] 366
+Started game 370 of 400 (PurplePanda vs myChess)
+Finished game 367 (myChess vs PurplePanda): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 231 - 83 - 53  [0.702] 367
+Started game 371 of 400 (myChess vs PurplePanda)
+Finished game 368 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 232 - 83 - 53  [0.702] 368
+Started game 372 of 400 (PurplePanda vs myChess)
+Terminating process of engine PurplePanda(24)
+Finished game 369 (myChess vs PurplePanda): 1-0 {Black's connection stalls}
+Score of myChess vs PurplePanda: 233 - 83 - 53  [0.703] 369
+Started game 373 of 400 (myChess vs PurplePanda)
+Finished game 371 (myChess vs PurplePanda): 1-0 {White mates}
+Score of myChess vs PurplePanda: 234 - 83 - 53  [0.704] 370
+Started game 374 of 400 (PurplePanda vs myChess)
+Terminating process of engine PurplePanda(25)
+Finished game 372 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 235 - 83 - 53  [0.705] 371
+Started game 375 of 400 (myChess vs PurplePanda)
+Terminating process of engine PurplePanda(26)
+Finished game 370 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 236 - 83 - 53  [0.706] 372
+Started game 376 of 400 (PurplePanda vs myChess)
+Terminating process of engine PurplePanda(27)
+Finished game 374 (PurplePanda vs myChess): 0-1 {White's connection stalls}
+Score of myChess vs PurplePanda: 237 - 83 - 53  [0.706] 373
+Started game 377 of 400 (myChess vs PurplePanda)
+Finished game 376 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 238 - 83 - 53  [0.707] 374
+Started game 378 of 400 (PurplePanda vs myChess)
+Finished game 373 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 239 - 83 - 53  [0.708] 375
+Started game 379 of 400 (myChess vs PurplePanda)
+Finished game 375 (myChess vs PurplePanda): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess vs PurplePanda: 239 - 83 - 54  [0.707] 376
+Started game 380 of 400 (PurplePanda vs myChess)
+Finished game 378 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 240 - 83 - 54  [0.708] 377
+Started game 381 of 400 (myChess vs PurplePanda)
+Finished game 380 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 241 - 83 - 54  [0.709] 378
+Started game 382 of 400 (PurplePanda vs myChess)
+Finished game 377 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 242 - 83 - 54  [0.710] 379
+Started game 383 of 400 (myChess vs PurplePanda)
+Finished game 381 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 243 - 83 - 54  [0.711] 380
+...      myChess playing White: 116 - 46 - 28  [0.684] 190
+...      myChess playing Black: 127 - 37 - 26  [0.737] 190
+...      White vs Black: 153 - 173 - 54  [0.474] 380
+Elo difference: 156.0 +/- 35.2, LOS: 100.0 %, DrawRatio: 14.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 384 of 400 (PurplePanda vs myChess)
+Finished game 379 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 244 - 83 - 54  [0.711] 381
+Started game 385 of 400 (myChess vs PurplePanda)
+Finished game 382 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 245 - 83 - 54  [0.712] 382
+Started game 386 of 400 (PurplePanda vs myChess)
+Finished game 383 (myChess vs PurplePanda): 1/2-1/2 {Draw by adjudication}
+Score of myChess vs PurplePanda: 245 - 83 - 55  [0.711] 383
+Started game 387 of 400 (myChess vs PurplePanda)
+Finished game 384 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 246 - 83 - 55  [0.712] 384
+Started game 388 of 400 (PurplePanda vs myChess)
+Finished game 386 (PurplePanda vs myChess): 0-1 {Black mates}
+Score of myChess vs PurplePanda: 247 - 83 - 55  [0.713] 385
+Started game 389 of 400 (myChess vs PurplePanda)
+Finished game 387 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 248 - 83 - 55  [0.714] 386
+Started game 390 of 400 (PurplePanda vs myChess)
+Finished game 388 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 248 - 83 - 56  [0.713] 387
+Started game 391 of 400 (myChess vs PurplePanda)
+Finished game 385 (myChess vs PurplePanda): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess vs PurplePanda: 248 - 83 - 57  [0.713] 388
+Started game 392 of 400 (PurplePanda vs myChess)
+Finished game 390 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 249 - 83 - 57  [0.713] 389
+Started game 393 of 400 (myChess vs PurplePanda)
+Finished game 391 (myChess vs PurplePanda): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 249 - 84 - 57  [0.712] 390
+Started game 394 of 400 (PurplePanda vs myChess)
+Finished game 392 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 249 - 84 - 58  [0.711] 391
+Started game 395 of 400 (myChess vs PurplePanda)
+Finished game 394 (PurplePanda vs myChess): 0-1 {Black mates}
+Score of myChess vs PurplePanda: 250 - 84 - 58  [0.712] 392
+Started game 396 of 400 (PurplePanda vs myChess)
+Finished game 395 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 251 - 84 - 58  [0.712] 393
+Started game 397 of 400 (myChess vs PurplePanda)
+Finished game 389 (myChess vs PurplePanda): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess vs PurplePanda: 251 - 84 - 59  [0.712] 394
+Started game 398 of 400 (PurplePanda vs myChess)
+Finished game 396 (PurplePanda vs myChess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess vs PurplePanda: 251 - 84 - 60  [0.711] 395
+Started game 399 of 400 (myChess vs PurplePanda)
+Finished game 397 (myChess vs PurplePanda): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 252 - 84 - 60  [0.712] 396
+Started game 400 of 400 (PurplePanda vs myChess)
+Finished game 393 (myChess vs PurplePanda): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess vs PurplePanda: 252 - 84 - 61  [0.712] 397
+Finished game 398 (PurplePanda vs myChess): 1-0 {White wins by adjudication}
+Score of myChess vs PurplePanda: 252 - 85 - 61  [0.710] 398
+Finished game 400 (PurplePanda vs myChess): 0-1 {Black wins by adjudication}
+Score of myChess vs PurplePanda: 253 - 85 - 61  [0.711] 399
+Finished game 399 (myChess vs PurplePanda): 1/2-1/2 {Draw by adjudication}
+Score of myChess vs PurplePanda: 253 - 85 - 62  [0.710] 400
+...      myChess playing White: 120 - 47 - 33  [0.682] 200
+...      myChess playing Black: 133 - 38 - 29  [0.738] 200
+...      White vs Black: 158 - 180 - 62  [0.472] 400
+Elo difference: 155.5 +/- 33.9, LOS: 100.0 %, DrawRatio: 15.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+
+Player: myChess
+   "Draw by 3-fold repetition": 29
+   "Draw by adjudication": 8
+   "Draw by fifty moves rule": 12
+   "Draw by insufficient mating material": 13
+   "Loss: Black mates": 1
+   "Loss: Black wins by adjudication": 46
+   "Loss: White wins by adjudication": 38
+   "Win: Black mates": 13
+   "Win: Black wins by adjudication": 102
+   "Win: Black's connection stalls": 6
+   "Win: White mates": 16
+   "Win: White wins by adjudication": 98
+   "Win: White's connection stalls": 18
+Player: PurplePanda
+   "Draw by 3-fold repetition": 29
+   "Draw by adjudication": 8
+   "Draw by fifty moves rule": 12
+   "Draw by insufficient mating material": 13
+   "Loss: Black mates": 13
+   "Loss: Black wins by adjudication": 102
+   "Loss: Black's connection stalls": 6
+   "Loss: White mates": 16
+   "Loss: White wins by adjudication": 98
+   "Loss: White's connection stalls": 18
+   "Win: Black mates": 1
+   "Win: Black wins by adjudication": 46
+   "Win: White wins by adjudication": 38
+Finished match
