@@ -459,8 +459,8 @@ Ja, mehrere — aber mit einem wichtigen Vorbehalt: praktisch alle moderneren Re
 * mobilityFactor = 0.1f --> 0.2f --> schlecht
 * mobilityFactor = 0.1f --> 0.15f --> neutral
 * threadWeightFactor = 0.02f --> 0.17f (schlecht) / 0.05 (neutral)
-* pawnStructure
-thread weight --> testweise raus
-EVALUATE_MATERIAL_ONLY_THRESHOLD --> testweise ausschalten
-chessFactor --> testweise raus
-doublePawnFactor --> stattdessen bessere Bewertung der Bauernstruktur (mehrere Bauern auf derselben Linie, Singulaner, Bauernketten)
+* pawnStructure --> neutral
+thread weight --> testweise raus (neutral)
+chessFactor --> testweise raus (schlecht)
+EVALUATE_MATERIAL_ONLY_THRESHOLD --> testweise ausschalten (sehr schlecht)
+
