@@ -482,6 +482,60 @@ This is the budget-policy this section's table should be read against: 1600 is t
 
 Documents the closure: `chessFactor` is not a candidate for removal. The `no-chess-factor` branch stays in the repository as a research archive so the same experiment isn't accidentally re-attempted. The more interesting open question — whether implementing [§ 12.4 check extensions](#124-check-extensions--s--1530-elo) would let us *then* drop `chessFactor` for free — is captured as a sequencing note in point 4 above.
 
+## 12.18 ~~Remove `EVALUATE_MATERIAL_ONLY_THRESHOLD` shortcut~~ — **investigated, mechanism strongly confirmed productive**
+
+*Investigated June 2026 with a single 1600-game-budget SPRT against `myChess-3.5.2`. Removing the material-only leaf shortcut produced the **strongest negative result and earliest SPRT termination** of the whole eval-removal series. The shortcut stays in the search. The `no-material-only-treshold` branch is kept as a research archive.*
+
+### What the shortcut did
+
+[`PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD = 200`](../src/main/java/org/michaelfl/mychess/engines/PositionSearch.java) and the matching `materialDelta` running counter (carried through `SearchNodeContext` and the `QuiescenceSearch` recursion) implemented a leaf-eval shortcut: whenever the cumulative material delta since the search root exceeded ±200 centi-pawns, `calculatePositionWeight` returned the raw `materialWeight` and skipped the full positional evaluation (`WeightingFunction.calculate` — PSTs, mobility, threat weight, castling, doubled pawns, etc.).
+
+Conceptually a "you're already up/down a couple of pawns, don't fuss about positional fine print" rule. The removal hypothesis: with the full eval cheap and `QuiescenceSearch` already handling captures cleanly, the shortcut might be redundant or even harmful (positional features could pick the better move within a class of materially-equivalent leaves).
+
+### What was measured
+
+One 1600-game-budget SPRT against `myChess-3.5.2`, TC 40/60, SPRT bounds `elo0=-3, elo1=10, α=β=0.05`:
+
+| Run | W-L-D | Elo | LOS | SPRT |
+|---|---|---|---|---|
+| 1 | 179-233-134 (546 games) | **−34.5 ± 25.4** | 0.4% | **H0 accepted at lbound** (llr −2.96, terminated at 34% budget) |
+
+W/B split:
+- White: 94-114-65 → ~−26 Elo
+- Black: 85-119-69 → ~−43 Elo
+- W/B gap: ~17 Elo (within the noise range we've seen at < 300 games per color)
+
+This is the cleanest, fastest, and largest-magnitude negative result of the eval-removal series. The CI lower bound is ≈ −60 Elo, the upper bound ≈ −9 Elo — even the most optimistic reading of the data places the shortcut's contribution above any noise floor.
+
+### What we learned
+
+1. **The shortcut is a major strength contributor — ~34 Elo at TC 40/60.** Three non-exclusive mechanisms likely combine to produce this:
+   - **Speed → depth.** Skipping `WeightingFunction.calculate` for an entire leaf class (when material is decisive) is a non-trivial node-time saving. More nodes per second translates directly into more search depth in time-bounded play.
+   - **Noise suppression in decided positions.** Positional features can register short-term disadvantages even when the material verdict is already settled. The shortcut forces the engine to commit to the material truth in those leaves instead of being pulled toward positionally-attractive but materially-losing continuations.
+   - **Eval-extreme avoidance.** In highly imbalanced positions, some positional components (mobility, PST, threat) can produce values that overreact to the material differential. The shortcut bypasses these pathological cases.
+
+2. **"Skip the full eval when material says X" is a real heuristic, not just an optimization.** This contradicts the naive intuition that more information is always better; in fact, with the eval still imperfect (no king-safety term, no passed-pawn term, no proper piece-square evaluation in late game), the *less* information path can be more accurate in materially-decided leaves.
+
+3. **The shortcut and QSearch are complementary.** QSearch handles the local tactical horizon by following captures; the material-only shortcut handles the global material verdict by suppressing positional noise once material is clearly tilted. They cover different parts of the eval-correctness space.
+
+### Methodology — SPRT termination at 34% budget
+
+This run is the cleanest demonstration of the §12.16 self-tuning principle:
+
+| Investigation | True effect ≈ | SPRT termination | Confirmation needed? |
+|---|---|---|---|
+| chessFactor removal (§12.17) | −14 Elo | 1199 / 1600 games (75% budget) | no — terminated cleanly |
+| **material-only-shortcut removal (this entry)** | **−34 Elo** | **546 / 1600 games (34% budget)** | **no — strongly terminated** |
+| narrow / threadWeight removals (§§12.15–12.16) | ≈ 0 Elo | ran to limit, pooled | yes — needed confirmation runs |
+
+The pattern is monotonic and clean: the bigger the true effect, the earlier SPRT terminates and the less budget is consumed. With 1600 as the budget ceiling, large effects pay only a fraction of that ceiling. Small effects run to the limit and produce a pooled point estimate — which is what we want, because at those magnitudes the only useful question is "indistinguishable from zero?" and pooling answers exactly that.
+
+### Why this slot in the roadmap
+
+Documents that the `EVALUATE_MATERIAL_ONLY_THRESHOLD` shortcut is not a candidate for removal — it carries ~34 Elo of measurable strength. The `no-material-only-treshold` branch stays in the repository as a research archive. The investigation also strengthens the methodology baseline for future eval-removal work: when the SPRT terminates inside the first half of the budget, the verdict is generally not in question and a confirmation run does not add value.
+
+A second-order open question: the 200-centi-pawn threshold itself was never tuned. It's plausible that 150 or 300 might be slightly better. Worth a future single-run SPRT each, but only after higher-priority items in §§ 12.1–12.8.
+
 ---
 
 ## Suggested implementation order
