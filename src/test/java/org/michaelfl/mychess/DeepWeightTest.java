@@ -61,8 +61,8 @@ class DeepWeightTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4
                 """;
         testPosition(pgn,
-                0.60f,
-                0.70f,
+                0.50f,
+                0.65f,
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
     }

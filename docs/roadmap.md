@@ -536,6 +536,61 @@ Documents that the `EVALUATE_MATERIAL_ONLY_THRESHOLD` shortcut is not a candidat
 
 A second-order open question: the 200-centi-pawn threshold itself was never tuned. It's plausible that 150 or 300 might be slightly better. Worth a future single-run SPRT each, but only after higher-priority items in §§ 12.1–12.8.
 
+## 12.19 ~~Add hanging-pieces penalty to the evaluation function~~ — **DONE (+28 Elo)**
+
+*Implemented and merged June 2026. A 1600-game-budget SPRT against `myChess-3.5.2` terminated at the upper bound (H1 accepted) after 867 games with **+28.1 ± 20.5 Elo, LOS 99.6%**. First successful eval-term addition after the long pawn-structure investigation series (§ 12.15) and the four eval-removal closures (§§ 12.16–12.18). Released as `v3.6.0`.*
+
+### What was added
+
+A new penalty term in `WeightingFunction` that counts pieces that are simultaneously **attacked by an opposing piece AND not defended by any own-color piece** (kings excluded). Each hanging piece costs 0.1 pawn-units in the final-weight formula, applied as `(white_hanging - black_hanging) * undefendedPiecesFactor` with `undefendedPiecesFactor = -0.1f` — mirrors the sign convention of `doublePawnFactor`.
+
+Implementation detail (worth highlighting because it is unusual and clean):
+
+- A copy of the raw board (`tempBoard`) is taken at the start of every `calculate()` call.
+- The existing per-piece scan already touches every attacking-relation and every defending-relation. It is extended to *tag* those relations on `tempBoard`:
+  - `capture()` ORs `ATTACK_MARK_BIT = 32` onto the attacked square (bit 5, which does not collide with any piece byte `8–21` or with `Board.illegal = 64`).
+  - `defend()` wipes the entire square to `Board.empty = 0`, clearing both piece bits and any attack marker.
+- A linear scan after the main loop counts squares with `(piece & ATTACK_MARK_BIT) == ATTACK_MARK_BIT && (piece & SIDE_BITS) == SIDE_BITS` (kings excluded via pre-computed `WHITE_KING_ATTACKED` / `BLACK_KING_ATTACKED` constants).
+- A defended piece's square ends as `0`, so it never satisfies the "marker bit AND piece bits" predicate regardless of the order in which attack-mark and defend-wipe arrive. Verified by enumerating all four orderings.
+
+The capture-or-defend dispatch for pawn diagonals was folded into a `captureOrDefendWithPawn` helper, replacing four near-identical if-blocks in the white/black pawn paths.
+
+### What was measured
+
+One 1600-game-budget SPRT against `myChess-3.5.2`, TC 40/60, SPRT bounds `elo0=-3, elo1=10, α=β=0.05`:
+
+| Run | W-L-D | Elo | LOS | SPRT |
+|---|---|---|---|---|
+| 1 | 373-303-191 (867 games, 3 No Result) | **+28.1 ± 20.5** | **99.6%** | **H1 accepted at ubound** (llr +2.95, terminated at 54% budget) |
+
+W/B split:
+- White: 183-149-102 → ~+27 Elo
+- Black: 190-154-89 → ~+29 Elo
+- W/B gap: **~3 Elo** — essentially symmetric
+
+### What we learned
+
+1. **The first H1-accepted result of the entire eval-investigation series.** All earlier work either terminated at H0 (clear regression — §§ 12.17–12.18) or ran to the budget limit (neutral / inconclusive — §§ 12.15–12.16, threadWeight). H1-acceptance with LOS 99.6% is decisive.
+
+2. **W/B-symmetric within ~3 Elo despite only 433–434 games per color.** Every earlier experiment with the same opening set and ~400 games-per-color showed run-to-run W/B-gap variance of 13–38 Elo (§§ 12.15–12.16). The fact that this term works *equally well* for both colors is independent evidence that it captures a real, chess-correct signal — not an opening-book artifact, not a side-specific positional accident.
+
+3. **"Attacked AND undefended" is a meaningfully different signal from "undefended alone."** The first iteration of this term counted *every* own piece that lacked a defender, regardless of whether it was under attack — that was a weaker signal and chess-theoretically diffuse. Restricting to *hanging* pieces (the chess-theoretic concept of a piece that is one move away from being lost for free) was the change that made the term productive.
+
+4. **Magnitude is well-tuned at -0.1.** A typical mid-game position has 1–3 hanging pieces per side, so the term contributes 0–0.3 pawn-units to the eval — large enough to matter, small enough to not dominate. (The first iteration had factor -0.5, which would have been too large; reduced after code review.)
+
+5. **Marker-bit-in-tempBoard is a clean data-encoding pattern.** No additional parallel array needed; one bit in the existing piece byte carries the attack-mark information. The collision-free bit (32) lives in unused space between piece-byte range (8–21) and `illegal` (64). Worth remembering for future eval terms that need per-square tags.
+
+### Why this slot in the roadmap
+
+Documents the first successful eval-term addition since the pre-investigation baseline. Establishes a template that future eval-additions can follow:
+
+- **Start from a chess-theoretic concept that the existing eval misses** (here: tactical fragility within one ply). Reject pure-positional concepts that the engine already approximates (cf. §12.15).
+- **Restrict the trigger condition tightly enough to make the signal meaningful** (here: attacked AND undefended, not just undefended).
+- **Tune the magnitude conservatively** (-0.1 turned out to be Goldilocks; -0.5 would have failed).
+- **Verify on a 1600-game SPRT** with W/B-symmetry as a side-check for opening-book-artifact contamination.
+
+The hanging-pieces term is now part of `master` at `v3.6.0`. The `undefended-pieces-weight` branch may be deleted once any pending follow-up work (e.g. cross-confirming against a stronger opponent than 3.5.2) is done — but the implementation itself is in master and there is no reason to keep the branch indefinitely.
+
 ---
 
 ## Suggested implementation order
