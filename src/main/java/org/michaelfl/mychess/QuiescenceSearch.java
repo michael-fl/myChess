@@ -27,11 +27,11 @@ public final class QuiescenceSearch {
         this.maxQuiescenceDepth = maxQuiescenceDepth;
     }
 
-    public int quiescenceSearch(final Board workingBoard, final int capturedOnField, final int depth, final int weightFactor, final int alpha, final int beta, final int materialWeight, final int materialDelta) {
+    public int quiescenceSearch(final Board workingBoard, final int capturedOnField, final int depth, final int weightFactor, final int alpha, final int beta) {
         final int maxDepth = depth + maxQuiescenceDepth;
 
         statistics.startQuiescenceSearch();
-        int weight = quiescenceSearch(new SearchNodeContext(depth, maxDepth, null, weightFactor, alpha, beta, materialWeight, materialDelta, workingBoard, null));
+        int weight = quiescenceSearch(new SearchNodeContext(depth, maxDepth, null, weightFactor, alpha, beta, workingBoard, null));
         statistics.endQuiescenceSearch();
 
         return weight;
@@ -48,17 +48,16 @@ public final class QuiescenceSearch {
         statistics.incrQuiescencePositionsCount();
         statistics.reachedDepth(depth);
 
-        int standPat = calculatePositionWeight(ctx.workingBoard(), ctx.weightFactor(), ctx.materialWeight(), ctx.materialDelta());
+        int standPat = calculatePositionWeight(ctx.workingBoard(), ctx.weightFactor());
 
         // Fail-soft stand-pat cutoff: return the actual stand-pat value, not
         // the beta bound. Caller (and a future TT) get a tighter lower bound.
         //
-        // Self-check probe: an illegal previous move can push materialDelta
-        // past EVALUATE_MATERIAL_ONLY_THRESHOLD so calculatePositionWeight
-        // returns the raw materialWeight (skipping the eval's
-        // containsIllegalMove sentinel). Without this probe we would hand
-        // the parent a legitimate-looking score for an illegal move. Limited
-        // to the two early-return paths below; the capture loop is already
+        // Self-check probe: belt-and-braces guard for the two early-return
+        // paths. The WeightingFunction already returns ILLEGAL_WEIGHT_POS/NEG
+        // when it detects that the side to move can capture the opposing
+        // king (containsIllegalMove sentinel), so this probe is normally
+        // redundant — but cheap and explicit. The capture loop is already
         // protected by moves.isIllegal() after calculateMoves.
         if (standPat >= ctx.betaWeight() || depth == ctx.maxDepth()) {
             if (ctx.workingBoard().canCaptureOpposingKing()) {
@@ -89,14 +88,11 @@ public final class QuiescenceSearch {
             // Follow only moves, which capture on the same field, until no further capture is possible on that field
             if (capturedOnField == Move.getToField(plainMoves[i])) {
                 final int move = plainMoves[i];
-                final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move);
-                final int newMaterialWeight = ctx.materialWeight() + moveWeight;
-                final int newMaterialDelta = ctx.materialDelta() + moveWeight;
 
                 final int alphaLocal = Math.max(ctx.alphaWeight(), bestWeight);
 
                 ctx.workingBoard().makeMove(move);
-                int weight = -quiescenceSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), null, -ctx.weightFactor(), -ctx.betaWeight(), -alphaLocal, -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), null));
+                int weight = -quiescenceSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), null, -ctx.weightFactor(), -ctx.betaWeight(), -alphaLocal, ctx.workingBoard(), null));
                 ctx.workingBoard().revertMove();
 
                 // -ILLEGAL_WEIGHT is possible to be returned, but never +ILLEGAL_WEIGHT
@@ -115,10 +111,7 @@ public final class QuiescenceSearch {
         return bestWeight;
     }
 
-    private int calculatePositionWeight(final Board workingBoard, final int weightFactor, final int materialWeight, final int materialDelta) {
-        if (materialDelta > PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD || materialDelta < -PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD) {
-            return materialWeight;
-        }
+    private int calculatePositionWeight(final Board workingBoard, final int weightFactor) {
         return weightingFunction.calculate(workingBoard) * weightFactor;
     }
 }
