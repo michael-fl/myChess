@@ -57,15 +57,14 @@ class QuiescenceSearchTest {
 
         var workingBoard = game.getBoard().copy();
         int weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
-        int materialCenti = weightFactor * WeightingFunction.calculateMaterialWeight(workingBoard);
         int capturedOnField = Move.getToField(game.getGameStatus().getLastMove());
 
         int wide = qsearch.quiescenceSearch(workingBoard, capturedOnField, 0, weightFactor,
-                WeightingFunction.MIN_ALPHA, WeightingFunction.MAX_BETA, materialCenti, 0);
+                WeightingFunction.MIN_ALPHA, WeightingFunction.MAX_BETA);
 
         int tightBeta = wide - 100;
         int tight = qsearch.quiescenceSearch(workingBoard, capturedOnField, 0, weightFactor,
-                WeightingFunction.MIN_ALPHA, tightBeta, materialCenti, 0);
+                WeightingFunction.MIN_ALPHA, tightBeta);
 
         assertEquals(wide, tight, "fail-soft must return the true stand-pat weight even when beta-cutoff fires; got " + tight + " with beta=" + tightBeta + ", true=" + wide);
         assertTrue(tight > tightBeta, "returned weight must exceed the tight beta bound (fail-hard would clamp to " + tightBeta + ")");
@@ -93,7 +92,7 @@ class QuiescenceSearchTest {
         var capturedOnField = Move.getToField(game.getGameStatus().getLastMove());
         var alpha = WeightingFunction.MIN_ALPHA;
         var beta = WeightingFunction.MAX_BETA;
-        weightCenti = weightFactor * quiescenceSearch.quiescenceSearch(workingBoard, capturedOnField, 0, weightFactor, alpha, beta, weightFactor * materialWeightCenti, 0);
+        weightCenti = weightFactor * quiescenceSearch.quiescenceSearch(workingBoard, capturedOnField, 0, weightFactor, alpha, beta);
         float weight = weightCenti / 100f;
         System.out.println("Quiescence weight: " + weight);
 

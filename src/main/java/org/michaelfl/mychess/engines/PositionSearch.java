@@ -34,13 +34,6 @@ import static org.michaelfl.mychess.Assert.*;
 public final class PositionSearch {
 
     /**
-     * If the player has gained/lost more than this threshold in material weight during the current search,
-     * only material weight on the board is considered in the evaluation function.
-     * Otherwise, the full evaluation of the position is done.
-     */
-    public static final int EVALUATE_MATERIAL_ONLY_THRESHOLD = 200;
-
-    /**
      * Hard cap on the iterative-deepening target depth. UCI's
      * {@code go depth ...} accepts arbitrary integers and a missing
      * {@code depth} keyword defaults to {@code Integer.MAX_VALUE}; with no
@@ -159,12 +152,6 @@ public final class PositionSearch {
      *       search runs in pure negamax form.</li>
      *   <li>{@code alphaWeight} / {@code betaWeight} — alpha-beta window
      *       in centi-pawns from the side-to-move's perspective.</li>
-     *   <li>{@code materialWeight} — cumulative material from the
-     *       side-to-move's perspective. Used by the leaf shortcut when
-     *       {@code materialDelta} exceeds
-     *       {@link PositionSearch#EVALUATE_MATERIAL_ONLY_THRESHOLD}.</li>
-     *   <li>{@code materialDelta} — running material change since the
-     *       search root; gates the material-only leaf shortcut.</li>
      *   <li>{@code workingBoard} — shared mutable board. One per
      *       search; every recursion calls {@code makeMove} /
      *       {@code revertMove} on it.</li>
@@ -175,7 +162,7 @@ public final class PositionSearch {
     @SuppressWarnings("java:S6218")
     public record SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnownPath,
                                     int weightFactor,
-                                    int alphaWeight, int betaWeight, int materialWeight, int materialDelta,
+                                    int alphaWeight, int betaWeight,
                                     Board workingBoard, int[] pvTable) {
 
         /**
@@ -453,7 +440,6 @@ public final class PositionSearch {
             throw new IllegalChessPositionException(workingBoard);
         }
 
-        final int materialWeight = weightFactor * WeightingFunction.calculateMaterialWeight(workingBoard);
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
         final SearchNodeResult[] results = new SearchNodeResult[countMoves];
@@ -470,13 +456,11 @@ public final class PositionSearch {
         for (int i = 0; i < countMoves; i++) {
             final int move = plainMoves[i];
 
-            final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move);
-            final int newMaterialWeight = materialWeight + moveWeight;
             boolean logWeight = false;
 
             pvTable[0] = move;
             workingBoard.makeMove(move);
-            var result = alphaBetaSearch(new SearchNodeContext(1, maxDepth, bestKnownPath, -weightFactor, WeightingFunction.MIN_ALPHA, -alphaWeight, -newMaterialWeight, -moveWeight, workingBoard, pvTable)).negate();
+            var result = alphaBetaSearch(new SearchNodeContext(1, maxDepth, bestKnownPath, -weightFactor, WeightingFunction.MIN_ALPHA, -alphaWeight, workingBoard, pvTable)).negate();
             if (result.isTimeout()) {
                 return previousBestKnownPath;
             }
@@ -601,9 +585,6 @@ public final class PositionSearch {
             }
 
             final int move = plainMoves[i];
-            final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move);
-            final int newMaterialWeight = ctx.materialWeight + moveWeight;
-            final int newMaterialDelta = ctx.materialDelta + moveWeight;
 
             // alpha-beta cutoff threshold for the child: never below the
             // parent's alpha (fail-soft may pull bestResult.weight below it
@@ -612,7 +593,7 @@ public final class PositionSearch {
 
             pvTable[pvIndex] = move;
             ctx.workingBoard.makeMove(move);
-            var result = alphaBetaSearch(new SearchNodeContext(depth + 1, ctx.maxDepth, bestKnownPath, -ctx.weightFactor, -ctx.betaWeight, -alphaLocal, -newMaterialWeight, -newMaterialDelta, ctx.workingBoard, pvTable)).negate();
+            var result = alphaBetaSearch(new SearchNodeContext(depth + 1, ctx.maxDepth, bestKnownPath, -ctx.weightFactor, -ctx.betaWeight, -alphaLocal, ctx.workingBoard, pvTable)).negate();
             ctx.workingBoard.revertMove();
             if (result.isTimeout()) {
                 return SearchNodeResult.TIMEOUT;
@@ -665,16 +646,13 @@ public final class PositionSearch {
         final int lastMove = workingBoard.getGameStatus().getLastMove();
 
         if (Move.getCapturedPiece(lastMove) == 0) {
-            return calculatePositionWeight(workingBoard, ctx.weightFactor, ctx.materialWeight, ctx.materialDelta);
+            return calculatePositionWeight(workingBoard, ctx.weightFactor);
         } else {
-            return quiescenceSearch.quiescenceSearch(workingBoard, Move.getToField(lastMove), ctx.depth, ctx.weightFactor, ctx.alphaWeight, ctx.betaWeight, ctx.materialWeight, ctx.materialDelta);
+            return quiescenceSearch.quiescenceSearch(workingBoard, Move.getToField(lastMove), ctx.depth, ctx.weightFactor, ctx.alphaWeight, ctx.betaWeight);
         }
     }
 
-    private int calculatePositionWeight(final Board workingBoard, final int weightFactor, final int materialWeight, final int materialDelta) {
-        if (materialDelta > EVALUATE_MATERIAL_ONLY_THRESHOLD || materialDelta < -EVALUATE_MATERIAL_ONLY_THRESHOLD) {
-            return materialWeight;
-        }
+    private int calculatePositionWeight(final Board workingBoard, final int weightFactor) {
         return weightingFunction.calculate(workingBoard) * weightFactor;
     }
 
