@@ -1,20 +1,8 @@
 package org.michaelfl.mychess.engines;
 
-import org.michaelfl.mychess.Board;
-import org.michaelfl.mychess.ChessUtil;
-import org.michaelfl.mychess.EngineConfig;
-import org.michaelfl.mychess.Game;
+import org.michaelfl.mychess.*;
 import org.michaelfl.mychess.Game.GameResult;
-import org.michaelfl.mychess.GameStatus;
-import org.michaelfl.mychess.IllegalChessPositionException;
-import org.michaelfl.mychess.KillerMoves;
-import org.michaelfl.mychess.Log;
-import org.michaelfl.mychess.Move;
-import org.michaelfl.mychess.MoveGenerator;
-import org.michaelfl.mychess.Moves;
-import org.michaelfl.mychess.QuiescenceSearch;
-import org.michaelfl.mychess.Statistics;
-import org.michaelfl.mychess.WeightingFunction;
+import org.michaelfl.mychess.TranspositionTable.Bound;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 
 import java.util.Arrays;
@@ -55,7 +43,7 @@ public final class PositionSearch {
 
     /**
      * Per-node state for one invocation of
-     * {@link PositionSearch#alphaBetaSearchI(SearchNodeContext)}: current
+     * {@link PositionSearch#alphaBetaSearch(SearchNodeContext, int, int)}: current
      * search depth, alpha-beta window, side-to-move sign, running material
      * counters, the working board, and a reference to the shared
      * principal-variation (PV) table. Non-PV fields are straightforward;
@@ -99,7 +87,7 @@ public final class PositionSearch {
      * <p>The diagonal slot of row {@code d} — column {@code d}, addressed
      * by {@link #pvIndex()} — is the move currently being considered at
      * depth {@code d}. It is rewritten at the top of every move-loop
-     * iteration in {@code alphaBetaSearchI}. The slots
+     * iteration in {@code alphaBetaSearchMain}. The slots
      * {@code d+1 .. maxDepth-1} to the right of the diagonal hold the
      * sub-PV continuing from that candidate; deeper nodes fill them via
      * {@link #copyUpPV()}. Slots to the left of the diagonal are written
@@ -148,7 +136,7 @@ public final class PositionSearch {
      *       does not create a {@code SearchNodeContext}; it writes
      *       {@code pvTable[0]} directly.</li>
      *   <li>{@code maxDepth} — the iterative-deepening iteration's target
-     *       depth. The leaf shortcut in {@code alphaBetaSearchI} fires
+     *       depth. The leaf shortcut in {@code alphaBetaSearchMain} fires
      *       at {@code depth == maxDepth}.</li>
      *   <li>{@code bestKnownPath} — the previous iteration's PV, threaded
      *       through so each depth can take its best-known move from
@@ -157,8 +145,6 @@ public final class PositionSearch {
      *   <li>{@code weightFactor} — {@code +1} for white-to-move,
      *       {@code -1} for black; negated at each child recursion so the
      *       search runs in pure negamax form.</li>
-     *   <li>{@code alphaWeight} / {@code betaWeight} — alpha-beta window
-     *       in centi-pawns from the side-to-move's perspective.</li>
      *   <li>{@code materialWeight} — cumulative material from the
      *       side-to-move's perspective. Used by the leaf shortcut when
      *       {@code materialDelta} exceeds
@@ -171,12 +157,31 @@ public final class PositionSearch {
      *   <li>{@code pvTable} — see above. Shared across every
      *       {@code SearchNodeContext} within one deepening iteration.</li>
      * </ul>
+     *
+     * <p>The alpha-beta window ({@code alphaWeight} / {@code betaWeight})
+     * and the TT-supplied move-ordering hint ({@code ttMove}) used to be
+     * record fields in earlier iterations. They have been promoted to
+     * plain method parameters on {@code alphaBetaSearch} /
+     * {@code alphaBetaSearchMain} so that the per-node alpha/beta narrowing
+     * does not require allocating a new record at every recursion — the
+     * record state ({@code workingBoard}, {@code pvTable}, etc.) is shared,
+     * the window is per-call.
      */
     @SuppressWarnings("java:S6218")
     public record SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnownPath,
                                     int weightFactor,
-                                    int alphaWeight, int betaWeight, int materialWeight, int materialDelta,
+                                    int materialWeight, int materialDelta,
                                     Board workingBoard, int[] pvTable) {
+
+        /**
+         * Plies still to search below this node ({@code maxDepth - depth}).
+         * Used as the TT lookup-depth comparison: an entry stored at
+         * remaining-depth {@code r_stored} is only usable for a score
+         * read when {@code r_stored >= this.remainingDepth()}.
+         */
+        public int remainingDepth() {
+            return maxDepth - depth;
+        }
 
         /**
          * Side length of the (conceptual) PV-table matrix: both the
@@ -235,7 +240,7 @@ public final class PositionSearch {
          *               +----+----+----+----+----+      [M1, M2, M3] from depth 1's perspective
          * }</pre>
          *
-         * <p>Called from {@code alphaBetaSearchI}'s move loop whenever
+         * <p>Called from {@code alphaBetaSearchMain}'s move loop whenever
          * the current child move improves the parent's best result so
          * far (and on a β-cutoff before the early return).
          */
@@ -257,33 +262,160 @@ public final class PositionSearch {
          * stale slots written by an earlier sibling's deeper
          * exploration — the defect reproduced by
          * {@code IllegalPvRegressionTest}'s test02 cases.
+         *
+         * <p>Example, {@code truncateParentPv()} called at depth 2 of a
+         * depth-4 search (so {@code maxDepth=4}, {@code pvMaxLength=5}).
+         * The trailing column 4 stays at the {@code 0} terminator
+         * throughout:
+         *
+         * <pre>{@code
+         *   col           0    1    2    3    4
+         *               +----+----+----+----+----+
+         *   row 1 before |    | M1 | M2'| M3'|  0 |   <- parent has stale slots 2..3
+         *               +----+----+----+----+----+      from an earlier sibling's
+         *                                              copyUpPV at this depth
+         *   row 2       |    |    | ?? | ?? |  ? |   <- depth 2 returns terminal
+         *               +----+----+----+----+----+      (no move to propagate)
+         *
+         *                       || zero row 1, slots 2..4
+         *                       v
+         *
+         *               +----+----+----+----+----+
+         *   row 1 after |    | M1 |  0 |  0 |  0 |   <- parent's row reads as the PV
+         *               +----+----+----+----+----+      [M1] only; no stale tail
+         * }</pre>
          */
         public void truncateParentPv() {
             final int fromIndex = pvParentIndex();
             final int toIndexExclusive = depth * pvMaxLength();
             Arrays.fill(pvTable, fromIndex, toIndexExclusive, 0);
         }
+
+        /**
+         * PV-table maintenance for the transposition-table early-return
+         * paths in {@code alphaBetaSearchPre}. When a TT lookup serves the
+         * result for this node (EXACT bound, or LOWER/UPPER cutoff with
+         * {@code alpha >= beta}), the recursive descent that would
+         * normally fill row {@code d}'s slots {@code d..maxDepth} via
+         * {@link #copyUpPV()} from the child never happens. Without this
+         * helper, the parent's subsequent {@link #copyUpPV()} would
+         * carry the row's stale slots — left over from an earlier
+         * sibling's exploration — up into its own row, and the iteration
+         * would emit a principal variation that includes moves which are
+         * not legal at the positions the PV claims to reach.
+         *
+         * <p>This is the same hazard {@link #truncateParentPv()} addresses
+         * for terminal returns (mate/stalemate/draw/leaf eval), specialized
+         * for the TT case where we DO have a non-zero move to propagate
+         * (the TT entry's stored best move). Concretely:
+         *
+         * <ol>
+         *   <li>Write {@code ttMove} into this depth's diagonal slot
+         *       (row {@code d}, column {@code d}), matching what an
+         *       in-tree search would have written via
+         *       {@code pvTable[pvIndex] = move} in the move loop.</li>
+         *   <li>Zero this depth's row past the diagonal (columns
+         *       {@code d+1..maxDepth}) — no further continuation is
+         *       known beyond the TT-stored best move.</li>
+         *   <li>Propagate the result one level up via {@link #copyUpPV()},
+         *       so the parent's row reads
+         *       {@code [..., parent's move, ttMove, 0, 0, ...]} after the
+         *       parent picks this child as its best.</li>
+         * </ol>
+         *
+         * <p>Without this propagation, the next iterative-deepening pass
+         * picks up the stale PV as its {@code bestKnownPath}, hands a
+         * not-legal move to {@code MoveGenerator} as the move-ordering
+         * hint, and (depending on the MoveSorter's tolerance) either
+         * trips the sorter's "pvMove not produced" diagnostic skip or
+         * crashes inside {@code Board.makeMove}.
+         *
+         * <p>Example, {@code writeTTCachedPv(TT)} called at depth 2 of a
+         * depth-4 search (so {@code maxDepth=4}, {@code pvMaxLength=5})
+         * after a TT lookup serves the result for this node:
+         *
+         * <pre>{@code
+         *   col           0    1    2    3    4
+         *               +----+----+----+----+----+
+         *   row 1 before |    | M1 | M2'| M3'|  0 |   <- parent's stale slots
+         *               +----+----+----+----+----+
+         *   row 2 before |    |    | M2'| M3'|  0 |   <- own row also stale
+         *               +----+----+----+----+----+      (from a previous visit)
+         *
+         *                       || step 1: write TT-bestMove to own
+         *                       ||         diagonal (row 2, col 2)
+         *                       v
+         *
+         *               +----+----+----+----+----+
+         *   row 2 step1 |    |    | TT | M3'|  0 |   <- diagonal correct, tail stale
+         *               +----+----+----+----+----+
+         *
+         *                       || step 2: zero own row past the diagonal
+         *                       ||         (row 2, cols 3..4)
+         *                       v
+         *
+         *               +----+----+----+----+----+
+         *   row 2 step2 |    |    | TT |  0 |  0 |
+         *               +----+----+----+----+----+
+         *
+         *                       || step 3: copyUpPV — row 2, slots 2..4
+         *                       ||         -> row 1, slots 2..4
+         *                       v
+         *
+         *               +----+----+----+----+----+
+         *   row 1 after |    | M1 | TT |  0 |  0 |   <- parent's row now reads
+         *               +----+----+----+----+----+      [M1, TT] with no tail
+         * }</pre>
+         *
+         * @param ttMove the {@link TranspositionTable.TTEntry#getBestMove()}
+         *               of the entry being returned. Must be non-zero; the
+         *               TT only stores a best move alongside a real score.
+         */
+        public void writeTTCachedPv(int ttMove) {
+            pvTable[pvIndex()] = ttMove;
+            Arrays.fill(pvTable, pvIndex() + 1, (depth + 1) * pvMaxLength(), 0);
+            copyUpPV();
+        }
+
     }
 
-    public record SearchNodeResult(GameResult result, int weight, boolean isTimeout) {
+    /**
+     * One alpha-beta node's return value. The {@code bound} and
+     * {@code bestMove} fields exist for the transposition table:
+     * {@code bound} classifies {@code weight} as exact / lower / upper
+     * (see {@link Bound}), and {@code bestMove} carries the move that
+     * produced {@code weight} so a future re-visit of the same position
+     * can use it as the first move tried (see
+     * {@link MoveSorter#reset}'s {@code ttMove} parameter). Both are
+     * read back via {@link TranspositionTable#put}.
+     */
+    public record SearchNodeResult(GameResult result, int weight, Bound bound, int bestMove, boolean isTimeout) {
 
-        public static final SearchNodeResult TIMEOUT = new SearchNodeResult(GameResult.ONGOING, 0, true);
-        public static final SearchNodeResult INVALID = new SearchNodeResult(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT_NEG, false);
+        public static final SearchNodeResult TIMEOUT = new SearchNodeResult(GameResult.ONGOING, 0, Bound.EXACT, 0, true);
+        public static final SearchNodeResult INVALID = new SearchNodeResult(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT_NEG, Bound.EXACT, 0, false);
 
         /**
          * Initial "no result yet" placeholder used as the starting value of
-         * {@code bestResult} in {@code alphaBetaSearchI}. Any real return
+         * {@code bestResult} in {@code alphaBetaSearchMain}. Any real return
          * value (in {@code (ILLEGAL_WEIGHT_NEG, ILLEGAL_WEIGHT_POS]}) is
          * strictly greater, so the first valid move always replaces it.
          */
-        public static final SearchNodeResult INITIAL = new SearchNodeResult(GameResult.ONGOING, WeightingFunction.MIN_ALPHA, false);
+        public static final SearchNodeResult INITIAL = new SearchNodeResult(GameResult.ONGOING, WeightingFunction.MIN_ALPHA, Bound.EXACT, 0, false);
 
-        public static SearchNodeResult create(GameResult result, int weight) {
-            return new SearchNodeResult(result, weight, false);
+        public SearchNodeResult(GameResult result, int weight, Bound bound, int bestMove) {
+            this(result, weight, bound, bestMove, false);
+        }
+
+        public boolean isIllegal() {
+            return weight ==  WeightingFunction.ILLEGAL_WEIGHT_POS || weight ==  WeightingFunction.ILLEGAL_WEIGHT_NEG;
+        }
+
+        public static SearchNodeResult create(GameResult result, int weight, Bound bound, int bestMove) {
+            return new SearchNodeResult(result, weight, bound, bestMove, false);
         }
 
         public static SearchNodeResult draw() {
-            return new SearchNodeResult(GameResult.DRAW, 0, false);
+            return new SearchNodeResult(GameResult.DRAW, 0, Bound.EXACT, 0, false);
         }
 
         /**
@@ -292,22 +424,22 @@ public final class PositionSearch {
          * the rest of the search — fail-soft does not clamp it.
          */
         public static SearchNodeResult illegal() {
-            return new SearchNodeResult(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT_POS, false);
+            return new SearchNodeResult(GameResult.ONGOING, WeightingFunction.ILLEGAL_WEIGHT_POS, Bound.EXACT, 0, false);
         }
 
         public static SearchNodeResult checkmateSelf(int depth) {
-            return new SearchNodeResult(GameResult.CHECKMATE, -WeightingFunction.checkmateInCenti(depth), false);
+            return new SearchNodeResult(GameResult.CHECKMATE, -WeightingFunction.checkmateInCenti(depth), Bound.EXACT, 0, false);
         }
 
         public static SearchNodeResult stalemate() {
-            return new SearchNodeResult(GameResult.STALEMATE, 0, false);
+            return new SearchNodeResult(GameResult.STALEMATE, 0, Bound.EXACT, 0, false);
         }
 
         public SearchNodeResult negate() {
             if (weight == 0) {
                 return this;
             }
-            return new SearchNodeResult(result, -weight, isTimeout);
+            return new SearchNodeResult(result, -weight, bound, bestMove, isTimeout);
         }
     }
 
@@ -318,6 +450,7 @@ public final class PositionSearch {
     private final MoveGenerator moveGenerator;
     private final WeightingFunction weightingFunction = new WeightingFunction();
     private final QuiescenceSearch quiescenceSearch;
+    private final TranspositionTable tt;
     private final int weightFactor;
     private final Statistics statistics = new Statistics();
     private final boolean silent;
@@ -330,6 +463,7 @@ public final class PositionSearch {
         this.moveGenerator = new MoveGenerator(new MoveSorterImpl(killerMoves));
         this.engineConfig = engine.getConfig();
         this.quiescenceSearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics, engineConfig.getMaxQuiescenceDepth());
+        this.tt = engine.getTranspositionTable();
         this.weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
         this.silent = engineConfig.isSilent();
         this.timeout = System.currentTimeMillis() + engineConfig.getMillisPerMove();
@@ -448,7 +582,7 @@ public final class PositionSearch {
         final Board workingBoard = game.getBoard().copy();
 
         final int bestKnownNextMove = getMoveAtDepth(bestKnownPath, 0);
-        final Moves moves = moveGenerator.calculateMoves(workingBoard, 0, bestKnownNextMove);
+        final Moves moves = moveGenerator.calculateMoves(workingBoard, 0, bestKnownNextMove, 0);
         if (moves.isIllegal()) {
             throw new IllegalChessPositionException(workingBoard);
         }
@@ -476,7 +610,10 @@ public final class PositionSearch {
 
             pvTable[0] = move;
             workingBoard.makeMove(move);
-            var result = alphaBetaSearch(new SearchNodeContext(1, maxDepth, bestKnownPath, -weightFactor, WeightingFunction.MIN_ALPHA, -alphaWeight, -newMaterialWeight, -moveWeight, workingBoard, pvTable)).negate();
+            var result = alphaBetaSearch(
+                    new SearchNodeContext(1, maxDepth, bestKnownPath, -weightFactor, -newMaterialWeight, -moveWeight, workingBoard, pvTable),
+                    WeightingFunction.MIN_ALPHA, -alphaWeight)
+                    .negate();
             if (result.isTimeout()) {
                 return previousBestKnownPath;
             }
@@ -528,30 +665,22 @@ public final class PositionSearch {
         return 0;
     }
 
-    private SearchNodeResult alphaBetaSearch(final SearchNodeContext ctx) {
-        var result = alphaBetaSearchI(ctx);
+    private SearchNodeResult alphaBetaSearch(final SearchNodeContext ctx, final int alphaWeight, final int betaWeight) {
+        __assert(() -> !(WeightingFunction.isIllegalWeight(alphaWeight) || WeightingFunction.isIllegalWeight(betaWeight)),
+                () -> "ILLEGAL_WEIGHT as alpha/beta; depth=" + ctx.depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + ctx.workingBoard);
+
+        var result = alphaBetaSearchPre(ctx, alphaWeight, betaWeight);
+
         // ILLEGAL_WEIGHT_NEG <= weight < ILLEGAL_WEIGHT_POS
         __assert(() -> !(result.weight <= WeightingFunction.ILLEGAL_WEIGHT_NEG || result.weight > WeightingFunction.ILLEGAL_WEIGHT_POS),
-                () -> "Unexpected weight " + result.weight + " returned, depth=" + ctx.depth() + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
+                () -> "Unexpected weight " + result.weight + " returned, depth=" + ctx.depth() + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + ctx.workingBoard);
 
         return result;
     }
 
-    @SuppressWarnings("Duplicates")
-    private SearchNodeResult alphaBetaSearchI(final SearchNodeContext ctx) {
-        final int depth = ctx.depth;
-        MoveAndWeight bestKnownPath = ctx.bestKnownPath;
+    private SearchNodeResult alphaBetaSearchPre(final SearchNodeContext ctx, int alphaWeight, int betaWeight) {
         final GameStatus gameStatus = ctx.workingBoard.getGameStatus();
         statistics.incrPositionCount();
-        final var pvTable = ctx.pvTable;
-        final int pvIndex = ctx.pvIndex();
-        // Fail-soft: bestResult starts below any legal weight; the first valid
-        // move always replaces it, so the eventual return value is the true
-        // best score even when it falls below ctx.alphaWeight.
-        SearchNodeResult bestResult = SearchNodeResult.INITIAL;
-
-        __assert(() -> !(WeightingFunction.isIllegalWeight(ctx.alphaWeight()) || WeightingFunction.isIllegalWeight(ctx.betaWeight())),
-                () -> "ILLEGAL_WEIGHT as alpha/beta; depth=" + depth + ", alphaWeight=" + ctx.alphaWeight + ", betaWeight=" + ctx.betaWeight + "\n" + ctx.workingBoard);
 
         if ((engineConfig.isEnableFiftyMovesRule() && gameStatus.getHalfMoveClock() >= 100) || (engineConfig.isEnableThreefoldRepetition() && ctx.workingBoard.isThreefoldRepetition())) {
             ctx.truncateParentPv();
@@ -566,20 +695,78 @@ public final class PositionSearch {
         // enough to detect that the previous move was an illegal self-check
         // — no need to generate (and sort) the full pseudo-legal move list
         // since we don't iterate at the leaf anyway.
-        if (depth == ctx.maxDepth) {
+        if (ctx.remainingDepth() == 0) {
             if (ctx.workingBoard.canCaptureOpposingKing()) {
                 // ILLEGAL — parent will reject this branch and skip its own
                 // copyUpPV, so the parent's row stays as-is. No truncate needed.
                 return SearchNodeResult.illegal();
             }
             ctx.truncateParentPv();
-            return SearchNodeResult.create(GameResult.ONGOING, quiescenceSearch(ctx));
+            return SearchNodeResult.create(GameResult.ONGOING, quiescenceSearch(ctx, alphaWeight, betaWeight), Bound.EXACT, 0);
         }
+
+        // Transposition table lookup
+        final var ttEntry = tt.get(ctx.workingBoard.getGameStatus().getPositionHash());
+        if (ttEntry != null && ttEntry.getDepth() >= ctx.remainingDepth()) {
+            final int score = WeightingFunction.scoreFromTT(ttEntry.getScore(), ctx.depth);
+
+            switch (ttEntry.getBound()) {
+                case EXACT -> {
+                    return exactTTResult(ctx, score, ttEntry.getBestMove());
+                }
+                case LOWER -> alphaWeight = Math.max(alphaWeight, score);
+                case UPPER -> betaWeight = Math.min(betaWeight, score);
+            }
+
+            if (alphaWeight >= betaWeight) {
+                return exactTTResult(ctx, score, ttEntry.getBestMove());
+            }
+        }
+
+        final int bestMove = ttEntry != null ? ttEntry.getBestMove(): 0;
+        final SearchNodeResult result = alphaBetaSearchMain(ctx, alphaWeight, betaWeight, bestMove);
+
+        if (!result.isTimeout() && !result.isIllegal()) {
+            // Store result in transposition table
+            int score = WeightingFunction.scoreToTT(result.weight, ctx.depth);
+            tt.put(gameStatus.getPositionHash(), ctx.remainingDepth(), score, result.bound, result.bestMove);
+        }
+
+        return result;
+    }
+
+    /**
+     * Shared return path for the two TT-cache early-exit branches in
+     * {@link #alphaBetaSearchPre} (EXACT bound, and LOWER/UPPER cutoff
+     * with {@code alpha &gt;= beta}). Updates the PV table via
+     * {@link SearchNodeContext#writeTTCachedPv(int)} so the parent's
+     * subsequent {@link SearchNodeContext#copyUpPV()} does not propagate
+     * stale slots from an earlier sibling's exploration, then wraps the
+     * given depth-adjusted score and best move in a {@link SearchNodeResult}.
+     */
+    private static SearchNodeResult exactTTResult(SearchNodeContext ctx, int score, int bestMove) {
+        ctx.writeTTCachedPv(bestMove);
+
+        return SearchNodeResult.create(GameResult.ONGOING, score, Bound.EXACT, bestMove);
+    }
+
+    @SuppressWarnings("Duplicates")
+    private PositionSearch.SearchNodeResult alphaBetaSearchMain(final PositionSearch.SearchNodeContext ctx, final int alphaWeight, final int betaWeight, final int ttMove) {
+        final int depth = ctx.depth;
+        MoveAndWeight bestKnownPath = ctx.bestKnownPath;
+        statistics.incrPositionCount();
+        final var pvTable = ctx.pvTable;
+        final int pvIndex = ctx.pvIndex();
+
+        // Fail-soft: bestResult starts below any legal weight; the first valid
+        // move always replaces it, so the eventual return value is the true
+        // best score even when it falls below ctx.alphaWeight.
+        SearchNodeResult bestResult = SearchNodeResult.INITIAL;
 
         // Non-leaf: full move generation is needed for the iteration; check
         // legality on the resulting Moves.ILLEGAL sentinel.
         final int bestKnownNextMove = getMoveAtDepth(bestKnownPath, depth);
-        final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard, depth, bestKnownNextMove);
+        final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard, depth, bestKnownNextMove, ttMove);
         if (moves.isIllegal()) {
             return SearchNodeResult.illegal();
         }
@@ -594,6 +781,7 @@ public final class PositionSearch {
         }
 
         boolean haveValidMoves = false;
+        int bestMove = 0;
 
         for (int i = 0; i < countMoves; i++) {
             if (isTimeout()) {
@@ -608,11 +796,11 @@ public final class PositionSearch {
             // alpha-beta cutoff threshold for the child: never below the
             // parent's alpha (fail-soft may pull bestResult.weight below it
             // when the first move fails low).
-            final int alphaLocal = Math.max(ctx.alphaWeight, bestResult.weight);
+            final int alphaLocal = Math.max(alphaWeight, bestResult.weight);
 
             pvTable[pvIndex] = move;
             ctx.workingBoard.makeMove(move);
-            var result = alphaBetaSearch(new SearchNodeContext(depth + 1, ctx.maxDepth, bestKnownPath, -ctx.weightFactor, -ctx.betaWeight, -alphaLocal, -newMaterialWeight, -newMaterialDelta, ctx.workingBoard, pvTable)).negate();
+            var result = alphaBetaSearch(new SearchNodeContext(depth + 1, ctx.maxDepth, bestKnownPath, -ctx.weightFactor, -newMaterialWeight, -newMaterialDelta, ctx.workingBoard, pvTable), -betaWeight, -alphaLocal).negate();
             ctx.workingBoard.revertMove();
             if (result.isTimeout()) {
                 return SearchNodeResult.TIMEOUT;
@@ -628,26 +816,32 @@ public final class PositionSearch {
                 // weight that triggered the cutoff, not the beta bound. The
                 // unclamped value lets the caller (and a future TT) record a
                 // tighter lower bound on this position's true score.
-                if (weight >= ctx.betaWeight) {
+                if (weight >= betaWeight) {
                     statistics.incrPrunedMovesCount(countMoves - i - 1);
                     ctx.copyUpPV();
                     if (Move.getCapturedPiece(move) == 0) {
                         killerMoves.addMove(move, depth);
                     }
-                    return result;
+                    return new SearchNodeResult(result.result(), weight, Bound.LOWER, move);
                 }
 
                 if (weight > bestResult.weight) {
                     bestResult = result;
+                    bestMove = move;
                     ctx.copyUpPV();
                 }
             }
         }
 
-        return haveValidMoves ? bestResult : checkmateOrStalemate(ctx);
+        if (haveValidMoves) {
+            Bound bound = bestResult.weight > alphaWeight ? Bound.EXACT : Bound.UPPER;
+            return new SearchNodeResult(bestResult.result, bestResult.weight, bound, bestMove);
+        }
+
+        return checkmateOrStalemate(ctx);
     }
 
-    private SearchNodeResult checkmateOrStalemate(SearchNodeContext ctx) {
+    private PositionSearch.SearchNodeResult checkmateOrStalemate(PositionSearch.SearchNodeContext ctx) {
         // Reached when the move loop found no legal moves at this depth.
         // Fail-soft: return the true checkmate/stalemate score regardless of
         // the alpha-beta window — the caller (and a future TT) gets a sharp
@@ -660,14 +854,14 @@ public final class PositionSearch {
                 SearchNodeResult.stalemate();
     }
 
-    private int quiescenceSearch(SearchNodeContext ctx) {
+    private int quiescenceSearch(final SearchNodeContext ctx, final int alphaWeight, final int betaWeight) {
         final var workingBoard = ctx.workingBoard;
         final int lastMove = workingBoard.getGameStatus().getLastMove();
 
         if (Move.getCapturedPiece(lastMove) == 0) {
             return calculatePositionWeight(workingBoard, ctx.weightFactor, ctx.materialWeight, ctx.materialDelta);
         } else {
-            return quiescenceSearch.quiescenceSearch(workingBoard, Move.getToField(lastMove), ctx.depth, ctx.weightFactor, ctx.alphaWeight, ctx.betaWeight, ctx.materialWeight, ctx.materialDelta);
+            return quiescenceSearch.quiescenceSearch(workingBoard, ctx.depth, ctx.weightFactor, alphaWeight, betaWeight, ctx.materialWeight, ctx.materialDelta);
         }
     }
 

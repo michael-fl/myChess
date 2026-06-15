@@ -20,6 +20,7 @@ class NextMoveTaskTest {
                 .maxDepth(20)
                 .millisPerMove(60_000)
                 .silent(true)
+                .setTranspositionTable(TestSupport.createTestTT())
                 .build();
     }
 

@@ -254,6 +254,7 @@ class IllegalPvRegressionTest {
         var config = new EngineConfig.Builder()
                 .maxDepth(maxDepth)
                 .silent(true)
+                .setTranspositionTable(TestSupport.createTestTT())
                 .build();
         var game = GameImporter.importerFor(gameMoves).importGame(
                 new GameConfig(MyChessEngine.class, config));
@@ -268,6 +269,7 @@ class IllegalPvRegressionTest {
         var config = new EngineConfig.Builder()
                 .maxDepth(maxDepth)
                 .silent(true)
+                .setTranspositionTable(TestSupport.createTestTT())
                 .build();
         var board = Fen.importFEN(fen);
         var game = new Game(new GameConfig(MyChessEngine.class, config), board);

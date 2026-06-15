@@ -1,21 +1,24 @@
 package org.michaelfl.mychess.engines;
 
-import org.michaelfl.mychess.Board;
-import org.michaelfl.mychess.GameStatus;
-import org.michaelfl.mychess.IntArray;
-import org.michaelfl.mychess.KillerMoves;
-import org.michaelfl.mychess.Move;
-import org.michaelfl.mychess.MoveSorter;
-import org.michaelfl.mychess.Moves;
-import org.michaelfl.mychess.MovesArray;
-import org.michaelfl.mychess.PieceSquareTables;
-import org.michaelfl.mychess.SortableMovesBucket;
-import org.michaelfl.mychess.WeightingFunction;
+import org.michaelfl.mychess.*;
 
 /**
  * Default {@link MoveSorter}. Emits moves in this order:
- * known-best (PV), recapture of the last moved piece, winning captures,
+ * pvMove (previous iteration's principal-variation move at this depth),
+ * ttMove (best move from a transposition-table hit at this position),
+ * recapture of the last moved piece, winning captures,
  * {@link KillerMoves}, other captures, quiet moves, king moves.
+ *
+ * <p>The two front-loaded ordering hints ({@code pvMove}, {@code ttMove})
+ * are passed in via {@link #reset(GameStatus, Board, int, int, int)} and
+ * are added to the output only when the move generator actually reports
+ * them through {@link #addMove}. Tracking this via per-hint
+ * {@code pvMoveSeen} / {@code ttMoveSeen} flags protects against stale
+ * hints (e.g. a TT bestMove from an unreachable Zobrist-collision
+ * neighbor, or a PV entry that survived a search-tree shape change):
+ * unseen hints are skipped and logged via {@link Log#info} rather than
+ * blindly added — handing an unplayable move to the search loop would
+ * otherwise crash inside {@link Board#makeMove(int)}.
  *
  * @author Michael Fleischhauer
  */
@@ -30,7 +33,10 @@ public final class MoveSorterImpl implements MoveSorter {
     private final MovesArray bucketKingMoves = new MovesArray();
 
     private final KillerMoves killerMoves;
-    private int knownBestMove;
+    private int pvMove;
+    private int ttMove;
+    private boolean pvMoveSeen;
+    private boolean ttMoveSeen;
     private int targetFieldOfLastOppositeMove;
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Board board;
@@ -45,10 +51,13 @@ public final class MoveSorterImpl implements MoveSorter {
     }
 
     @Override
-    public void reset(GameStatus gameStatus, Board board, int depth, int knownBestMove) {
+    public void reset(GameStatus gameStatus, Board board, int depth, int pvMove, int ttMove) {
         this.board = board;
         this.depth = depth;
-        this.knownBestMove = knownBestMove;
+        this.pvMove = pvMove;
+        this.ttMove = ttMove;
+        this.pvMoveSeen = false;
+        this.ttMoveSeen = false;
 
         targetFieldOfLastOppositeMove = Move.getToField(gameStatus.getLastMove());
 
@@ -63,7 +72,12 @@ public final class MoveSorterImpl implements MoveSorter {
 
     @Override
     public void addMove(final int move, final int fromField, final int toField, final byte movingPiece, final byte capturedPiece) {
-        if (move == knownBestMove) {
+        if (move == pvMove) {
+            pvMoveSeen = true;
+            return;
+        }
+        if (move == ttMove) {
+            ttMoveSeen = true;
             return;
         }
         if (killerMoves.isKillerMove(move, depth)) {
@@ -103,9 +117,28 @@ public final class MoveSorterImpl implements MoveSorter {
         bucketOtherCaptures.sort();
         bucketRemainingMoves.sort();
 
-        if (knownBestMove != 0) {
-            movesArray.add(knownBestMove);
+        if (pvMove != 0) {
+            if (pvMoveSeen) {
+                movesArray.add(pvMove);
+            } else {
+                Log.info("[sort] pvMove " + ChessUtil.moveToString(pvMove)
+                        + " not produced by MoveGenerator at depth=" + depth
+                        + ", hash=" + Long.toHexString(board.getGameStatus().getPositionHash())
+                        + " — skipping (invariant violation, see roadmap)");
+            }
         }
+
+        if (ttMove != 0 && ttMove != pvMove) {
+            if (ttMoveSeen) {
+                movesArray.add(ttMove);
+            } else {
+                Log.info("[sort] ttMove " + ChessUtil.moveToString(ttMove)
+                        + " not produced by MoveGenerator at depth=" + depth
+                        + ", hash=" + Long.toHexString(board.getGameStatus().getPositionHash())
+                        + " — skipping (invariant violation, see roadmap)");
+            }
+        }
+
         if (bestMoveCapturingLastPlayedOppositePiece != 0) {
             movesArray.add(bestMoveCapturingLastPlayedOppositePiece);
         }

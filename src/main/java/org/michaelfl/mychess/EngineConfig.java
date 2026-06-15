@@ -14,13 +14,15 @@ public final class EngineConfig {
     private static final int DEFAULT_MAX_QUIESCENCE_SEARCH_DEPTH = 20;
     private static final int DEFAULT_MILLIS_PER_MOVE = 30_000;
 
+    private final TranspositionTable tt;
     private final int maxDepth;
     private final int millisPerMove;
     private final boolean silent;
     private final boolean enableThreefoldRepetition;
     private final boolean enableFiftyMovesRule;
 
-    private EngineConfig(int maxDepth, int millisPerMove, boolean silent, boolean enableThreefoldRepetition, boolean enableFiftyMovesRule) {
+    private EngineConfig(TranspositionTable tt, int maxDepth, int millisPerMove, boolean silent, boolean enableThreefoldRepetition, boolean enableFiftyMovesRule) {
+        this.tt = tt;
         this.maxDepth = maxDepth;
         this.millisPerMove = millisPerMove;
         this.silent = silent;
@@ -28,11 +30,22 @@ public final class EngineConfig {
         this.enableFiftyMovesRule = enableFiftyMovesRule;
     }
 
+    /**
+     * The transposition table the engine should consult and update during
+     * search. Either an explicit instance supplied via
+     * {@link Builder#setTranspositionTable(TranspositionTable)} or, if
+     * the builder caller did not set one, the lazy process-wide singleton
+     * obtained from {@link TranspositionTable#getDefaultInstance()}.
+     */
+    public final TranspositionTable getTranspositionTable() {
+        return tt;
+    }
+
     public final int getMaxDepth() {
         return maxDepth;
     }
 
-    public int getMillisPerMove() {
+    public final int getMillisPerMove() {
         return millisPerMove;
     }
 
@@ -53,11 +66,25 @@ public final class EngineConfig {
     }
 
     public static final class Builder {
+        private TranspositionTable tt;
         private int maxDepth = Integer.MAX_VALUE;
         private int millisPerMove = DEFAULT_MILLIS_PER_MOVE;
         private boolean silent = false;
         private boolean enableThreefoldRepetition = true;
         private boolean enableFiftyMovesRule = true;
+
+        /**
+         * Provide an explicit {@link TranspositionTable} instance for the
+         * engine to use. When this is not called, {@link #build()} falls
+         * back to {@link TranspositionTable#getDefaultInstance()} — the
+         * lazy process-wide singleton, appropriate for production / UCI
+         * use. Tests should pass an isolated TT instance instead so
+         * cached entries from one test cannot leak into the next.
+         */
+        public Builder setTranspositionTable(TranspositionTable tt) {
+            this.tt = tt;
+            return this;
+        }
 
         public Builder maxDepth(int maxDepth) {
             this.maxDepth = maxDepth;
@@ -85,7 +112,11 @@ public final class EngineConfig {
         }
 
         public EngineConfig build() {
-            return new EngineConfig(maxDepth, millisPerMove, silent, enableThreefoldRepetition, enableFiftyMovesRule);
+            if (tt == null) {
+                tt = TranspositionTable.getDefaultInstance();
+            }
+
+            return new EngineConfig(tt, maxDepth, millisPerMove, silent, enableThreefoldRepetition, enableFiftyMovesRule);
         }
     }
 }

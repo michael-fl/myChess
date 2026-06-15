@@ -23,6 +23,7 @@ class PositionSearchTest {
         return new EngineConfig.Builder()
                 .maxDepth(maxDepth)
                 .silent(true)
+                .setTranspositionTable(TestSupport.createTestTT())
                 .build();
     }
 
@@ -100,6 +101,7 @@ class PositionSearchTest {
                 .maxDepth(20)
                 .millisPerMove(1_000)
                 .silent(true)
+                .setTranspositionTable(TestSupport.createTestTT())
                 .build();
         var game = GameImporter.importerFor("1. e4 e5 2. Nf3 Nc6").importGame(
                 new GameConfig(MyChessEngine.class, config));
@@ -123,6 +125,7 @@ class PositionSearchTest {
                 .maxDepth(20)
                 .millisPerMove(60_000)
                 .silent(true)
+                .setTranspositionTable(TestSupport.createTestTT())
                 .build();
         var game = GameImporter.importerFor("1. e4 e5 2. Nf3 Nc6").importGame(
                 new GameConfig(MyChessEngine.class, config));

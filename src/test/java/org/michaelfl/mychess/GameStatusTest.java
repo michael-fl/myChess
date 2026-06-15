@@ -24,6 +24,7 @@ class GameStatusTest {
                 new EngineConfig.Builder()
                         .maxDepth(2)
                         .silent(true)
+                        .setTranspositionTable(TestSupport.createTestTT())
                         .build());
     }
 

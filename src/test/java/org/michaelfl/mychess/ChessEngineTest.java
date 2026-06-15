@@ -21,6 +21,7 @@ class ChessEngineTest {
         return new EngineConfig.Builder()
                 .maxDepth(2)
                 .silent(true)
+                .setTranspositionTable(TestSupport.createTestTT())
                 .build();
     }
 
@@ -183,6 +184,7 @@ class ChessEngineTest {
                 .maxDepth(Integer.MAX_VALUE)
                 .millisPerMove(2000)
                 .silent(true)
+                .setTranspositionTable(TestSupport.createTestTT())
                 .build();
         var game = new Game(new GameConfig(MyChessEngine.class, config), board);
         try {

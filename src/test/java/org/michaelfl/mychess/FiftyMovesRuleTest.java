@@ -51,7 +51,8 @@ class FiftyMovesRuleTest {
                 """);
         var config = new GameConfig(
                 MyChessEngine.class,
-                new EngineConfig.Builder().enableFiftyMovesRule(false).build()
+                new EngineConfig.Builder().enableFiftyMovesRule(false)
+                        .setTranspositionTable(TestSupport.createTestTT()).build()
         );
         var game = importer.importGame(config);
 

@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static org.michaelfl.mychess.Assert.__assert;
 import static org.michaelfl.mychess.ChessUtil.*;
 import static org.michaelfl.mychess.RandomNumbers.RANDOM_NUMBERS;
 
@@ -313,7 +314,7 @@ public final class Board {
      * value. This follows from the Chess960 starting-position symmetry —
      * Black's back rank mirrors White's, so the rook files are paired by
      * side, not by color. The four-valued {@link CastlingSlot} enum
-     * carries other per-color information (e.g. {@link CastlingSlot#bitMask})
+     * carries other per-color information (e.g. {@code CastlingSlot#bitMask})
      * that this lookup ignores.
      */
     public int getCastlingRookFile(CastlingSlot slot) {
@@ -547,6 +548,22 @@ public final class Board {
         return board[field];
     }
 
+    /**
+     * Defensive pre-check for {@link #makeMove(int)}: verifies that the
+     * move's {@code fromField} / {@code toField} indices are inside the
+     * 12×12 board array, that the source square actually holds a piece
+     * (not empty, not the illegal-border sentinel), and that the target
+     * square is on the playable board. Throws
+     * {@link IllegalStateException} with a human-readable move string on
+     * any violation.
+     *
+     * <p>Added during the transposition-table work to make the symptom
+     * of a bad TT- or PV-supplied move ordering hint actionable: a stale
+     * move encoded with an empty source square used to fail deep inside
+     * {@link #_makeNormalMove}'s Zobrist update with a cryptic
+     * {@link ArrayIndexOutOfBoundsException}; this helper surfaces the
+     * problem at the move's entry point with the actual squares named.
+     */
     void validateMove(int move) {
         byte fromField = Move.getFromField(move);
         byte toField = Move.getToField(move);
@@ -582,6 +599,10 @@ public final class Board {
         final int movingPieceNo = ChessUtil.getPieceNumber12(board[fromField]);
         final int toFieldNo = ChessUtil.getFieldNumber64(toField);
         long newPositionHash = getGameStatus().getPositionHash();
+
+        if (movingPieceNo < 0 || movingPieceNo >= 12) {
+            throw new IllegalStateException("Wrong source piece: " + board[fromField]);
+        }
 
         // Remove moving piece from source field
         newPositionHash ^= RANDOM_NUMBERS[movingPieceNo * 64 + ChessUtil.getFieldNumber64(fromField)];
@@ -1122,7 +1143,7 @@ public final class Board {
             return false;
         }
 
-        Moves nextMoves = moveGenerator.calculateMoves(getGameStatus(), this, 0, 0);
+        Moves nextMoves = moveGenerator.calculateMoves(this);
         if (nextMoves.isIllegal()) {
             return false; // illegal chess position
         }
@@ -1137,7 +1158,7 @@ public final class Board {
 
             // Check the next theoretically possible moves. If those contain an illegal move (king can be captured),
             // the king is still under check.
-            Moves nextMoves2 = moveGenerator.calculateMoves(getGameStatus(), this, 0, 0);
+            Moves nextMoves2 = moveGenerator.calculateMoves(this);
             if (!nextMoves2.isIllegal()) {
                 revertMove();
                 return false;
@@ -1180,7 +1201,7 @@ public final class Board {
                 var workingBoard = copy();
                 possibleMoves.removeIf(move -> {
                     workingBoard.makeMove(move);
-                    Moves nextMoves = moveGenerator.calculateMoves(workingBoard.getGameStatus(), workingBoard, 0, 0);
+                    Moves nextMoves = moveGenerator.calculateMoves(workingBoard);
                     workingBoard.revertMove();
                     return nextMoves.isIllegal();
                 });

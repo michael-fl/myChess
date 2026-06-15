@@ -59,19 +59,41 @@ public final class MoveGenerator {
         this.moveSorter = moveSorter;
     }
 
+    /**
+     * Convenience wrapper for callers outside the iterative-deepening
+     * search (REPL, opening-book builder, tests): runs at depth 0 with
+     * no move-ordering hints. See
+     * {@link #calculateMoves(Board, int, int, int)} for parameter
+     * semantics.
+     */
     public Moves calculateMoves(Board theBoard) {
-        return calculateMoves(theBoard.getGameStatus(), theBoard, 0, 0);
+        return calculateMoves(theBoard, 0, 0, 0);
     }
 
+    /**
+     * Convenience wrapper for callers that have a search depth but no
+     * move-ordering hints — e.g. {@link QuiescenceSearch}, which never
+     * receives a PV or TT move because the quiescence cache is not
+     * wired into the transposition table. See
+     * {@link #calculateMoves(Board, int, int, int)} for the full
+     * parameter set.
+     */
     public Moves calculateMoves(Board theBoard, int depth) {
-        return calculateMoves(theBoard.getGameStatus(), theBoard, depth, 0);
+        return calculateMoves(theBoard, depth, 0, 0);
     }
 
-    public Moves calculateMoves(Board theBoard, int depth, int knownBestMove) {
-        return calculateMoves(theBoard.getGameStatus(), theBoard, depth, knownBestMove);
-    }
-
-    public Moves calculateMoves(GameStatus game, Board theBoard, int depth, int knownBestMove) {
+    /**
+     * Pseudo-legal move generation with full ordering hints. {@code pvMove}
+     * (previous iteration's PV at this depth) and {@code ttMove} (best
+     * move from a transposition-table hit) are forwarded to the
+     * {@link MoveSorter#reset} call so the resulting {@link Moves}
+     * starts with those two moves — when the generator actually produces
+     * them, see {@link MoveSorter#reset} for the protection against
+     * stale hints. Pass {@code 0} for either slot when no hint is
+     * available.
+     */
+    public Moves calculateMoves(Board theBoard, int depth, int pvMove, int ttMove) {
+        final GameStatus game = theBoard.getGameStatus();
         final int turn = game.getTurn();
         this.gameStatus = game;
         this.theBoard = theBoard;
@@ -79,7 +101,7 @@ public final class MoveGenerator {
         this.oppositeColor = game.getOppositeColor();
         this.oppositeKing = turn == GameStatus.TURN_WHITE ? Board.blackKing : Board.whiteKing;
         this.containsIllegalMove = false;
-        this.moveSorter.reset(game, theBoard, depth, knownBestMove);
+        this.moveSorter.reset(game, theBoard, depth, pvMove, ttMove);
 
         final int stopField = 9 * Board.LENGTH + 10;
 

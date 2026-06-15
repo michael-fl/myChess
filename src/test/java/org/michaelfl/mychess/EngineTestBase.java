@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class EngineTestBase {
@@ -22,6 +23,7 @@ public class EngineTestBase {
     protected static EngineConfig engineConfig() {
         return new EngineConfig.Builder()
                 .maxDepth(8)
+                .setTranspositionTable(TestSupport.createTestTT())
                 .build();
     }
 
@@ -40,13 +42,26 @@ public class EngineTestBase {
 
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
 
-            var expectedPathDepth = config.getEngineWhiteConfig().getMaxDepth() - 1;
+            var maxExpectedPathDepth = config.getEngineWhiteConfig().getMaxDepth() - 1;
             if (WeightingFunction.isCheckmateWeight(expectedMinWeight)) {
-                expectedPathDepth = Math.min(expectedPathDepth, WeightingFunction.checkmateWeightToPlies(expectedMinWeight));
+                maxExpectedPathDepth = Math.min(maxExpectedPathDepth, WeightingFunction.checkmateWeightToPlies(expectedMinWeight));
             }
-            assertEquals(expectedPathDepth, pathLength(move.path()), "Unexpected path length: " + ChessUtil.pathToString(move.path()));
+
+            // PV length can be shorter than maxDepth-1 if a transposition-table
+            // cache hit truncated the principal variation (see
+            // PositionSearch.SearchNodeContext.writeTTCachedPv). Accept any
+            // non-empty PV that doesn't exceed the maximum search depth; below
+            // we walk only the actual length to validate expectedPathOpt.
+            int actualPathLength = pathLength(move.path());
+            assertTrue(actualPathLength >= 1,
+                    "Path is empty: " + ChessUtil.pathToString(move.path()));
+            assertTrue(actualPathLength <= maxExpectedPathDepth,
+                    "Path longer than maxDepth-1=" + maxExpectedPathDepth + ": "
+                            + ChessUtil.pathToString(move.path()));
+
             if (expectedPathOpt != null) {
-                assertEquals(expectedPathDepth, expectedPathOpt.length, "Test setup error: Wrong length of expected path");
+                assertTrue(expectedPathOpt.length <= maxExpectedPathDepth,
+                        "Test setup error: expected path longer than maxDepth-1=" + maxExpectedPathDepth);
             }
 
             if (notContainsMove(game, expectedMoves, move.move())) {
@@ -65,7 +80,9 @@ public class EngineTestBase {
                 fail("Wrong weight: " + ChessUtil.weightToString(weight) + ". Expected maximum of " + ChessUtil.weightToString(expectedMaxWeight));
             }
 
-            for (int i = 0; i < expectedPathDepth; i++) {
+            int pathDepthToCheck = Math.min(actualPathLength,
+                    expectedPathOpt != null ? expectedPathOpt.length : actualPathLength);
+            for (int i = 0; i < pathDepthToCheck; i++) {
                 if (expectedPathOpt != null && notContainsMove(game, Set.of(expectedPathOpt[i]), move.path()[i])) {
                     game.print();
                     fail("Unexpected move at path depth " + i + ": " + game.getBoard().moveToShortNotation(new Move(move.path()[i])) + ", expected " + expectedPathOpt[i] + ", expected path=" + Arrays.toString(expectedPathOpt) + ", actual path=" + ChessUtil.pathToString(move.path()));
@@ -93,7 +110,7 @@ public class EngineTestBase {
         return !moveStrings.contains(ChessUtil.moveToString(move)) && !moveStrings.contains(game.getBoard().moveToShortNotation(new Move(move)).toString());
     }
 
-    private static Object pathLength(int[] path) {
+    private static int pathLength(int[] path) {
         int len = 0;
         //noinspection StatementWithEmptyBody
         for (int i = 0; i < path.length && path[i] != 0; i++, len++) {

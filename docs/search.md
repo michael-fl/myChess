@@ -83,7 +83,7 @@ When a cutoff happens, three things are recorded:
 2. **PV update.** Even though we're cutting off, the PV table is updated so the calling code can still print *a* principal variation (though it may be truncated).
 3. **Killer move registration.** If the cutting move was a quiet move (no capture), it gets remembered in the per-depth `KillerMoves` table for ordering at sibling positions of the same depth (see [§ 7.2](#72-killer-moves)).
 
-**Fail-soft.** The returned value on a beta cutoff is the actual `result.weight` that triggered it, not `ctx.betaWeight`. Fail-soft exposes *how far* above β the cutoff went — the same alpha-beta tree is explored as under fail-hard, but the unclamped value lets the caller (and a future [transposition table](roadmap.md#121-transposition-table--s--m--150300-elo)) record a tighter lower bound. Symmetrically, when no move improves on α the returned `bestResult.weight` may fall below α — fail-hard would have clamped it. The same principle applies in `QuiescenceSearch`: stand-pat cutoffs return the actual stand-pat value and capture cutoffs return the actual weight, both unclamped. See [roadmap § 12.13](roadmap.md#1213-switch-alpha-beta-from-fail-hard-to-fail-soft--s-no-direct-elo-enables-aspiration--tt-tightening) for the design rationale and how it unlocks aspiration windows and TT-bound sharpening.
+**Fail-soft.** The returned value on a beta cutoff is the actual `result.weight` that triggered it, not `ctx.betaWeight`. Fail-soft exposes *how far* above β the cutoff went — the same alpha-beta tree is explored as under fail-hard, but the unclamped value lets the caller (and the [transposition table](#79-transposition-table)) record a tighter lower bound. Symmetrically, when no move improves on α the returned `bestResult.weight` may fall below α — fail-hard would have clamped it. The same principle applies in `QuiescenceSearch`: stand-pat cutoffs return the actual stand-pat value and capture cutoffs return the actual weight, both unclamped. See [roadmap § 12.13](roadmap.md#1213-switch-alpha-beta-from-fail-hard-to-fail-soft--s-no-direct-elo-enables-aspiration--tt-tightening) for the design rationale and how it unlocks aspiration windows and TT-bound sharpening.
 
 **Search-node context** is a `record`:
 
@@ -429,7 +429,7 @@ public static SearchNodeResult stalemate() {
 }
 ```
 
-**Fail-soft at terminal nodes.** Terminal-node factories (`checkmateSelf`, `stalemate`, `draw`) return the true score without any α/β clamping. This is consistent with the [main-loop fail-soft behavior](#61-negamax--alpha-beta-foundation): the value is allowed to escape the parent's window, and the caller (or a future [transposition table](roadmap.md#121-transposition-table--s--m--150300-elo)) records a sharper bound. Conversion from a previous fail-hard `window(weight, α, β)` helper happened as part of [roadmap § 12.13](roadmap.md#1213-switch-alpha-beta-from-fail-hard-to-fail-soft--s-no-direct-elo-enables-aspiration--tt-tightening).
+**Fail-soft at terminal nodes.** Terminal-node factories (`checkmateSelf`, `stalemate`, `draw`) return the true score without any α/β clamping. This is consistent with the [main-loop fail-soft behavior](#61-negamax--alpha-beta-foundation): the value is allowed to escape the parent's window, and the caller (or the [transposition table](#79-transposition-table)) records a sharper bound. Conversion from a previous fail-hard `window(weight, α, β)` helper happened as part of [roadmap § 12.13](roadmap.md#1213-switch-alpha-beta-from-fail-hard-to-fail-soft--s-no-direct-elo-enables-aspiration--tt-tightening).
 
 **Where does the search realize the game is over at the *root*, not at an interior node?** Two places intercept this *before* the search ever runs:
 
@@ -831,12 +831,17 @@ private final SortableMovesBucket bucketRemainingMoves  = new SortableMovesBucke
 private final MovesArray         bucketKingMoves       = new MovesArray();
 ```
 
-Plus a hidden seventh "bucket": the `knownBestMove` itself (the PV move from [§ 7.1](#71-best-known-move-pv-ordering)).
+Plus two hidden front-of-list slots: the **`pvMove`** (previous iteration's principal-variation move at this depth, see [§ 7.1](#71-best-known-move-pv-ordering)) and the **`ttMove`** (best move from a transposition-table lookup at this position, see [§ 7.9](#79-transposition-table)).
 
 **The dispatch** in `addMove(move, fromField, toField, movingPiece, capturedPiece)`:
 
 ```java
-if (move == knownBestMove) {
+if (move == pvMove) {
+    pvMoveSeen = true;
+    return;                                            // already accounted for at output time
+}
+if (move == ttMove) {
+    ttMoveSeen = true;
     return;                                            // already accounted for at output time
 }
 if (killerMoves.isKillerMove(move, depth)) {
@@ -881,7 +886,8 @@ bucketWinningCaptures.sort();
 bucketOtherCaptures.sort();
 bucketRemainingMoves.sort();
 
-if (knownBestMove != 0)                                  movesArray.add(knownBestMove);
+if (pvMove != 0 && pvMoveSeen)                           movesArray.add(pvMove);   // else: log + skip
+if (ttMove != 0 && ttMove != pvMove && ttMoveSeen)       movesArray.add(ttMove);   // else: log + skip
 if (bestMoveCapturingLastPlayedOppositePiece != 0)       movesArray.add(bestMoveCapturingLastPlayedOppositePiece);
 movesArray.addAll(bucketWinningCaptures.getMoves());
 movesArray.addAll(bucketKillerMoves);                    // TODO: see § 7.2
@@ -890,19 +896,24 @@ movesArray.addAll(bucketRemainingMoves.getMoves());
 movesArray.addAll(bucketKingMoves);                      // TODO: change in endgame
 ```
 
+The `pvMoveSeen` / `ttMoveSeen` flags guard against stale hints: a `pvMove` or `ttMove` is only added to the output when the move generator actually reported it via `addMove`. Unseen hints are dropped with a `Log.info` diagnostic instead — see [§ 7.9](#79-transposition-table)'s "Move-ordering integration" subsection for the rationale and the failure modes the flags protect against.
+
 Final order at every node:
 
 | # | Bucket | Sorted by | Rationale |
 |---|---|---|---|
-| 1 | PV move (`knownBestMove`) | (one entry) | Most likely best by previous iteration. |
-| 2 | Best immediate recapture of opponent's last-moved piece | (one entry) | Captures-resolve-first: if they just played X to attack/defend, our best response that recaptures on their landing square is usually critical. |
-| 3 | Winning captures | descending by `value(captured) − value(moving)` | MVV-LVA-like: capturing a queen with a pawn (+8) > capturing a pawn with a queen (-8). |
-| 4 | Killer moves (this depth) | (insertion order, two entries max) | Quiet moves that have caused cutoffs at sibling depths. |
-| 5 | Other captures (non-winning) | descending by same delta | Trades that lose material may still defend or attack. |
-| 6 | Other quiet moves | descending by PST delta (`destWeight − srcWeight`) | Moves that improve a piece's square (e.g. centralize a knight) before moves that worsen it. |
-| 7 | King moves | (insertion order) | Usually defensive / forced; trying them last reduces wasted exploration. |
+| 1 | `pvMove` (previous iteration's PV) | (one entry) | Most likely best by previous iteration. |
+| 2 | `ttMove` (TT lookup's best move) | (one entry) | Likely best by a previous visit to this position via a different move order. Distinct from `pvMove` because the TT can return a hint from a transposed subtree, not just the on-PV continuation. |
+| 3 | Best immediate recapture of opponent's last-moved piece | (one entry) | Captures-resolve-first: if they just played X to attack/defend, our best response that recaptures on their landing square is usually critical. |
+| 4 | Winning captures | descending by `value(captured) − value(moving)` | MVV-LVA-like: capturing a queen with a pawn (+8) > capturing a pawn with a queen (-8). |
+| 5 | Killer moves (this depth) | (insertion order, two entries max) | Quiet moves that have caused cutoffs at sibling depths. |
+| 6 | Other captures (non-winning) | descending by same delta | Trades that lose material may still defend or attack. |
+| 7 | Other quiet moves | descending by PST delta (`destWeight − srcWeight`) | Moves that improve a piece's square (e.g. centralize a knight) before moves that worsen it. |
+| 8 | King moves | (insertion order) | Usually defensive / forced; trying them last reduces wasted exploration. |
 
-**Why the second slot is the "recapture-of-last-moved-piece"** — this is a small but high-impact special case. When the opponent's last move targeted a particular square (a capture, a check, an attack on our queen), our most urgent response is typically to deal with that piece. Trying it first means alpha-beta gets a cutoff candidate immediately when one exists. It is checked by:
+**Why `ttMove` sits between `pvMove` and the recapture slot.** Conceptually both `pvMove` and `ttMove` are "the previous best move at this position", so they share the same priority tier — try them before any heuristic-classified bucket. They are listed in two slots rather than one because they can disagree: `pvMove` is the move on the iteration's principal path (only meaningful at PV-following nodes), while `ttMove` is whatever the last visit to this exact position stored, which is often a different transposition that reaches the same position from a different ancestor. When the search is still inside the PV, the two usually agree and the duplicate-guard (`ttMove != pvMove`) skips the second add; once the search branches off the PV, only `ttMove` carries forward, and it does so for every transposed visit until a deeper iteration overwrites the entry.
+
+**Why the "recapture-of-last-moved-piece" slot comes right after the `pvMove`/`ttMove` pair** — this is a small but high-impact special case. When the opponent's last move targeted a particular square (a capture, a check, an attack on our queen), our most urgent response is typically to deal with that piece. Trying it first (after exhausting the previous-search hints) means alpha-beta gets a cutoff candidate immediately when one exists. It is checked by:
 
 ```java
 toField == targetFieldOfLastOppositeMove
@@ -915,3 +926,183 @@ The slot only holds the *best* such recapture (highest `deltaWeight`); subsequen
 **Why king moves are last.** Moving the king out of its safe home is usually a positional concession — either forced (king in check) or in the endgame. In the middlegame, king moves rarely win material or improve position. Putting them last means alpha-beta searches the more impactful pieces first; if a king move is actually best, the iteration still finds it, just later (and probably with little speed cost because PV-first ordering will have it cached for the next iteration). The `TODO` in the code notes this assumption breaks in endgames where the king is an active piece — a more sophisticated version would key off `gameStatus.isEndGame()`.
 
 **Why insertion sort for the buckets.** `SortableMovesBucket.sort()` uses insertion sort with fast paths for `n=1` and `n=2`. Move-list buckets are small (rarely > 15 entries), and insertion sort wins for small `n`. Special-casing the trivial sizes avoids any sort overhead on the common path. Details on the bucket data structure are in [§ 3.7](data-types.md#37-sortablemovesbucket).
+
+## 7.9 Transposition table
+
+The transposition table (TT) caches per-position search results keyed by Zobrist hash. Positions reached through different move orders are searched only once: subsequent visits read the cached score (when the stored depth is at least as deep as the new search) and use the stored best move as a move-ordering hint at any depth. Implementation: [`TranspositionTable`](../src/main/java/org/michaelfl/mychess/TranspositionTable.java), wired through [`EngineConfig.getTranspositionTable()`](../src/main/java/org/michaelfl/mychess/EngineConfig.java).
+
+### Storage layout
+
+Fixed-size open-addressed array. The table holds `size` `TTEntry` instances, where `size` is a power of two so the lookup index is a low-bit mask of the Zobrist hash:
+
+```java
+private int hash(final long hashKey) {
+    return (int) hashKey & (size - 1);
+}
+```
+
+Each `TTEntry` carries five fields:
+
+| Field | Meaning |
+|---|---|
+| `hashKey` | Full 64-bit Zobrist key. Also doubles as the occupancy marker: a freshly cleared slot has `hashKey == 0`. |
+| `depth` | `remainingDepth` (= `maxDepth - currentDepth`) at which this entry was searched. NOT the distance from the root. |
+| `score` | Centipawn score relative to the cached position. Mate scores are stored as "mate-in-N plies from here". |
+| `bound` | One of `EXACT` / `LOWER` / `UPPER` — see "Bound semantics" below. |
+| `bestMove` | Packed-int move that produced `score`. Used as a move-ordering hint even when the entry's depth is too shallow to return the score directly. |
+
+The default singleton is `2^20` entries (~50 MB); tests use isolated `2^14`-entry instances via `TestSupport.createTestTT()` (see "Lifecycle" below).
+
+### Lookup
+
+The lookup happens in [`PositionSearch.alphaBetaSearchPre`](../src/main/java/org/michaelfl/mychess/engines/PositionSearch.java) before recursion into the move loop:
+
+```java
+final var ttEntry = tt.get(gameStatus.getPositionHash());
+if (ttEntry != null && ttEntry.getDepth() >= ctx.remainingDepth()) {
+    final int score = scoreFromTT(ttEntry.getScore(), ctx.depth);
+
+    switch (ttEntry.getBound()) {
+        case EXACT -> { return exactTTResult(ctx, score, ttEntry.getBestMove()); }
+        case LOWER -> alphaWeight = Math.max(alphaWeight, score);
+        case UPPER -> betaWeight = Math.min(betaWeight, score);
+    }
+    if (alphaWeight >= betaWeight) {
+        return exactTTResult(ctx, score, ttEntry.getBestMove());
+    }
+}
+```
+
+Two things to notice:
+
+1. **`get()` returns `null` on a hash-bucket collision.** The hash function only uses the low bits of the 64-bit Zobrist key, so two genuinely different positions can land in the same slot. `get()` performs a full `hashKey == entry.hashKey` identity check and returns `null` if they differ — the caller never reads another position's entry. True 64-bit Zobrist collisions are astronomically rare (~1 in 10^19 per pair) and treated as ignorable.
+2. **The depth gate (`ttEntry.getDepth() >= ctx.remainingDepth()`) controls *the score*, not the bestMove.** Below the depth gate the score is ignored but the stored bestMove is still extracted and threaded into the move sorter as `ttMove` (see § 7.1 and "Move-ordering integration" below).
+
+### Storage
+
+After the recursive search returns, the result is stored:
+
+```java
+if (!result.isTimeout() && !result.isIllegal()) {
+    int score = scoreToTT(result.weight, ctx.depth);
+    tt.put(gameStatus.getPositionHash(), ctx.remainingDepth(), score, result.bound, result.bestMove);
+}
+```
+
+The replacement policy in `put()` is **depth-preferred-EXACT**:
+
+```java
+if (entry.hashKey == hashKey && entry.depth > depth && entry.bound == Bound.EXACT) {
+    return;  // keep deeper exact entry
+}
+```
+
+That is: the existing slot is kept only when it represents the same position with a strictly deeper `EXACT` cached score. Every other case (different hashKey, same key with shallower or equal depth, non-EXACT bound) is overwritten unconditionally. The single-line eviction logic is deliberate — anything more sophisticated (aging / generation counters / always-replace-with-better-bound) would buy marginal hit-rate at the cost of more code on the hottest path of the search.
+
+### Bound semantics
+
+The `Bound` field classifies what `score` means relative to the alpha-beta window at store time:
+
+| Bound | Meaning | Stored after |
+|---|---|---|
+| `EXACT` | `score` is the position's exact value: `alpha < score < beta` held when stored. | A move-loop completion where some move beat alpha and none reached beta. |
+| `LOWER` | `score` is a lower bound: the true value is at least `score`. | A beta cutoff: `weight >= beta` triggered an early return; further moves were pruned and might have been better still. |
+| `UPPER` | `score` is an upper bound: the true value is at most `score`. | A "fail-low" exit where every legal move returned a score not exceeding alpha. |
+
+The LOWER/UPPER bounds let the lookup narrow the next call's window without returning a final value: a stored LOWER `s` raises alpha to at least `s` (we know the true value is at least that), a stored UPPER `s` lowers beta to at most `s` (we know it cannot exceed that). When that narrowing produces `alpha >= beta`, the position is decided either way and the cached value is returned just as if it had been EXACT.
+
+### Mate-score depth adjustment
+
+Mate scores encode "mate in N plies" via a high-magnitude sentinel range (`CHECKMATE_WEIGHT_HIGH - plies * 100`, see [`WeightingFunction.checkmateInCenti`](../src/main/java/org/michaelfl/mychess/WeightingFunction.java)). A score returned from the search is *root-relative* — "mate at depth D in the current tree" — but the TT is keyed by position and the same mate, looked up from a different depth, refers to a different "mate at depth D′". Two helpers translate between the two frames:
+
+```java
+private int scoreToTT(int score, int depth) {
+    if (WeightingFunction.isCheckmateWeight(score)) {
+        int plies = WeightingFunction.checkmateWeightToPlies(score);
+        int checkmateCenti = WeightingFunction.checkmateInCenti(plies - depth);
+        return score >= 0 ? checkmateCenti : -checkmateCenti;
+    }
+    return score;
+}
+
+private int scoreFromTT(int score, int depth) {
+    if (WeightingFunction.isCheckmateWeight(score)) {
+        int plies = WeightingFunction.checkmateWeightToPlies(score);
+        int checkmateCenti = WeightingFunction.checkmateInCenti(depth + plies);
+        return score >= 0 ? checkmateCenti : -checkmateCenti;
+    }
+    return score;
+}
+```
+
+On store: subtract the current depth so the stored value reads as "mate in `(plies - depth)` plies from this position". On read: add the current depth back so the returned value reads as "mate at depth `(depth + storedPlies)` of the current search tree".
+
+**Sign preservation matters.** `isCheckmateWeight` and `checkmateWeightToPlies` both take the absolute value of the input — they accept positive (delivering mate) and negative (being mated) scores symmetrically. The `score >= 0 ? +ck : -ck` conditional preserves the sign through the round-trip. An earlier version of this code dropped the sign; the regression that surfaced this was `GameStatusTest.testWhiteCheckmate` flipping its expected mate move because a "we are mated" entry came back from the TT as "we are mating".
+
+### PV-table interaction
+
+A TT-cached early return short-circuits the recursion, which means the parent's PV-table row will *not* be filled in by a child's `copyUpPV` (see § 6.3). Without intervention, the parent's subsequent `copyUpPV()` would propagate whatever stale slots an earlier sibling's exploration left behind, and the iteration would emit a principal variation containing moves not legal at the positions it claims to reach.
+
+The fix lives in `SearchNodeContext.writeTTCachedPv(int ttMove)`, called from both TT-cached return paths via the `exactTTResult` helper:
+
+```java
+public void writeTTCachedPv(int ttMove) {
+    pvTable[pvIndex()] = ttMove;                                                // own row, diagonal slot
+    Arrays.fill(pvTable, pvIndex() + 1, (depth + 1) * pvMaxLength(), 0);        // truncate own row past diagonal
+    copyUpPV();                                                                 // propagate via the standard mechanism
+}
+```
+
+The result, after the parent's normal `copyUpPV` chain runs, is a PV that reads `[..., parent's move, ttMove, 0, 0, ...]` — semantically "the TT says the best move at this depth is `ttMove` and we do not have a continuation beyond that". The full diagram is in the method's JavaDoc.
+
+A known side effect: when a TT hit fires at depth `d`, the visible PV terminates at `d` — even though the search behind it was depth-`maxDepth`-deep. The played move and its score are correct; only the displayed continuation is shorter than the underlying search saw. Reconstructing the full PV by walking the TT (apply the stored bestMove, look up the resulting position, recurse) is a known follow-up — see [roadmap § 12.1](roadmap.md#121-transposition-table--s--m--150300-elo).
+
+### Move-ordering integration
+
+When the TT lookup neither serves a final result nor cuts off the window, the entry's `bestMove` is still forwarded to the move generator as `ttMove` (alongside the previous iteration's PV move):
+
+```java
+final int bestMove = ttEntry != null ? ttEntry.getBestMove() : 0;
+final SearchNodeResult result = alphaBetaSearchMain(ctx, alphaWeight, betaWeight, bestMove);
+```
+
+`MoveSorter.reset` accepts both `pvMove` and `ttMove`. The sorter emits them in that order at the front of the move list, before the recapture / winning-capture / killer / quiet-move buckets described in § 7.8.
+
+**Protection against stale hints.** Either hint may be illegal at the current position — a TT bestMove from a Zobrist-collision-neighbour (vanishingly rare but possible), or a PV entry that does not survive a tree-shape change. Blindly prepending an illegal move to the sorter's output would crash inside `Board.makeMove`. `MoveSorterImpl` defends by tracking per-hint `pvMoveSeen` / `ttMoveSeen` flags:
+
+```java
+public void addMove(int move, ...) {
+    if (move == pvMove) { pvMoveSeen = true; return; }
+    if (move == ttMove) { ttMoveSeen = true; return; }
+    // … normal bucketing
+}
+
+public Moves getSortedMoves() {
+    …
+    if (pvMove != 0) {
+        if (pvMoveSeen) { movesArray.add(pvMove); }
+        else            { Log.info("[sort] pvMove " + … + " not produced by MoveGenerator …"); }
+    }
+    if (ttMove != 0 && ttMove != pvMove) {
+        if (ttMoveSeen) { movesArray.add(ttMove); }
+        else            { Log.info("[sort] ttMove " + … + " not produced by MoveGenerator …"); }
+    }
+    …
+}
+```
+
+A hint is added to the sorted output only when the move generator actually reports it via `addMove`. Unseen hints are dropped and logged; the search continues with the bucket-sorted moves as if the hint had never been set.
+
+The seen-flags reset to `false` at the top of every `reset()` call so they cannot leak across nodes — `MoveSorterImpl` is reused for every search node, not allocated fresh.
+
+### Lifecycle
+
+- **Production / UCI:** `TranspositionTable.getDefaultInstance()` lazily creates a single `2^20`-entry instance the first time it is requested. `EngineConfig.Builder.build()` picks it up when no explicit instance was set, so the UCI handler and the REPL automatically share one TT across all moves of one process.
+- **`ucinewgame` clears the table.** `UciHandler.handleNewGame()` calls `tt.clear()` so cached scores from a prior game (which may have been played with different time controls or against a different opponent) cannot influence the new game.
+- **Tests use isolated instances.** Every test that builds an `EngineConfig` wires its own TT via `TestSupport.createTestTT()` (default `2^14` entries). Test order would otherwise change search outcomes — entries from an earlier test could serve as move-ordering hints in a later one. The `MoveSorterImplTest.ttMoveSeenFlag_isResetBetweenInvocations` regression is the historical reminder of why this matters: with shared state, a sticky `ttMoveSeen` flag from a prior reset led to illegal moves entering the search loop.
+
+### Limitations
+
+- **Not thread-safe.** `put()` writes five fields of an entry non-atomically; a concurrent `get()` could observe a half-updated slot. The engine runs a single-threaded search executor, so this is not an issue today. A future Lazy SMP search would need to switch the entry to a packed-`long` representation with `volatile` reads/writes.
+- **No "always-replace" tier.** A two-tier scheme (always-replace + depth-preferred) typically improves hit rate by 5–10% on tactical search. The current single-tier `put()` keeps the code one line shorter; the trade-off is worth re-measuring after the next round of search optimizations.
+- **Shortened PV display** — see "PV-table interaction" above and [roadmap § 12.1](roadmap.md#121-transposition-table--s--m--150300-elo).
