@@ -19,6 +19,20 @@ The single biggest missing optimization, and the one the README already flags. A
 
 Caveats: must clear or use a generation counter between games; mate-score adjustment by ply on store/probe; not safe in a parallel search (out of scope here).
 
+### Follow-up: reconstruct the principal variation from TT walks
+
+The initial TT implementation (June 2026) ships with a known side-effect on the principal variation: when an EXACT TT hit serves a node's result, the PV row at that depth is set to `[ttBestMove, 0, 0, ...]` and copied up to the parent (via [`SearchNodeContext.writeTTCachedPv`](../src/main/java/org/michaelfl/mychess/engines/PositionSearch.java)). The PV therefore terminates one ply after the TT-cached node, even when the actual search depth was full. Concretely, after a depth-8 search the engine sometimes emits a 4–6-ply PV; the *played move* and *score* are unaffected.
+
+The fix used by most engines: after the search finishes, extend the root PV by walking the TT — apply the root's `bestMove`, look up the resulting position's `bestMove`, apply, repeat until either a miss or a repeat. Each step requires only a TT lookup plus a `makeMove`/`revertMove` pair, so the cost is negligible compared to the search itself. Stop conditions:
+
+- Lookup returns `null` (no entry for the resulting position).
+- The walked depth reaches the search's `maxDepth`.
+- The same position recurs (cycle guard).
+
+The relaxed PV-length check in [`EngineTestBase.testPosition`](../src/test/java/org/michaelfl/mychess/EngineTestBase.java) (June 2026) tolerates the current short-PV behavior; once TT-walk reconstruction is in, that relaxation can stay or tighten — either way it'll keep working.
+
+Out of scope until §12.1's base implementation has been Elo-measured. The motivation is purely diagnostic / cosmetic (UCI `info pv` lines), not strength.
+
 ## 12.2 Null-move pruning — **S, ≈ 50–100 Elo**
 
 Pass the turn to the opponent at depth ≥ 3 and search the reply with reduced depth `R = 2 or 3`. If the result still exceeds beta, the original position is so good for the side to move that a real move can only confirm it — return beta.

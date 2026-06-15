@@ -53,6 +53,7 @@ final class UciHandler {
 
     private Board board;
     private boolean is960;
+    private final TranspositionTable tt;
     private final AtomicReference<NextMoveTask> currentTask = new AtomicReference<>();
     private final AtomicReference<Game> currentGame = new AtomicReference<>();
     private final AtomicReference<Thread> currentWatcher = new AtomicReference<>();
@@ -81,6 +82,7 @@ final class UciHandler {
         this.env = env;
         this.in = in;
         this.board = Board.createNewGame();
+        this.tt = TranspositionTable.getDefaultInstance();
     }
 
     void run() {
@@ -174,9 +176,11 @@ final class UciHandler {
         cancelCurrentTask();
         shutdownCurrentGame();
         this.board = Board.createNewGame();
-        ChessEngine.resetIterationTimings();
         this.gameId = UUID.randomUUID().toString();
         this.gameStartMs = System.currentTimeMillis();
+
+        ChessEngine.resetIterationTimings();
+        tt.clear();
     }
 
     private void handlePosition(String line) {
@@ -243,6 +247,7 @@ final class UciHandler {
                 .maxDepth(args.maxDepth)
                 .millisPerMove(args.timeBudgetMillis)
                 .silent(true)
+                .setTranspositionTable(tt)
                 .build();
         var gameConfig = new GameConfig(MyChessEngine.class, engineConfig);
 

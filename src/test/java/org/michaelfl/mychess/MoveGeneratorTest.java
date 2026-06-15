@@ -310,6 +310,7 @@ class MoveGeneratorTest {
     private EngineConfig engineConfig() {
         return new EngineConfig.Builder()
                 .maxDepth(8)
+                .setTranspositionTable(TestSupport.createTestTT())
                 .build();
     }
 
@@ -360,7 +361,7 @@ class MoveGeneratorTest {
 
         var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
         int knowBestMove = game.getBoard().moveDescriptionToMove(MoveDescription.fromString("h2-h4", GameStatus.TURN_WHITE)).move();
-        var moves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard(), 0, knowBestMove);
+        var moves = moveGenerator.calculateMoves(game.getBoard(), 0, knowBestMove, 0);
 
         testMoves(game, "b1-c3 g1-f3 d2-d4 e2-e4 d2-d3 e2-e3 b1-a3 g1-h3 a2-a3 h2-h3 a2-a4 h2-h4 b2-b4 c2-c4 f2-f4 g2-g4 b2-b3 g2-g3 c2-c3 f2-f3");
 
@@ -378,7 +379,7 @@ class MoveGeneratorTest {
     private void testMoves(Game game, String expectedMovesStr) {
         game.print();
         var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
-        var moves = moveGenerator.calculateMoves(game.getGameStatus(), game.getBoard(), 0, 0);
+        var moves = moveGenerator.calculateMoves(game.getBoard(), 0, 0, 0   );
         System.out.println(moves.toString());
 
         assertNotNull(moves, "No moves returned");

@@ -70,7 +70,8 @@ class ThreefoldRepetitionTest {
                 """);
         var config = new GameConfig(
                 MyChessEngine.class,
-                new EngineConfig.Builder().enableThreefoldRepetition(false).build());
+                new EngineConfig.Builder().enableThreefoldRepetition(false)
+                        .setTranspositionTable(TestSupport.createTestTT()).build());
         var game = importer.importGame(config);
         game.makeMove(MoveDescription.fromString("Bc6", game.getTurn()));
         assertEquals(GameResult.ONGOING, game.getResult(), "Game must not be finished yet");

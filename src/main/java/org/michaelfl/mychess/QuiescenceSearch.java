@@ -27,22 +27,24 @@ public final class QuiescenceSearch {
         this.maxQuiescenceDepth = maxQuiescenceDepth;
     }
 
-    public int quiescenceSearch(final Board workingBoard, final int capturedOnField, final int depth, final int weightFactor, final int alpha, final int beta, final int materialWeight, final int materialDelta) {
+    public int quiescenceSearch(final Board workingBoard, final int depth, final int weightFactor, final int alphaWeight, final int betaWeight, final int materialWeight, final int materialDelta) {
         final int maxDepth = depth + maxQuiescenceDepth;
 
         statistics.startQuiescenceSearch();
-        int weight = quiescenceSearch(new SearchNodeContext(depth, maxDepth, null, weightFactor, alpha, beta, materialWeight, materialDelta, workingBoard, null));
+        int weight = quiescenceSearch(
+                new SearchNodeContext(depth, maxDepth, null, weightFactor, materialWeight, materialDelta, workingBoard, null),
+                alphaWeight, betaWeight);
         statistics.endQuiescenceSearch();
 
         return weight;
     }
 
-    private int quiescenceSearch(final SearchNodeContext ctx) {
+    private int quiescenceSearch(final SearchNodeContext ctx, final int alphaWeight, final int betaWeight) {
         final int depth = ctx.depth();
         final GameStatus gameStatus = ctx.workingBoard().getGameStatus();
 
-        __assert(() -> !(WeightingFunction.isIllegalWeight(ctx.alphaWeight()) || WeightingFunction.isIllegalWeight(ctx.betaWeight())),
-                () -> "ILLEGAL_WEIGHT as alpha/beta; depth=" + depth + ", alphaWeight=" + ctx.alphaWeight() + ", betaWeight=" + ctx.betaWeight() + "\n" + ctx.workingBoard());
+        __assert(() -> !(WeightingFunction.isIllegalWeight(alphaWeight) || WeightingFunction.isIllegalWeight(betaWeight)),
+                () -> "ILLEGAL_WEIGHT as alpha/beta; depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + ctx.workingBoard());
 
         statistics.incrPositionCount();
         statistics.incrQuiescencePositionsCount();
@@ -60,7 +62,7 @@ public final class QuiescenceSearch {
         // the parent a legitimate-looking score for an illegal move. Limited
         // to the two early-return paths below; the capture loop is already
         // protected by moves.isIllegal() after calculateMoves.
-        if (standPat >= ctx.betaWeight() || depth == ctx.maxDepth()) {
+        if (standPat >= betaWeight || depth == ctx.maxDepth()) {
             if (ctx.workingBoard().canCaptureOpposingKing()) {
                 return WeightingFunction.ILLEGAL_WEIGHT_POS;
             }
@@ -93,16 +95,18 @@ public final class QuiescenceSearch {
                 final int newMaterialWeight = ctx.materialWeight() + moveWeight;
                 final int newMaterialDelta = ctx.materialDelta() + moveWeight;
 
-                final int alphaLocal = Math.max(ctx.alphaWeight(), bestWeight);
+                final int alphaLocal = Math.max(alphaWeight, bestWeight);
 
                 ctx.workingBoard().makeMove(move);
-                int weight = -quiescenceSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), null, -ctx.weightFactor(), -ctx.betaWeight(), -alphaLocal, -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), null));
+                int weight = -quiescenceSearch(
+                        new SearchNodeContext(depth + 1, ctx.maxDepth(), null, -ctx.weightFactor(), -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), null),
+                        -betaWeight, -alphaLocal);
                 ctx.workingBoard().revertMove();
 
                 // -ILLEGAL_WEIGHT is possible to be returned, but never +ILLEGAL_WEIGHT
                 if (weight > WeightingFunction.ILLEGAL_WEIGHT_NEG) {
                     // Fail-soft beta cutoff: return actual weight.
-                    if (weight >= ctx.betaWeight()) {
+                    if (weight >= betaWeight) {
                         return weight;
                     }
                     if (weight > bestWeight) {

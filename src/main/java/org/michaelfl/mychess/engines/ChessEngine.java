@@ -1,14 +1,7 @@
 package org.michaelfl.mychess.engines;
 
-import org.michaelfl.mychess.EngineConfig;
-import org.michaelfl.mychess.Game;
+import org.michaelfl.mychess.*;
 import org.michaelfl.mychess.Game.GameResult;
-import org.michaelfl.mychess.GameStatus;
-import org.michaelfl.mychess.Log;
-import org.michaelfl.mychess.Move;
-import org.michaelfl.mychess.Moves;
-import org.michaelfl.mychess.MyChessEnv;
-import org.michaelfl.mychess.WeightingFunction;
 import org.michaelfl.mychess.openingdb.OpeningDB;
 import org.michaelfl.mychess.openingdb.OpeningDB.MoveInfo;
 
@@ -51,15 +44,28 @@ public abstract class ChessEngine {
     private final ExecutorService executor;
     private final EngineConfig config;
     protected final Game game;
+    protected final TranspositionTable tt;
 
     protected ChessEngine(EngineConfig config, Game game) {
         this.config = config;
         this.game = game;
+        this.tt = config.getTranspositionTable();
         this.executor = Executors.newSingleThreadExecutor();
     }
 
     public void shutdown() {
         executor.shutdownNow();
+    }
+
+    /**
+     * Convenience accessor that delegates to
+     * {@link EngineConfig#getTranspositionTable()}. Subclasses access
+     * this via {@code this.tt}; external callers (e.g. the UCI handler,
+     * which clears the table on {@code ucinewgame}) go through this
+     * getter.
+     */
+    public final TranspositionTable getTranspositionTable() {
+        return tt;
     }
 
     /**

@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import static org.michaelfl.mychess.Assert.__assert;
+
 //    132           ...             143
 //    120           ...             131
 //    108   110(a8) ... 117(h8) 118 119
@@ -637,5 +639,65 @@ public final class WeightingFunction {
     public static int checkmateWeightToPlies(int weightCenti) {
         final int w = Math.abs(weightCenti);
         return (CHECKMATE_WEIGHT_HIGH - w) / 100;
+    }
+
+    /**
+     * Translates a mate score from "mate-at-depth-d-from-root" form into
+     * the position-relative "mate-in-K-plies-from-here" form used by the
+     * transposition table. Subtracts {@code depth} from the encoded plies
+     * and preserves the sign of the score; non-mate scores pass through
+     * unchanged.
+     *
+     * <p>The {@code plies >= depth} assertion catches inconsistent
+     * states early — if a positive mate score's encoded ply count is
+     * smaller than the current depth, the resulting stored score would
+     * underflow the mate sentinel range and start looking like an
+     * ordinary positional score on lookup.
+     *
+     * <p>Despite the "TT" in the name, this is a pure score-coordinate
+     * transformation with no transposition-table dependency. It lives
+     * here next to the other mate-score helpers because that is the
+     * coordinate system it operates on.
+     */
+    public static int scoreToTT(int score, int depth) {
+        if (isCheckmateWeight(score)) {
+            int plies = checkmateWeightToPlies(score);
+            __assert(() -> plies >= depth, () -> String.format("checkmate plies=%s, depth=%s", plies, depth));
+            int checkmateCenti = checkmateInCenti(plies - depth);
+            return score >= 0 ? checkmateCenti : -checkmateCenti;
+        }
+
+        return score;
+    }
+
+    /**
+     * Inverse of {@link #scoreToTT(int, int)}: translates a TT-stored
+     * mate score back to the current search depth. The TT stores mate
+     * scores relative to the cached position ("mate-in-K plies from
+     * here"), independent of how deep in the tree that position was
+     * when the score was computed. On lookup at depth {@code d} from
+     * the root, we add {@code d} so the returned value reads as "mate
+     * at depth {@code d + K} of the current tree", which is what the
+     * negamax caller compares against alpha/beta and what an
+     * iteration's PV propagates up.
+     *
+     * <p>Sign preservation matters: a stored negative mate stays a
+     * negative mate. The earlier private implementation in
+     * {@code PositionSearch} dropped the sign, and the regression that
+     * surfaced this was {@code GameStatusTest.testWhiteCheckmate}
+     * flipping its expected mate move because a "we are mated" entry
+     * came back from the TT as "we are mating".
+     *
+     * <p>Non-mate scores are positional and depth-independent in
+     * storage, so they pass through unchanged.
+     */
+    public static int scoreFromTT(int score, int depth) {
+        if (isCheckmateWeight(score)) {
+            int plies = checkmateWeightToPlies(score);
+            int checkmateCenti = checkmateInCenti(depth + plies);
+            return score >= 0 ? checkmateCenti : -checkmateCenti;
+        }
+
+        return score;
     }
 }

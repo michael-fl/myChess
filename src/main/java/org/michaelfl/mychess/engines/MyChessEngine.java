@@ -3,6 +3,7 @@ package org.michaelfl.mychess.engines;
 import org.michaelfl.mychess.EngineConfig;
 import org.michaelfl.mychess.Game;
 import org.michaelfl.mychess.Moves;
+import org.michaelfl.mychess.TranspositionTable;
 
 /**
  * {@link ChessEngine} implementation delegating both move generation and the

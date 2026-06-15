@@ -29,13 +29,17 @@ class MoveSorterImplTest {
         var board = Board.createNewGame();
         int bestMove = normalMove(Board.e2, Board.e4, Board.empty);
 
-        sorter.reset(board.getGameStatus(), board, 0, bestMove);
+        sorter.reset(board.getGameStatus(), board, 0, bestMove, 0);
 
         // Add a couple of unrelated quiet moves so the bucket isn't empty.
         sorter.addMove(normalMove(Board.d2, Board.d4, Board.empty),
                 Board.d2, Board.d4, Board.whitePawn, Board.empty);
         sorter.addMove(normalMove(Board.g1, Board.f3, Board.empty),
                 Board.g1, Board.f3, Board.whiteKnight, Board.empty);
+        // Add the best move
+        sorter.addMove(bestMove, Board.e2, Board.e4, Board.whitePawn, Board.empty);
+        sorter.addMove(normalMove(Board.a1, Board.a4, Board.empty),
+                Board.a1, Board.a4, Board.whitePawn, Board.empty);
 
         var moves = sorter.getSortedMoves();
         assertEquals(bestMove, moves.getMoves()[0],
@@ -50,7 +54,7 @@ class MoveSorterImplTest {
         var board = Board.createNewGame();
         var status = statusWithLastMoveTo(Board.d5);
 
-        sorter.reset(status, board, 0, 0);
+        sorter.reset(status, board, 0, 0, 0);
 
         int recaptureD5 = normalMove(Board.e4, Board.d5, Board.blackQueen);
         int otherCapture = normalMove(Board.f4, Board.e5, Board.blackQueen);
@@ -70,7 +74,7 @@ class MoveSorterImplTest {
         var board = Board.createNewGame();
         var status = statusWithLastMoveTo(Board.a1); // irrelevant for this test
 
-        sorter.reset(status, board, 0, 0);
+        sorter.reset(status, board, 0, 0, 0);
 
         // Pawn captures queen (winning: +800)
         int winningCapture = normalMove(Board.e4, Board.d5, Board.blackQueen);
@@ -102,7 +106,7 @@ class MoveSorterImplTest {
 
         var sorter = new MoveSorterImpl(killers);
         var board = Board.createNewGame();
-        sorter.reset(board.getGameStatus(), board, 0, 0);
+        sorter.reset(board.getGameStatus(), board, 0, 0, 0);
 
         int winningCapture = normalMove(Board.e4, Board.d5, Board.blackQueen);
         int losingCapture  = normalMove(Board.d1, Board.d7, Board.blackPawn);
@@ -132,7 +136,7 @@ class MoveSorterImplTest {
     void kingMovesLandLast() {
         var sorter = new MoveSorterImpl();
         var board = Board.createNewGame();
-        sorter.reset(board.getGameStatus(), board, 0, 0);
+        sorter.reset(board.getGameStatus(), board, 0, 0, 0);
 
         int kingMove = normalMove(Board.e1, Board.e2, Board.empty);
         int quietMove = normalMove(Board.d2, Board.d4, Board.empty);
@@ -151,13 +155,85 @@ class MoveSorterImplTest {
                 "King move must appear after quiet non-king moves");
     }
 
+    /**
+     * Regression test for the seen-flag reset bug: {@code MoveSorterImpl}
+     * is reused across all search nodes (one sorter per engine instance,
+     * reset() called at every node). The {@code pvMoveSeen}/{@code ttMoveSeen}
+     * flags must be cleared inside reset(), otherwise a "seen" flag set
+     * by the previous node's addMove() loop sticks across reset() and
+     * the next node blindly adds its (possibly illegal) pv/tt move to
+     * the sorted output.
+     *
+     * <p>Production symptom: the search reaches makeMove() with a move
+     * whose from-field is empty, and Board throws IllegalStateException.
+     */
+    @Test
+    void ttMoveSeenFlag_isResetBetweenInvocations() {
+        var sorter = new MoveSorterImpl();
+        var board = Board.createNewGame();
+
+        // First invocation: ttMove = M1, and the move generator produces M1.
+        // addMove() sets ttMoveSeen = true.
+        int m1 = normalMove(Board.e2, Board.e4, Board.empty);
+        sorter.reset(board.getGameStatus(), board, 0, 0, m1);
+        sorter.addMove(m1, Board.e2, Board.e4, Board.whitePawn, Board.empty);
+        sorter.getSortedMoves();   // drains the bucket; M1 is in the output
+
+        // Second invocation: ttMove = M2, but the move generator does NOT
+        // produce M2 (simulating an inconsistent TT-bestMove for this position).
+        // Without the seen-flag reset, ttMoveSeen stays true from the first
+        // invocation and M2 would be blindly added to the output.
+        int m2 = normalMove(Board.d2, Board.d4, Board.empty);
+        sorter.reset(board.getGameStatus(), board, 0, 0, m2);
+        sorter.addMove(normalMove(Board.g1, Board.f3, Board.empty),
+                Board.g1, Board.f3, Board.whiteKnight, Board.empty);
+
+        var moves = sorter.getSortedMoves();
+        int[] out = moves.getMoves();
+        int count = moves.count();
+        for (int i = 0; i < count; i++) {
+            assertNotEquals(m2, out[i],
+                    "ttMove that was never reported by the move generator must not appear "
+                            + "in sorted output — sticky ttMoveSeen flag would otherwise leak from "
+                            + "the previous reset() call");
+        }
+    }
+
+    /** Symmetric regression test for {@code pvMoveSeen}: same shape as the
+     *  ttMoveSeen test, but with the pv-move slot. */
+    @Test
+    void pvMoveSeenFlag_isResetBetweenInvocations() {
+        var sorter = new MoveSorterImpl();
+        var board = Board.createNewGame();
+
+        int m1 = normalMove(Board.e2, Board.e4, Board.empty);
+        sorter.reset(board.getGameStatus(), board, 0, m1, 0);
+        sorter.addMove(m1, Board.e2, Board.e4, Board.whitePawn, Board.empty);
+        sorter.getSortedMoves();
+
+        int m2 = normalMove(Board.d2, Board.d4, Board.empty);
+        sorter.reset(board.getGameStatus(), board, 0, m2, 0);
+        sorter.addMove(normalMove(Board.g1, Board.f3, Board.empty),
+                Board.g1, Board.f3, Board.whiteKnight, Board.empty);
+
+        var moves = sorter.getSortedMoves();
+        int[] out = moves.getMoves();
+        int count = moves.count();
+        for (int i = 0; i < count; i++) {
+            assertNotEquals(m2, out[i],
+                    "pvMove that was never reported by the move generator must not appear "
+                            + "in sorted output — sticky pvMoveSeen flag would otherwise leak from "
+                            + "the previous reset() call");
+        }
+    }
+
     @Test
     void knownBestMoveIsNotDuplicatedWhenAlsoAdded() {
         var sorter = new MoveSorterImpl();
         var board = Board.createNewGame();
         int bestMove = normalMove(Board.e2, Board.e4, Board.empty);
 
-        sorter.reset(board.getGameStatus(), board, 0, bestMove);
+        sorter.reset(board.getGameStatus(), board, 0, bestMove, 0);
 
         sorter.addMove(bestMove, Board.e2, Board.e4, Board.whitePawn, Board.empty);
         sorter.addMove(normalMove(Board.d2, Board.d4, Board.empty),

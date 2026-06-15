@@ -50,6 +50,7 @@ class BlunderTest {
         var engineConfig = new EngineConfig.Builder()
                 .millisPerMove(SEARCH_BUDGET_MS)
                 .silent(true)
+                .setTranspositionTable(TestSupport.createTestTT())
                 .build();
         var gameConfig = new GameConfig(MyChessEngine.class, engineConfig);
 
