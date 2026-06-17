@@ -91,12 +91,66 @@ A `int[2][64][64]` table indexed by `(color, fromField, toField)` is incremented
 - Complements [§ 7.2 killer moves](search.md#72-killer-moves), which only remember two moves per depth — history is dense across all `from→to` pairs.
 - Decay (e.g. shift right by 1 every iteration) keeps the table responsive across iterative-deepening iterations and across games.
 
-## 12.6 Static Exchange Evaluation (SEE) in quiescence — **M, ≈ 30–50 Elo**
+## 12.6 Quiescence search upgrade — **M, ≈ 40–80 Elo (combined)**
 
-In [`QuiescenceSearch`](../src/main/java/org/michaelfl/mychess/QuiescenceSearch.java), prune captures whose SEE score is negative — i.e. the resulting exchange sequence loses material. The current quiescence loops over every capture, including obviously losing ones like `QxP` defended by a pawn.
+The current [`QuiescenceSearch`](../src/main/java/org/michaelfl/mychess/QuiescenceSearch.java) implementation is much narrower than the textbook quiescence search — see [search § 6.4](search.md#64-quiescence-search) for the precise description of what it does (and does not) do today. In short:
 
-- Implement `Board.see(toField, attackerPiece, defenderColor)`: alternately swap least-valuable attackers, return the resulting material delta.
-- Also useful in the main search for ordering "winning vs. losing captures" beyond the current [`bucketWinningCaptures` / `bucketOtherCaptures`](../src/main/java/org/michaelfl/mychess/engines/MoveSorterImpl.java) split based on victim − attacker (i.e. a one-ply MVV/LVA approximation).
+- **What it does:** stand-pat with fail-soft α/β, resolves the capture chain *on the last-captured square only*, depth-capped at 20.
+- **What it does not do:** follow captures on *other* squares, order captures, filter losing captures, prune captures whose material gain can never reach α, extend on checks, or use the transposition table.
+
+The original "follow all captures" approach was tried once and abandoned as too expensive — at a time before the TT, MVV-LVA, and SEE existed in the codebase. With those primitives now available (or about to be), the upgrade becomes viable. This section splits the upgrade into five independently shippable sub-items, in the order they should be implemented.
+
+### 12.6.1 Follow all captures, not only same-square — **M, ≈ 30–60 Elo**
+
+The single biggest gap: extend the QSearch capture loop to consider *every* legal capture at the leaf, not only those landing on the field the previous move captured on. The current condition
+
+```java
+if (capturedOnField == Move.getToField(plainMoves[i])) {
+```
+
+is replaced by
+
+```java
+if (Move.getCapturedPiece(plainMoves[i]) != 0) {
+```
+
+This makes the QSearch tree much wider per node — exactly the explosion the original implementation feared — which is why the next two items (12.6.2, 12.6.3) need to land alongside or shortly after to keep the cost bounded.
+
+Closes the systematic blind spot where myChess at the leaf overlooks a hanging piece on a square other than the last contested one (forks, discovered attacks, hung pieces from earlier in the sequence). Anecdotally responsible for a non-trivial fraction of cutechess losses where myChess is statically "fine" but tactically lost within 1–2 plies.
+
+### 12.6.2 MVV-LVA capture ordering in QSearch — **S, ≈ 5–15 Elo**
+
+Inside the new all-captures loop, try captures in **Most Valuable Victim, Least Valuable Attacker** order. `WeightingFunction.getMaterialWeightOfMove` already provides the victim weight; the attacker piece can be read from the source square in one byte-load. A simple `(victimWeight * 16) − attackerWeight` sort key (or a precomputed 6×6 table indexed by piece type) is enough.
+
+Without ordering, the all-captures version of 12.6.1 wastes most of its work — α/β cutoffs depend on trying the best capture first. With MVV-LVA, even the unfiltered all-captures variant becomes practical.
+
+### 12.6.3 SEE pruning of losing captures in QSearch — **M, ≈ 10–20 Elo**
+
+After 12.6.1+12.6.2, the loop still considers obviously losing captures like `QxP` defended by a pawn. **Static Exchange Evaluation** simulates the exchange sequence purely from the static piece values (no recursive search), returning the net material change. Skip captures with `SEE < 0`.
+
+Implementation: a `Board.see(toField, attackerPieceType, sideToMove)` method that alternately swaps the least-valuable attacker from each side onto the contested square and returns the running material balance. ~30 lines using the existing attacker enumeration.
+
+SEE is also useful in the **main search** for splitting winning vs. losing captures more precisely than the current `bucketWinningCaptures` / `bucketOtherCaptures` heuristic in [`MoveSorterImpl`](../src/main/java/org/michaelfl/mychess/engines/MoveSorterImpl.java) (which uses victim − attacker, a one-ply MVV/LVA approximation). Worth a follow-up SPRT once it exists.
+
+### 12.6.4 Delta pruning in QSearch — **S, ≈ 5–15 Elo**
+
+A second pruning layer that complements SEE: skip captures where `standPat + capturedMaterial + DELTA_MARGIN < α`. The intuition: even if this capture wins its full nominal material, it can't lift the position above α — there is no point in searching it.
+
+Standard `DELTA_MARGIN` ≈ 200 cp (≈ two pawns of safety). Disable in endgames where small material differences dominate the eval surface.
+
+Cheap to implement (~5 lines), small but real Elo gain.
+
+### 12.6.5 TT integration in QSearch — **M, ≈ 5–15 Elo**
+
+Use the [§ 12.1 transposition table](#121-transposition-table--done--70-elo) inside the QSearch as well: probe on entry, store on exit. Modern engines do this, with a depth marker of 0 (or a small constant) so QSearch entries cannot be reused as score-cutoffs by the deeper main search — they are valuable as best-move/bound hints for QSearch revisits.
+
+Caveat: QSearch generates many leaf positions; without care, those will thrash the TT and evict more valuable main-search entries. The standard mitigation is a two-bucket TT layout (one slot depth-preferred for main-search entries, one always-replace for QSearch leaves) or a depth-weighted replacement formula. Worth a separate SPRT to confirm net positive in myChess specifically — engines that did not use TT in QSearch have measured ~0 Elo from adding it, others +20.
+
+### Why the staged order matters
+
+Item 12.6.1 alone is a net **loss** without 12.6.2 and 12.6.3, because the all-captures tree without ordering or pruning is too expensive to fit inside the time budget — the engine reaches a lower main-search depth and loses more from that than it gains from the wider QSearch. The minimum viable upgrade is **12.6.1 + 12.6.2 + 12.6.3 in one branch**, validated by a single SPRT against the same-square baseline.
+
+12.6.4 and 12.6.5 are independent refinements that can each be SPRT'd separately.
 
 ## 12.7 Evaluation upgrades — **M, ≈ 50–100 Elo combined**
 
@@ -434,7 +488,7 @@ Documents the closure so the heuristic family isn't unwittingly re-attempted. Th
 
 ### What the term did
 
-`threadWeight[color]` accumulated, during the per-piece eval scan, a small bonus for every potential capture target the side could threaten — roughly `weightOfPiece[capturedPiece]` per pseudo-legal capture, plus `+4` for any move that put the opposing king in check. Multiplied by `threadWeightFactor = 0.02f` in the final sum. Conceptually a coarse approximation of "side-to-move can take stuff," which a working quiescence search ([`QuiescenceSearch`](../src/main/java/org/michaelfl/mychess/QuiescenceSearch.java)) already covers more precisely. The hypothesis was: with QSearch in place, `threadWeight` is redundant or actively noise, and removing it should be neutral-to-positive.
+`threadWeight[color]` accumulated, during the per-piece eval scan, a small bonus for every potential capture target the side could threaten — roughly `weightOfPiece[capturedPiece]` per pseudo-legal capture, plus `+4` for any move that put the opposing king in check. Multiplied by `threadWeightFactor = 0.02f` in the final sum. Conceptually a coarse approximation of "side-to-move can take stuff," which a textbook quiescence search would cover more precisely. The hypothesis was: with myChess's existing [`QuiescenceSearch`](../src/main/java/org/michaelfl/mychess/QuiescenceSearch.java) in place, `threadWeight` is redundant or actively noise, and removing it should be neutral-to-positive. The hypothesis turned out to be wrong, and the postmortem below identifies why: myChess's QSearch resolves only the *same-square exchange chain*, not all captures, so threats on other squares still need eval-side compensation. See [§ 12.6](#126-quiescence-search-upgrade--m--4080-elo) for the structural fix and [search § 6.4](search.md#64-quiescence-search) for the current QSearch description.
 
 ### What was measured
 
@@ -452,7 +506,7 @@ Two independent measurements of the same configuration differed by **35 Elo**. R
 
 1. **The term is not measurably harmful at factor `0.02`.** The earlier impression that "less `threadWeight` = better" came from a single factor-`0.17` measurement that was clearly a regression. With factor `0.05` at ~neutral and factor `0.00` (this experiment) also at ~neutral, the whole bottom half of the factor range is statistically indistinguishable. Only large factors clearly hurt.
 2. **No clear case for removal.** The simplification argument (~10 fewer lines, two fewer increments per `capture()` call) would be defensible if the change were Elo-neutral or positive. With a pooled point estimate of −6 Elo, the code shrink does not justify the potential strength loss.
-3. **`threadWeight` and `QSearch` are not fully redundant after all.** If they were, removing `threadWeight` should be exactly neutral. The slight pooled regression hints that `threadWeight` still contributes some useful signal at the leaf (presumably positions just past the QSearch horizon where a potential capture should weigh into the static eval), even if that signal is weak.
+3. **`threadWeight` and `QSearch` are not fully redundant after all.** If they were, removing `threadWeight` should be exactly neutral. The slight pooled regression hints that `threadWeight` still contributes some useful signal at the leaf — and given that myChess's QSearch covers only the same-square exchange chain (see [search § 6.4](search.md#64-quiescence-search)), the explanation is concrete rather than mysterious: `threadWeight` was filling exactly the gap of "captures available on squares other than the contested one" that QSearch ignores. The proper fix is the structural QSearch upgrade in [§ 12.6](#126-quiescence-search-upgrade--m--4080-elo); revisiting `threadWeight` removal afterwards is then meaningful.
 
 ### Methodology lesson — small-effect SPRT noise floor
 
@@ -484,7 +538,7 @@ Documents the closure so the `threadWeight` removal isn't unwittingly re-attempt
 
 ### What the term did
 
-`chessCount[color]` was incremented inside `capture()` whenever the per-piece move scan found that the side could "capture" the opposing king — i.e., the side could play a check on the next ply. Multiplied by `chessFactor = 0.25f` in the final eval sum, this was a flat **+0.25 pawn unit bonus per available check** at the eval leaf. The hypothesis — analogous to §12.16 — was that quiescence search already covers forcing moves and the bonus might be redundant or noise.
+`chessCount[color]` was incremented inside `capture()` whenever the per-piece move scan found that the side could "capture" the opposing king — i.e., the side could play a check on the next ply. Multiplied by `chessFactor = 0.25f` in the final eval sum, this was a flat **+0.25 pawn unit bonus per available check** at the eval leaf. The hypothesis — analogous to §12.16 — was that quiescence search already covers forcing moves and the bonus might be redundant or noise. As with §12.16, this hypothesis assumed a *textbook* quiescence search; myChess's actual QSearch resolves only the same-square exchange chain and does not extend on checks (see [search § 6.4](search.md#64-quiescence-search)), so the assumption was structurally wrong from the start.
 
 ### What was measured
 
@@ -505,7 +559,7 @@ This is the **cleanest negative result** in the eval-removal investigation serie
 
 1. **`chessFactor` is genuinely contributing strength.** Unlike `threadWeight` (§12.16, removal was pooled-neutral), removing the check-bonus loses measurable Elo. The two terms are not symmetric in their value despite both being "soft attack signals."
 
-2. **QSearch and `chessFactor` are complementary, not redundant.** Quiescence search in myChess follows captures only — it does not extend on checks (no check-extension feature is implemented; see [§ 12.4](#124-check-extensions--s--1530-elo)). So a leaf node where the side *could* give check next ply has no way to surface that information to alpha-beta unless the static eval encodes it. `chessFactor = 0.25` is effectively a cheap proxy for the missing check-extension: it nudges the search toward lines with forcing moves available, which often correlate with king-attack themes the rest of the eval doesn't directly capture.
+2. **QSearch and `chessFactor` are complementary, not redundant.** Quiescence search in myChess follows only same-square exchange chains (see [search § 6.4](search.md#64-quiescence-search)) and does not extend on checks (no check-extension feature is implemented; see [§ 12.4](#124-check-extensions--s--1530-elo)). So a leaf node where the side *could* give check next ply has no way to surface that information to alpha-beta unless the static eval encodes it. `chessFactor = 0.25` is effectively a cheap proxy for the missing check-extension: it nudges the search toward lines with forcing moves available, which often correlate with king-attack themes the rest of the eval doesn't directly capture. Revisiting `chessFactor` removal becomes meaningful once both [§ 12.4 check extensions](#124-check-extensions--s--1530-elo) and [§ 12.6 QSearch upgrade](#126-quiescence-search-upgrade--m--4080-elo) are in place.
 
 3. **Cost/benefit is the inverse of §12.16.** `threadWeight` cost ~10 lines and delivered pooled-neutral Elo (so removal was defensible on simplification grounds, just not necessary). `chessFactor` costs ~5 lines and delivers ~+14 Elo (so removal would be a clear regression, simplification argument loses). The two terms look superficially similar in the code but play very different roles.
 
@@ -533,7 +587,7 @@ Documents the closure: `chessFactor` is not a candidate for removal. The `no-che
 
 [`PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD = 200`](../src/main/java/org/michaelfl/mychess/engines/PositionSearch.java) and the matching `materialDelta` running counter (carried through `SearchNodeContext` and the `QuiescenceSearch` recursion) implemented a leaf-eval shortcut: whenever the cumulative material delta since the search root exceeded ±200 centi-pawns, `calculatePositionWeight` returned the raw `materialWeight` and skipped the full positional evaluation (`WeightingFunction.calculate` — PSTs, mobility, threat weight, castling, doubled pawns, etc.).
 
-Conceptually a "you're already up/down a couple of pawns, don't fuss about positional fine print" rule. The removal hypothesis: with the full eval cheap and `QuiescenceSearch` already handling captures cleanly, the shortcut might be redundant or even harmful (positional features could pick the better move within a class of materially-equivalent leaves).
+Conceptually a "you're already up/down a couple of pawns, don't fuss about positional fine print" rule. The removal hypothesis: with the full eval cheap and `QuiescenceSearch` already resolving the same-square exchange chain (see [search § 6.4](search.md#64-quiescence-search) for the exact scope), the shortcut might be redundant or even harmful (positional features could pick the better move within a class of materially-equivalent leaves).
 
 ### What was measured
 
@@ -559,7 +613,7 @@ This is the cleanest, fastest, and largest-magnitude negative result of the eval
 
 2. **"Skip the full eval when material says X" is a real heuristic, not just an optimization.** This contradicts the naive intuition that more information is always better; in fact, with the eval still imperfect (no king-safety term, no passed-pawn term, no proper piece-square evaluation in late game), the *less* information path can be more accurate in materially-decided leaves.
 
-3. **The shortcut and QSearch are complementary.** QSearch handles the local tactical horizon by following captures; the material-only shortcut handles the global material verdict by suppressing positional noise once material is clearly tilted. They cover different parts of the eval-correctness space.
+3. **The shortcut and QSearch are complementary.** QSearch handles the local tactical horizon — narrowly, by resolving the same-square exchange chain only (see [search § 6.4](search.md#64-quiescence-search)); the material-only shortcut handles the global material verdict by suppressing positional noise once material is clearly tilted. They cover different parts of the eval-correctness space. The complementarity will become tighter once [§ 12.6 QSearch upgrade](#126-quiescence-search-upgrade--m--4080-elo) lands and QSearch handles a broader class of tactical positions — at that point the shortcut may shift from "load-bearing" to "optional", which is a deliberate re-test target.
 
 ### Methodology — SPRT termination at 34% budget
 
@@ -646,7 +700,7 @@ The hanging-pieces term is now part of `master` at `v3.6.0`. The `undefended-pie
 | 4 | [§ 12.3 LMR](#123-late-move-reductions-lmr--s--50100-elo) + [§ 12.5 history](#125-history-heuristic--s--3050-elo) | S | +250 – +450 |
 | 5 | [§ 12.2 Null-move pruning](#122-null-move-pruning--s--50100-elo) | S | +300 – +550 |
 | 6 | [§ 12.4 Check extensions](#124-check-extensions--s--1530-elo) + [§ 12.8 aspiration](#128-aspiration-windows--s--2040-elo) | S | +340 – +620 |
-| 7 | [§ 12.6 SEE](#126-static-exchange-evaluation-see-in-quiescence--m--3050-elo) | M | +370 – +670 |
+| 7 | [§ 12.6 Quiescence search upgrade](#126-quiescence-search-upgrade--m--4080-elo) — all-captures + MVV-LVA + SEE pruning + delta pruning + optional TT integration | M | +380 – +700 |
 | 8 | [§ 12.7 Eval upgrades](#127-evaluation-upgrades--m--50100-elo-combined) | M | +420 – +770 |
 | 9 | [§ 12.12 Real time management](#1212-real-time-management-heuristics--s--m--3060-elo) | S–M | +450 – +830 |
 | 10 | [§ 12.11 Chess960](#1211-chess960-fischer-random-support--m-no-elo-on-standard-chess-but-opens-a-new-variant) (optional, opens a new variant) | M | — (on standard chess) |

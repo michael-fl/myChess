@@ -16,7 +16,7 @@ calculateNextMove()                       ─ iterative deepening
             quiescenceSearch(...)         ─ extend through captures
 ```
 
-Each layer has its own job. The outer loop manages time and re-uses the previous iteration's best move. The root layer differs from inner layers only in that it tracks the *winning move*, not just the winning score. The inner alpha-beta layer is pure negamax. The quiescence layer extends past the nominal max depth on capture chains.
+Each layer has its own job. The outer loop manages time and re-uses the previous iteration's best move. The root layer differs from inner layers only in that it tracks the *winning move*, not just the winning score. The inner alpha-beta layer is pure negamax. The quiescence layer extends past the nominal max depth — but only by resolving the *same-square exchange chain* triggered by the leaf-entering capture; see [§ 6.4](#64-quiescence-search) for the precise (narrow) scope and [roadmap § 12.6](roadmap.md#126-quiescence-search-upgrade--m--4080-elo) for the planned upgrade to a proper all-captures quiescence.
 
 ## 6.1 Negamax / alpha-beta foundation
 
@@ -184,7 +184,9 @@ __assert(() -> !(countMoves > 0 && bestKnownNextMove != 0 && bestKnownNextMove !
 
 A purely fixed-depth alpha-beta search suffers from the **horizon effect**: if the last move at `maxDepth` was a capture, the search evaluates a position mid-exchange. White trades a queen for a pawn at depth 6, the search bottoms out and reports "+8 pawns for white", and never sees that black recaptures the queen at depth 7. The static evaluation is wildly wrong because the position isn't *quiet*.
 
-myChess handles this with [`QuiescenceSearch`](src/main/java/org/michaelfl/mychess/QuiescenceSearch.java) — a second alpha-beta layer that takes over from `alphaBetaSearchI` at the leaf and follows *capture chains* until they resolve.
+myChess handles this with [`QuiescenceSearch`](src/main/java/org/michaelfl/mychess/QuiescenceSearch.java) — a second alpha-beta layer that takes over from `alphaBetaSearchI` at the leaf and resolves the **exchange on the last-captured square**.
+
+> **Status (June 2026).** The current implementation is intentionally narrow: it resolves only the exchange chain on the square where the previous move captured. It does *not* follow captures on other squares, does not order or filter capture candidates, does not extend on checks, and does not consult the transposition table. This is a known limitation, deliberately preserved so far as a pragmatic compromise, and is the subject of the planned upgrade in [roadmap § 12.6](roadmap.md#126-quiescence-search-upgrade--m--4080-elo). What this section describes is the *current behavior*, not the textbook ideal.
 
 **Trigger.** Inside `PositionSearch.alphaBetaSearchI`, when `depth == maxDepth`:
 
@@ -251,7 +253,18 @@ This is more restrictive than the textbook "follow all captures" approach. The r
 // Follow only moves, which capture on the same field, until no further capture is possible on that field
 ```
 
-Following all captures was tried and rejected as too expensive. The same-square restriction is a pragmatic compromise: it correctly evaluates the immediate exchange (which is where the horizon effect is most painful) but misses tactical sequences that switch attack squares (e.g. fork → win the queen elsewhere). Those still have to be caught by the main search reaching adequate depth.
+Following all captures was tried at the time the TODO was written and rejected as too expensive — that test predates the [transposition table § 7.9](#79-transposition-table), MVV-LVA capture ordering, and any form of SEE-based losing-capture filter. The same-square restriction is the pragmatic compromise that resulted: it correctly evaluates the *immediate* exchange (which is where the horizon effect is most painful) but **misses every other tactical motif at the leaf** — pieces hanging on other squares, forks that switch attack squares (e.g. capture on e5, then win the queen on d8), discovered captures, captures that follow a check evasion, and so on. Those still have to be caught by the main search reaching adequate depth, which is fragile.
+
+This is also why two earlier roadmap closures — [§ 12.16 `threadWeight` removal](roadmap.md#1216-discontinue-the-threadweight-investigation--done) and [§ 12.17 `chessFactor` removal](roadmap.md#1217-discontinue-the-chessfactor-investigation--done) — found that the eval-side terms they removed were **not** fully redundant with quiescence: they covered exactly the multi-square tactical signals that the current QSearch ignores. A real all-captures quiescence search would likely make both removals neutral or positive; until then, the eval-side compensation stays.
+
+**What is missing relative to the textbook quiescence search**, in rough order of expected impact:
+
+- **All captures, not only same-square** — the central gap; planned as [§ 12.6.1](roadmap.md#1261-follow-all-captures-not-only-same-square--m--3060-elo).
+- **MVV-LVA capture ordering** — try the most valuable victim with the cheapest attacker first; [§ 12.6.2](roadmap.md#1262-mvv-lva-capture-ordering-in-qsearch--s--515-elo).
+- **SEE-based pruning** of losing captures — skip `QxP` defended by a pawn; [§ 12.6.3](roadmap.md#1263-see-pruning-of-losing-captures-in-qsearch--m--1020-elo).
+- **Delta pruning** — skip captures where stand-pat + captured material + safety margin still falls below α; [§ 12.6.4](roadmap.md#1264-delta-pruning-in-qsearch--s--515-elo).
+- **TT lookup / store inside QSearch** — score and best-move reuse for transposed leaves; [§ 12.6.5](roadmap.md#1265-tt-integration-in-qsearch--m--515-elo).
+- **Check extensions** — pursue forcing check sequences past the QSearch border; partially covered by the unrelated [§ 12.4 check extensions](roadmap.md#124-check-extensions--s--1530-elo) in the main search, may also belong inside QSearch.
 
 **Depth cap.** Quiescence has its own depth budget:
 

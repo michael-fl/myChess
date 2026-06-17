@@ -464,3 +464,103 @@ thread weight --> testweise raus (neutral)
 chessFactor --> testweise raus (schlecht)
 EVALUATE_MATERIAL_ONLY_THRESHOLD --> testweise ausschalten (sehr schlecht)
 
+--
+
+PositionSearch.java — neue Helfer und Konstanten
+
+  ┌──────────────────────────────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │               Element                │                                             Bedarf                                              │
+  ├──────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ SearchNodeContext.remainingDepth()   │ kurze JavaDoc — wird oft als TT-Lookup-Schwelle benutzt                                         │
+  ├──────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ SearchNodeResult.TIMEOUT (Konstante) │ analog zu INITIAL/INVALID-Doks                                                                  │
+  ├──────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ SearchNodeResult.INVALID (Konstante) │ analog (was bedeutet "ILLEGAL_WEIGHT_NEG als Initial-Result"?)                                  │
+  ├──────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ SearchNodeResult.isIllegal()         │ kurze JavaDoc                                                                                   │
+  ├──────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ SearchNodeResult.create()            │ trivial, aber öffentliche API ohne Doc ist unschön                                              │
+  ├──────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ SearchNodeResult.draw()              │ analog checkmateSelf/stalemate haben Doc                                                        │
+  ├──────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ SearchNodeResult.negate()            │ wichtig — die "weight==0 short-circuit" und Sign-Flip-Semantik dokumentieren                    │
+  ├──────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ scoreFromTT(int score, int depth)    │ Mate-Score-Depth-Adjustment ist subtil, brauch unbedingt Erklärung                              │
+  ├──────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ scoreToTT(int score, int depth)      │ dito, und Begründung warum sign preserved werden muss (Bug-History)                             │
+  ├──────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ exactTTResult(...)                   │ als statischer Helper benannt, aber Sinn (PV-Update + Result-Wrapping) sollte dokumentiert sein │
+  └──────────────────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+  Sonstige Public-Methoden ohne JavaDoc (neue API)
+
+  ┌────────────────────────┬───────────────────────────────────────────────────────┬──────────────────────────────────────────────────────────────────────────────────────────────┐
+  │         Klasse         │                        Methode                        │                                            Bedarf                                            │
+  ├────────────────────────┼───────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ EngineConfig           │ getTranspositionTable()                               │ "die TT-Instanz dieser Config"                                                               │
+  ├────────────────────────┼───────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ EngineConfig.Builder   │ setTranspositionTable(TranspositionTable)             │ "expliziter Override; wenn ungesetzt → getDefaultInstance()"                                 │
+  ├────────────────────────┼───────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ChessEngine            │ getTranspositionTable()                               │ Verweis auf EngineConfig.getTranspositionTable()                                             │
+  ├────────────────────────┼───────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Board                  │ validateMove(int)                                     │ neue Defensive-Hilfsmethode — Doc für Wann/Was sie wirft                                     │
+  ├────────────────────────┼───────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ MoveSorter (interface) │ reset(...)                                            │ das Parameter-Paar pvMove/ttMove ist neu — was bedeuten sie semantisch? was passiert wenn 0? │
+  ├────────────────────────┼───────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ MoveGenerator          │ alle 5 calculateMoves-Overloads                       │ Wann verwendet man welchen? Was bedeuten pvMove und ttMove?                                  │
+  ├────────────────────────┼───────────────────────────────────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ QuiescenceSearch       │ quiescenceSearch(Board, int, int, int, int, int, int) │ öffentlicher Entry-Point — die 7 Int-Parameter ohne Erklärung sind ein Code-Smell            │
+  └────────────────────────┴───────────────────────────────────────────────────────┴──────────────────────────────────────────────────────────────────────────────────────────────┘
+
+  ---
+  (b) Veraltete JavaDoc (Signatur oder Verhalten hat sich geändert)
+
+  ┌───────────────────────────────────────────────────────────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │                              Stelle                               │                                                                Problem                                                                 │
+  ├───────────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ PositionSearch.SearchNodeContext Class-JavaDoc, Bullet-Liste      │ listet alphaWeight / betaWeight als Record-Felder — sind aber jetzt Methoden-Parameter                                                 │
+  │ "Non-PV fields" (Z. 148–149)                                      │                                                                                                                                        │
+  ├───────────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ PositionSearch.SearchNodeContext Class-JavaDoc, Bullet (Z. 161)   │ listet ttMove als Feld — war nie eines, ist Methoden-Parameter von alphaBetaSearchMain                                                 │
+  ├───────────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ PositionSearch.java:90                                            │ "rewritten at the top of every move-loop iteration in alphaBetaSearchI" — Methode heißt jetzt alphaBetaSearchMain                      │
+  ├───────────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ PositionSearch.java:139                                           │ "The leaf shortcut in alphaBetaSearchI fires" — selbe Methoden-Umbenennung                                                             │
+  ├───────────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ PositionSearch.java:231                                           │ copyUpPV()-JavaDoc: "Called from alphaBetaSearchI's move loop" — selber Fall                                                           │
+  ├───────────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ PositionSearch.java:377                                           │ SearchNodeResult.INITIAL-JavaDoc: "starting value of bestResult in alphaBetaSearchI" — selber Fall                                     │
+  ├───────────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ChessEngineTest.java:167, 180                                     │ Test-Kommentare verweisen ebenfalls auf alphaBetaSearchI (niedrigere Priorität, nicht JavaDoc)                                         │
+  ├───────────────────────────────────────────────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ QuiescenceSearch.java:55–63                                       │ Kommentar im quiescenceSearch über die Self-Check-Probe erwähnt nur die alte Material-Only-Shortcut-Logik; die TT ist jetzt ein        │
+  │                                                                   │ weiterer Pfad der PV/State umgehen kann, der Kommentar erwähnt das aber nicht                                                          │
+  └───────────────────────────────────────────────────────────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+  ---
+  (c) Sonstige Findings beim Durchlesen (zur Diskussion, kein JavaDoc-Issue)
+
+  - CommandHandler.tt — Feld wird in der Konstruktor-Zeile gesetzt, aber nirgends ausgelesen. Entweder Dead Code (Konstruktor-Signatur wurde geändert ohne Bedarf), oder Stub für einen geplanten tt-REPL-Befehl.
+  Falls ersteres: Feld + Konstruktor-Parameter entfernen. Falls letzteres: Doc-Kommentar mit "TODO: wire to upcoming tt clear / tt info commands" anhängen.
+  - MoveGenerator.calculateMoves(GameStatus, Board, int, int) (4-arg-Overload, Z. 74-76) — ich hatte das im ersten Review als "unused dead code" markiert; war damals tatsächlich gefixt im Body (game wird jetzt
+  korrekt durchgereicht), aber wird der Overload überhaupt aufgerufen? grep zeigt calculateMoves mit Board, int, int, int-Signatur ist die meistgenutzte. Wenn der GameStatus-First-Overload tot ist, kann er weg.
+  - QuiescenceSearch.quiescenceSearch verliert den capturedOnField-Parameter im Refactor — der Public-Entry-Point hat jetzt 7 Parameter ohne JavaDoc, was die API-Lesbarkeit verschlechtert. Wäre ein guter
+  Kandidat für einen Parameter-Record (QuiescenceEntry(workingBoard, depth, weightFactor, alpha, beta, materialWeight, materialDelta)) — aber das ist ein eigener Refactor, kein JavaDoc-Bedarf.
+
+--
+
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+      -engine name=mychess-tt    cmd=./versions/4.0.0-tt/mychess-uci.sh proto=uci \
+      -engine name=mychess-3.6.0 cmd=./versions/3.6.0/mychess-uci.sh    proto=uci \
+      -each tc=40/60 \
+      -rounds 800 -games 2 -repeat \
+      -sprt elo0=-3 elo1=15 alpha=0.05 beta=0.05 \
+      -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+      -concurrency 4 -ratinginterval 10 \
+      -recover \
+      -draw movenumber=40 movecount=8 score=40 \
+      -resign movecount=4 score=600 \
+      -pgnout test-results/sprt-tt-vs-3.6.0.pgn \
+      | tee test-results/sprt-tt-vs-3.6.0-stdout.log
+      
+      
