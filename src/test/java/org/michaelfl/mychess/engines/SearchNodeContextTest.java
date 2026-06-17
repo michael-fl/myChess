@@ -2,7 +2,6 @@ package org.michaelfl.mychess.engines;
 
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.Board;
-import org.michaelfl.mychess.engines.PositionSearch.SearchNodeContext;
 
 import java.util.Arrays;
 

@@ -1,7 +1,7 @@
 package org.michaelfl.mychess;
 
 import org.michaelfl.mychess.engines.PositionSearch;
-import org.michaelfl.mychess.engines.PositionSearch.SearchNodeContext;
+import org.michaelfl.mychess.engines.SearchNodeContext;
 
 import static org.michaelfl.mychess.Assert.__assert;
 
