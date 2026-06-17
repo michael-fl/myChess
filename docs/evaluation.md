@@ -247,7 +247,7 @@ The score added per threatened piece is the full **material value** of that piec
 
 A capture also still counts toward **mobility** — moving onto an enemy piece is one of the squares the piece can reach.
 
-**Scale factor.** `threadWeightFactor = 0.02` — deliberately tiny. Attacking the opponent's queen contributes only 18 centipawns to the score, not 900. The threat component is a *positional nudge* to prefer aggressive piece placement, not a substitute for actually winning material. Actually winning material happens in the search, where capturing the queen on the next ply produces 900 centipawns of material gain that propagates through quiescence.
+**Scale factor.** `threadWeightFactor = 0.02` — deliberately tiny. Attacking the opponent's queen contributes only 18 centipawns to the score, not 900. The threat component is a *positional nudge* to prefer aggressive piece placement, not a substitute for actually winning material. Actually winning material happens in the search — but with one caveat: myChess's quiescence search resolves only the *same-square exchange chain* at the leaf (see [search § 6.4](search.md#64-quiescence-search)), so a threatened-but-not-yet-captured queen on a square different from the previous capture relies on the main search reaching adequate depth, with `threadWeight` filling the gap in the meantime. The structural fix is the planned [§ 12.6 QSearch upgrade](roadmap.md#126-quiescence-search-upgrade--m--4080-elo); see also the [§ 12.16 closure](roadmap.md#1216-discontinue-the-threadweight-investigation--done) for the empirical confirmation that `threadWeight` and QSearch are not redundant in the current form.
 
 ## 5.5 Castling state
 
