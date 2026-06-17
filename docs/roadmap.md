@@ -8,16 +8,45 @@ The README's [§ 1.2 *Scope and status*](../README.md#12-scope-and-status) alrea
 
 ---
 
-## 12.1 Transposition table — **S → M, ≈ 150–300 Elo**
+## 12.1 ~~Transposition table~~ — **DONE (≈ +70 Elo)**
 
-The single biggest missing optimization, and the one the README already flags. A transposition table (TT) caches per-position search results keyed by Zobrist hash, so positions reached through different move orders are evaluated once.
+*Implemented and merged June 2026. Two independent self-play SPRTs against `myChess-3.6.0`, TC 40/60, both terminated cleanly at the upper bound (H1 accepted) far before the 1600-game budget — see "What was measured" below. Released as `v4.0.0`.*
 
-- The hash already exists ([`Board.calculatePositionKey()`](../src/main/java/org/michaelfl/mychess/Board.java), [§ 3.8](data-types.md#38-zobrist-hashing-and-positionencoding)).
-- Each TT entry stores `{key, depth, score, bestMove, bound}` where `bound ∈ {EXACT, LOWER, UPPER}`. A fixed-size open-addressed array with depth-preferred or always-replace policy is enough.
-- The TT also feeds [§ 7.1 best-known-move ordering](search.md#71-best-known-move-pv-ordering): on a TT hit, try the stored `bestMove` first — strictly more informed than the previous-iteration PV alone.
-- Wire-in points: [`PositionSearch.calculateNextMove`](../src/main/java/org/michaelfl/mychess/engines/PositionSearch.java) (probe at node entry, store on exit) and `MoveSorterImpl.reset(...)` (accept a TT move).
+The single biggest missing optimization, and the one the README already flagged. The transposition table (TT) caches per-position search results keyed by Zobrist hash, so positions reached through different move orders are evaluated once.
 
-Caveats: must clear or use a generation counter between games; mate-score adjustment by ply on store/probe; not safe in a parallel search (out of scope here).
+- The hash already existed ([`Board.calculatePositionKey()`](../src/main/java/org/michaelfl/mychess/Board.java), [§ 3.8](data-types.md#38-zobrist-hashing-and-positionencoding)).
+- Each TT entry stores `{key, depth, score, bestMove, bound}` where `bound ∈ {EXACT, LOWER, UPPER}`. A fixed-size open-addressed array with depth-preferred-EXACT replacement is what shipped.
+- The TT also feeds [§ 7.1 best-known-move ordering](search.md#71-best-known-move-pv-ordering): on a TT hit, try the stored `bestMove` first — strictly more informed than the previous-iteration PV alone (see [§ 7.8 Move sorting](search.md#78-move-sorting-sortablemovesbucket) for the `ttMove` integration).
+- Wire-in points: [`PositionSearch.alphaBetaSearchPre`](../src/main/java/org/michaelfl/mychess/engines/PositionSearch.java) (probe at node entry, store on exit) and `MoveSorterImpl` (accepts a TT move via the `ttMove` hint).
+
+Caveats handled in the shipped implementation: TT is cleared on `ucinewgame` via [`UciHandler.handleNewGame`](../src/main/java/org/michaelfl/mychess/UciHandler.java); mate-score adjustment by ply on store/probe is encapsulated in [`WeightingFunction.scoreToTT` / `scoreFromTT`](../src/main/java/org/michaelfl/mychess/WeightingFunction.java) (the sign-loss bug surfaced through `GameStatusTest.testWhiteCheckmate` during development and is now locked in by `ScoreTTAdjustmentTest`); parallel search remains out of scope. See [§ 7.9 Transposition table](search.md#79-transposition-table) for the full technical reference.
+
+### What was measured
+
+Two self-play SPRTs against `myChess-3.6.0`, TC 40/60, 1600-game budget each:
+
+| Run | Band (`elo0`..`elo1`) | W-L-D | Games | Elo | LOS | SPRT |
+|---|---|---|---|---|---|---|
+| 1 | `-3 .. 15` | 117-67-43 | 227 | **+77.8 ± 41.6** | 100% | H1 accepted at ubound (14% budget) |
+| 2 | `20 .. 80` | 133-81-54 | 268 | **+68.3 ± 37.8** | 100% | H1 accepted at ubound (17% budget) |
+
+Both runs terminated in the first quarter of the budget and produced overlapping point estimates around **+70 Elo**. White-vs-Black split was symmetric in both runs (60.5% vs 61.5% in Run 1, 61.8% vs 57.6% in Run 2) — no color-asymmetric bug pattern. Draw ratio dropped to 18.9% / 20.1% (vs ~30% in pre-TT baselines) — TT cutoffs decide games earlier.
+
+### What we learned
+
+1. **Magnitude is at the upper end of literature numbers for a first TT.** The pre-implementation estimate was "150–300 Elo" from chess-programming literature, but myChess already had reasonable best-known-move ordering ([§ 7.1](search.md#71-best-known-move-pv-ordering)) and killer-move heuristics ([§ 7.2](search.md#72-killer-moves)). The +70 Elo measured is consistent with the picture: a first TT in an engine with prior PV-ordering captures the *sibling-path* ordering gains plus genuine score cutoffs, but not the additional 80–100 Elo a TT would buy on top of a no-ordering baseline.
+
+2. **The two SPRT bugs that surfaced during development are worth remembering.** Both surfaced through *integration* tests, not the TT-specific unit tests written alongside the implementation:
+   - The mate-score sign-loss in `scoreFromTT` only fired through `GameStatusTest.testWhiteCheckmate` — a far-from-TT test. Lesson: when a new layer touches scores, the existing end-game suite is the canary.
+   - The stale-PV propagation through TT-cached early returns only fired through `EngineSmokeTest.testPosition1` (illegal-PV emission). Lesson: PV-table invariants under early-return code paths need explicit `truncate` / `writeTTCachedPv` helpers, not implicit "the next iteration will overwrite anyway" reasoning.
+
+   Both are now covered by dedicated regression tests (`ScoreTTAdjustmentTest`, `IllegalPvRegressionTest`).
+
+3. **Per-process JVM-wrapper tuning matters under `concurrency=4`.** Fixed `-Xms256m -Xmx256m`, `-XX:+AlwaysPreTouch`, `-XX:+UseSerialGC` on the test-version wrappers stopped heap-resize stalls and GC-thread contention that would otherwise have caused time-loss artifacts in the SPRT. The flags were added to **both** TT-version and baseline-3.6.0 wrappers to keep the comparison fair.
+
+### Why this slot in the roadmap
+
+Closes the largest remaining single-feature item with a clean +70 Elo measurement and unblocks several downstream items that pair with TT — most importantly [§ 12.2 Null-move pruning](#122-null-move-pruning--s--50100-elo) (whose reduced-depth search now hits a populated TT and can cut off immediately), [§ 12.3 LMR](#123-late-move-reductions-lmr--s--50100-elo) (where the TT-stored bestMove is the first re-search candidate), and [§ 12.8 Aspiration windows](#128-aspiration-windows--s--2040-elo) (where TT bounds become the natural source for the next iteration's window).
 
 ### Follow-up: reconstruct the principal variation from TT walks
 
@@ -31,7 +60,7 @@ The fix used by most engines: after the search finishes, extend the root PV by w
 
 The relaxed PV-length check in [`EngineTestBase.testPosition`](../src/test/java/org/michaelfl/mychess/EngineTestBase.java) (June 2026) tolerates the current short-PV behavior; once TT-walk reconstruction is in, that relaxation can stay or tighten — either way it'll keep working.
 
-Out of scope until §12.1's base implementation has been Elo-measured. The motivation is purely diagnostic / cosmetic (UCI `info pv` lines), not strength.
+Now that §12.1's base implementation is measured (≈ +70 Elo, see header), this becomes the natural next refinement on the TT path. The motivation remains purely diagnostic / cosmetic (UCI `info pv` lines), not strength.
 
 ## 12.2 Null-move pruning — **S, ≈ 50–100 Elo**
 
