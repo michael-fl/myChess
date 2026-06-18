@@ -206,6 +206,7 @@ class UciHandlerTest {
         var input = """
                 uci
                 setoption name UCI_Chess960 value true
+                ucinewgame
                 position fen %s
                 go depth 7
                 """.formatted(KINGSIDE_TEST_FEN);
@@ -219,6 +220,7 @@ class UciHandlerTest {
         var input = """
                 uci
                 setoption name UCI_Chess960 value true
+                ucinewgame
                 position fen %s
                 go depth 7
                 """.formatted(KINGSIDE_TEST_FEN);
@@ -233,6 +235,7 @@ class UciHandlerTest {
         var input = """
                 uci
                 setoption name UCI_Chess960 value true
+                ucinewgame
                 position fen r3kb1r/pppq1ppp/2npbn2/4p3/4P3/2NPBN2/PPPQ1PPP/R3KB1R w KQkq - 0 1
                 go depth 7
                 """;
@@ -248,6 +251,7 @@ class UciHandlerTest {
         var input = """
                 uci
                 setoption name UCI_Chess960 value true
+                ucinewgame
                 position fen r3kb1r/pppq1ppp/2npbn2/4p3/4P3/2NPBN2/PPPQ1PPP/R3KB1R b KQkq - 1 1
                 go depth 7
                 """;

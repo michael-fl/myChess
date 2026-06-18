@@ -563,4 +563,26 @@ PositionSearch.java — neue Helfer und Konstanten
       -pgnout test-results/sprt-tt-vs-3.6.0.pgn \
       | tee test-results/sprt-tt-vs-3.6.0-stdout.log
       
-      
+--
+
+1. Sofortige Maßnahme (Low-Effort, ~30 min Arbeit):
+
+  DEFAULT_SIZE in TranspositionTable.java von 1 << 20 auf 1 << 22 ändern:
+
+  private static final int DEFAULT_SIZE = 1 << 22;   // 4 M Einträge ≈ 200 MB
+
+  Im Wrapper-Skript -Xmx256m auf -Xmx512m anheben (damit die größere TT plus JIT-Cache + Working-Set reinpasst). Mit concurrency=4 sind das dann 8 × 512 MB = 4 GB total — passt komfortabel auf jeden modernen
+  Mac.
+
+  Erwartet: +10-30 Elo rein durch die größere TT bei gleichem TC. Würde ich mit einem 800-1600-Spiele SPRT (elo0=-3 elo1=15) gegen die aktuelle 1 M-Version verifizieren — das ist eine kleine genug Änderung,
+  dass es leicht im Rauschen verschwinden könnte, aber der Mechanismus ist klar.
+
+  2. Mittelfristig (im Rahmen der nächsten Roadmap-Iteration):
+
+  Implementiere die UCI-Hash-Option (steht in der Roadmap als „waits for the TT" implizit drin, jetzt ohne diesen Vorbehalt). Cutechess und alle GUIs sagen damit beim Setup: „TT bitte 256 MB" oder ähnliches.
+  Das macht myChess GUI-konform und Tournament-tauglich, ohne dass die Default-Größe für jeden Use-Case neu kompiliert werden müsste.
+
+  Ungefähr 10 Zeilen in UciHandler (neue setoption-Behandlung) plus eine Re-Allocation-Methode in TranspositionTable. Da die TT ein Singleton ist und die Realloc nur beim setoption vor dem ersten go passieren
+  würde, ist es sicher.
+  
+  
