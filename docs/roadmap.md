@@ -8,9 +8,9 @@ The README's [§ 1.2 *Scope and status*](../README.md#12-scope-and-status) alrea
 
 ---
 
-## 12.1 ~~Transposition table~~ — **DONE (≈ +70 Elo)**
+## 12.1 ~~Transposition table~~ — **DONE (+93 Elo)**
 
-*Implemented and merged June 2026. Two independent self-play SPRTs against `myChess-3.6.0`, TC 40/60, both terminated cleanly at the upper bound (H1 accepted) far before the 1600-game budget — see "What was measured" below. Released as `v4.0.0`.*
+*Implemented and merged June 2026. Two early-stopping self-play SPRTs and one 1600-game fixed-N match against `myChess-3.6.0`, TC 40/60. The precise reference number is the fixed-N match: **+92.7 ± 15.2 Elo** at 1600 games, LOS 100 %. Released as `v4.0.0`.*
 
 The single biggest missing optimization, and the one the README already flagged. The transposition table (TT) caches per-position search results keyed by Zobrist hash, so positions reached through different move orders are evaluated once.
 
@@ -23,18 +23,23 @@ Caveats handled in the shipped implementation: TT is cleared on `ucinewgame` via
 
 ### What was measured
 
-Two self-play SPRTs against `myChess-3.6.0`, TC 40/60, 1600-game budget each:
+Three self-play matches against `myChess-3.6.0`, TC 40/60:
 
-| Run | Band (`elo0`..`elo1`) | W-L-D | Games | Elo | LOS | SPRT |
-|---|---|---|---|---|---|---|
-| 1 | `-3 .. 15` | 117-67-43 | 227 | **+77.8 ± 41.6** | 100% | H1 accepted at ubound (14% budget) |
-| 2 | `20 .. 80` | 133-81-54 | 268 | **+68.3 ± 37.8** | 100% | H1 accepted at ubound (17% budget) |
+| Run | Type | Band (`elo0`..`elo1`) | W-L-D | Games | Elo | LOS | Termination |
+|---|---|---|---|---|---|---|---|
+| 1 | SPRT | `-3 .. 15` | 117-67-43 | 227 | **+77.8 ± 41.6** | 100% | H1 at ubound (14% budget) |
+| 2 | SPRT | `20 .. 80` | 133-81-54 | 268 | **+68.3 ± 37.8** | 100% | H1 at ubound (17% budget) |
+| 3 | **Fixed-N** | — | **817-400-383** | **1600** | **+92.7 ± 15.2** | **100%** | full budget — precise reference |
 
-Both runs terminated in the first quarter of the budget and produced overlapping point estimates around **+70 Elo**. White-vs-Black split was symmetric in both runs (60.5% vs 61.5% in Run 1, 61.8% vs 57.6% in Run 2) — no color-asymmetric bug pattern. Draw ratio dropped to 18.9% / 20.1% (vs ~30% in pre-TT baselines) — TT cutoffs decide games earlier.
+All three estimates are consistent within their CIs, but the **fixed-N match is the reference**: it has the tightest CI (±15.2 vs ±37-42 for the SPRTs), and SPRT point estimates are known to be biased low by the early-stopping mechanism (the test stops as soon as evidence for H1 is sufficient, which can be well before the sample mean has converged on the true value — both SPRT runs here terminated at sample means 15-25 Elo below the eventual fixed-N point).
+
+**White-vs-Black asymmetry.** The early SPRT runs showed near-symmetric W/B splits (~60-62 % both sides). The 1600-game fixed-N match exposes a ~62 Elo gap: kandidat as White wins 66.9 %, as Black 59.1 %. At 800 games per color the per-color CI is ±20-25 Elo, so the gap is ≈2.5σ — suggestive but not airtight. Most plausible reading: the TT amplifies the small first-move advantage that already existed pre-TT (the W>B baseline-bias investigated in [§ 12.14](#1214-the-wb-color-asymmetry-investigation--investigation-archived)) — both sides get a stronger search, but the side that starts from slightly better positions converts that into a slightly larger fraction of wins. Worth re-checking after [§ 12.2 NMP](#122-null-move-pruning--s--50100-elo) and [§ 12.6 QSearch upgrade](#126-quiescence-search-upgrade--m--4080-elo) land; if the asymmetry persists at >2σ, it deserves a separate investigation entry.
+
+**Draw ratio** dropped to 19-24 % across the three runs (vs ~30 % in pre-TT baselines) — TT cutoffs decide games earlier.
 
 ### What we learned
 
-1. **Magnitude is at the upper end of literature numbers for a first TT.** The pre-implementation estimate was "150–300 Elo" from chess-programming literature, but myChess already had reasonable best-known-move ordering ([§ 7.1](search.md#71-best-known-move-pv-ordering)) and killer-move heuristics ([§ 7.2](search.md#72-killer-moves)). The +70 Elo measured is consistent with the picture: a first TT in an engine with prior PV-ordering captures the *sibling-path* ordering gains plus genuine score cutoffs, but not the additional 80–100 Elo a TT would buy on top of a no-ordering baseline.
+1. **Magnitude is at the upper end of literature numbers for a first TT.** The pre-implementation estimate was "150–300 Elo" from chess-programming literature, but myChess already had reasonable best-known-move ordering ([§ 7.1](search.md#71-best-known-move-pv-ordering)) and killer-move heuristics ([§ 7.2](search.md#72-killer-moves)). The measured +93 Elo is consistent with the picture: a first TT in an engine with prior PV-ordering captures the *sibling-path* ordering gains plus genuine score cutoffs, but not the additional 60–100 Elo a TT would buy on top of a no-ordering baseline. The pre-test prediction of "+50 with +30-80 range" turned out to be too conservative — the TT/PV-ordering synergy outperformed the rough estimate by ~10-15 Elo.
 
 2. **The two SPRT bugs that surfaced during development are worth remembering.** Both surfaced through *integration* tests, not the TT-specific unit tests written alongside the implementation:
    - The mate-score sign-loss in `scoreFromTT` only fired through `GameStatusTest.testWhiteCheckmate` — a far-from-TT test. Lesson: when a new layer touches scores, the existing end-game suite is the canary.
@@ -44,9 +49,11 @@ Both runs terminated in the first quarter of the budget and produced overlapping
 
 3. **Per-process JVM-wrapper tuning matters under `concurrency=4`.** Fixed `-Xms256m -Xmx256m`, `-XX:+AlwaysPreTouch`, `-XX:+UseSerialGC` on the test-version wrappers stopped heap-resize stalls and GC-thread contention that would otherwise have caused time-loss artifacts in the SPRT. The flags were added to **both** TT-version and baseline-3.6.0 wrappers to keep the comparison fair.
 
+4. **SPRT is a hypothesis test, not an estimation tool.** Both early SPRT runs accepted H1 with point estimates (+78, +68) noticeably below the eventual fixed-N reference (+93). This is *not* a bug in either test — it is the expected behavior: SPRT stops as soon as the data is *sufficient* to reject H0 in favor of H1, which happens long before the sample mean has converged. For a precise Elo number, run a fixed-N match (no `-sprt` block); for a "is it better?" decision, run SPRT. Trying to "tighten" SPRT by shifting the band (e.g. `elo0=20 elo1=80`) does *not* extend the test meaningfully when the true effect is well above the band — the LLR still terminates early. This finding is now reflected in the `reference_sprt_cutechess_template` memory and the `match-<slug>` naming convention for fixed-N runs.
+
 ### Why this slot in the roadmap
 
-Closes the largest remaining single-feature item with a clean +70 Elo measurement and unblocks several downstream items that pair with TT — most importantly [§ 12.2 Null-move pruning](#122-null-move-pruning--s--50100-elo) (whose reduced-depth search now hits a populated TT and can cut off immediately), [§ 12.3 LMR](#123-late-move-reductions-lmr--s--50100-elo) (where the TT-stored bestMove is the first re-search candidate), and [§ 12.8 Aspiration windows](#128-aspiration-windows--s--2040-elo) (where TT bounds become the natural source for the next iteration's window).
+Closes the largest remaining single-feature item with a clean +93 Elo measurement and unblocks several downstream items that pair with TT — most importantly [§ 12.2 Null-move pruning](#122-null-move-pruning--s--50100-elo) (whose reduced-depth search now hits a populated TT and can cut off immediately), [§ 12.3 LMR](#123-late-move-reductions-lmr--s--50100-elo) (where the TT-stored bestMove is the first re-search candidate), and [§ 12.8 Aspiration windows](#128-aspiration-windows--s--2040-elo) (where TT bounds become the natural source for the next iteration's window).
 
 ### Follow-up: reconstruct the principal variation from TT walks
 
@@ -60,7 +67,7 @@ The fix used by most engines: after the search finishes, extend the root PV by w
 
 The relaxed PV-length check in [`EngineTestBase.testPosition`](../src/test/java/org/michaelfl/mychess/EngineTestBase.java) (June 2026) tolerates the current short-PV behavior; once TT-walk reconstruction is in, that relaxation can stay or tighten — either way it'll keep working.
 
-Now that §12.1's base implementation is measured (≈ +70 Elo, see header), this becomes the natural next refinement on the TT path. The motivation remains purely diagnostic / cosmetic (UCI `info pv` lines), not strength.
+Now that §12.1's base implementation is measured (+93 Elo, see header), this becomes the natural next refinement on the TT path. The motivation remains purely diagnostic / cosmetic (UCI `info pv` lines), not strength.
 
 ## 12.2 Null-move pruning — **S, ≈ 50–100 Elo**
 
@@ -68,7 +75,7 @@ Pass the turn to the opponent at depth ≥ 3 and search the reply with reduced d
 
 - One conditional branch inside the recursive node, plus a `Board.switchTurn()` / restore pair (no piece is moved). The `GameStatus` stack already supports a turn flip via [`GameStatus.switchTurn()`](../src/main/java/org/michaelfl/mychess/GameStatus.java).
 - Disable when the side to move is in check or has only pawns + king (avoid zugzwang). The existing `isEndGame()` heuristic is too crude — gate on actual non-pawn material instead.
-- Pairs naturally with [§ 12.1 TT](#121-transposition-table--s--m--150300-elo): TT cutoffs from the reduced-depth search return immediately.
+- Pairs naturally with [§ 12.1 TT](#121-transposition-table--done-93-elo): TT cutoffs from the reduced-depth search return immediately.
 
 ## 12.3 Late move reductions (LMR) — **S, ≈ 50–100 Elo**
 
@@ -142,7 +149,7 @@ Cheap to implement (~5 lines), small but real Elo gain.
 
 ### 12.6.5 TT integration in QSearch — **M, ≈ 5–15 Elo**
 
-Use the [§ 12.1 transposition table](#121-transposition-table--done--70-elo) inside the QSearch as well: probe on entry, store on exit. Modern engines do this, with a depth marker of 0 (or a small constant) so QSearch entries cannot be reused as score-cutoffs by the deeper main search — they are valuable as best-move/bound hints for QSearch revisits.
+Use the [§ 12.1 transposition table](#121-transposition-table--done-93-elo) inside the QSearch as well: probe on entry, store on exit. Modern engines do this, with a depth marker of 0 (or a small constant) so QSearch entries cannot be reused as score-cutoffs by the deeper main search — they are valuable as best-move/bound hints for QSearch revisits.
 
 Caveat: QSearch generates many leaf positions; without care, those will thrash the TT and evict more valuable main-search entries. The standard mitigation is a two-bucket TT layout (one slot depth-preferred for main-search entries, one always-replace for QSearch leaves) or a depth-weighted replacement formula. Worth a separate SPRT to confirm net positive in myChess specifically — engines that did not use TT in QSearch have measured ~0 Elo from adding it, others +20.
 
@@ -170,7 +177,7 @@ Item 12.6.1 alone is a net **loss** without 12.6.2 and 12.6.3, because the all-c
 At each iterative-deepening iteration, search with a narrow window `[score − 50, score + 50]` around the previous iteration's score. Re-search with the wider window only on a fail-high or fail-low.
 
 - One change in [`PositionSearch.calculateNextMove`](../src/main/java/org/michaelfl/mychess/engines/PositionSearch.java)'s deepening loop.
-- Pairs with [§ 12.1 TT](#121-transposition-table--s--m--150300-elo): without it, re-searches are expensive enough that the heuristic can be a net loss.
+- Pairs with [§ 12.1 TT](#121-transposition-table--done-93-elo): without it, re-searches are expensive enough that the heuristic can be a net loss.
 
 ## 12.9 UCI protocol — **M (1–2 days), no Elo directly but unblocks GUI + measurement**
 
@@ -196,7 +203,7 @@ The full UCI protocol is large, but the subset needed for **"plays in HIARCS or 
 | `bestmove e2e4` | engine → GUI | the result of `go` |
 | `quit` | GUI → engine | exit |
 
-Optional `info depth … nodes … pv …` lines during search make the GUI's analysis panel light up but aren't strictly required to play. Not needed for a first version: `setoption` (waits for the TT in [§ 12.1](#121-transposition-table--s--m--150300-elo)), `ponder`, `UCI_Chess960` (waits for [§ 12.11](#1211-chess960-fischer-random-support--m-no-elo-on-standard-chess-but-opens-a-new-variant)).
+Optional `info depth … nodes … pv …` lines during search make the GUI's analysis panel light up but aren't strictly required to play. Not needed for a first version: `setoption` (waits for the TT in [§ 12.1](#121-transposition-table--done-93-elo)), `ponder`, `UCI_Chess960` (waits for [§ 12.11](#1211-chess960-fischer-random-support--m-no-elo-on-standard-chess-but-opens-a-new-variant)).
 
 Three concrete sub-steps:
 
@@ -376,11 +383,11 @@ This entry intentionally comes *after* the search optimizations in the recommend
 
 ## 12.13 ~~Switch alpha-beta from fail-hard to fail-soft~~ — **DONE**
 
-*Done — implemented as preparation for the transposition table ([§ 12.1](#121-transposition-table--s--m--150300-elo)).*
+*Done — implemented as preparation for the transposition table ([§ 12.1](#121-transposition-table--done-93-elo)).*
 
 Both `PositionSearch.alphaBetaSearchI` and `QuiescenceSearch.quiescenceSearch` now return the true unclamped score on beta cutoff and on fail-low. The previous `SearchNodeResult.window(weight, α, β)` helper and the alpha/β-taking factory overloads (`create`, `draw`, `stalemate`, `checkmateSelf`) are gone; terminal-node factories return raw scores. The `ILLEGAL_WEIGHT_POS` sentinel survives trivially since nothing clamps anymore. The `if (alpha >= 0) return alpha` shortcut in `checkmateOrStalemate` is removed — checkmate/stalemate now always return the true terminal score regardless of α.
 
-The alpha-beta search tree is identical to fail-hard (same cutoff conditions, same best-move selection). What changes is the value returned at the boundary: a fail-high node returns *how far above β* it landed, a fail-low node returns *how far below α*. That information is what [§ 12.1 TT](#121-transposition-table--s--m--150300-elo) uses to store sharper lower/upper bounds, and what [§ 12.8 aspiration windows](#128-aspiration-windows--s--2040-elo) uses to set a tighter re-search range.
+The alpha-beta search tree is identical to fail-hard (same cutoff conditions, same best-move selection). What changes is the value returned at the boundary: a fail-high node returns *how far above β* it landed, a fail-low node returns *how far below α*. That information is what [§ 12.1 TT](#121-transposition-table--done-93-elo) uses to store sharper lower/upper bounds, and what [§ 12.8 aspiration windows](#128-aspiration-windows--s--2040-elo) uses to set a tighter re-search range.
 
 Regression test: [`QuiescenceSearchTest.quiescenceFailSoft_betaCutoffReturnsUnclampedWeight`](../src/test/java/org/michaelfl/mychess/QuiescenceSearchTest.java) constructs a stand-pat position, runs quiescence with both wide and tight β, and asserts the tight call returns the unclamped stand-pat (a fail-hard implementation would clamp to β).
 
@@ -696,7 +703,7 @@ The hanging-pieces term is now part of `master` at `v3.6.0`. The `undefended-pie
 |---|---|---|---|
 | 1 | [§ 12.9 UCI minimal](#129-uci-protocol--m-12-days-no-elo-directly-but-unblocks-gui--measurement) — FEN importer + `UciHandler` + HIARCS/Stockfish baseline gauntlet | M (1–2 days) | — (GUI + baseline measurement) |
 | 2 | [§ 12.10 In-process harness](#1210-in-process-measurement-harness--sm-no-elo-but-adds-fast-per-change-diagnostics) — node-count bench + WAC EPD runner (self-play loop optional, covered by cutechess-cli from step 1) | S | — (per-change diagnostics) |
-| 3 | [§ 12.1 Transposition table](#121-transposition-table--s--m--150300-elo) (fail-soft alpha-beta is already in place, see [§ 12.13](#1213-switch-alpha-beta-from-fail-hard-to-fail-soft--done)) | M | +150 – +300 |
+| 3 | [§ 12.1 Transposition table](#121-transposition-table--done-93-elo) (fail-soft alpha-beta is already in place, see [§ 12.13](#1213-switch-alpha-beta-from-fail-hard-to-fail-soft--done)) | M | +150 – +300 |
 | 4 | [§ 12.3 LMR](#123-late-move-reductions-lmr--s--50100-elo) + [§ 12.5 history](#125-history-heuristic--s--3050-elo) | S | +250 – +450 |
 | 5 | [§ 12.2 Null-move pruning](#122-null-move-pruning--s--50100-elo) | S | +300 – +550 |
 | 6 | [§ 12.4 Check extensions](#124-check-extensions--s--1530-elo) + [§ 12.8 aspiration](#128-aspiration-windows--s--2040-elo) | S | +340 – +620 |

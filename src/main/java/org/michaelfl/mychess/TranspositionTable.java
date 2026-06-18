@@ -53,7 +53,7 @@ import java.util.Arrays;
  */
 public final class TranspositionTable {
 
-    private static final int DEFAULT_SIZE = 1 << 20;
+    private static final int DEFAULT_SIZE = 1 << 22;
 
     private static TranspositionTable INSTANCE;
 
@@ -162,8 +162,8 @@ public final class TranspositionTable {
     }
 
     /**
-     * Lazy-initialised process-wide singleton with {@code DEFAULT_SIZE = 2^20}
-     * entries (~50 MB). Used by {@link EngineConfig.Builder#build()} when no
+     * Lazy-initialised process-wide singleton with {@code DEFAULT_SIZE = 2^22}
+     * entries (~200 MB). Used by {@link EngineConfig.Builder#build()} when no
      * explicit {@link TranspositionTable} is set, and by the UCI / REPL
      * code paths that want one shared cache per JVM. Production engines
      * normally pick this one up; tests must create their own via

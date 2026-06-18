@@ -964,7 +964,7 @@ Each `TTEntry` carries five fields:
 | `bound` | One of `EXACT` / `LOWER` / `UPPER` — see "Bound semantics" below. |
 | `bestMove` | Packed-int move that produced `score`. Used as a move-ordering hint even when the entry's depth is too shallow to return the score directly. |
 
-The default singleton is `2^20` entries (~50 MB); tests use isolated `2^14`-entry instances via `TestSupport.createTestTT()` (see "Lifecycle" below).
+The default singleton is `2^22` entries (~200 MB), raised from the original `2^20` (~50 MB) in v4.0.1 after analysis showed that at TC 40/60 the smaller table got rewritten ~30-60× per game and lost much of its mid-depth signal to evictions; tests use isolated `2^14`-entry instances via `TestSupport.createTestTT()` (see "Lifecycle" below).
 
 ### Lookup
 
@@ -1068,7 +1068,7 @@ public void writeTTCachedPv(int ttMove) {
 
 The result, after the parent's normal `copyUpPV` chain runs, is a PV that reads `[..., parent's move, ttMove, 0, 0, ...]` — semantically "the TT says the best move at this depth is `ttMove` and we do not have a continuation beyond that". The full diagram is in the method's JavaDoc.
 
-A known side effect: when a TT hit fires at depth `d`, the visible PV terminates at `d` — even though the search behind it was depth-`maxDepth`-deep. The played move and its score are correct; only the displayed continuation is shorter than the underlying search saw. Reconstructing the full PV by walking the TT (apply the stored bestMove, look up the resulting position, recurse) is a known follow-up — see [roadmap § 12.1](roadmap.md#121-transposition-table--s--m--150300-elo).
+A known side effect: when a TT hit fires at depth `d`, the visible PV terminates at `d` — even though the search behind it was depth-`maxDepth`-deep. The played move and its score are correct; only the displayed continuation is shorter than the underlying search saw. Reconstructing the full PV by walking the TT (apply the stored bestMove, look up the resulting position, recurse) is a known follow-up — see [roadmap § 12.1](roadmap.md#121-transposition-table--done-93-elo).
 
 ### Move-ordering integration
 
@@ -1110,7 +1110,7 @@ The seen-flags reset to `false` at the top of every `reset()` call so they canno
 
 ### Lifecycle
 
-- **Production / UCI:** `TranspositionTable.getDefaultInstance()` lazily creates a single `2^20`-entry instance the first time it is requested. `EngineConfig.Builder.build()` picks it up when no explicit instance was set, so the UCI handler and the REPL automatically share one TT across all moves of one process.
+- **Production / UCI:** `TranspositionTable.getDefaultInstance()` lazily creates a single `2^22`-entry instance the first time it is requested (raised from `2^20` in v4.0.1). `EngineConfig.Builder.build()` picks it up when no explicit instance was set, so the UCI handler and the REPL automatically share one TT across all moves of one process.
 - **`ucinewgame` clears the table.** `UciHandler.handleNewGame()` calls `tt.clear()` so cached scores from a prior game (which may have been played with different time controls or against a different opponent) cannot influence the new game.
 - **Tests use isolated instances.** Every test that builds an `EngineConfig` wires its own TT via `TestSupport.createTestTT()` (default `2^14` entries). Test order would otherwise change search outcomes — entries from an earlier test could serve as move-ordering hints in a later one. The `MoveSorterImplTest.ttMoveSeenFlag_isResetBetweenInvocations` regression is the historical reminder of why this matters: with shared state, a sticky `ttMoveSeen` flag from a prior reset led to illegal moves entering the search loop.
 
@@ -1118,4 +1118,4 @@ The seen-flags reset to `false` at the top of every `reset()` call so they canno
 
 - **Not thread-safe.** `put()` writes five fields of an entry non-atomically; a concurrent `get()` could observe a half-updated slot. The engine runs a single-threaded search executor, so this is not an issue today. A future Lazy SMP search would need to switch the entry to a packed-`long` representation with `volatile` reads/writes.
 - **No "always-replace" tier.** A two-tier scheme (always-replace + depth-preferred) typically improves hit rate by 5–10% on tactical search. The current single-tier `put()` keeps the code one line shorter; the trade-off is worth re-measuring after the next round of search optimizations.
-- **Shortened PV display** — see "PV-table interaction" above and [roadmap § 12.1](roadmap.md#121-transposition-table--s--m--150300-elo).
+- **Shortened PV display** — see "PV-table interaction" above and [roadmap § 12.1](roadmap.md#121-transposition-table--done-93-elo).
