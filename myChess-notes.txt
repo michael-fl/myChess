@@ -585,4 +585,45 @@ PositionSearch.java — neue Helfer und Konstanten
   Ungefähr 10 Zeilen in UciHandler (neue setoption-Behandlung) plus eine Re-Allocation-Methode in TranspositionTable. Da die TT ein Singleton ist und die Realloc nur beim setoption vor dem ersten go passieren
   würde, ist es sicher.
   
+--
+
+Aus deiner Selbsteinschätzung vs 3.5.x ergibt sich eine grobe Elo-Verortung:
+
+  - „nicht überrannt, aber noch kein Sieg" gegen 3.5.x → du liegst geschätzt ~50-150 Elo unter 3.5.x
+  - 4.0.0 ist +93 Elo über 3.6.0 (was wiederum +28 über 3.5.2 ist) → 4.0.0 ist ~+170 Elo über deinem Niveau bei gleicher Bedenkzeit
+  - 4.0.1 (TT-Größe) bringt voraussichtlich nochmal +10-15 → wenn der laufende Test positiv ausgeht
+
+  Für faire/spannende Spiele willst du diese Elo-Differenz durch eine Zeit-Asymmetrie ausgleichen. Faustregel für Engines im 1400-1700-Bereich: Halbierung der Bedenkzeit ≈ −40 Elo. Also:
+
+  ┌──────────────┬────────────────────────────────────┬────────────────────────────────────────────────────────────────┐
+  │ myChess-Zeit │ Effektives Elo (relativ zu 60 min) │                        Stärke vs. dich                         │
+  ├──────────────┼────────────────────────────────────┼────────────────────────────────────────────────────────────────┤
+  │ 60 min       │ Volle Stärke (4.0.x)               │ ~+170 darüber → du verlierst oft, frustrierende Spiele         │
+  ├──────────────┼────────────────────────────────────┼────────────────────────────────────────────────────────────────┤
+  │ 30 min       │ -40                                │ ~+130 → noch sehr stark, du verlierst meist                    │
+  ├──────────────┼────────────────────────────────────┼────────────────────────────────────────────────────────────────┤
+  │ 15 min       │ -80                                │ ~+90 → herausfordernd, gelegentlicher Sieg möglich             │
+  ├──────────────┼────────────────────────────────────┼────────────────────────────────────────────────────────────────┤
+  │ 10 min       │ -100                               │ ~+70 → gute Kämpfe, du kannst gewinnen wenn präzise            │
+  ├──────────────┼────────────────────────────────────┼────────────────────────────────────────────────────────────────┤
+  │ 5 min        │ -160                               │ ~+10 → ausgeglichene Partien, oft entscheidet Form             │
+  ├──────────────┼────────────────────────────────────┼────────────────────────────────────────────────────────────────┤
+  │ 2.5 min      │ -200                               │ du leicht überlegen → wenig Spannung, du gewinnst routinemäßig │
+  └──────────────┴────────────────────────────────────┴────────────────────────────────────────────────────────────────┘
+
+  Für „fordernd aber gewinnbar" ist 10-15 Minuten myChess-Zeit der Sweet Spot.
+
+  Konkrete Einstellung in Cutechess-GUI
+
+  In cutechess-gui kann man pro Engine getrennt das Time-Control setzen:
+
+  - Tools → Settings → Engines → wähle myChess → „Time control" auf z.B. 0+10 (10 Min sudden death) oder 0:10+0:05 (10 Min + 5 Sek Inkrement)
+  - Dein eigenes Time-Control im „New Game"-Dialog dann auf 60 Min (oder 60+5 mit Inkrement)
+
+  Wenn du es etwas formaler willst (z.B. nicht sudden death), nimm 40/X-Formate:
+  - Du: 40/60 = 40 Züge in 60 Min, danach Verlängerung
+  - myChess: 40/10 = 40 Züge in 10 Min
+  
+--
+
   

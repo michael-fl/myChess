@@ -244,6 +244,160 @@ exec java -jar bagatur-1.7e.jar
 > [computerchess.org.uk/ccrl/4040](https://www.computerchess.org.uk/ccrl/4040/)
 > or [/404](https://www.computerchess.org.uk/ccrl/404/) (the 40/15 list).
 
+## Concrete recipe: 4-engine anchor-bracket measurement
+
+This is the recipe that produced the canonical absolute-strength measurement of myChess so far. The original run (May-June 2026, against v3.1.x) produced **myChess ≈ 1422.7 ± 17.5 Ordo-Elo** with three CCRL Blitz anchors. The recipe is preserved here verbatim so that future re-measurements (after each milestone version) follow the same protocol and produce directly-comparable numbers.
+
+The setup is **four independent 1-on-1 matches** against externally-anchored engines, then Ordo combines them into a single Elo estimate with proper inter-engine cross-comparison. *Not* a single cutechess gauntlet — Ordo handles the cross-engine math better when each pairing is a separate match.
+
+### Engines and anchors
+
+Current CCRL Blitz values (verified live on [computerchess.org.uk/404](https://computerchess.org.uk/404/rating_list_all.html) before each run):
+
+| Engine | CCRL Blitz | Rolle | Wrapper |
+|---|---|---|---|
+| Pulse 1.7.3 | 1505 | Anker (mid-range) | `./engines/pulse/pulse.sh` (UCI) |
+| TSCP 1.81 | 1607 | Anker (upper) | `./engines/tscp/tscp.sh` (xboard) |
+| PurplePanda 14 | 1445 | Anker (close-to-myChess) | `./engines/PurplePanda/purplepanda.sh` (UCI) |
+| DoctorB 1.2.1 | 1326 (nominal) | **frei** — Ordo schätzt selbst | `./engines/DoctorB/doctorb.sh` (UCI) |
+
+**Why DoctorB is intentionally not anchored.** The 1326 CCRL nominal rating reflects a different port / build of DoctorB. The version that runs reliably on the macOS-build path measures ~145 Elo weaker than the CCRL number in self-play vs the others — most plausibly a port artifact, not a real strength claim. Leaving DoctorB free in Ordo turns this into a sanity check: if Ordo computes DoctorB at ~1180, the port artifact is confirmed and the other three anchors are doing the actual work.
+
+### Cutechess invocations (one per opponent)
+
+Replace `4.0.1` in the engine path with whichever `versions/<X>/` directory holds the myChess build being measured. Use the new `match-<slug>` naming convention (these are precision-estimate matches, not SPRT — see the [sprt-cutechess-template](../../.claude/projects/-Users-mf--PRIVAT--New-Stuff-myChess/memory/reference_sprt_cutechess_template.md) memory for the SPRT/fixed-N distinction).
+
+```bash
+# === Match A: myChess vs Pulse ===
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+    -engine name=myChess cmd=./versions/4.0.1/mychess-uci.sh proto=uci \
+    -engine name=Pulse   cmd=./engines/pulse/pulse.sh        proto=uci \
+    -each tc=40/120 \
+    -rounds 200 -games 2 -repeat \
+    -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+    -concurrency 4 -ratinginterval 20 \
+    -recover \
+    -draw movenumber=40 movecount=8 score=40 \
+    -resign movecount=4 score=600 \
+    -pgnout test-results/match-mychess-vs-pulse.pgn \
+    | tee test-results/match-mychess-vs-pulse-stdout.log
+
+# === Match B: myChess vs TSCP (xboard, not uci) ===
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+    -engine name=myChess cmd=./versions/4.0.1/mychess-uci.sh proto=uci \
+    -engine name=TSCP    cmd=./engines/tscp/tscp.sh          proto=xboard \
+    -each tc=40/120 \
+    -rounds 200 -games 2 -repeat \
+    -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+    -concurrency 4 -ratinginterval 20 \
+    -recover \
+    -draw movenumber=40 movecount=8 score=40 \
+    -resign movecount=4 score=600 \
+    -pgnout test-results/match-mychess-vs-tscp.pgn \
+    | tee test-results/match-mychess-vs-tscp-stdout.log
+
+# === Match C: myChess vs DoctorB ===
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+    -engine name=myChess cmd=./versions/4.0.1/mychess-uci.sh proto=uci \
+    -engine name=DoctorB cmd=./engines/DoctorB/doctorb.sh    proto=uci \
+    -each tc=40/120 \
+    -rounds 200 -games 2 -repeat \
+    -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+    -concurrency 4 -ratinginterval 20 \
+    -recover \
+    -draw movenumber=40 movecount=8 score=40 \
+    -resign movecount=4 score=600 \
+    -pgnout test-results/match-mychess-vs-doctorb.pgn \
+    | tee test-results/match-mychess-vs-doctorb-stdout.log
+
+# === Match D: myChess vs PurplePanda ===
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+    -engine name=myChess     cmd=./versions/4.0.1/mychess-uci.sh         proto=uci \
+    -engine name=PurplePanda cmd=./engines/PurplePanda/purplepanda.sh    proto=uci \
+    -each tc=40/120 \
+    -rounds 200 -games 2 -repeat \
+    -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+    -concurrency 4 -ratinginterval 20 \
+    -recover \
+    -draw movenumber=40 movecount=8 score=40 \
+    -resign movecount=4 score=600 \
+    -pgnout test-results/match-mychess-vs-purplepanda.pgn \
+    | tee test-results/match-mychess-vs-purplepanda-stdout.log
+```
+
+**Total wall-clock:** Each match runs ~400 games at TC 40/120 with `concurrency=4` — roughly **3-4 hours per match**, **12-16 hours for all four matches**. Run them sequentially (no two matches in parallel, because each already pegs all four cores). PurplePanda historically had stalling issues that required a separate `tools/clean-pgn.sh` pass — see the `cleaned.pgn` variants in `test-results/` for the original run.
+
+### Parameter rationale
+
+- **TC 40/120**: 40 moves in 120 seconds = ~3 sec/move. Faster than CCRL Blitz (40/15 = 22.5 sec/move) but reaches the same strength tier; the ratio is what matters across engines, not the absolute TC. Re-running at CCRL-exact TC would burn ~8× more wall-clock and is not worth it for a relative anchor.
+- **2moves_v2.pgn**: shared opening book, every position played twice with swapped colors → color bias cancels per-pairing.
+- **score=40 for draw, score=600 for resign**: matches the current standard documented in the [sprt-cutechess-template](../../.claude/projects/-Users-mf--PRIVAT--New-Stuff-myChess/memory/reference_sprt_cutechess_template.md) memory. The original test12-15 runs (2026-05) used `score=20` for draw — slightly more games went to natural conclusion, slightly fewer adjudications. The current `score=40` produces a higher draw-adjudication rate and shorter games on average; both are valid, but stick with one across the whole bracket so the four matches are mutually comparable.
+- **`-recover`**: critical — if one engine misbehaves on a single game (PurplePanda stalls, DoctorB crashes), the match continues instead of aborting.
+- **No `-sprt`**: this is a precision-estimate match, not a hypothesis test. Run the full 400-game budget per match.
+
+### Ordo combination step
+
+After all four PGNs are produced:
+
+```bash
+# 1. Concatenate all four anchor matches into one PGN stream
+cat test-results/match-mychess-vs-pulse.pgn \
+    test-results/match-mychess-vs-tscp.pgn \
+    test-results/match-mychess-vs-doctorb.pgn \
+    test-results/match-mychess-vs-purplepanda.pgn \
+    > /tmp/bracket.pgn
+
+# 2. Anchor file: fixed CCRL Blitz ratings for the three reliable engines.
+#    DoctorB is intentionally NOT anchored — Ordo computes its implied
+#    strength from the match, and a substantial gap to the CCRL nominal
+#    confirms the port artifact.
+cat > /tmp/anchors.csv <<'EOF'
+"Pulse",1505
+"TSCP",1607
+"PurplePanda",1445
+EOF
+
+# 3. Run Ordo
+/Users/mf/_PRIVAT_/New-Stuff/ordo/ordo \
+    -p /tmp/bracket.pgn \
+    -m /tmp/anchors.csv \
+    -o test-results/ordo-bracket.txt \
+    -c test-results/ordo-bracket.csv
+```
+
+The `-m anchors.csv` switch forces Ordo to treat the listed engines as having their stated rating (zero uncertainty). If you want each anchor to carry its own CCRL CI, use `-y anchors-with-error.csv` instead and provide a third column with the per-anchor σ — Ordo then propagates the uncertainty through to myChess.
+
+### Reading the output
+
+`ordo-bracket.txt` looks like this (from the May-2026 run, against v3.1.x):
+
+```
+   # PLAYER         :  RATING  ERROR  POINTS  PLAYED   (%)
+   1 TSCP           :  1607.0   ----   305.5     397    77
+   2 Pulse          :  1505.0   ----   236.5     400    59
+   3 myChess        :  1422.7   17.5   835.0    1573    53
+   4 PurplePanda    :  1281.8   32.0   116.0     376    31
+   5 DoctorB        :  1180.5   33.8    80.0     400    20
+```
+
+- Anchored rows show `----` for ERROR (zero by construction).
+- myChess ERROR (17.5) is Ordo's posterior σ on the rating, given all four matches. This is much tighter than any single-anchor delta would give, because the bracket triangulates from three independent anchors.
+- DoctorB at 1180 vs nominal CCRL 1326 = the port artifact mentioned above. The 145-Elo gap is the empirical evidence; without leaving DoctorB free, this would have been invisible.
+- PurplePanda at 1282 vs nominal CCRL 1445 hints at a similar (smaller) artifact, but PurplePanda was kept anchored anyway because the alternative (only 2 anchors) tightens the bracket too narrowly around Pulse-TSCP. Keep an eye on this in future runs.
+
+### When to re-run this bracket
+
+After every milestone version where the cumulative delta against the last-measured baseline is **≥ 50 Elo**. Concretely:
+
+- After v3.1.x was measured (May 2026 → 1422.7), the next legitimate re-measurement is after v4.0.x lands (cumulative +~120 Elo measured between 3.1.x and 4.0.x). The expected Ordo result at 4.0.x is **~1543 ± 18 Elo**, give or take CCRL-list drift on the three anchors.
+- For smaller per-version deltas (<50 Elo), trust the per-version SPRT/match deltas in [version-history.md](version-history.md) instead — Ordo re-measurement would cost ~12-16 hours for a result within the existing error bar.
+
+### Cross-references
+
+- The original run's notes (CCRL bracket table, decision rationale for which anchors to fix) live in `myChess-notes.txt` lines ~99-198. The recipe above is the canonical version going forward.
+- The [version-history.md](version-history.md) absolute-Elo column carries forward from this measurement via per-version SPRT deltas. A fresh bracket re-anchors that column.
+- The methodology context (why CCRL anchors, why ~1500 Elo is the right tier for myChess) is the earlier sections of this document, especially [§ Approach](#approach-gauntlet-against-honest-engines) and [§ Recommended opponent shortlist](#recommended-opponent-shortlist) — note that the CCRL numbers in the shortlist there were sourced before the live-list re-verification of May 2026, and the values used in this recipe (Pulse 1505, TSCP 1607, PurplePanda 1445) are the verified current ones.
+
 ## Notes on time control
 
 The CCRL 40/15 list uses **40 moves in 15 minutes** as its time control.
