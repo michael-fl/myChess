@@ -54,6 +54,7 @@ import java.util.Arrays;
 public final class TranspositionTable {
 
     private static final int DEFAULT_SIZE = 1 << 22;
+    private static final int BUCKET_SIZE = 4;
 
     private static TranspositionTable INSTANCE;
 
@@ -133,6 +134,7 @@ public final class TranspositionTable {
     }
 
     private final int size;
+    private final int hashSize;
     private final TTEntry[] table;
 
     /**
@@ -150,6 +152,7 @@ public final class TranspositionTable {
         }
 
         this.size = size;
+        this.hashSize = size / BUCKET_SIZE;
         this.table = new TTEntry[size];
 
         for (int i = 0; i < size; i++) {
@@ -196,7 +199,7 @@ public final class TranspositionTable {
     }
 
     private int hash(final long hashKey) {
-        return (int) hashKey & (size - 1);
+        return ((int) hashKey & (hashSize - 1)) * BUCKET_SIZE;
     }
 
     /**
@@ -208,9 +211,16 @@ public final class TranspositionTable {
      * across {@link #put(long, int, int, Bound, int)} calls.
      */
     public TTEntry get(final long hashKey) {
-        var entry = table[hash(hashKey)];
+        final int startIndex = hash(hashKey);
+        final int endIndex = startIndex + BUCKET_SIZE;
 
-        return hashKey == entry.hashKey ? entry : null;
+        for (int i = startIndex; i < endIndex; i++ ) {
+            if (table[i].hashKey == hashKey) {
+                return table[i];
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -236,12 +246,29 @@ public final class TranspositionTable {
      *                 if none is meaningful (terminal nodes)
      */
     public void put(final long hashKey, final int depth, final int score, final Bound bound, final int bestMove) {
-        var entry = table[hash(hashKey)];
+        int index = hash(hashKey);
+        final int endIndex = index + BUCKET_SIZE;
+        int replaceIndex = index;
 
-        if (entry.hashKey == hashKey && entry.depth > depth && entry.bound == Bound.EXACT) {
-            return;  // keep deeper exact entry
+        for (; index < endIndex; index++ ) {
+            final TTEntry entry = table[index];
+
+            if (entry.hashKey == hashKey) {
+                if (entry.depth > depth && entry.bound == Bound.EXACT) {
+                    return;  // keep deeper exact entry
+                }
+                replaceIndex = index;
+                break;
+            }
+            if (entry.depth < table[replaceIndex].depth
+                    || (table[replaceIndex].bound == Bound.EXACT
+                        && table[replaceIndex].depth == entry.depth
+                        && entry.bound != Bound.EXACT)) {
+                replaceIndex = index;
+            }
         }
 
+        TTEntry entry = table[replaceIndex];
         entry.hashKey = hashKey;
         entry.depth = depth;
         entry.score = score;
