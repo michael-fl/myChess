@@ -55,6 +55,24 @@ All three estimates are consistent within their CIs, but the **fixed-N match is 
 
 Closes the largest remaining single-feature item with a clean +93 Elo measurement and unblocks several downstream items that pair with TT — most importantly [§ 12.2 Null-move pruning](#122-null-move-pruning--s--50100-elo) (whose reduced-depth search now hits a populated TT and can cut off immediately), [§ 12.3 LMR](#123-late-move-reductions-lmr--s--50100-elo) (where the TT-stored bestMove is the first re-search candidate), and [§ 12.8 Aspiration windows](#128-aspiration-windows--s--2040-elo) (where TT bounds become the natural source for the next iteration's window).
 
+### Follow-up: 4× TT default size in v4.0.1 — null effect at TC 40/60
+
+The initial TT shipped with `DEFAULT_SIZE = 2^20` (1 M entries, ~50 MB). Analysis suggested this was being overwritten ~30-60× per game at TC 40/60, with the depth-preferred-EXACT replacement protecting the most valuable entries but the mid-depth signal getting evicted. Predicted gain from quadrupling to 2^22 (4 M entries, ~200 MB): **+10-15 Elo**.
+
+**Measured: +1.1 ± 14.5 Elo over 1600 games** (SPRT `elo0=-3 elo1=15` ran the full budget without accepting either bound — LLR drifted toward H0 at -1.63 by the end; draw ratio 27.8 %; W/B asymmetry within noise at ±20 Elo per color). The TT enlargement produces **no measurable strength change** at this TC.
+
+**What the null result actually means:**
+
+1. **The depth-preferred-EXACT policy is more effective than the eviction-rate alone suggests.** A 1 M-entry table being overwritten 30-60× per game still preserves the high-depth EXACT entries that matter for cutoffs; the mid-depth entries that get evicted apparently weren't carrying enough Elo to show up in a 1600-game match.
+2. **TC 40/60 doesn't produce enough unique meaningful positions to saturate even a 1 M-entry table's *working set*.** At ~750 k nodes per move with ~60 moves per game, the cumulative unique-position count after transposition dedup is ~12-24 M, but the *working set* (positions that get revisited within the same game's search horizon) is much smaller — closer to 1 M.
+3. **The 4 M version isn't worse either.** No regression, no GC-pause artifact from the larger heap (verified via per-process RSS during the SPRT). It's purely a no-op at this TC.
+
+**Decision: keep 4 M as the default.** The harmless-at-this-TC result doesn't generalise to longer TCs (where the search tree grows enough to *use* the extra capacity). A 200 MB TT is fine on any modern desktop, and matches the common 256-512 MB range that Tournament-quality engines deploy with. Reverting to 1 M would only matter on memory-constrained setups (mobile, browser), which is not myChess's target.
+
+**Follow-up: UCI `Hash` option** is the proper long-term solution — let the GUI configure TT size per use case. Currently in [§ 12.9.2 `UciHandler` (1 day)](#1292-ucihandler--1-day), the `setoption` handling is minimal; adding a `Hash` option (parse MB value, re-allocate the singleton TT) is ~10-15 lines plus a small TranspositionTable refactor. This becomes more attractive once we know that for TC 40/60 the natural default differs from TC 40/300+ — instead of guessing, expose the knob.
+
+**Methodological note:** the prediction "+10-15 Elo from 4× TT size" was wrong by an order of magnitude. The Sättigungs-Kurve from chess-programming literature was extrapolated from engines with weaker replacement policies (always-replace) where bigger TTs help more. For myChess with depth-preferred-EXACT, the saturation point at TC 40/60 is already at ~1 M, not at the 4-16 M I had estimated. Future similar predictions for TT-related parameters should account for the replacement-policy interaction explicitly.
+
 ### Follow-up: reconstruct the principal variation from TT walks
 
 The initial TT implementation (June 2026) ships with a known side-effect on the principal variation: when an EXACT TT hit serves a node's result, the PV row at that depth is set to `[ttBestMove, 0, 0, ...]` and copied up to the parent (via [`SearchNodeContext.writeTTCachedPv`](../src/main/java/org/michaelfl/mychess/engines/PositionSearch.java)). The PV therefore terminates one ply after the TT-cached node, even when the actual search depth was full. Concretely, after a depth-8 search the engine sometimes emits a 4–6-ply PV; the *played move* and *score* are unaffected.
@@ -203,7 +221,7 @@ The full UCI protocol is large, but the subset needed for **"plays in HIARCS or 
 | `bestmove e2e4` | engine → GUI | the result of `go` |
 | `quit` | GUI → engine | exit |
 
-Optional `info depth … nodes … pv …` lines during search make the GUI's analysis panel light up but aren't strictly required to play. Not needed for a first version: `setoption` (waits for the TT in [§ 12.1](#121-transposition-table--done-93-elo)), `ponder`, `UCI_Chess960` (waits for [§ 12.11](#1211-chess960-fischer-random-support--m-no-elo-on-standard-chess-but-opens-a-new-variant)).
+Optional `info depth … nodes … pv …` lines during search make the GUI's analysis panel light up but aren't strictly required to play. Now feasible as follow-up work since both prerequisites have landed: `setoption name Hash` (TT is now in master, [§ 12.1](#121-transposition-table--done-93-elo)) and `setoption name UCI_Chess960` (Chess960 is in master, [§ 12.11](#1211-chess960-fischer-random-support--m-no-elo-on-standard-chess-but-opens-a-new-variant)). `ponder` remains out of scope for a first version. The `Hash` option specifically is motivated by the v4.0.1 null-effect finding ([§ 12.1 follow-up](#follow-up-4-tt-default-size-in-v401--null-effect-at-tc-4060)): exposing the knob lets the user pick a TC-appropriate value instead of relying on a default that may be over- or under-dimensioned for their use case.
 
 Three concrete sub-steps:
 
