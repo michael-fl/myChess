@@ -1,0 +1,779 @@
+Indexing opening suite...
+Started game 4 of 1600 (mychess-3.6.0 vs mychess-tt)
+Started game 1 of 1600 (mychess-tt vs mychess-3.6.0)
+Started game 3 of 1600 (mychess-tt vs mychess-3.6.0)
+Started game 2 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 2 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 1 - 0 - 0  [1.000] 1
+Started game 5 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 4 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 1 - 0 - 1  [0.750] 2
+Started game 6 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 3 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 2 - 0 - 1  [0.833] 3
+Started game 7 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 1 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-tt vs mychess-3.6.0: 2 - 0 - 2  [0.750] 4
+Started game 8 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 6 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 2 - 1 - 2  [0.600] 5
+Started game 9 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 7 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 3 - 1 - 2  [0.667] 6
+Started game 10 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 5 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-tt vs mychess-3.6.0: 3 - 1 - 3  [0.643] 7
+Started game 11 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 11 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 4 - 1 - 3  [0.688] 8
+Started game 12 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 8 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 5 - 1 - 3  [0.722] 9
+Started game 13 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 10 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 6 - 1 - 3  [0.750] 10
+Started game 14 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 9 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 6 - 1 - 4  [0.727] 11
+Started game 15 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 13 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 6 - 2 - 4  [0.667] 12
+Started game 16 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 12 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 6 - 3 - 4  [0.615] 13
+Started game 17 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 14 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 6 - 4 - 4  [0.571] 14
+Started game 18 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 15 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 7 - 4 - 4  [0.600] 15
+Started game 19 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 16 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-tt vs mychess-3.6.0: 7 - 4 - 5  [0.594] 16
+Started game 20 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 17 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 7 - 5 - 5  [0.559] 17
+Started game 21 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 19 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 8 - 5 - 5  [0.583] 18
+Started game 22 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 21 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 8 - 6 - 5  [0.553] 19
+Started game 23 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 20 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 9 - 6 - 5  [0.575] 20
+...      mychess-tt playing White: 5 - 3 - 3  [0.591] 11
+...      mychess-tt playing Black: 4 - 3 - 2  [0.556] 9
+...      White vs Black: 8 - 7 - 5  [0.525] 20
+Elo difference: 52.5 +/- 140.4, LOS: 78.1 %, DrawRatio: 25.0 %
+SPRT: llr 0.184 (6.3%), lbound -2.94, ubound 2.94
+Started game 24 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 23 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 10 - 6 - 5  [0.595] 21
+Started game 25 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 24 (mychess-3.6.0 vs mychess-tt): 1-0 {White mates}
+Score of mychess-tt vs mychess-3.6.0: 10 - 7 - 5  [0.568] 22
+Started game 26 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 26 (mychess-3.6.0 vs mychess-tt): 0-1 {Black mates}
+Score of mychess-tt vs mychess-3.6.0: 11 - 7 - 5  [0.587] 23
+Started game 27 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 18 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 12 - 7 - 5  [0.604] 24
+Started game 28 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 22 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 13 - 7 - 5  [0.620] 25
+Started game 29 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 25 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 13 - 8 - 5  [0.596] 26
+Started game 30 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 27 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 14 - 8 - 5  [0.611] 27
+Started game 31 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 28 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 14 - 8 - 6  [0.607] 28
+Started game 32 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 30 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 14 - 9 - 6  [0.586] 29
+Started game 33 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 31 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 14 - 10 - 6  [0.567] 30
+Started game 34 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 32 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 15 - 10 - 6  [0.581] 31
+Started game 35 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 29 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 15 - 10 - 7  [0.578] 32
+Started game 36 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 33 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 15 - 10 - 8  [0.576] 33
+Started game 37 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 35 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 16 - 10 - 8  [0.588] 34
+Started game 38 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 36 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 17 - 10 - 8  [0.600] 35
+Started game 39 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 34 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 18 - 10 - 8  [0.611] 36
+Started game 40 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 37 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 19 - 10 - 8  [0.622] 37
+Started game 41 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 38 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 20 - 10 - 8  [0.632] 38
+Started game 42 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 39 (mychess-tt vs mychess-3.6.0): 0-1 {Black mates}
+Score of mychess-tt vs mychess-3.6.0: 20 - 11 - 8  [0.615] 39
+Started game 43 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 40 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 21 - 11 - 8  [0.625] 40
+...      mychess-tt playing White: 9 - 6 - 5  [0.575] 20
+...      mychess-tt playing Black: 12 - 5 - 3  [0.675] 20
+...      White vs Black: 14 - 18 - 8  [0.450] 40
+Elo difference: 88.7 +/- 101.8, LOS: 96.1 %, DrawRatio: 20.0 %
+SPRT: llr 0.616 (20.9%), lbound -2.94, ubound 2.94
+Started game 44 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 41 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 21 - 12 - 8  [0.610] 41
+Started game 45 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 43 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 21 - 13 - 8  [0.595] 42
+Started game 46 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 42 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 22 - 13 - 8  [0.605] 43
+Started game 47 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 44 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 23 - 13 - 8  [0.614] 44
+Started game 48 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 45 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 23 - 13 - 9  [0.611] 45
+Started game 49 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 46 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 24 - 13 - 9  [0.620] 46
+Started game 50 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 49 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 24 - 14 - 9  [0.606] 47
+Started game 51 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 48 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 25 - 14 - 9  [0.615] 48
+Started game 52 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 51 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 26 - 14 - 9  [0.622] 49
+Started game 53 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 47 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 26 - 14 - 10  [0.620] 50
+Started game 54 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 50 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 26 - 15 - 10  [0.608] 51
+Started game 55 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 52 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 27 - 15 - 10  [0.615] 52
+Started game 56 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 53 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 28 - 15 - 10  [0.623] 53
+Started game 57 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 56 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 28 - 15 - 11  [0.620] 54
+Started game 58 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 55 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 29 - 15 - 11  [0.627] 55
+Started game 59 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 54 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 30 - 15 - 11  [0.634] 56
+Started game 60 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 59 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 30 - 15 - 12  [0.632] 57
+Started game 61 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 60 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 31 - 15 - 12  [0.638] 58
+Started game 62 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 58 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 31 - 15 - 13  [0.636] 59
+Started game 63 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 61 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 31 - 16 - 13  [0.625] 60
+...      mychess-tt playing White: 12 - 10 - 8  [0.533] 30
+...      mychess-tt playing Black: 19 - 6 - 5  [0.717] 30
+...      White vs Black: 18 - 29 - 13  [0.408] 60
+Elo difference: 88.7 +/- 81.2, LOS: 98.6 %, DrawRatio: 21.7 %
+SPRT: llr 0.944 (32.1%), lbound -2.94, ubound 2.94
+Started game 64 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 64 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 32 - 16 - 13  [0.631] 61
+Started game 65 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 62 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 32 - 16 - 14  [0.629] 62
+Started game 66 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 63 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 33 - 16 - 14  [0.635] 63
+Started game 67 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 65 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 33 - 16 - 15  [0.633] 64
+Started game 68 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 66 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 34 - 16 - 15  [0.638] 65
+Started game 69 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 57 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-tt vs mychess-3.6.0: 34 - 16 - 16  [0.636] 66
+Started game 70 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 67 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 34 - 17 - 16  [0.627] 67
+Started game 71 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 68 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 34 - 18 - 16  [0.618] 68
+Started game 72 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 72 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 35 - 18 - 16  [0.623] 69
+Started game 73 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 69 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 36 - 18 - 16  [0.629] 70
+Started game 74 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 70 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 37 - 18 - 16  [0.634] 71
+Started game 75 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 73 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 38 - 18 - 16  [0.639] 72
+Started game 76 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 71 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 38 - 19 - 16  [0.630] 73
+Started game 77 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 75 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 38 - 20 - 16  [0.622] 74
+Started game 78 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 76 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 38 - 21 - 16  [0.613] 75
+Started game 79 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 78 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 38 - 22 - 16  [0.605] 76
+Started game 80 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 77 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 38 - 22 - 17  [0.604] 77
+Started game 81 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 74 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 38 - 22 - 18  [0.603] 78
+Started game 82 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 79 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 38 - 23 - 18  [0.595] 79
+Started game 83 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 80 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 39 - 23 - 18  [0.600] 80
+...      mychess-tt playing White: 15 - 14 - 11  [0.512] 40
+...      mychess-tt playing Black: 24 - 9 - 7  [0.688] 40
+...      White vs Black: 24 - 38 - 18  [0.412] 80
+Elo difference: 70.4 +/- 68.9, LOS: 97.9 %, DrawRatio: 22.5 %
+SPRT: llr 0.991 (33.7%), lbound -2.94, ubound 2.94
+Started game 84 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 83 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 40 - 23 - 18  [0.605] 81
+Started game 85 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 81 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 41 - 23 - 18  [0.610] 82
+Started game 86 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 86 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 41 - 24 - 18  [0.602] 83
+Started game 87 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 84 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 41 - 25 - 18  [0.595] 84
+Started game 88 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 82 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 42 - 25 - 18  [0.600] 85
+Started game 89 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 85 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 43 - 25 - 18  [0.605] 86
+Started game 90 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 90 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 43 - 26 - 18  [0.598] 87
+Started game 91 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 87 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 44 - 26 - 18  [0.602] 88
+Started game 92 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 88 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 45 - 26 - 18  [0.607] 89
+Started game 93 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 89 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 46 - 26 - 18  [0.611] 90
+Started game 94 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 91 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 46 - 26 - 19  [0.610] 91
+Started game 95 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 93 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 47 - 26 - 19  [0.614] 92
+Started game 96 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 94 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 48 - 26 - 19  [0.618] 93
+Started game 97 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 92 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 49 - 26 - 19  [0.622] 94
+Started game 98 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 97 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 50 - 26 - 19  [0.626] 95
+Started game 99 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 95 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 50 - 27 - 19  [0.620] 96
+Started game 100 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 99 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 50 - 28 - 19  [0.613] 97
+Started game 101 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 98 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 51 - 28 - 19  [0.617] 98
+Started game 102 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 96 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 51 - 29 - 19  [0.611] 99
+Started game 103 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 102 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 51 - 29 - 20  [0.610] 100
+...      mychess-tt playing White: 22 - 16 - 12  [0.560] 50
+...      mychess-tt playing Black: 29 - 13 - 8  [0.660] 50
+...      White vs Black: 35 - 45 - 20  [0.450] 100
+Elo difference: 77.7 +/- 62.7, LOS: 99.3 %, DrawRatio: 20.0 %
+SPRT: llr 1.33 (45.3%), lbound -2.94, ubound 2.94
+Started game 104 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 100 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 51 - 30 - 20  [0.604] 101
+Started game 105 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 103 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 52 - 30 - 20  [0.608] 102
+Started game 106 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 105 (mychess-tt vs mychess-3.6.0): 1-0 {White mates}
+Score of mychess-tt vs mychess-3.6.0: 53 - 30 - 20  [0.612] 103
+Started game 107 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 101 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 53 - 31 - 20  [0.606] 104
+Started game 108 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 104 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 54 - 31 - 20  [0.610] 105
+Started game 109 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 107 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 55 - 31 - 20  [0.613] 106
+Started game 110 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 106 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 55 - 32 - 20  [0.607] 107
+Started game 111 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 108 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 55 - 33 - 20  [0.602] 108
+Started game 112 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 110 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 55 - 34 - 20  [0.596] 109
+Started game 113 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 111 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 55 - 35 - 20  [0.591] 110
+Started game 114 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 112 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 55 - 36 - 20  [0.586] 111
+Started game 115 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 109 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 56 - 36 - 20  [0.589] 112
+Started game 116 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 114 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 56 - 36 - 21  [0.588] 113
+Started game 117 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 115 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 57 - 36 - 21  [0.592] 114
+Started game 118 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 117 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 57 - 37 - 21  [0.587] 115
+Started game 119 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 113 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 57 - 37 - 22  [0.586] 116
+Started game 120 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 116 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 58 - 37 - 22  [0.590] 117
+Started game 121 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 118 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 58 - 38 - 22  [0.585] 118
+Started game 122 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 119 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 58 - 39 - 22  [0.580] 119
+Started game 123 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 120 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 59 - 39 - 22  [0.583] 120
+...      mychess-tt playing White: 27 - 20 - 13  [0.558] 60
+...      mychess-tt playing Black: 32 - 19 - 9  [0.608] 60
+...      White vs Black: 46 - 52 - 22  [0.475] 120
+Elo difference: 58.5 +/- 57.3, LOS: 97.8 %, DrawRatio: 18.3 %
+SPRT: llr 1.15 (38.9%), lbound -2.94, ubound 2.94
+Started game 124 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 123 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 60 - 39 - 22  [0.587] 121
+Started game 125 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 122 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 60 - 40 - 22  [0.582] 122
+Started game 126 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 124 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 61 - 40 - 22  [0.585] 123
+Started game 127 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 121 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-tt vs mychess-3.6.0: 61 - 40 - 23  [0.585] 124
+Started game 128 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 125 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 62 - 40 - 23  [0.588] 125
+Started game 129 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 129 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 63 - 40 - 23  [0.591] 126
+Started game 130 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 127 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 64 - 40 - 23  [0.594] 127
+Started game 131 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 126 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 65 - 40 - 23  [0.598] 128
+Started game 132 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 130 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 66 - 40 - 23  [0.601] 129
+Started game 133 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 132 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 67 - 40 - 23  [0.604] 130
+Started game 134 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 128 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 67 - 41 - 23  [0.599] 131
+Started game 135 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 131 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 68 - 41 - 23  [0.602] 132
+Started game 136 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 135 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 69 - 41 - 23  [0.605] 133
+Started game 137 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 134 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 70 - 41 - 23  [0.608] 134
+Started game 138 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 136 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 71 - 41 - 23  [0.611] 135
+Started game 139 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 138 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 72 - 41 - 23  [0.614] 136
+Started game 140 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 133 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 72 - 42 - 23  [0.609] 137
+Started game 141 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 140 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 72 - 43 - 23  [0.605] 138
+Started game 142 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 141 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 72 - 44 - 23  [0.601] 139
+Started game 143 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 139 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 72 - 44 - 24  [0.600] 140
+...      mychess-tt playing White: 33 - 22 - 15  [0.579] 70
+...      mychess-tt playing Black: 39 - 22 - 9  [0.621] 70
+...      White vs Black: 55 - 61 - 24  [0.479] 140
+Elo difference: 70.4 +/- 53.6, LOS: 99.5 %, DrawRatio: 17.1 %
+SPRT: llr 1.62 (54.9%), lbound -2.94, ubound 2.94
+Started game 144 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 137 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 72 - 44 - 25  [0.599] 141
+Started game 145 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 142 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 72 - 45 - 25  [0.595] 142
+Started game 146 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 145 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 73 - 45 - 25  [0.598] 143
+Started game 147 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 144 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 74 - 45 - 25  [0.601] 144
+Started game 148 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 143 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 74 - 46 - 25  [0.597] 145
+Started game 149 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 147 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 74 - 46 - 26  [0.596] 146
+Started game 150 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 146 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 74 - 46 - 27  [0.595] 147
+Started game 151 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 148 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 75 - 46 - 27  [0.598] 148
+Started game 152 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 151 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 76 - 46 - 27  [0.601] 149
+Started game 153 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 150 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 76 - 46 - 28  [0.600] 150
+Started game 154 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 152 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 77 - 46 - 28  [0.603] 151
+Started game 155 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 149 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-tt vs mychess-3.6.0: 77 - 46 - 29  [0.602] 152
+Started game 156 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 155 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 77 - 47 - 29  [0.598] 153
+Started game 157 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 153 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 77 - 47 - 30  [0.597] 154
+Started game 158 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 158 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 78 - 47 - 30  [0.600] 155
+Started game 159 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 156 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 79 - 47 - 30  [0.603] 156
+Started game 160 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 157 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 79 - 48 - 30  [0.599] 157
+Started game 161 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 161 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 79 - 48 - 31  [0.598] 158
+Started game 162 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 159 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 79 - 49 - 31  [0.594] 159
+Started game 163 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 154 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 79 - 49 - 32  [0.594] 160
+...      mychess-tt playing White: 35 - 26 - 20  [0.556] 81
+...      mychess-tt playing Black: 44 - 23 - 12  [0.633] 79
+...      White vs Black: 58 - 70 - 32  [0.463] 160
+Elo difference: 65.9 +/- 49.1, LOS: 99.6 %, DrawRatio: 20.0 %
+SPRT: llr 1.78 (60.5%), lbound -2.94, ubound 2.94
+Started game 164 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 163 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 80 - 49 - 32  [0.596] 161
+Started game 165 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 160 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 81 - 49 - 32  [0.599] 162
+Started game 166 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 162 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 81 - 49 - 33  [0.598] 163
+Started game 167 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 164 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 81 - 50 - 33  [0.595] 164
+Started game 168 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 167 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 82 - 50 - 33  [0.597] 165
+Started game 169 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 165 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 83 - 50 - 33  [0.599] 166
+Started game 170 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 166 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 83 - 51 - 33  [0.596] 167
+Started game 171 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 170 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 84 - 51 - 33  [0.598] 168
+Started game 172 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 168 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 85 - 51 - 33  [0.601] 169
+Started game 173 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 169 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 86 - 51 - 33  [0.603] 170
+Started game 174 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 171 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 86 - 52 - 33  [0.599] 171
+Started game 175 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 174 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 86 - 53 - 33  [0.596] 172
+Started game 176 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 173 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 87 - 53 - 33  [0.598] 173
+Started game 177 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 172 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 88 - 53 - 33  [0.601] 174
+Started game 178 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 177 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 89 - 53 - 33  [0.603] 175
+Started game 179 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 175 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 89 - 54 - 33  [0.599] 176
+Started game 180 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 178 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 89 - 55 - 33  [0.596] 177
+Started game 181 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 176 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 89 - 56 - 33  [0.593] 178
+Started game 182 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 179 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 89 - 56 - 34  [0.592] 179
+Started game 183 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 181 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 89 - 56 - 35  [0.592] 180
+...      mychess-tt playing White: 41 - 28 - 22  [0.571] 91
+...      mychess-tt playing Black: 48 - 28 - 13  [0.612] 89
+...      White vs Black: 69 - 76 - 35  [0.481] 180
+Elo difference: 64.4 +/- 46.4, LOS: 99.7 %, DrawRatio: 19.4 %
+SPRT: llr 1.94 (65.9%), lbound -2.94, ubound 2.94
+Started game 184 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 183 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 90 - 56 - 35  [0.594] 181
+Started game 185 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 180 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 91 - 56 - 35  [0.596] 182
+Started game 186 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 184 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 92 - 56 - 35  [0.598] 183
+Started game 187 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 186 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 92 - 57 - 35  [0.595] 184
+Started game 188 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 182 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 92 - 58 - 35  [0.592] 185
+Started game 189 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 185 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-tt vs mychess-3.6.0: 92 - 58 - 36  [0.591] 186
+Started game 190 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 187 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 93 - 58 - 36  [0.594] 187
+Started game 191 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 188 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 94 - 58 - 36  [0.596] 188
+Started game 192 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 189 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 94 - 59 - 36  [0.593] 189
+Started game 193 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 191 (mychess-tt vs mychess-3.6.0): 1-0 {White mates}
+Score of mychess-tt vs mychess-3.6.0: 95 - 59 - 36  [0.595] 190
+Started game 194 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 190 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 96 - 59 - 36  [0.597] 191
+Started game 195 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 192 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 97 - 59 - 36  [0.599] 192
+Started game 196 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 194 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 97 - 60 - 36  [0.596] 193
+Started game 197 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 193 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 98 - 60 - 36  [0.598] 194
+Started game 198 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 196 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 99 - 60 - 36  [0.600] 195
+Started game 199 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 198 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 99 - 61 - 36  [0.597] 196
+Started game 200 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 197 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 100 - 61 - 36  [0.599] 197
+Started game 201 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 195 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 100 - 62 - 36  [0.596] 198
+Started game 202 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 201 (mychess-tt vs mychess-3.6.0): 1-0 {White mates}
+Score of mychess-tt vs mychess-3.6.0: 101 - 62 - 36  [0.598] 199
+Started game 203 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 203 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 102 - 62 - 36  [0.600] 200
+...      mychess-tt playing White: 48 - 30 - 23  [0.589] 101
+...      mychess-tt playing Black: 54 - 32 - 13  [0.611] 99
+...      White vs Black: 80 - 84 - 36  [0.490] 200
+Elo difference: 70.4 +/- 44.5, LOS: 99.9 %, DrawRatio: 18.0 %
+SPRT: llr 2.33 (79.3%), lbound -2.94, ubound 2.94
+Started game 204 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 199 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 103 - 62 - 36  [0.602] 201
+Started game 205 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 200 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-tt vs mychess-3.6.0: 103 - 62 - 37  [0.601] 202
+Started game 206 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 202 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 104 - 62 - 37  [0.603] 203
+Started game 207 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 205 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 105 - 62 - 37  [0.605] 204
+Started game 208 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 204 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 106 - 62 - 37  [0.607] 205
+Started game 209 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 206 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 106 - 62 - 38  [0.607] 206
+Started game 210 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 207 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 107 - 62 - 38  [0.609] 207
+Started game 211 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 208 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 107 - 63 - 38  [0.606] 208
+Started game 212 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 210 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 107 - 63 - 39  [0.605] 209
+Started game 213 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 209 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 108 - 63 - 39  [0.607] 210
+Started game 214 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 212 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 109 - 63 - 39  [0.609] 211
+Started game 215 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 215 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 109 - 64 - 39  [0.606] 212
+Started game 216 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 213 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 110 - 64 - 39  [0.608] 213
+Started game 217 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 211 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 111 - 64 - 39  [0.610] 214
+Started game 218 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 214 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 112 - 64 - 39  [0.612] 215
+Started game 219 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 216 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 112 - 64 - 40  [0.611] 216
+Started game 220 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 219 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 113 - 64 - 40  [0.613] 217
+Started game 221 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 220 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 113 - 64 - 41  [0.612] 218
+Started game 222 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 218 (mychess-3.6.0 vs mychess-tt): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 113 - 65 - 41  [0.610] 219
+Started game 223 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 217 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 114 - 65 - 41  [0.611] 220
+...      mychess-tt playing White: 56 - 31 - 23  [0.614] 110
+...      mychess-tt playing Black: 58 - 34 - 18  [0.609] 110
+...      White vs Black: 90 - 89 - 41  [0.502] 220
+Elo difference: 78.7 +/- 42.4, LOS: 100.0 %, DrawRatio: 18.6 %
+SPRT: llr 2.92 (99.1%), lbound -2.94, ubound 2.94
+Started game 224 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 221 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 114 - 66 - 41  [0.609] 221
+Started game 225 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 222 (mychess-3.6.0 vs mychess-tt): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 115 - 66 - 41  [0.610] 222
+Started game 226 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 224 (mychess-3.6.0 vs mychess-tt): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 115 - 66 - 42  [0.610] 223
+Started game 227 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 225 (mychess-tt vs mychess-3.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 115 - 67 - 42  [0.607] 224
+Started game 228 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 223 (mychess-tt vs mychess-3.6.0): 1-0 {White wins by adjudication}
+Score of mychess-tt vs mychess-3.6.0: 116 - 67 - 42  [0.609] 225
+Started game 229 of 1600 (mychess-tt vs mychess-3.6.0)
+Finished game 227 (mychess-tt vs mychess-3.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-tt vs mychess-3.6.0: 116 - 67 - 43  [0.608] 226
+Started game 230 of 1600 (mychess-3.6.0 vs mychess-tt)
+Finished game 228 (mychess-3.6.0 vs mychess-tt): 0-1 {Black mates}
+Score of mychess-tt vs mychess-3.6.0: 117 - 67 - 43  [0.610] 227
+Finished game 230 (mychess-3.6.0 vs mychess-tt): * {No result}
+Score of mychess-tt vs mychess-3.6.0: 117 - 67 - 43  [0.610] 227
+Finished game 229 (mychess-tt vs mychess-3.6.0): * {No result}
+Score of mychess-tt vs mychess-3.6.0: 117 - 67 - 43  [0.610] 227
+Finished game 226 (mychess-3.6.0 vs mychess-tt): * {No result}
+Score of mychess-tt vs mychess-3.6.0: 117 - 67 - 43  [0.610] 227
+...      mychess-tt playing White: 57 - 33 - 24  [0.605] 114
+...      mychess-tt playing Black: 60 - 34 - 19  [0.615] 113
+...      White vs Black: 91 - 93 - 43  [0.496] 227
+Elo difference: 77.8 +/- 41.6, LOS: 100.0 %, DrawRatio: 18.9 %
+SPRT: llr 2.99 (101.4%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Player: mychess-tt
+   "Draw by 3-fold repetition": 25
+   "Draw by adjudication": 10
+   "Draw by insufficient mating material": 8
+   "Loss: Black mates": 1
+   "Loss: Black wins by adjudication": 32
+   "Loss: White mates": 1
+   "Loss: White wins by adjudication": 33
+   "No result": 3
+   "Win: Black mates": 2
+   "Win: Black wins by adjudication": 58
+   "Win: White mates": 3
+   "Win: White wins by adjudication": 54
+Player: mychess-3.6.0
+   "Draw by 3-fold repetition": 25
+   "Draw by adjudication": 10
+   "Draw by insufficient mating material": 8
+   "Loss: Black mates": 2
+   "Loss: Black wins by adjudication": 58
+   "Loss: White mates": 3
+   "Loss: White wins by adjudication": 54
+   "No result": 3
+   "Win: Black mates": 1
+   "Win: Black wins by adjudication": 32
+   "Win: White mates": 1
+   "Win: White wins by adjudication": 33
+Finished match
