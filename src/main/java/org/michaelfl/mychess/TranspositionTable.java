@@ -106,6 +106,7 @@ public final class TranspositionTable {
         private int score;
         private Bound bound;
         private int bestMove;
+        private int hitCount;
 
         /** Full 64-bit Zobrist key of the stored position. */
         public long getHashKey() {
@@ -195,6 +196,7 @@ public final class TranspositionTable {
             entry.score = 0;
             entry.bound = Bound.EXACT;
             entry.bestMove = 0;
+            entry.hitCount = 0;
         }
     }
 
@@ -216,6 +218,7 @@ public final class TranspositionTable {
 
         for (int i = startIndex; i < endIndex; i++ ) {
             if (table[i].hashKey == hashKey) {
+                table[i].hitCount++;
                 return table[i];
             }
         }
@@ -260,15 +263,17 @@ public final class TranspositionTable {
                 replaceIndex = index;
                 break;
             }
-            if (entry.depth < table[replaceIndex].depth
-                    || (table[replaceIndex].bound == Bound.EXACT
-                        && table[replaceIndex].depth == entry.depth
-                        && entry.bound != Bound.EXACT)) {
+            if (entry.hitCount < table[replaceIndex].hitCount
+                    || (entry.hitCount == table[replaceIndex].hitCount
+                        && entry.depth < table[replaceIndex].depth)) {
                 replaceIndex = index;
             }
         }
 
         TTEntry entry = table[replaceIndex];
+        if (entry.hashKey != hashKey) {
+            entry.hitCount = 0;
+        }
         entry.hashKey = hashKey;
         entry.depth = depth;
         entry.score = score;
