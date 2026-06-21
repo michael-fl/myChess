@@ -95,6 +95,9 @@ public final class PositionSearch {
         final long startMs = System.currentTimeMillis();
         long previousIterationEndMs = startMs;
 
+        // Increment generation counter on each root search
+        tt.nextGeneration();
+
         for (int depth = 1; depth <= maxDepth && !isTimeout(); depth++) {
             if (depth > 1 && shouldSkipIteration(depth)) {
                 break;
