@@ -304,24 +304,24 @@ public final class PositionSearch {
         }
 
         // Transposition table lookup
-        final var ttEntry = tt.get(ctx.workingBoard().getGameStatus().getPositionHash());
-        if (ttEntry != null && ttEntry.getDepth() >= ctx.remainingDepth()) {
-            final int score = WeightingFunction.scoreFromTT(ttEntry.getScore(), ctx.depth());
+        final var ttEntryView = tt.get(ctx.workingBoard().getGameStatus().getPositionHash());
+        if (ttEntryView != null && ttEntryView.getDepth() >= ctx.remainingDepth()) {
+            final int score = WeightingFunction.scoreFromTT(ttEntryView.getScore(), ctx.depth());
 
-            switch (ttEntry.getBound()) {
+            switch (ttEntryView.getBound()) {
                 case EXACT -> {
-                    return exactTTResult(ctx, score, ttEntry.getBestMove());
+                    return exactTTResult(ctx, score, ttEntryView.getBestMove());
                 }
                 case LOWER -> alphaWeight = Math.max(alphaWeight, score);
                 case UPPER -> betaWeight = Math.min(betaWeight, score);
             }
 
             if (alphaWeight >= betaWeight) {
-                return exactTTResult(ctx, score, ttEntry.getBestMove());
+                return exactTTResult(ctx, score, ttEntryView.getBestMove());
             }
         }
 
-        final int bestMove = ttEntry != null ? ttEntry.getBestMove(): 0;
+        final int bestMove = ttEntryView != null ? ttEntryView.getBestMove() : 0;
         final SearchNodeResult result = alphaBetaSearchMain(ctx, alphaWeight, betaWeight, bestMove);
 
         if (!result.isTimeout() && !result.isIllegal()) {

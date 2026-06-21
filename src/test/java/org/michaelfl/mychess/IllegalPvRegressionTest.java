@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
@@ -35,6 +37,18 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @Tag("slow")
 class IllegalPvRegressionTest {
+
+    private TranspositionTable tt;
+
+    @BeforeEach
+    void setup() {
+        tt = TestSupport.createTestTT();
+    }
+
+    @AfterEach
+    void tearDown() {
+        tt.close();
+    }
 
     /**
      * cutechess game 2 (Round 1, SF-1600 vs myChess), Black to move after
@@ -249,12 +263,12 @@ class IllegalPvRegressionTest {
     }
 
     /** Replay {@code gameMoves} via {@link GameImporter}. */
-    private static void runPvLegalityCheck(String gameMoves, int maxDepth, String label)
+    private void runPvLegalityCheck(String gameMoves, int maxDepth, String label)
             throws Exception {
         var config = new EngineConfig.Builder()
                 .maxDepth(maxDepth)
                 .silent(true)
-                .setTranspositionTable(TestSupport.createTestTT())
+                .setTranspositionTable(tt)
                 .build();
         var game = GameImporter.importerFor(gameMoves).importGame(
                 new GameConfig(MyChessEngine.class, config));
@@ -264,12 +278,12 @@ class IllegalPvRegressionTest {
 
     /** Import a FEN directly — used for cases where the regression source is
      * an in-engine validatePv log entry rather than a game move list. */
-    private static void runPvLegalityCheckFromFen(String fen, int maxDepth, String label)
+    private void runPvLegalityCheckFromFen(String fen, int maxDepth, String label)
             throws Exception {
         var config = new EngineConfig.Builder()
                 .maxDepth(maxDepth)
                 .silent(true)
-                .setTranspositionTable(TestSupport.createTestTT())
+                .setTranspositionTable(tt)
                 .build();
         var board = Fen.importFEN(fen);
         var game = new Game(new GameConfig(MyChessEngine.class, config), board);

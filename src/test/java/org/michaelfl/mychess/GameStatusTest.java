@@ -1,5 +1,6 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.Game.GameResult;
@@ -17,15 +18,22 @@ import static org.michaelfl.mychess.WeightingFunction.checkmateIn;
 class GameStatusTest {
 
     private GameConfig config;
+    private TranspositionTable tt;
 
     @BeforeEach
     void setup() {
+        tt = TestSupport.createTestTT();
         config = new GameConfig(MyChessEngine.class,
                 new EngineConfig.Builder()
                         .maxDepth(2)
                         .silent(true)
-                        .setTranspositionTable(TestSupport.createTestTT())
+                        .setTranspositionTable(tt)
                         .build());
+    }
+
+    @AfterEach
+    void tearDown() {
+        tt.close();
     }
 
     @Test

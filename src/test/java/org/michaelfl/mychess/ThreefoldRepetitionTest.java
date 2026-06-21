@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
@@ -14,6 +16,18 @@ import static org.michaelfl.mychess.EngineTest.engineConfig;
  * @author Michael Fleischhauer
  */
 class ThreefoldRepetitionTest {
+
+    private TranspositionTable tt;
+
+    @BeforeEach
+    void setup() {
+        tt = TestSupport.createTestTT();
+    }
+
+    @AfterEach
+    void tearDown() {
+        tt.close();
+    }
 
     @Test
     void testIsDraw() {
@@ -34,7 +48,8 @@ class ThreefoldRepetitionTest {
                 1. g3 e6 2. a3 Qh4 3. gxh4 a6 4. Nf3 Nf6 5. Ng1 Ng8 6. Nf3 Nf6 7. Ng1
                 """;
         GameImporter importer = GameImporter.importerFor(moves);
-        var game = importer.importGame(new GameConfig(MyChessEngine.class, engineConfig()));
+        var config = new GameConfig(MyChessEngine.class, engineConfig(tt));
+        var game = importer.importGame(config);
 
         MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
         assertEquals("f6-g8", ChessUtil.moveToString(move.move()), "Unexpected move");
@@ -71,7 +86,7 @@ class ThreefoldRepetitionTest {
         var config = new GameConfig(
                 MyChessEngine.class,
                 new EngineConfig.Builder().enableThreefoldRepetition(false)
-                        .setTranspositionTable(TestSupport.createTestTT()).build());
+                        .setTranspositionTable(tt).build());
         var game = importer.importGame(config);
         game.makeMove(MoveDescription.fromString("Bc6", game.getTurn()));
         assertEquals(GameResult.ONGOING, game.getResult(), "Game must not be finished yet");
