@@ -3,31 +3,37 @@ package org.michaelfl.mychess;
 import java.util.Arrays;
 
 /**
- * Fixed-size open-addressed transposition table caching per-position search
- * results keyed by Zobrist hash. Positions reached through different move
- * orders are evaluated only once: subsequent visits read the cached score
- * (when the stored depth is at least as deep as the new search) or use the
- * stored best move as a move-ordering hint.
+ * Fixed-size bucketed transposition table caching per-position search results
+ * keyed by Zobrist hash. Positions reached through different move orders are
+ * evaluated only once: subsequent visits read the cached score (when the
+ * stored depth is at least as deep as the new search) or use the stored best
+ * move as a move-ordering hint.
  *
  * <h2>Lookup &amp; collision handling</h2>
  *
- * <p>The hash function masks the low {@code log2(size)} bits of the
- * 64-bit Zobrist hash, mapping every key to one of {@code size} buckets.
- * On a hash-bucket collision (two positions land on the same slot but
- * have different Zobrist keys), {@link #get(long)} returns {@code null}
- * because of an explicit identity check on the full {@code long} hashKey;
- * the caller cannot read another position's entry by accident. True
- * 64-bit Zobrist collisions are astronomically rare (~1 in 10^19 per
- * pair) and treated as ignorable.
+ * <p>The table contains {@code size} slots grouped into fixed
+ * {@value #BUCKET_SIZE}-entry buckets. The hash function masks the low
+ * {@code log2(size / BUCKET_SIZE)} bits of the 64-bit Zobrist hash and maps
+ * every key to the start of one bucket. {@link #get(long)} scans only that
+ * bucket and returns an entry only when the stored full {@code long hashKey}
+ * matches the requested key exactly; the caller cannot read another
+ * position's entry by accident. True 64-bit Zobrist collisions are
+ * astronomically rare (~1 in 10^19 per pair) and treated as ignorable.
  *
  * <h2>Replacement strategy</h2>
  *
- * <p>{@link #put(long, int, int, Bound, int)} keeps an existing
+ * <p>{@link #put(long, int, int, Bound, int)} first searches the target
+ * bucket for the same key. For a same-key update it keeps an existing
  * {@link Bound#EXACT} entry if and only if its stored depth is strictly
- * greater than the new entry's depth. Anything else (different hashKey,
- * same key with shallower or equal depth, non-EXACT bound) is overwritten.
- * The depth-preferred-EXACT policy avoids losing a deeply searched score
- * to a shallow re-visit while keeping the eviction logic single-line.
+ * greater than the new entry's depth, refreshing the entry's generation so a
+ * useful deep hit is not aged out immediately. Otherwise the same-key slot is
+ * overwritten.
+ *
+ * <p>For a new key, {@code put} replaces the slot with the lowest replacement
+ * score: deeper entries are favored, {@link Bound#EXACT} entries get a small
+ * bonus, and older entries are penalized by generation age. The goal is to
+ * keep the bucket's most useful recent search information while still making
+ * stale or shallow entries easy to evict.
  *
  * <h2>Lifecycle</h2>
  *
@@ -36,18 +42,17 @@ import java.util.Arrays;
  * instances obtained from {@code TestSupport.createTestTT()} to avoid
  * cross-test pollution. {@link #clear()} resets all entries to the
  * empty sentinel (hashKey 0, depth 0, score 0, bound EXACT, bestMove
- * 0) and should be called whenever the engine starts a new game
- * (UCI {@code ucinewgame}) so that scores from the previous game do
- * not influence the new one.
+ * 0, generation 0) and should be called whenever the engine starts a new game
+ * (UCI {@code ucinewgame}) so that scores from the previous game do not
+ * influence the new one.
  *
  * <h2>Thread safety</h2>
  *
- * <p>Not thread-safe. {@link #put(long, int, int, Bound, int)} writes
- * five fields of a {@link TTEntry} non-atomically; a concurrent
- * {@link #get(long)} could observe a half-updated entry. The engine
- * runs a single-threaded search executor so this is not an issue
- * today; a future lazy-SMP search would need atomic packed-int
- * entries.
+ * <p>Not thread-safe. {@link #put(long, int, int, Bound, int)} writes the
+ * mutable fields of a {@link TTEntry} non-atomically; a concurrent
+ * {@link #get(long)} could observe a half-updated entry. The engine runs a
+ * single-threaded search executor so this is not an issue today; a future
+ * lazy-SMP search would need atomic packed-int entries.
  *
  * @author Michael Fleischhauer
  */
@@ -75,8 +80,8 @@ public final class TranspositionTable {
 
     /**
      * One slot in the table. Mutable to avoid garbage during the search;
-     * {@link TranspositionTable#put} overwrites the five fields in place
-     * instead of allocating a fresh object.
+     * {@link TranspositionTable#put} overwrites the fields in place instead of
+     * allocating a fresh object.
      *
      * <p>Fields:
      * <ul>
@@ -98,6 +103,9 @@ public final class TranspositionTable {
      *       produced the cached score. Used as a move-ordering hint on
      *       lookup even when the entry's depth is too shallow for the
      *       score to be returned directly.</li>
+     *   <li>{@code generation} — root-search generation in which the entry was
+     *       last written or refreshed. Used only by the replacement heuristic
+     *       to age out stale entries inside a bucket.</li>
      * </ul>
      */
     public static final class TTEntry {
@@ -106,6 +114,7 @@ public final class TranspositionTable {
         private int score;
         private Bound bound;
         private int bestMove;
+        private int generation;
 
         /** Full 64-bit Zobrist key of the stored position. */
         public long getHashKey() {
@@ -136,14 +145,15 @@ public final class TranspositionTable {
     private final int size;
     private final int hashSize;
     private final TTEntry[] table;
+    private int generation;
 
     /**
-     * Allocates a table with {@code size} entries. The size must be a
-     * power of two so {@link #hash(long)} can mask with {@code size - 1}
-     * to compute the bucket index. All entries are initialised to the
-     * empty-slot sentinel state ({@code hashKey == 0}).
+     * Allocates a table with {@code size} slots. The size must be a power of
+     * two so {@link #hash(long)} can use a low-bit mask to compute the target
+     * bucket. All entries are initialized to the empty-slot sentinel state
+     * ({@code hashKey == 0}).
      *
-     * @param size number of entries (rows). Must be a power of two; an
+     * @param size number of slots. Must be a power of two; an
      *             {@link IllegalArgumentException} is thrown otherwise.
      */
     public TranspositionTable(int size) {
@@ -165,7 +175,7 @@ public final class TranspositionTable {
     }
 
     /**
-     * Lazy-initialised process-wide singleton with {@code DEFAULT_SIZE = 2^22}
+     * Lazy-initialized process-wide singleton with {@code DEFAULT_SIZE = 2^22}
      * entries (~200 MB). Used by {@link EngineConfig.Builder#build()} when no
      * explicit {@link TranspositionTable} is set, and by the UCI / REPL
      * code paths that want one shared cache per JVM. Production engines
@@ -195,7 +205,19 @@ public final class TranspositionTable {
             entry.score = 0;
             entry.bound = Bound.EXACT;
             entry.bestMove = 0;
+            entry.generation = 0;
         }
+
+        generation = 0;
+    }
+
+    /**
+     * Advances the table generation used by the replacement heuristic. Called
+     * once per root search so older entries gradually lose priority inside
+     * their bucket.
+     */
+    public void nextGeneration() {
+        generation++;
     }
 
     private int hash(final long hashKey) {
@@ -203,12 +225,11 @@ public final class TranspositionTable {
     }
 
     /**
-     * Looks up the entry for the given Zobrist key. Returns the
-     * {@link TTEntry} only if its stored {@code hashKey} matches the
-     * argument exactly (full 64-bit identity); on a hash-bucket
-     * collision with a different key, returns {@code null}. The
-     * returned object is the live slot — callers must not retain it
-     * across {@link #put(long, int, int, Bound, int)} calls.
+     * Looks up the entry for the given Zobrist key. Scans the key's
+     * {@value #BUCKET_SIZE}-entry bucket and returns a {@link TTEntry} only if
+     * its stored {@code hashKey} matches the argument exactly (full 64-bit
+     * identity). The returned object is the live slot — callers must not retain
+     * it across {@link #put(long, int, int, Bound, int)} calls.
      */
     public TTEntry get(final long hashKey) {
         final int startIndex = hash(hashKey);
@@ -224,12 +245,18 @@ public final class TranspositionTable {
     }
 
     /**
-     * Inserts or overwrites the entry for {@code hashKey}. The existing
-     * slot is kept only if it represents the same position with a
-     * strictly deeper {@link Bound#EXACT} cached score — that is the
-     * one case where overwriting would lose strictly more information
-     * than it gains. Every other case (different hashKey, shallower
-     * stored depth, non-EXACT bound) is overwritten unconditionally.
+     * Inserts or overwrites the entry for {@code hashKey}. The key maps to one
+     * fixed-size bucket; only slots in that bucket are inspected or replaced.
+     *
+     * <p>If the bucket already contains {@code hashKey}, the existing slot is
+     * kept only when it is a strictly deeper {@link Bound#EXACT} entry. In that
+     * case only its generation is refreshed. Otherwise the same slot is
+     * overwritten with the new data.
+     *
+     * <p>If the bucket does not contain {@code hashKey}, the replacement slot
+     * is the entry with the lowest replacement score. The score favors greater
+     * search depth, gives a small bonus to {@link Bound#EXACT} entries, and
+     * penalizes entries from older generations.
      *
      * <p>Mate-score depth adjustment is the caller's responsibility:
      * pass the score already converted to "mate-in-N from this position"
@@ -255,15 +282,14 @@ public final class TranspositionTable {
 
             if (entry.hashKey == hashKey) {
                 if (entry.depth > depth && entry.bound == Bound.EXACT) {
+                    entry.generation = generation;
                     return;  // keep deeper exact entry
                 }
                 replaceIndex = index;
                 break;
             }
-            if (entry.depth < table[replaceIndex].depth
-                    || (table[replaceIndex].bound == Bound.EXACT
-                        && table[replaceIndex].depth == entry.depth
-                        && entry.bound != Bound.EXACT)) {
+
+            if (replacementScore(entry) < replacementScore(table[replaceIndex])) {
                 replaceIndex = index;
             }
         }
@@ -274,5 +300,13 @@ public final class TranspositionTable {
         entry.score = score;
         entry.bound = bound;
         entry.bestMove = bestMove;
+        entry.generation = generation;
+    }
+
+    private int replacementScore(final TTEntry entry) {
+        final int exactBonus = entry.bound == Bound.EXACT ? 2 : 0;
+        final int agePenalty = generation - entry.generation;
+
+        return 4 * entry.depth + exactBonus - agePenalty;
     }
 }
