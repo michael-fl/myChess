@@ -1,7 +1,5 @@
 package org.michaelfl.mychess;
 
-import java.util.Arrays;
-
 /**
  * Fixed-size open-addressed transposition table caching per-position search
  * results keyed by Zobrist hash. Positions reached through different move
@@ -55,7 +53,7 @@ public final class TranspositionTable {
 
     private static final int DEFAULT_SIZE = 1 << 22;
     private static final int BUCKET_SIZE = 4;
-
+    private static final int AGE_EXPIRED = 1024;
     private static TranspositionTable INSTANCE;
 
     /**
@@ -106,6 +104,7 @@ public final class TranspositionTable {
         private int score;
         private Bound bound;
         private int bestMove;
+        private int age;
 
         /** Full 64-bit Zobrist key of the stored position. */
         public long getHashKey() {
@@ -136,6 +135,8 @@ public final class TranspositionTable {
     private final int size;
     private final int hashSize;
     private final TTEntry[] table;
+    private int ageExpiredCounter = 0;
+    private int age = 1;
 
     /**
      * Allocates a table with {@code size} entries. The size must be a
@@ -195,11 +196,23 @@ public final class TranspositionTable {
             entry.score = 0;
             entry.bound = Bound.EXACT;
             entry.bestMove = 0;
+            entry.age = 0;
         }
+
+        age = 1;
+        ageExpiredCounter = 0;
     }
 
     private int hash(final long hashKey) {
         return ((int) hashKey & (hashSize - 1)) * BUCKET_SIZE;
+    }
+
+    private int getCurrentAge() {
+        if ((++ageExpiredCounter & (AGE_EXPIRED - 1)) == 0) {
+            return age++;
+        }
+
+        return age;
     }
 
     /**
@@ -216,6 +229,7 @@ public final class TranspositionTable {
 
         for (int i = startIndex; i < endIndex; i++ ) {
             if (table[i].hashKey == hashKey) {
+                table[i].age = getCurrentAge();
                 return table[i];
             }
         }
@@ -255,15 +269,15 @@ public final class TranspositionTable {
 
             if (entry.hashKey == hashKey) {
                 if (entry.depth > depth && entry.bound == Bound.EXACT) {
+                    entry.age = getCurrentAge();
                     return;  // keep deeper exact entry
                 }
                 replaceIndex = index;
                 break;
             }
-            if (entry.depth < table[replaceIndex].depth
-                    || (table[replaceIndex].bound == Bound.EXACT
-                        && table[replaceIndex].depth == entry.depth
-                        && entry.bound != Bound.EXACT)) {
+            if (entry.age < table[replaceIndex].age
+                    || (entry.age == table[replaceIndex].age
+                        && entry.depth < table[replaceIndex].depth)) {
                 replaceIndex = index;
             }
         }
@@ -274,5 +288,6 @@ public final class TranspositionTable {
         entry.score = score;
         entry.bound = bound;
         entry.bestMove = bestMove;
+        entry.age = getCurrentAge();
     }
 }
