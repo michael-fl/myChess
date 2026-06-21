@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.michaelfl.mychess.engines.MyChessEngine;
@@ -19,11 +21,23 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class PositionSearchTest {
 
-    private static EngineConfig deepConfig(int maxDepth) {
+    private TranspositionTable tt;
+
+    @BeforeEach
+    void setup() {
+        tt = TestSupport.createTestTT();
+    }
+
+    @AfterEach
+    void tearDown() {
+        tt.close();
+    }
+
+    private static EngineConfig deepConfig(int maxDepth, TranspositionTable tt) {
         return new EngineConfig.Builder()
                 .maxDepth(maxDepth)
                 .silent(true)
-                .setTranspositionTable(TestSupport.createTestTT())
+                .setTranspositionTable(tt)
                 .build();
     }
 
@@ -37,7 +51,7 @@ class PositionSearchTest {
                 3. Bc4 Nf6??
                 """;
         var game = GameImporter.importerFor(setup).importGame(
-                new GameConfig(MyChessEngine.class, deepConfig(4)));
+                new GameConfig(MyChessEngine.class, deepConfig(4, tt)));
 
         var move = game.getEngine().nextMoveAsync().getResult(20, TimeUnit.SECONDS);
 
@@ -52,7 +66,7 @@ class PositionSearchTest {
     void principalVariationLengthAtMostMaxDepth() throws Exception {
         // Use a quiet opening so the engine does not bail with a mate-shortened path.
         var game = GameImporter.importerFor("1. e4 e5 2. Nf3 Nc6 3. Bb5 a6").importGame(
-                new GameConfig(MyChessEngine.class, deepConfig(4)));
+                new GameConfig(MyChessEngine.class, deepConfig(4, tt)));
 
         var move = game.getEngine().nextMoveAsync().getResult(30, TimeUnit.SECONDS);
 
@@ -75,7 +89,7 @@ class PositionSearchTest {
                 4. Qxf7#
                 """;
         var game = GameImporter.importerFor(setup).importGame(
-                new GameConfig(MyChessEngine.class, deepConfig(8)));
+                new GameConfig(MyChessEngine.class, deepConfig(8, tt)));
 
         var move = game.getEngine().nextMoveAsync().getResult(10, TimeUnit.SECONDS);
 
@@ -87,7 +101,7 @@ class PositionSearchTest {
     @Test
     @Timeout(value = 30, unit = TimeUnit.SECONDS)
     void getPossibleMovesAtStartReturnsTwentyMoves() {
-        var game = new Game(new GameConfig(MyChessEngine.class, deepConfig(1)));
+        var game = new Game(new GameConfig(MyChessEngine.class, deepConfig(1, tt)));
         Moves moves = PositionSearch.getPossibleMoves(game.getEngine(), game);
         assertEquals(20, moves.count(),
                 "From the start position there are exactly 20 legal moves for white");
@@ -101,7 +115,7 @@ class PositionSearchTest {
                 .maxDepth(20)
                 .millisPerMove(1_000)
                 .silent(true)
-                .setTranspositionTable(TestSupport.createTestTT())
+                .setTranspositionTable(tt)
                 .build();
         var game = GameImporter.importerFor("1. e4 e5 2. Nf3 Nc6").importGame(
                 new GameConfig(MyChessEngine.class, config));
@@ -125,13 +139,17 @@ class PositionSearchTest {
                 .maxDepth(20)
                 .millisPerMove(60_000)
                 .silent(true)
-                .setTranspositionTable(TestSupport.createTestTT())
+                .setTranspositionTable(tt)
                 .build();
         var game = GameImporter.importerFor("1. e4 e5 2. Nf3 Nc6").importGame(
                 new GameConfig(MyChessEngine.class, config));
 
         var task = game.getEngine().nextMoveAsync();
-        task.cancel();
-        assertTrue(task.isCanceled(), "After cancel(), isCanceled() must report true");
+        try {
+            task.cancel();
+            assertTrue(task.isCanceled(), "After cancel(), isCanceled() must report true");
+        } finally {
+            game.shutdown();
+        }
     }
 }

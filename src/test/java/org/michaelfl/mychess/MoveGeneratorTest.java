@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -15,6 +17,18 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Michael Fleischhauer
  */
 class MoveGeneratorTest {
+
+    private TranspositionTable tt;
+
+    @BeforeEach
+    void setup() {
+        tt = TestSupport.createTestTT();
+    }
+
+    @AfterEach
+    void tearDown() {
+        tt.close();
+    }
 
     @Test
     void testWhiteEnPassantMove() {
@@ -307,23 +321,23 @@ class MoveGeneratorTest {
         }
     }
 
-    private EngineConfig engineConfig() {
+    private EngineConfig engineConfig(TranspositionTable tt) {
         return new EngineConfig.Builder()
                 .maxDepth(8)
-                .setTranspositionTable(TestSupport.createTestTT())
+                .setTranspositionTable(tt)
                 .build();
     }
 
     @Test
     void testStartPosition() {
-        var game = new Game(new GameConfig(engineConfig()));
+        var game = new Game(new GameConfig(engineConfig(tt)));
 
         testMoves(game, "b1-c3 g1-f3 d2-d4 e2-e4 d2-d3 e2-e3 b1-a3 g1-h3 a2-a3 h2-h3 a2-a4 h2-h4 b2-b4 c2-c4 f2-f4 g2-g4 b2-b3 g2-g3 c2-c3 f2-f3");
     }
 
     @Test
     void testBlackFirstMove() {
-        var game = new Game(new GameConfig(engineConfig()));
+        var game = new Game(new GameConfig(engineConfig(tt)));
         game.makeMove(MoveDescription.fromString("e4", GameStatus.TURN_WHITE));
 
         testMoves(game, "b8-c6 g8-f6 d7-d5 e7-e5 d7-d6 e7-e6 b8-a6 g8-h6 a7-a6 h7-h6 a7-a5 h7-h5 b7-b5 c7-c5 f7-f5 g7-g5 b7-b6 g7-g6 c7-c6 f7-f6");
@@ -357,7 +371,7 @@ class MoveGeneratorTest {
 
     @Test
     void testKnownBestMoveComesFirst() {
-        var game = new Game(new GameConfig(engineConfig()));
+        var game = new Game(new GameConfig(engineConfig(tt)));
 
         var moveGenerator = new MoveGenerator(MoveSorter.defaultImplementation());
         int knowBestMove = game.getBoard().moveDescriptionToMove(MoveDescription.fromString("h2-h4", GameStatus.TURN_WHITE)).move();
@@ -370,7 +384,7 @@ class MoveGeneratorTest {
 
     private void testMoves(String gameNotation, String expectedMovesStr) {
         GameImporter importer = GameImporter.importerFor(gameNotation);
-        var config = new GameConfig(engineConfig());
+        var config = new GameConfig(engineConfig(tt));
         var game = importer.importGame(config);
 
         testMoves(game, expectedMovesStr);

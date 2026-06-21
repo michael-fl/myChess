@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.io.TempDir;
@@ -17,11 +19,23 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class ChessEngineTest {
 
-    private static EngineConfig defaultConfig() {
+    private TranspositionTable tt;
+
+    @BeforeEach
+    void setup() {
+        tt = TestSupport.createTestTT();
+    }
+
+    @AfterEach
+    void tearDown() {
+        tt.close();
+    }
+
+    private static EngineConfig defaultConfig(TranspositionTable tt) {
         return new EngineConfig.Builder()
                 .maxDepth(2)
                 .silent(true)
-                .setTranspositionTable(TestSupport.createTestTT())
+                .setTranspositionTable(tt)
                 .build();
     }
 
@@ -44,7 +58,7 @@ class ChessEngineTest {
                 1. f3 e6 2. g4 Qh4
                 """;
         var game = GameImporter.importerFor(pgn).importGame(
-                new GameConfig(MyChessEngine.class, defaultConfig()));
+                new GameConfig(MyChessEngine.class, defaultConfig(tt)));
 
         var move = game.getEngine().nextMoveAsync().getResult(10, TimeUnit.SECONDS);
 
@@ -112,7 +126,7 @@ class ChessEngineTest {
     @Test
     @Timeout(value = 30, unit = TimeUnit.SECONDS)
     void openingBookHit_playsTheBookMove(@TempDir Path tmp) throws Exception {
-        var game = new Game(new GameConfig(MyChessEngine.class, defaultConfig()));
+        var game = new Game(new GameConfig(MyChessEngine.class, defaultConfig(tt)));
         var positionKey = game.getBoard().calculatePositionKey();
         int e2e4 = packMoveFor(game, "e4");
 
@@ -133,7 +147,7 @@ class ChessEngineTest {
     @Test
     @Timeout(value = 30, unit = TimeUnit.SECONDS)
     void openingBookFiltersOutLowSampleEntry(@TempDir Path tmp) throws Exception {
-        var game = new Game(new GameConfig(MyChessEngine.class, defaultConfig()));
+        var game = new Game(new GameConfig(MyChessEngine.class, defaultConfig(tt)));
         var positionKey = game.getBoard().calculatePositionKey();
         int e2e4 = packMoveFor(game, "e4");
 
@@ -155,7 +169,7 @@ class ChessEngineTest {
     @Test
     @Timeout(value = 30, unit = TimeUnit.SECONDS)
     void nextMoveAsync_returnsTaskWithEnv() {
-        var game = new Game(new GameConfig(MyChessEngine.class, defaultConfig()));
+        var game = new Game(new GameConfig(MyChessEngine.class, defaultConfig(tt)));
         var task = game.getEngine().nextMoveAsync();
         assertNotNull(task.getEnv(), "Task must always carry an env (real or empty)");
     }
@@ -184,7 +198,7 @@ class ChessEngineTest {
                 .maxDepth(Integer.MAX_VALUE)
                 .millisPerMove(2000)
                 .silent(true)
-                .setTranspositionTable(TestSupport.createTestTT())
+                .setTranspositionTable(tt)
                 .build();
         var game = new Game(new GameConfig(MyChessEngine.class, config), board);
         try {
@@ -208,7 +222,7 @@ class ChessEngineTest {
     @Test
     @Timeout(value = 30, unit = TimeUnit.SECONDS)
     void shutdown_rejectsFurtherSubmissions() {
-        var game = new Game(new GameConfig(MyChessEngine.class, defaultConfig()));
+        var game = new Game(new GameConfig(MyChessEngine.class, defaultConfig(tt)));
         var engine = game.getEngine();
         game.shutdown();
         assertThrows(RejectedExecutionException.class,

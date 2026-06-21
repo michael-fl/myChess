@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
@@ -46,11 +48,23 @@ class BlunderTest {
      */
     private static final int JUNIT_TIMEOUT_S = 60;
 
-    private static Game gameWithExplicitBudget(String pgn) {
+    private TranspositionTable tt;
+
+    @BeforeEach
+    void setup() {
+        tt = TestSupport.createTestTT();
+    }
+
+    @AfterEach
+    void tearDown() {
+        tt.close();
+    }
+
+    private static Game gameWithExplicitBudget(String pgn, TranspositionTable tt) {
         var engineConfig = new EngineConfig.Builder()
                 .millisPerMove(SEARCH_BUDGET_MS)
                 .silent(true)
-                .setTranspositionTable(TestSupport.createTestTT())
+                .setTranspositionTable(tt)
                 .build();
         var gameConfig = new GameConfig(MyChessEngine.class, engineConfig);
 
@@ -97,7 +111,7 @@ class BlunderTest {
                 56. Ke3 Kf7 57. Ne5+ Kf6 58. Nd7+ Ke7 59. Nb6 Nf8 60. Kf4 Ke6 61. Kf3 Ng6
                 62. Na4 Kd6 63. Ke3 Kd5 64. Nb6+ Ke6 65. Nc4 Ne5
                 """;
-        var game = gameWithExplicitBudget(pgn);
+        var game = gameWithExplicitBudget(pgn, tt);
         assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
                 "after 65...Ne5 white must be to move");
 
@@ -166,7 +180,7 @@ class BlunderTest {
                 8. Bb2 Ne4 9. Qd3 Ba6 10. Qd1 e5 11. Nxe5 Bd6 12. Bd3 Nxc3 13. Qd2 Bc8
                 14. Qxc3 b4 15. Qd2 f6
                 """;
-        var game = gameWithExplicitBudget(pgn);
+        var game = gameWithExplicitBudget(pgn, tt);
         assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
                 "after 15...f6 white (myChess) must be to move");
 
@@ -207,7 +221,7 @@ class BlunderTest {
                 27. Nxd4 Bxh3 28. g3 Rg5 29. Qe3 Re5 30. Qh6 Bf6 31. f4 Rc5 32. Nb3 Rxc3
                 33. bxc3 Qf5 34. Rd3 Bg4 35. a4 Qe4 36. Kg1 d5 37. f5 Bxf5 38. Qd2 Qg4
                 """;
-        var game = gameWithExplicitBudget(pgn);
+        var game = gameWithExplicitBudget(pgn, tt);
         assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
                 "after 38...Qg4 white (myChess) must be to move");
 
@@ -245,7 +259,7 @@ class BlunderTest {
                 14. h3 Bxf3 15. gxf3 e5 16. Bh6 Re8 17. Kf1 exd4 18. cxd4 Nxd4 19. Qd1 Qd6
                 20. Be3 Nc6 21. h4 Qa3 22. h5 Qxa2 23. hxg6 hxg6 24. Bxg6 Re7 25. Bd3
                 """;
-        var game = gameWithExplicitBudget(pgn);
+        var game = gameWithExplicitBudget(pgn, tt);
         assertEquals(GameStatus.TURN_BLACK, game.getTurn(),
                 "after 25.Bd3 black (myChess) must be to move");
 
@@ -275,7 +289,7 @@ class BlunderTest {
                 8. a3 Bd6 9. Nb5 g5 10. Nxd6+ cxd6 11. Nh5 Nxh5 12. Qxh5 Na5 13. Qd1 d5
                 14. cxd5 Qxd5 15. Qa4 O-O 16. h4
                 """;
-        var game = gameWithExplicitBudget(pgn);
+        var game = gameWithExplicitBudget(pgn, tt);
         assertEquals(GameStatus.TURN_BLACK, game.getTurn(),
                 "after 16.h4 black (myChess) must be to move");
 

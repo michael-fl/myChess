@@ -23,8 +23,10 @@ final class TestSupport {
     }
 
     /**
-     * Fresh, isolated {@link TranspositionTable} for one test. Tests should
-     * not share a TT instance: lookup state from a prior test would
+     * Fresh, isolated {@link TranspositionTable} for one test. Release the
+     * returned table after the test, either with try-with-resources or with
+     * {@code @AfterEach} calling {@link TranspositionTable#close()}. Tests
+     * should not share a TT instance: lookup state from a prior test would
      * otherwise leak into the search of the next one (move-ordering hints
      * from stale entries, occasional surprise cutoffs on hash matches
      * across positions).

@@ -946,7 +946,7 @@ The transposition table (TT) caches per-position search results keyed by Zobrist
 
 ### Storage layout
 
-Bucketed hash table. The `TTEntry[]` array of length `size` is logically split into `size / BUCKET_SIZE` fixed-size buckets of `BUCKET_SIZE = 4` slots each (raised from the single-slot layout of v4.0.0 / v4.0.1 in v4.0.2 — see [version-history.md](version-history.md) and [roadmap § 12.1 follow-up](roadmap.md#follow-up-tt-bucket-replacement-strategies--explored-depth-only-chosen)). Both `size` and `size / BUCKET_SIZE` are powers of two, so the bucket-selection index is a low-bit mask of the Zobrist hash:
+Bucketed hash table backed by one off-heap `MemorySegment` (rewritten in v4.0.3; previous v4.0.2 layout was an in-heap `TTEntry[]`). The table owns `size` 24-byte records, logically split into `size / BUCKET_SIZE` fixed-size buckets of `BUCKET_SIZE = 4` slots each. Both `size` and `size / BUCKET_SIZE` are powers of two, so the bucket-selection index is a low-bit mask of the Zobrist hash:
 
 ```java
 private int hash(final long hashKey) {
@@ -954,9 +954,9 @@ private int hash(final long hashKey) {
 }
 ```
 
-`hash(key)` returns the flat-array index of the bucket's first slot; the bucket then spans `[hash(key), hash(key) + BUCKET_SIZE)`.
+`hash(key)` returns the flat byte offset of the bucket's first slot record; the bucket then spans records `[hash(key), hash(key) + BUCKET_SIZE)`. Each record is 24 bytes: one `long` (hashKey) followed by four `int` values (depth, score, bound ordinal, bestMove). `TTEntryView` is a reused view that points at one record in the segment; callers must read its values before the next `get()` or `put()` repositions the view.
 
-Each `TTEntry` carries five fields:
+Each record carries five fields:
 
 | Field | Meaning |
 |---|---|
@@ -966,32 +966,32 @@ Each `TTEntry` carries five fields:
 | `bound` | One of `EXACT` / `LOWER` / `UPPER` — see "Bound semantics" below. |
 | `bestMove` | Packed-int move that produced `score`. Used as a move-ordering hint even when the entry's depth is too shallow to return the score directly. |
 
-The default singleton is `2^22` entries (~200 MB), raised from the original `2^20` (~50 MB) in v4.0.1 after analysis showed that at TC 40/60 the smaller table got rewritten ~30-60× per game and lost much of its mid-depth signal to evictions; tests use isolated `2^14`-entry instances via `TestSupport.createTestTT()` (see "Lifecycle" below).
+The default singleton is `2^22` entries (~96 MB at 24 bytes per entry), raised from the original `2^20` in v4.0.1 after analysis showed that at TC 40/60 the smaller table got rewritten ~30-60× per game and lost much of its mid-depth signal to evictions; tests use isolated `2^14`-entry instances via `TestSupport.createTestTT()` (see "Lifecycle" below).
 
 ### Lookup
 
 The lookup happens in [`PositionSearch.alphaBetaSearchPre`](../src/main/java/org/michaelfl/mychess/engines/PositionSearch.java) before recursion into the move loop:
 
 ```java
-final var ttEntry = tt.get(gameStatus.getPositionHash());
-if (ttEntry != null && ttEntry.getDepth() >= ctx.remainingDepth()) {
-    final int score = scoreFromTT(ttEntry.getScore(), ctx.depth);
+final var ttEntryView = tt.get(gameStatus.getPositionHash());
+if (ttEntryView != null && ttEntryView.getDepth() >= ctx.remainingDepth()) {
+    final int score = scoreFromTT(ttEntryView.getScore(), ctx.depth());
 
-    switch (ttEntry.getBound()) {
-        case EXACT -> { return exactTTResult(ctx, score, ttEntry.getBestMove()); }
+    switch (ttEntryView.getBound()) {
+        case EXACT -> { return exactTTResult(ctx, score, ttEntryView.getBestMove()); }
         case LOWER -> alphaWeight = Math.max(alphaWeight, score);
         case UPPER -> betaWeight = Math.min(betaWeight, score);
     }
     if (alphaWeight >= betaWeight) {
-        return exactTTResult(ctx, score, ttEntry.getBestMove());
+        return exactTTResult(ctx, score, ttEntryView.getBestMove());
     }
 }
 ```
 
 Two things to notice:
 
-1. **`get()` scans the target bucket linearly.** The hash function only uses the low bits of the 64-bit Zobrist key, so many genuinely different positions can land in the same bucket. `get()` scans all `BUCKET_SIZE = 4` slots of the target bucket and returns the first whose stored `hashKey` matches the argument exactly (full 64-bit identity check); if none match, it returns `null`. Up to four distinct keys can coexist in one bucket without evicting each other — only a bucket-full-of-different-keys forces a replacement decision on the next `put()`. True 64-bit Zobrist collisions (two genuinely different positions producing identical 64-bit keys) are astronomically rare (~1 in 10^19 per pair) and treated as ignorable.
-2. **The depth gate (`ttEntry.getDepth() >= ctx.remainingDepth()`) controls *the score*, not the bestMove.** Below the depth gate the score is ignored but the stored bestMove is still extracted and threaded into the move sorter as `ttMove` (see § 7.1 and "Move-ordering integration" below).
+1. **`get()` scans the target bucket linearly.** The hash function only uses the low bits of the 64-bit Zobrist key, so many genuinely different positions can land in the same bucket. `get()` scans all `BUCKET_SIZE = 4` slots of the target bucket, repositioning the reused `TTEntryView` on each slot, and returns the view when its `getHashKey()` matches the argument exactly (full 64-bit identity check); if none match, it returns `null`. Up to four distinct keys can coexist in one bucket without evicting each other — only a bucket-full-of-different-keys forces a replacement decision on the next `put()`. True 64-bit Zobrist collisions (two genuinely different positions producing identical 64-bit keys) are astronomically rare (~1 in 10^19 per pair) and treated as ignorable.
+2. **The depth gate (`ttEntryView.getDepth() >= ctx.remainingDepth()`) controls *the score*, not the bestMove.** Below the depth gate the score is ignored but the stored bestMove is still extracted and threaded into the move sorter as `ttMove` (see § 7.1 and "Move-ordering integration" below).
 
 ### Storage
 
@@ -999,8 +999,8 @@ After the recursive search returns, the result is stored:
 
 ```java
 if (!result.isTimeout() && !result.isIllegal()) {
-    int score = scoreToTT(result.weight, ctx.depth);
-    tt.put(gameStatus.getPositionHash(), ctx.remainingDepth(), score, result.bound, result.bestMove);
+    int score = scoreToTT(result.weight(), ctx.depth());
+    tt.put(gameStatus.getPositionHash(), ctx.remainingDepth(), score, result.bound(), result.bestMove());
 }
 ```
 
@@ -1011,12 +1011,14 @@ public void put(...) {
     int index = hash(hashKey);
     final int endIndex = index + BUCKET_SIZE;
     int replaceIndex = index;
-
+    int replaceDepth, replaceBoundOrd;
+    // scan the bucket, tracking the best eviction candidate;
+    // TTEntryView is repositioned on each slot in turn
     for (; index < endIndex; index++) {
-        final TTEntry entry = table[index];
-
-        if (entry.hashKey == hashKey) {
-            if (entry.depth > depth && entry.bound == Bound.EXACT) {
+        currentEntryView.position(index);
+        if (currentEntryView.getHashKey() == hashKey) {
+            if (currentEntryView.getDepth() > depth
+                    && currentEntryView.getBound() == Bound.EXACT) {
                 return;                          // keep deeper exact entry
             }
             replaceIndex = index;                // same-key hit → overwrite in place
@@ -1024,14 +1026,9 @@ public void put(...) {
         }
         // eviction candidate: lowest depth, break ties by preferring
         // to evict a non-EXACT slot over an EXACT one of equal depth
-        if (entry.depth < table[replaceIndex].depth
-                || (table[replaceIndex].bound == Bound.EXACT
-                    && table[replaceIndex].depth == entry.depth
-                    && entry.bound != Bound.EXACT)) {
-            replaceIndex = index;
-        }
+        ...
     }
-    // ... write entry fields at table[replaceIndex] ...
+    // ... reposition the view on replaceIndex and write() the new fields ...
 }
 ```
 
@@ -1105,13 +1102,13 @@ A known side effect: when a TT hit fires at depth `d`, the visible PV terminates
 When the TT lookup neither serves a final result nor cuts off the window, the entry's `bestMove` is still forwarded to the move generator as `ttMove` (alongside the previous iteration's PV move):
 
 ```java
-final int bestMove = ttEntry != null ? ttEntry.getBestMove() : 0;
+final int bestMove = ttEntryView != null ? ttEntryView.getBestMove() : 0;
 final SearchNodeResult result = alphaBetaSearchMain(ctx, alphaWeight, betaWeight, bestMove);
 ```
 
 `MoveSorter.reset` accepts both `pvMove` and `ttMove`. The sorter emits them in that order at the front of the move list, before the recapture / winning-capture / killer / quiet-move buckets described in § 7.8.
 
-**Protection against stale hints.** Either hint may be illegal at the current position — a TT bestMove from a Zobrist-collision-neighbour (vanishingly rare but possible), or a PV entry that does not survive a tree-shape change. Blindly prepending an illegal move to the sorter's output would crash inside `Board.makeMove`. `MoveSorterImpl` defends by tracking per-hint `pvMoveSeen` / `ttMoveSeen` flags:
+**Protection against stale hints.** Either hint may be illegal at the current position — a TT bestMove from a Zobrist-collision-neighbor (vanishingly rare but possible), or a PV entry that does not survive a tree-shape change. Blindly prepending an illegal move to the sorter's output would crash inside `Board.makeMove`. `MoveSorterImpl` defends by tracking per-hint `pvMoveSeen` / `ttMoveSeen` flags:
 
 ```java
 public void addMove(int move, ...) {
@@ -1140,8 +1137,9 @@ The seen-flags reset to `false` at the top of every `reset()` call so they canno
 
 ### Lifecycle
 
-- **Production / UCI:** `TranspositionTable.getDefaultInstance()` lazily creates a single `2^22`-entry instance the first time it is requested (raised from `2^20` in v4.0.1). `EngineConfig.Builder.build()` picks it up when no explicit instance was set, so the UCI handler and the REPL automatically share one TT across all moves of one process.
+- **Production / UCI:** `TranspositionTable.getDefaultInstance()` lazily creates a single `2^22`-entry off-heap instance the first time it is requested (raised from `2^20` in v4.0.1). `EngineConfig.Builder.build()` picks it up when no explicit instance was set, so the UCI handler and the REPL automatically share one TT across all moves of one process. This singleton is process-lifetime state and is normally not closed manually.
 - **`ucinewgame` clears the table.** `UciHandler.handleNewGame()` calls `tt.clear()` so cached scores from a prior game (which may have been played with different time controls or against a different opponent) cannot influence the new game.
+- **Explicit instances must be closed.** A non-singleton TT owns native memory through its `MemorySegment` / `Arena`; release it with try-with-resources or by closing a test field in `@AfterEach`.
 - **Tests use isolated instances.** Every test that builds an `EngineConfig` wires its own TT via `TestSupport.createTestTT()` (default `2^14` entries). Test order would otherwise change search outcomes — entries from an earlier test could serve as move-ordering hints in a later one. The `MoveSorterImplTest.ttMoveSeenFlag_isResetBetweenInvocations` regression is the historical reminder of why this matters: with shared state, a sticky `ttMoveSeen` flag from a prior reset led to illegal moves entering the search loop.
 
 ### Limitations
