@@ -31,9 +31,10 @@ import java.util.Arrays;
  *
  * <p>For a new key, {@code put} replaces the slot with the lowest replacement
  * score: deeper entries are favored, {@link Bound#EXACT} entries get a small
- * bonus, and older entries are penalized by generation age. The goal is to
- * keep the bucket's most useful recent search information while still making
- * stale or shallow entries easy to evict.
+ * bonus, and older entries are penalized by generation age. If two entries
+ * have the same replacement score, the lower {@code hitcount} loses first.
+ * The goal is to keep the bucket's most useful recent search information
+ * while still making stale, shallow, or rarely reused entries easy to evict.
  *
  * <h2>Lifecycle</h2>
  *
@@ -42,9 +43,9 @@ import java.util.Arrays;
  * instances obtained from {@code TestSupport.createTestTT()} to avoid
  * cross-test pollution. {@link #clear()} resets all entries to the
  * empty sentinel (hashKey 0, depth 0, score 0, bound EXACT, bestMove
- * 0, generation 0) and should be called whenever the engine starts a new game
- * (UCI {@code ucinewgame}) so that scores from the previous game do not
- * influence the new one.
+ * 0, generation 0, hitcount 0) and should be called whenever the engine starts
+ * a new game (UCI {@code ucinewgame}) so that scores from the previous game do
+ * not influence the new one.
  *
  * <h2>Thread safety</h2>
  *
@@ -104,8 +105,13 @@ public final class TranspositionTable {
      *       lookup even when the entry's depth is too shallow for the
      *       score to be returned directly.</li>
      *   <li>{@code generation} — root-search generation in which the entry was
-     *       last written or refreshed. Used only by the replacement heuristic
-     *       to age out stale entries inside a bucket.</li>
+     *       last written, refreshed by a lookup, or refreshed by a protected
+     *       same-key write. Used by the replacement heuristic to age out stale
+     *       entries inside a bucket.</li>
+     *   <li>{@code hitcount} — number of successful lookups since this slot was
+     *       last assigned to a different key. Used as a tie-breaker when two
+     *       entries have the same replacement score; lower hit counts are
+     *       replaced first.</li>
      * </ul>
      */
     public static final class TTEntry {
@@ -115,6 +121,7 @@ public final class TranspositionTable {
         private Bound bound;
         private int bestMove;
         private int generation;
+        private int hitcount;
 
         /** Full 64-bit Zobrist key of the stored position. */
         public long getHashKey() {
@@ -206,6 +213,7 @@ public final class TranspositionTable {
             entry.bound = Bound.EXACT;
             entry.bestMove = 0;
             entry.generation = 0;
+            entry.hitcount = 0;
         }
 
         generation = 0;
@@ -228,15 +236,23 @@ public final class TranspositionTable {
      * Looks up the entry for the given Zobrist key. Scans the key's
      * {@value #BUCKET_SIZE}-entry bucket and returns a {@link TTEntry} only if
      * its stored {@code hashKey} matches the argument exactly (full 64-bit
-     * identity). The returned object is the live slot — callers must not retain
-     * it across {@link #put(long, int, int, Bound, int)} calls.
+     * identity).
+     *
+     * <p>A successful lookup refreshes the entry's {@code generation} and
+     * increments its {@code hitcount}, because even a depth-too-shallow TT hit
+     * can still be valuable as a move-ordering hint. The returned object is the
+     * live slot — callers must not retain it across
+     * {@link #put(long, int, int, Bound, int)} calls.
      */
     public TTEntry get(final long hashKey) {
         final int startIndex = hash(hashKey);
         final int endIndex = startIndex + BUCKET_SIZE;
 
         for (int i = startIndex; i < endIndex; i++ ) {
-            if (table[i].hashKey == hashKey) {
+            final var entry = table[i];
+            if (entry.hashKey == hashKey) {
+                entry.generation = generation;
+                entry.hitcount++;
                 return table[i];
             }
         }
@@ -250,13 +266,16 @@ public final class TranspositionTable {
      *
      * <p>If the bucket already contains {@code hashKey}, the existing slot is
      * kept only when it is a strictly deeper {@link Bound#EXACT} entry. In that
-     * case only its generation is refreshed. Otherwise the same slot is
-     * overwritten with the new data.
+     * case only its generation is refreshed and its {@code hitcount} is kept.
+     * Otherwise the same slot is overwritten with the new data, also keeping
+     * its {@code hitcount} because it still represents the same position.
      *
      * <p>If the bucket does not contain {@code hashKey}, the replacement slot
      * is the entry with the lowest replacement score. The score favors greater
      * search depth, gives a small bonus to {@link Bound#EXACT} entries, and
-     * penalizes entries from older generations.
+     * penalizes entries from older generations. If replacement scores are tied,
+     * the lower {@code hitcount} is replaced. When a slot is assigned to a
+     * different key, its {@code hitcount} is reset to 0.
      *
      * <p>Mate-score depth adjustment is the caller's responsibility:
      * pass the score already converted to "mate-in-N from this position"
@@ -289,18 +308,25 @@ public final class TranspositionTable {
                 break;
             }
 
-            if (replacementScore(entry) < replacementScore(table[replaceIndex])) {
+            final int score1 = replacementScore(entry);
+            final int score2 = replacementScore(table[replaceIndex]);
+            if (score1 < score2
+                    || (score1 == score2 && entry.hitcount < table[replaceIndex].hitcount)) {
                 replaceIndex = index;
             }
         }
 
         TTEntry entry = table[replaceIndex];
+        final boolean replacesDifferentKey = entry.hashKey != hashKey;
         entry.hashKey = hashKey;
         entry.depth = depth;
         entry.score = score;
         entry.bound = bound;
         entry.bestMove = bestMove;
         entry.generation = generation;
+        if (replacesDifferentKey) {
+            entry.hitcount = 0;
+        }
     }
 
     private int replacementScore(final TTEntry entry) {
