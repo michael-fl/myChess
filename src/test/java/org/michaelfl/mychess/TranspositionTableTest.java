@@ -1,6 +1,5 @@
 package org.michaelfl.mychess;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.TranspositionTable.Bound;
 import org.michaelfl.mychess.TranspositionTable.TTEntry;
@@ -31,6 +30,10 @@ class TranspositionTableTest {
                 "size 1000 is not a power of two");
         assertThrows(IllegalArgumentException.class, () -> new TranspositionTable(0),
                 "size 0 is not a power of two");
+        assertThrows(IllegalArgumentException.class, () -> new TranspositionTable(1),
+                "size 1 cannot hold a full bucket");
+        assertThrows(IllegalArgumentException.class, () -> new TranspositionTable(2),
+                "size 2 cannot hold a full bucket");
     }
 
     @Test
@@ -55,10 +58,9 @@ class TranspositionTableTest {
 
     @Test
     void hashBucketCollision_getReturnsNullForDifferentKey() {
-        // size = 16 means the low 4 bits select the bucket. Two keys with
-        // identical low 4 bits but different high bits land in the same
-        // slot; get() must reject the second one via its full hashKey
-        // identity check.
+        // size = 16 with BUCKET_SIZE = 4 means the low 2 bits select the
+        // bucket. These keys land in the same bucket, but get() must reject
+        // the second one via its full hashKey identity check.
         var tt = new TranspositionTable(SMALL_SIZE);
         long key1 = 0x100L;             // bucket 0
         long key2 = 0x200L;             // bucket 0, different high bits
@@ -115,23 +117,81 @@ class TranspositionTableTest {
     }
 
     @Test
-    @Disabled
-    void put_overwritesDifferentKeyInSameBucket() {
-        // Different keys landing in the same bucket: the new key wins
-        // unconditionally (the keep-deeper-EXACT guard requires hashKey
-        // identity, so it does not apply to cross-key bucket collisions).
+    void put_keepsRecentEntrySeparateFromProtectedEntries() {
         var tt = new TranspositionTable(SMALL_SIZE);
-        long oldKey = 0x100L;
-        long newKey = 0x200L;
-        tt.put(oldKey, 5, 100, Bound.EXACT, 1);
-        tt.put(newKey, 3, 200, Bound.EXACT, 2);
 
-        assertNull(tt.get(oldKey),
-                "old key must be evicted by a same-bucket put");
-        TTEntry entry = tt.get(newKey);
-        assertNotNull(entry, "new key must be retrievable");
-        assertEquals(3, entry.getDepth());
-        assertEquals(200, entry.getScore());
+        long protectedKey1 = 0x100L;
+        long protectedKey2 = 0x200L;
+        long protectedKey3 = 0x300L;
+        long recentKey = 0x400L;
+        long newRecentKey = 0x500L;
+
+        tt.put(protectedKey1, 5, 100, Bound.EXACT, 1);
+        tt.put(protectedKey2, 4, 200, Bound.EXACT, 2);
+        tt.put(protectedKey3, 3, 300, Bound.EXACT, 3);
+        tt.put(recentKey, 1, 400, Bound.LOWER, 4);
+
+        assertNotNull(tt.get(protectedKey1), "protected key 1 must be stored");
+        assertNotNull(tt.get(protectedKey2), "protected key 2 must be stored");
+        assertNotNull(tt.get(protectedKey3), "protected key 3 must be stored");
+        assertNotNull(tt.get(recentKey), "recent key must be stored");
+
+        tt.put(newRecentKey, 1, 500, Bound.UPPER, 5);
+
+        assertNotNull(tt.get(protectedKey1), "recent lane must not evict protected key 1");
+        assertNotNull(tt.get(protectedKey2), "recent lane must not evict protected key 2");
+        assertNotNull(tt.get(protectedKey3), "recent lane must not evict protected key 3");
+        assertNull(tt.get(recentKey), "new recent key must replace the old recent entry");
+        assertNotNull(tt.get(newRecentKey), "new recent key must be retrievable");
+    }
+
+    @Test
+    void put_replacesWeakestProtectedEntryWithoutTouchingRecentLane() {
+        var tt = new TranspositionTable(SMALL_SIZE);
+
+        long protectedKey1 = 0x100L;
+        long protectedKey2 = 0x200L;
+        long weakestProtectedKey = 0x300L;
+        long recentKey = 0x400L;
+        long newProtectedKey = 0x500L;
+
+        tt.put(protectedKey1, 5, 100, Bound.EXACT, 1);
+        tt.put(protectedKey2, 4, 200, Bound.EXACT, 2);
+        tt.put(weakestProtectedKey, 3, 300, Bound.EXACT, 3);
+        tt.put(recentKey, 1, 400, Bound.LOWER, 4);
+
+        tt.put(newProtectedKey, 6, 500, Bound.EXACT, 5);
+
+        assertNotNull(tt.get(protectedKey1), "strong protected key 1 must stay");
+        assertNotNull(tt.get(protectedKey2), "strong protected key 2 must stay");
+        assertNull(tt.get(weakestProtectedKey), "weakest protected key must be evicted");
+        assertNotNull(tt.get(recentKey), "protected replacement must not touch recent lane");
+        TTEntry entry = tt.get(newProtectedKey);
+        assertNotNull(entry, "new protected key must be retrievable");
+        assertEquals(6, entry.getDepth());
+    }
+
+    @Test
+    void put_promotesSameKeyFromRecentLaneToProtectedLane() {
+        var tt = new TranspositionTable(SMALL_SIZE);
+
+        long promotedKey = 0x100L;
+        long protectedKey1 = 0x200L;
+        long protectedKey2 = 0x300L;
+        long weakestProtectedKey = 0x400L;
+
+        tt.put(promotedKey, 1, 100, Bound.LOWER, 1);
+        tt.put(protectedKey1, 5, 200, Bound.EXACT, 2);
+        tt.put(protectedKey2, 4, 300, Bound.EXACT, 3);
+        tt.put(weakestProtectedKey, 3, 400, Bound.EXACT, 4);
+
+        tt.put(promotedKey, 6, 500, Bound.EXACT, 5);
+
+        TTEntry entry = tt.get(promotedKey);
+        assertNotNull(entry, "promoted key must stay retrievable");
+        assertEquals(6, entry.getDepth(), "promoted key must hold the newer protected value");
+        assertEquals(Bound.EXACT, entry.getBound());
+        assertNull(tt.get(weakestProtectedKey), "promotion must use the protected replacement lane");
     }
 
     @Test
