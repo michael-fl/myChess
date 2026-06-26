@@ -172,6 +172,53 @@ class TranspositionTableTest {
     }
 
     @Test
+    void put_rejectsWeakCandidateFromProtectedLane() {
+        var tt = new TranspositionTable(SMALL_SIZE);
+
+        long protectedKey1 = 0x100L;
+        long protectedKey2 = 0x200L;
+        long weakestProtectedKey = 0x300L;
+        long recentKey = 0x400L;
+        long weakCandidateKey = 0x500L;
+
+        tt.put(protectedKey1, 8, 100, Bound.EXACT, 1);
+        tt.put(protectedKey2, 7, 200, Bound.EXACT, 2);
+        tt.put(weakestProtectedKey, 6, 300, Bound.EXACT, 3);
+        tt.put(recentKey, 1, 400, Bound.LOWER, 4);
+
+        tt.put(weakCandidateKey, 2, 500, Bound.LOWER, 5);
+
+        assertNotNull(tt.get(protectedKey1), "weak candidate must not evict protected key 1");
+        assertNotNull(tt.get(protectedKey2), "weak candidate must not evict protected key 2");
+        assertNotNull(tt.get(weakestProtectedKey), "weak candidate must not evict weakest protected key");
+        assertNull(tt.get(recentKey), "rejected protected candidate must replace the recent entry");
+        assertNotNull(tt.get(weakCandidateKey), "rejected protected candidate must remain available as recent");
+    }
+
+    @Test
+    void put_admitsExactCandidateOverNonExactAtEqualDepth() {
+        var tt = new TranspositionTable(SMALL_SIZE);
+
+        long protectedKey1 = 0x100L;
+        long protectedKey2 = 0x200L;
+        long weakestProtectedKey = 0x300L;
+        long recentKey = 0x400L;
+        long exactCandidateKey = 0x500L;
+
+        tt.put(protectedKey1, 8, 100, Bound.EXACT, 1);
+        tt.put(protectedKey2, 7, 200, Bound.EXACT, 2);
+        tt.put(weakestProtectedKey, 4, 300, Bound.LOWER, 3);
+        tt.put(recentKey, 1, 400, Bound.LOWER, 4);
+
+        tt.put(exactCandidateKey, 4, 500, Bound.EXACT, 5);
+
+        assertNull(tt.get(weakestProtectedKey),
+                "EXACT candidate must replace a non-EXACT entry at equal depth");
+        assertNotNull(tt.get(exactCandidateKey), "admitted EXACT candidate must be retrievable");
+        assertNotNull(tt.get(recentKey), "admitted candidate must not replace the recent entry");
+    }
+
+    @Test
     void put_promotesSameKeyFromRecentLaneToProtectedLane() {
         var tt = new TranspositionTable(SMALL_SIZE);
 
@@ -192,6 +239,60 @@ class TranspositionTableTest {
         assertEquals(6, entry.getDepth(), "promoted key must hold the newer protected value");
         assertEquals(Bound.EXACT, entry.getBound());
         assertNull(tt.get(weakestProtectedKey), "promotion must use the protected replacement lane");
+    }
+
+    @Test
+    void put_keepsWeakSameKeyUpdateInRecentLane() {
+        var tt = new TranspositionTable(SMALL_SIZE);
+
+        long recentKey = 0x100L;
+        long protectedKey1 = 0x200L;
+        long protectedKey2 = 0x300L;
+        long weakestProtectedKey = 0x400L;
+
+        tt.put(recentKey, 1, 100, Bound.LOWER, 1);
+        tt.put(protectedKey1, 8, 200, Bound.EXACT, 2);
+        tt.put(protectedKey2, 7, 300, Bound.EXACT, 3);
+        tt.put(weakestProtectedKey, 6, 400, Bound.EXACT, 4);
+
+        tt.put(recentKey, 2, 500, Bound.LOWER, 5);
+
+        TTEntry entry = tt.get(recentKey);
+        assertNotNull(entry, "updated recent key must stay retrievable");
+        assertEquals(2, entry.getDepth(), "recent entry must contain the newer value");
+        assertEquals(500, entry.getScore());
+        assertNotNull(tt.get(protectedKey1), "weak promotion must not evict protected key 1");
+        assertNotNull(tt.get(protectedKey2), "weak promotion must not evict protected key 2");
+        assertNotNull(tt.get(weakestProtectedKey), "weak promotion must not evict weakest protected key");
+    }
+
+    @Test
+    void put_demotesShallowNonExactSameKeyUpdateToRecentLane() {
+        var tt = new TranspositionTable(SMALL_SIZE);
+
+        long demotedKey = 0x100L;
+        long protectedKey1 = 0x200L;
+        long protectedKey2 = 0x300L;
+        long recentKey = 0x400L;
+        long newProtectedKey = 0x500L;
+
+        tt.put(demotedKey, 3, 100, Bound.LOWER, 1);
+        tt.put(protectedKey1, 5, 200, Bound.EXACT, 2);
+        tt.put(protectedKey2, 4, 300, Bound.EXACT, 3);
+        tt.put(recentKey, 1, 400, Bound.LOWER, 4);
+
+        tt.put(demotedKey, 1, 500, Bound.UPPER, 5);
+
+        TTEntry entry = tt.get(demotedKey);
+        assertNotNull(entry, "demoted key must stay retrievable");
+        assertEquals(1, entry.getDepth());
+        assertEquals(Bound.UPPER, entry.getBound());
+        assertNull(tt.get(recentKey), "demotion must replace the previous recent entry");
+
+        tt.put(newProtectedKey, 2, 600, Bound.EXACT, 6);
+
+        assertNotNull(tt.get(demotedKey), "protected replacement must not touch the demoted recent entry");
+        assertNotNull(tt.get(newProtectedKey), "freed protected slot must accept a new protected entry");
     }
 
     @Test

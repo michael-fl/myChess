@@ -30,7 +30,8 @@ package org.michaelfl.mychess;
  * | recent | protected   | protected   | protected   |
  * +--------+-------------+-------------+-------------+
  *      ^          ^
- *      |          +-- exact or deeper entries; weakest protected slot is evicted
+ *      |          +-- exact or deeper entries; admitted only if at least as
+ *      |              valuable as the weakest protected slot
  *      +------------- shallow non-EXACT entries; always replace recent slot
  * </pre>
  *
@@ -41,14 +42,16 @@ package org.michaelfl.mychess;
  * search front always leaves a move-ordering hint without displacing deeper
  * cached work. Exact or deeper entries go to the protected lane, where
  * replacement prefers evicting lower-depth entries and preserves
- * {@link Bound#EXACT} entries on equal depth.
+ * {@link Bound#EXACT} entries on equal depth. A candidate enters the protected
+ * lane only if it is at least as valuable as the weakest protected entry;
+ * otherwise it falls back to the recent lane.
  *
  * <p>{@link #put(long, int, int, Bound, int)} first searches the target bucket
  * for the same key. For a same-key update it keeps an existing
  * {@link Bound#EXACT} entry if and only if its stored depth is strictly
  * greater than the new entry's depth. A same-key entry stored in the recent
  * lane is promoted to the protected lane once the new value qualifies for
- * protection.
+ * protection and passes the same admission check.
  *
  * <h2>Lifecycle</h2>
  *
@@ -246,12 +249,15 @@ public final class TranspositionTable {
      * <p>If the bucket already contains {@code hashKey}, the existing slot is
      * kept only when it is a strictly deeper {@link Bound#EXACT} entry. If the
      * new value qualifies for the protected lane and the old value is in the
-     * recent lane, the entry is promoted into the protected lane; otherwise the
-     * same slot is overwritten with the new data.
+     * recent lane, the entry is promoted only if it is at least as valuable as
+     * the weakest protected entry; otherwise the recent slot is overwritten
+     * with the new data. Conversely, a protected entry updated with a shallow
+     * non-EXACT value is moved back to the recent lane.
      *
      * <p>If the bucket does not contain {@code hashKey}, shallow non-EXACT
      * entries replace the recent-lane slot. Exact or deeper entries replace the
-     * weakest protected-lane slot.
+     * weakest protected-lane slot only when they are at least as valuable;
+     * otherwise they also replace the recent-lane slot.
      *
      * <p>Mate-score depth adjustment is the caller's responsibility:
      * pass the score already converted to "mate-in-N from this position"
@@ -274,9 +280,7 @@ public final class TranspositionTable {
             return;
         }
 
-        final int replaceIndex = qualifiesForProtectedLane(depth, bound)
-                ? findProtectedReplacementIndex(bucketStartIndex)
-                : bucketStartIndex;
+        final int replaceIndex = findReplacementIndex(bucketStartIndex, depth, bound);
         writeEntry(table[replaceIndex], hashKey, depth, score, bound, bestMove);
     }
 
@@ -291,9 +295,17 @@ public final class TranspositionTable {
                 if (entry.depth > depth && entry.bound == Bound.EXACT) {
                     return true;  // keep deeper exact entry
                 }
-                if (index == bucketStartIndex && qualifiesForProtectedLane(depth, bound)) {
-                    final int protectedIndex = findProtectedReplacementIndex(bucketStartIndex);
-                    writeEntry(table[protectedIndex], hashKey, depth, score, bound, bestMove);
+                final boolean useProtectedLane = qualifiesForProtectedLane(depth, bound);
+                if (index == bucketStartIndex && useProtectedLane) {
+                    final int replacementIndex = findReplacementIndex(bucketStartIndex, depth, bound);
+                    if (replacementIndex != bucketStartIndex) {
+                        writeEntry(table[replacementIndex], hashKey, depth, score, bound, bestMove);
+                        clearEntry(entry);
+                    } else {
+                        writeEntry(entry, hashKey, depth, score, bound, bestMove);
+                    }
+                } else if (index != bucketStartIndex && !useProtectedLane) {
+                    writeEntry(table[bucketStartIndex], hashKey, depth, score, bound, bestMove);
                     clearEntry(entry);
                 } else {
                     writeEntry(entry, hashKey, depth, score, bound, bestMove);
@@ -307,6 +319,17 @@ public final class TranspositionTable {
 
     private static boolean qualifiesForProtectedLane(final int depth, final Bound bound) {
         return depth > 1 || bound == Bound.EXACT;
+    }
+
+    private int findReplacementIndex(final int bucketStartIndex, final int depth, final Bound bound) {
+        if (!qualifiesForProtectedLane(depth, bound)) {
+            return bucketStartIndex;
+        }
+
+        final int protectedIndex = findProtectedReplacementIndex(bucketStartIndex);
+        return isAtLeastAsValuable(depth, bound, table[protectedIndex])
+                ? protectedIndex
+                : bucketStartIndex;
     }
 
     private int findProtectedReplacementIndex(final int bucketStartIndex) {
@@ -327,6 +350,12 @@ public final class TranspositionTable {
                 || (current.bound == Bound.EXACT
                     && current.depth == candidate.depth
                     && candidate.bound != Bound.EXACT);
+    }
+
+    private static boolean isAtLeastAsValuable(final int depth, final Bound bound, final TTEntry current) {
+        return depth > current.depth
+                || (depth == current.depth
+                    && (bound == Bound.EXACT || current.bound != Bound.EXACT));
     }
 
     private static void writeEntry(final TTEntry entry, final long hashKey, final int depth, final int score,
