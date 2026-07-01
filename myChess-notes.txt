@@ -569,7 +569,7 @@ PositionSearch.java — neue Helfer und Konstanten
 
   DEFAULT_SIZE in TranspositionTable.java von 1 << 20 auf 1 << 22 ändern:
 
-  private static final int DEFAULT_SIZE = 1 << 22;   // 4 M Einträge ≈ 200 MB
+  private static final int DEFAULT_SIZE = 1 << 22;   // 4 M Einträge ≈ 96 MiB TT record storage
 
   Im Wrapper-Skript -Xmx256m auf -Xmx512m anheben (damit die größere TT plus JIT-Cache + Working-Set reinpasst). Mit concurrency=4 sind das dann 8 × 512 MB = 4 GB total — passt komfortabel auf jeden modernen
   Mac.
@@ -622,8 +622,122 @@ Aus deiner Selbsteinschätzung vs 3.5.x ergibt sich eine grobe Elo-Verortung:
 
   Wenn du es etwas formaler willst (z.B. nicht sudden death), nimm 40/X-Formate:
   - Du: 40/60 = 40 Züge in 60 Min, danach Verlängerung
-  - myChess: 40/10 = 40 Züge in 10 Min
+  - myChess: 40/10+0:03 = 40 Züge in 10 Min + 3s Inkrement
   
 --
 
-  
+int replacementScore(TTEntryView e, int entryGeneration) {
+    final int exactBonus = e.getBound() == Bound.EXACT ? 2 : 0;
+    final int agePenalty = currentGeneration - entryGeneration;
+    return 4 * e.getDepth() + exactBonus - agePenalty;
+}
+
+Bei jeder neuen Root-Suche: currentGeneration++
+
+--
+
+1. 4.0.1-tt-bucket-depth-generation (done)
+2. 4.0.1-tt-bucket-depth-generation-lru (done)
+3. 4.0.1-tt-bucket-two-tier (done)
+
+4. 4.0.1-tt-memory-segment
+
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+      -engine name=mychess-4.0.1-tt-bucket-two-tier-admission cmd=./versions/4.0.1-tt-bucket-two-tier-admission/mychess-uci.sh    proto=uci \
+      -engine name=mychess-4.0.1 cmd=./versions/4.0.1/mychess-uci.sh proto=uci \
+      -each tc=40/60 \
+      -rounds 800 -games 2 -repeat \
+      -sprt elo0=-3 elo1=10 alpha=0.05 beta=0.05 \
+      -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+      -concurrency 4 -ratinginterval 10 \
+      -recover \
+      -draw movenumber=40 movecount=8 score=40 \
+      -resign movecount=4 score=600 \
+      -pgnout test-results/sprt-tt-bucket-two-tier-admission.pgn \
+      | tee test-results/sprt-tt-bucket-two-tier-admission-stdout.log
+      
+Messungen für origin/tt-bucket-two-tier-admission-hitcount:
+-----------------------------------------------------------
+
+1. tt-bucket-two-tier-admission-hitcount vs. tt-bucket-depth (Elo difference: 9.3 +/- 13.9, LOS: 90.5 %, DrawRatio: 32.9 %)
+2. tt-bucket-two-tier-admission-hitcount vs. tt-bucket-depth-bucket8
+
+3. Hitcount-Schwelle
+hitcount egal <-- Messung 1
+hitcount > 0
+hitcount > 1 (current)
+hitcount > 2
+Mein Bauchgefühl: > 1 oder > 0 gewinnt. > 2 könnte zu streng sein.
+
+4. Lane-Aufteilung
+2 recent + 6 protected <-- Messung 2
+3 recent + 5 protected
+4 recent + 4 protected (current)
+Mein Bauchgefühl: 2+6 könnte gut sein, weil die Recent Lane eher Durchlauferhitzer ist und Protected den wertvollen Cache hält.
+
+5. Age-Penalty
+4 * depth + exactBonus
+4 * depth + exactBonus - agePenalty (current)
+4 * depth + exactBonus - 2 * agePenalty <-- Messung 3
+Mein Bauchgefühl: -agePenalty ist gut, -2*agePenalty könnte zu aggressiv sein.
+
+
+
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+  -engine name=mychess-4.0.1-tt-bucket-two-tier-admission-hitcount cmd=./versions/4.0.1-tt-bucket-two-tier-admission-hitcount/mychess-uci.sh proto=uci \
+  -engine name=mychess-4.0.1-tt-bucket-variant-B cmd=./versions/4.0.1-tt-bucket-variant-B/mychess-uci.sh proto=uci \
+  -each tc=40/60 \
+  -rounds 800 -games 2 -repeat \
+  -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+  -concurrency 4 -ratinginterval 10 \
+  -recover \
+  -draw movenumber=40 movecount=8 score=40 \
+  -resign movecount=4 score=600 \
+  -pgnout test-results/sprt-variantA-vs-variantB.pgn \
+  | tee test-results/sprt-variantA-vs-variantB-stdout.log
+
+
+Score of mychess-4.0.1-tt-bucket-two-tier-admission-hitcount vs mychess-4.0.1: 593 - 539 - 468  [0.517] 1600
+...      mychess-4.0.1-tt-bucket-two-tier-admission-hitcount playing White: 294 - 270 - 236  [0.515] 800
+...      mychess-4.0.1-tt-bucket-two-tier-admission-hitcount playing Black: 299 - 269 - 232  [0.519] 800
+...      White vs Black: 563 - 569 - 468  [0.498] 1600
+Elo difference: 11.7 +/- 14.3, LOS: 94.6 %, DrawRatio: 29.3 %
+SPRT: llr 2 (68.1%), lbound -2.94, ubound 2.94
+
+Player: mychess-4.0.1-tt-bucket-two-tier-admission-hitcount
+   "Draw by 3-fold repetition": 358
+   "Draw by adjudication": 68
+   "Draw by fifty moves rule": 5
+   "Draw by insufficient mating material": 36
+   "Draw by stalemate": 1
+   "Loss: Black loses on time": 1
+   "Loss: Black mates": 6
+   "Loss: Black wins by adjudication": 261
+   "Loss: White loses on time": 3
+   "Loss: White mates": 8
+   "Loss: White wins by adjudication": 260
+   "Win: Black loses on time": 1
+   "Win: Black mates": 8
+   "Win: Black wins by adjudication": 286
+   "Win: White loses on time": 5
+   "Win: White mates": 3
+   "Win: White wins by adjudication": 290
+Player: mychess-4.0.1
+   "Draw by 3-fold repetition": 358
+   "Draw by adjudication": 68
+   "Draw by fifty moves rule": 5
+   "Draw by insufficient mating material": 36
+   "Draw by stalemate": 1
+   "Loss: Black loses on time": 1
+   "Loss: Black mates": 8
+   "Loss: Black wins by adjudication": 286
+   "Loss: White loses on time": 5
+   "Loss: White mates": 3
+   "Loss: White wins by adjudication": 290
+   "Win: Black loses on time": 1
+   "Win: Black mates": 6
+   "Win: Black wins by adjudication": 261
+   "Win: White loses on time": 3
+   "Win: White mates": 8
+   "Win: White wins by adjudication": 260
+   
