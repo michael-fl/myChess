@@ -54,7 +54,7 @@ import java.util.Arrays;
 public final class TranspositionTable {
 
     private static final int DEFAULT_SIZE = 1 << 22;
-    private static final int BUCKET_SIZE = 4;
+    private static final int BUCKET_SIZE = 8;
 
     private static TranspositionTable INSTANCE;
 
