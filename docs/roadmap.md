@@ -73,6 +73,79 @@ The initial TT shipped with `DEFAULT_SIZE = 2^20` (1 M entries, ~50 MB). Analysi
 
 **Methodological note:** the prediction "+10-15 Elo from 4× TT size" was wrong by an order of magnitude. The Sättigungs-Kurve from chess-programming literature was extrapolated from engines with weaker replacement policies (always-replace) where bigger TTs help more. For myChess with depth-preferred-EXACT, the saturation point at TC 40/60 is already at ~1 M, not at the 4-16 M I had estimated. Future similar predictions for TT-related parameters should account for the replacement-policy interaction explicitly.
 
+### Follow-up: TT bucket replacement strategies — explored, depth-only chosen
+
+Between 2026-06-20 and 2026-07-01, we explored whether splitting each TT hash slot into a 4-entry bucket with a smarter replacement policy would out-perform the v4.0.1 baseline (single-slot, depth-preferred-EXACT). Nine variants were implemented on separate branches and eight were measured; results converge on the finding that **any depth-aware bucket policy is worth ~+9 Elo over single-slot, but additional replacement-policy complexity beyond that does not measurably pay off** at TC 40/60.
+
+**Variants explored** (all `tt-bucket-*` branches in the repo, kept for reproducibility):
+
+| Branch | Replacement strategy in one line |
+|---|---|
+| `tt-bucket-depth` | 4-slot bucket, evict min-depth (EXACT wins ties) — **simplest** |
+| `tt-bucket-depth-generation` | 4-slot, replacementScore = `4·depth + exactBonus − agePenalty` |
+| `tt-bucket-depth-generation-lru` | as above, `hitcount` as tie-break |
+| `tt-bucket-age` | evict oldest, depth as tie-break |
+| `tt-bucket-hitcount` | evict lowest hitCount, depth as tie-break |
+| `tt-bucket-two-tier` | 1 recent-slot + 3 protected-slots, `depth > 1 \|\| EXACT` qualifies for protected |
+| `tt-bucket-two-tier-admission` | as above + admission gate: new entry must be ≥ replaced protected slot |
+| `tt-bucket-two-tier-admission-hitcount` | **8-slot bucket** (4 recent + 4 protected), admission gate + hitcount-based protection promotion — **most complex, and the only variant with BUCKET_SIZE ≠ 4** |
+| `tt-bucket-memory-segment` | structural refactor to `MemorySegment` storage — unmeasured, orthogonal to policy question |
+
+**Measurement matrix vs `v4.0.1` baseline** (SPRT `elo0=-3 elo1=10`/`15`, 1600 games, TC 40/60):
+
+| Branch | Δ Elo | CI | LOS | LLR |
+|---|---|---|---|---|
+| `tt-bucket-depth` | **+9.3** | ±13.9 | 90.5 % | 1.50 |
+| `tt-bucket-depth-generation` | +9.3 | ±14.2 | 90.1 % | 1.45 |
+| `tt-bucket-depth-generation-lru` | +8.9 | ±14.0 | 89.4 % | 1.38 |
+| `tt-bucket-two-tier` | +8.0 | ±13.9 | 87.1 % | 1.16 |
+| `tt-bucket-two-tier-admission` | +11.1 | ±14.2 | 93.7 % | 1.88 |
+| `tt-bucket-two-tier-admission-hitcount` (run 1) | +11.7 | ±14.3 | 94.6 % | 2.00 |
+| `tt-bucket-two-tier-admission-hitcount` (run 2, confirmation) | +6.3 | ±14.0 | 81.0 % | 0.71 |
+| **`admission-hitcount` pooled (3200 games)** | **~+9.0** | ~±10 | ~95 % | — |
+| `tt-bucket-age` | −0.2 | ±14.5 | 48.8 % | −0.89 |
+| `tt-bucket-hitcount` (aborted at 1240) | −0.3 | ±16.0 | 48.6 % | −0.74 |
+
+**Two head-to-head tests** (bucket variant vs bucket variant, not vs baseline):
+
+| Test | Games | Δ Elo | CI | LOS | Verdict |
+|---|---|---|---|---|---|
+| `admission` vs `two-tier` | 1462 | −9.3 | ±14.6 | 10.7 % | **H0 accepted** — admission gate hurts vs plain two-tier |
+| **`admission-hitcount` vs `depth`** | **3200** | **+5.9** | **±9.8** | 87.9 % | **inconclusive (below 95 %)** — nominal lean toward complex variant, not statistically decisive. **Confound:** `admission-hitcount` uses BUCKET_SIZE = 8, `depth` uses BUCKET_SIZE = 4 — the test measures policy *and* bucket geometry together, cannot attribute the +5.9 cleanly to one factor. |
+
+**Findings.**
+
+1. **Depth-aware bucketing gives ~+9 Elo over single-slot.** Six independent depth-aware variants cluster in the +8-12 Elo band vs baseline. Six matched positive measurements are not random — this is a real signal from splitting the single-slot bucket into 4 slots with depth-based eviction.
+
+2. **Beyond depth-awareness, additional replacement-policy complexity does not measurably pay off at current sample sizes.** The strongest head-to-head test (simplest `depth` vs most complex `admission-hitcount`) produced +5.9 ± 9.8 Elo — LOS 87.9 %, below the 95 % threshold for a confident positive. The 3200-game trajectory shows the point estimate wandering between +5 and +10 without clean convergence. The true effect is plausibly in the +3 to +8 Elo range, but that's small enough that the code-complexity cost outweighs it at this stage of the engine's development.
+
+3. **Aggressive admission control (without hitcount) is *harmful*.** The `two-tier-admission` vs `two-tier` head-to-head accepted H0 at −9.3 ± 14.6 Elo — a clear regression. The unconditional admission gate discards entries that later turn out to have been useful. The `two-tier-admission-hitcount` variant partially rescues this by only promoting entries with `hitcount > 1` — but the net gain over `depth` is marginal.
+
+4. **Age-only and hitCount-only replacement don't work.** Both variants that dropped `depth` as the primary key landed at ~0 Elo vs baseline. Depth is the load-bearing signal for TT-entry value; other axes (age, hit frequency) are at best tie-breakers.
+
+**Decision.** Merge `tt-bucket-depth` as the next production TT (planned as `v4.0.2`). The simplest depth-aware bucket policy captures essentially all of the measurable Elo benefit at TC 40/60, keeps the replacement logic to ~10 lines, and does not add fields to `TTEntry`. The more complex variants are kept as branches for reproducibility but not merged.
+
+**Re-test plan after search-side features land.** The head-to-head `admission-hitcount` vs `depth` (+5.9 ± 9.8, currently ambiguous) is worth **re-running** once §12.2 NMP, §12.3 LMR, and §12.6 QSearch upgrade are in master. Those three features materially change what the TT sees: NMP adds many reduced-depth searches, LMR adds re-searches at partial depth, and QSearch-all-captures changes the leaf-node profile. The optimal replacement policy in the post-NMP/LMR/QSearch world may differ from what's optimal today. Concretely:
+
+- Baseline for the re-test = post-NMP/LMR/QSearch master (whatever version that is)
+- Candidate = `tt-bucket-two-tier-admission-hitcount` rebased onto that baseline
+- Same SPRT setup: 3200 games, TC 40/60, `elo0=-3 elo1=10`
+- If the re-test lands at a decisive positive (LOS ≥ 95 %, Δ ≥ +10 Elo): merge `admission-hitcount` at that point
+- If it lands at neutral or negative: `depth` stays the production TT and `admission-hitcount` is retired
+- **Bucket-geometry disentanglement (2×2 factorial):** the current head-to-head result confounds policy with bucket size (`admission-hitcount` uses BUCKET_SIZE = 8, `depth` uses 4). The clean disentanglement needs two additional matches, both against the current single-slot baseline or a common bucket baseline:
+
+  |  | BUCKET_SIZE = 4 | BUCKET_SIZE = 8 |
+  |---|---|---|
+  | **Policy: `depth`** | ✓ measured | ✗ **needs `depth(8)` test** |
+  | **Policy: `admission-hitcount`** | ✗ **needs `admission-hitcount(4)` test** | ✓ measured |
+
+  Concretely: `depth(8)` vs `depth(4)` isolates the bucket-size effect at fixed policy, and `admission-hitcount(4)` vs `depth(4)` isolates the policy effect at fixed size. If `depth(8)` alone gains most of the +5.9 seen in the head-to-head, the policy is neutral and only geometry matters; if `admission-hitcount(4)` gains it, the policy is doing real work and geometry is neutral; if both contribute independently, we know their combined value.
+- With this 2×2 filled in, the final merge decision can be attributed cleanly: (a) merge `depth(4)`, (b) upgrade to `depth(8)` if geometry-only wins, or (c) upgrade to `admission-hitcount(8)` if policy-plus-geometry wins jointly.
+
+**Not-yet-measured:** the `tt-bucket-memory-segment` branch is a structural refactor (MemorySegment storage instead of `TTEntry[]`) that is orthogonal to the replacement-policy question. It would need its own SPRT once the policy decision is settled — currently deferred.
+
+**Archived branches.** All eight `tt-bucket-*` branches are kept in the repo (not deleted) as historical datapoints for this investigation. They are not maintained against master and will bit-rot naturally as the codebase evolves; if a future rebased comparison is needed, they can be updated at that time.
+
 ### Follow-up: reconstruct the principal variation from TT walks
 
 The initial TT implementation (June 2026) ships with a known side-effect on the principal variation: when an EXACT TT hit serves a node's result, the PV row at that depth is set to `[ttBestMove, 0, 0, ...]` and copied up to the parent (via [`SearchNodeContext.writeTTCachedPv`](../src/main/java/org/michaelfl/mychess/engines/PositionSearch.java)). The PV therefore terminates one ply after the TT-cached node, even when the actual search depth was full. Concretely, after a depth-8 search the engine sometimes emits a 4–6-ply PV; the *played move* and *score* are unaffected.
