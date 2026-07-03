@@ -1,7 +1,5 @@
 package org.michaelfl.mychess;
 
-import java.util.Arrays;
-
 /**
  * Fixed-size open-addressed transposition table caching per-position search
  * results keyed by Zobrist hash. Positions reached through different move
@@ -9,25 +7,42 @@ import java.util.Arrays;
  * (when the stored depth is at least as deep as the new search) or use the
  * stored best move as a move-ordering hint.
  *
- * <h2>Lookup &amp; collision handling</h2>
+ * <h2>Bucket layout &amp; lookup</h2>
  *
- * <p>The hash function masks the low {@code log2(size)} bits of the
- * 64-bit Zobrist hash, mapping every key to one of {@code size} buckets.
- * On a hash-bucket collision (two positions land on the same slot but
- * have different Zobrist keys), {@link #get(long)} returns {@code null}
- * because of an explicit identity check on the full {@code long} hashKey;
- * the caller cannot read another position's entry by accident. True
- * 64-bit Zobrist collisions are astronomically rare (~1 in 10^19 per
- * pair) and treated as ignorable.
+ * <p>Entries are grouped into fixed-size <em>buckets</em> of
+ * {@value #BUCKET_SIZE} slots each. The hash function masks the low
+ * {@code log2(size / BUCKET_SIZE)} bits of the 64-bit Zobrist key to
+ * pick a bucket, then {@link #get(long)} scans all {@value #BUCKET_SIZE}
+ * slots of that bucket linearly and returns the entry whose full 64-bit
+ * {@code hashKey} matches exactly. Up to {@value #BUCKET_SIZE} distinct
+ * keys that hash to the same bucket therefore coexist without evicting
+ * each other; only a bucket-full-of-different-keys forces a replacement
+ * decision. On no match, {@link #get(long)} returns {@code null}. True
+ * 64-bit Zobrist collisions between distinct positions are astronomically
+ * rare (~1 in 10^19 per pair) and treated as ignorable.
  *
  * <h2>Replacement strategy</h2>
  *
- * <p>{@link #put(long, int, int, Bound, int)} keeps an existing
- * {@link Bound#EXACT} entry if and only if its stored depth is strictly
- * greater than the new entry's depth. Anything else (different hashKey,
- * same key with shallower or equal depth, non-EXACT bound) is overwritten.
- * The depth-preferred-EXACT policy avoids losing a deeply searched score
- * to a shallow re-visit while keeping the eviction logic single-line.
+ * <p>{@link #put(long, int, int, Bound, int)} scans the target bucket
+ * looking for a slot that already holds the given {@code hashKey}:
+ * <ul>
+ *   <li><b>Same key already present.</b> If the incumbent is a strictly
+ *       deeper {@link Bound#EXACT} entry, the put is a no-op (do not lose
+ *       depth to a shallow re-visit). Otherwise, the incumbent slot is
+ *       overwritten in place.</li>
+ *   <li><b>Key not in bucket.</b> Evict the entry with the <em>lowest</em>
+ *       stored {@code depth}. Ties are broken against {@link Bound#EXACT}
+ *       — a non-EXACT candidate is picked over an EXACT incumbent of
+ *       equal depth, so EXACT scores enjoy a small extra survival margin.
+ *       The new entry then takes that slot.</li>
+ * </ul>
+ *
+ * <p>This depth-preferred-EXACT policy is the simplest replacement rule
+ * that consistently preserves information-dense entries. More elaborate
+ * policies (age, hit-count, two-tier lanes, admission control) were
+ * measured in the {@code tt-bucket-*} branches during v4.0.x development
+ * and did not measurably outperform this rule at TC 40/60 — see
+ * roadmap § 12.1 follow-up for the full comparison.
  *
  * <h2>Lifecycle</h2>
  *
@@ -92,7 +107,8 @@ public final class TranspositionTable {
      *       are stored relative to the cached position (mate-in-N
      *       plies from here), not relative to the search root; callers
      *       must adjust on read/write via
-     *       {@code PositionSearch.scoreFromTT/scoreToTT}.</li>
+     *       {@link WeightingFunction#scoreToTT(int, int)} /
+     *       {@link WeightingFunction#scoreFromTT(int, int)}.</li>
      *   <li>{@code bound} — see {@link Bound}.</li>
      *   <li>{@code bestMove} — packed-int move (see {@link Move}) that
      *       produced the cached score. Used as a move-ordering hint on
@@ -138,12 +154,16 @@ public final class TranspositionTable {
     private final TTEntry[] table;
 
     /**
-     * Allocates a table with {@code size} entries. The size must be a
-     * power of two so {@link #hash(long)} can mask with {@code size - 1}
-     * to compute the bucket index. All entries are initialised to the
-     * empty-slot sentinel state ({@code hashKey == 0}).
+     * Allocates a table with {@code size} total slots, laid out as
+     * {@code size / BUCKET_SIZE} buckets of {@value #BUCKET_SIZE} slots
+     * each. The size must be a power of two so that {@code hashSize =
+     * size / BUCKET_SIZE} is also a power of two and {@link #hash(long)}
+     * can pick a bucket by masking with {@code hashSize - 1}. All entries
+     * are initialized to the empty-slot sentinel state
+     * ({@code hashKey == 0}).
      *
-     * @param size number of entries (rows). Must be a power of two; an
+     * @param size total number of slots. Must be a power of two (and,
+     *             implicitly, at least {@value #BUCKET_SIZE}); an
      *             {@link IllegalArgumentException} is thrown otherwise.
      */
     public TranspositionTable(int size) {
@@ -165,7 +185,7 @@ public final class TranspositionTable {
     }
 
     /**
-     * Lazy-initialised process-wide singleton with {@code DEFAULT_SIZE = 2^22}
+     * Lazy-initialized process-wide singleton with {@code DEFAULT_SIZE = 2^22}
      * entries (~200 MB). Used by {@link EngineConfig.Builder#build()} when no
      * explicit {@link TranspositionTable} is set, and by the UCI / REPL
      * code paths that want one shared cache per JVM. Production engines
@@ -198,17 +218,27 @@ public final class TranspositionTable {
         }
     }
 
+    /**
+     * Maps a Zobrist key to the start index of its bucket in
+     * {@link #table}: takes the low {@code log2(hashSize)} bits of the
+     * key to pick a bucket ordinal, then multiplies by
+     * {@value #BUCKET_SIZE} to get the flat-array offset of the bucket's
+     * first slot. The bucket then spans indices {@code [return,
+     * return + BUCKET_SIZE)}.
+     */
     private int hash(final long hashKey) {
         return ((int) hashKey & (hashSize - 1)) * BUCKET_SIZE;
     }
 
     /**
-     * Looks up the entry for the given Zobrist key. Returns the
-     * {@link TTEntry} only if its stored {@code hashKey} matches the
-     * argument exactly (full 64-bit identity); on a hash-bucket
-     * collision with a different key, returns {@code null}. The
-     * returned object is the live slot — callers must not retain it
-     * across {@link #put(long, int, int, Bound, int)} calls.
+     * Looks up the entry for the given Zobrist key. Scans all
+     * {@value #BUCKET_SIZE} slots of the target bucket linearly and
+     * returns the first slot whose stored {@code hashKey} matches the
+     * argument exactly (full 64-bit identity). If none of the
+     * {@value #BUCKET_SIZE} slots holds this key, returns {@code null}.
+     * The returned object is the live slot — callers must not retain it
+     * across {@link #put(long, int, int, Bound, int)} calls, because a
+     * subsequent put may overwrite its fields.
      */
     public TTEntry get(final long hashKey) {
         final int startIndex = hash(hashKey);
@@ -224,18 +254,28 @@ public final class TranspositionTable {
     }
 
     /**
-     * Inserts or overwrites the entry for {@code hashKey}. The existing
-     * slot is kept only if it represents the same position with a
-     * strictly deeper {@link Bound#EXACT} cached score — that is the
-     * one case where overwriting would lose strictly more information
-     * than it gains. Every other case (different hashKey, shallower
-     * stored depth, non-EXACT bound) is overwritten unconditionally.
+     * Inserts an entry into the bucket for {@code hashKey}. Behavior
+     * depends on whether the bucket already contains a slot for this
+     * key (see the class-level "Replacement strategy" section for the
+     * full rationale):
+     * <ul>
+     *   <li><b>Same key present.</b> If the incumbent is a strictly
+     *       deeper {@link Bound#EXACT} entry, this call is a no-op —
+     *       the deeper cached result would be lost to a shallower
+     *       re-visit. Otherwise, the incumbent slot is overwritten in
+     *       place with the new fields.</li>
+     *   <li><b>Key not in bucket.</b> The bucket is scanned during the
+     *       same loop to track the eviction candidate: the slot with
+     *       the lowest {@code depth}, breaking ties by preferring to
+     *       evict a non-EXACT slot over an EXACT one of equal depth.
+     *       That slot is then overwritten with the new fields.</li>
+     * </ul>
      *
      * <p>Mate-score depth adjustment is the caller's responsibility:
      * pass the score already converted to "mate-in-N from this position"
-     * (see {@code PositionSearch.scoreToTT}). Likewise the {@code depth}
-     * argument is the {@code remainingDepth} at which the score was
-     * searched, not the distance from the root.
+     * (see {@link WeightingFunction#scoreToTT(int, int)}). Likewise, the
+     * {@code depth} argument is the {@code remainingDepth} at which the
+     * score was searched, not the distance from the root.
      *
      * @param hashKey  full 64-bit Zobrist key of the position
      * @param depth    remaining search depth at which {@code score} was
