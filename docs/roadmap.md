@@ -106,12 +106,13 @@ Between 2026-06-20 and 2026-07-01, we explored whether splitting each TT hash sl
 | `tt-bucket-age` | −0.2 | ±14.5 | 48.8 % | −0.89 |
 | `tt-bucket-hitcount` (aborted at 1240) | −0.3 | ±16.0 | 48.6 % | −0.74 |
 
-**Two head-to-head tests** (bucket variant vs bucket variant, not vs baseline):
+**Three head-to-head tests** (bucket variant vs bucket variant, not vs baseline):
 
 | Test | Games | Δ Elo | CI | LOS | Verdict |
 |---|---|---|---|---|---|
 | `admission` vs `two-tier` | 1462 | −9.3 | ±14.6 | 10.7 % | **H0 accepted** — admission gate hurts vs plain two-tier |
-| **`admission-hitcount` vs `depth`** | **3200** | **+5.9** | **±9.8** | 87.9 % | **inconclusive (below 95 %)** — nominal lean toward complex variant, not statistically decisive. **Confound:** `admission-hitcount` uses BUCKET_SIZE = 8, `depth` uses BUCKET_SIZE = 4 — the test measures policy *and* bucket geometry together, cannot attribute the +5.9 cleanly to one factor. |
+| **`admission-hitcount` vs `depth`** | **3200** | **+5.9** | **±9.8** | 87.9 % | **inconclusive (below 95 %)** — nominal lean toward complex variant, not statistically decisive. **Confound:** `admission-hitcount` uses BUCKET_SIZE = 8, `depth` uses BUCKET_SIZE = 4 — the test measures policy *and* bucket geometry together, cannot attribute the +5.9 cleanly to one factor. See Finding 5 for the follow-up disentanglement. |
+| **`depth(8)` vs `depth(4)`** | **3200** | **−3.4** | **±9.9** | 25.3 % | **inconclusive, nominally negative** — bucket size 8 does not help at fixed policy (`depth`), if anything slightly hurts. Resolves the bucket-geometry confound in the row above: the +5.9 there cannot come from bucket size and must be a policy effect. See Finding 5. |
 
 **Findings.**
 
@@ -123,6 +124,8 @@ Between 2026-06-20 and 2026-07-01, we explored whether splitting each TT hash sl
 
 4. **Age-only and hitCount-only replacement don't work.** Both variants that dropped `depth` as the primary key landed at ~0 Elo vs baseline. Depth is the load-bearing signal for TT-entry value; other axes (age, hit frequency) are at best tie-breakers.
 
+5. **Bucket size 8 does not help at fixed policy** (`depth(8)` vs `depth(4)` = −3.4 ± 9.9 Elo, LOS 25.3 %, 3200 games — added 2026-07-03). At fixed 2²² total TT capacity, `BUCKET_SIZE = 8` halves the number of buckets, which raises the hash-collision rate; the extra slots per bucket do not compensate. This resolves the confound flagged in Finding 2: the +5.9 Elo of `admission-hitcount(8)` over `depth(4)` cannot come from bucket geometry (which is neutral-to-negative) and must be attributable to the replacement policy. Naive additive decomposition: policy effect at fixed bucket size ≈ +5.9 − (−3.4) = **+9.3 Elo**. The `admission-hitcount` policy is doing more work than the raw head-to-head suggested — the wider bucket was handicapping it. However, both underlying measurements have LOS below 95 %, so the derived +9.3 Elo carries a combined CI of roughly ±14 Elo — informative but still not statistically decisive. This confirms the "depth-only" merge decision *and* strengthens the case for a serious `admission-hitcount` re-evaluation once search-side features change the TT-access profile (see Re-test plan below).
+
 **Decision.** Merge `tt-bucket-depth` as the next production TT (planned as `v4.0.2`). The simplest depth-aware bucket policy captures essentially all of the measurable Elo benefit at TC 40/60, keeps the replacement logic to ~10 lines, and does not add fields to `TTEntry`. The more complex variants are kept as branches for reproducibility but not merged.
 
 **Re-test plan after search-side features land.** The head-to-head `admission-hitcount` vs `depth` (+5.9 ± 9.8, currently ambiguous) is worth **re-running** once §12.2 NMP, §12.3 LMR, and §12.6 QSearch upgrade are in master. Those three features materially change what the TT sees: NMP adds many reduced-depth searches, LMR adds re-searches at partial depth, and QSearch-all-captures changes the leaf-node profile. The optimal replacement policy in the post-NMP/LMR/QSearch world may differ from what's optimal today. Concretely:
@@ -132,15 +135,17 @@ Between 2026-06-20 and 2026-07-01, we explored whether splitting each TT hash sl
 - Same SPRT setup: 3200 games, TC 40/60, `elo0=-3 elo1=10`
 - If the re-test lands at a decisive positive (LOS ≥ 95 %, Δ ≥ +10 Elo): merge `admission-hitcount` at that point
 - If it lands at neutral or negative: `depth` stays the production TT and `admission-hitcount` is retired
-- **Bucket-geometry disentanglement (2×2 factorial):** the current head-to-head result confounds policy with bucket size (`admission-hitcount` uses BUCKET_SIZE = 8, `depth` uses 4). The clean disentanglement needs two additional matches, both against the current single-slot baseline or a common bucket baseline:
+- **Bucket-geometry 2×2 status (updated 2026-07-03):** three of four cells now measured. Bucket size 8 is at best neutral at fixed policy — closes off option (b) from the original plan below.
 
   |  | BUCKET_SIZE = 4 | BUCKET_SIZE = 8 |
   |---|---|---|
-  | **Policy: `depth`** | ✓ measured | ✗ **needs `depth(8)` test** |
-  | **Policy: `admission-hitcount`** | ✗ **needs `admission-hitcount(4)` test** | ✓ measured |
+  | **Policy: `depth`** | ✓ measured (+9.3 vs single-slot) | ✓ measured (−3.4 vs `depth(4)`) |
+  | **Policy: `admission-hitcount`** | ✗ **still unmeasured** | ✓ measured (+9.0 pooled vs single-slot) |
 
-  Concretely: `depth(8)` vs `depth(4)` isolates the bucket-size effect at fixed policy, and `admission-hitcount(4)` vs `depth(4)` isolates the policy effect at fixed size. If `depth(8)` alone gains most of the +5.9 seen in the head-to-head, the policy is neutral and only geometry matters; if `admission-hitcount(4)` gains it, the policy is doing real work and geometry is neutral; if both contribute independently, we know their combined value.
-- With this 2×2 filled in, the final merge decision can be attributed cleanly: (a) merge `depth(4)`, (b) upgrade to `depth(8)` if geometry-only wins, or (c) upgrade to `admission-hitcount(8)` if policy-plus-geometry wins jointly.
+  The one remaining cell (`admission-hitcount(4)`) is the cleanest way to measure the pure policy effect at aligned bucket size. Absorb it into the post-search-features retest: rebase `tt-bucket-two-tier-admission-hitcount` onto the post-NMP baseline **with `BUCKET_SIZE` reduced to 4**, then run head-to-head against post-NMP `tt-bucket-depth`. Same SPRT setup: 3200 games, TC 40/60, `elo0=-3 elo1=10`.
+- Post-retest merge options are now binary:
+  - **(a)** if `admission-hitcount(4)` vs `depth(4)` lands at LOS ≥ 95 % with Δ ≥ +10 Elo: merge `admission-hitcount(4)` as the next-generation TT
+  - **(b)** if it lands neutral or negative: `depth(4)` stays production and `admission-hitcount` is retired
 
 **Not-yet-measured:** the `tt-bucket-memory-segment` branch is a structural refactor (MemorySegment storage instead of `TTEntry[]`) that is orthogonal to the replacement-policy question. It would need its own SPRT once the policy decision is settled — currently deferred.
 
