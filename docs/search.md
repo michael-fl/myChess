@@ -946,13 +946,15 @@ The transposition table (TT) caches per-position search results keyed by Zobrist
 
 ### Storage layout
 
-Fixed-size open-addressed array. The table holds `size` `TTEntry` instances, where `size` is a power of two so the lookup index is a low-bit mask of the Zobrist hash:
+Bucketed hash table. The `TTEntry[]` array of length `size` is logically split into `size / BUCKET_SIZE` fixed-size buckets of `BUCKET_SIZE = 4` slots each (raised from the single-slot layout of v4.0.0 / v4.0.1 in v4.0.2 — see [version-history.md](version-history.md) and [roadmap § 12.1 follow-up](roadmap.md#follow-up-tt-bucket-replacement-strategies--explored-depth-only-chosen)). Both `size` and `size / BUCKET_SIZE` are powers of two, so the bucket-selection index is a low-bit mask of the Zobrist hash:
 
 ```java
 private int hash(final long hashKey) {
-    return (int) hashKey & (size - 1);
+    return ((int) hashKey & (hashSize - 1)) * BUCKET_SIZE;
 }
 ```
+
+`hash(key)` returns the flat-array index of the bucket's first slot; the bucket then spans `[hash(key), hash(key) + BUCKET_SIZE)`.
 
 Each `TTEntry` carries five fields:
 
@@ -988,7 +990,7 @@ if (ttEntry != null && ttEntry.getDepth() >= ctx.remainingDepth()) {
 
 Two things to notice:
 
-1. **`get()` returns `null` on a hash-bucket collision.** The hash function only uses the low bits of the 64-bit Zobrist key, so two genuinely different positions can land in the same slot. `get()` performs a full `hashKey == entry.hashKey` identity check and returns `null` if they differ — the caller never reads another position's entry. True 64-bit Zobrist collisions are astronomically rare (~1 in 10^19 per pair) and treated as ignorable.
+1. **`get()` scans the target bucket linearly.** The hash function only uses the low bits of the 64-bit Zobrist key, so many genuinely different positions can land in the same bucket. `get()` scans all `BUCKET_SIZE = 4` slots of the target bucket and returns the first whose stored `hashKey` matches the argument exactly (full 64-bit identity check); if none match, it returns `null`. Up to four distinct keys can coexist in one bucket without evicting each other — only a bucket-full-of-different-keys forces a replacement decision on the next `put()`. True 64-bit Zobrist collisions (two genuinely different positions producing identical 64-bit keys) are astronomically rare (~1 in 10^19 per pair) and treated as ignorable.
 2. **The depth gate (`ttEntry.getDepth() >= ctx.remainingDepth()`) controls *the score*, not the bestMove.** Below the depth gate the score is ignored but the stored bestMove is still extracted and threaded into the move sorter as `ttMove` (see § 7.1 and "Move-ordering integration" below).
 
 ### Storage
@@ -1002,15 +1004,43 @@ if (!result.isTimeout() && !result.isIllegal()) {
 }
 ```
 
-The replacement policy in `put()` is **depth-preferred-EXACT**:
+The replacement policy in `put()` is **depth-preferred-EXACT** with a bucket-scan eviction pass:
 
 ```java
-if (entry.hashKey == hashKey && entry.depth > depth && entry.bound == Bound.EXACT) {
-    return;  // keep deeper exact entry
+public void put(...) {
+    int index = hash(hashKey);
+    final int endIndex = index + BUCKET_SIZE;
+    int replaceIndex = index;
+
+    for (; index < endIndex; index++) {
+        final TTEntry entry = table[index];
+
+        if (entry.hashKey == hashKey) {
+            if (entry.depth > depth && entry.bound == Bound.EXACT) {
+                return;                          // keep deeper exact entry
+            }
+            replaceIndex = index;                // same-key hit → overwrite in place
+            break;
+        }
+        // eviction candidate: lowest depth, break ties by preferring
+        // to evict a non-EXACT slot over an EXACT one of equal depth
+        if (entry.depth < table[replaceIndex].depth
+                || (table[replaceIndex].bound == Bound.EXACT
+                    && table[replaceIndex].depth == entry.depth
+                    && entry.bound != Bound.EXACT)) {
+            replaceIndex = index;
+        }
+    }
+    // ... write entry fields at table[replaceIndex] ...
 }
 ```
 
-That is: the existing slot is kept only when it represents the same position with a strictly deeper `EXACT` cached score. Every other case (different hashKey, same key with shallower or equal depth, non-EXACT bound) is overwritten unconditionally. The single-line eviction logic is deliberate — anything more sophisticated (aging / generation counters / always-replace-with-better-bound) would buy marginal hit-rate at the cost of more code on the hottest path of the search.
+Two branches:
+
+- **Same key in the bucket.** If the incumbent is a strictly deeper `EXACT` entry, the put is a no-op — the deeper cached result would be lost to a shallower re-visit. Otherwise the incumbent slot is overwritten in place with the new fields (`hashKey`, `depth`, `score`, `bound`, `bestMove`).
+- **Key not in bucket.** The loop tracks a single eviction candidate as it scans: initially the first slot, then any subsequent slot whose stored `depth` is lower (or equal-depth-but-non-EXACT against an EXACT incumbent). At loop end, that candidate is overwritten. Effectively: evict the least-informative slot, with EXACT scores enjoying a small extra survival margin on ties.
+
+This is the winner of an eight-variant investigation of bucket replacement policies (see [roadmap § 12.1 follow-up](roadmap.md#follow-up-tt-bucket-replacement-strategies--explored-depth-only-chosen)). More elaborate schemes (age / hit-count / two-tier lanes / admission control) were measured and did not measurably outperform this simplest depth-aware rule at TC 40/60.
 
 ### Bound semantics
 
