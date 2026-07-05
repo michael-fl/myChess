@@ -210,4 +210,222 @@ class PGNImporterTest {
         testPGN(pgn, GameResult.ONGOING, GameStatus.TURN_BLACK, 192, Board.whiteKing, Board.e3, Board.blackKing, Board.d1);
     }
 
+    // -------------------------------------------------------------------
+    // Non-standard starting position — covered via two entry points:
+    //   (a) [FEN "..."] tag pair in the PGN header (PGN_9 already exercises
+    //       this shape end-to-end here; extra tests below cover Chess960
+    //       and the standard-vs-Chess960 branch)
+    //   (b) explicit startFen parameter on PGNImporter / GameImporter that
+    //       overrides any tag pair.
+    // -------------------------------------------------------------------
+
+    private static final String STANDARD_START_FEN =
+            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+
+    private static final String CHESS960_START_FEN =
+            "bnrqkrnb/pppppppp/8/8/8/8/PPPPPPPP/BNRQKRNB w KQkq - 0 1";
+
+    /** Same starting position as PGN_9 — Black to move after 1. e4. */
+    private static final String KINGS_PAWN_BLACK_TO_MOVE_FEN =
+            "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1";
+
+    @Test
+    void importGame_withFenTag_startsFromThatPosition() {
+        // PGN_9 header has [SetUp "1"] and [FEN "...4P3..."] (Black to move
+        // after 1. e4). Importer must honor the tag and start there; the
+        // first move in the notation is "1...c5" (Black), which would be
+        // illegal from the standard start with White to move.
+        testPGN(PgnTest.PGN_9, GameResult.ONGOING, GameStatus.TURN_WHITE, 36,
+                Board.whiteKnight, Board.b5, Board.blackKing, Board.b8);
+    }
+
+    @Test
+    void importGame_chess960_withVariantAndFenTag_appliesChess960Castling() {
+        // Chess960 setup with corner bishops and c/f-file rooks. The
+        // canonical short-castle for Black on this back rank keeps the
+        // rook on its starting file (f8) — a move that would be illegal
+        // under standard castling rules. Also exercises Ng8→f6 clearing
+        // the king's path.
+        var pgnString = """
+                [Event "Chess960 castle smoke test"]
+                [Variant "Chess960"]
+                [SetUp "1"]
+                [FEN "%s"]
+
+                1. g3 Nf6 2. Nf3 O-O *
+                """.formatted(CHESS960_START_FEN);
+
+        var game = new PGNImporter(parseSingle(pgnString)).importGame();
+
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "White to move after Black's O-O");
+        assertEquals(Board.blackKing, game.getBoard().get(Board.g8), "Black king on g8 after O-O");
+        assertEquals(Board.blackRook, game.getBoard().get(Board.f8),
+                "Chess960 O-O leaves kingside rook on its original file");
+    }
+
+    @Test
+    void importGame_noFenTag_startsFromStandardPosition() {
+        // Regression guard: an unmodified headerless PGN (no [FEN] tag)
+        // must still start from the classical initial position.
+        var pgnString = "1. e4 e5 2. Nf3 Nc6 *";
+
+        var game = new PGNImporter(parseSingle(pgnString)).importGame();
+
+        assertEquals(Board.whiteKing, game.getBoard().get(Board.e1), "White king on e1 (standard start)");
+        assertEquals(Board.blackKnight, game.getBoard().get(Board.c6), "Black knight on c6 after 2...Nc6");
+    }
+
+    @Test
+    void importGame_explicitChess960StartFen_autoDetectsChess960Castling() {
+        // Chess960 setup passed as startFen — auto-detection based on
+        // non-standard back-rank layout must pick Chess960 castling rules,
+        // otherwise the O-O parser would map KQkq to a/h files (empty)
+        // and reject the castle.
+        var moveText = "1. g3 Nf6 2. Nf3 O-O *";
+
+        var importer = GameImporter.importerFor(moveText, CHESS960_START_FEN);
+        var game = importer.importGame();
+
+        assertEquals(Board.blackKing, game.getBoard().get(Board.g8),
+                "Black king on g8 after Chess960 O-O with auto-detected Chess960 rules");
+        assertEquals(Board.blackRook, game.getBoard().get(Board.f8),
+                "Chess960 kingside rook stays on f8 (its starting file)");
+    }
+
+    @Test
+    void importGame_explicitStartFen_overridesFenTagInHeader() {
+        // Header carries a [FEN "..."] tag for one position, but the
+        // constructor receives a different startFen — the explicit
+        // parameter must win. To make the assertion unambiguous, choose
+        // an override FEN that leads to a different piece layout than
+        // the header would.
+        //
+        // Header FEN: Black to move after 1. e4 (KINGS_PAWN_BLACK_TO_MOVE_FEN).
+        // Override FEN: Chess960 corner-bishop setup, White to move.
+        // Move list: only 1. g3 (works from Chess960 setup but 1. g3 as
+        // WHITE's first move is illegal from the header FEN, since it's
+        // Black's turn there — an inversion strong enough to expose any
+        // silent fall-through to the tag).
+        var pgnString = """
+                [Event "Override test"]
+                [SetUp "1"]
+                [FEN "%s"]
+
+                1. g3 Nf6 *
+                """.formatted(KINGS_PAWN_BLACK_TO_MOVE_FEN);
+
+        var pgn = parseSingle(pgnString);
+        var importer = new PGNImporter(pgn, CHESS960_START_FEN);
+
+        var game = importer.importGame();
+
+        // If the override worked, we're on the Chess960 setup with a black
+        // knight now on f6 (came from g8). If the header's FEN had won,
+        // constructing the game would have thrown (1. g3 is illegal when
+        // Black is to move) — a passing test here means the override took.
+        assertEquals(Board.blackKnight, game.getBoard().get(Board.f6),
+                "Chess960 knight on f6 after 1...Nf6 — override FEN was used");
+        assertEquals(Board.whiteBishop, game.getBoard().get(Board.a1),
+                "corner bishop preserved from override Chess960 start");
+    }
+
+    @Test
+    void importGame_explicitStartFen_nullFallsBackToHeaderTag() {
+        // startFen == null means "defer to the header tag". Equivalent to
+        // the single-arg PGNImporter(Pgn) constructor.
+        var pgnString = """
+                [Event "Fallback test"]
+                [SetUp "1"]
+                [FEN "%s"]
+
+                1... c5 *
+                """.formatted(KINGS_PAWN_BLACK_TO_MOVE_FEN);
+
+        var pgn = parseSingle(pgnString);
+        var importer = new PGNImporter(pgn, /* startFen = */ null);
+
+        var game = importer.importGame();
+
+        assertEquals(Board.blackPawn, game.getBoard().get(Board.c5),
+                "Black c-pawn advanced to c5 from header FEN");
+    }
+
+    @Test
+    void gameImporterFactory_pgnPathAcceptsExplicitStartFen() {
+        // Public entry via GameImporter.importerFor — the same override
+        // behavior is available to external callers, not just to the
+        // package-private PGNImporter constructor. Uses a Chess960 setup
+        // so the effect of the explicit startFen is observable (the
+        // corner-bishop layout differs from the standard start).
+        var moveText = "1. g3 Nf6 *";
+
+        var importer = GameImporter.importerFor(moveText, CHESS960_START_FEN);
+
+        assertInstanceOf(PGNImporter.class, importer, "PGN move text dispatches to PGNImporter (not SimpleNotationImporter)");
+        var game = importer.importGame();
+        assertEquals(Board.whiteBishop, game.getBoard().get(Board.a1),
+                "Chess960 corner bishop preserved — startFen honored through the factory");
+        assertEquals(Board.blackKnight, game.getBoard().get(Board.f6),
+                "1...Nf6 played from the Chess960 starting position");
+    }
+
+    @Test
+    void chess960AutoDetection_standardStartFenIsNotChess960() {
+        // Verify that passing the canonical standard-chess starting FEN
+        // explicitly still parses under standard-chess rules — the auto-
+        // detector must recognize the RNBQKBNR back rank and defer to
+        // Fen.importFEN rather than Fen.importChess960FEN.
+        var moveText = "1. e4 e5 *";
+
+        var importer = GameImporter.importerFor(moveText, STANDARD_START_FEN);
+        var game = importer.importGame();
+
+        assertEquals(Board.whiteRook, game.getBoard().get(Board.a1),
+                "standard-chess back rank preserved from start FEN");
+        assertEquals(Board.blackPawn, game.getBoard().get(Board.e5),
+                "1...e5 played from the standard starting position");
+    }
+
+    @Test
+    void importGame_explicitStartFen_acceptsShredderCastlingSpelling() {
+        // Same corner-bishop Chess960 setup as CHESS960_START_FEN but the
+        // castling-rights field uses the Shredder / X-FEN file-letter
+        // spelling (Cc = rooks on c-file, Ff = rooks on f-file) instead
+        // of the classical KQkq shorthand. Both spellings must lead to
+        // the same board — a Chess960 castling parser sees the file
+        // letters, and myChess's auto-detector routes Shredder-style
+        // castling through the Chess960 code path even when the back
+        // rank alone would look standard.
+        var shredderStartFen = "bnrqkrnb/pppppppp/8/8/8/8/PPPPPPPP/BNRQKRNB w FCfc - 0 1";
+        var moveText = "1. g3 Nf6 2. Nf3 O-O *";
+
+        var importer = GameImporter.importerFor(moveText, shredderStartFen);
+        var game = importer.importGame();
+
+        assertEquals(Board.blackKing, game.getBoard().get(Board.g8),
+                "Black king on g8 after O-O — Shredder-castling FEN parsed via Chess960 path");
+        assertEquals(Board.blackRook, game.getBoard().get(Board.f8),
+                "Chess960 kingside rook stays on f8");
+    }
+
+    @Test
+    void importGame_explicitStartFen_rejectsMidGameFen() {
+        // Strict-validation contract: the explicit startFen parameter
+        // demands a genuine game-starting position, not an arbitrary FEN.
+        // Mid-game snapshots must go through the PGN [FEN] header instead
+        // (which has no such restriction — see importGame_withFenTag_...).
+        var pgnString = "1... c5 *";
+
+        var ex = assertThrows(IllegalArgumentException.class,
+                () -> GameImporter.importerFor(pgnString, KINGS_PAWN_BLACK_TO_MOVE_FEN));
+
+        assertTrue(ex.getMessage().contains("not a valid game starting position"),
+                "error message should identify the strict-startFen contract, got: " + ex.getMessage());
+    }
+
+    private static Pgn parseSingle(String pgnString) {
+        return Pgn.parse(pgnString).findFirst()
+                .orElseThrow(() -> new IllegalStateException("no PGN parsed"));
+    }
+
 }

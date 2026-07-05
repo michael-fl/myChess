@@ -9,7 +9,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Spliterators;
 import java.util.stream.Stream;
@@ -27,6 +29,12 @@ import java.util.stream.StreamSupport;
 public final class Pgn {
 
     private static final String DRAW_TOKEN = "1/2-1/2";
+
+    /** PGN tag name for the starting position FEN. */
+    public static final String TAG_FEN = "FEN";
+
+    /** PGN tag name for the chess variant (e.g. "Chess960", "fischerandom"). */
+    public static final String TAG_VARIANT = "Variant";
 
     public static final class IllegalPGNException extends RuntimeException {
         IllegalPGNException(String message) {
@@ -51,16 +59,50 @@ public final class Pgn {
     private final String notation;
     public final Result result;
     public final List<MoveDescription> moves;
+    public final Map<String, String> tags;
 
-    private Pgn(String notation, Result result, List<MoveDescription> moves) {
+    private Pgn(String notation, Result result, List<MoveDescription> moves, Map<String, String> tags) {
         this.notation = notation;
         this.result = result;
         this.moves = Collections.unmodifiableList(moves);
+        this.tags = Collections.unmodifiableMap(tags);
     }
 
     @Override
     public String toString() {
         return notation;
+    }
+
+    /**
+     * Value of the given PGN tag pair, or {@code null} if the header did not
+     * contain that tag.
+     */
+    public String getTag(String key) {
+        return tags.get(key);
+    }
+
+    /**
+     * Starting-position FEN from the {@code [FEN "..."]} tag pair, or
+     * {@code null} if the PGN uses the standard initial position.
+     */
+    public String getStartFen() {
+        return tags.get(TAG_FEN);
+    }
+
+    /**
+     * {@code true} if the {@code [Variant "..."]} tag pair indicates a
+     * Chess960 / Fischer-random game (the check is case-insensitive and
+     * matches on "960" or "fischer" substrings, covering the common
+     * cutechess and Lichess spellings).
+     */
+    public boolean isChess960() {
+        var variant = tags.get(TAG_VARIANT);
+        if (variant == null) {
+            return false;
+        }
+
+        var v = variant.toLowerCase();
+        return v.contains("960") || v.contains("fischer");
     }
 
     public static Stream<Pgn> parse(String pgn) throws IllegalPGNException {
@@ -89,10 +131,40 @@ public final class Pgn {
 
     private static class Builder {
         private final StringBuilder buf = new StringBuilder();
+        private final Map<String, String> tags = new LinkedHashMap<>();
         private int startOfMoveTextSection = -1;
 
         void addTagPair(String line) {
             buf.append(line).append('\n');
+            parseTagPair(line);
+        }
+
+        /**
+         * Parse {@code [Key "Value"]} into the tags map. The line is
+         * already known to start with {@code [} and end with {@code ]}
+         * (validated by the caller). Malformed tag pairs are silently
+         * skipped: the raw text remains in {@link #buf}, so callers
+         * that need the original notation are unaffected.
+         */
+        private void parseTagPair(String line) {
+            var contents = line.substring(1, line.length() - 1);
+            int quoteStart = contents.indexOf('"');
+            if (quoteStart < 0) {
+                return;
+            }
+
+            var key = contents.substring(0, quoteStart).trim();
+            if (key.isEmpty()) {
+                return;
+            }
+
+            int quoteEnd = contents.lastIndexOf('"');
+            if (quoteEnd <= quoteStart) {
+                return;
+            }
+
+            var value = contents.substring(quoteStart + 1, quoteEnd);
+            tags.put(key, value);
         }
 
         void addMovesLine(String line) {
@@ -153,7 +225,7 @@ public final class Pgn {
                 throw new IllegalPGNException("No moves defined: " + this);
             }
 
-            return new Pgn(buf.toString(), result, moves);
+            return new Pgn(buf.toString(), result, moves, tags);
         }
 
         private int parseMoveNo(String token) {

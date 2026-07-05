@@ -74,7 +74,16 @@ public final class Game {
     }
 
     Game(GameConfig config, List<MoveDescription> moves) {
-        this(config);
+        this(config, Board.createNewGame(), moves);
+    }
+
+    /**
+     * Construct a game whose board starts from {@code initialBoard} and then
+     * replays {@code moves}. Used by {@link PGNImporter} when the PGN
+     * declares a starting FEN via the {@code [FEN "..."]} tag pair.
+     */
+    Game(GameConfig config, Board initialBoard, List<MoveDescription> moves) {
+        this(config, initialBoard);
 
         try {
             for (MoveDescription move : moves) {

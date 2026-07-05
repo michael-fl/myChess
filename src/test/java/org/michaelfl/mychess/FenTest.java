@@ -287,48 +287,26 @@ class FenTest {
                 "exportShredderFEN must emit 'HAha' on standard chess (rook files a/h)");
     }
 
-    @Test
-    void exportShredderFen_scharnaglId0_emitsHFhf() {
-        // BBQNNRKR — king on g1, rooks on f1 and h1
-        String shredderFen = "bbqnnrkr/pppppppp/8/8/8/8/PPPPPPPP/BBQNNRKR w HFhf - 0 1";
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(strings = {
+            // Scharnagl ID 0 — BBQNNRKR, king g1, rooks f1/h1 → Shredder 'HFhf'.
+            "bbqnnrkr/pppppppp/8/8/8/8/PPPPPPPP/BBQNNRKR w HFhf - 0 1",
+            // Scharnagl ID 404 — RBBQNNKR, king g1, rooks a1/h1 → 'HAha'.
+            // The exact case that defeated the old heuristic-based exporter
+            // (rook files match standard-chess defaults but the king is NOT
+            // on e1 — the old code decided "looks like standard chess, emit
+            // KQkq" and lost the disambiguation).
+            "rbbqnnkr/pppppppp/8/8/8/8/PPPPPPPP/RBBQNNKR w HAha - 0 1",
+            // Scharnagl ID 959 — RKRNNQBB, king b1, rooks a1/c1 → 'CAca'.
+            "rkrnnqbb/pppppppp/8/8/8/8/PPPPPPPP/RKRNNQBB w CAca - 0 1",
+            // Cutechess sample 960 position — RKBBNRNQ, king b1, rooks a1/f1 → 'FAfa'.
+            "rkbbnrnq/pppppppp/8/8/8/8/PPPPPPPP/RKBBNRNQ w FAfa - 0 1"
+    })
+    void exportShredderFen_startPositionRoundTrips(String shredderFen) {
         var board = Fen.importFEN(shredderFen);
 
         assertEquals(shredderFen, Fen.exportShredderFEN(board),
-                "Scharnagl ID 0 must round-trip with Shredder castling 'HFhf'");
-    }
-
-    @Test
-    void exportShredderFen_scharnaglId404_emitsHAha() {
-        // RBBQNNKR — king on g1, rooks on a1 and h1. Rook files happen to
-        // match standard-chess defaults {0,7}, but the king is NOT on e1.
-        // This is the exact case that defeated the old heuristic-based
-        // exporter (which decided "looks like standard chess, emit KQkq").
-        // With the explicit method, Shredder export must produce 'HAha'.
-        String shredderFen = "rbbqnnkr/pppppppp/8/8/8/8/PPPPPPPP/RBBQNNKR w HAha - 0 1";
-        var board = Fen.importFEN(shredderFen);
-
-        assertEquals(shredderFen, Fen.exportShredderFEN(board),
-                "Scharnagl ID 404 (king on g, rooks on a/h) must produce 'HAha' under Shredder export");
-    }
-
-    @Test
-    void exportShredderFen_scharnaglId959_emitsCAca() {
-        // RKRNNQBB — king on b1, rooks on a1 and c1
-        String shredderFen = "rkrnnqbb/pppppppp/8/8/8/8/PPPPPPPP/RKRNNQBB w CAca - 0 1";
-        var board = Fen.importFEN(shredderFen);
-
-        assertEquals(shredderFen, Fen.exportShredderFEN(board),
-                "Scharnagl ID 959 must round-trip with Shredder castling 'CAca'");
-    }
-
-    @Test
-    void exportShredderFen_cutechessSamplePosition_emitsFAfa() {
-        // RKBBNRNQ — king on b1, rooks on a1 and f1
-        String shredderFen = "rkbbnrnq/pppppppp/8/8/8/8/PPPPPPPP/RKBBNRNQ w FAfa - 0 1";
-        var board = Fen.importFEN(shredderFen);
-
-        assertEquals(shredderFen, Fen.exportShredderFEN(board),
-                "cutechess sample 960 position must round-trip with Shredder castling 'FAfa'");
+                "Shredder-form starting FEN must round-trip through import + export");
     }
 
     @Test
@@ -349,8 +327,8 @@ class FenTest {
 
     @Test
     void castlingStateShredder_partialRights_emitsOnlyAliveSlots() {
-        // Drop white queenside by clearing that single bit on a 960 board;
-        // the resulting Shredder field should be three letters (HFhf minus 'F').
+        // Drop white queenside by clearing that single bit on a 960 board.
+        // The resulting Shredder field should be three letters (HFhf minus 'F').
         String fullRightsFen = "bbqnnrkr/pppppppp/8/8/8/8/PPPPPPPP/BBQNNRKR w HFhf - 0 1";
         var board = Fen.importFEN(fullRightsFen);
         var original = board.getGameStatus();
@@ -371,7 +349,7 @@ class FenTest {
 
     @Test
     void castlingStateShredder_noRights_emitsDash() {
-        // Same 960 back rank but castling rights manually set to "-".
+        // Same 960 back rank but castling rights manually set to -.
         // Verifies the dash fallback fires through the Shredder writer too.
         var board = Fen.importFEN("bbqnnrkr/pppppppp/8/8/8/8/PPPPPPPP/BBQNNRKR w - - 0 1");
 
@@ -388,5 +366,89 @@ class FenTest {
 
         assertEquals("KQkq", Fen.castlingState(board.getGameStatus()),
                 "single-arg castlingState must still emit the classical letters");
+    }
+
+    // -------------------------------------------------------------------
+    // Fen.requireStartFen — strict "is this a game-starting position?"
+    // validator. Accepts exactly the 960 canonical starting FENs from
+    // Chess960StartPositions (standard chess is position 518, the 959
+    // Chess960 setups make up the rest); rejects everything else.
+    // -------------------------------------------------------------------
+
+    private static final String CHESS960_START_FEN =
+            "bnrqkrnb/pppppppp/8/8/8/8/PPPPPPPP/BNRQKRNB w KQkq - 0 1";
+
+    @Test
+    void requireStartFen_acceptsStandardStart() {
+        assertDoesNotThrow(() -> Fen.requireStartFen(START_POSITION_FEN),
+                "canonical standard-chess starting FEN must be accepted");
+    }
+
+    @Test
+    void requireStartFen_acceptsChess960Setup() {
+        assertDoesNotThrow(() -> Fen.requireStartFen(CHESS960_START_FEN),
+                "corner-bishop Chess960 starting FEN must be accepted");
+    }
+
+    @Test
+    void requireStartFen_acceptsAllChess960StartPositions() {
+        // Every canonical FEN produced by Chess960StartPositions must
+        // pass the validator — the two are backed by the same underlying
+        // set, so this is a smoke test for wiring.
+        for (int id = 0; id < Chess960StartPositions.COUNT; id++) {
+            var fen = Chess960StartPositions.fenById(id);
+            assertDoesNotThrow(() -> Fen.requireStartFen(fen),
+                    "canonical FEN #" + id + " must be accepted: " + fen);
+        }
+    }
+
+    @Test
+    void requireStartFen_acceptsShredderCastlingRights() {
+        // Position 0 has back rank BBQNNRKR: kingside rook on h1, queenside
+        // rook on f1. Its Shredder-form starting FEN uses HFhf for castling
+        // rights (uppercase = White files, lowercase = Black files). Verify
+        // the validator accepts this form alongside the classical KQkq
+        // shorthand.
+        var shredderFen = "bbqnnrkr/pppppppp/8/8/8/8/PPPPPPPP/BBQNNRKR w HFhf - 0 1";
+
+        assertDoesNotThrow(() -> Fen.requireStartFen(shredderFen),
+                "Shredder-FEN castling-rights spelling must be accepted");
+    }
+
+    @Test
+    void requireStartFen_rejectsNull() {
+        var ex = assertThrows(IllegalArgumentException.class,
+                () -> Fen.requireStartFen(null));
+
+        assertTrue(ex.getMessage().contains("must not be null"), ex.getMessage());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            // Mid-game standard chess (position after 1. e4).
+            "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1",
+            // Starting layout but Black to move.
+            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1",
+            // Starting layout but partial castling rights.
+            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w Kk - 0 1",
+            // Starting layout but with an en-passant square set.
+            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq e3 0 1",
+            // Starting layout but non-zero half-move clock.
+            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 5 1",
+            // Starting layout but full-move number > 1.
+            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 5",
+            // Asymmetric back ranks (RNBQKBNR vs. RBNQKBNR).
+            "rbnqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+            // Malformed field count (5 fields instead of 6).
+            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq",
+            // Complete garbage.
+            "not a fen at all"
+    })
+    void requireStartFen_rejectsNonStartingFens(String fen) {
+        var ex = assertThrows(IllegalArgumentException.class,
+                () -> Fen.requireStartFen(fen));
+
+        assertTrue(ex.getMessage().contains("not a valid game starting position"),
+                "error message should identify the strict-startFen contract, got: " + ex.getMessage());
     }
 }
