@@ -6,7 +6,7 @@
 
   <groupId>michael-fl</groupId>
   <artifactId>my-chess</artifactId>
-  <version>4.2.2</version>
+  <version>4.3.0-tt-bucket-two-tier-admission-hitcount</version>
 
   <properties>
     <maven.compiler.release>25</maven.compiler.release>
