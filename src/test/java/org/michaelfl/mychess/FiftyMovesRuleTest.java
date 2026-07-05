@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.engines.MyChessEngine;
@@ -10,6 +12,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author Michael Fleischhauer
  */
 class FiftyMovesRuleTest {
+
+    private TranspositionTable tt;
+
+    @BeforeEach
+    void setup() {
+        tt = TestSupport.createTestTT();
+    }
+
+    @AfterEach
+    void tearDown() {
+        tt.close();
+    }
 
     @Test
     void testFiftyMovesRule() {
@@ -52,7 +66,7 @@ class FiftyMovesRuleTest {
         var config = new GameConfig(
                 MyChessEngine.class,
                 new EngineConfig.Builder().enableFiftyMovesRule(false)
-                        .setTranspositionTable(TestSupport.createTestTT()).build()
+                        .setTranspositionTable(tt).build()
         );
         var game = importer.importGame(config);
 

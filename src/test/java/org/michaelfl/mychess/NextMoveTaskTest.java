@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.michaelfl.mychess.engines.MyChessEngine;
@@ -15,12 +17,24 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class NextMoveTaskTest {
 
-    private static EngineConfig slowConfig() {
+    private TranspositionTable tt;
+
+    @BeforeEach
+    void setup() {
+        tt = TestSupport.createTestTT();
+    }
+
+    @AfterEach
+    void tearDown() {
+        tt.close();
+    }
+
+    private static EngineConfig slowConfig(TranspositionTable tt) {
         return new EngineConfig.Builder()
                 .maxDepth(20)
                 .millisPerMove(60_000)
                 .silent(true)
-                .setTranspositionTable(TestSupport.createTestTT())
+                .setTranspositionTable(tt)
                 .build();
     }
 
@@ -51,10 +65,14 @@ class NextMoveTaskTest {
     void cancelSetsTheFlag() {
         // Submit a long-running search via the engine so the future is wired up.
         var game = GameImporter.importerFor("1. e4 e5").importGame(
-                new GameConfig(MyChessEngine.class, slowConfig()));
+                new GameConfig(MyChessEngine.class, slowConfig(tt)));
         var task = game.getEngine().nextMoveAsync();
-        task.cancel();
-        assertTrue(task.isCanceled(), "After cancel(), isCanceled() must be true");
+        try {
+            task.cancel();
+            assertTrue(task.isCanceled(), "After cancel(), isCanceled() must be true");
+        } finally {
+            game.shutdown();
+        }
     }
 
     @Test
@@ -63,7 +81,7 @@ class NextMoveTaskTest {
         // 60-second budget per move with a deep search — getResult with a very small
         // timeout must throw TimeoutException.
         var game = GameImporter.importerFor("1. e4 e5").importGame(
-                new GameConfig(MyChessEngine.class, slowConfig()));
+                new GameConfig(MyChessEngine.class, slowConfig(tt)));
         var task = game.getEngine().nextMoveAsync();
 
         try {

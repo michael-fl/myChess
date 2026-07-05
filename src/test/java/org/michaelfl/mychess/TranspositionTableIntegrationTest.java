@@ -1,8 +1,10 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
-import org.michaelfl.mychess.TranspositionTable.TTEntry;
+import org.michaelfl.mychess.TranspositionTable.TTEntryView;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
 
@@ -24,6 +26,18 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * @author Michael Fleischhauer
  */
 class TranspositionTableIntegrationTest {
+
+    private TranspositionTable tt;
+
+    @BeforeEach
+    void setup() {
+        tt = TestSupport.createTestTT();
+    }
+
+    @AfterEach
+    void tearDown() {
+        tt.close();
+    }
 
     private static EngineConfig configWith(TranspositionTable tt) {
         return new EngineConfig.Builder()
@@ -51,7 +65,6 @@ class TranspositionTableIntegrationTest {
     @Test
     @Timeout(value = 30, unit = TimeUnit.SECONDS)
     void afterSearch_ttContainsPostBestMoveEntry() throws Exception {
-        var tt = TestSupport.createTestTT();
         var game = GameImporter.importerFor("1. e4 e5").importGame(
                 new GameConfig(MyChessEngine.class, configWith(tt)));
 
@@ -61,7 +74,7 @@ class TranspositionTableIntegrationTest {
         // searched by alphaBetaSearchPre at depth 1 of the root iteration
         // and therefore must end up in the TT.
         long postMoveHash = hashAfterMove(game, move.move());
-        TTEntry entry = tt.get(postMoveHash);
+        TTEntryView entry = tt.get(postMoveHash);
 
         assertNotNull(entry,
                 "TT must contain an entry for the position reached by playing the engine's "
@@ -76,15 +89,14 @@ class TranspositionTableIntegrationTest {
         // search's lookup of the shared post-move hash must hit an entry
         // populated by the first search (later overwritten or kept by the
         // depth-preferred policy, but never null).
-        var sharedTT = TestSupport.createTestTT();
 
         // Knight-only moves so neither sequence leaves an en-passant
         // square nor resets the half-move clock — those would otherwise
         // diverge between the two move orders and break the precondition.
         var gameA = GameImporter.importerFor("1. Nf3 Nf6 2. Nc3 Nc6").importGame(
-                new GameConfig(MyChessEngine.class, configWith(sharedTT)));
+                new GameConfig(MyChessEngine.class, configWith(tt)));
         var gameB = GameImporter.importerFor("1. Nc3 Nc6 2. Nf3 Nf6").importGame(
-                new GameConfig(MyChessEngine.class, configWith(sharedTT)));
+                new GameConfig(MyChessEngine.class, configWith(tt)));
 
         // Precondition: after both games have played their move 2, the
         // resulting positions transpose to the same Zobrist hash.
@@ -103,7 +115,7 @@ class TranspositionTableIntegrationTest {
         // overwritten by gameB's search but never dropped).
         gameB.getEngine().nextMoveAsync().getResult(30, TimeUnit.SECONDS);
 
-        assertNotNull(sharedTT.get(postMoveHashA),
+        assertNotNull(tt.get(postMoveHashA),
                 "after the second (transposed) search, the TT must still hold an entry "
                         + "for the position the first search populated");
     }
@@ -111,7 +123,6 @@ class TranspositionTableIntegrationTest {
     @Test
     @Timeout(value = 30, unit = TimeUnit.SECONDS)
     void clear_dropsEntriesPopulatedBySearch() throws Exception {
-        var tt = TestSupport.createTestTT();
         var game = GameImporter.importerFor("1. e4 e5").importGame(
                 new GameConfig(MyChessEngine.class, configWith(tt)));
 

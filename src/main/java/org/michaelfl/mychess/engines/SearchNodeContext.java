@@ -332,7 +332,7 @@ public record SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnown
      *               +----+----+----+----+----+      [M1, TT] with no tail
      * }</pre>
      *
-     * @param ttMove the {@link TranspositionTable.TTEntry#getBestMove()}
+     * @param ttMove the {@link TranspositionTable.TTEntryView#getBestMove()}
      *               of the entry being returned. Must be non-zero; the
      *               TT only stores the best move alongside a real score.
      */
