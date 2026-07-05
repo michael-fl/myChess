@@ -968,6 +968,8 @@ Each record carries five fields:
 
 The default singleton is `2^22` entries (~96 MB at 24 bytes per entry), raised from the original `2^20` in v4.0.1 after analysis showed that at TC 40/60 the smaller table got rewritten ~30-60× per game and lost much of its mid-depth signal to evictions; tests use isolated `2^14`-entry instances via `TestSupport.createTestTT()` (see "Lifecycle" below).
 
+The v4.0.3 off-heap rewrite delivered **+15.6 ± 9.8 Elo** against the v4.0.2 in-heap layout (3200-game fixed-N match at TC 40/60, LOS 99.9 %). The gain is attributed to two combined effects: cache locality (a 4-slot bucket occupies ~96 bytes contiguous — about 1.5 cache lines — versus a `TTEntry[]` variant where each of the four referenced Java objects may reside on a separate cache line, worst case 5-8 cache-line loads per bucket scan) and reduced Serial-GC card-table work (the old generation no longer contains 4 M `TTEntry` reference cells that must be scanned on every minor collection).
+
 ### Lookup
 
 The lookup happens in [`PositionSearch.alphaBetaSearchPre`](../src/main/java/org/michaelfl/mychess/engines/PositionSearch.java) before recursion into the move loop:
