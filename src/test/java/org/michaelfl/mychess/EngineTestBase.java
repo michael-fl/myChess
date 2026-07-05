@@ -21,9 +21,13 @@ public class EngineTestBase {
 
     @SuppressWarnings("SameParameterValue")
     protected static EngineConfig engineConfig() {
+        return engineConfig(TestSupport.createTestTT());
+    }
+
+    protected static EngineConfig engineConfig(TranspositionTable tt) {
         return new EngineConfig.Builder()
                 .maxDepth(8)
-                .setTranspositionTable(TestSupport.createTestTT())
+                .setTranspositionTable(tt)
                 .build();
     }
 
@@ -103,6 +107,8 @@ public class EngineTestBase {
 
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException(e);
+        } finally {
+            config.getEngineWhiteConfig().getTranspositionTable().close();
         }
     }
 
