@@ -1,5 +1,9 @@
 package org.michaelfl.mychess;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Forsyth–Edwards Notation (FEN) import and export for {@link Board}.
  *
@@ -7,8 +11,73 @@ package org.michaelfl.mychess;
  */
 final class Fen {
 
+    /**
+     * All 960 canonical game-starting FENs: standard chess (position 518)
+     * plus the 959 Chess960 setups. Populated once from
+     * {@link Chess960StartPositions} and used by
+     * {@link #requireStartFen(String)} for O(1) membership checks. Each
+     * position appears in the set twice — once in the Shredder form
+     * ({@code fenById} directly returns that) and once in the classical
+     * {@code KQkq} shorthand — so both castling-right spellings a caller
+     * might realistically pass are accepted.
+     */
+    private static final Set<String> START_FENS = loadStartFenSet();
+
     private Fen() {
         throw new IllegalStateException("Utility class");
+    }
+
+    /**
+     * Validate that {@code fen} is one of the 960 canonical game-starting
+     * FENs — either the classical chess initial position or one of the
+     * 959 Chess960 setups — as enumerated by {@link Chess960StartPositions}.
+     * Both the Shredder ({@code HAha}, {@code HFhf}, …) and the classical
+     * {@code KQkq} spelling of the castling-rights field are accepted.
+     *
+     * <p>This is stricter than {@link #importFEN(String)}, which accepts
+     * any legal FEN including mid-game snapshots. Use this at API
+     * boundaries that promise to start a fresh game from the given
+     * position — mid-game FENs, wrong side to move, partial castling
+     * rights, non-zero move counters, and asymmetric back ranks are all
+     * rejected as programmer error rather than silently misparsed
+     * downstream.
+     *
+     * @throws IllegalArgumentException when {@code fen} is null or not
+     *         one of the 960 canonical starting FENs
+     */
+    static void requireStartFen(String fen) {
+        if (fen == null) {
+            throw new IllegalArgumentException("start FEN must not be null");
+        }
+        if (!START_FENS.contains(fen.trim())) {
+            throw new IllegalArgumentException(
+                    "not a valid game starting position — expected the standard chess "
+                            + "initial position or one of the 960 Chess960 setups (see "
+                            + Chess960StartPositions.class.getSimpleName() + "), got: " + fen);
+        }
+    }
+
+    private static Set<String> loadStartFenSet() {
+        HashSet<String> set = HashSet.newHashSet(Chess960StartPositions.COUNT * 3);
+        for (int i = 0; i < Chess960StartPositions.COUNT; i++) {
+            var shredderFen = Chess960StartPositions.fenById(i);
+            set.add(shredderFen);
+            set.add(withClassicalCastlingRights(shredderFen));
+        }
+
+        return Collections.unmodifiableSet(set);
+    }
+
+    /**
+     * Return {@code fen} with the castling-rights field (field 3) replaced
+     * by the classical {@code KQkq} shorthand. Used only during set init
+     * to seed the classical spelling alongside the Shredder one.
+     */
+    private static String withClassicalCastlingRights(String fen) {
+        var fields = fen.split(" ");
+        fields[2] = "KQkq";
+
+        return String.join(" ", fields);
     }
 
     /**

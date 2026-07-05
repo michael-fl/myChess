@@ -392,4 +392,124 @@ class PgnTest {
     void testPgnStartsWithBlack() {
         testPGN(PGN_9, Result.BLACK_WINS, 71);
     }
+
+    // -------------------------------------------------------------------
+    // PGN tag pair parsing — {@code [Key "Value"]} lines populate a
+    // structured tags map on the parsed {@link Pgn}, alongside the raw
+    // notation. Both the map lookup helpers and the specialized
+    // {@link Pgn#getStartFen()} / {@link Pgn#isChess960()} accessors are
+    // covered here.
+    // -------------------------------------------------------------------
+
+    private static final String CHESS960_START_FEN =
+            "bnrqkrnb/pppppppp/8/8/8/8/PPPPPPPP/BNRQKRNB w KQkq - 0 1";
+
+    private static Pgn parseSingle(String pgnString) {
+        return Pgn.parse(pgnString).findFirst()
+                .orElseThrow(() -> new IllegalStateException("no PGN parsed"));
+    }
+
+    @Test
+    void tags_parsedFromStandardHeaders() {
+        var pgn = parseSingle(PGN_1);
+
+        assertEquals("48. Rilton Cup 2018-19", pgn.getTag("Event"), "Event tag value");
+        assertEquals("Stockholm SWE", pgn.getTag("Site"), "Site tag value");
+        assertEquals("Donchenko, Alexander", pgn.getTag("White"), "White tag value");
+        assertEquals("Eggleston, David J", pgn.getTag("Black"), "Black tag value");
+        assertEquals("1-0", pgn.getTag("Result"), "Result tag value");
+        assertEquals("D37", pgn.getTag("ECO"), "ECO tag value");
+        assertEquals(11, pgn.tags.size(), "expected tag pair count for PGN_1");
+    }
+
+    @Test
+    void tags_getTag_returnsNullForMissingKey() {
+        var pgn = parseSingle(PGN_1);
+
+        assertNull(pgn.getTag("FEN"), "PGN_1 has no FEN tag");
+        assertNull(pgn.getTag("Variant"), "PGN_1 has no Variant tag");
+        assertNull(pgn.getTag("NonExistent"), "unknown key returns null");
+    }
+
+    @Test
+    void tags_emptyMap_whenPgnHasNoHeaders() {
+        var headerlessPgn = "1. e4 e5 2. Nf3 Nc6 *";
+
+        var pgn = parseSingle(headerlessPgn);
+
+        assertTrue(pgn.tags.isEmpty(), "headerless PGN has no tag pairs");
+    }
+
+    @Test
+    void getStartFen_returnsFenTagValue() {
+        var pgn = parseSingle(PGN_9);
+
+        assertEquals("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1",
+                pgn.getStartFen(), "starting FEN taken from [FEN \"...\"] tag pair");
+    }
+
+    @Test
+    void getStartFen_returnsNullWhenAbsent() {
+        var pgn = parseSingle(PGN_1);
+
+        assertNull(pgn.getStartFen(), "PGN_1 has no [FEN] tag");
+    }
+
+    @Test
+    void isChess960_recognizesChess960Variant() {
+        var pgnString = """
+                [Event "Test"]
+                [Variant "Chess960"]
+                [SetUp "1"]
+                [FEN "%s"]
+
+                1. g3 Nf6 *
+                """.formatted(CHESS960_START_FEN);
+
+        assertTrue(parseSingle(pgnString).isChess960(), "[Variant \"Chess960\"] recognized");
+    }
+
+    @Test
+    void isChess960_recognizesFischerrandomVariant() {
+        var pgnString = """
+                [Event "Test"]
+                [Variant "fischerandom"]
+                [SetUp "1"]
+                [FEN "%s"]
+
+                1. g3 Nf6 *
+                """.formatted(CHESS960_START_FEN);
+
+        assertTrue(parseSingle(pgnString).isChess960(),
+                "cutechess-style [Variant \"fischerandom\"] recognized (case-insensitive)");
+    }
+
+    @Test
+    void isChess960_returnsFalseForStandardChess() {
+        assertFalse(parseSingle(PGN_1).isChess960(), "standard PGN without Variant tag is not Chess960");
+
+        var pgnStd = """
+                [Event "Test"]
+                [Variant "Standard"]
+
+                1. e4 e5 *
+                """;
+        assertFalse(parseSingle(pgnStd).isChess960(), "[Variant \"Standard\"] is not Chess960");
+    }
+
+    @Test
+    void tags_preserveInsertionOrder() {
+        var pgnString = """
+                [Zebra "z"]
+                [Alpha "a"]
+                [Middle "m"]
+
+                1. e4 *
+                """;
+
+        var keys = parseSingle(pgnString).tags.keySet().toArray(new String[0]);
+
+        assertArrayEquals(new String[] { "Zebra", "Alpha", "Middle" }, keys,
+                "tag pairs preserve source order (LinkedHashMap iteration)");
+    }
 }
