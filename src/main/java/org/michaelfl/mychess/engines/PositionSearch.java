@@ -103,10 +103,13 @@ public final class PositionSearch {
         MoveAndWeight bestPath = null;
         // Clamp to MAX_SEARCH_DEPTH so a UCI `go depth 5000` (or the default
         // Integer.MAX_VALUE for depth-unlimited go commands) cannot drive the
-        // iteration loop into a runaway — see MAX_SEARCH_DEPTH JavaDoc.
+        // iteration loop into a runaway — see MAX_SEARCH_DEPTH Javadoc.
         final int maxDepth = Math.min(engineConfig.getMaxDepth(), MAX_SEARCH_DEPTH);
         final long startMs = System.currentTimeMillis();
         long previousIterationEndMs = startMs;
+
+        // Increment generation counter on each root search
+        tt.nextGeneration();
 
         for (int depth = 1; depth <= maxDepth && !isTimeout(); depth++) {
             if (depth > 1 && shouldSkipIteration(depth)) {
