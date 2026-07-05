@@ -37,7 +37,11 @@ class TranspositionTableTest {
         tt.close();
     }
 
+    // The constructors below throw before returning; no TranspositionTable
+    // instance is ever created, so the IDE's "AutoCloseable used outside
+    // try-with-resources" warning is a false positive here.
     @Test
+    @SuppressWarnings("resource")
     void constructor_rejectsNonPowerOfTwo() {
         assertThrows(IllegalArgumentException.class, () -> new TranspositionTable(3),
                 "size 3 is not a power of two");
