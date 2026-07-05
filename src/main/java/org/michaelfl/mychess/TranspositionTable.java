@@ -25,7 +25,7 @@ import java.lang.foreign.ValueLayout;
  * <p>Slots are grouped into fixed-size <em>buckets</em> of
  * {@value #BUCKET_SIZE} slots each. The hash function masks the low
  * {@code log2(size / BUCKET_SIZE)} bits of the 64-bit Zobrist key to
- * pick a bucket, then {@link #get(long)} scans all {@value #BUCKET_SIZE}
+ * pick a bucket. Then {@link #get(long)} scans all {@value #BUCKET_SIZE}
  * slots of that bucket linearly, repositioning the reused view on each,
  * and returns the view whose stored {@code hashKey} matches the argument
  * exactly (full 64-bit identity check). Up to {@value #BUCKET_SIZE}
@@ -43,7 +43,7 @@ import java.lang.foreign.ValueLayout;
  * <ul>
  *   <li><b>Same key already present.</b> If the incumbent is a strictly
  *       deeper {@link Bound#EXACT} entry, the put is a no-op (do not lose
- *       depth to a shallow re-visit). Otherwise the incumbent slot is
+ *       depth to a shallow re-visit). Otherwise, the incumbent slot is
  *       overwritten in place.</li>
  *   <li><b>Key not in bucket.</b> Evict the entry with the <em>lowest</em>
  *       stored {@code depth}. Ties are broken against {@link Bound#EXACT}
@@ -233,10 +233,7 @@ public final class TranspositionTable implements AutoCloseable {
     /** Arena owning the off-heap memory for this table. Closed by {@link #close()}. */
     private final Arena arena = Arena.ofShared();
 
-    /** Number of table slots. Always a power of two, and always at least {@value #BUCKET_SIZE}. */
-    private final int size;
-
-    /** Number of buckets in the table ({@code size / BUCKET_SIZE}). Also a power of two. */
+    /** Number of buckets in the table ({@code size / BUCKET_SIZE}). Also, a power of two. */
     private final int hashSize;
 
     /** Contiguous off-heap storage for all serialized table entries ({@code size * ENTRY_SIZE} bytes). */
@@ -263,9 +260,8 @@ public final class TranspositionTable implements AutoCloseable {
             throw new IllegalArgumentException("size must be power of two");
         }
 
-        this.size = size;
         this.hashSize = size / BUCKET_SIZE;
-        this.memory = arena.allocate(size * ENTRY_SIZE, 8); // all bytes 0-initialised
+        this.memory = arena.allocate(size * ENTRY_SIZE, 8); // all bytes 0-initialized
     }
 
     /**
@@ -333,7 +329,7 @@ public final class TranspositionTable implements AutoCloseable {
      * argument exactly (full 64-bit identity). If none of the
      * {@value #BUCKET_SIZE} slots holds this key, returns {@code null}.
      * The returned view is the live positioned view — callers must not
-     * retain it across a subsequent {@link #get(long)} or
+     * retain it across a subsequent {@code get} or
      * {@link #put(long, int, int, Bound, int)} call, because either will
      * reposition it.
      */
@@ -360,7 +356,7 @@ public final class TranspositionTable implements AutoCloseable {
      *   <li><b>Same key present.</b> If the incumbent is a strictly
      *       deeper {@link Bound#EXACT} entry, this call is a no-op —
      *       the deeper cached result would be lost to a shallower
-     *       re-visit. Otherwise the incumbent slot is overwritten in
+     *       re-visit. Otherwise, the incumbent slot is overwritten in
      *       place with the new fields.</li>
      *   <li><b>Key not in bucket.</b> The loop tracks an eviction
      *       candidate as it scans: the slot with the lowest {@code depth},
@@ -372,12 +368,11 @@ public final class TranspositionTable implements AutoCloseable {
      * <p>Because the table shares a single reusable {@link TTEntryView},
      * the scan captures each slot's {@code depth} and {@code bound} in
      * local primitives rather than holding a second live view. After the
-     * scan, the view is repositioned once on the chosen slot for the
-     * write.
+     * scan, the view is repositioned once on the chosen slot for write.
      *
      * <p>Mate-score depth adjustment is the caller's responsibility:
      * pass the score already converted to "mate-in-N from this position"
-     * (see {@link WeightingFunction#scoreToTT(int, int)}). Likewise the
+     * (see {@link WeightingFunction#scoreToTT(int, int)}). Likewise, the
      * {@code depth} argument is the {@code remainingDepth} at which the
      * score was searched, not the distance from the root.
      *
