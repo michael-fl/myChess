@@ -432,4 +432,101 @@ class WeightingFunctionTest {
         assertEquals(0.41f, scoreWithoutEp, 0.05f,
                 "Score without en-passant target must be stable around the fixed baseline");
     }
+
+    // ---------- getMaterialWeightOfMove ----------
+    // Centipawn material delta of a single packed move, sign-positive
+    // (returns |gain|). Covers every branch of the switch: sentinel 0,
+    // normal quiet move, normal capture, en-passant (previously missing —
+    // regression anchor), each of the four promotion targets, promotion
+    // with capture, and castling.
+
+    private static final int PAWN_CP = 100;
+
+    @Test
+    void materialWeightOfMove_sentinelZero_returnsZero() {
+        assertEquals(0, WeightingFunction.getMaterialWeightOfMove(0),
+                "the null-move sentinel has no material delta");
+    }
+
+    @Test
+    void materialWeightOfMove_normalMoveWithoutCapture_returnsZero() {
+        int move = Move.create(Board.e2, Board.e4, Board.empty, Move.typeNormal);
+
+        assertEquals(0, WeightingFunction.getMaterialWeightOfMove(move),
+                "quiet moves have no material delta");
+    }
+
+    @Test
+    void materialWeightOfMove_normalCapture_returnsCapturedWeight() {
+        int move = Move.create(Board.f3, Board.e5, Board.blackKnight, Move.typeNormal);
+
+        assertEquals(300, WeightingFunction.getMaterialWeightOfMove(move),
+                "a normal capture reports the captured piece's centipawn value");
+    }
+
+    @Test
+    void materialWeightOfMove_enPassantCapture_returnsPawnWeight() {
+        // En-passant captures a pawn — the fix locks this in. Before the fix
+        // this branch fell through to the switch default and returned 0,
+        // silently under-weighting en-passant in delta-pruning and the
+        // material-only shortcut in PositionSearch.
+        int move = Move.create(Board.d5, Board.e6, Board.blackPawn, Move.typeEnPassant);
+
+        assertEquals(PAWN_CP, WeightingFunction.getMaterialWeightOfMove(move),
+                "en-passant captures a pawn — the returned value must reflect that");
+    }
+
+    @Test
+    void materialWeightOfMove_promotionToQueen_noCapture_returnsQueenMinusPawn() {
+        int move = Move.create(Board.a7, Board.a8, Board.empty, Move.typePawnPromotionQueen);
+
+        assertEquals(900 - PAWN_CP, WeightingFunction.getMaterialWeightOfMove(move),
+                "queen promotion adds queen weight, subtracts the consumed pawn's weight");
+    }
+
+    @Test
+    void materialWeightOfMove_promotionToKnight_noCapture_returnsKnightMinusPawn() {
+        int move = Move.create(Board.a7, Board.a8, Board.empty, Move.typePawnPromotionKnight);
+
+        assertEquals(300 - PAWN_CP, WeightingFunction.getMaterialWeightOfMove(move));
+    }
+
+    @Test
+    void materialWeightOfMove_promotionToRook_noCapture_returnsRookMinusPawn() {
+        int move = Move.create(Board.a7, Board.a8, Board.empty, Move.typePawnPromotionRook);
+
+        assertEquals(500 - PAWN_CP, WeightingFunction.getMaterialWeightOfMove(move));
+    }
+
+    @Test
+    void materialWeightOfMove_promotionToBishop_noCapture_returnsBishopMinusPawn() {
+        int move = Move.create(Board.a7, Board.a8, Board.empty, Move.typePawnPromotionBishop);
+
+        assertEquals(300 - PAWN_CP, WeightingFunction.getMaterialWeightOfMove(move));
+    }
+
+    @Test
+    void materialWeightOfMove_promotionWithCapture_returnsPromotedMinusPawnPlusCaptured() {
+        int move = Move.create(Board.b7, Board.a8, Board.blackKnight, Move.typePawnPromotionQueen);
+
+        // Gain: promoted queen (+900) - consumed pawn (-100) + captured knight (+300) = 1100
+        assertEquals(900 - PAWN_CP + 300, WeightingFunction.getMaterialWeightOfMove(move),
+                "promotion-with-capture aggregates promotion delta and captured-piece value");
+    }
+
+    @Test
+    void materialWeightOfMove_castlingKingSide_returnsZero() {
+        int move = Move.create(Board.e1, Board.g1, Board.empty, Move.typeCastlingKingSide);
+
+        assertEquals(0, WeightingFunction.getMaterialWeightOfMove(move),
+                "castling produces no material delta");
+    }
+
+    @Test
+    void materialWeightOfMove_castlingQueenSide_returnsZero() {
+        int move = Move.create(Board.e1, Board.c1, Board.empty, Move.typeCastlingQueenSide);
+
+        assertEquals(0, WeightingFunction.getMaterialWeightOfMove(move),
+                "castling produces no material delta");
+    }
 }

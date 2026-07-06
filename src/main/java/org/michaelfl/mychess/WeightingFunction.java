@@ -165,12 +165,17 @@ public final class WeightingFunction {
         return piecesWeight[0] - piecesWeight[1];
     }
 
-    /** Get material weight of move in centi pawns. */
+    /** Get material weight of move in centi pawns. The returned value is always a positive number. */
     public static int getMaterialWeightOfMove(int move) {
+        if (move == 0) {
+            return 0;
+        }
+
         final int capturedWeight = WeightingFunction.weightOfPiece[Move.getCapturedPiece(move)];
         final byte moveType = Move.getMoveType(move);
-        if (moveType == Move.typeNormal)
+        if (moveType == Move.typeNormal || moveType == Move.typeEnPassant) {
             return capturedWeight;
+        }
 
         final int pawnWeight = weightOfPiece[Board.whitePawn];
         return switch (moveType) {
