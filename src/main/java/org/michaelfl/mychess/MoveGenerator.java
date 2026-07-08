@@ -46,6 +46,7 @@ public final class MoveGenerator {
     }
 
     private final MoveSorter moveSorter;
+    private final boolean allPromotions;
 
     private GameStatus gameStatus;
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
@@ -55,8 +56,34 @@ public final class MoveGenerator {
     private int oppositeKing;
     private boolean containsIllegalMove;
 
+    /**
+     * Standard production constructor. Under-promotion set is
+     * {@code Q, R, N} — the bishop under-promotion is skipped because
+     * a queen strictly dominates a bishop on both diagonals, making
+     * bishop promotion never the objectively best move (unlike rook,
+     * which can be the unique winning promotion in stalemate-avoidance
+     * situations, and knight, which reaches squares queens cannot).
+     * Equivalent to {@link #MoveGenerator(MoveSorter, boolean)
+     * MoveGenerator(moveSorter, false)}.
+     */
     public MoveGenerator(MoveSorter moveSorter) {
+        this(moveSorter, false);
+    }
+
+    /**
+     * Full constructor with control over the under-promotion set.
+     *
+     * @param allPromotions {@code false} for the production set
+     *                      ({@code Q, R, N} — bishop skipped);
+     *                      {@code true} for the exhaustive set
+     *                      ({@code Q, R, N, B}). Perft tests use
+     *                      {@code true} so leaf counts match the
+     *                      canonical Chess-Programming-Wiki values
+     *                      exactly.
+     */
+    public MoveGenerator(MoveSorter moveSorter, boolean allPromotions) {
         this.moveSorter = moveSorter;
+        this.allPromotions = allPromotions;
     }
 
     /**
@@ -162,6 +189,10 @@ public final class MoveGenerator {
             // Pawn promotion
             addMove(from, to, Board.whitePawn, board[to], Move.typePawnPromotionQueen);
             addMove(from, to, Board.whitePawn, board[to], Move.typePawnPromotionKnight);
+            addMove(from, to, Board.whitePawn, board[to], Move.typePawnPromotionRook);
+            if (allPromotions) {
+                addMove(from, to, Board.whitePawn, board[to], Move.typePawnPromotionBishop);
+            }
         } else {
             addMove(from, to, Board.whitePawn, board[to], Move.typeNormal);
         }
@@ -172,6 +203,10 @@ public final class MoveGenerator {
             // Pawn promotion
             addMove(from, to, Board.blackPawn, board[to], Move.typePawnPromotionQueen);
             addMove(from, to, Board.blackPawn, board[to], Move.typePawnPromotionKnight);
+            addMove(from, to, Board.blackPawn, board[to], Move.typePawnPromotionRook);
+            if (allPromotions) {
+                addMove(from, to, Board.blackPawn, board[to], Move.typePawnPromotionBishop);
+            }
         } else {
             addMove(from, to, Board.blackPawn, board[to], Move.typeNormal);
         }
