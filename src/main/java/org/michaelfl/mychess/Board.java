@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.michaelfl.mychess.Assert.__assert;
 import static org.michaelfl.mychess.ChessUtil.*;
 import static org.michaelfl.mychess.RandomNumbers.RANDOM_NUMBERS;
 
@@ -514,8 +513,29 @@ public final class Board {
         // En passant right
         byte enPassantField = getEnPassantField(movedPiece, fromField, toField);
 
+        int materialWeightOfMove = WeightingFunction.getMaterialWeightOfMove(move);
+
         // New game status
-        push(new GameStatus(gameStatus.getPlyCount() + 1, gameStatus.getOppositeColor(), move, newHalfMoveClock, newCastlingState, enPassantField, newPositionHash));
+        push(getGameStatus().switchTurn(move, newHalfMoveClock, newCastlingState, enPassantField, newPositionHash));
+    }
+
+    public void makeNullMove() {
+        final GameStatus gameStatus = getGameStatus();
+        long newPositionHash = gameStatus.getPositionHash();
+
+        // Clear en-passant field
+        newPositionHash = clearEnPassantHashContribution(newPositionHash, false);
+
+        // Switch turn
+        newPositionHash ^= RANDOM_NUMBERS[TURN_INDEX];
+
+        // New game status
+        push(getGameStatus().switchTurn(
+                0, // no actual move
+                0, // reset half move clock
+                gameStatus.getCastlingState(),
+                (byte) 0, // reset en-passant field
+                newPositionHash));
     }
 
     static byte getEnPassantField(byte movedPiece, byte fromField, byte toField) {
@@ -615,7 +635,7 @@ public final class Board {
         return printSymbols[piece];
     }
 
-    byte get(int field) {
+    public byte get(int field) {
         return board[field];
     }
 
@@ -932,6 +952,17 @@ public final class Board {
 
         int move = getGameStatus().getLastMove();
         MOVE_REVERT_FUNCTIONS[Move.getMoveType(move)].revert(this, move);
+        pop();
+    }
+
+    public void revertNullMove() {
+        if (stackSize <= 1) {
+            throw new IllegalStateException("No move to revert");
+        }
+        if (getGameStatus().getLastMove() != 0) {
+            throw new IllegalStateException("Previous move wasn't a null move");
+        }
+
         pop();
     }
 
@@ -1632,5 +1663,41 @@ public final class Board {
         }
 
         return true;
+    }
+
+    /**
+     * From-scratch sum of non-pawn material per side, in centipawns.
+     * Returns a two-element array where index 0 is White and index 1
+     * is Black. Pawns are excluded from the count; kings weigh 0 by
+     * convention, so they do not affect the totals either. Empty and
+     * off-board squares are skipped.
+     *
+     * <p>Used at boundary points where the incremental counter on
+     * {@link GameStatus} needs to be seeded or verified — FEN import,
+     * position encoding, the sanity check in the {@code Board}
+     * constructor. Not called on the hot search path; the search
+     * consults {@link GameStatus#getWhiteNonPawnMaterialWeight()} /
+     * {@link GameStatus#getBlackNonPawnMaterialWeight()} instead,
+     * which are maintained incrementally by
+     * {@link GameStatus#switchTurn(int, int, int, byte, long)}.
+     *
+     * <p>The invariant every test in {@code NonPawnMaterialWeightTest}
+     * defends: at every point in a game, this recomputation from the
+     * current raw board must equal the incrementally-tracked pair on
+     * the current {@link GameStatus}.
+     */
+    public static int[] calculateNonPawnMaterialWeights(byte[] rawBoard) {
+        final int[] materialWeights = new int[2];
+        final int stopField = Board.h8 + 1;
+
+        for (int field = Board.a1; field < stopField; field++) {
+            final byte piece = rawBoard[field];
+            if (piece != Board.empty && piece != Board.illegal && !Board.isPawn(piece)) {
+                final int color = (piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE ? 0 : 1;
+                materialWeights[color] += WeightingFunction.weightOfPiece[piece];
+            }
+        }
+
+        return materialWeights;
     }
 }

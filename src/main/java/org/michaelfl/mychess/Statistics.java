@@ -11,6 +11,7 @@ package org.michaelfl.mychess;
 @SuppressWarnings("unused")
 public final class Statistics {
     private long positionsCount;
+    private long nmpCutoffCount;
     private long prunedMovesCount;
     private int maximumReachedDepth;
     private long quiescencePositionsCountTotal;
@@ -20,6 +21,10 @@ public final class Statistics {
 
     public void incrPositionCount() {
         positionsCount++;
+    }
+
+    public void incrNmpCutoffCount() {
+        nmpCutoffCount++;
     }
 
     public void incrQuiescencePositionsCount() {
@@ -53,6 +58,10 @@ public final class Statistics {
         return positionsCount;
     }
 
+    public long getNmpCutoffCount() {
+        return nmpCutoffCount;
+    }
+
     public long getQuiescencePositionsCount() {
         return quiescencePositionsCountTotal;
     }
@@ -74,5 +83,19 @@ public final class Statistics {
 
     public int getMaximumReachedDepth() {
         return maximumReachedDepth;
+    }
+
+    @Override
+    public String toString() {
+        return "Statistics{" +
+                "positionsCount=" + positionsCount +
+                ", nmpCutoffCount=" + nmpCutoffCount +
+                ", prunedMovesCount=" + prunedMovesCount +
+                ", maximumReachedDepth=" + maximumReachedDepth +
+                ", quiescencePositionsCountTotal=" + quiescencePositionsCountTotal +
+                ", quiescencePositionsCountCurrent=" + quiescencePositionsCountCurrent +
+                ", quiescencePositionsCountMax=" + quiescencePositionsCountMax +
+                ", quiescenceSearchesCount=" + quiescenceSearchesCount +
+                '}';
     }
 }

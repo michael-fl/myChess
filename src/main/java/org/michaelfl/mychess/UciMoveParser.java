@@ -36,9 +36,9 @@ final class UciMoveParser {
         int fromField = fieldFromString(fromStr);
         byte piece = board.get(fromField);
 
-        int turn = isWhitePiece(piece) ? GameStatus.TURN_WHITE : GameStatus.TURN_BLACK;
+        int turn = ChessUtil.isWhitePiece(piece) ? GameStatus.TURN_WHITE : GameStatus.TURN_BLACK;
 
-        if (isKing(piece) && isCastlingMove(fromStr, toStr, board, turn)) {
+        if (ChessUtil.isKing(piece) && isCastlingMove(fromStr, toStr, board, turn)) {
             boolean kingSide = toStr.charAt(0) > fromStr.charAt(0);
             return MoveDescription.fromString(kingSide ? "O-O" : "O-O-O", turn);
         }
@@ -83,14 +83,6 @@ final class UciMoveParser {
         }
 
         return sb.toString();
-    }
-
-    private static boolean isKing(byte piece) {
-        return piece == Board.whiteKing || piece == Board.blackKing;
-    }
-
-    private static boolean isWhitePiece(byte piece) {
-        return piece >= Board.whitePawn && piece <= Board.whiteKing;
     }
 
     /**

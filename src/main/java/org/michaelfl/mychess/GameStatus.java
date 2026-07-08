@@ -3,8 +3,8 @@ package org.michaelfl.mychess;
 /**
  * Immutable per-ply state snapshot owned by {@link Board}: side to move,
  * castling-rights bitmask, en-passant target square, half-move clock, last
- * move and Zobrist position hash. Pushed before every {@code makeMove} and
- * popped on {@code revertMove}.
+ * move, Zobrist position hash, and cumulative non-pawn material per side.
+ * Pushed before every {@code makeMove} and popped on {@code revertMove}.
  *
  * @author Michael Fleischhauer
  */
@@ -19,6 +19,37 @@ public final class GameStatus {
 
     private static final byte INITIAL_CASTLING_STATE = 15;
     private static final long INITIAL_POSITION_HASH = -8376097377325274526L;
+
+    /**
+     * Zero-filled sentinel {@code [0, 0]} used by callers that build a
+     * throwaway {@code GameStatus} solely to feed
+     * {@link Board#calculatePositionHash(byte[], GameStatus)} — the hash
+     * calculator does not read the material fields, so seeding them with
+     * the correct values would be wasted work. The two live users are
+     * {@link Fen} and {@link PositionEncoding}, both of which discard the
+     * temporary status and build a second one with the actual material
+     * (via {@link Board#calculateNonPawnMaterialWeights(byte[])}) before
+     * constructing the {@link Board}.
+     *
+     * <p>Safe to share across many temporary statuses: the
+     * {@link #GameStatus GameStatus} constructor copies element-wise into
+     * its own array, so no caller can mutate this static through a
+     * constructed status.
+     */
+    static final int[] EMPTY_NON_PAWN_MATERIAL_WEIGHT = new int[2];
+
+    /**
+     * Per-side non-pawn material at the start of a fresh game:
+     * {@code 2R + 2N + 2B + 1Q = 3100} centipawns. Identical across
+     * standard chess and every Chess960 setup, since all 960 starting
+     * positions share the same piece set (just permuted on the back
+     * rank).
+     */
+    private static final int INITIAL_NON_PAWN_MATERIAL_WEIGHT =
+            WeightingFunction.weightOfPiece[Board.whiteRook] * 2
+                    + WeightingFunction.weightOfPiece[Board.whiteKnight] * 2
+                    + WeightingFunction.weightOfPiece[Board.whiteBishop] * 2
+                    + WeightingFunction.weightOfPiece[Board.whiteQueen];
 
     public static final int TURN_WHITE = 8;
     @SuppressWarnings("WeakerAccess")
@@ -118,11 +149,32 @@ public final class GameStatus {
      */
     private final byte enPassantField;
 
+    /**
+     * Cumulative non-pawn material per side in centipawns.
+     * {@code nonPawnMaterialWeight[0]} is White, {@code [1]} is Black.
+     * Maintained incrementally by
+     * {@link #switchTurn(int, int, int, byte, long)}: non-pawn captures
+     * subtract from the loser's slot, pawn promotions add the promoted
+     * piece's weight to the promoter's slot. Kings weigh 0 and pawns
+     * are excluded, so the initial value is 3100cp per side
+     * ({@code 2R + 2N + 2B + 1Q}) for both standard chess and every
+     * Chess960 setup.
+     *
+     * <p>Used for allocation-free non-pawn-material lookups on the hot
+     * search path (Q-search filtering, endgame detection, the
+     * zugzwang guard on null-move pruning). For a from-scratch
+     * recomputation over the raw board see
+     * {@link Board#calculateNonPawnMaterialWeights(byte[])}.
+     */
+    private final int[] nonPawnMaterialWeight = new int[2];
+
     private GameStatus() {
-        this(0, TURN_WHITE, 0, 0, INITIAL_CASTLING_STATE, (byte) 0, INITIAL_POSITION_HASH);
+        this(0, TURN_WHITE, 0, 0, INITIAL_CASTLING_STATE, (byte) 0,
+                INITIAL_POSITION_HASH, new int[] { INITIAL_NON_PAWN_MATERIAL_WEIGHT, INITIAL_NON_PAWN_MATERIAL_WEIGHT });
     }
 
-    GameStatus(int plyCount, int turn, int lastMove, int halfMoveClock, int castlingState, byte enPassantField, long positionHash) {
+    GameStatus(int plyCount, int turn, int lastMove, int halfMoveClock, int castlingState, byte enPassantField,
+               long positionHash, int[] nonPawnMaterialWeight) {
         this.plyCount = plyCount;
         this.turn = turn;
         this.lastMove = lastMove;
@@ -130,10 +182,97 @@ public final class GameStatus {
         this.castlingState = castlingState;
         this.positionHash = positionHash;
         this.enPassantField = enPassantField;
+        this.nonPawnMaterialWeight[0] = nonPawnMaterialWeight[0];
+        this.nonPawnMaterialWeight[1] = nonPawnMaterialWeight[1];
     }
 
     static GameStatus newGame() {
         return new GameStatus();
+    }
+
+    /**
+     * Build the {@code GameStatus} that follows this one after a move.
+     * Advances {@code plyCount} by one and flips the side to move; sets
+     * {@code lastMove}, {@code halfMoveClock}, {@code castlingState},
+     * {@code enPassantField} and {@code positionHash} to the values the
+     * caller has already computed. The reason this method exists rather
+     * than a raw constructor is the incremental update of
+     * {@link #nonPawnMaterialWeight} from the packed move:
+     * <ul>
+     *   <li>Non-pawn capture: subtract the captured piece's centipawn
+     *       weight from the loser's slot.</li>
+     *   <li>Pawn promotion (with or without capture): add the promoted
+     *       piece's centipawn weight to the promoter's slot. The
+     *       consumed pawn was never counted, so this simple add is
+     *       correct.</li>
+     *   <li>Everything else — quiet move, pawn move, pawn capture,
+     *       en-passant, castling — leaves both sides untouched. The new
+     *       status shares the parent's {@code nonPawnMaterialWeight}
+     *       array reference; the constructor copies element-wise into
+     *       its own array, so the aliasing is safe.</li>
+     * </ul>
+     *
+     * <p>Null-move handling: when {@code lastMove == 0} the whole
+     * material-update branch is skipped and the parent material is
+     * carried over unchanged. Callers (see {@link Board#makeNullMove()})
+     * are still responsible for passing the null-move-appropriate
+     * {@code halfMoveClock} (typically 0) and {@code enPassantField}
+     * (typically 0) themselves.
+     *
+     * @param lastMove       packed move that just completed, or {@code 0}
+     *                       for a null move
+     * @param halfMoveClock  new half-move clock (caller-computed)
+     * @param castlingState  new castling-rights bitmask
+     * @param enPassantField new en-passant target square, or {@code 0} if none
+     * @param positionHash   Zobrist hash of the resulting position
+     * @return the new immutable {@code GameStatus} to push onto the
+     *         Board's status stack
+     */
+    GameStatus switchTurn(int lastMove, int halfMoveClock, int castlingState, byte enPassantField, long positionHash) {
+        int[] newNonPawnMaterialWeight = this.nonPawnMaterialWeight;
+        if (lastMove != 0) {
+            final byte capturedPiece = Move.getCapturedPiece(lastMove);
+            final boolean pawnCaptured = Board.isPawn(capturedPiece);
+            final int nonPawnCaptureWeight = capturedPiece == 0 || pawnCaptured ? 0 : WeightingFunction.weightOfPiece[capturedPiece];
+            final int myNonPawnMaterialGain = getNonPawnMaterialGain(lastMove);
+
+            if (nonPawnCaptureWeight > 0 || myNonPawnMaterialGain > 0) {
+                if (turn == GameStatus.TURN_WHITE) {
+                    newNonPawnMaterialWeight = new int[]{nonPawnMaterialWeight[0] + myNonPawnMaterialGain, nonPawnMaterialWeight[1] - nonPawnCaptureWeight};
+                } else {
+                    newNonPawnMaterialWeight = new int[]{nonPawnMaterialWeight[0] - nonPawnCaptureWeight, nonPawnMaterialWeight[1] + myNonPawnMaterialGain};
+                }
+            }
+        }
+
+        return new GameStatus(getPlyCount() + 1, getOppositeColor(), lastMove,
+                halfMoveClock, castlingState, enPassantField, positionHash, newNonPawnMaterialWeight);
+    }
+
+    /**
+     * Centipawn non-pawn material gain from {@code move} for the side
+     * that just moved. Non-zero only for promotions — the promoted
+     * piece's weight, since the consumed pawn was never in the non-pawn
+     * total. Non-promotion moves return 0: captures do not shift
+     * material to the capturer's side (the captured piece is accounted
+     * for by subtracting from the loser in
+     * {@link #switchTurn(int, int, int, byte, long)}).
+     */
+    private static int getNonPawnMaterialGain(int move) {
+        if (move == 0) {
+            return 0;
+        }
+
+        final byte moveType = Move.getMoveType(move);
+        return switch (moveType) {
+            case Move.typeNormal -> //noinspection DuplicateBranchesInSwitch
+                    0; // opt for most likely case
+            case Move.typePawnPromotionQueen -> WeightingFunction.weightOfPiece[Board.whiteQueen];
+            case Move.typePawnPromotionKnight -> WeightingFunction.weightOfPiece[Board.whiteKnight];
+            case Move.typePawnPromotionRook -> WeightingFunction.weightOfPiece[Board.whiteRook];
+            case Move.typePawnPromotionBishop -> WeightingFunction.weightOfPiece[Board.whiteBishop];
+            default -> 0;
+        };
     }
 
     public int getPlyCount() {
@@ -190,6 +329,30 @@ public final class GameStatus {
     }
 
     /**
+     * White's cumulative non-pawn material in centipawns
+     * ({@code 2R + 2N + 2B + 1Q = 3100} at game start, minus what
+     * White has lost, plus what White has gained by promotion). See
+     * {@link #nonPawnMaterialWeight} for the tracking semantics.
+     */
+    public int getWhiteNonPawnMaterialWeight() {
+        return nonPawnMaterialWeight[0];
+    }
+
+    /**
+     * Black's cumulative non-pawn material in centipawns. See
+     * {@link #getWhiteNonPawnMaterialWeight()} for the semantics.
+     */
+    public int getBlackNonPawnMaterialWeight() {
+        return nonPawnMaterialWeight[1];
+    }
+
+    /** Has the side to move at least 1 non-pawn piece (king excluded)? */
+    public boolean hasNonPawnMaterial() {
+        final int index = getTurn() == TURN_WHITE ? 0 : 1;
+        return nonPawnMaterialWeight[index] > 0;
+    }
+
+    /**
      * The full six-bit castling-state bitmask for this ply — see the
      * {@link #castlingState} field documentation for the bit layout and
      * for the well-known integer values (initial position = 15, no
@@ -240,10 +403,6 @@ public final class GameStatus {
 
     public boolean isBlackCastlingQueenSidePossible() {
         return (castlingState & BIT_BLACK_CASTLING_QUEEN_SIDE_POSSIBLE) == BIT_BLACK_CASTLING_QUEEN_SIDE_POSSIBLE;
-    }
-
-    public GameStatus switchTurn() {
-        return new GameStatus(plyCount, getOppositeColor(), 0, halfMoveClock, castlingState, (byte) 0, positionHash);
     }
 
     @Override

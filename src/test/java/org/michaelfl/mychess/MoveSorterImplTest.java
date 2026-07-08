@@ -20,7 +20,7 @@ class MoveSorterImplTest {
         int lastMove = Move.create(Board.d4, toField, Board.empty, Move.typeNormal);
         int initialCastling = 15; // all four castling rights granted
         return new GameStatus(1, GameStatus.TURN_WHITE, lastMove, 0,
-                initialCastling, (byte) 0, 0L);
+                initialCastling, (byte) 0, 0L, new int[2]);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package org.michaelfl.mychess.engines;
 
+import org.jspecify.annotations.Nullable;
 import org.michaelfl.mychess.*;
 import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.TranspositionTable.Bound;
@@ -40,6 +41,17 @@ public final class PositionSearch {
      * time control (typical ≈ 8–12 plies).
      */
     public static final int MAX_SEARCH_DEPTH = 64;
+
+    /** Depth reduction R for null-move pruning. */
+    private static final int NMP_REDUCTION_R = 2;
+
+    /**
+     * Minimum plies the reduced child must still search for NMP to give
+     * meaningful signal (as opposed to a near-static probe).
+     * Setting this to 2 means the child sees at least 2 plies + quiescence,
+     * so it can detect two-ply threats and quiet build-ups.
+     */
+    private static final int NMP_MIN_CHILD_DEPTH = 2;
 
     private final NextMoveTask task;
     private final Game game;
@@ -322,7 +334,14 @@ public final class PositionSearch {
         }
 
         final int bestMove = ttEntryView != null ? ttEntryView.getBestMove() : 0;
-        final SearchNodeResult result = alphaBetaSearchMain(ctx, alphaWeight, betaWeight, bestMove);
+
+        // Null move pruning (NMP)
+        SearchNodeResult result = nmp(ctx, betaWeight);
+        if (result != null) {
+            return result;
+        }
+
+        result = alphaBetaSearchMain(ctx, alphaWeight, betaWeight, bestMove);
 
         if (!result.isTimeout() && !result.isIllegal()) {
             // Store result in transposition table
@@ -331,6 +350,35 @@ public final class PositionSearch {
         }
 
         return result;
+    }
+
+    private @Nullable SearchNodeResult nmp(final SearchNodeContext ctx, final int betaWeight) {
+        if (canDoNMP(ctx)) {
+            ctx.workingBoard().makeNullMove();
+            var result = alphaBetaSearch(
+                    new SearchNodeContext(ctx.depth() + 1, ctx.maxDepth() - NMP_REDUCTION_R, MoveAndWeight.NO_MOVE, -ctx.weightFactor(), -ctx.materialWeight(), -ctx.materialDelta(), ctx.workingBoard(), ctx.pvTable(), true),
+                    -betaWeight, -betaWeight + 1).negate();
+            ctx.workingBoard().revertNullMove();
+            ctx.truncateParentPv();
+
+            if (result.isTimeout()) {
+                return SearchNodeResult.TIMEOUT;
+            }
+            if (!result.isIllegal() && result.weight() >= betaWeight) { // beta cutoff
+                statistics.incrNmpCutoffCount();
+                return SearchNodeResult.create(GameResult.ONGOING, result.weight(), Bound.LOWER, 0);
+            }
+        }
+
+        return null;
+    }
+
+    private boolean canDoNMP(SearchNodeContext ctx) {
+        final GameStatus gameStatus = ctx.workingBoard().getGameStatus();
+
+        return gameStatus.hasNonPawnMaterial() // Has at least 1 non-pawn piece?
+                && ctx.remainingDepth() - 1 - NMP_REDUCTION_R >= NMP_MIN_CHILD_DEPTH // Child depth deep enough?
+                && !ctx.lastMoveWasNull(); // No consecutive null moves (makes no sense)
     }
 
     /**

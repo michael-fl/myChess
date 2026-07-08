@@ -353,18 +353,6 @@ __assert(() -> !(result.weight <= WeightingFunction.ILLEGAL_WEIGHT_NEG
 
 The trick wins because pseudo-legal generation is enormously cheaper, and alpha-beta pruning makes the extra ply mostly free at the leaves (illegal candidates get the worst possible score and are pruned immediately). The one place where the trick *doesn't* apply is **castling**, where the king must be safe on three specific squares including its current one — there the explicit attack test from [§ 4.3](#43-castling-legality) is unavoidable.
 
-**`Board.isKingChecked(MoveGenerator)`** uses the same trick for stand-alone "am I in check now?" queries (used by `MoveDescription` verification and by `Board.isCheckmate`):
-
-```java
-public boolean isKingChecked(MoveGenerator moveGenerator) {
-    // Pretend it's the opponent's turn
-    GameStatus gameStatus = getGameStatus().switchTurn();
-    // Generate their moves. If any would capture our king, we're in check.
-    Moves nextMoves = moveGenerator.calculateMoves(gameStatus, this, 0, 0);
-    return nextMoves.isIllegal();
-}
-```
-
 ## 4.6 Move-ordering hook
 
 The generator does not assemble its output into a sorted list itself. Every move it produces is routed through:

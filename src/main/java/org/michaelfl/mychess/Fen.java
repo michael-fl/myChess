@@ -123,9 +123,11 @@ final class Fen {
 
         // Build a draft status (hash=0) just to feed into Board.calculatePositionHash,
         // which only reads castling/turn/enPassant from the GameStatus, not the hash itself.
-        var draftStatus = new GameStatus(plyCount, turn, 0, halfMoveClock, castling.bits(), enPassantField, 0L);
+        var draftStatus = new GameStatus(plyCount, turn, 0, halfMoveClock, castling.bits(), enPassantField,
+                0L, GameStatus.EMPTY_NON_PAWN_MATERIAL_WEIGHT);
         long positionHash = Board.calculatePositionHash(rawBoard, draftStatus);
-        var gameStatus = new GameStatus(plyCount, turn, 0, halfMoveClock, castling.bits(), enPassantField, positionHash);
+        var gameStatus = new GameStatus(plyCount, turn, 0, halfMoveClock, castling.bits(), enPassantField,
+                positionHash, Board.calculateNonPawnMaterialWeights(rawBoard));
 
         return new Board(rawBoard, gameStatus, castling.rookFiles(), is960);
     }
