@@ -60,7 +60,7 @@ class BoardCastlingRookFilesTest {
         // the white-* and black-* slot lookups must therefore return
         // the same per-side file.
         byte[] custom = new byte[] { 1, 5 };
-        Board board = new Board(Board.createEmptyRawBoard(),
+        Board board = new Board(Board.createNewGame().getRawBoard(),
                 GameStatus.newGame(), custom, false);
 
         assertEquals(1, board.getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE), "WQ custom");
@@ -73,7 +73,7 @@ class BoardCastlingRookFilesTest {
 
     @Test
     void twoArgConstructor_appliesDefaultRookFiles() {
-        Board board = new Board(Board.createEmptyRawBoard(), GameStatus.newGame());
+        Board board = new Board(Board.createNewGame().getRawBoard(), GameStatus.newGame());
 
         assertEquals(0, board.getCastlingRookFile(CastlingSlot.WHITE_QUEENSIDE), "WQ via 2-arg ctor");
         assertEquals(7, board.getCastlingRookFile(CastlingSlot.WHITE_KINGSIDE),  "WK via 2-arg ctor");
@@ -84,7 +84,7 @@ class BoardCastlingRookFilesTest {
     @Test
     void copy_carriesRookFilesIntoTheCopy() {
         byte[] custom = new byte[] { 2, 4 };
-        Board original = new Board(Board.createEmptyRawBoard(),
+        Board original = new Board(Board.createNewGame().getRawBoard(),
                 GameStatus.newGame(), custom, false);
 
         Board copy = original.copy();
@@ -97,7 +97,7 @@ class BoardCastlingRookFilesTest {
     @Test
     void copy_rookFilesAreDeepCopied_noSharedMutation() {
         byte[] custom = new byte[] { 2, 4 };
-        Board original = new Board(Board.createEmptyRawBoard(),
+        Board original = new Board(Board.createNewGame().getRawBoard(),
                 GameStatus.newGame(), custom, false);
 
         Board copy = original.copy();

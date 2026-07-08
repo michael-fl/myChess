@@ -207,10 +207,12 @@ final class PositionEncoding {
             castlingBitSet = setBit(castlingBitSet, GameStatus.BIT_BLACK_HAS_CASTLED, true);
         }
 
-        var gameStatusTmp = new GameStatus(plyCount, turn, lastMove, halfMoveClock, castlingBitSet, enPassantField, 0);
+        var gameStatusTmp = new GameStatus(plyCount, turn, lastMove, halfMoveClock, castlingBitSet, enPassantField,
+                0, GameStatus.EMPTY_NON_PAWN_MATERIAL_WEIGHT);
         long positionHash = Board.calculatePositionHash(rawBoard, gameStatusTmp);
 
-        var gameStatus = new GameStatus(plyCount, turn, lastMove, halfMoveClock, castlingBitSet, enPassantField, positionHash);
+        var gameStatus = new GameStatus(plyCount, turn, lastMove, halfMoveClock, castlingBitSet, enPassantField,
+                positionHash, Board.calculateNonPawnMaterialWeights(rawBoard));
         return new Board(rawBoard, gameStatus);
     }
 

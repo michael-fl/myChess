@@ -121,6 +121,11 @@ import java.util.Arrays;
  *       {@code revertMove} on it.</li>
  *   <li>{@code pvTable} — see above. Shared across every
  *       {@code SearchNodeContext} within one deepening iteration.</li>
+ *   <li>{@code lastMoveWasNull} — set to {@code true} only in the
+ *       recursive descent right after a null-move push, so the
+ *       null-move-pruning gate at the child node can refuse to fire
+ *       twice in a row. All other paths default to {@code false} via
+ *       the convenience constructor.</li>
  * </ul>
  *
  * <p>The alpha-beta window ({@code alphaWeight} / {@code betaWeight})
@@ -136,7 +141,22 @@ import java.util.Arrays;
 public record SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnownPath,
                                 int weightFactor,
                                 int materialWeight, int materialDelta,
-                                Board workingBoard, int[] pvTable) {
+                                Board workingBoard, int[] pvTable,
+                                boolean lastMoveWasNull) {
+
+    /**
+     * Convenience constructor that defaults {@code lastMoveWasNull} to
+     * {@code false}. Every path that reaches this constructor is a
+     * real (non-null) move context; only the null-move descent uses
+     * the primary constructor with {@code lastMoveWasNull = true} to
+     * prevent consecutive null moves.
+     */
+    public SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnownPath,
+                      int weightFactor,
+                      int materialWeight, int materialDelta,
+                      Board workingBoard, int[] pvTable) {
+        this(depth, maxDepth, bestKnownPath, weightFactor, materialWeight, materialDelta, workingBoard, pvTable, false);
+    }
 
     /**
      * Plies still to search below this node ({@code maxDepth - depth}).

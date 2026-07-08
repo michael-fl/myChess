@@ -266,8 +266,6 @@ Initial value is `INITIAL_CASTLING_STATE = 15` — all four rights granted, neit
 
 **Turn constants share bits with the piece encoding** (see [§ 3.2](#32-piece-encoding)), so `(piece & turn) == turn` tests "is this my piece" without a color-table lookup.
 
-**`switchTurn()`** returns a *new* `GameStatus` with the colors flipped and `enPassantField` cleared. It is used by `Board.isKingChecked` to ask "could the opponent capture my king *now*?" — see [§ 4.5](move-generation.md#45-pseudo-legal-moves-and-king-capture-detection).
-
 **Initial position hash** is a precomputed long literal:
 
 ```java

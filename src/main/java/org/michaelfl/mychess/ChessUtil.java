@@ -9,6 +9,7 @@ import java.util.Collection;
  *
  * @author Michael Fleischhauer
  */
+@SuppressWarnings("unused")
 public final class ChessUtil {
 
     private ChessUtil() {
@@ -214,6 +215,26 @@ public final class ChessUtil {
         };
     }
 
+    public static String pieceToDebugString(byte piece) {
+        return switch (piece) {
+            case Board.empty -> "empty";
+            case Board.illegal -> "illegal";
+            case Board.whitePawn -> "whitePawn";
+            case Board.whiteKnight -> "whiteKnight";
+            case Board.whiteBishop -> "whiteBishop";
+            case Board.whiteRook -> "whiteRook";
+            case Board.whiteQueen -> "whiteQueen";
+            case Board.whiteKing -> "whiteKing";
+            case Board.blackPawn -> "blackPawn";
+            case Board.blackKnight -> "blackKnight";
+            case Board.blackBishop -> "blackBishop";
+            case Board.blackRook -> "blackRook";
+            case Board.blackQueen -> "blackQueen";
+            case Board.blackKing -> "blackKing";
+            default -> "unknown#" + piece;
+        };
+    }
+
     /**
      * Returns the column (0..7) of the first occurrence of {@code piece} on the
      * given {@code row} (0..7, row 0 = rank 1), or {@code -1} if {@code piece}
@@ -236,4 +257,17 @@ public final class ChessUtil {
 
         return -1;
     }
+
+    public static boolean isKing(byte piece) {
+        return piece == Board.whiteKing || piece == Board.blackKing;
+    }
+
+    public static boolean isWhitePiece(byte piece) {
+        return piece >= Board.whitePawn && piece <= Board.whiteKing;
+    }
+
+    public static boolean isBlackPiece(byte piece) {
+        return piece >= Board.blackPawn && piece <= Board.blackKing;
+    }
+
 }

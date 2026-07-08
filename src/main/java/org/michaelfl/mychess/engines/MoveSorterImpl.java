@@ -132,8 +132,13 @@ public final class MoveSorterImpl implements MoveSorter {
             if (ttMoveSeen) {
                 movesArray.add(ttMove);
             } else {
+                int lastMove = board.getGameStatus().getLastMove();
                 Log.info("[sort] ttMove " + ChessUtil.moveToString(ttMove)
+                        + " (" + ChessUtil.pieceToDebugString(board.get(Move.getFromField(ttMove))) + ")"
                         + " not produced by MoveGenerator at depth=" + depth
+                        + ", last move=" + ChessUtil.moveToString(lastMove)
+                        + " (" + ChessUtil.pieceToDebugString(board.get(Move.getToField(lastMove))) + ")"
+                        + ", turn=" + (((board.getGameStatus().getTurn() & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE) ? "white" : "black")
                         + ", hash=" + Long.toHexString(board.getGameStatus().getPositionHash())
                         + " — skipping (invariant violation, see roadmap)");
             }
