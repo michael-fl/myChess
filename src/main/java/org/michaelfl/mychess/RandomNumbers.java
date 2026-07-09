@@ -5,8 +5,43 @@ import java.util.Random;
 
 /**
  * Precomputed array of 793 random {@code long}s used as the Zobrist hashing
- * table by {@link Board#calculatePositionKey()}. Values are fixed at build
- * time so position hashes are stable across runs.
+ * table by {@link Board#calculatePositionKey()} and the incremental
+ * {@link Board#_makeNormalMove(int)} and friends. Values are fixed at
+ * build time so position hashes are stable across runs.
+ *
+ * <h2>Table layout</h2>
+ *
+ * <p>The 793 entries are partitioned into four contiguous sub-tables,
+ * with base offsets defined as constants in {@link Board}. The total
+ * length is {@code 12 * 64 + 1 + 16 + 8 = 793}.
+ *
+ * <pre>
+ * Range         Length  Sub-table
+ * -----------   ------  ---------------------------------------------
+ * [0,   768)      768   (piece_kind * 64) + square
+ *                         piece_kind = getPieceNumber12(piece)  (0..11)
+ *                         square     = getFieldNumber64(field)  (0..63)
+ *
+ * [768, 769)        1   Side to move — XOR-ed when Black is on move
+ *                         index: TURN_INDEX
+ *
+ * [769, 785)       16   Castling rights (low 4 bits only; HAS_CASTLED
+ *                       bits are intentionally not hashed)
+ *                         index: CASTLING_RIGHTS_INDEX
+ *                                + (castlingState % 16)
+ *
+ * [785, 793)        8   En-passant file (a..h; rank implied by turn)
+ *                         index: EN_PASSANT_INDEX
+ *                                + (enPassantField % 12 - 2)
+ * </pre>
+ *
+ * <p>See {@code docs/data-types.md §3.8} for the full scheme
+ * discussion (rationale, incremental update pattern, invariants
+ * against {@link Board#calculatePositionHash(byte[], GameStatus)}).
+ * The three {@code Board}-level index constants
+ * ({@link Board#TURN_INDEX}, {@code CASTLING_RIGHTS_INDEX},
+ * {@code EN_PASSANT_INDEX}) carry per-slot documentation including
+ * the sub-index arithmetic for each region.
  *
  * @author Michael Fleischhauer
  */

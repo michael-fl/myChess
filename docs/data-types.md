@@ -375,6 +375,14 @@ private final static int EN_PASSANT_INDEX     = 12 * 64 + 17;  // = 785, length 
 
 `ChessUtil.getPieceNumber12(piece)` maps a piece byte (8–21) to a 0–11 index; `ChessUtil.getFieldNumber64(field)` maps a mailbox index (26–117) to a 0–63 square index.
 
+**Sub-index arithmetic** — three subtleties worth noting explicitly:
+
+- **Castling: only the low 4 bits.** `castlingState % 16` masks off the `BIT_WHITE_HAS_CASTLED` and `BIT_BLACK_HAS_CASTLED` bits (values 16 and 32). Those two are intentionally not hashed: once a side has castled, both of its rights bits are already cleared, so the low-four-bits pattern already encodes "castled ⇒ no more castling rights for that side". Adding the `HAS_CASTLED` bits to the hash would introduce redundant information — two positions differing only in `HAS_CASTLED` would produce distinct hashes despite being search-equivalent.
+
+- **En-passant: only the file, not the rank.** An en-passant target always sits on rank 3 (a white pawn's double-move aftermath) or rank 6 (a black pawn's). Which of the two is determined by the side to move, and that is already covered by the `TURN_INDEX` XOR — so hashing the rank would be redundant.
+
+- **The `enPassantField % 12 - 2` derivation.** The 12×12 mailbox board has a two-column left border. `Board.a3` = 50 lives at mailbox column 2 (`50 % 12 = 2`); subtracting 2 yields a 0-based file index. The formula only makes sense for a non-zero `enPassantField`; the two hash sites (`Board.calculatePositionHash` and `Board._makeNormalMove`) both guard on `enPassantField != 0` before evaluating it.
+
 Castling and turn updates happen in `Board.makeMove` after the type-specific function returns:
 
 ```java
