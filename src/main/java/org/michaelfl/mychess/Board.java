@@ -117,9 +117,80 @@ public final class Board {
     public static final int g8 = 9 * LENGTH + 2 + 6;
     public static final int h8 = 9 * LENGTH + 2 + 7;
 
-    private static final int TURN_INDEX = 12 * 64; // length = 1
-    private static final int CASTLING_RIGHTS_INDEX = 12 * 64 + 1; // length = 16
-    private static final int EN_PASSANT_INDEX = 12 * 64 + 17; // length = 8
+    /**
+     * Base offset of the 1-entry side-to-move sub-table in
+     * {@link RandomNumbers#RANDOM_NUMBERS}. A single random number
+     * suffices for the two possible turn values: it is XOR-ed exactly
+     * when Black is on move (see {@link #calculatePositionHash(byte[],
+     * GameStatus)}) or, equivalently, toggled once per turn switch in
+     * the incremental update — two XORs of the same value cancel, so
+     * one slot cleanly separates the White-to-move and Black-to-move
+     * hashes.
+     *
+     * <p>Sub-table length: 1. Range in {@code RANDOM_NUMBERS}:
+     * {@code [768, 769)}. See {@code docs/data-types.md §3.8} for the
+     * full table layout.
+     */
+    private static final int TURN_INDEX = 12 * 64;
+
+    /**
+     * Base offset of the 16-entry castling-rights sub-table in
+     * {@link RandomNumbers#RANDOM_NUMBERS}. One random per possible
+     * combination of the four rights bits. The castling contribution
+     * to the hash is:
+     *
+     * <pre>
+     *   hash ^= RANDOM_NUMBERS[CASTLING_RIGHTS_INDEX + (castlingState % 16)];
+     * </pre>
+     *
+     * <p>Only the low four bits of {@link GameStatus#getCastlingState()}
+     * are read — the four castling-rights bits ({@code BIT_WHITE_
+     * CASTLING_KING_SIDE_POSSIBLE}, {@code ..._QUEEN_SIDE_POSSIBLE},
+     * and the two black counterparts). The two higher {@code HAS_CASTLED}
+     * bits are intentionally <em>not</em> hashed: once a side has
+     * castled, both of its rights bits are already cleared, so the
+     * "has castled" state is fully encoded by the low-four-bits pattern
+     * being zero for that side. Adding the {@code HAS_CASTLED} bits to
+     * the hash would introduce redundant information without
+     * distinguishing any additional position.
+     *
+     * <p>Sub-table length: 16. Range in {@code RANDOM_NUMBERS}:
+     * {@code [769, 785)}. See {@code docs/data-types.md §3.8} for the
+     * full table layout.
+     */
+    private static final int CASTLING_RIGHTS_INDEX = 12 * 64 + 1;
+
+    /**
+     * Base offset of the 8-entry en-passant sub-table in
+     * {@link RandomNumbers#RANDOM_NUMBERS}. One random per file (a..h).
+     * The en-passant contribution to the hash is:
+     *
+     * <pre>
+     *   int file = enPassantField % Board.LENGTH - 2;    // 0..7 (a..h)
+     *   hash    ^= RANDOM_NUMBERS[EN_PASSANT_INDEX + file];
+     * </pre>
+     *
+     * <p>Only the file is hashed, not the rank: an en-passant target
+     * always sits on rank 3 (a white pawn's double-move aftermath) or
+     * rank 6 (a black pawn's), and which of the two is determined by
+     * whose turn it is — so the rank carries no additional distinguishing
+     * information beyond what {@link #TURN_INDEX} already contributes.
+     *
+     * <p>The {@code - 2} accounts for the two-column left border of the
+     * 12x12 mailbox board: {@link #a3}={@value Board#a3} lives at
+     * mailbox column 2, so {@code (enPassantField % 12) - 2} maps a
+     * legal en-passant square index back to a 0-based file. The formula
+     * only makes sense for a non-zero {@code enPassantField}; the two
+     * hash sites — {@link #calculatePositionHash(byte[], GameStatus)}
+     * and the incremental update in {@link #_makeNormalMove(int)} —
+     * both guard on {@code enPassantField != 0} before reading the
+     * random.
+     *
+     * <p>Sub-table length: 8. Range in {@code RANDOM_NUMBERS}:
+     * {@code [785, 793)}. See {@code docs/data-types.md §3.8} for the
+     * full table layout.
+     */
+    private static final int EN_PASSANT_INDEX = 12 * 64 + 17;
 
     // Piece-number constants for direct indexing into RANDOM_NUMBERS.
     // Equivalent to ChessUtil.getPieceNumber12(<piece byte>), surfaced as
@@ -615,11 +686,8 @@ public final class Board {
         newPositionHash ^= RANDOM_NUMBERS[movingPieceNo * 64 + toFieldNo];
 
         // Update en passant field
-        int enPassantField = getGameStatus().getEnPassantField();
-        if (enPassantField != 0) {
-            newPositionHash ^= RANDOM_NUMBERS[EN_PASSANT_INDEX + enPassantField % Board.LENGTH - 2];
-        }
-        enPassantField = Board.getEnPassantField(board[fromField], fromField, toField);
+        newPositionHash = clearEnPassantHashContribution(newPositionHash, false);
+        byte enPassantField = Board.getEnPassantField(board[fromField], fromField, toField);
         if (enPassantField != 0) {
             newPositionHash ^= RANDOM_NUMBERS[EN_PASSANT_INDEX + enPassantField % Board.LENGTH - 2];
         }
@@ -660,7 +728,18 @@ public final class Board {
             newPositionHash ^= RANDOM_NUMBERS[ChessUtil.getPieceNumber12(whitePawn) * 64 + ChessUtil.getFieldNumber64(toField + Board.LENGTH)];
         }
 
-        return newPositionHash;
+        return clearEnPassantHashContribution(newPositionHash, true);
+    }
+
+    private long clearEnPassantHashContribution(final long positionHash, boolean isEnPassantMove) {
+        int enPassantField = getGameStatus().getEnPassantField();
+        if (enPassantField != 0) {
+            return positionHash ^ RANDOM_NUMBERS[EN_PASSANT_INDEX + enPassantField % Board.LENGTH - 2];
+        } else if (isEnPassantMove) {
+            throw new IllegalStateException("En-passant field must be set in GameStatus on en-passant move");
+        }
+
+        return positionHash;
     }
 
     private static long makePawnPromotionMoveQueen(Board board, int move) {
@@ -695,7 +774,7 @@ public final class Board {
         // Add queen to target field
         newPositionHash ^= RANDOM_NUMBERS[ChessUtil.getPieceNumber12(targetPiece) * 64 + toFieldNo];
 
-        return newPositionHash;
+        return clearEnPassantHashContribution(newPositionHash, false);
     }
 
     private static long makePawnPromotionMoveKnight(Board board, int move) {
@@ -796,7 +875,7 @@ public final class Board {
             newPositionHash ^= RANDOM_NUMBERS[BLACK_ROOK_NO * 64 + ChessUtil.getFieldNumber64(f8)];        // add rook
         }
 
-        return newPositionHash;
+        return clearEnPassantHashContribution(newPositionHash, false);
     }
 
     private static long makeCastlingQueenSideMove(Board board, int move) {
@@ -843,7 +922,7 @@ public final class Board {
             newPositionHash ^= RANDOM_NUMBERS[BLACK_ROOK_NO * 64 + ChessUtil.getFieldNumber64(d8)];        // add rook
         }
 
-        return newPositionHash;
+        return clearEnPassantHashContribution(newPositionHash, false);
     }
 
     public void revertMove() {
@@ -950,7 +1029,7 @@ public final class Board {
         }
     }
 
-    long calculatePositionHash() {
+    public long calculatePositionHash() {
         return calculatePositionHash(board, getGameStatus());
     }
 
