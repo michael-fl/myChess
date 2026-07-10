@@ -4,11 +4,11 @@ The test suite is the executable specification for myChess: it pins down move ge
 
 | Metric | Value |
 |---|---|
-| Test files | 22 |
-| Test methods (`@Test` + `@ParameterizedTest`) | 300 |
-| Currently passing | 290 |
+| Test classes | 54 (+ 2 shared helpers: `TestSupport`, `EngineTestBase`) |
+| Test methods (`@Test` + `@ParameterizedTest`) | 652 |
+| Currently passing | 648 (all non-`@Disabled`) |
 | Currently `@Disabled` | 4 |
-| Test source lines | ~3 640 |
+| Test source lines | ~13 660 |
 | Framework | JUnit Jupiter 5.11 |
 | Execution | `mvn test` (Maven Surefire 3.5.2) |
 
@@ -34,16 +34,17 @@ JDK 25 must be active for `mvn test` (set `JAVA_HOME` if the system default diff
 
 ### Categories
 
-The 22 files cluster into five groups:
+The 54 test classes cluster into seven groups (line counts are per group, summing to the ~13 660 total plus the two shared helpers):
 
-| Group | Files | Lines | What it covers |
+| Group | Files (count) | Lines | What it covers |
 |---|---|---|---|
-| **Data structures & encoding** | `BoardTest`, `ChessUtilTest`, `GameStatusTest`, `MoveTest`, `MoveDescriptionTest`, `SortableMovesBucketTest`, `PieceSquareTablesTest`, `PositionEncodingTest` | ~1300 | Bit-packing, board layout, color/turn bit invariants, sortable bucket sort order, piece-square table inversion, mailbox indexing, notation parsing. |
-| **Move generation & rules** | `MoveGeneratorTest`, `GameTest`, `BoardTest` (overlap) | ~360 | Pseudo-legal generation, castling legality, en passant, check / checkmate / stalemate detection. |
-| **Search & evaluation** | `EngineTest`, `DeepWeightTest`, `WeightingFunctionTest`, `QuiescenceSearchTest`, `ZobristHashingTest` | ~1230 | Position regressions, evaluation component ranges, quiescence depth, Zobrist invariants. |
-| **Draw rules** | `ThreefoldRepetitionTest`, `FiftyMovesRuleTest` | ~115 | Detection + opt-out toggle for both rules. |
-| **Notation & I/O** | `FenTest`, `PgnTest`, `PGNImporterTest` | ~624 | FEN export, PGN parsing (strict + lenient modes), end-to-end PGN replay. |
-| **Database** | `openingdb/DBValueTest` | ~98 | Byte-layout encoding of `DBValue`, win/loss attribution. |
+| **Data structures & encoding** (13) | `BoardTest`, `ChessUtilTest`, `GameStatusTest`, `MoveTest`, `MoveDescriptionTest`, `PositionEncodingTest`, `PieceSquareTablesTest`, `SortableMovesBucketTest`, `BitOpsTest`, `IntArrayTest`, `CastlingSlotTest`, `BoardCastlingRookFilesTest`, `Chess960StartPositionsTest` | ~3750 | Bit-packing, board layout, color/turn bit invariants, sortable bucket sort order, piece-square table inversion, mailbox indexing, castling-slot / rook-file resolution, the 960 start-position table, notation parsing. |
+| **Move generation & rules** (7) | `MoveGeneratorTest`, `GameTest`, `PerftTest`, `Chess960CastlingTest`, `MoveSorterImplTest`, `KillerMovesTest`, `SimpleNotationImporterTest` (`BoardTest` overlaps) | ~1510 | Pseudo-legal generation, castling legality (standard + 960), en passant, check / checkmate / stalemate detection, move ordering; **Perft node-count verification** against the Chess-Programming-Wiki reference values. |
+| **Search & evaluation** (19) | `EngineTest`, `EngineSmokeTest`, `DeepWeightTest`, `WeightingFunctionTest`, `QuiescenceSearchTest`, `PositionSearchTest`, `engines/SearchNodeContextTest`, `engines/IterationTimingsTest`, `MirrorEvalTest`, `HangingPiecesEvalTest`, `BlunderTest`, `ChessEngineTest`, `NextMoveTaskTest`, `EvalRegressionTest`, `IllegalPvRegressionTest`, `StalemateAvoidanceRegressionTest`, `MoveSortInvariantRegressionTest`, `ZobristHashingTest`, `PositionHashConsistencyRegressionTest` | ~4390 | Position regressions, eval component ranges, mirror-symmetry of eval, quiescence depth, PV-legality regressions, iterative-deepening timings, async task lifecycle, and Zobrist-hash correctness (incremental vs from-scratch, en-passant round-trips, perft-style + randomized Chess960 consistency walks). |
+| **Transposition table** (3) | `TranspositionTableTest`, `TranspositionTableIntegrationTest`, `ScoreTTAdjustmentTest` | ~525 | Bucket replacement / eviction policy, `TTEntryView` round-trips, end-to-end TT plumbing through the engine, mate-score depth adjustment on store / probe. |
+| **Draw rules** (2) | `ThreefoldRepetitionTest`, `FiftyMovesRuleTest` | ~180 | Detection + opt-out toggle for both rules. |
+| **Notation & I/O** (8) | `FenTest`, `PgnTest`, `PGNImporterTest`, `FenChess960ImportTest`, `PGNConverterTest`, `UciMoveParserTest`, `UciHandlerTest`, `LogTest` | ~2910 | FEN export/import (standard + 960 / Shredder), PGN parsing (strict + lenient) and end-to-end replay from arbitrary start positions, UCI move parsing and protocol handling, log routing. |
+| **Database** (2) | `openingdb/DBValueTest`, `openingdb/OpeningDBImporterTest` | ~230 | Byte-layout encoding of `DBValue`, win/loss attribution, opening-DB import. |
 
 ### Position-as-string idiom
 
@@ -138,6 +139,14 @@ Three properties are verified:
 - **`testIncrementalUpdateWithRevert`** — additionally calls `revertMove` after each `makeMove` and verifies the hash returns to the prior value, then `makeMove` again and verifies the hash is restored. This catches any asymmetry between forward and undo updates.
 
 Plus five tests for the en-passant hash contribution (`testWhiteEnPassantField`, `testBlackEnPassantField`, `testDifferentHashForDifferentPositions`, `testSameHashForSamePosition`, `testEnPassantMakesDifferenceForSamePosition`). The last is subtle: two move orders that arrive at the same piece arrangement must hash *differently* when one of them grants en-passant rights but the other doesn't.
+
+### `PerftTest` — move-generator node-count verification
+
+The gold-standard move-generator correctness test. Enumerates every strictly legal move sequence to a fixed depth from six canonical positions (standard start, Kiwipete, and four Chess-Programming-Wiki positions chosen to exercise rare interactions — en-passant chains, promotion-with-capture, pinned pieces revealing check, castling through attacked squares) and compares the leaf count against the mathematically known values. A discrepancy of even one node means a missed legal move or a spuriously generated illegal one.
+
+Split into a default set (each position at two depths, ~2 s total) and a `@Tag("slow")` set one depth deeper per position (~40 s, ~600 M nodes). The `MoveGenerator` runs in `allPromotions = true` mode so all four promotion piece types are generated, matching the reference counts (production skips bishop under-promotion — see [§ 4.0.6](version-history.md)).
+
+This suite surfaced the latent en-passant Zobrist-drift bug fixed in v4.0.7: the count mismatch appeared only in the two positions whose sub-trees contain en-passant captures, which pointed straight at the ep move handling. Complemented by [`PositionHashConsistencyRegressionTest`](../src/test/java/org/michaelfl/mychess/PositionHashConsistencyRegressionTest.java), which walks the same kind of exhaustive / randomized move sequences asserting incremental-hash consistency at every ply.
 
 ### `ThreefoldRepetitionTest` (×4) — engine plays into the draw
 
