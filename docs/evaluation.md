@@ -90,7 +90,7 @@ It returns the material change a move causes (captured-piece value, adjusted for
  0,  0,  0,  0,  0,  0,  0,  0
 ```
 
-Local deviation from Simplified: the original table rewards b2/c2/g2 with +10 (and b3/g3 with −5) — bonuses that discouraged queenside and fianchetto development. They were removed when the old hand-rolled `calculateOpeningState` heuristic in [`WeightingFunction`](../src/main/java/org/michaelfl/mychess/WeightingFunction.java) was retired (it had its own +10 cp pawn-move bonus for those same files, which conflicted with the PST). A future PeSTO migration ([roadmap § 12.7](roadmap.md#127-evaluation-upgrades--m--50100-elo-combined)) would replace the entire table set.
+Local deviation from Simplified: the original table rewards b2/c2/g2 with +10 (and b3/g3 with −5) — bonuses that discouraged queenside and fianchetto development. They were removed when the old hand-rolled `calculateOpeningState` heuristic in [`WeightingFunction`](../src/main/java/org/michaelfl/mychess/WeightingFunction.java) was retired (it had its own +10 cp pawn-move bonus for those same files, which conflicted with the PST). A future PeSTO migration ([roadmap § 12.7](roadmap.md#127-evaluation-upgrades--m--4080-elo-combined)) would replace the entire table set.
 
 **Knight (white):** −50 in corners (worst squares for a knight), +15 to +20 in the central 4×4 (best squares — d4/e4/d5/e5 score +20, the surrounding ring +15).
 
@@ -204,7 +204,7 @@ if (fieldToRow(field) == 1) {
 
 ### Tuning observations
 
-The six per-piece weights are hand-tuned heuristics, never ELO-validated. They are listed as a candidate in [roadmap § 12.7](roadmap.md#127-evaluation-upgrades--m--50100-elo-combined). The inverse-scaling intent is clear once you look at the maximum contribution a single piece can produce, which is remarkably uniform across the four "real" mobility types:
+The six per-piece weights are hand-tuned heuristics, never ELO-validated. They are listed as a candidate in [roadmap § 12.7](roadmap.md#127-evaluation-upgrades--m--4080-elo-combined). The inverse-scaling intent is clear once you look at the maximum contribution a single piece can produce, which is remarkably uniform across the four "real" mobility types:
 
 | Piece  | Per-move | Typical max moves    | Max contribution (raw) |
 |--------|---------:|---------------------:|-----------------------:|
