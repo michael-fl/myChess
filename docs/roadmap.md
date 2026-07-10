@@ -21,6 +21,8 @@ The single biggest missing optimization, and the one the README already flagged.
 
 Caveats handled in the shipped implementation: TT is cleared on `ucinewgame` via [`UciHandler.handleNewGame`](../src/main/java/org/michaelfl/mychess/UciHandler.java); mate-score adjustment by ply on store/probe is encapsulated in [`WeightingFunction.scoreToTT` / `scoreFromTT`](../src/main/java/org/michaelfl/mychess/WeightingFunction.java) (the sign-loss bug surfaced through `GameStatusTest.testWhiteCheckmate` during development and is now locked in by `ScoreTTAdjustmentTest`); parallel search remains out of scope. See [§ 7.9 Transposition table](search.md#79-transposition-table) for the full technical reference.
 
+**Latent Zobrist-drift bug fixed in v4.0.7 (post-hoc).** Throughout the entire v4.0.x TT line the incremental position hash could drift from a from-scratch recomputation: only `Board._makeNormalMove` cleared the previous ply's en-passant hash contribution, so a pawn double-step followed by a promotion, castling, or en-passant capture left a stale en-passant random XOR-ed into the hash. Because a drifted hash produces false TT hits (cached scores / best-moves from unrelated positions), the +92.7 / +9.3 / +15.6 Elo measurements for v4.0.0 / v4.0.2 / v4.0.3 were all taken with this noise/bias source active — the true TT contribution may be marginally larger than those numbers. The fix (v4.0.7, `ccfa2ab`) centralizes the clear in a shared helper called from every `make*Move` path; it merged as a correctness fix with no isolated SPRT. Regression coverage: [`PositionHashConsistencyRegressionTest`](../src/test/java/org/michaelfl/mychess/PositionHashConsistencyRegressionTest.java) (perft-style + randomized Chess960 self-play hash-consistency checks) and the canonical [Perft suite](testing.md) (which surfaced the count discrepancy en-passant positions produce). See [version-history § 4.0.4–4.0.7](version-history.md) for the propagation implications.
+
 ### What was measured
 
 Three self-play matches against `myChess-3.6.0`, TC 40/60:
@@ -173,12 +175,24 @@ Pass the turn to the opponent at depth ≥ 3 and search the reply with reduced d
 - Disable when the side to move is in check or has only pawns + king (avoid zugzwang). The existing `isEndGame()` heuristic is too crude — gate on actual non-pawn material instead.
 - Pairs naturally with [§ 12.1 TT](#121-transposition-table--done-93-elo): TT cutoffs from the reduced-depth search return immediately.
 
+**Status: first version implemented (`nmp` branch), merge pending.** V1 uses `R = 2` fixed; a zugzwang guard on the new `GameStatus.hasNonPawnMaterial()` (incremental per-side non-pawn material was added alongside, replacing the crude `isEndGame()` gate); a `lastMoveWasNull` flag on `SearchNodeContext` forbidding consecutive null moves; and a null-window reduced search (`-β, -β+1`) that only fires when the reduced child still gets ≥ 2 plies (`MIN_CHILD_DEPTH`). Dedicated `makeNullMove()` / `revertNullMove()` on `Board`. An in-progress 3200-game fixed-N match vs `v4.0.7` measures **≈ +70 Elo** at ~1200 games — squarely inside the estimated band, and vindicating the 50–100 estimate here. Empirical mechanism check from the match's own stderr timing logs: mean reached search depth rose **8.7 → 9.5 ply**, and the share of moves reaching depth ≥ 10 went **25 % → 41 %**, confirming the time→depth reinvestment (the reduced probes make each iteration cheaper, and the process-static iteration-timing SMA correctly spends the saving on more depth). The DONE writeup (final Elo + implementation reference) lands with the merge.
+
+**Follow-up tuning (next round, after V1 merges).** V1 is deliberately conservative; several standard refinements should add more on top, each measured on its own:
+
+- **Static-eval guard before the null move** — only attempt NMP when the node's static eval ≥ β (refined by the TT bound where an entry exists — a bound corrects the raw eval only in its informative direction; see [§ 3.8](data-types.md#38-zobrist-hashing-and-positionencoding) for TT bound semantics). Skips fruitless probes. Requires computing the static eval at *inner* nodes (currently only at leaves) — a small refactor that also unlocks the next two items.
+- **Reverse futility pruning** — if the static eval is *far* above β at low remaining depth, cut off with no search at all. Reuses the same inner-node eval.
+- **Adaptive R** — grow the reduction with remaining depth (e.g. `R = 2 + remainingDepth/6`), optionally also with how far the eval exceeds β.
+- **TT-store the NMP cutoffs** — write the fail-high as a `LOWER` bound so a later visit reuses it. Pure speedup, currently missed.
+- **Verification search** — at high remaining depth, confirm the cutoff with a reduced regular search before accepting it; catches the zugzwang cases the material guard misses and makes a more aggressive `R` safe.
+- **Guard tuning** — measure `MIN_CHILD_DEPTH` variants and whether an explicit `isKingChecked()` guard (currently omitted; illegal null-move positions fall out via the `isIllegal` path in the reduced search) is worth its per-node cost.
+
 ## 12.3 Late move reductions (LMR) — **S, ≈ 50–100 Elo**
 
 After the first few moves at a node (those that have already passed [§ 7.1 PV / 7.2 killer ordering](search.md#71-best-known-move-pv-ordering)), reduce the search depth by 1–2 for quiet moves. If the reduced search beats alpha, re-search at full depth.
 
 - Adds two integer comparisons in the move loop in `calculateNextMoveSub`. Disable on captures, promotions, and check-givers.
 - Synergises strongly with TT and a [§ 12.5 history heuristic](#125-history-heuristic--s--3050-elo): both make the *first few* moves much more likely to be best, which is exactly the precondition for LMR's gamble to pay off.
+- Best introduced together with [§ 12.20 PVS](#1220-principal-variation-search-pvs--negascout--s--1025-elo): LMR-reduced moves already run on a null window, so the two share the re-search path.
 
 ## 12.4 Check extensions — **S, ≈ 15–30 Elo**
 
@@ -791,6 +805,16 @@ Documents the first successful eval-term addition since the pre-investigation ba
 
 The hanging-pieces term is now part of `master` at `v3.6.0`. The `undefended-pieces-weight` branch may be deleted once any pending follow-up work (e.g. cross-confirming against a stronger opponent than 3.5.2) is done — but the implementation itself is in master and there is no reason to keep the branch indefinitely.
 
+## 12.20 Principal Variation Search (PVS / NegaScout) — **S, ≈ 10–25 Elo**
+
+Search only the *first* move at each node — the PV move, ordered first by [§ 7.1 PV / TT ordering](search.md#71-best-known-move-pv-ordering) — with the full `(alpha, beta)` window. Search every *other* move with a null window `(alpha, alpha+1)`: a cheap proof that it is worse than the PV move. Only when a null-window search unexpectedly fails high (the move is actually better than alpha) re-search that one move with the full window.
+
+- Prerequisites already in master: the TT ([§ 12.1](#121-transposition-table--done-93-elo)) and PV/TT-move-first ordering, which make the first move reliably the best often enough that the null-window tests on the remaining moves pay off.
+- **Natural partner to [§ 12.3 LMR](#123-late-move-reductions-lmr--s--50100-elo).** LMR-reduced moves are searched with a null window anyway, so PVS and LMR are usually introduced together and share the re-search machinery. The null-window primitive already exists in the codebase — the [§ 12.2 NMP](#122-null-move-pruning--s--50100-elo) reduced search uses `-β, -β+1`.
+- The one subtlety is search instability: a node can be visited with different windows across re-searches, and TT bounds from one window feed the next. Standard and manageable, but worth watching in the node-count diagnostics ([§ 12.10](#1210-in-process-measurement-harness--sm-no-elo-but-adds-fast-per-change-diagnostics)).
+
+*Aside — can a search run on null windows exclusively?* Yes: that is **MTD(f)** (Memory-enhanced Test Driver; `f` = first-guess). It replaces the single full-window root search with a *series* of null-window tests that bracket the true minimax value, driven by a first guess (typically the previous iteration's score). It requires a TT — the repeated root searches share work only through it — and was competitive with NegaScout in the mid-90s (Plaat, Schaeffer, Pijls, de Bruin), but it is sensitive to eval granularity and prone to search-instability oscillation. PVS — full window on the PV line, null window elsewhere — is the robust middle ground modern engines settled on, which is why this item targets PVS rather than MTD(f).
+
 ---
 
 ## Suggested implementation order
@@ -800,8 +824,8 @@ The hanging-pieces term is now part of `master` at `v3.6.0`. The `undefended-pie
 | 1 | [§ 12.9 UCI minimal](#129-uci-protocol--m-12-days-no-elo-directly-but-unblocks-gui--measurement) — FEN importer + `UciHandler` + HIARCS/Stockfish baseline gauntlet | M (1–2 days) | — (GUI + baseline measurement) |
 | 2 | [§ 12.10 In-process harness](#1210-in-process-measurement-harness--sm-no-elo-but-adds-fast-per-change-diagnostics) — node-count bench + WAC EPD runner (self-play loop optional, covered by cutechess-cli from step 1) | S | — (per-change diagnostics) |
 | 3 | [§ 12.1 Transposition table](#121-transposition-table--done-93-elo) (fail-soft alpha-beta is already in place, see [§ 12.13](#1213-switch-alpha-beta-from-fail-hard-to-fail-soft--done)) | M | +150 – +300 |
-| 4 | [§ 12.3 LMR](#123-late-move-reductions-lmr--s--50100-elo) + [§ 12.5 history](#125-history-heuristic--s--3050-elo) | S | +250 – +450 |
-| 5 | [§ 12.2 Null-move pruning](#122-null-move-pruning--s--50100-elo) | S | +300 – +550 |
+| 4 | [§ 12.3 LMR](#123-late-move-reductions-lmr--s--50100-elo) + [§ 12.20 PVS](#1220-principal-variation-search-pvs--negascout--s--1025-elo) + [§ 12.5 history](#125-history-heuristic--s--3050-elo) | S | +260 – +475 |
+| 5 | [§ 12.2 Null-move pruning](#122-null-move-pruning--s--50100-elo) | S | +310 – +575 (measured ≈ +70 for NMP itself) |
 | 6 | [§ 12.4 Check extensions](#124-check-extensions--s--1530-elo) + [§ 12.8 aspiration](#128-aspiration-windows--s--2040-elo) | S | +340 – +620 |
 | 7 | [§ 12.6 Quiescence search upgrade](#126-quiescence-search-upgrade--m--4080-elo) — all-captures + MVV-LVA + SEE pruning + delta pruning + optional TT integration | M | +380 – +700 |
 | 8 | [§ 12.7 Eval upgrades](#127-evaluation-upgrades--m--50100-elo-combined) | M | +420 – +770 |
