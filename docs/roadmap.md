@@ -269,13 +269,13 @@ Item 12.6.1 alone is a net **loss** without 12.6.2 and 12.6.3, because the all-c
 
 12.6.4 and 12.6.5 are independent refinements that can each be SPRT'd separately.
 
-## 12.7 Evaluation upgrades — **M, ≈ 50–100 Elo combined**
+## 12.7 Evaluation upgrades — **M, ≈ 40–80 Elo combined**
 
 [§ 5 *Evaluation Function*](evaluation.md#5-evaluation-function) ends with a list of features deliberately omitted. Adding the cheapest ones individually buys little; bundling them is worthwhile. In rough cost order:
 
 - **Bishop pair** (+30 cp when a side has both bishops). One bit-test added to the material scan.
 - **Passed pawns** — bonus scaled by rank. Detection is one row-and-adjacent-file scan per pawn; do it inside the existing `calculateForWhitePawn` / `calculateForBlackPawn` loops to amortise.
-- **King safety beyond castling** — count enemy attackers on the 3×3 square ring around the own king, weighted by attacker type. The pseudo-move scan in `WeightingFunction` already enumerates attackers; add a per-square attacker-count side table.
+- **King safety** — pulled out into its own [§ 12.21](#1221-king-safety--m--3060-elo): it is the single largest eval term missing today and a full complex (attacker weighting, pawn shield, open lines) rather than a one-liner, so it is tracked separately from this bundle.
 - **Proper endgame detection** — replace [`GameStatus.isEndGame() { return plyCount > 60; }`](../src/main/java/org/michaelfl/mychess/GameStatus.java) with a material-based criterion (e.g. `total non-pawn material < threshold`). This alone fixes the endgame king-PST cutoff in [§ 5.2](evaluation.md#52-piece-square-tables) and makes [§ 12.2 null-move pruning](#122-null-move-pruning--s--50100-elo) safer.
 - **Tapered evaluation with PeSTO PSTs** — replace the hand-tuned [Simplified PSTs](https://www.chessprogramming.org/Simplified_Evaluation_Function) currently in [`PieceSquareTables`](../src/main/java/org/michaelfl/mychess/PieceSquareTables.java) with the auto-tuned [PeSTO](https://www.chessprogramming.org/PeSTO%27s_Evaluation_Function) tables (separate midgame and endgame tables per piece type), interpolated by remaining non-pawn material. Requires the proper endgame detection above. Two design choices specific to myChess:
   - **Column-symmetrize the tables before use.** PeSTO is trained on standard-chess games where kingside castling dominates, so its tables encode column asymmetries (a-file ≠ h-file) that are statistical artifacts of the training corpus, not chess principles — the knight table has a-rank/h-rank values differing by ~80 cp on the back rank. For Chess960 ([§ 12.11](#1211-chess960-fischer-random-support--m-no-elo-on-standard-chess-but-opens-a-new-variant)) this asymmetry is actively harmful (no side dominates after castling); for standard chess it likely costs only 5–10 Elo. Mirror-average every column pair (a↔h, b↔g, c↔f, d↔e) at table-load time — one shared symmetric table for both variants is much simpler than maintaining two separate sets, and the Elo trade-off is well worth the reduced complexity.
@@ -815,6 +815,19 @@ Search only the *first* move at each node — the PV move, ordered first by [§ 
 
 *Aside — can a search run on null windows exclusively?* Yes: that is **MTD(f)** (Memory-enhanced Test Driver; `f` = first-guess). It replaces the single full-window root search with a *series* of null-window tests that bracket the true minimax value, driven by a first guess (typically the previous iteration's score). It requires a TT — the repeated root searches share work only through it — and was competitive with NegaScout in the mid-90s (Plaat, Schaeffer, Pijls, de Bruin), but it is sensitive to eval granularity and prone to search-instability oscillation. PVS — full window on the PV line, null window elsewhere — is the robust middle ground modern engines settled on, which is why this item targets PVS rather than MTD(f).
 
+## 12.21 King safety — **M, ≈ 30–60 Elo**
+
+The single largest evaluation term myChess is still missing. Today the only king-safety signal in the eval is the king PST (which just encodes "stay back / castle in the midgame", see [§ 5.2](evaluation.md#52-piece-square-tables)); there is no notion of *how exposed* the king actually is. [§ 5's omissions list](evaluation.md#5-evaluation-function) explicitly flags "king safety beyond castling" as not implemented. For an engine with zero king-danger evaluation this is very likely the most valuable single eval addition — comfortably ahead of bishop-pair or passed-pawn terms, which is why it is tracked here rather than buried in the [§ 12.7](#127-evaluation-upgrades--m--4080-elo-combined) bundle (mirroring how [§ 12.19 hanging pieces](#1219-add-hanging-pieces-penalty-to-the-evaluation-function--done-28-elo) earned its own section as a standalone eval term).
+
+**What to build.** A king-danger score that grows with the pressure on the king's neighbourhood:
+
+- **Attacker count on the king ring** — count enemy pieces attacking the 3×3 (or wider) square ring around the own king, weighted by attacker type (queen ≫ rook > bishop/knight). The per-piece pseudo-move scan in `WeightingFunction` already enumerates every attack relation (the same scan that feeds [§ 12.19 hanging pieces](#1219-add-hanging-pieces-penalty-to-the-evaluation-function--done-28-elo)); add a per-square attacker-count side table alongside the existing attack-mark bit.
+- **Non-linear in the attacker count** — the classic king-safety insight: two attackers are far more than twice as dangerous as one. A small lookup table indexed by weighted attacker count (the "attack weight → danger" curve) captures this; linear scaling badly underrates real attacks.
+- **Pawn shield** — bonus for own pawns on the two/three files in front of the king on its home rank; penalty for missing or advanced shield pawns.
+- **Open / half-open files toward the king** — penalty when an enemy rook or queen bears on a file with no own pawn in front of the king.
+
+**Why it's a section, not a bullet.** Unlike the other §12.7 terms (each a few lines), king safety is a small subsystem with several interacting parts and a non-linear response curve that *must* be tuned — untuned or linearly scaled, it can easily be net-negative (over- or under-valuing attacks). It pairs naturally with an automated eval-tuning setup (Texel/SPSA): the attacker-type weights and the danger curve are exactly the kind of parameters that hand-tuning gets wrong and a tuner gets right. Measure with a king-safety-heavy slice of the [STS suite](https://www.chessprogramming.org/Strategic_Test_Suite) once implemented; the STS "king safety" category gives a direct read on whether the term is pulling its weight.
+
 ---
 
 ## Suggested implementation order
@@ -828,7 +841,7 @@ Search only the *first* move at each node — the PV move, ordered first by [§ 
 | 5 | [§ 12.2 Null-move pruning](#122-null-move-pruning--s--50100-elo) | S | +310 – +575 (measured ≈ +70 for NMP itself) |
 | 6 | [§ 12.4 Check extensions](#124-check-extensions--s--1530-elo) + [§ 12.8 aspiration](#128-aspiration-windows--s--2040-elo) | S | +340 – +620 |
 | 7 | [§ 12.6 Quiescence search upgrade](#126-quiescence-search-upgrade--m--4080-elo) — all-captures + MVV-LVA + SEE pruning + delta pruning + optional TT integration | M | +380 – +700 |
-| 8 | [§ 12.7 Eval upgrades](#127-evaluation-upgrades--m--50100-elo-combined) | M | +420 – +770 |
+| 8 | [§ 12.7 Eval upgrades](#127-evaluation-upgrades--m--4080-elo-combined) + [§ 12.21 King safety](#1221-king-safety--m--3060-elo) | M | +420 – +770 |
 | 9 | [§ 12.12 Real time management](#1212-real-time-management-heuristics--s--m--3060-elo) | S–M | +450 – +830 |
 | 10 | [§ 12.11 Chess960](#1211-chess960-fischer-random-support--m-no-elo-on-standard-chess-but-opens-a-new-variant) (optional, opens a new variant) | M | — (on standard chess) |
 
