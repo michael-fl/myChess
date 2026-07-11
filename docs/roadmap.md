@@ -35,7 +35,7 @@ Three self-play matches against `myChess-3.6.0`, TC 40/60:
 
 All three estimates are consistent within their CIs, but the **fixed-N match is the reference**: it has the tightest CI (±15.2 vs ±37-42 for the SPRTs), and SPRT point estimates are known to be biased low by the early-stopping mechanism (the test stops as soon as evidence for H1 is sufficient, which can be well before the sample mean has converged on the true value — both SPRT runs here terminated at sample means 15-25 Elo below the eventual fixed-N point).
 
-**White-vs-Black asymmetry.** The early SPRT runs showed near-symmetric W/B splits (~60-62 % both sides). The 1600-game fixed-N match exposes a ~62 Elo gap: kandidat as White wins 66.9 %, as Black 59.1 %. At 800 games per color the per-color CI is ±20-25 Elo, so the gap is ≈2.5σ — suggestive but not airtight. Most plausible reading: the TT amplifies the small first-move advantage that already existed pre-TT (the W>B baseline-bias investigated in [§ 12.14](#1214-the-wb-color-asymmetry-investigation--investigation-archived)) — both sides get a stronger search, but the side that starts from slightly better positions converts that into a slightly larger fraction of wins. Worth re-checking after [§ 12.2 NMP](#122-null-move-pruning--s--50100-elo) and [§ 12.6 QSearch upgrade](#126-quiescence-search-upgrade--m--4080-elo) land; if the asymmetry persists at >2σ, it deserves a separate investigation entry.
+**White-vs-Black asymmetry.** The early SPRT runs showed near-symmetric W/B splits (~60-62 % both sides). The 1600-game fixed-N match exposes a ~62 Elo gap: kandidat as White wins 66.9 %, as Black 59.1 %. At 800 games per color the per-color CI is ±20-25 Elo, so the gap is ≈2.5σ — suggestive but not airtight. Most plausible reading: the TT amplifies the small first-move advantage that already existed pre-TT (the W>B baseline-bias investigated in [§ 12.14](#1214-color-asymmetry-investigate-the-wb-bias-seen-in-cross-version-matches--s-evidence-weakening)) — both sides get a stronger search, but the side that starts from slightly better positions converts that into a slightly larger fraction of wins. Worth re-checking after [§ 12.2 NMP](#122-null-move-pruning--done-76-elo) and [§ 12.6 QSearch upgrade](#126-quiescence-search-upgrade--m--4080-elo) land; if the asymmetry persists at >2σ, it deserves a separate investigation entry.
 
 **Draw ratio** dropped to 19-24 % across the three runs (vs ~30 % in pre-TT baselines) — TT cutoffs decide games earlier.
 
@@ -55,7 +55,7 @@ All three estimates are consistent within their CIs, but the **fixed-N match is 
 
 ### Why this slot in the roadmap
 
-Closes the largest remaining single-feature item with a clean +93 Elo measurement and unblocks several downstream items that pair with TT — most importantly [§ 12.2 Null-move pruning](#122-null-move-pruning--s--50100-elo) (whose reduced-depth search now hits a populated TT and can cut off immediately), [§ 12.3 LMR](#123-late-move-reductions-lmr--s--50100-elo) (where the TT-stored bestMove is the first re-search candidate), and [§ 12.8 Aspiration windows](#128-aspiration-windows--s--2040-elo) (where TT bounds become the natural source for the next iteration's window).
+Closes the largest remaining single-feature item with a clean +93 Elo measurement and unblocks several downstream items that pair with TT — most importantly [§ 12.2 Null-move pruning](#122-null-move-pruning--done-76-elo) (whose reduced-depth search now hits a populated TT and can cut off immediately), [§ 12.3 LMR](#123-late-move-reductions-lmr--s--50100-elo) (where the TT-stored bestMove is the first re-search candidate), and [§ 12.8 Aspiration windows](#128-aspiration-windows--s--2040-elo) (where TT bounds become the natural source for the next iteration's window).
 
 ### Follow-up: 4× TT default size in v4.0.1 — null effect at TC 40/60
 
@@ -167,17 +167,37 @@ The relaxed PV-length check in [`EngineTestBase.testPosition`](../src/test/java/
 
 Now that §12.1's base implementation is measured (+93 Elo, see header), this becomes the natural next refinement on the TT path. The motivation remains purely diagnostic / cosmetic (UCI `info pv` lines), not strength.
 
-## 12.2 Null-move pruning — **S, ≈ 50–100 Elo**
+## 12.2 ~~Null-move pruning~~ — **DONE (+76 Elo)**
 
-Pass the turn to the opponent at depth ≥ 3 and search the reply with reduced depth `R = 2 or 3`. If the result still exceeds beta, the original position is so good for the side to move that a real move can only confirm it — return beta.
+*Implemented and merged as `v4.1.0` (July 2026). A 3200-game fixed-N match vs `v4.0.7`, TC 40/60, measured **+76.0 ± 10.1 Elo, LOS 100 %** (draw ratio 31.5 %) — the second-largest single-feature jump after the TT, squarely inside the 50–100 estimate.*
+
+Pass the turn to the opponent and search the reply with reduced depth. If the result still exceeds beta, the original position is so good for the side to move that a real move can only confirm it — return beta.
 
 - One conditional branch inside the recursive node, plus a `Board.switchTurn()` / restore pair (no piece is moved). The `GameStatus` stack already supports a turn flip via [`GameStatus.switchTurn()`](../src/main/java/org/michaelfl/mychess/GameStatus.java).
 - Disable when the side to move is in check or has only pawns + king (avoid zugzwang). The existing `isEndGame()` heuristic is too crude — gate on actual non-pawn material instead.
 - Pairs naturally with [§ 12.1 TT](#121-transposition-table--done-93-elo): TT cutoffs from the reduced-depth search return immediately.
 
-**Status: first version implemented (`nmp` branch), merge pending.** V1 uses `R = 2` fixed; a zugzwang guard on the new `GameStatus.hasNonPawnMaterial()` (incremental per-side non-pawn material was added alongside, replacing the crude `isEndGame()` gate); a `lastMoveWasNull` flag on `SearchNodeContext` forbidding consecutive null moves; and a null-window reduced search (`-β, -β+1`) that only fires when the reduced child still gets ≥ 2 plies (`MIN_CHILD_DEPTH`). Dedicated `makeNullMove()` / `revertNullMove()` on `Board`. An in-progress 3200-game fixed-N match vs `v4.0.7` measures **≈ +70 Elo** at ~1200 games — squarely inside the estimated band, and vindicating the 50–100 estimate here. Empirical mechanism check from the match's own stderr timing logs: mean reached search depth rose **8.7 → 9.5 ply**, and the share of moves reaching depth ≥ 10 went **25 % → 41 %**, confirming the time→depth reinvestment (the reduced probes make each iteration cheaper, and the process-static iteration-timing SMA correctly spends the saving on more depth). The DONE writeup (final Elo + implementation reference) lands with the merge.
+### What was implemented
 
-**Follow-up tuning (next round, after V1 merges).** V1 is deliberately conservative; several standard refinements should add more on top, each measured on its own:
+`R = 2` fixed; a zugzwang guard on the new `GameStatus.hasNonPawnMaterial()` (incremental per-side non-pawn material was added alongside, replacing the crude `isEndGame()` gate); a `lastMoveWasNull` flag on `SearchNodeContext` forbidding consecutive null moves; and a null-window reduced search (`-β, -β+1`) that only fires when the reduced child still gets ≥ 2 plies (`MIN_CHILD_DEPTH`). Dedicated `makeNullMove()` / `revertNullMove()` on `Board`, covered by `BoardNullMoveTest`. No `isKingChecked()` guard — illegal null-move positions fall out via the `isIllegal` path in the reduced search, which the match showed costs nothing measurable.
+
+### What was measured
+
+3200-game fixed-N match vs `v4.0.7`, TC 40/60, `2moves_v2.pgn` openings:
+
+| Slice | W-L-D | Elo |
+|---|---|---|
+| Overall | 1441-752-1007 (0.608) | **+76.0 ± 10.1**, LOS 100 % |
+| nmp as White | 750-357-493 (0.623) | ~+87 |
+| nmp as Black | 691-395-514 (0.593) | ~+65 |
+
+### What we learned
+
+1. **The mechanism is time→depth, verified from the match's own stderr timing logs.** NMP does not search shallower — it makes each iteration cheaper, and the process-static iteration-timing SMA correctly reinvests the saving in depth. Mean reached search depth rose **8.7 → 9.5 ply**; the share of moves reaching depth ≥ 10 went **25 % → 41 %**. (An initial "does nmp search shallower?" worry from eyeballing the skip-depth logs was a distribution artifact — 4.0.7 has a long thin tail of trivial deep endgames that catches the eye, but median *and* mean both move deeper with NMP.)
+
+2. **The gain is W/B-asymmetric (~+87 White vs ~+65 Black).** At 1600 games per color the per-color CI is ±~14, so the ~22 Elo gap is ≈1.5σ — suggestive, not airtight. Same pattern the TT showed: a stronger search on both sides amplifies the small first-move advantage. A data point for the [§ 12.14](#1214-color-asymmetry-investigate-the-wb-bias-seen-in-cross-version-matches--s-evidence-weakening) asymmetry investigation, which explicitly flagged re-checking after NMP lands.
+
+**Follow-up tuning (next round).** V1 is deliberately conservative and is now in master; several standard refinements should add more on top, each measured on its own:
 
 - **Static-eval guard before the null move** — only attempt NMP when the node's static eval ≥ β (refined by the TT bound where an entry exists — a bound corrects the raw eval only in its informative direction; see [§ 3.8](data-types.md#38-zobrist-hashing-and-positionencoding) for TT bound semantics). Skips fruitless probes. Requires computing the static eval at *inner* nodes (currently only at leaves) — a small refactor that also unlocks the next two items.
 - **Reverse futility pruning** — if the static eval is *far* above β at low remaining depth, cut off with no search at all. Reuses the same inner-node eval.
@@ -276,7 +296,7 @@ Item 12.6.1 alone is a net **loss** without 12.6.2 and 12.6.3, because the all-c
 - **Bishop pair** (+30 cp when a side has both bishops). One bit-test added to the material scan.
 - **Passed pawns** — bonus scaled by rank. Detection is one row-and-adjacent-file scan per pawn; do it inside the existing `calculateForWhitePawn` / `calculateForBlackPawn` loops to amortise.
 - **King safety** — pulled out into its own [§ 12.21](#1221-king-safety--m--3060-elo): it is the single largest eval term missing today and a full complex (attacker weighting, pawn shield, open lines) rather than a one-liner, so it is tracked separately from this bundle.
-- **Proper endgame detection** — replace [`GameStatus.isEndGame() { return plyCount > 60; }`](../src/main/java/org/michaelfl/mychess/GameStatus.java) with a material-based criterion (e.g. `total non-pawn material < threshold`). This alone fixes the endgame king-PST cutoff in [§ 5.2](evaluation.md#52-piece-square-tables) and makes [§ 12.2 null-move pruning](#122-null-move-pruning--s--50100-elo) safer.
+- **Proper endgame detection** — replace [`GameStatus.isEndGame() { return plyCount > 60; }`](../src/main/java/org/michaelfl/mychess/GameStatus.java) with a material-based criterion (e.g. `total non-pawn material < threshold`). This alone fixes the endgame king-PST cutoff in [§ 5.2](evaluation.md#52-piece-square-tables) and makes [§ 12.2 null-move pruning](#122-null-move-pruning--done-76-elo) safer.
 - **Tapered evaluation with PeSTO PSTs** — replace the hand-tuned [Simplified PSTs](https://www.chessprogramming.org/Simplified_Evaluation_Function) currently in [`PieceSquareTables`](../src/main/java/org/michaelfl/mychess/PieceSquareTables.java) with the auto-tuned [PeSTO](https://www.chessprogramming.org/PeSTO%27s_Evaluation_Function) tables (separate midgame and endgame tables per piece type), interpolated by remaining non-pawn material. Requires the proper endgame detection above. Two design choices specific to myChess:
   - **Column-symmetrize the tables before use.** PeSTO is trained on standard-chess games where kingside castling dominates, so its tables encode column asymmetries (a-file ≠ h-file) that are statistical artifacts of the training corpus, not chess principles — the knight table has a-rank/h-rank values differing by ~80 cp on the back rank. For Chess960 ([§ 12.11](#1211-chess960-fischer-random-support--m-no-elo-on-standard-chess-but-opens-a-new-variant)) this asymmetry is actively harmful (no side dominates after castling); for standard chess it likely costs only 5–10 Elo. Mirror-average every column pair (a↔h, b↔g, c↔f, d↔e) at table-load time — one shared symmetric table for both variants is much simpler than maintaining two separate sets, and the Elo trade-off is well worth the reduced complexity.
   - **The existing `invert()` for the black tables stays unchanged.** It only flips ranks (1↔8 etc.) and doesn't touch column ordering, which is exactly what antisymmetry of the eval (`MirrorEvalTest`) requires.
@@ -504,6 +524,8 @@ Regression test: [`QuiescenceSearchTest.quiescenceFailSoft_betaCutoffReturnsUncl
 ## 12.14 Color asymmetry: investigate the W>B bias seen in cross-version matches — **S, evidence weakening**
 
 > **Update June 2026:** the original "W>B bias is a real engine defect worth 30–50 Elo" hypothesis has lost support after three additional cutechess matches. The cross-version-artifact explanation is now the more plausible reading. See the *updated interpretation* section below.
+>
+> **Update July 2026 (post-NMP):** the [§ 12.2 NMP](#122-null-move-pruning--done-76-elo) match adds a fresh data point. NMP's gain over v4.0.7 was itself W/B-asymmetric — **~+87 Elo as White vs ~+65 as Black** (~22 Elo gap, ≈1.5σ at 1600 games/color). This supports the "stronger search amplifies the first-move advantage" reading over a fixable eval defect: a pure eval bias would not scale with search strength, but a first-move-advantage amplification would. Still sub-2σ, so it does not on its own promote this to a separate investigation — but two independent search features (TT, now NMP) show the same directional effect, which is itself weak evidence for the amplification explanation.
 
 Across five cutechess matches during the spring 2026 mobility-tuning sessions (positionFactor x2, mobilityFactor x2, mobility-rebalance, no-mobility, mobility-factor=0.15) a striking pattern emerged: in every match where the engine had any form of mobility weighting enabled, **myChess scored noticeably better as white than as black** — typically 40–65 Elo difference between colors. The single experiment where the asymmetry disappeared was the no-mobility ablation; with mobility re-enabled (at any factor in [0.1, 0.2]) the W>B gap returned, including in the strongest form (~65 Elo) at factor 0.15.
 
@@ -810,7 +832,7 @@ The hanging-pieces term is now part of `master` at `v3.6.0`. The `undefended-pie
 Search only the *first* move at each node — the PV move, ordered first by [§ 7.1 PV / TT ordering](search.md#71-best-known-move-pv-ordering) — with the full `(alpha, beta)` window. Search every *other* move with a null window `(alpha, alpha+1)`: a cheap proof that it is worse than the PV move. Only when a null-window search unexpectedly fails high (the move is actually better than alpha) re-search that one move with the full window.
 
 - Prerequisites already in master: the TT ([§ 12.1](#121-transposition-table--done-93-elo)) and PV/TT-move-first ordering, which make the first move reliably the best often enough that the null-window tests on the remaining moves pay off.
-- **Natural partner to [§ 12.3 LMR](#123-late-move-reductions-lmr--s--50100-elo).** LMR-reduced moves are searched with a null window anyway, so PVS and LMR are usually introduced together and share the re-search machinery. The null-window primitive already exists in the codebase — the [§ 12.2 NMP](#122-null-move-pruning--s--50100-elo) reduced search uses `-β, -β+1`.
+- **Natural partner to [§ 12.3 LMR](#123-late-move-reductions-lmr--s--50100-elo).** LMR-reduced moves are searched with a null window anyway, so PVS and LMR are usually introduced together and share the re-search machinery. The null-window primitive already exists in the codebase — the [§ 12.2 NMP](#122-null-move-pruning--done-76-elo) reduced search uses `-β, -β+1`.
 - The one subtlety is search instability: a node can be visited with different windows across re-searches, and TT bounds from one window feed the next. Standard and manageable, but worth watching in the node-count diagnostics ([§ 12.10](#1210-in-process-measurement-harness--sm-no-elo-but-adds-fast-per-change-diagnostics)).
 
 *Aside — can a search run on null windows exclusively?* Yes: that is **MTD(f)** (Memory-enhanced Test Driver; `f` = first-guess). It replaces the single full-window root search with a *series* of null-window tests that bracket the true minimax value, driven by a first guess (typically the previous iteration's score). It requires a TT — the repeated root searches share work only through it — and was competitive with NegaScout in the mid-90s (Plaat, Schaeffer, Pijls, de Bruin), but it is sensitive to eval granularity and prone to search-instability oscillation. PVS — full window on the PV line, null window elsewhere — is the robust middle ground modern engines settled on, which is why this item targets PVS rather than MTD(f).
@@ -838,7 +860,7 @@ The single largest evaluation term myChess is still missing. Today the only king
 | 2 | [§ 12.10 In-process harness](#1210-in-process-measurement-harness--sm-no-elo-but-adds-fast-per-change-diagnostics) — node-count bench + WAC EPD runner (self-play loop optional, covered by cutechess-cli from step 1) | S | — (per-change diagnostics) |
 | 3 | [§ 12.1 Transposition table](#121-transposition-table--done-93-elo) (fail-soft alpha-beta is already in place, see [§ 12.13](#1213-switch-alpha-beta-from-fail-hard-to-fail-soft--done)) | M | +150 – +300 |
 | 4 | [§ 12.3 LMR](#123-late-move-reductions-lmr--s--50100-elo) + [§ 12.20 PVS](#1220-principal-variation-search-pvs--negascout--s--1025-elo) + [§ 12.5 history](#125-history-heuristic--s--3050-elo) | S | +260 – +475 |
-| 5 | [§ 12.2 Null-move pruning](#122-null-move-pruning--s--50100-elo) | S | +310 – +575 (measured ≈ +70 for NMP itself) |
+| 5 | [§ 12.2 Null-move pruning](#122-null-move-pruning--done-76-elo) — **DONE** | S | measured **+76.0 ± 10.1** for NMP itself |
 | 6 | [§ 12.4 Check extensions](#124-check-extensions--s--1530-elo) + [§ 12.8 aspiration](#128-aspiration-windows--s--2040-elo) | S | +340 – +620 |
 | 7 | [§ 12.6 Quiescence search upgrade](#126-quiescence-search-upgrade--m--4080-elo) — all-captures + MVV-LVA + SEE pruning + delta pruning + optional TT integration | M | +380 – +700 |
 | 8 | [§ 12.7 Eval upgrades](#127-evaluation-upgrades--m--4080-elo-combined) + [§ 12.21 King safety](#1221-king-safety--m--3060-elo) | M | +420 – +770 |
