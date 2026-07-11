@@ -232,14 +232,28 @@ A `int[2][64][64]` table indexed by `(color, fromField, toField)` is incremented
 
 The current [`QuiescenceSearch`](../src/main/java/org/michaelfl/mychess/QuiescenceSearch.java) implementation is much narrower than the textbook quiescence search — see [search § 6.4](search.md#64-quiescence-search) for the precise description of what it does (and does not) do today. In short:
 
-- **What it does:** stand-pat with fail-soft α/β, resolves the capture chain *on the last-captured square only*, depth-capped at 20.
-- **What it does not do:** follow captures on *other* squares, order captures, filter losing captures, prune captures whose material gain can never reach α, extend on checks, or use the transposition table.
+- **What it does:** entered at a leaf *only when the move that reached it was a capture*; then stand-pat with fail-soft α/β, resolves the capture chain *on the last-captured square only*, depth-capped at 20.
+- **What it does not do:** run at all after a *quiet* leaf move (a piece left en prise by a quiet move is scored statically — the side to move never grabs it), follow captures on *other* squares, order captures, filter losing captures, prune captures whose material gain can never reach α, extend on checks, or use the transposition table.
 
 The original "follow all captures" approach was tried once and abandoned as too expensive — at a time before the TT, MVV-LVA, and SEE existed in the codebase. With those primitives now available (or about to be), the upgrade becomes viable. This section splits the upgrade into five independently shippable sub-items, in the order they should be implemented.
 
-### 12.6.1 Follow all captures, not only same-square — **M, ≈ 30–60 Elo**
+### 12.6.1 Enter at every leaf and follow all captures — **M, ≈ 30–60 Elo**
 
-The single biggest gap: extend the QSearch capture loop to consider *every* legal capture at the leaf, not only those landing on the field the previous move captured on. The current condition
+Two coupled changes, both required. A textbook quiescence runs at *every* horizon leaf and there decides — via stand-pat plus the available captures — whether the position is actually quiet. myChess today skips both the unconditional entry and the all-captures scan.
+
+**(a) Entry condition.** The leaf wrapper [`PositionSearch.quiescenceSearch`](../src/main/java/org/michaelfl/mychess/engines/PositionSearch.java) descends into the real quiescence only when the move that reached the leaf was a capture:
+
+```java
+if (Move.getCapturedPiece(lastMove) == 0) {
+    return calculatePositionWeight(...);   // quiet leaf → static eval, no quiescence
+} else {
+    return quiescenceSearch.quiescenceSearch(...);
+}
+```
+
+So a quiet move that leaves an enemy piece en prise is scored statically — the side to move never gets to grab it in quiescence. The fix enters quiescence unconditionally at the leaf; the stand-pat cutoff (see [search § 6.4](search.md#64-quiescence-search)) already returns immediately when the position really is quiet, so the extra cost is only paid where captures actually exist.
+
+**(b) Capture loop.** Inside quiescence, extend the loop to consider *every* legal capture, not only those landing on the field the previous move captured on. The current condition
 
 ```java
 if (capturedOnField == Move.getToField(plainMoves[i])) {
@@ -251,9 +265,11 @@ is replaced by
 if (Move.getCapturedPiece(plainMoves[i]) != 0) {
 ```
 
+**(a) and (b) must land together.** Both hinge on the same "last move was a capture" assumption: `QuiescenceSearch` asserts a capturing last move and derives `capturedOnField` from it. Entering quiescence after a quiet move while the same-square loop is still in place would resolve captures on the quiet move's *destination* square — meaningless. So the entry gate cannot be dropped without also generalizing the loop, and vice versa.
+
 This makes the QSearch tree much wider per node — exactly the explosion the original implementation feared — which is why the next two items (12.6.2, 12.6.3) need to land alongside or shortly after to keep the cost bounded.
 
-Closes the systematic blind spot where myChess at the leaf overlooks a hanging piece on a square other than the last contested one (forks, discovered attacks, hung pieces from earlier in the sequence). Anecdotally responsible for a non-trivial fraction of cutechess losses where myChess is statically "fine" but tactically lost within 1–2 plies.
+Closes two systematic blind spots: (1) a hanging piece on a square other than the last contested one after a *capture* (forks, discovered attacks, pieces hung earlier in the sequence), and (2) any tactical capture available to the side to move after a *quiet* leaf move. Anecdotally responsible for a non-trivial fraction of cutechess losses where myChess is statically "fine" but tactically lost within 1–2 plies.
 
 ### 12.6.2 MVV-LVA capture ordering in QSearch — **S, ≈ 5–15 Elo**
 
