@@ -741,3 +741,75 @@ Player: mychess-4.0.1
    "Win: White mates": 8
    "Win: White wins by adjudication": 260
    
+--
+
+Stufe 1 — hoher Nutzen, geringer Aufwand
+
+  1. Eval-Guard vor dem Null-Move (staticEval >= beta). Das ist die wichtigste fehlende Standard-Bremse. Aktuell macht myChess die reduzierte Null-Move-Suche bei jedem eligiblen Knoten. Klassisch versucht man
+  NMP nur, wenn die statische Eval am Knoten bereits ≥ β ist — sonst ist ein Fail-High unwahrscheinlich und die reduzierte Suche ist verschwendet. Spart einen Haufen fruchtloser NMP-Versuche → mehr Zeit für
+  echte Tiefe. Voraussetzung: die statische Eval muss am inneren Knoten verfügbar sein (myChess berechnet sie aktuell erst am Blatt) — kleiner Umbau, aber der zahlt sich auch für Punkt 2/3 aus.
+
+  2. Adaptives R (tiefenabhängig). Statt R=2 fest: R = 2 + remainingDepth/6 (o.ä.). Bei tiefen Suchen aggressiver reduzieren, bei flachen vorsichtig. Der Klassiker unter den NMP-Tweaks, fast immer +Elo. Zwei
+  Zeilen. Deine Messung zeigt, dass der Tiefengewinn vor allem ab Tiefe 10 greift — genau dort würde ein größeres R zusätzlich reinhauen.
+
+  3. Reverse Futility Pruning (a.k.a. static null-move pruning). Verwandt, aber separat und noch billiger: Wenn staticEval − margin ≥ β bei geringer Resttiefe, direkt cutten ohne überhaupt eine Suche. Kein
+  Null-Move, kein Descent — reine statische Entscheidung. In feature-armen Engines oft überraschend stark (+15–30). Braucht dieselbe Knoten-Eval wie Punkt 1, also am besten zusammen bauen.
+
+  Stufe 2 — mittlerer Aufwand, solider Nutzen
+
+  4. TT-Store der NMP-Cutoffs. Den Fail-High als LOWER-Bound mit reduzierter Tiefe in die TT schreiben. Ein späterer Besuch derselben Position spart sich die NMP-Probe komplett. Reiner Speedup, kein Risiko —
+  verpasster Gewinn aus V1.
+
+  5. Eval-abhängiges R. Zusätzlich zu Punkt 2: R weiter erhöhen, je weiter die Eval über β liegt, z.B. R += min((staticEval − β)/200, 2). Stockfish-Stil. Baut auf der Knoten-Eval auf.
+
+  6. Verification Search. Die Absicherung, die aggressiveres R erst sicher macht: Bei hoher Resttiefe den NMP-Cutoff durch eine reduzierte reguläre (Nicht-Null-)Suche verifizieren, bevor man ihn akzeptiert.
+  Fängt die Zugzwang-Fehlcutoffs ab, die dein hasNonPawnMaterial-Guard nicht erwischt (z.B. Stellungen mit Material, aber trotzdem zugzwangartig). Erlaubt, R höher zu drehen ohne Genauigkeitsverlust.
+
+  Stufe 3 — messen, wahrscheinlich klein
+
+  7. Guard-Grenzen tunen. MIN_CHILD_DEPTH und die untere Tiefenschwelle. Wir haben bewusst konservativ R+3 gewählt; R+2 oder R+1 ausprobieren. Billiges A/B.
+
+  8. isKingChecked-Guard. Den hast du bewusst weggelassen (die Schach-Fälle purzeln via isIllegal raus). Einmal messen, ob ein expliziter Guard NPS bringt — vermutlich neutral, aber gut zu wissen.
+
+  Methodik
+
+  Jede dieser Änderungen einzeln per Fixed-N/SPRT gegen die aktuelle nmp-Version messen. NMP-Tuning hat starke Interaktionseffekte (Punkt 1+3 teilen sich die Knoten-Eval; adaptives R + Verification hängen
+  zusammen), und was in Stockfish +Elo bringt, kann in einer feature-armen Engine anders wirken. Reihenfolge-Vorschlag: erst die Knoten-Eval einbauen (schaltet 1+3+5 frei), dann 1, dann 2/3, dann der Rest.
+
+  Strategischer Ausblick — der größere Hebel liegt woanders
+
+  Ehrliche Einordnung: Die NMP-Tweaks oben bringen realistisch jeweils +5 bis +20, in Summe vielleicht nochmal +30–40. Aber das nächste große Feature wäre LMR (Late Move Reductions) — spät sortierte Züge
+  reduziert durchsuchen. In einer Engine, die (wie deine Messung zeigt) stark vom Zeit→Tiefe-Umtausch profitiert, ist LMR typisch der nächste große Sprung (+30–60), oft größer als alles NMP-Feintuning zusammen.
+  Und LMR + NMP verstärken sich gegenseitig.
+
+  Mein Vorschlag für die Roadmap-Reihenfolge: Eval-Guard + adaptives R + RFP als schnelle NMP-Ernte (Stufe 1, ein, zwei Sessions), dann LMR als nächstes Hauptkapitel, und Verification-Search/eval-R als
+  NMP-Verfeinerung nachdem LMR steht (dann kann man R aggressiver drehen, weil LMR und Verification zusammen die Fehlerrate abfedern).
+
+--
+Die Bound-Semantik ist der Schlüssel
+
+  Der TT-Eintrag trägt ja nicht nur einen Score, sondern auch einen Bound-Typ (EXACT / LOWER / UPPER). Der sagt dir, in welche Richtung der wahre Wert vom gespeicherten ttScore abweicht:
+
+  - LOWER — der wahre Wert ist ≥ ttScore. Wenn ttScore also höher ist als die rohe Eval, war die rohe Eval eine Unterschätzung → hebe sie auf ttScore an.
+  - UPPER — der wahre Wert ist ≤ ttScore. Wenn ttScore niedriger ist als die rohe Eval, war sie eine Überschätzung → senke sie auf ttScore ab.
+  - EXACT — der wahre Wert ist ttScore → nimm ihn direkt.
+
+  Zeigt der Bound in die „falsche" Richtung (z.B. LOWER, aber ttScore < eval), bringt er keine nutzbare Information → behalte die rohe Eval. Also nie Arithmetik, sondern: „nimm den such-informierten Wert, wenn
+  sein Bound die Richtung stützt, sonst die rohe Eval."
+  - EXACT — der wahre Wert ist ttScore → nimm ihn direkt.
+
+  Zeigt der Bound in die „falsche" Richtung (z.B. LOWER, aber ttScore < eval), bringt er keine nutzbare Information → behalte die rohe Eval. Also nie Arithmetik, sondern: „nimm den such-informierten Wert, wenn
+  sein Bound die Richtung stützt, sonst die rohe Eval."
+
+  Als Pseudocode
+
+  staticEval = WeightingFunction.calculate(board);
+  if (ttHit) {
+      if (bound == EXACT
+          || (bound == LOWER && ttScore > staticEval)
+          || (bound == UPPER && ttScore < staticEval)) {
+          staticEval = ttScore;   // Ersetzung, kein Mischen
+      }
+  }
+  // erst danach: if (staticEval >= beta) { versuche NMP }
+  
