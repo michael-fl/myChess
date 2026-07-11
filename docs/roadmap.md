@@ -200,7 +200,7 @@ Pass the turn to the opponent and search the reply with reduced depth. If the re
 **Follow-up tuning (next round).** V1 is deliberately conservative and is now in master; several standard refinements should add more on top, each measured on its own:
 
 - **Static-eval guard before the null move** — only attempt NMP when the node's static eval ≥ β (refined by the TT bound where an entry exists — a bound corrects the raw eval only in its informative direction; see [§ 3.8](data-types.md#38-zobrist-hashing-and-positionencoding) for TT bound semantics). Skips fruitless probes. Requires computing the static eval at *inner* nodes (currently only at leaves) — a small refactor that also unlocks the next two items.
-- **Reverse futility pruning** — if the static eval is *far* above β at low remaining depth, cut off with no search at all. Reuses the same inner-node eval.
+- **Reverse futility pruning** (a.k.a. static null move pruning) — if the static eval is *far* above β at low remaining depth, cut off with no search at all. Reuses the same inner-node eval. **Estimated ≈ +15–30 Elo** (unmeasured; overlaps with NMP, so the marginal gain on the post-NMP baseline is toward the lower end; margin/depth-cap tuning-sensitive).
 - **Adaptive R** — grow the reduction with remaining depth (e.g. `R = 2 + remainingDepth/6`), optionally also with how far the eval exceeds β.
 - **TT-store the NMP cutoffs** — write the fail-high as a `LOWER` bound so a later visit reuses it. Pure speedup, currently missed.
 - **Verification search** — at high remaining depth, confirm the cutoff with a reduced regular search before accepting it; catches the zugzwang cases the material guard misses and makes a more aggressive `R` safe.
