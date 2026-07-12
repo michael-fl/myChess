@@ -42,8 +42,16 @@ public final class PositionSearch {
      */
     public static final int MAX_SEARCH_DEPTH = 64;
 
-    /** Depth reduction R for null-move pruning. */
-    private static final int NMP_REDUCTION_R = 2;
+    /** Base depth reduction R for null-move pruning. */
+    private static final int NMP_BASE_R = 2;
+
+    /**
+     * Divisor controlling how fast the null-move reduction grows with remaining
+     * depth (see {@link #getNmpReduction(int)}). A larger value means more
+     * conservative growth; 6 keeps R at 2–3 for myChess's typical search depths.
+     * This is the main knob for NMP aggressiveness — 4 grows R noticeably faster.
+     */
+    private static final int NMP_R_DEPTH_DIVISOR = 6;
 
     /**
      * Minimum plies the reduced child must still search for NMP to give
@@ -333,7 +341,7 @@ public final class PositionSearch {
             }
         }
 
-        final int bestMove = ttEntryView != null ? ttEntryView.getBestMove() : 0;
+        final int ttMove = ttEntryView != null ? ttEntryView.getBestMove() : 0;
 
         // Null move pruning (NMP)
         SearchNodeResult result = nmp(ctx, betaWeight);
@@ -341,7 +349,7 @@ public final class PositionSearch {
             return result;
         }
 
-        result = alphaBetaSearchMain(ctx, alphaWeight, betaWeight, bestMove);
+        result = alphaBetaSearchMain(ctx, alphaWeight, betaWeight, ttMove);
 
         if (!result.isTimeout() && !result.isIllegal()) {
             // Store result in transposition table
@@ -356,7 +364,7 @@ public final class PositionSearch {
         if (canDoNMP(ctx)) {
             ctx.workingBoard().makeNullMove();
             var result = alphaBetaSearch(
-                    new SearchNodeContext(ctx.depth() + 1, ctx.maxDepth() - NMP_REDUCTION_R, MoveAndWeight.NO_MOVE, -ctx.weightFactor(), -ctx.materialWeight(), -ctx.materialDelta(), ctx.workingBoard(), ctx.pvTable(), true),
+                    new SearchNodeContext(ctx.depth() + 1, ctx.maxDepth() - getNmpReduction(ctx.remainingDepth()), MoveAndWeight.NO_MOVE, -ctx.weightFactor(), -ctx.materialWeight(), -ctx.materialDelta(), ctx.workingBoard(), ctx.pvTable(), true),
                     -betaWeight, -betaWeight + 1).negate();
             ctx.workingBoard().revertNullMove();
             ctx.truncateParentPv();
@@ -373,11 +381,26 @@ public final class PositionSearch {
         return null;
     }
 
+    /**
+     * Adaptive null-move reduction {@code R = NMP_BASE_R + remainingDepth / NMP_R_DEPTH_DIVISOR}.
+     * R grows with remaining depth because the tree — and thus the saving from a
+     * stronger reduction — is largest at the deepest nodes, while shallow nodes
+     * keep the conservative base reduction. With the current constants R is 2 at
+     * remaining depth &lt; 6, 3 at 6–11, 4 at 12–17, and so on.
+     *
+     * <p>Must be called with the same {@code remainingDepth} at both use sites
+     * ({@link #canDoNMP} and the reduced search in {@link #nmp}) so the
+     * child-depth guard matches the actual reduction applied.
+     */
+    private static int getNmpReduction(int remainingDepth) {
+        return NMP_BASE_R + remainingDepth / NMP_R_DEPTH_DIVISOR;
+    }
+
     private boolean canDoNMP(SearchNodeContext ctx) {
         final GameStatus gameStatus = ctx.workingBoard().getGameStatus();
 
         return gameStatus.hasNonPawnMaterial() // Has at least 1 non-pawn piece?
-                && ctx.remainingDepth() - 1 - NMP_REDUCTION_R >= NMP_MIN_CHILD_DEPTH // Child depth deep enough?
+                && ctx.remainingDepth() - 1 - getNmpReduction(ctx.remainingDepth()) >= NMP_MIN_CHILD_DEPTH // Child depth deep enough?
                 && !ctx.lastMoveWasNull(); // No consecutive null moves (makes no sense)
     }
 
