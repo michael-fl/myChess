@@ -1,12 +1,12 @@
 package org.michaelfl.mychess.engines;
 
-import org.jspecify.annotations.Nullable;
 import org.michaelfl.mychess.*;
 import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.TranspositionTable.Bound;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.concurrent.CancellationException;
 
 import static org.michaelfl.mychess.Assert.*;
@@ -42,16 +42,17 @@ public final class PositionSearch {
      */
     public static final int MAX_SEARCH_DEPTH = 64;
 
-    /** Base depth reduction R for null-move pruning. */
+    /** Base term of the adaptive null-move reduction R (see {@link #getNmpReduction(int)}). */
     private static final int NMP_BASE_R = 2;
 
     /**
      * Divisor controlling how fast the null-move reduction grows with remaining
-     * depth (see {@link #getNmpReduction(int)}). A larger value means more
-     * conservative growth; 6 keeps R at 2–3 for myChess's typical search depths.
-     * This is the main knob for NMP aggressiveness — 4 grows R noticeably faster.
+     * depth (see {@link #getNmpReduction(int)}): {@code R = NMP_BASE_R + remainingDepth / this}.
+     * A larger value means slower, more conservative growth. At the current 4, R
+     * climbs by one every four plies of remaining depth. This is the main knob
+     * for NMP aggressiveness — 6 would grow R more slowly, 3 faster.
      */
-    private static final int NMP_R_DEPTH_DIVISOR = 6;
+    private static final int NMP_R_DEPTH_DIVISOR = 4;
 
     /**
      * Minimum plies the reduced child must still search for NMP to give
@@ -60,6 +61,35 @@ public final class PositionSearch {
      * so it can detect two-ply threats and quiet build-ups.
      */
     private static final int NMP_MIN_CHILD_DEPTH = 2;
+
+    /**
+     * Target minimum remaining depth at which null-move pruning should still
+     * fire. The floor reduction in {@link #getNmpReduction(int)} is derived from
+     * it ({@code NMP_MIN_DEPTH - 1 - NMP_MIN_CHILD_DEPTH}) so that a node at this
+     * depth still clears the {@link #canDoNMP} child-depth guard even when the
+     * adaptive reduction would otherwise be too aggressive to fire here. Deriving
+     * the floor from this constraint rather than from {@link #NMP_BASE_R} keeps
+     * the minimum firing depth stable when the base reduction is retuned.
+     */
+    private static final int NMP_MIN_DEPTH = 5;
+
+    /**
+     * Remaining-depth threshold at or above which an NMP cutoff must be
+     * confirmed by a verification search before it is accepted; below it the
+     * cutoff is taken directly. Chosen to verify roughly the top third of a
+     * typical ~9–12 ply search — the region where a zugzwang false-cutoff is
+     * costliest (it prunes a large subtree and corrupts the root eval) and
+     * where the adaptive R is largest (so the null-move probe is most
+     * approximate). The numerous cheap cutoffs at remaining depth 5–6 are left
+     * unverified to preserve the NMP speedup.
+     *
+     * <p>Engine-specific and a primary tuning knob: the remaining-depth ≥ 8–10
+     * thresholds used by engines that search 25–30 plies do not transfer to
+     * myChess's shallow search (there rd ≥ 10 would almost never fire). Sweep
+     * {6, 7, 8} — lower to protect more of the tree if aggressive R leaks
+     * zugzwang losses, raise if verification erodes reached depth.
+     */
+    private static final int NMP_VERIFICATION_MIN_DEPTH = 7;
 
     private final NextMoveTask task;
     private final Game game;
@@ -229,7 +259,7 @@ public final class PositionSearch {
             pvTable[0] = move;
             workingBoard.makeMove(move);
             var result = alphaBetaSearch(
-                    new SearchNodeContext(1, maxDepth, bestKnownPath, -weightFactor, -newMaterialWeight, -moveWeight, workingBoard, pvTable),
+                    new SearchNodeContext(1, maxDepth, bestKnownPath, -weightFactor, -newMaterialWeight, -moveWeight, workingBoard, pvTable, maxDepth + 1),
                     WeightingFunction.MIN_ALPHA, -alphaWeight)
                     .negate();
             if (result.isTimeout()) {
@@ -344,12 +374,16 @@ public final class PositionSearch {
         final int ttMove = ttEntryView != null ? ttEntryView.getBestMove() : 0;
 
         // Null move pruning (NMP)
-        SearchNodeResult result = nmp(ctx, betaWeight);
-        if (result != null) {
-            return result;
+        final var nmpResult = nmp(ctx, betaWeight);
+        if (nmpResult.isPresent()) {
+            final var verificationResult = verifyNmpCutoff(ctx, nmpResult.get(), alphaWeight, betaWeight, ttMove);
+            if (verificationResult.isPresent()) {
+                return verificationResult.get();
+            }
         }
 
-        result = alphaBetaSearchMain(ctx, alphaWeight, betaWeight, ttMove);
+        // Do standard full-depth alpha-beta search
+        var result = alphaBetaSearchMain(ctx, alphaWeight, betaWeight, ttMove);
 
         if (!result.isTimeout() && !result.isIllegal()) {
             // Store result in transposition table
@@ -360,40 +394,82 @@ public final class PositionSearch {
         return result;
     }
 
-    private @Nullable SearchNodeResult nmp(final SearchNodeContext ctx, final int betaWeight) {
+    private Optional<SearchNodeResult> verifyNmpCutoff(SearchNodeContext ctx, SearchNodeResult result, int alphaWeight, int betaWeight, int ttMove) {
+        if (!result.isTimeout() && ctx.remainingDepth() >= NMP_VERIFICATION_MIN_DEPTH && !ctx.isVerificationSearch()) {
+            // Potential NMP cutoff --> Run verification search on the reduced depth
+            result = alphaBetaSearchMain(createContextForVerificationSearch(ctx), alphaWeight, betaWeight, ttMove);
+            if (!result.isTimeout() && !result.isIllegal()) {
+                if (result.weight() < betaWeight) {
+                    return Optional.empty();
+                }
+                // NMP cutoff
+                statistics.incrNmpCutoffCount();
+            }
+        }
+
+        return Optional.of(result);
+    }
+
+    // Note: May return TIMEOUT, but never ILLEGAL
+    private Optional<SearchNodeResult> nmp(final SearchNodeContext ctx, final int betaWeight) {
         if (canDoNMP(ctx)) {
             ctx.workingBoard().makeNullMove();
-            var result = alphaBetaSearch(
-                    new SearchNodeContext(ctx.depth() + 1, ctx.maxDepth() - getNmpReduction(ctx.remainingDepth()), MoveAndWeight.NO_MOVE, -ctx.weightFactor(), -ctx.materialWeight(), -ctx.materialDelta(), ctx.workingBoard(), ctx.pvTable(), true),
-                    -betaWeight, -betaWeight + 1).negate();
+            var result = alphaBetaSearch(createContextForNmp(ctx), -betaWeight, -betaWeight + 1).negate();
             ctx.workingBoard().revertNullMove();
             ctx.truncateParentPv();
 
             if (result.isTimeout()) {
-                return SearchNodeResult.TIMEOUT;
+                return Optional.of(SearchNodeResult.TIMEOUT);
             }
             if (!result.isIllegal() && result.weight() >= betaWeight) { // beta cutoff
-                statistics.incrNmpCutoffCount();
-                return SearchNodeResult.create(GameResult.ONGOING, result.weight(), Bound.LOWER, 0);
+                return Optional.of(SearchNodeResult.create(GameResult.ONGOING, result.weight(), Bound.LOWER, 0));
             }
         }
 
-        return null;
+        return Optional.empty();
+    }
+
+    private SearchNodeContext createContextForNmp(final SearchNodeContext ctx) {
+        return new SearchNodeContext(ctx.depth() + 1, ctx.maxDepth() - getNmpReduction(ctx.remainingDepth()), MoveAndWeight.NO_MOVE, -ctx.weightFactor(), -ctx.materialWeight(), -ctx.materialDelta(), ctx.workingBoard(), ctx.pvTable(), ctx.pvMaxLength(), true, false);
+    }
+
+    private SearchNodeContext createContextForVerificationSearch(final SearchNodeContext ctx) {
+        // Clear this node's PV line before the verification search: it searches to a
+        // shorter (reduced) depth, so without this the slots beyond its line would keep
+        // stale moves from an earlier sibling and leak an illegal PV upward (see IllegalPvRegressionTest).
+        Arrays.fill(ctx.pvTable(), ctx.pvIndex(), (ctx.depth() + 1) * ctx.pvMaxLength(), 0);
+
+        return new SearchNodeContext(ctx.depth(), ctx.maxDepth() - getNmpReduction(ctx.remainingDepth()), ctx.bestKnownPath(), ctx.weightFactor(), ctx.materialWeight(), ctx.materialDelta(), ctx.workingBoard(), ctx.pvTable(), ctx.pvMaxLength(), false, true);
     }
 
     /**
-     * Adaptive null-move reduction {@code R = NMP_BASE_R + remainingDepth / NMP_R_DEPTH_DIVISOR}.
-     * R grows with remaining depth because the tree — and thus the saving from a
-     * stronger reduction — is largest at the deepest nodes, while shallow nodes
-     * keep the conservative base reduction. With the current constants R is 2 at
-     * remaining depth &lt; 6, 3 at 6–11, 4 at 12–17, and so on.
+     * Adaptive null-move reduction {@code R = NMP_BASE_R + remainingDepth / NMP_R_DEPTH_DIVISOR},
+     * with a floor for shallow depths. R grows with remaining depth because the
+     * tree — and thus the saving from a stronger reduction — is largest at the
+     * deepest nodes.
+     *
+     * <p>When the adaptive value would leave the reduced child shallower than
+     * {@link #NMP_MIN_CHILD_DEPTH}, R is clamped to
+     * {@code NMP_MIN_DEPTH - 1 - NMP_MIN_CHILD_DEPTH} instead, so NMP still fires
+     * down to {@link #NMP_MIN_DEPTH} rather than being blocked there by an
+     * over-aggressive reduction. The floor derives from the minimum-firing-depth
+     * constraint, not from {@link #NMP_BASE_R}, so it stays correct when the base
+     * reduction is retuned.
+     *
+     * <p>With the current constants (base 2, divisor 4) the effective R where NMP
+     * fires is: 2 at remaining depth 5, 3 at 6–7, 4 at 8–11, 5 at 12–15, and so on.
      *
      * <p>Must be called with the same {@code remainingDepth} at both use sites
-     * ({@link #canDoNMP} and the reduced search in {@link #nmp}) so the
-     * child-depth guard matches the actual reduction applied.
+     * ({@link #canDoNMP} and the reduced search in {@link #nmp}) so the child-depth
+     * guard matches the actual reduction applied.
      */
     private static int getNmpReduction(int remainingDepth) {
-        return NMP_BASE_R + remainingDepth / NMP_R_DEPTH_DIVISOR;
+        final int reduction = NMP_BASE_R + remainingDepth / NMP_R_DEPTH_DIVISOR;
+        if (remainingDepth - 1 - reduction >= NMP_MIN_CHILD_DEPTH) {
+            return reduction;
+        }
+
+        return NMP_MIN_DEPTH - 1 - NMP_MIN_CHILD_DEPTH;
     }
 
     private boolean canDoNMP(SearchNodeContext ctx) {
@@ -469,7 +545,7 @@ public final class PositionSearch {
 
             pvTable[pvIndex] = move;
             ctx.workingBoard().makeMove(move);
-            var result = alphaBetaSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), bestKnownPath, -ctx.weightFactor(), -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), pvTable), -betaWeight, -alphaLocal).negate();
+            var result = alphaBetaSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), bestKnownPath, -ctx.weightFactor(), -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), pvTable, ctx.pvMaxLength(), false, ctx.isVerificationSearch()), -betaWeight, -alphaLocal).negate();
             ctx.workingBoard().revertMove();
             if (result.isTimeout()) {
                 return SearchNodeResult.TIMEOUT;

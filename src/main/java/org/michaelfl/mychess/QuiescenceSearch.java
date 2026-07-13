@@ -32,7 +32,7 @@ public final class QuiescenceSearch {
 
         statistics.startQuiescenceSearch();
         int weight = quiescenceSearch(
-                new SearchNodeContext(depth, maxDepth, null, weightFactor, materialWeight, materialDelta, workingBoard, null),
+                new SearchNodeContext(depth, maxDepth, null, weightFactor, materialWeight, materialDelta, workingBoard, null, 0),
                 alphaWeight, betaWeight);
         statistics.endQuiescenceSearch();
 
@@ -99,7 +99,7 @@ public final class QuiescenceSearch {
 
                 ctx.workingBoard().makeMove(move);
                 int weight = -quiescenceSearch(
-                        new SearchNodeContext(depth + 1, ctx.maxDepth(), null, -ctx.weightFactor(), -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), null),
+                        new SearchNodeContext(depth + 1, ctx.maxDepth(), null, -ctx.weightFactor(), -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), null, 0),
                         -betaWeight, -alphaLocal);
                 ctx.workingBoard().revertMove();
 

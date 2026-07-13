@@ -207,8 +207,9 @@ class BlunderTest {
      * consequence (a fresh search from that later position already
      * reports {@code -6.0}, so the engine knows it is lost there); the
      * genuine over-optimistic selection error is {@code 39.Rxd5}. The
-     * engine should decline the pawn and address the {@code ...Qxg3+}
-     * threat instead.
+     * engine now correctly declines the pawn and addresses the
+     * {@code ...Qxg3+} threat; this test guards against a regression back
+     * to {@code 39.Rxd5}.
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -227,15 +228,7 @@ class BlunderTest {
 
         var result = searchCurrentPosition(game);
 
-        // TODO move should be avoided
-        boolean avoided = false;
-        try {
-            assertEngineAvoids(result, Board.d3, Board.d5, "39.Rxd5");
-            avoided = true;
-        } catch (AssertionFailedError _) {
-            // expected for now
-        }
-        assertFalse(avoided);
+        assertEngineAvoids(result, Board.d3, Board.d5, "39.Rxd5");
     }
 
     /**

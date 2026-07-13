@@ -30,21 +30,29 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class EvalRegressionTest extends EngineTestBase {
 
     /**
-     * TODO — myChess trades its active a6-bishop for the passive e2-knight,
-     *   dropping Stockfish's eval from +2.2 to +0.6 (Black's view). The
-     *   pre-trade position is already scored only +0.93 by myChess (~1.3
-     *   pawns below Stockfish), so the engine sees no urgency to preserve
-     *   the bishop.
+     * TODO — in this Chess960 position myChess plays the mediocre rook move
+     *   d8-d7: Stockfish drops from -1.9 to -1.0 (Black's view), giving up
+     *   ~0.9 of Black's advantage. Not a blunder, but well short of the best
+     *   positional continuation.
      * <p>
-     *   Root cause: static eval underweights active long-diagonal bishops
-     *   against passive knights. NOT a search-depth issue — deeper search
-     *   or NMP alone will not fix this. Candidates: mobility term in
-     *   {@link WeightingFunction}, PST tweaks favoring a6-diagonal bishops,
+     *   History: myChess 4.0.3 played the outright-bad a6-e2 here, trading
+     *   its active a6-bishop for the passive e2-knight. The aggressive-R +
+     *   null-move verification search moved the engine off that trade to
+     *   d8-d7 — a mild improvement (d8-d7 evaluates better than a6-e2), but
+     *   incidental: the engine keeps the bishop yet still misses the
+     *   strongest move.
+     * <p>
+     *   Root cause is eval-side, not search: the static eval underweights
+     *   the strongest positional continuation (active long-diagonal bishop,
+     *   piece activity). NOT fixable by deeper search or NMP alone.
+     *   Candidates: mobility term in {@link WeightingFunction}, PST tweaks,
      *   or a piece-activity penalty for out-of-play knights.
      * <p>
-     *   When the eval improves and this test fails, expected corrected
-     *   choice is one of the bishop retreats (Bb7, Bc4, or similar) that
-     *   preserves the positional pressure.
+     *   This test now pins the current suboptimal choice d8-d7 as a behavior
+     *   anchor. It is search-sensitive and may change again on the next search
+     *   tweak; when it does, re-check against Stockfish and re-anchor. The eval
+     *   weakness is resolved only when the engine finds a move at or near
+     *   Stockfish's best (~ -1.9).
      */
     @Test
     void tradesActiveA6BishopForPassiveE2Knight() throws InterruptedException, ExecutionException, TimeoutException {
@@ -67,8 +75,8 @@ class EvalRegressionTest extends EngineTestBase {
 
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
             var moveStr = ChessUtil.moveToString(move.move());
-            assertEquals("a6-e2", moveStr,
-                    "current known-bad choice; see TODO");
+            assertEquals("d8-d7", moveStr,
+                    "current suboptimal choice; see TODO — still ~0.9 below best, eval weakness unresolved");
         } finally {
             config.getEngineWhiteConfig().getTranspositionTable().close();
         }

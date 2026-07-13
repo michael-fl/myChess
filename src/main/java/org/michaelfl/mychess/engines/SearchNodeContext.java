@@ -141,8 +141,9 @@ import java.util.Arrays;
 public record SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnownPath,
                                 int weightFactor,
                                 int materialWeight, int materialDelta,
-                                Board workingBoard, int[] pvTable,
-                                boolean lastMoveWasNull) {
+                                Board workingBoard, int[] pvTable, int pvMaxLength,
+                                boolean lastMoveWasNull,
+                                boolean isVerificationSearch) {
 
     /**
      * Convenience constructor that defaults {@code lastMoveWasNull} to
@@ -154,8 +155,8 @@ public record SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnown
     public SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnownPath,
                       int weightFactor,
                       int materialWeight, int materialDelta,
-                      Board workingBoard, int[] pvTable) {
-        this(depth, maxDepth, bestKnownPath, weightFactor, materialWeight, materialDelta, workingBoard, pvTable, false);
+                      Board workingBoard, int[] pvTable, int pvMaxLength) {
+        this(depth, maxDepth, bestKnownPath, weightFactor, materialWeight, materialDelta, workingBoard, pvTable, pvMaxLength, false, false);
     }
 
     /**
@@ -166,16 +167,6 @@ public record SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnown
      */
     public int remainingDepth() {
         return maxDepth - depth;
-    }
-
-    /**
-     * Side length of the (conceptual) PV-table matrix: both the
-     * number of rows and the number of columns per row. Equals
-     * {@code maxDepth + 1} — one extra slot past the last move
-     * acts as a zero-terminator for PV consumers.
-     */
-    private int pvMaxLength() {
-        return maxDepth + 1;
     }
 
     /**
