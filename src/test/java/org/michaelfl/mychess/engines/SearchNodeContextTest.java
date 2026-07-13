@@ -42,7 +42,8 @@ class SearchNodeContextTest {
                 +1,           // weightFactor   — not read
                 0, 0,         // materialWeight, materialDelta — not read
                 Board.createNewGame(),
-                pvTable);
+                pvTable,
+                MAX_DEPTH + 1);
 
         ctx.writeTTCachedPv(TT_MOVE);
 
