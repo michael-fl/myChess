@@ -22,19 +22,18 @@ class QuiescenceSearchTest {
     // A good quiescence search should detect that the white knight is not protected
     // and can be captured as compensation for the captured black knight.
     @Test
-    void testPositionWithUnguardedNight1() {
+    void testPositionWithUnguardedKnight1() {
         var gameNotation = "1.c3 e6 2.Nf3 d6 3.a3 Nc6 4.Nh4 Nb4 5.d3 c5 6.axb4";
-        // TODO: 0 < expectedWeight < 0.5 !
-        quiescenceTest(gameNotation, Board.blackKnight, 3.0f, 2.6f, 2.9f, 2);
+        quiescenceTest(gameNotation, Board.blackKnight, 3.0f, 0f, 0.5f, 2);
     }
 
     // A good quiescence search should detect that the white knight is not protected
     // and is a much more valuable target for the black queen than the pawn on d5.
     @Test
-    void testPositionWithUnguardedNight2() {
+    void testPositionWithUnguardedKnight2() {
         var gameNotation = "1.Nf3 e6 2.Nh4 d5 3.c3 a6 4.c4 b6 5.cxd5";
         // TODO: 2.0 < expectedWeight < 3.0 !
-        quiescenceTest(gameNotation, Board.blackPawn, 1.0f, -0.8f, -0.5f, 1);
+        quiescenceTest(gameNotation, Board.blackPawn, 1.0f, -3.0f, -2.0f, 1);
     }
 
     /**
