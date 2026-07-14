@@ -1,12 +1,12 @@
 package org.michaelfl.mychess.engines;
 
+import org.jspecify.annotations.Nullable;
 import org.michaelfl.mychess.*;
 import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.TranspositionTable.Bound;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 
 import java.util.Arrays;
-import java.util.Optional;
 import java.util.concurrent.CancellationException;
 
 import static org.michaelfl.mychess.Assert.*;
@@ -375,10 +375,10 @@ public final class PositionSearch {
 
         // Null move pruning (NMP)
         final var nmpResult = nmp(ctx, betaWeight);
-        if (nmpResult.isPresent()) {
-            final var verificationResult = verifyNmpCutoff(ctx, nmpResult.get(), alphaWeight, betaWeight, ttMove);
-            if (verificationResult.isPresent()) {
-                return verificationResult.get();
+        if (nmpResult != null) {
+            final var verificationResult = verifyNmpCutoff(ctx, nmpResult, alphaWeight, betaWeight, ttMove);
+            if (verificationResult != null) {
+                return verificationResult;
             }
         }
 
@@ -394,24 +394,24 @@ public final class PositionSearch {
         return result;
     }
 
-    private Optional<SearchNodeResult> verifyNmpCutoff(SearchNodeContext ctx, SearchNodeResult result, int alphaWeight, int betaWeight, int ttMove) {
+    private @Nullable SearchNodeResult verifyNmpCutoff(SearchNodeContext ctx, SearchNodeResult result, int alphaWeight, int betaWeight, int ttMove) {
         if (!result.isTimeout() && ctx.remainingDepth() >= NMP_VERIFICATION_MIN_DEPTH && !ctx.isVerificationSearch()) {
             // Potential NMP cutoff --> Run verification search on the reduced depth
             result = alphaBetaSearchMain(createContextForVerificationSearch(ctx), alphaWeight, betaWeight, ttMove);
             if (!result.isTimeout() && !result.isIllegal()) {
                 if (result.weight() < betaWeight) {
-                    return Optional.empty();
+                    return null;
                 }
                 // NMP cutoff
                 statistics.incrNmpCutoffCount();
             }
         }
 
-        return Optional.of(result);
+        return result;
     }
 
     // Note: May return TIMEOUT, but never ILLEGAL
-    private Optional<SearchNodeResult> nmp(final SearchNodeContext ctx, final int betaWeight) {
+    private @Nullable SearchNodeResult nmp(final SearchNodeContext ctx, final int betaWeight) {
         if (canDoNMP(ctx)) {
             ctx.workingBoard().makeNullMove();
             var result = alphaBetaSearch(createContextForNmp(ctx), -betaWeight, -betaWeight + 1).negate();
@@ -419,14 +419,14 @@ public final class PositionSearch {
             ctx.truncateParentPv();
 
             if (result.isTimeout()) {
-                return Optional.of(SearchNodeResult.TIMEOUT);
+                return SearchNodeResult.TIMEOUT;
             }
             if (!result.isIllegal() && result.weight() >= betaWeight) { // beta cutoff
-                return Optional.of(SearchNodeResult.create(GameResult.ONGOING, result.weight(), Bound.LOWER, 0));
+                return SearchNodeResult.create(GameResult.ONGOING, result.weight(), Bound.LOWER, 0);
             }
         }
 
-        return Optional.empty();
+        return null;
     }
 
     private SearchNodeContext createContextForNmp(final SearchNodeContext ctx) {
