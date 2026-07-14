@@ -53,7 +53,7 @@ class QuiescenceSearchTest {
         var moveGenerator = new MoveGenerator(new MoveSorterImpl());
         var statistics = new Statistics();
         var weightingFunction = new WeightingFunction();
-        var qsearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics, game.getEngine().getConfig().getMaxQuiescenceDepth());
+        var qsearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics, game.getEngine().getConfig().getMaxQuiescenceDepth(), System.currentTimeMillis() + 5 * 60_000);
 
         var workingBoard = game.getBoard().copy();
         int weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
@@ -70,6 +70,34 @@ class QuiescenceSearchTest {
         assertTrue(tight > tightBeta, "returned weight must exceed the tight beta bound (fail-hard would clamp to " + tightBeta + ")");
     }
 
+    @Test
+    void quiescenceTimeout_setsTimeoutFlag() {
+        var gameNotation = """
+                1. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 4. d3 Bb4 5. Bd2 d6 6. Nd5 a5 7. Be2 Ra6 8. O-O Rb6 9. Qe1
+                h6 10. Nxb4
+                """;
+        var importer = GameImporter.importerFor(gameNotation);
+        var game = importer.importGame();
+        var moveGenerator = new MoveGenerator(new MoveSorterImpl());
+        var statistics = new Statistics();
+        var weightingFunction = new WeightingFunction();
+        for (int i = 0; i < 9_998; i++) {
+            statistics.incrPositionCount();
+        }
+        var qsearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics,
+                game.getEngine().getConfig().getMaxQuiescenceDepth(), System.currentTimeMillis() - 1);
+
+        var workingBoard = game.getBoard().copy();
+        int weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
+        int materialCenti = weightFactor * WeightingFunction.calculateMaterialWeight(workingBoard);
+
+        int weight = qsearch.quiescenceSearch(workingBoard, 0, weightFactor,
+                WeightingFunction.MIN_ALPHA, WeightingFunction.MAX_BETA, materialCenti, 0);
+
+        assertTrue(qsearch.isTimeout(), "Quiescence search must expose a timeout that occurs inside its recursive capture search");
+        assertEquals(0, weight, "Timeout returns a dummy score that callers must ignore when isTimeout() is true");
+    }
+
     void quiescenceTest(String gameNotation, byte capturedPiece, float expectedMaterialWeight, float expectedWeightMin, float expectedWeightMax, int expectedMaximumReachedDepthMin) {
         var importer = GameImporter.importerFor(gameNotation);
         var game = importer.importGame();
@@ -77,7 +105,7 @@ class QuiescenceSearchTest {
         var statistics = new Statistics();
         var weightingFunction = new WeightingFunction();
 
-        var quiescenceSearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics, game.getEngine().getConfig().getMaxQuiescenceDepth());
+        var quiescenceSearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics, game.getEngine().getConfig().getMaxQuiescenceDepth(), System.currentTimeMillis() + 5 * 60_000);
         var workingBoard = game.getBoard().copy();
         var weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
         var materialWeightCenti = WeightingFunction.calculateMaterialWeight(workingBoard);
