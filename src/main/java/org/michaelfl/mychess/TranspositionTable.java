@@ -123,6 +123,8 @@ public final class TranspositionTable implements AutoCloseable {
     /** Lazy process-wide table used when an engine does not receive an explicit table. */
     private static TranspositionTable INSTANCE;
 
+    private static TranspositionTable QSEARCH_INSTANCE;
+
     /**
      * Score-bound classification stored alongside each cached score, used
      * by the alpha-beta lookup in {@code PositionSearch.alphaBetaSearchPre}
@@ -297,6 +299,14 @@ public final class TranspositionTable implements AutoCloseable {
         }
 
         return INSTANCE;
+    }
+
+    public static synchronized TranspositionTable getDefaultQSearchInstance() {
+        if (QSEARCH_INSTANCE == null) {
+            QSEARCH_INSTANCE = new TranspositionTable(DEFAULT_SIZE);
+        }
+
+        return QSEARCH_INSTANCE;
     }
 
     /**

@@ -99,9 +99,7 @@ public final class MoveGenerator {
 
     /**
      * Convenience wrapper for callers that have a search depth but no
-     * move-ordering hints — e.g. {@link QuiescenceSearch}, which never
-     * receives a PV or TT move because the quiescence cache is not
-     * wired into the transposition table. See
+     * move-ordering hints. See
      * {@link #calculateMoves(Board, int, int, int)} for the full
      * parameter set.
      */

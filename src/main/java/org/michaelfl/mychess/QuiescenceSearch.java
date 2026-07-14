@@ -1,5 +1,6 @@
 package org.michaelfl.mychess;
 
+import org.michaelfl.mychess.TranspositionTable.Bound;
 import org.michaelfl.mychess.engines.PositionSearch;
 import org.michaelfl.mychess.engines.SearchNodeContext;
 
@@ -16,11 +17,14 @@ import static org.michaelfl.mychess.Assert.__assert;
 @SuppressWarnings("DuplicatedCode")
 public final class QuiescenceSearch {
 
+    private record QuiescenceSearchResult(int weight, Bound bound, int bestMove) {}
+
     private final MoveGenerator moveGenerator;
     private final WeightingFunction weightingFunction;
     private final Statistics statistics;
     private final int maxQuiescenceDepth;
     private final long timeout;
+    private final TranspositionTable tt;
     private boolean isTimeout;
 
     public QuiescenceSearch(MoveGenerator moveGenerator, WeightingFunction weightingFunction, Statistics statistics, int maxQuiescenceDepth, long timeout) {
@@ -28,6 +32,7 @@ public final class QuiescenceSearch {
         this.weightingFunction = weightingFunction;
         this.statistics = statistics;
         this.maxQuiescenceDepth = maxQuiescenceDepth;
+        this.tt = TranspositionTable.getDefaultQSearchInstance();
         this.timeout = timeout;
     }
 
@@ -35,27 +40,64 @@ public final class QuiescenceSearch {
         final int maxDepth = depth + maxQuiescenceDepth;
 
         statistics.startQuiescenceSearch();
-        int weight = quiescenceSearch(
+        var result = quiescenceSearchPre(
                 new SearchNodeContext(depth, maxDepth, null, weightFactor, materialWeight, materialDelta, workingBoard, null),
-                alphaWeight, betaWeight);
+                                      alphaWeight, betaWeight);
         statistics.endQuiescenceSearch();
 
-        return weight;
+        return result.weight();
     }
 
-    private int quiescenceSearch(final SearchNodeContext ctx, final int alphaWeight, final int betaWeight) {
+    private QuiescenceSearchResult quiescenceSearchPre(final SearchNodeContext ctx, int alphaWeight, int betaWeight) {
         final int depth = ctx.depth();
 
-        __assert(() -> !(WeightingFunction.isIllegalWeight(alphaWeight) || WeightingFunction.isIllegalWeight(betaWeight)),
-                () -> "ILLEGAL_WEIGHT as alpha/beta; depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + ctx.workingBoard());
+        final int alphaFinal = alphaWeight;
+        final int betaFinal = betaWeight;
+        __assert(() -> !(WeightingFunction.isIllegalWeight(alphaFinal) || WeightingFunction.isIllegalWeight(betaFinal)),
+                () -> "ILLEGAL_WEIGHT as alpha/beta; depth=" + depth + ", alphaWeight=" + alphaFinal + ", betaWeight=" + betaFinal + "\n" + ctx.workingBoard());
 
         statistics.incrPositionCount();
         statistics.incrQuiescencePositionsCount();
         statistics.reachedDepth(depth);
 
         if (isTimeout()) {
-            return 0;
+            return new QuiescenceSearchResult(0, Bound.EXACT, 0);
         }
+
+        // Transposition table lookup
+        final var ttEntryView = tt.get(ctx.workingBoard().getGameStatus().getPositionHash());
+        if (ttEntryView != null && ttEntryView.getDepth() >= ctx.remainingDepth()) {
+            final int score = WeightingFunction.scoreFromTT(ttEntryView.getScore(), ctx.depth());
+
+            switch (ttEntryView.getBound()) {
+                case EXACT -> {
+                    return new QuiescenceSearchResult(score, Bound.EXACT, ttEntryView.getBestMove());
+                }
+                case LOWER -> alphaWeight = Math.max(alphaWeight, score);
+                case UPPER -> betaWeight = Math.min(betaWeight, score);
+            }
+
+            if (alphaWeight >= betaWeight) {
+                return new QuiescenceSearchResult(score, ttEntryView.getBound(), ttEntryView.getBestMove());
+            }
+        }
+
+        final int ttMove = ttEntryView != null ? ttEntryView.getBestMove() : 0;
+
+        var result = quiescenceSearch(ctx, alphaWeight, betaWeight, ttMove);
+        int weight = result.weight();
+
+        if (!isTimeout() && weight != WeightingFunction.ILLEGAL_WEIGHT_POS && weight != WeightingFunction.ILLEGAL_WEIGHT_NEG) {
+            // Store result in transposition table
+            int score = WeightingFunction.scoreToTT(weight, ctx.depth());
+            tt.put(ctx.workingBoard().getGameStatus().getPositionHash(), ctx.remainingDepth(), score, result.bound(), result.bestMove());
+        }
+
+        return result;
+    }
+
+    private QuiescenceSearchResult quiescenceSearch(final SearchNodeContext ctx, int alphaWeight, int betaWeight, int ttMove) {
+        final int depth = ctx.depth();
 
         int standPat = calculatePositionWeight(ctx.workingBoard(), ctx.weightFactor(), ctx.materialWeight(), ctx.materialDelta());
 
@@ -71,9 +113,10 @@ public final class QuiescenceSearch {
         // protected by moves.isIllegal() after calculateMoves.
         if (standPat >= betaWeight || depth == ctx.maxDepth()) {
             if (ctx.workingBoard().canCaptureOpposingKing()) {
-                return WeightingFunction.ILLEGAL_WEIGHT_POS;
+                return new QuiescenceSearchResult(WeightingFunction.ILLEGAL_WEIGHT_POS, Bound.EXACT, 0);
             }
-            return standPat;
+            var bound = standPat >= betaWeight ? Bound.LOWER : Bound.EXACT;
+            return new QuiescenceSearchResult(standPat, bound, 0);
         }
 
         // Fail-soft: bestWeight tracks the true best score (may be below
@@ -81,13 +124,14 @@ public final class QuiescenceSearch {
         // computed as max(alpha, bestWeight) at the call site.
         int bestWeight = standPat;
 
-        final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard(), depth);
+        final Moves moves = moveGenerator.calculateMoves(ctx.workingBoard(), depth, 0, ttMove);
         if (moves.isIllegal()) {
-            return WeightingFunction.ILLEGAL_WEIGHT_POS;
+            return new QuiescenceSearchResult(WeightingFunction.ILLEGAL_WEIGHT_POS, Bound.EXACT, 0);
         }
 
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
+        int bestMove = 0;
 
         for (int i = 0; i < countMoves; i++) {
             // Follow only moves, which are captures
@@ -100,29 +144,34 @@ public final class QuiescenceSearch {
                 final int alphaLocal = Math.max(alphaWeight, bestWeight);
 
                 ctx.workingBoard().makeMove(move);
-                int weight = -quiescenceSearch(
+                var result = quiescenceSearchPre(
                         new SearchNodeContext(depth + 1, ctx.maxDepth(), null, -ctx.weightFactor(), -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), null),
                         -betaWeight, -alphaLocal);
+                int weight = -result.weight();
+
                 ctx.workingBoard().revertMove();
 
                 if (isTimeout()) {
-                    return 0;
+                    return new QuiescenceSearchResult(0, Bound.EXACT, 0);
                 }
 
                 // -ILLEGAL_WEIGHT is possible to be returned, but never +ILLEGAL_WEIGHT
                 if (weight > WeightingFunction.ILLEGAL_WEIGHT_NEG) {
                     // Fail-soft beta cutoff: return actual weight.
                     if (weight >= betaWeight) {
-                        return weight;
+                        bestMove = move;
+                        return new QuiescenceSearchResult(weight, Bound.LOWER, bestMove);
                     }
                     if (weight > bestWeight) {
                         bestWeight = weight;
+                        bestMove = move;
                     }
                 }
             }
         }
 
-        return bestWeight;
+        Bound bound = bestWeight > alphaWeight ? Bound.EXACT : Bound.UPPER;
+        return new QuiescenceSearchResult(bestWeight, bound, bestMove);
     }
 
     private int calculatePositionWeight(final Board workingBoard, final int weightFactor, final int materialWeight, final int materialDelta) {

@@ -1,5 +1,6 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.engines.MoveSorterImpl;
 
@@ -9,6 +10,11 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Michael Fleischhauer
  */
 class QuiescenceSearchTest {
+
+    @BeforeEach
+    void setup() {
+        TranspositionTable.getDefaultQSearchInstance().clear();
+    }
 
     @Test
     void testPositionAfterCapture() {
@@ -49,6 +55,7 @@ class QuiescenceSearchTest {
         var gameNotation = "1.Nf3 e5 2.Nxe5";
         var importer = GameImporter.importerFor(gameNotation);
         var game = importer.importGame();
+        TranspositionTable.getDefaultQSearchInstance().clear();
         var moveGenerator = new MoveGenerator(new MoveSorterImpl());
         var statistics = new Statistics();
         var weightingFunction = new WeightingFunction();
@@ -62,6 +69,7 @@ class QuiescenceSearchTest {
                 WeightingFunction.MIN_ALPHA, WeightingFunction.MAX_BETA, materialCenti, 0);
 
         int tightBeta = wide - 100;
+        TranspositionTable.getDefaultQSearchInstance().clear();
         int tight = qsearch.quiescenceSearch(workingBoard, 0, weightFactor,
                 WeightingFunction.MIN_ALPHA, tightBeta, materialCenti, 0);
 
@@ -77,6 +85,7 @@ class QuiescenceSearchTest {
                 """;
         var importer = GameImporter.importerFor(gameNotation);
         var game = importer.importGame();
+        TranspositionTable.getDefaultQSearchInstance().clear();
         var moveGenerator = new MoveGenerator(new MoveSorterImpl());
         var statistics = new Statistics();
         var weightingFunction = new WeightingFunction();
@@ -100,6 +109,7 @@ class QuiescenceSearchTest {
     void quiescenceTest(String gameNotation, byte capturedPiece, float expectedMaterialWeight, float expectedWeightMin, float expectedWeightMax, int expectedMaximumReachedDepthMin) {
         var importer = GameImporter.importerFor(gameNotation);
         var game = importer.importGame();
+        TranspositionTable.getDefaultQSearchInstance().clear();
         var moveGenerator = new MoveGenerator(new MoveSorterImpl());
         var statistics = new Statistics();
         var weightingFunction = new WeightingFunction();
