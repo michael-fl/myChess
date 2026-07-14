@@ -6,9 +6,10 @@ import org.michaelfl.mychess.engines.SearchNodeContext;
 import static org.michaelfl.mychess.Assert.__assert;
 
 /**
- * Tactical extension at search leaves: keeps capturing as long as the last
- * move was a capture, capped by {@link EngineConfig#getMaxQuiescenceDepth()}.
- * Avoids the horizon effect on hanging captures.
+ * Tactical extension at search leaves: evaluates the stand-pat position and
+ * recursively follows available captures, capped by
+ * {@link EngineConfig#getMaxQuiescenceDepth()}. Avoids the horizon effect on
+ * hanging captures while keeping the normal alpha-beta leaf evaluation quiet.
  *
  * @author Michael Fleischhauer
  */
@@ -44,7 +45,6 @@ public final class QuiescenceSearch {
 
     private int quiescenceSearch(final SearchNodeContext ctx, final int alphaWeight, final int betaWeight) {
         final int depth = ctx.depth();
-        final GameStatus gameStatus = ctx.workingBoard().getGameStatus();
 
         __assert(() -> !(WeightingFunction.isIllegalWeight(alphaWeight) || WeightingFunction.isIllegalWeight(betaWeight)),
                 () -> "ILLEGAL_WEIGHT as alpha/beta; depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + ctx.workingBoard());
@@ -89,14 +89,9 @@ public final class QuiescenceSearch {
         final int[] plainMoves = moves.getMoves();
         final int countMoves = moves.count();
 
-        int capturedOnField = Move.getToField(gameStatus.getLastMove());
-        __assert(() -> Move.getCapturedPiece(gameStatus.getLastMove()) != 0);
-
         for (int i = 0; i < countMoves; i++) {
-            // TODO: Follow only moves, which are captures. Unfortunately this increases computation time too much.
-
-            // Follow only moves, which capture on the same field, until no further capture is possible on that field
-            if (capturedOnField == Move.getToField(plainMoves[i])) {
+            // Follow only moves, which are captures
+            if (Move.getCapturedPiece(plainMoves[i]) != 0) {
                 final int move = plainMoves[i];
                 final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move);
                 final int newMaterialWeight = ctx.materialWeight() + moveWeight;

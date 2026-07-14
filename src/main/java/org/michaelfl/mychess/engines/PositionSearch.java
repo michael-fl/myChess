@@ -58,7 +58,6 @@ public final class PositionSearch {
     private final EngineConfig engineConfig;
     private final KillerMoves killerMoves = new KillerMoves();
     private final MoveGenerator moveGenerator;
-    private final WeightingFunction weightingFunction = new WeightingFunction();
     private final QuiescenceSearch quiescenceSearch;
     private final TranspositionTable tt;
     private final int weightFactor;
@@ -73,7 +72,7 @@ public final class PositionSearch {
         this.moveGenerator = new MoveGenerator(new MoveSorterImpl(killerMoves));
         this.engineConfig = engine.getConfig();
         this.timeout = System.currentTimeMillis() + engineConfig.getMillisPerMove();
-        this.quiescenceSearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics, engineConfig.getMaxQuiescenceDepth(), timeout);
+        this.quiescenceSearch = new QuiescenceSearch(moveGenerator, new WeightingFunction(), statistics, engineConfig.getMaxQuiescenceDepth(), timeout);
         this.tt = engine.getTranspositionTable();
         this.weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
         this.silent = engineConfig.isSilent();
@@ -508,21 +507,7 @@ public final class PositionSearch {
     }
 
     private int quiescenceSearch(final SearchNodeContext ctx, final int alphaWeight, final int betaWeight) {
-        final var workingBoard = ctx.workingBoard();
-        final int lastMove = workingBoard.getGameStatus().getLastMove();
-
-        if (Move.getCapturedPiece(lastMove) == 0) {
-            return calculatePositionWeight(workingBoard, ctx.weightFactor(), ctx.materialWeight(), ctx.materialDelta());
-        } else {
-            return quiescenceSearch.quiescenceSearch(workingBoard, ctx.depth(), ctx.weightFactor(), alphaWeight, betaWeight, ctx.materialWeight(), ctx.materialDelta());
-        }
-    }
-
-    private int calculatePositionWeight(final Board workingBoard, final int weightFactor, final int materialWeight, final int materialDelta) {
-        if (materialDelta > EVALUATE_MATERIAL_ONLY_THRESHOLD || materialDelta < -EVALUATE_MATERIAL_ONLY_THRESHOLD) {
-            return materialWeight;
-        }
-        return weightingFunction.calculate(workingBoard) * weightFactor;
+        return quiescenceSearch.quiescenceSearch(ctx.workingBoard(), ctx.depth(), ctx.weightFactor(), alphaWeight, betaWeight, ctx.materialWeight(), ctx.materialDelta());
     }
 
     private void log(String s) {
