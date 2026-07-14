@@ -181,6 +181,7 @@ final class UciHandler {
 
         ChessEngine.resetIterationTimings();
         tt.clear();
+        TranspositionTable.getDefaultQSearchInstance().clear();
     }
 
     private void handlePosition(String line) {
