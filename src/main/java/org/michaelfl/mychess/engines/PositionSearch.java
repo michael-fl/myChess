@@ -72,11 +72,11 @@ public final class PositionSearch {
         this.game = game;
         this.moveGenerator = new MoveGenerator(new MoveSorterImpl(killerMoves));
         this.engineConfig = engine.getConfig();
-        this.quiescenceSearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics, engineConfig.getMaxQuiescenceDepth());
+        this.timeout = System.currentTimeMillis() + engineConfig.getMillisPerMove();
+        this.quiescenceSearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics, engineConfig.getMaxQuiescenceDepth(), timeout);
         this.tt = engine.getTranspositionTable();
         this.weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
         this.silent = engineConfig.isSilent();
-        this.timeout = System.currentTimeMillis() + engineConfig.getMillisPerMove();
     }
 
     public static MoveAndWeight calculateNextMove(ChessEngine engine, NextMoveTask task, Game game) {
@@ -312,7 +312,14 @@ public final class PositionSearch {
                 return SearchNodeResult.illegal();
             }
             ctx.truncateParentPv();
-            return SearchNodeResult.create(GameResult.ONGOING, quiescenceSearch(ctx, alphaWeight, betaWeight), Bound.EXACT, 0);
+
+            int weight = quiescenceSearch(ctx, alphaWeight, betaWeight);
+            if (quiescenceSearch.isTimeout()) {
+                this.isTimeout = true;
+                return SearchNodeResult.TIMEOUT;
+            }
+
+            return SearchNodeResult.create(GameResult.ONGOING, weight, Bound.EXACT, 0);
         }
 
         // Transposition table lookup

@@ -19,12 +19,15 @@ public final class QuiescenceSearch {
     private final WeightingFunction weightingFunction;
     private final Statistics statistics;
     private final int maxQuiescenceDepth;
+    private final long timeout;
+    private boolean isTimeout;
 
-    public QuiescenceSearch(MoveGenerator moveGenerator, WeightingFunction weightingFunction, Statistics statistics, int maxQuiescenceDepth) {
+    public QuiescenceSearch(MoveGenerator moveGenerator, WeightingFunction weightingFunction, Statistics statistics, int maxQuiescenceDepth, long timeout) {
         this.moveGenerator = moveGenerator;
         this.weightingFunction = weightingFunction;
         this.statistics = statistics;
         this.maxQuiescenceDepth = maxQuiescenceDepth;
+        this.timeout = timeout;
     }
 
     public int quiescenceSearch(final Board workingBoard, final int depth, final int weightFactor, final int alphaWeight, final int betaWeight, final int materialWeight, final int materialDelta) {
@@ -49,6 +52,10 @@ public final class QuiescenceSearch {
         statistics.incrPositionCount();
         statistics.incrQuiescencePositionsCount();
         statistics.reachedDepth(depth);
+
+        if (isTimeout()) {
+            return 0;
+        }
 
         int standPat = calculatePositionWeight(ctx.workingBoard(), ctx.weightFactor(), ctx.materialWeight(), ctx.materialDelta());
 
@@ -103,6 +110,10 @@ public final class QuiescenceSearch {
                         -betaWeight, -alphaLocal);
                 ctx.workingBoard().revertMove();
 
+                if (isTimeout()) {
+                    return 0;
+                }
+
                 // -ILLEGAL_WEIGHT is possible to be returned, but never +ILLEGAL_WEIGHT
                 if (weight > WeightingFunction.ILLEGAL_WEIGHT_NEG) {
                     // Fail-soft beta cutoff: return actual weight.
@@ -125,4 +136,12 @@ public final class QuiescenceSearch {
         }
         return weightingFunction.calculate(workingBoard) * weightFactor;
     }
+
+    public boolean isTimeout() {
+        if (!isTimeout) {
+            isTimeout = statistics.getPositionsCount() % 10000 == 0 && System.currentTimeMillis() >= timeout;
+        }
+        return isTimeout;
+    }
+
 }
