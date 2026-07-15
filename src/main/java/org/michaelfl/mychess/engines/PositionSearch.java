@@ -322,14 +322,18 @@ public final class PositionSearch {
 
             switch (ttEntryView.getBound()) {
                 case EXACT -> {
-                    return exactTTResult(ctx, score, ttEntryView.getBestMove());
+                    return ttResult(ctx, score, Bound.EXACT, ttEntryView.getBestMove());
                 }
                 case LOWER -> alphaWeight = Math.max(alphaWeight, score);
                 case UPPER -> betaWeight = Math.min(betaWeight, score);
             }
 
             if (alphaWeight >= betaWeight) {
-                return exactTTResult(ctx, score, ttEntryView.getBestMove());
+                // A LOWER/UPPER entry that pushes alpha >= beta produces a
+                // LOWER/UPPER cutoff, not an exact score — return the entry's
+                // own bound, never EXACT, so any consumer of this result's
+                // bound sees the correct fail-high/fail-low.
+                return ttResult(ctx, score, ttEntryView.getBound(), ttEntryView.getBestMove());
             }
         }
 
@@ -383,17 +387,18 @@ public final class PositionSearch {
 
     /**
      * Shared return path for the two TT-cache early-exit branches in
-     * {@link #alphaBetaSearchPre} (EXACT bound, and LOWER/UPPER cutoff
-     * with {@code alpha &gt;= beta}). Updates the PV table via
+     * {@link #alphaBetaSearchPre}: the EXACT-bound hit, and the LOWER/UPPER
+     * cutoff with {@code alpha &gt;= beta}. Updates the PV table via
      * {@link SearchNodeContext#writeTTCachedPv(int)} so the parent's
      * subsequent {@link SearchNodeContext#copyUpPV()} does not propagate
      * stale slots from an earlier sibling's exploration, then wraps the
-     * given depth-adjusted score and best move in a {@link SearchNodeResult}.
+     * given depth-adjusted score and best move in a {@link SearchNodeResult}
+     * carrying the caller-supplied {@code bound}.
      */
-    private static SearchNodeResult exactTTResult(SearchNodeContext ctx, int score, int bestMove) {
+    private static SearchNodeResult ttResult(SearchNodeContext ctx, int score, Bound bound, int bestMove) {
         ctx.writeTTCachedPv(bestMove);
 
-        return SearchNodeResult.create(GameResult.ONGOING, score, Bound.EXACT, bestMove);
+        return SearchNodeResult.create(GameResult.ONGOING, score, bound, bestMove);
     }
 
     @SuppressWarnings("Duplicates")
