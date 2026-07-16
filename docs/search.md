@@ -16,7 +16,7 @@ calculateNextMove()                       ─ iterative deepening
             quiescenceSearch(...)         ─ extend through captures
 ```
 
-Each layer has its own job. The outer loop manages time and re-uses the previous iteration's best move. The root layer differs from inner layers only in that it tracks the *winning move*, not just the winning score. The inner alpha-beta layer is pure negamax. The quiescence layer extends past the nominal max depth — but only by resolving the *same-square exchange chain* triggered by the leaf-entering capture; see [§ 6.4](#64-quiescence-search) for the precise (narrow) scope and [roadmap § 12.6](roadmap.md#126-quiescence-search-upgrade--m--4080-elo) for the planned upgrade to a proper all-captures quiescence.
+Each layer has its own job. The outer loop manages time and re-uses the previous iteration's best move. The root layer differs from inner layers only in that it tracks the *winning move*, not just the winning score. The inner alpha-beta layer is pure negamax. The quiescence layer extends past the nominal max depth by resolving **all captures** at every leaf until the position is quiet (the all-captures upgrade of [§ 12.6.1](roadmap.md#1261-enter-at-every-leaf-and-follow-all-captures--done-60-elo), +60.4 Elo); see [§ 6.4](#64-quiescence-search) for the details.
 
 ## 6.1 Negamax / alpha-beta foundation
 
@@ -184,37 +184,28 @@ __assert(() -> !(countMoves > 0 && bestKnownNextMove != 0 && bestKnownNextMove !
 
 A purely fixed-depth alpha-beta search suffers from the **horizon effect**: if the last move at `maxDepth` was a capture, the search evaluates a position mid-exchange. White trades a queen for a pawn at depth 6, the search bottoms out and reports "+8 pawns for white", and never sees that black recaptures the queen at depth 7. The static evaluation is wildly wrong because the position isn't *quiet*.
 
-myChess handles this with [`QuiescenceSearch`](src/main/java/org/michaelfl/mychess/QuiescenceSearch.java) — a second alpha-beta layer that takes over from `alphaBetaSearchI` at the leaf and resolves the **exchange on the last-captured square**.
+myChess handles this with [`QuiescenceSearch`](src/main/java/org/michaelfl/mychess/QuiescenceSearch.java) — a second alpha-beta layer that takes over at **every** leaf and resolves **all available captures** until the position is quiet.
 
-> **Status (June 2026).** The current implementation is intentionally narrow: it is entered only when the move into the leaf was a capture, and then resolves only the exchange chain on the square where that move captured. It does *not* run at all after a quiet leaf move (a piece left en prise by a quiet move is scored statically), does *not* follow captures on other squares, does not order or filter capture candidates, does not extend on checks, and does not consult the transposition table. This is a known limitation, deliberately preserved so far as a pragmatic compromise, and is the subject of the planned upgrade in [roadmap § 12.6](roadmap.md#126-quiescence-search-upgrade--m--4080-elo). What this section describes is the *current behavior*, not the textbook ideal.
+> **Status (v4.2.0, July 2026).** Since v4.2.0 this is a proper all-captures quiescence search: it is entered at **every** leaf (not only after a capturing move) and follows **every** legal capture (not only recaptures on the last-contested square). That upgrade ([roadmap § 12.6.1](roadmap.md#1261-enter-at-every-leaf-and-follow-all-captures--done-60-elo)) measured **+60.4 ± 9.7 Elo** vs v4.1.1 (3200-game fixed-N, LOS 100 %). It still does *not* order captures by SEE, prune losing captures (SEE < 0), delta-prune, extend on checks, or consult the transposition table — those are the remaining refinements in [§ 12.6.2–12.6.5](roadmap.md#126-quiescence-search-upgrade--m--4080-elo). What follows describes the current (v4.2.0) behavior.
 
-**Trigger.** Inside `PositionSearch.alphaBetaSearchI`, when `depth == maxDepth`:
-
-```java
-if (depth == ctx.maxDepth) {
-    return SearchNodeResult.create(GameResult.ONGOING, quiescenceSearch(ctx), ctx.alphaWeight(), ctx.betaWeight());
-}
-```
-
-…and `quiescenceSearch(ctx)` in turn:
+**Trigger.** Inside `PositionSearch.alphaBetaSearchPre`, when `remainingDepth == 0`, the leaf enters quiescence **unconditionally** (after a cheap illegal-position probe):
 
 ```java
-private int quiescenceSearch(SearchNodeContext ctx) {
-    final var workingBoard = ctx.workingBoard;
-    final int lastMove = workingBoard.getGameStatus().getLastMove();
-
-    if (Move.getCapturedPiece(lastMove) == 0) {
-        return calculatePositionWeight(workingBoard, ctx.weightFactor, ctx.materialWeight, ctx.materialDelta);
-    } else {
-        return quiescenceSearch.quiescenceSearch(workingBoard, Move.getToField(lastMove),
-                                                 ctx.depth, ctx.weightFactor,
-                                                 ctx.alphaWeight, ctx.betaWeight,
-                                                 ctx.materialWeight, ctx.materialDelta);
+if (ctx.remainingDepth() == 0) {
+    if (ctx.workingBoard().canCaptureOpposingKing()) {
+        return SearchNodeResult.illegal();
     }
+    ctx.truncateParentPv();
+    int weight = quiescenceSearch(ctx, alphaWeight, betaWeight);
+    if (quiescenceSearch.isTimeout()) {          // new in v4.2.0 — see Depth cap
+        this.isTimeout = true;
+        return SearchNodeResult.TIMEOUT;
+    }
+    return SearchNodeResult.create(GameResult.ONGOING, weight, Bound.EXACT, 0);
 }
 ```
 
-Only positions where **the move into the leaf was a capture** enter quiescence. If the last move was quiet, static evaluation is trusted as-is — a blind spot: a quiet move that leaves an enemy piece en prise is scored statically, and the side to move never gets to grab it at the leaf. Lifting this entry gate (enter at *every* leaf) is part of the planned upgrade in [§ 12.6.1](roadmap.md#1261-enter-at-every-leaf-and-follow-all-captures--m--3060-elo). Otherwise, control passes to `QuiescenceSearch.quiescenceSearch`.
+**Every** leaf enters quiescence now — including those reached by a *quiet* move. This closes the old blind spot where a quiet move that left an enemy piece en prise was scored statically: quiescence always computes stand-pat and then examines the side-to-move's captures, regardless of how the leaf was reached. (Before v4.2.0 there was an entry gate that ran quiescence only after a *capturing* leaf move; it is gone.)
 
 **The stand-pat trick.** A quiescence node's first move is to compute the static evaluation *as if the side to move did nothing* — the so-called *stand-pat* score. This is the lower bound: the side can refuse to enter further captures by accepting the current evaluation.
 
@@ -232,39 +223,29 @@ int bestWeight = Math.max(ctx.alphaWeight(), standPat);
 
 `bestWeight` is initialized to the *maximum* of α and stand-pat — the side to move can always do at least as well as stand-pat, so that becomes the floor for further capture searches. Subsequent capture moves can improve on it or trigger a cutoff.
 
-**The capture restriction.** Crucially, myChess does **not** follow *all* captures — only those that capture **on the same square** as the last move:
+**Following all captures.** Quiescence follows **every** legal capture at the node — a plain check on each generated move:
 
 ```java
-int capturedOnField = Move.getToField(gameStatus.getLastMove());
-
 for (int i = 0; i < countMoves; i++) {
-    if (capturedOnField == Move.getToField(plainMoves[i])) {
-        // … recurse on this move
+    if (Move.getCapturedPiece(plainMoves[i]) != 0) {
+        // … make the capture, recurse, revert
     }
 }
 ```
 
-This is more restrictive than the textbook "follow all captures" approach. The result is that quiescence follows only **the exchange on the contested square**: if white captures on e5, quiescence considers only black recaptures on e5, then only white re-recaptures on e5, and so on until no side has another piece attacking e5. The comment in the code explains:
+The moves come from the normal `MoveGenerator` / `MoveSorterImpl`, so captures arrive **already ordered** (winning captures first, then the rest). That existing ordering is why the much wider capture tree still gets good α/β cutoffs *without* a dedicated MVV-LVA/SEE pass — and it is why the roadmap's earlier worry that "all-captures without ordering is a net loss" did not materialize here (see [§ 12.6.1](roadmap.md#1261-enter-at-every-leaf-and-follow-all-captures--done-60-elo)).
 
-```java
-// TODO: Follow only moves, which are captures. Unfortunately this increases computation time too much.
-//if (Move.getCapturedPiece(plainMoves[i]) != 0) {
+This resolves exactly the tactical motifs the old same-square-only search missed: pieces hanging on any square, forks that switch attack squares (e.g. capture on e5, then win the queen on d8), discovered captures, and captures available after a quiet move. Before v4.2.0 the search followed only recaptures on the last-contested square — a pragmatic compromise that predated the [transposition table § 7.9](#79-transposition-table) and capture ordering.
 
-// Follow only moves, which capture on the same field, until no further capture is possible on that field
-```
+The all-captures search also changes the premise of an earlier eval-side closure: [§ 12.16 `threadWeight`](roadmap.md#1216-discontinue-the-threadweight-investigation--done) kept the `threadWeight` term *because* the old quiescence missed captures on squares other than the contested one — the exact gap that is now closed. That removal is therefore worth **re-testing**. (The [§ 12.17 `chessFactor`](roadmap.md#1217-discontinue-the-chessfactor-investigation--done) closure is *not* affected: it compensates for missing *checks*, which the all-captures search still does not cover.)
 
-Following all captures was tried at the time the TODO was written and rejected as too expensive — that test predates the [transposition table § 7.9](#79-transposition-table), MVV-LVA capture ordering, and any form of SEE-based losing-capture filter. The same-square restriction is the pragmatic compromise that resulted: it correctly evaluates the *immediate* exchange (which is where the horizon effect is most painful) but **misses every other tactical motif at the leaf** — pieces hanging on other squares, forks that switch attack squares (e.g. capture on e5, then win the queen on d8), discovered captures, captures that follow a check evasion, and so on. Those still have to be caught by the main search reaching adequate depth, which is fragile.
+**What is still missing relative to the textbook quiescence search** — the remaining [§ 12.6](roadmap.md#126-quiescence-search-upgrade--m--4080-elo) sub-items, in rough order of expected impact:
 
-This is also why two earlier roadmap closures — [§ 12.16 `threadWeight` removal](roadmap.md#1216-discontinue-the-threadweight-investigation--done) and [§ 12.17 `chessFactor` removal](roadmap.md#1217-discontinue-the-chessfactor-investigation--done) — found that the eval-side terms they removed were **not** fully redundant with quiescence: they covered exactly the multi-square tactical signals that the current QSearch ignores. A real all-captures quiescence search would likely make both removals neutral or positive; until then, the eval-side compensation stays.
-
-**What is missing relative to the textbook quiescence search**, in rough order of expected impact:
-
-- **Enter at every leaf, and follow all captures** — the central gap: run quiescence after quiet moves too (not only after a capture), and follow *every* capture rather than only the same-square exchange; planned as [§ 12.6.1](roadmap.md#1261-enter-at-every-leaf-and-follow-all-captures--m--3060-elo).
-- **MVV-LVA capture ordering** — try the most valuable victim with the cheapest attacker first; [§ 12.6.2](roadmap.md#1262-mvv-lva-capture-ordering-in-qsearch--s--515-elo).
-- **SEE-based pruning** of losing captures — skip `QxP` defended by a pawn; [§ 12.6.3](roadmap.md#1263-see-pruning-of-losing-captures-in-qsearch--m--1020-elo).
+- **SEE-based pruning** of losing captures — skip `QxP` defended by a pawn, and order the rest by SEE; [§ 12.6.3](roadmap.md#1263-see-pruning-of-losing-captures-in-qsearch--m--1020-elo). The single biggest remaining lever: it directly shrinks the now-wider capture tree.
+- **QSearch-specific MVV-LVA ordering** — currently QSearch reuses the main sorter's ordering rather than a dedicated capture sort; [§ 12.6.2](roadmap.md#1262-mvv-lva-capture-ordering-in-qsearch--s--515-elo).
 - **Delta pruning** — skip captures where stand-pat + captured material + safety margin still falls below α; [§ 12.6.4](roadmap.md#1264-delta-pruning-in-qsearch--s--515-elo).
 - **TT lookup / store inside QSearch** — score and best-move reuse for transposed leaves; [§ 12.6.5](roadmap.md#1265-tt-integration-in-qsearch--m--515-elo).
-- **Check extensions** — pursue forcing check sequences past the QSearch border; partially covered by the unrelated [§ 12.4 check extensions](roadmap.md#124-check-extensions--s--1530-elo) in the main search, may also belong inside QSearch.
+- **Check extensions** — pursue forcing check sequences past the QSearch border; [§ 12.4 check extensions](roadmap.md#124-check-extensions--s--1530-elo).
 
 **Depth cap.** Quiescence has its own depth budget:
 
@@ -273,7 +254,7 @@ this.quiescenceSearch = new QuiescenceSearch(game, moveGenerator, weightingFunct
                                               engineConfig.getMaxQuiescenceDepth());
 ```
 
-`EngineConfig.getMaxQuiescenceDepth() = DEFAULT_MAX_QUIESCENCE_SEARCH_DEPTH = 20`. Since each level of quiescence consumes at least one piece in the exchange, hitting depth 20 means more than 10 captures on the same square — astronomically rare. The cap is a safety net.
+`EngineConfig.getMaxQuiescenceDepth() = DEFAULT_MAX_QUIESCENCE_SEARCH_DEPTH = 20`. Since every quiescence ply is a capture (each consumes at least one piece), hitting depth 20 means a capture chain more than 10 deep — astronomically rare. The cap is a safety net; the cooperative `isTimeout()` check added in v4.2.0 is the primary bound that keeps the now-wider all-captures search inside the move budget.
 
 **Recursion is still negamax with α/β.** Quiescence honors the same pruning rules as the main search and propagates `materialWeight`/`materialDelta` to keep the material-only shortcut working (see [§ 7.3](#73-material-only-evaluation-shortcut)).
 
