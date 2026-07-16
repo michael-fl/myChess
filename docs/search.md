@@ -980,12 +980,13 @@ if (ttEntryView != null && ttEntryView.getDepth() >= ctx.remainingDepth()) {
     final int score = scoreFromTT(ttEntryView.getScore(), ctx.depth());
 
     switch (ttEntryView.getBound()) {
-        case EXACT -> { return exactTTResult(ctx, score, ttEntryView.getBestMove()); }
+        case EXACT -> { return ttResult(ctx, score, Bound.EXACT, ttEntryView.getBestMove()); }
         case LOWER -> alphaWeight = Math.max(alphaWeight, score);
         case UPPER -> betaWeight = Math.min(betaWeight, score);
     }
     if (alphaWeight >= betaWeight) {
-        return exactTTResult(ctx, score, ttEntryView.getBestMove());
+        // LOWER/UPPER cutoff — return the entry's own bound, not EXACT
+        return ttResult(ctx, score, ttEntryView.getBound(), ttEntryView.getBestMove());
     }
 }
 ```
@@ -1085,7 +1086,7 @@ On store: subtract the current depth so the stored value reads as "mate in `(pli
 
 A TT-cached early return short-circuits the recursion, which means the parent's PV-table row will *not* be filled in by a child's `copyUpPV` (see § 6.3). Without intervention, the parent's subsequent `copyUpPV()` would propagate whatever stale slots an earlier sibling's exploration left behind, and the iteration would emit a principal variation containing moves not legal at the positions it claims to reach.
 
-The fix lives in `SearchNodeContext.writeTTCachedPv(int ttMove)`, called from both TT-cached return paths via the `exactTTResult` helper:
+The fix lives in `SearchNodeContext.writeTTCachedPv(int ttMove)`, called from both TT-cached return paths via the `ttResult` helper:
 
 ```java
 public void writeTTCachedPv(int ttMove) {
