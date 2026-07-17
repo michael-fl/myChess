@@ -30,21 +30,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class EvalRegressionTest extends EngineTestBase {
 
     /**
-     * TODO — myChess trades its active a6-bishop for the passive e2-knight,
-     *   dropping Stockfish's eval from +2.2 to +0.6 (Black's view). The
-     *   pre-trade position is already scored only +0.93 by myChess (~1.3
-     *   pawns below Stockfish), so the engine sees no urgency to preserve
-     *   the bishop.
+     * Regression anchor (Chess960). myChess 4.0.3 traded its active a6-bishop
+     * for the passive e2-knight here (a6-e2), dropping Stockfish's eval from
+     * +2.2 to +0.6 (Black's view) — the static eval underweighted active
+     * long-diagonal bishops against passive knights.
      * <p>
-     *   Root cause: static eval underweights active long-diagonal bishops
-     *   against passive knights. NOT a search-depth issue — deeper search
-     *   or NMP alone will not fix this. Candidates: mobility term in
-     *   {@link WeightingFunction}, PST tweaks favoring a6-diagonal bishops,
-     *   or a piece-activity penalty for out-of-play knights.
-     * <p>
-     *   When the eval improves and this test fails, expected corrected
-     *   choice is one of the bishop retreats (Bb7, Bc4, or similar) that
-     *   preserves the positional pressure.
+     * <b>Resolved in v4.2.0.</b> With the all-captures quiescence search
+     * ([search § 6.4]) the engine no longer makes that trade — it plays
+     * <b>h8-g7</b> (fianchettoes the h8-bishop, keeping the a6-bishop active),
+     * which is one of Stockfish's top two choices in this position (~ −2.3,
+     * alongside Qb6). The method name reflects the historical 4.0.3 symptom;
+     * the test now pins the corrected, strong move.
      */
     @Test
     void tradesActiveA6BishopForPassiveE2Knight() throws InterruptedException, ExecutionException, TimeoutException {
@@ -67,8 +63,8 @@ class EvalRegressionTest extends EngineTestBase {
 
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
             var moveStr = ChessUtil.moveToString(move.move());
-            assertEquals("a6-e2", moveStr,
-                    "current known-bad choice; see TODO");
+            assertEquals("h8-g7", moveStr,
+                    "v4.2.0 all-captures QSearch now finds Bg7 (a top Stockfish choice), not the old bad a6-e2 trade");
         } finally {
             config.getEngineWhiteConfig().getTranspositionTable().close();
         }

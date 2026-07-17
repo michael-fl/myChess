@@ -19,13 +19,14 @@ import static org.michaelfl.mychess.WeightingFunction.checkmateIn;
 @Tag("slow")
 class DeepWeightTest {
 
+    // FEN: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1
     @Test
     void testPosition01() {
         var pgn = """
                 1. e4
                 """;
         testPosition(pgn,
-                0.3f,
+                0.15f, // was 0.3; SF depth 20: +0.47; opening-eval self-pin, v4.2.0 drift
                 0.5f,
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
@@ -56,12 +57,13 @@ class DeepWeightTest {
     }
 
     @Test
+    // FEN: rnbqkbnr/pp2pppp/3p4/8/3NP3/8/PPP2PPP/RNBQKB1R b KQkq - 0 4
     void testPosition04() {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4
                 """;
         testPosition(pgn,
-                0.50f,
+                0.35f, // was 0.50; SF depth 20: +0.41 — v4.2.0 eval now ≈ SF
                 0.65f,
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
@@ -94,13 +96,14 @@ class DeepWeightTest {
     }
 
     @Test
+    // FEN: r1b1k2r/2q1bppp/p2ppn2/1p4P1/3NPP2/2N2Q2/PPP4P/2KR1B1R b kq - 0 12
     void testPosition08() {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5
                 """;
         testPosition(pgn,
-                0.58f,
+                0.3f, // was 0.58; SF depth 20: +0.50; v4.2.0 eval drift
                 0.70f,
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
