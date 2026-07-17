@@ -186,15 +186,10 @@ class BlunderTest {
 
         var result = searchCurrentPosition(game);
 
-        // TODO move should be avoided
-        boolean avoided = false;
-        try {
-            assertEngineAvoids(result, Board.e5, Board.g6, "16.Ng6");
-            avoided = true;
-        } catch (AssertionFailedError _) {
-            // expected for now
-        }
-        assertFalse(avoided);
+        // Since the v4.2.0 all-captures quiescence search, the engine correctly
+        // declines the unsound 16.Ng6 sacrifice; this test now guards against a
+        // regression back to it.
+        assertEngineAvoids(result, Board.e5, Board.g6, "16.Ng6");
     }
 
     /**
@@ -227,15 +222,10 @@ class BlunderTest {
 
         var result = searchCurrentPosition(game);
 
-        // TODO move should be avoided
-        boolean avoided = false;
-        try {
-            assertEngineAvoids(result, Board.d3, Board.d5, "39.Rxd5");
-            avoided = true;
-        } catch (AssertionFailedError _) {
-            // expected for now
-        }
-        assertFalse(avoided);
+        // Since the v4.2.0 all-captures quiescence search, the engine correctly
+        // declines the losing 39.Rxd5 pawn grab; this test now guards against a
+        // regression back to it.
+        assertEngineAvoids(result, Board.d3, Board.d5, "39.Rxd5");
     }
 
     /**
