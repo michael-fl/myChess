@@ -228,7 +228,7 @@ A `int[2][64][64]` table indexed by `(color, fromField, toField)` is incremented
 - Complements [§ 7.2 killer moves](search.md#72-killer-moves), which only remember two moves per depth — history is dense across all `from→to` pairs.
 - Decay (e.g. shift right by 1 every iteration) keeps the table responsive across iterative-deepening iterations and across games.
 
-## 12.6 Quiescence search upgrade — **§12.6.1 DONE (+60 Elo); §12.6.2–12.6.5 pending**
+## 12.6 Quiescence search upgrade — **§12.6.1 DONE (+60 Elo); §12.6.2–12.6.4 pending; §12.6.5 tried & shelved**
 
 **§12.6.1 (enter at every leaf + follow all captures) shipped in v4.2.0 — measured +60.4 ± 9.7 Elo** (details below). The remaining sub-items refine that all-captures search. See [search § 6.4](search.md#64-quiescence-search) for the current behavior. In short:
 
@@ -271,17 +271,21 @@ Standard `DELTA_MARGIN` ≈ 200 cp (≈ two pawns of safety). Disable in endgame
 
 Cheap to implement (~5 lines), small but real Elo gain.
 
-### 12.6.5 TT integration in QSearch — **M, ≈ 5–15 Elo**
+### 12.6.5 TT integration in QSearch — *tried, shelved (−11 Elo, LOS 4 %)*
 
-Use the [§ 12.1 transposition table](#121-transposition-table--done-93-elo) inside the QSearch as well: probe on entry, store on exit. Modern engines do this, with a depth marker of 0 (or a small constant) so QSearch entries cannot be reused as score-cutoffs by the deeper main search — they are valuable as best-move/bound hints for QSearch revisits.
+**Tried** on branch `qsearch-tt` (commit `1a39da5`): a **separate** full-size transposition table for the QSearch (`getDefaultQSearchInstance()`), probed on entry and stored on exit with EXACT/LOWER/UPPER bounds plus a TT move for ordering, keyed by remaining QSearch depth and cleared on `ucinewgame`.
 
-Caveat: QSearch generates many leaf positions; without care, those will thrash the TT and evict more valuable main-search entries. The standard mitigation is a two-bucket TT layout (one slot depth-preferred for main-search entries, one always-replace for QSearch leaves) or a depth-weighted replacement formula. Worth a separate SPRT to confirm net positive in myChess specifically — engines that did not use TT in QSearch have measured ~0 Elo from adding it, others +20.
+**Measured 4.2.1-qsearch-tt vs 4.2.0: −10.6 ± 11.5 Elo, LOS 3.6 % over ~2040 games** — a real, small regression. The apparent color split (candidate 0.503 as White, 0.467 as Black) is **not** a bug: once the intrinsic first-move advantage (White vs Black 0.518 in the match) is factored out, the deficit is symmetric (−0.015 in both colors), i.e. a uniform ~−11 Elo.
+
+The cause is structural, not a code-cleanup artifact: a *second* full table doubles memory/cache pressure on top of the main TT, and QSearch nodes are individually so cheap that probe+store cost plus TT thrashing outweighs the few saved nodes. This matches the literature — QSearch-TT is a notoriously marginal feature. Strong engines that use it (e.g. Stockfish) **share the single main TT** with a QS depth sentinel (`DEPTH_QS`, a 0/small-constant marker so QSearch entries are always preferred-below main-search entries) rather than a separate table, and draw most of the benefit from the TT move / early cutoffs, not from raw score caching.
+
+If revisited, the only variant worth an SPRT is the shared-TT design: reuse the [§ 12.1 table](#121-transposition-table--done-93-elo) with the depth sentinel above — **not** a second table. Otherwise deprioritized behind §12.6.3 (SEE pruning).
 
 ### Why the staged order matters — *superseded by the 12.6.1 result*
 
 The original worry here was: **12.6.1 alone is a net loss** without 12.6.2/12.6.3, because an all-captures tree *with no ordering* is too expensive to fit the time budget (lower main-search depth costs more than the wider QSearch gains). **This turned out not to apply to myChess** — 12.6.1 shipped alone and measured +60.4 Elo, because `MoveSorterImpl` already orders captures (winning first), so the wider tree got good cutoffs without a dedicated ordering pass. The premise ("no ordering") was simply false for this engine.
 
-The remaining sub-items (12.6.2 QSearch-specific MVV-LVA, 12.6.3 SEE pruning, 12.6.4 delta pruning, 12.6.5 TT-in-QSearch) are now *independent* refinements on top of the shipped all-captures search, each SPRT'd separately. 12.6.3 (SEE pruning) is the highest-value next step: it shrinks the now-wider capture tree rather than just reordering it.
+The remaining sub-items (12.6.2 QSearch-specific MVV-LVA, 12.6.3 SEE pruning, 12.6.4 delta pruning) are now *independent* refinements on top of the shipped all-captures search, each SPRT'd separately (12.6.5 TT-in-QSearch was tried and shelved — see above). 12.6.3 (SEE pruning) is the highest-value next step: it shrinks the now-wider capture tree rather than just reordering it.
 
 ## 12.7 Evaluation upgrades — **M, ≈ 40–80 Elo combined**
 
