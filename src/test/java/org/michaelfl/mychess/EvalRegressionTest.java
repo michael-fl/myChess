@@ -71,33 +71,33 @@ class EvalRegressionTest extends EngineTestBase {
     }
 
     /**
-     * TODO — myChess plays 25...Rc6 (c8-rook to c6), dropping Stockfish's
-     *   eval from +0.7 to +2.5 (White's view) — nearly two pawn units in
-     *   a single move. myChess sees the resulting position at only −0.10
-     *   from Black's perspective, so once again the engine has no
-     *   awareness of the impending drop.
+     * TODO — myChess plays 25...Rb8 (c8-rook to b8), a passive rook move.
+     *   Stockfish (depth 22) rates it at about +1.9 (White's view), versus
+     *   about +0.85 for its best move Ng4 — the engine still concedes roughly
+     *   a pawn against the active plan. The SEE quiescence search nudged the
+     *   choice up from the older Rc6 (≈ +2.2), so it is ~0.3 pawns better, but
+     *   the same weakness remains.
      * <p>
      *   Position context (Chess960, corner-bishop setup): Black just
      *   captured the a2-knight and White recaptured with Qxa2. Both sides
      *   have completed development; Black has an active queen on a5 and
      *   dark-square bishop on g7, but the c8-rook stands passively behind
-     *   Black's own pawns. Rc6 does not open a file or challenge a White
-     *   piece — it just repositions to a square where it can be attacked
-     *   and where it interferes with Black's own pieces.
+     *   Black's own pawns. Rb8 neither opens a file nor challenges a White
+     *   piece — it just shuffles the rook along the back rank.
      * <p>
-     *   Better plans: bring the knight forward Ng4 or advance the h-pawn (h5).
-     *   Both are active plans that make use of the dark-square bishop's diagonal.
+     *   Better plans: bring the knight forward Ng4 (Stockfish's choice) or
+     *   Ne8, or advance the h-pawn (h5) — active plans that make use of the
+     *   dark-square bishop's diagonal.
      * <p>
      *   Root cause: static eval undervalues piece activity and central
      *   knight jumps in closed middlegame positions, and overvalues
-     *   passive rook lifts. NOT a search-depth issue.
+     *   passive rook moves. NOT a search-depth issue.
      */
     @Test
-    void movesRookToC6DroppingAlmostTwoPawns() throws InterruptedException, ExecutionException, TimeoutException {
+    void movesRookToB8DroppingAboutAPawn() throws InterruptedException, ExecutionException, TimeoutException {
         // Feed the same game up to and including White's 25th move
         // (Qxa2 recapturing the knight). Then it is Black to move —
-        // myChess computes the response, which is expected to be the
-        // known-bad c8-c6 rook lift.
+        // myChess computes the response, the known-bad passive c8-b8 rook move.
         var pgn = """
                 [Date "2026.07.05"]
                 [White "Michael Fleischhauer"]
@@ -119,7 +119,7 @@ class EvalRegressionTest extends EngineTestBase {
 
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
             var moveStr = ChessUtil.moveToString(move.move());
-            assertEquals("c8-c6", moveStr,
+            assertEquals("c8-b8", moveStr,
                     "current known-bad choice; see TODO");
         } finally {
             config.getEngineWhiteConfig().getTranspositionTable().close();

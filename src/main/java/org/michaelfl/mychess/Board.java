@@ -258,6 +258,16 @@ public final class Board {
         MOVE_REVERT_FUNCTIONS[Move.typeEnPassant]           = Board::revertEnPassantMove;
     }
 
+    static final byte[] FIELD_12_TO_8 = new byte[144];
+    static {
+        for (int field = 0; field < 144; field++) {
+            int row = field / Board.LENGTH - 2;
+            int col = field % Board.LENGTH - 2;
+
+            FIELD_12_TO_8[field] = (byte) (row * 8 + col);
+        }
+    }
+
     private final byte[] board;
     private final GameStatus[] statusStack;
     private final boolean is960;
@@ -1128,20 +1138,20 @@ public final class Board {
     // pseudo-legal move generator and inspecting Moves.isIllegal(), which is
     // what an earlier implementation of isKingChecked used to do.
 
-    private static final int[] KNIGHT_OFFSETS = {
+    public static final int[] KNIGHT_OFFSETS = {
             2 * LENGTH + 1, 2 * LENGTH - 1, -2 * LENGTH + 1, -2 * LENGTH - 1,
             LENGTH + 2, LENGTH - 2, -LENGTH + 2, -LENGTH - 2
     };
 
-    private static final int[] KING_ADJACENCY_OFFSETS = {
+    public static final int[] KING_ADJACENCY_OFFSETS = {
             LENGTH, LENGTH + 1, 1, -LENGTH + 1, -LENGTH, -LENGTH - 1, -1, LENGTH - 1
     };
 
-    private static final int[] DIAGONAL_RAY_DIRS = {
+    public static final int[] DIAGONAL_RAY_DIRS = {
             LENGTH + 1, LENGTH - 1, -LENGTH + 1, -LENGTH - 1
     };
 
-    private static final int[] ORTHOGONAL_RAY_DIRS = {
+    public static final int[] ORTHOGONAL_RAY_DIRS = {
             LENGTH, -LENGTH, 1, -1
     };
 
