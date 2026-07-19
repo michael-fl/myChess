@@ -246,4 +246,104 @@ class MoveSorterImplTest {
         }
         assertEquals(1, count, "knownBestMove must appear exactly once even if also added via addMove()");
     }
+
+    // --- Quiescence mode: SEE-based capture ordering and pruning of losing captures. ---
+    // These use real boards (Fen.importFEN), because in quiescence mode the sorter
+    // scores captures via a static exchange evaluation that reads the actual position.
+
+    private static boolean contains(Moves moves, int move) {
+        return indexOf(moves, move) >= 0;
+    }
+
+    private static int indexOf(Moves moves, int move) {
+        for (int i = 0; i < moves.count(); i++) {
+            if (moves.getMoves()[i] == move) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    @Test
+    void quiescenceModePrunesLosingCapturesThatMainSearchKeeps() {
+        // bxc5 wins an undefended knight (SEE +300); Qxh7 grabs a king-defended pawn
+        // (SEE -800). The main search keeps both (ordered by delta); quiescence prunes
+        // the SEE-negative Qxh7.
+        var board = Fen.importFEN("6k1/7p/7Q/2n5/1P6/8/8/K7 w - - 0 1");
+        int winning = normalMove(Board.b4, Board.c5, Board.blackKnight);
+        int losing = normalMove(Board.h6, Board.h7, Board.blackPawn);
+
+        var mainSorter = new MoveSorterImpl(new KillerMoves());
+        mainSorter.reset(board.getGameStatus(), board, 0, 0, 0);
+        mainSorter.addMove(winning, Board.b4, Board.c5, Board.whitePawn, Board.blackKnight);
+        mainSorter.addMove(losing, Board.h6, Board.h7, Board.whiteQueen, Board.blackPawn);
+
+        var mainMoves = mainSorter.getSortedMoves();
+        assertTrue(contains(mainMoves, winning), "main search keeps the winning capture");
+        assertTrue(contains(mainMoves, losing), "main search keeps the losing capture (no SEE pruning)");
+
+        var quiescenceSorter = MoveSorterImpl.forQuiescenceSearch();
+        quiescenceSorter.reset(board.getGameStatus(), board, 0, 0, 0);
+        quiescenceSorter.addMove(winning, Board.b4, Board.c5, Board.whitePawn, Board.blackKnight);
+        quiescenceSorter.addMove(losing, Board.h6, Board.h7, Board.whiteQueen, Board.blackPawn);
+
+        var quiescenceMoves = quiescenceSorter.getSortedMoves();
+        assertTrue(contains(quiescenceMoves, winning), "quiescence keeps the SEE-positive capture");
+        assertFalse(contains(quiescenceMoves, losing), "quiescence prunes the SEE-negative capture");
+    }
+
+    @Test
+    void quiescenceModeOrdersWinningCapturesBySee() {
+        // Two winning captures: bxc5 wins a knight (SEE +300), fxe5 wins a pawn (SEE +100).
+        var board = Fen.importFEN("6k1/8/8/2n1p3/1P3P2/8/8/K7 w - - 0 1");
+        int captureKnight = normalMove(Board.b4, Board.c5, Board.blackKnight);
+        int capturePawn = normalMove(Board.f4, Board.e5, Board.blackPawn);
+
+        var sorter = MoveSorterImpl.forQuiescenceSearch();
+        sorter.reset(board.getGameStatus(), board, 0, 0, 0);
+        // Add the lower-SEE capture first to prove the ordering is by value, not insertion.
+        sorter.addMove(capturePawn, Board.f4, Board.e5, Board.whitePawn, Board.blackPawn);
+        sorter.addMove(captureKnight, Board.b4, Board.c5, Board.whitePawn, Board.blackKnight);
+
+        var moves = sorter.getSortedMoves();
+        assertTrue(indexOf(moves, captureKnight) < indexOf(moves, capturePawn),
+                "the higher-SEE capture (knight, +300) must be ordered before the lower-SEE capture (pawn, +100)");
+    }
+
+    @Test
+    void quiescenceModeKeepsEvenCaptures() {
+        // dxe5: a pawn takes a pawn defended by the f6 pawn -> SEE 0. The >= 0 gate keeps it.
+        var board = Fen.importFEN("4k3/8/5p2/4p3/3P4/8/8/K7 w - - 0 1");
+        int evenCapture = normalMove(Board.d4, Board.e5, Board.blackPawn);
+
+        var sorter = MoveSorterImpl.forQuiescenceSearch();
+        sorter.reset(board.getGameStatus(), board, 0, 0, 0);
+        sorter.addMove(evenCapture, Board.d4, Board.e5, Board.whitePawn, Board.blackPawn);
+
+        assertTrue(contains(sorter.getSortedMoves(), evenCapture),
+                "an even capture (SEE == 0) must not be pruned in quiescence");
+    }
+
+    @Test
+    void quiescenceModeDiscardsLosingCaptures() {
+        var board = Fen.importFEN("4k3/3n3q/8/2p1P3/3N1B2/7P/7R/K7 b - - 0 1");
+        int losingCapture1 = normalMove(Board.d7, Board.e5, Board.whitePawn);
+        int losingCapture2 = normalMove(Board.h7, Board.h3, Board.whitePawn);
+        int winningCapture = normalMove(Board.c5, Board.d4, Board.whiteKnight);
+
+        var sorter = MoveSorterImpl.forQuiescenceSearch();
+        sorter.reset(board.getGameStatus(), board, 0, 0, 0);
+        sorter.addMove(losingCapture1, Board.d7, Board.e5, Board.blackKnight, Board.whitePawn);
+        sorter.addMove(winningCapture, Board.c5, Board.d4, Board.blackPawn, Board.whitePawn);
+        sorter.addMove(losingCapture2, Board.h7, Board.h3, Board.blackQueen, Board.whitePawn);
+
+        var moves = sorter.getSortedMoves();
+        assertFalse(contains(moves, losingCapture1),
+                "an losing capture must be pruned in quiescence");
+        assertFalse(contains(moves, losingCapture2),
+                "an losing capture must be pruned in quiescence");
+        assertTrue(contains(moves, winningCapture),
+                "an winning capture must not be pruned in quiescence");
+    }
 }

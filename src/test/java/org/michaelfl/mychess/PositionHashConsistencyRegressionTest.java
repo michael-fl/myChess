@@ -295,7 +295,7 @@ class PositionHashConsistencyRegressionTest {
             int positionId = random.nextInt(Chess960StartPositions.COUNT);
             String startFen = Chess960StartPositions.fenById(positionId);
             Board board = Fen.importChess960FEN(startFen);
-            MoveGenerator gen = new MoveGenerator(MoveSorter.defaultImplementation(), true);
+            MoveGenerator gen = new MoveGenerator(MoveSorter.defaultImplementation(), true, false);
             List<String> playedMoves = new ArrayList<>();
 
             try {

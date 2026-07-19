@@ -173,11 +173,8 @@ public final class ChessUtil {
     }
 
     /** Map the given field to its corresponding number from 0 to 63, where a1 = 0, b1 = 1, ... h8 = 63. */
-    public static int getFieldNumber64(int field) {
-        int row = field / Board.LENGTH - 2;
-        int col = field % Board.LENGTH - 2;
-
-        return row * 8 + col;
+    public static int getFieldNumber64(final int field) {
+        return Board.FIELD_12_TO_8[field];
     }
 
     public static int setBit(int bitSet, int bit, boolean set) {
@@ -258,11 +255,27 @@ public final class ChessUtil {
         return -1;
     }
 
-    public static boolean isKing(byte piece) {
+    public static boolean isKing(final byte piece) {
         return piece == Board.whiteKing || piece == Board.blackKing;
     }
 
-    public static boolean isWhitePiece(byte piece) {
+    public static boolean isBishop(final byte piece) {
+        return piece == Board.whiteBishop || piece == Board.blackBishop;
+    }
+
+    public static boolean isKnight(final byte piece) {
+        return piece == Board.whiteKnight || piece == Board.blackKnight;
+    }
+
+    public static boolean isRook(final byte piece) {
+        return piece == Board.whiteRook || piece == Board.blackRook;
+    }
+
+    public static boolean isQueen(final byte piece) {
+        return piece == Board.whiteQueen || piece == Board.blackQueen;
+    }
+
+    public static boolean isWhitePiece(final byte piece) {
         return piece >= Board.whitePawn && piece <= Board.whiteKing;
     }
 
