@@ -68,21 +68,7 @@ public class EngineTestBase {
                         "Test setup error: expected path longer than maxDepth-1=" + maxExpectedPathDepth);
             }
 
-            if (notContainsMove(game, expectedMoves, move.move())) {
-                game.print();
-                System.out.println(game.exportFEN());
-                fail("Wrong move: " + ChessUtil.moveToString(move.move()) + ". Expected one of " + expectedMoves);
-            }
-
-            var weight = move.weight();
-            if (weight < expectedMinWeight) {
-                game.print();
-                fail("Wrong weight: " + ChessUtil.weightToString(weight) + ". Expected minimum of " + ChessUtil.weightToString(expectedMinWeight));
-            }
-            if (weight > expectedMaxWeight) {
-                game.print();
-                fail("Wrong weight: " + ChessUtil.weightToString(weight) + ". Expected maximum of " + ChessUtil.weightToString(expectedMaxWeight));
-            }
+            assertMoveAndWeight(game, move, expectedMoves, expectedMinWeight, expectedMaxWeight);
 
             int pathDepthToCheck = Math.min(actualPathLength,
                     expectedPathOpt != null ? expectedPathOpt.length : actualPathLength);
@@ -109,6 +95,57 @@ public class EngineTestBase {
             throw new RuntimeException(e);
         } finally {
             config.getEngineWhiteConfig().getTranspositionTable().close();
+        }
+    }
+
+    /**
+     * Runs the engine on a position given directly as a FEN (no move history)
+     * and asserts the chosen move and its weight, delegating both checks to
+     * {@link #assertMoveAndWeight}. Uses {@link Fen#importChess960FEN(String)}
+     * so Chess960 castling rights parse correctly (a standard FEN is handled as
+     * a special case). The {@code config}'s transposition table is closed on
+     * exit, mirroring {@link #testPosition}.
+     */
+    protected static void testPositionFromFen(String fen, String expectedMove, float expectedMinWeight, float expectedMaxWeight, GameConfig config) {
+        testPositionFromFen(fen, Set.of(expectedMove), expectedMinWeight, expectedMaxWeight, config);
+    }
+
+    protected static void testPositionFromFen(String fen, Set<String> expectedMoves, float expectedMinWeight, float expectedMaxWeight, GameConfig config) {
+        try {
+            var game = new Game(config, Fen.importChess960FEN(fen));
+
+            MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
+
+            assertMoveAndWeight(game, move, expectedMoves, expectedMinWeight, expectedMaxWeight);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            throw new RuntimeException(e);
+        } finally {
+            config.getEngineWhiteConfig().getTranspositionTable().close();
+        }
+    }
+
+    /**
+     * Asserts the engine's chosen move is one of {@code expectedMoves} (long or
+     * short notation) and that its weight lies within
+     * {@code [expectedMinWeight, expectedMaxWeight]}. On failure the board and
+     * FEN are printed to aid diagnosis. Shared by {@link #testPosition} and
+     * {@link #testPositionFromFen}.
+     */
+    private static void assertMoveAndWeight(Game game, MoveAndWeight move, Set<String> expectedMoves, float expectedMinWeight, float expectedMaxWeight) {
+        if (notContainsMove(game, expectedMoves, move.move())) {
+            game.print();
+            System.out.println(game.exportFEN());
+            fail("Wrong move: " + ChessUtil.moveToString(move.move()) + ". Expected one of " + expectedMoves);
+        }
+
+        var weight = move.weight();
+        if (weight < expectedMinWeight) {
+            game.print();
+            fail("Wrong weight: " + ChessUtil.weightToString(weight) + ". Expected minimum of " + ChessUtil.weightToString(expectedMinWeight));
+        }
+        if (weight > expectedMaxWeight) {
+            game.print();
+            fail("Wrong weight: " + ChessUtil.weightToString(weight) + ". Expected maximum of " + ChessUtil.weightToString(expectedMaxWeight));
         }
     }
 

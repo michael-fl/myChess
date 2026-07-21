@@ -562,4 +562,45 @@ class EngineTest extends EngineTestBase {
         );
     }
 
+    // FEN: rk1r2b1/ppp3pp/3b1pn1/3n4/3P2q1/4BNP1/PPP1N2P/RKQR1B2 w KQkq - 2 11
+    // Chess960 middlegame (both kings on the b-file). Black stands slightly
+    // better — active queen g4, central knight d5, and both bishops — while
+    // White has no immediate target. The only sound move is the knight retreat
+    // Ne2-g1 (regrouping toward Bf1-b5/d3); Stockfish agrees (e2-g1, ~ -0.6 from
+    // White's view). myChess at maxDepth 8 plays e2-g1 and evaluates -0.67
+    // (white-POV), essentially matching Stockfish. Built from the bare FEN (no
+    // move history), so it uses new Game(config, board) rather than the
+    // PGN-based testPosition(...) helper.
+    @Test
+    void testPositionChess960KnightRetreat() {
+        testPositionFromFen(
+                "rk1r2b1/ppp3pp/3b1pn1/3n4/3P2q1/4BNP1/PPP1N2P/RKQR1B2 w KQkq - 2 11",
+                "e2-g1", // Stockfish-best; the only sound move
+                -0.9f,   // white-POV; myChess ~ -0.67 at maxDepth 8, Stockfish -0.6
+                -0.4f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
+    // FEN: rk1r2b1/ppp3pp/3b1pn1/3n4/3P2q1/4BNP1/PPP1N1BP/RKQR4 b KQkq - 3 11
+    // Follow-up to the position above, after White's blunder Bg2 (f1-g2). Black
+    // is to move and wins a piece by force: both Re8 (d8-e8) and Qe6 (g4-e6)
+    // pile on the e-file and win either the e3 bishop or the e2 knight —
+    // Stockfish scores both at -3.3. myChess plays the correct move (d8-e8), but
+    // at maxDepth 8 the forced piece win lies beyond the horizon, so its eval
+    // UNDER-REPORTS badly: only ~ -0.81 (white-POV) instead of -3.3.
+    // This anchor pins both facts — right move, under-valued position. A deeper
+    // search or a check/pin extension should eventually surface the ~ -3 eval;
+    // when it does, this test's weight bound will (correctly) force a review.
+    @Test
+    void testPositionChess960WinsPieceButUnderReports() {
+        testPositionFromFen(
+                "rk1r2b1/ppp3pp/3b1pn1/3n4/3P2q1/4BNP1/PPP1N1BP/RKQR4 b KQkq - 3 11",
+                Set.of("d8-e8", "g4-e6"), // Re8 or Qe6 both win a piece (Stockfish -3.3)
+                -1.3f, // myChess under-reports (~ -0.8) — the piece win is beyond the depth-8 horizon
+                -0.4f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
 }
