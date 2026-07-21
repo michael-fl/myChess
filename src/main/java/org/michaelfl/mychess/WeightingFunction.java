@@ -45,6 +45,7 @@ public final class WeightingFunction {
     private static final byte BLACK_KING_ATTACKED = Board.blackKing | ATTACK_MARK_BIT;
 
     private static final byte[] PAWN = new byte[] { Board.whitePawn, Board.blackPawn };
+    private static final byte[] FORWARD_OFFSET = new byte[] { Board.LENGTH, -Board.LENGTH };
 
     /** Piece weight in centi pawns. */
     public static final int[] weightOfPiece = new int[Board.blackKing + 1];
@@ -122,24 +123,24 @@ public final class WeightingFunction {
             0,    //  0
             0,    //  1
             5,    //  2
-            10,   //  3
-            15,   //  4
-            20,   //  5
-            25,   //  6
-            30,   //  7
-            50,   //  8 +15 -- noticeable increase from 8 to 10 (Q+R, Q+B+K)
-            70,   //  9 +20
-            100,  // 10 +30
-            130,  // 11 +30
-            170,  // 12 +40 -- now heavily progressive
-            210,  // 13 +40
-            260,  // 14 +50
-            320,  // 15 +60 -- severe king weakness
-            390,  // 16 +70
-            470,  // 17 +80
-            570,  // 18 +100
-            680,  // 19 +110
-            800   // 20 +120
+            5,    //  3
+            10,   //  4
+            10,   //  5
+            15,   //  6
+            15,   //  7
+            25,   //  8 +15 -- noticeable increase from 8 to 10 (Q+R, Q+B+K)
+            35,   //  9 +20
+            50,   // 10 +30
+            65,   // 11 +30
+            85,   // 12 +40 -- now heavily progressive
+            105,  // 13 +40
+            130,  // 14 +50
+            160,  // 15 +60 -- severe king weakness
+            195,  // 16 +70
+            235,  // 17 +80
+            285,  // 18 +100
+            340,  // 19 +110
+            400   // 20 +120
     };
 
     @FunctionalInterface
@@ -163,6 +164,7 @@ public final class WeightingFunction {
         calculationFunctions[Board.blackKing]   = WeightingFunction::_calculateForKing;
     }
 
+    private static final int[] ownTurn = new int[] { GameStatus.TURN_WHITE, GameStatus.TURN_BLACK };
     private static final int[] oppositeTurn = new int[] { GameStatus.TURN_BLACK, GameStatus.TURN_WHITE };
     private static final int[] oppositeKing = new int[] { Board.blackKing, Board.whiteKing };
 
@@ -224,6 +226,7 @@ public final class WeightingFunction {
     private final int[] undefendedPiecesCount = new int[2];
     /** Raw pawn-shield weight per color (see {@link #calculatePawnShieldWeight}); index 0 = white, 1 = black. */
     private final int[] pawnShieldWeight = new int[2];
+    private final int[] kingCoverUnit = new int[2];
     /**
      * Per-color mask of the squares forming that color's king zone (the king's
      * square plus its eight neighbors), indexed by board field. Rebuilt each
@@ -312,6 +315,8 @@ public final class WeightingFunction {
         this.attackUnit[1] = 0;
         this.kingAttackerCount[0] = 0;
         this.kingAttackerCount[1] = 0;
+        this.kingCoverUnit[0] = 0;
+        this.kingCoverUnit[1] = 0;
 
         System.arraycopy(board, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
         Arrays.fill(isKingZoneField[0], false);
@@ -409,7 +414,15 @@ public final class WeightingFunction {
      */
     float calcKingAttackPenalty(int color) {
         return kingAttackerCount[color] < 2 ?
-            0 : KING_ATTACK_PENALTY[Math.min(attackUnit[color], KING_ATTACK_PENALTY.length - 1)];
+            0 :
+            KING_ATTACK_PENALTY[Math.min(attackUnit[color], KING_ATTACK_PENALTY.length - 1)] * kingCoverAttackMultiplier(color^1);
+    }
+
+    private static final float MIN_ATTACK_MULTIPLIER = 0.3f;
+
+    private float kingCoverAttackMultiplier(int defendingColor) {
+        float coverRatio = kingCoverUnit[defendingColor] / (float) MAX_KING_COVER;
+        return MIN_ATTACK_MULTIPLIER + (1f - coverRatio) * (1f - MIN_ATTACK_MULTIPLIER);
     }
 
     // --- Package-private accessors for king-safety unit tests. The arrays are
@@ -718,6 +731,7 @@ public final class WeightingFunction {
         move(myPiece, field, field + Board.LENGTH - 1, color);
 
         pawnShieldWeight[color] = calculatePawnShieldWeight(field, color);
+        kingCoverUnit[color] = calculateKingCover(field, color);
     }
 
     /**
@@ -771,6 +785,9 @@ public final class WeightingFunction {
      *         {@link #pawnShieldFactor})
      */
     private int calculatePawnShieldWeight(final int field, final int color) {
+        // TODO temporary disabled for measurement
+        if (true) return 0;
+
         final byte myPawn = PAWN[color];
         int weight = 0;
 
@@ -782,6 +799,31 @@ public final class WeightingFunction {
         }
 
         return weight;
+    }
+
+    private static final int MAX_KING_COVER = 6;
+
+    private int calculateKingCover(final int kingField, final int color) {
+        final byte myPawn = PAWN[color];
+        final int myTurn = ownTurn[color];
+        final int forward = FORWARD_OFFSET[color];
+
+        return coverOf(kingField + forward - 1, myPawn, myTurn)
+            + coverOf(kingField + forward,     myPawn, myTurn)
+            + coverOf(kingField + forward + 1, myPawn, myTurn);
+    }
+
+    private int coverOf(final int field, final byte myPawn, final int myTurn) {
+        final byte piece = board[field];
+
+        if (piece == myPawn) {
+            return 2;
+        }
+        if ((piece & myTurn) == myTurn) {
+            return 1;
+        }
+
+        return 0;
     }
 
     private boolean move(final byte movingPiece, final int from, final int to, int color) {
