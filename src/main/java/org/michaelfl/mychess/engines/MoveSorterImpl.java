@@ -33,6 +33,9 @@ public final class MoveSorterImpl implements MoveSorter {
     private final MovesArray bucketKingMoves = new MovesArray();
 
     private final KillerMoves killerMoves;
+    private final boolean isQuiescenceSearch;
+    private final StaticExchangeEvaluation see;
+
     private int pvMove;
     private int ttMove;
     private boolean pvMoveSeen;
@@ -42,12 +45,56 @@ public final class MoveSorterImpl implements MoveSorter {
     private Board board;
     private int depth;
 
+    /**
+     * Full-search sorter with a private, empty killer-move table. Convenience for
+     * callers (mainly tests) that do not share killers across nodes; the engine
+     * itself uses {@link #MoveSorterImpl(KillerMoves)} to share one table.
+     */
     public MoveSorterImpl() {
-        this(new KillerMoves());
+        this(new KillerMoves(), false);
     }
 
+    /**
+     * Full-search sorter that shares the given killer-move table, so beta-cutoff
+     * killers recorded at one node are reused for move ordering at sibling nodes of
+     * the same depth. Captures are ordered by the material delta
+     * ({@code captured − mover}); no static exchange evaluation and no pruning.
+     *
+     * @param killerMoves the killer table shared across the whole search
+     */
     public MoveSorterImpl(KillerMoves killerMoves) {
+        this(killerMoves, false);
+    }
+
+    /**
+     * Shared implementation of the two sorting modes.
+     *
+     * <p>In quiescence mode captures are scored and ordered by their static
+     * exchange value and losing captures ({@code SEE < 0}) are dropped; the
+     * {@link StaticExchangeEvaluation} is created eagerly here and re-initialised on
+     * every {@link #reset}. In full-search mode captures are ordered by the material
+     * delta and nothing is pruned.
+     *
+     * @param killerMoves        the shared killer table, or {@code null} in
+     *                           quiescence mode — quiescence only searches captures
+     *                           and a capture can never be a killer (killers are
+     *                           quiet moves), so the table is never consulted
+     * @param isQuiescenceSearch {@code true} for SEE ordering plus losing-capture
+     *                           pruning, {@code false} for the full search
+     */
+    private MoveSorterImpl(KillerMoves killerMoves, boolean isQuiescenceSearch) {
         this.killerMoves = killerMoves;
+        this.isQuiescenceSearch = isQuiescenceSearch;
+        this.see = isQuiescenceSearch ? new StaticExchangeEvaluation() : null;
+    }
+
+    /**
+     * Builds the sorter used by the quiescence search: it orders captures by static
+     * exchange value and prunes losing captures ({@code SEE < 0}). It carries no
+     * killer-move table (see the private constructor for why).
+     */
+    public static MoveSorterImpl forQuiescenceSearch() {
+        return new MoveSorterImpl(null, true);
     }
 
     @Override
@@ -58,6 +105,10 @@ public final class MoveSorterImpl implements MoveSorter {
         this.ttMove = ttMove;
         this.pvMoveSeen = false;
         this.ttMoveSeen = false;
+
+        if (see != null) {
+            see.init(board);
+        }
 
         targetFieldOfLastOppositeMove = Move.getToField(gameStatus.getLastMove());
 
@@ -80,18 +131,20 @@ public final class MoveSorterImpl implements MoveSorter {
             ttMoveSeen = true;
             return;
         }
-        if (killerMoves.isKillerMove(move, depth)) {
+        if (killerMoves != null && killerMoves.isKillerMove(move, depth)) {
             bucketKillerMoves.add(move);
         } else if (capturedPiece != 0) {
-            final float deltaWeight = WeightingFunction.weightOfPiece[capturedPiece] - WeightingFunction.weightOfPiece[movingPiece];
-            if (toField == targetFieldOfLastOppositeMove && deltaWeight > bestWeightCapturingLastPlayedOppositePiece) {
-                if (bestMoveCapturingLastPlayedOppositePiece != 0) {
-                    getCapturesBucket(deltaWeight).add(bestMoveCapturingLastPlayedOppositePiece, (int) bestWeightCapturingLastPlayedOppositePiece);
+            final int deltaWeight = captureWeight(move, movingPiece, capturedPiece);
+            if (!isQuiescenceSearch || deltaWeight >= 0) { // Prune losing captures in quiescence search
+                if (toField == targetFieldOfLastOppositeMove && deltaWeight > bestWeightCapturingLastPlayedOppositePiece) {
+                    if (bestMoveCapturingLastPlayedOppositePiece != 0) {
+                        getCapturesBucket(deltaWeight).add(bestMoveCapturingLastPlayedOppositePiece, (int) bestWeightCapturingLastPlayedOppositePiece);
+                    }
+                    bestMoveCapturingLastPlayedOppositePiece = move;
+                    bestWeightCapturingLastPlayedOppositePiece = deltaWeight;
+                } else {
+                    getCapturesBucket(deltaWeight).add(move, deltaWeight);
                 }
-                bestMoveCapturingLastPlayedOppositePiece = move;
-                bestWeightCapturingLastPlayedOppositePiece = deltaWeight;
-            } else {
-                getCapturesBucket(deltaWeight).add(move, (int) deltaWeight);
             }
         } else if (Board.isKing(movingPiece)) {
             bucketKingMoves.add(move);
@@ -101,6 +154,14 @@ public final class MoveSorterImpl implements MoveSorter {
             final int weight = destWeight - srcWeight;
 
             bucketRemainingMoves.add(move, weight);
+        }
+    }
+
+    private int captureWeight(int move, byte movingPiece, byte capturedPiece) {
+        if (!isQuiescenceSearch) {
+            return WeightingFunction.weightOfPiece[capturedPiece] - WeightingFunction.weightOfPiece[movingPiece];
+        } else {
+            return see.see(move);
         }
     }
 

@@ -13,6 +13,8 @@ package org.michaelfl.mychess;
 //    12 13         ...          22  23
 //    00 01         ...          10  11
 
+import org.michaelfl.mychess.engines.MoveSorterImpl;
+
 /**
  * Generates the pseudo-legal moves for the side to move and feeds them into a
  * {@link MoveSorter} (default {@link org.michaelfl.mychess.engines.MoveSorterImpl}).
@@ -47,6 +49,8 @@ public final class MoveGenerator {
 
     private final MoveSorter moveSorter;
     private final boolean allPromotions;
+    /** Should this generator only return captures? True for quiescence search, otherwise false. */
+    private final boolean onlyCaptures;
 
     private GameStatus gameStatus;
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
@@ -63,16 +67,31 @@ public final class MoveGenerator {
      * bishop promotion never the objectively best move (unlike rook,
      * which can be the unique winning promotion in stalemate-avoidance
      * situations, and knight, which reaches squares queens cannot).
-     * Equivalent to {@link #MoveGenerator(MoveSorter, boolean)
-     * MoveGenerator(moveSorter, false)}.
+     * Equivalent to {@link #MoveGenerator(MoveSorter, boolean, boolean)
+     * MoveGenerator(moveSorter, false, false)}.
      */
     public MoveGenerator(MoveSorter moveSorter) {
-        this(moveSorter, false);
+        this(moveSorter, false, false);
     }
 
     /**
-     * Full constructor with control over the under-promotion set.
+     * Like {@link #MoveGenerator(MoveSorter)} but with explicit control over the
+     * under-promotion set. Still generates the full move list (captures and quiet
+     * moves); equivalent to {@link #MoveGenerator(MoveSorter, boolean, boolean)
+     * MoveGenerator(moveSorter, allPromotions, false)}.
      *
+     * @param allPromotions see {@link #MoveGenerator(MoveSorter, boolean, boolean)}
+     */
+    public MoveGenerator(MoveSorter moveSorter, boolean allPromotions) {
+        this(moveSorter, allPromotions, false);
+    }
+
+    /**
+     * Full constructor with control over the under-promotion set and whether only
+     * captures are generated.
+     *
+     * @param moveSorter    sink that receives every generated move and returns them
+     *                      in search order (see {@link MoveSorter})
      * @param allPromotions {@code false} for the production set
      *                      ({@code Q, R, N} — bishop skipped);
      *                      {@code true} for the exhaustive set
@@ -80,10 +99,28 @@ public final class MoveGenerator {
      *                      {@code true} so leaf counts match the
      *                      canonical Chess-Programming-Wiki values
      *                      exactly.
+     * @param onlyCaptures  {@code true} to emit only capturing moves — including
+     *                      en passant and capture-promotions — and skip all quiet
+     *                      moves, castling and non-capturing promotions; used by the
+     *                      quiescence search. {@code false} for the full move list.
+     *                      Package-private because only {@link #forQuiescenceSearch()}
+     *                      and the search itself use the capture-only mode.
      */
-    public MoveGenerator(MoveSorter moveSorter, boolean allPromotions) {
+    MoveGenerator(MoveSorter moveSorter, boolean allPromotions, boolean onlyCaptures) {
         this.moveSorter = moveSorter;
         this.allPromotions = allPromotions;
+        this.onlyCaptures = onlyCaptures;
+    }
+
+    /**
+     * Builds the move generator used by the quiescence search: a capture-only
+     * generator ({@code onlyCaptures == true}) paired with the quiescence
+     * {@link MoveSorterImpl#forQuiescenceSearch() sorter}, which orders captures by
+     * their static exchange value and prunes losing ones. Uses the production
+     * under-promotion set ({@code Q, R, N}).
+     */
+    public static MoveGenerator forQuiescenceSearch() {
+        return new MoveGenerator(MoveSorterImpl.forQuiescenceSearch(), false, true);
     }
 
     /**
@@ -149,20 +186,22 @@ public final class MoveGenerator {
     }
 
     private void calculateWhitePawnMoves(int field) {
-        // single step
-        int to = field + Board.LENGTH;
-        if (board[to] == 0)
-            addWhitePawnMove(field, to);
-
-        // double step
-        if (fieldToRow(field) == 1) {
-            to = field + 2 * Board.LENGTH;
-            if (board[to] == 0 && board[field + Board.LENGTH] == 0)
+        if (!onlyCaptures) {
+            // single step
+            int to = field + Board.LENGTH;
+            if (board[to] == 0)
                 addWhitePawnMove(field, to);
+
+            // double step
+            if (fieldToRow(field) == 1) {
+                to = field + 2 * Board.LENGTH;
+                if (board[to] == 0 && board[field + Board.LENGTH] == 0)
+                    addWhitePawnMove(field, to);
+            }
         }
 
         // capture right
-        to = field + Board.LENGTH + 1;
+        int to = field + Board.LENGTH + 1;
         if ((board[to] & oppositeColor) == oppositeColor) {
             if (board[to] == oppositeKing)
                 containsIllegalMove = true;
@@ -229,20 +268,22 @@ public final class MoveGenerator {
     }
 
     private void calculateBlackPawnMoves(int field) {
-        // single step
-        int to = field - Board.LENGTH;
-        if (board[to] == 0)
-            addBlackPawnMove(field, to);
-
-        // double step
-        if (fieldToRow(field) == 6) {
-            to = field - 2 * Board.LENGTH;
-            if (board[to] == 0 && board[field - Board.LENGTH] == 0)
+        if (!onlyCaptures) {
+            // single step
+            int to = field - Board.LENGTH;
+            if (board[to] == 0)
                 addBlackPawnMove(field, to);
+
+            // double step
+            if (fieldToRow(field) == 6) {
+                to = field - 2 * Board.LENGTH;
+                if (board[to] == 0 && board[field - Board.LENGTH] == 0)
+                    addBlackPawnMove(field, to);
+            }
         }
 
         // capture right
-        to = field - Board.LENGTH + 1;
+        int to = field - Board.LENGTH + 1;
         if ((board[to] & oppositeColor) == oppositeColor) {
             if (board[to] == oppositeKing)
                 containsIllegalMove = true;
@@ -365,13 +406,14 @@ public final class MoveGenerator {
         move(piece, field, field + Board.LENGTH - 1);
 
         // castling
-        if (gameStatus.isCastlingPossible())
+        if (!onlyCaptures && gameStatus.isCastlingPossible()) {
             calculateCastlingMoves(field);
+        }
     }
 
     private boolean move(final byte piece, final int from, final int to) {
         final byte capturedPiece = board[to];
-        if (capturedPiece == 0 || (capturedPiece & oppositeColor) == oppositeColor) {
+        if ((capturedPiece == 0 && !onlyCaptures) || (capturedPiece & oppositeColor) == oppositeColor) {
             addMove(from, to, piece, capturedPiece, Move.typeNormal);
             if (capturedPiece == oppositeKing)
                 containsIllegalMove = true;
@@ -704,9 +746,11 @@ public final class MoveGenerator {
     }
 
     private void addMove(final int fromField, final int toField, final byte movingPiece, final byte capturedPiece, final byte moveType) {
-        int move = Move.create((byte) fromField, (byte) toField, capturedPiece, moveType);
+        if (!onlyCaptures || capturedPiece != 0) {
+            int move = Move.create((byte) fromField, (byte) toField, capturedPiece, moveType);
 
-        moveSorter.addMove(move, fromField, toField, movingPiece, capturedPiece);
+            moveSorter.addMove(move, fromField, toField, movingPiece, capturedPiece);
+        }
     }
 
 }

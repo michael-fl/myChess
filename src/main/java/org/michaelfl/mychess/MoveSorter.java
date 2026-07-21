@@ -37,6 +37,13 @@ public interface MoveSorter {
     void addMove(int move, int fromField, int toField, byte movingPiece, byte capturedPiece);
     Moves getSortedMoves();
 
+    /**
+     * Returns a fresh sorter for the full (main) search: a {@link MoveSorterImpl}
+     * with its own empty killer-move table and no static exchange evaluation.
+     * Captures are ordered by the material delta ({@code captured − mover}). For
+     * the quiescence-search variant (SEE ordering and losing-capture pruning) use
+     * {@link MoveSorterImpl#forQuiescenceSearch()}.
+     */
     static MoveSorter defaultImplementation() {
         return new MoveSorterImpl();
     }

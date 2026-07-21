@@ -90,34 +90,31 @@ public final class QuiescenceSearch {
         final int countMoves = moves.count();
 
         for (int i = 0; i < countMoves; i++) {
-            // Follow only moves, which are captures
-            if (Move.getCapturedPiece(plainMoves[i]) != 0) {
-                final int move = plainMoves[i];
-                final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move);
-                final int newMaterialWeight = ctx.materialWeight() + moveWeight;
-                final int newMaterialDelta = ctx.materialDelta() + moveWeight;
+            final int move = plainMoves[i];
+            final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move);
+            final int newMaterialWeight = ctx.materialWeight() + moveWeight;
+            final int newMaterialDelta = ctx.materialDelta() + moveWeight;
 
-                final int alphaLocal = Math.max(alphaWeight, bestWeight);
+            final int alphaLocal = Math.max(alphaWeight, bestWeight);
 
-                ctx.workingBoard().makeMove(move);
-                int weight = -quiescenceSearch(
-                        new SearchNodeContext(depth + 1, ctx.maxDepth(), null, -ctx.weightFactor(), -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), null),
-                        -betaWeight, -alphaLocal);
-                ctx.workingBoard().revertMove();
+            ctx.workingBoard().makeMove(move);
+            int weight = -quiescenceSearch(
+                    new SearchNodeContext(depth + 1, ctx.maxDepth(), null, -ctx.weightFactor(), -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), null),
+                    -betaWeight, -alphaLocal);
+            ctx.workingBoard().revertMove();
 
-                if (isTimeout()) {
-                    return 0;
+            if (isTimeout()) {
+                return 0;
+            }
+
+            // -ILLEGAL_WEIGHT is possible to be returned, but never +ILLEGAL_WEIGHT
+            if (weight > WeightingFunction.ILLEGAL_WEIGHT_NEG) {
+                // Fail-soft beta cutoff: return actual weight.
+                if (weight >= betaWeight) {
+                    return weight;
                 }
-
-                // -ILLEGAL_WEIGHT is possible to be returned, but never +ILLEGAL_WEIGHT
-                if (weight > WeightingFunction.ILLEGAL_WEIGHT_NEG) {
-                    // Fail-soft beta cutoff: return actual weight.
-                    if (weight >= betaWeight) {
-                        return weight;
-                    }
-                    if (weight > bestWeight) {
-                        bestWeight = weight;
-                    }
+                if (weight > bestWeight) {
+                    bestWeight = weight;
                 }
             }
         }
