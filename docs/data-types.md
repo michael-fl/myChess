@@ -346,7 +346,7 @@ Choices worth noting:
 - **Parallel arrays**, not array of pairs. Same reason as `IntArray`: no allocation per move.
 - The bucket itself is *cleared and reused* per node by `MoveSorterImpl`; not allocated per call.
 
-`SortableMovesBucket` is the building block of move ordering. `MoveSorterImpl` keeps several buckets (PV move, killers, captures sorted by MVV-LVA-style weight, quiet moves) and concatenates them in order to produce the final `Moves` list passed back to the search. See [§ 7.8](search.md#78-move-sorting-sortablemovesbucket) for the full ordering policy.
+`SortableMovesBucket` is the building block of move ordering. `MoveSorterImpl` keeps several buckets (PV move, killers, captures sorted by MVV-LVA-style weight, quiet moves) and concatenates them in order to produce the final `Moves` list passed back to the search. In its quiescence variant (`MoveSorterImpl.forQuiescenceSearch()`, since v4.2.1) the capture buckets are instead keyed by full static exchange value and losing captures (SEE < 0) are dropped. See [§ 7.8](search.md#78-move-sorting-sortablemovesbucket) for the full ordering policy.
 
 ## 3.8 Zobrist hashing and `PositionEncoding`
 

@@ -35,7 +35,7 @@ Three self-play matches against `myChess-3.6.0`, TC 40/60:
 
 All three estimates are consistent within their CIs, but the **fixed-N match is the reference**: it has the tightest CI (±15.2 vs ±37-42 for the SPRTs), and SPRT point estimates are known to be biased low by the early-stopping mechanism (the test stops as soon as evidence for H1 is sufficient, which can be well before the sample mean has converged on the true value — both SPRT runs here terminated at sample means 15-25 Elo below the eventual fixed-N point).
 
-**White-vs-Black asymmetry.** The early SPRT runs showed near-symmetric W/B splits (~60-62 % both sides). The 1600-game fixed-N match exposes a ~62 Elo gap: kandidat as White wins 66.9 %, as Black 59.1 %. At 800 games per color the per-color CI is ±20-25 Elo, so the gap is ≈2.5σ — suggestive but not airtight. Most plausible reading: the TT amplifies the small first-move advantage that already existed pre-TT (the W>B baseline-bias investigated in [§ 12.14](#1214-color-asymmetry-investigate-the-wb-bias-seen-in-cross-version-matches--s-evidence-weakening)) — both sides get a stronger search, but the side that starts from slightly better positions converts that into a slightly larger fraction of wins. Worth re-checking after [§ 12.2 NMP](#122-null-move-pruning--done-76-elo) and [§ 12.6 QSearch upgrade](#126-quiescence-search-upgrade--m--4080-elo) land; if the asymmetry persists at >2σ, it deserves a separate investigation entry.
+**White-vs-Black asymmetry.** The early SPRT runs showed near-symmetric W/B splits (~60-62 % both sides). The 1600-game fixed-N match exposes a ~62 Elo gap: kandidat as White wins 66.9 %, as Black 59.1 %. At 800 games per color the per-color CI is ±20-25 Elo, so the gap is ≈2.5σ — suggestive but not airtight. Most plausible reading: the TT amplifies the small first-move advantage that already existed pre-TT (the W>B baseline-bias investigated in [§ 12.14](#1214-color-asymmetry-investigate-the-wb-bias-seen-in-cross-version-matches--s-evidence-weakening)) — both sides get a stronger search, but the side that starts from slightly better positions converts that into a slightly larger fraction of wins. Worth re-checking after [§ 12.2 NMP](#122-null-move-pruning--done-76-elo) and [§ 12.6 QSearch upgrade](#126-quiescence-search-upgrade) land; if the asymmetry persists at >2σ, it deserves a separate investigation entry.
 
 **Draw ratio** dropped to 19-24 % across the three runs (vs ~30 % in pre-TT baselines) — TT cutoffs decide games earlier.
 
@@ -228,12 +228,14 @@ A `int[2][64][64]` table indexed by `(color, fromField, toField)` is incremented
 - Complements [§ 7.2 killer moves](search.md#72-killer-moves), which only remember two moves per depth — history is dense across all `from→to` pairs.
 - Decay (e.g. shift right by 1 every iteration) keeps the table responsive across iterative-deepening iterations and across games.
 
-## 12.6 Quiescence search upgrade — **§12.6.1 DONE (+60 Elo); §12.6.2–12.6.4 pending; §12.6.5 tried & shelved**
+## 12.6 Quiescence search upgrade
+
+**Status:** §12.6.1 DONE (+60 Elo, v4.2.0); §12.6.2 + §12.6.3 DONE (+40.6 Elo, SEE, v4.2.1); §12.6.4 pending; §12.6.5 tried & shelved.
 
 **§12.6.1 (enter at every leaf + follow all captures) shipped in v4.2.0 — measured +60.4 ± 9.7 Elo** (details below). The remaining sub-items refine that all-captures search. See [search § 6.4](search.md#64-quiescence-search) for the current behavior. In short:
 
-- **What the QSearch does now (v4.2.0):** entered at *every* leaf; stand-pat with fail-soft α/β; follows *all* legal captures (in the main sorter's order — winning captures first); a cooperative timeout keeps it inside the move budget; depth-capped at 20.
-- **What it still does not do:** order captures by SEE, prune losing captures (SEE < 0), delta-prune, extend on checks, or use the transposition table — the remaining §12.6.2–12.6.5 items below.
+- **What the QSearch does now (v4.2.1):** entered at *every* leaf; stand-pat with fail-soft α/β; follows all legal captures **ordered by SEE, with losing captures (SEE < 0) pruned** (§12.6.2+§12.6.3); a cooperative timeout keeps it inside the move budget; depth-capped at 20.
+- **What it still does not do:** delta-prune, extend on checks, or use the transposition table — the remaining §12.6.4–12.6.5 items below.
 
 The original "follow all captures" approach was tried once, long ago, and abandoned as too expensive — before the TT and capture ordering existed. With capture ordering now in `MoveSorterImpl`, the wider search pays off (see 12.6.1). This section splits the upgrade into five independently shippable sub-items.
 
@@ -249,19 +251,21 @@ Shipped in v4.2.0. Three changes, which had to land together:
 
 **Note — it shipped *alone*.** Contrary to the "staged order" caveat below, 12.6.1 was measured without 12.6.2/12.6.3 and was already strongly positive. The reason: myChess's `MoveSorterImpl` already orders captures (winning captures first), so the wider capture tree got good α/β cutoffs for free — the "all-captures without ordering is a net loss" worry assumed *no* ordering, which is not myChess's situation.
 
-### 12.6.2 MVV-LVA capture ordering in QSearch — **S, ≈ 5–15 Elo**
+### 12.6.2 Capture ordering in QSearch — **DONE (v4.2.1, shipped as SEE ordering)**
 
-Inside the new all-captures loop, try captures in **Most Valuable Victim, Least Valuable Attacker** order. `WeightingFunction.getMaterialWeightOfMove` already provides the victim weight; the attacker piece can be read from the source square in one byte-load. A simple `(victimWeight * 16) − attackerWeight` sort key (or a precomputed 6×6 table indexed by piece type) is enough.
+Shipped in v4.2.1 together with §12.6.3 and measured as one bundle (**+40.6 Elo** — see there). Instead of the plain MVV-LVA key originally planned here, the quiescence-configured `MoveSorterImpl` scores each capture by its full **static exchange value** (`StaticExchangeEvaluation.see(move)`) rather than the main search's victim − attacker approximation, then buckets winning (SEE > 0) captures ahead of the rest. SEE ordering is strictly more precise than MVV-LVA — it accounts for the whole exchange sequence, not just the first victim/attacker pair — so the planned MVV-LVA step was subsumed by it.
 
-Without ordering, the all-captures version of 12.6.1 wastes most of its work — α/β cutoffs depend on trying the best capture first. With MVV-LVA, even the unfiltered all-captures variant becomes practical.
+Without ordering, the all-captures version of 12.6.1 wastes most of its work — α/β cutoffs depend on trying the best capture first; SEE ordering supplies exactly that.
 
-### 12.6.3 SEE pruning of losing captures in QSearch — **M, ≈ 10–20 Elo**
+### 12.6.3 SEE pruning of losing captures in QSearch — **DONE (+40.6 Elo)**
 
-After 12.6.1+12.6.2, the loop still considers obviously losing captures like `QxP` defended by a pawn. **Static Exchange Evaluation** simulates the exchange sequence purely from the static piece values (no recursive search), returning the net material change. Skip captures with `SEE < 0`.
+The all-captures loop otherwise considers obviously losing captures like `QxP` defended by a pawn. **Static Exchange Evaluation** simulates the exchange sequence purely from the static piece values (no recursive search), returning the net material change; captures with `SEE < 0` are dropped before the search ever makes them.
 
-Implementation: a `Board.see(toField, attackerPieceType, sideToMove)` method that alternately swaps the least-valuable attacker from each side onto the contested square and returns the running material balance. ~30 lines using the existing attacker enumeration.
+**Shipped in v4.2.1** as a dedicated `StaticExchangeEvaluation` class (least-valuable-attacker swap-off with X-ray battery reveals in both ray directions and both colors), wired into a quiescence-configured `MoveSorterImpl`: the sorter scores each capture by `see(move)` and uses that both to order captures (§12.6.2) and to skip the ones with `SEE < 0` (the `isQuiescenceSearch && deltaWeight < 0` guard in `addMove`). Covered by `StaticExchangeEvaluationTest` (per-method: the `see()` entry point, exchange folding, revealed attackers per compass direction, container reuse) and `MoveSorterImplTest`. The class turned out larger than the originally sketched ~30-line `Board.see(...)` — the X-ray reveal handling and reusable-container design account for the difference.
 
-SEE is also useful in the **main search** for splitting winning vs. losing captures more precisely than the current `bucketWinningCaptures` / `bucketOtherCaptures` heuristic in [`MoveSorterImpl`](../src/main/java/org/michaelfl/mychess/engines/MoveSorterImpl.java) (which uses victim − attacker, a one-ply MVV/LVA approximation). Worth a follow-up SPRT once it exists.
+**Measured / learned.** **+40.6 ± 9.4 Elo** vs v4.2.0 (3200-game fixed-N, LOS 100 %, draw ratio 39.3 %), **color-robust** — winning with both colors (0.580 as White, 0.537 as Black). The measurement bundles SEE ordering (§12.6.2) and SEE < 0 pruning together — they shipped in one commit and were not A/B-split, so the division between "better ordering" and "fewer wasted nodes" is not separately quantified. Well above the pre-estimate (≈ 10–20 Elo for pruning alone), because it also replaced the capture *ordering* with the more precise SEE key.
+
+SEE is also useful in the **main search** for splitting winning vs. losing captures more precisely than the current `bucketWinningCaptures` / `bucketOtherCaptures` heuristic in [`MoveSorterImpl`](../src/main/java/org/michaelfl/mychess/engines/MoveSorterImpl.java) (which still uses victim − attacker, a one-ply MVV/LVA approximation, for the main search). Now that `StaticExchangeEvaluation` exists, extending it to the main-search sorter is a concrete follow-up — worth a separate SPRT.
 
 ### 12.6.4 Delta pruning in QSearch — **S, ≈ 5–15 Elo**
 
@@ -279,13 +283,13 @@ Cheap to implement (~5 lines), small but real Elo gain.
 
 The cause is structural, not a code-cleanup artifact: a *second* full table doubles memory/cache pressure on top of the main TT, and QSearch nodes are individually so cheap that probe+store cost plus TT thrashing outweighs the few saved nodes. This matches the literature — QSearch-TT is a notoriously marginal feature. Strong engines that use it (e.g. Stockfish) **share the single main TT** with a QS depth sentinel (`DEPTH_QS`, a 0/small-constant marker so QSearch entries are always preferred-below main-search entries) rather than a separate table, and draw most of the benefit from the TT move / early cutoffs, not from raw score caching.
 
-If revisited, the only variant worth an SPRT is the shared-TT design: reuse the [§ 12.1 table](#121-transposition-table--done-93-elo) with the depth sentinel above — **not** a second table. Otherwise deprioritized behind §12.6.3 (SEE pruning).
+If revisited, the only variant worth an SPRT is the shared-TT design: reuse the [§ 12.1 table](#121-transposition-table--done-93-elo) with the depth sentinel above — **not** a second table. Otherwise deprioritized behind the remaining QSearch refinement (§12.6.4 delta pruning); §12.6.3 SEE pruning has since shipped (v4.2.1).
 
 ### Why the staged order matters — *superseded by the 12.6.1 result*
 
 The original worry here was: **12.6.1 alone is a net loss** without 12.6.2/12.6.3, because an all-captures tree *with no ordering* is too expensive to fit the time budget (lower main-search depth costs more than the wider QSearch gains). **This turned out not to apply to myChess** — 12.6.1 shipped alone and measured +60.4 Elo, because `MoveSorterImpl` already orders captures (winning first), so the wider tree got good cutoffs without a dedicated ordering pass. The premise ("no ordering") was simply false for this engine.
 
-The remaining sub-items (12.6.2 QSearch-specific MVV-LVA, 12.6.3 SEE pruning, 12.6.4 delta pruning) are now *independent* refinements on top of the shipped all-captures search, each SPRT'd separately (12.6.5 TT-in-QSearch was tried and shelved — see above). 12.6.3 (SEE pruning) is the highest-value next step: it shrinks the now-wider capture tree rather than just reordering it.
+The sub-items were *independent* refinements on top of the shipped all-captures search, each SPRT'd separately. 12.6.2 (SEE ordering) + 12.6.3 (SEE pruning) shipped together in v4.2.1 (**+40.6 Elo**) — the highest-value step, shrinking the now-wider capture tree rather than just reordering it; 12.6.5 (TT-in-QSearch) was tried and shelved (see above). Only 12.6.4 (delta pruning) remains open.
 
 ## 12.7 Evaluation upgrades — **M, ≈ 40–80 Elo combined**
 
@@ -860,7 +864,7 @@ The single largest evaluation term myChess is still missing. Today the only king
 | 4 | [§ 12.3 LMR](#123-late-move-reductions-lmr--s--50100-elo) + [§ 12.20 PVS](#1220-principal-variation-search-pvs--negascout--s--1025-elo) + [§ 12.5 history](#125-history-heuristic--s--3050-elo) | S | +260 – +475 |
 | 5 | [§ 12.2 Null-move pruning](#122-null-move-pruning--done-76-elo) — **DONE** | S | measured **+76.0 ± 10.1** for NMP itself |
 | 6 | [§ 12.4 Check extensions](#124-check-extensions--s--1530-elo) + [§ 12.8 aspiration](#128-aspiration-windows--s--2040-elo) | S | +340 – +620 |
-| 7 | [§ 12.6 Quiescence search upgrade](#126-quiescence-search-upgrade--m--4080-elo) — all-captures + MVV-LVA + SEE pruning + delta pruning + optional TT integration | M | +380 – +700 |
+| 7 | [§ 12.6 Quiescence search upgrade](#126-quiescence-search-upgrade) — all-captures + MVV-LVA + SEE pruning + delta pruning + optional TT integration | M | +380 – +700 |
 | 8 | [§ 12.7 Eval upgrades](#127-evaluation-upgrades--m--4080-elo-combined) + [§ 12.21 King safety](#1221-king-safety--m--3060-elo) | M | +420 – +770 |
 | 9 | [§ 12.12 Real time management](#1212-real-time-management-heuristics--s--m--3060-elo) | S–M | +450 – +830 |
 | 10 | [§ 12.11 Chess960](#1211-chess960-fischer-random-support--m-no-elo-on-standard-chess-but-opens-a-new-variant) (optional, opens a new variant) | M | — (on standard chess) |
