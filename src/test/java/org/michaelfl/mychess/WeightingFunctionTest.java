@@ -428,8 +428,11 @@ class WeightingFunctionTest {
         // the en-passant code path must NOT activate.
         float scoreWithoutEp = scoreOf("1. e4 a6 2. e5 a5 3. h3");
         // The current eval at this position is known-good; we anchor it within a
-        // ±0.05 band around the value we measured after the bug fix.
-        assertEquals(0.41f, scoreWithoutEp, 0.05f,
+        // ±0.05 band around the measured value. Baseline dropped 0.41 -> 0.32 with the
+        // v4.3.0 king-safety term (white's e2 shield square is vacated by e4-e5, so
+        // black's king is slightly better sheltered); the en-passant behavior under
+        // test is unchanged.
+        assertEquals(0.32f, scoreWithoutEp, 0.05f,
                 "Score without en-passant target must be stable around the fixed baseline");
     }
 
