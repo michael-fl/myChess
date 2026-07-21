@@ -72,7 +72,9 @@ public final class PositionSearch {
         this.moveGenerator = new MoveGenerator(new MoveSorterImpl(killerMoves));
         this.engineConfig = engine.getConfig();
         this.timeout = System.currentTimeMillis() + engineConfig.getMillisPerMove();
-        this.quiescenceSearch = new QuiescenceSearch(moveGenerator, new WeightingFunction(), statistics, engineConfig.getMaxQuiescenceDepth(), timeout);
+        this.quiescenceSearch = new QuiescenceSearch(
+                MoveGenerator.forQuiescenceSearch(),
+                new WeightingFunction(), statistics, engineConfig.getMaxQuiescenceDepth(), timeout);
         this.tt = engine.getTranspositionTable();
         this.weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
         this.silent = engineConfig.isSilent();

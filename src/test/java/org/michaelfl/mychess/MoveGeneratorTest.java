@@ -2,6 +2,7 @@ package org.michaelfl.mychess;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -419,5 +420,79 @@ class MoveGeneratorTest {
                 .map(moveDescription -> game.getBoard().moveDescriptionToMove(moveDescription))
                 .map(Move::move)
                 .collect(Collectors.toSet());
+    }
+
+    /**
+     * Tests for the {@code onlyCaptures} generation mode used by the static exchange
+     * evaluation and the quiescence search: quiet moves (pawn pushes, castling, and
+     * non-capturing slider/knight/king moves) are dropped, while every capture —
+     * including en passant and capture-promotions — is still generated.
+     */
+    @Nested
+    class OnlyCapturesTests {
+
+        private Moves generate(String fen, boolean onlyCaptures) {
+            var generator = new MoveGenerator(MoveSorter.defaultImplementation(), false, onlyCaptures);
+
+            return generator.calculateMoves(Fen.importFEN(fen));
+        }
+
+        private Set<String> moveSet(Moves moves) {
+            return Arrays.stream(moves.getMoves(), 0, moves.count())
+                    .mapToObj(ChessUtil::moveToString)
+                    .collect(Collectors.toSet());
+        }
+
+        @Test
+        void yieldsExactlyTheCapturesOfTheFullMoveList() {
+            // Italian-style middlegame: several captures (Bxc6, Nxe5, ...), castling
+            // rights, and many quiet moves.
+            var fen = "r1bqk1nr/pppp1ppp/2n5/1Bb1p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 1";
+            var full = generate(fen, false);
+            var onlyCaptures = generate(fen, true);
+
+            var capturesOfFull = Arrays.stream(full.getMoves(), 0, full.count())
+                    .filter(move -> Move.getCapturedPiece(move) != 0)
+                    .mapToObj(ChessUtil::moveToString)
+                    .collect(Collectors.toSet());
+
+            assertEquals(capturesOfFull, moveSet(onlyCaptures), "onlyCaptures must be exactly the captures of the full move list");
+            assertFalse(capturesOfFull.isEmpty(), "the position must offer captures");
+            assertTrue(onlyCaptures.count() < full.count(), "onlyCaptures must drop the quiet moves");
+
+            for (int i = 0; i < onlyCaptures.count(); i++) {
+                int move = onlyCaptures.getMoves()[i];
+                assertNotEquals(0, Move.getCapturedPiece(move), "onlyCaptures produced a non-capture: " + ChessUtil.moveToString(move));
+            }
+        }
+
+        @Test
+        void includesEnPassant() {
+            // Black has just played f7-f5; white's e5 pawn captures en passant on f6.
+            var onlyCaptures = moveSet(generate("4k3/8/8/4Pp2/8/8/8/4K3 w - f6 0 1", true));
+
+            assertTrue(onlyCaptures.contains("e5-f6"), "en passant is a capture and must be generated: " + onlyCaptures);
+        }
+
+        @Test
+        void includesCapturePromotionButNotPushPromotion() {
+            // White pawn b7 can capture-promote on a8 (black rook) or push-promote on b8.
+            var onlyCaptures = moveSet(generate("r3k3/1P6/8/8/8/8/8/4K3 w - - 0 1", true));
+
+            assertTrue(onlyCaptures.contains("b7-a8Q"), "capture-promotion must be generated: " + onlyCaptures);
+            assertFalse(onlyCaptures.contains("b7-b8Q"), "push-promotion is not a capture and must be excluded: " + onlyCaptures);
+        }
+
+        @Test
+        void excludesCastling() {
+            // White may castle kingside and can also capture the black rook up the h-file.
+            var fen = "4k2r/8/8/8/8/8/8/4K2R w Kk - 0 1";
+
+            assertTrue(moveSet(generate(fen, false)).contains("e1-g1"), "sanity: the full move list should offer kingside castling");
+
+            var onlyCaptures = moveSet(generate(fen, true));
+            assertFalse(onlyCaptures.contains("e1-g1"), "castling is not a capture and must be excluded");
+            assertTrue(onlyCaptures.contains("h1-h8"), "the rook capture up the h-file must be present: " + onlyCaptures);
+        }
     }
 }
