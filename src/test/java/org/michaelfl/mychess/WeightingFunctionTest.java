@@ -428,11 +428,12 @@ class WeightingFunctionTest {
         // the en-passant code path must NOT activate.
         float scoreWithoutEp = scoreOf("1. e4 a6 2. e5 a5 3. h3");
         // The current eval at this position is known-good; we anchor it within a
-        // ±0.05 band around the measured value. Baseline dropped 0.41 -> 0.32 with the
-        // v4.3.0 king-safety term (white's e2 shield square is vacated by e4-e5, so
-        // black's king is slightly better sheltered); the en-passant behavior under
-        // test is unchanged.
-        assertEquals(0.32f, scoreWithoutEp, 0.05f,
+        // ±0.05 band around the measured value (~0.39). Both kings are still central
+        // (e-file), so the v4.3.0 king-safety pawn shield contributes 0 to both sides
+        // and the king-attack term is currently disabled — i.e. no king-safety effect
+        // here, so this reflects the base eval and is stable against king-safety tuning.
+        // The en-passant behavior under test is unchanged.
+        assertEquals(0.39f, scoreWithoutEp, 0.05f,
                 "Score without en-passant target must be stable around the fixed baseline");
     }
 

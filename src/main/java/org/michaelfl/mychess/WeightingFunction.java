@@ -202,7 +202,7 @@ public final class WeightingFunction {
      * Scales the pawn-shield delta (white - black, in the raw centipawn units
      * of {@link #PAWN_SHIELD_WEIGHTS}) into the final position weight.
      */
-    private static final float pawnShieldFactor = 0.005f;
+    private static final float pawnShieldFactor = 0.01f;
     /**
      * Scales the king-attack penalty delta (white - black, from
      * {@link #KING_ATTACK_PENALTY}) into the final position weight.
@@ -225,7 +225,8 @@ public final class WeightingFunction {
     private final int[] doublePawnCount = new int[2];
     private final int[] undefendedPiecesCount = new int[2];
     /** Raw pawn-shield weight per color (see {@link #calculatePawnShieldWeight}); index 0 = white, 1 = black. */
-    private final int[] pawnShieldWeight = new int[2];
+    private final int[] pawnShieldPenalty = new int[2];
+    // TODO remove
     private final int[] kingCoverUnit = new int[2];
     /**
      * Per-color mask of the squares forming that color's king zone (the king's
@@ -309,8 +310,8 @@ public final class WeightingFunction {
         this.doublePawnCount[1] = 0;
         this.undefendedPiecesCount[0] = 0;
         this.undefendedPiecesCount[1] = 0;
-        this.pawnShieldWeight[0] = 0;
-        this.pawnShieldWeight[1] = 0;
+        this.pawnShieldPenalty[0] = 0;
+        this.pawnShieldPenalty[1] = 0;
         this.attackUnit[0] = 0;
         this.attackUnit[1] = 0;
         this.kingAttackerCount[0] = 0;
@@ -394,9 +395,9 @@ public final class WeightingFunction {
                 + (castlingState[0] - castlingState[1]) * castlingFactor
                 + (chessCount[0] - chessCount[1]) * chessFactor
                 + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
-                + (pawnShieldWeight[0] - pawnShieldWeight[1]) * pawnShieldFactor
+                + (pawnShieldPenalty[0] - pawnShieldPenalty[1]) * pawnShieldFactor
                 + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor
-                + (calcKingAttackPenalty(0) - calcKingAttackPenalty(1)) * kingAttackFactor
+                //+ (calcKingAttackPenalty(0) - calcKingAttackPenalty(1)) * kingAttackFactor
         ) * 100);
     }
 
@@ -428,8 +429,8 @@ public final class WeightingFunction {
     // --- Package-private accessors for king-safety unit tests. The arrays are
     // populated by calculate(Board); index 0 = white, 1 = black. ---
 
-    int[] getPawnShieldWeight() {
-        return pawnShieldWeight;
+    int[] getPawnShieldPenalty() {
+        return pawnShieldPenalty;
     }
 
     int[] getAttackUnit() {
@@ -471,7 +472,7 @@ public final class WeightingFunction {
                "doublePawnCount:       w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + DELTA_STR + (doublePawnCount[0] - doublePawnCount[1]) + WEIGHT_STR + round((doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) + '\n' +
                "chessCount:            w=" + chessCount[0] + ", b=" + chessCount[1] + DELTA_STR + (chessCount[0] - chessCount[1]) + WEIGHT_STR + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
                "undefendedPiecesCount: w=" + undefendedPiecesCount[0] + ", b=" + undefendedPiecesCount[1] + DELTA_STR + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) + WEIGHT_STR + round((undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor) + '\n' +
-               "pawnShieldWeight:      w=" + pawnShieldWeight[0] + ", b=" + pawnShieldWeight[1] + DELTA_STR + (pawnShieldWeight[0] - pawnShieldWeight[1]) + WEIGHT_STR + round((pawnShieldWeight[0] - pawnShieldWeight[1]) * pawnShieldFactor) + '\n' +
+               "pawnShieldPenalty:     w=" + pawnShieldPenalty[0] + ", b=" + pawnShieldPenalty[1] + DELTA_STR + (pawnShieldPenalty[0] - pawnShieldPenalty[1]) + WEIGHT_STR + round((pawnShieldPenalty[0] - pawnShieldPenalty[1]) * pawnShieldFactor) + '\n' +
                "attackUnit:            w=" + attackUnit[0] + ", b=" + attackUnit[1] + DELTA_STR + (attackUnit[0] - attackUnit[1]) + WEIGHT_STR + round((calcKingAttackPenalty(0) - calcKingAttackPenalty(1)) * kingAttackFactor) + '\n' +
                "weight: " + calculatePositionWeight() / 100f;
     }
@@ -503,7 +504,7 @@ public final class WeightingFunction {
      * @param piece the attacking piece
      */
     private void increaseAttackUnit(final int color, final int fromField, final int toField, final byte piece) {
-        if (isKingZoneField[color^1][toField] && !isKingAttackerCounted[fromField]) {
+        if (false && isKingZoneField[color^1][toField] && !isKingAttackerCounted[fromField]) {
             final int score = ATTACK_UNIT_OF_PIECE[piece];
             if (score > 0) {
                 isKingAttackerCounted[fromField] = true;
@@ -730,75 +731,111 @@ public final class WeightingFunction {
         // move up-left
         move(myPiece, field, field + Board.LENGTH - 1, color);
 
-        pawnShieldWeight[color] = calculatePawnShieldWeight(field, color);
-        kingCoverUnit[color] = calculateKingCover(field, color);
+        pawnShieldPenalty[color] = calculatePawnShieldPenalty(field, color);
+        //kingCoverUnit[color] = calculateKingCover(field, color);
     }
 
-    /**
-     * Centipawn bonus for a friendly pawn on each square around the king, laid
-     * out as a 5-wide grid over the two ranks in front of the king plus the
-     * king's own rank (the king's square itself is skipped):
-     * <pre>
-     *     05 10 10 10 05   (two ranks ahead)
-     *     05 15 15 15 05   (one rank ahead)
-     *     05 05  K  05 05  (king's rank)
-     * </pre>
-     * Pawns directly shielding the king (the 15s) score highest. Parallel to
-     * {@link #PAWN_SHIELD_OFFSETS}.
-     */
-    private static final int[] PAWN_SHIELD_WEIGHTS = new int[] {
-            5, 10, 10, 10, 5,
-            5, 15, 15, 15, 5,
-            5,  5,      5, 5
-    };
-    /**
-     * Board-index offsets, parallel to {@link #PAWN_SHIELD_WEIGHTS}, from the
-     * king's square to each shield square. Index 0 = white (the shield extends
-     * up the board), index 1 = black (mirrored, downward).
-     */
-    private static final int[][] PAWN_SHIELD_OFFSETS = new int[][] {
-            {
-                2 * Board.LENGTH - 2, 2 * Board.LENGTH - 1, 2 * Board.LENGTH, 2 * Board.LENGTH + 1, 2 * Board.LENGTH + 2,
-                Board.LENGTH - 2, Board.LENGTH - 1, Board.LENGTH, Board.LENGTH + 1, Board.LENGTH + 2,
-                -2, -1, 1, 2
-            },
-            {
-                -2 * Board.LENGTH - 2, -2 * Board.LENGTH - 1, -2 * Board.LENGTH, -2 * Board.LENGTH + 1, -2 * Board.LENGTH + 2,
-                -Board.LENGTH - 2, -Board.LENGTH - 1, -Board.LENGTH, -Board.LENGTH + 1, -Board.LENGTH + 2,
-                -2, -1, 1, 2
-            },
+    // Penalty (cp) per shield pawn, indexed by ranks advanced from its home square.
+    private static final int[] PAWN_SHIELD_PENALTIES = new int[] {
+              0, // on home square
+             -5, // 1 rank advanced
+            -15, // 2 ranks advanced
+            -30  // 3+ ranks advanced or missing
     };
 
-    /** Test accessor for the static shield-offset table (index 0 = white, 1 = black). */
-    static int[][] getPawnShieldOffsets() {
-        return PAWN_SHIELD_OFFSETS;
+    // Base board index of each color's pawn home rank (rank 2 white, rank 7 black);
+    // add a file's raw column (field % LENGTH) to get that file's home square.
+    private static final int[] PAWN_HOME_RANK_ROW = new int[] { 3 * Board.LENGTH, 8 * Board.LENGTH };
+
+    private enum KingPosition {
+        LEFT,
+        MID_LEFT,
+        CENTER,
+        MID_RIGHT,
+        RIGHT
     }
 
-    /**
-     * Sums the {@link #PAWN_SHIELD_WEIGHTS} of every square around the king on
-     * {@code field} that is occupied by a friendly pawn — a bonus rewarding an
-     * intact pawn cover in front of the king.
-     *
-     * @param field board index of the king
-     * @param color king's color (0 = white, 1 = black)
-     * @return the raw pawn-shield weight in centipawns (later scaled by
-     *         {@link #pawnShieldFactor})
-     */
-    private int calculatePawnShieldWeight(final int field, final int color) {
-        // TODO temporary disabled for measurement
-        if (true) return 0;
+    private int calculatePawnShieldPenalty(final int kingField, final int color) {
+        if (!isKingNearOwnBackRank(kingField, color)) {
+            return 0; // shield only matters when the king is on or near its castling square
+        }
 
         final byte myPawn = PAWN[color];
-        int weight = 0;
 
-        for (int i = 0; i < PAWN_SHIELD_WEIGHTS.length; i++) {
-            final int off = PAWN_SHIELD_OFFSETS[color][i];
-            if (board[field + off] == myPawn) {
-                weight += PAWN_SHIELD_WEIGHTS[i];
+        var position = getKingPosition(kingField);
+        return switch (position) {
+            case LEFT, RIGHT -> PAWN_SHIELD_PENALTIES[pawnAdvancementFromHome(kingField - 1, myPawn, color)]
+                    + PAWN_SHIELD_PENALTIES[pawnAdvancementFromHome(kingField, myPawn, color)]
+                    + PAWN_SHIELD_PENALTIES[pawnAdvancementFromHome(kingField + 1, myPawn, color)];
+            case MID_LEFT -> PAWN_SHIELD_PENALTIES[pawnAdvancementFromHome(kingField - 2, myPawn, color)]
+                    + PAWN_SHIELD_PENALTIES[pawnAdvancementFromHome(kingField - 1, myPawn, color)]
+                    + PAWN_SHIELD_PENALTIES[pawnAdvancementFromHome(kingField, myPawn, color)];
+            case CENTER -> 0;
+            case MID_RIGHT -> PAWN_SHIELD_PENALTIES[pawnAdvancementFromHome(kingField, myPawn, color)]
+                    + PAWN_SHIELD_PENALTIES[pawnAdvancementFromHome(kingField + 1, myPawn, color)]
+                    + PAWN_SHIELD_PENALTIES[pawnAdvancementFromHome(kingField + 2, myPawn, color)];
+        };
+    }
+
+    private static final KingPosition[] KING_POSITIONS = new KingPosition[] {
+            KingPosition.LEFT,          // a file
+            KingPosition.LEFT,          // b
+            KingPosition.MID_LEFT,      // c
+            KingPosition.CENTER,        // d
+            KingPosition.CENTER,        // e
+            KingPosition.MID_RIGHT,     // f
+            KingPosition.RIGHT,         // g
+            KingPosition.RIGHT          // h
+    };
+
+    private KingPosition getKingPosition(int kingField) {
+        return KING_POSITIONS[kingField % Board.LENGTH - 2];
+    }
+
+    /**
+     * Whether the king is on or near its castling square — its own first or
+     * second rank (ranks 1-2 for white, ranks 7-8 for black). The pawn shield
+     * is only scored there; an advanced king is not treated as if it had a
+     * shield in front of it.
+     */
+    boolean isKingNearOwnBackRank(int kingField, int color) {
+        return color == 0 ? kingField <= Board.h2 : kingField >= Board.a7;
+    }
+
+    /**
+     * How many ranks the file's nearest friendly pawn has advanced from its home
+     * square (rank 2 for white, rank 7 for black), used to index
+     * {@link #PAWN_SHIELD_PENALTIES}: {@code 0} = on the home square,
+     * {@code 1}/{@code 2} = one/two ranks advanced, capped at the last index for
+     * a pawn advanced three or more ranks or missing entirely. Measuring from the
+     * home square (rather than the king's rank) keeps the score independent of
+     * whether the king stands on its first or second rank. An off-board file (no
+     * shield file exists there) maps to the {@code 0}-cp bucket.
+     *
+     * @param fileSquare any square identifying the file to examine (only its file is used)
+     * @param myPawn the friendly pawn piece
+     * @param color 0 = white, 1 = black
+     */
+    private int pawnAdvancementFromHome(int fileSquare, byte myPawn, int color) {
+        final int homeField = PAWN_HOME_RANK_ROW[color] + fileSquare % Board.LENGTH;
+        if (board[homeField] == Board.illegal) {
+            return 0; // no shield file here (off-board) -> 0 cp
+        }
+
+        final int length = PAWN_SHIELD_PENALTIES.length - 1;
+        final int forward = FORWARD_OFFSET[color];
+
+        for (int i = 0; i < length; i++) {
+            final int piece = board[homeField + i * forward];
+            if (piece == myPawn) {
+                return i;
+            }
+            if (piece == Board.illegal) {
+                break;
             }
         }
 
-        return weight;
+        return length;
     }
 
     private static final int MAX_KING_COVER = 6;

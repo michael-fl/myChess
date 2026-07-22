@@ -6,7 +6,7 @@
 
   <groupId>michael-fl</groupId>
   <artifactId>my-chess</artifactId>
-  <version>4.3.0-cover-units</version>
+  <version>4.3.0-pawn-shield</version>
 
   <properties>
     <maven.compiler.release>25</maven.compiler.release>
