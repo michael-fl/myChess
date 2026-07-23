@@ -214,7 +214,9 @@ public final class WeightingFunction {
         System.arraycopy(board, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
 
         final int stopField = Board.h8 + 1;
-        final boolean isEndGame = game.isEndGame();
+        final long kingFields = findKingFields();
+        final int whiteKingField = (int) (kingFields >>> 32);
+        final int blackKingField = (int) kingFields;
 
         for (int field = Board.a1; field < stopField; field++) {
             final byte piece = board[field];
@@ -222,8 +224,8 @@ public final class WeightingFunction {
                 final int color = (piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE ? 0 : 1;
 
                 piecesWeight[color] += weightOfPiece[piece];
-                if (!(isEndGame && Board.isKing(piece))) {
-                    positionWeight[color] += PieceSquareTables.getPieceSquareWeight(piece, field);
+                if (!(Board.isKing(piece) && game.isEndGame())) {
+                    positionWeight[color] += PieceSquareTables.getPieceSquareWeight(piece, field, color == 0 ? whiteKingField : blackKingField);
                 }
 
                 calculationFunctions[piece].calculate(this, field, color);
@@ -235,6 +237,28 @@ public final class WeightingFunction {
         calculateUndefendedPiecesCount();
 
         return calculatePositionWeight();
+    }
+
+    /**
+     * Finds both king fields in a single early-exiting scan, packed into one
+     * {@code long} (white king in the high 32 bits, black king in the low 32)
+     * to avoid allocating an array in the eval hot path. Index 0 is a safe
+     * sentinel ({@code board[0]} is always {@link Board#illegal}) should a king
+     * be absent.
+     */
+    private long findKingFields() {
+        int wk = 0, bk = 0;
+
+        for (int field = Board.a1; field <= Board.h8 && (wk == 0 || bk == 0); field++) {
+            final byte p = board[field];
+            if (p == Board.whiteKing) {
+                wk = field;
+            } else if (p == Board.blackKing) {
+                bk = field;
+            }
+        }
+
+        return ((long) wk << 32) | bk;
     }
 
     private int calculatePositionWeight() {

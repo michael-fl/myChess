@@ -44,6 +44,7 @@ public final class MoveSorterImpl implements MoveSorter {
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Board board;
     private int depth;
+    private int kingField;
 
     /**
      * Full-search sorter with a private, empty killer-move table. Convenience for
@@ -105,6 +106,7 @@ public final class MoveSorterImpl implements MoveSorter {
         this.ttMove = ttMove;
         this.pvMoveSeen = false;
         this.ttMoveSeen = false;
+        this.kingField = board.findKingField(gameStatus.isWhiteTurn() ? Board.whiteKing : Board.blackKing);
 
         if (see != null) {
             see.init(board);
@@ -149,8 +151,8 @@ public final class MoveSorterImpl implements MoveSorter {
         } else if (Board.isKing(movingPiece)) {
             bucketKingMoves.add(move);
         } else {
-            final int srcWeight = PieceSquareTables.getPieceSquareWeight(movingPiece, fromField);
-            final int destWeight = PieceSquareTables.getPieceSquareWeight(movingPiece, toField);
+            final int srcWeight = PieceSquareTables.getPieceSquareWeight(movingPiece, fromField, kingField);
+            final int destWeight = PieceSquareTables.getPieceSquareWeight(movingPiece, toField, kingField);
             final int weight = destWeight - srcWeight;
 
             bucketRemainingMoves.add(move, weight);

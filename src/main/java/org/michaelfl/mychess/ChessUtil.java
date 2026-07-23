@@ -255,6 +255,10 @@ public final class ChessUtil {
         return -1;
     }
 
+    public static boolean isPawn(final byte piece) {
+        return piece == Board.whitePawn || piece == Board.blackPawn;
+    }
+
     public static boolean isKing(final byte piece) {
         return piece == Board.whiteKing || piece == Board.blackKing;
     }
