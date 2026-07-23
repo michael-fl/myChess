@@ -1,12 +1,14 @@
 package org.michaelfl.mychess;
 
+import java.util.Arrays;
+
 import static org.michaelfl.mychess.Board.*;
 
 /**
  * Per-piece, per-square positional bonuses. Tables are adapted from the
  * <a href="https://www.chessprogramming.org/Simplified_Evaluation_Function">chessprogramming.org
  * <em>Simplified Evaluation Function</em></a>, with one local modification in the white
- * pawn table — see {@link #pawnTableWhiteString} for details. The black tables are
+ * pawn table — see {@link #pawnTableWhiteCenterKing} for details. The black tables are
  * derived from the white tables via vertical {@link #invert(byte[])} (rank 1 &harr; 8 etc.),
  * which preserves the evaluation's color antisymmetry asserted by {@code MirrorEvalTest}.
  *
@@ -35,7 +37,7 @@ public final class PieceSquareTables {
      * over 800 games (+5.6 &plusmn; 21.2, LOS 69.9%). See roadmap &sect; 12.7 for the
      * planned full migration to PeSTO.
      */
-    private static final String pawnTableWhiteString = """
+    private static final String pawnTableWhiteCenterKingString = """
              0,  0,  0,  0,  0,  0,  0,  0,
             50, 50, 50, 50, 50, 50, 50, 50,
             10, 10, 20, 30, 30, 20, 10, 10,
@@ -45,8 +47,47 @@ public final class PieceSquareTables {
              5,  0,  0,-20,-20, 10,  0,  5,
              0,  0,  0,  0,  0,  0,  0,  0
             """;
-    private static final byte[] pawnTableWhite = createBoard(pawnTableWhiteString);
-    private static final byte[] pawnTableBlack = invert(pawnTableWhite);
+    private static final byte[] pawnTableWhiteCenterKing = createBoard(pawnTableWhiteCenterKingString);
+    private static final byte[] pawnTableBlackCenterKing = invert(pawnTableWhiteCenterKing);
+
+    private static final String pawnTableWhiteKingsideKingString = """
+             0,  0,  0,  0,  0,  0,  0,  0,
+            50, 50, 50, 50, 50, 50, 50, 50,
+            10, 10, 20, 30, 30, 20, 10, 10,
+             5,  5, 10, 25, 25, 10,  5,  5,
+             0,  0,  0, 20, 20,  0,  0,  0,
+             0,  0,  0,  0,  0,-10,  0,  5,
+             0,  0,  0,-20,-20, 10,  0,  5,
+             0,  0,  0,  0,  0,  0,  0,  0
+            """;
+    private static final byte[] pawnTableWhiteKingsideKing = createBoard(pawnTableWhiteKingsideKingString);
+    private static final byte[] pawnTableBlackKingsideKing = invert(pawnTableWhiteKingsideKing);
+
+    private static final String pawnTableWhiteQueensideKingString = """
+             0,  0,  0,  0,  0,  0,  0,  0,
+            50, 50, 50, 50, 50, 50, 50, 50,
+            10, 10, 20, 30, 30, 20, 10, 10,
+             5,  5, 10, 25, 25, 10,  5,  5,
+             0,  0,  0, 20, 20,  0,  0,  0,
+             5,  0,-10,  0,  0,  0,  0,  0,
+             5,  0, 10,-20,-20,  0,  0,  0,
+             0,  0,  0,  0,  0,  0,  0,  0
+            """;
+    private static final byte[] pawnTableWhiteQueensideKing = createBoard(pawnTableWhiteQueensideKingString);
+    private static final byte[] pawnTableBlackQueensideKing = invert(pawnTableWhiteQueensideKing);
+
+    private static final String pawnTableWhiteEndgameString = """
+             0,  0,  0,  0,  0,  0,  0,  0,
+            50, 50, 50, 50, 50, 50, 50, 50,
+            10, 10, 20, 30, 30, 20, 10, 10,
+             5,  5, 10, 25, 25, 10,  5,  5,
+             5,  5,  5, 20, 20,  5,  5,  5,
+             0,  0,  0,  0,  0,  0,  0,  0,
+             0,  0,  0,-20,-20,  0,  0,  0,
+             0,  0,  0,  0,  0,  0,  0,  0
+            """;
+    private static final byte[] pawnTableWhiteEndgame = createBoard(pawnTableWhiteEndgameString);
+    private static final byte[] pawnTableBlackEndgame = invert(pawnTableWhiteEndgame);
 
     /* Knight */
     private static final String knightTableWhiteString = """
@@ -120,19 +161,79 @@ public final class PieceSquareTables {
 
     private static final byte[][] piece2table = new byte[blackKing + 1][];
     static {
-        piece2table[whitePawn] = pawnTableWhite;
         piece2table[whiteBishop] = bishopTableWhite;
         piece2table[whiteKnight] = knightTableWhite;
         piece2table[whiteRook] = rookTableWhite;
         piece2table[whiteQueen] = queenTableWhite;
         piece2table[whiteKing] = kingTableWhite;
-        piece2table[blackPawn] = pawnTableBlack;
         piece2table[blackBishop] = bishopTableBlack;
         piece2table[blackKnight] = knightTableBlack;
         piece2table[blackRook] = rookTableBlack;
         piece2table[blackQueen] = queenTableBlack;
         piece2table[blackKing] = kingTableBlack;
     }
+
+    private static final int QUEENSIDE = 0;
+    private static final int CENTER = 1;
+    private static final int KINGSIDE = 2;
+    private static final int ENDGAME = 3;
+
+    private static final int[][] FIELD_2_KING_POS = new int[2][LENGTH * LENGTH];
+    static {
+        Arrays.fill(FIELD_2_KING_POS[0], ENDGAME);
+        Arrays.fill(FIELD_2_KING_POS[1], ENDGAME);
+
+        // white
+        FIELD_2_KING_POS[0][a1] = QUEENSIDE;
+        FIELD_2_KING_POS[0][b1] = QUEENSIDE;
+        FIELD_2_KING_POS[0][c1] = QUEENSIDE;
+        FIELD_2_KING_POS[0][d1] = CENTER;
+        FIELD_2_KING_POS[0][e1] = CENTER;
+        FIELD_2_KING_POS[0][f1] = KINGSIDE;
+        FIELD_2_KING_POS[0][g1] = KINGSIDE;
+        FIELD_2_KING_POS[0][h1] = KINGSIDE;
+        FIELD_2_KING_POS[0][a2] = QUEENSIDE;
+        FIELD_2_KING_POS[0][b2] = QUEENSIDE;
+        FIELD_2_KING_POS[0][c2] = QUEENSIDE;
+        FIELD_2_KING_POS[0][d2] = CENTER;
+        FIELD_2_KING_POS[0][e2] = CENTER;
+        FIELD_2_KING_POS[0][f2] = KINGSIDE;
+        FIELD_2_KING_POS[0][g2] = KINGSIDE;
+        FIELD_2_KING_POS[0][h2] = KINGSIDE;
+
+        // black
+        FIELD_2_KING_POS[1][a8] = QUEENSIDE;
+        FIELD_2_KING_POS[1][b8] = QUEENSIDE;
+        FIELD_2_KING_POS[1][c8] = QUEENSIDE;
+        FIELD_2_KING_POS[1][d8] = CENTER;
+        FIELD_2_KING_POS[1][e8] = CENTER;
+        FIELD_2_KING_POS[1][f8] = KINGSIDE;
+        FIELD_2_KING_POS[1][g8] = KINGSIDE;
+        FIELD_2_KING_POS[1][h8] = KINGSIDE;
+        FIELD_2_KING_POS[1][a7] = QUEENSIDE;
+        FIELD_2_KING_POS[1][b7] = QUEENSIDE;
+        FIELD_2_KING_POS[1][c7] = QUEENSIDE;
+        FIELD_2_KING_POS[1][d7] = CENTER;
+        FIELD_2_KING_POS[1][e7] = CENTER;
+        FIELD_2_KING_POS[1][f7] = KINGSIDE;
+        FIELD_2_KING_POS[1][g7] = KINGSIDE;
+        FIELD_2_KING_POS[1][h7] = KINGSIDE;
+    }
+
+    private static final byte[][][] pawnTables = new byte[][][]{
+            {
+                    pawnTableWhiteQueensideKing,
+                    pawnTableWhiteCenterKing,
+                    pawnTableWhiteKingsideKing,
+                    pawnTableWhiteEndgame
+            },
+            {
+                    pawnTableBlackQueensideKing,
+                    pawnTableBlackCenterKing,
+                    pawnTableBlackKingsideKing,
+                    pawnTableBlackEndgame
+            }
+    };
 
     private static byte[] createBoard(final String tableString) {
         final byte[] table = Board.createEmptyRawBoard();
@@ -171,7 +272,16 @@ public final class PieceSquareTables {
         return piece2table[piece];
     }
 
-    public static int getPieceSquareWeight(final byte piece, final int field) {
-        return piece2table[piece][field];
+    public static int getPieceSquareWeight(final byte piece, final int field, final int kingField) {
+        return getPSTForPiece(piece, kingField)[field];
+    }
+
+    private static byte[] getPSTForPiece(final byte piece, final int kingField) {
+        if (ChessUtil.isPawn(piece)) {
+            final int color = (piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE ? 0 : 1;
+            return pawnTables[color][FIELD_2_KING_POS[color][kingField]];
+        }
+
+        return piece2table[piece];
     }
 }

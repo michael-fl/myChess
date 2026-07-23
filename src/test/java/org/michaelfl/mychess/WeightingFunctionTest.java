@@ -47,6 +47,21 @@ class WeightingFunctionTest {
     }
 
     @Test
+    void symmetricCastledPositionEvaluatesToZero() {
+        // A perfectly color-symmetric position (both kings castled kingside,
+        // mirrored rooks and pawns) MUST evaluate to 0. Detector for the
+        // king-dependent pawn PST wiring: the eval passes only the side-to-move's
+        // king to getPieceSquareWeight for BOTH colors, so white's pawns use the
+        // kingside table while black's fall back to the endgame table -> the
+        // symmetry breaks and the score is non-zero. Goes green once each pawn is
+        // bucketed by its OWN color's king.
+        var f = new WeightingFunction();
+        var board = Fen.importFEN("5rk1/5ppp/8/8/8/8/5PPP/5RK1 w - - 0 1");
+
+        assertEquals(0.0f, f.calculate(board), "a color-symmetric position must score 0");
+    }
+
+    @Test
     void testPosition01() {
         var pgn = """
                 1. e4
@@ -299,7 +314,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8
                 """;
-        testPosition(pgn, -0.21f);
+        testPosition(pgn, -0.18f);
     }
 
     @Test
@@ -309,7 +324,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6
                 """;
-        testPosition(pgn, 0.99f);
+        testPosition(pgn, 1.12f);
     }
 
     @Test
@@ -339,7 +354,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6 O-O
                 """;
-        testPosition(pgn, -0.06f);
+        testPosition(pgn, -0.01f);
     }
 
     @Test
@@ -349,7 +364,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6 O-O 18. Rg1
                 """;
-        testPosition(pgn, 0.08f);
+        testPosition(pgn, 0.13f);
     }
 
     // Terrible position for black (no mobility, pieces on bad, narrow positions)

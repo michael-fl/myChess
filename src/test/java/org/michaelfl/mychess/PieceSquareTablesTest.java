@@ -21,7 +21,7 @@ class PieceSquareTablesTest {
                  5,  0,  0,-20,-20, 10,  0,  5,
                  0,  0,  0,  0,  0,  0,  0,  0
                 """;
-        testTable(Board.whitePawn, s);
+        assertPawnTable(Board.whitePawn, Board.e1, s); // king on e1 -> CENTER bucket
 
         s = """
                  0,  0,  0,  0,  0,  0,  0,  0,
@@ -33,7 +33,36 @@ class PieceSquareTablesTest {
                 50, 50, 50, 50, 50, 50, 50, 50,
                  0,  0,  0,  0,  0,  0,  0,  0
                 """;
-        testTable(Board.blackPawn, s);
+        assertPawnTable(Board.blackPawn, Board.e8, s); // king on e8 -> CENTER bucket
+    }
+
+    // Spot-check that the pawn table is SELECTED by the own king's zone.
+    @Test
+    void pawnTableIsSelectedByKingPosition() {
+        // c2: only the queenside-king table gives the c2 pawn a bonus.
+        assertEquals(0,  PieceSquareTables.getPieceSquareWeight(Board.whitePawn, Board.c2, Board.e1), "c2, king e1 (center)");
+        assertEquals(10, PieceSquareTables.getPieceSquareWeight(Board.whitePawn, Board.c2, Board.c1), "c2, king c1 (queenside)");
+        // a3: the kingside-king table drops the queenside a3 bonus.
+        assertEquals(5, PieceSquareTables.getPieceSquareWeight(Board.whitePawn, Board.a3, Board.e1), "a3, king e1 (center)");
+        assertEquals(0, PieceSquareTables.getPieceSquareWeight(Board.whitePawn, Board.a3, Board.g1), "a3, king g1 (kingside)");
+        // a4: only the endgame table (king off its back ranks) rewards the a4 advance.
+        assertEquals(0, PieceSquareTables.getPieceSquareWeight(Board.whitePawn, Board.a4, Board.e1), "a4, king e1 (center)");
+        assertEquals(5, PieceSquareTables.getPieceSquareWeight(Board.whitePawn, Board.a4, Board.e4), "a4, king e4 (endgame)");
+    }
+
+    void assertPawnTable(byte pawn, int kingField, String tableString) {
+        int field = Board.a8;
+        for (String weightStr : tableString.split(",")) {
+            int expectedWeight = Integer.parseInt(weightStr.trim());
+            int weight = PieceSquareTables.getPieceSquareWeight(pawn, field, kingField);
+            assertEquals(expectedWeight, weight, "Wrong weight at field " + ChessUtil.fieldToString(field));
+
+            if (ChessUtil.getColOfField(field) < 7) {
+                field++;
+            } else {
+                field -= Board.LENGTH + 7;
+            }
+        }
     }
 
     @Test

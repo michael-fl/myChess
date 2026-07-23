@@ -1249,7 +1249,7 @@ public final class Board {
         return isFieldAttackedBy(findKingField(enemyKing), myColor);
     }
 
-    private int findKingField(byte king) {
+    public int findKingField(byte king) {
         for (int field = a1; field <= h8; field++) {
             if (board[field] == king) {
                 return field;
