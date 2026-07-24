@@ -49,7 +49,6 @@ public final class QuiescenceSearch {
         __assert(() -> !(WeightingFunction.isIllegalWeight(alphaWeight) || WeightingFunction.isIllegalWeight(betaWeight)),
                 () -> "ILLEGAL_WEIGHT as alpha/beta; depth=" + depth + ", alphaWeight=" + alphaWeight + ", betaWeight=" + betaWeight + "\n" + ctx.workingBoard());
 
-        statistics.incrPositionCount();
         statistics.incrQuiescencePositionsCount();
         statistics.reachedDepth(depth);
 
@@ -98,6 +97,15 @@ public final class QuiescenceSearch {
             final int alphaLocal = Math.max(alphaWeight, bestWeight);
 
             ctx.workingBoard().makeMove(move);
+
+            // Count this capture continuation as a visited position. The
+            // quiescence entry itself is the search's horizon leaf, already
+            // counted in alphaBetaSearchPre, so it is deliberately not counted
+            // again here — otherwise every leaf would be counted twice.
+            // (incrQuiescencePositionsCount above still counts every quiescence
+            // node, entry included, for the separate quiescence-size stat.)
+            statistics.incrPositionCount();
+
             int weight = -quiescenceSearch(
                     new SearchNodeContext(depth + 1, ctx.maxDepth(), null, -ctx.weightFactor(), -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), null),
                     -betaWeight, -alphaLocal);

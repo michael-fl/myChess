@@ -443,6 +443,19 @@ The most direct measurement of "playing strength" — pit two myChess builds aga
 - *Draw rate.* Similar engines remise 40–60% of games. Underweighting draws (counting only wins) understates the difference; use the full `wins + 0.5·draws` score. To force more decisive games, use shorter time controls (5+0.1 instead of 30+0) or a tactical-rich opening set.
 - *Blind spot.* If both versions share the same bug — e.g. both play `1.e4` poorly — self-play never reveals it. The opening fixture set helps, but the only real cure is an *external* opponent (which is what § 12.9 UCI gets you).
 
+### 12.10.4 PGN parser: ignore comments, NAGs, and variations — **XS, ~½ day**
+
+myChess's `Pgn` parser currently rejects movetext annotations: a cutechess game like `3. e4 {+0.20/8 1.6s} d5 {book}` fails with `Wrong move notation: {book}`. This blocks reusing real-world PGN corpora (the `test-results/*.pgn` match archives) as position sources for the harnesses above — e.g. mining quiet middlegame FENs for the bench suite (§ 12.10.1) or building an EPD fixture (§ 12.10.2).
+
+Make the SAN tokenizer skip:
+
+- **Comments** — `{ … }` (brace) and `; …` (rest-of-line).
+- **NAGs** — `$1`, `$2`, … glyph tokens.
+- **Recursive variations** — `( … )` parenthesized sub-lines (nestable).
+- The trailing **game-result** token (`1-0` / `0-1` / `1/2-1/2` / `*`).
+
+Small, self-contained change in `Pgn` with unit tests over annotated fixtures; no engine impact. (Interim workaround used when mining bench positions: strip `{…}` with a regex before import.)
+
 ### Recommended order
 
 1. **Build § 12.10.1 (node bench) first.** Half a day, immediate feedback on every search change.
