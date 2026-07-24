@@ -1,5 +1,8 @@
 package org.michaelfl.mychess;
 
+import org.michaelfl.mychess.Pgn.IOExceptionWrapper;
+import org.michaelfl.mychess.Pgn.IllegalPGNException;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -32,6 +35,8 @@ public final class Pgn {
 
     /** PGN tag name for the starting position FEN. */
     public static final String TAG_FEN = "FEN";
+
+    private static final String EN_PASSANT = "e.p.";
 
     /** PGN tag name for the chess variant (e.g. "Chess960", "fischerandom"). */
     public static final String TAG_VARIANT = "Variant";
@@ -191,6 +196,11 @@ public final class Pgn {
 
             // Tokens must come in triples: Move no, white move, black move
             while ((token = tokenizer.nextToken()) != null) {
+                System.out.println("Token #" + i + "[" + token + "]");
+                if (isComment(token) || isVariation(token) || isEnPassant(token) || isNAG(token)) {
+                    continue; // Ignore comments
+                }
+
                 if (isGameTerminationMarker(token)) {
                     if (i % 3 == 1) {
                         throw new IllegalPGNException("Wrong position for game termination marker: " + this);
@@ -200,18 +210,20 @@ public final class Pgn {
                 } else if (i % 3 == 0) { // move no
                     int moveNo = parseMoveNo(token);
                     if (moveNo != expectedMoveNo) {
-                        throw new IllegalPGNException("Wrong move no " + moveNo + ". Expected " + expectedMoveNo + ": " + this);
+                        System.err.println("Wrong move no " + moveNo + ". Expected " + expectedMoveNo + ": " + this);
                     }
-                    expectedMoveNo++;
                 } else if (i % 3 == 1) { // white move
-                    if (!"..".equals(token)) {
-                        moves.add(MoveDescription.fromString(token, GameStatus.TURN_WHITE));
-                    }
+                    moves.add(MoveDescription.fromString(token, GameStatus.TURN_WHITE));
                 } else if (i % 3 == 2) { // black move
-                    if ("..".equals(token)) {
-                        throw new IllegalPGNException("Wrong move notation: " + this);
+                    if (Character.isDigit(token.charAt(0))) {
+                        int moveNo = parseMoveNoFromBlackContinuation(token);
+                        if (moveNo != expectedMoveNo) {
+                            System.err.println("Wrong move no " + moveNo + ". Expected " + expectedMoveNo + ": " + this);
+                        }
+                        continue;
                     }
                     moves.add(MoveDescription.fromString(token, GameStatus.TURN_BLACK));
+                    expectedMoveNo++;
                 }
 
                 i++;
@@ -228,12 +240,35 @@ public final class Pgn {
             return new Pgn(buf.toString(), result, moves, tags);
         }
 
+        private boolean isComment(String token) {
+            return token.startsWith("{") || token.startsWith(";");
+        }
+
+        private boolean isVariation(String token) {
+            return token.startsWith("(");
+        }
+
+        private boolean isEnPassant(String token) {
+            return token.equals(EN_PASSANT);
+        }
+
+        private boolean isNAG(String token) {
+            return token.startsWith("$");
+        }
+
         private int parseMoveNo(String token) {
             int i = token.indexOf('.');
             if (i != token.length() - 1) {
                 throw new IllegalPGNException("Move no expected: " + this);
             }
             return Integer.parseInt(token.substring(0, i));
+        }
+
+        private int parseMoveNoFromBlackContinuation(String token) {
+            if (!token.endsWith("...")) {
+                throw new IllegalPGNException("Continuation expected: " + this);
+            }
+            return Integer.parseInt(token.substring(0, token.length() - 3));
         }
 
         private static boolean isGameTerminationMarker(String token) {
@@ -378,7 +413,7 @@ public final class Pgn {
 
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
-                if (!line.isEmpty()) { // skip empty lines
+                if (!line.isEmpty() && !line.startsWith("%")) { // skip empty lines
                     return line;
                 }
             }
@@ -411,16 +446,126 @@ public final class Pgn {
                     pos = skipWhitespace(i + 1);
                     return token;
                 }
-                if (c == '.' && (buf.charAt(i - 1) != '.' || buf.charAt(i + 1) != '.')) {
+                if (c == 'e' && lookAhead(i, EN_PASSANT)) {
+                    pos = skipWhitespace(i + EN_PASSANT.length());
+                    return EN_PASSANT;
+                }
+                if (c == '.' && (i == length - 1 || buf.charAt(i + 1) != '.')) {
                     var token = buf.substring(pos, i + 1);
                     pos = skipWhitespace(i + 1);
                     return token;
+                }
+                if (c == '$') {
+                    if (i > pos) {
+                        return extractCurrentToken(i);
+                    }
+
+                    return extractGlyph();
+                }
+
+                if (c == '{') { // Start of comment
+                    if (i > pos) {
+                        return extractCurrentToken(i);
+                    }
+
+                    return extractComment();
+                }
+
+                if (c == ';') { // Rest of line comment
+                    if (i > pos) {
+                        return extractCurrentToken(i);
+                    }
+
+                    return extractLineComment();
+                }
+
+                if (c == '(') { // Start of variant
+                    if (i > pos) {
+                        return extractCurrentToken(i);
+                    }
+
+                    return extractVariation();
                 }
             }
 
             var token = buf.substring(pos);
             pos = length;
             return token;
+        }
+
+        @SuppressWarnings("SameParameterValue")
+        private boolean lookAhead(int index, String term) {
+            return buf.indexOf(term, index) == index;
+        }
+
+        private String extractCurrentToken(int index) {
+            var token = buf.substring(pos, index);
+            pos = index;
+            return token;
+        }
+
+        private String extractComment() {
+            int i2 = buf.indexOf("}", pos + 1);
+            if (i2 < 0) {
+                throw new IllegalPGNException("Comment not closed");
+            }
+            var token = buf.substring(pos, i2 + 1);
+            pos = skipWhitespace(i2 + 1);
+            return token;
+        }
+
+        private String extractLineComment() {
+            int i2 = findEOL();
+            var token = i2 != -1 ? buf.substring(pos, i2) : buf.substring(pos);
+            pos = skipWhitespace(i2);
+            return token;
+        }
+
+        private String extractVariation() {
+            int bracesCount = 0;
+
+            for (int i = pos; i < length; i++) {
+                var c = buf.charAt(i);
+                if (c == '(') {
+                    bracesCount++;
+                } else if (c == ')') {
+                    bracesCount = Math.max(0, bracesCount - 1);
+                }
+                if (bracesCount == 0) {
+                    var token = buf.substring(pos, i + 1);
+                    pos = skipWhitespace(i + 1);
+                    return token;
+                }
+            }
+
+            throw new IllegalPGNException("Variant not closed: " + this);
+        }
+
+        private String extractGlyph() {
+            for (int i = pos + 1; i < length; i++) {
+                var c = buf.charAt(i);
+                if (!Character.isDigit(c)) {
+                    var token = buf.substring(pos, i);
+                    pos = skipWhitespace(i);
+                    return token;
+                }
+            }
+
+            var token = buf.substring(pos);
+            pos = length;
+
+            return token;
+        }
+
+        private int findEOL() {
+            for (int i = pos; i < length; i++) {
+                var c = buf.charAt(i);
+                if (c == '\n' || c == '\r') {
+                    return i;
+                }
+            }
+
+            return -1;
         }
 
         private int skipWhitespace(int position) {
