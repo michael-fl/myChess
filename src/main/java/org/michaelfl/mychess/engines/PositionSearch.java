@@ -413,7 +413,6 @@ public final class PositionSearch {
     private SearchNodeResult alphaBetaSearchMain(final SearchNodeContext ctx, final int alphaWeight, final int betaWeight, final int ttMove) {
         final int depth = ctx.depth();
         MoveAndWeight bestKnownPath = ctx.bestKnownPath();
-        statistics.incrPositionCount();
         final var pvTable = ctx.pvTable();
         final int pvIndex = ctx.pvIndex();
 

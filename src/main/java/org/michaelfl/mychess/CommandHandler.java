@@ -623,10 +623,99 @@ final class CommandHandler {
         }
     }
 
+    private final class BenchCommand extends Command {
+
+        private static final String PREFIX = "bench";
+
+        @Override
+        boolean canHandle(String commandLine) {
+            return PREFIX.equals(commandLine) || commandLine.startsWith(PREFIX + " ");
+        }
+
+        @Override
+        void handle(String commandLine) {
+            String args = commandLine.substring(PREFIX.length()).trim();
+            boolean all = false;
+            boolean chess960 = false;
+            int depth = Bench.DEFAULT_DEPTH;
+
+            if (!args.isEmpty()) {
+                for (String token : args.split("\\s+")) {
+                    if ("all".equals(token)) {
+                        all = true;
+                    } else if ("960".equals(token)) {
+                        chess960 = true;
+                    } else {
+                        try {
+                            depth = Integer.parseInt(token);
+                        } catch (NumberFormatException _) {
+                            System.err.println("Usage: bench [all | 960] [depth]");
+                            return;
+                        }
+                    }
+                }
+            }
+
+            if (all) {
+                printAll(depth);
+            } else {
+                printResult(Bench.run(depth, chess960));
+            }
+        }
+
+        private void printResult(Bench.BenchResult result) {
+            System.out.printf("bench suite=%s depth=%d positions=%d%n",
+                    result.chess960() ? "chess960" : "standard", result.depth(), result.positions().size());
+
+            int index = 1;
+            int count = result.positions().size();
+
+            for (var position : result.positions()) {
+                System.out.printf("%3d/%d  nodes %,12d  time %6d ms   %s%n",
+                        index++, count, position.nodes(), position.timeMs(), shortFen(position.fen()));
+            }
+
+            System.out.println("===========================================================");
+            System.out.printf("Total time     : %,d ms%n", result.totalTimeMs());
+            System.out.printf("Nodes searched : %,d%n", result.totalNodes());
+            System.out.printf("NPS            : %,d%n", result.nps());
+        }
+
+        private void printAll(int depth) {
+            var standard = Bench.run(depth, false);
+            var chess960 = Bench.run(depth, true);
+
+            printResult(standard);
+            System.out.println();
+            printResult(chess960);
+            System.out.println();
+
+            // Combined grand total across all suites, in the same summary format
+            // as a single-suite footer (no per-position lines to merge).
+            long totalNodes = standard.totalNodes() + chess960.totalNodes();
+            long totalTimeMs = standard.totalTimeMs() + chess960.totalTimeMs();
+            int totalPositions = standard.positions().size() + chess960.positions().size();
+            long totalNps = totalTimeMs == 0 ? 0 : totalNodes * 1_000L / totalTimeMs;
+
+            System.out.printf("bench suite=all depth=%d positions=%d%n", depth, totalPositions);
+            System.out.println("===========================================================");
+            System.out.printf("Total time     : %,d ms%n", totalTimeMs);
+            System.out.printf("Nodes searched : %,d%n", totalNodes);
+            System.out.printf("NPS            : %,d%n", totalNps);
+        }
+
+        private String shortFen(String fen) {
+            int space = fen.indexOf(' ');
+
+            return space < 0 ? fen : fen.substring(0, space);
+        }
+    }
+
     private final List<Command> commands = List.of(
             new CommandHandler.QuitCommand(),
             new CommandHandler.AutoGameCommand(),
             new CommandHandler.NewGameCommand(),
+            new BenchCommand(),
             new CommandHandler.MoveCommand(),
             new CommandHandler.ImportCommand(),
             new CommandHandler.PrintCommand(),
