@@ -1,0 +1,247 @@
+Indexing opening suite...
+Started game 1 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 1 (4.3.0-cover-units vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 0 - 1 - 0  [0.000] 1
+Started game 2 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 2 (4.2.1 vs 4.3.0-cover-units): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 0 - 2 - 0  [0.000] 2
+Started game 3 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 3 (4.3.0-cover-units vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 0 - 2 - 1  [0.167] 3
+Started game 4 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 4 (4.2.1 vs 4.3.0-cover-units): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 0 - 3 - 1  [0.125] 4
+Started game 5 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 5 (4.3.0-cover-units vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 1 - 3 - 1  [0.300] 5
+Started game 6 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 6 (4.2.1 vs 4.3.0-cover-units): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 1 - 4 - 1  [0.250] 6
+Started game 7 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 7 (4.3.0-cover-units vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 2 - 4 - 1  [0.357] 7
+Started game 8 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 8 (4.2.1 vs 4.3.0-cover-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 2 - 4 - 2  [0.375] 8
+Started game 9 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 9 (4.3.0-cover-units vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 2 - 4 - 3  [0.389] 9
+Started game 10 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 10 (4.2.1 vs 4.3.0-cover-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 2 - 4 - 4  [0.400] 10
+...      4.3.0-cover-units playing White: 2 - 1 - 2  [0.600] 5
+...      4.3.0-cover-units playing Black: 0 - 3 - 2  [0.200] 5
+...      White vs Black: 5 - 1 - 4  [0.700] 10
+Elo difference: -70.4 +/- 185.5, LOS: 20.7 %, DrawRatio: 40.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 11 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 11 (4.3.0-cover-units vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 2 - 4 - 5  [0.409] 11
+Started game 12 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 12 (4.2.1 vs 4.3.0-cover-units): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 2 - 5 - 5  [0.375] 12
+Started game 13 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 13 (4.3.0-cover-units vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 2 - 6 - 5  [0.346] 13
+Started game 14 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 14 (4.2.1 vs 4.3.0-cover-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 2 - 6 - 6  [0.357] 14
+Started game 15 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 15 (4.3.0-cover-units vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 2 - 6 - 7  [0.367] 15
+Started game 16 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 16 (4.2.1 vs 4.3.0-cover-units): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 2 - 6 - 8  [0.375] 16
+Started game 17 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 17 (4.3.0-cover-units vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 2 - 7 - 8  [0.353] 17
+Started game 18 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 18 (4.2.1 vs 4.3.0-cover-units): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 2 - 8 - 8  [0.333] 18
+Started game 19 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 19 (4.3.0-cover-units vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 2 - 8 - 9  [0.342] 19
+Started game 20 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 20 (4.2.1 vs 4.3.0-cover-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 2 - 8 - 10  [0.350] 20
+...      4.3.0-cover-units playing White: 2 - 3 - 5  [0.450] 10
+...      4.3.0-cover-units playing Black: 0 - 5 - 5  [0.250] 10
+...      White vs Black: 7 - 3 - 10  [0.600] 20
+Elo difference: -107.5 +/- 111.7, LOS: 2.9 %, DrawRatio: 50.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 21 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 21 (4.3.0-cover-units vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 2 - 9 - 10  [0.333] 21
+Started game 22 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 22 (4.2.1 vs 4.3.0-cover-units): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 3 - 9 - 10  [0.364] 22
+Started game 23 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 23 (4.3.0-cover-units vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 3 - 9 - 11  [0.370] 23
+Started game 24 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 24 (4.2.1 vs 4.3.0-cover-units): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 4 - 9 - 11  [0.396] 24
+Started game 25 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 25 (4.3.0-cover-units vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 5 - 9 - 11  [0.420] 25
+Started game 26 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 26 (4.2.1 vs 4.3.0-cover-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 5 - 9 - 12  [0.423] 26
+Started game 27 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 27 (4.3.0-cover-units vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 6 - 9 - 12  [0.444] 27
+Started game 28 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 28 (4.2.1 vs 4.3.0-cover-units): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 6 - 10 - 12  [0.429] 28
+Started game 29 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 29 (4.3.0-cover-units vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 7 - 10 - 12  [0.448] 29
+Started game 30 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 30 (4.2.1 vs 4.3.0-cover-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 7 - 10 - 13  [0.450] 30
+...      4.3.0-cover-units playing White: 5 - 4 - 6  [0.533] 15
+...      4.3.0-cover-units playing Black: 2 - 6 - 7  [0.367] 15
+...      White vs Black: 11 - 6 - 13  [0.583] 30
+Elo difference: -34.9 +/- 96.0, LOS: 23.3 %, DrawRatio: 43.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 31 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 31 (4.3.0-cover-units vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 8 - 10 - 13  [0.468] 31
+Started game 32 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 32 (4.2.1 vs 4.3.0-cover-units): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 9 - 10 - 13  [0.484] 32
+Started game 33 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 33 (4.3.0-cover-units vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 9 - 11 - 13  [0.470] 33
+Started game 34 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 34 (4.2.1 vs 4.3.0-cover-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 9 - 11 - 14  [0.471] 34
+Started game 35 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 35 (4.3.0-cover-units vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 9 - 11 - 15  [0.471] 35
+Started game 36 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 36 (4.2.1 vs 4.3.0-cover-units): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 9 - 12 - 15  [0.458] 36
+Started game 37 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 37 (4.3.0-cover-units vs 4.2.1): 1-0 {White mates}
+Score of 4.3.0-cover-units vs 4.2.1: 10 - 12 - 15  [0.473] 37
+Started game 38 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 38 (4.2.1 vs 4.3.0-cover-units): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 10 - 13 - 15  [0.461] 38
+Started game 39 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 39 (4.3.0-cover-units vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 10 - 13 - 16  [0.462] 39
+Started game 40 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 40 (4.2.1 vs 4.3.0-cover-units): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 11 - 13 - 16  [0.475] 40
+...      4.3.0-cover-units playing White: 7 - 5 - 8  [0.550] 20
+...      4.3.0-cover-units playing Black: 4 - 8 - 8  [0.400] 20
+...      White vs Black: 15 - 9 - 16  [0.575] 40
+Elo difference: -17.4 +/- 85.0, LOS: 34.2 %, DrawRatio: 40.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 41 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 41 (4.3.0-cover-units vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 12 - 13 - 16  [0.488] 41
+Started game 42 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 42 (4.2.1 vs 4.3.0-cover-units): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 12 - 13 - 17  [0.488] 42
+Started game 43 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 43 (4.3.0-cover-units vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 12 - 14 - 17  [0.477] 43
+Started game 44 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 44 (4.2.1 vs 4.3.0-cover-units): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 12 - 15 - 17  [0.466] 44
+Started game 45 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 45 (4.3.0-cover-units vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 13 - 15 - 17  [0.478] 45
+Started game 46 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 46 (4.2.1 vs 4.3.0-cover-units): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 13 - 16 - 17  [0.467] 46
+Started game 47 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 47 (4.3.0-cover-units vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 13 - 17 - 17  [0.457] 47
+Started game 48 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 48 (4.2.1 vs 4.3.0-cover-units): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 13 - 18 - 17  [0.448] 48
+Started game 49 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 49 (4.3.0-cover-units vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 14 - 18 - 17  [0.459] 49
+Started game 50 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 50 (4.2.1 vs 4.3.0-cover-units): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 15 - 18 - 17  [0.470] 50
+...      4.3.0-cover-units playing White: 10 - 7 - 8  [0.560] 25
+...      4.3.0-cover-units playing Black: 5 - 11 - 9  [0.380] 25
+...      White vs Black: 21 - 12 - 17  [0.590] 50
+Elo difference: -20.9 +/- 79.6, LOS: 30.1 %, DrawRatio: 34.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 51 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 51 (4.3.0-cover-units vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 15 - 18 - 18  [0.471] 51
+Started game 52 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 52 (4.2.1 vs 4.3.0-cover-units): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 15 - 18 - 19  [0.471] 52
+Started game 53 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 53 (4.3.0-cover-units vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 16 - 18 - 19  [0.481] 53
+Started game 54 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 54 (4.2.1 vs 4.3.0-cover-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 16 - 18 - 20  [0.481] 54
+Started game 55 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 55 (4.3.0-cover-units vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 17 - 18 - 20  [0.491] 55
+Started game 56 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 56 (4.2.1 vs 4.3.0-cover-units): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 17 - 19 - 20  [0.482] 56
+Started game 57 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 57 (4.3.0-cover-units vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 17 - 20 - 20  [0.474] 57
+Started game 58 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 58 (4.2.1 vs 4.3.0-cover-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 17 - 20 - 21  [0.474] 58
+Started game 59 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 59 (4.3.0-cover-units vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 18 - 20 - 21  [0.483] 59
+Started game 60 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 60 (4.2.1 vs 4.3.0-cover-units): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 18 - 21 - 21  [0.475] 60
+...      4.3.0-cover-units playing White: 13 - 8 - 9  [0.583] 30
+...      4.3.0-cover-units playing Black: 5 - 13 - 12  [0.367] 30
+...      White vs Black: 26 - 13 - 21  [0.608] 60
+Elo difference: -17.4 +/- 71.8, LOS: 31.5 %, DrawRatio: 35.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 61 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 61 (4.3.0-cover-units vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 18 - 21 - 22  [0.475] 61
+Started game 62 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 62 (4.2.1 vs 4.3.0-cover-units): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 18 - 22 - 22  [0.468] 62
+Started game 63 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 63 (4.3.0-cover-units vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 19 - 22 - 22  [0.476] 63
+Started game 64 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 64 (4.2.1 vs 4.3.0-cover-units): 1-0 {White mates}
+Score of 4.3.0-cover-units vs 4.2.1: 19 - 23 - 22  [0.469] 64
+Started game 65 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 65 (4.3.0-cover-units vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 19 - 24 - 22  [0.462] 65
+Started game 66 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 66 (4.2.1 vs 4.3.0-cover-units): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 20 - 24 - 22  [0.470] 66
+Started game 67 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 67 (4.3.0-cover-units vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-cover-units vs 4.2.1: 20 - 24 - 23  [0.470] 67
+Started game 68 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 68 (4.2.1 vs 4.3.0-cover-units): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 21 - 24 - 23  [0.478] 68
+Started game 69 of 3200 (4.3.0-cover-units vs 4.2.1)
+Finished game 69 (4.3.0-cover-units vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 21 - 25 - 23  [0.471] 69
+Started game 70 of 3200 (4.2.1 vs 4.3.0-cover-units)
+Finished game 70 (4.2.1 vs 4.3.0-cover-units): 1-0 {White wins by adjudication}
+Score of 4.3.0-cover-units vs 4.2.1: 21 - 26 - 23  [0.464] 70
+...      4.3.0-cover-units playing White: 14 - 10 - 11  [0.557] 35
+...      4.3.0-cover-units playing Black: 7 - 16 - 12  [0.371] 35
+...      White vs Black: 30 - 17 - 23  [0.593] 70
+Elo difference: -24.9 +/- 67.5, LOS: 23.3 %, DrawRatio: 32.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 71 of 3200 (4.3.0-cover-units vs 4.2.1)
