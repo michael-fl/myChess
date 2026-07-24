@@ -1,0 +1,2657 @@
+Indexing opening suite...
+Started game 1 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Started game 2 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Started game 4 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Started game 3 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 4 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 1 - 0 - 0  [1.000] 1
+Started game 5 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 2 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 1 - 1 - 0  [0.500] 2
+Started game 6 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 1 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 1 - 2 - 0  [0.333] 3
+Started game 7 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 3 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 2 - 2 - 0  [0.500] 4
+Started game 8 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 7 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 3 - 2 - 0  [0.600] 5
+Started game 9 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 8 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 3 - 3 - 0  [0.500] 6
+Started game 10 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 5 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 4 - 3 - 0  [0.571] 7
+Started game 11 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 6 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 4 - 3 - 1  [0.563] 8
+Started game 12 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 10 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 4 - 4 - 1  [0.500] 9
+Started game 13 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 9 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 5 - 4 - 1  [0.550] 10
+...      4.3.0-king-safety-pst-base playing White: 4 - 1 - 0  [0.800] 5
+...      4.3.0-king-safety-pst-base playing Black: 1 - 3 - 1  [0.300] 5
+...      White vs Black: 7 - 2 - 1  [0.750] 10
+Elo difference: 34.9 +/- 237.0, LOS: 63.1 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 14 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 11 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 5 - 5 - 1  [0.500] 11
+Started game 15 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 12 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 5 - 6 - 1  [0.458] 12
+Started game 16 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 13 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 6 - 6 - 1  [0.500] 13
+Started game 17 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 14 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 6 - 7 - 1  [0.464] 14
+Started game 18 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 16 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 6 - 7 - 2  [0.467] 15
+Started game 19 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 17 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 7 - 7 - 2  [0.500] 16
+Started game 20 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 15 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 7 - 8 - 2  [0.471] 17
+Started game 21 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 19 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 8 - 8 - 2  [0.500] 18
+Started game 22 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 21 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 8 - 8 - 3  [0.500] 19
+Started game 23 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 18 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 9 - 8 - 3  [0.525] 20
+...      4.3.0-king-safety-pst-base playing White: 7 - 3 - 1  [0.682] 11
+...      4.3.0-king-safety-pst-base playing Black: 2 - 5 - 2  [0.333] 9
+...      White vs Black: 12 - 5 - 3  [0.675] 20
+Elo difference: 17.4 +/- 148.9, LOS: 59.6 %, DrawRatio: 15.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 24 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 20 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 9 - 8 - 4  [0.524] 21
+Started game 25 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 25 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 9 - 8 - 5  [0.523] 22
+Started game 26 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 23 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 10 - 8 - 5  [0.543] 23
+Started game 27 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 24 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 10 - 9 - 5  [0.521] 24
+Started game 28 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 22 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 11 - 9 - 5  [0.540] 25
+Started game 29 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 27 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 11 - 9 - 6  [0.538] 26
+Started game 30 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 28 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 11 - 10 - 6  [0.519] 27
+Started game 31 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 26 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 11 - 10 - 7  [0.518] 28
+Started game 32 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 29 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 11 - 11 - 7  [0.500] 29
+Started game 33 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 31 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 11 - 12 - 7  [0.483] 30
+...      4.3.0-king-safety-pst-base playing White: 8 - 5 - 3  [0.594] 16
+...      4.3.0-king-safety-pst-base playing Black: 3 - 7 - 4  [0.357] 14
+...      White vs Black: 15 - 8 - 7  [0.617] 30
+Elo difference: -11.6 +/- 112.5, LOS: 41.7 %, DrawRatio: 23.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 34 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 30 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 11 - 12 - 8  [0.484] 31
+Started game 35 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 32 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 11 - 13 - 8  [0.469] 32
+Started game 36 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 35 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 11 - 14 - 8  [0.455] 33
+Started game 37 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 36 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 11 - 15 - 8  [0.441] 34
+Started game 38 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 33 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 11 - 15 - 9  [0.443] 35
+Started game 39 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 34 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 11 - 15 - 10  [0.444] 36
+Started game 40 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 37 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 11 - 15 - 11  [0.446] 37
+Started game 41 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 38 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 11 - 15 - 12  [0.447] 38
+Started game 42 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 42 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 12 - 15 - 12  [0.462] 39
+Started game 43 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 40 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 12 - 15 - 13  [0.463] 40
+...      4.3.0-king-safety-pst-base playing White: 8 - 6 - 5  [0.553] 19
+...      4.3.0-king-safety-pst-base playing Black: 4 - 9 - 8  [0.381] 21
+...      White vs Black: 17 - 10 - 13  [0.588] 40
+Elo difference: -26.1 +/- 90.5, LOS: 28.2 %, DrawRatio: 32.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 44 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 41 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 12 - 16 - 13  [0.451] 41
+Started game 45 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 39 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 12 - 16 - 14  [0.452] 42
+Started game 46 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 43 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 12 - 17 - 14  [0.442] 43
+Started game 47 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 46 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 12 - 17 - 15  [0.443] 44
+Started game 48 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 44 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 12 - 18 - 15  [0.433] 45
+Started game 49 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 47 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 12 - 19 - 15  [0.424] 46
+Started game 50 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 45 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 12 - 20 - 15  [0.415] 47
+Started game 51 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 48 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 13 - 20 - 15  [0.427] 48
+Started game 52 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 49 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 14 - 20 - 15  [0.439] 49
+Started game 53 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 50 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 14 - 21 - 15  [0.430] 50
+...      4.3.0-king-safety-pst-base playing White: 9 - 10 - 6  [0.480] 25
+...      4.3.0-king-safety-pst-base playing Black: 5 - 11 - 9  [0.380] 25
+...      White vs Black: 20 - 15 - 15  [0.550] 50
+Elo difference: -49.0 +/- 82.5, LOS: 11.8 %, DrawRatio: 30.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 54 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 51 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 14 - 21 - 16  [0.431] 51
+Started game 55 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 55 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 14 - 21 - 17  [0.433] 52
+Started game 56 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 53 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 14 - 21 - 18  [0.434] 53
+Started game 57 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 52 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 14 - 22 - 18  [0.426] 54
+Started game 58 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 56 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 14 - 22 - 19  [0.427] 55
+Started game 59 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 54 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 14 - 23 - 19  [0.420] 56
+Started game 60 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 59 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 14 - 23 - 20  [0.421] 57
+Started game 61 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 58 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 14 - 24 - 20  [0.414] 58
+Started game 62 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 60 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 14 - 25 - 20  [0.407] 59
+Started game 63 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 57 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 15 - 25 - 20  [0.417] 60
+...      4.3.0-king-safety-pst-base playing White: 10 - 10 - 10  [0.500] 30
+...      4.3.0-king-safety-pst-base playing Black: 5 - 15 - 10  [0.333] 30
+...      White vs Black: 25 - 15 - 20  [0.583] 60
+Elo difference: -58.5 +/- 73.3, LOS: 5.7 %, DrawRatio: 33.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 64 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 62 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 15 - 25 - 21  [0.418] 61
+Started game 65 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 61 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 15 - 26 - 21  [0.411] 62
+Started game 66 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 63 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 15 - 27 - 21  [0.405] 63
+Started game 67 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 66 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 15 - 27 - 22  [0.406] 64
+Started game 68 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 64 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 15 - 28 - 22  [0.400] 65
+Started game 69 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 65 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 15 - 28 - 23  [0.402] 66
+Started game 70 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 69 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 16 - 28 - 23  [0.410] 67
+Started game 71 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 67 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 17 - 28 - 23  [0.419] 68
+Started game 72 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 70 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 18 - 28 - 23  [0.428] 69
+Started game 73 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 71 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 18 - 29 - 23  [0.421] 70
+...      4.3.0-king-safety-pst-base playing White: 12 - 13 - 11  [0.486] 36
+...      4.3.0-king-safety-pst-base playing Black: 6 - 16 - 12  [0.353] 34
+...      White vs Black: 28 - 19 - 23  [0.564] 70
+Elo difference: -55.1 +/- 67.9, LOS: 5.4 %, DrawRatio: 32.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 74 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 68 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 18 - 29 - 24  [0.423] 71
+Started game 75 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 72 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 18 - 29 - 25  [0.424] 72
+Started game 76 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 74 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 18 - 29 - 26  [0.425] 73
+Started game 77 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 73 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 18 - 30 - 26  [0.419] 74
+Started game 78 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 75 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 18 - 31 - 26  [0.413] 75
+Started game 79 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 77 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 18 - 32 - 26  [0.408] 76
+Started game 80 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 78 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 18 - 32 - 27  [0.409] 77
+Started game 81 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 76 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 19 - 32 - 27  [0.417] 78
+Started game 82 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 80 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 19 - 33 - 27  [0.411] 79
+Started game 83 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 79 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 19 - 33 - 28  [0.412] 80
+...      4.3.0-king-safety-pst-base playing White: 12 - 16 - 12  [0.450] 40
+...      4.3.0-king-safety-pst-base playing Black: 7 - 17 - 16  [0.375] 40
+...      White vs Black: 29 - 23 - 28  [0.537] 80
+Elo difference: -61.4 +/- 62.4, LOS: 2.6 %, DrawRatio: 35.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 84 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 81 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 19 - 33 - 29  [0.414] 81
+Started game 85 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 83 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 19 - 33 - 30  [0.415] 82
+Started game 86 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 85 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 19 - 34 - 30  [0.410] 83
+Started game 87 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 82 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 19 - 34 - 31  [0.411] 84
+Started game 88 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 84 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 20 - 34 - 31  [0.418] 85
+Started game 89 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 87 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 20 - 35 - 31  [0.413] 86
+Started game 90 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 88 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 20 - 36 - 31  [0.408] 87
+Started game 91 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 89 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 20 - 37 - 31  [0.403] 88
+Started game 92 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 86 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 20 - 38 - 31  [0.399] 89
+Started game 93 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 90 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 20 - 38 - 32  [0.400] 90
+...      4.3.0-king-safety-pst-base playing White: 12 - 19 - 14  [0.422] 45
+...      4.3.0-king-safety-pst-base playing Black: 8 - 19 - 18  [0.378] 45
+...      White vs Black: 31 - 27 - 32  [0.522] 90
+Elo difference: -70.4 +/- 58.7, LOS: 0.9 %, DrawRatio: 35.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 94 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 92 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 20 - 39 - 32  [0.396] 91
+Started game 95 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 91 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 21 - 39 - 32  [0.402] 92
+Started game 96 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 93 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 21 - 40 - 32  [0.398] 93
+Started game 97 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 94 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 21 - 41 - 32  [0.394] 94
+Started game 98 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 98 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 21 - 41 - 33  [0.395] 95
+Started game 99 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 96 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 21 - 41 - 34  [0.396] 96
+Started game 100 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 95 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 21 - 42 - 34  [0.392] 97
+Started game 101 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 99 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 21 - 43 - 34  [0.388] 98
+Started game 102 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 100 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 22 - 43 - 34  [0.394] 99
+Started game 103 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 97 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 23 - 43 - 34  [0.400] 100
+...      4.3.0-king-safety-pst-base playing White: 14 - 22 - 14  [0.420] 50
+...      4.3.0-king-safety-pst-base playing Black: 9 - 21 - 20  [0.380] 50
+...      White vs Black: 35 - 31 - 34  [0.520] 100
+Elo difference: -70.4 +/- 56.3, LOS: 0.7 %, DrawRatio: 34.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 104 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 104 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 23 - 44 - 34  [0.396] 101
+Started game 105 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 102 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 23 - 44 - 35  [0.397] 102
+Started game 106 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 101 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 24 - 44 - 35  [0.403] 103
+Started game 107 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 103 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 25 - 44 - 35  [0.409] 104
+Started game 108 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 105 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 25 - 45 - 35  [0.405] 105
+Started game 109 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 107 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 25 - 46 - 35  [0.401] 106
+Started game 110 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 106 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 25 - 46 - 36  [0.402] 107
+Started game 111 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 108 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 25 - 46 - 37  [0.403] 108
+Started game 112 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 112 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 25 - 46 - 38  [0.404] 109
+Started game 113 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 109 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 25 - 46 - 39  [0.405] 110
+...      4.3.0-king-safety-pst-base playing White: 16 - 24 - 15  [0.427] 55
+...      4.3.0-king-safety-pst-base playing Black: 9 - 22 - 24  [0.382] 55
+...      White vs Black: 38 - 33 - 39  [0.523] 110
+Elo difference: -67.2 +/- 53.0, LOS: 0.6 %, DrawRatio: 35.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 114 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 110 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 25 - 46 - 40  [0.405] 111
+Started game 115 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 111 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 25 - 46 - 41  [0.406] 112
+Started game 116 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 114 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 25 - 46 - 42  [0.407] 113
+Started game 117 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 113 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 26 - 46 - 42  [0.412] 114
+Started game 118 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 116 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 26 - 47 - 42  [0.409] 115
+Started game 119 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 115 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 27 - 47 - 42  [0.414] 116
+Started game 120 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 117 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 27 - 47 - 43  [0.415] 117
+Started game 121 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 119 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 28 - 47 - 43  [0.419] 118
+Started game 122 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 120 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 29 - 47 - 43  [0.424] 119
+Started game 123 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 122 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 29 - 48 - 43  [0.421] 120
+...      4.3.0-king-safety-pst-base playing White: 19 - 24 - 17  [0.458] 60
+...      4.3.0-king-safety-pst-base playing Black: 10 - 24 - 26  [0.383] 60
+...      White vs Black: 43 - 34 - 43  [0.537] 120
+Elo difference: -55.5 +/- 50.4, LOS: 1.5 %, DrawRatio: 35.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 124 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 118 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 29 - 48 - 44  [0.421] 121
+Started game 125 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 121 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 29 - 49 - 44  [0.418] 122
+Started game 126 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 124 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 29 - 49 - 45  [0.419] 123
+Started game 127 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 123 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 29 - 49 - 46  [0.419] 124
+Started game 128 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 125 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 29 - 49 - 47  [0.420] 125
+Started game 129 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 127 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 30 - 49 - 47  [0.425] 126
+Started game 130 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 126 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 30 - 50 - 47  [0.421] 127
+Started game 131 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 128 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 30 - 50 - 48  [0.422] 128
+Started game 132 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 130 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 30 - 50 - 49  [0.422] 129
+Started game 133 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 129 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 30 - 51 - 49  [0.419] 130
+...      4.3.0-king-safety-pst-base playing White: 20 - 26 - 19  [0.454] 65
+...      4.3.0-king-safety-pst-base playing Black: 10 - 25 - 30  [0.385] 65
+...      White vs Black: 45 - 36 - 49  [0.535] 130
+Elo difference: -56.6 +/- 47.6, LOS: 1.0 %, DrawRatio: 37.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 134 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 133 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 30 - 51 - 50  [0.420] 131
+Started game 135 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 132 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 30 - 51 - 51  [0.420] 132
+Started game 136 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 131 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 31 - 51 - 51  [0.425] 133
+Started game 137 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 134 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 31 - 51 - 52  [0.425] 134
+Started game 138 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 135 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 32 - 51 - 52  [0.430] 135
+Started game 139 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 136 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 32 - 52 - 52  [0.426] 136
+Started game 140 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 137 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 33 - 52 - 52  [0.431] 137
+Started game 141 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 138 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 33 - 53 - 52  [0.428] 138
+Started game 142 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 139 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 34 - 53 - 52  [0.432] 139
+Started game 143 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 141 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 35 - 53 - 52  [0.436] 140
+...      4.3.0-king-safety-pst-base playing White: 25 - 26 - 20  [0.493] 71
+...      4.3.0-king-safety-pst-base playing Black: 10 - 27 - 32  [0.377] 69
+...      White vs Black: 52 - 36 - 52  [0.557] 140
+Elo difference: -44.9 +/- 46.0, LOS: 2.8 %, DrawRatio: 37.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 144 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 140 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 35 - 53 - 53  [0.436] 141
+Started game 145 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 144 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 35 - 53 - 54  [0.437] 142
+Started game 146 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 142 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 35 - 53 - 55  [0.437] 143
+Started game 147 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 143 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 35 - 53 - 56  [0.438] 144
+Started game 148 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 146 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 35 - 54 - 56  [0.434] 145
+Started game 149 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 148 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 35 - 54 - 57  [0.435] 146
+Started game 150 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 147 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 35 - 54 - 58  [0.435] 147
+Started game 151 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 150 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 35 - 54 - 59  [0.436] 148
+Started game 152 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 151 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 36 - 54 - 59  [0.440] 149
+Started game 153 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 149 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 36 - 55 - 59  [0.437] 150
+...      4.3.0-king-safety-pst-base playing White: 26 - 27 - 22  [0.493] 75
+...      4.3.0-king-safety-pst-base playing Black: 10 - 28 - 37  [0.380] 75
+...      White vs Black: 54 - 37 - 59  [0.557] 150
+Elo difference: -44.2 +/- 43.6, LOS: 2.3 %, DrawRatio: 39.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 154 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 152 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 36 - 56 - 59  [0.434] 151
+Started game 155 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 145 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 36 - 56 - 60  [0.434] 152
+Started game 156 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 153 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 36 - 57 - 60  [0.431] 153
+Started game 157 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 154 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 36 - 57 - 61  [0.432] 154
+Started game 158 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 155 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 36 - 57 - 62  [0.432] 155
+Started game 159 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 156 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 37 - 57 - 62  [0.436] 156
+Started game 160 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 157 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 37 - 57 - 63  [0.436] 157
+Started game 161 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 158 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 37 - 58 - 63  [0.434] 158
+Started game 162 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 159 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 37 - 58 - 64  [0.434] 159
+Started game 163 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 160 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 37 - 58 - 65  [0.434] 160
+...      4.3.0-king-safety-pst-base playing White: 26 - 28 - 26  [0.487] 80
+...      4.3.0-king-safety-pst-base playing Black: 11 - 30 - 39  [0.381] 80
+...      White vs Black: 56 - 39 - 65  [0.553] 160
+Elo difference: -45.9 +/- 41.7, LOS: 1.6 %, DrawRatio: 40.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 164 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 161 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 38 - 58 - 65  [0.438] 161
+Started game 165 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 162 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 38 - 59 - 65  [0.435] 162
+Started game 166 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 163 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 39 - 59 - 65  [0.439] 163
+Started game 167 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 165 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 39 - 60 - 65  [0.436] 164
+Started game 168 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 164 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 39 - 60 - 66  [0.436] 165
+Started game 169 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 167 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 39 - 60 - 67  [0.437] 166
+Started game 170 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 166 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 40 - 60 - 67  [0.440] 167
+Started game 171 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 168 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 40 - 61 - 67  [0.438] 168
+Started game 172 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 171 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 40 - 61 - 68  [0.438] 169
+Started game 173 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 169 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 40 - 62 - 68  [0.435] 170
+...      4.3.0-king-safety-pst-base playing White: 28 - 30 - 28  [0.488] 86
+...      4.3.0-king-safety-pst-base playing Black: 12 - 32 - 40  [0.381] 84
+...      White vs Black: 60 - 42 - 68  [0.553] 170
+Elo difference: -45.2 +/- 40.7, LOS: 1.5 %, DrawRatio: 40.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 174 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 170 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 40 - 62 - 69  [0.436] 171
+Started game 175 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 172 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 40 - 63 - 69  [0.433] 172
+Started game 176 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 173 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 41 - 63 - 69  [0.436] 173
+Started game 177 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 175 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 41 - 64 - 69  [0.434] 174
+Started game 178 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 174 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 41 - 64 - 70  [0.434] 175
+Started game 179 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 176 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 42 - 64 - 70  [0.438] 176
+Started game 180 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 177 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 43 - 64 - 70  [0.441] 177
+Started game 181 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 179 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 43 - 65 - 70  [0.438] 178
+Started game 182 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 178 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 43 - 66 - 70  [0.436] 179
+Started game 183 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 180 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 43 - 66 - 71  [0.436] 180
+...      4.3.0-king-safety-pst-base playing White: 30 - 32 - 28  [0.489] 90
+...      4.3.0-king-safety-pst-base playing Black: 13 - 34 - 43  [0.383] 90
+...      White vs Black: 64 - 45 - 71  [0.553] 180
+Elo difference: -44.6 +/- 39.7, LOS: 1.4 %, DrawRatio: 39.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 184 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 183 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 43 - 66 - 72  [0.436] 181
+Started game 185 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 181 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 43 - 66 - 73  [0.437] 182
+Started game 186 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 182 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 43 - 67 - 73  [0.434] 183
+Started game 187 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 184 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 43 - 67 - 74  [0.435] 184
+Started game 188 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 186 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 43 - 68 - 74  [0.432] 185
+Started game 189 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 188 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 43 - 69 - 74  [0.430] 186
+Started game 190 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 189 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 43 - 69 - 75  [0.430] 187
+Started game 191 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 187 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 44 - 69 - 75  [0.434] 188
+Started game 192 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 185 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 45 - 69 - 75  [0.437] 189
+Started game 193 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 193 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 45 - 70 - 75  [0.434] 190
+...      4.3.0-king-safety-pst-base playing White: 32 - 33 - 31  [0.495] 96
+...      4.3.0-king-safety-pst-base playing Black: 13 - 37 - 44  [0.372] 94
+...      White vs Black: 69 - 46 - 75  [0.561] 190
+Elo difference: -46.0 +/- 38.7, LOS: 1.0 %, DrawRatio: 39.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 194 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 192 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 46 - 70 - 75  [0.437] 191
+Started game 195 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 191 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 46 - 70 - 76  [0.438] 192
+Started game 196 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 190 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 46 - 70 - 77  [0.438] 193
+Started game 197 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 195 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 46 - 71 - 77  [0.436] 194
+Started game 198 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 196 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 47 - 71 - 77  [0.438] 195
+Started game 199 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 194 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 47 - 71 - 78  [0.439] 196
+Started game 200 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 200 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 47 - 72 - 78  [0.437] 197
+Started game 201 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 197 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 48 - 72 - 78  [0.439] 198
+Started game 202 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 199 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 48 - 73 - 78  [0.437] 199
+Started game 203 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 198 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 48 - 74 - 78  [0.435] 200
+...      4.3.0-king-safety-pst-base playing White: 33 - 35 - 32  [0.490] 100
+...      4.3.0-king-safety-pst-base playing Black: 15 - 39 - 46  [0.380] 100
+...      White vs Black: 72 - 50 - 78  [0.555] 200
+Elo difference: -45.4 +/- 37.8, LOS: 0.9 %, DrawRatio: 39.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 204 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 202 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 48 - 75 - 78  [0.433] 201
+Started game 205 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 201 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 48 - 75 - 79  [0.433] 202
+Started game 206 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 204 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 49 - 75 - 79  [0.436] 203
+Started game 207 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 203 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 49 - 75 - 80  [0.436] 204
+Started game 208 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 205 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 49 - 76 - 80  [0.434] 205
+Started game 209 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 207 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 50 - 76 - 80  [0.437] 206
+Started game 210 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 206 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 51 - 76 - 80  [0.440] 207
+Started game 211 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 208 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 51 - 77 - 80  [0.438] 208
+Started game 212 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 210 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 51 - 77 - 81  [0.438] 209
+Started game 213 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 209 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 51 - 77 - 82  [0.438] 210
+...      4.3.0-king-safety-pst-base playing White: 34 - 36 - 35  [0.490] 105
+...      4.3.0-king-safety-pst-base playing Black: 17 - 41 - 47  [0.386] 105
+...      White vs Black: 75 - 53 - 82  [0.552] 210
+Elo difference: -43.2 +/- 36.9, LOS: 1.1 %, DrawRatio: 39.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 214 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 211 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by stalemate}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 51 - 77 - 83  [0.438] 211
+Started game 215 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 212 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 51 - 77 - 84  [0.439] 212
+Started game 216 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 214 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 51 - 78 - 84  [0.437] 213
+Started game 217 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 215 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 51 - 78 - 85  [0.437] 214
+Started game 218 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 216 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 52 - 78 - 85  [0.440] 215
+Started game 219 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 213 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 52 - 78 - 86  [0.440] 216
+Started game 220 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 217 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 52 - 78 - 87  [0.440] 217
+Started game 221 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 218 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 52 - 79 - 87  [0.438] 218
+Started game 222 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 219 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 53 - 79 - 87  [0.441] 219
+Started game 223 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 220 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 53 - 79 - 88  [0.441] 220
+...      4.3.0-king-safety-pst-base playing White: 35 - 36 - 39  [0.495] 110
+...      4.3.0-king-safety-pst-base playing Black: 18 - 43 - 49  [0.386] 110
+...      White vs Black: 78 - 54 - 88  [0.555] 220
+Elo difference: -41.3 +/- 35.7, LOS: 1.2 %, DrawRatio: 40.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 224 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 223 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 54 - 79 - 88  [0.443] 221
+Started game 225 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 222 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 54 - 79 - 89  [0.444] 222
+Started game 226 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 224 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 54 - 80 - 89  [0.442] 223
+Started game 227 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 226 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 55 - 80 - 89  [0.444] 224
+Started game 228 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 221 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 55 - 80 - 90  [0.444] 225
+Started game 229 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 225 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 55 - 80 - 91  [0.445] 226
+Started game 230 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 227 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 56 - 80 - 91  [0.447] 227
+Started game 231 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 229 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 56 - 81 - 91  [0.445] 228
+Started game 232 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 228 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 57 - 81 - 91  [0.448] 229
+Started game 233 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 231 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 58 - 81 - 91  [0.450] 230
+...      4.3.0-king-safety-pst-base playing White: 38 - 37 - 41  [0.504] 116
+...      4.3.0-king-safety-pst-base playing Black: 20 - 44 - 50  [0.395] 114
+...      White vs Black: 82 - 57 - 91  [0.554] 230
+Elo difference: -34.9 +/- 35.0, LOS: 2.6 %, DrawRatio: 39.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 234 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 230 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 58 - 82 - 91  [0.448] 231
+Started game 235 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 232 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 58 - 83 - 91  [0.446] 232
+Started game 236 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 234 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 58 - 84 - 91  [0.444] 233
+Started game 237 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 233 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 59 - 84 - 91  [0.447] 234
+Started game 238 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 235 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 59 - 84 - 92  [0.447] 235
+Started game 239 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 236 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 60 - 84 - 92  [0.449] 236
+Started game 240 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 237 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 60 - 85 - 92  [0.447] 237
+Started game 241 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 239 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 60 - 85 - 93  [0.447] 238
+Started game 242 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 238 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 60 - 86 - 93  [0.446] 239
+Started game 243 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 241 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 60 - 87 - 93  [0.444] 240
+...      4.3.0-king-safety-pst-base playing White: 39 - 39 - 43  [0.500] 121
+...      4.3.0-king-safety-pst-base playing Black: 21 - 48 - 50  [0.387] 119
+...      White vs Black: 87 - 60 - 93  [0.556] 240
+Elo difference: -39.3 +/- 34.5, LOS: 1.3 %, DrawRatio: 38.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 244 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 240 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 60 - 87 - 94  [0.444] 241
+Started game 245 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 244 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 60 - 87 - 95  [0.444] 242
+Started game 246 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 243 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 60 - 87 - 96  [0.444] 243
+Started game 247 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 245 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 60 - 88 - 96  [0.443] 244
+Started game 248 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 242 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 60 - 88 - 97  [0.443] 245
+Started game 249 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 246 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 60 - 88 - 98  [0.443] 246
+Started game 250 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 247 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 61 - 88 - 98  [0.445] 247
+Started game 251 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 249 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 61 - 88 - 99  [0.446] 248
+Started game 252 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 248 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 61 - 88 - 100  [0.446] 249
+Started game 253 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 250 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 62 - 88 - 100  [0.448] 250
+...      4.3.0-king-safety-pst-base playing White: 40 - 40 - 45  [0.500] 125
+...      4.3.0-king-safety-pst-base playing Black: 22 - 48 - 55  [0.396] 125
+...      White vs Black: 88 - 62 - 100  [0.552] 250
+Elo difference: -36.3 +/- 33.5, LOS: 1.7 %, DrawRatio: 40.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 254 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 252 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 63 - 88 - 100  [0.450] 251
+Started game 255 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 251 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 63 - 89 - 100  [0.448] 252
+Started game 256 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 253 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 63 - 90 - 100  [0.447] 253
+Started game 257 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 256 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 64 - 90 - 100  [0.449] 254
+Started game 258 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 257 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 65 - 90 - 100  [0.451] 255
+Started game 259 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 254 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 65 - 90 - 101  [0.451] 256
+Started game 260 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 255 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 65 - 90 - 102  [0.451] 257
+Started game 261 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 258 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 65 - 91 - 102  [0.450] 258
+Started game 262 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 260 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 65 - 91 - 103  [0.450] 259
+Started game 263 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 259 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 65 - 91 - 104  [0.450] 260
+...      4.3.0-king-safety-pst-base playing White: 41 - 42 - 47  [0.496] 130
+...      4.3.0-king-safety-pst-base playing Black: 24 - 49 - 57  [0.404] 130
+...      White vs Black: 90 - 66 - 104  [0.546] 260
+Elo difference: -34.9 +/- 32.8, LOS: 1.9 %, DrawRatio: 40.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 264 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 261 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 65 - 91 - 105  [0.450] 261
+Started game 265 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 262 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 66 - 91 - 105  [0.452] 262
+Started game 266 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 264 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 66 - 91 - 106  [0.452] 263
+Started game 267 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 265 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 66 - 91 - 107  [0.453] 264
+Started game 268 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 263 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 66 - 91 - 108  [0.453] 265
+Started game 269 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 266 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 66 - 92 - 108  [0.451] 266
+Started game 270 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 267 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 66 - 92 - 109  [0.451] 267
+Started game 271 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 268 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 66 - 92 - 110  [0.451] 268
+Started game 272 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 270 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 67 - 92 - 110  [0.454] 269
+Started game 273 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 269 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 68 - 92 - 110  [0.456] 270
+...      4.3.0-king-safety-pst-base playing White: 42 - 42 - 51  [0.500] 135
+...      4.3.0-king-safety-pst-base playing Black: 26 - 50 - 59  [0.411] 135
+...      White vs Black: 92 - 68 - 110  [0.544] 270
+Elo difference: -31.0 +/- 32.0, LOS: 2.9 %, DrawRatio: 40.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 274 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 272 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 68 - 92 - 111  [0.456] 271
+Started game 275 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 273 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 69 - 92 - 111  [0.458] 272
+Started game 276 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 271 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 69 - 92 - 112  [0.458] 273
+Started game 277 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 274 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 69 - 93 - 112  [0.456] 274
+Started game 278 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 275 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 69 - 94 - 112  [0.455] 275
+Started game 279 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 276 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 69 - 94 - 113  [0.455] 276
+Started game 280 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 279 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 70 - 94 - 113  [0.457] 277
+Started game 281 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 277 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 70 - 94 - 114  [0.457] 278
+Started game 282 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 278 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 70 - 95 - 114  [0.455] 279
+Started game 283 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 280 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 70 - 96 - 114  [0.454] 280
+...      4.3.0-king-safety-pst-base playing White: 44 - 43 - 53  [0.504] 140
+...      4.3.0-king-safety-pst-base playing Black: 26 - 53 - 61  [0.404] 140
+...      White vs Black: 97 - 69 - 114  [0.550] 280
+Elo difference: -32.4 +/- 31.4, LOS: 2.2 %, DrawRatio: 40.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 284 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 282 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 71 - 96 - 114  [0.456] 281
+Started game 285 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 284 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 71 - 96 - 115  [0.456] 282
+Started game 286 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 285 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 72 - 96 - 115  [0.458] 283
+Started game 287 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 281 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 72 - 96 - 116  [0.458] 284
+Started game 288 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 286 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 73 - 96 - 116  [0.460] 285
+Started game 289 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 283 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 73 - 96 - 117  [0.460] 286
+Started game 290 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 289 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 73 - 96 - 118  [0.460] 287
+Started game 291 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 287 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 74 - 96 - 118  [0.462] 288
+Started game 292 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 288 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 74 - 96 - 119  [0.462] 289
+Started game 293 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 290 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 75 - 96 - 119  [0.464] 290
+...      4.3.0-king-safety-pst-base playing White: 46 - 43 - 56  [0.510] 145
+...      4.3.0-king-safety-pst-base playing Black: 29 - 53 - 63  [0.417] 145
+...      White vs Black: 99 - 72 - 119  [0.547] 290
+Elo difference: -25.2 +/- 30.8, LOS: 5.4 %, DrawRatio: 41.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 294 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 293 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 75 - 97 - 119  [0.462] 291
+Started game 295 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 292 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 75 - 97 - 120  [0.462] 292
+Started game 296 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 294 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 76 - 97 - 120  [0.464] 293
+Started game 297 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 291 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 76 - 97 - 121  [0.464] 294
+Started game 298 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 295 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 76 - 97 - 122  [0.464] 295
+Started game 299 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 296 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 76 - 98 - 122  [0.463] 296
+Started game 300 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 298 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 77 - 98 - 122  [0.465] 297
+Started game 301 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 297 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 77 - 98 - 123  [0.465] 298
+Started game 302 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 299 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 78 - 98 - 123  [0.467] 299
+Started game 303 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 301 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 79 - 98 - 123  [0.468] 300
+...      4.3.0-king-safety-pst-base playing White: 48 - 44 - 59  [0.513] 151
+...      4.3.0-king-safety-pst-base playing Black: 31 - 54 - 64  [0.423] 149
+...      White vs Black: 102 - 75 - 123  [0.545] 300
+Elo difference: -22.0 +/- 30.3, LOS: 7.7 %, DrawRatio: 41.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 304 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 302 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 80 - 98 - 123  [0.470] 301
+Started game 305 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 300 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 80 - 99 - 123  [0.469] 302
+Started game 306 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 303 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 81 - 99 - 123  [0.470] 303
+Started game 307 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 304 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 81 - 99 - 124  [0.470] 304
+Started game 308 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 306 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 81 - 99 - 125  [0.470] 305
+Started game 309 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 305 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 81 - 99 - 126  [0.471] 306
+Started game 310 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 307 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 81 - 100 - 126  [0.469] 307
+Started game 311 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 308 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 81 - 100 - 127  [0.469] 308
+Started game 312 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 310 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 82 - 100 - 127  [0.471] 309
+Started game 313 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 309 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 82 - 100 - 128  [0.471] 310
+...      4.3.0-king-safety-pst-base playing White: 49 - 45 - 61  [0.513] 155
+...      4.3.0-king-safety-pst-base playing Black: 33 - 55 - 67  [0.429] 155
+...      White vs Black: 104 - 78 - 128  [0.542] 310
+Elo difference: -20.2 +/- 29.7, LOS: 9.1 %, DrawRatio: 41.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 314 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 312 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 82 - 100 - 129  [0.471] 311
+Started game 315 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 313 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 83 - 100 - 129  [0.473] 312
+Started game 316 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 311 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 84 - 100 - 129  [0.474] 313
+Started game 317 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 314 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 84 - 101 - 129  [0.473] 314
+Started game 318 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 315 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 84 - 102 - 129  [0.471] 315
+Started game 319 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 316 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 84 - 103 - 129  [0.470] 316
+Started game 320 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 318 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 84 - 103 - 130  [0.470] 317
+Started game 321 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 319 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 84 - 103 - 131  [0.470] 318
+Started game 322 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 317 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 85 - 103 - 131  [0.472] 319
+Started game 323 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 320 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 85 - 104 - 131  [0.470] 320
+...      4.3.0-king-safety-pst-base playing White: 52 - 46 - 62  [0.519] 160
+...      4.3.0-king-safety-pst-base playing Black: 33 - 58 - 69  [0.422] 160
+...      White vs Black: 110 - 79 - 131  [0.548] 320
+Elo difference: -20.7 +/- 29.3, LOS: 8.3 %, DrawRatio: 40.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 324 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 323 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 85 - 104 - 132  [0.470] 321
+Started game 325 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 321 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 86 - 104 - 132  [0.472] 322
+Started game 326 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 324 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 86 - 104 - 133  [0.472] 323
+Started game 327 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 322 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 86 - 104 - 134  [0.472] 324
+Started game 328 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 325 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 86 - 104 - 135  [0.472] 325
+Started game 329 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 328 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 86 - 105 - 135  [0.471] 326
+Started game 330 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 327 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 86 - 106 - 135  [0.469] 327
+Started game 331 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 326 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 87 - 106 - 135  [0.471] 328
+Started game 332 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 329 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 88 - 106 - 135  [0.473] 329
+Started game 333 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 330 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 88 - 107 - 135  [0.471] 330
+...      4.3.0-king-safety-pst-base playing White: 54 - 47 - 64  [0.521] 165
+...      4.3.0-king-safety-pst-base playing Black: 34 - 60 - 71  [0.421] 165
+...      White vs Black: 114 - 81 - 135  [0.550] 330
+Elo difference: -20.0 +/- 28.9, LOS: 8.7 %, DrawRatio: 40.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 334 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 331 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 88 - 107 - 136  [0.471] 331
+Started game 335 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 334 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 88 - 108 - 136  [0.470] 332
+Started game 336 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 333 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 89 - 108 - 136  [0.471] 333
+Started game 337 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 335 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 89 - 108 - 137  [0.472] 334
+Started game 338 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 337 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 89 - 109 - 137  [0.470] 335
+Started game 339 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 332 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 89 - 109 - 138  [0.470] 336
+Started game 340 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 336 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 89 - 109 - 139  [0.470] 337
+Started game 341 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 338 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 89 - 110 - 139  [0.469] 338
+Started game 342 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 341 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 90 - 110 - 139  [0.471] 339
+Started game 343 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 340 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 91 - 110 - 139  [0.472] 340
+...      4.3.0-king-safety-pst-base playing White: 56 - 48 - 66  [0.524] 170
+...      4.3.0-king-safety-pst-base playing Black: 35 - 62 - 73  [0.421] 170
+...      White vs Black: 118 - 83 - 139  [0.551] 340
+Elo difference: -19.4 +/- 28.4, LOS: 9.0 %, DrawRatio: 40.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 344 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 343 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 92 - 110 - 139  [0.474] 341
+Started game 345 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 344 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 92 - 111 - 139  [0.472] 342
+Started game 346 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 339 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 92 - 111 - 140  [0.472] 343
+Started game 347 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 342 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 92 - 112 - 140  [0.471] 344
+Started game 348 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 346 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 92 - 113 - 140  [0.470] 345
+Started game 349 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 345 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 92 - 113 - 141  [0.470] 346
+Started game 350 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 347 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 92 - 113 - 142  [0.470] 347
+Started game 351 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 348 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 92 - 113 - 143  [0.470] 348
+Started game 352 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 351 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 93 - 113 - 143  [0.471] 349
+Started game 353 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 350 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 94 - 113 - 143  [0.473] 350
+...      4.3.0-king-safety-pst-base playing White: 58 - 48 - 69  [0.529] 175
+...      4.3.0-king-safety-pst-base playing Black: 36 - 65 - 74  [0.417] 175
+...      White vs Black: 123 - 84 - 143  [0.556] 350
+Elo difference: -18.9 +/- 28.0, LOS: 9.3 %, DrawRatio: 40.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 354 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 353 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 95 - 113 - 143  [0.474] 351
+Started game 355 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 354 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 95 - 114 - 143  [0.473] 352
+Started game 356 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 349 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 95 - 115 - 143  [0.472] 353
+Started game 357 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 352 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 95 - 116 - 143  [0.470] 354
+Started game 358 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 356 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 95 - 116 - 144  [0.470] 355
+Started game 359 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 355 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 95 - 117 - 144  [0.469] 356
+Started game 360 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 357 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 95 - 117 - 145  [0.469] 357
+Started game 361 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 358 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 95 - 117 - 146  [0.469] 358
+Started game 362 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 359 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 96 - 117 - 146  [0.471] 359
+Started game 363 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 360 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 97 - 117 - 146  [0.472] 360
+...      4.3.0-king-safety-pst-base playing White: 60 - 50 - 70  [0.528] 180
+...      4.3.0-king-safety-pst-base playing Black: 37 - 67 - 76  [0.417] 180
+...      White vs Black: 127 - 87 - 146  [0.556] 360
+Elo difference: -19.3 +/- 27.7, LOS: 8.6 %, DrawRatio: 40.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 364 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 361 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 97 - 118 - 146  [0.471] 361
+Started game 365 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 362 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 97 - 119 - 146  [0.470] 362
+Started game 366 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 364 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 97 - 119 - 147  [0.470] 363
+Started game 367 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 363 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 97 - 119 - 148  [0.470] 364
+Started game 368 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 366 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 97 - 119 - 149  [0.470] 365
+Started game 369 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 367 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 98 - 119 - 149  [0.471] 366
+Started game 370 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 365 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 98 - 119 - 150  [0.471] 367
+Started game 371 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 368 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 98 - 119 - 151  [0.471] 368
+Started game 372 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 369 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 99 - 119 - 151  [0.473] 369
+Started game 373 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 371 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 99 - 120 - 151  [0.472] 370
+...      4.3.0-king-safety-pst-base playing White: 62 - 52 - 72  [0.527] 186
+...      4.3.0-king-safety-pst-base playing Black: 37 - 68 - 79  [0.416] 184
+...      White vs Black: 130 - 89 - 151  [0.555] 370
+Elo difference: -19.7 +/- 27.3, LOS: 7.8 %, DrawRatio: 40.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 374 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 373 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 99 - 120 - 152  [0.472] 371
+Started game 375 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 370 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 99 - 120 - 153  [0.472] 372
+Started game 376 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 372 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 99 - 120 - 154  [0.472] 373
+Started game 377 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 374 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 99 - 120 - 155  [0.472] 374
+Started game 378 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 375 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 99 - 120 - 156  [0.472] 375
+Started game 379 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 377 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 100 - 120 - 156  [0.473] 376
+Started game 380 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 376 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 100 - 121 - 156  [0.472] 377
+Started game 381 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 379 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 100 - 122 - 156  [0.471] 378
+Started game 382 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 378 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 101 - 122 - 156  [0.472] 379
+Started game 383 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 382 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 102 - 122 - 156  [0.474] 380
+...      4.3.0-king-safety-pst-base playing White: 63 - 53 - 74  [0.526] 190
+...      4.3.0-king-safety-pst-base playing Black: 39 - 69 - 82  [0.421] 190
+...      White vs Black: 132 - 92 - 156  [0.553] 380
+Elo difference: -18.3 +/- 26.8, LOS: 9.1 %, DrawRatio: 41.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 384 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 380 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 103 - 122 - 156  [0.475] 381
+Started game 385 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 384 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 103 - 123 - 156  [0.474] 382
+Started game 386 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 385 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 103 - 123 - 157  [0.474] 383
+Started game 387 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 381 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 103 - 123 - 158  [0.474] 384
+Started game 388 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 383 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 104 - 123 - 158  [0.475] 385
+Started game 389 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 386 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 104 - 123 - 159  [0.475] 386
+Started game 390 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 387 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 104 - 123 - 160  [0.475] 387
+Started game 391 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 388 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 104 - 124 - 160  [0.474] 388
+Started game 392 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 389 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 105 - 124 - 160  [0.476] 389
+Started game 393 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 390 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 106 - 124 - 160  [0.477] 390
+...      4.3.0-king-safety-pst-base playing White: 65 - 53 - 77  [0.531] 195
+...      4.3.0-king-safety-pst-base playing Black: 41 - 71 - 83  [0.423] 195
+...      White vs Black: 136 - 94 - 160  [0.554] 390
+Elo difference: -16.0 +/- 26.5, LOS: 11.8 %, DrawRatio: 41.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 394 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 393 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 106 - 125 - 160  [0.476] 391
+Started game 395 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 395 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 106 - 125 - 161  [0.476] 392
+Started game 396 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 392 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 106 - 126 - 161  [0.475] 393
+Started game 397 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 391 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 106 - 126 - 162  [0.475] 394
+Started game 398 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 394 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 106 - 127 - 162  [0.473] 395
+Started game 399 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 398 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 107 - 127 - 162  [0.475] 396
+Started game 400 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 397 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 107 - 128 - 162  [0.474] 397
+Started game 401 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 396 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 107 - 128 - 163  [0.474] 398
+Started game 402 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 399 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 107 - 129 - 163  [0.472] 399
+Started game 403 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 400 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 108 - 129 - 163  [0.474] 400
+...      4.3.0-king-safety-pst-base playing White: 65 - 56 - 79  [0.522] 200
+...      4.3.0-king-safety-pst-base playing Black: 43 - 73 - 84  [0.425] 200
+...      White vs Black: 138 - 99 - 163  [0.549] 400
+Elo difference: -18.3 +/- 26.2, LOS: 8.6 %, DrawRatio: 40.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 404 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 401 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 108 - 129 - 164  [0.474] 401
+Started game 405 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 402 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 108 - 129 - 165  [0.474] 402
+Started game 406 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 404 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 108 - 129 - 166  [0.474] 403
+Started game 407 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 403 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 109 - 129 - 166  [0.475] 404
+Started game 408 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 408 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 110 - 129 - 166  [0.477] 405
+Started game 409 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 407 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 110 - 130 - 166  [0.475] 406
+Started game 410 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 405 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 110 - 131 - 166  [0.474] 407
+Started game 411 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 406 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 110 - 131 - 167  [0.474] 408
+Started game 412 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 409 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 110 - 131 - 168  [0.474] 409
+Started game 413 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 410 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 110 - 131 - 169  [0.474] 410
+...      4.3.0-king-safety-pst-base playing White: 66 - 58 - 81  [0.520] 205
+...      4.3.0-king-safety-pst-base playing Black: 44 - 73 - 88  [0.429] 205
+...      White vs Black: 139 - 102 - 169  [0.545] 410
+Elo difference: -17.8 +/- 25.8, LOS: 8.8 %, DrawRatio: 41.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 414 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 412 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 110 - 131 - 170  [0.474] 411
+Started game 415 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 411 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 110 - 132 - 170  [0.473] 412
+Started game 416 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 413 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 111 - 132 - 170  [0.475] 413
+Started game 417 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 415 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 111 - 132 - 171  [0.475] 414
+Started game 418 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 414 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 112 - 132 - 171  [0.476] 415
+Started game 419 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 416 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 113 - 132 - 171  [0.477] 416
+Started game 420 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 417 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 113 - 132 - 172  [0.477] 417
+Started game 421 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 420 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 114 - 132 - 172  [0.478] 418
+Started game 422 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 419 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 114 - 132 - 173  [0.479] 419
+Started game 423 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 418 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 115 - 132 - 173  [0.480] 420
+...      4.3.0-king-safety-pst-base playing White: 67 - 59 - 84  [0.519] 210
+...      4.3.0-king-safety-pst-base playing Black: 48 - 73 - 89  [0.440] 210
+...      White vs Black: 140 - 107 - 173  [0.539] 420
+Elo difference: -14.1 +/- 25.5, LOS: 14.0 %, DrawRatio: 41.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 424 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 423 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 115 - 132 - 174  [0.480] 421
+Started game 425 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 422 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 115 - 133 - 174  [0.479] 422
+Started game 426 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 421 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 115 - 134 - 174  [0.478] 423
+Started game 427 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 424 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 116 - 134 - 174  [0.479] 424
+Started game 428 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 426 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 116 - 134 - 175  [0.479] 425
+Started game 429 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 427 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 116 - 134 - 176  [0.479] 426
+Started game 430 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 428 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 116 - 134 - 177  [0.479] 427
+Started game 431 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 425 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 116 - 134 - 178  [0.479] 428
+Started game 432 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 429 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 116 - 135 - 178  [0.478] 429
+Started game 433 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 432 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 116 - 135 - 179  [0.478] 430
+...      4.3.0-king-safety-pst-base playing White: 67 - 61 - 87  [0.514] 215
+...      4.3.0-king-safety-pst-base playing Black: 49 - 74 - 92  [0.442] 215
+...      White vs Black: 141 - 110 - 179  [0.536] 430
+Elo difference: -15.4 +/- 25.1, LOS: 11.5 %, DrawRatio: 41.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 434 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 430 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 116 - 136 - 179  [0.477] 431
+Started game 435 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 431 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 116 - 136 - 180  [0.477] 432
+Started game 436 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 433 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 116 - 137 - 180  [0.476] 433
+Started game 437 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 434 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 116 - 138 - 180  [0.475] 434
+Started game 438 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 435 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 116 - 138 - 181  [0.475] 435
+Started game 439 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 437 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 116 - 138 - 182  [0.475] 436
+Started game 440 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 438 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 116 - 138 - 183  [0.475] 437
+Started game 441 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 436 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 117 - 138 - 183  [0.476] 438
+Started game 442 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 439 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 118 - 138 - 183  [0.477] 439
+Started game 443 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 441 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 118 - 138 - 184  [0.477] 440
+...      4.3.0-king-safety-pst-base playing White: 68 - 62 - 91  [0.514] 221
+...      4.3.0-king-safety-pst-base playing Black: 50 - 76 - 93  [0.441] 219
+...      White vs Black: 144 - 112 - 184  [0.536] 440
+Elo difference: -15.8 +/- 24.8, LOS: 10.6 %, DrawRatio: 41.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 444 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 442 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 118 - 139 - 184  [0.476] 441
+Started game 445 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 440 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 118 - 140 - 184  [0.475] 442
+Started game 446 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 443 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 118 - 140 - 185  [0.475] 443
+Started game 447 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 444 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 119 - 140 - 185  [0.476] 444
+Started game 448 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 445 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 119 - 140 - 186  [0.476] 445
+Started game 449 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 446 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 119 - 141 - 186  [0.475] 446
+Started game 450 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 447 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 119 - 141 - 187  [0.475] 447
+Started game 451 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 448 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 119 - 141 - 188  [0.475] 448
+Started game 452 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 450 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 119 - 141 - 189  [0.476] 449
+Started game 453 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 451 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 120 - 141 - 189  [0.477] 450
+...      4.3.0-king-safety-pst-base playing White: 69 - 62 - 94  [0.516] 225
+...      4.3.0-king-safety-pst-base playing Black: 51 - 79 - 95  [0.438] 225
+...      White vs Black: 148 - 113 - 189  [0.539] 450
+Elo difference: -16.2 +/- 24.5, LOS: 9.7 %, DrawRatio: 42.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 454 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 449 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 121 - 141 - 189  [0.478] 451
+Started game 455 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 454 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 121 - 141 - 190  [0.478] 452
+Started game 456 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 452 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 121 - 141 - 191  [0.478] 453
+Started game 457 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 455 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 122 - 141 - 191  [0.479] 454
+Started game 458 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 453 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 123 - 141 - 191  [0.480] 455
+Started game 459 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 456 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 123 - 142 - 191  [0.479] 456
+Started game 460 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 459 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 123 - 143 - 191  [0.478] 457
+Started game 461 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 458 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 123 - 143 - 192  [0.478] 458
+Started game 462 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 457 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 123 - 144 - 192  [0.477] 459
+Started game 463 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 461 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 123 - 144 - 193  [0.477] 460
+...      4.3.0-king-safety-pst-base playing White: 72 - 64 - 95  [0.517] 231
+...      4.3.0-king-safety-pst-base playing Black: 51 - 80 - 98  [0.437] 229
+...      White vs Black: 152 - 115 - 193  [0.540] 460
+Elo difference: -15.9 +/- 24.2, LOS: 9.9 %, DrawRatio: 42.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 464 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 460 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black mates}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 124 - 144 - 193  [0.478] 461
+Started game 465 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 462 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 125 - 144 - 193  [0.479] 462
+Started game 466 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 463 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 125 - 144 - 194  [0.479] 463
+Started game 467 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 464 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 125 - 144 - 195  [0.480] 464
+Started game 468 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 466 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 126 - 144 - 195  [0.481] 465
+Started game 469 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 465 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 126 - 145 - 195  [0.480] 466
+Started game 470 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 467 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 127 - 145 - 195  [0.481] 467
+Started game 471 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 468 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 127 - 146 - 195  [0.480] 468
+Started game 472 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 469 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 127 - 147 - 195  [0.479] 469
+Started game 473 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 470 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 127 - 147 - 196  [0.479] 470
+...      4.3.0-king-safety-pst-base playing White: 73 - 66 - 96  [0.515] 235
+...      4.3.0-king-safety-pst-base playing Black: 54 - 81 - 100  [0.443] 235
+...      White vs Black: 154 - 120 - 196  [0.536] 470
+Elo difference: -14.8 +/- 24.0, LOS: 11.3 %, DrawRatio: 41.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 474 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 471 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 127 - 147 - 197  [0.479] 471
+Started game 475 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 474 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 127 - 147 - 198  [0.479] 472
+Started game 476 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 473 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 127 - 147 - 199  [0.479] 473
+Started game 477 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 472 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 127 - 147 - 200  [0.479] 474
+Started game 478 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 475 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 127 - 148 - 200  [0.478] 475
+Started game 479 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 476 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 128 - 148 - 200  [0.479] 476
+Started game 480 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 477 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 128 - 148 - 201  [0.479] 477
+Started game 481 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 478 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 128 - 149 - 201  [0.478] 478
+Started game 482 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 479 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 128 - 149 - 202  [0.478] 479
+Started game 483 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 482 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 128 - 149 - 203  [0.478] 480
+...      4.3.0-king-safety-pst-base playing White: 73 - 67 - 100  [0.512] 240
+...      4.3.0-king-safety-pst-base playing Black: 55 - 82 - 103  [0.444] 240
+...      White vs Black: 155 - 122 - 203  [0.534] 480
+Elo difference: -15.2 +/- 23.6, LOS: 10.4 %, DrawRatio: 42.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 484 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 481 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 128 - 149 - 204  [0.478] 481
+Started game 485 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 480 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 128 - 149 - 205  [0.478] 482
+Started game 486 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 483 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 128 - 149 - 206  [0.478] 483
+Started game 487 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 485 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 128 - 149 - 207  [0.478] 484
+Started game 488 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 484 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 128 - 149 - 208  [0.478] 485
+Started game 489 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 488 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 129 - 149 - 208  [0.479] 486
+Started game 490 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 487 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 129 - 150 - 208  [0.478] 487
+Started game 491 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 486 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 129 - 151 - 208  [0.477] 488
+Started game 492 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 490 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 130 - 151 - 208  [0.479] 489
+Started game 493 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 492 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 131 - 151 - 208  [0.480] 490
+...      4.3.0-king-safety-pst-base playing White: 73 - 68 - 103  [0.510] 244
+...      4.3.0-king-safety-pst-base playing Black: 58 - 83 - 105  [0.449] 246
+...      White vs Black: 156 - 126 - 208  [0.531] 490
+Elo difference: -14.2 +/- 23.3, LOS: 11.7 %, DrawRatio: 42.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 494 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 489 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 131 - 152 - 208  [0.479] 491
+Started game 495 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 493 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 131 - 152 - 209  [0.479] 492
+Started game 496 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 491 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 131 - 152 - 210  [0.479] 493
+Started game 497 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 494 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 131 - 152 - 211  [0.479] 494
+Started game 498 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 495 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 131 - 153 - 211  [0.478] 495
+Started game 499 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 496 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 131 - 154 - 211  [0.477] 496
+Started game 500 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 498 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 132 - 154 - 211  [0.478] 497
+Started game 501 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 497 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 133 - 154 - 211  [0.479] 498
+Started game 502 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 500 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 133 - 155 - 211  [0.478] 499
+Started game 503 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 499 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 134 - 155 - 211  [0.479] 500
+...      4.3.0-king-safety-pst-base playing White: 75 - 70 - 105  [0.510] 250
+...      4.3.0-king-safety-pst-base playing Black: 59 - 85 - 106  [0.448] 250
+...      White vs Black: 160 - 129 - 211  [0.531] 500
+Elo difference: -14.6 +/- 23.2, LOS: 10.8 %, DrawRatio: 42.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 504 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 501 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 135 - 155 - 211  [0.480] 501
+Started game 505 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 503 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 136 - 155 - 211  [0.481] 502
+Started game 506 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 502 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 136 - 155 - 212  [0.481] 503
+Started game 507 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 504 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 136 - 156 - 212  [0.480] 504
+Started game 508 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 505 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 137 - 156 - 212  [0.481] 505
+Started game 509 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 506 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 137 - 156 - 213  [0.481] 506
+Started game 510 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 507 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 137 - 156 - 214  [0.481] 507
+Started game 511 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 508 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 137 - 156 - 215  [0.481] 508
+Started game 512 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 509 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 137 - 156 - 216  [0.481] 509
+Started game 513 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 510 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 137 - 157 - 216  [0.480] 510
+...      4.3.0-king-safety-pst-base playing White: 78 - 70 - 107  [0.516] 255
+...      4.3.0-king-safety-pst-base playing Black: 59 - 87 - 109  [0.445] 255
+...      White vs Black: 165 - 129 - 216  [0.535] 510
+Elo difference: -13.6 +/- 22.9, LOS: 12.2 %, DrawRatio: 42.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 514 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 512 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 137 - 157 - 217  [0.480] 511
+Started game 515 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 511 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 137 - 158 - 217  [0.479] 512
+Started game 516 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 513 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 137 - 158 - 218  [0.480] 513
+Started game 517 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 514 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 137 - 158 - 219  [0.480] 514
+Started game 518 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 515 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 137 - 159 - 219  [0.479] 515
+Started game 519 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 516 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 137 - 159 - 220  [0.479] 516
+Started game 520 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 517 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 137 - 160 - 220  [0.478] 517
+Started game 521 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 518 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 138 - 160 - 220  [0.479] 518
+Started game 522 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 520 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 138 - 160 - 221  [0.479] 519
+Started game 523 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 519 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 138 - 161 - 221  [0.478] 520
+...      4.3.0-king-safety-pst-base playing White: 78 - 74 - 108  [0.508] 260
+...      4.3.0-king-safety-pst-base playing Black: 60 - 87 - 113  [0.448] 260
+...      White vs Black: 165 - 134 - 221  [0.530] 520
+Elo difference: -15.4 +/- 22.6, LOS: 9.2 %, DrawRatio: 42.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 524 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 521 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 138 - 162 - 221  [0.477] 521
+Started game 525 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 523 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 138 - 162 - 222  [0.477] 522
+Started game 526 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 522 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 138 - 162 - 223  [0.477] 523
+Started game 527 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 524 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 139 - 162 - 223  [0.478] 524
+Started game 528 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 525 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 140 - 162 - 223  [0.479] 525
+Started game 529 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 528 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 141 - 162 - 223  [0.480] 526
+Started game 530 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 526 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 141 - 162 - 224  [0.480] 527
+Started game 531 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 527 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 142 - 162 - 224  [0.481] 528
+Started game 532 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 530 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 143 - 162 - 224  [0.482] 529
+Started game 533 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 531 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 143 - 162 - 225  [0.482] 530
+...      4.3.0-king-safety-pst-base playing White: 80 - 75 - 110  [0.509] 265
+...      4.3.0-king-safety-pst-base playing Black: 63 - 87 - 115  [0.455] 265
+...      White vs Black: 167 - 138 - 225  [0.527] 530
+Elo difference: -12.5 +/- 22.4, LOS: 13.8 %, DrawRatio: 42.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 534 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 529 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 143 - 162 - 226  [0.482] 531
+Started game 535 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 532 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 143 - 162 - 227  [0.482] 532
+Started game 536 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 535 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 144 - 162 - 227  [0.483] 533
+Started game 537 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 533 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 144 - 162 - 228  [0.483] 534
+Started game 538 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 536 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 145 - 162 - 228  [0.484] 535
+Started game 539 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 534 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 145 - 162 - 229  [0.484] 536
+Started game 540 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 538 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 145 - 162 - 230  [0.484] 537
+Started game 541 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 537 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 145 - 162 - 231  [0.484] 538
+Started game 542 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 539 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 145 - 163 - 231  [0.483] 539
+Started game 543 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 541 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 145 - 163 - 232  [0.483] 540
+...      4.3.0-king-safety-pst-base playing White: 81 - 76 - 114  [0.509] 271
+...      4.3.0-king-safety-pst-base playing Black: 64 - 87 - 118  [0.457] 269
+...      White vs Black: 168 - 140 - 232  [0.526] 540
+Elo difference: -11.6 +/- 22.1, LOS: 15.3 %, DrawRatio: 43.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 544 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 540 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 145 - 164 - 232  [0.482] 541
+Started game 545 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 542 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 146 - 164 - 232  [0.483] 542
+Started game 546 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 544 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 146 - 165 - 232  [0.483] 543
+Started game 547 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 545 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 147 - 165 - 232  [0.483] 544
+Started game 548 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 543 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 147 - 165 - 233  [0.483] 545
+Started game 549 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 546 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 147 - 166 - 233  [0.483] 546
+Started game 550 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 548 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 148 - 166 - 233  [0.484] 547
+Started game 551 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 547 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 148 - 167 - 233  [0.483] 548
+Started game 552 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 550 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 148 - 167 - 234  [0.483] 549
+Started game 553 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 549 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 148 - 168 - 234  [0.482] 550
+...      4.3.0-king-safety-pst-base playing White: 82 - 78 - 115  [0.507] 275
+...      4.3.0-king-safety-pst-base playing Black: 66 - 90 - 119  [0.456] 275
+...      White vs Black: 172 - 144 - 234  [0.525] 550
+Elo difference: -12.6 +/- 22.0, LOS: 13.0 %, DrawRatio: 42.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 554 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 551 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 148 - 168 - 235  [0.482] 551
+Started game 555 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 554 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 148 - 169 - 235  [0.481] 552
+Started game 556 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 552 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 148 - 169 - 236  [0.481] 553
+Started game 557 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 553 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 148 - 169 - 237  [0.481] 554
+Started game 558 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 555 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 148 - 169 - 238  [0.481] 555
+Started game 559 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 557 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 148 - 169 - 239  [0.481] 556
+Started game 560 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 558 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 148 - 169 - 240  [0.481] 557
+Started game 561 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 556 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 148 - 170 - 240  [0.480] 558
+Started game 562 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 560 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 148 - 171 - 240  [0.479] 559
+Started game 563 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 559 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 148 - 172 - 240  [0.479] 560
+...      4.3.0-king-safety-pst-base playing White: 82 - 79 - 119  [0.505] 280
+...      4.3.0-king-safety-pst-base playing Black: 66 - 93 - 121  [0.452] 280
+...      White vs Black: 175 - 145 - 240  [0.527] 560
+Elo difference: -14.9 +/- 21.8, LOS: 9.0 %, DrawRatio: 42.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 564 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 561 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 149 - 172 - 240  [0.480] 561
+Started game 565 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 562 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 150 - 172 - 240  [0.480] 562
+Started game 566 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 563 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 150 - 173 - 240  [0.480] 563
+Started game 567 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 564 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 150 - 174 - 240  [0.479] 564
+Started game 568 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 568 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 150 - 174 - 241  [0.479] 565
+Started game 569 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 566 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 150 - 174 - 242  [0.479] 566
+Started game 570 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 565 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 151 - 174 - 242  [0.480] 567
+Started game 571 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 569 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 151 - 175 - 242  [0.479] 568
+Started game 572 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 567 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 151 - 175 - 243  [0.479] 569
+Started game 573 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 570 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 151 - 175 - 244  [0.479] 570
+...      4.3.0-king-safety-pst-base playing White: 84 - 81 - 120  [0.505] 285
+...      4.3.0-king-safety-pst-base playing Black: 67 - 94 - 124  [0.453] 285
+...      White vs Black: 178 - 148 - 244  [0.526] 570
+Elo difference: -14.6 +/- 21.6, LOS: 9.2 %, DrawRatio: 42.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 574 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 573 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 152 - 175 - 244  [0.480] 571
+Started game 575 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 571 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 152 - 175 - 245  [0.480] 572
+Started game 576 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 572 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 153 - 175 - 245  [0.481] 573
+Started game 577 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 575 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 153 - 175 - 246  [0.481] 574
+Started game 578 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 574 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 153 - 176 - 246  [0.480] 575
+Started game 579 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 576 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 153 - 176 - 247  [0.480] 576
+Started game 580 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 577 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 153 - 177 - 247  [0.479] 577
+Started game 581 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 578 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 153 - 177 - 248  [0.479] 578
+Started game 582 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 580 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 153 - 177 - 249  [0.479] 579
+Started game 583 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 581 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 154 - 177 - 249  [0.480] 580
+...      4.3.0-king-safety-pst-base playing White: 86 - 82 - 122  [0.507] 290
+...      4.3.0-king-safety-pst-base playing Black: 68 - 95 - 127  [0.453] 290
+...      White vs Black: 181 - 150 - 249  [0.527] 580
+Elo difference: -13.8 +/- 21.4, LOS: 10.3 %, DrawRatio: 42.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 584 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 579 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 154 - 178 - 249  [0.479] 581
+Started game 585 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 582 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 154 - 179 - 249  [0.479] 582
+Started game 586 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 583 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 154 - 179 - 250  [0.479] 583
+Started game 587 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 585 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 154 - 180 - 250  [0.478] 584
+Started game 588 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 586 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 154 - 181 - 250  [0.477] 585
+Started game 589 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 584 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 154 - 181 - 251  [0.477] 586
+Started game 590 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 587 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 154 - 181 - 252  [0.477] 587
+Started game 591 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 588 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 154 - 181 - 253  [0.477] 588
+Started game 592 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 590 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 155 - 181 - 253  [0.478] 589
+Started game 593 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 589 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 155 - 181 - 254  [0.478] 590
+...      4.3.0-king-safety-pst-base playing White: 86 - 84 - 125  [0.503] 295
+...      4.3.0-king-safety-pst-base playing Black: 69 - 97 - 129  [0.453] 295
+...      White vs Black: 183 - 153 - 254  [0.525] 590
+Elo difference: -15.3 +/- 21.2, LOS: 7.8 %, DrawRatio: 43.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 594 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 591 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 155 - 181 - 255  [0.478] 591
+Started game 595 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 592 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 155 - 182 - 255  [0.477] 592
+Started game 596 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 593 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 155 - 182 - 256  [0.477] 593
+Started game 597 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 594 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 155 - 182 - 257  [0.477] 594
+Started game 598 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 596 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 155 - 182 - 258  [0.477] 595
+Started game 599 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 595 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 155 - 183 - 258  [0.477] 596
+Started game 600 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 597 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 155 - 183 - 259  [0.477] 597
+Started game 601 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 598 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 155 - 183 - 260  [0.477] 598
+Started game 602 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 602 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 155 - 183 - 261  [0.477] 599
+Started game 603 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 600 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 156 - 183 - 261  [0.477] 600
+...      4.3.0-king-safety-pst-base playing White: 86 - 85 - 128  [0.502] 299
+...      4.3.0-king-safety-pst-base playing Black: 70 - 98 - 133  [0.453] 301
+...      White vs Black: 184 - 155 - 261  [0.524] 600
+Elo difference: -15.6 +/- 20.9, LOS: 7.1 %, DrawRatio: 43.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 604 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 601 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 156 - 183 - 262  [0.478] 601
+Started game 605 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 605 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 156 - 183 - 263  [0.478] 602
+Started game 606 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 599 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 156 - 184 - 263  [0.477] 603
+Started game 607 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 604 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 156 - 184 - 264  [0.477] 604
+Started game 608 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 603 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 157 - 184 - 264  [0.478] 605
+Started game 609 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 608 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 157 - 184 - 265  [0.478] 606
+Started game 610 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 606 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 157 - 184 - 266  [0.478] 607
+Started game 611 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 607 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 157 - 184 - 267  [0.478] 608
+Started game 612 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 609 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 158 - 184 - 267  [0.479] 609
+Started game 613 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 610 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 158 - 185 - 267  [0.478] 610
+...      4.3.0-king-safety-pst-base playing White: 88 - 86 - 131  [0.503] 305
+...      4.3.0-king-safety-pst-base playing Black: 70 - 99 - 136  [0.452] 305
+...      White vs Black: 187 - 156 - 267  [0.525] 610
+Elo difference: -15.4 +/- 20.7, LOS: 7.2 %, DrawRatio: 43.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 614 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 612 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 158 - 185 - 268  [0.478] 611
+Started game 615 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 613 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 158 - 186 - 268  [0.477] 612
+Started game 616 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 611 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 158 - 186 - 269  [0.477] 613
+Started game 617 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 615 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 158 - 186 - 270  [0.477] 614
+Started game 618 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 614 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 159 - 186 - 270  [0.478] 615
+Started game 619 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 616 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 159 - 186 - 271  [0.478] 616
+Started game 620 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 620 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 159 - 187 - 271  [0.477] 617
+Started game 621 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 618 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 159 - 188 - 271  [0.477] 618
+Started game 622 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 617 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 159 - 188 - 272  [0.477] 619
+Started game 623 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 619 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 159 - 188 - 273  [0.477] 620
+...      4.3.0-king-safety-pst-base playing White: 88 - 87 - 135  [0.502] 310
+...      4.3.0-king-safety-pst-base playing Black: 71 - 101 - 138  [0.452] 310
+...      White vs Black: 189 - 158 - 273  [0.525] 620
+Elo difference: -16.3 +/- 20.5, LOS: 6.0 %, DrawRatio: 44.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 624 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 621 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 159 - 188 - 274  [0.477] 621
+Started game 625 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 624 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 159 - 188 - 275  [0.477] 622
+Started game 626 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 623 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 159 - 189 - 275  [0.476] 623
+Started game 627 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 622 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 159 - 190 - 275  [0.475] 624
+Started game 628 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 625 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 159 - 190 - 276  [0.475] 625
+Started game 629 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 626 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 159 - 191 - 276  [0.474] 626
+Started game 630 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 628 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 159 - 191 - 277  [0.474] 627
+Started game 631 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 629 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 160 - 191 - 277  [0.475] 628
+Started game 632 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 627 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 161 - 191 - 277  [0.476] 629
+Started game 633 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 630 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 161 - 191 - 278  [0.476] 630
+...      4.3.0-king-safety-pst-base playing White: 90 - 88 - 137  [0.503] 315
+...      4.3.0-king-safety-pst-base playing Black: 71 - 103 - 141  [0.449] 315
+...      White vs Black: 193 - 159 - 278  [0.527] 630
+Elo difference: -16.6 +/- 20.3, LOS: 5.5 %, DrawRatio: 44.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 634 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 632 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 162 - 191 - 278  [0.477] 631
+Started game 635 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 633 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 163 - 191 - 278  [0.478] 632
+Started game 636 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 631 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 164 - 191 - 278  [0.479] 633
+Started game 637 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 634 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 165 - 191 - 278  [0.479] 634
+Started game 638 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 637 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 165 - 192 - 278  [0.479] 635
+Started game 639 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 635 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 166 - 192 - 278  [0.480] 636
+Started game 640 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 639 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 167 - 192 - 278  [0.480] 637
+Started game 641 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 638 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 167 - 193 - 278  [0.480] 638
+Started game 642 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 636 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 167 - 193 - 279  [0.480] 639
+Started game 643 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 641 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 168 - 193 - 279  [0.480] 640
+...      4.3.0-king-safety-pst-base playing White: 95 - 89 - 137  [0.509] 321
+...      4.3.0-king-safety-pst-base playing Black: 73 - 104 - 142  [0.451] 319
+...      White vs Black: 199 - 162 - 279  [0.529] 640
+Elo difference: -13.6 +/- 20.2, LOS: 9.4 %, DrawRatio: 43.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 644 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 640 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 168 - 193 - 280  [0.480] 641
+Started game 645 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 642 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 168 - 193 - 281  [0.481] 642
+Started game 646 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 644 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 168 - 193 - 282  [0.481] 643
+Started game 647 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 645 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 168 - 194 - 282  [0.480] 644
+Started game 648 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 643 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 168 - 195 - 282  [0.479] 645
+Started game 649 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 647 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 168 - 196 - 282  [0.478] 646
+Started game 650 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 648 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 168 - 196 - 283  [0.478] 647
+Started game 651 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 646 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 169 - 196 - 283  [0.479] 648
+Started game 652 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 650 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 169 - 196 - 284  [0.479] 649
+Started game 653 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 649 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 169 - 196 - 285  [0.479] 650
+...      4.3.0-king-safety-pst-base playing White: 95 - 92 - 138  [0.505] 325
+...      4.3.0-king-safety-pst-base playing Black: 74 - 104 - 147  [0.454] 325
+...      White vs Black: 199 - 166 - 285  [0.525] 650
+Elo difference: -14.4 +/- 20.0, LOS: 7.9 %, DrawRatio: 43.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 654 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 651 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 169 - 197 - 285  [0.478] 651
+Started game 655 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 652 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 169 - 197 - 286  [0.479] 652
+Started game 656 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 653 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 169 - 198 - 286  [0.478] 653
+Started game 657 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 655 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 170 - 198 - 286  [0.479] 654
+Started game 658 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 656 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 170 - 199 - 286  [0.478] 655
+Started game 659 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 654 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 170 - 199 - 287  [0.478] 656
+Started game 660 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 657 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 170 - 199 - 288  [0.478] 657
+Started game 661 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 659 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 170 - 199 - 289  [0.478] 658
+Started game 662 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 660 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 170 - 200 - 289  [0.477] 659
+Started game 663 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 658 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 170 - 201 - 289  [0.477] 660
+...      4.3.0-king-safety-pst-base playing White: 96 - 94 - 140  [0.503] 330
+...      4.3.0-king-safety-pst-base playing Black: 74 - 107 - 149  [0.450] 330
+...      White vs Black: 203 - 168 - 289  [0.527] 660
+Elo difference: -16.3 +/- 19.9, LOS: 5.4 %, DrawRatio: 43.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 664 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 661 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 170 - 201 - 290  [0.477] 661
+Started game 665 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 662 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 170 - 202 - 290  [0.476] 662
+Started game 666 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 663 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 170 - 203 - 290  [0.475] 663
+Started game 667 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 664 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 170 - 204 - 290  [0.474] 664
+Started game 668 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 666 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 170 - 204 - 291  [0.474] 665
+Started game 669 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 665 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 171 - 204 - 291  [0.475] 666
+Started game 670 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 669 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 171 - 204 - 292  [0.475] 667
+Started game 671 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 668 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 171 - 204 - 293  [0.475] 668
+Started game 672 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 667 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 171 - 205 - 293  [0.475] 669
+Started game 673 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 670 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 171 - 205 - 294  [0.475] 670
+...      4.3.0-king-safety-pst-base playing White: 97 - 96 - 142  [0.501] 335
+...      4.3.0-king-safety-pst-base playing Black: 74 - 109 - 152  [0.448] 335
+...      White vs Black: 206 - 170 - 294  [0.527] 670
+Elo difference: -17.6 +/- 19.7, LOS: 4.0 %, DrawRatio: 43.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 674 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 673 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 171 - 206 - 294  [0.474] 671
+Started game 675 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 671 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 171 - 206 - 295  [0.474] 672
+Started game 676 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 674 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 171 - 206 - 296  [0.474] 673
+Started game 677 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 672 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 172 - 206 - 296  [0.475] 674
+Started game 678 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 676 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 173 - 206 - 296  [0.476] 675
+Started game 679 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 675 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 173 - 206 - 297  [0.476] 676
+Started game 680 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 677 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 173 - 207 - 297  [0.475] 677
+Started game 681 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 678 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 174 - 207 - 297  [0.476] 678
+Started game 682 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 680 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 174 - 208 - 297  [0.475] 679
+Started game 683 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 681 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 174 - 209 - 297  [0.474] 680
+...      4.3.0-king-safety-pst-base playing White: 97 - 99 - 144  [0.497] 340
+...      4.3.0-king-safety-pst-base playing Black: 77 - 110 - 153  [0.451] 340
+...      White vs Black: 207 - 176 - 297  [0.523] 680
+Elo difference: -17.9 +/- 19.6, LOS: 3.7 %, DrawRatio: 43.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 684 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 682 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 174 - 209 - 298  [0.474] 681
+Started game 685 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 679 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 174 - 209 - 299  [0.474] 682
+Started game 686 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 683 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 174 - 210 - 299  [0.474] 683
+Started game 687 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 685 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 174 - 211 - 299  [0.473] 684
+Started game 688 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 684 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 175 - 211 - 299  [0.474] 685
+Started game 689 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 686 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 175 - 212 - 299  [0.473] 686
+Started game 690 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 688 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 175 - 213 - 299  [0.472] 687
+Started game 691 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 690 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 175 - 214 - 299  [0.472] 688
+Started game 692 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 687 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 175 - 215 - 299  [0.471] 689
+Started game 693 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 689 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 175 - 216 - 299  [0.470] 690
+...      4.3.0-king-safety-pst-base playing White: 97 - 103 - 145  [0.491] 345
+...      4.3.0-king-safety-pst-base playing Black: 78 - 113 - 154  [0.449] 345
+...      White vs Black: 210 - 181 - 299  [0.521] 690
+Elo difference: -20.7 +/- 19.5, LOS: 1.9 %, DrawRatio: 43.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 694 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 691 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 175 - 216 - 300  [0.470] 691
+Started game 695 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 692 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 176 - 216 - 300  [0.471] 692
+Started game 696 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 694 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 176 - 216 - 301  [0.471] 693
+Started game 697 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 696 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 176 - 217 - 301  [0.470] 694
+Started game 698 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 693 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 177 - 217 - 301  [0.471] 695
+Started game 699 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 695 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 178 - 217 - 301  [0.472] 696
+Started game 700 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 697 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 178 - 217 - 302  [0.472] 697
+Started game 701 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 699 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 178 - 218 - 302  [0.471] 698
+Started game 702 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 701 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 178 - 218 - 303  [0.471] 699
+Started game 703 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 698 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 178 - 219 - 303  [0.471] 700
+...      4.3.0-king-safety-pst-base playing White: 99 - 104 - 148  [0.493] 351
+...      4.3.0-king-safety-pst-base playing Black: 79 - 115 - 155  [0.448] 349
+...      White vs Black: 214 - 183 - 303  [0.522] 700
+Elo difference: -20.4 +/- 19.4, LOS: 2.0 %, DrawRatio: 43.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 704 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 703 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 178 - 219 - 304  [0.471] 701
+Started game 705 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 704 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 178 - 219 - 305  [0.471] 702
+Started game 706 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 700 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 178 - 220 - 305  [0.470] 703
+Started game 707 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 702 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 178 - 221 - 305  [0.469] 704
+Started game 708 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 705 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 178 - 222 - 305  [0.469] 705
+Started game 709 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 706 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 179 - 222 - 305  [0.470] 706
+Started game 710 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 707 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 179 - 222 - 306  [0.470] 707
+Started game 711 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 708 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 180 - 222 - 306  [0.470] 708
+Started game 712 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 709 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 180 - 223 - 306  [0.470] 709
+Started game 713 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 710 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 181 - 223 - 306  [0.470] 710
+...      4.3.0-king-safety-pst-base playing White: 99 - 106 - 150  [0.490] 355
+...      4.3.0-king-safety-pst-base playing Black: 82 - 117 - 156  [0.451] 355
+...      White vs Black: 216 - 188 - 306  [0.520] 710
+Elo difference: -20.6 +/- 19.3, LOS: 1.8 %, DrawRatio: 43.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 714 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 711 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 181 - 223 - 307  [0.470] 711
+Started game 715 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 712 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 181 - 223 - 308  [0.471] 712
+Started game 716 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 714 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 181 - 223 - 309  [0.471] 713
+Started game 717 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 713 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 182 - 223 - 309  [0.471] 714
+Started game 718 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 717 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 182 - 223 - 310  [0.471] 715
+Started game 719 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 715 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 182 - 224 - 310  [0.471] 716
+Started game 720 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 716 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 182 - 224 - 311  [0.471] 717
+Started game 721 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 718 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 182 - 224 - 312  [0.471] 718
+Started game 722 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 719 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 182 - 224 - 313  [0.471] 719
+Started game 723 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 721 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 182 - 225 - 313  [0.470] 720
+...      4.3.0-king-safety-pst-base playing White: 100 - 108 - 153  [0.489] 361
+...      4.3.0-king-safety-pst-base playing Black: 82 - 117 - 160  [0.451] 359
+...      White vs Black: 217 - 190 - 313  [0.519] 720
+Elo difference: -20.8 +/- 19.1, LOS: 1.7 %, DrawRatio: 43.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 724 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 720 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 182 - 225 - 314  [0.470] 721
+Started game 725 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 722 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 182 - 226 - 314  [0.470] 722
+Started game 726 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 723 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 183 - 226 - 314  [0.470] 723
+Started game 727 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 725 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 183 - 226 - 315  [0.470] 724
+Started game 728 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 724 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 183 - 227 - 315  [0.470] 725
+Started game 729 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 727 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 184 - 227 - 315  [0.470] 726
+Started game 730 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 726 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 184 - 227 - 316  [0.470] 727
+Started game 731 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 729 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 184 - 227 - 317  [0.470] 728
+Started game 732 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 728 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 184 - 227 - 318  [0.471] 729
+Started game 733 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 730 (4.2.1 vs 4.3.0-king-safety-pst-base): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 185 - 227 - 318  [0.471] 730
+...      4.3.0-king-safety-pst-base playing White: 102 - 108 - 155  [0.492] 365
+...      4.3.0-king-safety-pst-base playing Black: 83 - 119 - 163  [0.451] 365
+...      White vs Black: 221 - 191 - 318  [0.521] 730
+Elo difference: -20.0 +/- 18.9, LOS: 1.9 %, DrawRatio: 43.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 734 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 733 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 186 - 227 - 318  [0.472] 731
+Started game 735 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 731 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 186 - 228 - 318  [0.471] 732
+Started game 736 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 734 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 186 - 229 - 318  [0.471] 733
+Started game 737 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 732 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 186 - 229 - 319  [0.471] 734
+Started game 738 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 735 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 187 - 229 - 319  [0.471] 735
+Started game 739 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 737 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 187 - 229 - 320  [0.471] 736
+Started game 740 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 738 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 187 - 229 - 321  [0.472] 737
+Started game 741 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 736 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 187 - 229 - 322  [0.472] 738
+Started game 742 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 739 (4.3.0-king-safety-pst-base vs 4.2.1): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 229 - 322  [0.472] 739
+Started game 743 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 740 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 230 - 322  [0.472] 740
+...      4.3.0-king-safety-pst-base playing White: 105 - 109 - 156  [0.495] 370
+...      4.3.0-king-safety-pst-base playing Black: 83 - 121 - 166  [0.449] 370
+...      White vs Black: 226 - 192 - 322  [0.523] 740
+Elo difference: -19.7 +/- 18.8, LOS: 2.0 %, DrawRatio: 43.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 744 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 741 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 230 - 323  [0.472] 741
+Started game 745 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 743 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 230 - 324  [0.472] 742
+Started game 746 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 745 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 230 - 325  [0.472] 743
+Started game 747 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 744 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 230 - 326  [0.472] 744
+Started game 748 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 742 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 230 - 327  [0.472] 745
+Started game 749 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 746 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 231 - 327  [0.471] 746
+Started game 750 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 748 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 231 - 328  [0.471] 747
+Started game 751 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 747 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 232 - 328  [0.471] 748
+Started game 752 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 750 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 232 - 329  [0.471] 749
+Started game 753 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 749 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 233 - 329  [0.470] 750
+...      4.3.0-king-safety-pst-base playing White: 105 - 111 - 159  [0.492] 375
+...      4.3.0-king-safety-pst-base playing Black: 83 - 122 - 170  [0.448] 375
+...      White vs Black: 227 - 194 - 329  [0.522] 750
+Elo difference: -20.9 +/- 18.6, LOS: 1.4 %, DrawRatio: 43.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 754 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 752 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 234 - 329  [0.469] 751
+Started game 755 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 751 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 234 - 330  [0.469] 752
+Started game 756 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 753 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 234 - 331  [0.469] 753
+Started game 757 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 754 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 234 - 332  [0.469] 754
+Started game 758 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 755 (4.3.0-king-safety-pst-base vs 4.2.1): 0-1 {Black wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 235 - 332  [0.469] 755
+Started game 759 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 756 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 235 - 333  [0.469] 756
+Started game 760 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 757 (4.3.0-king-safety-pst-base vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 235 - 334  [0.469] 757
+Started game 761 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
+Finished game 760 (4.2.1 vs 4.3.0-king-safety-pst-base): 1-0 {White wins by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 236 - 334  [0.468] 758
+Started game 762 of 3200 (4.2.1 vs 4.3.0-king-safety-pst-base)
+Finished game 758 (4.2.1 vs 4.3.0-king-safety-pst-base): 1/2-1/2 {Draw by adjudication}
+Score of 4.3.0-king-safety-pst-base vs 4.2.1: 188 - 236 - 335  [0.468] 759
+Started game 763 of 3200 (4.3.0-king-safety-pst-base vs 4.2.1)
