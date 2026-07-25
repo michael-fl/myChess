@@ -31,4 +31,9 @@ src/test/resources/large.pgn
 
 /myChess-stderr*
 
+# Texel tuning datasets: large, re-downloadable external data (~79 MB).
+# Only the README with the fetch command is tracked; the data itself is not.
+/tuning-data/*
+!/tuning-data/README.md
+
 

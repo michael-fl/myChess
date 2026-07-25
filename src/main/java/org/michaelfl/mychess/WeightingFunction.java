@@ -237,6 +237,49 @@ public final class WeightingFunction {
         return calculatePositionWeight();
     }
 
+    /** The evaluation factors the offline tuner can adjust, in a fixed order. */
+    public static final String[] TUNABLE_FACTOR_NAMES = {
+            "positionFactor", "mobilityFactor", "threadWeightFactor",
+            "castlingFactor", "chessFactor", "doublePawnFactor", "undefendedPiecesFactor"
+    };
+
+    /** Current values of {@link #TUNABLE_FACTOR_NAMES}, in the same order. */
+    public static double[] tunableFactorValues() {
+        return new double[] {
+                positionFactor, mobilityFactor, threadWeightFactor,
+                castlingFactor, chessFactor, doublePawnFactor, undefendedPiecesFactor
+        };
+    }
+
+    /**
+     * A position's evaluation together with the per-factor coefficients that
+     * feed it. The evaluation is linear in the factors, so the White-POV eval is
+     * a factor-independent material part plus {@code sum(features[i] * factor[i])}
+     * where {@code features} are in the {@link #TUNABLE_FACTOR_NAMES} order and
+     * in centipawns per unit factor. Used by the offline Texel factor tuner.
+     *
+     * @param eval     the White-POV evaluation in centipawns
+     * @param features the per-factor coefficients for this position
+     */
+    public record FactorBreakdown(int eval, double[] features) {}
+
+    /** Evaluate {@code board} and return its {@link FactorBreakdown} for tuning. */
+    public FactorBreakdown analyzeFactors(Board board) {
+        int eval = calculate(board);
+
+        double[] features = {
+                positionWeight[0] - positionWeight[1],
+                mobilityWeight[0] - mobilityWeight[1],
+                threadWeight[0] - threadWeight[1],
+                (castlingState[0] - castlingState[1]) * 100.0,
+                (chessCount[0] - chessCount[1]) * 100.0,
+                (doublePawnCount[0] - doublePawnCount[1]) * 100.0,
+                (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * 100.0
+        };
+
+        return new FactorBreakdown(eval, features);
+    }
+
     private int calculatePositionWeight() {
         if (containsIllegalMove)
             return turn == 0 ? ILLEGAL_WEIGHT_POS : ILLEGAL_WEIGHT_NEG;
