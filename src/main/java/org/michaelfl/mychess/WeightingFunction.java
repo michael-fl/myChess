@@ -136,6 +136,7 @@ public final class WeightingFunction {
     private Board theBoard; // For debugger only
     private byte[] board;
     private final byte[] tempBoard = new byte[Board.LENGTH * Board.LENGTH];
+    private final MoveState moveState = new MoveState();
     private final int[] chessCount = new int[2];
     private final float[] piecesWeight = new float[2];
     private final int[] mobilityWeight = new int[2];
@@ -334,6 +335,9 @@ public final class WeightingFunction {
     }
 
     private void calculateForWhitePawn(int field, int color) {
+        final var state = moveState;
+        state.reset(NONE);
+
         // single step
         int to = field + Board.LENGTH;
         if (board[to] == Board.empty) {
@@ -349,10 +353,10 @@ public final class WeightingFunction {
         }
 
         // capture right
-        captureOrDefendWithPawn(field + Board.LENGTH + 1, GameStatus.TURN_WHITE, GameStatus.TURN_BLACK, Board.whitePawn, color);
+        captureOrDefendWithPawn(state, field + Board.LENGTH + 1, GameStatus.TURN_WHITE, GameStatus.TURN_BLACK, Board.whitePawn, color);
 
         // capture left
-        captureOrDefendWithPawn(field + Board.LENGTH - 1, GameStatus.TURN_WHITE, GameStatus.TURN_BLACK, Board.whitePawn, color);
+        captureOrDefendWithPawn(state, field + Board.LENGTH - 1, GameStatus.TURN_WHITE, GameStatus.TURN_BLACK, Board.whitePawn, color);
 
         // en passant
         if (fieldToRow(field) == 4) {
@@ -361,11 +365,11 @@ public final class WeightingFunction {
                 if (board[field - 1] == Board.blackPawn
                         && Move.getToField(lastMove) == field - 1
                         && Move.getFromField(lastMove) == field - 1 + 2 * Board.LENGTH) {
-                    capture(field - 1, Board.whitePawn, color, Board.blackPawn);
+                    capture(state, field - 1, Board.whitePawn, color, Board.blackPawn);
                 } else if (board[field + 1] == Board.blackPawn
                         && Move.getToField(lastMove) == field + 1
                         && Move.getFromField(lastMove) == field + 1 + 2 * Board.LENGTH) {
-                    capture(field + 1, Board.whitePawn, color, Board.blackPawn);
+                    capture(state, field + 1, Board.whitePawn, color, Board.blackPawn);
                 }
             }
         }
@@ -381,9 +385,9 @@ public final class WeightingFunction {
         }
     }
 
-    private void captureOrDefendWithPawn(final int to, final int myTurn, final int oppositeTurn, final byte movingPawn, final int color) {
+    private void captureOrDefendWithPawn(MoveState state, final int to, final int myTurn, final int oppositeTurn, final byte movingPawn, final int color) {
         if ((board[to] & oppositeTurn) == oppositeTurn) {
-            capture(to, movingPawn, color, board[to]);
+            capture(state, to, movingPawn, color, board[to]);
         } else if ((board[to] & myTurn) == myTurn) {
             defend(to);
         }
@@ -398,6 +402,9 @@ public final class WeightingFunction {
     }
 
     private void calculateForBlackPawn(int field, int color) {
+        final var state = moveState;
+        state.reset(NONE);
+
         // single step
         int to = field - Board.LENGTH;
         if (board[to] == Board.empty) {
@@ -414,11 +421,11 @@ public final class WeightingFunction {
 
         // capture right
         to = field - Board.LENGTH + 1;
-        captureOrDefendWithPawn(to, GameStatus.TURN_BLACK, GameStatus.TURN_WHITE, Board.blackPawn, color);
+        captureOrDefendWithPawn(state, to, GameStatus.TURN_BLACK, GameStatus.TURN_WHITE, Board.blackPawn, color);
 
         // capture left
         to = field - Board.LENGTH - 1;
-        captureOrDefendWithPawn(to, GameStatus.TURN_BLACK, GameStatus.TURN_WHITE, Board.blackPawn, color);
+        captureOrDefendWithPawn(state, to, GameStatus.TURN_BLACK, GameStatus.TURN_WHITE, Board.blackPawn, color);
 
         // en passant
         if (fieldToRow(field) == 3) {
@@ -427,11 +434,11 @@ public final class WeightingFunction {
                 if (board[field - 1] == Board.whitePawn
                         && Move.getToField(lastMove) == field - 1
                         && Move.getFromField(lastMove) == field - 1 - 2 * Board.LENGTH) {
-                    capture(field - 1, Board.blackPawn, color, Board.whitePawn);
+                    capture(state, field - 1, Board.blackPawn, color, Board.whitePawn);
                 } else if (board[field + 1] == Board.whitePawn
                         && Move.getToField(lastMove) == field + 1
                         && Move.getFromField(lastMove) == field + 1 - 2 * Board.LENGTH) {
-                    capture(field + 1, Board.blackPawn, color, Board.whitePawn);
+                    capture(state, field + 1, Board.blackPawn, color, Board.whitePawn);
                 }
             }
         }
@@ -453,15 +460,17 @@ public final class WeightingFunction {
 
     private void calculateForKnight(int field, int color) {
         final byte myPiece = board[field];
+        final var state = moveState;
+        state.reset(NONE);
 
-        move(myPiece, field, field + 2 * Board.LENGTH + 1, color);
-        move(myPiece, field, field + 1 * Board.LENGTH + 2, color);
-        move(myPiece, field, field - 1 * Board.LENGTH + 2, color);
-        move(myPiece, field, field - 2 * Board.LENGTH + 1, color);
-        move(myPiece, field, field - 2 * Board.LENGTH - 1, color);
-        move(myPiece, field, field - 1 * Board.LENGTH - 2, color);
-        move(myPiece, field, field + 1 * Board.LENGTH - 2, color);
-        move(myPiece, field, field + 2 * Board.LENGTH - 1, color);
+        move(state, myPiece, field, field + 2 * Board.LENGTH + 1, color);
+        move(state, myPiece, field, field + 1 * Board.LENGTH + 2, color);
+        move(state, myPiece, field, field - 1 * Board.LENGTH + 2, color);
+        move(state, myPiece, field, field - 2 * Board.LENGTH + 1, color);
+        move(state, myPiece, field, field - 2 * Board.LENGTH - 1, color);
+        move(state, myPiece, field, field - 1 * Board.LENGTH - 2, color);
+        move(state, myPiece, field, field + 1 * Board.LENGTH - 2, color);
+        move(state, myPiece, field, field + 2 * Board.LENGTH - 1, color);
     }
 
     private static void _calculateForBishop(WeightingFunction generator, int field, int color) {
@@ -471,14 +480,20 @@ public final class WeightingFunction {
     private void calculateForBishop(int field, int color) {
         final byte myPiece = board[field];
 
+        final var state = moveState;
+
         // move up-right
-        for (int to = field + Board.LENGTH + 1; move(myPiece, field, to, color); to += Board.LENGTH + 1);
+        state.reset(DIAGONAL);
+        for (int to = field + Board.LENGTH + 1; move(state, myPiece, field, to, color); to += Board.LENGTH + 1);
         // move down-right
-        for (int to = field - Board.LENGTH + 1; move(myPiece, field, to, color); to = to - Board.LENGTH + 1);
+        state.reset(DIAGONAL);
+        for (int to = field - Board.LENGTH + 1; move(state, myPiece, field, to, color); to = to - Board.LENGTH + 1);
         // move down-left
-        for (int to = field - Board.LENGTH - 1; move(myPiece, field, to, color); to = to - Board.LENGTH - 1);
+        state.reset(DIAGONAL);
+        for (int to = field - Board.LENGTH - 1; move(state, myPiece, field, to, color); to = to - Board.LENGTH - 1);
         // move up-left
-        for (int to = field + Board.LENGTH - 1; move(myPiece, field, to, color); to += Board.LENGTH - 1);
+        state.reset(DIAGONAL);
+        for (int to = field + Board.LENGTH - 1; move(state, myPiece, field, to, color); to += Board.LENGTH - 1);
     }
 
     private static void _calculateForRook(WeightingFunction generator, int field, int color) {
@@ -489,14 +504,20 @@ public final class WeightingFunction {
         final byte myPiece = board[field];
         final int rankWeight = mobilityWeightOfPiece[myPiece] / 2;
 
+        final var state = moveState;
+
         // move up — file mobility (full weight)
-        for (int to = field + Board.LENGTH; move(myPiece, field, to, color); to += Board.LENGTH);
+        state.reset(ORTHOGONAL);
+        for (int to = field + Board.LENGTH; move(state, myPiece, field, to, color); to += Board.LENGTH);
         // move down — file mobility (full weight)
-        for (int to = field - Board.LENGTH; move(myPiece, field, to, color); to -= Board.LENGTH);
+        state.reset(ORTHOGONAL);
+        for (int to = field - Board.LENGTH; move(state, myPiece, field, to, color); to -= Board.LENGTH);
         // move left — rank mobility (half weight)
-        for (int to = field - 1; move(myPiece, field, to, color, rankWeight); to--);
+        state.reset(ORTHOGONAL);
+        for (int to = field - 1; move(state, myPiece, field, to, color, rankWeight); to--);
         // move right — rank mobility (half weight)
-        for (int to = field + 1; move(myPiece, field, to, color, rankWeight); to++);
+        state.reset(ORTHOGONAL);
+        for (int to = field + 1; move(state, myPiece, field, to, color, rankWeight); to++);
     }
 
     private static void _calculateForQueen(WeightingFunction generator, int field, int color) {
@@ -506,22 +527,32 @@ public final class WeightingFunction {
     private void calculateForQueen(int field, int color) {
         final byte myPiece = board[field];
 
+        final var state = moveState;
+
         // move up
-        for (int to = field + Board.LENGTH; move(myPiece, field, to, color); to += Board.LENGTH);
+        state.reset(ORTHOGONAL);
+        for (int to = field + Board.LENGTH; move(state, myPiece, field, to, color); to += Board.LENGTH);
         // move up-right
-        for (int to = field + Board.LENGTH + 1; move(myPiece, field, to, color); to += Board.LENGTH + 1);
+        state.reset(DIAGONAL);
+        for (int to = field + Board.LENGTH + 1; move(state, myPiece, field, to, color); to += Board.LENGTH + 1);
         // move right
-        for (int to = field + 1; move(myPiece, field, to, color); to++);
+        state.reset(ORTHOGONAL);
+        for (int to = field + 1; move(state, myPiece, field, to, color); to++);
         // move down-right
-        for (int to = field - Board.LENGTH + 1; move(myPiece, field, to, color); to = to - Board.LENGTH + 1);
+        state.reset(DIAGONAL);
+        for (int to = field - Board.LENGTH + 1; move(state, myPiece, field, to, color); to = to - Board.LENGTH + 1);
         // move down
-        for (int to = field - Board.LENGTH; move(myPiece, field, to, color); to -= Board.LENGTH);
+        state.reset(ORTHOGONAL);
+        for (int to = field - Board.LENGTH; move(state, myPiece, field, to, color); to -= Board.LENGTH);
         // move down-left
-        for (int to = field - Board.LENGTH - 1; move(myPiece, field, to, color); to = to - Board.LENGTH - 1);
+        state.reset(DIAGONAL);
+        for (int to = field - Board.LENGTH - 1; move(state, myPiece, field, to, color); to = to - Board.LENGTH - 1);
         // move left
-        for (int to = field - 1; move(myPiece, field, to, color); to--);
+        state.reset(ORTHOGONAL);
+        for (int to = field - 1; move(state, myPiece, field, to, color); to--);
         // move up-left
-        for (int to = field + Board.LENGTH - 1; move(myPiece, field, to, color); to += Board.LENGTH - 1);
+        state.reset(DIAGONAL);
+        for (int to = field + Board.LENGTH - 1; move(state, myPiece, field, to, color); to += Board.LENGTH - 1);
     }
 
     private static void _calculateForKing(WeightingFunction generator, int field, int color) {
@@ -530,65 +561,126 @@ public final class WeightingFunction {
 
     private void calculateForKing(int field, int color) {
         final byte myPiece = board[field];
+        final var state = moveState;
+        state.reset(NONE);
 
         // move up
-        move(myPiece, field, field + Board.LENGTH, color);
+        move(state, myPiece, field, field + Board.LENGTH, color);
         // move up-right
-        move(myPiece, field, field + Board.LENGTH + 1, color);
+        move(state, myPiece, field, field + Board.LENGTH + 1, color);
         // move right
-        move(myPiece, field, field + 1, color);
+        move(state, myPiece, field, field + 1, color);
         // move down-right
-        move(myPiece, field, field - Board.LENGTH + 1, color);
+        move(state, myPiece, field, field - Board.LENGTH + 1, color);
         // move down
-        move(myPiece, field, field - Board.LENGTH, color);
+        move(state, myPiece, field, field - Board.LENGTH, color);
         // move down-left
-        move(myPiece, field, field - Board.LENGTH - 1, color);
+        move(state, myPiece, field, field - Board.LENGTH - 1, color);
         // move left
-        move(myPiece, field, field - 1, color);
+        move(state, myPiece, field, field - 1, color);
         // move up-left
-        move(myPiece, field, field + Board.LENGTH - 1, color);
+        move(state, myPiece, field, field + Board.LENGTH - 1, color);
     }
 
-    private boolean move(final byte movingPiece, final int from, final int to, int color) {
-        return move(movingPiece, from, to, color, mobilityWeightOfPiece[movingPiece]);
+    private static final int NONE = 0;
+    private static final int ORTHOGONAL = 1;
+    private static final int DIAGONAL = 2;
+
+    private static final boolean[][] hasSameDirection = new boolean[3][Board.blackKing + 1];
+    static {
+        hasSameDirection[NONE][Board.whitePawn] = false;
+        hasSameDirection[NONE][Board.whiteKnight] = false;
+        hasSameDirection[NONE][Board.whiteBishop] = false;
+        hasSameDirection[NONE][Board.whiteRook] = false;
+        hasSameDirection[NONE][Board.whiteQueen] = false;
+        hasSameDirection[NONE][Board.whiteKing] = false;
+        hasSameDirection[NONE][Board.blackPawn] = false;
+        hasSameDirection[NONE][Board.blackKnight] = false;
+        hasSameDirection[NONE][Board.blackBishop] = false;
+        hasSameDirection[NONE][Board.blackRook] = false;
+        hasSameDirection[NONE][Board.blackQueen] = false;
+        hasSameDirection[NONE][Board.blackKing] = false;
+        hasSameDirection[ORTHOGONAL][Board.whitePawn] = false;
+        hasSameDirection[ORTHOGONAL][Board.whiteKnight] = false;
+        hasSameDirection[ORTHOGONAL][Board.whiteBishop] = false;
+        hasSameDirection[ORTHOGONAL][Board.whiteRook] = true;
+        hasSameDirection[ORTHOGONAL][Board.whiteQueen] = true;
+        hasSameDirection[ORTHOGONAL][Board.whiteKing] = false;
+        hasSameDirection[ORTHOGONAL][Board.blackPawn] = false;
+        hasSameDirection[ORTHOGONAL][Board.blackKnight] = false;
+        hasSameDirection[ORTHOGONAL][Board.blackBishop] = false;
+        hasSameDirection[ORTHOGONAL][Board.blackRook] = true;
+        hasSameDirection[ORTHOGONAL][Board.blackQueen] = true;
+        hasSameDirection[DIAGONAL][Board.whitePawn] = false;
+        hasSameDirection[DIAGONAL][Board.whiteKnight] = false;
+        hasSameDirection[DIAGONAL][Board.whiteBishop] = true;
+        hasSameDirection[DIAGONAL][Board.whiteRook] = false;
+        hasSameDirection[DIAGONAL][Board.whiteQueen] = true;
+        hasSameDirection[DIAGONAL][Board.whiteKing] = false;
+        hasSameDirection[DIAGONAL][Board.blackPawn] = false;
+        hasSameDirection[DIAGONAL][Board.blackKnight] = false;
+        hasSameDirection[DIAGONAL][Board.blackBishop] = true;
+        hasSameDirection[DIAGONAL][Board.blackRook] = false;
+        hasSameDirection[DIAGONAL][Board.blackQueen] = true;
+        hasSameDirection[DIAGONAL][Board.blackKing] = false;
     }
 
-    @SuppressWarnings({"unused", "java:S1117"})
-    private boolean move(final byte movingPiece, final int from, final int to, final int color, final int weight) {
-        final byte piece = board[to];
-        final int oppositeColor = WeightingFunction.oppositeColor[color];
+    private static class MoveState {
+        int direction;
+        int batteryDivisor = 1;
 
-        if (piece == Board.illegal)
-            return false;
-
-        if (piece == Board.empty) {
-            mobilityWeight[color] += weight;
-            return true;
-        } else if ((piece & oppositeColor) == oppositeColor) {
-            capture(to, color, piece, weight);
-            return false;
-        } else { // own color
-            defend(to);
-            return false;
+        void reset(int direction) {
+            this.direction = direction;
+            batteryDivisor = 1;
         }
     }
 
-    private void capture(final int to, final byte movingPiece, final int color, final byte piece) {
-        capture(to, color, piece, mobilityWeightOfPiece[movingPiece]);
+    private boolean move(final MoveState state, final byte movingPiece, final int from, final int to, int color) {
+        return move(state, movingPiece, from, to, color, mobilityWeightOfPiece[movingPiece]);
     }
 
-    private void capture(final int field, final int color, final byte piece, final int weight) {
+    @SuppressWarnings({"unused", "java:S1117"})
+    private boolean move(final MoveState state, final byte movingPiece, final int from, final int to, final int color, final int weight) {
+        final byte piece = board[to];
+        final int oppositeColor = WeightingFunction.oppositeColor[color];
+
+        if (piece == Board.illegal) {
+            return false;
+        }
+
+        if (piece == Board.empty) {
+            mobilityWeight[color] += weight / state.batteryDivisor;
+            return true;
+        } else if ((piece & oppositeColor) == oppositeColor) {
+            capture(state, to, color, piece, weight);
+            return false;
+        } else { // own color
+            defend(to);
+            if (hasSameDirection[state.direction][piece]) {
+                state.batteryDivisor++;
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    private void capture(final MoveState state, final int to, final byte movingPiece, final int color, final byte piece) {
+        capture(state, to, color, piece, mobilityWeightOfPiece[movingPiece]);
+    }
+
+    private void capture(final MoveState state, final int field, final int color, final byte piece, final int weight) {
         if (piece == oppositeKing[color]) {
             if (turn == color) {
                 containsIllegalMove = true;
             } else {
                 chessCount[color]++;
-                threadWeight[color] += 4; // ok, give some weight to the attacked king as well (since weightOfPiece(king) is 0)
+                threadWeight[color] += 4 / state.batteryDivisor; // ok, give some weight to the attacked king as well (since weightOfPiece(king) is 0)
             }
         }
 
-        mobilityWeight[color] += weight;
-        threadWeight[color] += weightOfPiece[piece];
+        mobilityWeight[color] += weight / state.batteryDivisor;
+        threadWeight[color] += weightOfPiece[piece] / state.batteryDivisor;
         tempBoard[field] |= ATTACK_MARK_BIT;
     }
 
