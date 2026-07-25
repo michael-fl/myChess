@@ -1,5 +1,6 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.michaelfl.mychess.tuning.TexelTuner;
@@ -23,6 +24,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  *
  * @author Michael Fleischhauer
  */
+@Tag("slow")
 class CombinedTexelDataTest {
 
     private static final Path DATASET = Path.of("tuning-data", "quiet-labeled.epd");

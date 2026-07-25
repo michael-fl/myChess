@@ -19,11 +19,15 @@ mvn package                                  # build jar in target/
 ```
 
 Tests that take more than ~10 s on this machine are annotated with JUnit 5's
-`@Tag("slow")` so they can be skipped during iterative development. Currently
-tagged: `BlunderTest`, `EngineTest`, `IllegalPvRegressionTest`, `DeepWeightTest`
-— together ~98 % of full-suite wall-clock. Add the tag at the class level when
-a new test reliably crosses the 10 s mark on a fresh JVM; prefer method-level
-tags only when a class has a clear fast/slow split.
+`@Tag("slow")` so they can be skipped during iterative development. Tagged at
+the class level: `BlunderTest`, `EngineTest`, `DeepWeightTest`,
+`EvalRegressionTest`, `IllegalPvRegressionTest`, and the dataset-backed Texel
+adapter tests (`AllPstTexelDataTest`, `MaterialPstTexelDataTest`,
+`CombinedTexelDataTest`, `FactorTexelDataTest`, `PawnPstTexelDataTest`);
+`PerftTest` additionally tags its deep-perft subset. Together these are the
+bulk of full-suite wall-clock. Add the tag at the class level when a new test
+reliably crosses the 10 s mark on a fresh JVM; prefer method-level tags only
+when a class has a clear fast/slow split.
 
 The REPL opens `db/openings.db` (MapDB) on start and creates it on first run if missing. `db/` is git-ignored.
 
