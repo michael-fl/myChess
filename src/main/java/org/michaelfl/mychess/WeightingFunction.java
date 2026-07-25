@@ -46,16 +46,16 @@ public final class WeightingFunction {
     public static final int[] weightOfPiece = new int[Board.blackKing + 1];
     static {
         weightOfPiece[Board.whitePawn]   = 100;
-        weightOfPiece[Board.whiteKnight] = 300;
-        weightOfPiece[Board.whiteBishop] = 300;
-        weightOfPiece[Board.whiteRook]   = 500;
-        weightOfPiece[Board.whiteQueen]  = 900;
+        weightOfPiece[Board.whiteKnight] = 292;
+        weightOfPiece[Board.whiteBishop] = 326;
+        weightOfPiece[Board.whiteRook]   = 507;
+        weightOfPiece[Board.whiteQueen]  = 1013;
         weightOfPiece[Board.whiteKing]   = 0;
         weightOfPiece[Board.blackPawn]   = 100;
-        weightOfPiece[Board.blackKnight] = 300;
-        weightOfPiece[Board.blackBishop] = 300;
-        weightOfPiece[Board.blackRook]   = 500;
-        weightOfPiece[Board.blackQueen]  = 900;
+        weightOfPiece[Board.blackKnight] = 292;
+        weightOfPiece[Board.blackBishop] = 326;
+        weightOfPiece[Board.blackRook]   = 507;
+        weightOfPiece[Board.blackQueen]  = 1013;
         weightOfPiece[Board.blackKing]   = 0;
     }
 
