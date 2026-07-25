@@ -200,8 +200,14 @@ public final class Pgn {
                 if (isComment(token) || isVariation(token) || isEnPassant(token) || isNAG(token)) {
                     continue; // Ignore comments
                 }
-
-                if (isGameTerminationMarker(token)) {
+                if (i == 0 && token.endsWith("...")) {
+                    // PGN starts with black continuation
+                    int moveNo = parseMoveNoFromBlackContinuation(token);
+                    if (moveNo != expectedMoveNo) {
+                        System.err.println("Wrong move no " + moveNo + ". Expected " + expectedMoveNo + ": " + this);
+                    }
+                    i++;
+                } else if (isGameTerminationMarker(token)) {
                     if (i % 3 == 1) {
                         throw new IllegalPGNException("Wrong position for game termination marker: " + this);
                     }
