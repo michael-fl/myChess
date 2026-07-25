@@ -47,8 +47,14 @@ public final class TexelTuner {
      */
     public record Sample(double baseEval, double[] features, double result) {}
 
-    /** Tuning knobs with sensible defaults for integer-valued tables. */
-    public record Config(double initialStep, double minStep, int maxRoundsPerStep) {
+    /**
+     * Tuning knobs with sensible defaults for integer-valued tables.
+     *
+     * @param minImprovement stop annealing a step size once a full coordinate-descent
+     *                       round improves the error by less than this — skips the flat
+     *                       tail where each round only nudges the error by an epsilon
+     */
+    public record Config(double initialStep, double minStep, int maxRoundsPerStep, double minImprovement) {
 
         public Config {
             if (initialStep <= 0 || minStep <= 0 || initialStep < minStep) {
@@ -57,6 +63,17 @@ public final class TexelTuner {
             if (maxRoundsPerStep < 1) {
                 throw new IllegalArgumentException("maxRoundsPerStep must be >= 1");
             }
+            if (minImprovement < 0) {
+                throw new IllegalArgumentException("minImprovement must be >= 0");
+            }
+        }
+
+        /**
+         * Backward-compatible knobs using {@link TexelTuner#DEFAULT_MIN_IMPROVEMENT}
+         * as the per-round early-stop threshold.
+         */
+        public Config(double initialStep, double minStep, int maxRoundsPerStep) {
+            this(initialStep, minStep, maxRoundsPerStep, DEFAULT_MIN_IMPROVEMENT);
         }
 
         /** Anneal from a step of 4 down to 0.5, up to 12 passes per step. */
@@ -69,6 +86,8 @@ public final class TexelTuner {
     private static final double K_SEARCH_UPPER = 1.0;
     private static final int K_SEARCH_ITERATIONS = 80;
     private static final double IMPROVEMENT_EPSILON = 1e-12;
+    /** Default per-round improvement below which a step size stops annealing early. */
+    private static final double DEFAULT_MIN_IMPROVEMENT = 1e-5;
 
     private TexelTuner() {
         // static utility
@@ -150,6 +169,7 @@ public final class TexelTuner {
             double bestError = meanSquaredError(data, params, k);
 
             for (int round = 0; round < config.maxRoundsPerStep(); round++) {
+                double errorBeforeRound = bestError;
                 boolean improved = false;
 
                 for (int j = 0; j < params.length; j++) {
@@ -178,7 +198,7 @@ public final class TexelTuner {
                     onRound.onRound(step, bestError, k);
                 }
 
-                if (!improved) {
+                if (!improved || errorBeforeRound - bestError < config.minImprovement()) {
                     break;
                 }
             }
