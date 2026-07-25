@@ -99,10 +99,10 @@ public final class WeightingFunction {
     private static final int[] oppositeColor = new int[] { GameStatus.TURN_BLACK, GameStatus.TURN_WHITE };
     private static final int[] oppositeKing = new int[] { Board.blackKing, Board.whiteKing };
 
-    private static final float mobilityFactor = 0.1f;
+    private static final float mobilityFactor = 0.1117f;
     private static final float positionFactor = 0.5f;
     private static final float threadWeightFactor = 0.02f;
-    private static final float chessFactor = 0.25f;
+    private static final float chessFactor = 0.332f;
     private static final float castlingFactor = 0.25f;
     /**
      * Per-doubled-pair penalty in pawn units, applied directly in the
@@ -111,7 +111,7 @@ public final class WeightingFunction {
      * <p>The standard chess-theory value is around -0.15 pawns per doubled
      * pair; we use that value here.
      */
-    private static final float doublePawnFactor = -0.15f;
+    private static final float doublePawnFactor = -0.1578f;
     /**
      * Per-hanging-piece penalty in pawn units, applied directly in the
      * final-weight formula. A piece counts as "hanging" when it is
@@ -128,7 +128,7 @@ public final class WeightingFunction {
      * factor is negative and applied to {@code white_count - black_count},
      * so more own-side hanging pieces decrease this side's score.
      */
-    private static final float undefendedPiecesFactor = -0.1f;
+    private static final float undefendedPiecesFactor = -0.0961f;
 
     private GameStatus game;
     private int turn; // 0 = white, 1 = black
