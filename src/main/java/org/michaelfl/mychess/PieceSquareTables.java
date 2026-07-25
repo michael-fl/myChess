@@ -36,14 +36,14 @@ public final class PieceSquareTables {
      * planned full migration to PeSTO.
      */
     private static final String pawnTableWhiteString = """
-             0,  0,  0,  0,  0,  0,  0,  0,
-            50, 50, 50, 50, 50, 50, 50, 50,
-            10, 10, 20, 30, 30, 20, 10, 10,
-             5,  5, 10, 25, 25, 10,  5,  5,
-             0,  0,  0, 20, 20,  0,  0,  0,
-             5,  0,-10,  0,  0,-10,  0,  5,
-             5,  0,  0,-20,-20, 10,  0,  5,
-             0,  0,  0,  0,  0,  0,  0,  0
+              0,   0,   0,   0,   0,   0,   0,   0,
+            300, 271, 244, 227, 227, 244, 271, 300,
+            127, 137, 123,  98,  98, 123, 137, 127,
+              7,  16,   3,   3,   3,   3,  16,   7,
+            -46, -23, -29,  -8,  -8, -29, -23, -46,
+            -35,  -5, -20, -23, -23, -20,  -5, -35,
+            -17,  -8,  -4, -26, -26,  -4,  -8, -17,
+              0,   0,   0,   0,   0,   0,   0,   0
             """;
     private static final byte[] pawnTableWhite = createBoard(pawnTableWhiteString);
     private static final byte[] pawnTableBlack = invert(pawnTableWhite);
