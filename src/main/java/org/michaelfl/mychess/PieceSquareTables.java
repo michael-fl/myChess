@@ -50,56 +50,56 @@ public final class PieceSquareTables {
 
     /* Knight */
     private static final String knightTableWhiteString = """
-            -50,-40,-30,-30,-30,-30,-40,-50,
-            -40,-20,  0,  0,  0,  0,-20,-40,
-            -30,  0, 10, 15, 15, 10,  0,-30,
-            -30,  5, 15, 20, 20, 15,  5,-30,
-            -30,  0, 15, 20, 20, 15,  0,-30,
-            -30,  5, 10, 15, 15, 10,  5,-30,
-            -40,-20,  0,  5,  5,  0,-20,-40,
-            -50,-40,-30,-30,-30,-30,-40,-50
+            -147, -75, -95, -14, -14, -95, -75,-147,
+             -79, -34,  27,   2,   2,  27, -34, -79,
+              -7,  26,  39,  51,  51,  39,  26,  -7,
+              23,  25,  35,  52,  52,  35,  25,  23,
+              -2,  12,  44,  52,  52,  44,  12,  -2,
+              -6,  27,  44,  50,  50,  44,  27,  -6,
+              20,  -3,  13,  38,  38,  13,  -3,  20,
+            -108,   0, -10,   2,   2, -10,   0,-108
             """;
     private static final byte[] knightTableWhite = createBoard(knightTableWhiteString);
     private static final byte[] knightTableBlack = invert(knightTableWhite);
 
     /* Bishop */
     private static final String bishopTableWhiteString = """
-            -20,-10,-10,-10,-10,-10,-10,-20,
-            -10,  0,  0,  0,  0,  0,  0,-10,
-            -10,  0,  5, 10, 10,  5,  0,-10,
-            -10,  5,  5, 10, 10,  5,  5,-10,
-            -10,  0, 10, 10, 10, 10,  0,-10,
-            -10, 10, 10, 10, 10, 10, 10,-10,
-            -10,  5,  0,  0,  0,  0,  5,-10,
-            -20,-10,-10,-10,-10,-10,-10,-20
+             -15, -38, -50, -44, -44, -50, -38, -15,
+             -41,   3, -22, -23, -23, -22,   3, -41,
+              15,  19,  21,  20,  20,  21,  19,  15,
+              -8,   2,  -9,  25,  25,  -9,   2,  -8,
+             -23,  -1,  14,  31,  31,  14,  -1, -23,
+              12,  30,  30,  28,  28,  30,  30,  12,
+               3,  52,  19,  25,  25,  19,  52,   3,
+             -30, -47,   1,   2,   2,   1, -47, -30
             """;
     private static final byte[] bishopTableWhite = createBoard(bishopTableWhiteString);
     private static final byte[] bishopTableBlack = invert(bishopTableWhite);
 
     /* Rook */
     private static final String rookTableWhiteString = """
-              0,  0,  0,  0,  0,  0,  0,  0,
-              5, 10, 10, 10, 10, 10, 10,  5,
-             -5,  0,  0,  0,  0,  0,  0, -5,
-             -5,  0,  0,  0,  0,  0,  0, -5,
-             -5,  0,  0,  0,  0,  0,  0, -5,
-             -5,  0,  0,  0,  0,  0,  0, -5,
-             -5,  0,  0,  0,  0,  0,  0, -5,
-              0,  0,  0,  5,  5,  0,  0,  0
+              38,  13,  17,  27,  27,  17,  13,  38,
+              23,  36,  32,  27,  27,  32,  36,  23,
+               1,  13,   8,  14,  14,   8,  13,   1,
+              -8, -12,   5,  10,  10,   5, -12,  -8,
+             -16, -19, -17,  -7,  -7, -17, -19, -16,
+             -30, -17, -16,  -4,  -4, -16, -17, -30,
+             -50, -16,  -2, -12, -12,  -2, -16, -50,
+             -74, -29,  43,  27,  27,  43, -29, -74
             """;
     private static final byte[] rookTableWhite = createBoard(rookTableWhiteString);
     private static final byte[] rookTableBlack = invert(rookTableWhite);
 
     /* Queen */
     private static final String queenTableWhiteString = """
-            -20,-10,-10, -5, -5,-10,-10,-20,
-            -10,  0,  0,  0,  0,  0,  0,-10,
-            -10,  0,  5,  5,  5,  5,  0,-10,
-             -5,  0,  5,  5,  5,  5,  0, -5,
-              0,  0,  5,  5,  5,  5,  0, -5,
-            -10,  5,  5,  5,  5,  5,  0,-10,
-            -10,  0,  5,  0,  0,  0,  0,-10,
-            -20,-10,-10, -5, -5,-10,-10,-20
+             -29, -22,  18,  27,  27,  18, -22, -29,
+             -39, -47,  17, -11, -11,  17, -47, -39,
+               5,   4,  30,  41,  41,  30,   4,   5,
+              -5, -20,   4, -13, -13,   4, -20,  -5,
+             -20,  11,  -2,   3,   3,  -2,  11, -20,
+             -32,   8,  26,  11,  11,  26,   8, -32,
+             -10,  12,  12,  22,  22,  12,  12, -10,
+               1, -27,   0,  20,  20,   0, -27,   1
             """;
     private static final byte[] queenTableWhite = createBoard(queenTableWhiteString);
     private static final byte[] queenTableBlack = invert(queenTableWhite);
