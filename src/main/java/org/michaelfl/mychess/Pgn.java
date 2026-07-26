@@ -196,7 +196,6 @@ public final class Pgn {
 
             // Tokens must come in triples: Move no, white move, black move
             while ((token = tokenizer.nextToken()) != null) {
-                System.out.println("Token #" + i + "[" + token + "]");
                 if (isComment(token) || isVariation(token) || isEnPassant(token) || isNAG(token)) {
                     continue; // Ignore comments
                 }
