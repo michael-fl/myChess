@@ -902,6 +902,14 @@ The single largest evaluation term myChess is still missing. Today the only king
 
 **Net take-away from all three attempts.** Hand-crafted king-safety terms — attacker count (−14.7), standalone shield (−57.5), king-dependent PST (−18.3) — all measured net-negative. This confirms the "must be tuned" caveat above: the next serious attempt should run through an automated tuner (Texel/SPSA) rather than hand-picked tables/weights, and should keep the eval a pure function of the position (avoid king-position-dependent piece values).
 
+**Forensic conditions for a tuned retry (branch `4.3.0-attack-units`, `e93fea4`, reviewed 2026-07).** Reading the shelved code alongside the match (`test-results/match-4.3.0-attack-units-stdout.log`: 662–753–819, [0.480] over 2235 games) surfaces *why* a plain Texel pass over the existing term would not be enough — three findings, each pointing at a fix beyond "just tune it":
+
+- **No phase scaling.** The term fires with full magnitude in the endgame, where two pieces bearing on the enemy king's 3×3 zone are usually incidental (e.g. R + K vs K), not a real attack — pure noise. King safety must fade toward the endgame, which is cleanest built on top of the tapered evaluation ([§ 12.7.1](#1271-tapered-evaluation--staged-rollout-strategy)).
+- **Fires on presence, not danger.** Any ≥ 2 distinct attackers on the 3×3 zone trigger the (attacker-side) bonus, so the engine over-commits pieces toward the enemy king on speculative attacks that the already-strong tactical search then refutes — the "static noise to a strong search" failure mode, concretely.
+- **What Texel can and cannot tune here.** The progressive `KING_ATTACK_PENALTY` curve is linear per bucket (each position lands in exactly one bucket → its bucket value is Texel-tunable), *but* the Zurichess `quiet-labeled` set under-samples the sharp, high-attack-unit positions the curve exists for, so tuning it on quiet data mostly *shrinks* the curve toward neutral rather than learning real attacking value. The attacker unit-weights (`ATTACK_UNIT_OF_PIECE`) set the table index and are therefore *non-linear* — not Texel-tunable; keep them fixed or SPSA them.
+
+A serious retry therefore needs three things together, not a lone tuner run: (1) **phase-scale** the term (do it with tapered eval); (2) **tune the curve on a dataset that includes real attacks**, not only quiet positions; (3) keep the **weights fixed / SPSA**, with **modest Elo expectations** — for an engine whose search already resolves king attacks tactically, the ceiling of a static king-safety term is likely well below this section's headline estimate. Sequence it after [§ 12.7.1](#1271-tapered-evaluation--staged-rollout-strategy).
+
 ---
 
 ## Suggested implementation order
