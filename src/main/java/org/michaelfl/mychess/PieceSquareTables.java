@@ -10,6 +10,13 @@ import static org.michaelfl.mychess.Board.*;
  * derived from the white tables via vertical {@link #invert(byte[])} (rank 1 &harr; 8 etc.),
  * which preserves the evaluation's color antisymmetry asserted by {@code MirrorEvalTest}.
  *
+ * <p>The tables feed a <em>tapered</em> evaluation: each piece kind has a
+ * separate midgame and endgame table, retrieved through {@link #getMidGameWeight} /
+ * {@link #getEndGameWeight} and interpolated by game phase in
+ * {@link WeightingFunction}. Both sets currently reference the same underlying
+ * tables — the phase-agnostic null-test configuration — so the evaluation is
+ * unchanged until the endgame tables are later tuned to diverge.
+ *
  * @author Michael Fleischhauer
  */
 @SuppressWarnings("java:S115")
@@ -118,20 +125,42 @@ public final class PieceSquareTables {
     private static final byte[] kingTableWhite = createBoard(kingTableWhiteString);
     private static final byte[] kingTableBlack = invert(kingTableWhite);
 
-    private static final byte[][] piece2table = new byte[blackKing + 1][];
+    /** Midgame piece-square table per piece constant, indexed as {@code table[piece][field]}. */
+    private static final byte[][] piece2midGameTable = new byte[blackKing + 1][];
     static {
-        piece2table[whitePawn] = pawnTableWhite;
-        piece2table[whiteBishop] = bishopTableWhite;
-        piece2table[whiteKnight] = knightTableWhite;
-        piece2table[whiteRook] = rookTableWhite;
-        piece2table[whiteQueen] = queenTableWhite;
-        piece2table[whiteKing] = kingTableWhite;
-        piece2table[blackPawn] = pawnTableBlack;
-        piece2table[blackBishop] = bishopTableBlack;
-        piece2table[blackKnight] = knightTableBlack;
-        piece2table[blackRook] = rookTableBlack;
-        piece2table[blackQueen] = queenTableBlack;
-        piece2table[blackKing] = kingTableBlack;
+        piece2midGameTable[whitePawn] = pawnTableWhite;
+        piece2midGameTable[whiteBishop] = bishopTableWhite;
+        piece2midGameTable[whiteKnight] = knightTableWhite;
+        piece2midGameTable[whiteRook] = rookTableWhite;
+        piece2midGameTable[whiteQueen] = queenTableWhite;
+        piece2midGameTable[whiteKing] = kingTableWhite;
+        piece2midGameTable[blackPawn] = pawnTableBlack;
+        piece2midGameTable[blackBishop] = bishopTableBlack;
+        piece2midGameTable[blackKnight] = knightTableBlack;
+        piece2midGameTable[blackRook] = rookTableBlack;
+        piece2midGameTable[blackQueen] = queenTableBlack;
+        piece2midGameTable[blackKing] = kingTableBlack;
+    }
+
+    /**
+     * Endgame piece-square table per piece constant. Currently populated with
+     * the same tables as {@link #piece2midGameTable} (the null-test
+     * configuration); tuning will later give the endgame phase its own values.
+     */
+    private static final byte[][] piece2endGameTable = new byte[blackKing + 1][];
+    static {
+        piece2endGameTable[whitePawn] = pawnTableWhite;
+        piece2endGameTable[whiteBishop] = bishopTableWhite;
+        piece2endGameTable[whiteKnight] = knightTableWhite;
+        piece2endGameTable[whiteRook] = rookTableWhite;
+        piece2endGameTable[whiteQueen] = queenTableWhite;
+        piece2endGameTable[whiteKing] = kingTableWhite;
+        piece2endGameTable[blackPawn] = pawnTableBlack;
+        piece2endGameTable[blackBishop] = bishopTableBlack;
+        piece2endGameTable[blackKnight] = knightTableBlack;
+        piece2endGameTable[blackRook] = rookTableBlack;
+        piece2endGameTable[blackQueen] = queenTableBlack;
+        piece2endGameTable[blackKing] = kingTableBlack;
     }
 
     private static byte[] createBoard(final String tableString) {
@@ -167,11 +196,39 @@ public final class PieceSquareTables {
         return resultTable;
     }
 
-    static byte[] getPieceSquareTable(final byte piece) {
-        return piece2table[piece];
+    /** The whole midgame table for {@code piece} (indexed by field). */
+    static byte[] getMidGameTable(final byte piece) {
+        return piece2midGameTable[piece];
     }
 
-    public static int getPieceSquareWeight(final byte piece, final int field) {
-        return piece2table[piece][field];
+    /**
+     * Midgame piece-square bonus for {@code piece} on {@code field}, in
+     * centipawns before scaling. Interpolated with {@link #getEndGameWeight} by
+     * game phase in {@link WeightingFunction}.
+     *
+     * @param piece piece constant ({@code whitePawn} .. {@code blackKing})
+     * @param field board field index
+     * @return the midgame table value on that square
+     */
+    public static int getMidGameWeight(final byte piece, final int field) {
+        return piece2midGameTable[piece][field];
+    }
+
+    /** The whole endgame table for {@code piece} (indexed by field). */
+    static byte[] getEndGameTable(final byte piece) {
+        return piece2endGameTable[piece];
+    }
+
+    /**
+     * Endgame piece-square bonus for {@code piece} on {@code field}, in
+     * centipawns before scaling. Interpolated with {@link #getMidGameWeight} by
+     * game phase in {@link WeightingFunction}.
+     *
+     * @param piece piece constant ({@code whitePawn} .. {@code blackKing})
+     * @param field board field index
+     * @return the endgame table value on that square
+     */
+    public static int getEndGameWeight(final byte piece, final int field) {
+        return piece2endGameTable[piece][field];
     }
 }

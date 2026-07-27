@@ -239,8 +239,8 @@ public final class MaterialPstTexelData {
 
             for (int row = 0; row < 8; row++) {
                 for (int filePair = 0; filePair < 4; filePair++) {
-                    int left = PieceSquareTables.getPieceSquareWeight(whitePiece, ChessUtil.getFieldFromColAndRow(filePair, row));
-                    int right = PieceSquareTables.getPieceSquareWeight(whitePiece, ChessUtil.getFieldFromColAndRow(7 - filePair, row));
+                    int left = PieceSquareTables.getMidGameWeight(whitePiece, ChessUtil.getFieldFromColAndRow(filePair, row));
+                    int right = PieceSquareTables.getMidGameWeight(whitePiece, ChessUtil.getFieldFromColAndRow(7 - filePair, row));
 
                     values[PST_BLOCK_OFFSET[slot] + row * 4 + filePair] = (left + right) / 2.0;
                 }

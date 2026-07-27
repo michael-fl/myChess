@@ -149,8 +149,8 @@ public final class MoveSorterImpl implements MoveSorter {
         } else if (Board.isKing(movingPiece)) {
             bucketKingMoves.add(move);
         } else {
-            final int srcWeight = PieceSquareTables.getPieceSquareWeight(movingPiece, fromField);
-            final int destWeight = PieceSquareTables.getPieceSquareWeight(movingPiece, toField);
+            final int srcWeight = PieceSquareTables.getMidGameWeight(movingPiece, fromField);
+            final int destWeight = PieceSquareTables.getMidGameWeight(movingPiece, toField);
             final int weight = destWeight - srcWeight;
 
             bucketRemainingMoves.add(move, weight);

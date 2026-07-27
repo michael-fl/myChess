@@ -162,7 +162,7 @@ class PieceSquareTablesTest {
     }
 
     void testTable(byte piece, String tableString) {
-        var table = PieceSquareTables.getPieceSquareTable(piece);
+        var table = PieceSquareTables.getMidGameTable(piece);
 
         assertNotNull(table, "No table");
         assertEquals(Board.createEmptyRawBoard().length, table.length, "Wrong board length");
