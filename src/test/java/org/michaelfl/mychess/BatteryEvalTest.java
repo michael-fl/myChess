@@ -2,6 +2,7 @@ package org.michaelfl.mychess;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -45,7 +46,7 @@ class BatteryEvalTest {
     }
 
     @Test
-    void rookBehindRook_addsDampedThreadAgainstTargetBehindFrontRook() {
+    void rookBehindRook_addsAmplifiedThreadAgainstTargetBehindFrontRook() {
         double batteryThread = feature(
                 "4k3/n7/8/8/8/8/R7/R3K3 w - - 0 1",
                 THREAD_FEATURE);
@@ -54,7 +55,7 @@ class BatteryEvalTest {
                 THREAD_FEATURE);
 
         assertTrue(batteryThread > frontRookOnlyThread,
-                "rear rook should add a damped threat bonus when the front rook owns the line to the target. "
+                "rear rook should add an amplified threat bonus when the front rook owns the forward line to the target. "
                         + "battery=" + batteryThread + ", frontOnly=" + frontRookOnlyThread);
     }
 
@@ -73,7 +74,7 @@ class BatteryEvalTest {
     }
 
     @Test
-    void queenBehindBishop_addsDampedThreadOnDiagonalTarget() {
+    void queenBehindBishop_addsAmplifiedThreadOnForwardDiagonalTarget() {
         double batteryThread = feature(
                 "4k3/8/5n2/8/8/2B5/1Q6/4K3 w - - 0 1",
                 THREAD_FEATURE);
@@ -82,8 +83,50 @@ class BatteryEvalTest {
                 THREAD_FEATURE);
 
         assertTrue(batteryThread > frontBishopOnlyThread,
-                "rear queen should add a damped threat bonus through the front bishop on the same diagonal. "
+                "rear queen should add an amplified threat bonus through the front bishop on a forward diagonal. "
                         + "battery=" + batteryThread + ", frontOnly=" + frontBishopOnlyThread);
+    }
+
+    @Test
+    void blackRookBatteryOnForwardFile_addsAmplifiedThread() {
+        double batteryThread = feature(
+                "4k2r/7r/8/8/8/8/7N/4K3 b - - 0 1",
+                THREAD_FEATURE);
+        double frontRookOnlyThread = feature(
+                "4k3/7r/8/8/8/8/7N/4K3 b - - 0 1",
+                THREAD_FEATURE);
+
+        assertTrue(batteryThread < frontRookOnlyThread,
+                "black rear rook should get the same forward-file battery amplification toward rank 1. "
+                        + "battery=" + batteryThread + ", frontOnly=" + frontRookOnlyThread);
+    }
+
+    @Test
+    void whiteRookBatteryBehindTargetDirection_doesNotLookBackwardThroughFrontRook() {
+        double backwardBatteryThread = feature(
+                "4k3/R7/R7/8/8/8/8/n3K3 w - - 0 1",
+                THREAD_FEATURE);
+        double frontRookOnlyThread = feature(
+                "4k3/8/R7/8/8/8/8/n3K3 w - - 0 1",
+                THREAD_FEATURE);
+
+        assertEquals(frontRookOnlyThread, backwardBatteryThread, 0.0,
+                "white battery amplification is forward-only; a rear rook must not see backward through its own front rook. "
+                        + "backwardBattery=" + backwardBatteryThread + ", frontOnly=" + frontRookOnlyThread);
+    }
+
+    @Test
+    void rookBatteryOnRank_doesNotLookSidewaysThroughFrontRook() {
+        double horizontalBatteryThread = feature(
+                "4k3/8/8/8/8/8/4K3/RR5n w - - 0 1",
+                THREAD_FEATURE);
+        double frontRookOnlyThread = feature(
+                "4k3/8/8/8/8/8/4K3/1R5n w - - 0 1",
+                THREAD_FEATURE);
+
+        assertEquals(frontRookOnlyThread, horizontalBatteryThread, 0.0,
+                "rook batteries are not amplified on ranks; a rear rook must not see sideways through its own front rook. "
+                        + "horizontalBattery=" + horizontalBatteryThread + ", frontOnly=" + frontRookOnlyThread);
     }
 
     private static double feature(String fen, int featureIndex) {
