@@ -181,7 +181,7 @@ public final class AllPstTexelData {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 int field = ChessUtil.getFieldFromColAndRow(col, row);
-                grid[row * 8 + col] = PieceSquareTables.getPieceSquareWeight(whitePiece, field);
+                grid[row * 8 + col] = PieceSquareTables.getMidGameWeight(whitePiece, field);
             }
         }
 
@@ -247,8 +247,8 @@ public final class AllPstTexelData {
                 for (int filePair = 0; filePair < 4; filePair++) {
                     // Average the two files in the pair (the current tables are
                     // not always perfectly symmetric).
-                    int left = PieceSquareTables.getPieceSquareWeight(whitePiece, ChessUtil.getFieldFromColAndRow(filePair, row));
-                    int right = PieceSquareTables.getPieceSquareWeight(whitePiece, ChessUtil.getFieldFromColAndRow(7 - filePair, row));
+                    int left = PieceSquareTables.getMidGameWeight(whitePiece, ChessUtil.getFieldFromColAndRow(filePair, row));
+                    int right = PieceSquareTables.getMidGameWeight(whitePiece, ChessUtil.getFieldFromColAndRow(7 - filePair, row));
 
                     values[BLOCK_OFFSET[kind] + localRank * 4 + filePair] = (left + right) / 2.0;
                 }

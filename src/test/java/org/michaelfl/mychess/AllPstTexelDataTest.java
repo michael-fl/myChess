@@ -154,8 +154,8 @@ class AllPstTexelDataTest {
                 boolean white = piece <= Board.whiteKing;
                 int tableRow = white ? row : 7 - row;
 
-                double symValue = (PieceSquareTables.getPieceSquareWeight(whitePiece, ChessUtil.getFieldFromColAndRow(col, tableRow))
-                        + PieceSquareTables.getPieceSquareWeight(whitePiece, ChessUtil.getFieldFromColAndRow(7 - col, tableRow))) / 2.0;
+                double symValue = (PieceSquareTables.getMidGameWeight(whitePiece, ChessUtil.getFieldFromColAndRow(col, tableRow))
+                        + PieceSquareTables.getMidGameWeight(whitePiece, ChessUtil.getFieldFromColAndRow(7 - col, tableRow))) / 2.0;
 
                 sum += (white ? 1 : -1) * symValue;
             }

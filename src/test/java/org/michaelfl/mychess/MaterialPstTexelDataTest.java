@@ -163,8 +163,8 @@ class MaterialPstTexelDataTest {
                 double sign = white ? 1.0 : -1.0;
                 int tableRow = white ? row : 7 - row;
 
-                double symValue = (PieceSquareTables.getPieceSquareWeight(whitePiece, ChessUtil.getFieldFromColAndRow(col, tableRow))
-                        + PieceSquareTables.getPieceSquareWeight(whitePiece, ChessUtil.getFieldFromColAndRow(7 - col, tableRow))) / 2.0;
+                double symValue = (PieceSquareTables.getMidGameWeight(whitePiece, ChessUtil.getFieldFromColAndRow(col, tableRow))
+                        + PieceSquareTables.getMidGameWeight(whitePiece, ChessUtil.getFieldFromColAndRow(7 - col, tableRow))) / 2.0;
 
                 sum += sign * WeightingFunction.weightOfPiece[whitePiece];
                 sum += sign * symValue * POSITION_FACTOR;

@@ -82,7 +82,7 @@ public final class PawnPstTexelData {
                 int field = ChessUtil.getFieldFromColAndRow(col, row);
                 int param = FIELD_TO_PARAM[field];
                 grid[row * 8 + col] = param < 0
-                        ? PieceSquareTables.getPieceSquareWeight(Board.whitePawn, field)
+                        ? PieceSquareTables.getMidGameWeight(Board.whitePawn, field)
                         : (int) Math.round(parameters[param]);
             }
         }
@@ -191,9 +191,9 @@ public final class PawnPstTexelData {
                 byte piece = raw[field];
 
                 if (piece == Board.whitePawn) {
-                    sum += PieceSquareTables.getPieceSquareWeight(Board.whitePawn, field);
+                    sum += PieceSquareTables.getMidGameWeight(Board.whitePawn, field);
                 } else if (piece == Board.blackPawn) {
-                    sum -= PieceSquareTables.getPieceSquareWeight(Board.blackPawn, field);
+                    sum -= PieceSquareTables.getMidGameWeight(Board.blackPawn, field);
                 }
             }
         }
@@ -257,8 +257,8 @@ public final class PawnPstTexelData {
 
             // Average the current values of the two files in the pair (the
             // current table is not perfectly symmetric).
-            int left = PieceSquareTables.getPieceSquareWeight(Board.whitePawn, ChessUtil.getFieldFromColAndRow(filePair, row));
-            int right = PieceSquareTables.getPieceSquareWeight(Board.whitePawn, ChessUtil.getFieldFromColAndRow(7 - filePair, row));
+            int left = PieceSquareTables.getMidGameWeight(Board.whitePawn, ChessUtil.getFieldFromColAndRow(filePair, row));
+            int right = PieceSquareTables.getMidGameWeight(Board.whitePawn, ChessUtil.getFieldFromColAndRow(7 - filePair, row));
 
             values[param] = (left + right) / 2.0;
         }

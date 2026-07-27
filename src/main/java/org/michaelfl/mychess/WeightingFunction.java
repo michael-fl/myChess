@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import java.util.Arrays;
+
 import static org.michaelfl.mychess.Assert.__assert;
 
 //    132           ...             143
@@ -16,8 +18,10 @@ import static org.michaelfl.mychess.Assert.__assert;
 //    00 01         ...          10  11
 
 /**
- * Static position evaluation in centipawn units: material plus
- * {@link PieceSquareTables} bonus plus per-piece capture/threat heuristics
+ * Static position evaluation in centipawn units: material plus a
+ * game-phase-<em>tapered</em> {@link PieceSquareTables} bonus (each piece's
+ * midgame and endgame table interpolated by the remaining material via
+ * {@link #blend}) plus per-piece capture/threat heuristics
  * (pawn structure including en-passant target, king safety, ...). Returns a
  * white-positive score that the engine negates at the boundary for black.
  * The {@code CHECKMATE_*} and {@code ILLEGAL_*} constants are sentinel
@@ -75,6 +79,32 @@ public final class WeightingFunction {
         mobilityWeightOfPiece[Board.blackKing]   = 0;
     }
 
+    /**
+     * Game-phase weight per piece constant, summed over all pieces on the board
+     * to derive the tapered-evaluation phase: knight = bishop = 1, rook = 2,
+     * queen = 4, pawn = king = 0. Full starting material sums to
+     * {@link #MAX_PHASE}; as pieces are traded the phase falls toward 0, sliding
+     * the evaluation from the midgame tables toward the endgame tables. These
+     * weights are fixed (not derived from the tunable {@link #weightOfPiece}) so
+     * the phase stays a constant per position and the tapered evaluation remains
+     * linear in its tunable parameters.
+     */
+    private static final int[] phaseWeightOfPiece = new int[Board.blackKing + 1];
+    static {
+        phaseWeightOfPiece[Board.whitePawn]   = 0;
+        phaseWeightOfPiece[Board.whiteKnight] = 1;
+        phaseWeightOfPiece[Board.whiteBishop] = 1;
+        phaseWeightOfPiece[Board.whiteRook]   = 2;
+        phaseWeightOfPiece[Board.whiteQueen]  = 4;
+        phaseWeightOfPiece[Board.whiteKing]   = 0;
+        phaseWeightOfPiece[Board.blackPawn]   = 0;
+        phaseWeightOfPiece[Board.blackKnight] = 1;
+        phaseWeightOfPiece[Board.blackBishop] = 1;
+        phaseWeightOfPiece[Board.blackRook]   = 2;
+        phaseWeightOfPiece[Board.blackQueen]  = 4;
+        phaseWeightOfPiece[Board.blackKing]   = 0;
+    }
+
     @FunctionalInterface
     private interface CalculateWeight {
         void calculate(WeightingFunction generator, int field, int color);
@@ -98,6 +128,11 @@ public final class WeightingFunction {
 
     private static final int[] oppositeColor = new int[] { GameStatus.TURN_BLACK, GameStatus.TURN_WHITE };
     private static final int[] oppositeKing = new int[] { Board.blackKing, Board.whiteKing };
+
+    /** Phase of the full starting material (4·1 knights + 4·1 bishops + 4·2 rooks + 2·4 queens); the phase is clamped to this. */
+    private static final int MAX_PHASE = 24;
+    /** {@link #MAX_PHASE} as a float, used for the {@link #blend} interpolation divide. */
+    private static final float MAX_PHASE_F = 24f;
 
     private static final float mobilityFactor = 0.1f;
     private static final float positionFactor = 0.5f;
@@ -145,6 +180,12 @@ public final class WeightingFunction {
     private final int[] castlingState = new int[2];
     private final int[] doublePawnCount = new int[2];
     private final int[] undefendedPiecesCount = new int[2];
+    /** Per-color sum of midgame piece-square values for the current position (index 0 = white, 1 = black). */
+    private final int[] pstMidGameWeight = new int[2];
+    /** Per-color sum of endgame piece-square values for the current position (index 0 = white, 1 = black). */
+    private final int[] pstEndGameWeight = new int[2];
+    /** Game phase of the most recently evaluated position, {@code 0..}{@link #MAX_PHASE}; see {@link #phaseWeightOfPiece}. */
+    private int phase;
 
     /** Material weight (delta white - black) in centi pawns. */
     public static int calculateMaterialWeight(Board theBoard) {
@@ -210,11 +251,16 @@ public final class WeightingFunction {
         this.doublePawnCount[1] = 0;
         this.undefendedPiecesCount[0] = 0;
         this.undefendedPiecesCount[1] = 0;
+        this.pstMidGameWeight[0] = 0;
+        this.pstMidGameWeight[1] = 0;
+        this.pstEndGameWeight[0] = 0;
+        this.pstEndGameWeight[1] = 0;
 
         System.arraycopy(board, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
 
         final int stopField = Board.h8 + 1;
         final boolean isEndGame = game.isEndGame();
+        int phase = 0;
 
         for (int field = Board.a1; field < stopField; field++) {
             final byte piece = board[field];
@@ -222,19 +268,61 @@ public final class WeightingFunction {
                 final int color = (piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE ? 0 : 1;
 
                 piecesWeight[color] += weightOfPiece[piece];
+
                 if (!(isEndGame && Board.isKing(piece))) {
-                    positionWeight[color] += PieceSquareTables.getPieceSquareWeight(piece, field);
+                    pstMidGameWeight[color] +=  PieceSquareTables.getMidGameWeight(piece, field);
+                    pstEndGameWeight[color] +=  PieceSquareTables.getEndGameWeight(piece, field);
                 }
+
+                phase = Math.min(phase + phaseWeightOfPiece[piece], MAX_PHASE);
 
                 calculationFunctions[piece].calculate(this, field, color);
             }
         }
+
+        positionWeight[0] = blend(pstMidGameWeight[0], pstEndGameWeight[0], phase);
+        positionWeight[1] = blend(pstMidGameWeight[1], pstEndGameWeight[1], phase);
+        this.phase = phase; // store in local field to allow tests to read the phase
 
         calculateCastlingState();
 
         calculateUndefendedPiecesCount();
 
         return calculatePositionWeight();
+    }
+
+    /**
+     * Interpolate a midgame and an endgame weight by game phase (tapered
+     * evaluation): {@code (mg·phase + eg·(MAX_PHASE − phase)) / MAX_PHASE}. At
+     * {@code phase == MAX_PHASE} the result is the pure midgame weight, at
+     * {@code phase == 0} the pure endgame weight. The caller passes a phase
+     * already clamped to {@code [0, MAX_PHASE]}. Rounding is done with
+     * {@code roundSymmetric} (round half away from zero) so it is odd
+     * ({@code round(-x) == -round(x)}), which preserves the evaluation's color
+     * antisymmetry once the midgame and endgame tables differ.
+     *
+     * @param mgWeight midgame weight
+     * @param egWeight endgame weight
+     * @param phase    game phase in {@code [0, MAX_PHASE]}
+     * @return the phase-interpolated weight in centipawns
+     */
+    static int blend(int mgWeight, int egWeight, int phase) {
+        return roundSymmetric((mgWeight * phase + egWeight * (MAX_PHASE - phase)) / MAX_PHASE_F);
+    }
+
+    /** The game phase of the most recently evaluated position, {@code 0..}{@link #MAX_PHASE}. */
+    int getPhase() {
+        return phase;
+    }
+
+    /** A copy of the per-color midgame position-weight sums from the last evaluation (index 0 = white, 1 = black). */
+    int[] getPstMidGameWeight() {
+        return Arrays.copyOf(pstMidGameWeight, pstMidGameWeight.length);
+    }
+
+    /** A copy of the per-color endgame position-weight sums from the last evaluation (index 0 = white, 1 = black). */
+    int[] getPstEndGameWeight() {
+        return Arrays.copyOf(pstEndGameWeight, pstEndGameWeight.length);
     }
 
     /** The evaluation factors the offline tuner can adjust, in a fixed order. */
