@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import java.util.Arrays;
+
 import static org.michaelfl.mychess.Assert.__assert;
 
 //    132           ...             143
@@ -18,7 +20,8 @@ import static org.michaelfl.mychess.Assert.__assert;
 /**
  * Static position evaluation in centipawn units: material plus
  * {@link PieceSquareTables} bonus plus per-piece capture/threat heuristics
- * (pawn structure including en-passant target, king safety, ...). Returns a
+ * (pawn structure including en-passant target, king safety, rook-file
+ * activity, ...). Returns a
  * white-positive score that the engine negates at the boundary for black.
  * The {@code CHECKMATE_*} and {@code ILLEGAL_*} constants are sentinel
  * ranges above any normal material delta.
@@ -98,12 +101,24 @@ public final class WeightingFunction {
 
     private static final int[] oppositeColor = new int[] { GameStatus.TURN_BLACK, GameStatus.TURN_WHITE };
     private static final int[] oppositeKing = new int[] { Board.blackKing, Board.whiteKing };
+    /** Own pawn constant per color (0 = white, 1 = black); {@code ownPawn[color ^ 1]} is the opponent's pawn. Used by the rook-file evaluation. */
+    private static final byte[] ownPawn = new byte[] { Board.whitePawn, Board.blackPawn };
+    /** Own rook constant per color (0 = white, 1 = black). Used by the rook-file / battery evaluation. */
+    private static final byte[] ownRook = new byte[] { Board.whiteRook, Board.blackRook };
 
     private static final float mobilityFactor = 0.1f;
     private static final float positionFactor = 0.5f;
     private static final float threadWeightFactor = 0.02f;
     private static final float chessFactor = 0.25f;
     private static final float castlingFactor = 0.25f;
+    /**
+     * Scales the rook-file / battery bonus in the final weight. The per-file
+     * bonuses in {@link #calculateRookFileWeight(int, int)} are already in
+     * centipawns, so this is a {@code 1.0} pass-through; the offline tuner can
+     * adjust it as the last entry of {@link #TUNABLE_FACTOR_NAMES}.
+     */
+    private static final float rookFileFactor = 1.0f;
+
     /**
      * Per-doubled-pair penalty in pawn units, applied directly in the
      * final-weight formula.
@@ -145,6 +160,16 @@ public final class WeightingFunction {
     private final int[] castlingState = new int[2];
     private final int[] doublePawnCount = new int[2];
     private final int[] undefendedPiecesCount = new int[2];
+    /**
+     * The (up to) two distinct files occupied by each color's rooks, as file
+     * indices 0-7 with {@code -1} marking an unused slot; indexed
+     * {@code [color][slot]} and filled by {@link #storeRookFile(int, int)}. At
+     * most two distinct files per color are tracked (a third promoted rook on a
+     * new file is dropped).
+     */
+    private final int[][] rookFiles = new int[2][2];
+    /** Per-color rook-file / battery bonus in centipawns (index 0 = white, 1 = black); see {@link #calculateRookFileWeight(int, int)}. */
+    private final int[] rookFilesWeight = new int[2];
 
     /** Material weight (delta white - black) in centi pawns. */
     public static int calculateMaterialWeight(Board theBoard) {
@@ -210,6 +235,12 @@ public final class WeightingFunction {
         this.doublePawnCount[1] = 0;
         this.undefendedPiecesCount[0] = 0;
         this.undefendedPiecesCount[1] = 0;
+        this.rookFiles[0][0] = -1;
+        this.rookFiles[0][1] = -1;
+        this.rookFiles[1][0] = -1;
+        this.rookFiles[1][1] = -1;
+        this.rookFilesWeight[0] = 0;
+        this.rookFilesWeight[1] = 0;
 
         System.arraycopy(board, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
 
@@ -230,6 +261,8 @@ public final class WeightingFunction {
             }
         }
 
+        calculateRookFileWeights();
+
         calculateCastlingState();
 
         calculateUndefendedPiecesCount();
@@ -240,14 +273,14 @@ public final class WeightingFunction {
     /** The evaluation factors the offline tuner can adjust, in a fixed order. */
     public static final String[] TUNABLE_FACTOR_NAMES = {
             "positionFactor", "mobilityFactor", "threadWeightFactor",
-            "castlingFactor", "chessFactor", "doublePawnFactor", "undefendedPiecesFactor"
+            "castlingFactor", "chessFactor", "doublePawnFactor", "undefendedPiecesFactor", "rookFileFactor"
     };
 
     /** Current values of {@link #TUNABLE_FACTOR_NAMES}, in the same order. */
     public static double[] tunableFactorValues() {
         return new double[] {
                 positionFactor, mobilityFactor, threadWeightFactor,
-                castlingFactor, chessFactor, doublePawnFactor, undefendedPiecesFactor
+                castlingFactor, chessFactor, doublePawnFactor, undefendedPiecesFactor, rookFileFactor
         };
     }
 
@@ -274,7 +307,8 @@ public final class WeightingFunction {
                 (castlingState[0] - castlingState[1]) * 100.0,
                 (chessCount[0] - chessCount[1]) * 100.0,
                 (doublePawnCount[0] - doublePawnCount[1]) * 100.0,
-                (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * 100.0
+                (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * 100.0,
+                rookFilesWeight[0] - rookFilesWeight[1]
         };
 
         return new FactorBreakdown(eval, features);
@@ -292,7 +326,8 @@ public final class WeightingFunction {
                 + (castlingState[0] - castlingState[1]) * castlingFactor
                 + (chessCount[0] - chessCount[1]) * chessFactor
                 + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
-                + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor) * 100);
+                + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor
+                + (rookFilesWeight[0] - rookFilesWeight[1]) / 100f * rookFileFactor) * 100);
     }
 
     /**
@@ -322,6 +357,7 @@ public final class WeightingFunction {
                "doublePawnCount:       w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + DELTA_STR + (doublePawnCount[0] - doublePawnCount[1]) + WEIGHT_STR + round((doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) + '\n' +
                "chessCount:            w=" + chessCount[0] + ", b=" + chessCount[1] + DELTA_STR + (chessCount[0] - chessCount[1]) + WEIGHT_STR + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
                "undefendedPiecesCount: w=" + undefendedPiecesCount[0] + ", b=" + undefendedPiecesCount[1] + DELTA_STR + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) + WEIGHT_STR + round((undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor) + '\n' +
+               "rookFilesWeight:       w=" + rookFilesWeight[0] + ", b=" + rookFilesWeight[1] + DELTA_STR + (rookFilesWeight[0] - rookFilesWeight[1]) + WEIGHT_STR + round((rookFilesWeight[0] - rookFilesWeight[1]) / 100f * rookFileFactor) + '\n' +
                "weight: " + calculatePositionWeight() / 100f;
     }
 
@@ -497,6 +533,28 @@ public final class WeightingFunction {
         for (int to = field - 1; move(myPiece, field, to, color, rankWeight); to--);
         // move right — rank mobility (half weight)
         for (int to = field + 1; move(myPiece, field, to, color, rankWeight); to++);
+
+        storeRookFile(field, color);
+    }
+
+    /**
+     * Record the file of a rook at {@code field} for {@code color} in
+     * {@link #rookFiles}. Stores at most two <em>distinct</em> files: the first
+     * rook's file goes to slot 0, a rook on a different file to slot 1, and any
+     * further rook is ignored (a second rook on an already-stored file, or a
+     * third promoted rook on a new file). Two rooks on the same file are thus
+     * recorded once; their battery is detected later when the file is scanned by
+     * {@link #calculateRookFileWeight(int, int)}.
+     */
+    private void storeRookFile(final int field, final int color) {
+        final int file = field % Board.LENGTH - 2;
+        final int[] rf = rookFiles[color];
+
+        if (rf[0] == -1) {
+            rf[0] = file;
+        } else if (rf[0] != file && rf[1] == -1) {
+            rf[1] = file;
+        }
     }
 
     private static void _calculateForQueen(WeightingFunction generator, int field, int color) {
@@ -594,6 +652,103 @@ public final class WeightingFunction {
 
     private void defend(final int field) {
         this.tempBoard[field] = Board.empty;
+    }
+
+    /** A copy of the (up to) two tracked rook files for {@code color}; {@code -1} marks an unused slot. Exposed for tests. */
+    int[] getRookFiles(int color) {
+        return Arrays.copyOf(rookFiles[color], 2);
+    }
+
+    /** A copy of the per-color rook-file / battery bonus in centipawns (index 0 = white, 1 = black). Exposed for tests. */
+    int[] getRookFilesWeight() {
+        return Arrays.copyOf(rookFilesWeight, 2);
+    }
+
+    /** Fill {@link #rookFilesWeight} for both colors from the files recorded in {@link #rookFiles}. */
+    private void calculateRookFileWeights() {
+        rookFilesWeight[0] = calculateRookFileWeightsForColor(0, rookFiles[0]);
+        rookFilesWeight[1] = calculateRookFileWeightsForColor(1, rookFiles[1]);
+    }
+
+    /**
+     * Sum the rook-file / battery bonus over the files stored for one color.
+     * Slot 0 is the sentinel: when it is {@code -1} (no rook recorded) the result
+     * is 0 and slot 1 is not consulted.
+     *
+     * @param color     0 = white, 1 = black
+     * @param rookFiles the color's two file slots (see {@link #rookFiles})
+     * @return the summed bonus in centipawns
+     */
+    int calculateRookFileWeightsForColor(final int color, final int[] rookFiles) {
+        int weight = 0;
+
+        if (rookFiles[0] >= 0) {
+            weight += calculateRookFileWeight(color, rookFiles[0]);
+            if (rookFiles[1] >= 0) {
+                weight += calculateRookFileWeight(color, rookFiles[1]);
+            }
+        }
+
+        return weight;
+    }
+
+    /**
+     * Bonus in centipawns for {@code color}'s rook(s) on a single {@code file}
+     * (0 = a-file .. 7 = h-file), scanning rank 1 to rank 8:
+     * <ul>
+     *   <li><b>Own pawn on the file</b> &rarr; {@code 0} — the file is closed;
+     *       this overrides everything else, including a battery.</li>
+     *   <li><b>Open file</b> (no pawn of either color) &rarr; {@code 20}.</li>
+     *   <li><b>Half-open file</b> (an opponent pawn, no own pawn) &rarr; {@code 10}.</li>
+     *   <li><b>Rook battery</b> — two of the color's rooks on this file with no
+     *       piece between them — adds a further {@code 30}. Only rook-rook
+     *       batteries count; any non-empty square between the rooks (a queen
+     *       included) breaks it.</li>
+     * </ul>
+     *
+     * @param color 0 = white, 1 = black
+     * @param file  file index 0-7
+     * @return the bonus in centipawns
+     */
+    int calculateRookFileWeight(final int color, final int file) {
+        final int startField = Board.a1 + file;
+        final byte myPawn = ownPawn[color];
+        final byte opponentPawn = ownPawn[color^1];
+        final byte myRook = ownRook[color];
+
+        boolean haveOpponentPawn = false;
+        boolean sawMyRook = false;
+        boolean isBattery = false;
+        boolean sawNonEmptyField = false;
+
+        for (int field = startField; field <= Board.h8; field += Board.LENGTH) {
+            final byte piece = board[field];
+            if (piece == myPawn) {
+                // File is not half-open for this color
+                return 0;
+            }
+            if (piece == myRook) {
+                if (sawMyRook && !sawNonEmptyField) {
+                    isBattery = true; // Count as battery if both rooks can see each other
+                }
+                sawMyRook = true;
+                sawNonEmptyField = false;
+            } else if (piece != Board.empty) {
+                sawNonEmptyField = true;
+            }
+
+            haveOpponentPawn |= piece == opponentPawn;
+        }
+
+        // Rook on open file gets 20cp bonus, on half-open file 10cp
+        int weight = haveOpponentPawn ? 10 : 20;
+
+        // Rook batteries get an extra bonus of 30cp
+        if (isBattery) {
+            weight += 30;
+        }
+
+        return weight;
     }
 
     private void calculateCastlingState() {

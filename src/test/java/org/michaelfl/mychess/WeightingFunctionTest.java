@@ -9,6 +9,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class WeightingFunctionTest {
 
+    private static final int WHITE = 0;
+    private static final int BLACK = 1;
+
     @Test
     void testCheckmateInFunctions() {
         assertEquals(WeightingFunction.CHECKMATE_WEIGHT_HIGH / 100f, WeightingFunction.checkmateIn(0), "wrong checkmate weight");
@@ -198,7 +201,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4
                 """;
-        testPosition(pgn, 0.76f);
+        testPosition(pgn, 0.86f);
     }
 
     @Test
@@ -225,7 +228,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6
                 """;
-        testPosition(pgn, 0.72f);
+        testPosition(pgn, 0.82f);
     }
 
     @Test
@@ -234,7 +237,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5
                 """;
-        testPosition(pgn, 0.84f);
+        testPosition(pgn, 0.94f);
     }
 
     @Test
@@ -252,7 +255,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5
                 """;
-        testPosition(pgn, 0.68f);
+        testPosition(pgn, 0.78f);
     }
 
     @Test
@@ -261,7 +264,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+
                 """;
-        testPosition(pgn, -0.60f);
+        testPosition(pgn, -0.53f);
     }
 
     @Test
@@ -270,7 +273,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1
                 """;
-        testPosition(pgn, -0.29f);
+        testPosition(pgn, -0.21f);
     }
 
     @Test
@@ -279,7 +282,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5
                 """;
-        testPosition(pgn, -0.64f);
+        testPosition(pgn, -0.54f);
     }
 
     // ** Unguarded bishop attacked by queen
@@ -289,7 +292,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5
                 """;
-        testPosition(pgn, -0.27f);
+        testPosition(pgn, -0.17f);
     }
 
     // ** White wins (back) a pawn with Nxe6
@@ -299,7 +302,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8
                 """;
-        testPosition(pgn, -0.21f);
+        testPosition(pgn, -0.11f);
     }
 
     @Test
@@ -309,7 +312,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6
                 """;
-        testPosition(pgn, 0.99f);
+        testPosition(pgn, 1.19f);
     }
 
     @Test
@@ -329,7 +332,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6
                 """;
-        testPosition(pgn, 0.33f);
+        testPosition(pgn, 0.43f);
     }
 
     @Test
@@ -339,7 +342,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6 O-O
                 """;
-        testPosition(pgn, -0.06f);
+        testPosition(pgn, 0.04f);
     }
 
     @Test
@@ -349,7 +352,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6 O-O 18. Rg1
                 """;
-        testPosition(pgn, 0.08f);
+        testPosition(pgn, 0.28f);
     }
 
     // Terrible position for black (no mobility, pieces on bad, narrow positions)
@@ -528,5 +531,177 @@ class WeightingFunctionTest {
 
         assertEquals(0, WeightingFunction.getMaterialWeightOfMove(move),
                 "castling produces no material delta");
+    }
+
+    // ---------- rook file and battery evaluation ----------
+
+    @Test
+    void rookFile_singleWhiteRookOnOpenFile_getsOpenFileBonus() {
+        var evaluator = analyze("4k3/8/8/8/8/8/8/R3K3 w - - 0 1");
+
+        assertArrayEquals(new int[] {0, -1}, evaluator.getRookFiles(WHITE),
+                "white rook file state should store the a-file");
+        assertArrayEquals(new int[] {20, 0}, evaluator.getRookFilesWeight(),
+                "a rook on an open file gets the 20cp open-file bonus");
+    }
+
+    @Test
+    void rookFile_singleBlackRookOnOpenFile_getsOpenFileBonusForBlack() {
+        var evaluator = analyze("4k2r/8/8/8/8/8/8/4K3 b - - 0 1");
+
+        assertArrayEquals(new int[] {7, -1}, evaluator.getRookFiles(BLACK),
+                "black rook file state should store the h-file");
+        assertArrayEquals(new int[] {0, 20}, evaluator.getRookFilesWeight(),
+                "black receives the same open-file bonus as white");
+    }
+
+    @Test
+    void rookFile_opponentPawnOnly_makesFileHalfOpen() {
+        var evaluator = analyze("4k3/p7/8/8/8/8/8/R3K3 w - - 0 1");
+
+        assertEquals(10, evaluator.calculateRookFileWeight(WHITE, 0),
+                "opponent pawn without own pawn makes the file half-open");
+        assertArrayEquals(new int[] {10, 0}, evaluator.getRookFilesWeight());
+    }
+
+    @Test
+    void rookFile_ownPawnOnFile_removesFileBonus() {
+        var evaluator = analyze("4k3/8/8/8/8/8/P7/R3K3 w - - 0 1");
+
+        assertEquals(0, evaluator.calculateRookFileWeight(WHITE, 0),
+                "own pawn on the file means neither open nor half-open");
+        assertArrayEquals(new int[] {0, 0}, evaluator.getRookFilesWeight());
+    }
+
+    @Test
+    void rookFile_twoRooksOnDifferentOpenFiles_addBothBonuses() {
+        var evaluator = analyze("4k3/8/8/8/8/8/8/R3K2R w - - 0 1");
+
+        assertArrayEquals(new int[] {0, 7}, evaluator.getRookFiles(WHITE),
+                "both original rook files should be tracked");
+        assertArrayEquals(new int[] {40, 0}, evaluator.getRookFilesWeight(),
+                "two open files should contribute two open-file bonuses");
+    }
+
+    @Test
+    void rookFileWeightsForColor_sumsOnlyStoredRookFiles() {
+        var evaluator = analyze("4k3/p7/8/8/8/8/8/R3K2R w - - 0 1");
+
+        assertEquals(0, evaluator.calculateRookFileWeightsForColor(WHITE, new int[] {-1, 7}),
+                "the first slot is the sentinel; a second slot without a first slot must be ignored");
+        assertEquals(10, evaluator.calculateRookFileWeightsForColor(WHITE, new int[] {0, -1}),
+                "one stored half-open rook file should contribute only that file");
+        assertEquals(30, evaluator.calculateRookFileWeightsForColor(WHITE, new int[] {0, 7}),
+                "two stored rook files should be summed");
+    }
+
+    @Test
+    void rookBattery_twoRooksSeeingEachOtherOnOpenFile_getsBatteryBonus() {
+        var evaluator = analyze("4k3/8/8/8/8/R7/8/R3K3 w - - 0 1");
+
+        assertArrayEquals(new int[] {0, -1}, evaluator.getRookFiles(WHITE),
+                "a battery on one file should be stored once");
+        assertEquals(50, evaluator.calculateRookFileWeight(WHITE, 0),
+                "open file battery gets 20cp open-file bonus plus 30cp battery bonus");
+        assertArrayEquals(new int[] {50, 0}, evaluator.getRookFilesWeight());
+    }
+
+    @Test
+    void rookBattery_twoRooksSeeingEachOtherOnHalfOpenFile_getsHalfOpenBatteryBonus() {
+        var evaluator = analyze("4k3/p7/8/8/8/R7/8/R3K3 w - - 0 1");
+
+        assertEquals(40, evaluator.calculateRookFileWeight(WHITE, 0),
+                "half-open battery gets 10cp half-open bonus plus 30cp battery bonus");
+        assertArrayEquals(new int[] {40, 0}, evaluator.getRookFilesWeight());
+    }
+
+    @Test
+    void rookBattery_pieceBetweenRooksPreventsBatteryBonus() {
+        var evaluator = analyze("4k3/8/8/8/8/R7/N7/R3K3 w - - 0 1");
+
+        assertEquals(20, evaluator.calculateRookFileWeight(WHITE, 0),
+                "a non-empty square between the rooks means they are not a battery");
+        assertArrayEquals(new int[] {20, 0}, evaluator.getRookFilesWeight());
+    }
+
+    @Test
+    void rookFile_stateIsResetBetweenCalculations() {
+        var evaluator = analyze("4k3/8/8/8/8/8/8/R3K3 w - - 0 1");
+        assertArrayEquals(new int[] {20, 0}, evaluator.getRookFilesWeight());
+
+        evaluator.calculate(Fen.importFEN("4k3/8/8/8/8/8/8/4K3 w - - 0 1"));
+
+        assertArrayEquals(new int[] {-1, -1}, evaluator.getRookFiles(WHITE),
+                "rook files from a previous position must not leak into the next calculation");
+        assertArrayEquals(new int[] {0, 0}, evaluator.getRookFilesWeight(),
+                "rook file weights from a previous position must not leak into the next calculation");
+    }
+
+    @Test
+    void rookFile_gettersReturnCopies() {
+        var evaluator = analyze("4k3/8/8/8/8/8/8/R3K3 w - - 0 1");
+
+        evaluator.getRookFiles(WHITE)[0] = 7;
+        evaluator.getRookFilesWeight()[0] = 99;
+
+        assertArrayEquals(new int[] {0, -1}, evaluator.getRookFiles(WHITE));
+        assertArrayEquals(new int[] {20, 0}, evaluator.getRookFilesWeight());
+    }
+
+    @Test
+    void analyzeFactors_rookFileFeatureReconstructsEvalContribution() {
+        var evaluator = new WeightingFunction();
+        var breakdown = evaluator.analyzeFactors(Fen.importFEN("4k3/8/8/8/8/8/8/R3K3 w - - 0 1"));
+
+        int rookIndex = indexOf(WeightingFunction.TUNABLE_FACTOR_NAMES, "rookFileFactor");
+
+        assertEquals(20.0, breakdown.features()[rookIndex],
+                "rook file features should be centipawn coefficients because rookFileFactor is scaled as 1.0");
+    }
+
+    @Test
+    void rookBattery_ownPawnOnFile_beatsBatteryBonus() {
+        // Rooks a1 + a3 form a connected battery, but a white pawn on a5 sits
+        // higher on the same file. The own-pawn check returns 0 for the whole
+        // file, so the detected battery earns nothing — a closed file is neither
+        // open nor half-open.
+        var evaluator = analyze("4k3/8/8/P7/8/R7/8/R3K3 w - - 0 1");
+
+        assertArrayEquals(new int[] {0, -1}, evaluator.getRookFiles(WHITE),
+                "both rooks are on the a-file, so a single file slot is stored");
+        assertEquals(0, evaluator.calculateRookFileWeight(WHITE, 0),
+                "an own pawn on the file forces 0, even when a battery is present");
+        assertArrayEquals(new int[] {0, 0}, evaluator.getRookFilesWeight());
+    }
+
+    @Test
+    void rookFile_thirdRookOnThirdFile_isNotTracked() {
+        // Documents a known limitation: storeRookFile keeps at most two distinct
+        // files, so a third rook (only reachable via promotion) on a third file
+        // is silently dropped. If that limitation is ever lifted, this test must
+        // be updated. Rooks a1 (file 0), d1 (file 3), h1 (file 7); all files open.
+        var evaluator = analyze("4k3/8/8/8/8/8/8/R2RK2R w - - 0 1");
+
+        assertArrayEquals(new int[] {0, 3}, evaluator.getRookFiles(WHITE),
+                "only the first two distinct rook files (a, d) are tracked; the h-file is dropped");
+        assertArrayEquals(new int[] {40, 0}, evaluator.getRookFilesWeight(),
+                "two open files score 2x20; the untracked third rook contributes nothing");
+    }
+
+    private static WeightingFunction analyze(String fen) {
+        var evaluator = new WeightingFunction();
+        evaluator.calculate(Fen.importFEN(fen));
+        return evaluator;
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private static int indexOf(String[] values, String needle) {
+        for (int i = 0; i < values.length; i++) {
+            if (values[i].equals(needle)) {
+                return i;
+            }
+        }
+        fail("missing expected factor: " + needle);
+        return -1;
     }
 }

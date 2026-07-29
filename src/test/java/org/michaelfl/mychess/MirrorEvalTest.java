@@ -62,6 +62,13 @@ class MirrorEvalTest {
                 Arguments.of("black up a rook and a bishop",
                         "r3kb2/8/8/8/8/8/8/4K3 w - - 0 1"),
 
+                // Rook-file/battery term: White's a-file rook is open (+20),
+                // Black's h-file rook is shut in by its own h7 pawn (0). Material
+                // is balanced (R+P each) so the full positional eval runs and the
+                // rook-file term's color antisymmetry is actually exercised.
+                Arguments.of("open-file rook vs own-pawn-blocked rook",
+                        "4k2r/7p/8/8/8/8/7P/R3K3 w - - 0 1"),
+
                 // Position with a doubled-pawn on each side at different files.
                 Arguments.of("doubled pawns: White c-file, Black f-file",
                         "4k3/8/5p2/5p2/8/2P5/2P5/4K3 w - - 0 1"),
