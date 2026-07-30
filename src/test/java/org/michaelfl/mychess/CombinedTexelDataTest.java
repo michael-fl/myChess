@@ -31,7 +31,7 @@ class CombinedTexelDataTest {
     private static final String RESULT_TAG = " c9 ";
 
     /** The factor indices the combined adapter keeps tunable (skip 0=position, 3=castling). */
-    private static final int[] TUNABLE_FACTORS = {1, 2, 4, 5, 6};
+    private static final int[] TUNABLE_FACTORS = {1, 2, 4, 5};
 
     @Test
     @Timeout(value = 60, unit = TimeUnit.SECONDS)
