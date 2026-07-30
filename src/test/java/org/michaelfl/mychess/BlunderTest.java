@@ -48,6 +48,14 @@ class BlunderTest {
      */
     private static final int JUNIT_TIMEOUT_S = 60;
 
+    /**
+     * Stockfish-annotated analysis position, black to move. Black is already
+     * slightly better and has two winning tries; see
+     * {@link #nxe2_atMove19_engineMissesTheExchangeWinningSacrifice()}.
+     */
+    private static final String HANGING_E2_FEN =
+            "b3r1kr/pp3pp1/2p5/5Qq1/5n1p/1B2N1P1/P3PP1P/4RRK1 b kq - 1 19";
+
     private TranspositionTable tt;
 
     @BeforeEach
@@ -69,6 +77,16 @@ class BlunderTest {
         var gameConfig = new GameConfig(MyChessEngine.class, engineConfig);
 
         return GameImporter.importerFor(pgn).importGame(gameConfig);
+    }
+
+    private static Game gameFromFen(String fen, TranspositionTable tt) {
+        var engineConfig = new EngineConfig.Builder()
+                .millisPerMove(SEARCH_BUDGET_MS)
+                .silent(true)
+                .setTranspositionTable(tt)
+                .build();
+
+        return new Game(new GameConfig(MyChessEngine.class, engineConfig), Fen.importFEN(fen));
     }
 
     /**
@@ -294,5 +312,58 @@ class BlunderTest {
             // expected for now
         }
         assertFalse(avoided);
+    }
+
+    /**
+     * Analysis position (Stockfish-annotated), black to move:
+     * {@code b3r1kr/pp3pp1/2p5/5Qq1/5n1p/1B2N1P1/P3PP1P/4RRK1 b kq - 1 19}.
+     * Black is already slightly better and has two winning tries:
+     * <ul>
+     *   <li>{@code 19...Qxf5} (played) — trades queens and simplifies;
+     *       Stockfish ~{@code -1.8}.</li>
+     *   <li>{@code 19...Nxe2+} (missed) — an exchange-winning knight sacrifice;
+     *       Stockfish ~{@code -4.2}.</li>
+     * </ul>
+     *
+     * <p>myChess prefers the simpler {@code Qxf5}. The point of {@code Nxe2+} is
+     * a deflection: if white accepts with {@code Rxe2}, then
+     * {@code Qxf5 Nxf5 Rxe2} wins the exchange (the recapture {@code Ne3xf5}
+     * vacates e3 and opens the e-file onto the now-undefended rook) — myChess
+     * <em>does</em> calculate this, rating the accept line ~{@code +3}. But
+     * white's only correct reply is to <b>decline</b> with {@code Kh1}
+     * (Stockfish's sole move), and there myChess evaluates only ~{@code +2}
+     * while Stockfish sees ~{@code +4.2}.
+     *
+     * <p>The gap is purely evaluative, not tactical. After {@code Nxe2+ Kh1}
+     * black is +2 pawns in <em>material</em> — which myChess counts — plus
+     * ~2 pawns of <em>positional</em> compensation it cannot see: the exposed
+     * {@code Kh1}, the a8-bishop on the long a8&ndash;h1 diagonal, and the e2
+     * outpost knight. Two known eval holes cause the miss: (1) there is no
+     * king-safety / attack term, and (2) the material-only eval shortcut
+     * ({@code EVALUATE_MATERIAL_ONLY_THRESHOLD = 200 cp}) discards the
+     * positional evaluation exactly when a side is +2 pawns. So
+     * {@code Nxe2+ ≈ Qxf5 ≈ +2} to myChess, and it simplifies.
+     *
+     * <p>Characterization test: asserts myChess still misses {@code Nxe2+}. It
+     * flips to red once the eval (tapered PSTs, a working king-safety term, or a
+     * smarter material-only gate) is strong enough to prefer the sacrifice — the
+     * cue to convert this into a positive assertion.
+     */
+    @Test
+    @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void nxe2_atMove19_engineMissesTheExchangeWinningSacrifice() throws Exception {
+        var game = gameFromFen(HANGING_E2_FEN, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(),
+                "in the analysis position black must be to move");
+
+        var result = searchCurrentPosition(game);
+
+        boolean foundNxe2 = Move.getFromField(result.move()) == Board.f4
+                && Move.getToField(result.move()) == Board.e2;
+
+        assertFalse(foundNxe2,
+                "engine now selects the stronger Nxe2+ (f4-e2) with white-POV eval " + result.weight()
+                        + " — the evaluation blind spot is fixed; convert this characterization test "
+                        + "into a positive assertion that Nxe2+ is chosen");
     }
 }
