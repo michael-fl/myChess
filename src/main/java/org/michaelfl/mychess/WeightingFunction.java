@@ -39,8 +39,6 @@ public final class WeightingFunction {
     private static final String DELTA_STR = ", delta=";
     private static final String WEIGHT_STR = ", weight=";
     private static final byte ATTACK_MARK_BIT = 32;
-    private static final byte WHITE_KING_ATTACKED = Board.whiteKing | ATTACK_MARK_BIT;
-    private static final byte BLACK_KING_ATTACKED = Board.blackKing | ATTACK_MARK_BIT;
 
     /** Piece weight in centi pawns. */
     public static final int[] weightOfPiece = new int[Board.blackKing + 1];
@@ -112,30 +110,12 @@ public final class WeightingFunction {
      * pair; we use that value here.
      */
     private static final float doublePawnFactor = -0.15f;
-    /**
-     * Per-hanging-piece penalty in pawn units, applied directly in the
-     * final-weight formula. A piece counts as "hanging" when it is
-     * simultaneously attacked by an opposing piece AND has no own-color
-     * defender (kings excluded). Tracked via the {@link #ATTACK_MARK_BIT}
-     * marker on {@link #tempBoard} during the per-piece scan: every
-     * {@code capture} call sets the marker on the attacked square; every
-     * {@link #defend(int)} call wipes the entire square (clearing both
-     * piece bits and any marker), so a defended piece never satisfies the
-     * "marker bit set AND piece bits set" predicate counted in
-     * {@link #calculateUndefendedPiecesCount()}.
-     *
-     * <p>The sign convention mirrors {@link #doublePawnFactor}: the
-     * factor is negative and applied to {@code white_count - black_count},
-     * so more own-side hanging pieces decrease this side's score.
-     */
-    private static final float undefendedPiecesFactor = -0.1f;
 
     private GameStatus game;
     private int turn; // 0 = white, 1 = black
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Board theBoard; // For debugger only
     private byte[] board;
-    private final byte[] tempBoard = new byte[Board.LENGTH * Board.LENGTH];
     private final int[] chessCount = new int[2];
     private final float[] piecesWeight = new float[2];
     private final int[] mobilityWeight = new int[2];
@@ -144,7 +124,6 @@ public final class WeightingFunction {
     private boolean containsIllegalMove;
     private final int[] castlingState = new int[2];
     private final int[] doublePawnCount = new int[2];
-    private final int[] undefendedPiecesCount = new int[2];
 
     /** Material weight (delta white - black) in centi pawns. */
     public static int calculateMaterialWeight(Board theBoard) {
@@ -208,10 +187,6 @@ public final class WeightingFunction {
         this.castlingState[1] = 0;
         this.doublePawnCount[0] = 0;
         this.doublePawnCount[1] = 0;
-        this.undefendedPiecesCount[0] = 0;
-        this.undefendedPiecesCount[1] = 0;
-
-        System.arraycopy(board, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
 
         final int stopField = Board.h8 + 1;
         final boolean isEndGame = game.isEndGame();
@@ -232,22 +207,20 @@ public final class WeightingFunction {
 
         calculateCastlingState();
 
-        calculateUndefendedPiecesCount();
-
         return calculatePositionWeight();
     }
 
     /** The evaluation factors the offline tuner can adjust, in a fixed order. */
     public static final String[] TUNABLE_FACTOR_NAMES = {
             "positionFactor", "mobilityFactor", "threadWeightFactor",
-            "castlingFactor", "chessFactor", "doublePawnFactor", "undefendedPiecesFactor"
+            "castlingFactor", "chessFactor", "doublePawnFactor"
     };
 
     /** Current values of {@link #TUNABLE_FACTOR_NAMES}, in the same order. */
     public static double[] tunableFactorValues() {
         return new double[] {
                 positionFactor, mobilityFactor, threadWeightFactor,
-                castlingFactor, chessFactor, doublePawnFactor, undefendedPiecesFactor
+                castlingFactor, chessFactor, doublePawnFactor
         };
     }
 
@@ -273,8 +246,7 @@ public final class WeightingFunction {
                 threadWeight[0] - threadWeight[1],
                 (castlingState[0] - castlingState[1]) * 100.0,
                 (chessCount[0] - chessCount[1]) * 100.0,
-                (doublePawnCount[0] - doublePawnCount[1]) * 100.0,
-                (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * 100.0
+                (doublePawnCount[0] - doublePawnCount[1]) * 100.0
         };
 
         return new FactorBreakdown(eval, features);
@@ -291,8 +263,7 @@ public final class WeightingFunction {
                 + (threadWeight[0] - threadWeight[1]) / 100f * threadWeightFactor
                 + (castlingState[0] - castlingState[1]) * castlingFactor
                 + (chessCount[0] - chessCount[1]) * chessFactor
-                + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
-                + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor) * 100);
+                + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) * 100);
     }
 
     /**
@@ -321,7 +292,6 @@ public final class WeightingFunction {
                "castlingState:         w=" + castlingState[0] + ", b=" + castlingState[1] + DELTA_STR + (castlingState[0] - castlingState[1]) + WEIGHT_STR + round((castlingState[0] - castlingState[1]) * castlingFactor) + '\n' +
                "doublePawnCount:       w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + DELTA_STR + (doublePawnCount[0] - doublePawnCount[1]) + WEIGHT_STR + round((doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) + '\n' +
                "chessCount:            w=" + chessCount[0] + ", b=" + chessCount[1] + DELTA_STR + (chessCount[0] - chessCount[1]) + WEIGHT_STR + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
-               "undefendedPiecesCount: w=" + undefendedPiecesCount[0] + ", b=" + undefendedPiecesCount[1] + DELTA_STR + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) + WEIGHT_STR + round((undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor) + '\n' +
                "weight: " + calculatePositionWeight() / 100f;
     }
 
@@ -384,8 +354,6 @@ public final class WeightingFunction {
     private void captureOrDefendWithPawn(final int to, final int myTurn, final int oppositeTurn, final byte movingPawn, final int color) {
         if ((board[to] & oppositeTurn) == oppositeTurn) {
             capture(to, movingPawn, color, board[to]);
-        } else if ((board[to] & myTurn) == myTurn) {
-            defend(to);
         }
     }
 
@@ -564,13 +532,12 @@ public final class WeightingFunction {
         if (piece == Board.empty) {
             mobilityWeight[color] += weight;
             return true;
-        } else if ((piece & oppositeColor) == oppositeColor) {
-            capture(to, color, piece, weight);
-            return false;
-        } else { // own color
-            defend(to);
-            return false;
         }
+        if ((piece & oppositeColor) == oppositeColor) {
+            capture(to, color, piece, weight);
+        }
+
+        return false;
     }
 
     private void capture(final int to, final byte movingPiece, final int color, final byte piece) {
@@ -589,11 +556,6 @@ public final class WeightingFunction {
 
         mobilityWeight[color] += weight;
         threadWeight[color] += weightOfPiece[piece];
-        tempBoard[field] |= ATTACK_MARK_BIT;
-    }
-
-    private void defend(final int field) {
-        this.tempBoard[field] = Board.empty;
     }
 
     private void calculateCastlingState() {
@@ -614,31 +576,6 @@ public final class WeightingFunction {
             castlingState[1] = -2;
         else
             castlingState[1] = -4;
-    }
-
-    /**
-     * Number of hanging pieces (attacked AND undefended, kings excluded)
-     * found for the given color during the most recent {@link #calculate}
-     * call. Package-private test hook — production callers should consume
-     * this contribution via the final weight returned by {@code calculate}.
-     *
-     * @param color {@code 0} for white, {@code 1} for black
-     */
-    int getHangingPiecesCount(int color) {
-        return undefendedPiecesCount[color];
-    }
-
-    private void calculateUndefendedPiecesCount() {
-        for (int field = Board.a1; field <= Board.h8; field++) {
-            final byte piece = tempBoard[field];
-            if ((piece & ATTACK_MARK_BIT) == ATTACK_MARK_BIT) {
-                if ((piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE && piece != WHITE_KING_ATTACKED) {
-                    undefendedPiecesCount[0]++;
-                } else if ((piece & GameStatus.TURN_BLACK) == GameStatus.TURN_BLACK && piece != BLACK_KING_ATTACKED) {
-                    undefendedPiecesCount[1]++;
-                }
-            }
-        }
     }
 
     public static boolean isIllegalWeight(int weightCenti) {

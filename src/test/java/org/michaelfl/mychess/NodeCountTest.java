@@ -41,7 +41,7 @@ class NodeCountTest {
      * intentional search or evaluation change alters the tree (as one would a
      * Stockfish bench number), never to mask an accidental miscount.
      */
-    private static final int EXPECTED_DEPTH_2_NODES = 138;
+    private static final int EXPECTED_DEPTH_2_NODES = 81;
 
     private static final int SEARCH_TIMEOUT_SECONDS = 20;
 

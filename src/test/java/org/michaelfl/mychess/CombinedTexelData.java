@@ -34,7 +34,7 @@ import java.util.List;
 public final class CombinedTexelData {
 
     /** Factor indices (into {@link WeightingFunction#TUNABLE_FACTOR_NAMES}) that stay tunable. */
-    private static final int[] TUNABLE_FACTORS = {1, 2, 4, 5, 6}; // skip 0=position, 3=castling
+    private static final int[] TUNABLE_FACTORS = {1, 2, 4, 5}; // skip 0=position, 3=castling
 
     private static final String EPD_COUNTER_SUFFIX = " 0 1";
     private static final String RESULT_TAG = " c9 ";
