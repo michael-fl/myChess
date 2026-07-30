@@ -318,6 +318,20 @@ The sub-items were *independent* refinements on top of the shipped all-captures 
 
 **PeSTO stays a reference, not the seed.** Measure PeSTO-as-is once (its MG/EG tables + material, column-symmetrized as described in the bullet above) against the current single-phase eval — a ceiling check that says whether proven tapered tables beat our eval *independently of our tuner*, which has twice cost Elo. Then compare our tuned tapered result against that reference: if ours ≥ PeSTO, the tuner and our eval design carry; if PeSTO is clearly better, adopt it (or seed a fresh tune from it). This refines the "Tapered evaluation with PeSTO PSTs" bullet above — prefer tuning from our tables with PeSTO as a yardstick over swapping PeSTO in wholesale.
 
+### 12.7.2 Tried — rook-file / battery bonus, shelved (neutral)
+
+**Tried — rook-file and battery bonus, shelved (neutral).** Branch `rook-battery` (commit `a12ba0f`). A rook on an open file scored +20 cp, a half-open file (an opponent pawn but no own pawn) +10 cp, 0 on a file carrying an own pawn; two of a color's rooks connected on the same file (a battery) added a further +30 cp, folded into the evaluation through a new tunable `rookFileFactor`. **Result: −2.0 ± 10.8 Elo vs 4.2.1 (2420 games, LOS 35.8% — neutral).** An early 1100-game snapshot read +13.9 ± 15.9 but regressed cleanly to zero — a textbook reminder not to trust sub-2000-game samples.
+
+**Why neutral — the term duplicates signal the evaluation already has:**
+
+- The open-file bonus overlaps with the existing **file-weighted rook mobility**: [`calculateForRook`](../src/main/java/org/michaelfl/mychess/WeightingFunction.java) already counts a rook's vertical (file) moves at full weight and its rank moves at half, so a rook on an open file is rewarded through mobility before the new term ever fires.
+- A rook on the 7th rank is already worth ~+5 cp through the **rook piece-square table** (its rank-7 values of +10 scaled by `positionFactor = 0.5`).
+- Only the **battery** bonus is genuinely new signal — but it is too rare and too search-resolvable (the concrete "pigs on the 7th" wins the tactical search already finds) to move the needle.
+
+**Narrower variants considered and not pursued:** open/half-open file bearing on the enemy king (king-safety-redundant, and hand-crafted king safety already measured net-negative — see [§ 12.21](#1221-king-safety--m--3060-elo)); a single rook on the 7th (PST-redundant); a battery with a concrete target (search-redundant).
+
+**Take-away.** For an engine with a strong tactical search, static evaluation terms that duplicate what **mobility, the piece-square tables, or the search itself** already capture tend to measure neutral. If a rook-battery / rook-on-7th bonus is ever revisited, it belongs inside a tapered evaluation ([§ 12.7.1](#1271-tapered-evaluation--staged-rollout-strategy)) as an **endgame-scaled** term (rooks on the 7th matter most in the endgame), not as a flat standalone. The code is preserved on branch `rook-battery` rather than merged.
+
 ## 12.8 Aspiration windows — **S, ≈ 20–40 Elo**
 
 At each iterative-deepening iteration, search with a narrow window `[score − 50, score + 50]` around the previous iteration's score. Re-search with the wider window only on a fail-high or fail-low.
