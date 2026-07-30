@@ -883,6 +883,40 @@ Documents the first successful eval-term addition since the pre-investigation ba
 
 The hanging-pieces term is now part of `master` at `v3.6.0`. The `undefended-pieces-weight` branch may be deleted once any pending follow-up work (e.g. cross-confirming against a stronger opponent than 3.5.2) is done — but the implementation itself is in master and there is no reason to keep the branch indefinitely.
 
+### 12.19.1 Re-validated — removal after the all-captures QSearch, term confirmed still productive (≈ −13 Elo)
+
+*Re-tested July 2026. § 12.18 flagged that the v4.2.0 all-captures QSearch (every leaf, all captures — see [search § 6.4](search.md#64-quiescence-search)) might have rendered some static eval terms redundant. The hanging-pieces penalty was the obvious candidate: if the QSearch resolves every capture at every leaf, does a static "attacked and undefended" penalty still add anything? It does. Removing it cost ≈ −13 Elo. The term stays; `remove-undefended-criteria` (`v4.2.3-remove-undefended-criteria`) is kept as a research archive, not merged.*
+
+#### What was measured
+
+The term and its supporting machinery (the `tempBoard` attack-marker scan, `defend()`, `calculateUndefendedPiecesCount`, the `getHangingPiecesCount` accessor, and the factor's entry in the tunable-factor arrays) were removed and matched against `myChess-4.2.1`, TC 40/1200:
+
+| Run | W-L-D | Elo | LOS |
+|---|---|---|---|
+| 1 | 359-401-480 (1240 games) | **−11.8 ± 15.1** | 6.4% |
+
+The running estimate held between −11 and −19 Elo across the last ~40 samples without trending back toward zero (LOS ≈ 4–9%, i.e. ~90–95% probability of a regression). The gauntlet was aborted once the direction was stable: the CI still nominally straddled zero, but for the *decision* — "is the term removable?" — the verdict was already clear. Removal would need a neutral-or-positive result; this is firmly negative. Running to significance would only have tightened toward ≈ −13 ± 10, not changed the sign.
+
+#### What we learned — the all-captures QSearch does NOT subsume the term
+
+The intuition "the QSearch grabs every hanging piece, so a static hanging-pieces term is redundant" is wrong, and the reason is structural in how the QSearch treats a leaf:
+
+1. **The QSearch never passes the move.** At each quiescence node it computes a stand-pat (`standPat = calculatePositionWeight(...)`, the full static eval), sets `bestWeight = standPat` as a *floor*, and then searches **only the side-to-move's captures**, which can only *raise* that floor. It never hands the opponent a free move.
+
+2. **Consequence — an asymmetry:**
+   - A hanging piece belonging to the side **not** to move *is* resolved: the side to move simply captures it in the QSearch. Here the static term genuinely is redundant.
+   - A hanging piece belonging to the side **to** move is **invisible** to the QSearch. Losing it would require the *opponent* to move, but the opponent only gets a turn *after* the side to move makes a capture. With no useful capture available, the QSearch returns the (too-optimistic) stand-pat and silently assumes the loose piece holds.
+
+3. **The static term corrects exactly that optimism.** "Attacked AND undefended" lowers the stand-pat — symmetrically for both colors — encoding the "the opponent grabs it next tempo" loss that a pass-less, captures-only QSearch cannot represent. That is real information the QSearch structurally lacks.
+
+4. **Secondary — search efficiency.** The term is part of the eval used for move ordering and alpha-beta pruning at every interior node, so removing it also degrades nodes-to-depth, compounding the eval loss under a time budget.
+
+This mirrors the § 12.18 finding for the material-only shortcut: the QSearch and the static term are **complementary, not redundant** — the QSearch resolves the concrete tactical horizon, the term keeps the leaf evaluation honest about loose pieces the horizon can't reach.
+
+#### Why this slot in the roadmap
+
+Closes the re-test that § 12.18 unlocked for this term: the hanging-pieces penalty (§ 12.19, +28 Elo at v3.6.0) is **still** productive after the all-captures QSearch, contributing ≈ 13 Elo. It is not a removal candidate. This reinforces the general lesson of the eval-removal series (§§ 12.16–12.18): every term that survived a removal test is load-bearing, and a stronger QSearch does not change that.
+
 ## 12.20 Principal Variation Search (PVS / NegaScout) — **S, ≈ 10–25 Elo**
 
 Search only the *first* move at each node — the PV move, ordered first by [§ 7.1 PV / TT ordering](search.md#71-best-known-move-pv-ordering) — with the full `(alpha, beta)` window. Search every *other* move with a null window `(alpha, alpha+1)`: a cheap proof that it is worse than the PV move. Only when a null-window search unexpectedly fails high (the move is actually better than alpha) re-search that one move with the full window.
