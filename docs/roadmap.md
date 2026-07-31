@@ -541,6 +541,32 @@ All three GUIs listed under [§ 12.9](#129-uci-protocol--m-no-elo-but-unblocks-m
 - **Cute Chess / cutechess-cli** — `-variant fischerandom` for engine matches; setting up a 960 gauntlet is a single command-line flag.
 - **Banksia GUI** — includes a one-click random-960-position generator alongside standard play.
 
+### 12.11.1 Evaluation tuning for Chess960 — what transfers, what to re-measure
+
+*Forward-looking. The primary user plays predominantly Chess960 against myChess, so 960 strength is a real target. This records which evaluation parameters transfer from standard chess and which are worth tuning or measuring specifically on 960.*
+
+**PSTs are variant-agnostic — tune on standard, they transfer.** A piece-square table scores *where a piece stands*, not where it started. Center control, open-file and rank bonuses, and the entire endgame (king centralization, passed pawns) are identical in 960; even castling *targets* are the same (960 castling still lands the king on the c-/g-file squares), and the endgame is literally identical to standard chess. So the tapered-PST tuning of [§ 12.7.1](#1271-tapered-evaluation--staged-rollout-strategy) on the standard Zurichess dataset produces tables that serve 960 as well — **no 960-specific PST dataset is needed.** The only divergent slice is the *middlegame king table* and early-development squares, because a standard dataset over-fits "the king ends on g1."
+
+**Tune on standard, measure on 960.** Because PSTs transfer, keep tuning them on the standard 1.4M-position dataset — but run the *validation* SPRT under 960 conditions (`cutechess-cli -variant fischerandom` with 960 start positions; myChess already speaks `UCI_Chess960`) so the keep/discard decision reflects the variant actually played. This catches a change that helps standard chess but misfires in 960 (e.g. an MG king-table tweak that over-fits standard castling) without needing a 960 tuning dataset. cutechess is the *measuring device* here, not an optimizer — the optimizer is still the offline Texel tuner.
+
+**The marquee 960 item — re-measure the shelved king-safety terms on 960.** Every king-safety attempt so far was killed on *standard* chess ([§ 12.21](#1221-king-safety--m--3060-elo): attacker-units −14.7, standalone pawn-shield −57.5, king-dependent PST −18.3). In standard chess the king is almost always safely castled on g1, so a king-safety term measures almost nothing and reads net-negative. **960 stresses king safety far more** — the king starts on a random file, is often exposed before castling, and there is no opening book to steer it to safety. It is entirely plausible that a term that is neutral-to-negative on standard is *positive* on 960. The term logic already exists in the archived branches; only the weight needs re-fitting. And because it is a handful of scalars — not hundreds of PST cells — this is the one case where **SPSA-style tuning directly against 960 games** is feasible (the games are the signal, so no labeled 960 dataset is required).
+
+**A 960 profile for the few variant-sensitive scalars.** For the small set of genuinely 960-sensitive scalars — king-safety weight, and opening-phase time allocation (which matters more in 960 precisely because there is no book) — it makes sense to carry variant-dependent values switched on `UCI_Chess960`, rather than a second full evaluation. The bulk PSTs stay a single shared set.
+
+**The largest 960 gap is not a tunable parameter at all.** myChess has no opening book for 960 (each start is unique), so it plays on search + evaluation from move 1 — exactly the phase where king safety and development decide games. That is why the king-safety re-test is doubly attractive: it targets the phase where myChess is most on its own, in the variant the user actually plays.
+
+Summary — where each parameter class belongs:
+
+| Parameter | Tune on | Measure on 960 |
+|---|---|---|
+| Bulk PSTs | standard (Texel, § 12.7.1) — they transfer | optional cross-check |
+| MG king PST | standard; a true 960 tune needs a 960 dataset | yes (hand variants) |
+| King-safety weights | SPSA-on-960 games (few scalars) or by hand | **yes** |
+| Opening time management | SPSA-on-960 games | **yes** |
+| Development / tempo term (if added) | standard | yes |
+
+Feasibility note: game-based tuning (SPSA/CLOP) against 960 games is only practical for a few scalars; a labeled 960 dataset for Texel PST tuning would have to be generated via self-play — a separate project, and unnecessary given PST transferability.
+
 ## 12.12 Real time management heuristics — **S → M, ≈ 30–60 Elo**
 
 myChess currently reads `wtime`/`btime`/`movestogo` from the GUI and converts them into a flat per-move budget (see [§ 12.9.2](#1292-ucihandler--1-day) / [`UciHandler.computeClockBudgetMillis`](../src/main/java/org/michaelfl/mychess/UciHandler.java)). The engine itself only ever sees `millisPerMove` — it has no notion of a remaining clock that persists across `go` calls.
