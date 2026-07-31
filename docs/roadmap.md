@@ -19,7 +19,7 @@ This roadmap is split across three files. Section numbers (§ 12.x) are **stable
 | 12.3 | Late move reductions (LMR) | S, ≈ 50–100 |
 | 12.4 | Check extensions | S, ≈ 15–30 |
 | 12.5 | History heuristic | S, ≈ 30–50 |
-| 12.6 | Quiescence search upgrade (remaining parts) | — |
+| 12.6 | Quiescence search upgrade (remaining parts) | S, ≈ 5–15 (delta pruning) |
 | 12.7 | Evaluation upgrades / tapered PST — *in flight* | M, ≈ 40–80 |
 | 12.8 | Aspiration windows | S, ≈ 20–40 |
 | 12.12 | Real time management heuristics | S–M, ≈ 30–60 |
@@ -249,6 +249,38 @@ The single largest evaluation term myChess is still missing. Today the only king
 - **What Texel can and cannot tune here.** The progressive `KING_ATTACK_PENALTY` curve is linear per bucket (each position lands in exactly one bucket → its bucket value is Texel-tunable), *but* the Zurichess `quiet-labeled` set under-samples the sharp, high-attack-unit positions the curve exists for, so tuning it on quiet data mostly *shrinks* the curve toward neutral rather than learning real attacking value. The attacker unit-weights (`ATTACK_UNIT_OF_PIECE`) set the table index and are therefore *non-linear* — not Texel-tunable; keep them fixed or SPSA them.
 
 A serious retry therefore needs three things together, not a lone tuner run: (1) **phase-scale** the term (do it with tapered eval); (2) **tune the curve on a dataset that includes real attacks**, not only quiet positions; (3) keep the **weights fixed / SPSA**, with **modest Elo expectations** — for an engine whose search already resolves king attacks tactically, the ceiling of a static king-safety term is likely well below this section's headline estimate. Sequence it after [§ 12.7.1](roadmap.md#1271-tapered-evaluation--staged-rollout-strategy).
+
+---
+
+## Search cluster plan — History → PVS → LMR
+
+The three remaining low-effort search items — [§ 12.5 history](roadmap.md#125-history-heuristic--s--3050-elo), [§ 12.20 PVS](roadmap.md#1220-principal-variation-search-pvs--negascout--s--1025-elo), and [§ 12.3 LMR](roadmap.md#123-late-move-reductions-lmr--s--50100-elo) — are the highest-leverage work once the tapered evaluation ([§ 12.7](roadmap.md#127-evaluation-upgrades--m--4080-elo-combined)) has landed. They reinforce each other, so the order and the measurement baselines matter more than the raw Elo estimates. This expands step 4 of the [suggested implementation order](roadmap.md#suggested-implementation-order) below into a concrete build-and-measure plan.
+
+**Baseline.** The tuned tapered build, `V_tapered`, once validated. Every step below builds on it.
+
+**Step 1 — History heuristic, alone.** Standalone, low-risk, and the *ordering foundation* LMR depends on: LMR's "reduce late quiet moves" gamble only pays off when the best move is already searched early, which good quiet-move ordering (TT + killers + history) provides. Doing history first de-risks LMR. Measure by SPRT against `V_tapered`; keep if positive → `V_hist`.
+
+**Step 2 — PVS (NegaScout), alone.** A low-risk search reformulation: search non-first moves on a null window and re-search on a fail-high. Small direct gain, but it provides the null-window / re-search scaffold that LMR plugs into. It must be *result-equivalent* to plain alpha-beta — the same best move and score at a fixed depth, only fewer nodes — so add a regression test; any divergence is a bug. Measure against `V_hist`; the gate is "no regression" plus a hopefully small gain → `V_pvs`.
+
+**Step 3 — LMR, on top of PVS.** The large but high-variance payoff. It needs *both* good ordering (history) and the null-window scaffold (PVS); built on plain alpha-beta it would be less efficient and would rework the same move loop twice. Get the reduction formula and the exclusions right — do not reduce captures, promotions, check-givers, killers, or the TT move — and re-search at full depth on a fail-high, reusing the PVS re-search. Measure against `V_pvs`; this is the payoff measurement — if it comes back flat or negative, retune the reduction rather than discarding it. Guard with the tactical suite (WAC / behavior tests): too-aggressive LMR misses tactics. → `V_cluster`.
+
+**Baselines — decide incrementally, track cumulatively.**
+
+| Step | Change | Decision SPRT against |
+|---|---|---|
+| 1 | History | `V_tapered` |
+| 2 | PVS | `V_hist` |
+| 3 | LMR | `V_pvs` |
+| — | whole cluster (for the record) | `V_tapered`; plus the fixed anchor (4.2.2 / Pulse) for the common Elo scale |
+
+The keep/discard **decision** is always the incremental SPRT against the immediate predecessor — clean attribution, as with the tapered null test against 4.2.2. The cumulative gain is additionally tracked against the fixed anchor so every version stays on one scale.
+
+**What to bundle.** History always stands alone (low-risk, its own value, and an LMR precondition). PVS and LMR *may* be bundled into one build if saving a measurement round matters — they share the re-search loop — at the cost of slightly muddier attribution; since PVS rarely hurts, a bundle result is almost entirely LMR. The default is to keep them separate: a PVS "no-regression" gate, then the LMR payoff.
+
+**Two constraints.**
+
+- All three are **variant-agnostic** (they help standard chess and Chess960 equally), so measure on the standard harness; an optional single 960 cross-check of the finished cluster is enough.
+- **Toggle only one feature per step**, with identical TC and openings, or LMR gets confounded with null-move pruning ([§ 12.2](roadmap-done.md#122-null-move-pruning--done-76-elo)) and evaluation interactions.
 
 ---
 
