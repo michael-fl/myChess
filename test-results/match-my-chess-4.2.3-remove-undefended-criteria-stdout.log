@@ -4965,3 +4965,14 @@ Started game 1422 of 3200 (4.2.1 vs remove-undefended-criteria)
 Finished game 1421 (remove-undefended-criteria vs 4.2.1): 1-0 {White wins by adjudication}
 Score of remove-undefended-criteria vs 4.2.1: 439 - 481 - 499  [0.485] 1419
 Started game 1423 of 3200 (remove-undefended-criteria vs 4.2.1)
+Finished game 1418 (4.2.1 vs remove-undefended-criteria): 1/2-1/2 {Draw by adjudication}
+Score of remove-undefended-criteria vs 4.2.1: 439 - 481 - 500  [0.485] 1420
+...      remove-undefended-criteria playing White: 240 - 220 - 250  [0.514] 710
+...      remove-undefended-criteria playing Black: 199 - 261 - 250  [0.456] 710
+...      White vs Black: 501 - 419 - 500  [0.529] 1420
+Elo difference: -10.3 +/- 14.5, LOS: 8.3 %, DrawRatio: 35.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 1424 of 3200 (4.2.1 vs remove-undefended-criteria)
+Finished game 1419 (remove-undefended-criteria vs 4.2.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of remove-undefended-criteria vs 4.2.1: 439 - 481 - 501  [0.485] 1421
+Started game 1425 of 3200 (remove-undefended-criteria vs 4.2.1)
