@@ -83,7 +83,7 @@ When a cutoff happens, three things are recorded:
 2. **PV update.** Even though we're cutting off, the PV table is updated so the calling code can still print *a* principal variation (though it may be truncated).
 3. **Killer move registration.** If the cutting move was a quiet move (no capture), it gets remembered in the per-depth `KillerMoves` table for ordering at sibling positions of the same depth (see [§ 7.2](#72-killer-moves)).
 
-**Fail-soft.** The returned value on a beta cutoff is the actual `result.weight` that triggered it, not `ctx.betaWeight`. Fail-soft exposes *how far* above β the cutoff went — the same alpha-beta tree is explored as under fail-hard, but the unclamped value lets the caller (and the [transposition table](#79-transposition-table)) record a tighter lower bound. Symmetrically, when no move improves on α the returned `bestResult.weight` may fall below α — fail-hard would have clamped it. The same principle applies in `QuiescenceSearch`: stand-pat cutoffs return the actual stand-pat value and capture cutoffs return the actual weight, both unclamped. See [roadmap § 12.13](roadmap.md#1213-switch-alpha-beta-from-fail-hard-to-fail-soft--s-no-direct-elo-enables-aspiration--tt-tightening) for the design rationale and how it unlocks aspiration windows and TT-bound sharpening.
+**Fail-soft.** The returned value on a beta cutoff is the actual `result.weight` that triggered it, not `ctx.betaWeight`. Fail-soft exposes *how far* above β the cutoff went — the same alpha-beta tree is explored as under fail-hard, but the unclamped value lets the caller (and the [transposition table](#79-transposition-table)) record a tighter lower bound. Symmetrically, when no move improves on α the returned `bestResult.weight` may fall below α — fail-hard would have clamped it. The same principle applies in `QuiescenceSearch`: stand-pat cutoffs return the actual stand-pat value and capture cutoffs return the actual weight, both unclamped. See [roadmap § 12.13](roadmap-done.md#1213-switch-alpha-beta-from-fail-hard-to-fail-soft--done) for the design rationale and how it unlocks aspiration windows and TT-bound sharpening.
 
 **Search-node context** is a `record`:
 
@@ -237,7 +237,7 @@ Since **v4.2.1** the moves come from a quiescence-specific `MoveGenerator.forQui
 
 This resolves exactly the tactical motifs the old same-square-only search missed: pieces hanging on any square, forks that switch attack squares (e.g. capture on e5, then win the queen on d8), discovered captures, and captures available after a quiet move. Before v4.2.0 the search followed only recaptures on the last-contested square — a pragmatic compromise that predated the [transposition table § 7.9](#79-transposition-table) and capture ordering.
 
-The all-captures search also changes the premise of an earlier eval-side closure: [§ 12.16 `threadWeight`](roadmap.md#1216-discontinue-the-threadweight-investigation--done) kept the `threadWeight` term *because* the old quiescence missed captures on squares other than the contested one — the exact gap that is now closed. That removal is therefore worth **re-testing**. (The [§ 12.17 `chessFactor`](roadmap.md#1217-discontinue-the-chessfactor-investigation--done) closure is *not* affected: it compensates for missing *checks*, which the all-captures search still does not cover.)
+The all-captures search also changes the premise of an earlier eval-side closure: [§ 12.16 `threadWeight`](roadmap-done.md#1216-remove-threadweight-term-from-the-evaluation-function--investigated-not-productive) kept the `threadWeight` term *because* the old quiescence missed captures on squares other than the contested one — the exact gap that is now closed. That removal is therefore worth **re-testing**. (The [§ 12.17 `chessFactor`](roadmap-done.md#1217-remove-chessfactor-term-from-the-evaluation-function--investigated-term-confirmed-productive) closure is *not* affected: it compensates for missing *checks*, which the all-captures search still does not cover.)
 
 **What is still missing relative to the textbook quiescence search** — the remaining [§ 12.6](roadmap.md#126-quiescence-search-upgrade) sub-items, in rough order of expected impact:
 
@@ -423,7 +423,7 @@ public static SearchNodeResult stalemate() {
 }
 ```
 
-**Fail-soft at terminal nodes.** Terminal-node factories (`checkmateSelf`, `stalemate`, `draw`) return the true score without any α/β clamping. This is consistent with the [main-loop fail-soft behavior](#61-negamax--alpha-beta-foundation): the value is allowed to escape the parent's window, and the caller (or the [transposition table](#79-transposition-table)) records a sharper bound. Conversion from a previous fail-hard `window(weight, α, β)` helper happened as part of [roadmap § 12.13](roadmap.md#1213-switch-alpha-beta-from-fail-hard-to-fail-soft--s-no-direct-elo-enables-aspiration--tt-tightening).
+**Fail-soft at terminal nodes.** Terminal-node factories (`checkmateSelf`, `stalemate`, `draw`) return the true score without any α/β clamping. This is consistent with the [main-loop fail-soft behavior](#61-negamax--alpha-beta-foundation): the value is allowed to escape the parent's window, and the caller (or the [transposition table](#79-transposition-table)) records a sharper bound. Conversion from a previous fail-hard `window(weight, α, β)` helper happened as part of [roadmap § 12.13](roadmap-done.md#1213-switch-alpha-beta-from-fail-hard-to-fail-soft--done).
 
 **Where does the search realize the game is over at the *root*, not at an interior node?** Two places intercept this *before* the search ever runs:
 
@@ -1021,7 +1021,7 @@ Two branches:
 - **Same key in the bucket.** If the incumbent is a strictly deeper `EXACT` entry, the put is a no-op — the deeper cached result would be lost to a shallower re-visit. Otherwise the incumbent slot is overwritten in place with the new fields (`hashKey`, `depth`, `score`, `bound`, `bestMove`).
 - **Key not in bucket.** The loop tracks a single eviction candidate as it scans: initially the first slot, then any subsequent slot whose stored `depth` is lower (or equal-depth-but-non-EXACT against an EXACT incumbent). At loop end, that candidate is overwritten. Effectively: evict the least-informative slot, with EXACT scores enjoying a small extra survival margin on ties.
 
-This is the winner of an eight-variant investigation of bucket replacement policies (see [roadmap § 12.1 follow-up](roadmap.md#follow-up-tt-bucket-replacement-strategies--explored-depth-only-chosen)). More elaborate schemes (age / hit-count / two-tier lanes / admission control) were measured and did not measurably outperform this simplest depth-aware rule at TC 40/60.
+This is the winner of an eight-variant investigation of bucket replacement policies (see [roadmap § 12.1 follow-up](roadmap-done.md#follow-up-tt-bucket-replacement-strategies--explored-depth-only-chosen)). More elaborate schemes (age / hit-count / two-tier lanes / admission control) were measured and did not measurably outperform this simplest depth-aware rule at TC 40/60.
 
 ### Bound semantics
 
@@ -1079,7 +1079,7 @@ public void writeTTCachedPv(int ttMove) {
 
 The result, after the parent's normal `copyUpPV` chain runs, is a PV that reads `[..., parent's move, ttMove, 0, 0, ...]` — semantically "the TT says the best move at this depth is `ttMove` and we do not have a continuation beyond that". The full diagram is in the method's JavaDoc.
 
-A known side effect: when a TT hit fires at depth `d`, the visible PV terminates at `d` — even though the search behind it was depth-`maxDepth`-deep. The played move and its score are correct; only the displayed continuation is shorter than the underlying search saw. Reconstructing the full PV by walking the TT (apply the stored bestMove, look up the resulting position, recurse) is a known follow-up — see [roadmap § 12.1](roadmap.md#121-transposition-table--done-93-elo).
+A known side effect: when a TT hit fires at depth `d`, the visible PV terminates at `d` — even though the search behind it was depth-`maxDepth`-deep. The played move and its score are correct; only the displayed continuation is shorter than the underlying search saw. Reconstructing the full PV by walking the TT (apply the stored bestMove, look up the resulting position, recurse) is a known follow-up — see [roadmap § 12.1](roadmap-done.md#121-transposition-table--done-93-elo).
 
 ### Move-ordering integration
 
@@ -1130,4 +1130,4 @@ The seen-flags reset to `false` at the top of every `reset()` call so they canno
 
 - **Not thread-safe.** `put()` writes five fields of an entry non-atomically; a concurrent `get()` could observe a half-updated slot. The engine runs a single-threaded search executor, so this is not an issue today. A future Lazy SMP search would need to switch the entry to a packed-`long` representation with `volatile` reads/writes.
 - **No "always-replace" tier.** A two-tier scheme (always-replace + depth-preferred) typically improves hit rate by 5–10% on tactical search. The current single-tier `put()` keeps the code one line shorter; the trade-off is worth re-measuring after the next round of search optimizations.
-- **Shortened PV display** — see "PV-table interaction" above and [roadmap § 12.1](roadmap.md#121-transposition-table--done-93-elo).
+- **Shortened PV display** — see "PV-table interaction" above and [roadmap § 12.1](roadmap-done.md#121-transposition-table--done-93-elo).
