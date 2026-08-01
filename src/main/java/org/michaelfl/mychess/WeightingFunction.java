@@ -131,8 +131,6 @@ public final class WeightingFunction {
 
     /** Phase of the full starting material (4·1 knights + 4·1 bishops + 4·2 rooks + 2·4 queens); the phase is clamped to this. */
     private static final int MAX_PHASE = 24;
-    /** {@link #MAX_PHASE} as a float, used for the {@link #blend} interpolation divide. */
-    private static final float MAX_PHASE_F = 24f;
 
     private static final float mobilityFactor = 0.1f;
     private static final float positionFactor = 0.5f;
@@ -270,15 +268,18 @@ public final class WeightingFunction {
                 piecesWeight[color] += weightOfPiece[piece];
 
                 if (!(isEndGame && Board.isKing(piece))) {
-                    pstMidGameWeight[color] +=  PieceSquareTables.getMidGameWeight(piece, field);
-                    pstEndGameWeight[color] +=  PieceSquareTables.getEndGameWeight(piece, field);
+                    int packed = PieceSquareTables.getCombinedWeight(piece, field);
+                    pstMidGameWeight[color] += (short) packed;
+                    pstEndGameWeight[color] += (short) ((packed + 0x8000) >> 16);
                 }
 
-                phase = Math.min(phase + phaseWeightOfPiece[piece], MAX_PHASE);
+                phase += phaseWeightOfPiece[piece];
 
                 calculationFunctions[piece].calculate(this, field, color);
             }
         }
+
+        phase = Math.min(phase, MAX_PHASE);
 
         positionWeight[0] = blend(pstMidGameWeight[0], pstEndGameWeight[0], phase);
         positionWeight[1] = blend(pstMidGameWeight[1], pstEndGameWeight[1], phase);
@@ -307,7 +308,11 @@ public final class WeightingFunction {
      * @return the phase-interpolated weight in centipawns
      */
     static int blend(int mgWeight, int egWeight, int phase) {
-        return roundSymmetric((mgWeight * phase + egWeight * (MAX_PHASE - phase)) / MAX_PHASE_F);
+        final int weight = mgWeight * phase + egWeight * (MAX_PHASE - phase);
+
+        return weight > 0 ?
+                (weight + MAX_PHASE / 2) / MAX_PHASE :
+                -((-weight + MAX_PHASE / 2) / MAX_PHASE);
     }
 
     /** The game phase of the most recently evaluated position, {@code 0..}{@link #MAX_PHASE}. */
