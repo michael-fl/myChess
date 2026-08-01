@@ -161,6 +161,44 @@ class PieceSquareTablesTest {
         testTable(Board.blackKing, s);
     }
 
+    /**
+     * Exercises {@link PieceSquareTables#getEndGameTable} (otherwise unused) and
+     * pins the structure and values of the endgame table.
+     *
+     * <p>The tables are stored packed — {@code pack(mg, eg) = (eg << 16) + mg} —
+     * and the endgame half is unpacked with the make_score carry correction
+     * {@code (short) ((packed + 0x8000) >> 16)}. A broken correction surfaces as
+     * an off-by-one on every square whose value is negative (the borrow case).
+     *
+     * <p>The tables are currently seeded {@code MG == EG} (the tapered null
+     * configuration), so the endgame table must equal the — separately
+     * value-checked, see the {@code test*Table} methods above — midgame table
+     * square for square, for every piece, including all the negative squares.
+     * That validates the endgame table's structure and values at once and, in
+     * particular, guards the carry-corrected unpacking across the whole board.
+     *
+     * <p>Once the endgame tables are tuned to their own values this must become
+     * an explicit expected-table check like the midgame tests above.
+     */
+    @Test
+    void endGameTableRoundTripsToTheMidGameTableInTheNullConfiguration() {
+        byte[] pieces = {
+                Board.whitePawn, Board.whiteKnight, Board.whiteBishop, Board.whiteRook, Board.whiteQueen, Board.whiteKing,
+                Board.blackPawn, Board.blackKnight, Board.blackBishop, Board.blackRook, Board.blackQueen, Board.blackKing,
+        };
+        int expectedLength = Board.createEmptyRawBoard().length;
+
+        for (byte piece : pieces) {
+            short[] endGameTable = PieceSquareTables.getEndGameTable(piece);
+            short[] midGameTable = PieceSquareTables.getMidGameTable(piece);
+
+            assertNotNull(endGameTable, "no endgame table for piece " + piece);
+            assertEquals(expectedLength, endGameTable.length, "wrong endgame-table length for piece " + piece);
+            assertArrayEquals(midGameTable, endGameTable,
+                    "endgame table must round-trip to the midgame table in the MG==EG null config (piece " + piece + ")");
+        }
+    }
+
     void testTable(byte piece, String tableString) {
         var table = PieceSquareTables.getMidGameTable(piece);
 

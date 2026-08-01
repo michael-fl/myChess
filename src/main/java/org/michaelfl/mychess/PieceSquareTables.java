@@ -7,7 +7,7 @@ import static org.michaelfl.mychess.Board.*;
  * <a href="https://www.chessprogramming.org/Simplified_Evaluation_Function">chessprogramming.org
  * <em>Simplified Evaluation Function</em></a>, with one local modification in the white
  * pawn table — see {@link #pawnTableWhiteString} for details. The black tables are
- * derived from the white tables via vertical {@link #invert(byte[])} (rank 1 &harr; 8 etc.),
+ * derived from the white tables via vertical {@link #invert(short[])} (rank 1 &harr; 8 etc.),
  * which preserves the evaluation's color antisymmetry asserted by {@code MirrorEvalTest}.
  *
  * <p>The tables feed a <em>tapered</em> evaluation: each piece kind has a
@@ -52,8 +52,8 @@ public final class PieceSquareTables {
              5,  0,  0,-20,-20, 10,  0,  5,
              0,  0,  0,  0,  0,  0,  0,  0
             """;
-    private static final byte[] pawnTableWhite = createBoard(pawnTableWhiteString);
-    private static final byte[] pawnTableBlack = invert(pawnTableWhite);
+    private static final short[] pawnTableWhite = createBoard(pawnTableWhiteString);
+    private static final short[] pawnTableBlack = invert(pawnTableWhite);
 
     /* Knight */
     private static final String knightTableWhiteString = """
@@ -66,8 +66,8 @@ public final class PieceSquareTables {
             -40,-20,  0,  5,  5,  0,-20,-40,
             -50,-40,-30,-30,-30,-30,-40,-50
             """;
-    private static final byte[] knightTableWhite = createBoard(knightTableWhiteString);
-    private static final byte[] knightTableBlack = invert(knightTableWhite);
+    private static final short[] knightTableWhite = createBoard(knightTableWhiteString);
+    private static final short[] knightTableBlack = invert(knightTableWhite);
 
     /* Bishop */
     private static final String bishopTableWhiteString = """
@@ -80,8 +80,8 @@ public final class PieceSquareTables {
             -10,  5,  0,  0,  0,  0,  5,-10,
             -20,-10,-10,-10,-10,-10,-10,-20
             """;
-    private static final byte[] bishopTableWhite = createBoard(bishopTableWhiteString);
-    private static final byte[] bishopTableBlack = invert(bishopTableWhite);
+    private static final short[] bishopTableWhite = createBoard(bishopTableWhiteString);
+    private static final short[] bishopTableBlack = invert(bishopTableWhite);
 
     /* Rook */
     private static final String rookTableWhiteString = """
@@ -94,8 +94,8 @@ public final class PieceSquareTables {
              -5,  0,  0,  0,  0,  0,  0, -5,
               0,  0,  0,  5,  5,  0,  0,  0
             """;
-    private static final byte[] rookTableWhite = createBoard(rookTableWhiteString);
-    private static final byte[] rookTableBlack = invert(rookTableWhite);
+    private static final short[] rookTableWhite = createBoard(rookTableWhiteString);
+    private static final short[] rookTableBlack = invert(rookTableWhite);
 
     /* Queen */
     private static final String queenTableWhiteString = """
@@ -108,8 +108,8 @@ public final class PieceSquareTables {
             -10,  0,  5,  0,  0,  0,  0,-10,
             -20,-10,-10, -5, -5,-10,-10,-20
             """;
-    private static final byte[] queenTableWhite = createBoard(queenTableWhiteString);
-    private static final byte[] queenTableBlack = invert(queenTableWhite);
+    private static final short[] queenTableWhite = createBoard(queenTableWhiteString);
+    private static final short[] queenTableBlack = invert(queenTableWhite);
 
     /* King */
     private static final String kingTableWhiteString = """
@@ -122,54 +122,89 @@ public final class PieceSquareTables {
              20, 20,  0,  0,  0,  0, 20, 20,
              20, 30, 10,  0,  0, 10, 30, 20
             """;
-    private static final byte[] kingTableWhite = createBoard(kingTableWhiteString);
-    private static final byte[] kingTableBlack = invert(kingTableWhite);
+    private static final short[] kingTableWhite = createBoard(kingTableWhiteString);
+    private static final short[] kingTableBlack = invert(kingTableWhite);
 
-    /** Midgame piece-square table per piece constant, indexed as {@code table[piece][field]}. */
-    private static final byte[][] piece2midGameTable = new byte[blackKing + 1][];
+    /** Combined piece-square tables (mid and end game) per piece constant, indexed as {@code table[piece][field]}. */
+    private static final int[][] piece2CombinedPST = new int[blackKing + 1][];
     static {
-        piece2midGameTable[whitePawn] = pawnTableWhite;
-        piece2midGameTable[whiteBishop] = bishopTableWhite;
-        piece2midGameTable[whiteKnight] = knightTableWhite;
-        piece2midGameTable[whiteRook] = rookTableWhite;
-        piece2midGameTable[whiteQueen] = queenTableWhite;
-        piece2midGameTable[whiteKing] = kingTableWhite;
-        piece2midGameTable[blackPawn] = pawnTableBlack;
-        piece2midGameTable[blackBishop] = bishopTableBlack;
-        piece2midGameTable[blackKnight] = knightTableBlack;
-        piece2midGameTable[blackRook] = rookTableBlack;
-        piece2midGameTable[blackQueen] = queenTableBlack;
-        piece2midGameTable[blackKing] = kingTableBlack;
+        piece2CombinedPST[whitePawn] = createCombinedTable(whitePawn);
+        piece2CombinedPST[whiteBishop] = createCombinedTable(whiteBishop);
+        piece2CombinedPST[whiteKnight] = createCombinedTable(whiteKnight);
+        piece2CombinedPST[whiteRook] = createCombinedTable(whiteRook);
+        piece2CombinedPST[whiteQueen] = createCombinedTable(whiteQueen);
+        piece2CombinedPST[whiteKing] = createCombinedTable(whiteKing);
+        piece2CombinedPST[blackPawn] = createCombinedTable(blackPawn);
+        piece2CombinedPST[blackBishop] = createCombinedTable(blackBishop);
+        piece2CombinedPST[blackKnight] = createCombinedTable(blackKnight);
+        piece2CombinedPST[blackRook] = createCombinedTable(blackRook);
+        piece2CombinedPST[blackQueen] = createCombinedTable(blackQueen);
+        piece2CombinedPST[blackKing] = createCombinedTable(blackKing);
     }
 
-    /**
-     * Endgame piece-square table per piece constant. Currently populated with
-     * the same tables as {@link #piece2midGameTable} (the null-test
-     * configuration); tuning will later give the endgame phase its own values.
-     */
-    private static final byte[][] piece2endGameTable = new byte[blackKing + 1][];
-    static {
-        piece2endGameTable[whitePawn] = pawnTableWhite;
-        piece2endGameTable[whiteBishop] = bishopTableWhite;
-        piece2endGameTable[whiteKnight] = knightTableWhite;
-        piece2endGameTable[whiteRook] = rookTableWhite;
-        piece2endGameTable[whiteQueen] = queenTableWhite;
-        piece2endGameTable[whiteKing] = kingTableWhite;
-        piece2endGameTable[blackPawn] = pawnTableBlack;
-        piece2endGameTable[blackBishop] = bishopTableBlack;
-        piece2endGameTable[blackKnight] = knightTableBlack;
-        piece2endGameTable[blackRook] = rookTableBlack;
-        piece2endGameTable[blackQueen] = queenTableBlack;
-        piece2endGameTable[blackKing] = kingTableBlack;
+    private static int[] createCombinedTable(byte forPiece) {
+        int[] table = new int[LENGTH * LENGTH];
+        short[] mgTable = midGameTable(forPiece);
+        short[] egTable = endGameTable(forPiece);
+
+        for (int field = a1; field <= h8; field++) {
+            short mgWeight = mgTable[field];
+            short egWeight = egTable[field];
+            if (mgWeight != 0 || egWeight != 0) {
+                table[field] = pack(mgWeight, egWeight);
+            }
+        }
+
+        return table;
     }
 
-    private static byte[] createBoard(final String tableString) {
-        final byte[] table = Board.createEmptyRawBoard();
+    private static int pack(short mgWeight, short egWeight) {
+        return (egWeight << 16) + mgWeight;
+    }
+
+    private static short[] midGameTable(byte forPiece) {
+        return switch (forPiece) {
+            case whitePawn -> pawnTableWhite;
+            case blackPawn -> pawnTableBlack;
+            case whiteKnight -> knightTableWhite;
+            case blackKnight -> knightTableBlack;
+            case whiteBishop -> bishopTableWhite;
+            case blackBishop -> bishopTableBlack;
+            case whiteRook -> rookTableWhite;
+            case blackRook -> rookTableBlack;
+            case whiteQueen -> queenTableWhite;
+            case blackQueen -> queenTableBlack;
+            case whiteKing -> kingTableWhite;
+            case blackKing -> kingTableBlack;
+            default -> throw new IllegalStateException("Unknown piece: " + forPiece);
+        };
+    }
+
+    private static short[] endGameTable(byte forPiece) {
+        return switch (forPiece) {
+            case whitePawn -> pawnTableWhite;
+            case blackPawn -> pawnTableBlack;
+            case whiteKnight -> knightTableWhite;
+            case blackKnight -> knightTableBlack;
+            case whiteBishop -> bishopTableWhite;
+            case blackBishop -> bishopTableBlack;
+            case whiteRook -> rookTableWhite;
+            case blackRook -> rookTableBlack;
+            case whiteQueen -> queenTableWhite;
+            case blackQueen -> queenTableBlack;
+            case whiteKing -> kingTableWhite;
+            case blackKing -> kingTableBlack;
+            default -> throw new IllegalStateException("Unknown piece: " + forPiece);
+        };
+    }
+
+    private static short[] createBoard(final String tableString) {
+        final short[] table = new short[LENGTH * LENGTH];
 
         int col = 0;
         int row = 7;
         for (String s : tableString.split(",")) {
-            byte weight = (byte) Integer.parseInt(s.trim());
+            short weight = Short.parseShort(s.trim());
             int field = ChessUtil.getFieldFromColAndRow(col, row);
             table[field] = weight;
 
@@ -182,8 +217,8 @@ public final class PieceSquareTables {
         return table;
     }
 
-    private static byte[] invert(byte[] table) {
-        byte[] resultTable = Board.createEmptyRawBoard();
+    private static short[] invert(final short[] table) {
+        short[] resultTable = new short[LENGTH * LENGTH];
 
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
@@ -196,9 +231,25 @@ public final class PieceSquareTables {
         return resultTable;
     }
 
-    /** The whole midgame table for {@code piece} (indexed by field). */
-    static byte[] getMidGameTable(final byte piece) {
-        return piece2midGameTable[piece];
+    public static int getCombinedWeight(final byte piece, final int field) {
+        return piece2CombinedPST[piece][field];
+    }
+
+    /**
+     * The whole midgame table for {@code piece} (indexed by field).
+     * Inefficient implementation - creates the whole table on each call! Used only by tests.
+     */
+    static short[] getMidGameTable(final byte piece) {
+        int[] combiPST = piece2CombinedPST[piece];
+
+        short[] result = new short[combiPST.length];
+
+        for (int f = a1; f <= h8; f++) {
+            int packed = combiPST[f];
+            result[f] = (short) packed;
+        }
+
+        return result;
     }
 
     /**
@@ -211,12 +262,25 @@ public final class PieceSquareTables {
      * @return the midgame table value on that square
      */
     public static int getMidGameWeight(final byte piece, final int field) {
-        return piece2midGameTable[piece][field];
+        final int[] combiPST = piece2CombinedPST[piece];
+        return (short) combiPST[field];
     }
 
-    /** The whole endgame table for {@code piece} (indexed by field). */
-    static byte[] getEndGameTable(final byte piece) {
-        return piece2endGameTable[piece];
+    /**
+     * The whole endgame table for {@code piece} (indexed by field).
+     * Inefficient implementation - creates the whole table on each call! Used only by tests.
+     */
+    static short[] getEndGameTable(final byte piece) {
+        int[] combiPST = piece2CombinedPST[piece];
+
+        short[] result = new short[combiPST.length];
+
+        for (int f = a1; f <= h8; f++) {
+            int packed = combiPST[f];
+            result[f] = (short) ((packed + 0x8000) >> 16);
+        }
+
+        return result;
     }
 
     /**
@@ -229,6 +293,7 @@ public final class PieceSquareTables {
      * @return the endgame table value on that square
      */
     public static int getEndGameWeight(final byte piece, final int field) {
-        return piece2endGameTable[piece][field];
+        final int[] combiPST = piece2CombinedPST[piece];
+        return (short) ((combiPST[field] + 0x8000) >> 16);
     }
 }
