@@ -222,7 +222,7 @@ public final class PositionSearch {
             pvTable[0] = move;
             workingBoard.makeMove(move);
             var result = alphaBetaSearch(
-                    new SearchNodeContext(1, maxDepth, bestKnownPath, -weightFactor, -newMaterialWeight, -moveWeight, workingBoard, pvTable),
+                    new SearchNodeContext(1, maxDepth, bestKnownPath, -weightFactor, -newMaterialWeight, -moveWeight, workingBoard, pvTable, pvMaxLength),
                     WeightingFunction.MIN_ALPHA, -alphaWeight)
                     .negate();
             if (result.isTimeout()) {
@@ -368,7 +368,7 @@ public final class PositionSearch {
         if (canDoNMP(ctx)) {
             ctx.workingBoard().makeNullMove();
             var result = alphaBetaSearch(
-                    new SearchNodeContext(ctx.depth() + 1, ctx.maxDepth() - NMP_REDUCTION_R, MoveAndWeight.NO_MOVE, -ctx.weightFactor(), -ctx.materialWeight(), -ctx.materialDelta(), ctx.workingBoard(), ctx.pvTable(), true),
+                    new SearchNodeContext(ctx.depth() + 1, ctx.maxDepth() - NMP_REDUCTION_R, MoveAndWeight.NO_MOVE, -ctx.weightFactor(), -ctx.materialWeight(), -ctx.materialDelta(), ctx.workingBoard(), ctx.pvTable(), ctx.pvMaxLength(), true),
                     -betaWeight, -betaWeight + 1).negate();
             ctx.workingBoard().revertNullMove();
             ctx.truncateParentPv();
@@ -458,7 +458,7 @@ public final class PositionSearch {
 
             pvTable[pvIndex] = move;
             ctx.workingBoard().makeMove(move);
-            var result = alphaBetaSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), bestKnownPath, -ctx.weightFactor(), -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), pvTable), -betaWeight, -alphaLocal).negate();
+            var result = alphaBetaSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), bestKnownPath, -ctx.weightFactor(), -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), pvTable, ctx.pvMaxLength()), -betaWeight, -alphaLocal).negate();
             ctx.workingBoard().revertMove();
             if (result.isTimeout()) {
                 return SearchNodeResult.TIMEOUT;

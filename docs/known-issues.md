@@ -777,3 +777,45 @@ warnings arrive interleaved between two running games):
 These will become individual reproducers later, ideally driven from
 the rebuilt-engine `[pv-validate]` log (which captures the search-root
 FEN directly) rather than from PGN move-replay reconstruction.
+
+### Root cause and fix — NMP corrupts the PV-table stride (2026-08-02)
+
+A distinct, later-found root cause of the illegal-PV family — and the one behind
+the `staleBestKnownMove_nf3nc6ne5_depth14` reproducer (which surfaces as a hard
+`AssertionError` mid-search, *"First move must be the best known move"*, rather
+than an illegal *emitted* PV).
+
+**Cause.** `maxDepth` did double duty in `SearchNodeContext`: the search-depth
+limit (`remainingDepth() = maxDepth - depth`) *and* the flat pvTable's stride
+(`pvMaxLength() = maxDepth + 1`; the table is `pvMaxLength × pvMaxLength`). Every
+recursion passed `maxDepth` unchanged — except the **null-move descent**, which
+passed `ctx.maxDepth() - NMP_REDUCTION_R` while sharing the same pvTable. So the
+entire NMP sub-tree computed `pvIndex()` / `copyUpPV()` with a *smaller stride*
+than the table actually had, and wrote PV moves at the wrong offsets. Concretely,
+at `maxDepth = 14` (stride 15) an NMP node at depth 6 (reduced stride 13) writes
+`pvIndex() = 6·13 + 6 = 84`, which in the real table (stride 15) is row 5, column
+9 — so a null-move scout's move (e.g. `f1-d3`) lands in a slot the main search
+later carries up via `copyUpPV`, producing a stale, position-illegal PV move (the
+`f1-d3` that appears twice in the depth-13 PV). `truncateParentPv` after NMP only
+clears the parent row with the *correct* stride, so the wrongly-addressed slot
+survives. Intermittent — it only bites when the main line does not overwrite that
+slot and the stale value is illegal there — matching the "129 warnings across
+27/40 games" pattern.
+
+This fix had in fact existed once, on the shelved `nmp-verification-search` branch
+(commit `645ceb4`), and was discarded when that experiment was shelved.
+
+**Fix** (`SearchNodeContext.java`, `PositionSearch.java`, `QuiescenceSearch.java`):
+carry `pvMaxLength` as its own record component — the constant pv-table stride,
+decoupled from `maxDepth`. The null-move descent now passes `ctx.pvMaxLength()`
+(unchanged stride) even though it reduces `maxDepth`, so its writes land in the
+correct slots.
+
+**Status.** The reproducer crashed before the fix and passes after (clean
+before/after on the same build); the whole `IllegalPvRegressionTest` is green and
+the full suite is green (1133 tests). Since NMP fires in almost every search, this
+was the *likely-dominant remaining source* of the illegal-PV warnings, so the
+"shapes not yet covered" above (length-1 promotion PVs, forcing-move tails,
+king-shuffle endings) are plausibly the same root cause and should now be gone —
+**to be confirmed by a fresh cutechess run**. This is not a proof that no other
+PV defect remains.

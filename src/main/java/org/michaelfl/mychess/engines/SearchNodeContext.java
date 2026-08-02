@@ -141,7 +141,7 @@ import java.util.Arrays;
 public record SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnownPath,
                                 int weightFactor,
                                 int materialWeight, int materialDelta,
-                                Board workingBoard, int[] pvTable,
+                                Board workingBoard, int[] pvTable, int pvMaxLength,
                                 boolean lastMoveWasNull) {
 
     /**
@@ -154,8 +154,8 @@ public record SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnown
     public SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnownPath,
                       int weightFactor,
                       int materialWeight, int materialDelta,
-                      Board workingBoard, int[] pvTable) {
-        this(depth, maxDepth, bestKnownPath, weightFactor, materialWeight, materialDelta, workingBoard, pvTable, false);
+                      Board workingBoard, int[] pvTable, int pvMaxLength) {
+        this(depth, maxDepth, bestKnownPath, weightFactor, materialWeight, materialDelta, workingBoard, pvTable, pvMaxLength, false);
     }
 
     /**
@@ -168,15 +168,14 @@ public record SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnown
         return maxDepth - depth;
     }
 
-    /**
-     * Side length of the (conceptual) PV-table matrix: both the
-     * number of rows and the number of columns per row. Equals
-     * {@code maxDepth + 1} — one extra slot past the last move
-     * acts as a zero-terminator for PV consumers.
-     */
-    private int pvMaxLength() {
-        return maxDepth + 1;
-    }
+    // pvMaxLength is the PV-table's row/column stride (= the root's maxDepth + 1,
+    // with one extra slot past the last move as a zero-terminator). It is carried
+    // as its own record component rather than derived from maxDepth: the null-move
+    // descent reduces maxDepth, and if the stride followed maxDepth the reduced
+    // sub-tree would compute pvIndex()/copyUpPV() with a smaller stride and write
+    // PV slots at the wrong offsets in the shared pvTable — a stale-slot /
+    // illegal-PV defect (see IllegalPvRegressionTest). Keeping it independent of
+    // maxDepth is the fix. The record's generated pvMaxLength() accessor returns it.
 
     /**
      * Flat index of this depth's diagonal slot: column {@code d} of

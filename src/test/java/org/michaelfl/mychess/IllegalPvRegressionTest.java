@@ -262,6 +262,28 @@ class IllegalPvRegressionTest {
                         + "the recursive call before the self-check detection can fire.");
     }
 
+    // ---- Nf3 Nc6 Ne5 case (REPL `imp [[g1-f3 b8-c6 f3-e5]]` + `dw`, 2026-08-01) ----
+    // A distinct manifestation of the same PV-table defect: instead of an
+    // illegal *emitted* PV, the search crashes mid-flight. At depth 14 the
+    // bestKnownPath's pv move f1-d3 for an internal node (depth=9,
+    // hash c54da06457b7f42e) is not producible by the MoveGenerator there, so
+    // MoveSorterImpl skips it and the first move searched becomes c1-e3 — which
+    // trips the "First move must be the best known move" invariant in
+    // PositionSearch.alphaBetaSearchMain. The corrupt PV is visible in the
+    // completed depth-13 line, where f1-d3 appears twice — a hallmark of a
+    // stale pvTable slot carried over between sibling iterations.
+    @Test
+    @Timeout(value = 240, unit = TimeUnit.SECONDS)
+    void staleBestKnownMove_nf3nc6ne5_depth14() throws Exception {
+        runPvLegalityCheckFromFen(
+                "r1bqkbnr/pppppppp/2n5/4N3/8/8/PPPPPPPP/RNBQKB1R b KQkq - 3 2",
+                14,
+                "REPL `imp [[g1-f3 b8-c6 f3-e5]]` + `dw` — at depth 14 the bestKnownPath pv move "
+                        + "f1-d3 is not producible at an internal node (depth 9), so the first move "
+                        + "searched is c1-e3, tripping the \"First move must be the best known move\" "
+                        + "invariant; f1-d3 appears twice in the depth-13 PV (stale pvTable slot)");
+    }
+
     /** Replay {@code gameMoves} via {@link GameImporter}. */
     private void runPvLegalityCheck(String gameMoves, int maxDepth, String label)
             throws Exception {
