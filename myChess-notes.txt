@@ -813,3 +813,91 @@ Die Bound-Semantik ist der Schlüssel
   }
   // erst danach: if (staticEval >= beta) { versuche NMP }
   
+--
+
+Die zwei Optimierungen — im Detail
+
+  Schritt 0: erst wo messen
+
+  Der Benchmark sagt wie viel langsamer, nicht wo. Bevor du optimierst, einen Profiler drüberlaufen lassen (JFR / async-profiler auf calculate()) — sonst optimierst du evtl. das Falsche (die Mobilität ist oft der
+  größte Eval-Posten, nicht die PSTs). Die zwei Kandidaten unten sind die wahrscheinlichen Blend-Kosten, aber bestätige es.
+
+  Optimierung A: Integer-Blend statt Float-Division (einfach, risikoarm → zuerst)
+
+  Aktuell (blend, 2×/Eval aufgerufen):
+  (mg*phase + eg*(24 - phase)) / 24.0f   // Float-Division + roundSymmetric
+  Float-Division ist ~20–40 Zyklen, roundSymmetric noch ein Branch/abs obendrauf. Ersetze durch reine Integer-Arithmetik:
+  int num = mg * phase + eg * (MAX_PHASE - phase);
+  int blended = (num >= 0)
+          ? (num + MAX_PHASE / 2) / MAX_PHASE      // +12 vor Ganzzahl-Division = runden zur nächsten
+          : -((-num + MAX_PHASE / 2) / MAX_PHASE); // Vorzeichen-Split = „round half away from zero"
+  Warum korrekt:
+  - mg, eg sind Centipawn-Ints, phase ∈ [0,24] → num ~±72k, passt locker in int.
+  - (num + 12) / 24 rundet zur nächsten Ganzzahl; der Vorzeichen-Split erhält die symmetrische Rundung (die odd-under-negation-Eigenschaft, die TaperedEvaluationTest prüft).
+  - /24 mit konstantem Divisor → der JIT macht daraus Multiply-mit-Magic-Konstante + Shift (keine echte Division-Instruktion). Schnell.
+
+  Risiko: gering — in sich geschlossener Rewrite von blend(); die vorhandenen Blend-Tests fangen einen Rundungsfehler. Danach neu benchmarken.
+
+  Optimierung B: weniger PST-Lookups via gepackter Tabelle (größer → nur wenn Profiling zeigt, dass PST-Reads heiß sind)
+
+  Aktuell zwei Tabellen, zwei Lookups pro Figur:
+  pstMidGameWeight[color] += getMidGameWeight(piece, field);   // Read Tabelle 1
+  pstEndGameWeight[color] += getEndGameWeight(piece, field);   // Read Tabelle 2
+  Ziel: eine Tabelle, ein Lookup.
+
+  Variante A — long-pack, sofort entpacken (meine Empfehlung):
+  Speichere pro (Figur, Feld) einen long, MG in den oberen 32 Bit, EG in den unteren:
+  // Tabelle einmalig bauen:  packed = ((long) mg << 32) | (eg & 0xFFFFFFFFL);
+  long packed = combinedTable(piece, field);        // EIN Read
+  pstMidGameWeight[color] += (int) (packed >> 32);  // arithm. Shift → signed MG
+  pstEndGameWeight[color] += (int) packed;          // untere 32 → signed EG
+  - Ein Speicherzugriff (eine Tabelle, cache-freundlich) statt zwei.
+  - Entpacken = Shift + Cast (Register-Ops, quasi gratis).
+  - Addieren in die zwei bestehenden Int-Akkumulatoren → kein Overflow/Carry-Problem, weil du vor dem Addieren entpackst.
+  - Korrektheit trivial prüfbar. Risiko: sehr gering. Das ist der Großteil des Gewinns (Lookups halbiert, eine Cache-Line).
+
+  Variante B — Stockfishs make_score (das, was du erwähnt hast; maximal, aber fummelig):
+  Beide in einen 32-Bit-int (16+16 Bit) packen und die gepackten Ints direkt addieren — so akkumulierst du einen gepackten Wert pro Farbe und entpackst nur einmal am Ende:
+  static int makeScore(int mg, int eg) { return (eg << 16) + mg; }   // EG oben, MG unten (SF-Konvention)
+  // akkumulieren:  scoreSum += tableScore;                          // EINE Addition pro Figur, beide Hälften
+  static int mgOf(int s) { return (short) s; }                        // untere 16, sign-extended
+  static int egOf(int s) { return (short) ((s + 0x8000) >> 16); }     // obere 16, mit Carry-Korrektur
+  Das + 0x8000 korrigiert den Borrow: wenn die untere Hälfte (MG) negativ ist, würde ihr Vorzeichenbit sonst 1 von der oberen Hälfte abziehen. Fallstricke:
+  - Jede Hälfte muss im signed-16-Bit-Bereich (±32767) bleiben — auch die aufsummierte (PST-Summen über ~16 Figuren bleiben weit darunter, aber das ist eine Invariante, die du per assert absichern solltest).
+  - Die Carry-Korrektur ist leicht subtil falsch → braucht sorgfältige Tests (dein TaperedEvaluationTest ist der richtige Ort).
+  - Spart gegenüber Variante A nur eine Addition pro Figur + ein Entpacken pro Eval — geringer Zusatznutzen bei deutlich mehr Risiko.
+
+  → Nimm Variante A. Zu Variante B nur greifen, wenn der Benchmark nach A zeigt, dass die Addition selbst noch heiß ist (unwahrscheinlich).
+
+  Überspringen: inkrementelle Phase
+
+  Die Phase wird schon im bestehenden Figurenloop mitsummiert (ein +/min pro Figur) — billig. Ein eigenes GameStatus-Feld + makeMove/revertMove-Pflege lohnt den Aufwand nicht (deckt sich mit der
+  §12.7.1-Entscheidung). Lass es, außer der Profiler sagt etwas anderes.
+
+  Nach dem Optimieren: Wert-Neutralität beweisen
+
+  Die Optimierungen sind reine Speed-Refactorings — die Bewertung muss bit-identisch bleiben. Prüfe zweifach:
+  1. bench-Node-Signatur unverändert (Bench.run(...).totalNodes() gleich wie vorher) → gleicher Baum → wert-neutral.
+  2. evalThroughput ns/call gesunken → Speed-Gewinn.
+
+  Wenn beides passt → Null-Test wiederholen (sollte jetzt ~0 sein) → dann ist der Weg frei fürs EG-Tuning.
+
+  Kurz: erst Integer-Blend (billig, sicher), dann — falls nötig — long-gepackte PST-Tabelle (Variante A); die make_score-Bit-Tricks (Variante B) nur, wenn A nicht reicht. Willst du, dass ich den Benchmark
+  committe (master) und du ihn dann auf die Tapered-Branch mergst?
+  
+--
+
+Master:
+  BENCH eval-throughput | positions=55 calls=19.999.980 | 386,5 ns/call | 2,59 Meval/s | checksum=1878469052
+  BENCH search-nps | positions=55 depth=7 | nodes=118.011.424 | time=60.528 ms | 1.949.699 NPS
+
+  
+Tapered Eval (before optimization):
+  BENCH eval-throughput | positions=55 calls=19.999.980 | 422,7 ns/call | 2,37 Meval/s | checksum=1878469052
+  BENCH search-nps | positions=55 depth=7 | nodes=118.011.424 | time=61.507 ms | 1.918.666 NPS
+
+Tapered Eval (optimized):
+  BENCH eval-throughput | positions=55 calls=19.999.980 | 404,2 ns/call | 2,47 Meval/s | checksum=1878469052
+  BENCH search-nps | positions=55 depth=7 | nodes=118.011.424 | time=61.085 ms | 1.931.921 NPS
+
+
