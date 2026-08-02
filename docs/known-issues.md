@@ -814,8 +814,15 @@ correct slots.
 **Status.** The reproducer crashed before the fix and passes after (clean
 before/after on the same build); the whole `IllegalPvRegressionTest` is green and
 the full suite is green (1133 tests). Since NMP fires in almost every search, this
-was the *likely-dominant remaining source* of the illegal-PV warnings, so the
-"shapes not yet covered" above (length-1 promotion PVs, forcing-move tails,
-king-shuffle endings) are plausibly the same root cause and should now be gone —
-**to be confirmed by a fresh cutechess run**. This is not a proof that no other
-PV defect remains.
+was the *dominant remaining source* of the illegal-PV warnings, so the "shapes not
+yet covered" above (length-1 promotion PVs, forcing-move tails, king-shuffle
+endings) were plausibly the same root cause.
+
+**Confirmed in match play (2026-08-02).** A 4.2.3-vs-4.2.2 self-play run settles
+it at scale: the *"First move must be the best known move"* assertion appears
+**6290 times** in v4.2.2's `mychess-stderr.log` and **0 times** in v4.2.3's, over
+1050 games. That is ~6 PV corruptions *per game* in v4.2.2 — all silently
+recovered from (games completed normally, no forfeits), which is why the bug went
+unnoticed for so long and why its strength cost is modest: the same match measured
+only +7.9 ± 16.3 Elo for the fix. The 6290 → 0 delta is nonetheless a clean
+elimination of the defect; the reduced-stride NMP writes were indeed the source.
