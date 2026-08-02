@@ -119,3 +119,39 @@ Nxe4 {+2.89/11 19s} 26. Rxe4 {20s} b6 {+3.72/12 14s, White resigns} 0-1
 
 --
 
+[Event "?"]
+[Site "?"]
+[Date "2026.08.01"]
+[Round "?"]
+[White "Michael Fleischhauer"]
+[Black "myChess 4.2.2"]
+[Result "0-1"]
+[BlackTimeControl "40/600+3"]
+[FEN "rbbknrqn/pppppppp/8/8/8/8/PPPPPPPP/RBBKNRQN w KQkq - 0 1"]
+[GameDuration "00:54:55"]
+[GameEndTime "2026-08-01T14:57:21.275 MESZ"]
+[GameStartTime "2026-08-01T14:02:25.706 MESZ"]
+[PlyCount "58"]
+[SetUp "1"]
+[Variant "fischerandom"]
+[WhiteTimeControl "1000/3600+15"]
+[EndFEN "1k6/pp5p/q1pn4/3p4/P2PpP2/1PP1Pn2/2BB1R2/2K3rQ w - - 3 30"]
+
+1. d4 d5 {-0.13/10 15s} 2. Ng3 {66s} c6 {-0.10/10 15s} 3. c3 {34s}
+Bxg3 {-0.14/10 8.1s} 4. hxg3 {3.4s} Bg4 {-0.09/10 7.4s} 5. f3 {91s}
+Bd7 {-0.12/10 7.8s} 6. Nd3 {55s} O-O-O {-0.09/10 11s} 7. Bf4 {92s}
+g5 {+0.06/10 10s} 8. Bd2 {15s} Nd6 {0.00/10 12s} 9. Ne5 {70s} f6 {+0.21/10 16s}
+10. Nxd7 {5.7s} Rxd7 {0.00/12 8.7s} 11. g4 {52s} Ng6 {+0.31/10 13s} 12. g3 {88s}
+Nc4 {+0.62/9 17s} 13. Bc1 {85s} Kb8 {+0.52/9 17s} 14. b3 {158s}
+Nd6 {+0.42/10 17s} 15. Bd2 {64s} e5 {+0.60/9 17s} 16. e3 {84s} e4 {+0.68/9 8.9s}
+17. Qg2 {163s} f5 {+0.66/9 18s} 18. gxf5 {127s} Rxf5 {+0.53/10 18s}
+19. Bc2 {139s} Rdf7 {+0.85/9 18s} 20. f4 {203s} gxf4 {+0.79/9 18s}
+21. gxf4 {4.9s} Rg7 {+0.72/9 13s} 22. Rg1 {74s} Rff7 {+0.60/10 9.6s}
+23. Qh2 {269s} Qd8 {+0.63/10 12s} 24. O-O-O {56s} Nh4 {+0.59/10 20s}
+25. Rxg7 {64s} Rxg7 {0.00/12 20s} 26. Rf1 {359s} Nf3 {+0.83/9 21s} 27. Qh1 {56s}
+Qa5 {+0.75/10 21s} 28. a4 {130s} Qa6 {+0.75/10 21s} 29. Rf2 {138s}
+Rg1+ {+4.00/12 5.6s, White resigns} 0-1
+
+--
+
+
