@@ -154,4 +154,58 @@ Rg1+ {+4.00/12 5.6s, White resigns} 0-1
 
 --
 
+[Event "?"]
+[Site "?"]
+[Date "2026.08.02"]
+[Round "?"]
+[White "Michael Fleischhauer"]
+[Black "myChess 4.2.2"]
+[Result "0-1"]
+[BlackTimeControl "40/600+3"]
+[FEN "brknrqnb/pppppppp/8/8/8/8/PPPPPPPP/BRKNRQNB w KQkq - 0 1"]
+[GameDuration "00:16:15"]
+[GameEndTime "2026-08-02T21:59:29.731 MESZ"]
+[GameStartTime "2026-08-02T21:43:13.949 MESZ"]
+[PlyCount "16"]
+[SetUp "1"]
+[Variant "fischerandom"]
+[WhiteTimeControl "1000/3600+15"]
+[EndFEN "1rknr3/p1ppp2p/6pq/1p1n1P2/3b4/3PNPP1/PPP2Q1P/B1KRR1Nb w kq - 5 9"]
+
+1. e4 g6 {-0.05/9 15s} 2. Ne3 {194s} b5 {+0.06/9 15s} 3. g3 {41s}
+f5 {+0.02/8 15s} 4. d3 {50s} Nf6 {+0.10/8 15s} 5. exf5 {277s}
+Bxh1 {+2.00/10 15s} 6. f3 {3.5s} Qh6 {+2.50/10 15s} 7. Qf2 {154s}
+Nd5 {+3.14/10 13s} 8. O-O-O {32s} Bd4 {+5.00/10 4.2s, White resigns} 0-1
+
+--
+
+[Event "?"]
+[Site "?"]
+[Date "2026.08.02"]
+[Round "?"]
+[White "Michael Fleischhauer"]
+[Black "myChess 4.2.2"]
+[Result "0-1"]
+[BlackTimeControl "40/600+3"]
+[FEN "rnbbknqr/pppppppp/8/8/8/8/PPPPPPPP/RNBBKNQR w KQkq - 0 1"]
+[GameDuration "00:24:42"]
+[GameEndTime "2026-08-02T22:24:19.978 MESZ"]
+[GameStartTime "2026-08-02T21:59:37.354 MESZ"]
+[PlyCount "28"]
+[SetUp "1"]
+[Variant "fischerandom"]
+[WhiteTimeControl "1000/3600+15"]
+[EndFEN "2kr2qr/ppp2pp1/3p4/4p2p/4Pn2/2PP1B1P/bPN2PPQ/2R1K2R w K - 4 14"]
+
+1. e4 Nc6 {-0.02/11 15s} 2. Ne3 {42s} d6 {-0.14/10 15s} 3. Nc3 {114s}
+e5 {-0.11/10 9.2s} 4. d3 {74s} Nd4 {+0.04/9 15s} 5. h3 {200s} Be6 {+0.07/9 8.6s}
+6. Ne2 {32s} Ng6 {+0.16/9 11s} 7. c3 {72s} Nxe2 {+0.38/11 16s} 8. Bxe2 {2.8s}
+Bg5 {+0.38/9 16s} 9. Nc2 {194s} Bxc1 {+1.27/11 16s} 10. Rxc1 {2.8s}
+Bxa2 {+1.08/11 13s} 11. Bg4 {148s} h5 {+1.46/10 8.1s} 12. Bf3 {129s}
+O-O-O {+1.54/9 16s} 13. Qh2 {58s} Nf4 {+1.72/10 8.0s} 14. O-O {78s}
+Nxd3 {+1.98/10 17s, White resigns} 0-1
+
+--
+
+
 

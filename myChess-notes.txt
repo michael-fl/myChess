@@ -900,4 +900,81 @@ Tapered Eval (optimized):
   BENCH eval-throughput | positions=55 calls=19.999.980 | 404,2 ns/call | 2,47 Meval/s | checksum=1878469052
   BENCH search-nps | positions=55 depth=7 | nodes=118.011.424 | time=61.085 ms | 1.931.921 NPS
 
+--
+
+bench ist der Schlüssel — damit wird die Messung sauber. Hier das komplette Vorgehen.
+
+  Warum bench der richtige Workload ist
+
+  Eine GC-Messung ist nur so gut wie ihre Reproduzierbarkeit. bench <depth> gibt dir genau das:
+  - fixe Tiefe, Zeitbudget = ∞ → die Knotenzahl ist bit-reproduzierbar (dieselbe über Läufe und Builds),
+  - frische TT pro Stellung, kein Opening-Book → jede Stellung wird wirklich gesucht,
+  - single-threaded → keine Thread-Contention verrauscht die Zahlen.
+
+  Damit ist die Allokationsmenge deterministisch. Ein A/B-Vergleich (vorher/nachher-Optimierung) misst dann exakt den Effekt der Änderung, nicht Messrauschen. cutechess wäre dafür untauglich (zeitbasiert,
+  nichtdeterministisch).
+
+  Der Messlauf — ein Kommando liefert beides
+
+  Ein einziger Lauf mit GC-Log und JFR beantwortet beide Fragen (GC-Anteil + welches Objekt dominiert):
+
+  export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-25.jdk/Contents/Home
+  cd /Users/mf/_PRIVAT_/New-Stuff/myChess
+
+  printf 'bench 12\nquit\n' | "$JAVA_HOME/bin/java" \
+      -Xms256m -Xmx256m -XX:+UseSerialGC -XX:+AlwaysPreTouch \
+      -Xlog:gc:file=/tmp/gc-4.2.3-d12.log:uptime,level,tags \
+      -XX:StartFlightRecording=filename=/tmp/bench-4.2.3-d12.jfr,settings=profile \
+      -cp "versions/4.2.3/my-chess-4.2.3.jar:versions/4.2.3/lib/*" \
+      org.michaelfl.mychess.MyChessMain
+
+  Die JVM-Flags sind bewusst identisch zum UCI-Wrapper (-XX:+UseSerialGC -Xmx256m -XX:+AlwaysPreTouch) — du misst dieselbe GC-Konfiguration, unter der die Engine im Match tatsächlich läuft. bench gibt am Ende
+  totalNodes (die Signatur) und time aus.
+
+  Warmup-Feinheit: JIT kompiliert die ersten ~1–2 Stellungen noch; bei Tiefe 12 über die ganze Suite ist das amortisiert. Für einen ganz sauberen Steady-State-Wert einen Wegwerf-bench 12 voranstellen (eigener
+  Aufruf) und erst den zweiten messen.
+
+  Frage 1 — Wie viel Zeit frisst der GC?
+
+  Unter SerialGC ist jede Collection Stop-the-World, also wörtlich gestohlene Suchzeit. Damit ist Σ Pause / Gesamtzeit eine ehrliche „GC-Steuer":
+
+  # Summe aller Young-Pausen aus dem GC-Log
+  awk '/Pause Young/ {gsub(/ms/,"",$NF); s+=$NF; n++} END {printf "GC: %d Collections, %.1f ms Pause gesamt\n", n, s}' /tmp/gc-4.2.3-d12.log
+
+  Das teilst du durch die von bench gemeldete Gesamtzeit. Zusätzlich zeigt dir JFR die Allokationsrate und den GC-Überblick kompakt:
+
+  jfr view gc /tmp/bench-4.2.3-d12.jfr        # Pausen, Frequenz, Allokationsrate (MB/s)
+
+  Frage 2 — Welches Objekt allokiert am meisten?
+
+  Das ist der Punkt aus der letzten Runde: Ich behaupte, SearchNodeResult (2×/Knoten via .negate()) allokiert mehr als SearchNodeContext. JFR verifiziert das ohne Extra-Tool:
+
+  jfr view allocation-by-class /tmp/bench-4.2.3-d12.jfr
+
+  Du siehst eine nach Bytes sortierte Typ-Liste. Erwartung: SearchNodeResult und SearchNodeContext oben, dazu evtl. Moves/Arrays. Wenn der Context nicht in den Top-Plätzen steht, ist die ganze Optimierung am
+  falschen Objekt — genau das soll die Messung verhindern.
+
+  Wer Call-Site-Auflösung (nicht nur Typ) will, nimmt async-profiler statt JFR: -e alloc → Flamegraph der Allokations-Stacks. JFR reicht aber für die Entscheidung.
+
+  Entscheidungsregel
+
+  ┌───────────────────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ GC-Anteil an der Suchzeit │                                                        Schluss                                                         │
+  ├───────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ < ~1–2 %                  │ Nicht lohnend. Finger weg vom Umbau.                                                                                   │
+  ├───────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ~2–5 %                    │ Grenzwertig — nur angehen, wenn Context/Result klar in den Top-Allokatoren stehen; Erwartung realistisch klein halten. │
+  ├───────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ > ~5 %                    │ Lohnt sich; dann aber das größte Objekt zuerst (vermutlich SearchNodeResult, nicht der Context).                       │
+  └───────────────────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+  A/B nach einer Optimierung
+
+  Später, wenn du z. B. den Search-Stack umbaust:
+  1. bench 12 vorher/nachher — die totalNodes-Signatur muss identisch sein. Weicht sie ab, hat der Umbau das Suchverhalten geändert (Bug), nicht nur die Allokation.
+  2. GC-Steuer und NPS vorher/nachher vergleichen — bei gleicher Signatur ist die Differenz ausschließlich der Allokations-/GC-Effekt.
+  3. Der echte Beweis bleibt trotzdem ein SPRT — Bench-NPS ist maschinenabhängig und nur Indikator, nie Stärke-Signal.
+
+--
+
 
