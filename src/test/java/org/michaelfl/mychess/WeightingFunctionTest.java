@@ -309,7 +309,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6
                 """;
-        testPosition(pgn, 0.99f);
+        testPosition(pgn, 1.1f); // was 0.99; shifted by the tapered pawn-EG table (v4.3.0)
     }
 
     @Test
@@ -329,7 +329,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6
                 """;
-        testPosition(pgn, 0.33f);
+        testPosition(pgn, 0.44f); // was 0.33; shifted by the tapered pawn-EG table (v4.3.0)
     }
 
     @Test
@@ -339,7 +339,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6 O-O
                 """;
-        testPosition(pgn, -0.06f);
+        testPosition(pgn, 0.04f); // was -0.06; shifted by the tapered pawn-EG table (v4.3.0)
     }
 
     @Test
@@ -349,7 +349,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6 O-O 18. Rg1
                 """;
-        testPosition(pgn, 0.08f);
+        testPosition(pgn, 0.18f); // was 0.08; shifted by the tapered pawn-EG table (v4.3.0)
     }
 
     // Terrible position for black (no mobility, pieces on bad, narrow positions)
