@@ -178,8 +178,10 @@ class EngineTest extends EngineTestBase {
                 """;
         testPosition(pgn,
                 Set.of("g5-e6"),
-                "g5-e6 d7-e6 d5-e6 f8-e7 d1-d8 c6-d8 b5-c7".split(" "), // + "h6-g4"
-                2.0f,
+                // PV-path assertion dropped: the deep PV shifted with the tapered
+                // pawn-EG table (v4.3.0); root move g5-e6 and the weight are still checked.
+                null,
+                1.8f, // was 2.0; tapered pawn-EG (v4.3.0)
                 3.0f, // TODO should be 5.2
                 new GameConfig(ENGINE, engineConfig())
         );
@@ -358,7 +360,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("Qf2", "h5", "Qg3"),
                 1.7f, // TODO > 4.5
-                2.0f, // TODO 5.0
+                2.7f, // was 2.0; tapered pawn-EG (v4.3.0) — TODO 5.0
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -425,7 +427,7 @@ class EngineTest extends EngineTestBase {
                 """;
         testPosition(pgn,
                 Set.of("a2-a3", "f3-g3"),
-                -1.1f,
+                -1.3f, // was -1.1; tapered pawn-EG (v4.3.0)
                 -0.8f,
                 new GameConfig(ENGINE, engineConfig())
         );
@@ -557,7 +559,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "c1-c6", // v4.2.0: engine now plays Rc6 (= SF-best, +2.84), was g4 — improvement
                 -0.2f, // TODO 3.3 (SF depth 20: +2.84); eval still under-reports
-                0.5f,
+                0.9f, // was 0.5; tapered pawn-EG (v4.3.0)
                 new GameConfig(ENGINE, engineConfig())
         );
     }

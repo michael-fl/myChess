@@ -3,6 +3,7 @@ package org.michaelfl.mychess;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
  * Dedicated tests for the tapered (phase-interpolated) evaluation added to
@@ -112,23 +113,25 @@ class TaperedEvaluationTest {
                 "blend must stay odd at a half-integer value (0.5)");
     }
 
-    // ---------- null-test configuration (MG == EG) ----------
+    // ---------- pawn tables diverge (tuned EG); all other pieces stay MG == EG ----------
 
     @Test
-    void nullTestConfig_midGameAndEndGameAccumulatorsAreEqual() {
-        // Both table sets currently point at the same tables, so for any
-        // position the per-color MG and EG position-weight sums must match.
+    void tapered_onlyPawnTablesDiverge_nonPawnAccumulatorsStillMatch() {
         var evaluator = new WeightingFunction();
 
-        for (String fen : new String[] {START_POS, MIDDLEGAME, ENDGAME}) {
-            Board board = Fen.importFEN(fen);
-            evaluator.calculate(board);
+        // The pawn endgame table was tuned to diverge from the midgame table
+        // (v4.3.0), so any position with pawns now has MG != EG.
+        evaluator.calculate(Fen.importFEN(START_POS));
+        assertNotEquals(evaluator.getPstMidGameWeight()[0], evaluator.getPstEndGameWeight()[0],
+                "pawns diverge: white MG/EG position weight must differ in the start position");
 
-            assertEquals(evaluator.getPstMidGameWeight()[0], evaluator.getPstEndGameWeight()[0],
-                    "white MG/EG position weight must match (MG == EG) for " + fen);
-            assertEquals(evaluator.getPstMidGameWeight()[1], evaluator.getPstEndGameWeight()[1],
-                    "black MG/EG position weight must match (MG == EG) for " + fen);
-        }
+        // Every non-pawn piece still shares one table for both phases, so a
+        // pawnless position keeps MG == EG.
+        evaluator.calculate(Fen.importFEN("4k3/8/8/8/8/8/8/R3K2R w KQ - 0 20"));
+        assertEquals(evaluator.getPstMidGameWeight()[0], evaluator.getPstEndGameWeight()[0],
+                "non-pawn tables still match: white MG/EG must be equal in a pawnless position");
+        assertEquals(evaluator.getPstMidGameWeight()[1], evaluator.getPstEndGameWeight()[1],
+                "non-pawn tables still match: black MG/EG must be equal in a pawnless position");
     }
 
     /**
