@@ -820,9 +820,11 @@ endings) were plausibly the same root cause.
 
 **Confirmed in match play (2026-08-02).** A 4.2.3-vs-4.2.2 self-play run settles
 it at scale: the *"First move must be the best known move"* assertion appears
-**6290 times** in v4.2.2's `mychess-stderr.log` and **0 times** in v4.2.3's, over
-1050 games. That is ~6 PV corruptions *per game* in v4.2.2 — all silently
-recovered from (games completed normally, no forfeits), which is why the bug went
-unnoticed for so long and why its strength cost is modest: the same match measured
-only +7.9 ± 16.3 Elo for the fix. The 6290 → 0 delta is nonetheless a clean
-elimination of the defect; the reduced-stride NMP writes were indeed the source.
+**6290 times** in v4.2.2's `mychess-stderr.log` and **0 times** in v4.2.3's
+(counted at the 1050-game mark). That is ~6 PV corruptions *per game* in v4.2.2 —
+all silently recovered from (games completed normally, no forfeits), which is why
+the bug went unnoticed for so long and why its strength cost is modest. The full
+1600-game match finished at **+8.7 ± 13.2 Elo, LOS 90.1 %** for the fix (the SPRT
+ran to its cap without crossing a bound — a small but real gain, no regression).
+The 6290 → 0 delta is a clean elimination of the defect; the reduced-stride NMP
+writes were indeed the source.
