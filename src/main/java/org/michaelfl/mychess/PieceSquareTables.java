@@ -13,9 +13,10 @@ import static org.michaelfl.mychess.Board.*;
  * <p>The tables feed a <em>tapered</em> evaluation: each piece kind has a
  * separate midgame and endgame table, retrieved through {@link #getMidGameWeight} /
  * {@link #getEndGameWeight} and interpolated by game phase in
- * {@link WeightingFunction}. Both sets currently reference the same underlying
- * tables — the phase-agnostic null-test configuration — so the evaluation is
- * unchanged until the endgame tables are later tuned to diverge.
+ * {@link WeightingFunction}. The pawn endgame table diverges from its midgame
+ * table (offline-tuned — see {@link #pawnEndgameTableWhiteString}); every other
+ * piece still references one shared table for both phases, so the taper
+ * currently affects pawns only, pending further tuning.
  *
  * @author Michael Fleischhauer
  */
@@ -54,6 +55,29 @@ public final class PieceSquareTables {
             """;
     private static final short[] pawnTableWhite = createBoard(pawnTableWhiteString);
     private static final short[] pawnTableBlack = invert(pawnTableWhite);
+
+    /**
+     * White pawn <b>endgame</b> table (tapered evaluation). Tuned offline on the
+     * Zurichess {@code quiet-labeled} dataset (1.43 M positions) via the
+     * {@code PawnPstTaperedTexelData} / {@code TexelPawnTaperedTuner} tooling,
+     * holding the midgame table above fixed. It strongly rewards advanced
+     * (passed) pawns — the classic endgame shape — where the midgame table is
+     * nearly flat past rank 5. File-symmetric by construction; the black table is
+     * the vertical mirror. A Texel-MSE candidate, to be confirmed by a cutechess
+     * match against the pre-change baseline before it is trusted.
+     */
+    private static final String pawnEndgameTableWhiteString = """
+              0,   0,   0,   0,   0,   0,   0,   0,
+            290, 290, 290, 290, 290, 290, 290, 290,
+            199, 207, 182, 159, 159, 182, 207, 199,
+             39,  50,  27,   6,   6,  27,  50,  39,
+            -24,  -5, -26, -27, -27, -26,  -5, -24,
+            -28,   2,  -9, -16, -16,  -9,   2, -28,
+            -12,   9,  11,  -5,  -5,  11,   9, -12,
+              0,   0,   0,   0,   0,   0,   0,   0
+            """;
+    private static final short[] pawnEndgameTableWhite = createBoard(pawnEndgameTableWhiteString);
+    private static final short[] pawnEndgameTableBlack = invert(pawnEndgameTableWhite);
 
     /* Knight */
     private static final String knightTableWhiteString = """
@@ -182,8 +206,8 @@ public final class PieceSquareTables {
 
     private static short[] endGameTable(byte forPiece) {
         return switch (forPiece) {
-            case whitePawn -> pawnTableWhite;
-            case blackPawn -> pawnTableBlack;
+            case whitePawn -> pawnEndgameTableWhite;
+            case blackPawn -> pawnEndgameTableBlack;
             case whiteKnight -> knightTableWhite;
             case blackKnight -> knightTableBlack;
             case whiteBishop -> bishopTableWhite;
