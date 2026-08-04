@@ -257,7 +257,6 @@ public final class WeightingFunction {
         System.arraycopy(board, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
 
         final int stopField = Board.h8 + 1;
-        final boolean isEndGame = game.isEndGame();
         int phase = 0;
 
         for (int field = Board.a1; field < stopField; field++) {
@@ -267,11 +266,13 @@ public final class WeightingFunction {
 
                 piecesWeight[color] += weightOfPiece[piece];
 
-                if (!(isEndGame && Board.isKing(piece))) {
-                    int packed = PieceSquareTables.getCombinedWeight(piece, field);
-                    pstMidGameWeight[color] += (short) packed;
-                    pstEndGameWeight[color] += (short) ((packed + 0x8000) >> 16);
-                }
+                // Accumulate every piece's PST (both phases; blended by phase
+                // afterwards). The king is no longer excepted here: the crude
+                // endgame king-PST skip (isEndGame / plyCount > 60) has been
+                // removed, so the tapered king endgame table handles centralization.
+                int packed = PieceSquareTables.getCombinedWeight(piece, field);
+                pstMidGameWeight[color] += (short) packed;
+                pstEndGameWeight[color] += (short) ((packed + 0x8000) >> 16);
 
                 phase += phaseWeightOfPiece[piece];
 
