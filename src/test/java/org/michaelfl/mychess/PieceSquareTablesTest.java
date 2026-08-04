@@ -249,6 +249,27 @@ class PieceSquareTablesTest {
         testEndGameTable(Board.whitePawn, s);
     }
 
+    /**
+     * Pins the tuned white king <b>endgame</b> table (centralization) value for
+     * value. Candidate on this branch — the values track the king endgame table
+     * under cutechess measurement; if that table is re-tuned or reverted, update
+     * this expectation with it.
+     */
+    @Test
+    void testKingEndgameTable() {
+        var s = """
+                -45,  24,  26,  24,  24,  26,  24, -45,
+                 38,  79,  75,  55,  55,  75,  79,  38,
+                 49,  96,  86,  72,  72,  86,  96,  49,
+                 32,  67,  80,  72,  72,  80,  67,  32,
+                  2,  50,  70,  79,  79,  70,  50,   2,
+                  6,  51,  70,  72,  72,  70,  51,   6,
+                 14,  44,  60,  56,  56,  60,  44,  14,
+                -52,  57,   6,-135,-135,   6,  57, -52
+                """;
+        testEndGameTable(Board.whiteKing, s);
+    }
+
     void testEndGameTable(byte piece, String tableString) {
         var table = PieceSquareTables.getEndGameTable(piece);
 
