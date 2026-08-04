@@ -91,22 +91,41 @@ myChess ELO = opponent's CCRL rating + Δ.
 
 ## Recommended opponent shortlist
 
-All four are free, UCI-compliant, and run on macOS. Java-based options
-need only `java -jar` and integrate trivially with cutechess. C/C++
-binaries are available for macOS from their release pages (or compile
-from source in seconds).
+These are the externally-anchored engines currently built and verified on
+this machine. Each lives under a self-describing directory in `engines/`
+that carries the engine's exact version **and** its approximate CCRL Blitz
+rating, e.g. `engines/pulse-1.7.3-elo1505/`. Java engines need only
+`java -jar`; the C/C++/Rust engines are compiled from source (build patches
+noted in the install section below).
 
-| Engine             | CCRL 40/15 | Language | macOS install                          |
-|--------------------|-----------:|----------|----------------------------------------|
-| TSCP 1.81          |    ~1750   | C        | compile from a single `.c` file        |
-| Pulse 1.7          |    ~2000   | Java     | drop the JAR in, wrap in shell script  |
-| Stash 35           |    ~2400   | C++      | Homebrew or pre-built binary           |
-| Bagatur 1.7e       |    ~2400   | Java     | drop the JAR in, wrap in shell script  |
+| Engine          | CCRL Blitz | Proto  | Wrapper                                              |
+|-----------------|-----------:|--------|------------------------------------------------------|
+| Pulse 1.7.3     |    1505    | UCI    | `engines/pulse-1.7.3-elo1505/pulse.sh`               |
+| TSCP 1.81       |    1607    | xboard | `engines/tscp-1.81-elo1607/tscp.sh`                  |
+| Zeta Dva 0402   |   ~1801    | xboard | `engines/ZetaDva-0402-elo1801/zetadva.sh`            |
+| Kojiro 0.1.4    |    1984    | UCI    | `engines/Kojiro-0.1.4-elo1984/kojiro.sh`             |
+| Princhess 0.7.0 |    1985    | UCI    | `engines/princhess-0.7.0-elo1985/princhess.sh`       |
 
-A pre-bisection guess for myChess based on tests 06–09: somewhere in
-the **1900–2200** range. The first match should therefore go against
-**Pulse 1.7** (~CCRL 2000) — close enough to expect a balanced result,
-high enough that a clear win/loss narrows the range usefully.
+Lower-rated anchors from the original (v3.1.x) bracket are still on disk:
+`PurplePanda-14-elo1445`, `DoctorB-1.2.1-elo1326`, `Zagreus-5.0-elo1414`,
+and the human-calibrated `maia-1900-elo1900` (Lc0 network, 1 node/move).
+
+> **Version trap — always verify the *exact* version's CCRL entry.** An
+> engine's rating can swing by *hundreds* of Elo across its own release
+> history, so grabbing "latest" is a reliable way to pick an anchor that is
+> useless for our strength band. Concrete cases hit during setup:
+> Kojiro **0.1.4 = 1984** but **0.1.3 = 2033**; Princhess **0.7.0 = 1985**
+> but **0.21 = 3329**; Stash **35 = 3347** (not the ~2400 an earlier draft
+> of this doc assumed); Bagatur is now only distributed as v5.x (~2900+),
+> the old 1.7e download is gone. Pin the version in the directory name — and
+> the rating alongside it — and confirm that exact build on the CCRL list
+> before trusting the number.
+
+For the current myChess strength (~1795, post-v4.3.0) the useful bracket is
+Pulse/TSCP below, Zeta Dva just above, and Kojiro/Princhess as the ~1985
+ceiling. The first match should go against an anchor within ~150 Elo of the
+estimate — close enough to expect a balanced result, decisive enough that a
+clear win/loss narrows the range.
 
 ## The three-step procedure
 
@@ -165,23 +184,23 @@ NM/FM strength, but more than a casual hobbyist.
 
 All commands assume the myChess repo as the working directory.
 
-### TSCP 1.81 (~1750)
+### TSCP 1.81 (1607)
 
 ```sh
 cd /tmp
 curl -O http://www.tckerrigan.com/Chess/TSCP/tscp181.zip
-unzip tscp181.zip -d tscp
-cd tscp
+unzip tscp181.zip -d tscp181
 # tscp.c is the single-file engine; compile with any C compiler
-clang -O2 -o tscp main.c board.c book.c data.c eval.c search.c
-mv tscp /Users/mf/_PRIVAT_/New-Stuff/myChess/engines/
+clang -O2 -o tscp181/tscp tscp181/*.c
+mkdir -p /Users/mf/_PRIVAT_/New-Stuff/myChess/engines/tscp-1.81-elo1607
+mv tscp181 /Users/mf/_PRIVAT_/New-Stuff/myChess/engines/tscp-1.81-elo1607/
 ```
 
 TSCP speaks the older xboard/winboard protocol natively, not UCI.
 Use cutechess's protocol bridge: `proto=xboard` instead of `proto=uci`
 in the cutechess command.
 
-### Pulse 1.7 (~2000)
+### Pulse 1.7.3 (1505)
 
 ```sh
 # Download the latest release from https://github.com/fluxroot/pulse/releases
@@ -190,52 +209,92 @@ in the cutechess command.
 cd /tmp
 curl -LO https://github.com/fluxroot/pulse/releases/download/v1.7.3/pulse-java-1.7.3.zip
 unzip pulse-java-1.7.3.zip
-mkdir -p /Users/mf/_PRIVAT_/New-Stuff/myChess/engines/pulse
-mv pulse-java-1.7.3/* /Users/mf/_PRIVAT_/New-Stuff/myChess/engines/pulse/
+mkdir -p /Users/mf/_PRIVAT_/New-Stuff/myChess/engines/pulse-1.7.3-elo1505
+mv pulse-java-1.7.3/* /Users/mf/_PRIVAT_/New-Stuff/myChess/engines/pulse-1.7.3-elo1505/
 ```
 
-Wrap in a shell script `engines/pulse.sh`:
+Wrap in a shell script `engines/pulse-1.7.3-elo1505/pulse.sh`:
 
 ```sh
 #!/bin/sh
-exec java -jar /Users/mf/_PRIVAT_/New-Stuff/myChess/engines/pulse/pulse-java-1.7.3.jar
+exec java -jar /Users/mf/_PRIVAT_/New-Stuff/myChess/engines/pulse-1.7.3-elo1505/pulse-java-1.7.3.jar
 ```
 
-`chmod +x engines/pulse.sh`. Pulse is native UCI, use `proto=uci`. The
-filename inside the JAR archive carries the release version — adjust
-the script when you upgrade Pulse.
+`chmod +x engines/pulse-1.7.3-elo1505/pulse.sh`. Pulse is native UCI, use
+`proto=uci`. The filename inside the JAR archive carries the release
+version — adjust the script when you upgrade Pulse.
 
-### Stash 35 (~2400)
+### Not used: Stash 35 and Bagatur 1.7e — too strong / unavailable
+
+An earlier draft of this doc listed **Stash 35** and **Bagatur 1.7e** at
+~2400 as upper anchors. Both entries were wrong:
+
+- **Stash 35 = ~3347 CCRL Blitz** — grandmaster-class, hundreds of Elo
+  above anything myChess will reach in this project. Useless as an anchor
+  (every game a loss carries no rating information).
+- **Bagatur 1.7e** is no longer distributed; the old download URL is dead
+  and only the v5.x line (~2900+) remains — again far too strong.
+
+Neither is installed. The upper end of the bracket is instead covered by
+Zeta Dva, Kojiro, and Princhess below.
+
+### Zeta Dva 0402 (~1801)
+
+Source build (GitLab). Speaks xboard, not UCI. The macOS toolchain has no
+full-static libc, so `--static` must be dropped from the compiler flags.
 
 ```sh
-# Homebrew: most reliable on macOS
-brew tap mhouppin/stash
-brew install stash
-
-# Or download a pre-built macOS binary from
-#   https://gitlab.com/mhouppin/stash-bot/-/releases
-# and place it at engines/stash
+cd /Users/mf/_PRIVAT_/New-Stuff/myChess/engines
+git clone https://gitlab.com/smatovic/ZetaDva.git ZetaDva-0402-elo1801
+cd ZetaDva-0402-elo1801
+git checkout v0402
+cd src
+# remove the -static / --static flag from CFLAGS in the Makefile (macOS), then:
+make
 ```
 
-Native UCI, `cmd=stash` (if installed via brew) or `cmd=./engines/stash`.
+Wrap in `engines/ZetaDva-0402-elo1801/zetadva.sh` (`cd` into `src`, then
+`exec ./zetadva`). Use `proto=xboard`.
 
-### Bagatur 1.7e (~2400)
+### Kojiro 0.1.4 (1984)
+
+Source build (GitHub). Native UCI. GNU-ld's `--whole-archive` is not
+supported by the macOS linker, so the makefile's `LDFLAGS` must be reduced
+to `-lpthread -lm`.
 
 ```sh
-cd /tmp
-curl -LO https://github.com/bagaturchess/Bagatur/releases/download/1.7e/bagatur_engine_1.7e.zip
-unzip bagatur_engine_1.7e.zip -d /Users/mf/_PRIVAT_/New-Stuff/myChess/engines/bagatur
+cd /Users/mf/_PRIVAT_/New-Stuff/myChess/engines
+git clone https://github.com/Babak-SSH/Kojiro.git Kojiro-0.1.4-elo1984
+cd Kojiro-0.1.4-elo1984
+git checkout 0.1.4
+cd src
+# patch LDFLAGS: replace the `--whole-archive ... --no-whole-archive` block
+# with `-lpthread -lm`, then:
+make
 ```
 
-Wrap in `engines/bagatur-uci.sh`:
+Wrap in `engines/Kojiro-0.1.4-elo1984/kojiro.sh` (`exec .../src/kojiro`).
+Use `proto=uci`. Note: Kojiro emits cosmetic "Illegal PV move" warnings on
+stderr; the games themselves are legal.
+
+### Princhess 0.7.0 (1985)
+
+Source build (GitHub, Rust). Native UCI. Requires the Rust toolchain
+(`brew install rust`, which provides `cargo` — Rust's Maven-equivalent).
 
 ```sh
-#!/bin/sh
-cd /Users/mf/_PRIVAT_/New-Stuff/myChess/engines/bagatur
-exec java -jar bagatur-1.7e.jar
+cd /Users/mf/_PRIVAT_/New-Stuff/myChess/engines
+git clone https://github.com/princesslana/princhess.git princhess-0.7.0-elo1985
+cd princhess-0.7.0-elo1985
+git checkout 0.7.0
+cargo build --release   # binary at target/release/princhess
 ```
 
-`chmod +x`. Native UCI.
+Wrap in `engines/princhess-0.7.0-elo1985/princhess.sh`
+(`exec .../target/release/princhess`). Use `proto=uci`. Note: a
+source build reports its UCI id as `Princhess 0.0.0-dev` (no release
+version stamped in); the CCRL-relevant version is the checked-out git tag
+`0.7.0`, which is why it lives in the directory name.
 
 > **Note on the version numbers in this table.** The CCRL lists move
 > over time as engines get updated. The ratings quoted here are
@@ -256,10 +315,10 @@ Current CCRL Blitz values (verified live on [computerchess.org.uk/404](https://c
 
 | Engine | CCRL Blitz | Rolle | Wrapper |
 |---|---|---|---|
-| Pulse 1.7.3 | 1505 | Anker (mid-range) | `./engines/pulse/pulse.sh` (UCI) |
-| TSCP 1.81 | 1607 | Anker (upper) | `./engines/tscp/tscp.sh` (xboard) |
-| PurplePanda 14 | 1445 | Anker (close-to-myChess) | `./engines/PurplePanda/purplepanda.sh` (UCI) |
-| DoctorB 1.2.1 | 1326 (nominal) | **frei** — Ordo schätzt selbst | `./engines/DoctorB/doctorb.sh` (UCI) |
+| Pulse 1.7.3 | 1505 | Anker (mid-range) | `./engines/pulse-1.7.3-elo1505/pulse.sh` (UCI) |
+| TSCP 1.81 | 1607 | Anker (upper) | `./engines/tscp-1.81-elo1607/tscp.sh` (xboard) |
+| PurplePanda 14 | 1445 | Anker (close-to-myChess) | `./engines/PurplePanda-14-elo1445/purplepanda.sh` (UCI) |
+| DoctorB 1.2.1 | 1326 (nominal) | **frei** — Ordo schätzt selbst | `./engines/DoctorB-1.2.1-elo1326/doctorb.sh` (UCI) |
 
 **Why DoctorB is intentionally not anchored.** The 1326 CCRL nominal rating reflects a different port / build of DoctorB. The version that runs reliably on the macOS-build path measures ~145 Elo weaker than the CCRL number in self-play vs the others — most plausibly a port artifact, not a real strength claim. Leaving DoctorB free in Ordo turns this into a sanity check: if Ordo computes DoctorB at ~1180, the port artifact is confirmed and the other three anchors are doing the actual work.
 
@@ -271,7 +330,7 @@ Replace `4.0.1` in the engine path with whichever `versions/<X>/` directory hold
 # === Match A: myChess vs Pulse ===
 /Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
     -engine name=myChess cmd=./versions/4.0.1/mychess-uci.sh proto=uci \
-    -engine name=Pulse   cmd=./engines/pulse/pulse.sh        proto=uci \
+    -engine name=Pulse   cmd=./engines/pulse-1.7.3-elo1505/pulse.sh        proto=uci \
     -each tc=40/120 \
     -rounds 200 -games 2 -repeat \
     -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
@@ -285,7 +344,7 @@ Replace `4.0.1` in the engine path with whichever `versions/<X>/` directory hold
 # === Match B: myChess vs TSCP (xboard, not uci) ===
 /Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
     -engine name=myChess cmd=./versions/4.0.1/mychess-uci.sh proto=uci \
-    -engine name=TSCP    cmd=./engines/tscp/tscp.sh          proto=xboard \
+    -engine name=TSCP    cmd=./engines/tscp-1.81-elo1607/tscp.sh          proto=xboard \
     -each tc=40/120 \
     -rounds 200 -games 2 -repeat \
     -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
@@ -299,7 +358,7 @@ Replace `4.0.1` in the engine path with whichever `versions/<X>/` directory hold
 # === Match C: myChess vs DoctorB ===
 /Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
     -engine name=myChess cmd=./versions/4.0.1/mychess-uci.sh proto=uci \
-    -engine name=DoctorB cmd=./engines/DoctorB/doctorb.sh    proto=uci \
+    -engine name=DoctorB cmd=./engines/DoctorB-1.2.1-elo1326/doctorb.sh    proto=uci \
     -each tc=40/120 \
     -rounds 200 -games 2 -repeat \
     -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
@@ -313,7 +372,7 @@ Replace `4.0.1` in the engine path with whichever `versions/<X>/` directory hold
 # === Match D: myChess vs PurplePanda ===
 /Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
     -engine name=myChess     cmd=./versions/4.0.1/mychess-uci.sh         proto=uci \
-    -engine name=PurplePanda cmd=./engines/PurplePanda/purplepanda.sh    proto=uci \
+    -engine name=PurplePanda cmd=./engines/PurplePanda-14-elo1445/purplepanda.sh    proto=uci \
     -each tc=40/120 \
     -rounds 200 -games 2 -repeat \
     -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
