@@ -287,10 +287,6 @@ public final class GameStatus {
         return halfMoveClock;
     }
 
-    public boolean isEndGame() {
-        return plyCount > 60; // TODO: Optimize end game detection
-    }
-
     public boolean isWhiteTurn() {
         return turn == GameStatus.TURN_WHITE;
     }

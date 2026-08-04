@@ -134,30 +134,4 @@ class TaperedEvaluationTest {
                 "non-pawn tables still match: black MG/EG must be equal in a pawnless position");
     }
 
-    /**
-     * The endgame king-PST skip ({@code game.isEndGame()}, plyCount &gt; 60) was
-     * restored, so with MG == EG the tapered eval reproduces the pre-tapered
-     * eval exactly — including that a king may centralize in the endgame without
-     * a piece-square penalty. King placement must therefore not change the
-     * endgame position weight (null-test stays eval-neutral), while outside the
-     * endgame the king table applies normally.
-     */
-    @Test
-    void nullTest_kingPstSkippedInEndgame_placementDoesNotChangePositionWeight() {
-        var evaluator = new WeightingFunction();
-
-        // fullmove 80 => plyCount > 60 => game.isEndGame() => king PST skipped.
-        evaluator.calculate(Fen.importFEN("7k/8/8/8/8/8/8/4K3 w - - 0 80"));
-        int endgameKingOnE1 = evaluator.getPstMidGameWeight()[0];
-        evaluator.calculate(Fen.importFEN("7k/8/8/8/4K3/8/8/8 w - - 0 80"));
-        int endgameKingOnE4 = evaluator.getPstMidGameWeight()[0];
-
-        assertEquals(0, endgameKingOnE1, "endgame king PST is skipped (e1)");
-        assertEquals(0, endgameKingOnE4, "endgame king PST is skipped, so placement is irrelevant (e4)");
-
-        // Outside the endgame the king table is applied normally.
-        evaluator.calculate(Fen.importFEN("7k/8/8/8/4K3/8/8/8 w - - 0 2"));
-        assertEquals(-40, evaluator.getPstMidGameWeight()[0],
-                "outside the endgame the king PST applies (central king e4 = -40)");
-    }
 }

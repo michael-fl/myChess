@@ -13,10 +13,10 @@ import static org.michaelfl.mychess.Board.*;
  * <p>The tables feed a <em>tapered</em> evaluation: each piece kind has a
  * separate midgame and endgame table, retrieved through {@link #getMidGameWeight} /
  * {@link #getEndGameWeight} and interpolated by game phase in
- * {@link WeightingFunction}. The pawn endgame table diverges from its midgame
- * table (offline-tuned — see {@link #pawnEndgameTableWhiteString}); every other
- * piece still references one shared table for both phases, so the taper
- * currently affects pawns only, pending further tuning.
+ * {@link WeightingFunction}. The pawn and king endgame tables diverge from their
+ * midgame tables (offline-tuned — see {@link #pawnEndgameTableWhiteString} and
+ * {@link #kingEndgameTableWhiteString}); the other four pieces still share one
+ * table for both phases.
  *
  * @author Michael Fleischhauer
  */
@@ -149,6 +149,31 @@ public final class PieceSquareTables {
     private static final short[] kingTableWhite = createBoard(kingTableWhiteString);
     private static final short[] kingTableBlack = invert(kingTableWhite);
 
+    /**
+     * White king <b>endgame</b> table (tapered evaluation). Tuned offline on the
+     * Zurichess {@code quiet-labeled} set (1.43 M positions) via the
+     * {@code KingPstTaperedTexelData} / {@code TexelKingTaperedTuner} tooling,
+     * holding the midgame table above fixed. It inverts the midgame "stay safe"
+     * shape into classic endgame centralization: the center is strongly rewarded
+     * and the back-rank center penalized, so the king marches up and inward once
+     * material comes off. Paired with removing the crude {@code isEndGame()}
+     * king-PST skip in {@link WeightingFunction}, this is the tapered king term
+     * (king-safety-lite in the midgame + endgame centralization). A Texel-MSE
+     * candidate, to be confirmed by a cutechess match before it is trusted.
+     */
+    private static final String kingEndgameTableWhiteString = """
+            -45, 24, 26, 24, 24, 26, 24,-45,
+             38, 79, 75, 55, 55, 75, 79, 38,
+             49, 96, 86, 72, 72, 86, 96, 49,
+             32, 67, 80, 72, 72, 80, 67, 32,
+              2, 50, 70, 79, 79, 70, 50,  2,
+              6, 51, 70, 72, 72, 70, 51,  6,
+             14, 44, 60, 56, 56, 60, 44, 14,
+            -52, 57,  6,-135,-135,  6, 57,-52
+            """;
+    private static final short[] kingEndgameTableWhite = createBoard(kingEndgameTableWhiteString);
+    private static final short[] kingEndgameTableBlack = invert(kingEndgameTableWhite);
+
     /** Combined piece-square tables (mid and end game) per piece constant, indexed as {@code table[piece][field]}. */
     private static final int[][] piece2CombinedPST = new int[blackKing + 1][];
     static {
@@ -216,8 +241,8 @@ public final class PieceSquareTables {
             case blackRook -> rookTableBlack;
             case whiteQueen -> queenTableWhite;
             case blackQueen -> queenTableBlack;
-            case whiteKing -> kingTableWhite;
-            case blackKing -> kingTableBlack;
+            case whiteKing -> kingEndgameTableWhite;
+            case blackKing -> kingEndgameTableBlack;
             default -> throw new IllegalStateException("Unknown piece: " + forPiece);
         };
     }
