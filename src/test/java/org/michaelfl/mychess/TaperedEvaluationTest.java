@@ -113,51 +113,34 @@ class TaperedEvaluationTest {
                 "blend must stay odd at a half-integer value (0.5)");
     }
 
-    // ---------- pawn tables diverge (tuned EG); all other pieces stay MG == EG ----------
+    // ---------- pawn (v4.3.0) and king (v4.3.1) tables diverge; other pieces stay MG == EG ----------
 
     @Test
-    void tapered_onlyPawnTablesDiverge_nonPawnAccumulatorsStillMatch() {
+    void tapered_pawnAndKingTablesDiverge_otherPiecesStillMatch() {
         var evaluator = new WeightingFunction();
 
-        // The pawn endgame table was tuned to diverge from the midgame table
-        // (v4.3.0), so any position with pawns now has MG != EG.
+        // The pawn (v4.3.0) and king (v4.3.1) endgame tables were tuned to
+        // diverge from their midgame tables, so any position with pawns or a
+        // king now has MG != EG.
         evaluator.calculate(Fen.importFEN(START_POS));
         assertNotEquals(evaluator.getPstMidGameWeight()[0], evaluator.getPstEndGameWeight()[0],
-                "pawns diverge: white MG/EG position weight must differ in the start position");
+                "pawns and king diverge: white MG/EG position weight must differ in the start position");
 
-        // Every non-pawn piece still shares one table for both phases, so a
-        // pawnless position keeps MG == EG.
-        evaluator.calculate(Fen.importFEN("4k3/8/8/8/8/8/8/R3K2R w KQ - 0 20"));
-        assertEquals(evaluator.getPstMidGameWeight()[0], evaluator.getPstEndGameWeight()[0],
-                "non-pawn tables still match: white MG/EG must be equal in a pawnless position");
-        assertEquals(evaluator.getPstMidGameWeight()[1], evaluator.getPstEndGameWeight()[1],
-                "non-pawn tables still match: black MG/EG must be equal in a pawnless position");
+        // Bare kings already split MG/EG on their own — the king endgame table
+        // rewards centralization, so a back-rank king scores differently in EG.
+        evaluator.calculate(Fen.importFEN("4k3/8/8/8/8/8/8/4K3 w - - 0 20"));
+        int kingsOnlyDivergence = evaluator.getPstMidGameWeight()[0] - evaluator.getPstEndGameWeight()[0];
+        assertNotEquals(0, kingsOnlyDivergence,
+                "the king endgame table diverges, so bare kings already split white MG/EG");
+
+        // Knight/bishop/rook/queen still share one table for both phases: adding
+        // a (white) rook must leave the MG − EG divergence unchanged, because the
+        // rook contributes equally to both phases. The king stays on e1 in both
+        // positions, so only the rook differs.
+        evaluator.calculate(Fen.importFEN("4k3/8/8/8/8/8/8/R3K3 w - - 0 20"));
+        int kingAndRookDivergence = evaluator.getPstMidGameWeight()[0] - evaluator.getPstEndGameWeight()[0];
+        assertEquals(kingsOnlyDivergence, kingAndRookDivergence,
+                "non-pawn/non-king pieces still match: adding a rook must not change the white MG/EG divergence");
     }
 
-    /**
-     * The endgame king-PST skip ({@code game.isEndGame()}, plyCount &gt; 60) was
-     * restored, so with MG == EG the tapered eval reproduces the pre-tapered
-     * eval exactly — including that a king may centralize in the endgame without
-     * a piece-square penalty. King placement must therefore not change the
-     * endgame position weight (null-test stays eval-neutral), while outside the
-     * endgame the king table applies normally.
-     */
-    @Test
-    void nullTest_kingPstSkippedInEndgame_placementDoesNotChangePositionWeight() {
-        var evaluator = new WeightingFunction();
-
-        // fullmove 80 => plyCount > 60 => game.isEndGame() => king PST skipped.
-        evaluator.calculate(Fen.importFEN("7k/8/8/8/8/8/8/4K3 w - - 0 80"));
-        int endgameKingOnE1 = evaluator.getPstMidGameWeight()[0];
-        evaluator.calculate(Fen.importFEN("7k/8/8/8/4K3/8/8/8 w - - 0 80"));
-        int endgameKingOnE4 = evaluator.getPstMidGameWeight()[0];
-
-        assertEquals(0, endgameKingOnE1, "endgame king PST is skipped (e1)");
-        assertEquals(0, endgameKingOnE4, "endgame king PST is skipped, so placement is irrelevant (e4)");
-
-        // Outside the endgame the king table is applied normally.
-        evaluator.calculate(Fen.importFEN("7k/8/8/8/4K3/8/8/8 w - - 0 2"));
-        assertEquals(-40, evaluator.getPstMidGameWeight()[0],
-                "outside the endgame the king PST applies (central king e4 = -40)");
-    }
 }
