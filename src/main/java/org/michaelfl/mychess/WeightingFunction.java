@@ -169,6 +169,18 @@ public final class WeightingFunction {
      */
     private static final float undefendedPiecesFactor = -0.1f;
 
+    /**
+     * Bishop-pair bonus in pawn units, awarded once to a side holding both
+     * bishops ({@code count >= 2}), applied directly in the final-weight formula.
+     * Two bishops cover both color complexes and complement each other, most of
+     * all in open positions — the best-established material-combination bonus in
+     * computer chess (Kaufman ~0.5; engines typically 0.3-0.5). myChess had no
+     * such term (knight = bishop = 300). A first fixed value, to be confirmed /
+     * tuned. Note: {@code count >= 2} ignores the vanishingly rare same-color
+     * double-promotion case.
+     */
+    private static final float bishopPairFactor = 0.4f;
+
     private GameStatus game;
     private int turn; // 0 = white, 1 = black
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
@@ -184,6 +196,7 @@ public final class WeightingFunction {
     private final int[] castlingState = new int[2];
     private final int[] doublePawnCount = new int[2];
     private final int[] undefendedPiecesCount = new int[2];
+    private final int[] bishopCount = new int[2];
     /** Per-color sum of midgame piece-square values for the current position (index 0 = white, 1 = black). */
     private final int[] pstMidGameWeight = new int[2];
     /** Per-color sum of endgame piece-square values for the current position (index 0 = white, 1 = black). */
@@ -255,6 +268,8 @@ public final class WeightingFunction {
         this.doublePawnCount[1] = 0;
         this.undefendedPiecesCount[0] = 0;
         this.undefendedPiecesCount[1] = 0;
+        this.bishopCount[0] = 0;
+        this.bishopCount[1] = 0;
         this.pstMidGameWeight[0] = 0;
         this.pstMidGameWeight[1] = 0;
         this.pstEndGameWeight[0] = 0;
@@ -392,7 +407,8 @@ public final class WeightingFunction {
                 + (castlingState[0] - castlingState[1]) * castlingFactor
                 + (chessCount[0] - chessCount[1]) * chessFactor
                 + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
-                + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor) * 100);
+                + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor
+                + ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * bishopPairFactor) * 100);
     }
 
     /**
@@ -570,6 +586,9 @@ public final class WeightingFunction {
 
     private void calculateForBishop(int field, int color) {
         final byte myPiece = board[field];
+
+        // count this bishop toward the side's bishop-pair bonus (awarded once in calculatePositionWeight)
+        bishopCount[color]++;
 
         // move up-right
         for (int to = field + Board.LENGTH + 1; move(myPiece, field, to, color); to += Board.LENGTH + 1);
