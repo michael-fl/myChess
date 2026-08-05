@@ -172,39 +172,27 @@ class PieceSquareTablesTest {
      * {@code (short) ((packed + 0x8000) >> 16)}. A broken correction surfaces as
      * an off-by-one on every square whose value is negative (the borrow case).
      *
-     * <p>Every piece whose endgame table is <em>not</em> separately tuned is still
-     * seeded {@code MG == EG}, so its endgame table must equal the — separately
-     * value-checked, see the {@code test*Table} methods above — midgame table
-     * square for square, including all the negative squares. That validates those
-     * endgame tables' structure and values at once and, in particular, guards the
-     * carry-corrected unpacking across the whole board.
-     *
-     * <p>The <b>pawn</b> and <b>king</b> endgame tables have been tuned to diverge,
-     * so they are checked to <em>differ</em> from their midgame tables instead;
-     * their explicit values are pinned by {@code testPawnEndgameTable} /
-     * {@code testKingEndgameTable}.
+     * <p>Every piece kind now has a separately tuned endgame table that
+     * <em>differs</em> from its midgame table — pawn (v4.3.0), king (v4.3.1), and
+     * knight/bishop/rook/queen jointly (v4.3.2). This test pins that divergence
+     * plus each endgame table's length; the explicit values (and, through their
+     * negative squares, the carry-corrected unpacking) are pinned by the
+     * {@code test*EndgameTable} methods below.
      */
     @Test
-    void endGameTablesMatchMidGameTablesExceptForTheTunedPawnAndKingTables() {
-        byte[] sharedTablePieces = {
-                Board.whiteKnight, Board.whiteBishop, Board.whiteRook, Board.whiteQueen,
-                Board.blackKnight, Board.blackBishop, Board.blackRook, Board.blackQueen,
+    void allEndgameTablesDivergeFromTheirMidgameTables() {
+        byte[] allPieces = {
+                Board.whitePawn, Board.whiteKnight, Board.whiteBishop, Board.whiteRook, Board.whiteQueen, Board.whiteKing,
+                Board.blackPawn, Board.blackKnight, Board.blackBishop, Board.blackRook, Board.blackQueen, Board.blackKing,
         };
         int expectedLength = Board.createEmptyRawBoard().length;
 
-        for (byte piece : sharedTablePieces) {
+        for (byte piece : allPieces) {
             short[] endGameTable = PieceSquareTables.getEndGameTable(piece);
-            short[] midGameTable = PieceSquareTables.getMidGameTable(piece);
 
             assertNotNull(endGameTable, "no endgame table for piece " + piece);
             assertEquals(expectedLength, endGameTable.length, "wrong endgame-table length for piece " + piece);
-            assertArrayEquals(midGameTable, endGameTable,
-                    "non-tuned endgame table must still match the midgame table (piece " + piece + ")");
-        }
-
-        // The pawn and king endgame tables were tuned to diverge from their midgame tables.
-        for (byte piece : new byte[] {Board.whitePawn, Board.blackPawn, Board.whiteKing, Board.blackKing}) {
-            assertFalse(Arrays.equals(PieceSquareTables.getMidGameTable(piece), PieceSquareTables.getEndGameTable(piece)),
+            assertFalse(Arrays.equals(PieceSquareTables.getMidGameTable(piece), endGameTable),
                     "the tuned endgame table must differ from its midgame table (piece " + piece + ")");
         }
     }
@@ -268,6 +256,72 @@ class PieceSquareTablesTest {
                 -52,  57,   6,-135,-135,   6,  57, -52
                 """;
         testEndGameTable(Board.whiteKing, s);
+    }
+
+    /**
+     * Pins the jointly tuned white knight/bishop/rook/queen <b>endgame</b> tables
+     * (v4.3.2, anchored to each midgame table's mean to strip the material leak)
+     * value for value. Candidate — the values track the joint endgame tune under
+     * cutechess measurement; if any is re-tuned or reverted, update it here.
+     */
+    @Test
+    void testKnightEndgameTable() {
+        var s = """
+                -106, -90, -81, -34, -34, -81, -90,-106,
+                 -88, -40, -11, -14, -14, -11, -40, -88,
+                 -26, -16,  21,  29,  29,  21, -16, -26,
+                  20,  19,  26,  45,  45,  26,  19,  20,
+                   6,   5,  29,  38,  38,  29,   5,   6,
+                 -34, -11,  -1,  32,  32,  -1, -11, -34,
+                  20, -20, -20,   9,   9, -20, -20,  20,
+                 -94, -22,  -4,  -6,  -6,  -4, -22, -94
+                """;
+        testEndGameTable(Board.whiteKnight, s);
+    }
+
+    @Test
+    void testBishopEndgameTable() {
+        var s = """
+                 -38, -53, -45, -29, -29, -45, -53, -38,
+                 -65, -13, -23, -19, -19, -23, -13, -65,
+                  15,   8,  14,   9,   9,  14,   8,  15,
+                  -6,   7, -10,  17,  17, -10,   7,  -6,
+                 -25,  -3,  25,  15,  15,  25,  -3, -25,
+                   3,  13,  29,  39,  39,  29,  13,   3,
+                 -15,  74,   1,  45,  45,   1,  74, -15,
+                 -33, -33,  11,   3,   3,  11, -33, -33
+                """;
+        testEndGameTable(Board.whiteBishop, s);
+    }
+
+    @Test
+    void testRookEndgameTable() {
+        var s = """
+                  38,  25,  31,  29,  29,  31,  25,  38,
+                  10,  19,  27,  31,  31,  27,  19,  10,
+                  12,  13,   7,   9,   9,   7,  13,  12,
+                   4,   1,   9,   5,   5,   9,   1,   4,
+                 -20, -13,  -7,  -3,  -3,  -7, -13, -20,
+                 -32, -27, -21, -10, -10, -21, -27, -32,
+                 -36, -15,  -7, -11, -11,  -7, -15, -36,
+                 -99, -15,  37,  18,  18,  37, -15, -99
+                """;
+        testEndGameTable(Board.whiteRook, s);
+    }
+
+    @Test
+    void testQueenEndgameTable() {
+        var s = """
+                   3,   5,  17,  22,  22,  17,   5,   3,
+                 -73, -73,  27,  27,  27,  27, -73, -73,
+                   1,  10,  32,  32,  32,  32,  10,   1,
+                 -22,  -1,  32,  32,  32,  32,  -1, -22,
+                 -56,  27,  -2,  32,  32,  -2,  27, -56,
+                 -71, -19,  32,  16,  16,  32, -19, -71,
+                 -39, -21,  13,  27,  27,  13, -21, -39,
+                   7, -79, -39,  22,  22, -39, -79,   7
+                """;
+        testEndGameTable(Board.whiteQueen, s);
     }
 
     void testEndGameTable(byte piece, String tableString) {

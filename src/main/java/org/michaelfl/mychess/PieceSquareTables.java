@@ -13,10 +13,11 @@ import static org.michaelfl.mychess.Board.*;
  * <p>The tables feed a <em>tapered</em> evaluation: each piece kind has a
  * separate midgame and endgame table, retrieved through {@link #getMidGameWeight} /
  * {@link #getEndGameWeight} and interpolated by game phase in
- * {@link WeightingFunction}. The pawn and king endgame tables diverge from their
- * midgame tables (offline-tuned — see {@link #pawnEndgameTableWhiteString} and
- * {@link #kingEndgameTableWhiteString}); the other four pieces still share one
- * table for both phases.
+ * {@link WeightingFunction}. Every piece kind now has a distinct, offline-tuned
+ * endgame table that diverges from its midgame table: the pawn
+ * ({@link #pawnEndgameTableWhiteString}, v4.3.0) and king
+ * ({@link #kingEndgameTableWhiteString}, v4.3.1) first, then knight, bishop, rook
+ * and queen jointly ({@link #knightEndgameTableWhiteString} etc., v4.3.2).
  *
  * @author Michael Fleischhauer
  */
@@ -174,6 +175,71 @@ public final class PieceSquareTables {
     private static final short[] kingEndgameTableWhite = createBoard(kingEndgameTableWhiteString);
     private static final short[] kingEndgameTableBlack = invert(kingEndgameTableWhite);
 
+    /*
+     * Joint Texel-tuned knight/bishop/rook/queen ENDGAME tables (v4.3.2). Tuned
+     * together in one 128-parameter run on the Zurichess quiet-labeled set with
+     * the midgame tables held fixed. Each table's uniform offset was then removed
+     * — a material leak: with material fixed, the tuner expressed "this piece is
+     * worth more/less in the endgame" as a flat shift of the whole table (e.g. the
+     * raw queen table sat ~+50 cp above its midgame level, the raw knight ~-36 cp
+     * below). That flat part re-counts material the fixed piece values already
+     * hold, so each endgame table is anchored to its midgame table's mean, leaving
+     * only the positional shape: knight and rook centralization / activity, milder
+     * bishop and queen patterns. A Texel-MSE candidate, to be confirmed by a
+     * cutechess match against v4.3.1 before it is trusted.
+     */
+    private static final String knightEndgameTableWhiteString = """
+            -106, -90, -81, -34, -34, -81, -90,-106,
+             -88, -40, -11, -14, -14, -11, -40, -88,
+             -26, -16,  21,  29,  29,  21, -16, -26,
+              20,  19,  26,  45,  45,  26,  19,  20,
+               6,   5,  29,  38,  38,  29,   5,   6,
+             -34, -11,  -1,  32,  32,  -1, -11, -34,
+              20, -20, -20,   9,   9, -20, -20,  20,
+             -94, -22,  -4,  -6,  -6,  -4, -22, -94
+            """;
+    private static final short[] knightEndgameTableWhite = createBoard(knightEndgameTableWhiteString);
+    private static final short[] knightEndgameTableBlack = invert(knightEndgameTableWhite);
+
+    private static final String bishopEndgameTableWhiteString = """
+             -38, -53, -45, -29, -29, -45, -53, -38,
+             -65, -13, -23, -19, -19, -23, -13, -65,
+              15,   8,  14,   9,   9,  14,   8,  15,
+              -6,   7, -10,  17,  17, -10,   7,  -6,
+             -25,  -3,  25,  15,  15,  25,  -3, -25,
+               3,  13,  29,  39,  39,  29,  13,   3,
+             -15,  74,   1,  45,  45,   1,  74, -15,
+             -33, -33,  11,   3,   3,  11, -33, -33
+            """;
+    private static final short[] bishopEndgameTableWhite = createBoard(bishopEndgameTableWhiteString);
+    private static final short[] bishopEndgameTableBlack = invert(bishopEndgameTableWhite);
+
+    private static final String rookEndgameTableWhiteString = """
+              38,  25,  31,  29,  29,  31,  25,  38,
+              10,  19,  27,  31,  31,  27,  19,  10,
+              12,  13,   7,   9,   9,   7,  13,  12,
+               4,   1,   9,   5,   5,   9,   1,   4,
+             -20, -13,  -7,  -3,  -3,  -7, -13, -20,
+             -32, -27, -21, -10, -10, -21, -27, -32,
+             -36, -15,  -7, -11, -11,  -7, -15, -36,
+             -99, -15,  37,  18,  18,  37, -15, -99
+            """;
+    private static final short[] rookEndgameTableWhite = createBoard(rookEndgameTableWhiteString);
+    private static final short[] rookEndgameTableBlack = invert(rookEndgameTableWhite);
+
+    private static final String queenEndgameTableWhiteString = """
+               3,   5,  17,  22,  22,  17,   5,   3,
+             -73, -73,  27,  27,  27,  27, -73, -73,
+               1,  10,  32,  32,  32,  32,  10,   1,
+             -22,  -1,  32,  32,  32,  32,  -1, -22,
+             -56,  27,  -2,  32,  32,  -2,  27, -56,
+             -71, -19,  32,  16,  16,  32, -19, -71,
+             -39, -21,  13,  27,  27,  13, -21, -39,
+               7, -79, -39,  22,  22, -39, -79,   7
+            """;
+    private static final short[] queenEndgameTableWhite = createBoard(queenEndgameTableWhiteString);
+    private static final short[] queenEndgameTableBlack = invert(queenEndgameTableWhite);
+
     /** Combined piece-square tables (mid and end game) per piece constant, indexed as {@code table[piece][field]}. */
     private static final int[][] piece2CombinedPST = new int[blackKing + 1][];
     static {
@@ -233,14 +299,14 @@ public final class PieceSquareTables {
         return switch (forPiece) {
             case whitePawn -> pawnEndgameTableWhite;
             case blackPawn -> pawnEndgameTableBlack;
-            case whiteKnight -> knightTableWhite;
-            case blackKnight -> knightTableBlack;
-            case whiteBishop -> bishopTableWhite;
-            case blackBishop -> bishopTableBlack;
-            case whiteRook -> rookTableWhite;
-            case blackRook -> rookTableBlack;
-            case whiteQueen -> queenTableWhite;
-            case blackQueen -> queenTableBlack;
+            case whiteKnight -> knightEndgameTableWhite;
+            case blackKnight -> knightEndgameTableBlack;
+            case whiteBishop -> bishopEndgameTableWhite;
+            case blackBishop -> bishopEndgameTableBlack;
+            case whiteRook -> rookEndgameTableWhite;
+            case blackRook -> rookEndgameTableBlack;
+            case whiteQueen -> queenEndgameTableWhite;
+            case blackQueen -> queenEndgameTableBlack;
             case whiteKing -> kingEndgameTableWhite;
             case blackKing -> kingEndgameTableBlack;
             default -> throw new IllegalStateException("Unknown piece: " + forPiece);
