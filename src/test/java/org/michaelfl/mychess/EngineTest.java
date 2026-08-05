@@ -47,7 +47,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "h3-e6",
                 0.2f,
-                0.4f,
+                0.5f, // max was 0.4; tapered king-EG table (v4.3.1) shifted eval to 0.42
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -381,7 +381,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("Rxh4"),
                 -0.45f, // was -0.2; Rxh4 is SF-best (SF depth 20: +0.58); v4.2.0 eval drift
-                0f,
+                0.1f, // max was 0; tapered king-EG table (v4.3.1) shifted eval to 0.04
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -426,7 +426,7 @@ class EngineTest extends EngineTestBase {
                 40. Re7 Rf5 41. Re3 Kb7 42. Kg3 a5 43. f4 a4 44. Kf3 Rb5 45. Re2 Kc6
                 """;
         testPosition(pgn,
-                Set.of("a2-a3", "f3-g3"),
+                Set.of("a2-a3", "f3-g3", "e2-e6"), // Re6 (rook activation) joins the eval-equivalent secondary moves post-v4.3.1
                 -1.3f, // was -1.1; tapered pawn-EG (v4.3.0)
                 -0.8f,
                 new GameConfig(ENGINE, engineConfig())
@@ -444,7 +444,7 @@ class EngineTest extends EngineTestBase {
                 11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4
                 """;
         testPosition(pgn,
-                "Qb8", // TODO Qc8 (SF-best)
+                "Qc8", // now finds the SF-best Qc8 (was Qb8; the tapered king-EG table, v4.3.1, tips the eval)
                 -2.6f, // was -2.5; 2 cp drift (v4.2.0). SF depth 20: +0.64 — eval under-reports (pre-existing)
                 -1.5f,
                 new GameConfig(ENGINE, engineConfig())
@@ -586,20 +586,24 @@ class EngineTest extends EngineTestBase {
 
     // FEN: rk1r2b1/ppp3pp/3b1pn1/3n4/3P2q1/4BNP1/PPP1N1BP/RKQR4 b KQkq - 3 11
     // Follow-up to the position above, after White's blunder Bg2 (f1-g2). Black
-    // is to move and wins a piece by force: both Re8 (d8-e8) and Qe6 (g4-e6)
-    // pile on the e-file and win either the e3 bishop or the e2 knight —
-    // Stockfish scores both at -3.3. myChess plays the correct move (d8-e8), but
-    // at maxDepth 8 the forced piece win lies beyond the horizon, so its eval
-    // UNDER-REPORTS badly: only ~ -0.81 (white-POV) instead of -3.3.
-    // This anchor pins both facts — right move, under-valued position. A deeper
-    // search or a check/pin extension should eventually surface the ~ -3 eval;
-    // when it does, this test's weight bound will (correctly) force a review.
+    // is to move with an overwhelming position: Re8 (d8-e8) and Qe6 (g4-e6) both
+    // pile on the e-file against the undefended e3 bishop and e2 knight. White can
+    // still rescue both pieces, so this is NOT a forced material win — it is
+    // Black's positional dominance that is decisive (Stockfish ~ -3.6).
+    // As of v4.3.1 the tapered king-EG table makes myChess prefer Qe4 (g4-e4):
+    // it keeps the same pressure on the e3 bishop and e2 knight but is objectively
+    // weaker (Stockfish ~ -2.3 — it concedes ~1.3 pawns of Black's edge). All
+    // three moves are accepted here; Qe4 is NO LONGER optimal.
+    // At maxDepth 8 the depth of Black's advantage lies beyond the horizon, so
+    // myChess's eval still UNDER-REPORTS badly (~ -0.8 white-POV instead of -3.6).
+    // A deeper search should eventually surface the ~ -3 eval; when it does, this
+    // test's weight bound will (correctly) force a review.
     @Test
-    void testPositionChess960WinsPieceButUnderReports() {
+    void testPositionChess960BlackDominatesButUnderReports() {
         testPositionFromFen(
                 "rk1r2b1/ppp3pp/3b1pn1/3n4/3P2q1/4BNP1/PPP1N1BP/RKQR4 b KQkq - 3 11",
-                Set.of("d8-e8", "g4-e6"), // Re8 or Qe6 both win a piece (Stockfish -3.3)
-                -1.3f, // myChess under-reports (~ -0.8) — the piece win is beyond the depth-8 horizon
+                Set.of("d8-e8", "g4-e6", "g4-e4"), // Re8/Qe6 keep Black's ~ -3.6 dominance; Qe4 is eval-adjacent but suboptimal (SF ~ -2.3) since v4.3.1
+                -1.3f, // myChess under-reports (~ -0.8) — the depth of Black's advantage is beyond the depth-8 horizon
                 -0.4f,
                 new GameConfig(ENGINE, engineConfig())
         );

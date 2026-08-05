@@ -252,7 +252,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5
                 """;
-        testPosition(pgn, 0.68f);
+        testPosition(pgn, 0.77f); // was 0.68; shifted by the tapered king-EG table (v4.3.1)
     }
 
     @Test
@@ -270,7 +270,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1
                 """;
-        testPosition(pgn, -0.29f);
+        testPosition(pgn, -0.22f); // was -0.29; shifted by the tapered king-EG table (v4.3.1)
     }
 
     @Test
@@ -279,7 +279,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5
                 """;
-        testPosition(pgn, -0.64f);
+        testPosition(pgn, -0.56f); // was -0.64; shifted by the tapered king-EG table (v4.3.1)
     }
 
     // ** Unguarded bishop attacked by queen
@@ -289,7 +289,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5
                 """;
-        testPosition(pgn, -0.27f);
+        testPosition(pgn, -0.18f); // was -0.27; shifted by the tapered king-EG table (v4.3.1)
     }
 
     // ** White wins (back) a pawn with Nxe6
@@ -299,7 +299,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8
                 """;
-        testPosition(pgn, -0.21f);
+        testPosition(pgn, -0.12f); // was -0.21; shifted by the tapered king-EG table (v4.3.1)
     }
 
     @Test
@@ -329,7 +329,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6
                 """;
-        testPosition(pgn, 0.44f); // was 0.33; shifted by the tapered pawn-EG table (v4.3.0)
+        testPosition(pgn, 0.58f); // was 0.44 (v4.3.0 pawn-EG); shifted by the tapered king-EG table (v4.3.1)
     }
 
     @Test
@@ -339,7 +339,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6 O-O
                 """;
-        testPosition(pgn, 0.04f); // was -0.06; shifted by the tapered pawn-EG table (v4.3.0)
+        testPosition(pgn, 0.05f); // was 0.04 (v4.3.0 pawn-EG); shifted by the tapered king-EG table (v4.3.1)
     }
 
     @Test
