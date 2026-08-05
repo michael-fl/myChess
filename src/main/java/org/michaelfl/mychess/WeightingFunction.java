@@ -71,11 +71,23 @@ public final class WeightingFunction {
      * zugzwang guard and the material-only search shortcut deliberately keep using
      * the phase-independent {@link #weightOfPiece}.
      *
-     * <p>Stage 0: seeded equal to the midgame values, so the taper is
-     * behavior-neutral by construction ({@code blend(x, x, phase) == x}); the
-     * endgame values will be Texel-tuned to diverge in a later step.
+     * <p>Texel-tuned (v4.3.2 candidate) on the Zurichess quiet-labeled set with
+     * the midgame values held fixed: the queen is worth more and the knight/rook
+     * less in the endgame, the bishop is ~unchanged. Pawn (the centipawn anchor)
+     * and king (value 0) keep their midgame values. A Texel-MSE candidate, to be
+     * confirmed by a cutechess SPRT against v4.3.1 before it is trusted.
      */
     public static final int[] weightOfPieceEndgame = weightOfPiece.clone();
+    static {
+        weightOfPieceEndgame[Board.whiteKnight] = 263;
+        weightOfPieceEndgame[Board.whiteBishop] = 304;
+        weightOfPieceEndgame[Board.whiteRook]   = 483;
+        weightOfPieceEndgame[Board.whiteQueen]  = 972;
+        weightOfPieceEndgame[Board.blackKnight] = 263;
+        weightOfPieceEndgame[Board.blackBishop] = 304;
+        weightOfPieceEndgame[Board.blackRook]   = 483;
+        weightOfPieceEndgame[Board.blackQueen]  = 972;
+    }
 
     private static final int[] mobilityWeightOfPiece = new int[Board.blackKing + 1];
     static {
