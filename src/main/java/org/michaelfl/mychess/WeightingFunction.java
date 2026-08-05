@@ -63,6 +63,20 @@ public final class WeightingFunction {
         weightOfPiece[Board.blackKing]   = 0;
     }
 
+    /**
+     * Endgame material values in centipawns (tapered evaluation). Blended with
+     * {@link #weightOfPiece} (the midgame values) by game phase in
+     * {@link #calculate}, exactly like the tapered piece-square tables. Only the
+     * evaluation's material term is tapered — SEE, move ordering, the null-move
+     * zugzwang guard and the material-only search shortcut deliberately keep using
+     * the phase-independent {@link #weightOfPiece}.
+     *
+     * <p>Stage 0: seeded equal to the midgame values, so the taper is
+     * behavior-neutral by construction ({@code blend(x, x, phase) == x}); the
+     * endgame values will be Texel-tuned to diverge in a later step.
+     */
+    public static final int[] weightOfPieceEndgame = weightOfPiece.clone();
+
     private static final int[] mobilityWeightOfPiece = new int[Board.blackKing + 1];
     static {
         mobilityWeightOfPiece[Board.whitePawn]   = 5;
@@ -171,6 +185,10 @@ public final class WeightingFunction {
     private final byte[] tempBoard = new byte[Board.LENGTH * Board.LENGTH];
     private final int[] chessCount = new int[2];
     private final float[] piecesWeight = new float[2];
+    /** Per-color sum of midgame material values for the current position (index 0 = white, 1 = black). */
+    private final int[] piecesWeightMg = new int[2];
+    /** Per-color sum of endgame material values for the current position (index 0 = white, 1 = black). */
+    private final int[] piecesWeightEg = new int[2];
     private final int[] mobilityWeight = new int[2];
     private final int[] positionWeight = new int[2];
     private final int[] threadWeight = new int[2];
@@ -236,6 +254,10 @@ public final class WeightingFunction {
         this.chessCount[1] = 0;
         this.piecesWeight[0] = 0;
         this.piecesWeight[1] = 0;
+        this.piecesWeightMg[0] = 0;
+        this.piecesWeightMg[1] = 0;
+        this.piecesWeightEg[0] = 0;
+        this.piecesWeightEg[1] = 0;
         this.mobilityWeight[0] = 0;
         this.mobilityWeight[1] = 0;
         this.positionWeight[0] = 0;
@@ -264,10 +286,11 @@ public final class WeightingFunction {
             if (piece != Board.empty && piece != Board.illegal) {
                 final int color = (piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE ? 0 : 1;
 
-                piecesWeight[color] += weightOfPiece[piece];
+                piecesWeightMg[color] += weightOfPiece[piece];
+                piecesWeightEg[color] += weightOfPieceEndgame[piece];
 
                 // Accumulate every piece's PST (both phases; blended by phase
-                // afterwards). The king is no longer excepted here: the crude
+                // afterward). The king is no longer excepted here: the crude
                 // endgame king-PST skip (isEndGame / plyCount > 60) has been
                 // removed, so the tapered king endgame table handles centralization.
                 int packed = PieceSquareTables.getCombinedWeight(piece, field);
@@ -284,6 +307,13 @@ public final class WeightingFunction {
 
         positionWeight[0] = blend(pstMidGameWeight[0], pstEndGameWeight[0], phase);
         positionWeight[1] = blend(pstMidGameWeight[1], pstEndGameWeight[1], phase);
+
+        // Tapered material: blend the midgame and endgame material sums by phase.
+        // Stage 0: the endgame values equal the midgame values, so this is
+        // behavior-neutral by construction (blend(x, x, phase) == x).
+        piecesWeight[0] = blend(piecesWeightMg[0], piecesWeightEg[0], phase);
+        piecesWeight[1] = blend(piecesWeightMg[1], piecesWeightEg[1], phase);
+
         this.phase = phase; // store in local field to allow tests to read the phase
 
         calculateCastlingState();
