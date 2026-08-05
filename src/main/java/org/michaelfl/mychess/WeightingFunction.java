@@ -46,20 +46,26 @@ public final class WeightingFunction {
     private static final byte WHITE_KING_ATTACKED = Board.whiteKing | ATTACK_MARK_BIT;
     private static final byte BLACK_KING_ATTACKED = Board.blackKing | ATTACK_MARK_BIT;
 
-    /** Piece weight in centi pawns. */
+    /**
+     * Piece weight in centipawns. The queen is 1000 (not the classical 900) as a
+     * v4.3.2 candidate: "two rooks = one queen", and it lifts myChess's
+     * queen/rook ratio from 1.8 toward PeSTO's ~2.15. Used everywhere material is
+     * counted — the evaluation, SEE, MVV-LVA move ordering, the null-move
+     * zugzwang guard and the material-only search shortcut.
+     */
     public static final int[] weightOfPiece = new int[Board.blackKing + 1];
     static {
         weightOfPiece[Board.whitePawn]   = 100;
         weightOfPiece[Board.whiteKnight] = 300;
         weightOfPiece[Board.whiteBishop] = 300;
         weightOfPiece[Board.whiteRook]   = 500;
-        weightOfPiece[Board.whiteQueen]  = 900;
+        weightOfPiece[Board.whiteQueen]  = 1000;
         weightOfPiece[Board.whiteKing]   = 0;
         weightOfPiece[Board.blackPawn]   = 100;
         weightOfPiece[Board.blackKnight] = 300;
         weightOfPiece[Board.blackBishop] = 300;
         weightOfPiece[Board.blackRook]   = 500;
-        weightOfPiece[Board.blackQueen]  = 900;
+        weightOfPiece[Board.blackQueen]  = 1000;
         weightOfPiece[Board.blackKing]   = 0;
     }
 
