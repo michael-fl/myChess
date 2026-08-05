@@ -344,10 +344,12 @@ class BlunderTest {
      * positional evaluation exactly when a side is +2 pawns. So
      * {@code Nxe2+ ≈ Qxf5 ≈ +2} to myChess, and it simplifies.
      *
-     * <p>Characterization test: asserts myChess still misses {@code Nxe2+}. It
-     * flips to red once the eval (tapered PSTs, a working king-safety term, or a
-     * smarter material-only gate) is strong enough to prefer the sacrifice — the
-     * cue to convert this into a positive assertion.
+     * <p>Positive assertion (since v4.3.1): myChess now <em>finds</em>
+     * {@code Nxe2+}. The tapered king endgame table penalizes the exposed,
+     * cornered {@code Kh1} in the low-phase position, which tips the evaluation
+     * enough to prefer the exchange-winning sacrifice over the simplifying
+     * {@code Qxf5}. The blind spot described above is closed; this test now
+     * guards against a regression back to declining the sacrifice.
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -361,9 +363,9 @@ class BlunderTest {
         boolean foundNxe2 = Move.getFromField(result.move()) == Board.f4
                 && Move.getToField(result.move()) == Board.e2;
 
-        assertFalse(foundNxe2,
-                "engine now selects the stronger Nxe2+ (f4-e2) with white-POV eval " + result.weight()
-                        + " — the evaluation blind spot is fixed; convert this characterization test "
-                        + "into a positive assertion that Nxe2+ is chosen");
+        assertTrue(foundNxe2,
+                "engine must select the exchange-winning Nxe2+ (f4-e2) — the tapered king-EG table "
+                        + "(v4.3.1) closed this blind spot; a miss is a regression. white-POV eval "
+                        + result.weight());
     }
 }
