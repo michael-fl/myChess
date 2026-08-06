@@ -26,7 +26,7 @@ public class EngineSmokeTest extends EngineTestBase {
                 // table (v4.3.0), as it did once before at v4.2.0 (see testPosition14).
                 null,
                 4.5f,
-                5.5f,
+                6.5f, // max 5.5 -> 6.5; queen 1000 (v4.3.2) raises this material-up eval to ~6.17
                 new GameConfig(ENGINE, engineConfig())
         );
     }

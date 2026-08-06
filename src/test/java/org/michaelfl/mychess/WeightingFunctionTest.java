@@ -480,7 +480,7 @@ class WeightingFunctionTest {
     void materialWeightOfMove_promotionToQueen_noCapture_returnsQueenMinusPawn() {
         int move = Move.create(Board.a7, Board.a8, Board.empty, Move.typePawnPromotionQueen);
 
-        assertEquals(900 - PAWN_CP, WeightingFunction.getMaterialWeightOfMove(move),
+        assertEquals(1000 - PAWN_CP, WeightingFunction.getMaterialWeightOfMove(move),
                 "queen promotion adds queen weight, subtracts the consumed pawn's weight");
     }
 
@@ -509,8 +509,8 @@ class WeightingFunctionTest {
     void materialWeightOfMove_promotionWithCapture_returnsPromotedMinusPawnPlusCaptured() {
         int move = Move.create(Board.b7, Board.a8, Board.blackKnight, Move.typePawnPromotionQueen);
 
-        // Gain: promoted queen (+900) - consumed pawn (-100) + captured knight (+300) = 1100
-        assertEquals(900 - PAWN_CP + 300, WeightingFunction.getMaterialWeightOfMove(move),
+        // Gain: promoted queen (+1000) - consumed pawn (-100) + captured knight (+300) = 1200
+        assertEquals(1000 - PAWN_CP + 300, WeightingFunction.getMaterialWeightOfMove(move),
                 "promotion-with-capture aggregates promotion delta and captured-piece value");
     }
 
