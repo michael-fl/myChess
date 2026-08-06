@@ -25,13 +25,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 class NonPawnMaterialWeightTest {
 
-    /** Standard chess starting non-pawn material: 2R + 2N + 2B + 1Q = 3100cp. */
-    private static final int INITIAL_NON_PAWN_MATERIAL = 2 * 500 + 2 * 300 + 2 * 300 + 900;
+    /** Standard chess starting non-pawn material: 2R + 2N + 2B + 1Q = 3200cp (queen = 1000 since v4.3.2). */
+    private static final int INITIAL_NON_PAWN_MATERIAL = 2 * 500 + 2 * 300 + 2 * 300 + 1000;
 
     private static final int KNIGHT = 300;
     private static final int BISHOP = 300;
     private static final int ROOK   = 500;
-    private static final int QUEEN  = 900;
+    private static final int QUEEN  = 1000;
 
     // ---------- Board.calculateNonPawnMaterialWeights (static, from scratch) ----------
 
@@ -118,11 +118,11 @@ class NonPawnMaterialWeightTest {
     }
 
     @Test
-    void newGame_startingMaterialEquals3100Centipawns() {
+    void newGame_startingMaterialEquals3200Centipawns() {
         var status = new Game().getBoard().getGameStatus();
 
         assertEquals(INITIAL_NON_PAWN_MATERIAL, status.getWhiteNonPawnMaterialWeight(),
-                "2R + 2N + 2B + 1Q = 3100cp");
+                "2R + 2N + 2B + 1Q = 3200cp");
     }
 
     // ---------- Incremental updates: no-change move types ----------

@@ -71,14 +71,13 @@ class EvalRegressionTest extends EngineTestBase {
     }
 
     /**
-     * TODO — myChess plays 25...Rc6 (c8-rook to c6), a passive rook move.
-     *   Stockfish (depth 22) rates it at about +2.2 (White's view), versus
-     *   about +0.85 for its best move Ng4 — the engine still concedes well over
-     *   a pawn against the active plan. The choice has oscillated with eval
-     *   changes: older Rc6 (≈ +2.2) → SEE-QSearch Rb8 (≈ +1.9) → the v4.3.0
-     *   tapered pawn-EG table flips it back to Rc6 (~0.3 pawns worse than Rb8).
-     *   The underlying weakness — a passive rook instead of the active Ng4 —
-     *   is unchanged.
+     * RESOLVED in v4.3.2 — myChess now plays the active 25...Ng4 (f6-g4),
+     *   Stockfish's best move here, instead of the passive rook shuffle it used
+     *   to pick. The choice had oscillated with eval changes (older Rc6 ≈ +2.2
+     *   White-view → SEE-QSearch Rb8 ≈ +1.9 → the v4.3.0 tapered pawn-EG table
+     *   flipped it back to Rc6); raising the queen's material value to 1000
+     *   (v4.3.2) finally tipped it to the active Ng4. This test now guards
+     *   against a regression back to the passive move.
      * <p>
      *   Position context (Chess960, corner-bishop setup): Black just
      *   captured the a2-knight and White recaptured with Qxa2. Both sides
@@ -96,10 +95,10 @@ class EvalRegressionTest extends EngineTestBase {
      *   passive rook moves. NOT a search-depth issue.
      */
     @Test
-    void movesRookPassivelyInsteadOfNg4() throws InterruptedException, ExecutionException, TimeoutException {
+    void findsTheActiveNg4() throws InterruptedException, ExecutionException, TimeoutException {
         // Feed the same game up to and including White's 25th move
         // (Qxa2 recapturing the knight). Then it is Black to move —
-        // myChess computes the response, the known-bad passive c8-c6 rook move.
+        // myChess computes the response: as of v4.3.2, the active Ng4 (f6-g4).
         var pgn = """
                 [Date "2026.07.05"]
                 [White "Michael Fleischhauer"]
@@ -121,8 +120,8 @@ class EvalRegressionTest extends EngineTestBase {
 
             MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
             var moveStr = ChessUtil.moveToString(move.move());
-            assertEquals("c8-c6", moveStr,
-                    "current known-bad passive choice (Rc6 since v4.3.0, was Rb8); see TODO — still not the active Ng4");
+            assertEquals("f6-g4", moveStr,
+                    "v4.3.2 (queen=1000) tips this Chess960 position to Stockfish's active Ng4 (f6-g4); guards against regression to the passive rook move");
         } finally {
             config.getEngineWhiteConfig().getTranspositionTable().close();
         }
