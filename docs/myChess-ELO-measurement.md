@@ -444,6 +444,19 @@ The `-m anchors.csv` switch forces Ordo to treat the listed engines as having th
 - DoctorB at 1180 vs nominal CCRL 1326 = the port artifact mentioned above. The 145-Elo gap is the empirical evidence; without leaving DoctorB free, this would have been invisible.
 - PurplePanda at 1282 vs nominal CCRL 1445 hints at a similar (smaller) artifact, but PurplePanda was kept anchored anyway because the alternative (only 2 anchors) tightens the bracket too narrowly around Pulse-TSCP. Keep an eye on this in future runs.
 
+### Optional: an old myChess version as a free participant (progress check + validation)
+
+For fun and for a cross-check, include an **old myChess version** — currently **v3.5.2** — as an extra participant. Run it **only against the same fixed anchors** (its own gauntlet, one match per anchor), and leave it out of the `anchors.csv` so Ordo rates it freely. This is **Variante A**.
+
+**Do NOT let the old version play the current myChess directly.** Keeping the two disconnected means the current-myChess rating is determined solely by *its own* games against the pinned anchors — the old version hangs off the same fixed anchors as a separate spoke, so the two estimates decouple and the current number is **not influenced**. A direct old-vs-current match would add a linking edge (and myChess-vs-myChess games are correlated, same engine family) that could shift/bias the current estimate — so skip it.
+
+Two payoffs, both free of cost to the current number:
+
+- **Progress bar.** v3.5.2 and the current version land on the *same absolute scale*, so you read the total gain since 3.5.2 directly.
+- **Validation.** v3.5.2 sits at **~1441** (the v3.1.x-era level, the only version ever measured directly against anchors — 1422.7 in May 2026). If Ordo places it near ~1441 again, the anchor calibration is confirmed. To also validate the *propagation* chain (self-play Elo → absolute), add a big-jump milestone such as **v4.0.0** (TT, propagated ~1562) or **v4.1.0** (NMP, ~1663) and check Ordo reproduces it.
+
+**Mechanics:** run `oldMyChess vs <each anchor>` matches with the same parameters as the main bracket, `cat` their PGNs into the same `/tmp/bracket.pgn`, and keep the old version **out of** `anchors.csv`. **Cost:** one extra gauntlet (old version × N anchors) ≈ another overnight — accuracy of the current number is unaffected (Variante A). **Caveat:** confirm the old version still *builds* from its git tag with the current toolchain and *runs cleanly* against an anchor (no illegal-move/crash bugs) before committing a full gauntlet to it — v3.5.2 is the safer pick here because its early bugs were fixed (v3.1.x is buggier).
+
 ### When to re-run this bracket
 
 After every milestone version where the cumulative delta against the last-measured baseline is **≥ 50 Elo**. Concretely:
