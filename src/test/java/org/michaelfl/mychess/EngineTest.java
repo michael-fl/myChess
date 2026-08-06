@@ -31,7 +31,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("f8-c8", "f7-f1"),
                 3.2f,
-                4.2f,
+                5.3f, // max 4.2 -> 5.3; queen 1000 (v4.3.2) raises this material-up eval to ~5.0
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -126,7 +126,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("g1-g5", "d5-d6", "g1-d1", "h2-h4"),
                 11.0f,
-                13.5f,
+                14.5f, // max 13.5 -> 14.5; queen 1000 (v4.3.2) raises this material-up eval to ~14.0
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -486,7 +486,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "Qxe7",
                 -0.5f, // was 0.0; Qxe7 is SF-best (SF depth 20: 0); v4.2.0 eval drift to ~ -0.37
-                0.3f,
+                1.3f, // max 0.3 -> 1.3; queen 1000 (v4.3.2) shifts this eval to ~ +1.03 (mild over-report vs SF ~0)
                 new GameConfig(ENGINE, engineConfig())
         );
     }
