@@ -977,4 +977,54 @@ bench ist der Schlüssel — damit wird die Messung sauber. Hier das komplette V
 
 --
 
+Für die konfigurierte 4-Anker-Bracket (400 Spiele/Engine, TC 40/120, concurrency=4):
+
+  ┌───────┬──────────────────────────────────────────────┬──────────┐
+  │ Match │                    Engine                    │  ~Dauer  │
+  ├───────┼──────────────────────────────────────────────┼──────────┤
+  │ A     │ TSCP 1607 (αβ, schnell)                      │ ~3–3,5 h │
+  ├───────┼──────────────────────────────────────────────┼──────────┤
+  │ B     │ Zeta Dva ~1801 (αβ, schnell)                 │ ~3–3,5 h │
+  ├───────┼──────────────────────────────────────────────┼──────────┤
+  │ C     │ Princhess 1985 (MCTS, schöpft Zeit voll aus) │ ~4–4,5 h │
+  ├───────┼──────────────────────────────────────────────┼──────────┤
+  │ D     │ Kojiro 1984 (αβ, schnell)                    │ ~3–3,5 h │
+  ├───────┼──────────────────────────────────────────────┼──────────┤
+  │ —     │ Ordo-Auswertung                              │ Sekunden │
+  └───────┴──────────────────────────────────────────────┴──────────┘
+
+  Gesamt: ~14–16 h (realistische Spanne 12–18 h) — also ein Über-Nacht-Lauf.
+
+--
+
+/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+      -engine name=mychess-4.3.2-queen-mg-1000 cmd=./versions/4.3.2-queen-mg-1000/mychess-uci.sh proto=uci \
+      -engine name=mychess-4.3.1               cmd=./versions/4.3.1/mychess-uci.sh                proto=uci \
+      -each tc=40/60 \
+      -rounds 800 -games 2 -repeat \
+      -sprt elo0=-3 elo1=15 alpha=0.05 beta=0.05 \
+      -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+      -concurrency 4 -ratinginterval 10 \
+      -recover \
+      -draw movenumber=40 movecount=8 score=40 \
+      -resign movecount=4 score=600 \
+      -pgnout test-results/sprt-4.3.2-queen-mg-1000-vs-4.3.1.pgn \
+      | tee test-results/sprt-4.3.2-queen-mg-1000-vs-4.3.1-stdout.log
+
+--
+
+Kandidaten-Queue (alle vs. v4.3.1, ein Lauf gleichzeitig):
+
+  ┌───────────────────────────┬─────────────────────┬────────────────────────────┐
+  │          Branch           │      Änderung       │           Status           │
+  ├───────────────────────────┼─────────────────────┼────────────────────────────┤
+  │ 4.3.2-tapered-eg-material │ EG-Material getunt  │ SPRT läuft                 │
+  ├───────────────────────────┼─────────────────────┼────────────────────────────┤
+  │ 4.3.2-queen-mg-1000       │ MG-Dame 1000        │ bereit                     │
+  ├───────────────────────────┼─────────────────────┼────────────────────────────┤
+  │ 4.3.2-bishop-pair         │ Läuferpaar +40 cp   │ bereit                     │
+  ├───────────────────────────┼─────────────────────┼────────────────────────────┤
+  │ 4.3.2-pesto-eg-material   │ PeSTO-EG-Richtungen │ noch zu bauen (bei Bedarf) │
+  └───────────────────────────┴─────────────────────┴────────────────────────────┘
+
 
