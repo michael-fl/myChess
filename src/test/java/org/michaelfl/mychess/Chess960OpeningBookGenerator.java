@@ -57,7 +57,7 @@ public final class Chess960OpeningBookGenerator {
     private static final long FILTER_TIMEOUT_SECONDS = 60L;
     private static final int PROGRESS_EVERY = 500;
 
-    private static final Path DEFAULT_OUTPUT = Path.of("tuning-data", "book-960.epd");
+    private static final Path DEFAULT_OUTPUT = Path.of("book-960.epd");
     private static final int DEFAULT_COUNT = 10_000;
     private static final long DEFAULT_SEED = 20260807L;
 
@@ -241,8 +241,8 @@ public final class Chess960OpeningBookGenerator {
 
     /**
      * Entry point: {@code Chess960OpeningBookGenerator [output] [count] [seed]}.
-     * Defaults to {@value #DEFAULT_COUNT} entries at
-     * {@code tuning-data/book-960.epd} with a fixed seed.
+     * Defaults to {@value #DEFAULT_COUNT} entries at {@code book-960.epd} with a
+     * fixed seed.
      */
     public static void main(String[] args) {
         Path output = args.length > 0 ? Path.of(args[0]) : DEFAULT_OUTPUT;
