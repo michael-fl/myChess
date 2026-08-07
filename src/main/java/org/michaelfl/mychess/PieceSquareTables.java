@@ -30,12 +30,12 @@ public final class PieceSquareTables {
     /** White pawn <b>midgame</b> table (full-joint Texel tune; see the class comment). */
     private static final String pawnTableWhiteString = """
                0,   0,   0,   0,   0,   0,   0,   0,
-              53,   1,  84, 151, 151,  84,   1,  53,
-             -39, -23,  48,  26,  26,  48, -23, -39,
-             -30,  18,   7,  39,  39,   7,  18, -30,
-             -49,  -1,  -2,  27,  27,  -2,  -1, -49,
-             -22,  18,   5,  11,  11,   5,  18, -22,
-             -22,  31,   9, -13, -13,   9,  31, -22,
+              87, 168, 187, 163, 163, 187, 168,  87,
+             -26,  32,  82,  96,  96,  82,  32, -26,
+             -37,  30,  18,  44,  44,  18,  30, -37,
+             -52,   8,   1,  29,  29,   1,   8, -52,
+             -38,  29,  -1,  -7,  -7,  -1,  29, -38,
+             -57,  37,   4, -38, -38,   4,  37, -57,
                0,   0,   0,   0,   0,   0,   0,   0
             """;
     private static final short[] pawnTableWhite = createBoard(pawnTableWhiteString);
@@ -47,140 +47,140 @@ public final class PieceSquareTables {
      * shape — where the midgame table is nearly flat past rank 5.
      */
     private static final String pawnEndgameTableWhiteString = """
-              0,   0,   0,   0,   0,   0,   0,   0,
-            358, 331, 339, 236, 236, 339, 331, 358,
-            190, 213, 136, 130, 130, 136, 213, 190,
-             52,  31,  14, -17, -17,  14,  31,  52,
-              2,  -4, -31, -29, -29, -31,  -4,   2,
-             -9,  -5, -22, -12, -12, -22,  -5,  -9,
-             -7,   7,   1,  -8,  -8,   1,   7,  -7,
-              0,   0,   0,   0,   0,   0,   0,   0
+               0,   0,   0,   0,   0,   0,   0,   0,
+             365, 338, 290, 281, 281, 290, 338, 365,
+             178, 182, 138, 123, 123, 138, 182, 178,
+              49,  41,  17,   3,   3,  17,  41,  49,
+              12,  12, -11, -14, -14, -11,  12,  12,
+              -4,   6, -11,   1,   1, -11,   6,  -4,
+               6,  10,   8,  23,  23,   8,  10,   6,
+               0,   0,   0,   0,   0,   0,   0,   0
             """;
     private static final short[] pawnEndgameTableWhite = createBoard(pawnEndgameTableWhiteString);
     private static final short[] pawnEndgameTableBlack = invert(pawnEndgameTableWhite);
 
     /* Knight (midgame) */
     private static final String knightTableWhiteString = """
-            -164,-154,-144, -78, -78,-144,-154,-164,
-            -121, -89,  45,  45,  45,  45, -89,-121,
-             -47,  37,  38,  60,  60,  38,  37, -47,
-              15,   6,  40,  43,  43,  40,   6,  15,
-             -31,   5,  33,  14,  14,  33,   5, -31,
-             -26,  27,  31,  32,  32,  31,  27, -26,
-               5,  25, -11,  32,  32, -11,  25,   5,
-              -5, -17, -20, -21, -21, -20, -17,  -5
+            -274,-104,-131,  12,  12,-131,-104,-274,
+             -90, -34, 134,  59,  59, 134, -34, -90,
+              -3, 133, 166, 149, 149, 166, 133,  -3,
+              13,  35,  88,  90,  90,  88,  35,  13,
+             -21,  25,  35,  41,  41,  35,  25, -21,
+             -39,  16,  29,  29,  29,  29,  16, -39,
+             -48, -67,   6,  -4,  -4,   6, -67, -48,
+            -128, -40, -86, -50, -50, -86, -40,-128
             """;
     private static final short[] knightTableWhite = createBoard(knightTableWhiteString);
     private static final short[] knightTableBlack = invert(knightTableWhite);
 
     /* Knight (endgame) */
     private static final String knightEndgameTableWhiteString = """
-             -74, -64, -54,  -6,  -6, -54, -64, -74,
-             -64, -44,  -5, -24, -24,  -5, -44, -64,
-             -43, -24, -14,  -9,  -9, -14, -24, -43,
-             -10,  33,  27,  13,  13,  27,  33, -10,
-              33, -24,   7,  42,  42,   7, -24,  33,
-             -27, -17, -14,  21,  21, -14, -17, -27,
-              40, -12, -14, -19, -19, -14, -12,  40,
-             -53, -49,  16,  14,  14,  16, -49, -53
+            -157,-101, -40, -59, -59, -40,-101,-157,
+             -77, -32, -50, -11, -11, -50, -32, -77,
+             -65, -39,   1,   8,   8,   1, -39, -65,
+             -35,  11,  33,  44,  44,  33,  11, -35,
+             -36,  -2,  33,  41,  41,  33,  -2, -36,
+             -45, -23,  -4,  25,  25,  -4, -23, -45,
+             -86, -43, -30,  -7,  -7, -30, -43, -86,
+             -93,-101, -41, -37, -37, -41,-101, -93
             """;
     private static final short[] knightEndgameTableWhite = createBoard(knightEndgameTableWhiteString);
     private static final short[] knightEndgameTableBlack = invert(knightEndgameTableWhite);
 
     /* Bishop (midgame) */
     private static final String bishopTableWhiteString = """
-             -94, -43, -13,-110,-110, -13, -43, -94,
-             -31, -25, -24, -51, -51, -24, -25, -31,
-              21,  43,  48,  49,  49,  48,  43,  21,
-              -4, -20,   0,  33,  33,   0, -20,  -4,
-               2,  -1,   0,  31,  31,   0,  -1,   2,
-              33,  11,  27,  10,  10,  27,  11,  33,
-               5,  48,   6,  13,  13,   6,  48,   5,
-             -17, -35,  -5,   8,   8,  -5, -35, -17
+             -37,  11,-124, -62, -62,-124,  11, -37,
+             -73,  34,  41,  17,  17,  41,  34, -73,
+             -18,  74,  93,  75,  75,  93,  74, -18,
+              -6,  12,  56,  87,  87,  56,  12,  -6,
+              -2,  23,  25,  60,  60,  25,  23,  -2,
+              10,  33,  42,  29,  29,  42,  33,  10,
+               5,  48,  37,   7,   7,  37,  48,   5,
+             -54, -42, -26, -34, -34, -26, -42, -54
             """;
     private static final short[] bishopTableWhite = createBoard(bishopTableWhiteString);
     private static final short[] bishopTableBlack = invert(bishopTableWhite);
 
     /* Bishop (endgame) */
     private static final String bishopEndgameTableWhiteString = """
-              15, -48,   1,  16,  16,   1, -48,  15,
-             -47,   1,  -5, -37, -37,  -5,   1, -47,
-               1,   4,  15,  -8,  -8,  15,   4,   1,
-               6,   6,  26,  13,  13,  26,   6,   6,
-             -19,   0,  14,  25,  25,  14,   0, -19,
-             -44,   6,  24,  41,  41,  24,   6, -44,
-             -33,  29,  18,  19,  19,  18,  29, -33,
-             -39, -49,   6, -15, -15,   6, -49, -39
+             -38, -38, -20, -15, -15, -20, -38, -38,
+             -22,  -8,  -6, -15, -15,  -6,  -8, -22,
+               6,  -8,   6,  -3,  -3,   6,  -8,   6,
+              -1,  12,  22,  23,  23,  22,  12,  -1,
+             -15,   0,  23,  26,  26,  23,   0, -15,
+             -27, -10,  11,  23,  23,  11, -10, -27,
+             -41, -33, -16,   3,   3, -16, -33, -41,
+             -40, -14, -39, -14, -14, -39, -14, -40
             """;
     private static final short[] bishopEndgameTableWhite = createBoard(bishopEndgameTableWhiteString);
     private static final short[] bishopEndgameTableBlack = invert(bishopEndgameTableWhite);
 
     /* Rook (midgame) */
     private static final String rookTableWhiteString = """
-              28,  83,  83,  16,  16,  83,  83,  28,
-             -30,   4,  93,  20,  20,  93,   4, -30,
-              -6, -17,  58,  -8,  -8,  58, -17,  -6,
-              21, -10,   7,  17,  17,   7, -10,  21,
-             -19, -76,  -7,   3,   3,  -7, -76, -19,
-             -78, -39, -36,   0,   0, -36, -39, -78,
-             -31, -19, -18, -22, -22, -18, -19, -31,
-             -49, -12,  20,  30,  30,  20, -12, -49
+              75,  73,  41, 114, 114,  41,  73,  75,
+              71,  58, 125, 142, 142, 125,  58,  71,
+              11,  80,  71,  53,  53,  71,  80,  11,
+             -44, -19,  42,  50,  50,  42, -19, -44,
+             -59, -20, -19,   8,   8, -19, -20, -59,
+             -78, -30, -16, -14, -14, -16, -30, -78,
+            -115, -22,  -9, -10, -10,  -9, -22,-115,
+             -45, -50,   8,  33,  33,   8, -50, -45
             """;
     private static final short[] rookTableWhite = createBoard(rookTableWhiteString);
     private static final short[] rookTableBlack = invert(rookTableWhite);
 
     /* Rook (endgame) */
     private static final String rookEndgameTableWhiteString = """
-              39,   9,   9,  39,  39,   9,   9,  39,
-              18,  19,   0,  17,  17,   0,  19,  18,
-               3,   1,  -8,  15,  15,  -8,   1,   3,
-             -27,   3,  19, -13, -13,  19,   3, -27,
-              -1,  29,  -6,  -5,  -5,  -6,  29,  -1,
-              -5, -23,  -8, -12, -12,  -8, -23,  -5,
-             -16, -40,   2,  -3,  -3,   2, -40, -16,
-              -5,  -5, -15, -14, -14, -15,  -5,  -5
+              18,  18,  30,  27,  27,  30,  18,  18,
+              14,  21,  16,   8,   8,  16,  21,  14,
+               4,   2,   4,   9,   9,   4,   2,   4,
+               6,   2,  14,   3,   3,  14,   2,   6,
+              -8,  -3,   2,  -1,  -1,   2,  -3,  -8,
+             -20,  -8, -17,  -8,  -8, -17,  -8, -20,
+              -9, -17,  -9,  -7,  -7,  -9, -17,  -9,
+             -29,   6, -10,  -6,  -6, -10,   6, -29
             """;
     private static final short[] rookEndgameTableWhite = createBoard(rookEndgameTableWhiteString);
     private static final short[] rookEndgameTableBlack = invert(rookEndgameTableWhite);
 
     /* Queen (midgame) */
     private static final String queenTableWhiteString = """
-            -119,-109, -58,  55,  55, -58,-109,-119,
-             -32, -99,  52, -12, -12,  52, -99, -32,
-              50,  60, -73,  -6,  -6, -73,  60,  50,
-              43,  -7, -16, -33, -33, -16,  -7,  43,
-             -17,   8,   6,  -6,  -6,   6,   8, -17,
-             -39,  25,  17,  39,  39,  17,  25, -39,
-             -13,  47,  40,  49,  49,  40,  47, -13,
-              10, -23,  17,  42,  42,  17, -23,  10
+              17,  43,  73,  71,  71,  73,  43,  17,
+              30, -11,  52, -15, -15,  52, -11,  30,
+              44,  30,  63,  37,  37,  63,  30,  44,
+             -26, -29,   1, -17, -17,   1, -29, -26,
+             -12, -23, -13, -12, -12, -13, -23, -12,
+              -9,  16,  -9,  -7,  -7,  -9,  16,  -9,
+             -34, -11,  26,  10,  10,  26, -11, -34,
+             -51, -49, -34,  -5,  -5, -34, -49, -51
             """;
     private static final short[] queenTableWhite = createBoard(queenTableWhiteString);
     private static final short[] queenTableBlack = invert(queenTableWhite);
 
     /* Queen (endgame) */
     private static final String queenEndgameTableWhiteString = """
-             -10, -22,  63,  56,  56,  63, -22, -10,
-             -10, -46,  59,  78,  78,  59, -46, -10,
-             -65, -31,  83,  61,  61,  83, -31, -65,
-             -65, -15,  83,  38,  38,  83, -15, -65,
-              -4,  20,   9,  66,  66,   9,  20,  -4,
-              13, -44,   8, -48, -48,   8, -44,  13,
-              19, -37, -38, -51, -51, -38, -37,  19,
-             -83, -45, -65, -82, -82, -65, -45, -83
+              11,  32,  41,  54,  54,  41,  32,  11,
+             -17,  50,  57,  99,  99,  57,  50, -17,
+             -11,  25,  44,  96,  96,  44,  25, -11,
+              39,  79,  64, 102, 102,  64,  79,  39,
+               5,  67,  53,  78,  78,  53,  67,   5,
+             -11, -17,  32,  15,  15,  32, -17, -11,
+             -54, -59, -53, -32, -32, -53, -59, -54,
+             -74, -48, -54, -48, -48, -54, -48, -74
             """;
     private static final short[] queenEndgameTableWhite = createBoard(queenEndgameTableWhiteString);
     private static final short[] queenEndgameTableBlack = invert(queenEndgameTableWhite);
 
     /* King (midgame) */
     private static final String kingTableWhiteString = """
-              32,  22,  22,  12,  12,  22,  22,  32,
-              32,  22,  22,  12,  12,  22,  22,  32,
-            -127,  22,  22, -14, -14,  22,  22,-127,
-             -61,-129,  -8, -29, -29,  -8,-129, -61,
-             -60,-124, -82, -93, -93, -82,-124, -60,
-            -100,  21, -45,-117,-117, -45,  21,-100,
-              66,  42, -61, -76, -76, -61,  42,  66,
-              63,  91,   0, -97, -97,   0,  91,  63
+             -52,  25, -18, -71, -71, -18,  25, -52,
+               0, -39, -24, -15, -15, -24, -39,   0,
+             -31,  46,   8, -36, -36,   8,  46, -31,
+             -53, -34, -37, -57, -57, -37, -34, -53,
+            -100, -34, -71, -85, -85, -71, -34,-100,
+             -41, -29, -52, -90, -90, -52, -29, -41,
+               9,  16, -24,-107,-107, -24,  16,   9,
+              -1,  60, -16, -46, -46, -16,  60,  -1
             """;
     private static final short[] kingTableWhite = createBoard(kingTableWhiteString);
     private static final short[] kingTableBlack = invert(kingTableWhite);
@@ -192,14 +192,14 @@ public final class PieceSquareTables {
      * penalized, so the king marches up and inward once material comes off.
      */
     private static final String kingEndgameTableWhiteString = """
-             -83,  -5,  -5,  -1,  -1,  -5,  -5, -83,
-              32,  62,  88,  58,  58,  88,  62,  32,
-              37,  69,  99,  69,  69,  99,  69,  37,
-              31,  94,  72,  66,  66,  72,  94,  31,
-              22,  66,  82, 110, 110,  82,  66,  22,
-              46,  40,  81, 104, 104,  81,  40,  46,
-             -18,  46,  74,  76,  76,  74,  46, -18,
-             -74, -17,   7, -58, -58,   7, -17, -74
+             -91, -31,  -3, -29, -29,  -3, -31, -91,
+              -1,  40,  52,  34,  34,  52,  40,  -1,
+              23,  61,  68,  35,  35,  68,  61,  23,
+              -5,  48,  57,  53,  53,  57,  48,  -5,
+             -29,   5,  44,  51,  51,  44,   5, -29,
+             -28,   4,  27,  44,  44,  27,   4, -28,
+             -44, -16,   8,  27,  27,   8, -16, -44,
+             -96, -58, -35, -39, -39, -35, -58, -96
             """;
     private static final short[] kingEndgameTableWhite = createBoard(kingEndgameTableWhiteString);
     private static final short[] kingEndgameTableBlack = invert(kingEndgameTableWhite);
