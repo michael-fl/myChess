@@ -256,30 +256,63 @@ public final class JointMgEgPstTaperedTexelData {
      * per-piece/per-phase offset the tuner introduced (a material re-rating in
      * disguise). Returns a fresh vector; the tuned shape within each block is
      * preserved, only the level is re-anchored to the current table's mean.
+     *
+     * <p>Structurally inert pawn slots (ranks 1 and 8, where a pawn can never
+     * stand) are excluded from the mean and left at their current value, so the
+     * re-centering preserves the mean over the <em>occupiable</em> pawn squares
+     * only. Averaging them in would spread the correction over eight
+     * always-zero slots and leave a residual pawn material shift.
      */
     public static double[] recenterToCurrentMeans(double[] tuned) {
         double[] result = tuned.clone();
 
-        for (int block = 0; block < PIECE_COUNT * PHASE_COUNT; block++) {
-            int base = block * SLOTS_PER_BLOCK;
-            double shift = blockMean(tuned, base) - blockMean(CURRENT_VALUES, base);
+        for (int pieceIndex = 0; pieceIndex < PIECE_COUNT; pieceIndex++) {
+            boolean pawn = isPawn(pieceIndex);
 
-            for (int slot = 0; slot < SLOTS_PER_BLOCK; slot++) {
-                result[base + slot] -= shift;
+            for (int phaseIndex = 0; phaseIndex < PHASE_COUNT; phaseIndex++) {
+                int base = blockBase(pieceIndex, phaseIndex);
+                double shift = activeMean(tuned, base, pawn) - activeMean(CURRENT_VALUES, base, pawn);
+
+                for (int slot = 0; slot < SLOTS_PER_BLOCK; slot++) {
+                    if (pawn && isInertPawnSlot(slot)) {
+                        result[base + slot] = CURRENT_VALUES[base + slot];
+                    } else {
+                        result[base + slot] = tuned[base + slot] - shift;
+                    }
+                }
             }
         }
 
         return result;
     }
 
-    private static double blockMean(double[] values, int base) {
+    /** Whether {@code pieceIndex} is the pawn block (index 0). */
+    private static boolean isPawn(int pieceIndex) {
+        return pieceIndex == 0;
+    }
+
+    /** A pawn slot on rank 1 or 8 (row 0 or 7) — never occupiable, hence inert. */
+    private static boolean isInertPawnSlot(int slot) {
+        int row = slot / 4;
+
+        return row == 0 || row == 7;
+    }
+
+    /** Mean over the occupiable slots of a block (all 32, minus the inert pawn ranks for pawns). */
+    private static double activeMean(double[] values, int base, boolean pawn) {
         double sum = 0.0;
+        int count = 0;
 
         for (int slot = 0; slot < SLOTS_PER_BLOCK; slot++) {
+            if (pawn && isInertPawnSlot(slot)) {
+                continue;
+            }
+
             sum += values[base + slot];
+            count++;
         }
 
-        return sum / SLOTS_PER_BLOCK;
+        return sum / count;
     }
 
     /**
