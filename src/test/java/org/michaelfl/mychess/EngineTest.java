@@ -381,7 +381,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("Rxh4"),
                 -0.45f, // was -0.2; Rxh4 is SF-best (SF depth 20: +0.58); v4.2.0 eval drift
-                0.1f, // max was 0; tapered king-EG table (v4.3.1) shifted eval to 0.04
+                0.5f, // king-EG (v4.3.1) then v4.3.3 bishop-pair (white holds the pair) → ~0.37
                 new GameConfig(ENGINE, engineConfig())
         );
     }

@@ -355,14 +355,16 @@ public final class WeightingFunction {
     /** The evaluation factors the offline tuner can adjust, in a fixed order. */
     public static final String[] TUNABLE_FACTOR_NAMES = {
             "positionFactor", "mobilityFactor", "threadWeightFactor",
-            "castlingFactor", "chessFactor", "doublePawnFactor", "undefendedPiecesFactor"
+            "castlingFactor", "chessFactor", "doublePawnFactor", "undefendedPiecesFactor",
+            "bishopPairFactor"
     };
 
     /** Current values of {@link #TUNABLE_FACTOR_NAMES}, in the same order. */
     public static double[] tunableFactorValues() {
         return new double[] {
                 positionFactor, mobilityFactor, threadWeightFactor,
-                castlingFactor, chessFactor, doublePawnFactor, undefendedPiecesFactor
+                castlingFactor, chessFactor, doublePawnFactor, undefendedPiecesFactor,
+                bishopPairFactor
         };
     }
 
@@ -389,7 +391,8 @@ public final class WeightingFunction {
                 (castlingState[0] - castlingState[1]) * 100.0,
                 (chessCount[0] - chessCount[1]) * 100.0,
                 (doublePawnCount[0] - doublePawnCount[1]) * 100.0,
-                (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * 100.0
+                (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * 100.0,
+                ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * 100.0
         };
 
         return new FactorBreakdown(eval, features);
