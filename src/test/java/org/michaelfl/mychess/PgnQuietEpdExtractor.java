@@ -39,9 +39,13 @@ import java.util.Set;
  *   <li>optionally de-duplicate exact positions across the whole run.</li>
  * </ul>
  *
- * <p>Chess960 games are skipped for now (their Shredder-castling FENs would not
- * round-trip through the standard-FEN parser the adapters use). The result label
- * is White-POV ({@code 1-0}/{@code 1/2-1/2}/{@code 0-1}), matching the tuner.
+ * <p>Chess960 games are handled: their positions are emitted with
+ * Shredder-castling FENs (rook-file letters) so the castling field round-trips.
+ * The eval the adapters compute is purely positional, and {@link Fen#importFEN}
+ * parses both classical and Shredder castling notation identically (the
+ * Chess960 flag only affects move generation, not FEN parsing or evaluation),
+ * so the adapters read these lines unchanged. The result label is White-POV
+ * ({@code 1-0}/{@code 1/2-1/2}/{@code 0-1}), matching the tuner.
  *
  * <p><b>Known limitation (this "L0" quiet filter).</b> The quiet test only
  * inspects the <em>side-to-move's own</em> captures; it is blind to the
@@ -120,12 +124,13 @@ public final class PgnQuietEpdExtractor {
     /**
      * Replay one game and return the sampled quiet EPD lines. {@code seen}
      * carries the cross-game de-dup state (only positions actually emitted are
-     * added to it). Games without a decisive/drawn result, Chess960 games, and
-     * games that fail to replay are skipped (returning an empty list).
+     * added to it). Games without a decisive/drawn result and games that fail to
+     * replay are skipped (returning an empty list). Chess960 games are replayed
+     * like any other; their positions are emitted with Shredder-castling FENs.
      */
     static List<String> extractGame(Pgn pgn, Config config, Set<String> seen) {
         String label = resultLabel(pgn.result);
-        if (label == null || pgn.isChess960()) {
+        if (label == null) {
             return List.of();
         }
 
@@ -162,7 +167,8 @@ public final class PgnQuietEpdExtractor {
                 continue;
             }
 
-            String fen = firstFourFenFields(board.exportFEN());
+            String fullFen = pgn.isChess960() ? Fen.exportShredderFEN(board) : board.exportFEN();
+            String fen = firstFourFenFields(fullFen);
             if (config.dedup() && (seen.contains(fen) || candidateFens.contains(fen))) {
                 continue;
             }
@@ -189,7 +195,7 @@ public final class PgnQuietEpdExtractor {
         Set<String> seen = new HashSet<>();
         long games = 0;
         long emitted = 0;
-        long skipped960 = 0;
+        long chess960Games = 0;
 
         try {
             Path parent = output.getParent();
@@ -206,7 +212,7 @@ public final class PgnQuietEpdExtractor {
                         games++;
 
                         if (pgn.isChess960()) {
-                            skipped960++;
+                            chess960Games++;
                         }
 
                         for (String line : extractGame(pgn, config, seen)) {
@@ -216,7 +222,7 @@ public final class PgnQuietEpdExtractor {
                         }
 
                         if (games % PROGRESS_EVERY == 0) {
-                            System.out.printf("  games=%,d  positions=%,d  (skipped 960=%,d)%n", games, emitted, skipped960);
+                            System.out.printf("  games=%,d  positions=%,d  (incl. Chess960=%,d)%n", games, emitted, chess960Games);
                         }
                     }
 
@@ -229,8 +235,8 @@ public final class PgnQuietEpdExtractor {
             throw new UncheckedIOException("extraction failed", e);
         }
 
-        System.out.printf("done: %,d games -> %,d quiet positions in %s (skipped %,d Chess960 games)%n",
-                games, emitted, output, skipped960);
+        System.out.printf("done: %,d games -> %,d quiet positions in %s (incl. %,d Chess960 games)%n",
+                games, emitted, output, chess960Games);
     }
 
     static void main(String[] args) throws IOException {
