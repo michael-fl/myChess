@@ -246,6 +246,14 @@ public final class WeightingFunction {
     }
 
     /** Calculate weight of position in centi pawns. */
+    /**
+     * PeSTO tapered material values (centipawns), indexed by piece kind
+     * {@code piece & 7} = pawn, knight, bishop, rook, queen, king. Used only by
+     * the pure-PeSTO reference eval on this ceiling-check branch.
+     */
+    private static final int[] PESTO_MG_VALUE = {82, 337, 365, 477, 1025, 0, 0, 0};
+    private static final int[] PESTO_EG_VALUE = {94, 281, 297, 512, 936, 0, 0, 0};
+
     public int calculate(Board theBoard) {
         this.game = theBoard.getGameStatus();
         this.turn = game.getTurn() == GameStatus.TURN_WHITE ? 0 : 1;
@@ -280,12 +288,28 @@ public final class WeightingFunction {
         final int stopField = Board.h8 + 1;
         int phase = 0;
 
+        // PeSTO tapered material accumulators (pure-PeSTO reference eval only).
+        int pestoMgW = 0;
+        int pestoMgB = 0;
+        int pestoEgW = 0;
+        int pestoEgB = 0;
+
         for (int field = Board.a1; field < stopField; field++) {
             final byte piece = board[field];
             if (piece != Board.empty && piece != Board.illegal) {
                 final int color = (piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE ? 0 : 1;
 
                 piecesWeight[color] += weightOfPiece[piece];
+
+                // PeSTO tapered material (pure-PeSTO reference eval only).
+                final int pestoKind = piece & 7;
+                if (color == 0) {
+                    pestoMgW += PESTO_MG_VALUE[pestoKind];
+                    pestoEgW += PESTO_EG_VALUE[pestoKind];
+                } else {
+                    pestoMgB += PESTO_MG_VALUE[pestoKind];
+                    pestoEgB += PESTO_EG_VALUE[pestoKind];
+                }
 
                 // Accumulate every piece's PST (both phases; blended by phase
                 // afterwards). The king is no longer excepted here: the crude
@@ -311,7 +335,18 @@ public final class WeightingFunction {
 
         calculateUndefendedPiecesCount();
 
-        return calculatePositionWeight();
+        if (containsIllegalMove) {
+            return turn == 0 ? ILLEGAL_WEIGHT_POS : ILLEGAL_WEIGHT_NEG;
+        }
+
+        // Pure-PeSTO reference eval (ceiling check): PeSTO tapered material +
+        // PeSTO tapered PST only — no mobility / bishop-pair / doubled-pawn /
+        // undefended / castling / threat terms. White POV, centipawns. The PST
+        // tables on this branch are 2x symmetrized PeSTO, and positionFactor
+        // (0.5) brings the PST contribution back to PeSTO's native magnitude.
+        int pestoMaterial = blend(pestoMgW, pestoEgW, phase) - blend(pestoMgB, pestoEgB, phase);
+
+        return roundSymmetric(pestoMaterial + (positionWeight[0] - positionWeight[1]) * positionFactor);
     }
 
     /**
