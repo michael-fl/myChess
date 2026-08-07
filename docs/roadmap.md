@@ -190,6 +190,10 @@ The sub-items were *independent* refinements on top of the shipped all-captures 
 
 **Shelved.** The joint endgame-PST and tapered-endgame-material branches are kept but not merged — both re-fix the same undervalued queen and are redundant with v4.3.2. If tapered endgame material is revisited, re-tune it **on top of** the corrected queen=1000 baseline; the queen's endgame divergence should then shrink toward PeSTO's direction.
 
+### 12.7.4 Bishop-pair bonus — DONE (+31 Elo, v4.3.3)
+
+**Bishop-pair bonus, shipped in v4.3.3 — +31.3 ± 24.1 Elo (LOS 99.4 %, SPRT H1 accepted at 512 games).** A side holding both bishops scores a fixed +0.4 pawns (~40 cp). myChess had no material-combination terms (knight = bishop = 300 flat), and the bishop pair is the most reliable such bonus in computer chess — two bishops cover both color complexes and dominate open positions. Counted per color in `WeightingFunction.calculateForBishop` (the per-piece handler) and awarded once in `calculatePositionWeight`; wired in as the 8th tunable Texel factor so the 0.4 value can be tuned later (the eval value is unchanged by that wiring). The largest single eval gain of the tapered/material series and its first formal H1 acceptance — a reminder that a missing *well-established* term can outweigh a lot of fine placement tuning (contrast the neutral joint endgame-PST, § 12.7.3). Note: there is deliberately **no** knight-pair bonus — two knights do not complement each other (and KNNvK is a draw).
+
 ## 12.8 Aspiration windows — **S, ≈ 20–40 Elo**
 
 At each iterative-deepening iteration, search with a narrow window `[score − 50, score + 50]` around the previous iteration's score. Re-search with the wider window only on a fail-high or fail-low.
