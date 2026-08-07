@@ -8,6 +8,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -168,6 +169,57 @@ class PgnQuietEpdExtractorTest {
             assertFalse(firstFens.contains(fenOf(line)),
                     "dedup must never emit the same position twice across the run: " + line);
         }
+    }
+
+    @Test
+    void extractGame_chess960GameIsReplayedAndEmitsShredderFens() {
+        // A real Chess960 self-play game whose rooks start on the b- and g-files.
+        // Verifies that 960 games are no longer skipped, that pre-castling
+        // positions are emitted with Shredder-castling notation (rook-file
+        // letters, not KQkq), and — critically — that the emitted lines round-trip
+        // through Fen.importFEN exactly as the Texel adapters read them.
+        String pgn = """
+                [Event "test"]
+                [Variant "fischerandom"]
+                [FEN "nrbkqnrb/p1pppppp/1p6/8/8/P7/1PPPPPPP/NRBKQNRB w KQkq - 0 1"]
+                [SetUp "1"]
+                [Result "0-1"]
+
+                1. Nb3 Ne6 2. g3 g6 3. Ne3 c6 4. d3 Nac7 5. Qb4 d5 6. O-O Nb5
+                7. Bf3 Nbd4 8. Qa4 Nxf3+ 9. exf3 Qd7 10. Bd2 O-O 11. Rfe1 Bg7
+                12. Ng4 Qc7 13. Nh6+ Kh8 14. Bc3 Ng5 15. Re3 e5 16. Qh4 d4
+                17. Qxg5 dxe3 18. fxe3 Be6 19. Ng4 f6 20. Qh4 Rbd8 21. Nf2 Kg8
+                22. f4 Qf7 23. Nd2 g5 24. fxg5 fxg5 25. Qxg5 h6 26. Qh4 Qxf2+
+                27. Kh1 Qxe3 28. b4 Bf6 29. Qh5 Bd5+ 30. Ne4 Bxe4+ 31. dxe4 Qxe4+
+                32. Kg1 Bg5 33. h3 Qxc2 34. Re1 Qxc3 35. Qg6+ Kh8 36. Rb1 Qxg3+
+                37. Kh1 Qxh3+ 38. Kg1 Be3# 0-1
+                """;
+        Pgn parsed = Pgn.parse(pgn).findFirst().orElseThrow();
+        assertTrue(parsed.isChess960(), "the fixture must be recognized as a Chess960 game");
+
+        var config = new PgnQuietEpdExtractor.Config(4, 4, 2, 6, true);
+        List<String> lines = PgnQuietEpdExtractor.extractGame(parsed, config, new HashSet<>());
+
+        assertFalse(lines.isEmpty(), "a Chess960 game must no longer be skipped: it must yield samples");
+
+        boolean anyShredderCastling = false;
+        for (String line : lines) {
+            assertTrue(line.matches(EPD_LINE_PATTERN), "malformed EPD line: " + line);
+
+            String fen = fenOf(line);
+
+            // The Texel adapters build the board exactly like this — it must not throw.
+            Board board = Fen.importFEN(fen + " 0 1");
+            assertNotNull(board, "the emitted 960 FEN must re-import for the adapters: " + line);
+
+            String castlingField = fen.split(" ")[2];
+            if (castlingField.matches(".*[A-Ha-h].*")) {
+                anyShredderCastling = true;
+            }
+        }
+
+        assertTrue(anyShredderCastling,
+                "at least one pre-castling sample must carry Shredder file-letter castling rights");
     }
 
     private static String fenOf(String epdLine) {
