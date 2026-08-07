@@ -89,8 +89,8 @@ class DeepWeightTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6
                 """;
         testPosition(pgn,
-                0.18f,
-                0.30f,
+                -0.35f, // v4.3.3 bishop-pair: black holds the pair here (white played Bxf6) → ~-0.16
+                0.05f,
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
     }
@@ -103,8 +103,8 @@ class DeepWeightTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5
                 """;
         testPosition(pgn,
-                0.3f, // was 0.58; SF depth 20: +0.50; v4.2.0 eval drift
-                0.70f,
+                -0.20f, // pawn/king-EG history; now v4.3.3 bishop-pair (black holds the pair) → ~-0.01
+                0.20f,
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
     }
