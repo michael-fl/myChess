@@ -127,6 +127,30 @@ class JointMgEgPstTaperedTexelDataTest {
     }
 
     @Test
+    void recenterExcludesInertPawnSlotsAndPreservesTheOccupiablePawnMean() {
+        double[] params = JointMgEgPstTaperedTexelData.currentTableValues();
+        double[] current = JointMgEgPstTaperedTexelData.currentTableValues();
+        int base = blockBase(0, PHASE_MG);              // pawn midgame
+
+        // Bump only the occupiable pawn slots (rows 1..6 -> slots 4..27).
+        for (int slot = 4; slot <= 27; slot++) {
+            params[base + slot] += 10.0;
+        }
+
+        double[] recentered = JointMgEgPstTaperedTexelData.recenterToCurrentMeans(params);
+
+        for (int slot = 4; slot <= 27; slot++) {
+            assertEquals(current[base + slot], recentered[base + slot], EPSILON,
+                    "the uniform bump on occupiable pawn slot " + slot + " must be removed");
+        }
+
+        for (int slot : new int[]{0, 1, 2, 3, 28, 29, 30, 31}) {
+            assertEquals(current[base + slot], recentered[base + slot], EPSILON,
+                    "inert pawn slot " + slot + " (rank 1/8) must stay at its current value");
+        }
+    }
+
+    @Test
     void startPositionHasFullPhase() {
         assertEquals(MAX_PHASE, JointMgEgPstTaperedTexelData.phaseOf(Board.createNewGame()),
                 "the opening position must have full material phase");
