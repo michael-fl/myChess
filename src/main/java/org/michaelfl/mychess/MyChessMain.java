@@ -39,7 +39,7 @@ public final class MyChessMain {
         }
     }
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
         System.err.println("Starting MyChess v" + VERSION);
         if (args.length > 0 && "uci".equalsIgnoreCase(args[0])) {
             runUci();
