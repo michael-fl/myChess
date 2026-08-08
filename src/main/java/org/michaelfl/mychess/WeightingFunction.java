@@ -111,6 +111,80 @@ public final class WeightingFunction {
         phaseWeightOfPiece[Board.blackKing]   = 0;
     }
 
+    /**
+     * Attack-unit weight per piece kind: how strongly a piece bearing on the
+     * enemy king zone contributes to the king-attack pressure. Heavier pieces
+     * weigh more; the king contributes nothing (and is thus never counted as an
+     * attacker). These weights are summed into {@link #attackUnit} and used to
+     * index {@link #KING_ATTACK_PENALTY}.
+     */
+    private static final int ATTACK_UNIT_KING = 0;
+    private static final int ATTACK_UNIT_PAWN = 1;
+    private static final int ATTACK_UNIT_KNIGHT = 2;
+    private static final int ATTACK_UNIT_BISHOP = 2;
+    private static final int ATTACK_UNIT_ROOK = 3;
+    private static final int ATTACK_UNIT_QUEEN = 5;
+
+    /** Attack-unit weight indexed by piece constant; see {@link #ATTACK_UNIT_KING}. */
+    private static final int[] ATTACK_UNIT_OF_PIECE = new int[Board.blackKing + 1];
+    static {
+        ATTACK_UNIT_OF_PIECE[Board.whitePawn]   = ATTACK_UNIT_PAWN;
+        ATTACK_UNIT_OF_PIECE[Board.whiteKnight] = ATTACK_UNIT_KNIGHT;
+        ATTACK_UNIT_OF_PIECE[Board.whiteBishop] = ATTACK_UNIT_BISHOP;
+        ATTACK_UNIT_OF_PIECE[Board.whiteRook]   = ATTACK_UNIT_ROOK;
+        ATTACK_UNIT_OF_PIECE[Board.whiteQueen]  = ATTACK_UNIT_QUEEN;
+        ATTACK_UNIT_OF_PIECE[Board.whiteKing]   = ATTACK_UNIT_KING;
+        ATTACK_UNIT_OF_PIECE[Board.blackPawn]   = ATTACK_UNIT_PAWN;
+        ATTACK_UNIT_OF_PIECE[Board.blackKnight] = ATTACK_UNIT_KNIGHT;
+        ATTACK_UNIT_OF_PIECE[Board.blackBishop] = ATTACK_UNIT_BISHOP;
+        ATTACK_UNIT_OF_PIECE[Board.blackRook]   = ATTACK_UNIT_ROOK;
+        ATTACK_UNIT_OF_PIECE[Board.blackQueen]  = ATTACK_UNIT_QUEEN;
+        ATTACK_UNIT_OF_PIECE[Board.blackKing]   = ATTACK_UNIT_KING;
+    }
+
+    /**
+     * King-attack penalty in centipawns, indexed by the attacking side's
+     * accumulated {@link #attackUnit}. The table grows progressively, so piling
+     * several pieces onto the king zone is punished far more than the sum of the
+     * individual attackers would suggest. Applied only once at least two distinct
+     * pieces attack, and the index is clamped to the last entry (see
+     * {@link #calcKingAttackPenalty}).
+     */
+    static final int[] KING_ATTACK_PENALTY = {
+            0,    //  0
+            0,    //  1
+            5,    //  2
+            5,    //  3
+            10,   //  4
+            10,   //  5
+            15,   //  6
+            15,   //  7
+            25,   //  8
+            35,   //  9
+            50,   // 10
+            65,   // 11
+            85,   // 12
+            105,  // 13
+            130,  // 14
+            160,  // 15
+            195,  // 16
+            235,  // 17
+            285,  // 18
+            340,  // 19
+            400   // 20
+    };
+
+    /**
+     * Board-index offsets from a king's square to the nine squares of its king
+     * zone (the king itself and its eight neighbors), used to populate
+     * {@link #isKingZoneField}.
+     */
+    private static final int[] KING_ZONE_OFFSETS = new int[] {
+            Board.LENGTH - 1, Board.LENGTH, Board.LENGTH + 1,
+            -1, 0, 1,
+            -Board.LENGTH - 1, -Board.LENGTH, -Board.LENGTH + 1
+    };
+
     @FunctionalInterface
     private interface CalculateWeight {
         void calculate(WeightingFunction generator, int field, int color);
@@ -181,6 +255,16 @@ public final class WeightingFunction {
      */
     private static final float bishopPairFactor = 0.4f;
 
+    /**
+     * Scales the king-attack penalty delta (white − black, from
+     * {@link #KING_ATTACK_PENALTY}) into the final position weight. With the
+     * penalty table already in centipawns and the final-weight sum in pawn
+     * units, {@code 0.01} carries the table's centipawn values through
+     * unchanged. Not (yet) a tunable factor — a first fixed value to be
+     * confirmed by self-play before Texel tuning.
+     */
+    private static final float kingAttackFactor = 0.01f;
+
     private GameStatus game;
     private int turn; // 0 = white, 1 = black
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
@@ -197,6 +281,23 @@ public final class WeightingFunction {
     private final int[] doublePawnCount = new int[2];
     private final int[] undefendedPiecesCount = new int[2];
     private final int[] bishopCount = new int[2];
+    /**
+     * Per-color mask of the squares forming that color's king zone (the king's
+     * square plus its eight neighbors), indexed by board field. Rebuilt each
+     * {@link #calculate(Board)} by {@link #fillKingZone}.
+     */
+    private final boolean[][] isKingZoneField = new boolean[2][Board.LENGTH * Board.LENGTH];
+    /** Accumulated attack units bearing on the enemy king zone, per attacking color. */
+    private final int[] attackUnit = new int[2];
+    /** Number of distinct pieces bearing on the enemy king zone, per attacking color. */
+    private final int[] kingAttackerCount = new int[2];
+    /**
+     * Deduplication guard for {@link #increaseAttackUnit}, keyed by the
+     * attacker's origin square: guarantees each piece is counted at most once,
+     * no matter how many king-zone squares it attacks. Cleared each
+     * {@link #calculate(Board)}.
+     */
+    private final boolean[] isKingAttackerCounted = new boolean[Board.LENGTH * Board.LENGTH];
     /** Per-color sum of midgame piece-square values for the current position (index 0 = white, 1 = black). */
     private final int[] pstMidGameWeight = new int[2];
     /** Per-color sum of endgame piece-square values for the current position (index 0 = white, 1 = black). */
@@ -270,15 +371,34 @@ public final class WeightingFunction {
         this.undefendedPiecesCount[1] = 0;
         this.bishopCount[0] = 0;
         this.bishopCount[1] = 0;
+        this.attackUnit[0] = 0;
+        this.attackUnit[1] = 0;
+        this.kingAttackerCount[0] = 0;
+        this.kingAttackerCount[1] = 0;
         this.pstMidGameWeight[0] = 0;
         this.pstMidGameWeight[1] = 0;
         this.pstEndGameWeight[0] = 0;
         this.pstEndGameWeight[1] = 0;
 
         System.arraycopy(board, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
+        Arrays.fill(isKingZoneField[0], false);
+        Arrays.fill(isKingZoneField[1], false);
+        Arrays.fill(isKingAttackerCounted, false);
 
         final int stopField = Board.h8 + 1;
         int phase = 0;
+
+        // Mark each king's 3x3 zone before the per-piece scan, so
+        // increaseAttackUnit can test attacks against an already-populated
+        // enemy king zone.
+        for (int field = Board.a1; field < stopField; field++) {
+            final byte piece = board[field];
+            if (piece == Board.whiteKing) {
+                fillKingZone(field, 0);
+            } else if (piece == Board.blackKing) {
+                fillKingZone(field, 1);
+            }
+        }
 
         for (int field = Board.a1; field < stopField; field++) {
             final byte piece = board[field];
@@ -411,7 +531,85 @@ public final class WeightingFunction {
                 + (chessCount[0] - chessCount[1]) * chessFactor
                 + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
                 + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor
-                + ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * bishopPairFactor) * 100);
+                + ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * bishopPairFactor
+                + (calcKingAttackPenalty(0) - calcKingAttackPenalty(1)) * kingAttackFactor) * 100);
+    }
+
+    /**
+     * Marks the nine squares of {@code color}'s king zone (the king on
+     * {@code kingField} plus its eight neighbors) in {@link #isKingZoneField}.
+     * Off-board neighbors of an edge or corner king land on the board's illegal
+     * border cells, so no bounds check is needed.
+     *
+     * @param kingField board index of the king
+     * @param color     king's color (0 = white, 1 = black)
+     */
+    private void fillKingZone(int kingField, int color) {
+        for (int off : KING_ZONE_OFFSETS) {
+            isKingZoneField[color][kingField + off] = true;
+        }
+    }
+
+    /**
+     * Records that the piece on {@code fromField} bears on {@code toField}. When
+     * {@code toField} lies in the enemy king zone, the piece's
+     * {@link #ATTACK_UNIT_OF_PIECE attack-unit weight} is added to
+     * {@link #attackUnit} and {@link #kingAttackerCount} is incremented.
+     *
+     * <p>Each piece is counted at most once per evaluation, regardless of how
+     * many king-zone squares it attacks: {@link #isKingAttackerCounted}, keyed by
+     * the origin square, absorbs the repeated calls a sliding piece makes along
+     * its rays. Two like pieces on different squares still count separately. The
+     * king itself has zero weight and is therefore never counted as an attacker.
+     *
+     * @param color     attacking color (0 = white, 1 = black)
+     * @param fromField origin square of the attacking piece
+     * @param toField   attacked square
+     * @param piece     the attacking piece
+     */
+    private void increaseAttackUnit(final int color, final int fromField, final int toField, final byte piece) {
+        if (isKingZoneField[color ^ 1][toField] && !isKingAttackerCounted[fromField]) {
+            final int score = ATTACK_UNIT_OF_PIECE[piece];
+
+            if (score > 0) {
+                isKingAttackerCounted[fromField] = true;
+                kingAttackerCount[color]++;
+                attackUnit[color] += score;
+            }
+        }
+    }
+
+    /**
+     * King-attack penalty (in centipawns) for the given attacking color, looked
+     * up in {@link #KING_ATTACK_PENALTY} by that side's accumulated
+     * {@link #attackUnit}.
+     *
+     * <p>Gated on at least two distinct attackers ({@link #kingAttackerCount}): a
+     * lone attacker cannot mount a real mating threat and scores zero. The
+     * attack-unit index is clamped to the last table entry.
+     *
+     * @param color attacking color (0 = white, 1 = black)
+     * @return the penalty the enemy king incurs, as a positive centipawn value
+     */
+    float calcKingAttackPenalty(int color) {
+        return kingAttackerCount[color] < 2 ?
+                0 :
+                KING_ATTACK_PENALTY[Math.min(attackUnit[color], KING_ATTACK_PENALTY.length - 1)];
+    }
+
+    // --- Package-private accessors for attack-unit unit tests. The arrays are
+    // populated by calculate(Board); index 0 = white, 1 = black. ---
+
+    int[] getAttackUnit() {
+        return attackUnit;
+    }
+
+    int[] getKingAttackerCount() {
+        return kingAttackerCount;
+    }
+
+    boolean isInKingZone(int color, int field) {
+        return isKingZoneField[color][field];
     }
 
     /**
@@ -441,6 +639,7 @@ public final class WeightingFunction {
                "doublePawnCount:       w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + DELTA_STR + (doublePawnCount[0] - doublePawnCount[1]) + WEIGHT_STR + round((doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) + '\n' +
                "chessCount:            w=" + chessCount[0] + ", b=" + chessCount[1] + DELTA_STR + (chessCount[0] - chessCount[1]) + WEIGHT_STR + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
                "undefendedPiecesCount: w=" + undefendedPiecesCount[0] + ", b=" + undefendedPiecesCount[1] + DELTA_STR + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) + WEIGHT_STR + round((undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor) + '\n' +
+               "attackUnit:            w=" + attackUnit[0] + ", b=" + attackUnit[1] + DELTA_STR + (attackUnit[0] - attackUnit[1]) + WEIGHT_STR + round((calcKingAttackPenalty(0) - calcKingAttackPenalty(1)) * kingAttackFactor) + '\n' +
                "weight: " + calculatePositionWeight() / 100f;
     }
 
@@ -468,10 +667,10 @@ public final class WeightingFunction {
         }
 
         // capture right
-        captureOrDefendWithPawn(field + Board.LENGTH + 1, GameStatus.TURN_WHITE, GameStatus.TURN_BLACK, Board.whitePawn, color);
+        captureOrDefendWithPawn(field, field + Board.LENGTH + 1, GameStatus.TURN_WHITE, GameStatus.TURN_BLACK, Board.whitePawn, color);
 
         // capture left
-        captureOrDefendWithPawn(field + Board.LENGTH - 1, GameStatus.TURN_WHITE, GameStatus.TURN_BLACK, Board.whitePawn, color);
+        captureOrDefendWithPawn(field, field + Board.LENGTH - 1, GameStatus.TURN_WHITE, GameStatus.TURN_BLACK, Board.whitePawn, color);
 
         // en passant
         if (fieldToRow(field) == 4) {
@@ -500,7 +699,9 @@ public final class WeightingFunction {
         }
     }
 
-    private void captureOrDefendWithPawn(final int to, final int myTurn, final int oppositeTurn, final byte movingPawn, final int color) {
+    private void captureOrDefendWithPawn(final int from, final int to, final int myTurn, final int oppositeTurn, final byte movingPawn, final int color) {
+        increaseAttackUnit(color, from, to, movingPawn);
+
         if ((board[to] & oppositeTurn) == oppositeTurn) {
             capture(to, movingPawn, color, board[to]);
         } else if ((board[to] & myTurn) == myTurn) {
@@ -533,11 +734,11 @@ public final class WeightingFunction {
 
         // capture right
         to = field - Board.LENGTH + 1;
-        captureOrDefendWithPawn(to, GameStatus.TURN_BLACK, GameStatus.TURN_WHITE, Board.blackPawn, color);
+        captureOrDefendWithPawn(field, to, GameStatus.TURN_BLACK, GameStatus.TURN_WHITE, Board.blackPawn, color);
 
         // capture left
         to = field - Board.LENGTH - 1;
-        captureOrDefendWithPawn(to, GameStatus.TURN_BLACK, GameStatus.TURN_WHITE, Board.blackPawn, color);
+        captureOrDefendWithPawn(field, to, GameStatus.TURN_BLACK, GameStatus.TURN_WHITE, Board.blackPawn, color);
 
         // en passant
         if (fieldToRow(field) == 3) {
@@ -682,6 +883,8 @@ public final class WeightingFunction {
 
         if (piece == Board.illegal)
             return false;
+
+        increaseAttackUnit(color, from, to, movingPiece);
 
         if (piece == Board.empty) {
             mobilityWeight[color] += weight;
