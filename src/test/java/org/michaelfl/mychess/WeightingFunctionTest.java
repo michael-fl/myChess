@@ -59,7 +59,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5
                 """;
-        testPosition(pgn, 0.39f);
+        testPosition(pgn, 0.45f);
     }
 
     @Test
@@ -91,7 +91,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4
                 """;
-        testPosition(pgn, -0.08f);
+        testPosition(pgn, -0.17f);
     }
 
     @Test
@@ -99,7 +99,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4
                 """;
-        testPosition(pgn, 0.92f);
+        testPosition(pgn, 0.71f);
     }
 
     @Test
@@ -107,7 +107,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6
                 """;
-        testPosition(pgn, 0.34f);
+        testPosition(pgn, 0.19f);
     }
 
     @Test
@@ -115,7 +115,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3
                 """;
-        testPosition(pgn, 0.80f);
+        testPosition(pgn, 0.61f);
     }
 
     @Test
@@ -123,7 +123,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6
                 """;
-        testPosition(pgn, 0.88f);
+        testPosition(pgn, 0.66f);
     }
 
     @Test
@@ -131,7 +131,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5
                 """;
-        testPosition(pgn, 1.03f);
+        testPosition(pgn, 0.72f);
     }
 
     @Test
@@ -139,7 +139,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6
                 """;
-        testPosition(pgn, 1.04f);
+        testPosition(pgn, 0.71f);
     }
 
     @Test
@@ -147,7 +147,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4
                 """;
-        testPosition(pgn, 0.86f);
+        testPosition(pgn, 0.53f);
     }
 
     @Test
@@ -155,7 +155,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7
                 """;
-        testPosition(pgn, 0.90f);
+        testPosition(pgn, 0.44f);
     }
 
     @Test
@@ -163,7 +163,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3
                 """;
-        testPosition(pgn, 0.96f);
+        testPosition(pgn, 0.33f);
     }
 
     @Test
@@ -171,7 +171,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7
                 """;
-        testPosition(pgn, 0.80f);
+        testPosition(pgn, 0.23f);
     }
 
     @Test
@@ -180,7 +180,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O
                 """;
-        testPosition(pgn, 1.12f);
+        testPosition(pgn, 1.34f);
     }
 
     @Test
@@ -189,7 +189,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7
                 """;
-        testPosition(pgn, 0.82f);
+        testPosition(pgn, 1.04f);
     }
 
     @Test
@@ -198,7 +198,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4
                 """;
-        testPosition(pgn, 0.76f);
+        testPosition(pgn, 0.9f);
     }
 
     @Test
@@ -207,7 +207,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5
                 """;
-        testPosition(pgn, 0.8f);
+        testPosition(pgn, 1.04f);
     }
 
     @Test
@@ -216,7 +216,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6
                 """;
-        testPosition(pgn, 4.05f);
+        testPosition(pgn, 4.59f);
     }
 
     @Test
@@ -225,7 +225,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6
                 """;
-        testPosition(pgn, 0.37f); // v4.3.3 bishop-pair: black holds the pair (white played Bxf6) → ~−0.4
+        testPosition(pgn, 0.85f); // v4.3.3 bishop-pair: black holds the pair (white played Bxf6) → ~−0.4
     }
 
     @Test
@@ -234,7 +234,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5
                 """;
-        testPosition(pgn, 0.51f); // v4.3.3 bishop-pair (black holds the pair)
+        testPosition(pgn, 1.05f); // v4.3.3 bishop-pair (black holds the pair)
     }
 
     @Test
@@ -243,7 +243,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7
                 """;
-        testPosition(pgn, 0.43f); // v4.3.3 bishop-pair (black holds the pair)
+        testPosition(pgn, 0.94f); // v4.3.3 bishop-pair (black holds the pair)
     }
 
     @Test
@@ -252,7 +252,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5
                 """;
-        testPosition(pgn, 0.37f); // 0.68 (v4.3.0) → 0.77 (v4.3.1 king-EG) → 0.37 (v4.3.3 bishop-pair, black holds the pair)
+        testPosition(pgn, 0.87f); // 0.68 (v4.3.0) → 0.77 (v4.3.1 king-EG) → 0.37 (v4.3.3 bishop-pair, black holds the pair)
     }
 
     @Test
@@ -261,7 +261,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+
                 """;
-        testPosition(pgn, -0.96f); // v4.3.3 bishop-pair (black holds the pair)
+        testPosition(pgn, -0.44f); // v4.3.3 bishop-pair (black holds the pair)
     }
 
     @Test
@@ -270,7 +270,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1
                 """;
-        testPosition(pgn, -0.63f); // king-EG (v4.3.1) then v4.3.3 bishop-pair (black holds the pair)
+        testPosition(pgn, 0.19f); // king-EG (v4.3.1) then v4.3.3 bishop-pair (black holds the pair)
     }
 
     @Test
@@ -279,7 +279,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5
                 """;
-        testPosition(pgn, -0.98f); // king-EG (v4.3.1) then v4.3.3 bishop-pair (black holds the pair)
+        testPosition(pgn, -0.03f); // king-EG (v4.3.1) then v4.3.3 bishop-pair (black holds the pair)
     }
 
     // ** Unguarded bishop attacked by queen
@@ -289,7 +289,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5
                 """;
-        testPosition(pgn, -0.58f); // king-EG (v4.3.1) then v4.3.3 bishop-pair (black holds the pair)
+        testPosition(pgn, 0.5f); // king-EG (v4.3.1) then v4.3.3 bishop-pair (black holds the pair)
     }
 
     // ** White wins (back) a pawn with Nxe6
@@ -299,7 +299,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8
                 """;
-        testPosition(pgn, -0.52f); // king-EG (v4.3.1) then v4.3.3 bishop-pair (black holds the pair)
+        testPosition(pgn, 0.52f); // king-EG (v4.3.1) then v4.3.3 bishop-pair (black holds the pair)
     }
 
     @Test
@@ -309,7 +309,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6
                 """;
-        testPosition(pgn, 0.79f); // pawn-EG (v4.3.0) then v4.3.3 bishop-pair (black holds the pair)
+        testPosition(pgn, 2.1f); // pawn-EG (v4.3.0) then v4.3.3 bishop-pair (black holds the pair)
     }
 
     @Test
@@ -319,7 +319,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6
                 """;
-        testPosition(pgn, -3.04f); // v4.3.3 bishop-pair (black holds the pair)
+        testPosition(pgn, -2.01f); // v4.3.3 bishop-pair (black holds the pair)
     }
 
     @Test
@@ -329,7 +329,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6
                 """;
-        testPosition(pgn, 0.58f); // was 0.44 (v4.3.0 pawn-EG); shifted by the tapered king-EG table (v4.3.1)
+        testPosition(pgn, 1.51f); // was 0.44 (v4.3.0 pawn-EG); shifted by the tapered king-EG table (v4.3.1)
     }
 
     @Test
@@ -339,7 +339,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6 O-O
                 """;
-        testPosition(pgn, 0.05f); // was 0.04 (v4.3.0 pawn-EG); shifted by the tapered king-EG table (v4.3.1)
+        testPosition(pgn, 0.16f); // was 0.04 (v4.3.0 pawn-EG); shifted by the tapered king-EG table (v4.3.1)
     }
 
     @Test
@@ -349,7 +349,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6 O-O 18. Rg1
                 """;
-        testPosition(pgn, 0.18f); // was 0.08; shifted by the tapered pawn-EG table (v4.3.0)
+        testPosition(pgn, 0.46f); // was 0.08; shifted by the tapered pawn-EG table (v4.3.0)
     }
 
     // Terrible position for black (no mobility, pieces on bad, narrow positions)
@@ -359,7 +359,7 @@ class WeightingFunctionTest {
                 1. Nc3 e5 2. Nf3 Nc6 3. d4 d6 4. d5 Nb4 5. a3 Na6 6. e4 Nc5 7. Be3 b6 8. b4 Nb7 9. Bb5+
                 Bd7 10. Qd3 Nf6 11. Bxd7+ Qxd7 12. Qa6 Qc8 13. Qc4 Be7 14. Qc6+ Nd7 15. Nb5
                 """;
-        testPosition(pgn, 1.04f);
+        testPosition(pgn, 0.19f);
     }
 
     private void testPosition(String gameNotation, float expectedWeight) {
@@ -429,7 +429,7 @@ class WeightingFunctionTest {
         float scoreWithoutEp = scoreOf("1. e4 a6 2. e5 a5 3. h3");
         // The current eval at this position is known-good; we anchor it within a
         // ±0.05 band around the value we measured after the bug fix.
-        assertEquals(0.41f, scoreWithoutEp, 0.05f,
+        assertEquals(0.54f, scoreWithoutEp, 0.05f,
                 "Score without en-passant target must be stable around the fixed baseline");
     }
 
