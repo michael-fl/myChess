@@ -113,15 +113,14 @@ class TaperedEvaluationTest {
                 "blend must stay odd at a half-integer value (0.5)");
     }
 
-    // ---------- pawn (v4.3.0) and king (v4.3.1) tables diverge; other pieces stay MG == EG ----------
+    // ---------- all piece tables diverge (MG != EG) since the full-joint tune ----------
 
     @Test
-    void tapered_pawnAndKingTablesDiverge_otherPiecesStillMatch() {
+    void tapered_allPieceTablesDiverge() {
         var evaluator = new WeightingFunction();
 
-        // The pawn (v4.3.0) and king (v4.3.1) endgame tables were tuned to
-        // diverge from their midgame tables, so any position with pawns or a
-        // king now has MG != EG.
+        // Since the full-joint MG+EG tune, every piece kind has separate midgame
+        // and endgame tables, so any non-empty position has MG != EG.
         evaluator.calculate(Fen.importFEN(START_POS));
         assertNotEquals(evaluator.getPstMidGameWeight()[0], evaluator.getPstEndGameWeight()[0],
                 "pawns and king diverge: white MG/EG position weight must differ in the start position");
@@ -133,14 +132,14 @@ class TaperedEvaluationTest {
         assertNotEquals(0, kingsOnlyDivergence,
                 "the king endgame table diverges, so bare kings already split white MG/EG");
 
-        // Knight/bishop/rook/queen still share one table for both phases: adding
-        // a (white) rook must leave the MG − EG divergence unchanged, because the
-        // rook contributes equally to both phases. The king stays on e1 in both
-        // positions, so only the rook differs.
+        // Since the full-joint tune, the rook also has its own diverging endgame
+        // table: adding a (white) rook now CHANGES the MG − EG divergence, because
+        // the rook contributes differently to the two phases. The king stays on e1
+        // in both positions, so only the rook differs.
         evaluator.calculate(Fen.importFEN("4k3/8/8/8/8/8/8/R3K3 w - - 0 20"));
         int kingAndRookDivergence = evaluator.getPstMidGameWeight()[0] - evaluator.getPstEndGameWeight()[0];
-        assertEquals(kingsOnlyDivergence, kingAndRookDivergence,
-                "non-pawn/non-king pieces still match: adding a rook must not change the white MG/EG divergence");
+        assertNotEquals(kingsOnlyDivergence, kingAndRookDivergence,
+                "all piece tables are tapered now: adding a rook must change the white MG/EG divergence");
     }
 
 }

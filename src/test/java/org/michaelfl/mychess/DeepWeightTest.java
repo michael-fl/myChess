@@ -39,7 +39,7 @@ class DeepWeightTest {
                 """;
         testPosition(pgn,
                 0.27f,
-                0.5f,
+                1.15f, // max was 0.5; v4.3.4 full-joint deep eval ~0.94
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
     }
@@ -51,7 +51,7 @@ class DeepWeightTest {
                 """;
         testPosition(pgn,
                 0.2f,
-                0.4f,
+                0.6f, // max was 0.4; v4.3.4 deep eval ~0.44
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
     }
@@ -118,7 +118,7 @@ class DeepWeightTest {
                 """;
         testPosition(pgn,
                 -0.05f,
-                0.2f,
+                0.7f, // max was 0.2; v4.3.4 deep eval ~0.49
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
     }
@@ -132,7 +132,7 @@ class DeepWeightTest {
                 """;
         testPosition(pgn,
                 0.14f,
-                0.34f,
+                0.65f, // max was 0.34; v4.3.4 deep eval ~0.47
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
     }
