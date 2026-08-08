@@ -2,6 +2,14 @@
 
 Yet another chess engine — just for fun.
 
+A small, self-contained chess engine written from scratch in Java 25. It speaks
+both an interactive REPL and the **UCI protocol** (so it plugs into Cute Chess,
+Arena, or a lichess bot bridge), supports **standard chess and Chess960**, and
+plays with a hand-written, [Texel-tuned tapered evaluation](docs/tapered-evaluation.md)
+behind an iterative-deepening alpha-beta search with a
+[transposition table](#7-search-optimizations), null-move pruning, and
+[quiescence search](docs/search.md#64-quiescence-search).
+
 ---
 
 ## Quick start
@@ -9,9 +17,12 @@ Yet another chess engine — just for fun.
 **Prerequisites:** JDK 25 (set `JAVA_HOME` if your system default is older), Maven 3.9 or newer.
 
 ```bash
-mvn compile          # build
-mvn exec:java        # start the REPL
-mvn test             # run the test suite (290 tests, ~2-3 min)
+mvn compile                             # compile
+mvn exec:java                           # start the interactive REPL
+mvn exec:java -Dexec.arguments="uci"    # start in UCI mode instead
+mvn test                                # full test suite (~1,170 tests, ~6 min)
+mvn test -DexcludedGroups=slow          # fast tests only (~20 s)
+mvn package                             # build the jar + copy runtime deps into target/dependency
 ```
 
 `mvn exec:java` launches the engine's **REPL** (*read-eval-print loop*) — an interactive text prompt on stdin/stdout. It prints the starting board and a `>` prompt, waits for a move or command, executes it, prints the resulting board, and loops. Type moves in long algebraic (`e2-e4`) or standard short algebraic (`Nf3`, `O-O`, `exd5`) — or commands. Sample session:
@@ -41,10 +52,23 @@ Turn: white
 
 A few useful pointers for first-time use:
 
-- The engine's per-move time budget defaults to 30 s ([`EngineConfig`](src/main/java/org/michaelfl/mychess/EngineConfig.java)). `go` and `auto` will spend that long on each move at depth 8 — be patient.
-- `import [[ <moves> ]]` and `import <pgn>` reload a game from notation; `export` prints the current game in the same long-algebraic form that `import [[...]]` accepts.
+- The engine's per-move time budget defaults to 30 s ([`EngineConfig`](src/main/java/org/michaelfl/mychess/EngineConfig.java)). The search is time-bounded iterative deepening with no fixed depth cap in normal play, so `go` and `auto` will spend that long on each move — be patient.
+- `import [[ <moves> ]]` and `import <pgn>` reload a game from notation; `export` prints the current game in the same long-algebraic form that `import [[...]]` accepts; `pgn` prints it as PGN move text; `fen` prints (and, from the REPL, can re-load) a FEN.
 - The opening book at `db/openings.db` ships **empty**; the engine works without it. See [Opening Database](docs/opening-database.md#93-import-pipeline) to populate it from PGN files.
 - The full REPL reference is in [§ 10.4 REPL commands](docs/notation.md#104-repl-commands).
+
+### Running as a UCI engine
+
+Passing `uci` as the first CLI argument switches [`MyChessMain`](src/main/java/org/michaelfl/mychess/MyChessMain.java) from the REPL to the [`UciHandler`](src/main/java/org/michaelfl/mychess/UciHandler.java), which speaks a practical subset of UCI (`uci`, `isready`, `ucinewgame`, `setoption`, `position`, `go`, `stop`, `quit`) plus the `UCI_Chess960` option for Fischer-random play. During development the quickest path is `mvn exec:java -Dexec.arguments="uci"` (shown in the Quick start above).
+
+For use in a GUI or a bot bridge, run the packaged jar standalone — `mvn package` puts the runtime dependencies under `target/dependency/` (adjust the version in the jar name to match `pom.xml`):
+
+```bash
+java -cp "target/my-chess-4.3.4.jar:target/dependency/*" \
+     org.michaelfl.mychess.MyChessMain uci
+```
+
+This is how the engine is driven by [cutechess-cli for strength testing](docs/elo-testing.md) and by the [lichess bot bridge](docs/myChess-on-lichess.md).
 
 ---
 
@@ -61,62 +85,25 @@ In this file:
    2. [Package boundaries and dependencies](#22-package-boundaries-and-dependencies)
    3. [Game, engine, and search separation](#23-game-engine-and-search-separation)
    4. [Concurrency and async move calculation](#24-concurrency-and-async-move-calculation)
-   5. [REPL and main loop](#25-repl-and-main-loop)
+   5. [Entry points: REPL and UCI](#25-entry-points-repl-and-uci)
 
 In separate files under [`docs/`](docs/):
 
 3. [Core Data Types](docs/data-types.md) — board, piece, move, status encoding; Zobrist hashing; move-list and notation types.
-   1. [Board representation (12×12 mailbox)](docs/data-types.md#31-board-representation-1212-mailbox)
-   2. [Piece encoding](docs/data-types.md#32-piece-encoding)
-   3. [Move encoding (packed int)](docs/data-types.md#33-move-encoding-packed-int)
-   4. [Move types](docs/data-types.md#34-move-types)
-   5. [`GameStatus` and the status stack](docs/data-types.md#35-gamestatus-and-the-status-stack)
-   6. [`Moves`, `MovesArray`, `IntArray`](docs/data-types.md#36-moves-movesarray-intarray)
-   7. [`SortableMovesBucket`](docs/data-types.md#37-sortablemovesbucket)
-   8. [Zobrist hashing and `PositionEncoding`](docs/data-types.md#38-zobrist-hashing-and-positionencoding)
-   9. [`MoveDescription` (symbolic moves)](docs/data-types.md#39-movedescription-symbolic-moves)
-   10. [`NextMoveTask` (async result handle)](docs/data-types.md#310-nextmovetask-async-result-handle)
-   11. [Principal-variation table](docs/data-types.md#311-principal-variation-table)
-4. [Move Generation](docs/move-generation.md) — pseudo-legal generation per piece, castling, en passant, king-capture detection, ordering hook.
-   1. [Generator structure](docs/move-generation.md#41-generator-structure)
-   2. [Per-piece movement](docs/move-generation.md#42-per-piece-movement)
-   3. [Castling legality](docs/move-generation.md#43-castling-legality)
-   4. [En passant](docs/move-generation.md#44-en-passant)
-   5. [Pseudo-legal moves and king-capture detection](docs/move-generation.md#45-pseudo-legal-moves-and-king-capture-detection)
-   6. [Move-ordering hook](docs/move-generation.md#46-move-ordering-hook)
+4. [Move Generation](docs/move-generation.md) — pseudo-legal generation per piece, castling (standard + Chess960), en passant, king-capture detection, ordering hook.
 5. [Evaluation Function](docs/evaluation.md) — material, piece-square tables, mobility, threats, castling, opening, double pawns, checks, composition.
-   1. [Material weight](docs/evaluation.md#51-material-weight)
-   2. [Piece-square tables](docs/evaluation.md#52-piece-square-tables)
-   3. [Mobility](docs/evaluation.md#53-mobility)
-   4. [Threat weight](docs/evaluation.md#54-threat-weight)
-   5. [Castling state](docs/evaluation.md#55-castling-state)
-   6. [Opening state](docs/evaluation.md#56-opening-state)
-   7. [Double-pawn penalty](docs/evaluation.md#57-double-pawn-penalty)
-   8. [Check count](docs/evaluation.md#58-check-count)
-   9. [Composition formula](docs/evaluation.md#59-composition-formula)
+   - [Tapered evaluation](docs/tapered-evaluation.md) — phase-interpolated midgame/endgame tables, the Texel-tuned piece-square tables, and the bishop-pair term.
 6. [Search Algorithm](docs/search.md#6-search-algorithm) — iterative-deepening negamax alpha-beta, PV table, quiescence, time management, mate scoring.
-   1. [Negamax / alpha-beta foundation](docs/search.md#61-negamax--alpha-beta-foundation)
-   2. [Iterative deepening](docs/search.md#62-iterative-deepening)
-   3. [Principal variation table](docs/search.md#63-principal-variation-table)
-   4. [Quiescence search](docs/search.md#64-quiescence-search)
-   5. [Time management and cancellation](docs/search.md#65-time-management-and-cancellation)
-   6. [Checkmate and stalemate scoring](docs/search.md#66-checkmate-and-stalemate-scoring)
-7. [Search Optimizations](docs/search.md#7-search-optimizations) — best-known-move ordering, killers, material-only shortcut, make/undo, packed moves, pruning stats, opening book, full sorting policy.
-   1. [Best-known-move (PV) ordering](docs/search.md#71-best-known-move-pv-ordering)
-   2. [Killer moves](docs/search.md#72-killer-moves)
-   3. [Material-only evaluation shortcut](docs/search.md#73-material-only-evaluation-shortcut)
-   4. [Make / undo on a single board](docs/search.md#74-make--undo-on-a-single-board)
-   5. [Packed-int move representation](docs/search.md#75-packed-int-move-representation)
-   6. [Beta cutoff and pruning statistics](docs/search.md#76-beta-cutoff-and-pruning-statistics)
-   7. [Opening-book lookup](docs/search.md#77-opening-book-lookup)
-   8. [Move sorting (`SortableMovesBucket`)](docs/search.md#78-move-sorting-sortablemovesbucket)
-8. [Game Lifecycle and Result Detection](docs/game-lifecycle.md) *(stub)*
-9. [Opening Database](docs/opening-database.md) *(stub)*
-10. [Notation and I/O](docs/notation.md) *(stub)*
-11. [Testing](docs/testing.md) *(stub)*
-12. [Roadmap: Improving Playing Strength](docs/roadmap.md) — concrete next steps with effort/Elo estimates.
-13. [Known issues](docs/known-issues.md) — open bugs and ongoing investigations.
-14. [Measuring playing strength with cutechess](docs/elo-testing.md) — the cutechess-cli match setup, SPRT parameters, opening-book choices, and how to read the output.
+7. [Search Optimizations](docs/search.md#7-search-optimizations) — transposition table, null-move pruning, SEE-ordered captures, best-known-move ordering, killers, material-only shortcut, make/undo, packed moves, opening book, full sorting policy.
+8. [Game Lifecycle and Result Detection](docs/game-lifecycle.md)
+9. [Opening Database](docs/opening-database.md)
+10. [Notation and I/O](docs/notation.md)
+11. [Testing](docs/testing.md)
+12. [Chess960 support](docs/Chess960-project.md) — start-position generation, Shredder-FEN, castling slots, UCI wiring.
+13. [Roadmap: Improving Playing Strength](docs/roadmap.md) — concrete next steps with effort/Elo estimates ([backlog](docs/roadmap-backlog.md), [completed items](docs/roadmap-done.md)).
+14. [Known issues](docs/known-issues.md) — open bugs and ongoing investigations.
+15. [Measuring playing strength with cutechess](docs/elo-testing.md) — the cutechess-cli match setup, SPRT parameters, opening-book choices, and how to read the output. See also the [version history](docs/version-history.md) and the [absolute-Elo measurement notes](docs/myChess-ELO-measurement.md).
+16. [Running myChess on lichess](docs/myChess-on-lichess.md) — setting the engine up as a UCI bot behind the lichess-bot bridge.
 
 ---
 
@@ -124,36 +111,38 @@ In separate files under [`docs/`](docs/):
 
 ### 1.1 What is myChess?
 
-myChess is a small, self-contained chess engine written from scratch in Java. It is a personal hobby project — the original tag line is *"yet another chess engine, just for fun"* — and the codebase reflects that: clarity over micro-optimization, no third-party engine framework, and no attempt to compete with established engines on playing strength.
+myChess is a small, self-contained chess engine written from scratch in Java. It is a personal hobby project — the original tag line is *"yet another chess engine, just for fun"* — and the codebase reflects that: clarity over micro-optimization, no third-party engine framework, and no neural-network evaluation. It has grown well past a toy, though: it now plays a competitive-hobby-level game, is playable in any UCI GUI, and supports Chess960.
 
-The engine plays a full game of chess against itself or against a human opponent. It implements the complete rules of chess (including castling, en passant, pawn promotion, the fifty-move rule, and threefold repetition), generates moves with a [hand-written generator](docs/move-generation.md) over a [12×12 mailbox board](docs/data-types.md#31-board-representation-1212-mailbox), [evaluates positions](docs/evaluation.md) with a material + positional + mobility weighted sum, and [searches](docs/search.md) via iterative-deepening alpha-beta with [quiescence search](docs/search.md#64-quiescence-search), [killer-move heuristics](docs/search.md#72-killer-moves), and a small opening book backed by [MapDB](https://mapdb.org/).
+The engine plays a full game of chess against itself or against a human opponent. It implements the complete rules of chess (including castling, en passant, pawn promotion, the fifty-move rule, and threefold repetition), generates moves with a [hand-written generator](docs/move-generation.md) over a [12×12 mailbox board](docs/data-types.md#31-board-representation-1212-mailbox), [evaluates positions](docs/evaluation.md) with a [tapered](docs/tapered-evaluation.md) material + positional + mobility weighted sum, and [searches](docs/search.md) via iterative-deepening alpha-beta with a [transposition table](docs/search.md#7-search-optimizations), null-move pruning, [quiescence search](docs/search.md#64-quiescence-search), [killer-move heuristics](docs/search.md#72-killer-moves), SEE-ordered captures, and a small opening book backed by [MapDB](https://mapdb.org/).
 
-There is no GUI, no UCI/XBoard protocol implementation, and no network play. The only interface is a line-oriented REPL on stdin/stdout in which the user types moves in algebraic notation or commands such as `go`, `revert`, `auto`, `fen`, or `import`. The REPL is implemented in [`CommandHandler`](src/main/java/org/michaelfl/mychess/CommandHandler.java) and started by [`MyChessMain`](src/main/java/org/michaelfl/mychess/MyChessMain.java).
+Two interfaces are provided: a line-oriented **REPL** on stdin/stdout (moves in algebraic notation or commands such as `go`, `revert`, `auto`, `fen`, `pgn`, `import`), and a **UCI** front-end so the engine can be driven by any standard chess GUI or by a lichess bot bridge. Both are launched from [`MyChessMain`](src/main/java/org/michaelfl/mychess/MyChessMain.java); the REPL is implemented in [`CommandHandler`](src/main/java/org/michaelfl/mychess/CommandHandler.java) and the UCI front-end in [`UciHandler`](src/main/java/org/michaelfl/mychess/UciHandler.java).
 
-The project is also a study object for the supporting techniques typical of a classical chess engine: bordered mailbox board representation, [packed-int move encoding](docs/data-types.md#33-move-encoding-packed-int), [Zobrist hashing](docs/data-types.md#38-zobrist-hashing-and-positionencoding), [principal-variation move ordering](docs/search.md#71-best-known-move-pv-ordering), alpha-beta pruning, and quiescence search. Each of those is documented in detail in the corresponding chapter under [`docs/`](docs/).
+The project is also a study object for the supporting techniques typical of a classical chess engine: bordered mailbox board representation, [packed-int move encoding](docs/data-types.md#33-move-encoding-packed-int), [Zobrist hashing](docs/data-types.md#38-zobrist-hashing-and-positionencoding), a Zobrist-keyed [transposition table](docs/search.md#7-search-optimizations), [principal-variation move ordering](docs/search.md#71-best-known-move-pv-ordering), alpha-beta pruning with null-move pruning, [static exchange evaluation](src/main/java/org/michaelfl/mychess/StaticExchangeEvaluation.java) for capture ordering, and quiescence search. Each of those is documented in detail in the corresponding chapter under [`docs/`](docs/).
 
 ### 1.2 Scope and status
 
 **What the engine does:**
 
 - Full standard chess rules — all piece movements, [castling](docs/move-generation.md#43-castling-legality) (with full legality check including squares-under-attack), [en passant](docs/move-generation.md#44-en-passant), pawn promotion (queen, rook, bishop, knight). See [Move Generation](docs/move-generation.md).
+- **Chess960 (Fischer random)** — all 960 start positions, Shredder-FEN import/export, and Chess960 castling. Enabled via the `UCI_Chess960` UCI option. See [Chess960 support](docs/Chess960-project.md).
 - Endgame and draw detection — checkmate, stalemate, fifty-move rule, and threefold repetition (via Zobrist hash comparison against the status stack). An insufficient-material check is implemented on `Board` but [not wired into game-result detection](docs/game-lifecycle.md#85-insufficient-material). See [Game Lifecycle and Result Detection](docs/game-lifecycle.md).
-- Iterative-deepening alpha-beta search in negamax form with a [principal-variation table](docs/search.md#63-principal-variation-table), [killer-move ordering](docs/search.md#72-killer-moves), [quiescence search](docs/search.md#64-quiescence-search) for capture sequences, and a [configurable per-move time budget](docs/search.md#65-time-management-and-cancellation). See [Search Algorithm](docs/search.md#6-search-algorithm) and [Search Optimizations](docs/search.md#7-search-optimizations).
+- Iterative-deepening alpha-beta search in negamax form with a Zobrist-keyed [transposition table](docs/search.md#7-search-optimizations), [null-move pruning](docs/search.md#7-search-optimizations), a [principal-variation table](docs/search.md#63-principal-variation-table), [killer-move ordering](docs/search.md#72-killer-moves), [SEE](src/main/java/org/michaelfl/mychess/StaticExchangeEvaluation.java)-ordered captures, [quiescence search](docs/search.md#64-quiescence-search) (itself TT-backed) for capture sequences, and a [configurable per-move time budget](docs/search.md#65-time-management-and-cancellation). See [Search Algorithm](docs/search.md#6-search-algorithm) and [Search Optimizations](docs/search.md#7-search-optimizations).
+- A [tapered evaluation](docs/tapered-evaluation.md) with separate midgame/endgame piece-square tables (Texel-tuned), tapered material, a bishop-pair bonus, mobility, and several positional terms. See [Evaluation Function](docs/evaluation.md).
 - [Opening book](docs/search.md#77-opening-book-lookup) lookup from a MapDB-backed database keyed by Zobrist position string. The book ships empty; it is built offline by [`OpeningDBImporter`](src/main/java/org/michaelfl/mychess/openingdb/OpeningDBImporter.java) from a directory of PGN files. See [Opening Database](docs/opening-database.md).
-- I/O in standard formats — [FEN](docs/notation.md#101-fen) for position export (no import: `fen` is a one-way diagnostic) and [PGN](docs/notation.md#102-pgn) for import of recorded games for replay or opening-book ingestion (no export). See [Notation and I/O](docs/notation.md).
-- Self-play (`auto`), single-move calculation (`go`), tip suggestion (`tip`), and full move history with `revert` undo.
+- I/O in standard formats — [FEN](docs/notation.md#101-fen) import/export (including Shredder-FEN for Chess960) and [PGN](docs/notation.md#102-pgn) import (of recorded games for replay or opening-book ingestion) and export (the `pgn` command, via [`PGNConverter`](src/main/java/org/michaelfl/mychess/PGNConverter.java)). See [Notation and I/O](docs/notation.md).
+- Two front-ends — the interactive **REPL** and a **UCI** protocol handler — plus self-play (`auto`), single-move calculation (`go`), tip suggestion (`tip`), a `bench` fixed-workload node count, and full move history with `revert` undo.
 
 **What the engine deliberately does not do (yet):**
 
-- **No UCI / XBoard protocol** — the engine cannot be plugged into Arena, Cute Chess, or any other standard GUI. The only interface is the built-in REPL.
-- **No transposition table** — positions reached by different move orders are searched independently. This is the single largest missing optimization compared with a competitive engine.
 - **No parallel search** — the search runs on a single dedicated worker thread ([`ChessEngine`](src/main/java/org/michaelfl/mychess/engines/ChessEngine.java) submits to `Executors.newSingleThreadExecutor()`).
-- **No neural-network evaluation** (NNUE or otherwise) — evaluation is a hand-written weighted sum.
+- **No neural-network evaluation** (NNUE or otherwise) — evaluation is a hand-written, Texel-tuned weighted sum.
 - **No endgame tablebases**.
 - **No pondering** — the engine does not think on the opponent's time.
 - **No persistent learning** — only the static opening book is read; the engine does not write back game outcomes.
 
-The git history shows that earlier branches contained two alternative search engines, "engine V1" and "engine V2", both removed in recent commits. The codebase now contains exactly one engine, [`MyChessEngine`](src/main/java/org/michaelfl/mychess/engines/MyChessEngine.java), delegating to [`PositionSearch`](src/main/java/org/michaelfl/mychess/engines/PositionSearch.java).
+The git history shows that earlier branches contained two alternative search engines, "engine V1" and "engine V2", both removed in earlier commits. The codebase now contains exactly one engine, [`MyChessEngine`](src/main/java/org/michaelfl/mychess/engines/MyChessEngine.java), delegating to [`PositionSearch`](src/main/java/org/michaelfl/mychess/engines/PositionSearch.java).
+
+**Playing strength:** myChess is *not* independently rated. Progress is tracked by self-play SPRT and fixed-N matches under [cutechess-cli](docs/elo-testing.md) and by an [absolute-Elo anchor bracket](docs/myChess-ELO-measurement.md) against reference engines; the per-release deltas are recorded in the [version history](docs/version-history.md). At the current release the anchored estimate sits in the mid-1800s Elo range — a strong club-player level, far from competitive engines, which is by design.
 
 **Build & runtime requirements:**
 
@@ -162,7 +151,7 @@ The git history shows that earlier branches contained two alternative search eng
 - JUnit Jupiter 5.11 for tests.
 - MapDB 3.0.8 as the only runtime dependency.
 
-The test suite contains 290 passing tests (4 skipped) and serves as the executable specification for move generation, encoding, search correctness, and notation parsing.
+The test suite contains roughly 1,170 tests (a handful skipped) and serves as the executable specification for move generation, encoding, search correctness, evaluation, Chess960, and notation parsing. Long-running tests are tagged `@Tag("slow")` and can be skipped with `-DexcludedGroups=slow`.
 
 ### 1.3 Repository layout
 
@@ -171,38 +160,49 @@ myChess/
 ├── CLAUDE.md                 # Guidance for AI coding agents (architecture cheat sheet)
 ├── README.md                 # This document
 ├── pom.xml                   # Maven build (Java 25, JUnit 5, MapDB)
+├── docs/                     # Detailed per-area documentation (see the ToC above)
 ├── db/                       # Created at runtime — MapDB opening book (git-ignored)
 ├── src/
 │   ├── main/java/org/michaelfl/mychess/
-│   │   ├── MyChessMain.java          # Entry point: opens DB, starts REPL
+│   │   ├── MyChessMain.java          # Entry point: dispatches to REPL or UCI
 │   │   ├── CommandHandler.java       # REPL command dispatch
+│   │   ├── UciHandler.java           # UCI protocol front-end
+│   │   ├── UciMoveParser.java        # UCI long-algebraic move parsing
+│   │   ├── Log.java                  # Output mode switch (REPL vs UCI)
+│   │   ├── Bench.java                # Fixed-workload node-count benchmark
 │   │   ├── Game.java                 # One game: board + two engines + status engine
 │   │   ├── GameConfig.java           # Per-game engine selection and config
 │   │   ├── GameStatus.java           # Immutable snapshot: turn, castling, hash, …
 │   │   ├── Board.java                # 12×12 mailbox, make/undo, Zobrist updates
+│   │   ├── CastlingSlot.java         # Castling rook/king slots (standard + Chess960)
+│   │   ├── Chess960StartPositions.java  # Enumerates all 960 start setups
 │   │   ├── Move.java                 # Packed-int move accessor + type constants
+│   │   ├── MoveFlag.java             # Move-type flag constants
 │   │   ├── Moves.java                # Result of move generation (int[] wrapper)
 │   │   ├── MovesArray.java           # Mutable packed-int move array
 │   │   ├── MoveDescription.java      # Symbolic (algebraic-notation) move
 │   │   ├── MoveGenerator.java        # Pseudo-legal move generation per piece
 │   │   ├── MoveSorter.java           # Strategy: how to order generated moves
 │   │   ├── SortableMovesBucket.java  # Insertion-sort bucket with weight keys
+│   │   ├── StaticExchangeEvaluation.java  # SEE for capture ordering / pruning
 │   │   ├── KillerMoves.java          # Per-depth killer-move table (2 slots)
-│   │   ├── WeightingFunction.java    # Static evaluation
-│   │   ├── PieceSquareTables.java    # Per-piece per-square positional bonuses
+│   │   ├── TranspositionTable.java   # Zobrist-keyed transposition table
+│   │   ├── WeightingFunction.java    # Static (tapered) evaluation
+│   │   ├── PieceSquareTables.java    # Per-piece midgame/endgame positional tables
 │   │   ├── QuiescenceSearch.java     # Capture-only extension past max depth
 │   │   ├── PositionEncoding.java     # Compact position serialization
 │   │   ├── RandomNumbers.java        # Precomputed Zobrist table
 │   │   ├── BitOps.java               # Pack/unpack 4 bytes ↔ int
 │   │   ├── IntArray.java             # Manually-grown int[] with O(1) push/pop
 │   │   ├── ChessUtil.java            # Field ↔ (col,row), notation helpers
-│   │   ├── Fen.java                  # FEN import/export
+│   │   ├── Fen.java                  # FEN import/export (incl. Shredder-FEN)
 │   │   ├── Pgn.java                  # PGN tokenizer/parser
 │   │   ├── PGNImporter.java          # File-level PGN import
+│   │   ├── PGNConverter.java         # Game → PGN move-text export
 │   │   ├── SimpleNotationImporter.java  # Long-algebraic move parser
 │   │   ├── GameImporter.java         # Replays a list of MoveDescriptions
 │   │   ├── MyChessEnv.java           # Per-process environment (opening DB)
-│   │   ├── EngineConfig.java         # Search depth, time, rule toggles
+│   │   ├── EngineConfig.java         # Search depth, time, TT, rule toggles
 │   │   ├── Statistics.java           # Search node counters (for logging)
 │   │   ├── Assert.java               # Lazy-message assertion helper
 │   │   ├── IllegalMoveException.java
@@ -211,14 +211,23 @@ myChess/
 │   │   │   ├── ChessEngine.java          # Abstract engine: async API, executor
 │   │   │   ├── MyChessEngine.java        # Concrete engine, delegates to PositionSearch
 │   │   │   ├── PositionSearch.java       # Iterative-deepening negamax alpha-beta
-│   │   │   ├── MoveSorterImpl.java       # Ordering: PV → killers → captures
+│   │   │   ├── MoveSorterImpl.java       # Ordering: PV → TT → killers → SEE captures
+│   │   │   ├── EngineTuning.java         # Search tuning knobs (time, NMP, skip-iter)
+│   │   │   ├── IterationInfo.java        # Per-iteration bookkeeping
+│   │   │   ├── IterationTimings.java     # Per-depth moving-average iteration times
+│   │   │   ├── SearchNodeContext.java    # Per-node search inputs
+│   │   │   ├── SearchNodeResult.java     # Per-node search outputs
+│   │   │   ├── BookMissThrottle.java     # Rate-limits opening-book miss logging
 │   │   │   └── NextMoveTask.java         # Async result handle, cancellation
 │   │   └── openingdb/
 │   │       ├── OpeningDB.java            # MapDB BTreeMap wrapper
 │   │       ├── DBValue.java              # Binary record: (count, [move,total,win,loss]*)
 │   │       └── OpeningDBImporter.java    # PGN → DB ingest pipeline
-│   └── test/java/org/michaelfl/mychess/  # 290 tests covering generator, search,
-│                                          # FEN/PGN, evaluation, Zobrist, …
+│   ├── main/resources/
+│   │   ├── version.properties       # Filtered to the pom version at build time
+│   │   ├── chess960_fens.csv        # Precomputed Chess960 start FENs
+│   │   └── bench                    # Fixed position set for the `bench` command
+│   └── test/java/org/michaelfl/mychess/  # ~1,170 tests across ~70 test classes
 └── target/                   # Maven output (git-ignored)
 ```
 
@@ -227,19 +236,20 @@ myChess/
 | Source area | Documentation |
 |---|---|
 | `Board`, `Move`, `GameStatus`, `Moves`, `IntArray`, `BitOps`, `RandomNumbers`, `PositionEncoding`, `MoveDescription` | [Core Data Types](docs/data-types.md) |
-| `MoveGenerator`, `MoveSorter`, `SortableMovesBucket`, `KillerMoves` | [Move Generation](docs/move-generation.md) + [Move sorting policy](docs/search.md#78-move-sorting-sortablemovesbucket) |
-| `WeightingFunction`, `PieceSquareTables` | [Evaluation Function](docs/evaluation.md) |
-| `engines/PositionSearch`, `engines/ChessEngine`, `engines/MyChessEngine`, `engines/MoveSorterImpl`, `engines/NextMoveTask`, `QuiescenceSearch` | [Search Algorithm](docs/search.md#6-search-algorithm) + [Search Optimizations](docs/search.md#7-search-optimizations) |
+| `MoveGenerator`, `MoveSorter`, `SortableMovesBucket`, `KillerMoves`, `StaticExchangeEvaluation`, `CastlingSlot`, `Chess960StartPositions` | [Move Generation](docs/move-generation.md) + [Move sorting policy](docs/search.md#78-move-sorting-sortablemovesbucket) + [Chess960](docs/Chess960-project.md) |
+| `WeightingFunction`, `PieceSquareTables` | [Evaluation Function](docs/evaluation.md) + [Tapered evaluation](docs/tapered-evaluation.md) |
+| `engines/PositionSearch`, `engines/ChessEngine`, `engines/MyChessEngine`, `engines/MoveSorterImpl`, `engines/NextMoveTask`, `TranspositionTable`, `QuiescenceSearch` | [Search Algorithm](docs/search.md#6-search-algorithm) + [Search Optimizations](docs/search.md#7-search-optimizations) |
 | `Game`, `GameConfig` (result detection, draw rules) | [Game Lifecycle and Result Detection](docs/game-lifecycle.md) |
 | `openingdb/OpeningDB`, `openingdb/DBValue`, `openingdb/OpeningDBImporter` | [Opening Database](docs/opening-database.md) |
-| `Fen`, `Pgn`, `PGNImporter`, `SimpleNotationImporter`, `GameImporter`, `CommandHandler` | [Notation and I/O](docs/notation.md) |
+| `Fen`, `Pgn`, `PGNImporter`, `PGNConverter`, `SimpleNotationImporter`, `GameImporter`, `CommandHandler`, `UciHandler`, `UciMoveParser` | [Notation and I/O](docs/notation.md) |
 | `src/test/…` | [Testing](docs/testing.md) |
-| Planned strength improvements (not yet implemented) | [Roadmap](docs/roadmap.md) |
+| Playing-strength measurement | [Elo testing](docs/elo-testing.md), [version history](docs/version-history.md), [absolute-Elo notes](docs/myChess-ELO-measurement.md) |
+| Planned strength improvements | [Roadmap](docs/roadmap.md), [backlog](docs/roadmap-backlog.md), [done](docs/roadmap-done.md) |
 
 **Key conventions:**
 
 - All production code lives under a single Java package, `org.michaelfl.mychess`, plus two sub-packages: `engines` for search and `openingdb` for the opening book. The dependency direction is strictly one-way (`engines` and `openingdb` depend on the root package, never the reverse).
-- Tests sit in the matching test-source tree with one `*Test.java` per production class.
+- Tests sit in the matching test-source tree with one `*Test.java` per production class (plus data-driven suites for the Texel-tuning adapters).
 - The MapDB opening book lives at `db/openings.db`. The directory is created on first run and git-ignored; the engine works without a populated book — it simply skips the book-lookup step.
 
 ## 2. Architecture Overview
@@ -250,11 +260,12 @@ myChess is organized as five layers, stacked from the entry point downward:
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│  MyChessMain  ─ entry point, owns the OpeningDB lifecycle        │
+│  MyChessMain  ─ entry point; dispatches to REPL or UCI           │
 └────────────────────────────┬─────────────────────────────────────┘
                              │
 ┌────────────────────────────▼─────────────────────────────────────┐
-│  CommandHandler   ─ REPL: parses lines, dispatches to commands   │
+│  CommandHandler (REPL)   /   UciHandler (UCI)                    │
+│  ─ parse input lines, drive one Game                             │
 └────────────────────────────┬─────────────────────────────────────┘
                              │
 ┌────────────────────────────▼─────────────────────────────────────┐
@@ -277,10 +288,11 @@ myChess is organized as five layers, stacked from the entry point downward:
 ┌────────────────────────────▼─────────────────────────────────────┐
 │  PositionSearch   ─ iterative-deepening negamax alpha-beta       │
 │  ├─ MoveGenerator        (pseudo-legal generation per piece)     │
-│  ├─ MoveSorterImpl       (PV → killers → captures ordering)      │
+│  ├─ MoveSorterImpl       (PV → TT → killers → SEE captures)      │
+│  ├─ TranspositionTable   (Zobrist-keyed; shared via EngineConfig)│
 │  ├─ KillerMoves          (per-depth, 2 slots)                    │
 │  ├─ QuiescenceSearch     (capture extensions past max depth)     │
-│  ├─ WeightingFunction    (static evaluation, ~9 components)      │
+│  ├─ WeightingFunction    (tapered static evaluation)             │
 │  └─ Statistics           (node counters for logging)             │
 └──────────────────────────────────────────────────────────────────┘
 ```
@@ -289,9 +301,9 @@ The split has two non-obvious properties:
 
 1. **`Game` owns the engines, not the other way around.** A `Game` instantiates one engine per color plus a third *status engine* used only to decide whether the position after a move is checkmate, stalemate, or ongoing. The user-facing engines never make a move on the board; they only return a candidate `MoveAndWeight`. The actual mutation of the `Board` happens in `Game.makeMove(...)`, after the engine has returned.
 
-2. **The search has no knowledge of the REPL or even of `Game`.** `PositionSearch` operates on a `Board` copy and a freshly built `MoveGenerator`. It receives a `NextMoveTask` for cancellation polling and a `ChessEngine` for the configuration and the `Random` instance, but it does not call back into `Game`. This is what lets the same search class be reused inside the depth-2 status engine without recursion or shared state.
+2. **The search has no knowledge of the REPL/UCI front-end or even of `Game`.** `PositionSearch` operates on a `Board` copy and a freshly built `MoveGenerator`. It receives a `NextMoveTask` for cancellation polling and a `ChessEngine` for the configuration (including the shared transposition table) and the `Random` instance, but it does not call back into `Game`. This is what lets the same search class be reused inside the depth-2 status engine without recursion or shared state.
 
-Each box in the diagram has its own deep-dive chapter: [`Board` / `Move` / `GameStatus`](docs/data-types.md), [`MoveGenerator`](docs/move-generation.md), [`WeightingFunction`](docs/evaluation.md), [`PositionSearch` / `QuiescenceSearch` / `KillerMoves`](docs/search.md).
+Each box in the diagram has its own deep-dive chapter: [`Board` / `Move` / `GameStatus`](docs/data-types.md), [`MoveGenerator`](docs/move-generation.md), [`WeightingFunction`](docs/evaluation.md), [`PositionSearch` / `QuiescenceSearch` / `KillerMoves` / `TranspositionTable`](docs/search.md).
 
 ### 2.2 Package boundaries and dependencies
 
@@ -299,7 +311,7 @@ There are exactly three packages:
 
 | Package | Responsibility | May depend on |
 |---|---|---|
-| `org.michaelfl.mychess` | Rules, board, moves, evaluation, notation, REPL | (root) |
+| `org.michaelfl.mychess` | Rules, board, moves, evaluation, notation, REPL, UCI | (root) |
 | `org.michaelfl.mychess.engines` | Search algorithm and async engine API | root |
 | `org.michaelfl.mychess.openingdb` | MapDB-backed opening book | root |
 
@@ -308,12 +320,12 @@ The dependency direction is strictly one-way: `engines` and `openingdb` import f
 Inside the root package, the natural sub-layers are visible from the import graph rather than from a directory structure:
 
 - **Pure data / encoding** — `BitOps`, `IntArray`, `ChessUtil`, `RandomNumbers`. No dependencies on other myChess classes.
-- **Move and position primitives** — `Move`, `Moves`, `MovesArray`, `GameStatus`, `MoveDescription`. Depend on the encoding layer.
-- **Board** — `Board` (1100 lines, the heart of the rules layer), `PositionEncoding`, `Fen`. Depend on primitives.
-- **Generation, sorting, evaluation** — `MoveGenerator`, `MoveSorter`, `SortableMovesBucket`, `KillerMoves`, `WeightingFunction`, `PieceSquareTables`, `QuiescenceSearch`. Depend on board.
-- **Notation and import** — `Pgn`, `PGNImporter`, `SimpleNotationImporter`, `GameImporter`, `MoveDescription`.
-- **Orchestration** — `Game`, `GameConfig`, `EngineConfig`, `MyChessEnv`, `Statistics`, `Assert`.
-- **REPL** — `CommandHandler`, `MyChessMain`. Top of the chain; nothing depends on these.
+- **Move and position primitives** — `Move`, `MoveFlag`, `Moves`, `MovesArray`, `GameStatus`, `MoveDescription`, `CastlingSlot`. Depend on the encoding layer.
+- **Board** — `Board`, `PositionEncoding`, `Fen`, `Chess960StartPositions`. Depend on primitives.
+- **Generation, sorting, evaluation** — `MoveGenerator`, `MoveSorter`, `SortableMovesBucket`, `StaticExchangeEvaluation`, `KillerMoves`, `TranspositionTable`, `WeightingFunction`, `PieceSquareTables`, `QuiescenceSearch`. Depend on board.
+- **Notation and import** — `Pgn`, `PGNImporter`, `PGNConverter`, `SimpleNotationImporter`, `GameImporter`, `UciMoveParser`.
+- **Orchestration** — `Game`, `GameConfig`, `EngineConfig`, `MyChessEnv`, `Statistics`, `Assert`, `Log`, `Bench`.
+- **Front-ends** — `CommandHandler` (REPL), `UciHandler` (UCI), `MyChessMain`. Top of the chain; nothing depends on these.
 
 ### 2.3 Game, engine, and search separation
 
@@ -333,13 +345,13 @@ The three roles — *rules*, *engine*, *search* — are kept deliberately separa
 
 1. Owns the single-thread `ExecutorService` on which the search runs.
 2. Short-circuits trivial cases *before* delegating to the search: game already over, 50-move rule armed, threefold repetition, or a usable opening-book candidate.
-3. Holds engine-level state that persists across calls: the `EngineConfig` and the `Random` instance used for opening-book sampling.
+3. Holds engine-level state that persists across calls: the `EngineConfig` (including the shared transposition table) and the `Random` instance used for opening-book sampling.
 
 The abstract method `calculateNextMoveSub(NextMoveTask)` is the extension point. The only concrete implementation, [`MyChessEngine`](src/main/java/org/michaelfl/mychess/engines/MyChessEngine.java), delegates straight to `PositionSearch.calculateNextMove(...)`.
 
-**`PositionSearch`** is the pure search. It takes a `ChessEngine` (for config and the shared `Random`), a `NextMoveTask` (for cancellation polling), and the `Game` (only to read the current board and turn). It constructs its own working `Board` copy via `game.getBoard().copy()`, its own `KillerMoves` table, and its own `MoveGenerator` bound to that table — none of those persist across move calculations. Its single public entry point is `calculateNextMove(...)`, which runs iterative deepening until the time budget is consumed or the configured `maxDepth` is reached, then returns the best `MoveAndWeight` it found. Full details are in [Search Algorithm](docs/search.md#6-search-algorithm) and [Search Optimizations](docs/search.md#7-search-optimizations).
+**`PositionSearch`** is the pure search. It takes a `ChessEngine` (for config, the shared transposition table, and the shared `Random`), a `NextMoveTask` (for cancellation polling), and the `Game` (only to read the current board and turn). It constructs its own working `Board` copy via `game.getBoard().copy()`, its own `KillerMoves` table, and its own `MoveGenerator` bound to that table — none of those persist across move calculations (the transposition table does, so entries survive across moves within a game). Its single public entry point is `calculateNextMove(...)`, which runs iterative deepening until the time budget is consumed or the configured `maxDepth` is reached, then returns the best `MoveAndWeight` it found. Full details are in [Search Algorithm](docs/search.md#6-search-algorithm) and [Search Optimizations](docs/search.md#7-search-optimizations).
 
-The reason the three roles are split this way: it lets the same search class be used both as the user-facing engine *and* as the depth-2 status engine inside `Game`, without recursion and without one search interfering with another's state. Each search call constructs a fresh `PositionSearch` with a fresh working board, fresh `WeightingFunction`, and fresh `Statistics`.
+The reason the three roles are split this way: it lets the same search class be used both as the user-facing engine *and* as the depth-2 status engine inside `Game`, without recursion and without one search interfering with another's state.
 
 **`GameConfig`** is the wiring point. By default it constructs a `Game` with `MyChessEngine` on both sides and a single shared `EngineConfig`, but its constructor accepts two engine classes and two configs so that asymmetric games (different depths, different time budgets, eventually different engines) can be set up programmatically.
 
@@ -369,42 +381,32 @@ Callers retrieve the result with `task.getResult(timeout, TimeUnit)` which forwa
 
 **Cancellation is cooperative on two layers:**
 
-1. `NextMoveTask.cancel()` sets the volatile flag *and* calls `resultFuture.cancel(false)`. The interrupt itself does little inside `PositionSearch` (the search does no blocking I/O), so the flag is the load-bearing mechanism.
+1. `NextMoveTask.cancel()` sets the volatile flag *and* calls `resultFuture.cancel(false)`. The interrupt itself does little inside `PositionSearch` (the search does no blocking I/O), so the flag is the load-bearing mechanism. UCI `stop` cancels through the same path.
 2. `PositionSearch.alphaBetaSearchI(...)` checks `task.isCanceled()` once per node, after move generation. If true, it throws a `CancellationException`, which unwinds back to the executor.
 
-**Time management is independent of cancellation.** `PositionSearch` records `timeout = System.currentTimeMillis() + millisPerMove` at construction time and checks it inside `isTimeout()` — but only every 10,000 visited nodes, to avoid hitting `currentTimeMillis()` on every leaf. When the deadline is exceeded mid-iteration, the in-flight depth's result is discarded and the best result from the previous completed iteration is returned. This is what makes iterative deepening safe under a hard time budget: there is always a complete previous-depth answer to fall back on. On top of that, a [skip-hopeless-iteration heuristic](docs/search.md#651-skip-hopeless-iteration-heuristic) tracks a per-depth moving average of past iteration times and avoids starting a deepening iteration in the first place when it likely won't complete — recovering the time for the rest of the game. See [Time management and cancellation](docs/search.md#65-time-management-and-cancellation) for the polling details and trade-offs.
+**Time management is independent of cancellation.** `PositionSearch` records `timeout = System.currentTimeMillis() + millisPerMove` at construction time and checks it inside `isTimeout()` — but only every 10,000 visited nodes, to avoid hitting `currentTimeMillis()` on every leaf. When the deadline is exceeded mid-iteration, the in-flight depth's result is discarded and the best result from the previous completed iteration is returned. This is what makes iterative deepening safe under a hard time budget: there is always a complete previous-depth answer to fall back on. On top of that, a [skip-hopeless-iteration heuristic](docs/search.md#651-skip-hopeless-iteration-heuristic) tracks a per-depth moving average of past iteration times and avoids starting a deepening iteration in the first place when it likely won't complete. See [Time management and cancellation](docs/search.md#65-time-management-and-cancellation) for the polling details and trade-offs.
 
-**The status engine is a synchronous user of the same machinery.** `Game.calculateGameResult()` calls `statusEngine.calculateNextMove(new NextMoveTask())` directly, not through `nextMoveAsync`. It executes on the calling thread (typically the REPL thread), with the timeout of the status engine's own `EngineConfig` (also 30 s by default, but depth-capped at 2 so it returns within milliseconds in practice).
+**The status engine is a synchronous user of the same machinery.** `Game.calculateGameResult()` calls `statusEngine.calculateNextMove(new NextMoveTask())` directly, not through `nextMoveAsync`. It executes on the calling thread, with the timeout of the status engine's own `EngineConfig`, but depth-capped at 2 so it returns within milliseconds in practice.
 
-**Engine shutdown** is initiated by `Game.shutdown()`, which calls `shutdown()` on both user-facing engines. `CommandHandler`'s quit/exit/q handler calls `game.shutdown()`. The status engine's executor is shut down implicitly when the JVM exits (no daemon thread protection, but the thread is idle by then). MapDB is closed via the try-with-resources block in `MyChessMain`.
+**Engine shutdown** is initiated by `Game.shutdown()`, which calls `shutdown()` on both user-facing engines. The REPL's quit/exit/q handler and the UCI `quit` handler both call `game.shutdown()`. MapDB is closed via the try-with-resources block in `MyChessMain`.
 
-### 2.5 REPL and main loop
+### 2.5 Entry points: REPL and UCI
 
-The entry point [`MyChessMain.main(...)`](src/main/java/org/michaelfl/mychess/MyChessMain.java) is intentionally tiny:
+The entry point [`MyChessMain.main(...)`](src/main/java/org/michaelfl/mychess/MyChessMain.java) chooses the front-end from the CLI arguments: with `uci` as the first argument it starts the UCI handler, otherwise the interactive REPL.
 
 ```java
-public static void main(String[] args) {
-    try (OpeningDB openingDB = OpeningDB.open()) {
-        var env = new MyChessEnv(openingDB);
-        var game = new Game();
-        CommandHandler scanner = new CommandHandler(env, game);
-
-        game.print();
-
-        do {
-            System.out.print(">");
-            System.out.flush();
-        } while (scanner.nextCommand());
-
-        System.out.println("Closing DB...");
+static void main(String[] args) {
+    if (args.length > 0 && "uci".equalsIgnoreCase(args[0])) {
+        runUci();
+        return;
     }
-    System.out.println("DB closed");
+    runRepl();
 }
 ```
 
-Two things to note: the opening DB is opened with try-with-resources so MapDB is guaranteed to flush and unlock the file even on crash, and the loop terminates as soon as `nextCommand()` returns `false` (set by the `quit` / `exit` / `q` handlers).
+Both front-ends open the opening book with try-with-resources so MapDB is guaranteed to flush and unlock the file even on crash; in UCI mode the book is optional and a missing `db/openings.db` is tolerated.
 
-[`CommandHandler`](src/main/java/org/michaelfl/mychess/CommandHandler.java) implements a classical Chain-of-Responsibility dispatch:
+**REPL.** [`CommandHandler`](src/main/java/org/michaelfl/mychess/CommandHandler.java) implements a classical Chain-of-Responsibility dispatch:
 
 - A package-private abstract inner class `Command` defines two methods: `canHandle(String)` and `handle(String) throws Exception`.
 - Each REPL verb is one nested final subclass: `QuitCommand`, `NewGameCommand`, `AutoGameCommand`, `ImportCommand`, `PrintCommand`, `BoardCommand`, `ExportCommand`, `RevertCommand`, `TipCommand`, `LastCommand`, `DeepWeightCommand`, `WeightCommand`, `GoCommand`, `MovesCommand`, `FenCommand`, `HashCommand`, `OpeningDBCommand`, …
@@ -425,3 +427,5 @@ The interactive flow for the most common commands:
 | `o…` | Look up the current Zobrist position string in the opening DB and print all known moves with their win/draw/loss statistics |
 
 Adding a new REPL command is a two-step change: define a new nested `Command` subclass inside `CommandHandler` and append it to the command list assembled in the constructor.
+
+**UCI.** [`UciHandler`](src/main/java/org/michaelfl/mychess/UciHandler.java) reads UCI commands line by line and drives the same `Game`/`ChessEngine` stack. It implements the handshake (`uci` → `id`/`option`/`uciok`, `isready` → `readyok`), `ucinewgame`, `position [startpos|fen …] moves …` (moves parsed by [`UciMoveParser`](src/main/java/org/michaelfl/mychess/UciMoveParser.java)), `go` (with time-control fields), `stop`, and `quit`, plus the `UCI_Chess960` option that switches the board and move generator into Fischer-random mode. Output is routed through [`Log`](src/main/java/org/michaelfl/mychess/Log.java) in UCI mode so diagnostics never corrupt the protocol stream. See [Running myChess on lichess](docs/myChess-on-lichess.md) for a deployment example.
