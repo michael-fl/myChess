@@ -1,0 +1,790 @@
+Indexing opening suite...
+Started game 1 of 1600 (joint-mg-eg vs v4.3.3)
+Started game 2 of 1600 (v4.3.3 vs joint-mg-eg)
+Started game 4 of 1600 (v4.3.3 vs joint-mg-eg)
+Started game 3 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 2 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 0 - 1 - 0  [0.000] 1
+Started game 5 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 4 (v4.3.3 vs joint-mg-eg): 0-1 {Black mates}
+Score of joint-mg-eg vs v4.3.3: 1 - 1 - 0  [0.500] 2
+Started game 6 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 3 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 2 - 1 - 0  [0.667] 3
+Started game 7 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 1 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 2 - 1 - 1  [0.625] 4
+Started game 8 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 6 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 2 - 1 - 2  [0.600] 5
+Started game 9 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 7 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 3 - 1 - 2  [0.667] 6
+Started game 10 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 5 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 3 - 1 - 3  [0.643] 7
+Started game 11 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 8 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 4 - 1 - 3  [0.688] 8
+Started game 12 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 9 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 4 - 2 - 3  [0.611] 9
+Started game 13 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 10 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 5 - 2 - 3  [0.650] 10
+...      joint-mg-eg playing White: 2 - 1 - 2  [0.600] 5
+...      joint-mg-eg playing Black: 3 - 1 - 1  [0.700] 5
+...      White vs Black: 3 - 4 - 3  [0.450] 10
+Elo difference: 107.5 +/- 215.3, LOS: 87.2 %, DrawRatio: 30.0 %
+SPRT: llr 0.217 (7.4%), lbound -2.94, ubound 2.94
+Started game 14 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 11 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 6 - 2 - 3  [0.682] 11
+Started game 15 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 12 (v4.3.3 vs joint-mg-eg): 0-1 {Black mates}
+Score of joint-mg-eg vs v4.3.3: 7 - 2 - 3  [0.708] 12
+Started game 16 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 15 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 7 - 3 - 3  [0.654] 13
+Started game 17 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 13 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 8 - 3 - 3  [0.679] 14
+Started game 18 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 16 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 8 - 4 - 3  [0.633] 15
+Started game 19 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 17 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 8 - 4 - 4  [0.625] 16
+Started game 20 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 18 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 8 - 5 - 4  [0.588] 17
+Started game 21 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 14 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by insufficient mating material}
+Score of joint-mg-eg vs v4.3.3: 8 - 5 - 5  [0.583] 18
+Started game 22 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 19 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 8 - 5 - 6  [0.579] 19
+Started game 23 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 21 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 8 - 6 - 6  [0.550] 20
+...      joint-mg-eg playing White: 4 - 3 - 4  [0.545] 11
+...      joint-mg-eg playing Black: 4 - 3 - 2  [0.556] 9
+...      White vs Black: 7 - 7 - 6  [0.500] 20
+Elo difference: 34.9 +/- 134.1, LOS: 70.4 %, DrawRatio: 30.0 %
+SPRT: llr 0.122 (4.1%), lbound -2.94, ubound 2.94
+Started game 24 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 20 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 8 - 7 - 6  [0.524] 21
+Started game 25 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 22 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 8 - 8 - 6  [0.500] 22
+Started game 26 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 23 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 8 - 8 - 7  [0.500] 23
+Started game 27 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 27 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 8 - 8 - 8  [0.500] 24
+Started game 28 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 24 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 9 - 8 - 8  [0.520] 25
+Started game 29 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 25 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 9 - 9 - 8  [0.500] 26
+Started game 30 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 28 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 10 - 9 - 8  [0.519] 27
+Started game 31 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 26 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 10 - 9 - 9  [0.518] 28
+Started game 32 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 29 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 10 - 9 - 10  [0.517] 29
+Started game 33 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 30 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by adjudication}
+Score of joint-mg-eg vs v4.3.3: 10 - 9 - 11  [0.517] 30
+...      joint-mg-eg playing White: 4 - 4 - 7  [0.500] 15
+...      joint-mg-eg playing Black: 6 - 5 - 4  [0.533] 15
+...      White vs Black: 9 - 10 - 11  [0.483] 30
+Elo difference: 11.6 +/- 101.6, LOS: 59.1 %, DrawRatio: 36.7 %
+SPRT: llr 0.0372 (1.3%), lbound -2.94, ubound 2.94
+Started game 34 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 31 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 10 - 10 - 11  [0.500] 31
+Started game 35 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 33 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by adjudication}
+Score of joint-mg-eg vs v4.3.3: 10 - 10 - 12  [0.500] 32
+Started game 36 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 32 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 10 - 10 - 13  [0.500] 33
+Started game 37 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 34 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 10 - 10 - 14  [0.500] 34
+Started game 38 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 38 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 11 - 10 - 14  [0.514] 35
+Started game 39 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 35 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 12 - 10 - 14  [0.528] 36
+Started game 40 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 37 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 13 - 10 - 14  [0.541] 37
+Started game 41 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 36 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 14 - 10 - 14  [0.553] 38
+Started game 42 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 41 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 14 - 10 - 15  [0.551] 39
+Started game 43 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 42 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by adjudication}
+Score of joint-mg-eg vs v4.3.3: 14 - 10 - 16  [0.550] 40
+...      joint-mg-eg playing White: 6 - 5 - 9  [0.525] 20
+...      joint-mg-eg playing Black: 8 - 5 - 7  [0.575] 20
+...      White vs Black: 11 - 13 - 16  [0.475] 40
+Elo difference: 34.9 +/- 85.1, LOS: 79.3 %, DrawRatio: 40.0 %
+SPRT: llr 0.285 (9.7%), lbound -2.94, ubound 2.94
+Started game 44 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 39 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 14 - 10 - 17  [0.549] 41
+Started game 45 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 40 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 14 - 11 - 17  [0.536] 42
+Started game 46 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 45 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 15 - 11 - 17  [0.547] 43
+Started game 47 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 46 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 15 - 11 - 18  [0.545] 44
+Started game 48 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 44 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 16 - 11 - 18  [0.556] 45
+Started game 49 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 43 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 17 - 11 - 18  [0.565] 46
+Started game 50 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 47 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 17 - 12 - 18  [0.553] 47
+Started game 51 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 48 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 17 - 13 - 18  [0.542] 48
+Started game 52 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 50 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 17 - 14 - 18  [0.531] 49
+Started game 53 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 51 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 18 - 14 - 18  [0.540] 50
+...      joint-mg-eg playing White: 9 - 6 - 10  [0.560] 25
+...      joint-mg-eg playing Black: 9 - 8 - 8  [0.520] 25
+...      White vs Black: 17 - 15 - 18  [0.520] 50
+Elo difference: 27.9 +/- 78.4, LOS: 76.0 %, DrawRatio: 36.0 %
+SPRT: llr 0.253 (8.6%), lbound -2.94, ubound 2.94
+Started game 54 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 49 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 19 - 14 - 18  [0.549] 51
+Started game 55 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 54 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 19 - 15 - 18  [0.538] 52
+Started game 56 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 53 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 19 - 16 - 18  [0.528] 53
+Started game 57 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 52 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 20 - 16 - 18  [0.537] 54
+Started game 58 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 56 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 21 - 16 - 18  [0.545] 55
+Started game 59 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 55 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 21 - 17 - 18  [0.536] 56
+Started game 60 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 58 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 22 - 17 - 18  [0.544] 57
+Started game 61 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 57 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 22 - 17 - 19  [0.543] 58
+Started game 62 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 60 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 22 - 18 - 19  [0.534] 59
+Started game 63 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 59 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 22 - 18 - 20  [0.533] 60
+...      joint-mg-eg playing White: 10 - 8 - 12  [0.533] 30
+...      joint-mg-eg playing Black: 12 - 10 - 8  [0.533] 30
+...      White vs Black: 20 - 20 - 20  [0.500] 60
+Elo difference: 23.2 +/- 72.8, LOS: 73.6 %, DrawRatio: 33.3 %
+SPRT: llr 0.229 (7.8%), lbound -2.94, ubound 2.94
+Started game 64 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 62 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 22 - 18 - 21  [0.533] 61
+Started game 65 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 61 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 23 - 18 - 21  [0.540] 62
+Started game 66 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 65 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 23 - 18 - 22  [0.540] 63
+Started game 67 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 64 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by insufficient mating material}
+Score of joint-mg-eg vs v4.3.3: 23 - 18 - 23  [0.539] 64
+Started game 68 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 67 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 24 - 18 - 23  [0.546] 65
+Started game 69 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 63 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by adjudication}
+Score of joint-mg-eg vs v4.3.3: 24 - 18 - 24  [0.545] 66
+Started game 70 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 68 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 24 - 18 - 25  [0.545] 67
+Started game 71 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 69 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 25 - 18 - 25  [0.551] 68
+Started game 72 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 66 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 26 - 18 - 25  [0.558] 69
+Started game 73 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 70 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 27 - 18 - 25  [0.564] 70
+...      joint-mg-eg playing White: 13 - 8 - 14  [0.571] 35
+...      joint-mg-eg playing Black: 14 - 10 - 11  [0.557] 35
+...      White vs Black: 23 - 22 - 25  [0.507] 70
+Elo difference: 44.9 +/- 66.2, LOS: 91.0 %, DrawRatio: 35.7 %
+SPRT: llr 0.632 (21.5%), lbound -2.94, ubound 2.94
+Started game 74 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 71 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 28 - 18 - 25  [0.570] 71
+Started game 75 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 74 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 29 - 18 - 25  [0.576] 72
+Started game 76 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 73 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 30 - 18 - 25  [0.582] 73
+Started game 77 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 75 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 30 - 18 - 26  [0.581] 74
+Started game 78 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 72 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 30 - 19 - 26  [0.573] 75
+Started game 79 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 77 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 31 - 19 - 26  [0.579] 76
+Started game 80 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 76 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 32 - 19 - 26  [0.584] 77
+Started game 81 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 79 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 32 - 19 - 27  [0.583] 78
+Started game 82 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 80 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 32 - 20 - 27  [0.576] 79
+Started game 83 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 81 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 32 - 20 - 28  [0.575] 80
+...      joint-mg-eg playing White: 16 - 8 - 17  [0.598] 41
+...      joint-mg-eg playing Black: 16 - 12 - 11  [0.551] 39
+...      White vs Black: 28 - 24 - 28  [0.525] 80
+Elo difference: 52.5 +/- 62.3, LOS: 95.2 %, DrawRatio: 35.0 %
+SPRT: llr 0.856 (29.1%), lbound -2.94, ubound 2.94
+Started game 84 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 78 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 33 - 20 - 28  [0.580] 81
+Started game 85 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 82 (v4.3.3 vs joint-mg-eg): 0-1 {Black mates}
+Score of joint-mg-eg vs v4.3.3: 34 - 20 - 28  [0.585] 82
+Started game 86 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 84 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 35 - 20 - 28  [0.590] 83
+Started game 87 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 85 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 36 - 20 - 28  [0.595] 84
+Started game 88 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 87 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 37 - 20 - 28  [0.600] 85
+Started game 89 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 86 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 37 - 21 - 28  [0.593] 86
+Started game 90 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 83 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 38 - 21 - 28  [0.598] 87
+Started game 91 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 89 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 38 - 21 - 29  [0.597] 88
+Started game 92 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 88 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 38 - 22 - 29  [0.590] 89
+Started game 93 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 90 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 39 - 22 - 29  [0.594] 90
+...      joint-mg-eg playing White: 19 - 8 - 18  [0.622] 45
+...      joint-mg-eg playing Black: 20 - 14 - 11  [0.567] 45
+...      White vs Black: 33 - 28 - 29  [0.528] 90
+Elo difference: 66.4 +/- 60.2, LOS: 98.5 %, DrawRatio: 32.2 %
+SPRT: llr 1.2 (40.9%), lbound -2.94, ubound 2.94
+Started game 94 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 91 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 39 - 22 - 30  [0.593] 91
+Started game 95 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 92 (v4.3.3 vs joint-mg-eg): 0-1 {Black mates}
+Score of joint-mg-eg vs v4.3.3: 40 - 22 - 30  [0.598] 92
+Started game 96 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 94 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 40 - 22 - 31  [0.597] 93
+Started game 97 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 95 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 41 - 22 - 31  [0.601] 94
+Started game 98 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 93 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 42 - 22 - 31  [0.605] 95
+Started game 99 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 96 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 42 - 23 - 31  [0.599] 96
+Started game 100 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 99 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 43 - 23 - 31  [0.603] 97
+Started game 101 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 97 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 43 - 24 - 31  [0.597] 98
+Started game 102 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 98 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 43 - 24 - 32  [0.596] 99
+Started game 103 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 100 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 44 - 24 - 32  [0.600] 100
+...      joint-mg-eg playing White: 22 - 9 - 19  [0.630] 50
+...      joint-mg-eg playing Black: 22 - 15 - 13  [0.570] 50
+...      White vs Black: 37 - 31 - 32  [0.530] 100
+Elo difference: 70.4 +/- 57.2, LOS: 99.2 %, DrawRatio: 32.0 %
+SPRT: llr 1.42 (48.3%), lbound -2.94, ubound 2.94
+Started game 104 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 102 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 45 - 24 - 32  [0.604] 101
+Started game 105 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 103 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 46 - 24 - 32  [0.608] 102
+Started game 106 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 105 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 46 - 25 - 32  [0.602] 103
+Started game 107 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 101 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by adjudication}
+Score of joint-mg-eg vs v4.3.3: 46 - 25 - 33  [0.601] 104
+Started game 108 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 104 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 46 - 26 - 33  [0.595] 105
+Started game 109 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 109 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 47 - 26 - 33  [0.599] 106
+Started game 110 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 106 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 47 - 27 - 33  [0.593] 107
+Started game 111 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 107 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 47 - 28 - 33  [0.588] 108
+Started game 112 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 108 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 47 - 29 - 33  [0.583] 109
+Started game 113 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 110 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 48 - 29 - 33  [0.586] 110
+...      joint-mg-eg playing White: 24 - 11 - 20  [0.618] 55
+...      joint-mg-eg playing Black: 24 - 18 - 13  [0.555] 55
+...      White vs Black: 42 - 35 - 33  [0.532] 110
+Elo difference: 60.6 +/- 55.2, LOS: 98.5 %, DrawRatio: 30.0 %
+SPRT: llr 1.28 (43.6%), lbound -2.94, ubound 2.94
+Started game 114 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 111 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 49 - 29 - 33  [0.590] 111
+Started game 115 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 112 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 49 - 30 - 33  [0.585] 112
+Started game 116 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 115 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 50 - 30 - 33  [0.588] 113
+Started game 117 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 114 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 50 - 31 - 33  [0.583] 114
+Started game 118 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 113 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 50 - 31 - 34  [0.583] 115
+Started game 119 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 116 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 50 - 31 - 35  [0.582] 116
+Started game 120 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 120 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 51 - 31 - 35  [0.585] 117
+Started game 121 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 119 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 52 - 31 - 35  [0.589] 118
+Started game 122 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 118 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 52 - 31 - 36  [0.588] 119
+Started game 123 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 117 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 52 - 31 - 37  [0.588] 120
+...      joint-mg-eg playing White: 27 - 11 - 22  [0.633] 60
+...      joint-mg-eg playing Black: 25 - 20 - 15  [0.542] 60
+...      White vs Black: 47 - 36 - 37  [0.546] 120
+Elo difference: 61.4 +/- 52.5, LOS: 98.9 %, DrawRatio: 30.8 %
+SPRT: llr 1.44 (48.9%), lbound -2.94, ubound 2.94
+Started game 124 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 122 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 53 - 31 - 37  [0.591] 121
+Started game 125 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 123 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 53 - 32 - 37  [0.586] 122
+Started game 126 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 121 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 54 - 32 - 37  [0.589] 123
+Started game 127 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 126 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 55 - 32 - 37  [0.593] 124
+Started game 128 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 124 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 55 - 32 - 38  [0.592] 125
+Started game 129 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 125 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 55 - 33 - 38  [0.587] 126
+Started game 130 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 127 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 55 - 33 - 39  [0.587] 127
+Started game 131 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 129 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 56 - 33 - 39  [0.590] 128
+Started game 132 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 130 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 57 - 33 - 39  [0.593] 129
+Started game 133 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 128 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 57 - 34 - 39  [0.588] 130
+...      joint-mg-eg playing White: 29 - 13 - 23  [0.623] 65
+...      joint-mg-eg playing Black: 28 - 21 - 16  [0.554] 65
+...      White vs Black: 50 - 41 - 39  [0.535] 130
+Elo difference: 62.1 +/- 50.7, LOS: 99.2 %, DrawRatio: 30.0 %
+SPRT: llr 1.56 (53.0%), lbound -2.94, ubound 2.94
+Started game 134 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 134 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 58 - 34 - 39  [0.592] 131
+Started game 135 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 132 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 59 - 34 - 39  [0.595] 132
+Started game 136 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 131 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 59 - 34 - 40  [0.594] 133
+Started game 137 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 135 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 59 - 35 - 40  [0.590] 134
+Started game 138 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 136 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 59 - 35 - 41  [0.589] 135
+Started game 139 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 133 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 59 - 35 - 42  [0.588] 136
+Started game 140 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 137 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 60 - 35 - 42  [0.591] 137
+Started game 141 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 138 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 61 - 35 - 42  [0.594] 138
+Started game 142 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 139 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 62 - 35 - 42  [0.597] 139
+Started game 143 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 140 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 62 - 35 - 43  [0.596] 140
+...      joint-mg-eg playing White: 31 - 14 - 25  [0.621] 70
+...      joint-mg-eg playing Black: 31 - 21 - 18  [0.571] 70
+...      White vs Black: 52 - 45 - 43  [0.525] 140
+Elo difference: 67.9 +/- 48.7, LOS: 99.7 %, DrawRatio: 30.7 %
+SPRT: llr 1.87 (63.6%), lbound -2.94, ubound 2.94
+Started game 144 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 141 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 62 - 35 - 44  [0.596] 141
+Started game 145 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 143 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by adjudication}
+Score of joint-mg-eg vs v4.3.3: 62 - 35 - 45  [0.595] 142
+Started game 146 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 142 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 62 - 36 - 45  [0.591] 143
+Started game 147 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 144 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 62 - 36 - 46  [0.590] 144
+Started game 148 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 146 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 62 - 37 - 46  [0.586] 145
+Started game 149 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 145 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by adjudication}
+Score of joint-mg-eg vs v4.3.3: 62 - 37 - 47  [0.586] 146
+Started game 150 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 147 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by adjudication}
+Score of joint-mg-eg vs v4.3.3: 62 - 37 - 48  [0.585] 147
+Started game 151 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 148 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 62 - 37 - 49  [0.584] 148
+Started game 152 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 149 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 63 - 37 - 49  [0.587] 149
+Started game 153 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 152 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 63 - 38 - 49  [0.583] 150
+...      joint-mg-eg playing White: 32 - 14 - 29  [0.620] 75
+...      joint-mg-eg playing Black: 31 - 24 - 20  [0.547] 75
+...      White vs Black: 56 - 45 - 49  [0.537] 150
+Elo difference: 58.5 +/- 46.2, LOS: 99.4 %, DrawRatio: 32.7 %
+SPRT: llr 1.75 (59.5%), lbound -2.94, ubound 2.94
+Started game 154 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 151 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 64 - 38 - 49  [0.586] 151
+Started game 155 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 150 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 65 - 38 - 49  [0.589] 152
+Started game 156 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 153 (joint-mg-eg vs v4.3.3): 0-1 {Black mates}
+Score of joint-mg-eg vs v4.3.3: 65 - 39 - 49  [0.585] 153
+Started game 157 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 154 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by insufficient mating material}
+Score of joint-mg-eg vs v4.3.3: 65 - 39 - 50  [0.584] 154
+Started game 158 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 155 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 65 - 40 - 50  [0.581] 155
+Started game 159 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 158 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 65 - 40 - 51  [0.580] 156
+Started game 160 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 159 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 66 - 40 - 51  [0.583] 157
+Started game 161 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 157 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 66 - 40 - 52  [0.582] 158
+Started game 162 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 156 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 67 - 40 - 52  [0.585] 159
+Started game 163 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 160 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 68 - 40 - 52  [0.588] 160
+...      joint-mg-eg playing White: 34 - 16 - 30  [0.613] 80
+...      joint-mg-eg playing Black: 34 - 24 - 22  [0.563] 80
+...      White vs Black: 58 - 50 - 52  [0.525] 160
+Elo difference: 61.4 +/- 44.8, LOS: 99.6 %, DrawRatio: 32.5 %
+SPRT: llr 1.97 (66.9%), lbound -2.94, ubound 2.94
+Started game 164 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 161 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 68 - 41 - 52  [0.584] 161
+Started game 165 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 162 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 69 - 41 - 52  [0.586] 162
+Started game 166 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 163 (joint-mg-eg vs v4.3.3): 1-0 {White mates}
+Score of joint-mg-eg vs v4.3.3: 70 - 41 - 52  [0.589] 163
+Started game 167 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 166 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 71 - 41 - 52  [0.591] 164
+Started game 168 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 167 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 72 - 41 - 52  [0.594] 165
+Started game 169 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 164 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 72 - 41 - 53  [0.593] 166
+Started game 170 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 165 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 72 - 41 - 54  [0.593] 167
+Started game 171 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 168 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 72 - 42 - 54  [0.589] 168
+Started game 172 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 172 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 72 - 43 - 54  [0.586] 169
+Started game 173 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 170 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 72 - 44 - 54  [0.582] 170
+...      joint-mg-eg playing White: 36 - 17 - 31  [0.613] 84
+...      joint-mg-eg playing Black: 36 - 27 - 23  [0.552] 86
+...      White vs Black: 63 - 53 - 54  [0.529] 170
+Elo difference: 57.8 +/- 43.6, LOS: 99.5 %, DrawRatio: 31.8 %
+SPRT: llr 1.93 (65.6%), lbound -2.94, ubound 2.94
+Started game 174 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 171 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 72 - 44 - 55  [0.582] 171
+Started game 175 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 173 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 73 - 44 - 55  [0.584] 172
+Started game 176 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 175 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 74 - 44 - 55  [0.587] 173
+Started game 177 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 169 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by fifty moves rule}
+Score of joint-mg-eg vs v4.3.3: 74 - 44 - 56  [0.586] 174
+Started game 178 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 174 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 74 - 45 - 56  [0.583] 175
+Started game 179 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 176 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 75 - 45 - 56  [0.585] 176
+Started game 180 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 178 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 75 - 45 - 57  [0.585] 177
+Started game 181 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 177 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 75 - 45 - 58  [0.584] 178
+Started game 182 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 179 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 75 - 46 - 58  [0.581] 179
+Started game 183 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 180 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 75 - 47 - 58  [0.578] 180
+...      joint-mg-eg playing White: 38 - 18 - 34  [0.611] 90
+...      joint-mg-eg playing Black: 37 - 29 - 24  [0.544] 90
+...      White vs Black: 67 - 55 - 58  [0.533] 180
+Elo difference: 54.5 +/- 42.2, LOS: 99.4 %, DrawRatio: 32.2 %
+SPRT: llr 1.93 (65.5%), lbound -2.94, ubound 2.94
+Started game 184 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 181 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 76 - 47 - 58  [0.580] 181
+Started game 185 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 184 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 77 - 47 - 58  [0.582] 182
+Started game 186 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 183 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 78 - 47 - 58  [0.585] 183
+Started game 187 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 185 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 79 - 47 - 58  [0.587] 184
+Started game 188 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 187 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 80 - 47 - 58  [0.589] 185
+Started game 189 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 182 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 81 - 47 - 58  [0.591] 186
+Started game 190 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 188 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 82 - 47 - 58  [0.594] 187
+Started game 191 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 190 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 83 - 47 - 58  [0.596] 188
+Started game 192 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 189 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 83 - 48 - 58  [0.593] 189
+Started game 193 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 186 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by insufficient mating material}
+Score of joint-mg-eg vs v4.3.3: 83 - 48 - 59  [0.592] 190
+...      joint-mg-eg playing White: 42 - 19 - 34  [0.621] 95
+...      joint-mg-eg playing Black: 41 - 29 - 25  [0.563] 95
+...      White vs Black: 71 - 60 - 59  [0.529] 190
+Elo difference: 64.7 +/- 41.6, LOS: 99.9 %, DrawRatio: 31.1 %
+SPRT: llr 2.43 (82.4%), lbound -2.94, ubound 2.94
+Started game 194 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 192 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 83 - 49 - 59  [0.589] 191
+Started game 195 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 193 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 83 - 49 - 60  [0.589] 192
+Started game 196 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 194 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 83 - 49 - 61  [0.588] 193
+Started game 197 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 191 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 83 - 49 - 62  [0.588] 194
+Started game 198 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 195 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 84 - 49 - 62  [0.590] 195
+Started game 199 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 196 (v4.3.3 vs joint-mg-eg): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 84 - 50 - 62  [0.587] 196
+Started game 200 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 198 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 84 - 50 - 63  [0.586] 197
+Started game 201 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 197 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 85 - 50 - 63  [0.588] 198
+Started game 202 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 199 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 85 - 51 - 63  [0.585] 199
+Started game 203 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 200 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by insufficient mating material}
+Score of joint-mg-eg vs v4.3.3: 85 - 51 - 64  [0.585] 200
+...      joint-mg-eg playing White: 44 - 20 - 36  [0.620] 100
+...      joint-mg-eg playing Black: 41 - 31 - 28  [0.550] 100
+...      White vs Black: 75 - 61 - 64  [0.535] 200
+Elo difference: 59.6 +/- 40.1, LOS: 99.8 %, DrawRatio: 32.0 %
+SPRT: llr 2.36 (80.3%), lbound -2.94, ubound 2.94
+Started game 204 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 201 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 86 - 51 - 64  [0.587] 201
+Started game 205 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 204 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 87 - 51 - 64  [0.589] 202
+Started game 206 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 203 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 87 - 51 - 65  [0.589] 203
+Started game 207 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 202 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 88 - 51 - 65  [0.591] 204
+Started game 208 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 208 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 89 - 51 - 65  [0.593] 205
+Started game 209 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 205 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 90 - 51 - 65  [0.595] 206
+Started game 210 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 206 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 90 - 51 - 66  [0.594] 207
+Started game 211 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 207 (joint-mg-eg vs v4.3.3): 1/2-1/2 {Draw by adjudication}
+Score of joint-mg-eg vs v4.3.3: 90 - 51 - 67  [0.594] 208
+Started game 212 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 209 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 91 - 51 - 67  [0.596] 209
+Started game 213 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 210 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 92 - 51 - 67  [0.598] 210
+...      joint-mg-eg playing White: 47 - 20 - 38  [0.629] 105
+...      joint-mg-eg playing Black: 45 - 31 - 29  [0.567] 105
+...      White vs Black: 78 - 65 - 67  [0.531] 210
+Elo difference: 68.7 +/- 39.3, LOS: 100.0 %, DrawRatio: 31.9 %
+SPRT: llr 2.9 (98.6%), lbound -2.94, ubound 2.94
+Started game 214 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 212 (v4.3.3 vs joint-mg-eg): 1/2-1/2 {Draw by 3-fold repetition}
+Score of joint-mg-eg vs v4.3.3: 92 - 51 - 68  [0.597] 211
+Started game 215 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 211 (joint-mg-eg vs v4.3.3): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 92 - 52 - 68  [0.594] 212
+Started game 216 of 1600 (v4.3.3 vs joint-mg-eg)
+Finished game 213 (joint-mg-eg vs v4.3.3): 1-0 {White wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 93 - 52 - 68  [0.596] 213
+Started game 217 of 1600 (joint-mg-eg vs v4.3.3)
+Finished game 214 (v4.3.3 vs joint-mg-eg): 0-1 {Black wins by adjudication}
+Score of joint-mg-eg vs v4.3.3: 94 - 52 - 68  [0.598] 214
+Finished game 217 (joint-mg-eg vs v4.3.3): * {No result}
+Score of joint-mg-eg vs v4.3.3: 94 - 52 - 68  [0.598] 214
+Finished game 215 (joint-mg-eg vs v4.3.3): * {No result}
+Score of joint-mg-eg vs v4.3.3: 94 - 52 - 68  [0.598] 214
+Finished game 216 (v4.3.3 vs joint-mg-eg): * {No result}
+Score of joint-mg-eg vs v4.3.3: 94 - 52 - 68  [0.598] 214
+...      joint-mg-eg playing White: 48 - 21 - 38  [0.626] 107
+...      joint-mg-eg playing Black: 46 - 31 - 30  [0.570] 107
+...      White vs Black: 79 - 67 - 68  [0.528] 214
+Elo difference: 69.1 +/- 39.0, LOS: 100.0 %, DrawRatio: 31.8 %
+SPRT: llr 2.97 (100.9%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Player: joint-mg-eg
+   "Draw by 3-fold repetition": 53
+   "Draw by adjudication": 9
+   "Draw by fifty moves rule": 1
+   "Draw by insufficient mating material": 5
+   "Loss: Black mates": 1
+   "Loss: Black wins by adjudication": 20
+   "Loss: White wins by adjudication": 31
+   "No result": 3
+   "Win: Black mates": 4
+   "Win: Black wins by adjudication": 42
+   "Win: White mates": 1
+   "Win: White wins by adjudication": 47
+Player: v4.3.3
+   "Draw by 3-fold repetition": 53
+   "Draw by adjudication": 9
+   "Draw by fifty moves rule": 1
+   "Draw by insufficient mating material": 5
+   "Loss: Black mates": 4
+   "Loss: Black wins by adjudication": 42
+   "Loss: White mates": 1
+   "Loss: White wins by adjudication": 47
+   "No result": 3
+   "Win: Black mates": 1
+   "Win: Black wins by adjudication": 20
+   "Win: White wins by adjudication": 31
+Finished match

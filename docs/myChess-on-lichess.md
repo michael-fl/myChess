@@ -1,0 +1,361 @@
+# myChess on Lichess — Bot Setup Guide
+
+Preparation notes for running myChess as a bot on [lichess.org](https://lichess.org).
+This is a planning/reference document; nothing here is wired up yet.
+
+---
+
+## 1. What is a Lichess bot?
+
+A Lichess **bot** is a dedicated account (flagged `BOT`) that plays through the
+[Lichess Bot API](https://lichess.org/api#tag/Bot) instead of the web UI. You do
+**not** implement that HTTP API yourself. The community-standard bridge
+
+- **lichess-bot** — <https://github.com/lichess-bot-devs/lichess-bot> (Python)
+
+does all the Lichess-side work: it subscribes to the account's event stream,
+accepts/creates challenges, and for every game streams the moves to and from a
+local **UCI** (or XBoard) engine. Your only obligation is to provide a compliant
+UCI engine — which myChess already is (see §5).
+
+```
+Lichess  <--HTTPS/stream-->  lichess-bot (Python)  <--UCI stdin/stdout-->  myChess
+```
+
+The bridge must stay running the whole time the bot should be online (on your
+machine or a small always-on server).
+
+---
+
+## 2. Setup steps
+
+1. **Create a fresh Lichess account** for the bot. It must have **zero rated
+   games** — upgrading to a BOT account is only allowed on a virgin account and
+   is **irreversible** (a BOT account can never play as a normal human account
+   again). Pick the bot's public name here; it cannot be changed later.
+
+   **Planned bot account name: `myChessJava`** (free as of 2026-08; permanent
+   once the account is upgraded to BOT). The account username is independent of
+   the engine's UCI `id name` (`myChess`) and needs no relation to it — Lichess
+   adds a `BOT` tag automatically regardless of the username.
+
+2. **Generate an API token** at
+   <https://lichess.org/account/oauth/token/create> with the scope
+   **“Play games with the Bot API” (`bot:play`)** — and *only* that scope
+   (least privilege; the token then has full play control of the account).
+   Treat it like a password.
+
+   > ⚠️ **Create the token while logged in as the bot account** (`myChessJava`),
+   > **not** your personal account. The `bot:play` checkbox is **greyed out on any
+   > account that has already played games** — only a fresh, bot-eligible account
+   > can select it. So: register `myChessJava`, do **not** play a single game with
+   > it, then create the token there. (If `bot:play` is unclickable, you are on the
+   > wrong account.)
+
+3. **Install lichess-bot** (needs Python 3.9+):
+   ```sh
+   git clone https://github.com/lichess-bot-devs/lichess-bot.git
+   cd lichess-bot
+   python3 -m venv venv && source venv/bin/activate
+   pip install -r requirements.txt
+   ```
+
+4. **Provide the engine.** Point lichess-bot at myChess's UCI wrapper. The
+   simplest path is to copy a built version directory (e.g. `versions/4.3.x/`
+   with `my-chess-<v>.jar`, `lib/`, and `mychess-uci.sh`) into lichess-bot's
+   `engines/` directory, or reference it by absolute path in the config.
+   `mychess-uci.sh` already exports `JAVA_HOME` and the JVM flags, so lichess-bot
+   just needs to execute it.
+
+5. **Write `config.yml`** (see §3). Put the token in it (and keep it secret).
+
+6. **Upgrade the account to BOT** — either let lichess-bot do it on first run
+   (`python3 lichess-bot.py -u`), or manually:
+   ```sh
+   curl -d '' https://lichess.org/api/bot/account/upgrade \
+     -H "Authorization: Bearer <YOUR_TOKEN>"
+   ```
+
+7. **Run the bot** (see §4) and issue/accept a first (casual) challenge (see §6).
+
+---
+
+## 3. `config.yml` (representative)
+
+> ⚠️ The lichess-bot config schema **evolves between versions**. Always start
+> from the `config.yml.default` shipped with the version you cloned and adapt it.
+> The example below shows the keys that matter for myChess; treat it as a guide,
+> not a guaranteed-current schema.
+
+**Where to find `config.yml.default`:**
+- **In your clone** (from step 3, the authoritative reference for your version):
+  it sits at the repo root — `lichess-bot/config.yml.default`. Copy it and edit
+  the copy:
+  ```sh
+  cd lichess-bot
+  cp config.yml.default config.yml
+  ```
+- **Online:** <https://github.com/lichess-bot-devs/lichess-bot/blob/master/config.yml.default>
+  (the `master` version may be newer than your clone — prefer your local copy).
+- **Field documentation:** the lichess-bot wiki —
+  <https://github.com/lichess-bot-devs/lichess-bot/wiki>.
+
+```yaml
+token: "xxxxxxxxxxxxxxxxxxxx"        # bot:play OAuth token — KEEP SECRET
+
+url: "https://lichess.org/"
+
+engine:
+  dir: "./engines/myChess/"          # directory containing the wrapper + jar + lib/
+  name: "mychess-uci.sh"             # the executable lichess-bot launches
+  protocol: "uci"
+  ponder: false                      # myChess does not support pondering (§5)
+
+  # Per-game UCI options sent via `setoption`. UCI_Chess960 is toggled
+  # automatically by the bridge for 960 games — no need to set it here.
+  uci_options:
+    # (myChess currently exposes only UCI_Chess960; add Hash/Threads here if
+    #  those options are implemented later)
+
+  # Safety margin subtracted from the clock the bridge reports, to cover
+  # process/network latency. Increment handling is on the myChess side (§7).
+  move_overhead: 100                 # milliseconds
+
+challenge:                           # which incoming challenges to auto-accept
+  concurrency: 1                     # one game at a time (single-threaded engine)
+  accept_bot: true
+  only_bot: false
+  variants:
+    - standard
+    - chess960                       # myChess supports both
+  time_controls:                     # real-time only; 'correspondence' omitted -> long/Fernschach games auto-declined
+    - bullet
+    - blitz
+    - rapid
+    - classical
+  max_base: 1800                     # max base time in SECONDS (30 min) -> reject marathon games (caps the real clock, not just the category)
+  max_increment: 30                  # max increment in seconds
+  # min_base: 60                     # optional: exclude ultra-short formats
+  modes:
+    - casual
+    - rated
+
+matchmaking:
+  allow_matchmaking: false           # set true (+ tune) to auto-seek opponents
+```
+
+**Do not commit a real token.** If `config.yml` lives in a repo, add it to
+`.gitignore` and commit only a `config.yml.example` with a placeholder token.
+
+---
+
+## 4. Running the bot
+
+```sh
+cd lichess-bot
+source venv/bin/activate
+python3 lichess-bot.py            # normal run
+python3 lichess-bot.py -u         # first run: also upgrades the account to BOT
+```
+
+- The process runs in the foreground and logs to the console (and to a log file
+  if configured). Keep it alive for the bot to stay online — e.g. under `tmux`,
+  a `systemd`/`launchd` service, or on a small VPS.
+- myChess's own stderr goes to `mychess-stderr.log` inside its engine directory
+  (the wrapper appends to it) — useful for debugging.
+
+### Monitoring / watching the bot
+
+To check whether the bot is currently playing — and to watch live:
+
+- **Profile page:** `https://lichess.org/@/myChessJava` — shows online status and,
+  when playing, the game in progress with a link to it.
+- **TV link (bookmark this):** `https://lichess.org/@/myChessJava/tv` — auto-follows
+  the bot's current (or most recent) game, move by move. The easiest "watch my bot" link.
+- **Watch live:** open any of the bot's game URLs in a browser — Lichess games are
+  public and spectatable in real time (board, clocks, optional eval bar); no login
+  needed, any number of spectators.
+- **Locally:** the lichess-bot console/log prints each accepted challenge, game
+  start/finish, and move — the most direct "is something running right now" view.
+- **Programmatically (API):**
+  - `GET /api/user/myChessJava` → includes a `playing` field carrying the current
+    game's URL while a game is in progress.
+  - `GET /api/users/status?ids=myChessJava&withGameIds=true` → compact online /
+    playing status plus the current game id.
+
+---
+
+## 5. Required UCI commands (and Chess960)
+
+lichess-bot drives the engine with a small UCI subset. myChess's
+[`UciHandler`](../src/main/java/org/michaelfl/mychess/UciHandler.java) already
+covers all of it:
+
+| Command | Purpose | myChess |
+|---|---|---|
+| `uci` | handshake → `id name` / `id author` / options / `uciok` | ✅ |
+| `isready` | sync → `readyok` | ✅ |
+| `ucinewgame` | reset for a new game | ✅ |
+| `position startpos [moves ...]` / `position fen <FEN> [moves ...]` | set up the position | ✅ |
+| `go wtime <ms> btime <ms> [movestogo <n>]`, `go movetime <ms>`, `go depth <d>`, `go infinite` | start searching | ✅ |
+| `stop` | stop and return `bestmove` | ✅ |
+| `bestmove <move>` (engine → GUI) | the chosen move (always emitted; legality-checked, `0000` fallback) | ✅ |
+| `quit` | shut down | ✅ |
+| `setoption name UCI_Chess960 value true/false` | enable Fischer Random | ✅ |
+
+**Chess960.** myChess advertises the `UCI_Chess960` check option and plays 960
+correctly (verified in cutechess `-variant fischerandom` matches). The bridge
+sets it per game, sends the 960 start position as a FEN (Shredder or classical
+castling rights), and myChess emits/accepts moves in UCI long-algebraic form,
+including the Chess960 castling convention. To offer 960, just list `chess960`
+under `challenge.variants`.
+
+**Move format.** UCI long algebraic: `e2e4`, `e7e8q` (promotion), and castling
+per the UCI/UCI_Chess960 convention — all handled by
+[`UciMoveParser`](../src/main/java/org/michaelfl/mychess/UciMoveParser.java).
+
+**Not supported (fine to skip):** pondering (`go ponder` / `ponderhit`). Keep
+`ponder: false` in the config.
+
+---
+
+## 6. Creating and accepting challenges
+
+**Accepting (incoming).** With the `challenge:` block in `config.yml`, lichess-bot
+**auto-accepts** any challenge that matches the rules (variant, time control,
+rated/casual, bot/human). Anything outside the rules is declined automatically.
+
+**Being challenged by a human.** Anyone can open `https://lichess.org/@/<BOTNAME>`
+and click **Challenge to a game**; if it matches the config it starts immediately.
+
+**Creating (outgoing).** Three ways:
+- **matchmaking** — set `matchmaking.allow_matchmaking: true` (and tune its
+  filters); lichess-bot then periodically seeks opponents on its own.
+- **Manual API call:**
+  ```sh
+  curl https://lichess.org/api/challenge/<OPPONENT> \
+    -H "Authorization: Bearer <TOKEN>" \
+    -d clock.limit=300 -d clock.increment=3 -d variant=chess960 -d rated=false
+  ```
+- **From the web UI** while logged in as the bot account (challenge another user
+  or bot).
+
+### Matchmaking (`allow_matchmaking`) — and keeping it considerate
+
+`matchmaking.allow_matchmaking` decides whether the bot **proactively seeks
+opponents** or only reacts to incoming challenges:
+
+- `false` (**recommended to start**) — the bot plays **only games others
+  initiate**. Full control; nothing happens while it is idle.
+- `true` — whenever the bot is idle it **issues its own challenges** (usually to
+  other online bots), keeping it active and building a rating on its own.
+
+Because self-initiated challenges are unsolicited, matchmaking must be **moderate
+and polite** — an aggressive setup spams the rest of the bot pool. Principles:
+
+- **Challenge near your own strength** (a bounded rating window), not the whole pool.
+- **Offer one clear, moderate time control**, not a spray of formats.
+- **Prefer casual** for games you initiate — don't force a rated result on others;
+  let *rated* games arrive via **incoming** challenges, where the opponent opts in.
+- **Be patient**: give challenges time to be accepted and don't hammer.
+- **Don't re-challenge bots that decline** (respect a block/decline list).
+
+Representative *considerate* configuration (keys are version-dependent — always
+check your `config.yml.default`):
+
+```yaml
+matchmaking:
+  allow_matchmaking: true
+  challenge_mode: "casual"          # polite: don't force rated games on others
+  challenge_variant: "standard"     # one variant at a time (or "chess960")
+  challenge_initial_time: [300]     # offer a single moderate control: 5+3
+  challenge_increment: [3]
+  opponent_min_rating: 1600         # stay near myChess's own strength ...
+  opponent_max_rating: 2100         # ... instead of spamming the extremes
+  opponent_rating_difference: 300   # (alternative to the fixed min/max window)
+  challenge_timeout: 30             # minutes of patience between attempts — no hammering
+  opponent_allow_tos_violation: false   # skip accounts Lichess has flagged for a ToS violation (e.g. cheating)
+```
+
+If you *do* want matchmaking to play rated (`challenge_mode: "rated"`), keep the
+rating window tight and the cadence low — a rated game you initiate also moves the
+opponent's rating, so restraint matters even more. A good rollout is: start with
+`allow_matchmaking: false`, confirm the bot plays cleanly on incoming challenges,
+then enable considerate casual matchmaking, and only later consider rated.
+
+---
+
+## 7. What to extend in myChess first — time increment
+
+**Gap:** myChess's `go` parser reads `wtime` / `btime` / `movestogo` / `movetime`
+/ `depth` / `infinite`, but **not `winc` / `binc`** (the per-move increment).
+Most Lichess time controls carry an increment (3+2, 5+3, …), so myChess currently
+**ignores the increment** when budgeting its move time. It still plays legally,
+but manages the clock naively — typically too conservatively, leaving time on the
+board, and in fast increment games this can cost strength.
+
+**Fix (small, ~1 hour):**
+- Parse `winc` / `binc` in `UciHandler`'s `go` decoder (add two `case` branches
+  and two fields to the `GoArgs` record).
+- Fold the increment into the per-move budget, e.g.
+  `budget ≈ remaining / movesToGo + increment` (with the existing safety margin),
+  so the engine spends the increment it is about to earn back.
+
+This is the natural first slice of roadmap **§12.12 (Real time management
+heuristics)** and is the one change worth making **before playing increment
+time controls** (which are the norm on Lichess).
+
+**Rated vs. unrated is irrelevant here** — a game plays identically either way;
+the engine does not even know whether it is rated. The only axis that matters is
+whether the time control carries an **increment**:
+
+- **No increment (sudden death, e.g. `10+0`, `5+0`, `15+0`) or fixed
+  `movetime`** — the current handler is **already fully sufficient, rated
+  included**. myChess can go live and play rated games on these controls right now.
+- **With increment (`3+2`, `5+3`, `15+10`, …)** — myChess still plays legally and
+  will **not flag** (it under-budgets rather than over-budgets), but it manages
+  the clock too conservatively and leaves strength on the table. Add the fix
+  above before serious play on these controls.
+
+So there are two clean ways to go rated: (a) restrict the challenge config to
+no-increment controls (`min_increment: 0`, `max_increment: 0`) and play rated
+today, or (b) add `winc`/`binc` handling first and then accept any time control.
+
+---
+
+## 8. Additional notes / gotchas
+
+- **Always-on host.** The bot is online only while lichess-bot runs. For 24/7,
+  use a small VPS or an always-on machine; otherwise start it when you want the
+  bot available.
+- **Token security.** The `bot:play` token grants full play control of the
+  account. Never commit it; git-ignore `config.yml`.
+- **Separate rating pool.** Bots are rated in their own pool and clearly flagged
+  `BOT`; they cannot play in human tournaments (except explicit bot arenas).
+- **Concurrency.** myChess is single-threaded; keep `challenge.concurrency: 1`
+  unless you run one engine process per game and have the cores to spare.
+- **JVM warmup / memory.** The engine process is reused across a whole game
+  (handshake once, then `position`/`go` per move), so JIT warmup only mildly
+  slows the first moves. The 256 MB heap in `mychess-uci.sh` is plenty; raise it
+  only if a larger transposition table is configured.
+- **Test locally first.** Before going live, drive `mychess-uci.sh` by hand
+  (`uci`, `isready`, `position …`, `go movetime 1000`) or play a few cutechess
+  games — exactly what this repo already does.
+- **Strength context.** myChess is roughly in the ~1800s Elo range (Pulse-anchored
+  estimate); expect it to settle somewhere in the mid bot pool. Fine for casual
+  play and a public presence.
+- **Be a good citizen.** Don't spam challenges via matchmaking; respect Lichess's
+  API rate limits (lichess-bot handles back-off, but aggressive config can still
+  trip limits).
+
+---
+
+## Summary checklist
+
+- [ ] Fresh Lichess account (0 rated games)
+- [ ] `bot:play` OAuth token
+- [ ] lichess-bot installed
+- [ ] built myChess version wired into `config.yml` (`ponder: false`, `chess960` listed)
+- [ ] account upgraded to BOT (irreversible)
+- [ ] **(recommended before increment time controls — rated or not)** `winc`/`binc` handling added to myChess (§7)
+- [ ] `python3 lichess-bot.py` running on an always-on host
