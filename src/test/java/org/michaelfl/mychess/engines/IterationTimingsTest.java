@@ -3,6 +3,8 @@ package org.michaelfl.mychess.engines;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.michaelfl.mychess.engines.IterationTimings.IterationDecision;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -204,5 +206,132 @@ class IterationTimingsTest {
                 "Reset must clear the sample counter");
         assertFalse(IterationTimings.isProbingDue(DEPTH, 1000, 1000),
                 "Reset must clear the skip counter");
+    }
+
+    // ---- decideIteration: the composite skip decision ----
+    //
+    // The whole suite runs with the heuristic switched off (see
+    // DisableSkipHeuristicExtension), so this branch of PositionSearch is
+    // otherwise never exercised. These tests turn it back on for their own
+    // duration and restore the suite-wide state afterwards — nothing that runs
+    // later may inherit an enabled heuristic, or it becomes order-dependent
+    // again, which is the very thing the extension exists to prevent.
+
+    /** Comfortably above {@link EngineTuning#MIN_SAMPLES_FOR_SKIP}. */
+    private static final long SAMPLE_MS = 1_000;
+
+    private static void withSkipHeuristicEnabled(Runnable body) {
+        IterationTimings.setSkipHeuristicEnabled(true);
+        try {
+            body.run();
+        } finally {
+            IterationTimings.setSkipHeuristicEnabled(false);
+        }
+    }
+
+    /** Feed enough samples that the depth passes the sample gate. */
+    private static void primeSamples() {
+        for (int i = 0; i < EngineTuning.MIN_SAMPLES_FOR_SKIP; i++) {
+            IterationTimings.recordCompletion(DEPTH, SAMPLE_MS);
+        }
+    }
+
+    @Test
+    void decideIteration_heuristicDisabled_alwaysRuns() {
+        primeSamples();
+
+        assertEquals(IterationDecision.RUN, IterationTimings.decideIteration(DEPTH, 1),
+                "with the heuristic off the estimate must be ignored, however hopeless it looks");
+    }
+
+    @Test
+    void decideIteration_tooFewSamples_runs() {
+        withSkipHeuristicEnabled(() -> {
+            IterationTimings.recordCompletion(DEPTH, SAMPLE_MS);
+
+            assertEquals(IterationDecision.RUN, IterationTimings.decideIteration(DEPTH, 1),
+                    "a single sample is below MIN_SAMPLES_FOR_SKIP, so there is nothing to decide on");
+        });
+    }
+
+    @Test
+    void decideIteration_estimateFitsInRemainingTime_runs() {
+        withSkipHeuristicEnabled(() -> {
+            primeSamples();
+
+            assertEquals(IterationDecision.RUN, IterationTimings.decideIteration(DEPTH, SAMPLE_MS),
+                    "an estimate equal to the remaining time still fits — the comparison is not strict");
+            assertEquals(IterationDecision.RUN, IterationTimings.decideIteration(DEPTH, SAMPLE_MS + 1),
+                    "an estimate below the remaining time fits");
+        });
+    }
+
+    @Test
+    void decideIteration_estimateExceedsRemainingTime_skips() {
+        withSkipHeuristicEnabled(() -> {
+            primeSamples();
+
+            assertEquals(IterationDecision.SKIP, IterationTimings.decideIteration(DEPTH, SAMPLE_MS - 1),
+                    "an estimate above the remaining time must skip while no probe is due");
+        });
+    }
+
+    @Test
+    void decideIteration_afterEnoughSkips_probesInsteadOfSkipping() {
+        withSkipHeuristicEnabled(() -> {
+            primeSamples();
+            // The ratio gate also has to pass, so leave nearly the full
+            // estimate as remaining time — just short of fitting.
+            long remainingMs = SAMPLE_MS - 1;
+
+            for (int i = 0; i < EngineTuning.SKIPS_BETWEEN_PROBES; i++) {
+                assertEquals(IterationDecision.SKIP, IterationTimings.decideIteration(DEPTH, remainingMs),
+                        "skip #" + (i + 1) + " before the probe is due");
+                IterationTimings.recordSkip(DEPTH);
+            }
+
+            assertEquals(IterationDecision.PROBE, IterationTimings.decideIteration(DEPTH, remainingMs),
+                    "after SKIPS_BETWEEN_PROBES consecutive skips the depth must be probed again");
+        });
+    }
+
+    @Test
+    void decideIteration_probeDueButTooLittleTimeLeft_skips() {
+        withSkipHeuristicEnabled(() -> {
+            primeSamples();
+
+            for (int i = 0; i < EngineTuning.SKIPS_BETWEEN_PROBES; i++) {
+                IterationTimings.recordSkip(DEPTH);
+            }
+
+            long farTooLittle = (long) (SAMPLE_MS * EngineTuning.MIN_PROBE_REMAINING_RATIO) - 1;
+
+            assertEquals(IterationDecision.SKIP, IterationTimings.decideIteration(DEPTH, farTooLittle),
+                    "the ratio gate must suppress a probe that would only contribute a misleadingly short sample");
+        });
+    }
+
+    @Test
+    void decideIteration_isAQueryAndDoesNotRecordSkips() {
+        withSkipHeuristicEnabled(() -> {
+            primeSamples();
+
+            for (int i = 0; i < EngineTuning.SKIPS_BETWEEN_PROBES + 2; i++) {
+                IterationTimings.decideIteration(DEPTH, SAMPLE_MS - 1);
+            }
+
+            assertEquals(IterationDecision.SKIP, IterationTimings.decideIteration(DEPTH, SAMPLE_MS - 1),
+                    "asking the question must not advance the skip counter; only recordSkip may do that, "
+                            + "otherwise a probe would become due without a single iteration being skipped");
+        });
+    }
+
+    @Test
+    void decideIteration_restoresTheSuiteWideDisabledState() {
+        withSkipHeuristicEnabled(() -> { /* nothing — the finally block is what is under test */ });
+
+        assertFalse(IterationTimings.isSkipHeuristicEnabled(),
+                "a test that enables the heuristic must hand it back disabled, or every test running after it "
+                        + "becomes order-dependent");
     }
 }
