@@ -163,17 +163,16 @@ public final class PositionSearch {
      * effect when it returns {@code true}.
      */
     private boolean shouldSkipIteration(int depth) {
-        if (!IterationTimings.hasEnoughSamplesForSkipDecision(depth)) {
+        final long remainingMs = timeout - System.currentTimeMillis();
+        final var decision = IterationTimings.decideIteration(depth, remainingMs);
+
+        if (decision == IterationTimings.IterationDecision.RUN) {
             return false;
         }
 
-        long estimateMs = IterationTimings.getEstimatedMs(depth);
-        long remainingMs = timeout - System.currentTimeMillis();
-        if (estimateMs <= remainingMs) {
-            return false;
-        }
+        final long estimateMs = IterationTimings.getEstimatedMs(depth);
 
-        if (IterationTimings.isProbingDue(depth, estimateMs, remainingMs)) {
+        if (decision == IterationTimings.IterationDecision.PROBE) {
             Log.info("[time] probe depth " + depth + ": est " + estimateMs
                     + " ms > remaining " + remainingMs + " ms");
             return false;

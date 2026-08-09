@@ -15,8 +15,16 @@ import java.util.Arrays;
  * {@link ChessEngine#resetIterationTimings()}) so a new game does not
  * inherit stale stats from a different position-complexity profile.
  *
- * <p>All public methods are {@code synchronized}; the contention is
- * negligible because the UciHandler runs only one search at a time.
+ * <p>The methods touching the statistics are {@code synchronized}; the
+ * contention is negligible because the UciHandler runs only one search at a
+ * time. {@link #decideIteration} keeps that lock even though the search runs
+ * on a single thread: it reads the sample count, the estimate and the skip
+ * counter in sequence, and only the lock guarantees that the three belong to
+ * the same state. There is also a second writer — {@code ucinewgame} resets
+ * the statistics from the UCI handler thread, not from the search thread.
+ *
+ * <p>The on/off switch is the exception: it is a {@code volatile} flag with a
+ * single writer, so it needs visibility but no mutual exclusion.
  *
  * <p>Depths above {@link #MAX_TRACKED_DEPTH} are silently ignored: the
  * search still runs, the skip heuristic simply does not apply for those
@@ -38,12 +46,88 @@ final class IterationTimings {
      */
     static final int MAX_TRACKED_DEPTH = 64;
 
+    /**
+     * Whether {@link PositionSearch} may act on these statistics; on in
+     * production, switched off for the whole test suite (see
+     * {@link #setSkipHeuristicEnabled}).
+     */
+    private static volatile boolean skipHeuristicEnabled = true;
+
     private static final long[][] window = new long[MAX_TRACKED_DEPTH + 1][EngineTuning.SMA_WINDOW_SIZE];
     private static final int[] nextWriteIdx = new int[MAX_TRACKED_DEPTH + 1];
     private static final int[] consecutiveSkips = new int[MAX_TRACKED_DEPTH + 1];
 
     private IterationTimings() {
         throw new IllegalStateException();
+    }
+
+    /**
+     * @return whether {@link PositionSearch} may skip a deepening iteration
+     *         based on these statistics
+     */
+    static boolean isSkipHeuristicEnabled() {
+        return skipHeuristicEnabled;
+    }
+
+    /**
+     * Turns the skip-hopeless-iteration heuristic on or off process-wide.
+     * Recording and querying stay functional either way — only the decision to
+     * skip is suppressed, so this class keeps behaving identically for its own
+     * unit tests.
+     *
+     * <p>Exists for the test suite, which switches it off for every test. The
+     * heuristic makes a search result depend on two things a test must not
+     * depend on: the statistics left behind by whatever ran before it in the
+     * same JVM — the state here is process-static — and the speed of the
+     * machine, because the estimate is compared against the remaining
+     * wall-clock budget. Both make search-based tests order-dependent and
+     * hardware-dependent.
+     *
+     * @param enabled {@code false} to make {@code shouldSkipIteration} always
+     *                answer "do not skip"
+     */
+    static void setSkipHeuristicEnabled(boolean enabled) {
+        skipHeuristicEnabled = enabled;
+    }
+
+    /** What {@link PositionSearch} should do with the next deepening iteration. */
+    enum IterationDecision {
+        /** Run it. */
+        RUN,
+        /** Run it even though the estimate exceeds the budget, to refresh the statistics. */
+        PROBE,
+        /** Do not run it. */
+        SKIP
+    }
+
+    /**
+     * The complete skip decision for {@code depth}, as a pure function of the
+     * recorded statistics and the time left. Kept here rather than in
+     * {@link PositionSearch} so it can be tested without a clock: the caller
+     * passes {@code remainingMs} in, and the same inputs always produce the
+     * same answer.
+     *
+     * <p>Note that this is a query — {@link #recordSkip} is the caller's job,
+     * so the decision itself has no side effect and can be exercised
+     * repeatedly in a test.
+     *
+     * @param depth       the deepening depth about to be started
+     * @param remainingMs milliseconds left in the move's time budget
+     * @return {@link IterationDecision#RUN} whenever the heuristic is off, the
+     *         depth has too little history, or the estimate fits in the
+     *         remaining time
+     */
+    static synchronized IterationDecision decideIteration(int depth, long remainingMs) {
+        if (!skipHeuristicEnabled || !hasEnoughSamplesForSkipDecision(depth)) {
+            return IterationDecision.RUN;
+        }
+
+        long estimateMs = getEstimatedMs(depth);
+        if (estimateMs <= remainingMs) {
+            return IterationDecision.RUN;
+        }
+
+        return isProbingDue(depth, estimateMs, remainingMs) ? IterationDecision.PROBE : IterationDecision.SKIP;
     }
 
     /**
