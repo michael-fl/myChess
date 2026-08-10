@@ -103,7 +103,8 @@ In separate files under [`docs/`](docs/):
 13. [Roadmap: Improving Playing Strength](docs/roadmap.md) — concrete next steps with effort/Elo estimates ([backlog](docs/roadmap-backlog.md), [completed items](docs/roadmap-done.md)).
 14. [Known issues](docs/known-issues.md) — open bugs and ongoing investigations.
 15. [Measuring playing strength with cutechess](docs/elo-testing.md) — the cutechess-cli match setup, SPRT parameters, opening-book choices, and how to read the output. See also the [version history](docs/version-history.md) and the [absolute-Elo measurement notes](docs/myChess-ELO-measurement.md).
-16. [Running myChess on lichess](docs/myChess-on-lichess.md) — setting the engine up as a UCI bot behind the lichess-bot bridge.
+16. [Bench history](docs/bench-history.md) — the `bench` node signature per release (depth 8 for the whole series, depth 9 from 4.3.4 on), what each jump attributes to, and why the node count is an equivalence oracle rather than a strength metric.
+17. [Running myChess on lichess](docs/myChess-on-lichess.md) — setting the engine up as a UCI bot behind the lichess-bot bridge.
 
 ---
 

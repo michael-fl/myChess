@@ -4,6 +4,11 @@ Compact, chronological summary of myChess releases — what changed, the measure
 
 Coverage starts at **v3.0.0** (May 2026), when the two earlier engine variants (`engines/v1`, `engines/v2`) were removed and `MyChessEngine` became the sole engine. The 2019/2020 v1.0.0 line in git history belongs to that earlier, now-deleted lineage.
 
+For the complementary *search-behavior* view of the same releases — the `bench`
+node signature per version, which characterizes what kind of change a release
+was rather than how strong it made the engine — see the
+[bench history](bench-history.md).
+
 | Version | Datum | Hauptänderungen | Δ Elo (gemessen) | ~CCRL Blitz |
 |---|---|---|---|---|
 | **3.0.0** | 2026-05-23 | First release of the current single-engine line. Adds [Log utility](search.md#75-packed-int-move-representation) and stderr routing; refactors that consolidated the search around `MyChessEngine`. | — | ~1440 (rough) |
