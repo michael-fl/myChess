@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  * <p>Usage example:
  * <pre>{@code
- * Bench.BenchResult r = Bench.run(9, false);
+ * Bench.BenchResult r = Bench.run(Bench.DEFAULT_DEPTH, false);
  * System.out.println("signature: " + r.totalNodes());
  * }</pre>
  *
@@ -44,8 +44,20 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public final class Bench {
 
-    /** Default search depth when the caller does not specify one. */
-    public static final int DEFAULT_DEPTH = 9;
+    /**
+     * Default search depth when the caller does not specify one.
+     *
+     * <p>Eight plies, because the node signature is equally strict at any fixed
+     * depth — the depth is part of the signature's label, not of its quality —
+     * while the cost is not: the suite's two artificial many-piece stress
+     * positions dominate the run, and every extra ply multiplies the whole
+     * benchmark by roughly the branching factor. Eight keeps a full run in the
+     * low minutes, which is what makes the "is this refactor neutral?" check
+     * cheap enough to actually run on every refactor. It also sits inside the
+     * depth 6-8 band the roadmap calibrates myChess's own resolution to
+     * ({@code docs/roadmap-backlog.md} § 12.10.2).
+     */
+    public static final int DEFAULT_DEPTH = 8;
 
     /** Effectively unbounded per-move time budget so depth is the only limit (24 h in ms). */
     private static final int INFINITE_MILLIS = 24 * 60 * 60 * 1_000;
