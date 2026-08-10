@@ -513,4 +513,126 @@ class BlunderTest {
         assertEquals(ChessUtil.moveToString(Board.c6, Board.d5), ChessUtil.moveToString(result.move()),
                 "engine must enter the mating net with Qd5+ (c6-d5); white-POV eval " + result.weight());
     }
+
+    /** White (myChess) to move, before the g4-abandoning 21.Nf3. */
+    private static final String BEFORE_NF3_FEN = "r4k1r/p1p2p2/R1pqbp2/1p6/2nP2P1/2N5/PPP1QP1N/R5K1 w - - 4 21";
+
+    /**
+     * Depth at which the engine stops playing {@code 21.Nf3}. Measured on
+     * v4.3.4: depths 3-4 and 6-8 all pick it (rated +65 cp down to -46 cp);
+     * at depth 9 it switches to {@code f4} and finally scores the position
+     * honestly at -300 cp.
+     */
+    private static final int NF3_REFUTATION_DEPTH = 9;
+
+    /**
+     * Casual blitz game <a href="https://lichess.org/oQHc2pgQ">oQHc2pgQ</a>,
+     * myChessJava vs Martuni (2164), 0-1. Material is dead level here, but
+     * myChess is already positionally lost (around -4 by lichess's analysis:
+     * black owns c4 with a knight, the bishop pair rakes an open position, and
+     * white's rooks on a6/a1 are uncoordinated). It then made it far worse with
+     * {@code 21.Nf3}, which drops a pawn for nothing — {@code Nh2} was the
+     * <em>only</em> defender of g4, so {@code 21...Bxg4} simply takes it.
+     *
+     * <p>Unlike the Philidor's Legacy case above, this is <b>not</b> a horizon
+     * problem. The depth-7 principal variation already contains
+     * {@code ...Bxg4}: the engine sees the pawn go and judges the resulting
+     * position to be roughly balanced (-24 cp) when it is closer to -400. So the
+     * defect is in the <em>evaluation</em>, not in how far the search reaches —
+     * a two-ply material loss that a quiescence search cannot miss, yet the
+     * position after it is scored far too optimistically.
+     *
+     * <p>In the game the clocks show about 4 s for this move (2:02 to 1:58),
+     * which puts the search at depth 7-8 — squarely in the band where
+     * {@code Nf3} is still its first choice. The test pins
+     * {@link #NF3_REFUTATION_DEPTH}; if the evaluation improves, that threshold
+     * should drop into the depths a blitz game actually reaches.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void nf3_atDepth9_engineStopsAbandoningTheG4Pawn() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_NF3_FEN, NF3_REFUTATION_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
+                "in the pre-blunder position white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineAvoids(result, Board.h2, Board.f3, "21.Nf3");
+    }
+
+    // ----------------------------------------------------------------
+    // King safety — rated blitz game https://lichess.org/XSSCyZ3b
+    // (JC2025AJEDREZ 1352, a human, vs myChessJava, 1-0), the first
+    // human opponent on lichess.
+    //
+    // Unlike every case above this one is NOT pinned as an avoidance
+    // test. myChess keeps choosing the losing move through depth 12
+    // (which already costs over two minutes), so the refutation depth
+    // is out of reach for a test. What can be pinned is the blind spot
+    // itself, in the style of MaterialOnlyShortcutEvalTest: the engine
+    // is asked for its own verdict, and the test records how far that
+    // verdict is from the truth.
+    // ----------------------------------------------------------------
+
+    /**
+     * Black (myChess) to move, before {@code 22...Qb4}. Three white pieces
+     * (Qh5, Nf5, Rg3) surround the open king on h8; black is a clean three pawns
+     * up on material.
+     */
+    private static final String BEFORE_QB4_FEN = "r1b1r2k/pppp1p1p/5p2/5N1Q/2q5/6R1/2P2PPP/2R3K1 b - - 7 22";
+
+    /** Depth myChess reached for this move in the game (300+3 time control, ~3 s spent). */
+    private static final int IN_GAME_DEPTH = 8;
+
+    /**
+     * Characterization of the king-safety blind spot — the clearest example so
+     * far, because material and danger point in opposite directions.
+     *
+     * <p>myChess is <b>three pawns up</b> here, and grades itself accordingly.
+     * Objectively it is lost: three white pieces bear on an open king (Qh5, Nf5,
+     * Rg3), and lichess's analysis puts the position near {@code -0.6} a move
+     * earlier and around {@code +10} for white after the move actually played.
+     * The engine's own verdict at the depth it reached in the game is roughly
+     * {@code -1.5} white-POV, i.e. "black is comfortably better" — a
+     * misjudgement of some ten pawns.
+     *
+     * <p>The move it picks, {@code 22...Qb4}, gives up the only defender of f7:
+     * the queen on c4 covered it along c4-d5-e6-f7, and f7 is exactly where
+     * white broke through ({@code 26.Qxf7}, mating on g7 two moves later).
+     * Measured on v4.3.4, {@code Qb4} is its first choice from depth 7 through
+     * <b>depth 12</b> (evaluations +128, +153, +48, +50, +4, -300 cp from black's
+     * side), so more search does not fix it — the position is simply scored
+     * wrong. The same game's {@code 21...Re8} shows the identical gap from
+     * {@code r1b2r1k/pppp1p1p/5p2/5N2/2q5/6R1/2P2PPP/2RQ2K1 b - - 5 21}, where
+     * the engine reads +1.6 to +2.3 for itself at every depth from 1 to 10.
+     *
+     * <p>This is what a king-safety term measures and myChess does not have
+     * (roadmap § 12.21): several attackers in the king zone, scored
+     * progressively. The material-only shortcut compounds it — three pawns is
+     * past {@code EVALUATE_MATERIAL_ONLY_THRESHOLD = 200 cp}, so in the lines
+     * where it keeps that lead the positional evaluation is skipped entirely and
+     * the danger cannot be seen at all.
+     *
+     * <p><b>This assertion is a characterization, not a goal.</b> It passes
+     * because the defect is present. Once king safety lands it must start
+     * failing — that is the signal to invert it into an
+     * {@link #assertEngineAvoids} test against {@code Qb4} and to record the new
+     * evaluation here.
+     */
+    @Test
+    @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void qb4_atMove22_characterizesTheKingSafetyBlindSpot() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_QB4_FEN, IN_GAME_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(),
+                "in the pre-blunder position black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertTrue(result.weight() < -0.5f,
+                "characterization: at the in-game depth myChess still rates itself better here, "
+                        + "blind to the three attackers on its open king (objectively white is winning "
+                        + "by roughly ten pawns). If this now reports a white advantage, king safety has "
+                        + "landed — turn this into an avoidance test for Qb4. white-POV eval "
+                        + result.weight());
+    }
 }
