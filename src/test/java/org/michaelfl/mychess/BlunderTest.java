@@ -635,4 +635,111 @@ class BlunderTest {
                         + "landed — turn this into an avoidance test for Qb4. white-POV eval "
                         + result.weight());
     }
+
+    /**
+     * White (myChess) to move after {@code 15.g4 Nxg4 16.hxg4 Bxg4}: two pawns
+     * up on material, and only f2 left in front of the king on g1.
+     */
+    private static final String STRIPPED_KING_FEN = "r5k1/ppqn1pp1/2pb3p/8/3P2b1/2NB1N2/PPP2P2/2RQB1K1 w - - 0 17";
+
+    /**
+     * The sharpest form of the same blind spot: with the king stripped bare, the
+     * engine's verdict is <em>exactly its material balance</em>.
+     *
+     * <p>From rated blitz game <a href="https://lichess.org/ogbRQZBH">ogbRQZBH</a>
+     * (myChessJava vs PlayMarius 2081, drawn by repetition). myChess pushed
+     * {@code 15.g4}, which invites the knight sacrifice {@code 15...Nxg4!
+     * 16.hxg4 Bxg4}: black gives a knight for two pawns and the white king,
+     * previously screened by f2/g2/h3, keeps only f2. Black's attack was real —
+     * the game continued {@code 18...Bh2+} and {@code 24...Bh3+ 25.Kxh3} with
+     * perpetual checks, and myChess survived solely because black took the
+     * threefold repetition.
+     *
+     * <p>Two measurements on v4.3.4 make the defect precise. First, the engine
+     * chooses {@code g4} from depth 5 through 10 and its principal variation
+     * never contains {@code ...Nxg4} at all — it expects the bishop to retreat
+     * ({@code 15...Bg6}), because a knight for two pawns reads as a material gain
+     * and therefore cannot be black's best. Second, and worse, in the position
+     * <em>after</em> the sacrifice it scores itself +266 to +210 cp at every
+     * depth from 1 to 9. The material edge is exactly +200 cp, so the naked king
+     * is worth essentially <b>nothing</b> to the evaluation. That flatness across
+     * all depths rules out a horizon effect: this is the evaluation function, not
+     * the search.
+     *
+     * <p>Note the direction, which is the mirror image of the other cases here:
+     * myChess does not fail to see an enemy attack, it <em>sells its own king
+     * shelter for material</em>. Two pawns also sits right at
+     * {@code EVALUATE_MATERIAL_ONLY_THRESHOLD = 200 cp}, so in these lines the
+     * positional evaluation may be skipped outright.
+     *
+     * <p><b>Characterization, not a goal</b> — same contract as
+     * {@link #qb4_atMove22_characterizesTheKingSafetyBlindSpot()}: it passes
+     * because the defect is present, and must be rewritten once a king-safety
+     * term makes the score fall away from the bare material count.
+     */
+    @Test
+    @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void strippedKing_evaluatesAsPureMaterial() throws Exception {
+        var game = gameFromFenAtDepth(STRIPPED_KING_FEN, 6, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
+                "in the post-sacrifice position white (myChess) must be to move");
+
+        var result = searchCurrentPosition(game);
+
+        assertTrue(result.weight() > 1.5f,
+                "characterization: myChess still values this at about its material edge (+2 pawns) "
+                        + "even though its king has lost every pawn but f2 and black holds a perpetual — "
+                        + "the king shelter is worth ~0 cp to the evaluation. A materially lower score "
+                        + "means king safety has landed; rewrite this test then. white-POV eval "
+                        + result.weight());
+    }
+
+    /** White (myChess) in check after {@code 24...Bh3+}; exactly three legal replies. */
+    private static final String POISONED_BISHOP_FEN = "r5k1/ppq2p2/6pp/1p6/1B1P1b2/3B1N1b/PPP1QPK1/4R3 w - - 1 25";
+
+    /**
+     * The same blindness in its third guise: accepting a sacrifice whose
+     * compensation is invisible, turning a won game into a draw.
+     *
+     * <p>Ten moves later in game <a href="https://lichess.org/ogbRQZBH">ogbRQZBH</a>,
+     * black threw in {@code 24...Bh3+}. myChess is in check with exactly three
+     * legal answers — {@code Kxh3}, {@code Kh1}, {@code Kg1} — so this is a pure
+     * decision, with no room for search breadth or move ordering to be blamed. It
+     * took the bishop, and {@code 25...Qd7+} produced the perpetual that saved
+     * black: lichess's analysis has the position at {@code +4.2} before the
+     * capture and {@code 0.0} after it.
+     *
+     * <p>Measured on v4.3.4, {@code Kxh3} is its choice at <em>every</em> depth
+     * from 1 to 12, and the score never moves off {@code +500 cp}. That number is
+     * precisely the material balance — two pawns up beforehand, plus the bishop —
+     * so once again the exposure of its own king is priced at zero. The principal
+     * variation reads {@code Kxh3 Rc8 Bb5 Qc2 ...}: the perpetual {@code ...Qd7+}
+     * never appears in it at all.
+     *
+     * <p>Declining with {@code Kh1} or {@code Kg1} keeps the extra pawns and the
+     * king behind cover. That is what a king-safety term would make visible: the
+     * capture drags the king onto h3 beside a black queen and rook.
+     *
+     * <p><b>Characterization, not a goal</b> — see
+     * {@link #qb4_atMove22_characterizesTheKingSafetyBlindSpot()}. When king
+     * safety lands this must flip, and the test should become an
+     * {@link #assertEngineAvoids} case against {@code Kxh3}.
+     */
+    @Test
+    @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void kxh3_atMove25_characterizesAcceptingThePoisonedBishop() throws Exception {
+        var game = gameFromFenAtDepth(POISONED_BISHOP_FEN, 6, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
+                "in the check position white (myChess) must be to move");
+
+        var result = searchCurrentPosition(game);
+
+        assertEquals(ChessUtil.moveToString(Board.g2, Board.h3), ChessUtil.moveToString(result.move()),
+                "characterization: myChess still grabs the bishop with Kxh3 rather than declining with "
+                        + "Kh1/Kg1, blind to the perpetual that follows. If it now declines, king safety "
+                        + "has landed — invert this into an avoidance test. white-POV eval " + result.weight());
+        assertTrue(result.weight() > 4.0f,
+                "characterization: the score should still be the bare material count (+5 pawns), with the "
+                        + "king dragged to h3 costing nothing; got " + result.weight());
+    }
 }
