@@ -368,4 +368,149 @@ class BlunderTest {
                         + "(v4.3.1) closed this blind spot; a miss is a regression. white-POV eval "
                         + result.weight());
     }
+
+    // ----------------------------------------------------------------
+    // Philidor's Legacy — rated blitz game
+    // https://lichess.org/KSvNk2VQ (TucuEngine 1923 vs myChessJava, 1-0),
+    // the first smothered mate myChess walked into on lichess.
+    //
+    // Two pawns down as black, myChess grabbed the a1 rook with
+    // 21...Qxa1?? — equalizing on material but parking its queen in the
+    // far corner. White forced the classic pattern:
+    //   22.Qd5+ Rf7 23.Qxa8+ Rf8 24.Qd5+ Kh8
+    //   25.Nf7+ Kg8 26.Nh6+ Kh8 27.Qg8+ Rxg8 28.Nf7#
+    //
+    // The cases below are pinned to a FIXED DEPTH rather than a time
+    // budget: the interesting quantity here is the depth at which the
+    // knowledge appears, and a fixed depth makes the outcome
+    // deterministic instead of machine-speed dependent (only the runtime
+    // varies). The measured thresholds are recorded per test.
+    // ----------------------------------------------------------------
+
+    /** Black (myChess) to move, before the losing 21...Qxa1. */
+    private static final String BEFORE_QXA1_FEN = "r4rk1/p1p3pp/2Q5/4N3/5B2/8/PPP1KP1P/R5q1 b - - 2 21";
+
+    /** White to move after 21...Qxa1, mate in 7 starting with Qd5+. */
+    private static final String AFTER_QXA1_FEN = "r4rk1/p1p3pp/2Q5/4N3/5B2/8/PPP1KP1P/q7 w - - 0 22";
+
+    /** White to move after 24...Kh8, mate in 4 starting with Nf7+. */
+    private static final String BEFORE_NF7_FEN = "5r1k/p1p3pp/8/3QN3/5B2/8/PPP1KP1P/q7 w - - 3 25";
+
+    /**
+     * Per-move budget for the fixed-depth cases below. Deliberately far above
+     * {@link #SEARCH_BUDGET_MS}: these tests want the <em>depth</em> to be the
+     * only bound, so the requested iteration always completes instead of the
+     * clock cutting it short and the result falling back to a shallower — and
+     * differently-decided — iteration.
+     */
+    private static final int DEPTH_BOUND_BUDGET_MS = 120_000;
+
+    /** JUnit safety timeout for the fixed-depth cases; above {@link #DEPTH_BOUND_BUDGET_MS}. */
+    private static final int DEPTH_BOUND_TIMEOUT_S = 150;
+
+    private static Game gameFromFenAtDepth(String fen, int depth, TranspositionTable tt) {
+        var engineConfig = new EngineConfig.Builder()
+                .maxDepth(depth)
+                .millisPerMove(DEPTH_BOUND_BUDGET_MS)
+                .silent(true)
+                .setTranspositionTable(tt)
+                .build();
+
+        return new Game(new GameConfig(MyChessEngine.class, engineConfig), Fen.importFEN(fen));
+    }
+
+    /** Like {@link #searchCurrentPosition}, but waits long enough for {@link #DEPTH_BOUND_BUDGET_MS}. */
+    private static MoveAndWeight searchCurrentPositionDeep(Game game) throws Exception {
+        return game.getEngine().nextMoveAsync().getResult(DEPTH_BOUND_TIMEOUT_S - 10, TimeUnit.SECONDS);
+    }
+
+    /**
+     * Depth at which the engine stops preferring the losing {@code 21...Qxa1}.
+     * Measured on v4.3.4: depths 1-12 all pick {@code Qxa1} (the evaluation
+     * drifting from +300 cp down to -506 cp as the attack comes into view);
+     * at depth 13 it switches to {@code Qxf2+} instead.
+     */
+    private static final int QXA1_REFUTATION_DEPTH = 13;
+
+    /**
+     * The engine must not walk into Philidor's Legacy with {@code 21...Qxa1}
+     * once it can search deep enough to see the consequence.
+     *
+     * <p>Note what this does and does not claim. Black is lost either way: at
+     * {@link #QXA1_REFUTATION_DEPTH} the preferred {@code Qxf2+} is still rated
+     * about -900 cp, so the "blunder" is choosing <em>mate</em> over merely
+     * losing. The genuine defect sits earlier — the queen raid 19...Qxg2 /
+     * 21...Qxa1 abandons a bare king, which is precisely what a king-safety
+     * term would penalize and myChess has none (roadmap § 12.21). The
+     * material-only eval shortcut compounds it: a rook is 500 cp, far past
+     * {@code EVALUATE_MATERIAL_ONLY_THRESHOLD = 200 cp}, so positional
+     * evaluation is skipped in exactly these material-grabbing lines.
+     *
+     * <p>In the game myChess had roughly 3 s per move and reached depth 7-8, so
+     * it could not reach this refutation — the knowledge exists in the search
+     * but not within the clock. A king-safety term should move the threshold
+     * down into reachable depths; that is the regression this test guards.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void qxa1_atDepth13_engineRefutesTheGreedyRookGrab() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_QXA1_FEN, QXA1_REFUTATION_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(),
+                "in the pre-blunder position black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineAvoids(result, Board.g1, Board.a1, "21...Qxa1");
+    }
+
+    /**
+     * The attacking side of the same combination: from the position after
+     * {@code 24...Kh8} the engine must find {@code 25.Nf7+} and see the mate.
+     *
+     * <p>Measured on v4.3.4: depths 1-7 prefer the quiet {@code Nd3} and rate
+     * the position a mere +3 pawns; at <b>depth 8</b> (0.6 s) the search finds
+     * {@code Nf7+} and reports {@code mate 4}, with the whole pattern in the
+     * principal variation — knight checks, queen sacrifice on g8, and the
+     * enemy rook forced to seal its own king in.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void nf7_atMove25_engineFindsSmotheredMateInFour() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_NF7_FEN, 8, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
+                "in the mate-in-4 position white must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.e5, Board.f7), ChessUtil.moveToString(result.move()),
+                "engine must start Philidor's Legacy with Nf7+ (e5-f7); white-POV eval " + result.weight());
+        assertTrue(result.weight() > 500f,
+                "the evaluation must be a mate score, not just a material edge; got " + result.weight());
+    }
+
+    /**
+     * The same combination seen from further out: after {@code 21...Qxa1} the
+     * mate is 13 plies deep, and the engine must still choose the entry move
+     * {@code 22.Qd5+}.
+     *
+     * <p>Measured on v4.3.4, this splits move choice from understanding: the
+     * right move appears at <b>depth 6</b>, but the position is still scored
+     * {@code 0} there; the evaluation climbs (+200 at depth 10, +1000 at
+     * depth 12) and only at <b>depth 14</b> (18.7 s) does the search report
+     * {@code mate 7} with the full forcing line. The assertion below pins the
+     * cheap part — the move — because that is what decides the game; the mate
+     * score costs eight extra plies and is documented rather than asserted.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void qd5_atMove22_engineFindsTheEntryToTheMatingNet() throws Exception {
+        var game = gameFromFenAtDepth(AFTER_QXA1_FEN, 8, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
+                "after 21...Qxa1 white must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.c6, Board.d5), ChessUtil.moveToString(result.move()),
+                "engine must enter the mating net with Qd5+ (c6-d5); white-POV eval " + result.weight());
+    }
 }
