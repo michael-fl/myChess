@@ -8,6 +8,7 @@ import org.michaelfl.mychess.openingdb.OpeningDB.PositionInfo;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -664,21 +665,21 @@ final class CommandHandler {
         }
 
         private void printResult(Bench.BenchResult result) {
-            System.out.printf("bench suite=%s depth=%d positions=%d%n",
+            System.out.printf(Locale.ROOT, "bench suite=%s depth=%d positions=%d%n",
                     result.chess960() ? "chess960" : "standard", result.depth(), result.positions().size());
 
             int index = 1;
             int count = result.positions().size();
 
             for (var position : result.positions()) {
-                System.out.printf("%3d/%d  nodes %,12d  time %6d ms   %s%n",
+                System.out.printf(Locale.ROOT, "%3d/%d  nodes %,12d  time %6d ms   %s%n",
                         index++, count, position.nodes(), position.timeMs(), shortFen(position.fen()));
             }
 
             System.out.println("===========================================================");
-            System.out.printf("Total time     : %,d ms%n", result.totalTimeMs());
-            System.out.printf("Nodes searched : %,d%n", result.totalNodes());
-            System.out.printf("NPS            : %,d%n", result.nps());
+            System.out.printf(Locale.ROOT, "Total time     : %,d ms%n", result.totalTimeMs());
+            System.out.printf(Locale.ROOT, "Nodes searched : %,d%n", result.totalNodes());
+            System.out.printf(Locale.ROOT, "NPS            : %,d%n", result.nps());
         }
 
         private void printAll(int depth) {
@@ -697,11 +698,11 @@ final class CommandHandler {
             int totalPositions = standard.positions().size() + chess960.positions().size();
             long totalNps = totalTimeMs == 0 ? 0 : totalNodes * 1_000L / totalTimeMs;
 
-            System.out.printf("bench suite=all depth=%d positions=%d%n", depth, totalPositions);
+            System.out.printf(Locale.ROOT, "bench suite=all depth=%d positions=%d%n", depth, totalPositions);
             System.out.println("===========================================================");
-            System.out.printf("Total time     : %,d ms%n", totalTimeMs);
-            System.out.printf("Nodes searched : %,d%n", totalNodes);
-            System.out.printf("NPS            : %,d%n", totalNps);
+            System.out.printf(Locale.ROOT, "Total time     : %,d ms%n", totalTimeMs);
+            System.out.printf(Locale.ROOT, "Nodes searched : %,d%n", totalNodes);
+            System.out.printf(Locale.ROOT, "NPS            : %,d%n", totalNps);
         }
 
         private String shortFen(String fen) {
