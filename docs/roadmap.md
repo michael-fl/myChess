@@ -25,6 +25,7 @@ This roadmap is split across three files. Section numbers (§ 12.x) are **stable
 | 12.12 | Real time management heuristics | S–M, ≈ 30–60 |
 | 12.20 | Principal Variation Search (PVS) | S, ≈ 10–25 |
 | 12.21 | King safety | M, ≈ 30–60 |
+| 12.23 | Repetition draws invisible to the search — *correctness* | S, ≈ 0 in self-play, real half-points vs others |
 
 **[Completed & investigated → `roadmap-done.md`](roadmap-done.md).** Shipped features and closed investigations (kept as knowledge):
 
@@ -271,6 +272,40 @@ The single largest evaluation term myChess is still missing. Today the only king
 - **What Texel can and cannot tune here.** The progressive `KING_ATTACK_PENALTY` curve is linear per bucket (each position lands in exactly one bucket → its bucket value is Texel-tunable), *but* the Zurichess `quiet-labeled` set under-samples the sharp, high-attack-unit positions the curve exists for, so tuning it on quiet data mostly *shrinks* the curve toward neutral rather than learning real attacking value. The attacker unit-weights (`ATTACK_UNIT_OF_PIECE`) set the table index and are therefore *non-linear* — not Texel-tunable; keep them fixed or SPSA them.
 
 A serious retry therefore needs three things together, not a lone tuner run: (1) **phase-scale** the term (do it with tapered eval); (2) **tune the curve on a dataset that includes real attacks**, not only quiet positions; (3) keep the **weights fixed / SPSA**, with **modest Elo expectations** — for an engine whose search already resolves king attacks tactically, the ceiling of a static king-safety term is likely well below this section's headline estimate. Sequence it after [§ 12.7.1](roadmap.md#1271-tapered-evaluation--staged-rollout-strategy).
+
+---
+
+## 12.23 Repetition draws are invisible to the search — **S, correctness fix, ≈ 0 in self-play but real half-points against others**
+
+A correctness bug, not an evaluation gap: the search cannot see a threefold repetition coming, so myChess walks into draws from positions it itself considers winning. Full mechanism and the two lichess games that exposed it are in [known-issues.md](known-issues.md); the short version is that two independent facts combine.
+
+`Board.isThreefoldRepetition()` fires on the **third** occurrence, as the game rule requires. Inside a search that is one ply too late: at the second occurrence the check correctly declines, and the position after it already carries a transposition-table entry stored *before* it was a repetition. The entry answers with its old, pre-repetition score and the continuation is cut off, so the third occurrence is never reached — at any depth. A position hash is path-independent; a repetition draw is not.
+
+**Opportunity, measured on 2026-08-11.** The 2000-game hybrid-vs-v4.3.4 fixed-N match (`test-results/match-hybrid-pesto-tables-vs-4.3.4.pgn`) gives the first quantification, because cutechess records each engine's own evaluation per move:
+
+| | count |
+|---|---|
+| draws, total | 687 of 2000 (34.4 %) |
+| … by threefold repetition | 586 — **85 % of all draws**, 29 % of all games |
+| … adjudicated as equal | 59 |
+| natural draws (non-adjudicated) | 628 |
+| **of those, one side reported ≥ +2.00 within the last 12 plies** | **203 (32.3 %)** |
+| … at 2–3 pawns / 3–5 pawns / 5–8 pawns | 105 / 87 / 11 |
+
+So one game in ten ended as a draw while an engine believed it was at least two pawns ahead, and 98 of those at three pawns or more.
+
+**Read that with one caveat.** myChess's own evaluation is exactly what the [§ 12.21](roadmap.md#1221-king-safety--m--3060-elo) blunder series shows to be unreliable — in lichess game [1PSnMOBF](https://lichess.org/1PSnMOBF) it reported `+1.43` in a position Stockfish scored as mate against it. Some of these `+2.00` readings are therefore misevaluation rather than a discarded win. The 98 games at three pawns and above are much harder to explain that way.
+
+**Where the cost actually falls.** Both engines in that match carry the bug, so it does not bias the measured Elo difference — it inflates the draw rate symmetrically. The real price is paid **outside** self-play, against opponents who do not make the same mistake: on lichess, game [i1QxWK9L](https://lichess.org/i1QxWK9L) was drawn by repetition with myChess roughly eight pawns up, and the anchor bracket ([§ 12.10.3](roadmap-backlog.md#12103-self-play-tournament--m-1-day)) is where a fix should become visible.
+
+**How to fix it.** Two routes, both making detection path-local instead of table-dependent:
+
+- Treat the **second** occurrence along the current search path as a draw. Standard practice in engines, and it removes the dependence on the table entirely — the repetition is then a property of the path being searched, which is what it actually is.
+- Or suppress table cutoffs whenever any position on the current path has occurred before. Narrower, but keeps the table honest in the rare case where the distinction matters.
+
+**How to measure it.** A **fixed-vs-broken SPRT** — unlike the match above, the asymmetry is then the measurand, so self-play measures this fix perfectly well. Expect the gain to show up as draws converting to wins rather than as a change in playing strength per move.
+
+**Already pinned by tests.** `ThreefoldRepetitionTest.secondOccurrenceIsNotYetADraw` guards the game rule (three occurrences) so a fix does not accidentally change it; `engineDoesNotAvoidRepetitionWhenWinning` plus the cold-table / warm-table pair in `BlunderTest` (`repetition_withColdTable_blocksTheCheckAndAvoidsTheDraw`, `repetition_withWarmTable_walksIntoTheDraw`) characterize the defect from both sides — the same position and depth, two table states, two different moves. The warm-table case is marked `TODO` and must start failing when the fix lands.
 
 ---
 
