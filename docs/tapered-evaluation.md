@@ -112,6 +112,14 @@ castling, doubled pawns, and undefended pieces, and will grow a king-safety term
   trained *alone* and bake in king safety and pawn structure that myChess
   already scores separately. This is a key reason the rollout (§ 6) seeds tuning
   from our own tables rather than PeSTO.
+  > **Outcome (2026-08-11) — this concern did not materialize.** PeSTO's tables
+  > were eventually imported wholesale *while keeping* every myChess term, and the
+  > feared double-counting cost nothing: the build measured **+32.6 ± 12.4 Elo**
+  > over v4.3.4 and shipped as v4.4.0. See
+  > [roadmap § 12.7.5](roadmap.md#1275-pesto-piece-square-tables--done-326-elo-v440).
+  > A plausible reading is that the wiki's tables are pure *placement* offsets with
+  > material held in a separate `mg_value` / `eg_value` array, so the overlap with
+  > myChess's own terms is smaller than "trained alone" suggests.
 
 Integration details to keep consistent with the current evaluation:
 
@@ -168,6 +176,14 @@ One measurable change per step (mirrors and expands
 2. **Texel-tune the MG/EG tables** (and material as MG/EG pairs). With the phase
    confound gone, the proxy improvement should finally track Elo. Measure against
    the step-0 baseline by SPRT.
+
+> **Superseded (2026-08-11).** The plan below — tune from our own tables, keep
+> PeSTO only as a yardstick — was followed and then overturned by its own
+> measurement: PeSTO's tables replaced ours outright in v4.4.0 (**+32.6 Elo**,
+> [roadmap § 12.7.5](roadmap.md#1275-pesto-piece-square-tables--done-326-elo-v440)).
+> Kept here for the reasoning, which is still sound as a *method* — it was the
+> ceiling test's ambiguity, not the plan, that misled: swapping tables and terms
+> at once produced a null result that said nothing about either.
 
 **PeSTO as an independent reference, not the seed.** Measure PeSTO-as-is once (its
 MG/EG tables and material, column-symmetrized) against the current single-phase

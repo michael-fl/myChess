@@ -1033,7 +1033,15 @@ Scheduled as [§ 12.23](roadmap.md#1223-repetition-draws-are-invisible-to-the-se
 which carries the measurement: in the 2000-game hybrid-vs-v4.3.4 match of
 2026-08-11, 586 of 687 draws (85 %) came from threefold repetition, and 203 of the
 628 non-adjudicated draws had one side reporting **≥ +2.00** within the last twelve
-plies — 98 of them at three pawns or more. Since both engines in that match share
-the bug it does not distort the measured Elo difference; the cost is paid against
-opponents that do not repeat, which is why the fix should be measured as a
-fixed-vs-broken SPRT rather than looked for in an ordinary self-play run.
+plies — 98 of them at three pawns or more.
+
+Since both engines in that match share the bug, it does not distort the measured
+Elo difference: a defect both sides have cancels out in the score. It becomes
+measurable only where the two sides **differ** in it, so the fix has to be measured
+as corrected myChess against uncorrected; in a match where both builds carry the
+bug it stays invisible no matter how many games are played.
+
+Against outside opponents the cost is real, and it comes from opponents that handle
+repetitions *correctly* — a losing opponent that deliberately steers into a
+threefold repetition collects half a point myChess had already earned. That is
+exactly what happened in i1QxWK9L.

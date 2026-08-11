@@ -5,7 +5,8 @@ Yet another chess engine — just for fun.
 A small, self-contained chess engine written from scratch in Java 25. It speaks
 both an interactive REPL and the **UCI protocol** (so it plugs into Cute Chess,
 Arena, or a lichess bot bridge), supports **standard chess and Chess960**, and
-plays with a hand-written, [Texel-tuned tapered evaluation](docs/tapered-evaluation.md)
+plays with a [tapered evaluation](docs/tapered-evaluation.md) built on
+[PeSTO's piece-square tables](#credits-and-third-party-material)
 behind an iterative-deepening alpha-beta search with a
 [transposition table](#7-search-optimizations), null-move pruning, and
 [quiescence search](docs/search.md#64-quiescence-search).
@@ -64,7 +65,7 @@ Passing `uci` as the first CLI argument switches [`MyChessMain`](src/main/java/o
 For use in a GUI or a bot bridge, run the packaged jar standalone — `mvn package` puts the runtime dependencies under `target/dependency/` (adjust the version in the jar name to match `pom.xml`):
 
 ```bash
-java -cp "target/my-chess-4.3.4.jar:target/dependency/*" \
+java -cp "target/my-chess-4.4.0.jar:target/dependency/*" \
      org.michaelfl.mychess.MyChessMain uci
 ```
 
@@ -87,12 +88,14 @@ In this file:
    4. [Concurrency and async move calculation](#24-concurrency-and-async-move-calculation)
    5. [Entry points: REPL and UCI](#25-entry-points-repl-and-uci)
 
+Also in this file, at the end: [Credits and third-party material](#credits-and-third-party-material).
+
 In separate files under [`docs/`](docs/):
 
 3. [Core Data Types](docs/data-types.md) — board, piece, move, status encoding; Zobrist hashing; move-list and notation types.
 4. [Move Generation](docs/move-generation.md) — pseudo-legal generation per piece, castling (standard + Chess960), en passant, king-capture detection, ordering hook.
 5. [Evaluation Function](docs/evaluation.md) — material, piece-square tables, mobility, threats, castling, opening, double pawns, checks, composition.
-   - [Tapered evaluation](docs/tapered-evaluation.md) — phase-interpolated midgame/endgame tables, the Texel-tuned piece-square tables, and the bishop-pair term.
+   - [Tapered evaluation](docs/tapered-evaluation.md) — phase-interpolated midgame/endgame tables, the PeSTO-derived piece-square tables (see [credits](#credits-and-third-party-material)), and the bishop-pair term.
 6. [Search Algorithm](docs/search.md#6-search-algorithm) — iterative-deepening negamax alpha-beta, PV table, quiescence, time management, mate scoring.
 7. [Search Optimizations](docs/search.md#7-search-optimizations) — transposition table, null-move pruning, SEE-ordered captures, best-known-move ordering, killers, material-only shortcut, make/undo, packed moves, opening book, full sorting policy.
 8. [Game Lifecycle and Result Detection](docs/game-lifecycle.md)
@@ -112,7 +115,7 @@ In separate files under [`docs/`](docs/):
 
 ### 1.1 What is myChess?
 
-myChess is a small, self-contained chess engine written from scratch in Java. It is a personal hobby project — the original tag line is *"yet another chess engine, just for fun"* — and the codebase reflects that: clarity over micro-optimization, no third-party engine framework, and no neural-network evaluation. It has grown well past a toy, though: it now plays a competitive-hobby-level game, is playable in any UCI GUI, and supports Chess960.
+myChess is a small, self-contained chess engine written from scratch in Java. It is a personal hobby project — the original tag line is *"yet another chess engine, just for fun"* — and the codebase reflects that: clarity over micro-optimization, no third-party engine framework, and no neural-network evaluation. The one piece of borrowed material is the set of piece-square tables, adopted from PeSTO in v4.4.0 and credited under [Credits and third-party material](#credits-and-third-party-material). It has grown well past a toy, though: it now plays a competitive-hobby-level game, is playable in any UCI GUI, and supports Chess960.
 
 The engine plays a full game of chess against itself or against a human opponent. It implements the complete rules of chess (including castling, en passant, pawn promotion, the fifty-move rule, and threefold repetition), generates moves with a [hand-written generator](docs/move-generation.md) over a [12×12 mailbox board](docs/data-types.md#31-board-representation-1212-mailbox), [evaluates positions](docs/evaluation.md) with a [tapered](docs/tapered-evaluation.md) material + positional + mobility weighted sum, and [searches](docs/search.md) via iterative-deepening alpha-beta with a [transposition table](docs/search.md#7-search-optimizations), null-move pruning, [quiescence search](docs/search.md#64-quiescence-search), [killer-move heuristics](docs/search.md#72-killer-moves), SEE-ordered captures, and a small opening book backed by [MapDB](https://mapdb.org/).
 
@@ -430,3 +433,45 @@ The interactive flow for the most common commands:
 Adding a new REPL command is a two-step change: define a new nested `Command` subclass inside `CommandHandler` and append it to the command list assembled in the constructor.
 
 **UCI.** [`UciHandler`](src/main/java/org/michaelfl/mychess/UciHandler.java) reads UCI commands line by line and drives the same `Game`/`ChessEngine` stack. It implements the handshake (`uci` → `id`/`option`/`uciok`, `isready` → `readyok`), `ucinewgame`, `position [startpos|fen …] moves …` (moves parsed by [`UciMoveParser`](src/main/java/org/michaelfl/mychess/UciMoveParser.java)), `go` (with time-control fields), `stop`, and `quit`, plus the `UCI_Chess960` option that switches the board and move generator into Fischer-random mode. Output is routed through [`Log`](src/main/java/org/michaelfl/mychess/Log.java) in UCI mode so diagnostics never corrupt the protocol stream. See [Running myChess on lichess](docs/myChess-on-lichess.md) for a deployment example.
+
+---
+
+## Credits and third-party material
+
+myChess is written from scratch, and the search, board representation, move
+generation, and evaluation architecture are original work. Two things in the tree
+are not, and are credited here.
+
+**Piece-square tables — PeSTO, by Ronald Friederich.** Since **v4.4.0** the twelve
+tapered piece-square tables in
+[`PieceSquareTables`](src/main/java/org/michaelfl/mychess/PieceSquareTables.java)
+are derived from [PeSTO's evaluation
+function](https://www.chessprogramming.org/PeSTO%27s_Evaluation_Function), created
+by Ronald Friederich and first tested in his engine
+[RofChade](https://www.chessprogramming.org/RofChade). PeSTO itself supersedes
+Tomasz Michniewski's [Simplified Evaluation
+Function](https://www.chessprogramming.org/Simplified_Evaluation_Function), and the
+code form published on the wiki is based on Pawel Koziol's adaptation for TSCP.
+
+The values were mirror-symmetrized (each square averaged with its file-mirrored
+counterpart) and scaled ×2 onto myChess's evaluation scale. That is a mechanical
+transformation, not a re-tune — the numbers remain Friederich's. Swapping them in
+while keeping every other myChess evaluation term measured **+32.6 ± 12.4 Elo**
+over v4.3.4 across 2 000 games; see [roadmap § 12.7.5](docs/roadmap.md#1275-pesto-piece-square-tables--done-326-elo-v440)
+for the measurement and for why a *pure* PeSTO evaluation measured ~0 while this
+hybrid did not. myChess's own Texel tuner and the tables it produced remain in the
+tree and are still usable.
+
+**License:** no explicit license or terms of use accompany the tables at the source
+(checked 2026-08-11). The Chess Programming Wiki page that publishes them is
+licensed [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) by its
+contributors. They are credited here because attribution is owed either way.
+
+**Opening book source data.** The MapDB opening book is built from
+[KingBase](https://www.kingbase-chess.net/) PGN archives by `OpeningDBImporter`. The
+generated `db/` directory is git-ignored, so no third-party game data is
+redistributed in this repository.
+
+**Test data.** Evaluation tuning used the Zurichess `quiet-labeled` position set,
+and the `bench` suite includes Stockfish's standard benchmark positions; both are
+noted where they are used.

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
-import org.opentest4j.AssertionFailedError;
 
 import java.util.concurrent.TimeUnit;
 
@@ -288,6 +287,14 @@ class BlunderTest {
      * trace — but the move that actually throws the game is the
      * recapture here. The engine should decline it (e.g. {@code ...g4})
      * and keep the king cover intact.
+     *
+     * <p><b>Fixed in v4.4.0.</b> With the PeSTO piece-square tables the engine
+     * declines the recapture and plays exactly that {@code ...g4}. Stockfish
+     * (depth 22) rates the blunder {@code gxh4} at <b>-2.05</b> from black's
+     * side, {@code g4} at <b>-0.41</b>, and its own best {@code d6} at
+     * <b>+0.74</b> — so the two-pawn error is gone while roughly a pawn of
+     * accuracy is still missing. The assertion below is therefore a real
+     * requirement now, not a characterization.
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -303,15 +310,11 @@ class BlunderTest {
 
         var result = searchCurrentPosition(game);
 
-        // TODO move should be avoided
-        boolean avoided = false;
-        try {
-            assertEngineAvoids(result, Board.g5, Board.h4, "16...gxh4");
-            avoided = true;
-        } catch (AssertionFailedError _) {
-            // expected for now
-        }
-        assertFalse(avoided);
+        // Fixed by the v4.4.0 PeSTO tables — a positive assertion now, no longer a
+        // characterization. TODO: the move it picks is g4 (Stockfish -0.41), the very
+        // alternative named above, but Stockfish's best is d6 (+0.74), so about 1.15
+        // pawns are still left on the table. Tighten to require d6 if the eval improves.
+        assertEngineAvoids(result, Board.g5, Board.h4, "16...gxh4");
     }
 
     /**
@@ -1101,27 +1104,28 @@ class BlunderTest {
      * enemy queen landing beside its own king. Depths 1-6 prefer {@code Qc3},
      * freeing the entombed queen, so once again the shallow search is the sound one.
      *
-     * <p><b>TODO — invert once king safety lands</b>, same contract as
-     * {@link #qe5_atMove9_characterizesSellingTheKingForARook()}: written first as an
-     * avoidance test against {@code h2-h3}, confirmed red (chosen with {@code +1.43}),
-     * then relaxed into this characterization.
+     * <p><b>Fixed in v4.4.0 — but only partly.</b> Written first as an avoidance test
+     * against {@code h2-h3} and confirmed red (chosen with {@code +1.43}), then relaxed
+     * into a characterization; the PeSTO piece-square tables then made it pass, so it is
+     * an avoidance test again. The engine now plays {@code Qc3}, freeing the entombed
+     * queen — the move its own shallow search had wanted all along.
+     *
+     * <p><b>TODO — {@code Qc3} is only the second-best move.</b> Stockfish puts it at
+     * <b>-0.8</b> while the quiet <b>{@code d3} scores +0.3</b>, so what changed is
+     * "loses by force" to "slightly worse", not "plays the best move". Roughly a pawn of
+     * accuracy is still missing; tighten this to require {@code d3} if the evaluation
+     * improves further.
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void h3_atMove12_characterizesTheUndefendedPawnPush() throws Exception {
+    void h3_atMove12_engineNoLongerPushesTheUndefendedPawn() throws Exception {
         var game = gameFromFenAtDepth(ENTOMBED_QUEEN_FEN, IN_GAME_DEPTH_MOVE_12, tt);
         assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
                 "after 11...h5 white (myChess) must be to move");
 
         var result = searchCurrentPositionDeep(game);
 
-        assertEquals(ChessUtil.moveToString(Board.h2, Board.h3), ChessUtil.moveToString(result.move()),
-                "characterization: myChess still pushes h3 onto a square nothing defends, allowing Qxh3 with "
-                        + "Qg2# to follow. If it now plays something else, king safety has landed — turn this "
-                        + "into an avoidance test. white-POV eval " + result.weight());
-        assertTrue(result.weight() > 0.5f,
-                "characterization: it rates itself clearly ahead (measured +1.43) in a position Stockfish "
-                        + "scores as mate against white; got " + result.weight());
+        assertEngineAvoids(result, Board.h2, Board.h3, "12.h3");
     }
 
 }

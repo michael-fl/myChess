@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.michaelfl.mychess.EngineTest.engineConfig;
 
@@ -159,8 +160,13 @@ class ThreefoldRepetitionTest {
 
         MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(1, TimeUnit.MINUTES);
 
-        assertEquals("c1-b1", ChessUtil.moveToString(move.move()),
-                "characterization: myChess sidesteps instead of taking the free rook with Kxc2 (c1-c2)");
+        // The defect is that the rook is not taken — not which square the king picks
+        // instead. Pinning the exact sidestep made this test fail on the v4.4.0 PeSTO
+        // tables purely because b1 and d1 swapped rank, so assert the defect itself.
+        assertNotEquals("c1-c2", ChessUtil.moveToString(move.move()),
+                "characterization: myChess must still sidestep rather than take the free rook with Kxc2 "
+                        + "(c1-c2). If it now takes it, the repetition handling improved — replace this "
+                        + "characterization with a positive assertion on c1-c2");
         assertTrue(move.weight() > 10f,
                 "characterization: the repetition line is priced as a large material advantage instead of "
                         + "the draw it is; got white-POV weight " + move.weight());

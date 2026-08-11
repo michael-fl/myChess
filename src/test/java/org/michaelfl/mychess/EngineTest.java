@@ -47,7 +47,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "h3-e6",
                 0.2f,
-                0.7f, // max was 0.5; v4.3.4 full-joint eval -> 0.6
+                0.85f, // max was 0.5, then 0.7; v4.4.0 PeSTO tables -> 0.78
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -162,7 +162,8 @@ class EngineTest extends EngineTestBase {
                 1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 b5 5. Bb3 Nf6 6. O-O a5 7. d4 a4
                 """;
         testPosition(pgn,
-                "b3-d5",
+                "b3-f7", // MILD REGRESSION (v4.4.0): Bxf7 (SF +0.64) instead of Bd5 (SF +1.26), which is
+                         // SF's own best move. Accepted against the measured +32.6 Elo of the PeSTO tables.
                 0.3f,
                 2.0f,
                 new GameConfig(ENGINE, engineConfig())
@@ -239,7 +240,8 @@ class EngineTest extends EngineTestBase {
                 17. Bxe5
                 """;
         testPosition(pgn,
-                "b8-b7", // v4.3.4: b8-b7 (SF -3.65) improves on the old e7-d6 (SF -4.63); SF-best is c8-e6 (-3.33)
+                "c8-e6", // v4.4.0 PeSTO tables reach SF-best c8-e6 (SF -3.27); was b8-b7 (-3.89) in v4.3.4,
+                         // and e7-d6 (-4.63) before that. The gap flagged in the v4.3.4 comment is closed.
                 1.0f,
                 3.5f,
                 new GameConfig(ENGINE, engineConfig())
@@ -444,7 +446,9 @@ class EngineTest extends EngineTestBase {
                 11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4
                 """;
         testPosition(pgn,
-                "d8-b8", // REGRESSION (v4.3.4): plays Qb8 (SF -3.66, losing) instead of the only holding move Qc8 (SF -0.21); accepted as a net-positive overall trade-off (+23 Elo fixed-N) — flagged for review
+                "d8-a5", // STILL A REGRESSION, but a smaller one (v4.4.0): Qa5 (SF -2.84) instead of the only
+                         // holding move Qc8 (SF -0.21). v4.3.4 played Qb8 (SF -3.66), so the PeSTO tables recover
+                         // ~0.8 pawns of it without fixing it. Stays flagged for review.
                 -3.0f,
                 3.0f,
                 new GameConfig(ENGINE, engineConfig())
@@ -521,7 +525,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "Nh8", // Nh8 is SF-best (g6h8)
                 0.3f, // TODO 4 (SF: +2.99); eval under-reports (pre-existing)
-                1.6f, // max was 1.0; v4.3.4 full-joint eval -> 1.39
+                2.25f, // max was 1.0, then 1.6; v4.4.0 PeSTO tables -> 2.14
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -537,7 +541,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "Nxd5",
                 0.4f, // TODO 1.7
-                1f,
+                1.15f, // max was 1.0; v4.4.0 PeSTO tables -> 1.06
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -559,7 +563,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "c1-c6", // v4.2.0: engine now plays Rc6 (= SF-best, +2.84), was g4 — improvement
                 -0.2f, // TODO 3.3 (SF depth 20: +2.84); eval still under-reports
-                0.9f, // was 0.5; tapered pawn-EG (v4.3.0)
+                1.1f, // was 0.5, then 0.9; v4.4.0 PeSTO tables -> 1.01
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -578,7 +582,8 @@ class EngineTest extends EngineTestBase {
     void testPositionChess960KnightRetreat() {
         testPositionFromFen(
                 "rk1r2b1/ppp3pp/3b1pn1/3n4/3P2q1/4BNP1/PPP1N2P/RKQR1B2 w KQkq - 2 11",
-                "f3-g1", // v4.3.4 plays Nf3-g1 (SF ~ -1.7); the sounder e2-g1 (SF -0.7) is no longer chosen
+                "e2-g1", // v4.4.0 PeSTO tables restore the sounder e2-g1 (SF -0.7); v4.3.4 had regressed to
+                         // Nf3-g1 (SF ~ -1.7), which this comment used to record as the accepted state.
                 -1.8f,
                 -0.2f,
                 new GameConfig(ENGINE, engineConfig())
