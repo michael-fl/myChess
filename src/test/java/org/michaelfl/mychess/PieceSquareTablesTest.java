@@ -132,11 +132,11 @@ class PieceSquareTablesTest {
      */
     @Test
     void anchorValuesMatchTheLoadedTables() {
-        assertEquals(-164, PieceSquareTables.getMidGameWeight(Board.whiteKnight, Board.a8), "knight MG a8");
-        assertEquals(-5, PieceSquareTables.getMidGameWeight(Board.whiteKnight, Board.a1), "knight MG a1");
-        assertEquals(-97, PieceSquareTables.getMidGameWeight(Board.whiteKing, Board.e1), "king MG e1");
-        assertEquals(83, PieceSquareTables.getMidGameWeight(Board.whiteRook, Board.c8), "rook MG c8");
-        assertEquals(236, PieceSquareTables.getEndGameWeight(Board.whitePawn, Board.d7), "pawn EG d7");
-        assertEquals(110, PieceSquareTables.getEndGameWeight(Board.whiteKing, Board.e4), "king EG e4");
+        assertEquals(-274, PieceSquareTables.getMidGameWeight(Board.whiteKnight, Board.a8), "knight MG a8");
+        assertEquals(-128, PieceSquareTables.getMidGameWeight(Board.whiteKnight, Board.a1), "knight MG a1");
+        assertEquals(-46, PieceSquareTables.getMidGameWeight(Board.whiteKing, Board.e1), "king MG e1");
+        assertEquals(41, PieceSquareTables.getMidGameWeight(Board.whiteRook, Board.c8), "rook MG c8");
+        assertEquals(281, PieceSquareTables.getEndGameWeight(Board.whitePawn, Board.d7), "pawn EG d7");
+        assertEquals(51, PieceSquareTables.getEndGameWeight(Board.whiteKing, Board.e4), "king EG e4");
     }
 }

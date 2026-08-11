@@ -27,7 +27,7 @@ class DeepWeightTest {
                 """;
         testPosition(pgn,
                 0.15f, // was 0.3; SF depth 20: +0.47; opening-eval self-pin, v4.2.0 drift
-                0.5f,
+                0.65f, // 0.5 -> 0.65 for the PeSTO tables (v4.4.0)
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
     }
@@ -64,7 +64,7 @@ class DeepWeightTest {
                 """;
         testPosition(pgn,
                 0.35f, // was 0.50; SF depth 20: +0.41 — v4.2.0 eval now ≈ SF
-                0.65f,
+                0.85f, // 0.65 -> 0.85 for the PeSTO tables (v4.4.0)
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
     }
@@ -90,7 +90,7 @@ class DeepWeightTest {
                 """;
         testPosition(pgn,
                 -0.35f, // v4.3.3 bishop-pair: black holds the pair here (white played Bxf6) → ~-0.16
-                0.05f,
+                0.25f, // 0.05 -> 0.25 for the PeSTO tables (v4.4.0)
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
     }
@@ -104,7 +104,7 @@ class DeepWeightTest {
                 """;
         testPosition(pgn,
                 -0.20f, // pawn/king-EG history; now v4.3.3 bishop-pair (black holds the pair) → ~-0.01
-                0.20f,
+                0.40f, // 0.20 -> 0.40 for the PeSTO tables (v4.4.0)
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
     }

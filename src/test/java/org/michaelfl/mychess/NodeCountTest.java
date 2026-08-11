@@ -41,7 +41,9 @@ class NodeCountTest {
      * intentional search or evaluation change alters the tree (as one would a
      * Stockfish bench number), never to mask an accidental miscount.
      */
-    private static final int EXPECTED_DEPTH_2_NODES = 140;
+    /* 140 -> 82 with the PeSTO piece-square tables (v4.4.0): a sharper evaluation orders
+     * moves better, so alpha-beta cuts more of the depth-2 tree. */
+    private static final int EXPECTED_DEPTH_2_NODES = 82;
 
     private static final int SEARCH_TIMEOUT_SECONDS = 20;
 
