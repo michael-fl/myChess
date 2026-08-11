@@ -425,6 +425,23 @@ class BlunderTest {
     }
 
     /**
+     * Replays {@code pgn} into a game whose engine is bounded by {@code depth}
+     * rather than by the clock — see {@link #DEPTH_BOUND_BUDGET_MS} for why. Used
+     * where a case needs the real move history (repetition detection reads the
+     * board's status stack, which a bare FEN does not carry).
+     */
+    private static Game gameFromPgnAtDepth(String pgn, int depth, TranspositionTable tt) {
+        var engineConfig = new EngineConfig.Builder()
+                .maxDepth(depth)
+                .millisPerMove(DEPTH_BOUND_BUDGET_MS)
+                .silent(true)
+                .setTranspositionTable(tt)
+                .build();
+
+        return GameImporter.importerFor(pgn).importGame(new GameConfig(MyChessEngine.class, engineConfig));
+    }
+
+    /**
      * Depth at which the engine stops preferring the losing {@code 21...Qxa1}.
      * Measured on v4.3.4: depths 1-12 all pick {@code Qxa1} (the evaluation
      * drifting from +300 cp down to -506 cp as the attack comes into view);
@@ -742,4 +759,133 @@ class BlunderTest {
                 "characterization: the score should still be the bare material count (+5 pawns), with the "
                         + "king dragged to h3 costing nothing; got " + result.weight());
     }
+
+    // ----------------------------------------------------------------
+    // Repetition draws vs. the transposition table — rated blitz game
+    // https://lichess.org/i1QxWK9L (Flower-Queen 1844 vs myChessJava,
+    // drawn by repetition while myChess was about eight pawns up).
+    //
+    // This is a correctness bug, not an evaluation gap, and it has a
+    // sharp signature: THE SAME POSITION, TWO TABLE STATES, TWO
+    // DIFFERENT MOVES. The pair of tests below pins both halves.
+    //
+    // Mechanism. isThreefoldRepetition() fires on the THIRD occurrence,
+    // so after 51...Kg7 (only the second) it correctly reports "no
+    // repetition"; the draw appears one ply later, after 52.Qd7+. The
+    // search never gets there, because the position after ...Kg7 already
+    // has a transposition-table entry stored during move 49 — when it was
+    // not yet a repetition. The entry returns its old score and the
+    // continuation is cut off. A position hash is path-independent; a
+    // repetition draw is not.
+    // ----------------------------------------------------------------
+
+    /**
+     * Fixed depth for the two repetition cases. Eight plies is what the engine
+     * reached in this blitz game, and both outcomes below are stable from depth 1
+     * upward, so the choice only affects runtime — each search finishes in well
+     * under a second, which matters because the warm-table case searches twice.
+     */
+    private static final int REPETITION_DEPTH = 8;
+
+    /** Black (myChess) to move, in check after 49.Qe6+ — two moves before the draw becomes available. */
+    private static final String REPETITION_PGN_MOVE_49 = """
+            1. Nf3 Nf6 2. e4 Nxe4 3. d3 Nf6 4. Be2 e6 5. O-O d5 6. d4 Bd6 7. Ne5 O-O 8. Nc3 Nfd7
+            9. Bf4 Bxe5 10. dxe5 Nc6 11. Bb5 Ndxe5 12. Qh5 f6 13. Rad1 Bd7 14. a3 a6 15. Bxc6 Nxc6
+            16. Qf3 Rc8 17. Rfe1 Kh8 18. h4 d4 19. Ne4 e5 20. Bg3 Qe7 21. b4 a5 22. b5 Na7 23. a4 Rcd8
+            24. h5 c6 25. h6 cxb5 26. hxg7+ Qxg7 27. Qb3 Bc6 28. Nd2 b4 29. Qc4 Bxa4 30. Rc1 Rc8
+            31. Qa2 Qd7 32. Nc4 Qd5 33. Qxa4 Rxc4 34. Ra1 Rc5 35. Red1 b6 36. Rd3 Rc3 37. Rad1 Qc6
+            38. Qa2 Rxc2 39. Qb3 Nc8 40. Re1 Rc3 41. Qb1 Nd6 42. Red1 Kg7 43. f3 Rc8 44. Bh2 Rc1
+            45. Qb3 Qb5 46. Rd2 Qc4 47. Qa4 Qc3 48. Qd7+ Kg8 49. Qe6+
+            """;
+
+    /** The same game two moves further on: black to move, in check after 51.Qe6+. Kg7 now permits 52.Qd7+ and the draw. */
+    private static final String REPETITION_PGN_MOVE_51 = """
+            1. Nf3 Nf6 2. e4 Nxe4 3. d3 Nf6 4. Be2 e6 5. O-O d5 6. d4 Bd6 7. Ne5 O-O 8. Nc3 Nfd7
+            9. Bf4 Bxe5 10. dxe5 Nc6 11. Bb5 Ndxe5 12. Qh5 f6 13. Rad1 Bd7 14. a3 a6 15. Bxc6 Nxc6
+            16. Qf3 Rc8 17. Rfe1 Kh8 18. h4 d4 19. Ne4 e5 20. Bg3 Qe7 21. b4 a5 22. b5 Na7 23. a4 Rcd8
+            24. h5 c6 25. h6 cxb5 26. hxg7+ Qxg7 27. Qb3 Bc6 28. Nd2 b4 29. Qc4 Bxa4 30. Rc1 Rc8
+            31. Qa2 Qd7 32. Nc4 Qd5 33. Qxa4 Rxc4 34. Ra1 Rc5 35. Red1 b6 36. Rd3 Rc3 37. Rad1 Qc6
+            38. Qa2 Rxc2 39. Qb3 Nc8 40. Re1 Rc3 41. Qb1 Nd6 42. Red1 Kg7 43. f3 Rc8 44. Bh2 Rc1
+            45. Qb3 Qb5 46. Rd2 Qc4 47. Qa4 Qc3 48. Qd7+ Kg8 49. Qe6+ Kg7 50. Qd7+ Kg8 51. Qe6+
+            """;
+
+    /**
+     * With a cold transposition table myChess gets this right: it blocks the check
+     * with {@code 51...Nf7} instead of stepping to g7 and allowing {@code 52.Qd7+}
+     * with the threefold draw.
+     *
+     * <p>Only four replies are legal ({@code Kh8}, {@code Kf8}, {@code Kg7},
+     * {@code Nf7}), and myChess is roughly five pawns up by its own reckoning, so
+     * the draw is a real loss of half a point. Measured on v4.3.4 it picks
+     * {@code Nf7} at every depth from 1 to 8. This is the control case for
+     * {@link #repetition_withWarmTable_walksIntoTheDraw()}: the knowledge is
+     * present, and the bug is that a stale table entry hides it.
+     */
+    @Test
+    @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void repetition_withColdTable_blocksTheCheckAndAvoidsTheDraw() throws Exception {
+        var game = gameFromPgnAtDepth(REPETITION_PGN_MOVE_51, REPETITION_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(),
+                "after 51.Qe6+ black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.d6, Board.f7), ChessUtil.moveToString(result.move()),
+                "with a cold table myChess must block with Nf7 (d6-f7) rather than repeat with Kg7; "
+                        + "white-POV eval " + result.weight());
+    }
+
+    /**
+     * The bug itself: searching the same three moves in sequence — so the table
+     * stays warm, as it does in a real game — myChess walks into the draw.
+     *
+     * <p>The test asks the engine for black's 49th move, plays out the game
+     * continuation, and asks again for the 51st. Both positions share one
+     * transposition table, exactly as in live play. Measured on v4.3.4 the engine
+     * answers the second question with {@code Kg7} <em>instantly</em> and with an
+     * unchanged score of about +6 from black's side — the tell-tale sign of a
+     * table hit rather than a search. Its verdict does not move at all between the
+     * harmless first occurrence and the one that concedes the draw.
+     *
+     * <p>Compare {@link #repetition_withColdTable_blocksTheCheckAndAvoidsTheDraw()}:
+     * clearing the table between the two questions is enough for the engine to
+     * find {@code Nf7}. Nothing about the position changed, only what the table
+     * remembered.
+     *
+     * <p><b>TODO — remove this characterization once the bug is fixed.</b> It
+     * passes because the defect is present. A fix has to make the repetition
+     * draw visible despite the table; the usual routes are to treat the
+     * <em>second</em> occurrence along the current search path as a draw (which
+     * makes detection path-local and independent of the table), or to suppress
+     * table cutoffs while any position of the current path has occurred before.
+     * When that lands, this test must start failing — then assert
+     * {@code Nf7} here too and delete this note.
+     */
+    @Test
+    @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void repetition_withWarmTable_walksIntoTheDraw() throws Exception {
+        var game = gameFromPgnAtDepth(REPETITION_PGN_MOVE_49, REPETITION_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(),
+                "after 49.Qe6+ black (myChess) must be to move");
+
+        // First question — this is what fills the table with an entry for the
+        // position after ...Kg7, at a point where it is not yet a repetition.
+        searchCurrentPositionDeep(game);
+
+        // Play the game continuation up to the same check two moves later.
+        game.makeMove(MoveDescription.fromString("Kg7", game.getTurn()));
+        game.makeMove(MoveDescription.fromString("Qd7", game.getTurn()));
+        game.makeMove(MoveDescription.fromString("Kg8", game.getTurn()));
+        game.makeMove(MoveDescription.fromString("Qe6", game.getTurn()));
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(),
+                "after 51.Qe6+ black (myChess) must be to move again");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.g8, Board.g7), ChessUtil.moveToString(result.move()),
+                "characterization: with the table warm myChess repeats with Kg7 and concedes the draw "
+                        + "from a winning position. If it now blocks with Nf7, the table no longer hides "
+                        + "the repetition — drop this test. white-POV eval " + result.weight());
+    }
+
 }

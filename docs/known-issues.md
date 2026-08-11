@@ -828,3 +828,201 @@ the bug went unnoticed for so long and why its strength cost is modest. The full
 ran to its cap without crossing a bound — a small but real gain, no regression).
 The 6290 → 0 delta is a clean elimination of the defect; the reduced-stride NMP
 writes were indeed the source.
+
+## Repetition draws are hidden by the transposition table (2026-08-10)
+
+### Observation
+
+Rated blitz game [i1QxWK9L](https://lichess.org/i1QxWK9L) (Flower-Queen 1844 vs
+myChessJava, 3+0) ended **1/2-1/2 by threefold repetition while myChess was about
+eight pawns up**. White checked with the queen, myChess shuffled its king back and
+forth, and the third occurrence arrived:
+
+```
+48. Qd7+ Kg8 49. Qe6+ Kg7 50. Qd7+ Kg8 51. Qe6+ Kg7 52. Qd7+ 1/2-1/2
+```
+
+At move 51 black was in check with four legal replies — `Kh8`, `Kf8`, `Kg7`,
+`Nf7`. Blocking with **`51...Nf7`** keeps the win; `Kg7` permits `52.Qd7+` and the
+draw. Position before the mistake:
+
+```
+2r3k1/7p/1p1nQp2/p3p3/1p1p4/2q2P2/3R2PB/2rR2K1 b - - 16 51
+```
+
+### The engine can see it — until the table remembers
+
+Driven through UCI with the full move history, the choice depends only on the
+state of the transposition table:
+
+| Black's move | table **warm** (as in live play) | table **cleared** before each move |
+|---|---|---|
+| 49... | `Kg7`, +603 cp | `Kg7`, +603 cp |
+| 50... | `Kg8`, +603 cp | **`Kh8`**, +576 cp |
+| 51... | **`Kg7`, +603 cp, in 0.0 s** | **`Nf7`**, +504 cp |
+
+With a cold table myChess plays `Nf7` at every depth from 1 to 8. With a warm one
+it reproduces the game exactly — and answers move 51 **instantly**, with a score
+that has not moved a single centipawn across all three questions. That is a table
+hit, not a search.
+
+### Mechanism
+
+Two facts combine:
+
+1. **`Board.isThreefoldRepetition()` fires on the *third* occurrence**
+   ([`Board.java`](../src/main/java/org/michaelfl/mychess/Board.java), it counts
+   two further matches in the status stack). After `51...Kg7` the position is only
+   the *second* occurrence, so the check in
+   [`PositionSearch.alphaBetaSearchPre`](../src/main/java/org/michaelfl/mychess/engines/PositionSearch.java)
+   correctly reports "no repetition". The draw materializes one ply later, after
+   `52.Qd7+`.
+2. **The search never reaches that ply.** The position after `...Kg7` already has
+   a transposition-table entry, stored during move 49's search — when it was *not*
+   yet a repetition. The entry satisfies the depth condition, its score is
+   returned, and the continuation is cut off.
+
+A position hash is **path-independent**; a repetition draw is **path-dependent**.
+The same hash therefore does not imply the same value, and reusing the entry
+across different histories silently converts a win into a draw. Note that the
+repetition check *is* already placed before the table lookup in
+`alphaBetaSearchPre` — the ordering is not the problem, the third-occurrence
+threshold combined with the cutoff is.
+
+> **Superseded in part — read the correction below.** A second game (ljG2b74s)
+> reproduces the defect with an *empty* table and *no* game history, which rules
+> the table out as the root cause. The third-occurrence threshold alone is
+> sufficient to explain both games; the table only amplifies it. See
+> "Second case, and a correction to the diagnosis".
+
+### Distinguishing it from the king-safety cases
+
+This is a **correctness bug, not an evaluation gap**. The king-safety blind spots
+pinned in the same test class on the same day (roadmap § 12.21) are the opposite
+kind of problem: there the engine searches correctly but scores the result wrong,
+and deeper search eventually corrects it. Here more depth does not help at all —
+the cutoff removes the very nodes that would reveal the draw. It is also cheap to
+observe: the 0.0 s response is the tell.
+
+### Artefacts
+
+Both halves are pinned in
+[`BlunderTest`](../src/test/java/org/michaelfl/mychess/BlunderTest.java):
+
+- `repetition_withColdTable_blocksTheCheckAndAvoidsTheDraw` — a genuine
+  assertion: with a cold table the engine must find `Nf7`.
+- `repetition_withWarmTable_walksIntoTheDraw` — a characterization carrying a
+  **TODO**: it passes because the defect is present, and must be deleted (or its
+  assertion switched to `Nf7`) once the bug is fixed.
+
+Both are depth-bounded at 8 plies so the outcome is deterministic and the pair
+runs in about a second.
+
+### Possible fixes (not implemented)
+
+- Treat the **second** occurrence along the current search path as a draw. This
+  is the usual approach in engines: detection becomes path-local, so no table
+  entry can mask it, and it also avoids the wasted plies spent re-walking a
+  repetition.
+- Or suppress table cutoffs while any position on the current path has already
+  occurred, so the repetition is re-derived rather than recalled.
+
+Either way the fix belongs in the search, and the two tests above turn it into a
+measurable change.
+
+### Second case, and a correction to the diagnosis (2026-08-11)
+
+Rated blitz game [ljG2b74s](https://lichess.org/ljG2b74s) (myChessJava vs
+Axiom_BOT 1818, 3+0) was **drawn by repetition from queen + knight + rook + two
+pawns against a bare rook**. Black checked along the second rank and myChess
+stepped aside six times in a row while a capture was legal every single time:
+
+| Move | played | available |
+|---|---|---|
+| 60. | `Kd1` | **`Kxe2`** |
+| 61. | `Kc1` | **`Kxd2`** |
+| 62. | `Kb1` | **`Kxc2`** |
+| 63. | `Kc1` | **`Kxb2`** |
+| 64. | `Kb1` | **`Kxc2`** |
+| 65. | `Kc1` | **`Kxb2`** |
+
+The black king stood on h7 and could not defend any of those squares, so each
+capture simply won the rook and left a bare king. Position before move 62:
+
+```
+5Q2/7k/3N4/4P3/6R1/8/2r3P1/2K5 w - - 15 62
+```
+
+The engine's own log shows what was happening: `elapsed=31 ms`, then 13, then 1,
+then **0 ms**, with the score frozen at `+16.82` throughout.
+
+### The cause: the threshold and the table together
+
+The entry above blamed a stale transposition-table entry carried across moves.
+That was too narrow — but so is blaming the threshold alone. Both are needed, and
+the order in which the search consults them is what makes the defect airtight.
+
+Re-measured from the bare FEN, so the table starts empty and the board carries no
+game history at all:
+
+| depth | best move | score |
+|---|---|---|
+| 1 | `Kxc2` | +2000 cp |
+| 2 | `Kb1` | +1545 cp |
+| … | `Kb1` | ~+1540 cp |
+| **14** | `Kb1` | +1540 cp, pv `Kb1 Rb2 Kc1 Rc2 Kb1 Rb2` |
+
+From depth 2 onward the engine's **own principal variation is the repetition**,
+and it prices that line as a fifteen-pawn advantage. The repetition is generated
+entirely inside the search tree, so a stale entry from an earlier move cannot be
+the explanation.
+
+But the threshold alone does not explain it either. The shuffle returns to the
+root position every four plies, so at depth 8 the third occurrence is reachable
+and at depth 14 the fourth — yet the score does not budge from +1540. Something
+stops the search from ever walking that far.
+
+That something is the lookup order in `alphaBetaSearchPre`:
+
+```
+1. repetition / fifty-move check   -> needs THREE occurrences, so it says "no"
+2. leaf check (remainingDepth == 0)
+3. transposition table             -> hit, returns the stored score
+```
+
+On the **first** return to the position (ply 4) the repetition check declines,
+because only two occurrences exist. The node therefore falls through to the
+table, where the very same position was stored from the root — scored **without**
+any repetition context. The hit cuts the line off, so the third occurrence is
+never reached, no matter how deep the search is allowed to run. Hence the flat
++1540 all the way to depth 14, and hence the 0 ms replies in live play.
+
+So the mechanism is an interaction: **the threshold lets the first repetition
+through, and the table then answers with a pre-repetition score.** Neither alone
+would suffice — with two-fold detection the check would fire before the lookup,
+and without the table the deeper search would eventually reach the third
+occurrence.
+
+Standard practice is to treat the **second** occurrence along the current search
+path as a draw: a side that can force a repetition can force the draw, so the
+first repetition is already worth 0. That single change addresses both games
+recorded here. The table is an *amplifier* — it makes the answer instantaneous and
+carries the misjudgment across successive moves — but it is not the root cause.
+
+### Artefacts
+
+`engineDoesNotAvoidRepetitionWhenWinning` in
+[`ThreefoldRepetitionTest`](../src/test/java/org/michaelfl/mychess/ThreefoldRepetitionTest.java)
+pins this position from the bare FEN at depth 8, asserting both the sidestep and
+the inflated score. It sits deliberately next to `testFindDrawMove`, which shows
+the engine *seeking* a draw when it wants one — this is the missing converse.
+
+The same class also gained `secondOccurrenceIsNotYetADraw`, a genuine assertion
+that the *game rule* still requires three occurrences. It is there as a guard rail
+for the fix: the search needs a stricter, path-local rule (second occurrence = draw
+inside the tree) and must not achieve that by loosening the rule itself, or myChess
+would start claiming draws the rules do not grant.
+
+Both carry a **TODO** where applicable: when the repetition handling is fixed, the
+characterization must start failing and its assertions should then require
+`Kxc2` — replaced, not relaxed.

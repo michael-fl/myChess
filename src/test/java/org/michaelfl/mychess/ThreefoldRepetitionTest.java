@@ -10,9 +10,28 @@ import org.michaelfl.mychess.engines.MyChessEngine;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.michaelfl.mychess.EngineTest.engineConfig;
 
 /**
+ * Threefold-repetition behavior on two levels.
+ *
+ * <p><b>The rule.</b> A draw is recognized on the <em>third</em> occurrence of a
+ * position ({@link #testIsDraw}, {@link #testIsDraw2}), the second is not yet
+ * enough ({@link #secondOccurrenceIsNotYetADraw}), and the whole rule can be
+ * switched off ({@link #testDisableThreefoldRepetition}). That is correct for the
+ * game rule and must stay that way.
+ *
+ * <p><b>The search.</b> When a draw is what it wants, the engine finds it
+ * ({@link #testFindDrawMove}). The converse — refusing a draw while winning —
+ * is where myChess currently fails: see
+ * {@link #engineDoesNotAvoidRepetitionWhenWinning}, and
+ * {@code docs/known-issues.md} for the mechanism. Two game-derived reproductions
+ * live in {@code BlunderTest} — {@code repetition_withColdTable_...} and
+ * {@code repetition_withWarmTable_...}, a pair that isolates the defect by
+ * searching the same position with a cold and with a warm transposition table.
+ *
  * @author Michael Fleischhauer
  */
 class ThreefoldRepetitionTest {
@@ -71,6 +90,80 @@ class ThreefoldRepetitionTest {
         assertEquals(GameResult.ONGOING, game.getResult(), "game must not be finished");
         game.makeMove(MoveDescription.fromString("Bc6", game.getTurn()));
         assertEquals(GameResult.DRAW, game.getResult(), "game must be draw due to threefold repetition rule");
+    }
+
+    /**
+     * The <em>second</em> occurrence of a position is not yet a draw — the rule
+     * needs a third. Genuine assertion, and the behavior must not change: this is
+     * what the game rule says.
+     *
+     * <p>It is spelled out because the same threshold is what breaks the search
+     * (see {@link #engineDoesNotAvoidRepetitionWhenWinning}). A fix there must
+     * introduce a separate, stricter rule for the search path — treating the
+     * second occurrence as a draw <em>inside the tree</em> — without loosening the
+     * rule tested here.
+     */
+    @Test
+    void secondOccurrenceIsNotYetADraw() {
+        // The knight dance returns to the post-3...a6 position: once after
+        // 5...Ng8 (second occurrence), once after 7...Ng8 (third).
+        var importer = GameImporter.importerFor("""
+                1. g3 e6 2. a3 Qh4 3. gxh4 a6 4. Nf3 Nf6 5. Ng1 Ng8
+                """);
+        var game = importer.importGame(Game.standardConfig());
+
+        assertEquals(GameResult.ONGOING, game.getResult(),
+                "the second occurrence of the position must not end the game");
+        assertFalse(game.getBoard().isThreefoldRepetition(),
+                "isThreefoldRepetition must still be false on the second occurrence");
+
+        game.makeMove(MoveDescription.fromString("Nf3", game.getTurn()));
+        game.makeMove(MoveDescription.fromString("Nf6", game.getTurn()));
+        game.makeMove(MoveDescription.fromString("Ng1", game.getTurn()));
+        game.makeMove(MoveDescription.fromString("Ng8", game.getTurn()));
+
+        assertTrue(game.getBoard().isThreefoldRepetition(),
+                "the third occurrence must be reported as a threefold repetition");
+        assertEquals(GameResult.DRAW, game.getResult(),
+                "the third occurrence must end the game as a draw");
+    }
+
+    /**
+     * The converse of {@link #testFindDrawMove}: the engine must <em>refuse</em> a
+     * repetition when it is winning. It currently does not.
+     *
+     * <p>Position from rated blitz game
+     * <a href="https://lichess.org/ljG2b74s">ljG2b74s</a>: white (myChess) has
+     * queen, knight, rook and two pawns against a bare rook, is in check from that
+     * rook on c2, and {@code Kxc2} simply takes it — the black king is stranded on
+     * h7 and defends nothing. Instead, myChess sidesteps with {@code Kb1} and its
+     * own principal variation is the shuffle {@code Kb1 Rb2 Kc1 Rc2 Kb1 Rb2},
+     * priced at about +15 pawns rather than the draw it actually is. In the game it
+     * declined the capture six times running and the game was drawn.
+     *
+     * <p>Cause, in short: on the first return to a position the three-occurrence
+     * check declines, the node falls through to the transposition table, and the
+     * table answers with the score stored before the repetition existed — so the
+     * third occurrence is never reached at any depth. Full write-up in
+     * {@code docs/known-issues.md}.
+     *
+     * <p><b>TODO — invert once the search treats the second occurrence along its
+     * path as a draw.</b> Then {@code Kxc2} must be the answer and the weight must
+     * be the material win, so replace the assertions below rather than relaxing
+     * them.
+     */
+    @Test
+    void engineDoesNotAvoidRepetitionWhenWinning() throws Exception {
+        var board = Fen.importFEN("5Q2/7k/3N4/4P3/6R1/8/2r3P1/2K5 w - - 15 62");
+        var game = new Game(new GameConfig(MyChessEngine.class, engineConfig(tt)), board);
+
+        MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(1, TimeUnit.MINUTES);
+
+        assertEquals("c1-b1", ChessUtil.moveToString(move.move()),
+                "characterization: myChess sidesteps instead of taking the free rook with Kxc2 (c1-c2)");
+        assertTrue(move.weight() > 10f,
+                "characterization: the repetition line is priced as a large material advantage instead of "
+                        + "the draw it is; got white-POV weight " + move.weight());
     }
 
     @Test
