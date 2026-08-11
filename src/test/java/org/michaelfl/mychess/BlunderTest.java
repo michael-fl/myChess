@@ -993,4 +993,135 @@ class BlunderTest {
                         + result.weight());
     }
 
+    // ----------------------------------------------------------------
+    // Selling the king for a rook — rated rapid game
+    // https://lichess.org/1PSnMOBF (myChessJava vs georgii_ai 2133, 0-1),
+    // the first game myChess resigned on lichess.
+    //
+    // Two decisions, both measured to be evaluation errors rather than
+    // horizon effects, because the choice is stable through depth 13 and
+    // hundreds of millions of nodes.
+    // ----------------------------------------------------------------
+
+    /** White (myChess) to move after {@code 8...g4}: the knight on f3 is attacked by the g4 pawn. */
+    private static final String HANGING_F3_KNIGHT_FEN = "r1b1k1nr/pppqbp1p/8/3p4/6p1/5N2/PPPPQPPP/RNB1R1K1 w kq - 0 9";
+
+    /** White (myChess) to move after {@code 11...h5}, its queen entombed on h8 and g2 vacated by 11.g3. */
+    private static final String ENTOMBED_QUEEN_FEN = "r1b1k1nQ/ppp1bp2/8/3p3p/6q1/5pP1/PPPP1P1P/RNB1R1K1 w q - 0 12";
+
+    /** Depth myChess reached for move 9 in the game (900+0 rapid, 23.7 s spent). */
+    private static final int IN_GAME_DEPTH_MOVE_9 = 11;
+
+    /** Depth myChess reached for move 12 in the game (14.8 s spent). */
+    private static final int IN_GAME_DEPTH_MOVE_12 = 10;
+
+    /**
+     * Leaving a knight to be captured because the rook it wins in return looks
+     * like a profit — the sharpest measured case of material outweighing king
+     * safety so far.
+     *
+     * <p>The g4 pawn attacks the knight on f3. Instead of saving it, myChess
+     * played {@code 9.Qe5??}, inviting {@code 9...gxf3 10.Qxh8}: a rook for a
+     * knight, {@code +200} cp of material, bought with a queen entombed on h8, a
+     * king whose g2/h2 shelter is gone and pierced by a black pawn on f3, and
+     * three pieces still on a1/b1/c1. Stockfish (depth 18) has the position at
+     * <b>+0.78</b> for white before the move and <b>-2.72</b> after it, and its
+     * best move is {@code Ne5} — moving the attacked knight.
+     *
+     * <p>Two measurements on v4.3.5 rule out a horizon effect and locate the
+     * defect in the evaluation:
+     * <ul>
+     *   <li>The engine's own principal variation at depth 11 spells the entire
+     *       sequence out — {@code Qe5 gxf3 Qxh8 Qg4 g3 Bf5 Rxe7+ Kxe7 Qe5+ Kf8
+     *       Qxc7} — and scores it <b>+113 cp</b>. It even predicts its own 11.g3
+     *       and Stockfish's recommended {@code ...Bf5}. It sees the position
+     *       correctly and prices it wrong by about five pawns.</li>
+     *   <li>{@code Qe5} stays its first choice from depth 4 all the way through
+     *       <b>depth 13</b> (640 million nodes), the score drifting only from
+     *       +113 to +78 cp. Depths 1-3 pick the correct {@code Ne5}, so <em>more</em>
+     *       search makes this move worse, not better.</li>
+     * </ul>
+     *
+     * <p>The material-only shortcut is provably active in the line: searching from
+     * the position after {@code 9...gxf3}, white is 300 cp down at the root, so
+     * {@code Qxh8} carries {@code materialDelta = +500}, past
+     * {@code EVALUATE_MATERIAL_ONLY_THRESHOLD = 200} — the whole subtree is then
+     * graded by material alone. The game log confirms it: myChess reported exactly
+     * {@code +2.00} for moves 10 and 11, the bare rook-for-knight balance.
+     *
+     * <p>That last point is why this game matters beyond one more blunder: it is
+     * direct evidence against the hope that deeper search (roadmap § 12.7.1) fixes
+     * this class of mistake. A systematically wrong evaluation is found faster, not
+     * corrected, by more plies.
+     *
+     * <p><b>TODO — invert once king safety lands.</b> Written first as an
+     * {@link #assertEngineAvoids} test against {@code e2-e5} and confirmed to fail
+     * (the engine chose it, rating {@code +1.13}), then turned into the
+     * characterization below so the suite stays green while the defect is open. When
+     * the evaluation improves this must start failing; the assertion should then
+     * become {@code assertEngineAvoids(result, Board.e2, Board.e5, "9.Qe5")} and
+     * ideally require {@code Ne5} outright.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void qe5_atMove9_characterizesSellingTheKingForARook() throws Exception {
+        var game = gameFromFenAtDepth(HANGING_F3_KNIGHT_FEN, IN_GAME_DEPTH_MOVE_9, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
+                "after 8...g4 white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.e2, Board.e5), ChessUtil.moveToString(result.move()),
+                "characterization: myChess still leaves the knight and plays Qe5, buying the h8 rook with its "
+                        + "king shelter. If it now saves the knight (Ne5 is Stockfish's choice), king safety has "
+                        + "landed — turn this into an avoidance test. white-POV eval " + result.weight());
+        assertTrue(result.weight() > 0.5f,
+                "characterization: it rates itself clearly ahead (measured +1.13) in a line Stockfish scores "
+                        + "-2.72 for white, so the sign itself is wrong; got " + result.weight());
+    }
+
+    /**
+     * Pushing a pawn onto an undefended square next to its own king, one move
+     * after the opponent had handed the game back.
+     *
+     * <p>Black's {@code 11...h5??} threw away a winning position — Stockfish reads
+     * {@code -4.72} before it and {@code -0.04} after — so myChess was level here
+     * and only had to keep the king covered. It played {@code 12.h3??}. Since
+     * {@code 11.g3} had vacated g2, nothing defends h3: {@code 12...Qxh3} wins the
+     * pawn and threatens {@code Qg2#}, mate on a square guarded by black's own f3
+     * pawn. Stockfish's verdict after {@code 12.h3} is mate; its recommendation is
+     * the quiet {@code d3}.
+     *
+     * <p>Measured on v4.3.5, myChess plays {@code h3} from depth 7 through
+     * <b>depth 13</b> (418 million nodes) and scores the position {@code +115} cp
+     * throughout. Its principal variation always continues {@code 12...Qg6} — the
+     * refutation {@code Qxh3} never appears, although it is a capture and therefore
+     * certain to be examined by the all-captures quiescence search. The mate lies
+     * some 19 plies out, far past the horizon, and no evaluation term flags an
+     * enemy queen landing beside its own king. Depths 1-6 prefer {@code Qc3},
+     * freeing the entombed queen, so once again the shallow search is the sound one.
+     *
+     * <p><b>TODO — invert once king safety lands</b>, same contract as
+     * {@link #qe5_atMove9_characterizesSellingTheKingForARook()}: written first as an
+     * avoidance test against {@code h2-h3}, confirmed red (chosen with {@code +1.43}),
+     * then relaxed into this characterization.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void h3_atMove12_characterizesTheUndefendedPawnPush() throws Exception {
+        var game = gameFromFenAtDepth(ENTOMBED_QUEEN_FEN, IN_GAME_DEPTH_MOVE_12, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
+                "after 11...h5 white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.h2, Board.h3), ChessUtil.moveToString(result.move()),
+                "characterization: myChess still pushes h3 onto a square nothing defends, allowing Qxh3 with "
+                        + "Qg2# to follow. If it now plays something else, king safety has landed — turn this "
+                        + "into an avoidance test. white-POV eval " + result.weight());
+        assertTrue(result.weight() > 0.5f,
+                "characterization: it rates itself clearly ahead (measured +1.43) in a position Stockfish "
+                        + "scores as mate against white; got " + result.weight());
+    }
+
 }
