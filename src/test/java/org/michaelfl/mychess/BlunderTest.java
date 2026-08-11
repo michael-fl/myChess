@@ -888,4 +888,109 @@ class BlunderTest {
                         + "the repetition — drop this test. white-POV eval " + result.weight());
     }
 
+    // ----------------------------------------------------------------
+    // Opening its own king for a pawn — rated rapid game
+    // https://lichess.org/ZLefzVvN (VietnameseCoffee 1893 vs myChessJava, 1-0).
+    // Two consecutive moves, both self-destructive, both played while a pawn up.
+    // ----------------------------------------------------------------
+
+    /** Black (myChess) to move, a pawn up, its f3 pawn jamming white's own g-file. */
+    private static final String BEFORE_FXG2_FEN = "rnbq1rk1/ppp3pp/8/3p3Q/3Nn3/3B1p2/PPPB1PPP/2KR2R1 b - - 1 13";
+
+    /** Black (myChess) to move after 14.Rxg2, with the g-file now open towards g7/g8. */
+    private static final String BEFORE_G6_FEN = "rnbq1rk1/ppp3pp/8/3p3Q/3Nn3/3B4/PPPB1PRP/2KR4 b - - 0 14";
+
+    /**
+     * Depth at which the engine stops playing {@code 13...fxg2}. Measured on
+     * v4.3.4: {@code fxg2} at depths 3-5, 7, 9 and 10, the equally losing
+     * {@code g6} at 6 and 8, and only at depth 11 the correct {@code Nf6} — after
+     * 195 s of fixed-depth search. In the game (15+0, about 11 s per move) it
+     * reached depth 9-10, so it missed the saving move by a single ply.
+     */
+    private static final int FXG2_REFUTATION_DEPTH = 11;
+
+    /** Depth at which the engine stops playing {@code 14...g6}: {@code g6} through depth 8, {@code Nf6} from 9. */
+    private static final int G6_REFUTATION_DEPTH = 9;
+
+    /**
+     * Opening its own king to win a pawn it did not need — and it was already a
+     * pawn ahead.
+     *
+     * <p>Black's pawn on f3 was a wedge that also jammed <em>white's</em> g-file:
+     * the white pawn on g2 blocked white's own rook on g1. {@code 13...fxg2}
+     * removes that blocker, {@code 14.Rxg2} recaptures, and the rook now looks
+     * straight down an open file at g7/g8 with the queen on h5 alongside. Two moves
+     * later came {@code 15.Rxg6+ hxg6 16.Qxg6+} and mate.
+     *
+     * <p>Reference evaluations from Stockfish (depth 21-22): the position before
+     * the capture is <b>+1.09</b> for white and its best move for black is
+     * {@code Nf6}; after {@code 13...fxg2 14.Rxg2} it is <b>+5.26</b>. myChess
+     * instead reports about <b>-0.6</b>, i.e. black comfortably better — wrong by
+     * some 1.7 pawns before the move and by more than six after it. {@code Nf6}
+     * appears in none of its principal variations below
+     * {@link #FXG2_REFUTATION_DEPTH}.
+     *
+     * <p>This is the fourth game in this class showing the same pattern: material
+     * is counted, the safety of its own king is not (roadmap § 12.21). What is new
+     * here is the directness — it clears away the very pawn that was obstructing
+     * the attacker's rook.
+     *
+     * <p><b>TODO — invert once king safety lands.</b> The test is pinned one ply
+     * below the refutation depth so it reproduces the game's decision; when the
+     * evaluation improves it must start failing, and the assertion should then
+     * become {@link #assertEngineAvoids} against {@code f3-g2}.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void fxg2_atMove13_characterizesOpeningTheFileForAPawn() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_FXG2_FEN, FXG2_REFUTATION_DEPTH - 2, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.f3, Board.g2), ChessUtil.moveToString(result.move()),
+                "characterization: myChess still takes on g2 and opens the g-file in front of its own king. "
+                        + "If it now plays something else (Nf6 is Stockfish's choice), king safety has landed — "
+                        + "turn this into an avoidance test. white-POV eval " + result.weight());
+        assertTrue(result.weight() < 0f,
+                "characterization: it rates itself ahead here, while Stockfish has white at +1.09; got "
+                        + result.weight());
+    }
+
+    /**
+     * The follow-up blunder, one move later: offering the rook sacrifice.
+     *
+     * <p>With the g-file already open, {@code 14...g6} places a pawn where it can
+     * be taken with check. {@code 15.Rxg6+} leaves black exactly three legal
+     * replies — {@code Kh8}, {@code Kf7}, {@code hxg6} — and Stockfish reads the
+     * resulting position as <b>mate in 9</b>. (The game continued {@code hxg6},
+     * though {@code Kh8} loses too; Stockfish's own mating line starts
+     * {@code 15.Rxg6+ Kh8}.)
+     *
+     * <p>Before the move Stockfish has white at <b>+5.08</b> and again recommends
+     * {@code Nf6}; myChess reports about <b>-0.4</b>, so it believes itself ahead
+     * while it is objectively lost — a misjudgment of roughly five and a half
+     * pawns, with the sign inverted. It plays {@code g6} at every depth from 3
+     * through 8 and finds {@code Nf6} only at {@link #G6_REFUTATION_DEPTH}.
+     *
+     * <p><b>TODO — invert once king safety lands</b>, same contract as
+     * {@link #fxg2_atMove13_characterizesOpeningTheFileForAPawn()}.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void g6_atMove14_characterizesOfferingTheRookSacrifice() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_G6_FEN, G6_REFUTATION_DEPTH - 1, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.g7, Board.g6), ChessUtil.moveToString(result.move()),
+                "characterization: myChess still plays g6 and invites 15.Rxg6+. If it now plays something "
+                        + "else, king safety has landed — turn this into an avoidance test. white-POV eval "
+                        + result.weight());
+        assertTrue(result.weight() < 0f,
+                "characterization: it rates itself ahead in a position Stockfish scores +5.08 for white; got "
+                        + result.weight());
+    }
+
 }
