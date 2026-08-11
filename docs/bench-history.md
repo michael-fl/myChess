@@ -59,12 +59,13 @@ time-truncated.
 | **4.3.2** | 368,432,487 | **−5.7 %** | tapered + Texel-tuned endgame PSTs, queen 900→1000 | +12.6 ± 13.3 | ~1816 |
 | **4.3.3** | 375,242,151 | **+1.8 %** | bishop-pair bonus | +31.3 ± 24.1 | ~1847 |
 | **4.3.4** | 350,506,008 | **−6.6 %** | full-joint MG+EG PST tune | +23.0 ± 12.9 | ~1870 |
+| **4.4.0** | 335,919,557 | **−4.2 %** | PeSTO piece-square tables | +32.6 ± 12.4 | ~1900 |
 
-Across the whole series, 4.3.4 needs **2.26× fewer nodes than 3.5.2** for the
-same depth (−55.7 %) while playing roughly **430 Elo stronger**.
+Across the whole series, 4.4.0 needs **2.36× fewer nodes than 3.5.2** for the
+same depth (−57.6 %) while playing roughly **460 Elo stronger**.
 
 Time and NPS for the same runs — **informative only**, all measured
-2026-08-09 on an Apple M1 Pro (10 cores), macOS 15.6.1, Corretto JDK 25.0.2,
+2026-08-09 (4.4.0: 2026-08-11) on an Apple M1 Pro (10 cores), macOS 15.6.1, Corretto JDK 25.0.2,
 each engine with `-Xms256m -Xmx256m -XX:+UseSerialGC`:
 
 | Version | Time @ d8 | NPS |
@@ -78,6 +79,7 @@ each engine with `-Xms256m -Xmx256m -XX:+UseSerialGC`:
 | 4.3.2 | 3:21 | 1,829,911 |
 | 4.3.3 | 3:26 | 1,814,411 |
 | 4.3.4 | 3:06 | 1,875,577 |
+| 4.4.0 | 3:00 | 1,861,173 |
 
 The NPS decline from ~3.0 M to ~1.9 M is the cost of the richer evaluation and
 the deeper quiescence search: fewer nodes per second, but each node is worth
@@ -97,13 +99,25 @@ and are historically closed.
 | Version | Nodes @ d9 | Nodes @ d8 | d9 / d8 |
 |---|---:|---:|---:|
 | **4.3.4** | 916,947,170 | 350,506,008 | **2.62** |
+| **4.4.0** | 920,132,868 | 335,919,557 | **2.74** |
 
 The **d9/d8 ratio is the effective branching factor** and the most interesting
-single number here. At 2.62 it is far below the ~5.9 (√35) that perfect move
+single number here. At 2.62–2.74 it is far below the ~5.9 (√35) that perfect move
 ordering would give in a plain alpha-beta search: transposition-table hits and
 null-move cutoffs remove whole subtrees, and the previous iteration's principal
 variation orders the next one. Tracking this ratio across future releases
 measures search quality more directly than either absolute count does.
+
+**4.4.0 raised it, from 2.62 to 2.74 — and that is not a regression.** The PeSTO
+tables shrank the depth-8 tree by 4.2 % while leaving depth 9 essentially unchanged
+(+0.3 %), so the ratio between them grew. The pattern is a *fading* ordering benefit
+rather than a worse search: the sharper evaluation separates moves more clearly, which
+helps most where little other ordering information exists yet, and matters less once
+the transposition table, the previous iteration's PV, and the killer moves dominate.
+The same effect is far more dramatic at very shallow depth — `NodeCountTest` records
+the depth-2 signature falling **140 → 82 nodes (−41 %)** with the same change. Read
+the ratio as a search-quality indicator only when the evaluation is held fixed;
+across an evaluation change it also moves for this reason.
 
 ---
 
@@ -127,7 +141,17 @@ earlier cutoffs — the textbook shape of an ordering improvement.
 
 **Better evaluation orders moves better.** The 4.2.3 → 4.3.4 evaluation series
 lowered the count by 10.3 % in total without touching search code: better
-piece-square tables rank moves better, which produces earlier cutoffs.
+piece-square tables rank moves better, which produces earlier cutoffs. **4.4.0
+confirms it a fourth time** — the PeSTO tables took another 4.2 % off depth 8,
+again with no search change, bringing the 4.2.3 → 4.4.0 total to **−14.0 %**.
+
+That effect is strongly depth-dependent, which is worth keeping in mind before
+reading a node count as a search-quality verdict. The same 4.4.0 change removes
+**41 %** of the depth-2 tree (`NodeCountTest`: 140 → 82 nodes), 4.2 % at depth 8,
+and **nothing measurable at depth 9** (+0.3 %). A sharper evaluation helps exactly
+where no other ordering information exists yet; deeper down, the transposition
+table, the previous iteration's principal variation, and the killer moves have
+already done the work.
 
 ---
 

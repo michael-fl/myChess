@@ -61,6 +61,15 @@ import static org.michaelfl.mychess.Board.*;
  * {@code 43.5, 84, 93.5, 81.5, …}; doubled {@code 87, 168, 187, 163, …}, which is
  * the first non-zero row of {@link #pawnTableWhiteString} below.
  *
+ * <p><b>Note the two steps compose to a plain sum:</b> halving and doubling cancel,
+ * so each value here is {@code PeSTO(square) + PeSTO(mirrored square)} &mdash; not a
+ * doubled single value. That is why <b>odd numbers occur</b> throughout: the pair
+ * simply has mixed parity. In {@link #knightEndgameTableWhiteString}, for instance,
+ * the {@code 1} is {@code 10 + (-9)} &mdash; PeSTO rates that square +10 and its
+ * mirror -9, an asymmetry of 19 cp between two positions that are equivalent by
+ * reflection. Averaging removes exactly that tuning noise; the &times;2 then puts
+ * the result on myChess's coarser scale.
+ *
  * <p><b>Why these and not ours.</b> myChess previously carried its own
  * full-joint Texel tune ({@code JointMgEgPstTaperedTexelData} /
  * {@code TexelJointMgEgTuner}, still in the tree and still usable). Swapping in
