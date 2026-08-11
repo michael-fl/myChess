@@ -1026,3 +1026,14 @@ would start claiming draws the rules do not grant.
 Both carry a **TODO** where applicable: when the repetition handling is fixed, the
 characterization must start failing and its assertions should then require
 `Kxc2` — replaced, not relaxed.
+
+### How large the problem is, and where the fix is tracked
+
+Scheduled as [§ 12.23](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--s-correctness-fix--0-in-self-play-but-real-half-points-against-others),
+which carries the measurement: in the 2000-game hybrid-vs-v4.3.4 match of
+2026-08-11, 586 of 687 draws (85 %) came from threefold repetition, and 203 of the
+628 non-adjudicated draws had one side reporting **≥ +2.00** within the last twelve
+plies — 98 of them at three pawns or more. Since both engines in that match share
+the bug it does not distort the measured Elo difference; the cost is paid against
+opponents that do not repeat, which is why the fix should be measured as a
+fixed-vs-broken SPRT rather than looked for in an ordinary self-play run.
