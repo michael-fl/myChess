@@ -73,7 +73,7 @@ class UciHandlerTest {
     void uci_onHandshake_reportsIdLinesThenUciok() {
         runHandler("uci\nquit\n")
                 .expectEachOf(
-                        "id name myChess",
+                        "^id name myChess \\S+$",
                         "^id author .+$"
                 )
                 .expect("uciok");
@@ -599,7 +599,7 @@ class UciHandlerTest {
     void fullSession_endToEnd_preservesProtocolOrder() {
         runHandler("uci\nisready\nposition startpos\ngo depth 2\nquit\n")
                 .expectEachOf(
-                        "id name myChess",
+                        "^id name myChess \\S+$",
                         "^id author .+$"
                 )
                 .expect("uciok")

@@ -33,7 +33,14 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 final class UciHandler {
 
-    private static final String ENGINE_NAME = "myChess";
+    /**
+     * Reported in the {@code uci} handshake as {@code id name}. The build version is
+     * appended following the usual convention (Stockfish answers
+     * {@code id name Stockfish 16}), so tools that record the engine name — cutechess
+     * logs, PGN metadata — carry the version with them and match-ups stay attributable
+     * afterwards.
+     */
+    private static final String ENGINE_NAME = "myChess " + Version.get();
     private static final String ENGINE_AUTHOR = "Michael Fleischhauer";
 
     /** Default fallback when wtime/btime is given without movestogo. */
