@@ -1,0 +1,1423 @@
+Indexing opening suite...
+Started game 4 of 1600 (v4.3.4 vs hybrid)
+Started game 1 of 1600 (hybrid vs v4.3.4)
+Started game 2 of 1600 (v4.3.4 vs hybrid)
+Started game 3 of 1600 (hybrid vs v4.3.4)
+Finished game 4 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 0 - 0 - 1  [0.500] 1
+Started game 5 of 1600 (hybrid vs v4.3.4)
+Finished game 1 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 1 - 0 - 1  [0.750] 2
+Started game 6 of 1600 (v4.3.4 vs hybrid)
+Finished game 2 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 1 - 1 - 1  [0.500] 3
+Started game 7 of 1600 (hybrid vs v4.3.4)
+Finished game 3 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 1 - 2 - 1  [0.375] 4
+Started game 8 of 1600 (v4.3.4 vs hybrid)
+Finished game 5 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 1 - 2 - 2  [0.400] 5
+Started game 9 of 1600 (hybrid vs v4.3.4)
+Finished game 8 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 2 - 2 - 2  [0.500] 6
+Started game 10 of 1600 (v4.3.4 vs hybrid)
+Finished game 6 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by adjudication}
+Score of hybrid vs v4.3.4: 2 - 2 - 3  [0.500] 7
+Started game 11 of 1600 (hybrid vs v4.3.4)
+Finished game 7 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 2 - 3 - 3  [0.438] 8
+Started game 12 of 1600 (v4.3.4 vs hybrid)
+Finished game 9 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 2 - 4 - 3  [0.389] 9
+Started game 13 of 1600 (hybrid vs v4.3.4)
+Finished game 11 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 2 - 4 - 4  [0.400] 10
+...      hybrid playing White: 1 - 3 - 2  [0.333] 6
+...      hybrid playing Black: 1 - 1 - 2  [0.500] 4
+...      White vs Black: 2 - 4 - 4  [0.400] 10
+Elo difference: -70.4 +/- 185.5, LOS: 20.7 %, DrawRatio: 40.0 %
+SPRT: llr -0.192 (-6.5%), lbound -2.94, ubound 2.94
+Started game 14 of 1600 (v4.3.4 vs hybrid)
+Finished game 10 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 2 - 5 - 4  [0.364] 11
+Started game 15 of 1600 (hybrid vs v4.3.4)
+Finished game 12 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 2 - 5 - 5  [0.375] 12
+Started game 16 of 1600 (v4.3.4 vs hybrid)
+Finished game 13 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 2 - 5 - 6  [0.385] 13
+Started game 17 of 1600 (hybrid vs v4.3.4)
+Finished game 17 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 3 - 5 - 6  [0.429] 14
+Started game 18 of 1600 (v4.3.4 vs hybrid)
+Finished game 16 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 4 - 5 - 6  [0.467] 15
+Started game 19 of 1600 (hybrid vs v4.3.4)
+Finished game 15 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 4 - 5 - 7  [0.469] 16
+Started game 20 of 1600 (v4.3.4 vs hybrid)
+Finished game 19 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 4 - 5 - 8  [0.471] 17
+Started game 21 of 1600 (hybrid vs v4.3.4)
+Finished game 14 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 4 - 5 - 9  [0.472] 18
+Started game 22 of 1600 (v4.3.4 vs hybrid)
+Finished game 18 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 5 - 5 - 9  [0.500] 19
+Started game 23 of 1600 (hybrid vs v4.3.4)
+Finished game 20 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 6 - 5 - 9  [0.525] 20
+...      hybrid playing White: 2 - 3 - 5  [0.450] 10
+...      hybrid playing Black: 4 - 2 - 4  [0.600] 10
+...      White vs Black: 4 - 7 - 9  [0.425] 20
+Elo difference: 17.4 +/- 117.1, LOS: 61.8 %, DrawRatio: 45.0 %
+SPRT: llr 0.0585 (2.0%), lbound -2.94, ubound 2.94
+Started game 24 of 1600 (v4.3.4 vs hybrid)
+Finished game 23 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 6 - 5 - 10  [0.524] 21
+Started game 25 of 1600 (hybrid vs v4.3.4)
+Finished game 22 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 6 - 5 - 11  [0.523] 22
+Started game 26 of 1600 (v4.3.4 vs hybrid)
+Finished game 21 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 7 - 5 - 11  [0.543] 23
+Started game 27 of 1600 (hybrid vs v4.3.4)
+Finished game 24 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 7 - 5 - 12  [0.542] 24
+Started game 28 of 1600 (v4.3.4 vs hybrid)
+Finished game 26 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 7 - 6 - 12  [0.520] 25
+Started game 29 of 1600 (hybrid vs v4.3.4)
+Finished game 25 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 7 - 7 - 12  [0.500] 26
+Started game 30 of 1600 (v4.3.4 vs hybrid)
+Finished game 27 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 7 - 7 - 13  [0.500] 27
+Started game 31 of 1600 (hybrid vs v4.3.4)
+Finished game 28 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 7 - 7 - 14  [0.500] 28
+Started game 32 of 1600 (v4.3.4 vs hybrid)
+Finished game 29 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 8 - 7 - 14  [0.517] 29
+Started game 33 of 1600 (hybrid vs v4.3.4)
+Finished game 31 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 9 - 7 - 14  [0.533] 30
+...      hybrid playing White: 5 - 4 - 7  [0.531] 16
+...      hybrid playing Black: 4 - 3 - 7  [0.536] 14
+...      White vs Black: 8 - 8 - 14  [0.500] 30
+Elo difference: 23.2 +/- 92.9, LOS: 69.1 %, DrawRatio: 46.7 %
+SPRT: llr 0.14 (4.8%), lbound -2.94, ubound 2.94
+Started game 34 of 1600 (v4.3.4 vs hybrid)
+Finished game 30 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by adjudication}
+Score of hybrid vs v4.3.4: 9 - 7 - 15  [0.532] 31
+Started game 35 of 1600 (hybrid vs v4.3.4)
+Finished game 32 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 10 - 7 - 15  [0.547] 32
+Started game 36 of 1600 (v4.3.4 vs hybrid)
+Finished game 34 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 11 - 7 - 15  [0.561] 33
+Started game 37 of 1600 (hybrid vs v4.3.4)
+Finished game 35 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 11 - 8 - 15  [0.544] 34
+Started game 38 of 1600 (v4.3.4 vs hybrid)
+Finished game 33 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 11 - 9 - 15  [0.529] 35
+Started game 39 of 1600 (hybrid vs v4.3.4)
+Finished game 38 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 11 - 10 - 15  [0.514] 36
+Started game 40 of 1600 (v4.3.4 vs hybrid)
+Finished game 36 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 12 - 10 - 15  [0.527] 37
+Started game 41 of 1600 (hybrid vs v4.3.4)
+Finished game 41 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 13 - 10 - 15  [0.539] 38
+Started game 42 of 1600 (v4.3.4 vs hybrid)
+Finished game 40 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 13 - 11 - 15  [0.526] 39
+Started game 43 of 1600 (hybrid vs v4.3.4)
+Finished game 37 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 13 - 12 - 15  [0.512] 40
+...      hybrid playing White: 6 - 7 - 7  [0.475] 20
+...      hybrid playing Black: 7 - 5 - 8  [0.550] 20
+...      White vs Black: 11 - 14 - 15  [0.463] 40
+Elo difference: 8.7 +/- 86.8, LOS: 57.9 %, DrawRatio: 37.5 %
+SPRT: llr 0.0235 (0.8%), lbound -2.94, ubound 2.94
+Started game 44 of 1600 (v4.3.4 vs hybrid)
+Finished game 39 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 14 - 12 - 15  [0.524] 41
+Started game 45 of 1600 (hybrid vs v4.3.4)
+Finished game 43 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 14 - 12 - 16  [0.524] 42
+Started game 46 of 1600 (v4.3.4 vs hybrid)
+Finished game 44 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 14 - 12 - 17  [0.523] 43
+Started game 47 of 1600 (hybrid vs v4.3.4)
+Finished game 42 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 14 - 13 - 17  [0.511] 44
+Started game 48 of 1600 (v4.3.4 vs hybrid)
+Finished game 45 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 15 - 13 - 17  [0.522] 45
+Started game 49 of 1600 (hybrid vs v4.3.4)
+Finished game 47 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 15 - 14 - 17  [0.511] 46
+Started game 50 of 1600 (v4.3.4 vs hybrid)
+Finished game 46 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 16 - 14 - 17  [0.521] 47
+Started game 51 of 1600 (hybrid vs v4.3.4)
+Finished game 49 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 16 - 14 - 18  [0.521] 48
+Started game 52 of 1600 (v4.3.4 vs hybrid)
+Finished game 48 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 17 - 14 - 18  [0.531] 49
+Started game 53 of 1600 (hybrid vs v4.3.4)
+Finished game 53 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 17 - 14 - 19  [0.530] 50
+...      hybrid playing White: 8 - 8 - 10  [0.500] 26
+...      hybrid playing Black: 9 - 6 - 9  [0.563] 24
+...      White vs Black: 14 - 17 - 19  [0.470] 50
+Elo difference: 20.9 +/- 77.0, LOS: 70.5 %, DrawRatio: 38.0 %
+SPRT: llr 0.176 (6.0%), lbound -2.94, ubound 2.94
+Started game 54 of 1600 (v4.3.4 vs hybrid)
+Finished game 51 (hybrid vs v4.3.4): 1/2-1/2 {Draw by adjudication}
+Score of hybrid vs v4.3.4: 17 - 14 - 20  [0.529] 51
+Started game 55 of 1600 (hybrid vs v4.3.4)
+Finished game 52 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 17 - 14 - 21  [0.529] 52
+Started game 56 of 1600 (v4.3.4 vs hybrid)
+Finished game 50 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 17 - 15 - 21  [0.519] 53
+Started game 57 of 1600 (hybrid vs v4.3.4)
+Finished game 54 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 17 - 15 - 22  [0.519] 54
+Started game 58 of 1600 (v4.3.4 vs hybrid)
+Finished game 55 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 17 - 16 - 22  [0.509] 55
+Started game 59 of 1600 (hybrid vs v4.3.4)
+Finished game 56 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 17 - 17 - 22  [0.500] 56
+Started game 60 of 1600 (v4.3.4 vs hybrid)
+Finished game 57 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 17 - 17 - 23  [0.500] 57
+Started game 61 of 1600 (hybrid vs v4.3.4)
+Finished game 60 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 17 - 17 - 24  [0.500] 58
+Started game 62 of 1600 (v4.3.4 vs hybrid)
+Finished game 58 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 17 - 18 - 24  [0.492] 59
+Started game 63 of 1600 (hybrid vs v4.3.4)
+Finished game 61 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 18 - 18 - 24  [0.500] 60
+...      hybrid playing White: 9 - 9 - 12  [0.500] 30
+...      hybrid playing Black: 9 - 9 - 12  [0.500] 30
+...      White vs Black: 18 - 18 - 24  [0.500] 60
+Elo difference: 0.0 +/- 68.9, LOS: 50.0 %, DrawRatio: 40.0 %
+SPRT: llr -0.0914 (-3.1%), lbound -2.94, ubound 2.94
+Started game 64 of 1600 (v4.3.4 vs hybrid)
+Finished game 62 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 19 - 18 - 24  [0.508] 61
+Started game 65 of 1600 (hybrid vs v4.3.4)
+Finished game 63 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 20 - 18 - 24  [0.516] 62
+Started game 66 of 1600 (v4.3.4 vs hybrid)
+Finished game 59 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 20 - 19 - 24  [0.508] 63
+Started game 67 of 1600 (hybrid vs v4.3.4)
+Finished game 65 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 20 - 20 - 24  [0.500] 64
+Started game 68 of 1600 (v4.3.4 vs hybrid)
+Finished game 64 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 20 - 21 - 24  [0.492] 65
+Started game 69 of 1600 (hybrid vs v4.3.4)
+Finished game 66 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 20 - 22 - 24  [0.485] 66
+Started game 70 of 1600 (v4.3.4 vs hybrid)
+Finished game 67 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 20 - 22 - 25  [0.485] 67
+Started game 71 of 1600 (hybrid vs v4.3.4)
+Finished game 69 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 20 - 22 - 26  [0.485] 68
+Started game 72 of 1600 (v4.3.4 vs hybrid)
+Finished game 68 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 20 - 23 - 26  [0.478] 69
+Started game 73 of 1600 (hybrid vs v4.3.4)
+Finished game 70 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 21 - 23 - 26  [0.486] 70
+...      hybrid playing White: 10 - 11 - 14  [0.486] 35
+...      hybrid playing Black: 11 - 12 - 12  [0.486] 35
+...      White vs Black: 22 - 22 - 26  [0.500] 70
+Elo difference: -9.9 +/- 65.2, LOS: 38.2 %, DrawRatio: 37.1 %
+SPRT: llr -0.266 (-9.0%), lbound -2.94, ubound 2.94
+Started game 74 of 1600 (v4.3.4 vs hybrid)
+Finished game 71 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 21 - 23 - 27  [0.486] 71
+Started game 75 of 1600 (hybrid vs v4.3.4)
+Finished game 73 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 22 - 23 - 27  [0.493] 72
+Started game 76 of 1600 (v4.3.4 vs hybrid)
+Finished game 74 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 23 - 23 - 27  [0.500] 73
+Started game 77 of 1600 (hybrid vs v4.3.4)
+Finished game 72 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 23 - 23 - 28  [0.500] 74
+Started game 78 of 1600 (v4.3.4 vs hybrid)
+Finished game 76 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 23 - 23 - 29  [0.500] 75
+Started game 79 of 1600 (hybrid vs v4.3.4)
+Finished game 78 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 24 - 23 - 29  [0.507] 76
+Started game 80 of 1600 (v4.3.4 vs hybrid)
+Finished game 75 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 24 - 23 - 30  [0.506] 77
+Started game 81 of 1600 (hybrid vs v4.3.4)
+Finished game 77 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 25 - 23 - 30  [0.513] 78
+Started game 82 of 1600 (v4.3.4 vs hybrid)
+Finished game 81 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 26 - 23 - 30  [0.519] 79
+Started game 83 of 1600 (hybrid vs v4.3.4)
+Finished game 80 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 26 - 23 - 31  [0.519] 80
+...      hybrid playing White: 13 - 11 - 16  [0.525] 40
+...      hybrid playing Black: 13 - 12 - 15  [0.512] 40
+...      White vs Black: 25 - 24 - 31  [0.506] 80
+Elo difference: 13.0 +/- 60.1, LOS: 66.6 %, DrawRatio: 38.8 %
+SPRT: llr 0.135 (4.6%), lbound -2.94, ubound 2.94
+Started game 84 of 1600 (v4.3.4 vs hybrid)
+Finished game 79 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 27 - 23 - 31  [0.525] 81
+Started game 85 of 1600 (hybrid vs v4.3.4)
+Finished game 83 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 27 - 24 - 31  [0.518] 82
+Started game 86 of 1600 (v4.3.4 vs hybrid)
+Finished game 84 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 28 - 24 - 31  [0.524] 83
+Started game 87 of 1600 (hybrid vs v4.3.4)
+Finished game 82 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by insufficient mating material}
+Score of hybrid vs v4.3.4: 28 - 24 - 32  [0.524] 84
+Started game 88 of 1600 (v4.3.4 vs hybrid)
+Finished game 87 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 28 - 25 - 32  [0.518] 85
+Started game 89 of 1600 (hybrid vs v4.3.4)
+Finished game 85 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 28 - 25 - 33  [0.517] 86
+Started game 90 of 1600 (v4.3.4 vs hybrid)
+Finished game 88 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 29 - 25 - 33  [0.523] 87
+Started game 91 of 1600 (hybrid vs v4.3.4)
+Finished game 89 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 30 - 25 - 33  [0.528] 88
+Started game 92 of 1600 (v4.3.4 vs hybrid)
+Finished game 86 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 31 - 25 - 33  [0.534] 89
+Started game 93 of 1600 (hybrid vs v4.3.4)
+Finished game 92 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 31 - 26 - 33  [0.528] 90
+...      hybrid playing White: 15 - 13 - 17  [0.522] 45
+...      hybrid playing Black: 16 - 13 - 16  [0.533] 45
+...      White vs Black: 28 - 29 - 33  [0.494] 90
+Elo difference: 19.3 +/- 57.6, LOS: 74.6 %, DrawRatio: 36.7 %
+SPRT: llr 0.28 (9.5%), lbound -2.94, ubound 2.94
+Started game 94 of 1600 (v4.3.4 vs hybrid)
+Finished game 90 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 31 - 27 - 33  [0.522] 91
+Started game 95 of 1600 (hybrid vs v4.3.4)
+Finished game 91 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 31 - 27 - 34  [0.522] 92
+Started game 96 of 1600 (v4.3.4 vs hybrid)
+Finished game 93 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 32 - 27 - 34  [0.527] 93
+Started game 97 of 1600 (hybrid vs v4.3.4)
+Finished game 95 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 32 - 28 - 34  [0.521] 94
+Started game 98 of 1600 (v4.3.4 vs hybrid)
+Finished game 94 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 33 - 28 - 34  [0.526] 95
+Started game 99 of 1600 (hybrid vs v4.3.4)
+Finished game 96 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 33 - 29 - 34  [0.521] 96
+Started game 100 of 1600 (v4.3.4 vs hybrid)
+Finished game 97 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 34 - 29 - 34  [0.526] 97
+Started game 101 of 1600 (hybrid vs v4.3.4)
+Finished game 98 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 35 - 29 - 34  [0.531] 98
+Started game 102 of 1600 (v4.3.4 vs hybrid)
+Finished game 99 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 36 - 29 - 34  [0.535] 99
+Started game 103 of 1600 (hybrid vs v4.3.4)
+Finished game 100 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 36 - 30 - 34  [0.530] 100
+...      hybrid playing White: 18 - 14 - 18  [0.540] 50
+...      hybrid playing Black: 18 - 16 - 16  [0.520] 50
+...      White vs Black: 34 - 32 - 34  [0.510] 100
+Elo difference: 20.9 +/- 55.8, LOS: 77.0 %, DrawRatio: 34.0 %
+SPRT: llr 0.334 (11.3%), lbound -2.94, ubound 2.94
+Started game 104 of 1600 (v4.3.4 vs hybrid)
+Finished game 101 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 37 - 30 - 34  [0.535] 101
+Started game 105 of 1600 (hybrid vs v4.3.4)
+Finished game 103 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 37 - 30 - 35  [0.534] 102
+Started game 106 of 1600 (v4.3.4 vs hybrid)
+Finished game 104 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 37 - 30 - 36  [0.534] 103
+Started game 107 of 1600 (hybrid vs v4.3.4)
+Finished game 102 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 38 - 30 - 36  [0.538] 104
+Started game 108 of 1600 (v4.3.4 vs hybrid)
+Finished game 105 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 38 - 30 - 37  [0.538] 105
+Started game 109 of 1600 (hybrid vs v4.3.4)
+Finished game 106 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 38 - 31 - 37  [0.533] 106
+Started game 110 of 1600 (v4.3.4 vs hybrid)
+Finished game 108 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 38 - 32 - 37  [0.528] 107
+Started game 111 of 1600 (hybrid vs v4.3.4)
+Finished game 107 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 39 - 32 - 37  [0.532] 108
+Started game 112 of 1600 (v4.3.4 vs hybrid)
+Finished game 110 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 40 - 32 - 37  [0.537] 109
+Started game 113 of 1600 (hybrid vs v4.3.4)
+Finished game 109 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 41 - 32 - 37  [0.541] 110
+...      hybrid playing White: 21 - 14 - 20  [0.564] 55
+...      hybrid playing Black: 20 - 18 - 17  [0.518] 55
+...      White vs Black: 39 - 34 - 37  [0.523] 110
+Elo difference: 28.5 +/- 53.3, LOS: 85.4 %, DrawRatio: 33.6 %
+SPRT: llr 0.555 (18.8%), lbound -2.94, ubound 2.94
+Started game 114 of 1600 (v4.3.4 vs hybrid)
+Finished game 111 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 42 - 32 - 37  [0.545] 111
+Started game 115 of 1600 (hybrid vs v4.3.4)
+Finished game 115 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 42 - 33 - 37  [0.540] 112
+Started game 116 of 1600 (v4.3.4 vs hybrid)
+Finished game 114 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 42 - 33 - 38  [0.540] 113
+Started game 117 of 1600 (hybrid vs v4.3.4)
+Finished game 113 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 43 - 33 - 38  [0.544] 114
+Started game 118 of 1600 (v4.3.4 vs hybrid)
+Finished game 112 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by adjudication}
+Score of hybrid vs v4.3.4: 43 - 33 - 39  [0.543] 115
+Started game 119 of 1600 (hybrid vs v4.3.4)
+Finished game 117 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 43 - 33 - 40  [0.543] 116
+Started game 120 of 1600 (v4.3.4 vs hybrid)
+Finished game 116 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 44 - 33 - 40  [0.547] 117
+Started game 121 of 1600 (hybrid vs v4.3.4)
+Finished game 118 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by adjudication}
+Score of hybrid vs v4.3.4: 44 - 33 - 41  [0.547] 118
+Started game 122 of 1600 (v4.3.4 vs hybrid)
+Finished game 120 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 44 - 34 - 41  [0.542] 119
+Started game 123 of 1600 (hybrid vs v4.3.4)
+Finished game 121 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 44 - 34 - 42  [0.542] 120
+...      hybrid playing White: 23 - 15 - 22  [0.567] 60
+...      hybrid playing Black: 21 - 19 - 20  [0.517] 60
+...      White vs Black: 42 - 36 - 42  [0.525] 120
+Elo difference: 29.0 +/- 50.5, LOS: 87.1 %, DrawRatio: 35.0 %
+SPRT: llr 0.633 (21.5%), lbound -2.94, ubound 2.94
+Started game 124 of 1600 (v4.3.4 vs hybrid)
+Finished game 119 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 44 - 35 - 42  [0.537] 121
+Started game 125 of 1600 (hybrid vs v4.3.4)
+Finished game 122 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 45 - 35 - 42  [0.541] 122
+Started game 126 of 1600 (v4.3.4 vs hybrid)
+Finished game 123 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 45 - 36 - 42  [0.537] 123
+Started game 127 of 1600 (hybrid vs v4.3.4)
+Finished game 124 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 46 - 36 - 42  [0.540] 124
+Started game 128 of 1600 (v4.3.4 vs hybrid)
+Finished game 125 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 46 - 36 - 43  [0.540] 125
+Started game 129 of 1600 (hybrid vs v4.3.4)
+Finished game 126 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 46 - 36 - 44  [0.540] 126
+Started game 130 of 1600 (v4.3.4 vs hybrid)
+Finished game 128 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 46 - 36 - 45  [0.539] 127
+Started game 131 of 1600 (hybrid vs v4.3.4)
+Finished game 127 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 47 - 36 - 45  [0.543] 128
+Started game 132 of 1600 (v4.3.4 vs hybrid)
+Finished game 130 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 48 - 36 - 45  [0.547] 129
+Started game 133 of 1600 (hybrid vs v4.3.4)
+Finished game 129 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 48 - 36 - 46  [0.546] 130
+...      hybrid playing White: 24 - 17 - 24  [0.554] 65
+...      hybrid playing Black: 24 - 19 - 22  [0.538] 65
+...      White vs Black: 43 - 41 - 46  [0.508] 130
+Elo difference: 32.2 +/- 48.3, LOS: 90.5 %, DrawRatio: 35.4 %
+SPRT: llr 0.784 (26.6%), lbound -2.94, ubound 2.94
+Started game 134 of 1600 (v4.3.4 vs hybrid)
+Finished game 131 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 48 - 36 - 47  [0.546] 131
+Started game 135 of 1600 (hybrid vs v4.3.4)
+Finished game 132 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 48 - 36 - 48  [0.545] 132
+Started game 136 of 1600 (v4.3.4 vs hybrid)
+Finished game 134 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 48 - 37 - 48  [0.541] 133
+Started game 137 of 1600 (hybrid vs v4.3.4)
+Finished game 137 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 48 - 37 - 49  [0.541] 134
+Started game 138 of 1600 (v4.3.4 vs hybrid)
+Finished game 135 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 48 - 38 - 49  [0.537] 135
+Started game 139 of 1600 (hybrid vs v4.3.4)
+Finished game 136 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 49 - 38 - 49  [0.540] 136
+Started game 140 of 1600 (v4.3.4 vs hybrid)
+Finished game 138 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 49 - 39 - 49  [0.536] 137
+Started game 141 of 1600 (hybrid vs v4.3.4)
+Finished game 133 (hybrid vs v4.3.4): 1/2-1/2 {Draw by adjudication}
+Score of hybrid vs v4.3.4: 49 - 39 - 50  [0.536] 138
+Started game 142 of 1600 (v4.3.4 vs hybrid)
+Finished game 141 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 49 - 39 - 51  [0.536] 139
+Started game 143 of 1600 (hybrid vs v4.3.4)
+Finished game 139 (hybrid vs v4.3.4): 1/2-1/2 {Draw by adjudication}
+Score of hybrid vs v4.3.4: 49 - 39 - 52  [0.536] 140
+...      hybrid playing White: 24 - 18 - 29  [0.542] 71
+...      hybrid playing Black: 25 - 21 - 23  [0.529] 69
+...      White vs Black: 45 - 43 - 52  [0.507] 140
+Elo difference: 24.9 +/- 45.9, LOS: 85.7 %, DrawRatio: 37.1 %
+SPRT: llr 0.625 (21.2%), lbound -2.94, ubound 2.94
+Started game 144 of 1600 (v4.3.4 vs hybrid)
+Finished game 140 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 50 - 39 - 52  [0.539] 141
+Started game 145 of 1600 (hybrid vs v4.3.4)
+Finished game 142 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 50 - 39 - 53  [0.539] 142
+Started game 146 of 1600 (v4.3.4 vs hybrid)
+Finished game 145 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 50 - 40 - 53  [0.535] 143
+Started game 147 of 1600 (hybrid vs v4.3.4)
+Finished game 144 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 50 - 41 - 53  [0.531] 144
+Started game 148 of 1600 (v4.3.4 vs hybrid)
+Finished game 143 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 50 - 41 - 54  [0.531] 145
+Started game 149 of 1600 (hybrid vs v4.3.4)
+Finished game 146 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 51 - 41 - 54  [0.534] 146
+Started game 150 of 1600 (v4.3.4 vs hybrid)
+Finished game 147 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 52 - 41 - 54  [0.537] 147
+Started game 151 of 1600 (hybrid vs v4.3.4)
+Finished game 148 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 52 - 41 - 55  [0.537] 148
+Started game 152 of 1600 (v4.3.4 vs hybrid)
+Finished game 149 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 53 - 41 - 55  [0.540] 149
+Started game 153 of 1600 (hybrid vs v4.3.4)
+Finished game 150 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 53 - 42 - 55  [0.537] 150
+...      hybrid playing White: 26 - 19 - 30  [0.547] 75
+...      hybrid playing Black: 27 - 23 - 25  [0.527] 75
+...      White vs Black: 49 - 46 - 55  [0.510] 150
+Elo difference: 25.5 +/- 44.5, LOS: 87.0 %, DrawRatio: 36.7 %
+SPRT: llr 0.688 (23.4%), lbound -2.94, ubound 2.94
+Started game 154 of 1600 (v4.3.4 vs hybrid)
+Finished game 153 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 53 - 43 - 55  [0.533] 151
+Started game 155 of 1600 (hybrid vs v4.3.4)
+Finished game 151 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 54 - 43 - 55  [0.536] 152
+Started game 156 of 1600 (v4.3.4 vs hybrid)
+Finished game 152 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by adjudication}
+Score of hybrid vs v4.3.4: 54 - 43 - 56  [0.536] 153
+Started game 157 of 1600 (hybrid vs v4.3.4)
+Finished game 154 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 54 - 43 - 57  [0.536] 154
+Started game 158 of 1600 (v4.3.4 vs hybrid)
+Finished game 155 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 54 - 44 - 57  [0.532] 155
+Started game 159 of 1600 (hybrid vs v4.3.4)
+Finished game 158 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 54 - 44 - 58  [0.532] 156
+Started game 160 of 1600 (v4.3.4 vs hybrid)
+Finished game 156 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by insufficient mating material}
+Score of hybrid vs v4.3.4: 54 - 44 - 59  [0.532] 157
+Started game 161 of 1600 (hybrid vs v4.3.4)
+Finished game 157 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 55 - 44 - 59  [0.535] 158
+Started game 162 of 1600 (v4.3.4 vs hybrid)
+Finished game 162 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 56 - 44 - 59  [0.538] 159
+Started game 163 of 1600 (hybrid vs v4.3.4)
+Finished game 160 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 56 - 45 - 59  [0.534] 160
+...      hybrid playing White: 28 - 21 - 30  [0.544] 79
+...      hybrid playing Black: 28 - 24 - 29  [0.525] 81
+...      White vs Black: 52 - 49 - 59  [0.509] 160
+Elo difference: 23.9 +/- 43.0, LOS: 86.3 %, DrawRatio: 36.9 %
+SPRT: llr 0.676 (23.0%), lbound -2.94, ubound 2.94
+Started game 164 of 1600 (v4.3.4 vs hybrid)
+Finished game 159 (hybrid vs v4.3.4): 1/2-1/2 {Draw by stalemate}
+Score of hybrid vs v4.3.4: 56 - 45 - 60  [0.534] 161
+Started game 165 of 1600 (hybrid vs v4.3.4)
+Finished game 161 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 57 - 45 - 60  [0.537] 162
+Started game 166 of 1600 (v4.3.4 vs hybrid)
+Finished game 163 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 57 - 46 - 60  [0.534] 163
+Started game 167 of 1600 (hybrid vs v4.3.4)
+Finished game 164 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 58 - 46 - 60  [0.537] 164
+Started game 168 of 1600 (v4.3.4 vs hybrid)
+Finished game 166 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 59 - 46 - 60  [0.539] 165
+Started game 169 of 1600 (hybrid vs v4.3.4)
+Finished game 167 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 59 - 47 - 60  [0.536] 166
+Started game 170 of 1600 (v4.3.4 vs hybrid)
+Finished game 165 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 60 - 47 - 60  [0.539] 167
+Started game 171 of 1600 (hybrid vs v4.3.4)
+Finished game 168 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 60 - 48 - 60  [0.536] 168
+Started game 172 of 1600 (v4.3.4 vs hybrid)
+Finished game 169 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 60 - 48 - 61  [0.536] 169
+Started game 173 of 1600 (hybrid vs v4.3.4)
+Finished game 171 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 61 - 48 - 61  [0.538] 170
+...      hybrid playing White: 31 - 23 - 32  [0.547] 86
+...      hybrid playing Black: 30 - 25 - 29  [0.530] 84
+...      White vs Black: 56 - 53 - 61  [0.509] 170
+Elo difference: 26.6 +/- 42.0, LOS: 89.3 %, DrawRatio: 35.9 %
+SPRT: llr 0.814 (27.7%), lbound -2.94, ubound 2.94
+Started game 174 of 1600 (v4.3.4 vs hybrid)
+Finished game 172 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 61 - 48 - 62  [0.538] 171
+Started game 175 of 1600 (hybrid vs v4.3.4)
+Finished game 170 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 62 - 48 - 62  [0.541] 172
+Started game 176 of 1600 (v4.3.4 vs hybrid)
+Finished game 173 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 63 - 48 - 62  [0.543] 173
+Started game 177 of 1600 (hybrid vs v4.3.4)
+Finished game 174 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 63 - 49 - 62  [0.540] 174
+Started game 178 of 1600 (v4.3.4 vs hybrid)
+Finished game 175 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 63 - 49 - 63  [0.540] 175
+Started game 179 of 1600 (hybrid vs v4.3.4)
+Finished game 177 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 64 - 49 - 63  [0.543] 176
+Started game 180 of 1600 (v4.3.4 vs hybrid)
+Finished game 176 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 64 - 49 - 64  [0.542] 177
+Started game 181 of 1600 (hybrid vs v4.3.4)
+Finished game 178 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 64 - 49 - 65  [0.542] 178
+Started game 182 of 1600 (v4.3.4 vs hybrid)
+Finished game 180 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 64 - 49 - 66  [0.542] 179
+Started game 183 of 1600 (hybrid vs v4.3.4)
+Finished game 181 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 65 - 49 - 66  [0.544] 180
+...      hybrid playing White: 34 - 23 - 33  [0.561] 90
+...      hybrid playing Black: 31 - 26 - 33  [0.528] 90
+...      White vs Black: 60 - 54 - 66  [0.517] 180
+Elo difference: 31.0 +/- 40.6, LOS: 93.3 %, DrawRatio: 36.7 %
+SPRT: llr 1.06 (35.9%), lbound -2.94, ubound 2.94
+Started game 184 of 1600 (v4.3.4 vs hybrid)
+Finished game 184 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 65 - 50 - 66  [0.541] 181
+Started game 185 of 1600 (hybrid vs v4.3.4)
+Finished game 182 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 65 - 51 - 66  [0.538] 182
+Started game 186 of 1600 (v4.3.4 vs hybrid)
+Finished game 179 (hybrid vs v4.3.4): 1/2-1/2 {Draw by fifty moves rule}
+Score of hybrid vs v4.3.4: 65 - 51 - 67  [0.538] 183
+Started game 187 of 1600 (hybrid vs v4.3.4)
+Finished game 183 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 66 - 51 - 67  [0.541] 184
+Started game 188 of 1600 (v4.3.4 vs hybrid)
+Finished game 185 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 66 - 52 - 67  [0.538] 185
+Started game 189 of 1600 (hybrid vs v4.3.4)
+Finished game 186 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 67 - 52 - 67  [0.540] 186
+Started game 190 of 1600 (v4.3.4 vs hybrid)
+Finished game 187 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 67 - 53 - 67  [0.537] 187
+Started game 191 of 1600 (hybrid vs v4.3.4)
+Finished game 188 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 67 - 54 - 67  [0.535] 188
+Started game 192 of 1600 (v4.3.4 vs hybrid)
+Finished game 189 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 67 - 55 - 67  [0.532] 189
+Started game 193 of 1600 (hybrid vs v4.3.4)
+Finished game 190 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 68 - 55 - 67  [0.534] 190
+...      hybrid playing White: 35 - 26 - 34  [0.547] 95
+...      hybrid playing Black: 33 - 29 - 33  [0.521] 95
+...      White vs Black: 64 - 59 - 67  [0.513] 190
+Elo difference: 23.8 +/- 39.9, LOS: 87.9 %, DrawRatio: 35.3 %
+SPRT: llr 0.778 (26.4%), lbound -2.94, ubound 2.94
+Started game 194 of 1600 (v4.3.4 vs hybrid)
+Finished game 193 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 68 - 55 - 68  [0.534] 191
+Started game 195 of 1600 (hybrid vs v4.3.4)
+Finished game 191 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 69 - 55 - 68  [0.536] 192
+Started game 196 of 1600 (v4.3.4 vs hybrid)
+Finished game 192 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 70 - 55 - 68  [0.539] 193
+Started game 197 of 1600 (hybrid vs v4.3.4)
+Finished game 196 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 71 - 55 - 68  [0.541] 194
+Started game 198 of 1600 (v4.3.4 vs hybrid)
+Finished game 194 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 71 - 56 - 68  [0.538] 195
+Started game 199 of 1600 (hybrid vs v4.3.4)
+Finished game 195 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 72 - 56 - 68  [0.541] 196
+Started game 200 of 1600 (v4.3.4 vs hybrid)
+Finished game 199 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 73 - 56 - 68  [0.543] 197
+Started game 201 of 1600 (hybrid vs v4.3.4)
+Finished game 197 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 73 - 57 - 68  [0.540] 198
+Started game 202 of 1600 (v4.3.4 vs hybrid)
+Finished game 198 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 74 - 57 - 68  [0.543] 199
+Started game 203 of 1600 (hybrid vs v4.3.4)
+Finished game 202 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 75 - 57 - 68  [0.545] 200
+...      hybrid playing White: 38 - 27 - 35  [0.555] 100
+...      hybrid playing Black: 37 - 30 - 33  [0.535] 100
+...      White vs Black: 68 - 64 - 68  [0.510] 200
+Elo difference: 31.4 +/- 39.3, LOS: 94.1 %, DrawRatio: 34.0 %
+SPRT: llr 1.15 (38.9%), lbound -2.94, ubound 2.94
+Started game 204 of 1600 (v4.3.4 vs hybrid)
+Finished game 201 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 76 - 57 - 68  [0.547] 201
+Started game 205 of 1600 (hybrid vs v4.3.4)
+Finished game 200 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 77 - 57 - 68  [0.550] 202
+Started game 206 of 1600 (v4.3.4 vs hybrid)
+Finished game 203 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 77 - 58 - 68  [0.547] 203
+Started game 207 of 1600 (hybrid vs v4.3.4)
+Finished game 204 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 77 - 58 - 69  [0.547] 204
+Started game 208 of 1600 (v4.3.4 vs hybrid)
+Finished game 206 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by insufficient mating material}
+Score of hybrid vs v4.3.4: 77 - 58 - 70  [0.546] 205
+Started game 209 of 1600 (hybrid vs v4.3.4)
+Finished game 205 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 77 - 59 - 70  [0.544] 206
+Started game 210 of 1600 (v4.3.4 vs hybrid)
+Finished game 208 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 78 - 59 - 70  [0.546] 207
+Started game 211 of 1600 (hybrid vs v4.3.4)
+Finished game 209 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 79 - 59 - 70  [0.548] 208
+Started game 212 of 1600 (v4.3.4 vs hybrid)
+Finished game 207 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 79 - 59 - 71  [0.548] 209
+Started game 213 of 1600 (hybrid vs v4.3.4)
+Finished game 211 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 80 - 59 - 71  [0.550] 210
+...      hybrid playing White: 41 - 29 - 36  [0.557] 106
+...      hybrid playing Black: 39 - 30 - 35  [0.543] 104
+...      White vs Black: 71 - 68 - 71  [0.507] 210
+Elo difference: 34.9 +/- 38.4, LOS: 96.3 %, DrawRatio: 33.8 %
+SPRT: llr 1.37 (46.4%), lbound -2.94, ubound 2.94
+Started game 214 of 1600 (v4.3.4 vs hybrid)
+Finished game 212 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 81 - 59 - 71  [0.552] 211
+Started game 215 of 1600 (hybrid vs v4.3.4)
+Finished game 210 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 81 - 59 - 72  [0.552] 212
+Started game 216 of 1600 (v4.3.4 vs hybrid)
+Finished game 213 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 81 - 59 - 73  [0.552] 213
+Started game 217 of 1600 (hybrid vs v4.3.4)
+Finished game 215 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 81 - 60 - 73  [0.549] 214
+Started game 218 of 1600 (v4.3.4 vs hybrid)
+Finished game 216 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 82 - 60 - 73  [0.551] 215
+Started game 219 of 1600 (hybrid vs v4.3.4)
+Finished game 214 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 82 - 61 - 73  [0.549] 216
+Started game 220 of 1600 (v4.3.4 vs hybrid)
+Finished game 217 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 82 - 61 - 74  [0.548] 217
+Started game 221 of 1600 (hybrid vs v4.3.4)
+Finished game 219 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 82 - 61 - 75  [0.548] 218
+Started game 222 of 1600 (v4.3.4 vs hybrid)
+Finished game 218 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 83 - 61 - 75  [0.550] 219
+Started game 223 of 1600 (hybrid vs v4.3.4)
+Finished game 220 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 83 - 62 - 75  [0.548] 220
+...      hybrid playing White: 41 - 30 - 39  [0.550] 110
+...      hybrid playing Black: 42 - 32 - 36  [0.545] 110
+...      White vs Black: 73 - 72 - 75  [0.502] 220
+Elo difference: 33.3 +/- 37.4, LOS: 95.9 %, DrawRatio: 34.1 %
+SPRT: llr 1.36 (46.1%), lbound -2.94, ubound 2.94
+Started game 224 of 1600 (v4.3.4 vs hybrid)
+Finished game 221 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 84 - 62 - 75  [0.550] 221
+Started game 225 of 1600 (hybrid vs v4.3.4)
+Finished game 224 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 84 - 63 - 75  [0.547] 222
+Started game 226 of 1600 (v4.3.4 vs hybrid)
+Finished game 222 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 84 - 64 - 75  [0.545] 223
+Started game 227 of 1600 (hybrid vs v4.3.4)
+Finished game 223 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 84 - 65 - 75  [0.542] 224
+Started game 228 of 1600 (v4.3.4 vs hybrid)
+Finished game 227 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 84 - 65 - 76  [0.542] 225
+Started game 229 of 1600 (hybrid vs v4.3.4)
+Finished game 225 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 84 - 66 - 76  [0.540] 226
+Started game 230 of 1600 (v4.3.4 vs hybrid)
+Finished game 226 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 84 - 66 - 77  [0.540] 227
+Started game 231 of 1600 (hybrid vs v4.3.4)
+Finished game 228 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 84 - 66 - 78  [0.539] 228
+Started game 232 of 1600 (v4.3.4 vs hybrid)
+Finished game 229 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 85 - 66 - 78  [0.541] 229
+Started game 233 of 1600 (hybrid vs v4.3.4)
+Finished game 230 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 86 - 66 - 78  [0.543] 230
+...      hybrid playing White: 43 - 32 - 40  [0.548] 115
+...      hybrid playing Black: 43 - 34 - 38  [0.539] 115
+...      White vs Black: 77 - 75 - 78  [0.504] 230
+Elo difference: 30.3 +/- 36.7, LOS: 94.8 %, DrawRatio: 33.9 %
+SPRT: llr 1.26 (42.8%), lbound -2.94, ubound 2.94
+Started game 234 of 1600 (v4.3.4 vs hybrid)
+Finished game 231 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 87 - 66 - 78  [0.545] 231
+Started game 235 of 1600 (hybrid vs v4.3.4)
+Finished game 232 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 87 - 67 - 78  [0.543] 232
+Started game 236 of 1600 (v4.3.4 vs hybrid)
+Finished game 233 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 87 - 68 - 78  [0.541] 233
+Started game 237 of 1600 (hybrid vs v4.3.4)
+Finished game 234 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 88 - 68 - 78  [0.543] 234
+Started game 238 of 1600 (v4.3.4 vs hybrid)
+Finished game 236 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 88 - 69 - 78  [0.540] 235
+Started game 239 of 1600 (hybrid vs v4.3.4)
+Finished game 238 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 88 - 70 - 78  [0.538] 236
+Started game 240 of 1600 (v4.3.4 vs hybrid)
+Finished game 235 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 89 - 70 - 78  [0.540] 237
+Started game 241 of 1600 (hybrid vs v4.3.4)
+Finished game 240 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 89 - 71 - 78  [0.538] 238
+Started game 242 of 1600 (v4.3.4 vs hybrid)
+Finished game 237 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 90 - 71 - 78  [0.540] 239
+Started game 243 of 1600 (hybrid vs v4.3.4)
+Finished game 239 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 90 - 72 - 78  [0.537] 240
+...      hybrid playing White: 46 - 34 - 40  [0.550] 120
+...      hybrid playing Black: 44 - 38 - 38  [0.525] 120
+...      White vs Black: 84 - 78 - 78  [0.512] 240
+Elo difference: 26.1 +/- 36.2, LOS: 92.1 %, DrawRatio: 32.5 %
+SPRT: llr 1.07 (36.2%), lbound -2.94, ubound 2.94
+Started game 244 of 1600 (v4.3.4 vs hybrid)
+Finished game 241 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 90 - 72 - 79  [0.537] 241
+Started game 245 of 1600 (hybrid vs v4.3.4)
+Finished game 245 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 91 - 72 - 79  [0.539] 242
+Started game 246 of 1600 (v4.3.4 vs hybrid)
+Finished game 244 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 92 - 72 - 79  [0.541] 243
+Started game 247 of 1600 (hybrid vs v4.3.4)
+Finished game 243 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 92 - 72 - 80  [0.541] 244
+Started game 248 of 1600 (v4.3.4 vs hybrid)
+Finished game 242 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by adjudication}
+Score of hybrid vs v4.3.4: 92 - 72 - 81  [0.541] 245
+Started game 249 of 1600 (hybrid vs v4.3.4)
+Finished game 247 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 93 - 72 - 81  [0.543] 246
+Started game 250 of 1600 (v4.3.4 vs hybrid)
+Finished game 246 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 94 - 72 - 81  [0.545] 247
+Started game 251 of 1600 (hybrid vs v4.3.4)
+Finished game 249 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 95 - 72 - 81  [0.546] 248
+Started game 252 of 1600 (v4.3.4 vs hybrid)
+Finished game 248 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 96 - 72 - 81  [0.548] 249
+Started game 253 of 1600 (hybrid vs v4.3.4)
+Finished game 252 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 96 - 72 - 82  [0.548] 250
+...      hybrid playing White: 49 - 34 - 42  [0.560] 125
+...      hybrid playing Black: 47 - 38 - 40  [0.536] 125
+...      White vs Black: 87 - 81 - 82  [0.512] 250
+Elo difference: 33.5 +/- 35.5, LOS: 96.8 %, DrawRatio: 32.8 %
+SPRT: llr 1.52 (51.8%), lbound -2.94, ubound 2.94
+Started game 254 of 1600 (v4.3.4 vs hybrid)
+Finished game 251 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 97 - 72 - 82  [0.550] 251
+Started game 255 of 1600 (hybrid vs v4.3.4)
+Finished game 250 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 97 - 72 - 83  [0.550] 252
+Started game 256 of 1600 (v4.3.4 vs hybrid)
+Finished game 253 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 97 - 72 - 84  [0.549] 253
+Started game 257 of 1600 (hybrid vs v4.3.4)
+Finished game 256 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 97 - 72 - 85  [0.549] 254
+Started game 258 of 1600 (v4.3.4 vs hybrid)
+Finished game 255 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 97 - 73 - 85  [0.547] 255
+Started game 259 of 1600 (hybrid vs v4.3.4)
+Finished game 254 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by insufficient mating material}
+Score of hybrid vs v4.3.4: 97 - 73 - 86  [0.547] 256
+Started game 260 of 1600 (v4.3.4 vs hybrid)
+Finished game 257 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 97 - 74 - 86  [0.545] 257
+Started game 261 of 1600 (hybrid vs v4.3.4)
+Finished game 260 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 98 - 74 - 86  [0.547] 258
+Started game 262 of 1600 (v4.3.4 vs hybrid)
+Finished game 259 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 99 - 74 - 86  [0.548] 259
+Started game 263 of 1600 (hybrid vs v4.3.4)
+Finished game 258 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 99 - 74 - 87  [0.548] 260
+...      hybrid playing White: 51 - 36 - 43  [0.558] 130
+...      hybrid playing Black: 48 - 38 - 44  [0.538] 130
+...      White vs Black: 89 - 84 - 87  [0.510] 260
+Elo difference: 33.5 +/- 34.6, LOS: 97.1 %, DrawRatio: 33.5 %
+SPRT: llr 1.6 (54.5%), lbound -2.94, ubound 2.94
+Started game 264 of 1600 (v4.3.4 vs hybrid)
+Finished game 262 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 100 - 74 - 87  [0.550] 261
+Started game 265 of 1600 (hybrid vs v4.3.4)
+Finished game 263 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 101 - 74 - 87  [0.552] 262
+Started game 266 of 1600 (v4.3.4 vs hybrid)
+Finished game 261 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 102 - 74 - 87  [0.553] 263
+Started game 267 of 1600 (hybrid vs v4.3.4)
+Finished game 264 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 102 - 75 - 87  [0.551] 264
+Started game 268 of 1600 (v4.3.4 vs hybrid)
+Finished game 265 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 102 - 75 - 88  [0.551] 265
+Started game 269 of 1600 (hybrid vs v4.3.4)
+Finished game 267 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 102 - 76 - 88  [0.549] 266
+Started game 270 of 1600 (v4.3.4 vs hybrid)
+Finished game 268 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 102 - 76 - 89  [0.549] 267
+Started game 271 of 1600 (hybrid vs v4.3.4)
+Finished game 269 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 102 - 76 - 90  [0.549] 268
+Started game 272 of 1600 (v4.3.4 vs hybrid)
+Finished game 270 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 103 - 76 - 90  [0.550] 269
+Started game 273 of 1600 (hybrid vs v4.3.4)
+Finished game 271 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 103 - 77 - 90  [0.548] 270
+...      hybrid playing White: 53 - 38 - 45  [0.555] 136
+...      hybrid playing Black: 50 - 39 - 45  [0.541] 134
+...      White vs Black: 92 - 88 - 90  [0.507] 270
+Elo difference: 33.6 +/- 34.0, LOS: 97.4 %, DrawRatio: 33.3 %
+SPRT: llr 1.67 (56.6%), lbound -2.94, ubound 2.94
+Started game 274 of 1600 (v4.3.4 vs hybrid)
+Finished game 266 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by fifty moves rule}
+Score of hybrid vs v4.3.4: 103 - 77 - 91  [0.548] 271
+Started game 275 of 1600 (hybrid vs v4.3.4)
+Finished game 273 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 104 - 77 - 91  [0.550] 272
+Started game 276 of 1600 (v4.3.4 vs hybrid)
+Finished game 272 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 105 - 77 - 91  [0.551] 273
+Started game 277 of 1600 (hybrid vs v4.3.4)
+Finished game 274 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by adjudication}
+Score of hybrid vs v4.3.4: 105 - 77 - 92  [0.551] 274
+Started game 278 of 1600 (v4.3.4 vs hybrid)
+Finished game 276 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 105 - 77 - 93  [0.551] 275
+Started game 279 of 1600 (hybrid vs v4.3.4)
+Finished game 275 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 105 - 77 - 94  [0.551] 276
+Started game 280 of 1600 (v4.3.4 vs hybrid)
+Finished game 277 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 106 - 77 - 94  [0.552] 277
+Started game 281 of 1600 (hybrid vs v4.3.4)
+Finished game 278 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 106 - 77 - 95  [0.552] 278
+Started game 282 of 1600 (v4.3.4 vs hybrid)
+Finished game 280 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 106 - 77 - 96  [0.552] 279
+Started game 283 of 1600 (hybrid vs v4.3.4)
+Finished game 279 (hybrid vs v4.3.4): 1/2-1/2 {Draw by adjudication}
+Score of hybrid vs v4.3.4: 106 - 77 - 97  [0.552] 280
+...      hybrid playing White: 55 - 38 - 47  [0.561] 140
+...      hybrid playing Black: 51 - 39 - 50  [0.543] 140
+...      White vs Black: 94 - 89 - 97  [0.509] 280
+Elo difference: 36.1 +/- 33.0, LOS: 98.4 %, DrawRatio: 34.6 %
+SPRT: llr 1.93 (65.4%), lbound -2.94, ubound 2.94
+Started game 284 of 1600 (v4.3.4 vs hybrid)
+Finished game 281 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 106 - 77 - 98  [0.552] 281
+Started game 285 of 1600 (hybrid vs v4.3.4)
+Finished game 282 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 107 - 77 - 98  [0.553] 282
+Started game 286 of 1600 (v4.3.4 vs hybrid)
+Finished game 285 (hybrid vs v4.3.4): 1-0 {White mates}
+Score of hybrid vs v4.3.4: 108 - 77 - 98  [0.555] 283
+Started game 287 of 1600 (hybrid vs v4.3.4)
+Finished game 283 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 108 - 77 - 99  [0.555] 284
+Started game 288 of 1600 (v4.3.4 vs hybrid)
+Finished game 284 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 108 - 78 - 99  [0.553] 285
+Started game 289 of 1600 (hybrid vs v4.3.4)
+Finished game 288 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 109 - 78 - 99  [0.554] 286
+Started game 290 of 1600 (v4.3.4 vs hybrid)
+Finished game 287 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 110 - 78 - 99  [0.556] 287
+Started game 291 of 1600 (hybrid vs v4.3.4)
+Finished game 289 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 111 - 78 - 99  [0.557] 288
+Started game 292 of 1600 (v4.3.4 vs hybrid)
+Finished game 286 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 112 - 78 - 99  [0.559] 289
+Started game 293 of 1600 (hybrid vs v4.3.4)
+Finished game 290 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 112 - 79 - 99  [0.557] 290
+...      hybrid playing White: 58 - 38 - 49  [0.569] 145
+...      hybrid playing Black: 54 - 41 - 50  [0.545] 145
+...      White vs Black: 99 - 92 - 99  [0.512] 290
+Elo difference: 39.7 +/- 32.6, LOS: 99.2 %, DrawRatio: 34.1 %
+SPRT: llr 2.22 (75.3%), lbound -2.94, ubound 2.94
+Started game 294 of 1600 (v4.3.4 vs hybrid)
+Finished game 291 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 112 - 80 - 99  [0.555] 291
+Started game 295 of 1600 (hybrid vs v4.3.4)
+Finished game 293 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 112 - 81 - 99  [0.553] 292
+Started game 296 of 1600 (v4.3.4 vs hybrid)
+Finished game 292 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 112 - 81 - 100  [0.553] 293
+Started game 297 of 1600 (hybrid vs v4.3.4)
+Finished game 294 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 112 - 81 - 101  [0.553] 294
+Started game 298 of 1600 (v4.3.4 vs hybrid)
+Finished game 297 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 112 - 82 - 101  [0.551] 295
+Started game 299 of 1600 (hybrid vs v4.3.4)
+Finished game 295 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 112 - 82 - 102  [0.551] 296
+Started game 300 of 1600 (v4.3.4 vs hybrid)
+Finished game 296 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 112 - 82 - 103  [0.551] 297
+Started game 301 of 1600 (hybrid vs v4.3.4)
+Finished game 299 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 112 - 83 - 103  [0.549] 298
+Started game 302 of 1600 (v4.3.4 vs hybrid)
+Finished game 298 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 112 - 83 - 104  [0.548] 299
+Started game 303 of 1600 (hybrid vs v4.3.4)
+Finished game 301 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 112 - 83 - 105  [0.548] 300
+...      hybrid playing White: 58 - 42 - 51  [0.553] 151
+...      hybrid playing Black: 54 - 41 - 54  [0.544] 149
+...      White vs Black: 99 - 96 - 105  [0.505] 300
+Elo difference: 33.7 +/- 31.8, LOS: 98.1 %, DrawRatio: 35.0 %
+SPRT: llr 1.91 (64.8%), lbound -2.94, ubound 2.94
+Started game 304 of 1600 (v4.3.4 vs hybrid)
+Finished game 304 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 112 - 84 - 105  [0.547] 301
+Started game 305 of 1600 (hybrid vs v4.3.4)
+Finished game 300 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 112 - 85 - 105  [0.545] 302
+Started game 306 of 1600 (v4.3.4 vs hybrid)
+Finished game 303 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 113 - 85 - 105  [0.546] 303
+Started game 307 of 1600 (hybrid vs v4.3.4)
+Finished game 305 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 113 - 86 - 105  [0.544] 304
+Started game 308 of 1600 (v4.3.4 vs hybrid)
+Finished game 302 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 113 - 86 - 106  [0.544] 305
+Started game 309 of 1600 (hybrid vs v4.3.4)
+Finished game 307 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 114 - 86 - 106  [0.546] 306
+Started game 310 of 1600 (v4.3.4 vs hybrid)
+Finished game 306 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 115 - 86 - 106  [0.547] 307
+Started game 311 of 1600 (hybrid vs v4.3.4)
+Finished game 308 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 115 - 86 - 107  [0.547] 308
+Started game 312 of 1600 (v4.3.4 vs hybrid)
+Finished game 312 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 115 - 86 - 108  [0.547] 309
+Started game 313 of 1600 (hybrid vs v4.3.4)
+Finished game 311 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 115 - 87 - 108  [0.545] 310
+...      hybrid playing White: 60 - 44 - 51  [0.552] 155
+...      hybrid playing Black: 55 - 43 - 57  [0.539] 155
+...      White vs Black: 103 - 99 - 108  [0.506] 310
+Elo difference: 31.5 +/- 31.3, LOS: 97.6 %, DrawRatio: 34.8 %
+SPRT: llr 1.81 (61.4%), lbound -2.94, ubound 2.94
+Started game 314 of 1600 (v4.3.4 vs hybrid)
+Finished game 309 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 115 - 88 - 108  [0.543] 311
+Started game 315 of 1600 (hybrid vs v4.3.4)
+Finished game 313 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 115 - 89 - 108  [0.542] 312
+Started game 316 of 1600 (v4.3.4 vs hybrid)
+Finished game 310 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 115 - 89 - 109  [0.542] 313
+Started game 317 of 1600 (hybrid vs v4.3.4)
+Finished game 314 (v4.3.4 vs hybrid): 1-0 {White mates}
+Score of hybrid vs v4.3.4: 115 - 90 - 109  [0.540] 314
+Started game 318 of 1600 (v4.3.4 vs hybrid)
+Finished game 316 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 115 - 90 - 110  [0.540] 315
+Started game 319 of 1600 (hybrid vs v4.3.4)
+Finished game 315 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 116 - 90 - 110  [0.541] 316
+Started game 320 of 1600 (v4.3.4 vs hybrid)
+Finished game 318 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 116 - 91 - 110  [0.539] 317
+Started game 321 of 1600 (hybrid vs v4.3.4)
+Finished game 317 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 117 - 91 - 110  [0.541] 318
+Started game 322 of 1600 (v4.3.4 vs hybrid)
+Finished game 319 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 118 - 91 - 110  [0.542] 319
+Started game 323 of 1600 (hybrid vs v4.3.4)
+Finished game 320 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 118 - 92 - 110  [0.541] 320
+...      hybrid playing White: 63 - 46 - 51  [0.553] 160
+...      hybrid playing Black: 55 - 46 - 59  [0.528] 160
+...      White vs Black: 109 - 101 - 110  [0.512] 320
+Elo difference: 28.3 +/- 30.9, LOS: 96.4 %, DrawRatio: 34.4 %
+SPRT: llr 1.62 (55.1%), lbound -2.94, ubound 2.94
+Started game 324 of 1600 (v4.3.4 vs hybrid)
+Finished game 321 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 119 - 92 - 110  [0.542] 321
+Started game 325 of 1600 (hybrid vs v4.3.4)
+Finished game 323 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 119 - 93 - 110  [0.540] 322
+Started game 326 of 1600 (v4.3.4 vs hybrid)
+Finished game 322 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 119 - 94 - 110  [0.539] 323
+Started game 327 of 1600 (hybrid vs v4.3.4)
+Finished game 324 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 119 - 94 - 111  [0.539] 324
+Started game 328 of 1600 (v4.3.4 vs hybrid)
+Finished game 326 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 119 - 94 - 112  [0.538] 325
+Started game 329 of 1600 (hybrid vs v4.3.4)
+Finished game 327 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 119 - 94 - 113  [0.538] 326
+Started game 330 of 1600 (v4.3.4 vs hybrid)
+Finished game 325 (hybrid vs v4.3.4): 1/2-1/2 {Draw by adjudication}
+Score of hybrid vs v4.3.4: 119 - 94 - 114  [0.538] 327
+Started game 331 of 1600 (hybrid vs v4.3.4)
+Finished game 328 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 119 - 94 - 115  [0.538] 328
+Started game 332 of 1600 (v4.3.4 vs hybrid)
+Finished game 329 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 119 - 94 - 116  [0.538] 329
+Started game 333 of 1600 (hybrid vs v4.3.4)
+Finished game 332 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 120 - 94 - 116  [0.539] 330
+...      hybrid playing White: 64 - 47 - 54  [0.552] 165
+...      hybrid playing Black: 56 - 47 - 62  [0.527] 165
+...      White vs Black: 111 - 103 - 116  [0.512] 330
+Elo difference: 27.4 +/- 30.3, LOS: 96.2 %, DrawRatio: 35.2 %
+SPRT: llr 1.63 (55.2%), lbound -2.94, ubound 2.94
+Started game 334 of 1600 (v4.3.4 vs hybrid)
+Finished game 330 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 120 - 94 - 117  [0.539] 331
+Started game 335 of 1600 (hybrid vs v4.3.4)
+Finished game 333 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 120 - 95 - 117  [0.538] 332
+Started game 336 of 1600 (v4.3.4 vs hybrid)
+Finished game 331 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 121 - 95 - 117  [0.539] 333
+Started game 337 of 1600 (hybrid vs v4.3.4)
+Finished game 335 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 122 - 95 - 117  [0.540] 334
+Started game 338 of 1600 (v4.3.4 vs hybrid)
+Finished game 337 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 123 - 95 - 117  [0.542] 335
+Started game 339 of 1600 (hybrid vs v4.3.4)
+Finished game 336 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 123 - 95 - 118  [0.542] 336
+Started game 340 of 1600 (v4.3.4 vs hybrid)
+Finished game 334 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 123 - 95 - 119  [0.542] 337
+Started game 341 of 1600 (hybrid vs v4.3.4)
+Finished game 341 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 124 - 95 - 119  [0.543] 338
+Started game 342 of 1600 (v4.3.4 vs hybrid)
+Finished game 340 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 124 - 96 - 119  [0.541] 339
+Started game 343 of 1600 (hybrid vs v4.3.4)
+Finished game 339 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 125 - 96 - 119  [0.543] 340
+...      hybrid playing White: 69 - 48 - 54  [0.561] 171
+...      hybrid playing Black: 56 - 48 - 65  [0.524] 169
+...      White vs Black: 117 - 104 - 119  [0.519] 340
+Elo difference: 29.7 +/- 29.9, LOS: 97.4 %, DrawRatio: 35.0 %
+SPRT: llr 1.85 (62.8%), lbound -2.94, ubound 2.94
+Started game 344 of 1600 (v4.3.4 vs hybrid)
+Finished game 338 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 125 - 96 - 120  [0.543] 341
+Started game 345 of 1600 (hybrid vs v4.3.4)
+Finished game 344 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 126 - 96 - 120  [0.544] 342
+Started game 346 of 1600 (v4.3.4 vs hybrid)
+Finished game 343 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 126 - 96 - 121  [0.544] 343
+Started game 347 of 1600 (hybrid vs v4.3.4)
+Finished game 345 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 127 - 96 - 121  [0.545] 344
+Started game 348 of 1600 (v4.3.4 vs hybrid)
+Finished game 346 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 127 - 97 - 121  [0.543] 345
+Started game 349 of 1600 (hybrid vs v4.3.4)
+Finished game 342 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 127 - 98 - 121  [0.542] 346
+Started game 350 of 1600 (v4.3.4 vs hybrid)
+Finished game 347 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 128 - 98 - 121  [0.543] 347
+Started game 351 of 1600 (hybrid vs v4.3.4)
+Finished game 348 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 128 - 99 - 121  [0.542] 348
+Started game 352 of 1600 (v4.3.4 vs hybrid)
+Finished game 349 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 128 - 100 - 121  [0.540] 349
+Started game 353 of 1600 (hybrid vs v4.3.4)
+Finished game 351 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 129 - 100 - 121  [0.541] 350
+...      hybrid playing White: 72 - 49 - 55  [0.565] 176
+...      hybrid playing Black: 57 - 51 - 66  [0.517] 174
+...      White vs Black: 123 - 106 - 121  [0.524] 350
+Elo difference: 28.9 +/- 29.5, LOS: 97.2 %, DrawRatio: 34.6 %
+SPRT: llr 1.82 (61.9%), lbound -2.94, ubound 2.94
+Started game 354 of 1600 (v4.3.4 vs hybrid)
+Finished game 350 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 130 - 100 - 121  [0.543] 351
+Started game 355 of 1600 (hybrid vs v4.3.4)
+Finished game 352 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 131 - 100 - 121  [0.544] 352
+Started game 356 of 1600 (v4.3.4 vs hybrid)
+Finished game 353 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 132 - 100 - 121  [0.545] 353
+Started game 357 of 1600 (hybrid vs v4.3.4)
+Finished game 355 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 133 - 100 - 121  [0.547] 354
+Started game 358 of 1600 (v4.3.4 vs hybrid)
+Finished game 357 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 133 - 100 - 122  [0.546] 355
+Started game 359 of 1600 (hybrid vs v4.3.4)
+Finished game 354 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 134 - 100 - 122  [0.548] 356
+Started game 360 of 1600 (v4.3.4 vs hybrid)
+Finished game 356 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 134 - 101 - 122  [0.546] 357
+Started game 361 of 1600 (hybrid vs v4.3.4)
+Finished game 359 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 134 - 101 - 123  [0.546] 358
+Started game 362 of 1600 (v4.3.4 vs hybrid)
+Finished game 362 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 135 - 101 - 123  [0.547] 359
+Started game 363 of 1600 (hybrid vs v4.3.4)
+Finished game 358 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 136 - 101 - 123  [0.549] 360
+...      hybrid playing White: 74 - 49 - 57  [0.569] 180
+...      hybrid playing Black: 62 - 52 - 66  [0.528] 180
+...      White vs Black: 126 - 111 - 123  [0.521] 360
+Elo difference: 33.9 +/- 29.2, LOS: 98.9 %, DrawRatio: 34.2 %
+SPRT: llr 2.28 (77.3%), lbound -2.94, ubound 2.94
+Started game 364 of 1600 (v4.3.4 vs hybrid)
+Finished game 361 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 137 - 101 - 123  [0.550] 361
+Started game 365 of 1600 (hybrid vs v4.3.4)
+Finished game 360 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by insufficient mating material}
+Score of hybrid vs v4.3.4: 137 - 101 - 124  [0.550] 362
+Started game 366 of 1600 (v4.3.4 vs hybrid)
+Finished game 364 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 138 - 101 - 124  [0.551] 363
+Started game 367 of 1600 (hybrid vs v4.3.4)
+Finished game 365 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 139 - 101 - 124  [0.552] 364
+Started game 368 of 1600 (v4.3.4 vs hybrid)
+Finished game 363 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 139 - 101 - 125  [0.552] 365
+Started game 369 of 1600 (hybrid vs v4.3.4)
+Finished game 367 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 139 - 102 - 125  [0.551] 366
+Started game 370 of 1600 (v4.3.4 vs hybrid)
+Finished game 368 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 139 - 102 - 126  [0.550] 367
+Started game 371 of 1600 (hybrid vs v4.3.4)
+Finished game 366 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 139 - 103 - 126  [0.549] 368
+Started game 372 of 1600 (v4.3.4 vs hybrid)
+Finished game 369 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 139 - 103 - 127  [0.549] 369
+Started game 373 of 1600 (hybrid vs v4.3.4)
+Finished game 370 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 140 - 103 - 127  [0.550] 370
+...      hybrid playing White: 76 - 50 - 59  [0.570] 185
+...      hybrid playing Black: 64 - 53 - 68  [0.530] 185
+...      White vs Black: 129 - 114 - 127  [0.520] 370
+Elo difference: 34.9 +/- 28.8, LOS: 99.1 %, DrawRatio: 34.3 %
+SPRT: llr 2.43 (82.5%), lbound -2.94, ubound 2.94
+Started game 374 of 1600 (v4.3.4 vs hybrid)
+Finished game 371 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 140 - 103 - 128  [0.550] 371
+Started game 375 of 1600 (hybrid vs v4.3.4)
+Finished game 372 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 141 - 103 - 128  [0.551] 372
+Started game 376 of 1600 (v4.3.4 vs hybrid)
+Finished game 373 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 142 - 103 - 128  [0.552] 373
+Started game 377 of 1600 (hybrid vs v4.3.4)
+Finished game 375 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 142 - 104 - 128  [0.551] 374
+Started game 378 of 1600 (v4.3.4 vs hybrid)
+Finished game 374 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 143 - 104 - 128  [0.552] 375
+Started game 379 of 1600 (hybrid vs v4.3.4)
+Finished game 378 (v4.3.4 vs hybrid): 1-0 {White mates}
+Score of hybrid vs v4.3.4: 143 - 105 - 128  [0.551] 376
+Started game 380 of 1600 (v4.3.4 vs hybrid)
+Finished game 377 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 144 - 105 - 128  [0.552] 377
+Started game 381 of 1600 (hybrid vs v4.3.4)
+Finished game 376 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 145 - 105 - 128  [0.553] 378
+Started game 382 of 1600 (v4.3.4 vs hybrid)
+Finished game 380 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 145 - 106 - 128  [0.551] 379
+Started game 383 of 1600 (hybrid vs v4.3.4)
+Finished game 379 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 145 - 106 - 129  [0.551] 380
+...      hybrid playing White: 78 - 51 - 61  [0.571] 190
+...      hybrid playing Black: 67 - 55 - 68  [0.532] 190
+...      White vs Black: 133 - 118 - 129  [0.520] 380
+Elo difference: 35.8 +/- 28.5, LOS: 99.3 %, DrawRatio: 33.9 %
+SPRT: llr 2.56 (86.9%), lbound -2.94, ubound 2.94
+Started game 384 of 1600 (v4.3.4 vs hybrid)
+Finished game 381 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 146 - 106 - 129  [0.552] 381
+Started game 385 of 1600 (hybrid vs v4.3.4)
+Finished game 382 (v4.3.4 vs hybrid): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 146 - 107 - 129  [0.551] 382
+Started game 386 of 1600 (v4.3.4 vs hybrid)
+Finished game 383 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 147 - 107 - 129  [0.552] 383
+Started game 387 of 1600 (hybrid vs v4.3.4)
+Finished game 387 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 148 - 107 - 129  [0.553] 384
+Started game 388 of 1600 (v4.3.4 vs hybrid)
+Finished game 385 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 148 - 107 - 130  [0.553] 385
+Started game 389 of 1600 (hybrid vs v4.3.4)
+Finished game 386 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 148 - 107 - 131  [0.553] 386
+Started game 390 of 1600 (v4.3.4 vs hybrid)
+Finished game 389 (hybrid vs v4.3.4): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 148 - 108 - 131  [0.552] 387
+Started game 391 of 1600 (hybrid vs v4.3.4)
+Finished game 388 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 149 - 108 - 131  [0.553] 388
+Started game 392 of 1600 (v4.3.4 vs hybrid)
+Finished game 384 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 149 - 108 - 132  [0.553] 389
+Started game 393 of 1600 (hybrid vs v4.3.4)
+Finished game 390 (v4.3.4 vs hybrid): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 149 - 108 - 133  [0.553] 390
+...      hybrid playing White: 81 - 52 - 62  [0.574] 195
+...      hybrid playing Black: 68 - 56 - 71  [0.531] 195
+...      White vs Black: 137 - 120 - 133  [0.522] 390
+Elo difference: 36.7 +/- 28.1, LOS: 99.5 %, DrawRatio: 34.1 %
+SPRT: llr 2.71 (92.1%), lbound -2.94, ubound 2.94
+Started game 394 of 1600 (v4.3.4 vs hybrid)
+Finished game 391 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 150 - 108 - 133  [0.554] 391
+Started game 395 of 1600 (hybrid vs v4.3.4)
+Finished game 392 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 151 - 108 - 133  [0.555] 392
+Started game 396 of 1600 (v4.3.4 vs hybrid)
+Finished game 393 (hybrid vs v4.3.4): 1-0 {White wins by adjudication}
+Score of hybrid vs v4.3.4: 152 - 108 - 133  [0.556] 393
+Started game 397 of 1600 (hybrid vs v4.3.4)
+Finished game 395 (hybrid vs v4.3.4): 1/2-1/2 {Draw by 3-fold repetition}
+Score of hybrid vs v4.3.4: 152 - 108 - 134  [0.556] 394
+Started game 398 of 1600 (v4.3.4 vs hybrid)
+Finished game 394 (v4.3.4 vs hybrid): 0-1 {Black wins by adjudication}
+Score of hybrid vs v4.3.4: 153 - 108 - 134  [0.557] 395
+Finished game 396 (v4.3.4 vs hybrid): * {No result}
+Score of hybrid vs v4.3.4: 153 - 108 - 134  [0.557] 395
+Finished game 397 (hybrid vs v4.3.4): * {No result}
+Score of hybrid vs v4.3.4: 153 - 108 - 134  [0.557] 395
+Finished game 398 (v4.3.4 vs hybrid): * {No result}
+Score of hybrid vs v4.3.4: 153 - 108 - 134  [0.557] 395
+...      hybrid playing White: 83 - 52 - 63  [0.578] 198
+...      hybrid playing Black: 70 - 56 - 71  [0.536] 197
+...      White vs Black: 139 - 122 - 134  [0.522] 395
+Elo difference: 39.8 +/- 28.0, LOS: 99.7 %, DrawRatio: 33.9 %
+SPRT: llr 3.02 (102.4%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Player: hybrid
+   "Draw by 3-fold repetition": 114
+   "Draw by adjudication": 12
+   "Draw by fifty moves rule": 2
+   "Draw by insufficient mating material": 5
+   "Draw by stalemate": 1
+   "Loss: Black wins by adjudication": 52
+   "Loss: White mates": 2
+   "Loss: White wins by adjudication": 54
+   "No result": 3
+   "Win: Black wins by adjudication": 70
+   "Win: White mates": 1
+   "Win: White wins by adjudication": 82
+Player: v4.3.4
+   "Draw by 3-fold repetition": 114
+   "Draw by adjudication": 12
+   "Draw by fifty moves rule": 2
+   "Draw by insufficient mating material": 5
+   "Draw by stalemate": 1
+   "Loss: Black wins by adjudication": 70
+   "Loss: White mates": 1
+   "Loss: White wins by adjudication": 82
+   "No result": 3
+   "Win: Black wins by adjudication": 52
+   "Win: White mates": 2
+   "Win: White wins by adjudication": 54
+Finished match
