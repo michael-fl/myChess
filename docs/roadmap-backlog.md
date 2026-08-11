@@ -232,3 +232,72 @@ Summary — where each parameter class belongs:
 
 Feasibility note: game-based tuning (SPSA/CLOP) against 960 games is only practical for a few scalars; a labeled 960 dataset for Texel PST tuning would have to be generated via self-play — a separate project, and unnecessary given PST transferability.
 
+
+## 12.22 Enable the opening book — deferred, with a measured motivation
+
+**Status: deferred by choice.** The book exists at `db/openings.db.disabled`
+(31 MB, built by [`OpeningDBImporter`](../src/main/java/org/michaelfl/mychess/openingdb/OpeningDBImporter.java)
+from KingBase, `MAX_MOVE_DEPTH = 16` moves) and is deliberately switched off, to
+first observe how myChess plays openings on its own. The lichess blitz rating of
+**1953** (rd 77, 33 rated games, 2026-08-11) is therefore already the "without
+book" datapoint.
+
+### The observation that motivates it
+
+Watching lichess games suggested myChess neglects development. Measured on the
+game archive, counting knights and bishops still on their home squares:
+
+| Dataset | after move 10 | after move 12 |
+|---|---|---|
+| **lichess**, no book (n = 71) | myChess 1.18 vs opponents 0.99 | 0.93 vs 0.70 |
+| **cross-engine matches**, 8-ply cutechess book (n = 2371) | myChess 0.92 vs opponents 1.11 | 0.67 vs 0.84 |
+
+The two datasets point in opposite directions, and the difference between them is
+the **book**, not the opponents: in the match archive an 8-ply opening book is
+imposed on both sides, on lichess myChess improvises from move 1 while its
+opponents mostly use books. The cross-engine numbers are highly significant
+(±0.04); the lichess ones are directional only (±0.21 at n = 71).
+
+Consistent with that, the "buried piece" pattern appears only without a book: on
+lichess **86 %** of myChess's undeveloped minors are blocked by its own pawn
+(0.80 of 0.93) versus 73 % for its opponents, while in the book-driven matches it
+sits at 68 %, *below* its opponents.
+
+Two impressions were refuted. myChess makes **fewer** queen moves than its
+opponents in the first 12 moves (0.80 vs 1.27), and it castles far more often
+(95.8 % vs 32.4 %) — the `castlingFactor` is doing its job.
+
+So the evaluation does not neglect development as a property; it improvises badly
+when nothing constrains the opening. Enabling the book is therefore the cheap
+lever, and adding a development term the expensive one — and § 12.7.2's lesson
+(flat standalone terms measure neutral for this engine) argues against the latter.
+
+### Measurement pitfall: MapDB takes an exclusive file lock
+
+Anyone measuring book-vs-no-book must know this first.
+[`OpeningDB`](../src/main/java/org/michaelfl/mychess/openingdb/OpeningDB.java)
+opens the file with `DBMaker.fileDB(path).transactionEnable()` — no `readOnly()`,
+no `fileLockDisable()` — so **only one process can hold it**. At
+`-concurrency 4` cutechess runs four engine processes per side; one wins the lock
+and the other three **silently fall back to search-only**, because
+`MyChessMain.runUci` tolerates a locked book by design. The measured effect would
+be diluted to roughly a quarter and read as "the book does nothing", with no error
+message anywhere.
+
+Run such a match at **`-concurrency 1`** (four times the wall-clock), or open the
+database read-only first — an engine change, not a test-harness one.
+
+### Suggested sequence when this is picked up
+
+1. **Development metric first, not Elo.** It reaches significance far faster:
+   ±0.04 at n = 2371 implies a clear signal at roughly 200 games, about half an
+   hour at concurrency 1. It also tests the causal chain directly — if the book
+   side develops better and the 86 % buried-piece figure collapses, the mechanism
+   above is confirmed.
+2. **Then an SPRT**, remembering that self-play *understates* a book: its value
+   lies in avoiding known-bad lines against unfamiliar opponents, and the book
+   side additionally suffers the "book exit" problem of leaving the book in
+   positions it does not understand itself. A near-zero self-play result would
+   therefore not mean the book is worthless on lichess.
+3. Consider `plies=2` instead of the usual 8 for the external book, so the
+   internal one has room to act — at the cost of less game variety.
