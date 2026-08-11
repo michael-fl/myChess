@@ -283,6 +283,69 @@ opponent's rating, so restraint matters even more. A good rollout is: start with
 `allow_matchmaking: false`, confirm the bot plays cleanly on incoming challenges,
 then enable considerate casual matchmaking, and only later consider rated.
 
+### The daily challenge limit — measured 2026-08-11
+
+Lichess caps how many challenges an account may **create** per day. On 2026-08-11
+`myChessJava` ran into it: from 15:50 onward every `POST /api/challenge/{user}`
+came back `429`.
+
+What the log showed, counted for that single calendar day:
+
+| | count | notes |
+|---|---|---|
+| challenges **created** | 202 | 185 succeeded before the first `429`; 8 × `429`, 9 × `400` |
+| incoming challenges accepted | 25 | 11 × `400` — the challenge was already gone |
+| incoming challenges declined | 11 | |
+| games actually played | 78 | ≈ 35 % of created challenges became a game |
+
+Three things are worth carrying forward.
+
+**It is a cumulative limit, not a burst limit.** The creations before the first
+`429` were 63 s to 1 909 s apart, and an earlier hour on the same day carried 26
+creations without a single complaint. Spacing requests further apart therefore does
+not help once the budget is spent — only a smaller daily total does. The exact
+threshold is not documented; 185 successful creations is an observed upper bound,
+not a published figure.
+
+**There are two different rate limits, and only one of them is self-describing.**
+lichess-bot knows a named limit `bot.vsBot.day`: when it fires, the server sends a
+`ratelimit` block containing the exact number of seconds to wait, and the client
+honors it (`lib/lichess.py`, `get_challenge_timeout`). It arrives as `429` for your
+own bot and as `400` when the *opponent* is the one at their limit — the 9 × `400`
+above are other bots hitting theirs, so this is routine. A plain challenge-quota
+`429` carries no such block, and lichess-bot then falls back to *guessing*:
+60 → 120 → 240 → 480 s, capped at 600 s (upstream commit `38d3446`, "fix: respect
+challenge rate limits (#1211)"). For a limit that resets once a day, a ten-minute
+ceiling is far too low — the bot keeps poking every ten minutes for the rest of the
+day.
+
+**Restarting the bot makes it worse, not better.** The backoff lives in the client
+and is initialized to 60 s in the constructor, so a restart resets it to its floor
+while the server-side counter is untouched. The bot then retries ten times as often
+as it did before the restart and floods the log with `429`s — which reads exactly
+like the problem getting worse and is easy to misread as a new fault.
+
+The response was to raise the acceptance rate rather than just slow the cadence:
+
+- `challenge_timeout: 5` → `15` — at five minutes the matchmaker created a
+  challenge roughly every 5-6 minutes (`min_wait_time` is 60 s on top), about
+  250-290 per day. At fifteen it is around 90, with no loss in games played,
+  because most challenges never became games anyway.
+- `challenge_increment: [0]` → `[0, 2, 3]` — increment-free games are widely
+  ignored by other bots, which is what the 35 % conversion reflects. Fewer wasted
+  challenges per game is the efficient fix; raw cadence is the blunt one.
+- `allow_matchmaking: false` until the quota window rolls over. Incoming
+  challenges are unaffected — the event stream has its own limits and the bot
+  keeps playing normally.
+
+Watch one side effect of adding increments: Lichess derives the rating category
+from an *estimated* duration, `base + 40 × increment` (`game_category` in
+`lib/matchmaking.py`). Base and increment are drawn independently
+(`random.choice` on each), so every pair can occur. A 1 440 s base is rapid at
+increment 0 but classical at increment 2 or 3, which shifts the mix toward
+classical — longer games, a separate rating that stays provisional longer, and
+much more CPU per game if a measurement run is going on in parallel.
+
 ---
 
 ## 7. What to extend in myChess first — time increment
@@ -346,7 +409,9 @@ today, or (b) add `winc`/`binc` handling first and then accept any time control.
   play and a public presence.
 - **Be a good citizen.** Don't spam challenges via matchmaking; respect Lichess's
   API rate limits (lichess-bot handles back-off, but aggressive config can still
-  trip limits).
+  trip limits). It did trip them on 2026-08-11 — see
+  [The daily challenge limit](#the-daily-challenge-limit--measured-2026-08-11) for
+  the measured numbers and why restarting the bot is the wrong reflex.
 
 ---
 
