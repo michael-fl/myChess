@@ -1128,4 +1128,129 @@ class BlunderTest {
         assertEngineAvoids(result, Board.h2, Board.h3, "12.h3");
     }
 
+    // ----------------------------------------------------------------
+    // Opening the file in front of its own king — rated rapid game
+    // https://lichess.org/NMc7sp8h (myChessJava vs matmoi 2133, 0-1).
+    //
+    // This game is unlike every other case in this class: for thirty
+    // moves myChess plays well AND judges the position correctly. Its
+    // own evaluation tracks Stockfish to within half a pawn:
+    //
+    //   move   myChess   Stockfish   diff
+    //     24    +1.62      +2.17    -0.55
+    //     26    +1.72      +2.34    -0.62
+    //     28    +1.56      +1.69    -0.13
+    //     30    +1.79      +1.31    +0.48
+    //     34    +1.72       0.00    +1.72   <- lost, unnoticed
+    //     35    +1.55       0.00    +1.55
+    //
+    // So this is not "the evaluation is generally skewed". It is one
+    // precise hole: a pawn move that opens the file in front of its own
+    // king costs nothing in the evaluation.
+    // ----------------------------------------------------------------
+
+    /** White (myChess) to move, clearly better, with the f2-g2-h2 pawns still intact. */
+    private static final String BEFORE_F3_FEN = "rr6/3bk1q1/p1nNp3/2R1p3/2Np2pp/P2R4/1PQ2PPP/6K1 w - - 1 33";
+
+    /** White (myChess) to move two moves later: the f-pawn is gone and both rooks eye the open f-file. */
+    private static final String BEFORE_RD3_FEN = "r4r2/3bk1q1/p1nNp3/2R1p3/2Np3p/P4R2/1PQ3PP/6K1 w - - 1 35";
+
+    /** Depth myChess reached for both moves in the game (1440+0 rapid, ~9 s per move). */
+    private static final int NMC7SP8H_DEPTH = 9;
+
+    /**
+     * The root of the collapse: pushing the pawn that shields its own king.
+     *
+     * <p>Before this move white is <b>+1.89</b> (Stockfish, depth 24) and Stockfish's
+     * choice is the quiet {@code Rd1}, keeping f2-g2-h2 closed and improving the pieces
+     * ({@code 33.Rd1 Rf8 34.Ne4 Rab8 35.Re1}). myChess instead played {@code 33.f3},
+     * which resolves the tension in front of its own king: after {@code gxf3 Rxf3} the
+     * f-pawn is gone, the f-file is open, and black lines up {@code Rf8} plus
+     * {@code Qg7} on it. The position after {@code f3} measures <b>0.00</b> — the whole
+     * advantage, given away in one move — and the game was lost from the f-file
+     * invasion that followed ({@code 38...Rf2}).
+     *
+     * <p>Note where the defect is <em>not</em>: myChess is a pawn <b>behind</b> in
+     * material here (2900 vs 3000 cp), so the material-only shortcut cannot explain the
+     * +1.55 it reports two moves later — that number is positional optimism, not a
+     * material count. Its own pieces really are well placed (knights on c4 and d6, the
+     * enemy king stuck on e7, all of which the piece-square tables reward); what is
+     * missing is the counterweight, the open file bearing on its own king. That is
+     * precisely the fourth bullet of roadmap § 12.21, "open / half-open files toward the
+     * king".
+     *
+     * <p><b>And deeper search makes it worse.</b> Measured in-game: depths 2-7 pick
+     * {@code h3}, and <b>depth 8 picks {@code Rd1}</b> — Stockfish's own best move.
+     * Only at <b>depth 9</b> does the search switch to {@code f3}. The same inversion as
+     * {@link #qe5_atMove9_characterizesSellingTheKingForARook()}: a systematically wrong
+     * evaluation is found more reliably by more plies, not corrected.
+     *
+     * <p><b>TODO — invert once king safety lands.</b> Written first as an
+     * {@link #assertEngineAvoids} test against {@code f2-f3} and confirmed to fail (the
+     * engine chose it), then turned into the characterization below so the suite stays
+     * green while the defect is open. The reproduction is exact — it picks the same
+     * {@code f2-f3} the game saw. Its score differs from the in-game +2.00 because the
+     * test starts from a bare FEN with a cold transposition table; only the move choice
+     * is being pinned.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void f3_atMove33_characterizesOpeningItsOwnPawnShield() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_F3_FEN, NMC7SP8H_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
+                "before 33.f3 white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.f2, Board.f3), ChessUtil.moveToString(result.move()),
+                "characterization: myChess still pushes f3 and opens the file in front of its own king. If it "
+                        + "now plays something else (Rd1 is Stockfish's choice, and depth 8 already finds it), "
+                        + "king safety has landed — turn this into an avoidance test. white-POV eval "
+                        + result.weight());
+        assertTrue(result.weight() > 0.5f,
+                "characterization: it still rates itself clearly ahead after giving the advantage away; the "
+                        + "position after f3 is 0.00 by Stockfish. Got " + result.weight());
+    }
+
+    /**
+     * The missed rescue two moves later: trading the rooks off the open file.
+     *
+     * <p>With the f-file already open, {@code 35.Rxf8} is the only move that holds —
+     * Stockfish rates the position <b>0.00</b> after it, because the trade removes the
+     * attacker from the file. myChess played {@code 35.Rd3} instead, retreating along
+     * the third rank, which Stockfish scores about <b>-2.6</b> (depth 22; deeper
+     * analysis reads it lower still).
+     *
+     * <p>{@code Rxf8} appears in <em>no</em> iteration: measured in-game, depths 1-2 and
+     * 9 pick {@code Rd3}, depths 3-8 pick the equally losing {@code Rb3} (-2.59). The
+     * engine consistently prefers to keep its rook on the third rank, which is
+     * consistent with the missing term — if the open file costs nothing, there is
+     * nothing to trade away.
+     *
+     * <p><b>TODO — invert once king safety lands.</b> Written first as a positive
+     * assertion requiring {@code Rxf8} — stronger than the usual avoidance test, which is
+     * fair here because the saving move is unique — and confirmed to fail (the engine
+     * chose {@code Rd3}). Relaxed to the characterization below so the suite stays green
+     * while the defect is open; the target assertion is preserved in this note, not lost.
+     * As with the sibling test, the score is lower than the in-game +1.55 only because
+     * the transposition table starts cold.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void rd3_atMove35_characterizesKeepingTheRookOffTheOpenFile() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_RD3_FEN, NMC7SP8H_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
+                "before 35.Rd3 white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.f3, Board.d3), ChessUtil.moveToString(result.move()),
+                "characterization: myChess still retreats along the third rank instead of trading with Rxf8, "
+                        + "the only move that holds. If it now plays f3-f8, king safety has landed — restore the "
+                        + "positive assertion on Rxf8. white-POV eval " + result.weight());
+        assertTrue(result.weight() > 0f,
+                "characterization: it rates itself ahead in a position Stockfish scores about -2.6 for white; "
+                        + "got " + result.weight());
+    }
+
 }
