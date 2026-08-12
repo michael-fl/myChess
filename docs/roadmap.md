@@ -12,7 +12,7 @@ The README's [§ 1.2 *Scope and status*](../README.md#12-scope-and-status) alrea
 
 This roadmap is split across three files. Section numbers (§ 12.x) are **stable IDs** and are referenced throughout the docs regardless of which file a section now lives in.
 
-**Active plan — in this file.** Forward, Elo-driving work (see [Suggested implementation order](#suggested-implementation-order) below for priority):
+**Active plan — in this file.** Forward, Elo-driving work (see the [current plan](#current-plan-2026-08-12) below for priority; the older [suggested implementation order](#suggested-implementation-order) is kept as history):
 
 | § | Item | Effort / Elo |
 |---|---|---|
@@ -261,7 +261,7 @@ Search only the *first* move at each node — the PV move, ordered first by [§ 
 
 The single largest evaluation term myChess is still missing. Today the only king-safety signal in the eval is the king PST (which just encodes "stay back / castle in the midgame", see [§ 5.2](evaluation.md#52-piece-square-tables)); there is no notion of *how exposed* the king actually is. [§ 5's omissions list](evaluation.md#5-evaluation-function) explicitly flags "king safety beyond castling" as not implemented. For an engine with zero king-danger evaluation this is very likely the most valuable single eval addition — comfortably ahead of bishop-pair or passed-pawn terms, which is why it is tracked here rather than buried in the [§ 12.7](roadmap.md#127-evaluation-upgrades--m--4080-elo-combined) bundle (mirroring how [§ 12.19 hanging pieces](roadmap-done.md#1219-add-hanging-pieces-penalty-to-the-evaluation-function--done-28-elo) earned its own section as a standalone eval term).
 
-**Priority — next evaluation theme (2026-08).** With the tapered piece-square-table / material series wrapping up (v4.3.0–v4.3.4), the offline Texel tuning infrastructure now exists (`TexelTuner` + the `*TexelData` adapters, the self-play → EPD pipeline, and the hybrid dataset) — precisely what the failed hand-crafted attempts below lacked, since all three were *untuned*. King safety (this section) together with the **mobility-weight retune** (§12.7) is therefore slated as the next evaluation work, **ahead of the remaining search items** (the largest being LMR, §12.3). Both are tuner-driven and build directly on the infrastructure from the tapered-PST work.
+**Priority — next evaluation theme (2026-08).** With the tapered piece-square-table / material series wrapping up (v4.3.0–v4.3.4), the offline Texel tuning infrastructure now exists (`TexelTuner` + the `*TexelData` adapters, the self-play → EPD pipeline, and the hybrid dataset) — precisely what the failed hand-crafted attempts below lacked, since all three were *untuned*. King safety (this section) together with the **mobility-weight retune** (§12.7) is therefore slated as the next evaluation work, **ahead of the remaining search items** (the largest being LMR, §12.3). Both are tuner-driven and build directly on the infrastructure from the tapered-PST work. This is now **step 3 of the [current plan](#current-plan-2026-08-12)**, which is the single place the ordering is decided — behind the re-anchor and the § 12.23 repetition fix, and ahead of the search cluster, with the depth-inversion evidence recorded there.
 
 **What to build.** A king-danger score that grows with the pressure on the king's neighbourhood:
 
@@ -358,6 +358,42 @@ The keep/discard **decision** is always the incremental SPRT against the immedia
 
 ---
 
+## Current plan (2026-08-12)
+
+**This section, not the historical table below, is the current priority.** The
+[suggested implementation order](#suggested-implementation-order) that follows was the
+plan drawn up at the start of the project; most of it is done (UCI, harness, TT, NMP,
+quiescence), and its remaining ordering — search cluster before evaluation — has been
+overtaken by measurement. It is kept for the reasoning, not as a to-do list.
+
+| Step | Item | Why here | Elo |
+|---|---|---|---|
+| 1 | **Absolute re-anchor** — [`tools/run-anchor-bracket.sh 4.4.0`](../tools/run-anchor-bracket.sh), recipe in [myChess-ELO-measurement.md](myChess-ELO-measurement.md) | Every strength number since 4.0.0 is a propagated relative delta; [version-history](version-history.md) puts the accumulated uncertainty at **±40 Elo**. The last six releases added ~+130 Elo with no external measurement. | none — it *calibrates* the rest |
+| 2 | [**§ 12.23 Repetition draws**](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--s-correctness-fix--0-in-self-play-but-real-half-points-against-others) | A correctness fix, small, with the opportunity now quantified: 203 of 2000 games drawn while one side saw itself ≥ +2.00. Best effort-to-payoff ratio of anything open. | ≈ 0 in self-play, real half-points against others |
+| 3 | [**§ 12.21 King safety**](roadmap.md#1221-king-safety--m--3060-elo) (with the § 12.7 mobility-weight retune) | The largest missing evaluation term, and now the only theme with *isolated* test cases: `qe5_atMove9` and `f3_atMove33` in `BlunderTest`. Prerequisites for a tuned attempt are finally in place. | M, ≈ 30–60 |
+| 4 | [**Search cluster**](#search-cluster-plan--history--pvs--lmr) — § 12.5 history → § 12.20 PVS → § 12.3 LMR | Largest raw estimate, but see the caveat below. Has its own build-and-measure plan. | S, ≈ 80–175 combined |
+
+**Why evaluation before search, against the older table's order.** Two independent games
+show that more depth makes a mis-evaluated move *more* likely, not less:
+
+- `9.Qe5` ([1PSnMOBF](https://lichess.org/1PSnMOBF)): correct at depths 1–3, wrong from
+  depth 4 through **depth 13 and 640 million nodes**, scored +0.78 where Stockfish has
+  −2.72.
+- `33.f3` ([NMc7sp8h](https://lichess.org/NMc7sp8h)): **depth 8 finds Stockfish's own
+  best move `Rd1`**; depth 9 discards it for `f3` and gives away a +1.89 advantage.
+
+Search improvements multiply whatever the evaluation believes. Where the belief is wrong
+by two to five pawns, deeper search converges faster on the wrong move — which is why
+step 4 sits behind step 3 rather than in front of it, reversing the original plan. This
+does not devalue the search work; it sequences it.
+
+**Step 1 is a measurement, not a feature**, and it is deliberately first: without it,
+steps 2–4 would each be judged against a baseline that is itself uncertain by ±40 Elo,
+and the § 12.23 fix in particular is expected to show up *only* against external
+opponents.
+
+---
+
 ## Suggested implementation order
 
 | Step | Item | Combined effort | Cumulative Elo (rough) |
@@ -372,6 +408,12 @@ The keep/discard **decision** is always the incremental SPRT against the immedia
 | 8 | [§ 12.7 Eval upgrades](roadmap.md#127-evaluation-upgrades--m--4080-elo-combined) + [§ 12.21 King safety](roadmap.md#1221-king-safety--m--3060-elo) | M | +420 – +770 |
 | 9 | [§ 12.12 Real time management](roadmap.md#1212-real-time-management-heuristics--s--m--3060-elo) | S–M | +450 – +830 |
 | 10 | [§ 12.11 Chess960](roadmap-backlog.md#1211-chess960-fischer-random-support--m-no-elo-on-standard-chess-but-opens-a-new-variant) (optional, opens a new variant) | M | — (on standard chess) |
+
+> **Historical.** Steps 1–3, 5 and 7 are done. The remaining ordering — search cluster
+> (step 4) before evaluation and king safety (step 8) — has been **superseded by the
+> [current plan](#current-plan-2026-08-12)**, which reverses it on measured grounds. Read
+> the reasoning below for why the original sequence made sense; do not read it as the
+> to-do list.
 
 The order is deliberate: **UCI first**, because (a) it yields an immediately visible GUI, (b) `cutechess-cli` becomes available as the measurement workhorse, and (c) a baseline gauntlet against fixed-depth Stockfish anchors every later improvement against a stable external reference. The in-process harness then adds fast per-change diagnostics. TT is the next biggest single jump, and LMR / null-move / aspiration all assume it exists. The eval upgrades come last because their interactions with the search are the easiest to misjudge without measurement. Chess960 is last of all because it gives zero Elo on standard chess and is best tackled once the core engine is strong.
 
