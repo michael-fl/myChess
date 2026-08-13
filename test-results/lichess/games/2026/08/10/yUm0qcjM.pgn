@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/yUm0qcjM"]
+[Date "2026.08.10"]
+[Round "-"]
+[White "DarkElectronBot"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "yUm0qcjM"]
+[UTCDate "2026.08.10"]
+[UTCTime "22:17:14"]
+[WhiteElo "1995"]
+[BlackElo "2098"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C42"]
+[Opening "Petrov's Defense"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nf6 3. Nxe5 Bd6 4. d4 O-O 5. Nc3 Bb4 6. Bd3 d6 7. Nf3 Bxc3+ 8. bxc3 Re8 9. Qe2 Bf5 10. e5 dxe5 11. dxe5 Bg4 12. h3 Bxf3 13. gxf3 Qd5 14. O-O Rxe5 15. Be3 Qd7 16. f4 Rh5 17. Qf3 Qxh3 18. Qxh3 Rxh3 19. Rfb1 b6 20. Bf1 Rh4 21. Bg2 c6 22. Rd1 Na6 23. Bxc6 Rf8 24. Kg2 Nc5 25. c4 Nh5 26. Kf3 Rc8 27. Rd6 g6 28. Bd5 Re8 29. Rd1 Rf8 30. a3 Ng7 31. Rc6 Nf5 32. Bxc5 bxc5 33. Rxc5 Rh3+ 34. Kg4 Rxa3 35. Rc7 Ra2 36. Rd2 Ra1 37. c5 h5+ 38. Kh3 a5 39. c6 Ra4 40. Rd7 Rxf4 41. c7 Rh4+ 42. Kg2 Rg4+ 43. Kf1 Ng3+ 44. fxg3 Rxg3 45. Rd3 Rxd3 46. cxd3 a4 47. Rd8 a3 48. c8=Q Rxd8 49. Qxd8+ Kg7 50. Qe7 1-0
+

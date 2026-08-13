@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/WMJZF0Dl"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "myChessJava"]
+[Black "Goldfish-Engine"]
+[Result "0-1"]
+[GameId "WMJZF0Dl"]
+[UTCDate "2026.08.11"]
+[UTCTime "07:08:07"]
+[WhiteElo "1946"]
+[BlackElo "2185"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "B10"]
+[Opening "Caro-Kann Defense"]
+[Termination "Normal"]
+
+1. e4 c6 2. Nf3 d5 3. exd5 cxd5 4. Nc3 Nc6 5. Bb5 Nf6 6. O-O Bg4 7. h3 Bxf3 8. Qxf3 a6 9. Bxc6+ bxc6 10. d3 e6 11. Qg3 h6 12. Bf4 Nh5 13. Qf3 Nxf4 14. Qxf4 Bd6 15. Qd2 O-O 16. d4 Qb6 17. Rab1 Rad8 18. Rfe1 Rfe8 19. b3 Bb4 20. Qd3 Qa5 21. Re3 c5 22. Na4 c4 23. Qe2 Bd6 24. Nc3 Bb4 25. Na4 Bd2 26. Rf3 Bg5 27. Nc3 Bf6 28. Rd1 e5 29. dxe5 Bxe5 30. Qd2 d4 31. Na4 Qb5 32. Qc1 c3 33. Rfd3 Qa5 34. Re1 Qc7 35. Qa1 Bh2+ 36. Kh1 Be5 37. Kg1 a5 38. Qd1 Bf6 39. Rf1 Re6 40. Qh5 Rde8 41. Rdd1 Re5 42. Qf3 Re2 43. Qf5 R8e5 44. Qf3 R5e4 45. Qd3 Qc6 46. Kh2 Qb7 47. Rc1 R4e3 48. Qf5 Be5+ 49. Kh1 Rg3 50. Rg1 Rxf2 51. Qxe5 Rgxg2 52. Qe8+ Kh7 53. Qe4+ Qxe4 54. Rge1 Rh2+ 55. Kg1 Qh1# 0-1
+

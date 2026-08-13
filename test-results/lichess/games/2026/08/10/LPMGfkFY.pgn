@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/LPMGfkFY"]
+[Date "2026.08.10"]
+[Round "-"]
+[White "cassandra-jl"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "LPMGfkFY"]
+[UTCDate "2026.08.10"]
+[UTCTime "18:47:46"]
+[WhiteElo "2153"]
+[BlackElo "3000"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "D35"]
+[Opening "Queen's Gambit Declined: Exchange Variation"]
+[Termination "Normal"]
+
+1. d4 d5 2. c4 e6 3. Nc3 Nf6 4. cxd5 exd5 5. Bg5 Be7 6. e3 O-O 7. Bd3 Nc6 8. a3 Bg4 9. Nf3 Ne4 10. Bxe7 Nxc3 11. Bxh7+ Kh8 12. bxc3 Qxe7 13. Bd3 Rae8 14. h3 Bh5 15. O-O Qd6 16. a4 Kg8 17. Rc1 f5 18. Re1 Qa3 19. Bb1 a6 20. c4 dxc4 21. Rxc4 Rf7 22. Bc2 Rf6 23. Qb1 Bf7 24. Rc5 b6 25. Rxf5 Rxf5 26. Bxf5 Qxa4 27. Rc1 Bd5 28. e4 Ba2 29. Qa1 Nb4 30. Rxc7 Bb3 31. Qc3 Bf7 32. Bd7 Qd1+ 33. Kh2 Na2 34. Qc6 Nb4 35. Qxb6 Nd5 36. exd5 Rd8 37. Be6 Rf8 38. Bxf7+ Kh8 39. Qg6 Qd3 40. Qxd3 a5 41. Qg6 Rxf7 42. Rxf7 a4 43. Qxg7# 1-0
+

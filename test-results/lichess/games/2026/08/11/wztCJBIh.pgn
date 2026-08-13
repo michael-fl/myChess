@@ -1,0 +1,22 @@
+[Event "rated variant:chess960 game"]
+[Site "https://lichess.org/wztCJBIh"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "myChessJava"]
+[Black "TestBot0"]
+[Result "1-0"]
+[GameId "wztCJBIh"]
+[UTCDate "2026.08.11"]
+[UTCTime "17:31:37"]
+[WhiteElo "2300"]
+[BlackElo "3000"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Chess960"]
+[TimeControl "600+10"]
+[Termination "Normal"]
+[FEN "qrkbnnbr/pppppppp/8/8/8/8/PPPPPPPP/QRKBNNBR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. e3 e5 2. Ng3 1-0
+

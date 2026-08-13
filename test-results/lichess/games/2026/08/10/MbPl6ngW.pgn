@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/MbPl6ngW"]
+[Date "2026.08.10"]
+[Round "-"]
+[White "GiffiBot"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "MbPl6ngW"]
+[UTCDate "2026.08.10"]
+[UTCTime "21:12:11"]
+[WhiteElo "1735"]
+[BlackElo "1656"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "A45"]
+[Opening "Queen's Pawn Game: Chigorin Variation"]
+[Termination "Normal"]
+
+1. d4 d5 2. Nc3 Nf6 3. Nf3 e6 4. Qd3 Bd6 5. e4 dxe4 6. Nxe4 Nxe4 7. Qxe4 f5 8. Qd3 Nc6 9. Bg5 Qd7 10. O-O-O O-O 11. Qb3 f4 12. Bb5 h6 13. Ne5 Qe8 14. d5 exd5 15. Rxd5 Kh8 16. Nc4 Be6 17. Nxd6 cxd6 18. Bh4 Qg6 19. Rxd6 Qxg2 20. Bxc6 bxc6 21. Qxe6 Qxh1+ 22. Rd1 Qxh2 23. Be7 Rfe8 24. Qe2 f3 25. Qe3 Qc7 26. Bd6 Rxe3 27. Bxc7 Re2 28. Bg3 Kg8 29. Rd3 Rf8 30. Kd1 Ree8 31. Kd2 Rf5 32. Kc3 Rc5+ 33. Kb3 Rb5+ 34. Kc3 Rc5+ 35. Kb3 Rb5+ 36. Kc3 Rf5 37. Kc4 Re2 38. Rc3 Rb5 39. b4 Re4+ 40. Kd3 Rbxb4 41. Rxc6 Ra4 42. Rc8+ Kf7 43. Bb8 Re7 44. Rc4 Rxa2 45. Bg3 Ra3+ 46. Kd4 Re2 47. Rc7+ Kf6 48. Rc6+ Kf5 49. Rc5+ Kg4 50. c3 Ra4+ 51. Kd3 h5 52. Rc7 g5 53. Rc5 h4 54. Be5 h3 55. Bg3 Rxf2 56. Bxf2 h2 57. Be3 h1=Q 58. Rxg5+ Kh4 59. Rg1 Qh2 60. Re1 Ra2 61. Kc4 Re2 62. Rxe2 Qxe2+ 63. Kd4 f2 64. Bxf2+ Qxf2+ 65. Kd3 a5 66. Kc4 Qb2 67. Kd5 Qxc3 68. Ke6 a4 69. Kd6 a3 70. Ke6 a2 71. Kd6 a1=Q 72. Kd7 Qd1+ 73. Ke7 Qg7+ 74. Ke6 Qdd7# 0-1
+

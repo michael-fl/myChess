@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/oYketdHO"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "GeoTsiBot"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "oYketdHO"]
+[UTCDate "2026.08.11"]
+[UTCTime "19:09:26"]
+[WhiteElo "1793"]
+[BlackElo "1981"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+3"]
+[ECO "A05"]
+[Opening "Zukertort Opening: Quiet System"]
+[Termination "Normal"]
+
+1. e3 Nf6 2. Nf3 Nc6 3. c3 e5 4. Qa4 Be7 5. Bb5 Bd6 6. Bd3 O-O 7. g4 Re8 8. g5 e4 9. gxf6 exf3 10. fxg7 Qg5 11. Bf1 Qxg7 12. d4 b6 13. Qb5 Bb7 14. h4 Rad8 15. h5 Ne7 16. h6 Qf6 17. Rh5 Kh8 18. Nd2 Ng8 19. Rh3 c5 20. Qb3 cxd4 21. cxd4 Nxh6 22. d5 Nf5 23. Rxf3 Re5 24. Bc4 Qh4 25. Kd1 Rc8 26. Qd3 Qg4 27. Qe2 Nd4 28. Rf4 Qxf4 29. exf4 Rxe2 30. Bxe2 Bxf4 31. b3 Nxe2 32. Kxe2 Be5 33. Rb1 Rc2 34. Ke3 Bxd5 35. a4 Rc3+ 36. Ke2 Rc2 37. Ke3 Kg7 38. Ba3 h5 39. Bb4 a5 40. Kd3 Rc8 41. Ba3 Rc3+ 42. Ke2 Rc2 43. Kd3 Rc3+ 44. Ke2 Rc2 45. Kd3 Ra2 46. Be7 Bf4 47. Nc4 Be6 48. Kd4 Rxf2 49. Bd8 d5 50. Nxb6 f6 51. Kc5 h4 52. Kb5 h3 53. Kxa5 h2 54. b4 Rg2 55. Rh1 Rg1 56. Rxh2 Bxh2 57. Be7 d4 58. Bc5 Rg5 59. Ka6 Rxc5 60. a5 Rc2 61. Na4 d3 62. Nc5 Bc4+ 63. Kb7 d2 64. Ka7 d1=Q 65. b5 Qd6 66. Nb7 Qb8+ 67. Kb6 Bd3 68. Ka6 Rc6# 0-1
+

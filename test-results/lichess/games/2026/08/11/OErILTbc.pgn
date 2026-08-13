@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/OErILTbc"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "myChessJava"]
+[Black "vala-bot"]
+[Result "0-1"]
+[GameId "OErILTbc"]
+[UTCDate "2026.08.11"]
+[UTCTime "05:35:22"]
+[WhiteElo "1941"]
+[BlackElo "2251"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C60"]
+[Opening "Ruy Lopez: Cozio Defense"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nge7 4. O-O Ng6 5. d4 exd4 6. Nxd4 Bc5 7. Nxc6 bxc6 8. Qh5 Qe7 9. Bc4 d6 10. Nc3 h6 11. Be3 Ne5 12. Bxc5 Bg4 13. Bxf7+ Kd7 14. Qxe5 Qxe5 15. Be3 g5 16. f4 gxf4 17. Rxf4 Be6 18. Raf1 Rh7 19. Rf6 Bxf7 20. Rxf7+ Rxf7 21. Rxf7+ Kc8 22. Bxh6 Qc5+ 23. Rf2 Rb8 24. Bc1 Kb7 25. Kf1 Re8 26. g3 d5 27. exd5 Qc4+ 28. Kg2 cxd5 29. a4 d4 30. Nb5 Qd5+ 31. Kg1 d3 32. cxd3 Re1+ 33. Rf1 Re2 34. Rf2 Qc5 35. d4 Qxc1+ 36. Kg2 Qc6+ 37. Kf1 Re8 38. Kg1 Re3 39. Rf7 Re1+ 40. Kf2 Qh1 41. Rxc7+ Kb8 42. Rc8+ Kxc8 43. Nxa7+ Kd7 44. g4 Qg1+ 45. Kf3 Qe3+ 0-1
+

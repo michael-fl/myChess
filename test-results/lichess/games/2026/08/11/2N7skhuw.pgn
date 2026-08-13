@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/2N7skhuw"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "TheHippoGiantBOT"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "2N7skhuw"]
+[UTCDate "2026.08.11"]
+[UTCTime "03:14:47"]
+[WhiteElo "1630"]
+[BlackElo "1872"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "A00"]
+[Opening "Hungarian Opening: Indian Defense"]
+[Termination "Normal"]
+
+1. g3 Nf6 2. Bg2 e6 3. d3 d5 4. e3 Nc6 5. Ne2 Bd6 6. h3 O-O 7. O-O e5 8. Nd2 Be6 9. b3 Qe7 10. Bb2 Rad8 11. a3 e4 12. dxe4 Nxe4 13. Nxe4 dxe4 14. Qc1 Bf5 15. c4 Ne5 16. Bxe5 Bxe5 17. Ra2 Rd3 18. b4 Rfd8 19. c5 Be6 20. Rc2 Bb3 21. Bxe4 Bxc2 22. Qxc2 Rd2 23. Qc4 c6 24. Bf3 Qd7 25. Kg2 Qd3 26. Qg4 Qxa3 27. Qe4 Bf6 28. Nf4 Bc3 29. b5 cxb5 30. Qxb7 Qxc5 31. Rc1 Qxe3 32. Rf1 Bd4 33. Qc7 Rxf2+ 34. Rxf2 Qxf2+ 35. Kh1 Qg1# 0-1
+

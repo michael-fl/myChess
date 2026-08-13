@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/8iJp6YPn"]
+[Date "2026.08.10"]
+[Round "-"]
+[White "myChessJava"]
+[Black "DarkElectronBot"]
+[Result "1/2-1/2"]
+[GameId "8iJp6YPn"]
+[UTCDate "2026.08.10"]
+[UTCTime "19:04:38"]
+[WhiteElo "2300"]
+[BlackElo "1989"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C65"]
+[Opening "Ruy Lopez: Berlin Defense"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O a6 5. Bxc6 dxc6 6. Nxe5 Nxe4 7. Re1 Qd4 8. d3 Qxf2+ 9. Kh1 Bd6 10. Rxe4 O-O 11. Nc3 Bxe5 12. Rxe5 Bg4 13. Qe1 Qxc2 14. Rg5 Bd7 15. Qg3 g6 16. Qxc7 Rfe8 17. Re5 Rxe5 18. Qxe5 Re8 19. Qg3 b5 20. a3 Qxd3 21. Qf2 Qf5 22. Kg1 a5 23. Bd2 b4 24. Na4 Qxf2+ 25. Kxf2 Bg4 26. Be3 Re4 27. Nc5 Rc4 28. Rc1 Rxc1 29. Bxc1 Be6 30. axb4 axb4 31. b3 Bd5 32. Bd2 Kg7 33. Bxb4 g5 34. Bc3+ Kg6 35. g3 Kf5 36. h3 h5 37. h4 gxh4 38. gxh4 Kf4 39. Bf6 Kg4 40. Ke3 Kf5 41. Bd4 Kg4 42. Bf6 Kf5 43. Bd4 Kg4 44. Bc3 f5 45. Be5 f4+ 46. Bxf4 Kxh4 47. b4 Kg4 48. Nd7 Kf5 49. Bg3 Bh1 50. Kd4 Kg4 51. Bd6 h4 52. Ne5+ Kh3 53. Kc5 Bg2 54. Bc7 Bf1 55. Nf3 Bd3 56. Bd8 Kg3 57. Nxh4 Be4 58. Kd4 Bb1 59. Ke3 Bc2 60. Nf3 Bb3 61. Ne5 Ba4 62. Bg5 Bb5 63. Kd4 Ba6 64. Nxc6 Kg4 65. Be3 Kf3 66. Na7 Bb7 67. b5 Be4 68. Nc6 Bf5 69. b6 Bc8 70. Nd8 Kg2 71. b7 Bxb7 72. Nxb7 Kf3 73. Nd6 Kg3 74. Ke4 Kg4 75. Nf7 Kh4 76. Kf4 Kh3 77. Ne5 Kg2 78. Kg4 Kh2 79. Kf3 Kh1 80. Nf7 Kh2 81. Bf2 Kh1 82. Be3 Kh2 83. Bf2 Kh1 84. Bd4 Kh2 85. Ng5 Kh1 86. Nf7 Kh2 87. Ng5 Kh1 88. Bb6 Kh2 89. Be3 Kh1 90. Bb6 Kh2 91. Be3 Kh1 92. Ne6 Kh2 93. Nf4 Kh1 94. Ne6 Kh2 95. Nf4 Kh1 96. Nd3 Kh2 97. Ne5 Kh1 98. Nd3 Kh2 99. Bb6 Kh3 100. Nf4+ Kh2 101. Bd4 Kh1 102. Nd3 Kh2 103. Nf4 Kh1 104. Nd3 Kh2 105. Nf2 Kg1 106. Ng4+ Kf1 107. Ne3+ Kg1 108. Ng4+ Kf1 109. Ne3+ Kg1 110. Be5 Kh1 111. Bg3 Kg1 112. Be5 Kh1 113. Bg3 Kg1 114. Bd6 Kh1 115. Ng4 Kg1 116. Ne3 Kh1 117. Ng4 Kg1 118. Be5 Kf1 119. Ne3+ Kg1 120. Ng4 Kf1 121. Ne3+ Kg1 122. Bd6 1/2-1/2
+

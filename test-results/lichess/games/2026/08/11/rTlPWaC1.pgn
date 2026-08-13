@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/rTlPWaC1"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "QueensGamBOT"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "rTlPWaC1"]
+[UTCDate "2026.08.11"]
+[UTCTime "01:53:01"]
+[WhiteElo "1741"]
+[BlackElo "1859"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C42"]
+[Opening "Petrov's Defense: Three Knights Game"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nf6 3. Nc3 Bc5 4. Nxe5 O-O 5. d4 Bb4 6. Bd3 d6 7. Nf3 Bxc3+ 8. bxc3 Re8 9. Bg5 Nxe4 10. Bxd8 Nxc3+ 11. Kf1 Nxd1 12. Bxc7 Nb2 13. Bxb8 Nxd3 14. Bxd6 Nb2 15. Rb1 Nc4 16. Bc7 Na3 17. Rb2 b6 18. Be5 Ba6+ 19. Kg1 Rac8 20. Bf4 Nxc2 21. h3 Bb7 22. Ne5 f6 23. Nd3 Re4 24. Be3 Nxe3 25. fxe3 Rxe3 26. Rd2 Rd8 27. Nf2 Rg3 28. Nd1 Rd5 29. Kf1 Ra3 30. Ke2 Rg5 31. Kf1 Rga5 32. Rg1 Rxa2 33. Rxa2 Rxa2 34. Nc3 Rc2 35. Nd1 Ba6+ 36. Ke1 Re2+ 37. Kf1 Rc2+ 38. Ke1 Re2+ 39. Kf1 Bc4 40. Rh1 Rd2+ 41. Ke1 Rxg2 42. Nc3 Rc2 43. Nd1 a5 44. Nf2 a4 45. Rh2 a3 46. Kd1 Bb3 47. Ne4 Rxh2+ 48. Ke1 a2 49. Nf2 a1=Q+ 50. Ke2 Qxd4 51. Kf3 Rxf2+ 52. Kg3 Qf4# 0-1
+

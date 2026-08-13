@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/kPaInaSv"]
+[Date "2026.08.10"]
+[Round "-"]
+[White "MrTonnerre"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "kPaInaSv"]
+[UTCDate "2026.08.10"]
+[UTCTime "19:49:31"]
+[WhiteElo "2026"]
+[BlackElo "1738"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "D53"]
+[Opening "Queen's Gambit Declined"]
+[Termination "Normal"]
+
+1. d4 d5 2. c4 e6 3. Nc3 Nf6 4. Bg5 Be7 5. e3 O-O 6. Rc1 Nc6 7. Nf3 Ne4 8. Bxe7 Qxe7 9. Bd3 Nb4 10. Bxe4 dxe4 11. Nxe4 Nxa2 12. Ra1 Qb4+ 13. Qd2 Qxc4 14. b3 Qd5 15. Ng3 Qxb3 16. Qxa2 Qb4+ 17. Kf1 Qe7 18. Qa5 Re8 19. Rc1 b6 20. Qe5 Ba6+ 21. Kg1 Qa3 22. Rb1 f6 23. Qf4 Rac8 24. Qg4 Bb7 25. e4 Rcd8 26. Qf4 Re7 27. Qg4 c5 28. Nh5 f5 29. Nf6+ Kh8 30. Qh4 g5 31. Qh6 Qd3 32. Rf1 Ba6 33. Rc1 Qa3 34. Re1 cxd4 35. Ne5 Rg8 36. Ng6+ Rxg6 37. Qf8+ Rg8 38. Qxg8# 1-0
+

@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/EQgzgmFP"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "vala-bot"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "EQgzgmFP"]
+[UTCDate "2026.08.11"]
+[UTCTime "01:44:29"]
+[WhiteElo "2248"]
+[BlackElo "1859"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C21"]
+[Opening "Center Game: Kieseritzky Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. d4 exd4 3. Nf3 Bc5 4. Bg5 Ne7 5. Nxd4 O-O 6. Nb3 Bd6 7. Nc3 a5 8. Bb5 a4 9. Nxa4 Bb4+ 10. c3 Ba5 11. O-O d6 12. e5 h6 13. Bh4 g5 14. Bg3 Nf5 15. exd6 cxd6 16. Nd4 Bc7 17. c4 Nxd4 18. Qxd4 Nc6 19. Qd2 Ne5 20. Nc3 Be6 21. Rad1 Nxc4 22. Qe2 Nb6 23. f4 Bxa2 24. fxg5 Bb3 25. Ne4 Bxd1 26. Qxd1 hxg5 27. Qh5 f6 28. Qg6+ Kh8 29. Nxf6 Rxf6 30. Rxf6 Ra1+ 31. Kf2 Qxf6+ 32. Qxf6+ Kg8 33. Be8 Nd5 34. Qg6+ Kh8 35. Bf7 Bb6+ 36. Ke2 Re1+ 37. Kd3 Re3+ 38. Kc4 Re4+ 39. Kxd5 1-0
+

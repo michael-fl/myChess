@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/vW4r1a36"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "myChessJava"]
+[Black "SageEngine"]
+[Result "1-0"]
+[GameId "vW4r1a36"]
+[UTCDate "2026.08.11"]
+[UTCTime "03:06:08"]
+[WhiteElo "1872"]
+[BlackElo "1770"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C41"]
+[Opening "Philidor Defense: Exchange Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 d6 3. d4 exd4 4. Bb5+ c6 5. Be2 c5 6. O-O Nc6 7. c3 Nf6 8. cxd4 Nxe4 9. d5 Nb4 10. a3 Qa5 11. Nbd2 Bf5 12. axb4 Qxa1 13. Bb5+ Bd7 14. Bxd7+ Kxd7 15. Nxe4 cxb4 16. Nfg5 f5 17. Nf7 Be7 18. Nxh8 Rxh8 19. Ng3 Bf6 20. Qe1 f4 21. Qe6+ Kd8 22. Qxd6+ Ke8 23. Nh5 Kf7 24. Qe6+ Kf8 25. Bxf4 Qa6 26. Bd6+ Qxd6 27. Qxd6+ Kf7 28. Nxf6 gxf6 29. Qc7+ Kg6 30. d6 a5 31. d7 a4 32. Re1 Rf8 33. Re8 h6 34. Rxf8 b3 35. d8=Q Kh5 36. Qg3 a3 37. Qe8# 1-0
+

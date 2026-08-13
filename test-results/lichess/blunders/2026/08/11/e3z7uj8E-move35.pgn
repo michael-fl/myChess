@@ -1,0 +1,22 @@
+[Event "casual rapid game"]
+[Site "https://lichess.org/e3z7uj8E"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "myChessJava"]
+[Black "Oxide-Eg"]
+[Result "0-1"]
+[GameId "e3z7uj8E"]
+[UTCDate "2026.08.11"]
+[UTCTime "22:44:24"]
+[WhiteElo "2073"]
+[BlackElo "1883"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "900+1"]
+[ECO "C65"]
+[Opening "Ruy Lopez: Berlin Defense"]
+[Termination "Normal"]
+
+1. e4 Nc6 2. Nf3 e5 3. Bb5 Nf6 4. O-O Bd6 5. d4 Nxd4 6. Nxd4 exd4 7. e5 Bxe5 8. Re1 O-O 9. Rxe5 c6 10. Bd3 d6 11. Re1 d5 12. c3 Bg4 13. Qb3 dxc3 14. Nxc3 Qd7 15. Qb4 Rae8 16. Bg5 Bf5 17. Bxf6 a5 18. Bxf5 Qxf5 19. Qxb7 Qxf6 20. Qc7 d4 21. Ne4 Qg6 22. Nc5 Rc8 23. Qxa5 Rcd8 24. Qd2 Qf5 25. b4 Qf6 26. Re4 h6 27. Rd1 Rfe8 28. Nd7 Qf5 29. Rxd4 Kh8 30. Rd6 Re4 31. Qc3 Re2 32. f3 Qg5 33. g3 Rde8 34. Rxc6 Rxh2 35. Kxh2 Re2+ 36. Kh1 Qh5+ 37. Kg1 Qh2+ 38. Kf1 Qf2# 0-1
+

@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/B6eR3o4K"]
+[Date "2026.08.10"]
+[Round "-"]
+[White "myChessJava"]
+[Black "debzero"]
+[Result "1-0"]
+[GameId "B6eR3o4K"]
+[UTCDate "2026.08.10"]
+[UTCTime "21:29:36"]
+[WhiteElo "1656"]
+[BlackElo "1836"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C67"]
+[Opening "Ruy Lopez: Berlin Defense, Rio Gambit Accepted"]
+[Termination "Normal"]
+
+1. e4 Nc6 2. Nf3 e5 3. Bb5 Nf6 4. O-O Nxe4 5. Re1 Nd6 6. Bxc6 dxc6 7. Rxe5+ Be7 8. Qe2 f6 9. Re3 Kf7 10. Nc3 Re8 11. d3 Nf5 12. Re4 Nd6 13. Ra4 Bf8 14. Be3 Kg8 15. Rd1 a5 16. Nd2 Nf5 17. Re4 Be6 18. Nb3 Nd6 19. Rh4 Bf7 20. Qf3 Qd7 21. Nc5 Qf5 22. Rf4 Qh5 23. Qxh5 Bxh5 24. Re1 b6 25. Nb3 Nb5 26. Nxb5 cxb5 27. Nd4 b4 28. Nb5 Bf7 29. Nxc7 Rac8 30. Nxe8 Rxe8 31. b3 Bd6 32. Rd4 Be5 33. Rd7 Be6 34. Rb7 Bc8 35. Rxb6 Bd4 36. Rb8 Be5 37. Bd4 Bxb8 38. Rxe8+ Kf7 39. Rxc8 Be5 40. Bxe5 fxe5 41. Ra8 h6 42. Rxa5 g5 43. Rxe5 Kf6 44. Rb5 h5 45. h4 gxh4 46. Kh2 Ke6 47. Kh3 Kd7 48. Rxb4 Ke6 49. a4 Ke5 50. a5 Kd6 51. a6 Kd5 52. a7 Kc5 53. Rc4+ Kd6 54. a8=Q Ke6 55. Rc6+ Kd7 56. Qb7+ Kd8 57. Rc8# 1-0
+

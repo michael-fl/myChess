@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/bDlRZChi"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "myChessJava"]
+[Black "GiffiBot"]
+[Result "1-0"]
+[GameId "bDlRZChi"]
+[UTCDate "2026.08.11"]
+[UTCTime "04:35:30"]
+[WhiteElo "1899"]
+[BlackElo "1743"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C67"]
+[Opening "Ruy Lopez: Berlin Defense, Rio Gambit Accepted"]
+[Termination "Normal"]
+
+1. e4 Nc6 2. Nf3 e5 3. Bb5 Nf6 4. O-O Nxe4 5. Re1 d5 6. d3 Nd6 7. Bxc6+ bxc6 8. Bg5 f6 9. Nxe5 Qe7 10. Nxc6 Qxe1+ 11. Qxe1+ Kd7 12. Nd4 Kd8 13. Bf4 g5 14. Bxg5 Bg7 15. Bf4 Re8 16. Qa5 Kd7 17. Bxd6 cxd6 18. Nb5 Ke7 19. N1c3 Be6 20. Re1 Kf8 21. Nxd6 Re7 22. Qc5 d4 23. Nf5 Bxf5 24. Rxe7 Re8 25. Re4+ Kf7 26. Qxa7+ Kf8 27. Qc5+ Kf7 28. Qxf5 Rxe4 29. Nxe4 h6 30. Qh7 f5 31. Ng3 f4 32. Nh5 Ke6 33. Nxg7+ Kd5 34. Qxh6 Kc5 35. Nf5 Kb4 36. Nxd4 Kc5 37. Qc6+ Kxd4 38. Qd6# 1-0
+

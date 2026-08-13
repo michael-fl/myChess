@@ -1,0 +1,21 @@
+[Event "casual rapid game"]
+[Site "https://lichess.org/pkEG20Fi"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "schachtelli77"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "pkEG20Fi"]
+[UTCDate "2026.08.11"]
+[UTCTime "19:54:27"]
+[WhiteElo "1577"]
+[BlackElo "2073"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "1200+0"]
+[ECO "C40"]
+[Opening "King's Knight Opening"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Bd6 3. Bc4 Nc6 4. a3 Nf6 5. d3 Bc5 6. h3 O-O 7. O-O d5 8. exd5 Nxd5 9. Bg5 f6 10. Bh4 Be6 11. Nc3 Qd7 12. Qc1 Nxc3 13. Bxe6+ Qxe6 14. bxc3 Rad8 15. Re1 g5 16. Bg3 Bb6 17. Nh2 Ne7 18. Ng4 Nf5 19. Qd1 Nxg3 20. Qf3 h5 21. Nh6+ Kh7 22. Qxg3 Kxh6 23. d4 Qf5 24. dxe5 Rd2 25. exf6 Bxf2+ 0-1
+

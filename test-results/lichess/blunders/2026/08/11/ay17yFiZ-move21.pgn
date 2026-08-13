@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/ay17yFiZ"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "myChessJava"]
+[Black "sunfish-engine"]
+[Result "1-0"]
+[GameId "ay17yFiZ"]
+[UTCDate "2026.08.11"]
+[UTCTime "07:18:25"]
+[WhiteElo "1946"]
+[BlackElo "1624"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C68"]
+[Opening "Ruy Lopez: Exchange Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Nf6 6. Nxe5 Nxe4 7. Re1 Qd4 8. d3 Qxf2+ 9. Kh1 Bd6 10. Rxe4 O-O 11. Nc3 Bxe5 12. Rxe5 Bg4 13. Qe1 Qxc2 14. Rg5 f5 15. Qe6+ Rf7 16. h3 h6 17. Rxg7+ Kxg7 18. Bxh6+ Kg8 19. Qg6+ Kh8 20. Qxf7 Rg8 21. Bf4 Qxg2+ 22. Kxg2 Bh5+ 23. Qxg8+ Kxg8 24. Re1 b5 25. a3 a5 26. Ne2 b4 27. Nd4 bxa3 28. bxa3 c5 29. Nxf5 Kh8 30. Re7 Kg8 31. Rxc7 a4 32. Bd6 Bf7 33. Nh6+ Kg7 34. Nxf7 Kh7 35. Ne5+ Kg8 36. Ng6 c4 37. Be5 cxd3 38. Rg7# 1-0
+

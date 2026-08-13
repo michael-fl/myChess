@@ -1,0 +1,23 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/vKiFB17p"]
+[Date "2026.08.10"]
+[Round "-"]
+[White "JC2025AJEDREZ"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "vKiFB17p"]
+[UTCDate "2026.08.10"]
+[UTCTime "20:22:42"]
+[WhiteElo "1625"]
+[BlackElo "3000"]
+[WhiteRatingDiff "-1"]
+[BlackRatingDiff "+1"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+0"]
+[ECO "C40"]
+[Opening "King's Knight Opening"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Bd6 3. d4 exd4 4. Qxd4 Nf6 5. Bg5 Nc6 6. Qd1 h6 7. Bh4 O-O 8. Bc4 g5 9. Bg3 Nxe4 10. Bxd6 Nxd6 11. O-O Nxc4 12. Qd5 Nb6 13. Qd1 d6 14. Nd4 Nxd4 15. Qxd4 Bf5 16. f4 Bxc2 17. fxg5 Qxg5 18. Qf4 Nd5 19. Qxg5+ hxg5 20. Nc3 Nxc3 21. bxc3 Rad8 22. Rf3 Rfe8 23. Raf1 Bg6 24. Rg3 Re5 25. h4 gxh4 26. Rg4 Rh5 27. Rf6 h3 28. Rfxg6+ fxg6 29. Rxg6+ Kf7 30. Rg3 Rg8 31. Rf3+ Ke7 32. Re3+ Kd7 33. Rxh3 0-1
+
