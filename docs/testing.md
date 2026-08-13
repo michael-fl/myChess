@@ -329,12 +329,20 @@ than maintained once there are enough cases to justify the tooling.
 | `king-safety` | 14 | Danger to its own king is not charged for. Pawn pushes in front of it (`33.f3`, `12.h3`, `38...g6`), captures that drag it out (`Kxh3`, `Kxh2`), an attack on its file simply not scored (`23...Qd2`). Tracked as [roadmap § 12.21](roadmap.md#1221-king-safety--m--3060-elo). |
 | `corner-grab` | 4 | Material taken with a piece that then sits out of play: `21...Qxa1` (Philidor's Legacy), `9.Qe5`/`Qxh8`, `12.Qxb7`, `15...Nxa1`. Three different pieces, four games, one shape. |
 | `endgame-technique` | 2 | Endgame-specific knowledge missing: trading into a lost pawn endgame (`66.Nxe5`), and not occupying a promotion square (`75.Ba1`). |
-| `repetition` | 2 | The search cannot see a threefold repetition coming — [§ 12.23](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--s-correctness-fix--0-in-self-play-but-real-half-points-against-others). |
+| `repetition` | 3 | The search cannot see a threefold repetition coming — [§ 12.23](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--s-correctness-fix--0-in-self-play-but-real-half-points-against-others). Two in `BlunderTest` isolating the cold-table / warm-table split, one in `ThreefoldRepetitionTest`. |
 | `tactical-oversight` | 2 | Walks into a concrete tactic: a pawn grab losing to a fork (`39.Rxd5`), a knight move abandoning the pawn it defended (`21.Nf3`). |
 | `unsound-attack` | 1 | Its own attack over-valued: the knight sacrifice `16.Ng6` rated +1.53. |
 
-Two tests carry no family on purpose — `nf7_atMove25` and `qd5_atMove22` assert that myChess
-*finds* a mating combination, so they are not blunder characterizations at all.
+The tally spans **every** test class, not just `BlunderTest` — `repetition` for instance
+draws one of its three cases from `ThreefoldRepetitionTest`.
+
+A test gets no family when it does not characterize a defect. `nf7_atMove25` and
+`qd5_atMove22` assert that myChess *finds* a mating combination; `testIsDraw`,
+`testFindDrawMove`, `secondOccurrenceIsNotYetADraw` and `testDisableThreefoldRepetition`
+assert that the repetition *rule* works as the rules of chess require. Those are guard
+rails, and marking them would inflate a family with cases that are not evidence of
+anything wrong. `secondOccurrenceIsNotYetADraw` in particular exists to stop a fix from
+loosening the game rule instead of tightening the search.
 
 The 14 king-safety cases are the argument for the roadmap's ordering. Note also which
 families a king-safety term would *not* touch: `75.Ba1` is the one case where the
