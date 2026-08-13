@@ -29,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Michael Fleischhauer
  */
+@SuppressWarnings("SameParameterValue")
 @Tag("slow")
 class BlunderTest {
 
@@ -1173,7 +1174,7 @@ class BlunderTest {
      * <p>Note where the defect is <em>not</em>: myChess is a pawn <b>behind</b> in
      * material here (2900 vs 3000 cp), so the material-only shortcut cannot explain the
      * +1.55 it reports two moves later — that number is positional optimism, not a
-     * material count. Its own pieces really are well placed (knights on c4 and d6, the
+     * material count. Its own pieces really are well-placed (knights on c4 and d6, the
      * enemy king stuck on e7, all of which the piece-square tables reward); what is
      * missing is the counterweight, the open file bearing on its own king. That is
      * precisely the fourth bullet of roadmap § 12.21, "open / half-open files toward the
@@ -1251,6 +1252,283 @@ class BlunderTest {
         assertTrue(result.weight() > 0f,
                 "characterization: it rates itself ahead in a position Stockfish scores about -2.6 for white; "
                         + "got " + result.weight());
+    }
+
+    // ----------------------------------------------------------------
+    // Found by tools/lichess-blunder-scan.py rather than by hand.
+    //
+    // The scanner walked 149 lichess games (6 828 of myChess's own moves)
+    // at depth 15, re-checked the candidates at depth 20, and ranked
+    // "losing phases" — three consecutive own moves losing 250 cp or more
+    // together. It independently rediscovered the cases already pinned
+    // above (KSvNk2VQ, 1PSnMOBF, XSSCyZ3b), which is the check that its
+    // detection works; the six below are from games never looked at.
+    //
+    // All six are pinned at depth 8. Where a deeper search fixes the move
+    // that is recorded per test, because it says whether the knowledge is
+    // missing or merely out of reach.
+    // ----------------------------------------------------------------
+
+    /** Depth used for the scanner-derived cases: what a blitz/rapid game actually reaches. */
+    private static final int SCANNER_DEPTH = 8;
+
+    /** White (myChess) to move, three pawns up, with a black rook offered on h2. */
+    private static final String POISONED_ROOK_H2_FEN = "4r2k/3N1pp1/2R4p/6q1/1P6/2Q2PP1/P6r/3R2K1 w - - 0 35";
+
+    /** Black (myChess) to move, three pawns up, white's Rh5 and Qh3 aimed at the king on h7. */
+    private static final String IGNORED_H_FILE_FEN = "rn1q1r2/4n2k/2p1Bp1p/b6R/8/2P4Q/Pp3PPP/5RK1 b - - 1 23";
+
+    /** White (myChess) to move in a won rook-and-bishop endgame; the black a2 pawn wants a1. */
+    private static final String PROMOTION_SQUARE_FEN = "R7/8/1k3B2/2p5/4p3/4K3/p1r2P2/8 w - - 24 75";
+
+    /** White (myChess) to move, level; the b7 pawn is bait for the queen. */
+    private static final String POISONED_B7_FEN = "r3kbnr/1pp3p1/p1pq1p2/6p1/4P1P1/1Q5P/PPPP1P2/RNB2RK1 w kq - 2 12";
+
+    /** Black (myChess) to move, three pawns up, with a white rook sitting on a1. */
+    private static final String CORNER_ROOK_A1_FEN = "1k1rr3/Npp2p1p/3p1p1b/2P2b2/Q2Pq3/5N2/PPn1BPPP/R4RK1 b - - 0 15";
+
+    /** Black (myChess) to move, two pawns up, white's queen on h5 and a passed pawn on d7. */
+    private static final String PAWN_PUSH_G6_FEN = "3r2k1/p1rPqpp1/1pbR4/7Q/4p3/5P2/P1B3PP/3R2K1 b - - 0 38";
+
+    /**
+     * Taking an offered rook next to its own king, and getting mated for it.
+     *
+     * <p>Rated game <a href="https://lichess.org/e3z7uj8E">e3z7uj8E</a>, the largest single
+     * loss in the whole 149-game scan. White is <b>+3.46</b> and black's rook on h2 is a
+     * sacrifice: after {@code 35.Kxh2} Stockfish reports <b>mate in 4</b>. The move to play
+     * is {@code 35.Qe5}, keeping the king covered and staying +3.46
+     * ({@code 35.Qe5 Qd8 36.Rdc1 Rxe5 37.Rc8}).
+     *
+     * <p>Same family as {@link #kxh3_atMove25_characterizesAcceptingThePoisonedBishop()} —
+     * king captures the offered piece, king safety pays for it — but this one is worse:
+     * there the price was a draw, here it is mate.
+     *
+     * <p>Depth matters here, and in the encouraging direction: {@code Kxh2} is chosen at
+     * depth 8, {@code Rg6} at 9, and from <b>depth 10</b> the search finds Stockfish's own
+     * {@code Qe5}. The knowledge is two plies out of reach rather than absent.
+     *
+     * <p><b>Its own verdict is the worst in this class: +8.00.</b> myChess rates the
+     * position after {@code Kxh2} as eight pawns in its favour while it is mated in four —
+     * a misjudgement of some eighteen pawns with the sign inverted. Everything it counts
+     * (a piece up after the capture) is there; nothing it counts sees the mate.
+     *
+     * <p><b>TODO — invert once king safety lands.</b> Written as an avoidance test against
+     * {@code g1-h2}, confirmed red, then relaxed below.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void kxh2_atMove35_characterizesTakingTheRookSacrifice() throws Exception {
+        var game = gameFromFenAtDepth(POISONED_ROOK_H2_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.g1, Board.h2), ChessUtil.moveToString(result.move()),
+                "characterization: myChess still takes the rook on h2 and is mated in four. If it now plays "
+                        + "something else (Qe5 is Stockfish's choice, and depth 10 already finds it), king "
+                        + "safety has landed — turn this into an avoidance test. white-POV eval "
+                        + result.weight());
+        assertTrue(result.weight() > 5f,
+                "characterization: it rates itself around +8 in a position where it is mated in four; got "
+                        + result.weight());
+    }
+
+    /**
+     * Ignoring an attack on its own king while three pawns up.
+     *
+     * <p>Rated game <a href="https://lichess.org/oDolisK8">oDolisK8</a>. Black (myChess) is
+     * <b>+2.89</b> with white's rook on h5 and queen on h3 both bearing on the king on h7.
+     * The move is {@code 23...Rh8}, contesting the file and holding everything. myChess
+     * played {@code 23...Qd2}, a queen sortie on the far side, and the position collapsed
+     * to <b>0.00</b>; the follow-up {@code 24...Qc2} then lost the rest.
+     *
+     * <p>Unlike the case above this is <em>not</em> a horizon problem: {@code Qd2} is its
+     * choice at every depth from 8 through 11. The attack on its own king simply does not
+     * enter the evaluation, which is the § 12.21 hole in its clearest form — nothing
+     * tactical to see, just a file that needs defending.
+     *
+     * <p><b>Its own verdict: +5.81 for itself</b> in a position Stockfish calls dead level.
+     * Nearly six pawns of phantom advantage, and the direction is the telling part — it
+     * believes the attack on its king is worth nothing at all.
+     *
+     * <p><b>TODO — invert once king safety lands.</b>
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void qd2_atMove23_characterizesIgnoringItsOwnKingFile() throws Exception {
+        var game = gameFromFenAtDepth(IGNORED_H_FILE_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.d8, Board.d2), ChessUtil.moveToString(result.move()),
+                "characterization: myChess still plays the queen to d2 and leaves the h-file undefended. If it "
+                        + "now plays Rh8, king safety has landed — turn this into an avoidance test. white-POV "
+                        + "eval " + result.weight());
+        assertTrue(result.weight() < -4f,
+                "characterization: it rates itself nearly six pawns ahead in a dead level position; got "
+                        + result.weight());
+    }
+
+    /**
+     * A won endgame given away by never occupying the promotion square.
+     *
+     * <p>Rated game <a href="https://lichess.org/gVJ7PdwQ">gVJ7PdwQ</a>, and a category
+     * that none of the cases above cover. White (myChess) is <b>+3.24</b> in a rook-and-
+     * bishop endgame; black's pawn stands on a2 and wants a1. The move is
+     * <b>{@code 75.Ba1}</b> (Stockfish, <b>+3.44</b>): the bishop simply sits on the
+     * promotion square. Everything else lets the pawn decide the game.
+     *
+     * <p>myChess finds it at <em>no</em> depth. It plays {@code Re8} at depths 8-10, which
+     * Stockfish scores <b>0.00</b>, and the game's {@code Be5} at depth 11, worth
+     * <b>+0.11</b>. Both throw the win away; the scanner flagged the whole stretch 75-77
+     * as a phase, because the bishop then shuffles {@code Be5-Bf6-Be5} while the pawn is
+     * the only thing that matters.
+     *
+     * <p>What makes this different from every other case in this class: there is no attack,
+     * no sacrifice and no king safety involved. It is endgame technique — recognising that
+     * a passed pawn one square from promotion outweighs any amount of piece activity. A
+     * king-safety term would not touch it.
+     *
+     * <p><b>Its own verdict: +0.52</b> after {@code Re8}. So it does not even believe it is
+     * winning any longer — the evaluation is roughly honest about the outcome, it simply never
+     * generates the move that keeps the win. That makes this the one case in this class
+     * where the gap looks like search or move ordering rather than evaluation.
+     *
+     * <p><b>TODO.</b> Written as a positive assertion requiring {@code f6-a1}, confirmed
+     * red, then relaxed below. Restore the positive form once the endgame play improves.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void ba1_atMove75_characterizesMissingThePromotionSquare() throws Exception {
+        var game = gameFromFenAtDepth(PROMOTION_SQUARE_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertNotEquals(ChessUtil.moveToString(Board.f6, Board.a1), ChessUtil.moveToString(result.move()),
+                "characterization: myChess must still miss Ba1, the only move that keeps the won endgame. If it "
+                        + "now finds it, replace this with a positive assertion on f6-a1. white-POV eval "
+                        + result.weight());
+    }
+
+    /**
+     * The queen goes pawn-hunting on b7 and does not come back.
+     *
+     * <p>Rated game <a href="https://lichess.org/9TXcD9ES">9TXcD9ES</a>. The position is
+     * <b>level</b> (0.00) and {@code 12.Kg2} keeps it there. myChess took the b7 pawn with
+     * {@code 12.Qxb7}, after which Stockfish reads <b>-8.53</b>: the queen has no way out
+     * of the corner.
+     *
+     * <p>Same family as {@code 9.Qe5} / {@code Qxh8} in
+     * {@link #qe5_atMove9_characterizesSellingTheKingForARook()} — a pawn or rook in the
+     * corner is worth more to the evaluation than the piece that has to fetch it. And like
+     * that case, more depth does not help: {@code Qxb7} is its choice at every depth from
+     * 8 through 11, so this is the evaluation, not the horizon.
+     *
+     * <p><b>Its own verdict: +1.79</b> where Stockfish has <b>-8.53</b> — a gap of more than
+     * <b>ten pawns</b>, the largest measured anywhere in this class. It counts the pawn it
+     * won and nothing about the queen that cannot return.
+     *
+     * <p><b>TODO — invert once the evaluation charges for a trapped piece.</b>
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void qxb7_atMove12_characterizesTakingThePoisonedPawn() throws Exception {
+        var game = gameFromFenAtDepth(POISONED_B7_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.b3, Board.b7), ChessUtil.moveToString(result.move()),
+                "characterization: myChess still grabs the b7 pawn and traps its own queen. If it now plays "
+                        + "something else (Kg2 holds the balance), the evaluation has learned to charge for a "
+                        + "trapped piece — turn this into an avoidance test. white-POV eval " + result.weight());
+        assertTrue(result.weight() > 1f,
+                "characterization: it rates itself ahead where Stockfish has -8.53, a gap above ten pawns; got "
+                        + result.weight());
+    }
+
+    /**
+     * The corner-rook grab again, this time with a knight.
+     *
+     * <p>Rated game <a href="https://lichess.org/ia3olzlm">ia3olzlm</a>. Black (myChess) is
+     * <b>+3.15</b> and plays {@code 15...Nxa1}, taking the rook in the corner; the position
+     * turns to <b>-1.67</b>. The move is {@code 15...Rg8} (+3.15), which keeps the bind.
+     *
+     * <p>This is the <b>third</b> instance of the same pattern in this class, after
+     * {@link #qxa1_atDepth13_engineRefutesTheGreedyRookGrab()} (Philidor's Legacy, queen
+     * takes a1) and the {@code Qxb7} case above. Three different pieces, three different
+     * games, one shape: a rook or pawn in a corner is taken while the piece that takes it
+     * leaves the position that mattered. That recurrence is the argument that this is a
+     * systematic evaluation gap rather than three coincidences.
+     *
+     * <p>Depth helps but arrives late: {@code Nxa1} at depths 8-9, and from <b>depth 10</b>
+     * the search switches to {@code Qe2}.
+     *
+     * <p><b>Its own verdict: +4.00 for itself</b> where Stockfish has it <b>-1.67</b> —
+     * nearly six pawns out, sign inverted. The rook is counted, the knight stranded on a1
+     * is not.
+     *
+     * <p><b>TODO — invert once the evaluation charges for a stranded piece.</b>
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void nxa1_atMove15_characterizesTakingTheCornerRook() throws Exception {
+        var game = gameFromFenAtDepth(CORNER_ROOK_A1_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.c2, Board.a1), ChessUtil.moveToString(result.move()),
+                "characterization: myChess still takes the rook in the corner and strands the knight there. If "
+                        + "it now plays Rg8, turn this into an avoidance test. white-POV eval " + result.weight());
+        assertTrue(result.weight() < -3f,
+                "characterization: it rates itself four pawns ahead where Stockfish has it 1.67 behind; got "
+                        + result.weight());
+    }
+
+    /**
+     * Pushing a pawn in front of its own king instead of removing the passed pawn.
+     *
+     * <p>Rated game <a href="https://lichess.org/LKbBtQml">LKbBtQml</a>. Black (myChess) is
+     * <b>+2.17</b>, white has a queen on h5 and a passed pawn on d7. The move is
+     * {@code 38...Rcxd7}, taking the pawn off the board ({@code 39.Rxd7 Rxd7 40.fxe4
+     * Rxd1+}). myChess played {@code 38...g6}, opening its own king to the queen, and the
+     * position went to <b>-4.78</b>.
+     *
+     * <p>Same family as {@code 33.f3} in
+     * {@link #f3_atMove33_characterizesOpeningItsOwnPawnShield()} and {@code 12.h3} in
+     * {@link #h3_atMove12_engineNoLongerPushesTheUndefendedPawn()}: a pawn move in front of
+     * the own king that the evaluation does not charge for.
+     *
+     * <p>Its choice oscillates with depth — {@code g6} at 8 and 10, the correct
+     * {@code Rcxd7} at 9 and 11 — so the two moves are close together in its evaluation.
+     * That is worth knowing: it means a modest king-safety penalty could be enough to
+     * settle this one, unlike the cases where the wrong move wins by a wide margin.
+     *
+     * <p><b>Its own verdict: +0.26 for itself</b> where Stockfish has white <b>+4.78</b> —
+     * about five pawns out. Note how modest its own number is: it does not think it is
+     * winning, it just fails to see that it is losing.
+     *
+     * <p><b>TODO — invert once king safety lands.</b> Given how close {@code g6} and
+     * {@code Rcxd7} sit in its evaluation, this should be among the first cases to flip.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void g6_atMove38_characterizesPushingThePawnInsteadOfTakingThePasser() throws Exception {
+        var game = gameFromFenAtDepth(PAWN_PUSH_G6_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.g7, Board.g6), ChessUtil.moveToString(result.move()),
+                "characterization: myChess still pushes g6 instead of removing the d7 passer with Rcxd7. If it "
+                        + "now takes the pawn, turn this into an avoidance test. white-POV eval "
+                        + result.weight());
+        assertTrue(result.weight() < 0f,
+                "characterization: it still rates itself slightly ahead where Stockfish has white +4.78; got "
+                        + result.weight());
     }
 
 }

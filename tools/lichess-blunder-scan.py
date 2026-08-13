@@ -43,6 +43,7 @@ import argparse
 import io
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -102,6 +103,7 @@ BLUNDERS_DIR = BASE_DIR / "blunders"
 STATE_FILE = BASE_DIR / "state.json"
 FINDINGS_DIR = BASE_DIR / "findings"
 REPORT_FILE = BASE_DIR / "blunders.md"
+TEST_SOURCE_DIR = REPO_ROOT / "src" / "test" / "java"
 
 
 def game_date(path: Path) -> str:
@@ -373,6 +375,26 @@ def scan_game(path: Path, engine: chess.engine.SimpleEngine,
     return headers.get("GameId", path.stem), color, findings, losses, chess960
 
 
+def covered_game_ids() -> set[str]:
+    """
+    Return the lichess game ids that already appear somewhere in the test sources.
+
+    The convention this relies on: a test that reproduces a game names its lichess id in
+    the JavaDoc, usually as a link. That makes the id the lookup key, so the report can
+    say whether a finding is already pinned without carrying method names around — and
+    finding the test itself is then a plain search for the id.
+    """
+    if not TEST_SOURCE_DIR.is_dir():
+        return set()
+
+    ids: set[str] = set()
+    pattern = re.compile(r"lichess\.org/([A-Za-z0-9]{8})")
+    for path in TEST_SOURCE_DIR.rglob("*.java"):
+        ids.update(pattern.findall(path.read_text()))
+
+    return ids
+
+
 def fmt_loss(centipawns: int) -> str:
     """
     Format a loss. Losses are never clamped themselves — only the evaluations they are
@@ -510,6 +532,9 @@ def write_report(findings: dict, threshold: int, scan_threshold: int,
     greater depth is correctly dropped. Unverified candidates are listed separately
     rather than silently ignored.
     """
+    covered = covered_game_ids()
+    tick = lambda game_id: "yes" if game_id in covered else "no"
+
     confirmed, unverified = [], []
     for game_id, entry in findings.items():
         for hit in entry["findings"]:
@@ -567,13 +592,14 @@ def write_report(findings: dict, threshold: int, scan_threshold: int,
                   f"above +{CLAMP_CP / 100:.0f} (a forced win leaves nothing to improve on). "
                   f"Starting merely a pawn or two ahead is the interesting case, not a filtered one.",
                   "",
-                  "| Total loss | At start | Game | Moves | Contributing moves | Color "
+                  "| Total loss | At start | Game | Test | Moves | Contributing moves | Color "
                   "| FEN before the first of them |",
-                  "|---:|---:|---|---|---|---|---|"]
+                  "|---:|---:|---|---|---|---|---|---|"]
         for total, game_id, entry, phase, detail, first_fen in phase_rows:
             lines.append(f"| **{fmt_loss(total)}** "
                          f"| {fmt_cp(phase.get('eval_at_start_cp', 0))} "
                          f"| [{game_id}](https://lichess.org/{game_id}) "
+                         f"| {tick(game_id)} "
                          f"| {phase['from_move']}–{phase['to_move']} "
                          f"| {', '.join(detail) or '—'} | {entry['color']} "
                          f"| `{first_fen}` |")
@@ -582,14 +608,15 @@ def write_report(findings: dict, threshold: int, scan_threshold: int,
     if confirmed:
         lines += [f"## Single-move blunders — at least {threshold} cp in one move",
                   "",
-                  "| Verified loss | Scan | Game | Move | Played | Before | After | Color "
+                  "| Verified loss | Scan | Game | Test | Move | Played | Before | After | Color "
                   "| FEN before the move |",
-                  "|---:|---:|---|---:|---|---:|---:|---|---|"]
+                  "|---:|---:|---|---|---:|---|---:|---:|---|---|"]
         for game_id, entry, hit in confirmed:
             ver = hit["verified"]
             lines.append(
                 f"| **{fmt_loss(ver['loss_cp'])}** | {fmt_loss(hit['scan']['loss_cp'])} "
-                f"| [{game_id}](https://lichess.org/{game_id}) | {hit['move_number']} "
+                f"| [{game_id}](https://lichess.org/{game_id}) | {tick(game_id)} "
+                f"| {hit['move_number']} "
                 f"| `{hit['move']}` | {fmt_cp(ver['eval_before_cp'])} "
                 f"| {fmt_cp(ver['eval_after_cp'])} | {entry['color']} "
                 f"| `{hit['fen_before']}` |")
@@ -606,6 +633,11 @@ def write_report(findings: dict, threshold: int, scan_threshold: int,
         lines.append("")
 
     lines += ["## Reading these numbers",
+              "",
+              "**Test** says whether any test source already mentions this game's lichess id. "
+              "The convention is that a test reproducing a game names its id in the JavaDoc, so "
+              "`grep` on the id finds the test — the method name does not need to travel in this "
+              "table.",
               "",
               "The *scan* column is the loss measured at the shallow depth, the *verified* column "
               "at the deeper one. Expect the verified figure to be **larger**: a shallow search "
