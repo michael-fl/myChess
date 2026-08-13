@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import org.michaelfl.mychess.engines.PositionSearch;
+
 /**
  * Killer-move heuristic table: stores up to two non-capturing moves per
  * search depth that previously caused a beta cutoff. Queried by
@@ -10,7 +12,7 @@ package org.michaelfl.mychess;
  */
 public final class KillerMoves {
 
-    private final int[][] moves = new int[50][2];
+    private final int[][] moves = new int[PositionSearch.MAX_SEARCH_DEPTH + 1][2];
 
     public boolean isKillerMove(int move, int depth) {
         final var m = moves[depth];
