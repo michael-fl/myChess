@@ -112,6 +112,8 @@ class BlunderTest {
      * passing once the eval (or the search depth in this kind of
      * pawn endgame) is strong enough to recognise the loss before
      * playing into it.
+     *
+     * <p><b>Blunder family:</b> endgame-technique
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -189,6 +191,8 @@ class BlunderTest {
      * that never materialised. A classic horizon / over-optimistic
      * king-attack evaluation. The engine should retreat or defend the
      * knight instead of playing the unsound sacrifice.
+     *
+     * <p><b>Blunder family:</b> unsound-attack
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -222,6 +226,8 @@ class BlunderTest {
      * genuine over-optimistic selection error is {@code 39.Rxd5}. The
      * engine should decline the pawn and address the {@code ...Qxg3+}
      * threat instead.
+     *
+     * <p><b>Blunder family:</b> tactical-oversight
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -257,6 +263,8 @@ class BlunderTest {
      * which is why the raw eval trace first flagged the collapse there.
      * The move that actually throws the game is the rook lift here; the
      * engine should keep the rook active on a useful file instead.
+     *
+     * <p><b>Blunder family:</b> king-safety
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -296,6 +304,8 @@ class BlunderTest {
      * <b>+0.74</b> — so the two-pawn error is gone while roughly a pawn of
      * accuracy is still missing. The assertion below is therefore a real
      * requirement now, not a characterization.
+     *
+     * <p><b>Blunder family:</b> king-safety
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -354,6 +364,8 @@ class BlunderTest {
      * enough to prefer the exchange-winning sacrifice over the simplifying
      * {@code Qxf5}. The blind spot described above is closed; this test now
      * guards against a regression back to declining the sacrifice.
+     *
+     * <p><b>Blunder family:</b> king-safety
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -471,6 +483,8 @@ class BlunderTest {
      * it could not reach this refutation — the knowledge exists in the search
      * but not within the clock. A king-safety term should move the threshold
      * down into reachable depths; that is the regression this test guards.
+     *
+     * <p><b>Blunder family:</b> corner-grab
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -568,6 +582,8 @@ class BlunderTest {
      * {@code Nf3} is still its first choice. The test pins
      * {@link #NF3_REFUTATION_DEPTH}; if the evaluation improves, that threshold
      * should drop into the depths a blitz game actually reaches.
+     *
+     * <p><b>Blunder family:</b> tactical-oversight
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -639,6 +655,8 @@ class BlunderTest {
      * failing — that is the signal to invert it into an
      * {@link #assertEngineAvoids} test against {@code Qb4} and to record the new
      * evaluation here.
+     *
+     * <p><b>Blunder family:</b> king-safety
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -697,6 +715,8 @@ class BlunderTest {
      * {@link #qb4_atMove22_characterizesTheKingSafetyBlindSpot()}: it passes
      * because the defect is present, and must be rewritten once a king-safety
      * term makes the score fall away from the bare material count.
+     *
+     * <p><b>Blunder family:</b> king-safety
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -745,6 +765,8 @@ class BlunderTest {
      * {@link #qb4_atMove22_characterizesTheKingSafetyBlindSpot()}. When king
      * safety lands this must flip, and the test should become an
      * {@link #assertEngineAvoids} case against {@code Kxh3}.
+     *
+     * <p><b>Blunder family:</b> king-safety
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -824,6 +846,8 @@ class BlunderTest {
      * {@code Nf7} at every depth from 1 to 8. This is the control case for
      * {@link #repetition_withWarmTable_walksIntoTheDraw()}: the knowledge is
      * present, and the bug is that a stale table entry hides it.
+     *
+     * <p><b>Blunder family:</b> repetition
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -864,6 +888,8 @@ class BlunderTest {
      * table cutoffs while any position of the current path has occurred before.
      * When that lands, this test must start failing — then assert
      * {@code Nf7} here too and delete this note.
+     *
+     * <p><b>Blunder family:</b> repetition
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -943,6 +969,8 @@ class BlunderTest {
      * below the refutation depth so it reproduces the game's decision; when the
      * evaluation improves it must start failing, and the assertion should then
      * become {@link #assertEngineAvoids} against {@code f3-g2}.
+     *
+     * <p><b>Blunder family:</b> king-safety
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -979,6 +1007,8 @@ class BlunderTest {
      *
      * <p><b>TODO — invert once king safety lands</b>, same contract as
      * {@link #fxg2_atMove13_characterizesOpeningTheFileForAPawn()}.
+     *
+     * <p><b>Blunder family:</b> king-safety
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -1065,6 +1095,8 @@ class BlunderTest {
      * the evaluation improves this must start failing; the assertion should then
      * become {@code assertEngineAvoids(result, Board.e2, Board.e5, "9.Qe5")} and
      * ideally require {@code Ne5} outright.
+     *
+     * <p><b>Blunder family:</b> corner-grab
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -1116,6 +1148,8 @@ class BlunderTest {
      * "loses by force" to "slightly worse", not "plays the best move". Roughly a pawn of
      * accuracy is still missing; tighten this to require {@code d3} if the evaluation
      * improves further.
+     *
+     * <p><b>Blunder family:</b> king-safety
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -1193,6 +1227,8 @@ class BlunderTest {
      * {@code f2-f3} the game saw. Its score differs from the in-game +2.00 because the
      * test starts from a bare FEN with a cold transposition table; only the move choice
      * is being pinned.
+     *
+     * <p><b>Blunder family:</b> king-safety
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -1235,6 +1271,8 @@ class BlunderTest {
      * while the defect is open; the target assertion is preserved in this note, not lost.
      * As with the sibling test, the score is lower than the in-game +1.55 only because
      * the transposition table starts cold.
+     *
+     * <p><b>Blunder family:</b> king-safety
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -1314,6 +1352,8 @@ class BlunderTest {
      *
      * <p><b>TODO — invert once king safety lands.</b> Written as an avoidance test against
      * {@code g1-h2}, confirmed red, then relaxed below.
+     *
+     * <p><b>Blunder family:</b> king-safety
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -1352,6 +1392,8 @@ class BlunderTest {
      * believes the attack on its king is worth nothing at all.
      *
      * <p><b>TODO — invert once king safety lands.</b>
+     *
+     * <p><b>Blunder family:</b> king-safety
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -1397,6 +1439,8 @@ class BlunderTest {
      *
      * <p><b>TODO.</b> Written as a positive assertion requiring {@code f6-a1}, confirmed
      * red, then relaxed below. Restore the positive form once the endgame play improves.
+     *
+     * <p><b>Blunder family:</b> endgame-technique
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -1431,6 +1475,8 @@ class BlunderTest {
      * won and nothing about the queen that cannot return.
      *
      * <p><b>TODO — invert once the evaluation charges for a trapped piece.</b>
+     *
+     * <p><b>Blunder family:</b> corner-grab
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -1471,6 +1517,8 @@ class BlunderTest {
      * is not.
      *
      * <p><b>TODO — invert once the evaluation charges for a stranded piece.</b>
+     *
+     * <p><b>Blunder family:</b> corner-grab
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -1513,6 +1561,8 @@ class BlunderTest {
      *
      * <p><b>TODO — invert once king safety lands.</b> Given how close {@code g6} and
      * {@code Rcxd7} sit in its evaluation, this should be among the first cases to flip.
+     *
+     * <p><b>Blunder family:</b> king-safety
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)

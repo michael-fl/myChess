@@ -302,19 +302,44 @@ own evaluation** (the gap is the finding — the extremes so far are +8.00 in a 
 in four, and +1.79 where Stockfish reads −8.53), the depth behavior, and which family the
 case belongs to.
 
-Naming the family matters more than it sounds. Three have emerged, and a fourth case in a
-known family is stronger evidence than a first case in a new one:
+Naming the family matters more than it sounds: a fourth case in a known family is stronger
+evidence than a first case in a new one. Every blunder test therefore closes its JavaDoc
+with a line naming its family, which makes the classification explicit and countable:
 
-- **King safety** — six instances. Pawn pushes in front of its own king (`33.f3`,
-  `12.h3`, `38...g6`), captures that drag the king out (`Kxh3`, `Kxh2`), an attack on its
-  own king simply not scored (`23...Qd2`). Tracked as [roadmap § 12.21](roadmap.md#1221-king-safety--m--3060-elo).
-- **The corner grab** — four instances, three different pieces: `21...Qxa1` (Philidor's
-  Legacy), `9.Qe5`/`Qxh8`, `12.Qxb7`, `15...Nxa1`. A rook or pawn in a corner is taken
-  while the piece taking it abandons what mattered.
-- **Endgame technique** — one instance, `75.Ba1` in gVJ7PdwQ, and the only case where
-  myChess's *evaluation* is roughly right (+0.52, the win is gone) while the move is never
-  generated at any depth. That points at search or move ordering rather than evaluation,
-  and no king-safety term will touch it.
+```java
+ * <p><b>Blunder family:</b> king-safety
+```
+
+```sh
+grep -hoE "Blunder family:</b> [a-z-]+" src/test/java/org/michaelfl/mychess/*.java \
+  | awk '{print $NF}' | sort | uniq -c | sort -rn
+```
+
+Deliberately **not** a custom JavaDoc tag: `@blunderFamily` would work for grep and for
+the compiler, but IntelliJ flags every unknown block tag as "Wrong tag", and 25 warnings
+are worse than a slightly less formal marker. A bold line in the body renders in the docs,
+needs no IDE or `maven-javadoc-plugin` configuration, and parses just as well.
+
+Nothing in the build reads it yet. The point is that the classification lives next to the
+evidence rather than in a document that drifts, so the tally below can be *derived* rather
+than maintained once there are enough cases to justify the tooling.
+
+| Family | Cases | What it means |
+|---|---:|---|
+| `king-safety` | 14 | Danger to its own king is not charged for. Pawn pushes in front of it (`33.f3`, `12.h3`, `38...g6`), captures that drag it out (`Kxh3`, `Kxh2`), an attack on its file simply not scored (`23...Qd2`). Tracked as [roadmap § 12.21](roadmap.md#1221-king-safety--m--3060-elo). |
+| `corner-grab` | 4 | Material taken with a piece that then sits out of play: `21...Qxa1` (Philidor's Legacy), `9.Qe5`/`Qxh8`, `12.Qxb7`, `15...Nxa1`. Three different pieces, four games, one shape. |
+| `endgame-technique` | 2 | Endgame-specific knowledge missing: trading into a lost pawn endgame (`66.Nxe5`), and not occupying a promotion square (`75.Ba1`). |
+| `repetition` | 2 | The search cannot see a threefold repetition coming — [§ 12.23](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--s-correctness-fix--0-in-self-play-but-real-half-points-against-others). |
+| `tactical-oversight` | 2 | Walks into a concrete tactic: a pawn grab losing to a fork (`39.Rxd5`), a knight move abandoning the pawn it defended (`21.Nf3`). |
+| `unsound-attack` | 1 | Its own attack over-valued: the knight sacrifice `16.Ng6` rated +1.53. |
+
+Two tests carry no family on purpose — `nf7_atMove25` and `qd5_atMove22` assert that myChess
+*finds* a mating combination, so they are not blunder characterizations at all.
+
+The 14 king-safety cases are the argument for the roadmap's ordering. Note also which
+families a king-safety term would *not* touch: `75.Ba1` is the one case where the
+evaluation is roughly right (+0.52 — it knows the win is gone) while the move is never
+generated at any depth, which points at search or move ordering instead.
 
 ### When the defect is fixed
 
