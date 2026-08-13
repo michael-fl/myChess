@@ -1,0 +1,23 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/IxQQ5SkY"]
+[Date "2026.08.12"]
+[Round "-"]
+[White "JC2025AJEDREZ"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "IxQQ5SkY"]
+[UTCDate "2026.08.12"]
+[UTCTime "19:14:37"]
+[WhiteElo "1624"]
+[BlackElo "2053"]
+[WhiteRatingDiff "-2"]
+[BlackRatingDiff "+3"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "C50"]
+[Opening "Italian Game: Giuoco Piano"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. O-O Nf6 5. d3 O-O 6. Bg5 h6 7. Bh4 g5 8. Bg3 d6 9. h3 Qe7 10. Nc3 Be6 11. Bxe6 fxe6 12. Qd2 Bb4 13. Rfe1 Nd4 14. Qe3 Nxc2 0-1
+

@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/bTfiiRFV"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "myChessJava"]
+[Black "stickshark99"]
+[Result "1-0"]
+[GameId "bTfiiRFV"]
+[UTCDate "2026.08.11"]
+[UTCTime "04:24:09"]
+[WhiteElo "1899"]
+[BlackElo "2021"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "B50"]
+[Opening "Sicilian Defense: Modern Variations"]
+[Termination "Normal"]
+
+1. e4 c5 2. Nf3 d6 3. Nc3 a6 4. Bc4 e6 5. O-O b5 6. Be2 b4 7. Na4 Bd7 8. b3 Bxa4 9. bxa4 Nf6 10. a3 Nxe4 11. Bd3 d5 12. Qe1 Ng5 13. Nxg5 Qxg5 14. axb4 cxb4 15. c3 Nc6 16. Qe2 bxc3 17. Bxa6 Nd4 18. Bb5+ Kd8 19. Qd3 cxd2 20. Bxd2 Qg4 21. Bc3 Nb3 22. Rad1 Nc5 23. Qe3 Bd6 24. f3 Qh5 25. f4 Rg8 26. Rc1 Nd7 27. Bd4 Ke7 28. Rc6 Rad8 29. Be2 Qf5 30. Bd3 Qg4 31. Bxh7 Rh8 32. h3 Qh5 33. Bd3 Qh6 34. a5 e5 35. Qe2 e4 36. Bc2 Nb8 37. Rb6 Rhe8 38. Bb3 Nd7 39. Rb5 Kf8 40. Rxd5 Nf6 41. Rf5 Qg6 42. Rg5 Qh6 43. Qc4 Rd7 44. Ba4 Rc7 45. Qb5 Rec8 46. a6 Rc4 47. Be3 Rb4 48. Qa5 Rbb8 49. a7 Ra8 50. Qb6 Be7 51. Re5 Bd8 52. Qb7 Kg8 53. Rc5 Bc7 54. Rxc7 Rd8 55. Bb3 Kh8 56. Rd1 Re8 57. Bxf7 Rf8 58. Bc5 Rad8 59. Rxd8 Rxd8 60. Rc8 Kh7 61. Rxd8 Qxf4 62. a8=Q Qc1+ 63. Kh2 Qf4+ 64. g3 Qd2+ 65. Rxd2 Ng4+ 66. hxg4 g6 67. Qxe4 Kg7 68. Qxg6# 1-0
+

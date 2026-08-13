@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/62W0P56w"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "myChessJava"]
+[Black "O-Rei-CX"]
+[Result "1-0"]
+[GameId "62W0P56w"]
+[UTCDate "2026.08.11"]
+[UTCTime "00:16:53"]
+[WhiteElo "1857"]
+[BlackElo "1662"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "B40"]
+[Opening "Sicilian Defense: French Variation"]
+[Termination "Normal"]
+
+1. e4 c5 2. Nf3 e6 3. Bc4 d5 4. exd5 exd5 5. Bb5+ Bd7 6. Qe2+ Be7 7. O-O Nf6 8. Re1 Kf8 9. d4 cxd4 10. Nxd4 Bc5 11. Nb3 b6 12. Nc3 Bxb5 13. Qxb5 a6 14. Qa4 Nbd7 15. Rd1 b5 16. Qf4 Rc8 17. Nxd5 Nxd5 18. Rxd5 Qe7 19. Rd1 Kg8 20. Qg4 Nb6 21. Nxc5 Rxc5 22. Bh6 g6 23. Qe4 Re5 24. Qxe5 Qxe5 25. Rd8+ Qe8 26. Rxe8# 1-0
+

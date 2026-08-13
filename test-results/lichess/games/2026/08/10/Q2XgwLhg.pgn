@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/Q2XgwLhg"]
+[Date "2026.08.10"]
+[Round "-"]
+[White "myChessJava"]
+[Black "JurdBird"]
+[Result "1-0"]
+[GameId "Q2XgwLhg"]
+[UTCDate "2026.08.10"]
+[UTCTime "21:19:19"]
+[WhiteElo "1656"]
+[BlackElo "1618"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C42"]
+[Opening "Petrov's Defense"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nf6 3. Nxe5 d6 4. Nf3 Be7 5. Nc3 O-O 6. Be2 Bg4 7. d3 Bxf3 8. Bxf3 d5 9. e5 Nfd7 10. Bxd5 c6 11. Bb3 Nxe5 12. O-O Bb4 13. Ne4 Na6 14. Qh5 Re8 15. Ng5 Qd7 16. Qxh7+ Kf8 17. Qh8+ Ke7 18. Qxg7 Qf5 19. d4 Nd7 20. Bxf7 Kd8 21. Bxe8 Kxe8 22. Qg8+ Nf8 23. a3 Be7 24. Qb3 Bxg5 25. Qxb7 Bxc1 26. Qxa8+ Kd7 27. Raxc1 Nc7 28. Qxa7 Ne6 29. Rfe1 Nf4 30. g3 Nh3+ 31. Kg2 Nxf2 32. Re5 Qf7 33. Rce1 Qf6 34. Re7+ Qxe7 35. Rxe7+ Kxe7 36. Qxc7+ Ke6 37. Kxf2 c5 38. dxc5 Kd5 39. Qf7+ Kxc5 40. Qe6 Kb5 41. b4 Ka4 42. Qa6# 1-0
+

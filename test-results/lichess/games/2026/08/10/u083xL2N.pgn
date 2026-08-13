@@ -1,0 +1,22 @@
+[Event "casual variant:chess960 game"]
+[Site "https://lichess.org/u083xL2N"]
+[Date "2026.08.10"]
+[Round "-"]
+[White "myChessJava"]
+[Black "CendanaBRW"]
+[Result "0-1"]
+[GameId "u083xL2N"]
+[UTCDate "2026.08.10"]
+[UTCTime "18:04:17"]
+[WhiteElo "2300"]
+[BlackElo "2010"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Chess960"]
+[TimeControl "60+1"]
+[Termination "Normal"]
+[FEN "nnbrqkrb/pppppppp/8/8/8/8/PPPPPPPP/NNBRQKRB w KQkq - 0 1"]
+[SetUp "1"]
+
+1. O-O Nb6 2. d4 d6 3. Nc3 e5 4. dxe5 Qxe5 5. g3 Bh3 6. f4 Qe7 7. Rf3 Nc6 8. Re3 Qd7 9. Nb3 g6 10. Nc5 Qc8 11. Nxb7 Qxb7 12. g4 Bxg4 13. Qh4 g5 14. fxg5 Be6 15. Rxe6 fxe6 16. Rf1+ Ke8 17. Qe4 d5 18. Qxe6+ Ne7 19. Rf7 Nc8 20. Rxh7 Bd4+ 21. Kg2 Bxc3 22. bxc3 Rd6 23. Qf7+ Kd8 24. Rg7 Rxg7 25. Qxg7 Qb1 26. Qf8+ Kd7 27. Qf4 Rc6 28. Qd2 Nd6 29. Kg1 Ra6 30. Bxd5 Nxd5 31. Kg2 Ra4 32. a3 Nf4+ 33. Kf2 Qb7 34. e4 Nh3+ 35. Kg3 Qxe4 36. Qd1 Qh4+ 37. Kg2 Rg4+ 38. Qxg4+ Qxg4+ 39. Kf1 Qf3+ 40. Ke1 Ng1 41. Kd2 Qe2# 0-1
+

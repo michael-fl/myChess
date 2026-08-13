@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/tX4yqvt4"]
+[Date "2026.08.10"]
+[Round "-"]
+[White "myChessJava"]
+[Black "debzero"]
+[Result "1-0"]
+[GameId "tX4yqvt4"]
+[UTCDate "2026.08.10"]
+[UTCTime "21:02:43"]
+[WhiteElo "1656"]
+[BlackElo "1836"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C68"]
+[Opening "Ruy Lopez: Exchange Variation"]
+[Termination "Normal"]
+
+1. e4 Nc6 2. Nf3 e5 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Qf6 6. d4 exd4 7. Bg5 Qd6 8. e5 Qg6 9. Qxd4 Be7 10. Qe3 Bxg5 11. Nxg5 Ne7 12. Ne4 Nd5 13. Qd3 Nf4 14. Qf3 Bh3 15. Nc5 O-O-O 16. Nc3 Qxg2+ 17. Qxg2 Bxg2 18. Rfe1 Bh3 19. Re3 Rhe8 20. Nd3 Nxd3 21. cxd3 Bf5 22. Rd1 c5 23. Rg3 g6 24. Re3 b6 25. f3 Rd4 26. Kf2 Red8 27. Ke2 Kb7 28. b3 a5 29. Rd2 Kc6 30. Ne4 a4 31. Ng5 R8d7 32. Nxh7 Rh4 33. Nf6 Rdd4 34. Kf1 axb3 35. axb3 Be6 36. Rb2 Kb5 37. Ne8 Rh8 38. Nxc7+ Kc6 39. Nxe6 fxe6 40. Rg2 Kd5 41. Rxg6 Rb4 42. Rg7 Rxb3 43. Rd7+ Kc6 44. Rd6+ Kc7 45. Re2 Rd8 46. Rxd8 Rxd3 47. Rxd3 Kb7 48. Rd6 Ka6 49. h4 Kb7 50. h5 Kc7 51. h6 c4 52. h7 b5 53. h8=Q Kb7 54. Rg2 c3 55. Rg7# 1-0
+

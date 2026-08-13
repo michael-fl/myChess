@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/w074d9HP"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "uzenatch"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "w074d9HP"]
+[UTCDate "2026.08.11"]
+[UTCTime "06:06:22"]
+[WhiteElo "1776"]
+[BlackElo "1953"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C42"]
+[Opening "Petrov's Defense"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nf6 3. Nxe5 Bd6 4. d4 O-O 5. Nc3 Bb4 6. Bg5 d6 7. Nd3 Bxc3+ 8. bxc3 Nbd7 9. Qe2 h6 10. Bh4 g5 11. Bg3 Nxe4 12. Qxe4 Re8 13. Ne5 dxe5 14. dxe5 Nxe5 15. Bxe5 Qd6 16. Bxd6 Rxe4+ 17. Be2 cxd6 18. Rb1 Be6 19. Kd1 Rf4 20. Bf3 g4 21. Bxb7 Rb8 22. Ke2 Re8 23. Ke3 Rf6 24. Kd3 Rxf2 25. Bc6 Bf5+ 26. Kc4 Rc8 27. Rbf1 Rxc6+ 28. Kd5 Rxf1 29. Rxf1 Bd7 30. Rb1 Ra6 31. Rb2 Be6+ 32. Kd4 Kg7 33. Kd3 Ra5 34. c4 Ra4 35. a3 Bxc4+ 36. Kc3 Be6 37. Rb4 Rxa3+ 38. Kb2 Re3 39. Ra4 Re2 40. h3 g3 41. Rxa7 Bf5 42. Ra5 Bxc2 43. Ra2 Be4+ 44. Ka1 Rxa2+ 45. Kxa2 Bxg2 46. h4 Bf3 47. h5 g2 48. Kb2 g1=Q 49. Kc3 Qc1+ 50. Kd3 Bxh5 51. Ke4 Qd2 52. Kf5 Qd5+ 53. Kf4 Qe5# 0-1
+

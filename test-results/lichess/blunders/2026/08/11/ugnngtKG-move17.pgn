@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/ugnngtKG"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "PlayMarius"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "ugnngtKG"]
+[UTCDate "2026.08.11"]
+[UTCTime "03:56:54"]
+[WhiteElo "2085"]
+[BlackElo "1903"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C42"]
+[Opening "Petrov's Defense: Italian Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nf6 3. Bc4 Bd6 4. O-O Nc6 5. d3 b6 6. Nc3 O-O 7. a3 Bb7 8. Be3 Rc8 9. h3 a6 10. Qd2 Na5 11. Ba2 c5 12. Nh4 Bc7 13. Nf5 Nc6 14. Bh6 gxh6 15. Qxh6 Ne8 16. Nd5 Rb8 17. Rfe1 c4 18. Re3 f6 19. Rg3+ Kf7 20. Bxc4 Rg8 21. Rxg8 Kxg8 22. Nde7+ Kh8 23. Qf8# 1-0
+

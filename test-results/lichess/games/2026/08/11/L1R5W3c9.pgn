@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/L1R5W3c9"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "GeoTsiBot"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "L1R5W3c9"]
+[UTCDate "2026.08.11"]
+[UTCTime "20:11:29"]
+[WhiteElo "1793"]
+[BlackElo "1981"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+3"]
+[ECO "A05"]
+[Opening "Zukertort Opening: Quiet System"]
+[Termination "Time forfeit"]
+
+1. e3 Nf6 2. Nf3 Nc6 3. Bb5 e6 4. O-O Be7 5. c3 O-O 6. Qa4 Bd6 7. d4 a6 8. Bxc6 bxc6 9. Nbd2 c5 10. e4 Be7 11. dxc5 Bxc5 12. Nb3 Be7 13. e5 Nd5 14. Qe4 Rb8 15. Re1 d6 16. Na5 Qe8 17. a4 Bd7 18. Ra2 Nb6 19. b3 f6 20. exd6 cxd6 21. Qd3 Qc8 22. c4 Qc5 23. Bd2 e5 24. b4 Qc7 25. b5 axb5 26. axb5 f5 27. Be3 Kh8 28. Bxb6 Rxb6 29. Nd4 e4 0-1
+

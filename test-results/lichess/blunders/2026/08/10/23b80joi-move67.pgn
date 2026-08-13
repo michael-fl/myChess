@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/23b80joi"]
+[Date "2026.08.10"]
+[Round "-"]
+[White "myChessJava"]
+[Black "cassandra-jl"]
+[Result "0-1"]
+[GameId "23b80joi"]
+[UTCDate "2026.08.10"]
+[UTCTime "23:27:17"]
+[WhiteElo "1957"]
+[BlackElo "2153"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "B50"]
+[Opening "Sicilian Defense: Modern Variations"]
+[Termination "Normal"]
+
+1. e4 c5 2. Nf3 d6 3. Nc3 Nf6 4. Bb5+ Bd7 5. O-O Bxb5 6. Nxb5 e5 7. d3 Be7 8. Bg5 O-O 9. Bxf6 Bxf6 10. Nc3 Na6 11. Qd2 Nc7 12. Rab1 Qe7 13. Rbd1 Rad8 14. Rfe1 Qd7 15. a3 Qc6 16. h3 Rfe8 17. Qe3 b5 18. Rf1 a5 19. Ne2 Ne6 20. Nc3 Nf4 21. Ne2 Ne6 22. Nc3 Nf4 23. Qd2 b4 24. axb4 axb4 25. Ne2 d5 26. Ng3 Ra8 27. exd5 Qxd5 28. Ne4 Be7 29. Rfe1 Red8 30. Qc1 f6 31. b3 Ra3 32. Qb2 Qf7 33. Ng3 Qd5 34. Re3 g6 35. Ne2 Ne6 36. Nd2 Qa8 37. Nc4 Ra2 38. Qb1 Bf8 39. Re4 Bh6 40. Rf1 Ng5 41. Rh4 Bg7 42. Re1 f5 43. Nb6 Qa3 44. Nc3 Qa7 45. Nc8 Rxc8 46. Nxa2 e4 47. dxe4 Nxe4 48. Re2 Ra8 49. c3 bxc3 50. Qd3 Qf7 51. Nc1 Bf6 52. Rf4 Rd8 53. Qc2 Qd5 54. Rf3 Qd1+ 55. Kh2 Qxc2 56. Rxc2 Rd2 57. Ra2 c2 58. Ra8+ Kg7 59. Ra7+ Kh6 60. g4 Rd1 61. Na2 Ra1 62. h4 fxg4 63. Rxf6 Nxf6 64. Ra4 Rxa2 65. Rc4 Ne4 66. Kg1 Ra1+ 67. Kg2 c1=Q 68. Rxc1 Rxc1 69. f4 Rc2+ 70. Kf1 g3 71. Kg1 Rf2 72. Kh1 Nd2 0-1
+

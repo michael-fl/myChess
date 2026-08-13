@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/7DyU0b04"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "myChessJava"]
+[Black "DeMen100ns-bot"]
+[Result "1-0"]
+[GameId "7DyU0b04"]
+[UTCDate "2026.08.11"]
+[UTCTime "03:40:31"]
+[WhiteElo "1878"]
+[BlackElo "2051"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C42"]
+[Opening "Petrov's Defense"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nf6 3. Nxe5 Be7 4. Bd3 d5 5. exd5 Qxd5 6. Nf3 Bg4 7. O-O Bxf3 8. Qxf3 Qxf3 9. gxf3 O-O 10. Nc3 Nc6 11. Re1 Rae8 12. b3 Nd4 13. Kg2 Ne6 14. Ne2 Nd5 15. Be4 Rd8 16. Bb2 Nef4+ 17. Kf1 Nxe2 18. Rxe2 Bb4 19. c3 Bc5 20. b4 Bb6 21. Bxd5 Rxd5 22. c4 Rh5 23. c5 Bxc5 24. bxc5 Rxh2 25. Re7 Rc8 26. Rc1 Rh1+ 27. Kg2 Rxc1 28. Bxc1 h5 29. Bb2 f6 30. Rd7 a5 31. Kg3 Rf8 32. Rxc7 Rf7 33. Rc8+ Kh7 34. Ra8 g5 35. Bc3 Kg6 36. Rxa5 h4+ 37. Kh3 Re7 38. Rb5 Re2 39. Rxb7 Rxf2 40. c6 Rxf3+ 41. Kg2 Rf4 42. c7 Rg4+ 43. Kh2 Rc4 44. Ba5 f5 45. Rb8 g4 46. c8=Q Rxc8 47. Rxc8 Kf7 48. Rc5 Kg6 49. Bd8 h3 50. Kg3 h2 51. Kxh2 f4 52. Rg5+ Kf7 53. Rxg4 Ke6 54. Kg2 Kd5 55. a4 Kc4 56. a5 Kb3 57. a6 Ka2 58. a7 Ka1 59. a8=Q+ Kb1 60. Qa3 Kc2 61. Kf3 Kb1 62. Rg1+ Kc2 63. Qc3# 1-0
+

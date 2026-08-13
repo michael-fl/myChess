@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/oQHc2pgQ"]
+[Date "2026.08.10"]
+[Round "-"]
+[White "myChessJava"]
+[Black "Martuni"]
+[Result "0-1"]
+[GameId "oQHc2pgQ"]
+[UTCDate "2026.08.10"]
+[UTCTime "19:41:34"]
+[WhiteElo "1738"]
+[BlackElo "2164"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C67"]
+[Opening "Ruy Lopez: Berlin Defense, Rio Gambit Accepted"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. Re1 Nd6 6. Bxc6 dxc6 7. Rxe5+ Be7 8. Qe2 Bg4 9. Nc3 Kf8 10. h3 Bf5 11. d4 Bf6 12. g4 Be6 13. Bg5 Qd7 14. Bxf6 gxf6 15. Ra5 b6 16. Ra4 h5 17. Nh2 hxg4 18. hxg4 b5 19. Ra5 Nc4 20. Ra6 Qd6 21. Nf3 Bxg4 22. Rd1 Qf4 23. Rxa7 Rxa7 24. Rd3 Nd2 25. Qe8+ Kxe8 26. Re3+ Kd7 27. Ne4 Bxf3 28. Nc5+ Kd6 29. Nb7+ Rxb7 30. Re6+ fxe6 31. c3 Qh2# 0-1
+
