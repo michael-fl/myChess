@@ -101,7 +101,7 @@ In separate files under [`docs/`](docs/):
 8. [Game Lifecycle and Result Detection](docs/game-lifecycle.md)
 9. [Opening Database](docs/opening-database.md)
 10. [Notation and I/O](docs/notation.md)
-11. [Testing](docs/testing.md)
+11. [Testing](docs/testing.md) — suite structure and conventions, notable cases, and the route from a lost lichess game to a pinned regression test.
 12. [Chess960 support](docs/Chess960-project.md) — start-position generation, Shredder-FEN, castling slots, UCI wiring.
 13. [Roadmap: Improving Playing Strength](docs/roadmap.md) — concrete next steps with effort/Elo estimates ([backlog](docs/roadmap-backlog.md), [completed items](docs/roadmap-done.md)).
 14. [Known issues](docs/known-issues.md) — open bugs and ongoing investigations.

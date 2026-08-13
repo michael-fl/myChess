@@ -221,3 +221,104 @@ Test names are very specific (`testWhiteWithDoublePawn`, `testStartPositionOpeni
 ### `GameTest.testToShortNotation` — round-trip notation
 
 A single test exercising the full chain `long algebraic input → MoveDescription → resolve → make move → render back to short algebraic → assertEquals to expected PGN form`. Walks a 60+ move game, asserting at every ply that the produced short notation matches the expected PGN string (including `+`, `#`, `0-0-0`, promotion suffixes, capture `x`, disambiguation columns/rows). Pinning the entire forward+inverse notation pipeline in one test.
+
+
+---
+
+## 11.3 Turning a lost game into a test
+
+`BlunderTest` grew to 27 cases by pinning real defeats, first from cutechess matches and
+now mostly from lichess. The route below is worth following exactly, because every step of
+it exists because a shortcut went wrong once.
+
+### Finding the case
+
+[`tools/lichess-blunder-scan.py`](../tools/lichess-blunder-scan.py) downloads new games and
+ranks the damage, writing [`test-results/lichess/blunders.md`](../test-results/lichess/blunders.md).
+Two rankings, and the second is the one that matters:
+
+- **Single-move blunders** — one move losing at least 300 cp.
+- **Losing phases** — three consecutive own moves losing 250 cp together. This exists
+  because the single-move filter misses the characteristic failure: a won game given away
+  in three moves, no one of which crosses the threshold. In game NMc7sp8h neither `33.f3`
+  (175 cp) nor `35.Rd3` (292 cp) would have been flagged, yet together they turn +1.89
+  into a loss. Five of the six worst phases start from a *winning* position.
+
+Pick by the **At start** column, not by the loss: a phase starting at +2.39 threw a win
+away, one starting at −3.16 was already lost and says nothing about the mistake that lost
+it. The **Test** column says whether a game is already covered — the scanner greps the test
+sources for `lichess.org/<id>`, which is why every test names its game id in the JavaDoc.
+
+### Working the case up
+
+[`tools/probe-blunder.py`](../tools/probe-blunder.py) prints everything a test needs:
+
+```sh
+../lichess-bot/venv/bin/python tools/probe-blunder.py --game NMc7sp8h --move 33
+```
+
+FEN, material balance, Stockfish's best move and evaluations, myChess's choice at each
+depth, and a suggested pin depth. Three of its outputs decide the shape of the test:
+
+- **Material balance.** myChess reporting a healthy advantage while a pawn *behind* rules
+  out the material-only eval shortcut as the explanation. That happened in NMc7sp8h
+  (−100 cp while claiming +1.55) and changed the diagnosis from "material greed" to a
+  genuine positional misjudgement.
+- **Depth behavior.** A move abandoned at depth 10 is knowledge two plies out of reach; a
+  move kept at every depth is a hole in the evaluation. Record which, in the JavaDoc — it
+  is the difference between "more search will fix this" and "more search will not".
+- **The UCI move.** Never derive it by hand. Deriving `Kxh2` as `h1h2` when the king stood
+  on **g1** made a probe report "not reproduced" for a move myChess had in fact played, and
+  the case was nearly dismissed.
+
+### Writing the test
+
+**Pin a depth, never a time budget.** Fixed depth is deterministic; a time budget makes the
+outcome depend on machine speed and load, and the same test then passes on one machine and
+fails on another. Use the depth the game actually reached — `probe-blunder.py` suggests the
+lowest one that reproduces.
+
+**Write the correct assertion first and confirm it goes red.** Then relax it to a
+characterization that passes, and record the target assertion in a `TODO`. A test written
+green from the start proves nothing: it may be green because it asserts the wrong thing.
+Both halves are needed — the red run proves the defect is real and reproduced, the green
+version keeps the suite usable while the defect is open.
+
+**Assert the defect, not its incidental details.** A repetition test pinned the exact
+sidestep `c1-b1`; the v4.4.0 tables changed it to `c1-d1` and the test failed although the
+defect — not taking the free rook — was unchanged. `assertNotEquals` on the move that
+*should* be played is the honest form there.
+
+**Do not call a change an improvement without measuring how large.** When the PeSTO tables
+made myChess play `Qc3` instead of the losing `12.h3`, that was reported as fixed. `Qc3` is
+Stockfish's *second* choice at −0.8 against `d3` at +0.3 — the blunder was gone, optimal
+play was not. Compare against the best move, not against the old move.
+
+### What the JavaDoc should carry
+
+Everything a reader needs to judge the case without re-running anything: the lichess link,
+what was at stake, what was played, Stockfish's best move and both evaluations, **myChess's
+own evaluation** (the gap is the finding — the extremes so far are +8.00 in a position mated
+in four, and +1.79 where Stockfish reads −8.53), the depth behavior, and which family the
+case belongs to.
+
+Naming the family matters more than it sounds. Three have emerged, and a fourth case in a
+known family is stronger evidence than a first case in a new one:
+
+- **King safety** — six instances. Pawn pushes in front of its own king (`33.f3`,
+  `12.h3`, `38...g6`), captures that drag the king out (`Kxh3`, `Kxh2`), an attack on its
+  own king simply not scored (`23...Qd2`). Tracked as [roadmap § 12.21](roadmap.md#1221-king-safety--m--3060-elo).
+- **The corner grab** — four instances, three different pieces: `21...Qxa1` (Philidor's
+  Legacy), `9.Qe5`/`Qxh8`, `12.Qxb7`, `15...Nxa1`. A rook or pawn in a corner is taken
+  while the piece taking it abandons what mattered.
+- **Endgame technique** — one instance, `75.Ba1` in gVJ7PdwQ, and the only case where
+  myChess's *evaluation* is roughly right (+0.52, the win is gone) while the move is never
+  generated at any depth. That points at search or move ordering rather than evaluation,
+  and no king-safety term will touch it.
+
+### When the defect is fixed
+
+The `TODO` says what to do: replace the characterization with the assertion it was written
+from, do not merely relax it. Two of these have already flipped — `16...gxh4` and `12.h3`
+both became real avoidance assertions when the v4.4.0 tables landed — and both kept a
+`TODO` for the accuracy still missing.

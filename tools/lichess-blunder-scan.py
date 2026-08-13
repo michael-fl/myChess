@@ -634,6 +634,11 @@ def write_report(findings: dict, threshold: int, scan_threshold: int,
 
     lines += ["## Reading these numbers",
               "",
+              "To work a finding up into a test, run "
+              "`tools/probe-blunder.py --game <id> --move <n>`: it prints the FEN, the material "
+              "balance, Stockfish's verdict and myChess's choice per depth. The conventions for "
+              "writing the test are in `docs/testing.md` section 11.3.",
+              "",
               "**Test** says whether any test source already mentions this game's lichess id. "
               "The convention is that a test reproducing a game names its id in the JavaDoc, so "
               "`grep` on the id finds the test — the method name does not need to travel in this "
