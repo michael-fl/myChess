@@ -20,7 +20,7 @@ The reference setup used for every measurement run (`test01`,
           option.UCI_LimitStrength=true option.UCI_Elo=1600 \
     -each tc=40/1200 \
     -rounds 20 -games 2 -repeat \
-    -sprt elo0=-50 elo1=50 alpha=0.05 beta=0.05 \
+    -sprt elo0=-3 elo1=15 alpha=0.05 beta=0.05 \
     -openings file=8moves_v3.pgn format=pgn order=random plies=16 \
     -concurrency 2 -ratinginterval 2 \
     -recover \
@@ -59,16 +59,43 @@ cancels out across each pair.
 
 ### Statistical termination (SPRT)
 
-`-sprt elo0=-50 elo1=50 alpha=0.05 beta=0.05` enables Wald's
+`-sprt elo0=-3 elo1=15 alpha=0.05 beta=0.05` enables Wald's
 Sequential Probability Ratio Test. After every finished game,
 cutechess updates a running log-likelihood ratio (`llr`) and checks
 whether the data is now strong enough to accept one of two
 hypotheses about the true ELO difference:
 
-- **H0**: true ELO difference ≤ `elo0` = −50, i.e. *myChess is at
-  least 50 ELO weaker than the opponent*.
-- **H1**: true ELO difference ≥ `elo1` = +50, i.e. *myChess is at
-  least 50 ELO stronger than the opponent*.
+- **H0**: true ELO difference ≤ `elo0` = −3, i.e. *the candidate is
+  no better than the baseline* (a hair's breadth of tolerance for noise).
+- **H1**: true ELO difference ≥ `elo1` = +15, i.e. *the candidate is
+  worth at least 15 ELO*.
+
+**Why −3 / +15, and why asymmetric.** This band is for the A/B test this
+project runs constantly: a candidate build against the previous release,
+where the two engines are nearly identical and the question is "is this
+change worth keeping?". The lower bound sits just below zero because a
+change that is merely neutral should be rejected, not tolerated; the upper
+bound at +15 is roughly the smallest gain worth the wall-clock of a
+release. Widening the zone makes the test stop sooner but answers a
+weaker question; narrowing it needs far more games.
+
+The **older, wide `elo0=-50 elo1=50`** shown in earlier runs belongs to a
+different use: a gauntlet against an *external* anchor engine, where the
+strength difference is unknown and possibly large. Keep the wide band for
+anchor measurements ([myChess-ELO-measurement.md](myChess-ELO-measurement.md))
+and the narrow one for candidate-versus-baseline.
+
+Two conventions that go with it, both learned the hard way:
+
+- **List the candidate engine first.** cutechess reports the ELO
+  difference as *first engine minus second*, so a swapped order silently
+  inverts the sign of every number in the log.
+- **An early SPRT stop inflates the point estimate.** Accepting H1 happens
+  precisely when the data has been favorable, so the reported difference
+  is biased upward — the winner's curse. Measured twice in this project:
+  the v4.3.4 tune read +69 at the stop and +23.0 ± 12.9 over a fixed 1900
+  games; the v4.4.0 PeSTO tables read +39.8 and +32.6 ± 12.4 over 2000.
+  Use SPRT to *decide*, then a fixed-N run to *quote*.
 - **`alpha = 0.05`**: maximum probability of falsely accepting H1.
 - **`beta = 0.05`**: maximum probability of falsely accepting H0.
 
@@ -77,10 +104,10 @@ makes no strong claim there, and the nominal error rates do not
 hold strictly inside it:
 
 ```
-    H0 accepted               indifference zone              H1 accepted
-  ←──────────────────●───────────────────────────────●──────────────────→
-                   −50                              +50         ELO difference
-                                                              (myChess − opponent)
+    H0 accepted          indifference zone                   H1 accepted
+  ←──────────────────●─────────────●─────────────────────────────────────→
+                    −3            +15                    ELO difference
+                                                    (candidate − baseline)
 ```
 
 The `llr` lives on a separate axis with two stop thresholds, derived
@@ -105,8 +132,13 @@ H0.
 
 ### When to vary the SPRT window
 
+- **`elo0 = −3, elo1 = +15`** (this project's default): candidate
+  against previous release. Decides in a few hundred to a few thousand
+  games depending on the true difference. Every A/B result quoted in
+  [version-history.md](version-history.md) since v4.3.0 uses it.
 - **`elo0 = −50, elo1 = +50`** (broad): suitable when expecting a
-  large ELO gap. SPRT typically decides within 20–40 games.
+  large ELO gap, e.g. a gauntlet against an external anchor engine.
+  SPRT typically decides within 20–40 games.
 - **`elo0 = 0, elo1 = 10`** (tight, common in Stockfish patch
   testing): used to detect tiny improvements. Needs thousands of
   games to decide; only worth running for engines already close in
