@@ -152,6 +152,8 @@ class ThreefoldRepetitionTest {
      * path as a draw.</b> Then {@code Kxc2} must be the answer and the weight must
      * be the material win, so replace the assertions below rather than relaxing
      * them.
+     *
+     * <p><b>Blunder family:</b> repetition
      */
     @Test
     void engineDoesNotAvoidRepetitionWhenWinning() throws Exception {
