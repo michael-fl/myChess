@@ -326,7 +326,7 @@ than maintained once there are enough cases to justify the tooling.
 
 | Family | Cases | What it means |
 |---|---:|---|
-| `king-safety` | 14 | Danger to its own king is not charged for. Pawn pushes in front of it (`33.f3`, `12.h3`, `38...g6`), captures that drag it out (`Kxh3`, `Kxh2`), an attack on its file simply not scored (`23...Qd2`). Tracked as [roadmap § 12.21](roadmap.md#1221-king-safety--m--3060-elo). |
+| `king-safety` | 15 | Danger to its own king is not charged for. Pawn pushes in front of it (`33.f3`, `12.h3`, `38...g6`), captures that drag it out (`Kxh3`, `Kxh2`), an attack on its file simply not scored (`23...Qd2`), a defender retreated to the back rank to save it (`15...Ne8`). Tracked as [roadmap § 12.21](roadmap.md#1221-king-safety--m--3060-elo). |
 | `corner-grab` | 4 | Material taken with a piece that then sits out of play: `21...Qxa1` (Philidor's Legacy), `9.Qe5`/`Qxh8`, `12.Qxb7`, `15...Nxa1`. Three different pieces, four games, one shape. |
 | `endgame-technique` | 2 | Endgame-specific knowledge missing: trading into a lost pawn endgame (`66.Nxe5`), and not occupying a promotion square (`75.Ba1`). |
 | `repetition` | 3 | The search cannot see a threefold repetition coming — [§ 12.23](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--s-correctness-fix--0-in-self-play-but-real-half-points-against-others). Two in `BlunderTest` isolating the cold-table / warm-table split, one in `ThreefoldRepetitionTest`. |
@@ -344,7 +344,7 @@ rails, and marking them would inflate a family with cases that are not evidence 
 anything wrong. `secondOccurrenceIsNotYetADraw` in particular exists to stop a fix from
 loosening the game rule instead of tightening the search.
 
-The 14 king-safety cases are the argument for the roadmap's ordering. Note also which
+The 15 king-safety cases are the argument for the roadmap's ordering. Note also which
 families a king-safety term would *not* touch: `75.Ba1` is the one case where the
 evaluation is roughly right (+0.52 — it knows the win is gone) while the move is never
 generated at any depth, which points at search or move ordering instead.
