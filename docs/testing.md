@@ -303,19 +303,43 @@ in four, and +1.79 where Stockfish reads −8.53), the depth behavior, and which
 case belongs to.
 
 Naming the family matters more than it sounds: a fourth case in a known family is stronger
-evidence than a first case in a new one. Every blunder test therefore closes its JavaDoc
-with a line naming its family, which makes the classification explicit and countable:
+evidence than a first case in a new one. Every test that characterizes engine behavior on a
+theme therefore closes its JavaDoc with a line naming its family, which makes the
+classification explicit and countable:
 
 ```java
- * <p><b>Blunder family:</b> king-safety
+ * <p><b>Test family:</b> king-safety (defect)
 ```
+
+The family is the **topic**; the word in parentheses is what the test currently *does*:
+
+| Status | Meaning |
+|---|---|
+| `defect` | Characterizes an open defect — it passes because the flaw is present, and must be inverted when the flaw goes (see [below](#when-the-defect-is-fixed)). |
+| `fixed` | Was a `defect`, now asserts the correct behavior and guards the repair. |
+| `guard` | Asserts correct behavior that was never broken, usually to mark the *limit* of a nearby defect. |
 
 ```sh
-grep -hoE "Blunder family:</b> [a-z-]+" src/test/java/org/michaelfl/mychess/*.java \
-  | awk '{print $NF}' | sort | uniq -c | sort -rn
+grep -hoE "Test family:</b> [a-z-]+ \([a-z]+\)" src/test/java/org/michaelfl/mychess/*.java \
+  | sed 's/.*<\/b> //' | sort | uniq -c | sort -rn        # topic + status
+grep -c "Test family:</b> king-safety (defect)" src/test/java/org/michaelfl/mychess/*.java
 ```
 
-Deliberately **not** a custom JavaDoc tag: `@blunderFamily` would work for grep and for
+The marker says **`Test family`, not `Blunder family`** — it was renamed once the first
+family arrived whose tests are not blunders. The narrower word had already started to
+mislead: it forced tests that assert myChess doing the *right* thing to stay unclassified
+even when they belonged squarely to a theme, and two `BlunderTest` cases (`16...gxh4`,
+`12.h3`) had flipped into real avoidance assertions while still carrying a label that called
+them blunders. A family is a *topic*, and a topic outlives the defect that introduced it.
+
+The status word exists because the topic alone cannot carry the evidence. Adding it
+immediately corrected a claim this document had made in prose: not all 17 king-safety cases
+are open defects — **four are already fixed**, so the number arguing for § 12.21 is 13.
+Two families turned out to have no open case at all. A family count without the status is
+a count of *interest* in a topic, which is not the same as a count of *evidence* against
+the engine, and only one of the two belongs in a prioritization argument.
+
+Deliberately **not** a custom JavaDoc tag: `@testFamily` would work for grep and for
 the compiler, but IntelliJ flags every unknown block tag as "Wrong tag", and 25 warnings
 are worse than a slightly less formal marker. A bold line in the body renders in the docs,
 needs no IDE or `maven-javadoc-plugin` configuration, and parses just as well.
@@ -324,18 +348,29 @@ Nothing in the build reads it yet. The point is that the classification lives ne
 evidence rather than in a document that drifts, so the tally below can be *derived* rather
 than maintained once there are enough cases to justify the tooling.
 
-| Family | Cases | What it means |
-|---|---:|---|
-| `king-safety` | 17 | Danger to its own king is not charged for. Pawn pushes in front of it (`33.f3`, `12.h3`, `20.h3`, `38...g6`), captures that drag it out (`Kxh3`, `Kxh2`), an attack on its file simply not scored (`23...Qd2`), a defender retreated to save it (`15...Ne8`), a pawn recaptured instead of trading off the attacking queen (`21.hxg4`). Tracked as [roadmap § 12.21](roadmap.md#1221-king-safety--m--3060-elo). |
-| `corner-grab` | 4 | Material taken with a piece that then sits out of play: `21...Qxa1` (Philidor's Legacy), `9.Qe5`/`Qxh8`, `12.Qxb7`, `15...Nxa1`. Three different pieces, four games, one shape. |
-| `endgame-technique` | 2 | Endgame-specific knowledge missing: trading into a lost pawn endgame (`66.Nxe5`), and not occupying a promotion square (`75.Ba1`). |
-| `repetition` | 3 | The search cannot see a threefold repetition coming — [§ 12.23](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--s-correctness-fix--0-in-self-play-but-real-half-points-against-others). Two in `BlunderTest` isolating the cold-table / warm-table split, one in `ThreefoldRepetitionTest`. |
-| `tactical-oversight` | 2 | Walks into a concrete tactic: a pawn grab losing to a fork (`39.Rxd5`), a knight move abandoning the pawn it defended (`21.Nf3`). |
-| `material-only-shortcut` | 1 | The evaluation degenerates to a piece count and prefers material to a winning exchange sacrifice: `36.Qxb5` instead of `36.Rxf6`. Lives in `MaterialOnlyShortcutEvalTest` as its case 4, not in `BlunderTest` — see below. |
-| `unsound-attack` | 1 | Its own attack over-valued: the knight sacrifice `16.Ng6` rated +1.53. |
+| Family | Open | Fixed | Guard | What it means |
+|---|---:|---:|---:|---|
+| `king-safety` | 13 | 4 | — | Danger to its own king is not charged for. Pawn pushes in front of it (`33.f3`, `20.h3`, `38...g6`), captures that drag it out (`Kxh3`, `Kxh2`), an attack on its file simply not scored (`23...Qd2`), a defender retreated to save it (`15...Ne8`), a pawn recaptured instead of trading off the attacking queen (`21.hxg4`). The four fixed ones (`25.Rg7`, `16...gxh4`, `19...Nxe2`, `12.h3`) came with the v4.3.1 and v4.4.0 tables. Tracked as [roadmap § 12.21](roadmap.md#1221-king-safety--m--3060-elo). |
+| `corner-grab` | 3 | — | 1 | Material taken with a piece that then sits out of play: `9.Qe5`/`Qxh8`, `12.Qxb7`, `15...Nxa1`. The guard is `21...Qxa1` (Philidor's Legacy), which pins that the search *does* refute the grab by depth 13 — the defect is that a real clock never reaches it. |
+| `material-only-shortcut` | 3 | — | 1 | The evaluation degenerates to a piece count once `materialDelta` leaves the ±200 cp band. All of `MaterialOnlyShortcutEvalTest`: a positional advantage erased (1), a material tie resolved by move ordering into the worst recapture (3), material preferred to a winning exchange sacrifice — `36.Qxb5` instead of `36.Rxf6` (4). The guard is case 2, marking where the blindness stops: material is the one dimension never discarded, so the right move is still found. Case 4 is the only one from a real game; it lives here rather than in `BlunderTest` — see below. |
+| `repetition` | 2 | — | 1 | The search cannot see a threefold repetition coming — [§ 12.23](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--s-correctness-fix--0-in-self-play-but-real-half-points-against-others). The two open cases are the warm-table walk-in and `engineDoesNotAvoidRepetitionWhenWinning`; the cold-table case is the guard showing the same position handled correctly when the table is empty. |
+| `endgame-technique` | 1 | 1 | — | Endgame-specific knowledge missing: not occupying a promotion square (`75.Ba1`). Fixed: trading into a lost pawn endgame (`66.Nxe5`), which now scores below −0.9 where it once read −0.04. |
+| `tactical-oversight` | — | 2 | — | Walks into a concrete tactic: a pawn grab losing to a fork (`39.Rxd5`), a knight move abandoning the pawn it defended (`21.Nf3`). **No open case** — both are repaired and now guard the repair. |
+| `unsound-attack` | — | 1 | — | Its own attack over-valued: the knight sacrifice `16.Ng6` rated +1.53. **No open case** — repaired, now guarding. |
+| **total** | **22** | **8** | **3** | 33 markers across three test classes. |
 
 The tally spans **every** test class, not just `BlunderTest` — `repetition` for instance
 draws one of its three cases from `ThreefoldRepetitionTest`.
+
+**What the split is for.** The `Open` column is the evidence; `Fixed` and `Guard` are history
+and boundary markers. Keeping them in the same family is deliberate — a repaired case is the
+best possible regression test for the theme, and a `guard` says where a defect stops, which
+is as much a part of understanding it as the defect itself. But only `Open` may be quoted in
+a prioritization argument. Two families read very differently once split: `tactical-oversight`
+and `unsound-attack` have **no open case at all**, so neither is an argument for anything —
+they are four repairs holding. Conversely `king-safety` keeps 13 open cases across nine
+distinct game situations, which is what makes § 12.21 the next evaluation theme rather than
+one more idea.
 
 **A case belongs with its mechanism, not with its provenance.** `BlunderTest` is where
 real-game cases live, so a game reproduction lands there by default — but the
@@ -345,7 +380,7 @@ class owns the explanation, so the case extends an argument instead of restating
 `deepEval` helper made the test three lines rather than a new scaffold; and it is not
 `@Tag("slow")`, so the case runs in the fast suite instead of inside a 410-second class.
 The deciding question is which file someone opens when they next chase this behavior — and
-for a shortcut nobody looks among seventeen king-safety blunders. The scanner's coverage
+for a shortcut nobody looks among seventeen king-safety cases. The scanner's coverage
 report is unaffected either way: it globs `src/test/java/**/*.java` for lichess ids, so a
 test is found wherever it sits.
 
@@ -353,7 +388,7 @@ A second line, `Contributing:`, marks a mechanism that is a co-cause rather than
 primary one, so a case can be counted once and still be findable from both sides:
 
 ```java
- * <p><b>Blunder family:</b> corner-grab
+ * <p><b>Test family:</b> corner-grab
  * <p><b>Contributing:</b> material-only-shortcut — a rook capture is a 500 cp swing…
 ```
 
@@ -375,19 +410,31 @@ engaged is the one the fourth case turns on — **a reported score that lands on
 number of pawns is a piece count, not an evaluation.** `+6.00` at three consecutive depths
 was what exposed it; `+6.27` one depth later was the control.
 
-A test gets no family when it does not characterize a defect. `nf7_atMove25` and
-`qd5_atMove22` assert that myChess *finds* a mating combination; `testIsDraw`,
-`testFindDrawMove`, `secondOccurrenceIsNotYetADraw` and `testDisableThreefoldRepetition`
-assert that the repetition *rule* works as the rules of chess require. Those are guard
-rails, and marking them would inflate a family with cases that are not evidence of
-anything wrong. `secondOccurrenceIsNotYetADraw` in particular exists to stop a fix from
-loosening the game rule instead of tightening the search.
+A test gets no family when there is no theme to name. Most of the suite is in that
+position — 854 test methods against 34 markers — because `IntArrayTest`, `LogTest` or
+`PGNConverterTest` verify a unit, not a behavior anyone will investigate as a topic. Adding
+a family there would be noise, not classification.
 
-The 17 king-safety cases are the argument for the roadmap's ordering, and two of them —
+Guard rails are the borderline case, and the answer is that it depends on whether the theme
+is the same one. `nf7_atMove25` and `qd5_atMove22` assert that myChess *finds* a mating
+combination; `testIsDraw`, `testFindDrawMove`, `secondOccurrenceIsNotYetADraw` and
+`testDisableThreefoldRepetition` assert that the repetition *rule* works as the rules of
+chess require. Those stay unmarked, because the rule holding is not evidence about the
+search that cannot see a repetition coming — different subject, same word.
+`secondOccurrenceIsNotYetADraw` in particular exists to stop a fix from loosening the game
+rule instead of tightening the search, which is the opposite concern from § 12.23. Contrast
+`material-only-shortcut` case 2: it also asserts correct behavior, but about the very
+mechanism the other three cases indict, and it is what establishes that material is the one
+dimension the shortcut never discards. That belongs in the family; the row states its role.
+
+The 13 open king-safety cases are the argument for the roadmap's ordering, and two of them —
 `15...Ne8` and `21.hxg4` — additionally bound how *large* the term has to be: in both, correct
 positional signal loses to a piece or a pawn of material, so a penalty worth a few dozen
 centipawns would not change either decision. All three shelved attempts in § 12.21 were scaled
-in exactly that range. Note also which
+in exactly that range. The four `fixed` cases carry a second lesson worth keeping in view:
+all four fell to *tables* (the v4.3.1 king endgame table, the v4.4.0 PeSTO tables) rather than
+to a dedicated king-safety term. That is the cheaper mechanism, and it is the one to rule out
+before building a new term. Note also which
 families a king-safety term would *not* touch: `75.Ba1` is the one case where the
 evaluation is roughly right (+0.52 — it knows the win is gone) while the move is never
 generated at any depth, which points at search or move ordering instead.

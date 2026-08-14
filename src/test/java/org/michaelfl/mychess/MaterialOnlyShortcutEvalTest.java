@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * <pre>{@code r1bq1bnr/ppppkppp/4p3/8/3nP3/2NPB3/PPP1BPPP/R1Q1R1K1 w - - 0 1}</pre>
  *
- * <p>White's only recapture is {@code Bxd4}. Afterwards material is dead equal
+ * <p>White's only recapture is {@code Bxd4}. Afterward material is dead equal
  * but White is hugely better developed (Stockfish ~+1.6). Because the deciding
  * advantage is <em>positional</em>, the shortcut discards it and the deep eval
  * reads ~0.
@@ -221,6 +221,12 @@ class MaterialOnlyShortcutEvalTest {
     /** Tolerance for the above: tight enough that any positional contribution breaks it. */
     private static final float PURE_MATERIAL_TOLERANCE = 0.001f;
 
+    /**
+     * Case 1 of the class comment, which carries the full analysis: the move is forced and
+     * correct, and the evaluation of the resulting position is what fails.
+     *
+     * <p><b>Test family:</b> material-only-shortcut (defect)
+     */
     @Test
     @Timeout(value = 120, unit = TimeUnit.SECONDS)
     void developmentLeadIsErasedByTheMaterialOnlyShortcut()
@@ -241,6 +247,13 @@ class MaterialOnlyShortcutEvalTest {
                         + STOCKFISH_DEVELOPMENT_LEAD + " for White; got " + ChessUtil.weightToString(eval.weight()));
     }
 
+    /**
+     * Case 2 of the class comment, which carries the full analysis. The one case here that
+     * asserts myChess doing the right thing: it marks the <em>limit</em> of the blindness,
+     * since material is the dimension the shortcut never discards.
+     *
+     * <p><b>Test family:</b> material-only-shortcut (guard)
+     */
     @Test
     @Timeout(value = 120, unit = TimeUnit.SECONDS)
     void trappedKnightRecaptureIsFoundThroughTheMaterialDifference()
@@ -264,6 +277,12 @@ class MaterialOnlyShortcutEvalTest {
                         + STOCKFISH_TRAPPED_KNIGHT + " for White; got " + ChessUtil.weightToString(eval.weight()));
     }
 
+    /**
+     * Case 3 of the class comment, which carries the full analysis: a material tie the move
+     * ordering then resolves in favor of the worst of the three recaptures.
+     *
+     * <p><b>Test family:</b> material-only-shortcut (defect)
+     */
     @Test
     @Timeout(value = 120, unit = TimeUnit.SECONDS)
     void queenRecaptureTrapPicksTheInferiorPawnCapture()
@@ -295,7 +314,7 @@ class MaterialOnlyShortcutEvalTest {
      * {@code BlunderTest} because the mechanism, not the provenance, is what someone chasing
      * this behavior will search for.
      *
-     * <p><b>Blunder family:</b> material-only-shortcut
+     * <p><b>Test family:</b> material-only-shortcut (defect)
      */
     @Test
     @Timeout(value = 120, unit = TimeUnit.SECONDS)

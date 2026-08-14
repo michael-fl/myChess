@@ -153,7 +153,7 @@ class ThreefoldRepetitionTest {
      * be the material win, so replace the assertions below rather than relaxing
      * them.
      *
-     * <p><b>Blunder family:</b> repetition
+     * <p><b>Test family:</b> repetition (defect)
      */
     @Test
     void engineDoesNotAvoidRepetitionWhenWinning() throws Exception {
