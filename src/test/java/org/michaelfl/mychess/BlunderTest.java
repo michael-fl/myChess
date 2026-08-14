@@ -352,11 +352,16 @@ class BlunderTest {
      * black is +2 pawns in <em>material</em> — which myChess counts — plus
      * ~2 pawns of <em>positional</em> compensation it cannot see: the exposed
      * {@code Kh1}, the a8-bishop on the long a8&ndash;h1 diagonal, and the e2
-     * outpost knight. Two known eval holes cause the miss: (1) there is no
-     * king-safety / attack term, and (2) the material-only eval shortcut
-     * ({@code EVALUATE_MATERIAL_ONLY_THRESHOLD = 200 cp}) discards the
-     * positional evaluation exactly when a side is +2 pawns. So
+     * outpost knight. The cause is the missing king-safety / attack term. So
      * {@code Nxe2+ ≈ Qxf5 ≈ +2} to myChess, and it simplifies.
+     *
+     * <p>An earlier version of this comment also blamed the material-only eval
+     * shortcut, "which discards the positional evaluation exactly when a side is
+     * +2 pawns". That was wrong, and the error is worth naming because it is easy
+     * to repeat: the shortcut keys on {@code materialDelta}, the swing
+     * <em>since the root</em>, not on the balance. {@code Nxe2+} captures a pawn,
+     * so the delta is +100 and stays inside the band — the positional evaluation
+     * runs here. One hole, not two.
      *
      * <p>Positive assertion (since v4.3.1): myChess now <em>finds</em>
      * {@code Nxe2+}. The tapered king endgame table penalizes the exposed,
@@ -485,6 +490,10 @@ class BlunderTest {
      * down into reachable depths; that is the regression this test guards.
      *
      * <p><b>Blunder family:</b> corner-grab
+     * <p><b>Contributing:</b> material-only-shortcut — a rook capture is a 500 cp
+     * swing, so the delta genuinely does leave the band here. See
+     * {@link MaterialOnlyShortcutEvalTest#qxb5AtMove36GrabsThePawnInsteadOfTheExchangeSacrifice()}
+     * for the case where the shortcut is the sole cause.
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -645,10 +654,17 @@ class BlunderTest {
      *
      * <p>This is what a king-safety term measures and myChess does not have
      * (roadmap § 12.21): several attackers in the king zone, scored
-     * progressively. The material-only shortcut compounds it — three pawns is
-     * past {@code EVALUATE_MATERIAL_ONLY_THRESHOLD = 200 cp}, so in the lines
-     * where it keeps that lead the positional evaluation is skipped entirely and
-     * the danger cannot be seen at all.
+     * progressively.
+     *
+     * <p>The material-only shortcut does <em>not</em> compound it, though an
+     * earlier version of this comment claimed it did ("three pawns is past
+     * {@code EVALUATE_MATERIAL_ONLY_THRESHOLD = 200 cp}, so in the lines where it
+     * keeps that lead the positional evaluation is skipped"). That has it exactly
+     * backwards. The threshold applies to {@code materialDelta}, the swing since
+     * the root — so a line that <em>keeps</em> a three-pawn lead holds the delta
+     * near zero and the positional evaluation runs throughout. It runs, and still
+     * misses the attack, which makes this a cleaner king-safety case than the
+     * original wording suggested.
      *
      * <p><b>This assertion is a characterization, not a goal.</b> It passes
      * because the defect is present. Once king safety lands it must start
@@ -707,9 +723,19 @@ class BlunderTest {
      *
      * <p>Note the direction, which is the mirror image of the other cases here:
      * myChess does not fail to see an enemy attack, it <em>sells its own king
-     * shelter for material</em>. Two pawns also sits right at
-     * {@code EVALUATE_MATERIAL_ONLY_THRESHOLD = 200 cp}, so in these lines the
-     * positional evaluation may be skipped outright.
+     * shelter for material</em>.
+     *
+     * <p>The material-only shortcut is <em>not</em> the explanation, and that
+     * matters for reading the number above. {@code materialDelta} measures the
+     * swing since the root, not the balance at it, so a position that merely
+     * <em>stands</em> two pawns up enters the search at a delta of zero; and the
+     * threshold comparison is a strict {@code >}, so even a two-pawn swing inside
+     * the search does not trip it. The positional evaluation therefore does run
+     * here — and still prices the naked king at nothing. A skipped evaluation
+     * would be the milder finding; this is the evaluation itself.
+     * {@link MaterialOnlyShortcutEvalTest#qxb5AtMove36GrabsThePawnInsteadOfTheExchangeSacrifice()}
+     * is the case where the shortcut genuinely is the cause, and it looks
+     * different: the score there lands on a whole pawn.
      *
      * <p><b>Characterization, not a goal</b> — same contract as
      * {@link #qb4_atMove22_characterizesTheKingSafetyBlindSpot()}: it passes
@@ -1097,6 +1123,11 @@ class BlunderTest {
      * ideally require {@code Ne5} outright.
      *
      * <p><b>Blunder family:</b> corner-grab
+     * <p><b>Contributing:</b> material-only-shortcut — the {@code Qxh8} delta of
+     * +500 is measured from the root, so the reasoning above holds as written, and
+     * the reported {@code +2.00} is the bare balance. This is the same signature as
+     * {@link MaterialOnlyShortcutEvalTest#qxb5AtMove36GrabsThePawnInsteadOfTheExchangeSacrifice()}:
+     * a score that lands on a whole pawn is a piece count, not an evaluation.
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -1747,5 +1778,6 @@ class BlunderTest {
                 "characterization: it reports about -0.85 where Stockfish has -4.93, at every depth from 8 to "
                         + "11; got " + result.weight());
     }
+
 
 }

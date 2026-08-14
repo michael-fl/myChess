@@ -331,10 +331,49 @@ than maintained once there are enough cases to justify the tooling.
 | `endgame-technique` | 2 | Endgame-specific knowledge missing: trading into a lost pawn endgame (`66.Nxe5`), and not occupying a promotion square (`75.Ba1`). |
 | `repetition` | 3 | The search cannot see a threefold repetition coming — [§ 12.23](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--s-correctness-fix--0-in-self-play-but-real-half-points-against-others). Two in `BlunderTest` isolating the cold-table / warm-table split, one in `ThreefoldRepetitionTest`. |
 | `tactical-oversight` | 2 | Walks into a concrete tactic: a pawn grab losing to a fork (`39.Rxd5`), a knight move abandoning the pawn it defended (`21.Nf3`). |
+| `material-only-shortcut` | 1 | The evaluation degenerates to a piece count and prefers material to a winning exchange sacrifice: `36.Qxb5` instead of `36.Rxf6`. Lives in `MaterialOnlyShortcutEvalTest` as its case 4, not in `BlunderTest` — see below. |
 | `unsound-attack` | 1 | Its own attack over-valued: the knight sacrifice `16.Ng6` rated +1.53. |
 
 The tally spans **every** test class, not just `BlunderTest` — `repetition` for instance
 draws one of its three cases from `ThreefoldRepetitionTest`.
+
+**A case belongs with its mechanism, not with its provenance.** `BlunderTest` is where
+real-game cases live, so a game reproduction lands there by default — but the
+`material-only-shortcut` case went to `MaterialOnlyShortcutEvalTest` instead, as the fourth
+of the four shapes that class already documents. Three reasons, and they generalize: the
+class owns the explanation, so the case extends an argument instead of restating it; its
+`deepEval` helper made the test three lines rather than a new scaffold; and it is not
+`@Tag("slow")`, so the case runs in the fast suite instead of inside a 410-second class.
+The deciding question is which file someone opens when they next chase this behavior — and
+for a shortcut nobody looks among seventeen king-safety blunders. The scanner's coverage
+report is unaffected either way: it globs `src/test/java/**/*.java` for lichess ids, so a
+test is found wherever it sits.
+
+A second line, `Contributing:`, marks a mechanism that is a co-cause rather than the
+primary one, so a case can be counted once and still be findable from both sides:
+
+```java
+ * <p><b>Blunder family:</b> corner-grab
+ * <p><b>Contributing:</b> material-only-shortcut — a rook capture is a 500 cp swing…
+```
+
+Two cases carry it (`21...Qxa1` and `9.Qe5`), and the reason to keep it separate from the
+family is that a co-cause must be *checked*, not assumed. Reviewing the four `BlunderTest`
+cases that mentioned the material-only shortcut in prose found **two of the four claims
+wrong**, both by the same confusion: `EVALUATE_MATERIAL_ONLY_THRESHOLD` applies to
+`materialDelta`, the material swing **since the root** of the search, not to the balance at
+it. So:
+
+- A position that merely *stands* two pawns up enters the search at a delta of zero.
+- A line that *keeps* a three-pawn lead holds the delta near zero throughout — the
+  positional evaluation runs, the opposite of what the comment claimed.
+- The comparison is a strict `>`, so a swing of exactly 200 cp does not trip it either.
+
+Both corrections make the affected cases *cleaner* king-safety evidence: the evaluation
+did run and still missed the danger. The cheap test for whether the shortcut is actually
+engaged is the one the fourth case turns on — **a reported score that lands on a whole
+number of pawns is a piece count, not an evaluation.** `+6.00` at three consecutive depths
+was what exposed it; `+6.27` one depth later was the control.
 
 A test gets no family when it does not characterize a defect. `nf7_atMove25` and
 `qd5_atMove22` assert that myChess *finds* a mating combination; `testIsDraw`,
