@@ -64,16 +64,70 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * +4.2 vs {@code axb3} +3.1): it doubles White's b-pawns and leaves the offside
  * a5 knight in place, both invisible to the shortcut.
  *
+ * <h2>4. The exchange sacrifice it will not play &mdash; {@code qxb5AtMove36...}</h2>
+ *
+ * <pre>{@code 1Qb2r1k/8/2BR1n1p/1pp1Rp1q/5p2/2P4P/1PP2PP1/6K1 w - - 1 36}</pre>
+ *
+ * <p>The only case here taken from a real game &mdash; rated classical
+ * <a href="https://lichess.org/5z59X4aB">5z59X4aB</a> (myChessJava 2013 vs Bot5551
+ * 1827, 1440+3, 1-0), move 36 &mdash; and the sharpest of the four. Black has just
+ * blundered with {@code 35...Nf6}, leaving the knight en prise while {@code Rf8} is
+ * the sole defender of {@code Bc8}, which {@code Qb8} attacks and behind which
+ * {@code Bc6} covers {@code e8}. So {@code 36.Rxf6} simply wins a piece:
+ * {@code 36.Rxf6 Rxf6 37.Bf3 Qh4 38.Qxc8+ Kg7 39.Re7+ Rf7}, Stockfish
+ * <b>+7.76</b>. myChess played <b>{@code 36.Qxb5}</b>, a free pawn and a winning
+ * move (<b>+5.71</b>) that is two pawns short of the winning move.
+ *
+ * <p>Its score is <b>+6.00</b> at depths 8, 9 and 10, and that number is not an
+ * evaluation but a piece count. The depth-9 line is
+ * {@code 36.Qxb5 Qf7 37.Qxc5 f3 38.gxf3 Kg7 39.Kh2 Bd7}; from the root balance of
+ * +300 cp its three pawn captures give a leaf balance of exactly +600. Note that
+ * the threshold applies to the swing <em>since the root</em>, not to the balance at
+ * it, and that the comparison is a strict {@code >}: the delta reads +100 after
+ * {@code Qxb5}, +200 after {@code Qxc5} (the boundary is spared exactly), and only
+ * {@code gxf3} at +300 crosses and returns raw material.
+ *
+ * <p>The tell is the roundness, and it holds on the other branch too: searching
+ * from the position after {@code 36.Rxf6 Rxf6} also reports exactly +600, again the
+ * leaf balance of its own line ({@code Qxc8+ Kh7 Bf3 Qf7 Rxc5 Qa2 Rxb5 Qb1+}, from
+ * +100 up three captures). Depth 11 is the control that proves the rule: it
+ * switches to {@code Re7} and reports +6.27, an unround number, because that line
+ * keeps the delta inside the band and the positional evaluation runs.
+ *
+ * <p>So the root comparison happens almost entirely in material. myChess scores
+ * {@code Rxf6} at +5.44 against +6.00 for {@code Qxb5}, rejecting the
+ * piece-winning move by 56 cp. {@code Rxf6} is an exchange sacrifice &mdash; rook
+ * for knight, {@code -200} after the recapture, of which {@code Qxc8} returns 300
+ * &mdash; and what makes it stronger is positional: rook on the seventh, bishop
+ * pair against nothing, a bare black king. Exactly the component the shortcut
+ * discards.
+ *
  * <h2>Takeaway</h2>
  *
  * <p>The material-only shortcut is an intended, load-bearing pruning heuristic:
  * it blinds the engine to <em>positional</em> distinctions but never to
  * <em>material</em> ones. That blindness is usually harmless — the move is forced
- * (1), or material decides it anyway (2). It becomes a genuine blunder only when
- * all candidate moves tie on material <em>and</em> the best one runs against the
- * cheapest-attacker move ordering (3). If the shortcut or the capture ordering
+ * (1), or material decides it anyway (2). If the shortcut or the capture ordering
  * (e.g. an SEE-based sort) ever changes, the affected assertion turns red and
  * should be updated.
+ *
+ * <p>Cases 3 and 4 are the two ways it does bite, and they are not the same. This
+ * class used to conclude that a genuine blunder needs <em>both</em> a material tie
+ * <em>and</em> the best move running against the cheapest-attacker ordering, which
+ * is case 3. Case 4 shows that is too narrow: nothing ties there and no ordering
+ * accident is needed, because the best move gives material <em>back</em>, and that
+ * is the one thing a material yardstick must always score as a loss. Case 3 is the
+ * more dangerous in practice, since a tie is settled by whatever the ordering tries
+ * first; case 4 is the more fundamental, because no ordering change can reach it.
+ *
+ * <p><b>None of this is a defect to fix on sight.</b> Removing the shortcut
+ * measured <b>-34 Elo</b> (<a href="../docs/roadmap.md">roadmap § 12.18</a>), and
+ * the error in case 4 cost nothing on the scoreboard &mdash; the game was won. These
+ * tests are the concrete cost side of a trade that pays: if the search cluster ever
+ * revisits the threshold, case 4 is a position where it demonstrably picks the worse
+ * move, which is worth more than the Elo number alone. Should that assertion start
+ * failing after such a change, it is information rather than a regression &mdash;
+ * check whether {@code Rxf6} is now found before touching it.
  *
  * @author Michael Fleischhauer
  */
@@ -145,6 +199,28 @@ class MaterialOnlyShortcutEvalTest {
     private static final float TRAP_TIE_WEIGHT = 1.0f;
     private static final float TRAP_TIE_TOLERANCE = 0.20f;
 
+    /** Case 4: white to move, a piece up, black's knight just planted on f6 en prise. */
+    private static final String EXCHANGE_SACRIFICE_FEN =
+            "1Qb2r1k/8/2BR1n1p/1pp1Rp1q/5p2/2P4P/1PP2PP1/6K1 w - - 1 36";
+
+    /** The pawn grab myChess prefers, and the piece-winning exchange sacrifice it declines. */
+    private static final String EXCHANGE_SACRIFICE_PAWN_GRAB = "Qxb5";
+    private static final String EXCHANGE_SACRIFICE_BEST_MOVE = "Rxf6";
+
+    private static final float STOCKFISH_EXCHANGE_SACRIFICE = 7.76f;
+    private static final float STOCKFISH_PAWN_GRAB = 5.71f;
+
+    /**
+     * The score myChess reports for {@code Qxb5}: exactly six pawns, the material
+     * balance at the leaf of its own principal variation. Pinned to the pawn because
+     * the <em>exactness</em> is the finding — a positional evaluation does not land
+     * on a whole number of pawns.
+     */
+    private static final float PURE_MATERIAL_WEIGHT = 6.0f;
+
+    /** Tolerance for the above: tight enough that any positional contribution breaks it. */
+    private static final float PURE_MATERIAL_TOLERANCE = 0.001f;
+
     @Test
     @Timeout(value = 120, unit = TimeUnit.SECONDS)
     void developmentLeadIsErasedByTheMaterialOnlyShortcut()
@@ -212,6 +288,38 @@ class MaterialOnlyShortcutEvalTest {
         assertTrue(Math.abs(eval.weight() - TRAP_TIE_WEIGHT) <= TRAP_TIE_TOLERANCE,
                 "the recaptures tie at the material-only value (~+" + TRAP_TIE_WEIGHT
                         + ", White up a pawn); got " + ChessUtil.weightToString(eval.weight()));
+    }
+
+    /**
+     * Case 4 of the class comment, which carries the full analysis. Kept here rather than in
+     * {@code BlunderTest} because the mechanism, not the provenance, is what someone chasing
+     * this behavior will search for.
+     *
+     * <p><b>Blunder family:</b> material-only-shortcut
+     */
+    @Test
+    @Timeout(value = 120, unit = TimeUnit.SECONDS)
+    void qxb5AtMove36GrabsThePawnInsteadOfTheExchangeSacrifice()
+            throws InterruptedException, ExecutionException, TimeoutException {
+
+        Eval eval = deepEval(EXCHANGE_SACRIFICE_FEN);
+
+        // The blunder: Rxf6 wins a piece outright, because the f8 rook is the only
+        // defender of the c8 bishop that Qb8 attacks. myChess takes the free pawn
+        // instead, a winning move two pawns short of the winning move.
+        assertEquals(EXCHANGE_SACRIFICE_PAWN_GRAB, eval.move(),
+                "characterization: myChess must still grab the pawn with " + EXCHANGE_SACRIFICE_PAWN_GRAB
+                        + " (SF +" + STOCKFISH_PAWN_GRAB + ") rather than win the piece with "
+                        + EXCHANGE_SACRIFICE_BEST_MOVE + " (SF +" + STOCKFISH_EXCHANGE_SACRIFICE
+                        + "). If it now plays the sacrifice, the shortcut no longer decides this position — "
+                        + "check roadmap § 12.18 before adjusting");
+
+        // The score must be exactly the leaf material of its own PV. That exactness
+        // is what shows the positional evaluation never ran, so an unround value
+        // means the shortcut no longer covers this subtree.
+        assertEquals(PURE_MATERIAL_WEIGHT, eval.weight(), PURE_MATERIAL_TOLERANCE,
+                "the score must be exactly the leaf material of its own principal variation, which is what "
+                        + "shows the positional evaluation was skipped; got " + ChessUtil.weightToString(eval.weight()));
     }
 
     /**
