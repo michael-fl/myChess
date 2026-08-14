@@ -1640,4 +1640,112 @@ class BlunderTest {
                         + result.weight());
     }
 
+    // ----------------------------------------------------------------
+    // Rated classical game https://lichess.org/caCDhMEU (myChessJava vs
+    // TopasBot 2067, 0-1). Two blunders on consecutive moves, and together
+    // they are the sharpest example of a signature that differs from every
+    // other case in this class: myChess is not *optimistic* here, it is
+    // *insensitive*. Its own evaluation sits at -0.8 through both moves and
+    // every depth from 8 to 11, while the truth walks from -0.47 to -4.93.
+    // Nothing about the collapse of its own kingside registers at all.
+    // ----------------------------------------------------------------
+
+    /** White (myChess) to move, level on material, king on g1 with the f-pawn long gone. */
+    private static final String BEFORE_H3_FEN = "3rk2r/1p3pp1/pNb1p3/3pP1qp/3Q2P1/4P3/PPP4P/3R1RK1 w k - 2 20";
+
+    /** White (myChess) to move one ply later, a pawn down, black's rook ready for the h-file. */
+    private static final String BEFORE_HXG4_FEN = "3rk2r/1p3pp1/pNb1p3/3pP1q1/3Q2p1/4P2P/PPP5/3R1RK1 w k - 0 21";
+
+    /**
+     * Touching the pawns in front of an already-airy king, for the fourth time in this class.
+     *
+     * <p>White's king shelter was spent long before this: {@code 15.fxe3} took the f-pawn away
+     * and {@code 12.g4} pushed the g-pawn, so g1 sits behind g4 and h2 with an open f-file.
+     * Black had not exploited it — Stockfish has the position at only <b>-0.47</b>, and
+     * {@code 20.Rd2} keeps it there ({@code 20.Rd2 O-O 21.Rg2 h4 22.h3}), quietly bringing the
+     * rook to the second rank before deciding anything about the h-file.
+     *
+     * <p>myChess played <b>{@code 20.h3}</b> instead, which resolves the tension on white's
+     * own terms and hands black the open file: <b>-3.12</b>. Same family as {@code 33.f3}
+     * ({@link #f3_atMove33_characterizesOpeningItsOwnPawnShield()}) and {@code 12.h3}
+     * ({@link #h3_atMove12_engineNoLongerPushesTheUndefendedPawn()}) — a pawn move in front of
+     * its own king that the evaluation does not charge for.
+     *
+     * <p>Its own verdict: <b>-0.82</b>, against a true -3.12. Note what kind of error that
+     * is. Elsewhere in this class myChess claims a large advantage it does not have; here it
+     * reports "slightly worse" and is simply <em>not wrong enough to act</em>. The 2.3-pawn
+     * gap is invisible rather than inverted.
+     *
+     * <p>Depth 11 finds {@code Qf4}, which is a reasonable alternative — but 8 through 10 all
+     * play {@code h3}, and the game was at 1800+2 with roughly depth 9 to 11 available.
+     *
+     * <p><b>TODO — invert once king safety lands.</b> Written as an avoidance test against
+     * {@code h2-h3}, confirmed red, then relaxed below.
+     *
+     * <p><b>Blunder family:</b> king-safety
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void h3_atMove20_characterizesOpeningTheLastPawnBeforeItsKing() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_H3_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.h2, Board.h3), ChessUtil.moveToString(result.move()),
+                "characterization: myChess still plays h3 and opens the file at its own king. If it now plays "
+                        + "Rd2, king safety has landed — turn this into an avoidance test. white-POV eval "
+                        + result.weight());
+        assertTrue(result.weight() > -2f,
+                "characterization: it reports only about -0.8 where Stockfish has -3.12 — insensitive rather "
+                        + "than optimistic; got " + result.weight());
+    }
+
+    /**
+     * Recapturing a pawn instead of trading the queens that are mating it.
+     *
+     * <p>One ply after the case above, and the more instructive of the two. White is a pawn
+     * down at <b>-3.12</b> with black's rook about to land on h4. The move is
+     * <b>{@code 21.Qf4}</b> (<b>-2.92</b>): offer the queen trade, because a defender with an
+     * open king wants the strongest attacker off the board —
+     * {@code 21.Qf4 Qxf4 22.Rxf4 gxh3 23.Kh2}, a pawn down but structurally alive.
+     *
+     * <p>myChess played <b>{@code 21.hxg4}</b>, taking the pawn back, keeping queens on and
+     * leaving the h-file open. Stockfish: <b>-4.93</b>. The game followed immediately —
+     * {@code 21...Rh4 22.Rf4 Qh6 23.Kf1 Rh2} and the rook was inside.
+     *
+     * <p><b>Reproduces at every depth from 8 to 11</b>, its evaluation flat at -0.81 to -0.90
+     * throughout. So this is not the horizon: the four-pawn gap is in the evaluation, and no
+     * amount of search closes it.
+     *
+     * <p>The shape is the same as {@link #ne8_atMove15_characterizesRetreatingTheKnightToTheBackRank()}:
+     * material is preferred over the safety of its own king — there by hoarding a piece, here
+     * by recapturing a pawn. Both point at the same missing counterweight, and both show that
+     * the term would have to be worth *more than a piece or a pawn* to change the decision,
+     * which is a size the three shelved hand-built attempts in
+     * <a href="../docs/roadmap.md">roadmap § 12.21</a> never approached.
+     *
+     * <p><b>TODO — invert once king safety lands.</b> Avoidance rather than requiring
+     * {@code Qf4}, so the test does not prescribe a single move where the point is the choice
+     * between defusing and grabbing.
+     *
+     * <p><b>Blunder family:</b> king-safety
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void hxg4_atMove21_characterizesRecapturingInsteadOfTradingQueens() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_HXG4_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.h3, Board.g4), ChessUtil.moveToString(result.move()),
+                "characterization: myChess still recaptures on g4 rather than defusing with Qf4. If it now "
+                        + "trades queens, king safety has landed — turn this into an avoidance test. white-POV "
+                        + "eval " + result.weight());
+        assertTrue(result.weight() > -2f,
+                "characterization: it reports about -0.85 where Stockfish has -4.93, at every depth from 8 to "
+                        + "11; got " + result.weight());
+    }
+
 }
