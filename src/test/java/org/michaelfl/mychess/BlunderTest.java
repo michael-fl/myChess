@@ -1581,4 +1581,63 @@ class BlunderTest {
                         + result.weight());
     }
 
+    /** Black (myChess) to move, a piece up, its f6 knight attacked by the g5 pawn. */
+    private static final String RETREAT_TO_E8_FEN = "r2q1rk1/ppp2ppp/2n2n2/6P1/2P1p3/P2P4/PB4P1/R2Q2KR b - - 0 15";
+
+    /**
+     * Saving an attacked knight by retreating it to the back rank, and losing the king for it.
+     *
+     * <p>Rated blitz game <a href="https://lichess.org/TG1DZhV0">TG1DZhV0</a>. Black (myChess)
+     * is <b>a whole piece up</b> (3200 vs 2800 cp) after the promotion sequence
+     * {@code 12...dxe3 13.g5 exf2 14.Bb2 fxg1=Q+ 15.Kxg1}, and Stockfish has it at
+     * <b>+3.3</b>. White's g5 pawn attacks the knight on f6.
+     *
+     * <p>myChess played {@code 15...Ne8}, tucking the knight onto the back rank. Stockfish
+     * reads the result as <b>-1.49</b> — nearly five pawns thrown away in one move — and the
+     * attack arrived immediately: {@code 16.Qh5 h6 17.gxh6 f6 18.hxg7 Nxg7 19.Qh7+} and the
+     * game was gone. Either {@code Nd4} (<b>+3.35</b>) or {@code Qxd3} (+3.30) holds
+     * everything; both simply let the f6 knight go, which a side a piece up can afford.
+     *
+     * <p><b>The piece-square tables are not the culprit here — they are overruled.</b> Worth
+     * recording, because it is the opposite of what one would guess. For a black knight in
+     * the midgame the tables give f6 <b>+29</b>, e8 <b>-50</b> and d4 <b>+90</b>: the retreat
+     * costs 79 cp of placement and the recommended move would gain 61. myChess plays the
+     * retreat anyway, so roughly 140 cp of correct positional signal is outweighed — by the
+     * 300 cp of the knight it would otherwise lose.
+     *
+     * <p>That makes this a different shape from the {@code corner-grab} cases, which are
+     * about material greedily *taken*. This is material *hoarded*: refusing to give a piece
+     * back while a piece up, because the evaluation counts the piece and not the king behind
+     * it. What would tip it is a term for the h-file and the bare g7 — hence the family
+     * below.
+     *
+     * <p>Its own verdict: <b>+4.03 for itself</b> against Stockfish's -1.49, a gap of five
+     * and a half pawns with the sign inverted. Depth moves it but does not fix it:
+     * {@code Ne8} at depths 8-10, and at depth 11 {@code Ng4}, which Stockfish scores
+     * <b>+0.08</b> — no longer losing, but the win is gone either way.
+     *
+     * <p><b>TODO — invert once king safety lands.</b> Written as an avoidance test against
+     * {@code f6-e8}, confirmed red, then relaxed below. Requiring {@code Nd4} outright would
+     * be the stronger form, but {@code Qxd3} is equally good, so avoidance is the honest
+     * assertion.
+     *
+     * <p><b>Blunder family:</b> king-safety
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void ne8_atMove15_characterizesRetreatingTheKnightToTheBackRank() throws Exception {
+        var game = gameFromFenAtDepth(RETREAT_TO_E8_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.f6, Board.e8), ChessUtil.moveToString(result.move()),
+                "characterization: myChess still saves the attacked knight with Ne8 and lets the attack on its "
+                        + "own king through. If it now plays Nd4 or Qxd3, king safety has landed — turn this "
+                        + "into an avoidance test. white-POV eval " + result.weight());
+        assertTrue(result.weight() < -3f,
+                "characterization: it rates itself four pawns ahead where Stockfish has it 1.49 behind; got "
+                        + result.weight());
+    }
+
 }
