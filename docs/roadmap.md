@@ -25,7 +25,7 @@ This roadmap is split across three files. Section numbers (§ 12.x) are **stable
 | 12.12 | Real time management heuristics | S–M, ≈ 30–60 |
 | 12.20 | Principal Variation Search (PVS) | S, ≈ 10–25 |
 | 12.21 | King safety | M, ≈ 30–60 |
-| 12.23 | Repetition draws invisible to the search — *correctness* | S, ≈ 0 in self-play, real half-points vs others |
+| 12.23 | Repetition draws invisible to the search — *correctness* | **code fixed 2026-08-14**, Elo not yet measured |
 
 **[Completed & investigated → `roadmap-done.md`](roadmap-done.md).** Shipped features and closed investigations (kept as knowledge):
 
@@ -292,7 +292,11 @@ A serious retry therefore needs three things together, not a lone tuner run: (1)
 
 ---
 
-## 12.23 Repetition draws are invisible to the search — **S, correctness fix, ≈ 0 in self-play but real half-points against others**
+## 12.23 Repetition draws are invisible to the search — **CODE FIXED 2026-08-14, Elo not yet measured**
+
+> The search change is in and pinned by four tests; the corrected-vs-uncorrected SPRT is
+> still outstanding, so this section stays here rather than moving to
+> [roadmap-done.md](roadmap-done.md). See *The fix, as implemented* below.
 
 A correctness bug, not an evaluation gap: the search cannot see a threefold repetition coming, so myChess walks into draws from positions it itself considers winning. Full mechanism and the two lichess games that exposed it are in [known-issues.md](known-issues.md); the short version is that two independent facts combine.
 
@@ -322,7 +326,11 @@ So one game in ten ended as a draw while an engine believed it was at least two 
 
 **How to measure it.** The bug becomes visible only where the two sides **differ** in it, so the measurement is **corrected myChess against uncorrected** — an ordinary SPRT, with the fix on one side only. In a match where both builds carry the bug it stays invisible no matter how many games are played, which is why it never surfaced anywhere in the evaluation series. The [anchor bracket](roadmap-backlog.md#12103-self-play-tournament--m-1-day) against external engines is the second place it should show. Expect the gain to appear as draws converting into wins rather than as stronger play per move.
 
-**Already pinned by tests.** `ThreefoldRepetitionTest.secondOccurrenceIsNotYetADraw` guards the game rule (three occurrences) so a fix does not accidentally change it; `engineDoesNotAvoidRepetitionWhenWinning` plus the cold-table / warm-table pair in `BlunderTest` (`repetition_withColdTable_blocksTheCheckAndAvoidsTheDraw`, `repetition_withWarmTable_walksIntoTheDraw`) characterize the defect from both sides — the same position and depth, two table states, two different moves. The warm-table case is marked `TODO` and must start failing when the fix lands.
+**The fix, as implemented (2026-08-14).** The first of the two routes above. `PositionSearch.alphaBetaSearchPre` now asks `Board.isTwofoldRepetition()` instead of `isThreefoldRepetition()`, so a position that has occurred **twice** along the current search path scores as a draw. Two lines of production change, because the existing structure already carried what the fix needed: the status stack holds the game prefix *and* the search path (one board, mutated by `makeMove`), and the draw check already sat above both the table lookup and the only `tt.put` — so the repetition is decided before any entry can answer, and the path-local draw is never itself stored. The game rule is untouched at three occurrences.
+
+**Pinned by four tests**, now all green. `ThreefoldRepetitionTest.secondOccurrenceIsNotYetADraw` guards the game rule so the fix cannot have been achieved by loosening it. `repetition_withWarmTable_findsTheBlockDespiteTheTable` in `BlunderTest` was the characterization that went red on the fix and is now its regression test; `repetition_withColdTable_blocksTheCheckAndAvoidsTheDraw` is the control that always passed. `engineNeitherStalematesNorRepeatsWhenWinning` asserts the principal variation contains no repetition, paired with `withRepetitionDetectionDisabledTheShuffleReturns`, which brings the shuffle back with the check off — without that pair the no-repetition assertion could pass for an unrelated reason.
+
+**A correction the fix surfaced.** The second case in [known-issues.md](known-issues.md) recorded that myChess declined a free rook six times running. It is not free: every one of those captures is **stalemate** (bare black king, boxed by `Qf8` and `Rg4`). Declining was correct, and the engine gets there correctly — depth 1 picks the capture at +20, depth 2 finds the stalemate. The defect was only ever the repetition. Because the old test asserted the refusal, which held both before and after the fix, a real improvement in that position produced no signal in the suite at all.
 
 ---
 
@@ -369,7 +377,7 @@ overtaken by measurement. It is kept for the reasoning, not as a to-do list.
 | Step | Item | Why here | Elo |
 |---|---|---|---|
 | 1 | **Absolute re-anchor** — [`tools/run-anchor-bracket.sh 4.4.0`](../tools/run-anchor-bracket.sh), recipe in [myChess-ELO-measurement.md](myChess-ELO-measurement.md) | Every strength number since 4.0.0 is a propagated relative delta; [version-history](version-history.md) puts the accumulated uncertainty at **±40 Elo**. The last six releases added ~+130 Elo with no external measurement. | none — it *calibrates* the rest |
-| 2 | [**§ 12.23 Repetition draws**](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--s-correctness-fix--0-in-self-play-but-real-half-points-against-others) | A correctness fix, small, with the opportunity now quantified: 203 of 2000 games drawn while one side saw itself ≥ +2.00. Best effort-to-payoff ratio of anything open. | ≈ 0 in self-play, real half-points against others |
+| 2 | [**§ 12.23 Repetition draws**](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--code-fixed-2026-08-14-elo-not-yet-measured) — **code done 2026-08-14**, only the SPRT remains | A correctness fix, small, with the opportunity now quantified: 203 of 2000 games drawn while one side saw itself ≥ +2.00. Best effort-to-payoff ratio of anything open. | ≈ 0 in self-play, real half-points against others |
 | 3 | [**§ 12.21 King safety**](roadmap.md#1221-king-safety--m--3060-elo) (with the § 12.7 mobility-weight retune) | The largest missing evaluation term, and now the only theme with *isolated* test cases: `qe5_atMove9` and `f3_atMove33` in `BlunderTest`. Prerequisites for a tuned attempt are finally in place. | M, ≈ 30–60 |
 | 4 | [**Search cluster**](#search-cluster-plan--history--pvs--lmr) — § 12.5 history → § 12.20 PVS → § 12.3 LMR | Largest raw estimate, but see the caveat below. Has its own build-and-measure plan. | S, ≈ 80–175 combined |
 

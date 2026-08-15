@@ -292,7 +292,7 @@ public final class PositionSearch {
         final GameStatus gameStatus = ctx.workingBoard().getGameStatus();
         statistics.incrPositionCount();
 
-        if ((engineConfig.isEnableFiftyMovesRule() && gameStatus.getHalfMoveClock() >= 100) || (engineConfig.isEnableThreefoldRepetition() && ctx.workingBoard().isThreefoldRepetition())) {
+        if ((engineConfig.isEnableFiftyMovesRule() && gameStatus.getHalfMoveClock() >= 100) || (engineConfig.isEnableThreefoldRepetition() && ctx.workingBoard().isTwofoldRepetition())) {
             ctx.truncateParentPv();
             if (ctx.workingBoard().canCaptureOpposingKing()) {
                 // ILLEGAL

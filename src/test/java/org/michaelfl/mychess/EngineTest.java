@@ -416,6 +416,13 @@ class EngineTest extends EngineTestBase {
     // −0.9 ± 0.2 weight band. TODO Rd2 — engine still under-reports this
     // endgame; will re-visit once QSearch and king-safety-in-endgame are on
     // the roadmap.
+    //
+    // This position is a genuine near-tie, which is why the accepted set keeps
+    // growing: Stockfish at depth 26 rates Rd2 −17, then Rf2 / Ke4 / Rh2 / Rc2+
+    // all at −18 and a3 at −19. A single centipawn separates the top six, so
+    // any search change can reorder them without meaning anything. Only add a
+    // move here after checking it is still in that band — the point of the set
+    // is to tolerate reordering, not to stop noticing a real regression.
     @Test
     void testPosition25() {
         var pgn = """
@@ -428,7 +435,11 @@ class EngineTest extends EngineTestBase {
                 40. Re7 Rf5 41. Re3 Kb7 42. Kg3 a5 43. f4 a4 44. Kf3 Rb5 45. Re2 Kc6
                 """;
         testPosition(pgn,
-                Set.of("a2-a3", "f3-g3", "e2-e6", "e2-g2"), // eval-equivalent secondary moves; v4.3.4 adds Rg2 (e2-g2)
+                // Eval-equivalent secondary moves; v4.3.4 added Rg2 (e2-g2), the § 12.23
+                // repetition fix added Ke4 (f3-e4). Measured with the check toggled and
+                // nothing else changed: Rg2 at -1.34, Ke4 at -1.27 — the fix prunes a
+                // repeating line, which reorders two moves 0.07 pawns apart.
+                Set.of("a2-a3", "f3-g3", "e2-e6", "e2-g2", "f3-e4"),
                 -1.5f, // was -1.3; tapered pawn-EG (v4.3.0), full-joint (v4.3.4)
                 -0.6f,
                 new GameConfig(ENGINE, engineConfig())
