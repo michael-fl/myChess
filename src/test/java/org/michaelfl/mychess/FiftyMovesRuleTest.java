@@ -19,13 +19,6 @@ import static org.michaelfl.mychess.EngineTestBase.engineConfig;
  */
 class FiftyMovesRuleTest {
 
-    /**
-     * The half-move clock after {@code 70.Qg2} in
-     * {@link #testFilipowiczSmederevac1966()}: one ply below the hundred the rule needs, so
-     * the draw is a search result rather than a root check.
-     */
-    private static final int CLOCK_ONE_PLY_SHORT = 99;
-
     private TranspositionTable tt;
 
     @BeforeEach
@@ -143,7 +136,9 @@ class FiftyMovesRuleTest {
         var config = new GameConfig(MyChessEngine.class, engineConfig(tt));
         var game = importer.importGame(config);
 
-        assertEquals(CLOCK_ONE_PLY_SHORT, game.getGameStatus().getHalfMoveClock(),
+        // 99, not 100: one ply below what the rule needs, so the draw has to come from the
+        // search rather than from the root check in ChessEngine.
+        assertEquals(99, game.getGameStatus().getHalfMoveClock(),
                 "premise of this test: the clock must be one ply short of the rule, so the draw has to be "
                         + "found by the search rather than by the root check in ChessEngine");
 

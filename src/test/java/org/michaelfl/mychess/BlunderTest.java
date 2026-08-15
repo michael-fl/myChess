@@ -48,14 +48,6 @@ class BlunderTest {
      */
     private static final int JUNIT_TIMEOUT_S = 60;
 
-    /**
-     * Stockfish-annotated analysis position, black to move. Black is already
-     * slightly better and has two winning tries; see
-     * {@link #nxe2_atMove19_engineMissesTheExchangeWinningSacrifice()}.
-     */
-    private static final String HANGING_E2_FEN =
-            "b3r1kr/pp3pp1/2p5/5Qq1/5n1p/1B2N1P1/P3PP1P/4RRK1 b kq - 1 19";
-
     private TranspositionTable tt;
 
     @BeforeEach
@@ -375,7 +367,9 @@ class BlunderTest {
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
     void nxe2_atMove19_engineMissesTheExchangeWinningSacrifice() throws Exception {
-        var game = gameFromFen(HANGING_E2_FEN, tt);
+        // Stockfish-annotated analysis position, black to move: already slightly better,
+        // with two winning tries.
+        var game = gameFromFen("b3r1kr/pp3pp1/2p5/5Qq1/5n1p/1B2N1P1/P3PP1P/4RRK1 b kq - 1 19", tt);
         assertEquals(GameStatus.TURN_BLACK, game.getTurn(),
                 "in the analysis position black must be to move");
 
@@ -1001,6 +995,13 @@ class BlunderTest {
      * matters as much as the move — it shows the engine still knows it is winning rather
      * than having settled for the drawn score of 0.00.
      *
+     * <p><b>The warm table is asserted, not assumed.</b> A warm-up that quietly stops warming
+     * turns a test like this into a cold-table one, which passes on the broken build as well —
+     * the engine finds {@code Nf7} from a cold table even with the defect present, so nothing
+     * would be measured and nothing would be reported. The assertion below therefore checks
+     * that the first search really did leave an entry for the position after {@code 49...Kg7}
+     * before the second search is allowed to mean anything.
+     *
      * <p><b>Test family:</b> repetition (fixed)
      */
     @Test
@@ -1016,6 +1017,17 @@ class BlunderTest {
 
         // Play the game continuation up to the same check two moves later.
         game.makeMove(MoveDescription.fromString("Kg7", game.getTurn()));
+
+        // Premise: the table must really be warm for that position. Without this the test
+        // could quietly degrade into a cold-table one — and from a cold table the engine
+        // finds Nf7 even with the defect present, so it would pass on the broken build and
+        // prove nothing. Measured here: depth 7. Presence is all that is asserted; the
+        // stored score is not, because the fix itself changes it.
+        assertNotNull(tt.get(game.getBoard().getGameStatus().getPositionHash()),
+                "the first search must have left a transposition-table entry for the position after "
+                        + "49...Kg7 — that stale entry is the whole mechanism this test exercises, and "
+                        + "without it the second search is not answering the same question");
+
         game.makeMove(MoveDescription.fromString("Qd7", game.getTurn()));
         game.makeMove(MoveDescription.fromString("Kg8", game.getTurn()));
         game.makeMove(MoveDescription.fromString("Qe6", game.getTurn()));
