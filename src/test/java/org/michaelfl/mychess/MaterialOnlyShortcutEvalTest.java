@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -101,6 +102,36 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * &mdash; and what makes it stronger is positional: rook on the seventh, bishop
  * pair against nothing, a bare black king. Exactly the component the shortcut
  * discards.
+ *
+ * <h2>5. Not a corner case &mdash; {@code immortalDrawIsGradedByCountingPieces...}</h2>
+ *
+ * <p>Cases 1&ndash;4 each show the shortcut deciding <em>one</em> position. This one shows how
+ * wide it can reach: four consecutive positions from Hamppe&ndash;Meitner, Vienna 1872 (the
+ * "Immortal Draw"), where black has sacrificed a queen and two pieces to drag the white king
+ * to c5, all score exactly <b>+8.00</b>. White is about ten pawns up, so every line leaves the
+ * band and the position is graded by counting pieces from beginning to end. The white king
+ * standing in the middle of black's forces is worth nothing, four moves running.
+ *
+ * <p>Stockfish reads all four as <b>0.00</b> &mdash; the draw is forced from move 11. The
+ * disagreement is not a search-depth gap in the ordinary sense: myChess cannot be *warned*
+ * here, only *shown*. It first agrees at move 17, when the perpetual is four plies away.
+ * {@code BlunderTest.kd7_afterKxb7_engineFindsTheMateThatPunishesTheKingGrab()} measures the
+ * cost precisely at the sharpest point of that line: the mating refutation is eight plies
+ * deep, so avoiding the losing king grab needs nine, and eight is what a normal search gets.
+ *
+ * <p>The assertion pins the <em>property</em>, not the number: the score is an exact number of
+ * pawns. Pinning +8.00 itself would be too brittle — a piece-square-table change moves the
+ * principal variation and with it the leaf balance, turning the test red for a reason that has
+ * nothing to do with the shortcut. (Case 4 still pins a fixed value and should be moved to
+ * this form.)
+ *
+ * <p><b>Note which way the implication runs.</b> Material values are multiples of 100 cp, so a
+ * material-only score is <em>necessarily</em> a whole number of pawns. The converse does not
+ * hold: {@link WeightingFunction} can land on a whole number too, it is simply one outcome
+ * among a hundred. A single whole score is therefore evidence, not proof — which is exactly
+ * why this case asserts across <b>four</b> positions. One coincidence is unremarkable; four in
+ * a row is not something to build an alternative explanation on. Anyone tightening this test
+ * should keep the aggregate rather than trade it for a sharper-looking single assertion.
  *
  * <h2>Takeaway</h2>
  *
@@ -213,13 +244,29 @@ class MaterialOnlyShortcutEvalTest {
     /**
      * The score myChess reports for {@code Qxb5}: exactly six pawns, the material
      * balance at the leaf of its own principal variation. Pinned to the pawn because
-     * the <em>exactness</em> is the finding — a positional evaluation does not land
-     * on a whole number of pawns.
+     * the <em>exactness</em> is the finding: a material-only score has to be a whole
+     * number, material values being multiples of 100 cp. A positional evaluation can
+     * land on one too, so on a single position this is evidence rather than proof —
+     * here it is corroborated by the +6.27 the search reports one depth deeper, and in
+     * case 5 by four whole numbers in a row.
      */
     private static final float PURE_MATERIAL_WEIGHT = 6.0f;
 
     /** Tolerance for the above: tight enough that any positional contribution breaks it. */
     private static final float PURE_MATERIAL_TOLERANCE = 0.001f;
+
+    /**
+     * Case 5: four consecutive positions from the Immortal Draw, black to move in each, white
+     * about ten pawns up after black's sacrifices. Stockfish scores every one of them 0.00.
+     */
+    private static final String[] IMMORTAL_DRAW_FENS = {
+            "r1b1k1nr/1pp2ppp/8/p1Kpp3/8/P7/1PPP2PP/R1BQ1BNR b kq - 0 12",
+            "r1b1k2r/1pp1nppp/8/pBKpp3/8/P7/1PPP2PP/R1BQ2NR b kq - 2 13",
+            "r1bk3r/1pp1nppp/2B5/p1Kpp3/8/P7/1PPP2PP/R1BQ2NR b - - 4 14",
+            "r1bk3r/2p1nppp/1pB5/pK1pp3/8/P7/1PPP2PP/R1BQ2NR b - - 1 15"};
+
+    /** The move each of those positions follows, for assertion messages. */
+    private static final String[] IMMORTAL_DRAW_LABELS = {"12.Kxc5", "13.Bb5+", "14.Bc6", "15.Kb5"};
 
     /**
      * Case 1 of the class comment, which carries the full analysis: the move is forced and
@@ -339,6 +386,43 @@ class MaterialOnlyShortcutEvalTest {
         assertEquals(PURE_MATERIAL_WEIGHT, eval.weight(), PURE_MATERIAL_TOLERANCE,
                 "the score must be exactly the leaf material of its own principal variation, which is what "
                         + "shows the positional evaluation was skipped; got " + ChessUtil.weightToString(eval.weight()));
+    }
+
+    /**
+     * Case 5 of the class comment, which carries the full analysis.
+     *
+     * <p><b>Test family:</b> material-only-shortcut (defect)
+     */
+    @Test
+    @Timeout(value = 120, unit = TimeUnit.SECONDS)
+    void immortalDrawIsGradedByCountingPieces()
+            throws InterruptedException, ExecutionException, TimeoutException {
+
+        for (int i = 0; i < IMMORTAL_DRAW_FENS.length; i++) {
+            Eval eval = deepEval(IMMORTAL_DRAW_FENS[i]);
+
+            // Material values are multiples of 100 cp, so a material-only score is necessarily
+            // whole. Asserting the property rather than the value survives table changes that
+            // move the principal variation; asserting it four times is what makes it evidence.
+            assertTrue(isWholePawns(eval.weight()),
+                    "after " + IMMORTAL_DRAW_LABELS[i] + " the score must be an exact number of pawns, "
+                            + "which is what a position graded by counting pieces looks like. An unround "
+                            + "value means the shortcut no longer covers this subtree; got "
+                            + ChessUtil.weightToString(eval.weight()));
+
+            // 0.00 is whole too, so without this the check above would pass unnoticed on the
+            // day the engine starts seeing the draw. Stockfish has one from move 11 onwards.
+            assertNotEquals(0f, eval.weight(),
+                    "after " + IMMORTAL_DRAW_LABELS[i] + " myChess must still miss the forced draw that "
+                            + "Stockfish sees from move 11 onwards. If it now reads 0.00, the evaluation "
+                            + "has learned something about the exposed king and this case should become a "
+                            + "positive assertion");
+        }
+    }
+
+    /** Whether {@code weight} is an exact number of pawns, the signature of a piece count. */
+    private static boolean isWholePawns(float weight) {
+        return Math.abs(weight - Math.round(weight)) < PURE_MATERIAL_TOLERANCE;
     }
 
     /**

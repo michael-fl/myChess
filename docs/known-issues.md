@@ -829,7 +829,11 @@ ran to its cap without crossing a bound — a small but real gain, no regression
 The 6290 → 0 delta is a clean elimination of the defect; the reduced-stride NMP
 writes were indeed the source.
 
-## Repetition draws are hidden by the transposition table (2026-08-10)
+## Repetition draws are invisible to the search (2026-08-10, **fixed 2026-08-14**)
+
+> Originally filed as "hidden by the transposition table". The table turned out to be
+> an amplifier rather than the cause — see the corrected diagnosis below — so the title
+> now names the defect instead of its loudest symptom.
 
 ### Observation
 
@@ -909,26 +913,28 @@ observe: the 0.0 s response is the tell.
 Both halves are pinned in
 [`BlunderTest`](../src/test/java/org/michaelfl/mychess/BlunderTest.java):
 
-- `repetition_withColdTable_blocksTheCheckAndAvoidsTheDraw` — a genuine
-  assertion: with a cold table the engine must find `Nf7`.
-- `repetition_withWarmTable_walksIntoTheDraw` — a characterization carrying a
-  **TODO**: it passes because the defect is present, and must be deleted (or its
-  assertion switched to `Nf7`) once the bug is fixed.
+- `repetition_withColdTable_blocksTheCheckAndAvoidsTheDraw` — with a cold table
+  the engine must find `Nf7`. This always passed; it is what showed the knowledge
+  was present and only hidden.
+- `repetition_withWarmTable_findsTheBlockDespiteTheTable` — the same question with
+  the table warm. Written as a characterization of the defect, it went red when the
+  fix landed and is now the regression test for it, asserting `Nf7` and that the
+  score stays a winning one rather than collapsing to 0.00.
 
 Both are depth-bounded at 8 plies so the outcome is deterministic and the pair
 runs in about a second.
 
-### Possible fixes (not implemented)
+### The fix that was chosen
 
-- Treat the **second** occurrence along the current search path as a draw. This
-  is the usual approach in engines: detection becomes path-local, so no table
-  entry can mask it, and it also avoids the wasted plies spent re-walking a
-  repetition.
+The first of the two routes below: treat the **second** occurrence along the current
+search path as a draw. Details and the measurement are under *Fixed (2026-08-14)*.
+
+- Treat the **second** occurrence along the current search path as a draw. The
+  usual approach in engines: detection becomes path-local, so no table entry can
+  mask it, and it also avoids the wasted plies spent re-walking a repetition.
 - Or suppress table cutoffs while any position on the current path has already
-  occurred, so the repetition is re-derived rather than recalled.
-
-Either way the fix belongs in the search, and the two tests above turn it into a
-measurable change.
+  occurred, so the repetition is re-derived rather than recalled. Not taken — it
+  keeps the table honest in rare cases but leaves detection dependent on it.
 
 ### Second case, and a correction to the diagnosis (2026-08-11)
 
@@ -937,21 +943,39 @@ Axiom_BOT 1818, 3+0) was **drawn by repetition from queen + knight + rook + two
 pawns against a bare rook**. Black checked along the second rank and myChess
 stepped aside six times in a row while a capture was legal every single time:
 
-| Move | played | available |
+| Move | played | capture available |
 |---|---|---|
-| 60. | `Kd1` | **`Kxe2`** |
-| 61. | `Kc1` | **`Kxd2`** |
-| 62. | `Kb1` | **`Kxc2`** |
-| 63. | `Kc1` | **`Kxb2`** |
-| 64. | `Kb1` | **`Kxc2`** |
-| 65. | `Kc1` | **`Kxb2`** |
+| 60. | `Kd1` | `Kxe2` |
+| 61. | `Kc1` | `Kxd2` |
+| 62. | `Kb1` | `Kxc2` |
+| 63. | `Kc1` | `Kxb2` |
+| 64. | `Kb1` | `Kxc2` |
+| 65. | `Kc1` | `Kxb2` |
 
-The black king stood on h7 and could not defend any of those squares, so each
-capture simply won the rook and left a bare king. Position before move 62:
+Position before move 62:
 
 ```
 5Q2/7k/3N4/4P3/6R1/8/2r3P1/2K5 w - - 15 62
 ```
+
+> **Correction (2026-08-14): every one of those captures is stalemate.** This entry
+> originally read "each capture simply won the rook and left a bare king", and
+> treated declining them as part of the defect. It is not. After `Kxc2` black is a
+> lone king on h7 with every escape square covered — g6, g7 and g8 by `Rg4` on the
+> g-file, h6 and h8 by `Qf8` — so black has no legal move and the game is drawn on
+> the spot. The same boxing holds for all six moves, because `Qf8` and `Rg4` never
+> move. Verified with python-chess: `is_stalemate() == True`, `result() == 1/2-1/2`.
+>
+> So myChess was **right** to decline the rook, and right for the right reason: at
+> depth 1 it does pick `Kxc2` at +20, and at depth 2 it discovers the stalemate and
+> abandons it. Winning here means walking the king *out* of the rook's reach until
+> the checks run out — which is what it does since the fix. The defect was only ever
+> the repetition, never the refusal.
+>
+> The lesson is about the diagnosis, not the engine: a legal capture of a hanging
+> piece was assumed to be good without checking, and that assumption then framed
+> correct play as a symptom for three days. Verify that the alternative actually
+> wins before calling a refusal a bug.
 
 The engine's own log shows what was happening: `elapsed=31 ms`, then 13, then 1,
 then **0 ms**, with the score frozen at `+16.82` throughout.
@@ -997,35 +1021,80 @@ any repetition context. The hit cuts the line off, so the third occurrence is
 never reached, no matter how deep the search is allowed to run. Hence the flat
 +1540 all the way to depth 14, and hence the 0 ms replies in live play.
 
-So the mechanism is an interaction: **the threshold lets the first repetition
+So the mechanism is an interaction: **the threshold lets the second occurrence
 through, and the table then answers with a pre-repetition score.** Neither alone
-would suffice — with two-fold detection the check would fire before the lookup,
+would suffice — with twofold detection the check would fire before the lookup,
 and without the table the deeper search would eventually reach the third
 occurrence.
 
 Standard practice is to treat the **second** occurrence along the current search
-path as a draw: a side that can force a repetition can force the draw, so the
-first repetition is already worth 0. That single change addresses both games
-recorded here. The table is an *amplifier* — it makes the answer instantaneous and
-carries the misjudgment across successive moves — but it is not the root cause.
+path as a draw. That single change addresses both games recorded here. The table
+is an *amplifier* — it makes the answer instantaneous and carries the misjudgment
+across successive moves — but it is not the root cause.
+
+> **Correction (2026-08-15).** This paragraph originally justified the change with
+> "a side that can force a repetition can force the draw, so the first repetition is
+> already worth 0". That is false, and worth spelling out because it is the
+> explanation everyone reaches for first. Reaching a position twice does not let
+> anyone *force* a third occurrence: the cycle contains the opponent's moves, and
+> going around it changes their payoffs. If the opponent returned through the cycle
+> the first time because it kept their advantage, the second time that same return
+> is the third occurrence and hence a draw, so they simply deviate to their
+> next-best move. The draw is available not to whoever wants it, but to whoever the
+> opponent lets have it.
+>
+> What actually justifies the change is that chess is very nearly Markovian in the
+> position: the same moves with the same consequences are available at a position
+> however it was reached, so a winning continuation at the second occurrence existed
+> at the first and the search has already seen it. "Very nearly" because two parts
+> of the state are not in the hash — the half-move clock and the repetition count —
+> which is the Graph History Interaction problem. The approximation is standard and
+> the errors are rare, but it is an approximation, not a theorem.
+> `Board.isTwofoldRepetition()` carries the same account.
+
+### Fixed (2026-08-14)
+
+`PositionSearch.alphaBetaSearchPre` now asks `Board.isTwofoldRepetition()` instead of
+`isThreefoldRepetition()`: a position that has occurred **twice** along the current search
+path scores as a draw. Two properties of the existing code made that a two-line
+change rather than a restructuring.
+
+- The status stack already holds the game prefix *and* the search path, because
+  `makeMove` mutates one board — so the path data was there, with no new structure.
+- The draw check already sat *above* the table lookup and above the only `tt.put`,
+  so the repetition is now decided before any entry can answer, and the path-local
+  draw score is never itself stored under that position's hash.
+
+The game rule is untouched. `isThreefoldRepetition()` still requires three
+occurrences, and `secondOccurrenceIsNotYetADraw` guards exactly that — the search
+needed a stricter, path-local rule and must not reach it by loosening the rule, or
+myChess would start claiming draws the rules do not grant.
+
+Measured on this position with the config toggle, which isolates the change:
+
+| `enableThreefoldRepetition` | best | score | principal variation |
+|---|---|---|---|
+| `false` (old behavior) | `Kd1` | +15.8 | `Kd1 Rd2 Kc1 Rc2 Kd1 Rd2` — the shuffle |
+| `true` (fixed) | `Kd1` | +15.05 | `Kd1 Rd2 Ke1 Re2 Kf1 Re1 Kf2` — walks out |
+
+**Elo not yet measured.** The corrected-vs-uncorrected SPRT is still pending.
 
 ### Artefacts
 
-`engineDoesNotAvoidRepetitionWhenWinning` in
+Four tests in
 [`ThreefoldRepetitionTest`](../src/test/java/org/michaelfl/mychess/ThreefoldRepetitionTest.java)
-pins this position from the bare FEN at depth 8, asserting both the sidestep and
-the inflated score. It sits deliberately next to `testFindDrawMove`, which shows
-the engine *seeking* a draw when it wants one — this is the missing converse.
+and [`BlunderTest`](../src/test/java/org/michaelfl/mychess/BlunderTest.java) now pin
+the mechanism: `engineNeitherStalematesNorRepeatsWhenWinning` (this position — no
+stalemate, no repetition in the PV), `withRepetitionDetectionDisabledTheShuffleReturns`
+(the same position with the check off must repeat again, so the assertion above cannot
+pass for an unrelated reason), plus the cold-table / warm-table pair.
 
-The same class also gained `secondOccurrenceIsNotYetADraw`, a genuine assertion
-that the *game rule* still requires three occurrences. It is there as a guard rail
-for the fix: the search needs a stricter, path-local rule (second occurrence = draw
-inside the tree) and must not achieve that by loosening the rule itself, or myChess
-would start claiming draws the rules do not grant.
-
-Both carry a **TODO** where applicable: when the repetition handling is fixed, the
-characterization must start failing and its assertions should then require
-`Kxc2` — replaced, not relaxed.
+One note on how the fix nearly went unnoticed here. The predecessor of the first test
+asserted that myChess "must still sidestep rather than take the free rook" — a
+condition that held both before and after the fix, since the capture is stalemate
+either way. So a real improvement in this exact position produced no change in the
+suite at all: the repetition vanished from the principal variation while the test kept
+passing. Assert the property the fix changes, not one that merely correlates with it.
 
 ### How large the problem is, and where the fix is tracked
 

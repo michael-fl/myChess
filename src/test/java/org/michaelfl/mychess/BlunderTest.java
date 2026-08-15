@@ -558,6 +558,78 @@ class BlunderTest {
                 "engine must enter the mating net with Qd5+ (c6-d5); white-POV eval " + result.weight());
     }
 
+    /**
+     * Hamppe&ndash;Meitner, Vienna 1872 (the "Immortal Draw"), after the losing
+     * {@code 17.Kxb7}. Black to move, with a forced mate.
+     */
+    private static final String AFTER_KXB7_FEN = "r2k3r/1Kp2ppp/1p6/p2pp3/8/P7/1PPP2PP/R1BQ2NR b - - 0 17";
+
+    /** Depth at which myChess reports the full mate. Measured: found at 8, still there at 10. */
+    private static final int KXB7_MATE_DEPTH = 8;
+
+    /**
+     * Lower bound in pawns for a score to be a mating one, derived from the production
+     * sentinel rather than written as a magic number: {@code CHECKMATE_WEIGHT_LOW} is in
+     * centipawns, {@code MoveAndWeight.weight()} in pawns.
+     */
+    private static final float MATE_SCORE_FLOOR = WeightingFunction.CHECKMATE_WEIGHT_LOW / 100f;
+
+    /**
+     * One ply earlier white has only {@code Kxb7} and {@code Kb5}; this is the depth at which
+     * it stops choosing the losing one. Measured on v4.4.0: depths 6&ndash;8 pick
+     * {@code Kxb7} (+15.00, then +4.00), depth 9 switches to {@code Kb5} at 0.00.
+     */
+    private static final int KXB7_AVOIDANCE_DEPTH = 9;
+
+    /**
+     * The mate that punishes the king grab in the Immortal Draw &mdash; and the measurement
+     * that turns "myChess plays the losing move" into a number.
+     *
+     * <p>In the drawn position after {@code 16...Bb7+} white has exactly two legal moves.
+     * {@code Kb5} takes the perpetual and draws; {@code Kxb7} grabs the bishop <em>with the
+     * king</em> and loses to {@code 17...Kd7 18.Qg4+ Kd6 19.Qc8 Rhxc8 20.Nf3 Rcb8#}. This test
+     * asks the second question: given that white has already blundered, does black find the
+     * punishment?
+     *
+     * <p>It does, at depth 8, and with Stockfish's line move for move &mdash; both report
+     * mate in 4. That is the point of keeping this as a guard rather than a curiosity: it
+     * separates two explanations that look identical from the outside. myChess is <b>not</b>
+     * blind to this mating pattern. It sees it as soon as it is in reach.
+     *
+     * <p><b>The whole failure is one ply of horizon.</b> The mate takes eight plies from here,
+     * so declining {@code Kxb7} needs nine — and {@link #KXB7_AVOIDANCE_DEPTH} is exactly where
+     * the engine starts declining it. A search given eight plies grabs the bishop and calls the
+     * position +4.00.
+     *
+     * <p>What makes that expensive is the evaluation, not the search. White is up about ten
+     * pawns here, so every line trips
+     * {@code PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD} and the position is graded by
+     * counting pieces — the white king standing on b7 in the middle of black's forces is worth
+     * exactly nothing. Stockfish reads the same position as 0.00 six moves earlier because its
+     * evaluation prices that king; myChess has no cheap route to the same conclusion and must
+     * calculate all eight plies. See
+     * {@code MaterialOnlyShortcutEvalTest.immortalDrawIsGradedByCountingPieces()}, which pins
+     * the counting itself on the four positions leading up to this one.
+     *
+     * <p><b>Test family:</b> corner-grab (guard)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void kd7_afterKxb7_engineFindsTheMateThatPunishesTheKingGrab() throws Exception {
+        var game = gameFromFenAtDepth(AFTER_KXB7_FEN, KXB7_MATE_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "after 17.Kxb7 black must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.d8, Board.d7), ChessUtil.moveToString(result.move()),
+                "black must start the mating net with Kd7 (d8-d7), trapping the king that just took on b7; "
+                        + "white-POV eval " + result.weight());
+        assertTrue(result.weight() < -MATE_SCORE_FLOOR,
+                "the score must be a mating one for black, not a material count: myChess reports mate in 4 "
+                        + "here at depth " + KXB7_MATE_DEPTH + ", the same line Stockfish gives; got "
+                        + result.weight());
+    }
+
     /** White (myChess) to move, before the g4-abandoning 21.Nf3. */
     private static final String BEFORE_NF3_FEN = "r4k1r/p1p2p2/R1pqbp2/1p6/2nP2P1/2N5/PPP1QP1N/R5K1 w - - 4 21";
 
@@ -839,6 +911,14 @@ class BlunderTest {
      */
     private static final int REPETITION_DEPTH = 8;
 
+    /**
+     * Upper bound on the white-POV score black must still report after declining the
+     * repetition. Measured at −5.35; the margin is deliberately wide because the point is
+     * only that the score is nowhere near the drawn 0.00, not what exactly it is — the
+     * evaluation of this endgame may legitimately drift with future table changes.
+     */
+    private static final float REPETITION_DECLINED_MAX_WEIGHT = -3.0f;
+
     /** Black (myChess) to move, in check after 49.Qe6+ — two moves before the draw becomes available. */
     private static final String REPETITION_PGN_MOVE_49 = """
             1. Nf3 Nf6 2. e4 Nxe4 3. d3 Nf6 4. Be2 e6 5. O-O d5 6. d4 Bd6 7. Ne5 O-O 8. Nc3 Nfd7
@@ -870,8 +950,8 @@ class BlunderTest {
      * {@code Nf7}), and myChess is roughly five pawns up by its own reckoning, so
      * the draw is a real loss of half a point. Measured on v4.3.4 it picks
      * {@code Nf7} at every depth from 1 to 8. This is the control case for
-     * {@link #repetition_withWarmTable_walksIntoTheDraw()}: the knowledge is
-     * present, and the bug is that a stale table entry hides it.
+     * {@link #repetition_withWarmTable_findsTheBlockDespiteTheTable()}: the knowledge was
+     * always present, and the bug was that a stale table entry hid it.
      *
      * <p><b>Test family:</b> repetition (guard)
      */
@@ -890,36 +970,42 @@ class BlunderTest {
     }
 
     /**
-     * The bug itself: searching the same three moves in sequence — so the table
-     * stays warm, as it does in a real game — myChess walks into the draw.
+     * The former bug, now the regression test for its fix: with the transposition table
+     * warm — as it always is in a real game — myChess must still find {@code 51...Nf7}
+     * rather than repeat with {@code Kg7}.
      *
-     * <p>The test asks the engine for black's 49th move, plays out the game
-     * continuation, and asks again for the 51st. Both positions share one
-     * transposition table, exactly as in live play. Measured on v4.3.4 the engine
-     * answers the second question with {@code Kg7} <em>instantly</em> and with an
-     * unchanged score of about +6 from black's side — the tell-tale sign of a
-     * table hit rather than a search. Its verdict does not move at all between the
-     * harmless first occurrence and the one that concedes the draw.
+     * <p>The test asks the engine for black's 49th move, plays out the game continuation,
+     * and asks again for the 51st. Both questions share one transposition table, exactly
+     * as in live play, so the second one is answered from a position whose table entry was
+     * written when it was not yet a repetition.
      *
-     * <p>Compare {@link #repetition_withColdTable_blocksTheCheckAndAvoidsTheDraw()}:
-     * clearing the table between the two questions is enough for the engine to
-     * find {@code Nf7}. Nothing about the position changed, only what the table
-     * remembered.
+     * <p><b>What it looked like while broken.</b> On v4.3.4 the engine answered the second
+     * question with {@code Kg7} <em>instantly</em> and with an unchanged score of about +6
+     * from black's side — a table hit, not a search. Its verdict did not move at all
+     * between the harmless first occurrence and the one that concedes the draw, while
+     * {@link #repetition_withColdTable_blocksTheCheckAndAvoidsTheDraw()} showed that
+     * merely clearing the table was enough to find {@code Nf7}. Nothing about the position
+     * differed between the two, only what the table remembered.
      *
-     * <p><b>TODO — remove this characterization once the bug is fixed.</b> It
-     * passes because the defect is present. A fix has to make the repetition
-     * draw visible despite the table; the usual routes are to treat the
-     * <em>second</em> occurrence along the current search path as a draw (which
-     * makes detection path-local and independent of the table), or to suppress
-     * table cutoffs while any position of the current path has occurred before.
-     * When that lands, this test must start failing — then assert
-     * {@code Nf7} here too and delete this note.
+     * <p><b>The fix.</b> {@code PositionSearch.alphaBetaSearchPre} now asks
+     * {@code Board.isTwofoldRepetition()} instead of {@code isThreefoldRepetition()}, so a
+     * position that has occurred twice along the search path scores as a draw. Because that check
+     * already sat <em>above</em> the table lookup, the repetition is now decided before any
+     * entry can answer, and the draw score is never itself stored — the early return
+     * precedes the only {@code tt.put}. Detection became a property of the path, which is
+     * what a repetition actually is. The game rule is untouched:
+     * {@code isThreefoldRepetition()} still requires three occurrences, and
+     * {@code ThreefoldRepetitionTest.secondOccurrenceIsNotYetADraw} guards that.
      *
-     * <p><b>Test family:</b> repetition (defect)
+     * <p>Post-fix measurement: {@code Nf7} (d6-f7) at −5.35 from white's side. The score
+     * matters as much as the move — it shows the engine still knows it is winning rather
+     * than having settled for the drawn score of 0.00.
+     *
+     * <p><b>Test family:</b> repetition (fixed)
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void repetition_withWarmTable_walksIntoTheDraw() throws Exception {
+    void repetition_withWarmTable_findsTheBlockDespiteTheTable() throws Exception {
         var game = gameFromPgnAtDepth(REPETITION_PGN_MOVE_49, REPETITION_DEPTH, tt);
         assertEquals(GameStatus.TURN_BLACK, game.getTurn(),
                 "after 49.Qe6+ black (myChess) must be to move");
@@ -938,10 +1024,13 @@ class BlunderTest {
 
         var result = searchCurrentPositionDeep(game);
 
-        assertEquals(ChessUtil.moveToString(Board.g8, Board.g7), ChessUtil.moveToString(result.move()),
-                "characterization: with the table warm myChess repeats with Kg7 and concedes the draw "
-                        + "from a winning position. If it now blocks with Nf7, the table no longer hides "
-                        + "the repetition — drop this test. white-POV eval " + result.weight());
+        assertEquals(ChessUtil.moveToString(Board.d6, Board.f7), ChessUtil.moveToString(result.move()),
+                "with the table warm myChess must still block with Nf7 (d6-f7) instead of repeating with "
+                        + "Kg7 — a stale entry written before the position was a repetition must not decide "
+                        + "it; white-POV eval " + result.weight());
+        assertTrue(result.weight() < REPETITION_DECLINED_MAX_WEIGHT,
+                "the score must stay a winning one for black rather than collapse to the drawn 0.00: seeing "
+                        + "the repetition must make the engine avoid it, not accept it; got " + result.weight());
     }
 
     // ----------------------------------------------------------------
@@ -967,6 +1056,15 @@ class BlunderTest {
 
     /** Depth at which the engine stops playing {@code 14...g6}: {@code g6} through depth 8, {@code Nf6} from 9. */
     private static final int G6_REFUTATION_DEPTH = 9;
+
+    /**
+     * Upper bound on myChess's white-POV score in the {@code 14...g6} position, whose true
+     * value is +5.08 (Stockfish, mate in 9 after {@code 15.Rxg6+}). Set well below that and
+     * well above the 0.0 currently measured, so the test tracks the *distance* from the
+     * truth rather than the exact number — which has already moved once, from −0.4 to 0.0,
+     * without the defect changing size.
+     */
+    private static final float G6_MISJUDGMENT_BOUND = 2.0f;
 
     /**
      * Opening its own king to win a pawn it did not need — and it was already a
@@ -1026,10 +1124,24 @@ class BlunderTest {
      * {@code 15.Rxg6+ Kh8}.)
      *
      * <p>Before the move Stockfish has white at <b>+5.08</b> and again recommends
-     * {@code Nf6}; myChess reports about <b>-0.4</b>, so it believes itself ahead
-     * while it is objectively lost — a misjudgment of roughly five and a half
-     * pawns, with the sign inverted. It plays {@code g6} at every depth from 3
-     * through 8 and finds {@code Nf6} only at {@link #G6_REFUTATION_DEPTH}.
+     * {@code Nf6}. It plays {@code g6} at every depth from 3 through 8 and finds
+     * {@code Nf6} only at {@link #G6_REFUTATION_DEPTH}.
+     *
+     * <p><b>The misjudgment changed shape on 2026-08-14 without shrinking.</b> myChess used
+     * to report about <b>-0.4</b> here — believing itself slightly ahead while objectively
+     * lost. Since the § 12.23 repetition fix it reports exactly <b>0.0</b>, because its
+     * depth-8 principal variation is now recognizable as a perpetual:
+     * {@code 14...g6 15.Rxg6+ hxg6 16.Qxg6+ Kh8 17.Qh6+ Kg8 18.Qg6+}, which returns to the
+     * position after {@code 16.Qxg6+}. The repetition is real — verified by replaying the
+     * line — and the score is therefore honest about <em>that line</em>. What stays wrong is
+     * white's side of it: Stockfish has <b>mate in 9</b> after {@code 15.Rxg6+}, so white
+     * has far better than a perpetual, and myChess settles for the draw because it cannot
+     * see the mating attack. The gap to the truth is still about five pawns; only its sign
+     * moved, from "slightly winning" to "drawn".
+     *
+     * <p>That is why the assertion below bounds the score well away from +5.08 rather than
+     * requiring a negative number: the defect is the distance from the truth, not which side
+     * of zero the engine lands on.
      *
      * <p><b>TODO — invert once king safety lands</b>, same contract as
      * {@link #fxg2_atMove13_characterizesOpeningTheFileForAPawn()}.
@@ -1048,9 +1160,11 @@ class BlunderTest {
                 "characterization: myChess still plays g6 and invites 15.Rxg6+. If it now plays something "
                         + "else, king safety has landed — turn this into an avoidance test. white-POV eval "
                         + result.weight());
-        assertTrue(result.weight() < 0f,
-                "characterization: it rates itself ahead in a position Stockfish scores +5.08 for white; got "
-                        + result.weight());
+        assertTrue(result.weight() < G6_MISJUDGMENT_BOUND,
+                "characterization: it reads a position Stockfish scores +5.08 for white (mate in 9) as no "
+                        + "worse than level — since the repetition fix that shows as exactly 0.0, the value "
+                        + "of the perpetual it settles for. If this now approaches +5, king safety has "
+                        + "landed; got " + result.weight());
     }
 
     // ----------------------------------------------------------------
@@ -1127,7 +1241,9 @@ class BlunderTest {
      * +500 is measured from the root, so the reasoning above holds as written, and
      * the reported {@code +2.00} is the bare balance. This is the same signature as
      * {@link MaterialOnlyShortcutEvalTest#qxb5AtMove36GrabsThePawnInsteadOfTheExchangeSacrifice()}:
-     * a score that lands on a whole pawn is a piece count, not an evaluation.
+     * a material-only score has to land on a whole pawn, so a whole one is a reason to
+     * suspect the shortcut — not on its own a proof of it, since the positional
+     * evaluation can produce a whole number too.
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)

@@ -335,7 +335,7 @@ them blunders. A family is a *topic*, and a topic outlives the defect that intro
 The status word exists because the topic alone cannot carry the evidence. Adding it
 immediately corrected a claim this document had made in prose: not all 17 king-safety cases
 are open defects — **four are already fixed**, so the number arguing for § 12.21 is 13.
-Two families turned out to have no open case at all. A family count without the status is
+Three families turned out to have no open case at all. A family count without the status is
 a count of *interest* in a topic, which is not the same as a count of *evidence* against
 the engine, and only one of the two belongs in a prioritization argument.
 
@@ -351,13 +351,13 @@ than maintained once there are enough cases to justify the tooling.
 | Family | Open | Fixed | Guard | What it means |
 |---|---:|---:|---:|---|
 | `king-safety` | 13 | 4 | — | Danger to its own king is not charged for. Pawn pushes in front of it (`33.f3`, `20.h3`, `38...g6`), captures that drag it out (`Kxh3`, `Kxh2`), an attack on its file simply not scored (`23...Qd2`), a defender retreated to save it (`15...Ne8`), a pawn recaptured instead of trading off the attacking queen (`21.hxg4`). The four fixed ones (`25.Rg7`, `16...gxh4`, `19...Nxe2`, `12.h3`) came with the v4.3.1 and v4.4.0 tables. Tracked as [roadmap § 12.21](roadmap.md#1221-king-safety--m--3060-elo). |
-| `corner-grab` | 3 | — | 1 | Material taken with a piece that then sits out of play: `9.Qe5`/`Qxh8`, `12.Qxb7`, `15...Nxa1`. The guard is `21...Qxa1` (Philidor's Legacy), which pins that the search *does* refute the grab by depth 13 — the defect is that a real clock never reaches it. |
-| `material-only-shortcut` | 3 | — | 1 | The evaluation degenerates to a piece count once `materialDelta` leaves the ±200 cp band. All of `MaterialOnlyShortcutEvalTest`: a positional advantage erased (1), a material tie resolved by move ordering into the worst recapture (3), material preferred to a winning exchange sacrifice — `36.Qxb5` instead of `36.Rxf6` (4). The guard is case 2, marking where the blindness stops: material is the one dimension never discarded, so the right move is still found. Case 4 is the only one from a real game; it lives here rather than in `BlunderTest` — see below. |
-| `repetition` | 2 | — | 1 | The search cannot see a threefold repetition coming — [§ 12.23](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--s-correctness-fix--0-in-self-play-but-real-half-points-against-others). The two open cases are the warm-table walk-in and `engineDoesNotAvoidRepetitionWhenWinning`; the cold-table case is the guard showing the same position handled correctly when the table is empty. |
+| `corner-grab` | 3 | — | 2 | Material taken with a piece that then sits out of play: `9.Qe5`/`Qxh8`, `12.Qxb7`, `15...Nxa1`. Two guards: `21...Qxa1` (Philidor's Legacy) pins that the search *does* refute the grab by depth 13 — the defect is that a real clock never reaches it; `17.Kxb7` (Hamppe–Meitner 1872) pins the mate that punishes taking a bishop **with the king**, found at depth 8 in Stockfish's own line. |
+| `material-only-shortcut` | 4 | — | 1 | The evaluation degenerates to a piece count once `materialDelta` leaves the ±200 cp band. All of `MaterialOnlyShortcutEvalTest`: a positional advantage erased (1), a material tie resolved by move ordering into the worst recapture (3), material preferred to a winning exchange sacrifice — `36.Qxb5` instead of `36.Rxf6` (4), and four consecutive positions of the Immortal Draw all graded at exactly +8.00 while Stockfish reads a forced 0.00 (5). The guard is case 2, marking where the blindness stops: material is the one dimension never discarded, so the right move is still found. Cases 4 and 5 come from real games; they live here rather than in `BlunderTest` — see below. Case 5 asserts the *property* (the score is an exact number of pawns) rather than a fixed value, which survives table changes that move the principal variation, and it asserts it four times because one whole number is coincidence-prone; case 4 still pins a number and should be moved to that form. |
+| `repetition` | — | 2 | 3 | **Fixed 2026-08-14** ([§ 12.23](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--s-correctness-fix--0-in-self-play-but-real-half-points-against-others)): the search asked for three occurrences, declined at the second, and fell through to a table entry written before the repetition existed. `PositionSearch` now asks `Board.isTwofoldRepetition()`, deciding it from the search path. The two `fixed` cases are the warm-table block and the winning-position shuffle; the guards are the cold-table control and a toggle test that brings the shuffle back with detection off — without that one the no-repetition assertion could pass for an unrelated reason. **Elo not yet measured**: the corrected-vs-uncorrected SPRT is still pending. |
 | `endgame-technique` | 1 | 1 | — | Endgame-specific knowledge missing: not occupying a promotion square (`75.Ba1`). Fixed: trading into a lost pawn endgame (`66.Nxe5`), which now scores below −0.9 where it once read −0.04. |
 | `tactical-oversight` | — | 2 | — | Walks into a concrete tactic: a pawn grab losing to a fork (`39.Rxd5`), a knight move abandoning the pawn it defended (`21.Nf3`). **No open case** — both are repaired and now guard the repair. |
 | `unsound-attack` | — | 1 | — | Its own attack over-valued: the knight sacrifice `16.Ng6` rated +1.53. **No open case** — repaired, now guarding. |
-| **total** | **22** | **8** | **3** | 33 markers across three test classes. |
+| **total** | **21** | **10** | **6** | 37 markers across three test classes. |
 
 The tally spans **every** test class, not just `BlunderTest` — `repetition` for instance
 draws one of its three cases from `ThreefoldRepetitionTest`.
@@ -366,11 +366,17 @@ draws one of its three cases from `ThreefoldRepetitionTest`.
 and boundary markers. Keeping them in the same family is deliberate — a repaired case is the
 best possible regression test for the theme, and a `guard` says where a defect stops, which
 is as much a part of understanding it as the defect itself. But only `Open` may be quoted in
-a prioritization argument. Two families read very differently once split: `tactical-oversight`
-and `unsound-attack` have **no open case at all**, so neither is an argument for anything —
-they are four repairs holding. Conversely `king-safety` keeps 13 open cases across nine
-distinct game situations, which is what makes § 12.21 the next evaluation theme rather than
-one more idea.
+a prioritization argument. Three families read very differently once split:
+`tactical-oversight`, `unsound-attack` and — since 2026-08-14 — `repetition` have **no open
+case at all**, so none of them is an argument for anything; they are repairs holding.
+Conversely `king-safety` keeps 13 open cases across nine distinct game situations, which is
+what makes § 12.21 the next evaluation theme rather than one more idea.
+
+`repetition` also shows why `fixed` is worth recording separately from deleting the test.
+Its four cases now pin a *mechanism* nobody would reconstruct from the production diff: that
+detection has to be path-local, that the game rule must stay at three occurrences, and that
+switching the check off brings the defect back. That last one is the reason the family kept
+two guards rather than shrinking to the repairs alone.
 
 **A case belongs with its mechanism, not with its provenance.** `BlunderTest` is where
 real-game cases live, so a game reproduction lands there by default — but the
@@ -406,9 +412,12 @@ it. So:
 
 Both corrections make the affected cases *cleaner* king-safety evidence: the evaluation
 did run and still missed the danger. The cheap test for whether the shortcut is actually
-engaged is the one the fourth case turns on — **a reported score that lands on a whole
-number of pawns is a piece count, not an evaluation.** `+6.00` at three consecutive depths
-was what exposed it; `+6.27` one depth later was the control.
+engaged is the one the fourth case turns on — **a material-only score has to land on a
+whole number of pawns**, material values being multiples of 100 cp. Note the direction:
+that makes a whole score a reason to suspect the shortcut, not a proof of it, since the
+positional evaluation can land on a whole number as well. Corroborate before concluding.
+For case 4 the corroboration was `+6.27` one depth deeper, next to `+6.00` at three
+consecutive depths; case 5 gets it from four whole numbers in a row.
 
 A test gets no family when there is no theme to name. Most of the suite is in that
 position — 854 test methods against 34 markers — because `IntArrayTest`, `LogTest` or

@@ -1106,7 +1106,127 @@ public final class Board {
         board.print();
     }
 
+    /**
+     * Whether the current position has occurred three times, which is what the rules of
+     * chess require for a draw claim.
+     *
+     * <p>This is the <b>game rule</b> and the only variant that may decide a game's result.
+     * {@code Game} and {@code ChessEngine} use it; the search deliberately does not, because
+     * inside a search tree the third occurrence is one ply too late — see
+     * {@link #isTwofoldRepetition()}.
+     *
+     * <p>Do not relax this to two occurrences to make the search see repetitions earlier.
+     * That would make myChess claim draws the rules do not grant, and
+     * {@code ThreefoldRepetitionTest.secondOccurrenceIsNotYetADraw} exists to catch exactly
+     * that mistake.
+     *
+     * @return {@code true} if this position has been reached three times within the current
+     *         reversible-move window
+     */
     public boolean isThreefoldRepetition() {
+        return hasOccurredAtLeast(3);
+    }
+
+    /**
+     * Whether the current position has occurred twice — the <b>search</b> variant, which is
+     * intentionally stricter than the game rule.
+     *
+     * <p>Named by <em>occurrences</em>, like {@link #isThreefoldRepetition()}, because that is
+     * how the rules of chess count ("the same position has appeared for at least the third
+     * time") and mixing conventions between two adjacent predicates is how a two-versus-three
+     * mistake gets written. Counting recurrences instead would make this the *first*
+     * repetition and the rule above the *second*, which reads plausibly right up to the point
+     * where someone acts on it.
+     *
+     * <p><b>Why treating the second occurrence as a draw is sound.</b> Chess is very nearly
+     * Markovian in the position: at a given position the same moves are available with the
+     * same consequences, no matter how it was reached. So if the side to move there had a
+     * winning continuation, it would have taken it at the <em>first</em> occurrence. Reaching
+     * the position a second time means that, in this line, both sides preferred to go around
+     * the cycle — and the continuations from the second occurrence are the same ones already
+     * examined at the first. Cutting the line off there therefore discards nothing the search
+     * has not already seen, and it replaces a value defined in terms of itself (the cycle's
+     * worth depends on the cycle's worth) with a fixed one.
+     *
+     * <p><b>Where that argument leaks.</b> Two parts of the true game state are not in the
+     * position hash, so two "identical" positions are not identical states:
+     *
+     * <ul>
+     *   <li>the <b>half-move clock</b> — going around a cycle burns plies toward the
+     *       fifty-move draw, so a win that is still reachable at the first occurrence may not
+     *       be at the third. {@link #calculatePositionKey()} strips the clock deliberately,
+     *       and the Zobrist hash never carried it;</li>
+     *   <li>the <b>repetition count</b> itself — after two occurrences one more move draws,
+     *       after one occurrence two more are needed, so the two states differ in what each
+     *       side can still afford.</li>
+     * </ul>
+     *
+     * This is the Graph History Interaction problem: the value of a node genuinely depends on
+     * the path taken to it, while a hash-keyed search conflates paths. It is a property of the
+     * problem, not a defect of this implementation, and the approximation is standard.
+     *
+     * <p><b>What this method must not be justified with.</b> Not with "a side that can reach a
+     * position twice can reach it a third time, so the draw is available to whoever wants it".
+     * That is false, and the repetition count is why. Suppose White is worse and shuffles into
+     * a cycle: the first time round, Black returns through it because doing so keeps the win;
+     * the second time, the same return would be the third occurrence and hence a draw, so
+     * Black simply deviates to its next-best move instead. Going around the cycle changes the
+     * cycle's payoffs, so nothing about a third occurrence is forced — the draw is available
+     * not to whoever wants it, but to whoever the opponent lets have it.
+     *
+     * <p>Without this, repetitions were invisible to the search at <em>any</em> depth. The
+     * three-occurrence check declined at the second occurrence, the node fell through to the
+     * transposition table, and the table answered with a score stored before the position was
+     * a repetition — so the third occurrence was never reached. Full account in
+     * {@code docs/known-issues.md} and roadmap § 12.23.
+     *
+     * <p><b>For the search only.</b> Using it to decide a game result would claim draws two
+     * occurrences early. {@code PositionSearch.alphaBetaSearchPre} is the sole caller, and it
+     * consults this <em>before</em> the transposition-table lookup — the order is what makes
+     * the check effective, since a table hit would otherwise answer first. The resulting draw
+     * score is never itself stored, because that early return precedes the only
+     * {@code tt.put}: it is true of this path, not of this position.
+     *
+     * @return {@code true} if this position has been reached twice within the current
+     *         reversible-move window
+     */
+    public boolean isTwofoldRepetition() {
+        return hasOccurredAtLeast(2);
+    }
+
+    /**
+     * Shared implementation of both repetition predicates.
+     *
+     * <p>Scans the {@code GameStatus} stack backwards in steps of two, so only positions with
+     * the same side to move are compared, and stops at the last irreversible move: a capture
+     * or pawn move resets the half-move clock, and no position before it can recur. The
+     * earliest a position can repeat is four plies back, which is what the guard below
+     * requires before scanning at all.
+     *
+     * <p>During a search the stack holds the game history <em>and</em> the moves the search
+     * has made, because {@code makeMove} mutates one board rather than copying. That is what
+     * lets {@link #isTwofoldRepetition()} answer path-locally without a separate structure.
+     *
+     * <p><b>Null moves.</b> {@code makeNullMove} pushes a status with a half-move clock of
+     * zero, which collapses {@code lowerLimit} to {@code stackSize - 1} and leaves the loop
+     * with no iterations. That is load-bearing rather than incidental: it stops two null moves
+     * from presenting as a repetition, and it keeps the step-of-two parity valid even though
+     * a null move flips the side to move without a full ply pair. Preserving that reset is a
+     * precondition of repetition detection, not a detail of null-move pruning. The cost is
+     * that a genuine repetition spanning a null move goes unseen — the conservative direction,
+     * since it can miss a draw but never invent one.
+     *
+     * @param occurrences how often the position must have been on the board <b>in total</b>,
+     *                    counted the way the rules of chess count: {@code 3} is the threefold
+     *                    rule, {@code 2} the search variant. The scan below sees only the
+     *                    <em>earlier</em> ones, so it needs one less than this — that
+     *                    conversion lives in a single named local rather than at every call
+     *                    site, which is what keeps {@code hasOccurredAtLeast(3)} readable as
+     *                    the rule itself.
+     * @return {@code true} if the position has occurred at least {@code occurrences} times
+     *         within the current reversible-move window
+     */
+    private boolean hasOccurredAtLeast(final int occurrences) {
         final GameStatus gameStatus = getGameStatus();
         final int halfMoveClock = gameStatus.getHalfMoveClock();
         if (halfMoveClock < 4 || stackSize < 4) {
@@ -1114,13 +1234,16 @@ public final class Board {
         }
         final long hash = gameStatus.getPositionHash();
         final int lowerLimit = Math.max(stackSize - 1 - halfMoveClock, 0);
+
+        // The current position is itself one of the occurrences; the scan finds the others.
+        final int earlierOccurrencesNeeded = occurrences - 1;
         int count = 0;
 
         for (int i = stackSize - 3; i >= lowerLimit; i -= 2) {
             if (hash == statusStack[i].getPositionHash()) {
                 count++;
             }
-            if (count == 2) {
+            if (count == earlierOccurrencesNeeded) {
                 return true;
             }
         }
