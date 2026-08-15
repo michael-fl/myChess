@@ -15,6 +15,8 @@ import java.util.concurrent.TimeoutException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.michaelfl.mychess.EngineTest.engineConfig;
 
@@ -45,6 +47,7 @@ import static org.michaelfl.mychess.EngineTest.engineConfig;
  *
  * @author Michael Fleischhauer
  */
+@SuppressWarnings("SameParameterValue")
 class ThreefoldRepetitionTest {
 
     /**
@@ -53,24 +56,6 @@ class ThreefoldRepetitionTest {
      * {@link #engineNeitherStalematesNorRepeatsWhenWinning()}.
      */
     private static final String STALEMATE_TRAP_FEN = "5Q2/7k/3N4/4P3/6R1/8/2r3P1/2K5 w - - 15 62";
-
-    /** {@code Kxc2}: wins the rook and stalemates black on the spot. */
-    private static final String STALEMATE_CAPTURE = "c1-c2";
-
-    /**
-     * Lower bound on the score in that position. White is up a queen, a knight and two
-     * pawns for a rook, so anything near either draw value fails this. Measured at +15.05.
-     */
-    private static final float STALEMATE_TRAP_MIN_WEIGHT = 10f;
-
-    /**
-     * The depth {@code EngineTestBase.engineConfig(tt)} uses, mirrored because
-     * {@link #withRepetitionDetectionDisabledTheShuffleReturns()} has to build its own
-     * config to flip one flag and must otherwise match its partner test. If the shared
-     * helper ever changes depth, change this with it or the pair stops comparing like
-     * with like.
-     */
-    private static final int SHARED_HELPER_MAX_DEPTH = 8;
 
     private TranspositionTable tt;
 
@@ -212,10 +197,14 @@ class ThreefoldRepetitionTest {
 
         MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(1, TimeUnit.MINUTES);
 
-        assertNotEquals(STALEMATE_CAPTURE, ChessUtil.moveToString(move.move()),
-                "Kxc2 (" + STALEMATE_CAPTURE + ") takes the rook but stalemates black, throwing a won game; "
+        final String stalemateCapture = "c1-c2";
+
+        assertNotEquals(stalemateCapture, ChessUtil.moveToString(move.move()),
+                "Kxc2 (" + stalemateCapture + ") takes the rook but stalemates black, throwing a won game; "
                         + "the engine must decline it");
-        assertTrue(move.weight() > STALEMATE_TRAP_MIN_WEIGHT,
+
+        // Measured at +15.05; the bound only has to sit clear of the 0.00 of either draw.
+        assertTrue(move.weight() > 10f,
                 "white is a queen, knight and two pawns up for a rook, so the score must stay a large "
                         + "positive one rather than the 0.00 of either draw; got " + move.weight());
         assertFalse(containsRepetition(STALEMATE_TRAP_FEN, move.path()),
@@ -244,10 +233,13 @@ class ThreefoldRepetitionTest {
      */
     @Test
     void withRepetitionDetectionDisabledTheShuffleReturns() throws Exception {
-        // Mirrors engineConfig(tt) exactly, plus the one toggle — the pair is only
-        // meaningful if the two searches differ in nothing else.
+        // The depth EngineTestBase.engineConfig(tt) uses, mirrored because this test builds its
+        // own config to flip one flag and must otherwise match its partner exactly. If the
+        // shared helper ever changes depth, change this with it.
+        final int sharedHelperMaxDepth = 8;
+
         var config = new EngineConfig.Builder()
-                .maxDepth(SHARED_HELPER_MAX_DEPTH)
+                .maxDepth(sharedHelperMaxDepth)
                 .enableThreefoldRepetition(false)
                 .setTranspositionTable(tt)
                 .build();
@@ -262,7 +254,7 @@ class ThreefoldRepetitionTest {
 
         // Enable repetition detection again. The engine must now avoid to repeat. Even with warm TT.
         config = new EngineConfig.Builder()
-                .maxDepth(SHARED_HELPER_MAX_DEPTH)
+                .maxDepth(sharedHelperMaxDepth)
                 .enableThreefoldRepetition(true)
                 .setTranspositionTable(tt)
                 .build();
@@ -375,5 +367,134 @@ class ThreefoldRepetitionTest {
         assertEquals(0f, move.weight(), "Weight must be 0 (draw)");
         assertEquals(GameResult.DRAW, move.result(), "game must be draw due to threefold repetition rule");
     }
+
+    /**
+     * Rated lichess game <a href="https://lichess.org/ImKwjaJy55DV">ImKwjaJy55DV</a>, played by
+     * the bot on <b>4.4.0</b> — the last repetition this bug cost before the fix, and the only
+     * case in the suite reproduced from a whole game rather than from one position.
+     *
+     * <p>White (myChess) stands about <b>+0.9</b> and shuffles its knight: {@code 20.Nf5 Ke6
+     * 21.Nd4+ Kf7 22.Nf5 Ke6 23.Nd4+ Kf7} — and after that last {@code Kf7} the position that
+     * first arose at {@code 19...Rg6} is on the board for the third time. Drawn.
+     *
+     * <p><b>The table is the whole story here, which is why the test has to warm it.</b> Asked
+     * about the position before move 23 with an empty table, <em>both</em> 4.4.0 and 4.4.1 avoid
+     * the repetition and play {@code Nh4} from depth 4 upward. The blunder only appears when the
+     * engine has answered the earlier questions first, exactly as in a real game. Replayed that
+     * way, at depth 8:
+     *
+     * <table border="1">
+     *   <caption>Moves 20&ndash;23 with one shared transposition table</caption>
+     *   <tr><th>move</th><th>4.4.0</th><th>4.4.1</th></tr>
+     *   <tr><td>20</td><td>{@code Nf5}</td><td>{@code Nf5}</td></tr>
+     *   <tr><td>21</td><td>{@code Nd4+}</td><td>{@code Rd3}</td></tr>
+     *   <tr><td>22</td><td>{@code Nf5}</td><td>{@code Ne2}</td></tr>
+     *   <tr><td>23</td><td>{@code Nd4+} → draw</td><td>{@code Rd3}</td></tr>
+     * </table>
+     *
+     * <p>4.4.0 reproduces the game move for move; 4.4.1 leaves the cycle at the first
+     * opportunity. This test therefore does what the SPRT cannot at this effect size: it shows
+     * the fix working on the exact game that motivated it.
+     *
+     * <p>It shows it without needing 4.4.0 built, because the two blocks below run the same
+     * fixture with {@code enableThreefoldRepetition} flipped. Off, the search takes no early
+     * return at the repeating node — which is precisely how the old three-occurrence test
+     * behaved there, the position being only twofold — so it stores the node and then plays
+     * {@code Nd4+}. That block is what makes the other one mean something: it demonstrates the
+     * fixture can still produce the blunder, so its absence with the check on is attributable
+     * to the check rather than to evaluation drift.
+     *
+     * <p><b>A detail worth keeping.</b> Ask Stockfish about the position before move 23 from a
+     * bare FEN, and it calls {@code Nd4+} the <em>best</em> move at +1.46. Give it the same
+     * position with the move history and {@code Nd4+} drops out of the top four entirely, best
+     * becoming {@code Nh4} at +0.92. The two numbers are the bug in miniature: a transposition
+     * entry is a history-less verdict on a position, and consulting one for a position whose
+     * value depends on its history is how a won game becomes a draw. It is also a warning about
+     * measuring: analysing any repetition case from a bare FEN answers a different question than
+     * the one being asked.
+     *
+     * <p><b>Test family:</b> repetition (fixed)
+     */
+    @Test
+    void repetitionFromLichessGameIsAvoidedWithAWarmTable() throws Exception {
+        final String repetitionMove = "f5-d4";
+
+        // Block 1 — the check switched off, which is how 4.4.0 behaved at this node: the
+        // position is there for the second time, its three-occurrence test declines, and the
+        // node is searched and stored like any other. This block exists to prove the fixture
+        // can produce the blunder at all. Without it, block 2 could be green for any unrelated
+        // reason — an evaluation change that happens to prefer Rd3 would look like a working fix.
+        try (var uncorrectedTable = TestSupport.createTestTT()) {
+            var uncorrected = playIntoTheShuffle(false, uncorrectedTable);
+
+            assertEquals(repetitionMove, uncorrected.move(),
+                    "with the repetition check off the warm-up must reproduce the game: 23.Nd4+ ("
+                            + repetitionMove + "). If it does not, this fixture no longer exercises the "
+                            + "defect and the assertion below proves nothing");
+            assertNotNull(uncorrected.entry(),
+                    "the warm-up must leave a transposition-table entry for the repeating position — that "
+                            + "entry, scored as if the position were not a repetition, is the mechanism");
+        }
+
+        // Block 2 — the same fixture with the check on. Differs in exactly one setting.
+        try (var correctedTable = TestSupport.createTestTT()) {
+            var corrected = playIntoTheShuffle(true, correctedTable);
+
+            assertNotEquals(repetitionMove, corrected.move(),
+                    "23.Nd4+ (" + repetitionMove + ") lets black claim the threefold repetition and throws "
+                            + "away about +0.9; the second-occurrence check is what stops it");
+
+            // Stockfish has the best alternative at +0.92; the bound only has to sit clear of 0.00.
+            assertTrue(corrected.weight() > 0.2f,
+                    "declining the repetition must also keep the advantage rather than settle for the drawn "
+                            + "0.00; got " + corrected.weight());
+            assertNull(corrected.entry(),
+                    "with the check on, the repeating position must NOT be stored: the draw is decided by an "
+                            + "early return that precedes the only tt.put, so a path-dependent value never "
+                            + "enters the table. Its absence here is the fix, not a failed warm-up");
+        }
+    }
+
+    /**
+     * Replays moves 20&ndash;22 of the game through the engine and returns what it then answers
+     * at move 23, together with the table entry for the position the shuffle returns to.
+     *
+     * <p>The moves are deliberately not appended to the PGN: an importer would replay them
+     * without ever consulting the engine, leaving the table cold — and from a cold table the
+     * engine avoids the repetition even with the defect present. The searches interleaved below
+     * are the fixture; their results are discarded and only their effect on the table matters.
+     */
+    private static Warmed playIntoTheShuffle(boolean repetitionCheck, TranspositionTable table) throws Exception {
+        var config = new EngineConfig.Builder()
+                .maxDepth(8)                                  // as EngineTestBase.engineConfig
+                .enableThreefoldRepetition(repetitionCheck)
+                .setTranspositionTable(table)
+                .build();
+        var game = GameImporter.importerFor("""
+                1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O f6 6. d4 Bg4 7. Be3 exd4 8. Qxd4 Bxf3
+                9. Qxd8+ Rxd8 10. gxf3 Ne7 11. Nd2 a5 12. Nb3 b6 13. Nd4 Kf7 14. Rad1 g5 15. f4 gxf4
+                16. Bxf4 Rg8+ 17. Kh1 Rc8 18. Rfe1 a4 19. h3 Rg6
+                """).importGame(new GameConfig(MyChessEngine.class, config));
+
+        // The position after 19...Rg6 — the one 21...Kf7 and 23...Kf7 return to.
+        long repeatingPosition = game.getBoard().getGameStatus().getPositionHash();
+
+        for (String[] played : new String[][]{{"Nf5", "Ke6"}, {"Nd4", "Kf7"}, {"Nf5", "Ke6"}}) {
+            game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
+
+            for (String move : played) {
+                game.makeMove(MoveDescription.fromString(move, game.getTurn()));
+            }
+        }
+
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "after 22...Ke6 white (myChess) must be to move");
+
+        var result = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
+
+        return new Warmed(ChessUtil.moveToString(result.move()), result.weight(), table.get(repeatingPosition));
+    }
+
+    /** What move 23 came out as, at what score, and whether the repeating position was stored. */
+    private record Warmed(String move, float weight, TranspositionTable.TTEntryView entry) {}
 
 }
