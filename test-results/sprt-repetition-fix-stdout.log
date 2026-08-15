@@ -1,0 +1,1162 @@
+Indexing opening suite...
+Started game 1 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Started game 2 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Started game 3 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Started game 4 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 3 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 0 - 0 - 1  [0.500] 1
+Started game 5 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 1 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 0 - 0 - 2  [0.500] 2
+Started game 6 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 4 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 0 - 1 - 2  [0.333] 3
+Started game 7 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 7 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 0 - 1 - 3  [0.375] 4
+Started game 8 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 5 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 0 - 1 - 4  [0.400] 5
+Started game 9 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 6 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 1 - 1 - 4  [0.500] 6
+Started game 10 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 9 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 1 - 2 - 4  [0.429] 7
+Started game 11 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 8 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 2 - 2 - 4  [0.500] 8
+Started game 12 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 11 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 3 - 2 - 4  [0.556] 9
+Started game 13 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 2 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-4.4.1 vs mychess-4.4.0: 3 - 2 - 5  [0.550] 10
+...      mychess-4.4.1 playing White: 1 - 1 - 4  [0.500] 6
+...      mychess-4.4.1 playing Black: 2 - 1 - 1  [0.625] 4
+...      White vs Black: 2 - 3 - 5  [0.450] 10
+Elo difference: 34.9 +/- 163.5, LOS: 67.3 %, DrawRatio: 50.0 %
+SPRT: llr 0.0804 (2.7%), lbound -2.94, ubound 2.94
+Started game 14 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 12 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 3 - 3 - 5  [0.500] 11
+Started game 15 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 10 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-4.4.1 vs mychess-4.4.0: 3 - 3 - 6  [0.500] 12
+Started game 16 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 14 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 3 - 3 - 7  [0.500] 13
+Started game 17 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 13 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 4 - 3 - 7  [0.536] 14
+Started game 18 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 16 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 5 - 3 - 7  [0.567] 15
+Started game 19 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 17 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 5 - 3 - 8  [0.563] 16
+Started game 20 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 15 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 5 - 3 - 9  [0.559] 17
+Started game 21 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 19 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 5 - 4 - 9  [0.528] 18
+Started game 22 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 18 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-4.4.1 vs mychess-4.4.0: 5 - 4 - 10  [0.526] 19
+Started game 23 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 20 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 6 - 4 - 10  [0.550] 20
+...      mychess-4.4.1 playing White: 2 - 2 - 6  [0.500] 10
+...      mychess-4.4.1 playing Black: 4 - 2 - 4  [0.600] 10
+...      White vs Black: 4 - 6 - 10  [0.450] 20
+Elo difference: 34.9 +/- 111.3, LOS: 73.6 %, DrawRatio: 50.0 %
+SPRT: llr 0.167 (5.7%), lbound -2.94, ubound 2.94
+Started game 24 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 22 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 6 - 4 - 11  [0.548] 21
+Started game 25 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 24 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 6 - 5 - 11  [0.523] 22
+Started game 26 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 23 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 7 - 5 - 11  [0.543] 23
+Started game 27 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 25 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 7 - 6 - 11  [0.521] 24
+Started game 28 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 21 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-4.4.1 vs mychess-4.4.0: 7 - 6 - 12  [0.520] 25
+Started game 29 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 26 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 7 - 7 - 12  [0.500] 26
+Started game 30 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 29 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 7 - 8 - 12  [0.481] 27
+Started game 31 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 27 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-4.4.1 vs mychess-4.4.0: 7 - 8 - 13  [0.482] 28
+Started game 32 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 28 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 8 - 8 - 13  [0.500] 29
+Started game 33 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 30 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 9 - 8 - 13  [0.517] 30
+...      mychess-4.4.1 playing White: 3 - 4 - 8  [0.467] 15
+...      mychess-4.4.1 playing Black: 6 - 4 - 5  [0.567] 15
+...      White vs Black: 7 - 10 - 13  [0.450] 30
+Elo difference: 11.6 +/- 95.8, LOS: 59.6 %, DrawRatio: 43.3 %
+SPRT: llr 0.0414 (1.4%), lbound -2.94, ubound 2.94
+Started game 34 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 34 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 9 - 8 - 14  [0.516] 31
+Started game 35 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 31 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 9 - 8 - 15  [0.516] 32
+Started game 36 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 32 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 9 - 8 - 16  [0.515] 33
+Started game 37 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 33 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 10 - 8 - 16  [0.529] 34
+Started game 38 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 35 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 11 - 8 - 16  [0.543] 35
+Started game 39 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 36 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 11 - 8 - 17  [0.542] 36
+Started game 40 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 38 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 12 - 8 - 17  [0.554] 37
+Started game 41 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 37 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 13 - 8 - 17  [0.566] 38
+Started game 42 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 39 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 13 - 9 - 17  [0.551] 39
+Started game 43 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 40 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 14 - 9 - 17  [0.563] 40
+...      mychess-4.4.1 playing White: 6 - 5 - 9  [0.525] 20
+...      mychess-4.4.1 playing Black: 8 - 4 - 8  [0.600] 20
+...      White vs Black: 10 - 13 - 17  [0.463] 40
+Elo difference: 43.7 +/- 83.3, LOS: 85.1 %, DrawRatio: 42.5 %
+SPRT: llr 0.389 (13.2%), lbound -2.94, ubound 2.94
+Started game 44 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 41 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 14 - 9 - 18  [0.561] 41
+Started game 45 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 42 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 15 - 9 - 18  [0.571] 42
+Started game 46 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 45 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 15 - 9 - 19  [0.570] 43
+Started game 47 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 44 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 16 - 9 - 19  [0.580] 44
+Started game 48 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 47 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 17 - 9 - 19  [0.589] 45
+Started game 49 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 43 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 17 - 10 - 19  [0.576] 46
+Started game 50 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 46 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 17 - 11 - 19  [0.564] 47
+Started game 51 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 48 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 17 - 12 - 19  [0.552] 48
+Started game 52 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 49 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 17 - 12 - 20  [0.551] 49
+Started game 53 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 51 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-4.4.1 vs mychess-4.4.0: 17 - 12 - 21  [0.550] 50
+...      mychess-4.4.1 playing White: 7 - 6 - 13  [0.519] 26
+...      mychess-4.4.1 playing Black: 10 - 6 - 8  [0.583] 24
+...      White vs Black: 13 - 16 - 21  [0.470] 50
+Elo difference: 34.9 +/- 74.5, LOS: 82.3 %, DrawRatio: 42.0 %
+SPRT: llr 0.369 (12.5%), lbound -2.94, ubound 2.94
+Started game 54 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 50 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-4.4.1 vs mychess-4.4.0: 17 - 12 - 22  [0.549] 51
+Started game 55 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 52 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 18 - 12 - 22  [0.558] 52
+Started game 56 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 53 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 18 - 13 - 22  [0.547] 53
+Started game 57 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 54 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 19 - 13 - 22  [0.556] 54
+Started game 58 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 55 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 20 - 13 - 22  [0.564] 55
+Started game 59 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 57 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 20 - 14 - 22  [0.554] 56
+Started game 60 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 56 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 20 - 14 - 23  [0.553] 57
+Started game 61 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 58 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 20 - 15 - 23  [0.543] 58
+Started game 62 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 61 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 21 - 15 - 23  [0.551] 59
+Started game 63 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 60 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 21 - 16 - 23  [0.542] 60
+...      mychess-4.4.1 playing White: 9 - 8 - 13  [0.517] 30
+...      mychess-4.4.1 playing Black: 12 - 8 - 10  [0.567] 30
+...      White vs Black: 17 - 20 - 23  [0.475] 60
+Elo difference: 29.0 +/- 70.0, LOS: 79.4 %, DrawRatio: 38.3 %
+SPRT: llr 0.332 (11.3%), lbound -2.94, ubound 2.94
+Started game 64 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 59 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 21 - 17 - 23  [0.533] 61
+Started game 65 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 64 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 21 - 17 - 24  [0.532] 62
+Started game 66 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 62 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 21 - 17 - 25  [0.532] 63
+Started game 67 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 63 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-4.4.1 vs mychess-4.4.0: 21 - 17 - 26  [0.531] 64
+Started game 68 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 65 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 21 - 17 - 27  [0.531] 65
+Started game 69 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 67 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 21 - 17 - 28  [0.530] 66
+Started game 70 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 69 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 21 - 17 - 29  [0.530] 67
+Started game 71 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 68 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 21 - 17 - 30  [0.529] 68
+Started game 72 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 66 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 22 - 17 - 30  [0.536] 69
+Started game 73 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 71 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 22 - 17 - 31  [0.536] 70
+...      mychess-4.4.1 playing White: 9 - 9 - 18  [0.500] 36
+...      mychess-4.4.1 playing Black: 13 - 8 - 13  [0.574] 34
+...      White vs Black: 17 - 22 - 31  [0.464] 70
+Elo difference: 24.9 +/- 61.3, LOS: 78.8 %, DrawRatio: 44.3 %
+SPRT: llr 0.351 (11.9%), lbound -2.94, ubound 2.94
+Started game 74 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 73 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 22 - 18 - 31  [0.528] 71
+Started game 75 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 70 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-4.4.1 vs mychess-4.4.0: 22 - 18 - 32  [0.528] 72
+Started game 76 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 74 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 22 - 18 - 33  [0.527] 73
+Started game 77 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 72 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 22 - 18 - 34  [0.527] 74
+Started game 78 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 75 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 22 - 19 - 34  [0.520] 75
+Started game 79 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 76 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 23 - 19 - 34  [0.526] 76
+Started game 80 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 77 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 23 - 19 - 35  [0.526] 77
+Started game 81 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 78 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 24 - 19 - 35  [0.532] 78
+Started game 82 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 79 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 25 - 19 - 35  [0.538] 79
+Started game 83 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 80 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 25 - 20 - 35  [0.531] 80
+...      mychess-4.4.1 playing White: 10 - 11 - 19  [0.487] 40
+...      mychess-4.4.1 playing Black: 15 - 9 - 16  [0.575] 40
+...      White vs Black: 19 - 26 - 35  [0.456] 80
+Elo difference: 21.7 +/- 57.6, LOS: 77.2 %, DrawRatio: 43.8 %
+SPRT: llr 0.331 (11.2%), lbound -2.94, ubound 2.94
+Started game 84 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 81 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-4.4.1 vs mychess-4.4.0: 25 - 20 - 36  [0.531] 81
+Started game 85 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 82 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 25 - 20 - 37  [0.530] 82
+Started game 86 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 83 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 25 - 20 - 38  [0.530] 83
+Started game 87 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 85 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 26 - 20 - 38  [0.536] 84
+Started game 88 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 86 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 26 - 20 - 39  [0.535] 85
+Started game 89 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 84 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 26 - 21 - 39  [0.529] 86
+Started game 90 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 88 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 26 - 21 - 40  [0.529] 87
+Started game 91 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 89 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 27 - 21 - 40  [0.534] 88
+Started game 92 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 90 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 27 - 21 - 41  [0.534] 89
+Started game 93 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 91 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 27 - 21 - 42  [0.533] 90
+...      mychess-4.4.1 playing White: 12 - 11 - 22  [0.511] 45
+...      mychess-4.4.1 playing Black: 15 - 10 - 20  [0.556] 45
+...      White vs Black: 22 - 26 - 42  [0.478] 90
+Elo difference: 23.2 +/- 52.8, LOS: 80.7 %, DrawRatio: 46.7 %
+SPRT: llr 0.43 (14.6%), lbound -2.94, ubound 2.94
+Started game 94 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 87 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 27 - 21 - 43  [0.533] 91
+Started game 95 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 92 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 27 - 22 - 43  [0.527] 92
+Started game 96 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 94 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 28 - 22 - 43  [0.532] 93
+Started game 97 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 93 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 28 - 22 - 44  [0.532] 94
+Started game 98 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 95 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 28 - 22 - 45  [0.532] 95
+Started game 99 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 96 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 29 - 22 - 45  [0.536] 96
+Started game 100 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 98 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 29 - 23 - 45  [0.531] 97
+Started game 101 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 97 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 29 - 23 - 46  [0.531] 98
+Started game 102 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 100 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 29 - 24 - 46  [0.525] 99
+Started game 103 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 99 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 29 - 25 - 46  [0.520] 100
+...      mychess-4.4.1 playing White: 12 - 12 - 26  [0.500] 50
+...      mychess-4.4.1 playing Black: 17 - 13 - 20  [0.540] 50
+...      White vs Black: 25 - 29 - 46  [0.480] 100
+Elo difference: 13.9 +/- 50.3, LOS: 70.7 %, DrawRatio: 46.0 %
+SPRT: llr 0.215 (7.3%), lbound -2.94, ubound 2.94
+Started game 104 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 101 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 29 - 25 - 47  [0.520] 101
+Started game 105 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 103 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 30 - 25 - 47  [0.525] 102
+Started game 106 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 105 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 30 - 25 - 48  [0.524] 103
+Started game 107 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 102 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 31 - 25 - 48  [0.529] 104
+Started game 108 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 104 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 31 - 26 - 48  [0.524] 105
+Started game 109 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 107 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 31 - 26 - 49  [0.524] 106
+Started game 110 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 109 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 31 - 26 - 50  [0.523] 107
+Started game 111 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 110 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 31 - 26 - 51  [0.523] 108
+Started game 112 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 106 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 31 - 26 - 52  [0.523] 109
+Started game 113 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 111 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 31 - 26 - 53  [0.523] 110
+...      mychess-4.4.1 playing White: 13 - 12 - 31  [0.509] 56
+...      mychess-4.4.1 playing Black: 18 - 14 - 22  [0.537] 54
+...      White vs Black: 27 - 30 - 53  [0.486] 110
+Elo difference: 15.8 +/- 47.0, LOS: 74.6 %, DrawRatio: 48.2 %
+SPRT: llr 0.307 (10.4%), lbound -2.94, ubound 2.94
+Started game 114 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 108 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 31 - 26 - 54  [0.523] 111
+Started game 115 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 112 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 31 - 26 - 55  [0.522] 112
+Started game 116 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 114 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 32 - 26 - 55  [0.527] 113
+Started game 117 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 115 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 33 - 26 - 55  [0.531] 114
+Started game 118 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 113 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-4.4.1 vs mychess-4.4.0: 33 - 26 - 56  [0.530] 115
+Started game 119 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 116 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 33 - 27 - 56  [0.526] 116
+Started game 120 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 118 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 34 - 27 - 56  [0.530] 117
+Started game 121 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 117 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 35 - 27 - 56  [0.534] 118
+Started game 122 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 119 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 36 - 27 - 56  [0.538] 119
+Started game 123 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 120 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 36 - 28 - 56  [0.533] 120
+...      mychess-4.4.1 playing White: 16 - 12 - 32  [0.533] 60
+...      mychess-4.4.1 playing Black: 20 - 16 - 24  [0.533] 60
+...      White vs Black: 32 - 32 - 56  [0.500] 120
+Elo difference: 23.2 +/- 45.6, LOS: 84.1 %, DrawRatio: 46.7 %
+SPRT: llr 0.575 (19.5%), lbound -2.94, ubound 2.94
+Started game 124 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 122 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-4.4.1 vs mychess-4.4.0: 36 - 28 - 57  [0.533] 121
+Started game 125 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 123 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 36 - 28 - 58  [0.533] 122
+Started game 126 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 121 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by stalemate}
+Score of mychess-4.4.1 vs mychess-4.4.0: 36 - 28 - 59  [0.533] 123
+Started game 127 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 126 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 37 - 28 - 59  [0.536] 124
+Started game 128 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 125 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 37 - 28 - 60  [0.536] 125
+Started game 129 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 124 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-4.4.1 vs mychess-4.4.0: 37 - 28 - 61  [0.536] 126
+Started game 130 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 127 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 37 - 29 - 61  [0.531] 127
+Started game 131 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 129 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 38 - 29 - 61  [0.535] 128
+Started game 132 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 128 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 39 - 29 - 61  [0.539] 129
+Started game 133 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 130 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 39 - 29 - 62  [0.538] 130
+...      mychess-4.4.1 playing White: 17 - 13 - 35  [0.531] 65
+...      mychess-4.4.1 playing Black: 22 - 16 - 27  [0.546] 65
+...      White vs Black: 33 - 35 - 62  [0.492] 130
+Elo difference: 26.8 +/- 43.4, LOS: 88.7 %, DrawRatio: 47.7 %
+SPRT: llr 0.769 (26.1%), lbound -2.94, ubound 2.94
+Started game 134 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 131 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 39 - 30 - 62  [0.534] 131
+Started game 135 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 132 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 40 - 30 - 62  [0.538] 132
+Started game 136 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 135 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 41 - 30 - 62  [0.541] 133
+Started game 137 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 136 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 42 - 30 - 62  [0.545] 134
+Started game 138 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 134 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 43 - 30 - 62  [0.548] 135
+Started game 139 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 133 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 43 - 31 - 62  [0.544] 136
+Started game 140 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 140 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 43 - 31 - 63  [0.544] 137
+Started game 141 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 137 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 44 - 31 - 63  [0.547] 138
+Started game 142 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 139 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 45 - 31 - 63  [0.550] 139
+Started game 143 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 141 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 45 - 32 - 63  [0.546] 140
+...      mychess-4.4.1 playing White: 20 - 16 - 35  [0.528] 71
+...      mychess-4.4.1 playing Black: 25 - 16 - 28  [0.565] 69
+...      White vs Black: 36 - 41 - 63  [0.482] 140
+Elo difference: 32.4 +/- 42.9, LOS: 93.1 %, DrawRatio: 45.0 %
+SPRT: llr 1 (34.0%), lbound -2.94, ubound 2.94
+Started game 144 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 142 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 46 - 32 - 63  [0.550] 141
+Started game 145 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 138 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 47 - 32 - 63  [0.553] 142
+Started game 146 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 143 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 47 - 32 - 64  [0.552] 143
+Started game 147 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 146 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 47 - 32 - 65  [0.552] 144
+Started game 148 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 145 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 47 - 32 - 66  [0.552] 145
+Started game 149 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 144 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 48 - 32 - 66  [0.555] 146
+Started game 150 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 147 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 49 - 32 - 66  [0.558] 147
+Started game 151 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 148 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 49 - 33 - 66  [0.554] 148
+Started game 152 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 150 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 49 - 34 - 66  [0.550] 149
+Started game 153 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 149 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 50 - 34 - 66  [0.553] 150
+...      mychess-4.4.1 playing White: 22 - 16 - 37  [0.540] 75
+...      mychess-4.4.1 playing Black: 28 - 18 - 29  [0.567] 75
+...      White vs Black: 40 - 44 - 66  [0.487] 150
+Elo difference: 37.2 +/- 41.8, LOS: 96.0 %, DrawRatio: 44.0 %
+SPRT: llr 1.25 (42.5%), lbound -2.94, ubound 2.94
+Started game 154 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 153 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 50 - 34 - 67  [0.553] 151
+Started game 155 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 152 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 50 - 34 - 68  [0.553] 152
+Started game 156 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 151 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 50 - 34 - 69  [0.552] 153
+Started game 157 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 154 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 51 - 34 - 69  [0.555] 154
+Started game 158 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 157 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 51 - 34 - 70  [0.555] 155
+Started game 159 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 155 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 52 - 34 - 70  [0.558] 156
+Started game 160 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 156 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-4.4.1 vs mychess-4.4.0: 52 - 34 - 71  [0.557] 157
+Started game 161 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 159 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 52 - 34 - 72  [0.557] 158
+Started game 162 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 160 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 53 - 34 - 72  [0.560] 159
+Started game 163 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 162 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 54 - 34 - 72  [0.563] 160
+...      mychess-4.4.1 playing White: 23 - 16 - 41  [0.544] 80
+...      mychess-4.4.1 playing Black: 31 - 18 - 31  [0.581] 80
+...      White vs Black: 41 - 47 - 72  [0.481] 160
+Elo difference: 43.7 +/- 40.1, LOS: 98.3 %, DrawRatio: 45.0 %
+SPRT: llr 1.65 (55.9%), lbound -2.94, ubound 2.94
+Started game 164 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 158 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 55 - 34 - 72  [0.565] 161
+Started game 165 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 161 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 55 - 35 - 72  [0.562] 162
+Started game 166 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 164 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 56 - 35 - 72  [0.564] 163
+Started game 167 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 163 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 56 - 36 - 72  [0.561] 164
+Started game 168 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 165 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 56 - 36 - 73  [0.561] 165
+Started game 169 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 166 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 57 - 36 - 73  [0.563] 166
+Started game 170 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 167 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 57 - 37 - 73  [0.560] 167
+Started game 171 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 168 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 58 - 37 - 73  [0.563] 168
+Started game 172 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 169 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 59 - 37 - 73  [0.565] 169
+Started game 173 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 170 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 60 - 37 - 73  [0.568] 170
+...      mychess-4.4.1 playing White: 24 - 19 - 42  [0.529] 85
+...      mychess-4.4.1 playing Black: 36 - 18 - 31  [0.606] 85
+...      White vs Black: 42 - 55 - 73  [0.462] 170
+Elo difference: 47.3 +/- 39.7, LOS: 99.0 %, DrawRatio: 42.9 %
+SPRT: llr 1.85 (62.8%), lbound -2.94, ubound 2.94
+Started game 174 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 171 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 61 - 37 - 73  [0.570] 171
+Started game 175 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 174 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 62 - 37 - 73  [0.573] 172
+Started game 176 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 175 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 62 - 38 - 73  [0.569] 173
+Started game 177 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 173 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-4.4.1 vs mychess-4.4.0: 62 - 38 - 74  [0.569] 174
+Started game 178 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 177 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 62 - 38 - 75  [0.569] 175
+Started game 179 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 172 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-4.4.1 vs mychess-4.4.0: 62 - 38 - 76  [0.568] 176
+Started game 180 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 176 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 62 - 39 - 76  [0.565] 177
+Started game 181 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 179 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 62 - 39 - 77  [0.565] 178
+Started game 182 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 178 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 63 - 39 - 77  [0.567] 179
+Started game 183 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 181 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 63 - 39 - 78  [0.567] 180
+...      mychess-4.4.1 playing White: 25 - 20 - 46  [0.527] 91
+...      mychess-4.4.1 playing Black: 38 - 19 - 32  [0.607] 89
+...      White vs Black: 44 - 58 - 78  [0.461] 180
+Elo difference: 46.6 +/- 38.4, LOS: 99.1 %, DrawRatio: 43.3 %
+SPRT: llr 1.94 (65.9%), lbound -2.94, ubound 2.94
+Started game 184 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 180 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 63 - 39 - 79  [0.566] 181
+Started game 185 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 183 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 64 - 39 - 79  [0.569] 182
+Started game 186 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 185 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 64 - 40 - 79  [0.566] 183
+Started game 187 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 182 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 65 - 40 - 79  [0.568] 184
+Started game 188 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 184 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 66 - 40 - 79  [0.570] 185
+Started game 189 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 187 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 66 - 41 - 79  [0.567] 186
+Started game 190 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 186 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 66 - 42 - 79  [0.564] 187
+Started game 191 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 191 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 66 - 43 - 79  [0.561] 188
+Started game 192 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 188 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 67 - 43 - 79  [0.563] 189
+Started game 193 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 190 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 67 - 43 - 80  [0.563] 190
+...      mychess-4.4.1 playing White: 26 - 23 - 46  [0.516] 95
+...      mychess-4.4.1 playing Black: 41 - 20 - 34  [0.611] 95
+...      White vs Black: 46 - 64 - 80  [0.453] 190
+Elo difference: 44.1 +/- 37.8, LOS: 98.9 %, DrawRatio: 42.1 %
+SPRT: llr 1.88 (63.8%), lbound -2.94, ubound 2.94
+Started game 194 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 192 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 67 - 43 - 81  [0.563] 191
+Started game 195 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 189 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 68 - 43 - 81  [0.565] 192
+Started game 196 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 193 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 69 - 43 - 81  [0.567] 193
+Started game 197 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 194 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 69 - 44 - 81  [0.564] 194
+Started game 198 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 196 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 69 - 44 - 82  [0.564] 195
+Started game 199 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 195 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 69 - 45 - 82  [0.561] 196
+Started game 200 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 197 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 70 - 45 - 82  [0.563] 197
+Started game 201 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 200 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 70 - 45 - 83  [0.563] 198
+Started game 202 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 198 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 71 - 45 - 83  [0.565] 199
+Started game 203 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 199 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 72 - 45 - 83  [0.568] 200
+...      mychess-4.4.1 playing White: 30 - 24 - 46  [0.530] 100
+...      mychess-4.4.1 playing Black: 42 - 21 - 37  [0.605] 100
+...      White vs Black: 51 - 66 - 83  [0.463] 200
+Elo difference: 47.2 +/- 37.0, LOS: 99.4 %, DrawRatio: 41.5 %
+SPRT: llr 2.12 (71.9%), lbound -2.94, ubound 2.94
+Started game 204 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 201 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 72 - 46 - 83  [0.565] 201
+Started game 205 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 203 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 72 - 46 - 84  [0.564] 202
+Started game 206 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 202 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 72 - 47 - 84  [0.562] 203
+Started game 207 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 204 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by stalemate}
+Score of mychess-4.4.1 vs mychess-4.4.0: 72 - 47 - 85  [0.561] 204
+Started game 208 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 205 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 72 - 47 - 86  [0.561] 205
+Started game 209 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 209 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 72 - 47 - 87  [0.561] 206
+Started game 210 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 206 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 73 - 47 - 87  [0.563] 207
+Started game 211 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 207 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 73 - 48 - 87  [0.560] 208
+Started game 212 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 211 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 74 - 48 - 87  [0.562] 209
+Started game 213 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 212 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 74 - 49 - 87  [0.560] 210
+...      mychess-4.4.1 playing White: 31 - 26 - 49  [0.524] 106
+...      mychess-4.4.1 playing Black: 43 - 23 - 38  [0.596] 104
+...      White vs Black: 54 - 69 - 87  [0.464] 210
+Elo difference: 41.6 +/- 36.1, LOS: 98.8 %, DrawRatio: 41.4 %
+SPRT: llr 1.91 (64.9%), lbound -2.94, ubound 2.94
+Started game 214 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 208 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 74 - 50 - 87  [0.557] 211
+Started game 215 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 214 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 74 - 50 - 88  [0.557] 212
+Started game 216 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 213 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 74 - 51 - 88  [0.554] 213
+Started game 217 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 210 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 75 - 51 - 88  [0.556] 214
+Started game 218 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 217 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 75 - 52 - 88  [0.553] 215
+Started game 219 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 218 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 76 - 52 - 88  [0.556] 216
+Started game 220 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 215 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 76 - 52 - 89  [0.555] 217
+Started game 221 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 216 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 76 - 52 - 90  [0.555] 218
+Started game 222 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 219 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 76 - 52 - 91  [0.555] 219
+Started game 223 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 220 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 76 - 53 - 91  [0.552] 220
+...      mychess-4.4.1 playing White: 31 - 28 - 51  [0.514] 110
+...      mychess-4.4.1 playing Black: 45 - 25 - 40  [0.591] 110
+...      White vs Black: 56 - 73 - 91  [0.461] 220
+Elo difference: 36.5 +/- 35.3, LOS: 97.9 %, DrawRatio: 41.4 %
+SPRT: llr 1.71 (58.1%), lbound -2.94, ubound 2.94
+Started game 224 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 222 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 76 - 54 - 91  [0.550] 221
+Started game 225 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 221 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 77 - 54 - 91  [0.552] 222
+Started game 226 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 224 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 78 - 54 - 91  [0.554] 223
+Started game 227 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 223 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 78 - 55 - 91  [0.551] 224
+Started game 228 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 225 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 78 - 56 - 91  [0.549] 225
+Started game 229 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 226 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 78 - 56 - 92  [0.549] 226
+Started game 230 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 227 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 78 - 57 - 92  [0.546] 227
+Started game 231 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 231 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 78 - 57 - 93  [0.546] 228
+Started game 232 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 228 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 78 - 58 - 93  [0.544] 229
+Started game 233 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 229 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 78 - 59 - 93  [0.541] 230
+...      mychess-4.4.1 playing White: 32 - 32 - 52  [0.500] 116
+...      mychess-4.4.1 playing Black: 46 - 27 - 41  [0.583] 114
+...      White vs Black: 59 - 78 - 93  [0.459] 230
+Elo difference: 28.8 +/- 34.8, LOS: 94.8 %, DrawRatio: 40.4 %
+SPRT: llr 1.31 (44.5%), lbound -2.94, ubound 2.94
+Started game 234 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 232 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 78 - 59 - 94  [0.541] 231
+Started game 235 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 234 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 78 - 59 - 95  [0.541] 232
+Started game 236 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 230 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 79 - 59 - 95  [0.543] 233
+Started game 237 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 233 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 79 - 60 - 95  [0.541] 234
+Started game 238 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 235 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 79 - 60 - 96  [0.540] 235
+Started game 239 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 236 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 80 - 60 - 96  [0.542] 236
+Started game 240 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 237 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 81 - 60 - 96  [0.544] 237
+Started game 241 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 238 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 81 - 61 - 96  [0.542] 238
+Started game 242 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 239 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 81 - 61 - 97  [0.542] 239
+Started game 243 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 242 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 81 - 61 - 98  [0.542] 240
+...      mychess-4.4.1 playing White: 33 - 33 - 54  [0.500] 120
+...      mychess-4.4.1 playing Black: 48 - 28 - 44  [0.583] 120
+...      White vs Black: 61 - 81 - 98  [0.458] 240
+Elo difference: 29.0 +/- 33.9, LOS: 95.3 %, DrawRatio: 40.8 %
+SPRT: llr 1.39 (47.3%), lbound -2.94, ubound 2.94
+Started game 244 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 243 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 81 - 62 - 98  [0.539] 241
+Started game 245 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 240 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 82 - 62 - 98  [0.541] 242
+Started game 246 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 241 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 83 - 62 - 98  [0.543] 243
+Started game 247 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 245 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 83 - 62 - 99  [0.543] 244
+Started game 248 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 244 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 83 - 62 - 100  [0.543] 245
+Started game 249 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 248 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 84 - 62 - 100  [0.545] 246
+Started game 250 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 249 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 84 - 63 - 100  [0.543] 247
+Started game 251 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 246 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 85 - 63 - 100  [0.544] 248
+Started game 252 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 250 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 86 - 63 - 100  [0.546] 249
+Started game 253 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 247 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 86 - 64 - 100  [0.544] 250
+...      mychess-4.4.1 playing White: 34 - 36 - 55  [0.492] 125
+...      mychess-4.4.1 playing Black: 52 - 28 - 45  [0.596] 125
+...      White vs Black: 62 - 88 - 100  [0.448] 250
+Elo difference: 30.7 +/- 33.5, LOS: 96.4 %, DrawRatio: 40.0 %
+SPRT: llr 1.53 (52.1%), lbound -2.94, ubound 2.94
+Started game 254 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 253 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 87 - 64 - 100  [0.546] 251
+Started game 255 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 251 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 88 - 64 - 100  [0.548] 252
+Started game 256 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 252 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 88 - 65 - 100  [0.545] 253
+Started game 257 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 254 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 89 - 65 - 100  [0.547] 254
+Started game 258 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 258 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 90 - 65 - 100  [0.549] 255
+Started game 259 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 256 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 91 - 65 - 100  [0.551] 256
+Started game 260 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 257 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 91 - 66 - 100  [0.549] 257
+Started game 261 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 255 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 92 - 66 - 100  [0.550] 258
+Started game 262 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 260 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 93 - 66 - 100  [0.552] 259
+Started game 263 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 259 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 94 - 66 - 100  [0.554] 260
+...      mychess-4.4.1 playing White: 38 - 37 - 55  [0.504] 130
+...      mychess-4.4.1 playing Black: 56 - 29 - 45  [0.604] 130
+...      White vs Black: 67 - 93 - 100  [0.450] 260
+Elo difference: 37.6 +/- 33.3, LOS: 98.7 %, DrawRatio: 38.5 %
+SPRT: llr 1.99 (67.7%), lbound -2.94, ubound 2.94
+Started game 264 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 263 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 94 - 66 - 101  [0.554] 261
+Started game 265 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 261 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 94 - 66 - 102  [0.553] 262
+Started game 266 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 262 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 94 - 67 - 102  [0.551] 263
+Started game 267 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 264 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 95 - 67 - 102  [0.553] 264
+Started game 268 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 267 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 95 - 67 - 103  [0.553] 265
+Started game 269 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 266 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 95 - 67 - 104  [0.553] 266
+Started game 270 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 265 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 96 - 67 - 104  [0.554] 267
+Started game 271 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 269 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 96 - 67 - 105  [0.554] 268
+Started game 272 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 268 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 97 - 67 - 105  [0.556] 269
+Started game 273 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 272 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 98 - 67 - 105  [0.557] 270
+...      mychess-4.4.1 playing White: 39 - 37 - 59  [0.507] 135
+...      mychess-4.4.1 playing Black: 59 - 30 - 46  [0.607] 135
+...      White vs Black: 69 - 96 - 105  [0.450] 270
+Elo difference: 40.1 +/- 32.5, LOS: 99.2 %, DrawRatio: 38.9 %
+SPRT: llr 2.25 (76.5%), lbound -2.94, ubound 2.94
+Started game 274 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 270 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 98 - 67 - 106  [0.557] 271
+Started game 275 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 273 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 98 - 67 - 107  [0.557] 272
+Started game 276 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 275 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 98 - 67 - 108  [0.557] 273
+Started game 277 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 271 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 98 - 67 - 109  [0.557] 274
+Started game 278 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 276 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 99 - 67 - 109  [0.558] 275
+Started game 279 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 277 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 99 - 67 - 110  [0.558] 276
+Started game 280 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 278 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 100 - 67 - 110  [0.560] 277
+Started game 281 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 274 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 100 - 67 - 111  [0.559] 278
+Started game 282 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 282 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 100 - 67 - 112  [0.559] 279
+Started game 283 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 279 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 101 - 67 - 112  [0.561] 280
+...      mychess-4.4.1 playing White: 40 - 37 - 63  [0.511] 140
+...      mychess-4.4.1 playing Black: 61 - 30 - 49  [0.611] 140
+...      White vs Black: 70 - 98 - 112  [0.450] 280
+Elo difference: 42.4 +/- 31.6, LOS: 99.6 %, DrawRatio: 40.0 %
+SPRT: llr 2.55 (86.5%), lbound -2.94, ubound 2.94
+Started game 284 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 280 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 101 - 67 - 113  [0.560] 281
+Started game 285 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 281 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 101 - 68 - 113  [0.559] 282
+Started game 286 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 283 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 102 - 68 - 113  [0.560] 283
+Started game 287 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 284 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 102 - 69 - 113  [0.558] 284
+Started game 288 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 285 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 103 - 69 - 113  [0.560] 285
+Started game 289 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 286 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 103 - 69 - 114  [0.559] 286
+Started game 290 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 287 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 104 - 69 - 114  [0.561] 287
+Started game 291 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 288 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 104 - 70 - 114  [0.559] 288
+Started game 292 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 289 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 105 - 70 - 114  [0.561] 289
+Started game 293 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 291 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 106 - 70 - 114  [0.562] 290
+...      mychess-4.4.1 playing White: 45 - 38 - 63  [0.524] 146
+...      mychess-4.4.1 playing Black: 61 - 32 - 51  [0.601] 144
+...      White vs Black: 77 - 99 - 114  [0.462] 290
+Elo difference: 43.4 +/- 31.3, LOS: 99.7 %, DrawRatio: 39.3 %
+SPRT: llr 2.68 (90.9%), lbound -2.94, ubound 2.94
+Started game 294 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 293 (mychess-4.4.1 vs mychess-4.4.0): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 106 - 71 - 114  [0.560] 291
+Started game 295 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 292 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 106 - 72 - 114  [0.558] 292
+Started game 296 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 290 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-4.4.1 vs mychess-4.4.0: 106 - 72 - 115  [0.558] 293
+Started game 297 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 294 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 107 - 72 - 115  [0.560] 294
+Started game 298 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 297 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 107 - 72 - 116  [0.559] 295
+Started game 299 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 296 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 108 - 72 - 116  [0.561] 296
+Started game 300 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 295 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 108 - 72 - 117  [0.561] 297
+Started game 301 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 299 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 108 - 72 - 118  [0.560] 298
+Started game 302 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 298 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 109 - 72 - 118  [0.562] 299
+Started game 303 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 301 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 110 - 72 - 118  [0.563] 300
+...      mychess-4.4.1 playing White: 46 - 39 - 66  [0.523] 151
+...      mychess-4.4.1 playing Black: 64 - 33 - 52  [0.604] 149
+...      White vs Black: 79 - 103 - 118  [0.460] 300
+Elo difference: 44.2 +/- 30.7, LOS: 99.8 %, DrawRatio: 39.3 %
+SPRT: llr 2.84 (96.3%), lbound -2.94, ubound 2.94
+Started game 304 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 300 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 110 - 73 - 118  [0.561] 301
+Started game 305 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 302 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 110 - 73 - 119  [0.561] 302
+Started game 306 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 303 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 110 - 73 - 120  [0.561] 303
+Started game 307 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 305 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-4.4.1 vs mychess-4.4.0: 110 - 73 - 121  [0.561] 304
+Started game 308 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 304 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-4.4.1 vs mychess-4.4.0: 110 - 73 - 122  [0.561] 305
+Started game 309 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 307 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 110 - 73 - 123  [0.560] 306
+Started game 310 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 306 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 110 - 74 - 123  [0.559] 307
+Started game 311 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 309 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 111 - 74 - 123  [0.560] 308
+Started game 312 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 308 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 111 - 75 - 123  [0.558] 309
+Started game 313 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 311 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 111 - 75 - 124  [0.558] 310
+...      mychess-4.4.1 playing White: 47 - 39 - 70  [0.526] 156
+...      mychess-4.4.1 playing Black: 64 - 36 - 54  [0.591] 154
+...      White vs Black: 83 - 103 - 124  [0.468] 310
+Elo difference: 40.5 +/- 30.1, LOS: 99.6 %, DrawRatio: 40.0 %
+SPRT: llr 2.67 (90.8%), lbound -2.94, ubound 2.94
+Started game 314 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 313 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 111 - 75 - 125  [0.558] 311
+Started game 315 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 312 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 111 - 75 - 126  [0.558] 312
+Started game 316 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 310 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 112 - 75 - 126  [0.559] 313
+Started game 317 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 314 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 112 - 75 - 127  [0.559] 314
+Started game 318 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 315 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 112 - 75 - 128  [0.559] 315
+Started game 319 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 316 (mychess-4.4.0 vs mychess-4.4.1): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 112 - 76 - 128  [0.557] 316
+Started game 320 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 317 (mychess-4.4.1 vs mychess-4.4.0): 1-0 {White wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 113 - 76 - 128  [0.558] 317
+Started game 321 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 318 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 114 - 76 - 128  [0.560] 318
+Started game 322 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 319 (mychess-4.4.1 vs mychess-4.4.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-4.4.1 vs mychess-4.4.0: 114 - 76 - 129  [0.560] 319
+Started game 323 of 1600 (mychess-4.4.1 vs mychess-4.4.0)
+Finished game 322 (mychess-4.4.0 vs mychess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 114 - 76 - 130  [0.559] 320
+...      mychess-4.4.1 playing White: 48 - 39 - 73  [0.528] 160
+...      mychess-4.4.1 playing Black: 66 - 37 - 57  [0.591] 160
+...      White vs Black: 85 - 105 - 130  [0.469] 320
+Elo difference: 41.5 +/- 29.4, LOS: 99.7 %, DrawRatio: 40.6 %
+SPRT: llr 2.86 (97.3%), lbound -2.94, ubound 2.94
+Started game 324 of 1600 (mychess-4.4.0 vs mychess-4.4.1)
+Finished game 320 (mychess-4.4.0 vs mychess-4.4.1): 0-1 {Black wins by adjudication}
+Score of mychess-4.4.1 vs mychess-4.4.0: 115 - 76 - 130  [0.561] 321
+Finished game 324 (mychess-4.4.0 vs mychess-4.4.1): * {No result}
+Score of mychess-4.4.1 vs mychess-4.4.0: 115 - 76 - 130  [0.561] 321
+Finished game 321 (mychess-4.4.1 vs mychess-4.4.0): * {No result}
+Score of mychess-4.4.1 vs mychess-4.4.0: 115 - 76 - 130  [0.561] 321
+Finished game 323 (mychess-4.4.1 vs mychess-4.4.0): * {No result}
+Score of mychess-4.4.1 vs mychess-4.4.0: 115 - 76 - 130  [0.561] 321
+...      mychess-4.4.1 playing White: 48 - 39 - 73  [0.528] 160
+...      mychess-4.4.1 playing Black: 67 - 37 - 57  [0.593] 161
+...      White vs Black: 85 - 106 - 130  [0.467] 321
+Elo difference: 42.4 +/- 29.4, LOS: 99.8 %, DrawRatio: 40.5 %
+SPRT: llr 2.95 (100.1%), lbound -2.94, ubound 2.94 - H1 was accepted
+
+Player: mychess-4.4.1
+   "Draw by 3-fold repetition": 89
+   "Draw by adjudication": 20
+   "Draw by fifty moves rule": 6
+   "Draw by insufficient mating material": 13
+   "Draw by stalemate": 2
+   "Loss: Black wins by adjudication": 39
+   "Loss: White wins by adjudication": 37
+   "No result": 3
+   "Win: Black wins by adjudication": 67
+   "Win: White wins by adjudication": 48
+Player: mychess-4.4.0
+   "Draw by 3-fold repetition": 89
+   "Draw by adjudication": 20
+   "Draw by fifty moves rule": 6
+   "Draw by insufficient mating material": 13
+   "Draw by stalemate": 2
+   "Loss: Black wins by adjudication": 67
+   "Loss: White wins by adjudication": 48
+   "No result": 3
+   "Win: Black wins by adjudication": 39
+   "Win: White wins by adjudication": 37
+Finished match

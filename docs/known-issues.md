@@ -1077,7 +1077,11 @@ Measured on this position with the config toggle, which isolates the change:
 | `false` (old behavior) | `Kd1` | +15.8 | `Kd1 Rd2 Kc1 Rc2 Kd1 Rd2` — the shuffle |
 | `true` (fixed) | `Kd1` | +15.05 | `Kd1 Rd2 Ke1 Re2 Kf1 Re1 Kf2` — walks out |
 
-**Elo not yet measured.** The corrected-vs-uncorrected SPRT is still pending.
+**Measured 2026-08-15.** Corrected against uncorrected, SPRT accepted H1 after 321 games at
++42.4 ± 29.4 (LOS 99.8 %) — read as **≈ +15**, since an early stop overestimates. The event
+count is the real evidence: of the repetition draws in that match, the corrected build was the
+side that had been winning **zero** times against **eighteen** for the uncorrected one
+(p = 7.6 × 10⁻⁶), and it was the side saved from a lost position 13 times against 1.
 
 ### Artefacts
 

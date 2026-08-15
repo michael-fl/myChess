@@ -25,7 +25,7 @@ This roadmap is split across three files. Section numbers (§ 12.x) are **stable
 | 12.12 | Real time management heuristics | S–M, ≈ 30–60 |
 | 12.20 | Principal Variation Search (PVS) | S, ≈ 10–25 |
 | 12.21 | King safety | M, ≈ 30–60 |
-| 12.23 | Repetition draws invisible to the search — *correctness* | **code fixed 2026-08-14**, Elo not yet measured |
+| 12.23 | ~~Repetition draws invisible to the search~~ — *correctness* | **DONE 2026-08-15** — SPRT H1 at 321 games, +42.4 ± 29.4; read as ≈ +15 |
 
 **[Completed & investigated → `roadmap-done.md`](roadmap-done.md).** Shipped features and closed investigations (kept as knowledge):
 
@@ -292,11 +292,30 @@ A serious retry therefore needs three things together, not a lone tuner run: (1)
 
 ---
 
-## 12.23 Repetition draws are invisible to the search — **CODE FIXED 2026-08-14, Elo not yet measured**
+## 12.23 ~~Repetition draws are invisible to the search~~ — **DONE 2026-08-15, ≈ +15 Elo**
 
-> The search change is in and pinned by four tests; the corrected-vs-uncorrected SPRT is
-> still outstanding, so this section stays here rather than moving to
-> [roadmap-done.md](roadmap-done.md). See *The fix, as implemented* below.
+> **Measured.** Corrected against uncorrected (4.4.1 vs 4.4.0), SPRT accepted H1 after only
+> **321 games**: +42.4 ± 29.4, LOS 99.8 %, draw ratio 40.5 %. Quote it as **≈ +15**, not +42 —
+> an early SPRT stop overestimates, as it did for 4.3.4 (+69 → +23.0) and 4.4.0 (+39.8 → +32.6).
+>
+> The event count is the stronger evidence and is what the prediction was made on. Games drawn
+> by repetition, split by which engine believed it was ahead:
+>
+> | | 4.4.1 | 4.4.0 | p vs 50/50 |
+> |---|---:|---:|---|
+> | **threw** — ahead, settled for the repetition | **0** | **18** | 7.6 × 10⁻⁶ |
+> | **rescued** — behind, saved half a point | 13 | 1 | 0.0018 |
+>
+> In 321 games the corrected build walked into a repetition from a won position **not once**,
+> against eighteen times for the uncorrected one. The negative control is the 2026-08-11 hybrid
+> match where both builds carry the bug: 95 to 85, p = 0.5. That asymmetry also gives an
+> estimate free of the Elo number's stopping bias — 18 against a symmetric 9/9 is nine games,
+> 4.5 points on 321, about **+10 Elo from that channel alone**, with the rescue channel
+> overlapping and adding some. Hence ≈ +15 rather than +42.
+>
+> No fixed-N run was made. It would cost ~20 hours for a number that changes no decision: the
+> fix stays regardless, and "does it work" is answered at p = 7.6 × 10⁻⁶.
+> Match data: `test-results/sprt-repetition-fix.pgn`.
 
 A correctness bug, not an evaluation gap: the search cannot see a threefold repetition coming, so myChess walks into draws from positions it itself considers winning. Full mechanism and the two lichess games that exposed it are in [known-issues.md](known-issues.md); the short version is that two independent facts combine.
 
@@ -377,7 +396,7 @@ overtaken by measurement. It is kept for the reasoning, not as a to-do list.
 | Step | Item | Why here | Elo |
 |---|---|---|---|
 | 1 | **Absolute re-anchor** — [`tools/run-anchor-bracket.sh 4.4.0`](../tools/run-anchor-bracket.sh), recipe in [myChess-ELO-measurement.md](myChess-ELO-measurement.md) | Every strength number since 4.0.0 is a propagated relative delta; [version-history](version-history.md) puts the accumulated uncertainty at **±40 Elo**. The last six releases added ~+130 Elo with no external measurement. | none — it *calibrates* the rest |
-| 2 | [**§ 12.23 Repetition draws**](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--code-fixed-2026-08-14-elo-not-yet-measured) — **code done 2026-08-14**, only the SPRT remains | A correctness fix, small, with the opportunity now quantified: 203 of 2000 games drawn while one side saw itself ≥ +2.00. Best effort-to-payoff ratio of anything open. | ≈ 0 in self-play, real half-points against others |
+| 2 | ~~[**§ 12.23 Repetition draws**](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--done-2026-08-15--15-elo)~~ — **done 2026-08-15** | A correctness fix, small, with the opportunity quantified beforehand: 203 of 2000 games drawn while one side saw itself ≥ +2.00. Best effort-to-payoff ratio of anything open, and it delivered. | **≈ +15** (SPRT H1 at 321 games; event count 0 : 18) |
 | 3 | [**§ 12.21 King safety**](roadmap.md#1221-king-safety--m--3060-elo) (with the § 12.7 mobility-weight retune) | The largest missing evaluation term, and now the only theme with *isolated* test cases: `qe5_atMove9` and `f3_atMove33` in `BlunderTest`. Prerequisites for a tuned attempt are finally in place. | M, ≈ 30–60 |
 | 4 | [**Search cluster**](#search-cluster-plan--history--pvs--lmr) — § 12.5 history → § 12.20 PVS → § 12.3 LMR | Largest raw estimate, but see the caveat below. Has its own build-and-measure plan. | S, ≈ 80–175 combined |
 
