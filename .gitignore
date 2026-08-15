@@ -31,6 +31,10 @@ src/test/resources/large.pgn
 
 /myChess-stderr*
 
+# Python bytecode from the tools/ scripts (lichess-blunder-scan, probe-blunder,
+# analyze-repetition-match). Regenerated on every run.
+__pycache__/
+
 # Texel tuning datasets: large, re-downloadable external data (~79 MB).
 # Only the README with the fetch command is tracked; the data itself is not.
 /tuning-data/*
