@@ -4,14 +4,27 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.Game.GameResult;
+import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.MyChessEngine;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.michaelfl.mychess.EngineTestBase.engineConfig;
 
 /**
  * @author Michael Fleischhauer
  */
 class FiftyMovesRuleTest {
+
+    /**
+     * The half-move clock after {@code 70.Qg2} in
+     * {@link #testFilipowiczSmederevac1966()}: one ply below the hundred the rule needs, so
+     * the draw is a search result rather than a root check.
+     */
+    private static final int CLOCK_ONE_PLY_SHORT = 99;
 
     private TranspositionTable tt;
 
@@ -80,4 +93,63 @@ class FiftyMovesRuleTest {
         assertEquals(100, halfMoveClock, "Wrong half move clock");
         assertEquals(GameResult.ONGOING, game.getResult(), "Game should not be finished");
     }
+
+    /**
+     * Filipowicz&ndash;Smederevac, Polanica Zdrój 1966 &mdash; the textbook fifty-move game,
+     * and the counterpart to {@code ThreefoldRepetitionTest.testFindDrawMove}: the engine must
+     * take a draw the rules offer it.
+     *
+     * <p>The last irreversible move was <b>20...h5</b>. Fifty moves of manoeuvring later the
+     * position after {@code 70.Qg2} carries a half-move clock of <b>99</b>, black to move.
+     *
+     * <p><b>That 99 is the whole point, and it is easy to misread this test without it.</b>
+     * The root short-circuit in {@code ChessEngine.calculateNextMove} fires at
+     * {@code halfMoveClock >= 100}, so it does <em>not</em> trigger here. The draw has to be
+     * found one ply deeper, inside {@code PositionSearch.alphaBetaSearchPre}. This therefore
+     * exercises the search, not the rule check at the root — which is what makes it worth
+     * having next to {@link #testFiftyMovesRule()}, where the clock has already run out.
+     * The premise is asserted below so that an edit to the move list cannot silently turn
+     * this into a test of something else.
+     *
+     * <p><b>Why no assertion on the move.</b> Black has 38 legal moves, and <b>33</b> of them
+     * reach the fifty-move draw; only {@code Bxe5}, {@code Bxa4}, {@code Nxf4}, {@code b5} and
+     * {@code c4} reset the clock and play on. There is no unique drawing move to pin, so the
+     * assertions are on the score and the result. myChess picks {@code Nc3} and reports 0.00
+     * from depth 1 upward.
+     *
+     * <p>The choice is not a throwaway: three of the five continuations are captures. That the
+     * engine prefers 0.00 to grabbing a pawn is correct here — Stockfish rates the position
+     * with the clock artificially cleared at only +0.24 for black, so the draw costs
+     * essentially nothing, and with the real clock its own top three moves all evaluate to 0.
+     *
+     * <p>Deliberately carries no {@code Test family:} marker, for the same reason
+     * {@code testFindDrawMove} does not: it guards correct behavior in a theme that has no
+     * open defect, and a family counting only guards would add nothing to the tally that is
+     * evidence of anything.
+     */
+    @Test
+    void testFilipowiczSmederevac1966() throws ExecutionException, InterruptedException, TimeoutException {
+        var importer = GameImporter.importerFor("""
+                1. e4 e6 2. d3 Ne7 3. g3 c5 4. Bg2 Nbc6 5. Be3 b6 6. Ne2 d5 7. O-O d4 8. Bc1 g6 9. Nd2 Bg7 10. f4 f5
+                11. a3 O-O 12. e5 a5 13. a4 Ba6 14. b3 Rb8 15. Nc4 Qc7 16. Kh1 Nd5 17. Bd2 Rfd8 18. Ng1 Bf8 19. Nf3 Be7
+                20. h4 h5 21. Qe2 Ncb4 22. Rfc1 Bb7 23. Kh2 Bc6 24. Na3 Ra8 25. Qe1 Rdb8 26. Qg1 Qb7 27. Qf1 Kg7
+                28. Qh1 Qd7 29. Ne1 Ra7 30. Nf3 Rba8 31. Ne1 Bd8 32. Nf3 Rb8 33. Ne1 Bc7 34. Nf3 Rh8 35. Ng5 Bd8
+                36. Nf3 Be7 37. Qg1 Bb7 38. Nb5 Raa8 39. Na3 Ba6 40. Qf1 Rab8 41. Nc4 Bd8 42. Qd1 Ne7 43. Nd6 Bc7
+                44. Qe2 Ng8 45. Ng5 Nh6 46. Bf3 Bd8 47. Nh3 Ng4+ 48. Kg1 Be7 49. Nc4 Nd5 50. Nf2 Bb7 51. Nh3 Bc6
+                52. Qg2 Rhc8 53. Re1 Rc7 54. Re2 Ra7 55. Ree1 Ra6 56. Re2 Rba8 57. Ree1 R8a7 58. Na3 Ra8 59. Nc4 Nh6
+                60. Na3 Nf7 61. Nf2 Rd8 62. Nc4 Rb8 63. Nh3 Bd8 64. Na3 Ra7 65. Qh1 Bc7 66. Qg2 Rd8 67. Qh1 Nh6
+                68. Ng5 Qe8 69. Kh2 Rd7 70. Qg2
+                """);
+        var config = new GameConfig(MyChessEngine.class, engineConfig(tt));
+        var game = importer.importGame(config);
+
+        assertEquals(CLOCK_ONE_PLY_SHORT, game.getGameStatus().getHalfMoveClock(),
+                "premise of this test: the clock must be one ply short of the rule, so the draw has to be "
+                        + "found by the search rather than by the root check in ChessEngine");
+
+        MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(5, TimeUnit.MINUTES);
+        assertEquals(0f, move.weight(), "Weight must be 0 (draw)");
+        assertEquals(GameResult.DRAW, move.result(), "game must be draw due to the fifty-move rule");
+    }
+
 }
