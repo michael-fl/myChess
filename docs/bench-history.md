@@ -35,6 +35,16 @@ node columns are exact. The time and NPS columns are informative only — they
 depend on the machine, the JVM, and the load at measurement time. The project
 convention is explicit about it: *compare nodes, never time.*
 
+That is now measured rather than assumed. 4.4.1 was benchmarked three times: once
+with two cutechess matches running alongside it (load average ~10 on 10 cores) and
+twice on a quiet machine. **All 55 positions were node-identical at both depth 8
+and depth 9 across every run**, while the throughput moved by 7 % (1,728,813 to
+1,861,394 NPS at depth 8). The equivalence-oracle property holds under load; the
+time columns visibly do not, and a run made on a busy machine is worth repeating
+before its NPS is recorded. Comparing per position rather than per total is what
+makes this a real check — equal totals could also arise from differences that
+cancel.
+
 **Deltas span everything between two rows.** These releases are checkpoints, not
 consecutive versions. The change from one row to the next bundles every release
 in between, so the attribution column names the dominant feature in that span,
@@ -60,6 +70,7 @@ time-truncated.
 | **4.3.3** | 375,242,151 | **+1.8 %** | bishop-pair bonus | +31.3 ± 24.1 | ~1847 |
 | **4.3.4** | 350,506,008 | **−6.6 %** | full-joint MG+EG PST tune | +23.0 ± 12.9 | ~1870 |
 | **4.4.0** | 335,919,557 | **−4.2 %** | PeSTO piece-square tables | +32.6 ± 12.4 | ~1900 |
+| **4.4.1** | 335,946,428 | **+0.008 %** | Repetition fix (§ 12.23) | not yet measured | — |
 
 Across the whole series, 4.4.0 needs **2.36× fewer nodes than 3.5.2** for the
 same depth (−57.6 %) while playing roughly **460 Elo stronger**.
@@ -80,6 +91,7 @@ each engine with `-Xms256m -Xmx256m -XX:+UseSerialGC`:
 | 4.3.3 | 3:26 | 1,814,411 |
 | 4.3.4 | 3:06 | 1,875,577 |
 | 4.4.0 | 3:00 | 1,861,173 |
+| 4.4.1 | 3:00 | 1,861,394 |
 
 The NPS decline from ~3.0 M to ~1.9 M is the cost of the richer evaluation and
 the deeper quiescence search: fewer nodes per second, but each node is worth
@@ -100,6 +112,7 @@ and are historically closed.
 |---|---:|---:|---:|
 | **4.3.4** | 916,947,170 | 350,506,008 | **2.62** |
 | **4.4.0** | 920,132,868 | 335,919,557 | **2.74** |
+| **4.4.1** | 918,718,652 | 335,946,428 | **2.74** |
 
 The **d9/d8 ratio is the effective branching factor** and the most interesting
 single number here. At 2.62–2.74 it is far below the ~5.9 (√35) that perfect move
@@ -133,6 +146,18 @@ evaluation change in the 4.2.3–4.3.4 range stayed within ±7 %, including the
 in project history pull in *opposite* directions: NMP (+76 Elo) cut nodes almost
 in half, the quiescence upgrade (+40.6 Elo) more than doubled them. Anyone
 reading this table as a strength proxy will draw the wrong conclusion.
+
+**A correctness fix can be almost invisible here — and the "almost" is the point.**
+4.4.1 changes the signature by **+0.008 %** at depth 8 and **−0.15 %** at depth 9,
+the smallest movement in the table. That is expected: the repetition fix only
+alters lines in which a position recurs, and the 55 bench positions are tactical
+and middlegame ones where that is rare. What matters is that the numbers are *not
+identical*. Bench is deterministic, so any difference at all is a real behavioral
+change — a zero delta would have meant the new code path never executes on this
+suite, and the run would have proved nothing. Note also that the two depths move in
+opposite directions, which is a reminder that "fewer nodes" is not the objective:
+the fix cuts repeating subtrees off early but also makes the search explore
+alternatives it previously never reached.
 
 **An ordering fix is visible as a pure node saving.** 4.2.3 fixed the PV table,
 changing neither search depth nor evaluation, and the signature dropped 19.9 %.
