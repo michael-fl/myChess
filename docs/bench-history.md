@@ -70,7 +70,7 @@ time-truncated.
 | **4.3.3** | 375,242,151 | **+1.8 %** | bishop-pair bonus | +31.3 ± 24.1 | ~1847 |
 | **4.3.4** | 350,506,008 | **−6.6 %** | full-joint MG+EG PST tune | +23.0 ± 12.9 | ~1870 |
 | **4.4.0** | 335,919,557 | **−4.2 %** | PeSTO piece-square tables | +32.6 ± 12.4 | ~1900 |
-| **4.4.1** | 335,946,428 | **+0.008 %** | Repetition fix (§ 12.23) | not yet measured | — |
+| **4.4.1** | 335,946,428 | **+0.008 %** | Repetition fix (§ 12.23) | ≈ +15 (SPRT H1 at 321 games, +42.4 ± 29.4) | ~1915 |
 
 Across the whole series, 4.4.0 needs **2.36× fewer nodes than 3.5.2** for the
 same depth (−57.6 %) while playing roughly **460 Elo stronger**.
