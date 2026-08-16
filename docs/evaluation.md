@@ -1,6 +1,6 @@
 # 5. Evaluation Function
 
-[`WeightingFunction.calculate(Board)`](src/main/java/org/michaelfl/mychess/WeightingFunction.java) is the static evaluation — it scores a position without looking ahead. Its result is the leaf value of the search tree, and it is by far the hottest piece of code in the engine.
+[`WeightingFunction.calculate(Board)`](../src/main/java/org/michaelfl/mychess/WeightingFunction.java) is the static evaluation — it scores a position without looking ahead. Its result is the leaf value of the search tree, and it is by far the hottest piece of code in the engine.
 
 The evaluation is a **weighted sum of eight components**, all expressed as a delta between white and black, all measured in centipawns at the end:
 
@@ -32,13 +32,22 @@ static {
     weightOfPiece[Board.whiteKnight] = 300;
     weightOfPiece[Board.whiteBishop] = 300;
     weightOfPiece[Board.whiteRook]   = 500;
-    weightOfPiece[Board.whiteQueen]  = 900;
+    weightOfPiece[Board.whiteQueen]  = 1000;  // 900 until v4.3.2; see note below
     weightOfPiece[Board.whiteKing]   = 0;   // ← kings count zero
     weightOfPiece[Board.blackPawn]   = 100;
     …
     weightOfPiece[Board.blackKing]   = 0;
 }
 ```
+
+**Why the queen is 1000 and not the textbook 900.** It was 900 until v4.3.2. The change
+came out of a tapered-evaluation experiment that measured *neutral*: a joint endgame-PST
+tune produced what looked like an endgame-material signal, but re-reading it showed a
+uniform per-piece offset — which is a statement about **material**, not about squares. The
+queen was simply undervalued relative to the rook in the midgame (1.8× rather than 2.0×).
+Raising it outright captured the whole effect at **+12.6 Elo**, with no phase dependence,
+and the tapered-material idea was shelved as redundant ([roadmap § 12.7.3](roadmap.md)).
+The other four values are unchanged from the classical scale.
 
 Kings count zero because they cannot be captured in a legal game — capturing the king is the king-capture-trick sentinel (see [§ 4.5](move-generation.md#45-pseudo-legal-moves-and-king-capture-detection)) and is replaced in the search by checkmate scoring (see [§ 6.6](search.md#66-checkmate-and-stalemate-scoring)). The material weight assigned to a king-capture would otherwise dwarf everything else and break alpha-beta windows.
 
@@ -75,78 +84,94 @@ It returns the material change a move causes (captured-piece value, adjusted for
 
 ## 5.2 Piece-square tables
 
-[`PieceSquareTables`](src/main/java/org/michaelfl/mychess/PieceSquareTables.java) holds the per-piece per-square positional bonuses adapted from the [chessprogramming.org *Simplified Evaluation Function*](https://www.chessprogramming.org/Simplified_Evaluation_Function), with one local modification (see footnote below). For every piece type, a 64-value table assigns a bonus or penalty to each square. Examples:
+[`PieceSquareTables`](../src/main/java/org/michaelfl/mychess/PieceSquareTables.java)
+holds a positional bonus per piece kind and square. It is the largest positional term
+by a wide margin, and since v4.4.0 the single most valuable one: adopting the PeSTO
+values was worth **+32.6 ± 12.4 Elo** on its own.
 
-**Pawn (white perspective, 8th rank at top):**
+**The numbers are not reproduced here, on purpose.** There are 24 tables of 64 values —
+six piece kinds × midgame/endgame × the pre-inverted black copy. Copying 1 536 numbers
+into Markdown is a maintenance promise nobody keeps; this chapter carried the *previous*
+generation of tables long after they had been replaced, which is precisely the failure
+mode. Read the values from the class; read the shape from here.
 
-```
- 0,  0,  0,  0,  0,  0,  0,  0,
-50, 50, 50, 50, 50, 50, 50, 50,   ← 7th rank: huge bonus for advanced pawns
-10, 10, 20, 30, 30, 20, 10, 10,
- 5,  5, 10, 25, 25, 10,  5,  5,
- 0,  0,  0, 20, 20,  0,  0,  0,
- 5,  0,-10,  0,  0,-10,  0,  5,
- 5,  0,  0,-20,-20, 10,  0,  5,   ← 2nd rank: −20 on d2/e2 forces central pawns forward; b2/c2/g2 zeroed (see below)
- 0,  0,  0,  0,  0,  0,  0,  0
-```
+### What the tables are
 
-Local deviation from Simplified: the original table rewards b2/c2/g2 with +10 (and b3/g3 with −5) — bonuses that discouraged queenside and fianchetto development. They were removed when the old hand-rolled `calculateOpeningState` heuristic in [`WeightingFunction`](../src/main/java/org/michaelfl/mychess/WeightingFunction.java) was retired (it had its own +10 cp pawn-move bonus for those same files, which conflicted with the PST). A future PeSTO migration ([roadmap § 12.7](roadmap.md#127-evaluation-upgrades--m--4080-elo-combined)) would replace the entire table set.
+Twelve logical tables, one midgame and one endgame per piece kind, each stored as
+`short[]` and each with a pre-inverted counterpart for black
+(`pawnTableWhite` / `pawnTableBlack`, and so on) so the lookup is an array index and
+never a coordinate flip in the hot path.
 
-**Knight (white):** −50 in corners (worst squares for a knight), +15 to +20 in the central 4×4 (best squares — d4/e4/d5/e5 score +20, the surrounding ring +15).
+The values derive from **PeSTO** (Ronald Friederich, RofChade), credited in the class
+header and in the [README](../README.md#credits-and-third-party-material). Each entry is
+`PeSTO(square) + PeSTO(mirrored square)` — mirror-averaging and doubling in one step,
+which makes the tables left/right symmetric (a↔h, b↔g, c↔f, d↔e) and puts them on
+myChess's centipawn scale. The symmetry matters: PeSTO's raw knight-endgame table has
++10 on one square and −9 on its mirror, a 19 cp difference between positions that are
+equivalent by reflection, and `MirrorEvalTest` would flag that.
 
-**King (white, midgame table):** strong penalties everywhere except the back rank, with bonuses on b1/g1 (+30 each) and c1/f1 (+10 each) to encourage castled positions. (Note: there is no separate endgame king table — see the special case below.)
+**Storage is `short`, not `byte`, and that is load-bearing.** The doubled values exceed
+±127. An earlier tapered attempt stored them in `byte[]`, silently overflowed, and
+measured **−15.6 Elo**; the tuning that looked like a failure was a container bug.
 
-**Storage layout.** The tables are stored as `byte[144]` arrays in the **same mailbox layout** as `Board` (so that `table[field]` is a direct lookup with the mailbox index — no coordinate conversion needed). They are built once at class load by parsing the string constants:
+### How a table reaches the score
 
-```java
-private static byte[] createBoard(final String tableString) {
-    final byte[] table = Board.createEmptyRawBoard();
-    int col = 0, row = 7;
-    for (String s : tableString.split(",")) {
-        byte weight = (byte) Integer.parseInt(s.trim());
-        table[ChessUtil.getFieldFromColAndRow(col, row)] = weight;
-        col = (col + 1) % 8;
-        if (col == 0) row--;
-    }
-    return table;
-}
-```
-
-**Black tables are inverted from white.** `invert(table)` flips the table top-to-bottom so that the 7th rank for white becomes the 2nd rank for black, and so on. A black pawn on a7 gets the same bonus a white pawn on a2 would get.
-
-A 22-entry lookup `piece2table[piece]` maps from piece byte (8–21) to the right per-piece table:
+Two lookups per piece, blended by game phase:
 
 ```java
-public static int getPieceSquareWeight(final byte piece, final int field) {
-    return piece2table[piece][field];
-}
+positionWeight[color] = blend(pstMidGameWeight[color], pstEndGameWeight[color], phase);
+// blend(mg, eg, phase) = (mg·phase + eg·(MAX_PHASE − phase)) / MAX_PHASE
 ```
 
-**Accumulation** in the main scan:
+`phase` is accumulated in the same piece loop that sums material, from
+`phaseWeightOfPiece`: knight and bishop 1, rook 2, queen 4, pawn and king 0. A full
+board sums to `MAX_PHASE = 24`; as pieces come off it falls toward 0, sliding the score
+from the midgame tables to the endgame ones. The weights are deliberately *fixed* rather
+than derived from the tunable material values, so the phase stays constant for a given
+position and the evaluation remains linear in its tunable parameters — which is what
+makes Texel tuning possible at all (see
+[tapered-evaluation.md](tapered-evaluation.md)).
 
-```java
-positionWeight[color] += PieceSquareTables.getPieceSquareWeight(piece, field);
+Rounding uses `roundSymmetric` — round half away from zero — so that
+`round(−x) == −round(x)`. An asymmetric rounding would introduce a side bias the moment
+the midgame and endgame tables differ.
+
+### The shape, in one example
+
+The midgame pawn table, white's perspective with the 8th rank at the top, as an
+**excerpt for orientation only**:
+
+```
+  0,   0,   0,   0,   0,   0,   0,   0,
+ 87, 168, 187, 163, 163, 187, 168,  87,   ← 7th rank: about to promote
+-26,  32,  82,  96,  96,  82,  32, -26,
+-37,  30,  18,  44,  44,  18,  30, -37,
+-52,   8,   1,  29,  29,   1,   8, -52,
+-38,  29,  -1,  -7,  -7,  -1,  29, -38,
+-57,  37,   4, -38, -38,   4,  37, -57,
+  0,   0,   0,   0,   0,   0,   0,   0
 ```
 
-**Endgame special case for the king.** The king PST encodes a *midgame* king-safety preference (stay back, castle). In an endgame this is wrong — the king should march to the center. myChess handles this with a simple cutoff:
+Three things generalise from it. Rank bonuses dominate for pawns and grow sharply toward
+promotion. Central files beat flank files at equal rank, and the a- and h-files carry
+outright penalties. And every row reads the same left to right as right to left — the
+mirror symmetry described above, visible directly.
 
-```java
-if (!(isEndGame && Board.isKing(piece))) {
-    positionWeight[color] += PieceSquareTables.getPieceSquareWeight(piece, field);
-}
-```
+The odd values are not typos. Each entry is a *sum of two* PeSTO values, so mixed parity
+is expected; the class comment works through `1 = 10 + (−9)` as an example.
 
-`isEndGame` is `gameStatus.isEndGame()`, which is a placeholder one-liner:
+The endgame counterpart of the same table is flatter across files and steeper across
+ranks — in an endgame a pawn's file matters less and its distance from promotion matters
+more. That difference *is* the tapered evaluation; before v4.3.0 there was one table and
+a crude `plyCount > 60` switch that simply dropped the king table.
 
-```java
-public boolean isEndGame() {
-    return plyCount > 60;     // TODO: optimize end-game detection
-}
-```
+### A local deviation worth remembering
 
-This is admittedly crude — true endgame detection would look at remaining material (no queens, few pieces, …) rather than ply count. A `TODO` marker in the code acknowledges the limitation.
-
-**Scale factor.** The position component contributes at `positionFactor = 0.5` to the final sum — half-weighted relative to material. A central knight (+20) is worth 10 centipawns relative to a corner knight (−50): a 35-centipawn swing for the knight position alone.
+The Simplified tables myChess used before v4.3.0 rewarded b2/c2/g2 with +10 and
+penalised b3/g3 with −5 — bonuses that discouraged queenside development and the
+fianchetto. Those squares were zeroed at the time, and the reasoning survived the move
+to PeSTO: a table that rewards a piece for *staying home* fights the rest of the
+evaluation.
 
 ## 5.3 Mobility
 
@@ -174,11 +199,11 @@ private boolean move(final byte movingPiece, final int from, final int to, int c
 **Per-piece weights** (note: *inverse* to material value):
 
 ```java
-mobilityWeightOfPiece[Board.whitePawn]   = 20;
-mobilityWeightOfPiece[Board.whiteKnight] = 50;
+mobilityWeightOfPiece[Board.whitePawn]   =  5;
+mobilityWeightOfPiece[Board.whiteKnight] = 40;
 mobilityWeightOfPiece[Board.whiteBishop] = 30;
-mobilityWeightOfPiece[Board.whiteRook]   = 10;
-mobilityWeightOfPiece[Board.whiteQueen]  =  5;
+mobilityWeightOfPiece[Board.whiteRook]   = 20;
+mobilityWeightOfPiece[Board.whiteQueen]  =  3;
 mobilityWeightOfPiece[Board.whiteKing]   =  0;
 ```
 
@@ -408,4 +433,4 @@ A few features of this formula worth noting:
 
 `isCheckmateWeight(w)` returns true iff `|w|` is between `LOW` and `HIGH` — i.e. the value encodes a mate in some number of plies, not a static evaluation. `checkmateWeightToPlies(w)` recovers that ply count: `(HIGH − |w|) / 100`. This range encoding lets the search compare mate scores: mate-in-3 (`200_000 − 300 = 199_700`) is preferred over mate-in-5 (`200_000 − 500 = 199_500`), and a regular evaluation of `+5.00` (= 500 centipawns) is correctly recognized as not-a-mate. See [§ 6.6](search.md#66-checkmate-and-stalemate-scoring) for how the search produces these values.
 
-**Where are pawn structure (passed pawns, isolated pawns, pawn chains), king safety beyond castling, bishop pair, and outposts?** Not implemented. The evaluation is deliberately compact — about 560 lines including all per-piece pseudo-move generation — and trades depth in the evaluator for breadth in the search. The opening-state component captures the most expensive missing piece (development) for the first 20 moves; everything else is left to the search.
+**Where are pawn structure (passed pawns, isolated pawns, pawn chains), king safety beyond castling, and outposts?** Not implemented. (The **bishop pair** no longer belongs on this list — it landed in v4.3.3 as a fixed +0.4-pawn bonus wired as the 8th tunable Texel factor, worth +31.3 ± 24.1 Elo, the largest single evaluation gain of the tapered series.) The evaluation is deliberately compact — about 560 lines including all per-piece pseudo-move generation — and trades depth in the evaluator for breadth in the search. The opening-state component captures the most expensive missing piece (development) for the first 20 moves; everything else is left to the search.

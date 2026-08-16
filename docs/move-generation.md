@@ -2,7 +2,7 @@
 
 ## 4.1 Generator structure
 
-[`MoveGenerator`](src/main/java/org/michaelfl/mychess/MoveGenerator.java) produces all moves the side-to-move can play in a given position. It is constructed once per engine, paired with a [`MoveSorter`](src/main/java/org/michaelfl/mychess/MoveSorter.java) instance, and reused across every node in the search.
+[`MoveGenerator`](../src/main/java/org/michaelfl/mychess/MoveGenerator.java) produces all moves the side-to-move can play in a given position. It is constructed once per engine, paired with a [`MoveSorter`](../src/main/java/org/michaelfl/mychess/MoveSorter.java) instance, and reused across every node in the search.
 
 ```java
 public MoveGenerator(MoveSorter moveSorter);
@@ -372,7 +372,7 @@ private void addMove(final int fromField, final int toField,
 return moveSorter.getSortedMoves();
 ```
 
-[`MoveSorter`](src/main/java/org/michaelfl/mychess/MoveSorter.java) is a three-method interface:
+[`MoveSorter`](../src/main/java/org/michaelfl/mychess/MoveSorter.java) is a three-method interface:
 
 ```java
 public interface MoveSorter {
@@ -386,7 +386,7 @@ This is a **strategy hook**, not just a sort utility. The sorter decides the ord
 
 Two implementations exist:
 
-- **[`MoveSorterImpl`](src/main/java/org/michaelfl/mychess/engines/MoveSorterImpl.java)** — the engine sorter. Six buckets (PV move → recapture of last-played piece → winning captures → killer moves → other captures → quiet moves → king moves), sorted internally where it matters. Full details in [§ 7.8](search.md#78-move-sorting-sortablemovesbucket).
+- **[`MoveSorterImpl`](../src/main/java/org/michaelfl/mychess/engines/MoveSorterImpl.java)** — the engine sorter. Six buckets (PV move → recapture of last-played piece → winning captures → killer moves → other captures → quiet moves → king moves), sorted internally where it matters. Full details in [§ 7.8](search.md#78-move-sorting-sortablemovesbucket).
 - **`MoveSorter.defaultImplementation()`** — returns a `new MoveSorterImpl()` constructed with a *new* `KillerMoves` table. Used in stand-alone contexts where the search history is irrelevant: tests, `Board.resolveMoveDescription`, `Game.makeMove`, `Pgn` parsing. The ordering still works; killer-move boosting just never fires because the table is fresh.
 
 The separation gives the search room to vary its ordering strategy (or experiment with one) without ever touching `MoveGenerator`. Conversely, `MoveGenerator` can be reused by any non-search caller (notation resolution, perft counting, opening-book ingestion) with a trivially-constructed sorter that produces the same legal move set.

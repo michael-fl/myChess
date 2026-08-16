@@ -45,7 +45,7 @@ if (board[to] != Board.illegal) { … }
 
 The 2-square border (rather than 1-square) is needed because a knight can jump 2 squares away. A bishop or rook may slide off in any direction; the sliding loops just terminate as soon as they read `illegal`. This is the classic *mailbox board* technique, and it eliminates conditional branches from every inner generator loop.
 
-**Indexing helpers** ([`ChessUtil`](src/main/java/org/michaelfl/mychess/ChessUtil.java)):
+**Indexing helpers** ([`ChessUtil`](../src/main/java/org/michaelfl/mychess/ChessUtil.java)):
 
 ```java
 getFieldFromColAndRow(col, row)  →  (row + 2) * 12 + col + 2
@@ -122,11 +122,11 @@ The `illegal = 64` sentinel uses a high bit that's disjoint from all real pieces
 **Printing tables** in `Board`:
 
 - `printSymbols` — 22-entry array of Unicode chess glyphs (`♚`, `♟`, …) for the REPL board display.
-- `fenSymbols` — 22-entry array of FEN letters (`K`, `p`, …) used by [`Fen`](src/main/java/org/michaelfl/mychess/Fen.java) for export.
+- `fenSymbols` — 22-entry array of FEN letters (`K`, `p`, …) used by [`Fen`](../src/main/java/org/michaelfl/mychess/Fen.java) for export.
 
 ## 3.3 Move encoding (packed int)
 
-A move is encoded as a single `int` (32 bits), packed by [`BitOps`](src/main/java/org/michaelfl/mychess/BitOps.java) into four bytes:
+A move is encoded as a single `int` (32 bits), packed by [`BitOps`](../src/main/java/org/michaelfl/mychess/BitOps.java) into four bytes:
 
 ```
   31           24 23           16 15            8 7             0
@@ -159,7 +159,7 @@ public static byte getByte2(int word) { return (byte) (word >>> 16); }
 public static byte getByte3(int word) { return (byte) (word >>> 24); }
 ```
 
-[`Move`](src/main/java/org/michaelfl/mychess/Move.java) exposes both **static** accessors that take the raw `int` (used everywhere on hot paths) and **instance** accessors that wrap an `int` (used at boundaries for printing and equality):
+[`Move`](../src/main/java/org/michaelfl/mychess/Move.java) exposes both **static** accessors that take the raw `int` (used everywhere on hot paths) and **instance** accessors that wrap an `int` (used at boundaries for printing and equality):
 
 ```java
 public static byte getFromField(int move)     { return BitOps.getByte0(move); }
@@ -189,7 +189,7 @@ This is what makes the make/undo idiom in the search affordable — see [§ 7.4]
 
 ## 3.4 Move types
 
-The eight move types defined by [`Move`](src/main/java/org/michaelfl/mychess/Move.java) cover the cases where a "move" is more than just *move piece from A to B, optionally capturing*:
+The eight move types defined by [`Move`](../src/main/java/org/michaelfl/mychess/Move.java) cover the cases where a "move" is more than just *move piece from A to B, optionally capturing*:
 
 ```java
 public final static byte typeNormal              = 0;
@@ -233,11 +233,11 @@ private final static IRevertMove[] MOVE_REVERT_FUNCTIONS = new IRevertMove[Move.
 | **PawnPromotion{Queen,Rook,Knight,Bishop}** | Move pawn to last rank, *replace* it with the chosen piece type. `capturedPiece` is still valid (promotion-with-capture). |
 | **EnPassant** | Pawn captures diagonally to an empty square; the actually-captured pawn sits one rank behind. The captured-piece slot in the move still holds the opponent pawn for symmetric undo. |
 
-Note that the move generator emits *two* promotion candidates per promotion ply — queen and knight ([`MoveGenerator.addWhitePawnMove`](src/main/java/org/michaelfl/mychess/MoveGenerator.java)). Rook and bishop promotions are not generated because they are strictly dominated by queen promotion. They remain valid move types because user input via `MoveDescription` (e.g. PGN with `=R` for "promote to rook") may still construct them.
+Note that the move generator emits *two* promotion candidates per promotion ply — queen and knight ([`MoveGenerator.addWhitePawnMove`](../src/main/java/org/michaelfl/mychess/MoveGenerator.java)). Rook and bishop promotions are not generated because they are strictly dominated by queen promotion. They remain valid move types because user input via `MoveDescription` (e.g. PGN with `=R` for "promote to rook") may still construct them.
 
 ## 3.5 `GameStatus` and the status stack
 
-[`GameStatus`](src/main/java/org/michaelfl/mychess/GameStatus.java) is an immutable snapshot of all rules-level state *outside* the piece positions:
+[`GameStatus`](../src/main/java/org/michaelfl/mychess/GameStatus.java) is an immutable snapshot of all rules-level state *outside* the piece positions:
 
 ```java
 private final int  plyCount;         // 0 at start, +1 per move
@@ -278,7 +278,7 @@ This avoids recomputing the start-position Zobrist sum at every `new Game()`. Th
 
 Three closely related types implement *"a manually managed `int[]` with append, pop, and shuffle"*:
 
-**[`IntArray`](src/main/java/org/michaelfl/mychess/IntArray.java)** — the primitive:
+**[`IntArray`](../src/main/java/org/michaelfl/mychess/IntArray.java)** — the primitive:
 
 ```java
 public class IntArray {
@@ -313,16 +313,16 @@ final int getMove(int moveIndex) {
 }
 ```
 
-**[`MovesArray`](src/main/java/org/michaelfl/mychess/MovesArray.java)** — `IntArray` subclass that overrides `toString()` to render moves as algebraic notation rather than raw integers. Used by `SortableMovesBucket` (see [§ 3.7](#37-sortablemovesbucket)) where the type signal matters for readability of the call sites.
+**[`MovesArray`](../src/main/java/org/michaelfl/mychess/MovesArray.java)** — `IntArray` subclass that overrides `toString()` to render moves as algebraic notation rather than raw integers. Used by `SortableMovesBucket` (see [§ 3.7](#37-sortablemovesbucket)) where the type signal matters for readability of the call sites.
 
-**[`Moves`](src/main/java/org/michaelfl/mychess/Moves.java)** — the result type of move generation. Wraps an `IntArray` and adds:
+**[`Moves`](../src/main/java/org/michaelfl/mychess/Moves.java)** — the result type of move generation. Wraps an `IntArray` and adds:
 
 - A sentinel singleton `Moves.ILLEGAL = new Moves(0)`, returned by the generator when the king-capture trick (see [§ 4.5](move-generation.md#45-pseudo-legal-moves-and-king-capture-detection)) detects that the *opponent's* previous move left their own king in check, i.e. the current position is illegal. Callers test with `moves.isIllegal()`, which is reference equality to the singleton.
 - `count()`, `getMoves()`, `contains(int)`, and `addMove(int)`.
 
 ## 3.7 `SortableMovesBucket`
 
-[`SortableMovesBucket`](src/main/java/org/michaelfl/mychess/SortableMovesBucket.java) holds **two parallel `IntArray`s of equal length** — one for moves, one for sort-key weights — and sorts them together by descending weight:
+[`SortableMovesBucket`](../src/main/java/org/michaelfl/mychess/SortableMovesBucket.java) holds **two parallel `IntArray`s of equal length** — one for moves, one for sort-key weights — and sorts them together by descending weight:
 
 ```java
 public final class SortableMovesBucket {
@@ -356,7 +356,7 @@ Choices worth noting:
 
 The classical Zobrist scheme: a precomputed table of random `long`s, one per (piece, square, …) feature. The hash of a position is the XOR of the table entries for all features present. Because XOR is its own inverse, the hash can be updated **incrementally** when a piece moves: XOR-out the old (piece, from), XOR-in the new (piece, to), XOR-out any captured (piece, to). All inside `Board._makeNormalMove(...)` and friends.
 
-The table is [`RandomNumbers.RANDOM_NUMBERS`](src/main/java/org/michaelfl/mychess/RandomNumbers.java) — 793 hardcoded `long` literals. The index layout is encoded by three constants in `Board`:
+The table is [`RandomNumbers.RANDOM_NUMBERS`](../src/main/java/org/michaelfl/mychess/RandomNumbers.java) — 793 hardcoded `long` literals. The index layout is encoded by three constants in `Board`:
 
 ```java
 private final static int TURN_INDEX           = 12 * 64;       // = 768, length 1
@@ -392,13 +392,15 @@ newPositionHash ^= RANDOM_NUMBERS[CASTLING_RIGHTS_INDEX + (newCastlingState % 16
 newPositionHash ^= RANDOM_NUMBERS[TURN_INDEX];
 ```
 
-The hash is stored on the new `GameStatus` and pushed onto the status stack. `Board.isThreefoldRepetition()` walks the stack backward (in 2-ply steps, since repetition requires the same side to move) and counts hash matches.
+The hash is stored on the new `GameStatus` and pushed onto the status stack. Both repetition predicates walk that stack backward through the shared `Board.hasOccurredAtLeast(int occurrences)`: in 2-ply steps, since a repetition requires the same side to move, and stopping at the last irreversible move, since the half-move clock bounds how far back a position can recur. `isThreefoldRepetition()` asks for three occurrences — the game rule — and `isTwofoldRepetition()` for two, which is the stricter rule the search uses so that a repetition is decided from the path rather than from a transposition-table entry written before the position was one (see [search § 6.7](search.md) and [roadmap § 12.23](roadmap.md)).
+
+Note what this makes the status stack: during a search it holds the game prefix *and* the moves the search has made, because `makeMove` mutates one board rather than copying. That is what lets the repetition test answer a path-local question without a separate data structure.
 
 A static `Board.calculatePositionHash(rawBoard, gameStatus)` exists as a from-scratch fallback for when there is no previous status (`PositionEncoding.decode`, FEN import, tests). The asserted invariant is that incremental updates and from-scratch computation always agree.
 
 **(b) `PositionEncoding`** — compact, lossy-but-sufficient, used for serialization.
 
-[`PositionEncoding`](src/main/java/org/michaelfl/mychess/PositionEncoding.java) encodes a position into **up to 192 bits (3 longs)** by packing into a `BitSet`:
+[`PositionEncoding`](../src/main/java/org/michaelfl/mychess/PositionEncoding.java) encodes a position into **up to 192 bits (3 longs)** by packing into a `BitSet`:
 
 ```
 bits 0..63     "is this square occupied?" — one bit per a1..h8 square
@@ -421,7 +423,7 @@ Note: **the `OpeningDB` key is not the `PositionEncoding` blob.** The key is the
 
 ## 3.9 `MoveDescription` (symbolic moves)
 
-[`MoveDescription`](src/main/java/org/michaelfl/mychess/MoveDescription.java) is the **symbolic** representation of a move — the form a move takes in user input or in a PGN file, before the move generator has resolved which actual board move it refers to. It is the counterpart to the packed-int `Move` representation: human-readable, possibly under-specified, never used on the search hot path.
+[`MoveDescription`](../src/main/java/org/michaelfl/mychess/MoveDescription.java) is the **symbolic** representation of a move — the form a move takes in user input or in a PGN file, before the move generator has resolved which actual board move it refers to. It is the counterpart to the packed-int `Move` representation: human-readable, possibly under-specified, never used on the search hot path.
 
 ```java
 public final class MoveDescription {
@@ -448,7 +450,7 @@ private final static Pattern MOVE_PATTERN = Pattern.compile(
     "^([PNBRQK])?([a-h])?([1-8])?([-x])?([a-h])([1-8])(=?[NBRQ])?(\\+|#|\\+\\+)?( ?e\\.p\\.)?(!|!!|!\\?|\\?!|\\?|\\?\\?)?$");
 ```
 
-**Resolution** to a concrete `Move` is the job of [`Board.resolveMoveDescription`](src/main/java/org/michaelfl/mychess/Board.java#L938) and `Board.moveDescriptionToMove`. The flow:
+**Resolution** to a concrete `Move` is the job of [`Board.resolveMoveDescription`](../src/main/java/org/michaelfl/mychess/Board.java#L938) and `Board.moveDescriptionToMove`. The flow:
 
 1. If the source field is not fully specified (`fromCol < 0` or `fromRow < 0`), call the `MoveGenerator` to enumerate all currently legal moves that land on the target square with the right piece.
 2. Filter by any partial source disambiguation the user provided (column, row, or promotion piece).
@@ -460,7 +462,7 @@ The reverse direction also exists: `Board.moveToShortNotation(Move)` converts a 
 
 ## 3.10 `NextMoveTask` (async result handle)
 
-[`NextMoveTask`](src/main/java/org/michaelfl/mychess/engines/NextMoveTask.java) is the small handle returned by `ChessEngine.nextMoveAsync(env)`. As a **data type** it carries three things:
+[`NextMoveTask`](../src/main/java/org/michaelfl/mychess/engines/NextMoveTask.java) is the small handle returned by `ChessEngine.nextMoveAsync(env)`. As a **data type** it carries three things:
 
 ```java
 public final class NextMoveTask {
@@ -488,7 +490,7 @@ public void cancel() {
 public boolean isCanceled() { return isCanceled; }
 ```
 
-The companion type [`ChessEngine.MoveAndWeight`](src/main/java/org/michaelfl/mychess/engines/ChessEngine.java) is the actual *result* the search returns:
+The companion type [`ChessEngine.MoveAndWeight`](../src/main/java/org/michaelfl/mychess/engines/ChessEngine.java) is the actual *result* the search returns:
 
 ```java
 public static final class MoveAndWeight {

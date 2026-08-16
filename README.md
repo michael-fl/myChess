@@ -8,7 +8,7 @@ Arena, or a lichess bot bridge), supports **standard chess and Chess960**, and
 plays with a [tapered evaluation](docs/tapered-evaluation.md) built on
 [PeSTO's piece-square tables](#credits-and-third-party-material)
 behind an iterative-deepening alpha-beta search with a
-[transposition table](#7-search-optimizations), null-move pruning, and
+[transposition table](docs/search.md#7-search-optimizations), null-move pruning, and
 [quiescence search](docs/search.md#64-quiescence-search).
 
 ---
@@ -65,7 +65,7 @@ Passing `uci` as the first CLI argument switches [`MyChessMain`](src/main/java/o
 For use in a GUI or a bot bridge, run the packaged jar standalone — `mvn package` puts the runtime dependencies under `target/dependency/` (adjust the version in the jar name to match `pom.xml`):
 
 ```bash
-java -cp "target/my-chess-4.4.0.jar:target/dependency/*" \
+java -cp "target/my-chess-4.4.1.jar:target/dependency/*" \
      org.michaelfl.mychess.MyChessMain uci
 ```
 
@@ -146,7 +146,7 @@ The project is also a study object for the supporting techniques typical of a cl
 
 The git history shows that earlier branches contained two alternative search engines, "engine V1" and "engine V2", both removed in earlier commits. The codebase now contains exactly one engine, [`MyChessEngine`](src/main/java/org/michaelfl/mychess/engines/MyChessEngine.java), delegating to [`PositionSearch`](src/main/java/org/michaelfl/mychess/engines/PositionSearch.java).
 
-**Playing strength:** myChess is *not* independently rated. Progress is tracked by self-play SPRT and fixed-N matches under [cutechess-cli](docs/elo-testing.md) and by an [absolute-Elo anchor bracket](docs/myChess-ELO-measurement.md) against reference engines; the per-release deltas are recorded in the [version history](docs/version-history.md). At the current release the anchored estimate sits in the mid-1800s Elo range — a strong club-player level, far from competitive engines, which is by design.
+**Playing strength:** myChess is *not* independently rated. Progress is tracked by self-play SPRT and fixed-N matches under [cutechess-cli](docs/elo-testing.md) and by an [absolute-Elo anchor bracket](docs/myChess-ELO-measurement.md) against reference engines; the current release is **v4.4.1**, and the chain of self-play deltas puts it near **1900** with a propagated uncertainty the [version history](docs/version-history.md) estimates at ±40 Elo — a re-anchor against externally rated engines was started on 2026-08-15 to replace that chain with a direct measurement; the per-release deltas are recorded in the [version history](docs/version-history.md). At the current release the anchored estimate sits in the mid-1800s Elo range — a strong club-player level, far from competitive engines, which is by design.
 
 **Build & runtime requirements:**
 

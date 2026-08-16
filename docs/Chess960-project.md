@@ -1,5 +1,20 @@
 # Chess960 — Project Plan
 
+> **Status: shipped.** The plan below was carried out. myChess plays Chess960 —
+> `UCI_Chess960` handled in `UciHandler`, castling and the 960 start positions in
+> `Board`/`Fen`, and the lichess bot accepts the variant. Tests:
+> `Chess960CastlingTest`, `Chess960StartPositionsTest`, `FenChess960ImportTest`, plus
+> randomized 960 consistency walks in `ZobristHashingTest`.
+>
+> One item is genuinely still open, and it is not support but *tuning*: whether the
+> evaluation needs 960-specific work. The measured answer so far is that
+> piece-square tables transfer — tune on standard chess, no separate 960 dataset —
+> while the shelved king-safety terms deserve re-measuring on 960, because they were
+> killed on the standard-chess yardstick. See
+> [roadmap-backlog § 12.11.1](roadmap-backlog.md#12111-evaluation-tuning-for-chess960--what-transfers-what-to-re-measure).
+>
+> Kept for the reasoning and the decisions, not as a to-do list.
+
 Working document for the effort to add Fischer Random / Chess960 support to
 myChess. Captures the current understanding, the decisions taken so far, and
 the phased work plan.
