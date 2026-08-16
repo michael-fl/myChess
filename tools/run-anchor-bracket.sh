@@ -14,13 +14,36 @@
 #   Princhess 0.7  1985   fixed   (upper anchor,  UCI)
 #   Kojiro 0.1.4  (1984)  FREE    (Ordo estimates it -> cross-checks the upper end)
 #
+# GIVE EVERY UCI ANCHOR A REAL HASH. Learned the hard way on 2026-08-16: the
+# first Princhess match ran at the engine's own default of 16 MB and produced
+# 86.4 % for myChess, which would have implied ~2300. Princhess is an MCTS
+# engine -- every tree node lives in the hash -- so 16 MB fills after ~9 600
+# nodes and the search simply stops: 0.07 s per move against myChess's 2.89 s,
+# a factor of 40. The match measured a crippled opponent, not an 1985 one. The
+# same trap is set for Kojiro, whose default Hash is 1 MB (less damaging for an
+# alpha-beta engine, which loses hit rate rather than stopping, but still far
+# from what CCRL measured). Anything an anchor's rating was established with has
+# to be passed explicitly; defaults are not comparable.
+#
+# The symptom is cheap to check and worth checking after every match: compare
+# the per-move times in the PGN comments. Two engines at the same TC should be
+# within a factor of ~2 of each other, never 40.
+#
 # Usage:
-#   tools/run-anchor-bracket.sh <mychess-version-dir> [--wait-for-cores]
+#   tools/run-anchor-bracket.sh <mychess-version-dir> [--wait-for-cores] [--only A,B]
 #
 #   <mychess-version-dir>  a subdirectory of versions/ that holds a built
 #                          myChess, e.g. "4.4.0" -> versions/4.4.0/mychess-uci.sh
 #   --wait-for-cores       block until no other cutechess-cli process runs
 #                          before starting Match A (use when an SPRT is still up)
+#   --only A,B             run only these anchors (comma-separated, names as in
+#                          the ANCHORS table). Use it to resume a bracket after
+#                          a match had to be redone; the Ordo step still picks
+#                          up every match PGN that exists on disk.
+#
+# An existing PGN/log for a match is never overwritten: it is moved aside to
+# *-superseded-<timestamp>.* first, so a rerun cannot destroy the evidence of
+# why it was rerun.
 #
 # Launch unattended (survives closing the terminal; will not sleep):
 #   nohup tools/run-anchor-bracket.sh 4.4.0 --wait-for-cores \
@@ -54,25 +77,45 @@ CONCURRENCY=4         # matches the baseline timing conditions; 8 P-cores allow 
 RATING_INTERVAL=10
 
 # --- arguments --------------------------------------------------------------
-VERSION="${1:-}"
+VERSION=""
 WAIT_FOR_CORES=0
-[ "${2:-}" = "--wait-for-cores" ] && WAIT_FOR_CORES=1
+ONLY=""
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --wait-for-cores) WAIT_FOR_CORES=1 ;;
+        --only) shift; ONLY="${1:-}" ;;
+        --only=*) ONLY="${1#--only=}" ;;
+        -*) echo "ERROR: unknown option: $1" >&2; exit 2 ;;
+        *) [ -z "$VERSION" ] && VERSION="$1" || { echo "ERROR: unexpected argument: $1" >&2; exit 2; } ;;
+    esac
+    shift
+done
 
 if [ -z "$VERSION" ]; then
-    echo "ERROR: no myChess version given. Usage: $0 <versions-subdir> [--wait-for-cores]" >&2
+    echo "ERROR: no myChess version given. Usage: $0 <versions-subdir> [--wait-for-cores] [--only A,B]" >&2
     exit 2
 fi
 
 MYCHESS="./versions/${VERSION}/mychess-uci.sh"
 
-# --- anchor set: "Name|wrapper|proto|fixedRatingOrEmpty" ---------------------
+# --- anchor set: "Name|wrapper|proto|fixedRatingOrEmpty|cutechessEngineOptions"
 # An empty rating field means the engine is left FREE for Ordo to estimate.
-ANCHORS='
-TSCP|./engines/tscp-1.81-elo1607/tscp.sh|xboard|1607
-ZetaDva|./engines/ZetaDva-0402-elo1801/zetadva.sh|xboard|1801
-Princhess|./engines/princhess-0.7.0-elo1985/princhess.sh|uci|1985
-Kojiro|./engines/Kojiro-0.1.4-elo1984/kojiro.sh|uci|
-'
+#
+# The options field is appended verbatim to that engine's -engine block and is
+# word-split on purpose, so several options can be given. Hash is not a tuning
+# knob here but a comparability requirement -- see the header. 256 MB is the
+# defensive choice: it is inside the range CCRL uses for its blitz lists, so it
+# does not lift an anchor above the rating it was measured at. The xboard
+# anchors get nothing; TSCP has no options at all and ZetaDva none that matter.
+ANCHOR_HASH_MB=256
+
+ANCHORS="
+TSCP|./engines/tscp-1.81-elo1607/tscp.sh|xboard|1607|
+ZetaDva|./engines/ZetaDva-0402-elo1801/zetadva.sh|xboard|1801|
+Princhess|./engines/princhess-0.7.0-elo1985/princhess.sh|uci|1985|option.Hash=$ANCHOR_HASH_MB
+Kojiro|./engines/Kojiro-0.1.4-elo1984/kojiro.sh|uci||option.Hash=$ANCHOR_HASH_MB
+"
 
 # --- prerequisite checks ----------------------------------------------------
 fail=0
@@ -120,17 +163,30 @@ echo "started: $(date '+%F %T')"
 echo "========================================================================"
 
 run_match() {
-    name="$1"; wrapper="$2"; proto="$3"
+    name="$1"; wrapper="$2"; proto="$3"; opts="$4"
     slug="$(echo "$name" | tr '[:upper:]' '[:lower:]')"
     pgn="$RESULTS/match-${VERSION}-vs-${slug}.pgn"
     log="$RESULTS/match-${VERSION}-vs-${slug}-stdout.log"
 
+    # Never overwrite a previous match: a rerun usually happens because the old
+    # result was wrong, and that wrongness is the evidence worth keeping.
+    if [ -s "$pgn" ]; then
+        stamp="$(date '+%Y%m%d-%H%M%S')"
+        echo "[$(date '+%F %T')] existing $pgn moved aside (-superseded-$stamp)"
+        mv "$pgn" "$RESULTS/match-${VERSION}-vs-${slug}-superseded-${stamp}.pgn"
+        [ -s "$log" ] && mv "$log" "$RESULTS/match-${VERSION}-vs-${slug}-stdout-superseded-${stamp}.log"
+    fi
+
     echo
     echo "[$(date '+%F %T')] ===== Match: myChess $VERSION vs $name ($proto) ====="
+    [ -n "$opts" ] && echo "[$(date '+%F %T')] $name engine options: $opts"
 
+    # $opts is deliberately unquoted: it carries zero or more cutechess engine
+    # options and has to word-split.
+    # shellcheck disable=SC2086
     "$CUTECHESS" \
         -engine name="myChess-$VERSION" cmd="$MYCHESS" proto=uci \
-        -engine name="$name" cmd="$wrapper" proto="$proto" \
+        -engine name="$name" cmd="$wrapper" proto="$proto" $opts \
         -each tc="$TC" \
         -rounds "$ROUNDS" -games 2 -repeat \
         -openings file="$OPENINGS" format=pgn order=random plies=8 \
@@ -147,9 +203,17 @@ run_match() {
     return $status
 }
 
-echo "$ANCHORS" | while IFS='|' read -r name wrapper proto rating; do
+echo "$ANCHORS" | while IFS='|' read -r name wrapper proto rating opts; do
     [ -z "$name" ] && continue
-    run_match "$name" "$wrapper" "$proto" || \
+
+    if [ -n "$ONLY" ]; then
+        case ",$ONLY," in
+            *",$name,"*) ;;
+            *) echo "[$(date '+%F %T')] skipping $name (--only $ONLY)"; continue ;;
+        esac
+    fi
+
+    run_match "$name" "$wrapper" "$proto" "$opts" || \
         echo "WARNING: match vs $name exited non-zero — continuing with the rest."
 done
 
@@ -164,7 +228,7 @@ ordo_csv="$RESULTS/ordo-anchor-${VERSION}.csv"
 
 # anchors.csv: only the FIXED anchors (Kojiro is deliberately omitted -> FREE)
 : > "$anchors_csv"
-echo "$ANCHORS" | while IFS='|' read -r name wrapper proto rating; do
+echo "$ANCHORS" | while IFS='|' read -r name wrapper proto rating opts; do
     [ -z "$name" ] && continue
     [ -n "$rating" ] && echo "\"$name\",$rating" >> "$anchors_csv"
 done
@@ -172,7 +236,7 @@ done
 # concatenate every match PGN that was actually produced
 : > "$bracket_pgn"
 found=0
-echo "$ANCHORS" | while IFS='|' read -r name wrapper proto rating; do
+echo "$ANCHORS" | while IFS='|' read -r name wrapper proto rating opts; do
     [ -z "$name" ] && continue
     slug="$(echo "$name" | tr '[:upper:]' '[:lower:]')"
     pgn="$RESULTS/match-${VERSION}-vs-${slug}.pgn"
