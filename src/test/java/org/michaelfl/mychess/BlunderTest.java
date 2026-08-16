@@ -569,13 +569,6 @@ class BlunderTest {
     private static final float MATE_SCORE_FLOOR = WeightingFunction.CHECKMATE_WEIGHT_LOW / 100f;
 
     /**
-     * One ply earlier white has only {@code Kxb7} and {@code Kb5}; this is the depth at which
-     * it stops choosing the losing one. Measured on v4.4.0: depths 6&ndash;8 pick
-     * {@code Kxb7} (+15.00, then +4.00), depth 9 switches to {@code Kb5} at 0.00.
-     */
-    private static final int KXB7_AVOIDANCE_DEPTH = 9;
-
-    /**
      * The mate that punishes the king grab in the Immortal Draw &mdash; and the measurement
      * that turns "myChess plays the losing move" into a number.
      *
@@ -591,8 +584,9 @@ class BlunderTest {
      * blind to this mating pattern. It sees it as soon as it is in reach.
      *
      * <p><b>The whole failure is one ply of horizon.</b> The mate takes eight plies from here,
-     * so declining {@code Kxb7} needs nine — and {@link #KXB7_AVOIDANCE_DEPTH} is exactly where
-     * the engine starts declining it. A search given eight plies grabs the bishop and calls the
+     * so declining {@code Kxb7} needs nine — and depth 9 is exactly where the engine starts
+     * declining it: measured on v4.4.0, depths 6&ndash;8 pick {@code Kxb7} (+15.00, then
+     * +4.00) and depth 9 switches to {@code Kb5} at 0.00. A search given eight plies grabs the bishop and calls the
      * position +4.00.
      *
      * <p>What makes that expensive is the evaluation, not the search. White is up about ten
@@ -1907,5 +1901,71 @@ class BlunderTest {
                         + "11; got " + result.weight());
     }
 
+    /** White (myChess) to move at move 49, material dead level: knight and three pawns each. */
+    private static final String KNIGHT_ENDGAME_FEN = "8/2N1k1p1/8/1p2K3/1P2p3/P1n5/5P2/8 w - - 2 49";
+
+    /**
+     * Upper bound on myChess's score in that endgame. Stockfish has +3.92 for the one winning
+     * move; myChess measured +0.91 to +1.05 across every depth from 8 to 16. The bound sits
+     * between the two, so the test fails the day the gap closes without pinning a number that
+     * ordinary evaluation drift would break.
+     */
+    private static final float KNIGHT_ENDGAME_BOUND = 2.0f;
+
+    /**
+     * Rated rapid game <a href="https://lichess.org/82EFspXF">82EFspXF</a> (myChessJava 2092 vs
+     * TopasBot 2069, 15+3, drawn), move 49 — a won knight endgame given away, and the clearest
+     * case in this class of an advantage consisting of <em>nothing but</em> position.
+     *
+     * <p>Material is dead level: knight and three pawns each. White wins anyway, and with
+     * exactly one move — <b>{@code 49.Kd4}</b>, worth <b>+3.92</b>, against +0.49 for the played
+     * {@code 49.Ne6}, +0.40 for {@code Nxb5} and +0.31 for {@code Na6} (Stockfish, depth 26).
+     * {@code Kd4} does three things at once: attacks the knight on c3, escorts the b-pawn, and
+     * steps in front of the e-pawn. The game went {@code 49.Ne6 Nd1 50.Nxg7} instead — a pawn
+     * grabbed, the win gone, drawn on move 90.
+     *
+     * <p><b>This pins the score, not the move — deliberately.</b> myChess reports between
+     * <b>+0.91 and +1.05 on every depth from 8 to 16</b>, flat and three pawns below the truth,
+     * while its move choice wanders between {@code Kd4} (depths 8-10 and 16) and {@code Nd5}
+     * (11-15). At depth 8 it plays the winning move, so an assertion on the move would either
+     * encode correct behavior or contradict itself one ply later. The evaluation is the stable
+     * defect here; the choice is not.
+     *
+     * <p><b>The game move is not reproducible from this FEN at any depth from 8 to 16.</b> Worth
+     * recording rather than hiding: it is the third case in a row where a bare-FEN probe fails
+     * to reproduce what the engine did over the board, after the repetition shuffle and
+     * <a href="https://lichess.org/ImKwjaJy55DV">ImKwjaJy55DV</a>. In both of those the cause
+     * was the warm transposition table, and this game reached move 49 with a table filled by the
+     * preceding 48. Anyone extending this case should warm the table the way
+     * {@code ThreefoldRepetitionTest.repetitionFromLichessGameIsAvoidedWithAWarmTable} does,
+     * rather than concluding the position is harmless.
+     *
+     * <p>It belongs to this family rather than to the material-only shortcut precisely because
+     * the two sides hold identical material: nothing here trips
+     * {@code EVALUATE_MATERIAL_ONLY_THRESHOLD}, so the positional terms <em>do</em> run — and
+     * still price a winning king march at a fifth of its worth. That makes it the sharpest
+     * evidence available that the evaluation carries almost no weight where material is level,
+     * and the second open case in a family that had only one.
+     *
+     * <p><b>Characterization, not a goal.</b> It passes because the defect is present. When the
+     * evaluation learns to see this, the score rises past {@link #KNIGHT_ENDGAME_BOUND} and the
+     * test must be rewritten to require {@code Kd4} outright rather than relaxed.
+     *
+     * <p><b>Test family:</b> endgame-technique (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void kd4_atMove49_characterizesNotSeeingTheWonKnightEndgame() throws Exception {
+        var game = gameFromFenAtDepth(KNIGHT_ENDGAME_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertTrue(result.weight() < KNIGHT_ENDGAME_BOUND,
+                "characterization: with material level myChess must still price this won endgame at about "
+                        + "+1 where Stockfish has +3.92 for Kd4. If it now reports more than "
+                        + KNIGHT_ENDGAME_BOUND + ", the evaluation has learned something about king activity "
+                        + "in the endgame — turn this into a positive assertion on Kd4; got " + result.weight());
+    }
 
 }
