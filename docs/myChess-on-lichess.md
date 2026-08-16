@@ -129,7 +129,7 @@ challenge:                           # which incoming challenges to auto-accept
     - standard
     - chess960                       # myChess supports both
   time_controls:                     # real-time only; 'correspondence' omitted -> long/Fernschach games auto-declined
-    - bullet
+#   - bullet                         # declined on purpose -- see "Bullet - declined on purpose" in section 6
     - blitz
     - rapid
     - classical
@@ -334,6 +334,8 @@ The response was to raise the acceptance rate rather than just slow the cadence:
 - `challenge_increment: [0]` → `[0, 2, 3]` — increment-free games are widely
   ignored by other bots, which is what the 35 % conversion reflects. Fewer wasted
   challenges per game is the efficient fix; raw cadence is the blunt one.
+  *(Superseded on 2026-08-16 — see [Standard formats instead of random
+  combinations](#standard-formats-instead-of-random-combinations--2026-08-16).)*
 - `allow_matchmaking: false` until the quota window rolls over. Incoming
   challenges are unaffected — the event stream has its own limits and the bot
   keeps playing normally.
@@ -345,6 +347,70 @@ from an *estimated* duration, `base + 40 × increment` (`game_category` in
 increment 0 but classical at increment 2 or 3, which shifts the mix toward
 classical — longer games, a separate rating that stays provisional longer, and
 much more CPU per game if a measurement run is going on in parallel.
+
+### Standard formats instead of random combinations — 2026-08-16
+
+That last observation — base and increment are drawn **independently** — turned
+out to matter for more than the rating category. A list of six base times and
+three increments does not offer six or three formats; it offers all **eighteen
+cross products**. The bot was therefore challenging bots with `24+2`, `30+3` and
+`3+3`: combinations no human plays and few bots recognize, which is a poor use of
+a daily challenge quota that had already run out once.
+
+lichess-bot has exactly one mechanism for expressing a *pair*: `matchmaking.overrides`,
+a map of named blocks, each overriding only the keys it names. `Matchmaking.choose_opponent`
+(`lib/matchmaking.py`) draws uniformly between the default block and the overrides —
+`random.choice(overrides.keys() + [None])` — so **one single-valued block per format**
+is the way to offer real time controls. The bot now offers five:
+
+| format | category | estimated duration | defined in |
+|---|---|---:|---|
+| 3+2 | blitz | 260 s | `overrides: blitz_3_2` |
+| 5+3 | blitz | 420 s | `overrides: blitz_5_3` |
+| 10+5 | rapid | 800 s | `overrides: rapid_10_5` |
+| 15+10 | rapid | 1300 s | `overrides: rapid_15_10` |
+| 30+0 | classical | 1800 s | the default block |
+
+Uniform draw, so 40 % blitz / 40 % rapid / 20 % classical; the eighteen-combination
+draw gave 33 / 39 / 28 %. Three things are load-bearing about this layout:
+
+- **The default block has to be one of the formats.** It is always in the draw, so
+  leaving multi-valued lists there would keep producing cross products for a fifth
+  of all challenges — the overrides alone do not fix anything.
+- **Exactly one classical slot**, and it is the expensive one: at
+  `challenge.concurrency: 1` a 30+0 game can occupy the bot for an hour, so one
+  game in five takes as long as the other four together. A second classical format
+  (30+20 would be the natural one) doubles that cost against a rating that
+  incoming challenges barely feed anyway.
+- **Increment 10 is the safest of the five, not the riskiest.** myChess settles at
+  spending roughly the increment per move while holding about `6.2 × increment` in
+  reserve (see [§ 7](#7-time-increment--implemented)), so 15+10 keeps ~62 s in hand
+  and 3+2 only ~12 s. Time trouble lives at the short end.
+
+`config.yml` is read at startup only — a running bot keeps the format list it
+started with until it is restarted.
+
+### Bullet — declined on purpose
+
+`challenge.time_controls` leaves `bullet` commented out. The original reason was
+that myChess forfeited the increment entirely, which in a 1+1 game is two thirds
+of the total time; that reason expired with [§ 7](#7-time-increment--implemented).
+What remains is that bullet is myChess's weakest format — a 1 min game leaves
+about 1.9 s for the first move and 0.16 s near the end, i.e. depth 4-5 instead of
+7-8 — and that the engine cannot ponder on the opponent's clock.
+
+Enabling it takes **three** changes, not one, and the second is easy to miss:
+
+1. uncomment `bullet` in `challenge.time_controls`;
+2. lower `challenge.min_base` from `180` to `60` — at a 180 s minimum base time
+   no bullet challenge can pass regardless of what `time_controls` says;
+3. set `challenge.bullet_requires_increment: true` — a `1+0` game gains nothing
+   from the increment handling and is exactly the case the old rationale called
+   hopeless.
+
+Worth doing only after the increment path has played real games under a clock
+that carries an increment; bullet is the least forgiving format for a
+time-management defect, and 60 seconds leave no room to notice one.
 
 ---
 
