@@ -1968,4 +1968,85 @@ class BlunderTest {
                         + "in the endgame — turn this into a positive assertion on Kd4; got " + result.weight());
     }
 
+    // ----------------------------------------------------------------
+    // King safety — the pawn storm against the castled king.
+    //
+    // The only case in this class that did NOT come from a myChess
+    // blunder: the position arose on lichess with myChess on the white
+    // side, and it was the OPPONENT who played the losing move. It is
+    // here because myChess turns out to share the blind spot from both
+    // sides — it would play the same move as black, and as white it
+    // cannot see the punishment.
+    // ----------------------------------------------------------------
+
+    /** Black to move, before {@code 21...Qa3}. Material is level; white's g4/h4 pawns face the castled king. */
+    private static final String BEFORE_QA3_FEN = "4r1k1/1b1r1pp1/p1p2b1p/2p1pN2/Pq1pP1PP/1P1P1N2/2PQ1PK1/3RR3 b - - 2 21";
+
+    /** The same position after {@code 21...Qa3}; white (myChess) to move and, objectively, winning. */
+    private static final String AFTER_QA3_FEN = "4r1k1/1b1r1pp1/p1p2b1p/2p1pN2/P2pP1PP/qP1P1N2/2PQ1PK1/3RR3 w - - 3 22";
+
+    /**
+     * Ceiling on what myChess may score the position after {@code 21...Qa3}. Measured on
+     * v4.4.2 it stays between {@code +0.02} and {@code +0.49} at every depth from 1 to 11,
+     * against {@code +3.6} from Stockfish, so the bound has three pawns of headroom below
+     * the truth and half a pawn above the highest reading.
+     */
+    private static final float QA3_ATTACK_BOUND = 1.0f;
+
+    /**
+     * The clearest case in this class of a <b>pawn storm</b> the evaluation cannot price —
+     * and the only one where the losing move was not myChess's own.
+     *
+     * <p>The position arose on lichess with myChess as white. Black played {@code 21...Qa3},
+     * which loses on the spot: Stockfish 18 (depth 26, 1 thread, 128 MB) has {@code -4.12} for
+     * it, against {@code -0.67} for the best move {@code 21...Qxd2} and {@code -0.88} for
+     * {@code 21...Bd8}. The refutation is <b>{@code 22.g5!}</b> — {@code 22...Bd8 23.gxh6 g6
+     * 24.Nxg7} — and its shape is what makes the move hard: the queen on a3 is never attacked
+     * and never trapped. It is simply <em>absent</em> from the kingside, and the storm arrives
+     * three moves later at the other end of the board.
+     *
+     * <p><b>myChess shares the blind spot from both sides.</b> Asked what to play as black it
+     * picks {@code Qa3} at depths 1-5 and again at depth 9, {@code Bd8} at 6-7 and 11-12,
+     * {@code Qb6} at 8 and 10 — the choice oscillates, and the score never leaves the band
+     * {@code -0.11} to {@code -0.33}. Depth 9 costs 7.7 M nodes and depth 11 costs 95.7 M, so
+     * a blitz clock lands squarely on the depth that blunders. Nothing here is a horizon
+     * problem: {@code g4-g5} appears inside its own principal variation at most depths. It sees
+     * the push and prices it at nothing.
+     *
+     * <p>The assertion pins the <em>white</em> side, because that is where the defect is stable.
+     * After {@code Qa3} the engine reads {@code +0.02} to {@code +0.49} at every depth from 1 to
+     * 11 while Stockfish has {@code +3.6} — a gap of over three pawns that does not close with
+     * depth. Pinning the black side instead would encode the oscillation above rather than the
+     * defect, the same reason
+     * {@link #kd4_atMove49_characterizesNotSeeingTheWonKnightEndgame} pins a score and not a move.
+     *
+     * <p>Material is dead level on both sides of the move, so the material-only shortcut never
+     * fires and the positional terms do run — they run and find nothing. This belongs with
+     * {@code qb4_atMove22_characterizesTheKingSafetyBlindSpot} and the stripped-king case:
+     * attackers converging on a castled king are worth approximately zero to this evaluation
+     * (roadmap § 12.21).
+     *
+     * <p><b>Characterization, not a goal.</b> It passes because the defect is present. When
+     * king safety lands, this score rises past {@link #QA3_ATTACK_BOUND} and the test must be
+     * rewritten — as a positive assertion that white finds {@code 22.g5}, and as an avoidance
+     * test against {@code Qa3} from {@link #BEFORE_QA3_FEN} at the depth a blitz game reaches.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void qa3_atMove21_characterizesNotSeeingTheG5PawnStorm() throws Exception {
+        var game = gameFromFenAtDepth(AFTER_QA3_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertTrue(result.weight() < QA3_ATTACK_BOUND,
+                "characterization: after 21...Qa3 white is winning by roughly 3.6 pawns (22.g5!), and "
+                        + "myChess must still read the position as near-equal because no term prices the "
+                        + "pawn storm. If it now reports more than " + QA3_ATTACK_BOUND + ", king safety has "
+                        + "landed — turn this into a positive assertion on 22.g5 and add an avoidance test "
+                        + "for Qa3 from BEFORE_QA3_FEN; white-POV eval " + result.weight());
+    }
+
 }
