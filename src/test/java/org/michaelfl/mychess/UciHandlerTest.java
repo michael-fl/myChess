@@ -611,6 +611,184 @@ class UciHandlerTest {
     // ---- helpers ----
     // (Move-parser unit tests live in UciMoveParserTest.)
 
+    // ---- Time increment (winc / binc) ----
+
+    /**
+     * Budget the handler computed for the last {@code go}, read back from the
+     * {@code [go] … budget=<ms>} line it writes to stderr.
+     *
+     * <p>{@code computeBudgetMillis} is private and the budget never reaches stdout, so this
+     * log line is the only seam. That is not a workaround: the line exists precisely so a
+     * time-forfeit episode can be reconstructed afterward, and pinning it here also protects
+     * its format.
+     */
+    private int budgetOf(String goLine) {
+        runHandler("uci\nposition startpos\n" + goLine + "\nquit\n");
+        var matcher = java.util.regex.Pattern.compile("\\[go][^\\n]*budget=(\\d+)")
+                .matcher(capturedErr.toString(StandardCharsets.UTF_8));
+
+        // capturedErr accumulates across runs within one test method, so take the LAST
+        // match rather than the first — otherwise a second call silently reads the first
+        // run's budget, which is exactly the way this helper failed when it was written.
+        String budget = null;
+        while (matcher.find()) {
+            budget = matcher.group(1);
+        }
+        assertNotNull(budget, "the handler must log a [go] line with a budget for: " + goLine);
+
+        return Integer.parseInt(budget);
+    }
+
+    /**
+     * The increment is what a Fischer time control refunds after each move, so a side may
+     * spend it every move without the clock falling. The handler adds
+     * {@code INCREMENT_USE_PERCENTAGE} = 80 % of it on top of the usual share of the
+     * remaining clock — 80 rather than 100 because transmission and GUI overhead would
+     * otherwise drift the clock slowly downwards.
+     *
+     * <p>{@code go depth 1} bounds the search so the test costs milliseconds; the budget is
+     * still computed from the clock, since {@code computeBudgetMillis} only short-circuits on
+     * {@code infinite} and {@code movetime}.
+     */
+    @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
+    void goWithWinc_whiteToMove_addsEightyPercentOfTheIncrement() {
+        int withoutIncrement = budgetOf("go depth 1 wtime 600000 btime 600000");
+        int withIncrement = budgetOf("go depth 1 wtime 600000 btime 600000 winc 5000 binc 5000");
+
+        assertEquals(600_000 / 31, withoutIncrement,
+                "without an increment the budget must stay the plain share of the remaining clock");
+        assertEquals(600_000 / 31 + 4_000, withIncrement,
+                "80 % of a 5 s increment is 4 s and must be added to that share");
+    }
+
+    /** Black to move must be budgeted from {@code btime}/{@code binc}, not from white's pair. */
+    @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
+    void goWithBinc_blackToMove_usesBlacksClockAndIncrement() {
+        runHandler("uci\nposition startpos moves e2e4\ngo depth 1 wtime 600000 btime 60000 winc 9000 binc 1000\nquit\n");
+        var matcher = java.util.regex.Pattern.compile("\\[go][^\\n]*color=B[^\\n]*budget=(\\d+)")
+                .matcher(capturedErr.toString(StandardCharsets.UTF_8));
+        assertTrue(matcher.find(), "the handler must log a [go] line for black");
+
+        assertEquals(60_000 / 31 + 800, Integer.parseInt(matcher.group(1)),
+                "black must be budgeted from btime=60000 and binc=1000, not from white's 600000/9000");
+    }
+
+    /**
+     * cutechess emits each increment only when it is greater than zero
+     * (`if (whiteTc->timeIncrement() > 0)` in `uciengine.cpp`), and time controls may be
+     * asymmetric, so {@code winc} can arrive without {@code binc}. Neither side may depend on
+     * the other being present.
+     */
+    @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
+    void goWithWincOnly_isAccepted_andBlackFallsBackToNoIncrement() {
+        assertEquals(600_000 / 31 + 4_000, budgetOf("go depth 1 wtime 600000 btime 600000 winc 5000"),
+                "a winc without a matching binc must still be applied for white");
+    }
+
+    /**
+     * The hard cap, and the reason the increment cannot simply be added.
+     *
+     * <p>An increment is credited to the clock, and the clock is what the flag falls on: with
+     * 2 s left and a 5 s increment a side still has only 2 s for this move. Budgeting the
+     * increment on top would be a guaranteed forfeit rather than a risk, so the result must be
+     * bounded by the remaining time less the safety margin.
+     */
+    @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
+    void goWithIncrementLargerThanTheClock_isCappedByTheRemainingTime() {
+        int budget = budgetOf("go depth 1 wtime 2000 btime 600000 winc 5000 binc 5000");
+
+        assertEquals(2_000 - 50, budget,
+                "with 2 s left the budget must be capped at the clock minus the 50 ms safety margin, "
+                        + "however large the increment is");
+    }
+
+    /**
+     * An increment without a clock is not computable — there is no remaining time to bound it
+     * against — so it must be ignored rather than used on its own. UCI does not guarantee that
+     * {@code winc} implies {@code wtime}; python-chess, for instance, emits every token
+     * independently of whatever the caller set.
+     */
+    @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
+    void goWithIncrementButNoClock_ignoresTheIncrement() {
+        int budget = budgetOf("go depth 1 winc 5000 binc 5000");
+
+        assertTrue(budget > 60_000,
+                "without wtime/btime the handler must fall back to the effectively unbounded budget "
+                        + "rather than deriving one from the increment alone; got " + budget);
+    }
+
+    /**
+     * <b>Characterization of a behavior change, not an assertion that it is right.</b>
+     *
+     * <p>The safety margin used to be subtracted from every clock budget
+     * ({@code ourMs / (movestogo + 1) − TIME_SAFETY_MARGIN_MS}). It is now applied only to
+     * the hard cap, so a game <em>without</em> an increment — which is every anchor match and
+     * most cutechess runs — gets 50 ms more per move than before. At 40/120 that is 50 ms on
+     * a ~3 s budget, well under two percent, and arguably the better design: the margin exists
+     * to prevent a flag fall, and a budget of one thirty-first of the clock cannot cause one.
+     *
+     * <p>It is pinned separately because it is a change to the pre-existing path rather than
+     * part of adding increments, and because a reader comparing the two formulas should find
+     * the difference recorded rather than have to spot it. If the margin was meant to stay in
+     * the normal path, this test is the one that should fail.
+     */
+    @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
+    void goWithoutIncrement_noLongerSubtractsTheSafetyMargin() {
+        int budget = budgetOf("go depth 1 wtime 600000 btime 600000");
+
+        assertEquals(600_000 / 31, budget,
+                "the plain share of the clock, with no margin deducted — the previous formula "
+                        + "returned " + (600_000 / 31 - 50));
+    }
+
+    /**
+     * {@code movestogo 0} makes the divisor 1, so the whole remaining clock is budgeted for a
+     * single move — bounded only by the hard cap.
+     *
+     * <p>cutechess never sends it (`if (myTc->movesLeft() > 0)`), and the behavior predates the
+     * increment work, so this is a robustness pin rather than a defect report: it records what
+     * happens if some other GUI does, and it will fail if a future guard changes it.
+     */
+    @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
+    void goWithMovestogoZero_budgetsTheEntireRemainingClock() {
+        int budget = budgetOf("go depth 1 wtime 60000 btime 60000 movestogo 0");
+
+        assertEquals(60_000 - 50, budget,
+                "movestogo 0 divides by one and is then limited only by the hard cap");
+    }
+
+    /**
+     * A clock that has already run past zero must not produce a negative or absurd budget.
+     *
+     * <p>Some GUIs report a negative {@code wtime} once a side has overstepped. Every term of
+     * the formula goes negative there, and only the {@code MIN_BUDGET_MS} floor keeps the
+     * result sane — worth pinning, because the floor is easy to drop when refactoring a
+     * three-way {@code min}/{@code max}.
+     */
+    @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
+    void goWithNegativeClock_fallsBackToTheMinimumBudget() {
+        int budget = budgetOf("go depth 1 wtime -5000 btime 600000 winc 1000 binc 1000");
+
+        assertEquals(50, budget,
+                "a negative clock must yield the MIN_BUDGET_MS floor, never a negative budget");
+    }
+
+    /** With a tournament control both {@code movestogo} and an increment can arrive together. */
+    @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
+    void goWithMovestogoAndIncrement_usesBoth() {
+        assertEquals(60_000 / 11 + 800, budgetOf("go depth 1 wtime 60000 btime 60000 movestogo 10 winc 1000 binc 1000"),
+                "movestogo must set the divisor and the increment must be added on top of that share");
+    }
+
     /**
      * Run the UCI handler with the given synthetic stdin input. Blocks until the
      * input is fully consumed and any in-flight search watcher has emitted its

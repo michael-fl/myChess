@@ -197,7 +197,7 @@ covers all of it:
 | `isready` | sync → `readyok` | ✅ |
 | `ucinewgame` | reset for a new game | ✅ |
 | `position startpos [moves ...]` / `position fen <FEN> [moves ...]` | set up the position | ✅ |
-| `go wtime <ms> btime <ms> [movestogo <n>]`, `go movetime <ms>`, `go depth <d>`, `go infinite` | start searching | ✅ |
+| `go wtime <ms> btime <ms> [winc <ms>] [binc <ms>] [movestogo <n>]`, `go movetime <ms>`, `go depth <d>`, `go infinite` | start searching | ✅ |
 | `stop` | stop and return `bestmove` | ✅ |
 | `bestmove <move>` (engine → GUI) | the chosen move (always emitted; legality-checked, `0000` fallback) | ✅ |
 | `quit` | shut down | ✅ |
@@ -348,41 +348,48 @@ much more CPU per game if a measurement run is going on in parallel.
 
 ---
 
-## 7. What to extend in myChess first — time increment
+## 7. Time increment — implemented
 
-**Gap:** myChess's `go` parser reads `wtime` / `btime` / `movestogo` / `movetime`
-/ `depth` / `infinite`, but **not `winc` / `binc`** (the per-move increment).
-Most Lichess time controls carry an increment (3+2, 5+3, …), so myChess currently
-**ignores the increment** when budgeting its move time. It still plays legally,
-but manages the clock naively — typically too conservatively, leaving time on the
-board, and in fast increment games this can cost strength.
+Most Lichess time controls carry an increment (3+2, 5+3, …). myChess reads
+`winc` / `binc` and folds the increment of the side to move into the per-move
+budget ([`UciHandler.computeClockBudgetMillis`](../src/main/java/org/michaelfl/mychess/UciHandler.java)):
 
-**Fix (small, ~1 hour):**
-- Parse `winc` / `binc` in `UciHandler`'s `go` decoder (add two `case` branches
-  and two fields to the `GoArgs` record).
-- Fold the increment into the per-move budget, e.g.
-  `budget ≈ remaining / movesToGo + increment` (with the existing safety margin),
-  so the engine spends the increment it is about to earn back.
+    budget = ourClock / (movestogo + 1) + 80 % × ourIncrement
 
-This is the natural first slice of roadmap **§12.12 (Real time management
-heuristics)** and is the one change worth making **before playing increment
-time controls** (which are the norm on Lichess).
+capped at `ourClock − 50 ms` and floored at 50 ms. `movestogo` falls back to 30
+when the GUI omits it — which every Lichess control does, since none of them has
+a moves-to-go phase.
 
-**Rated vs. unrated is irrelevant here** — a game plays identically either way;
-the engine does not even know whether it is rated. The only axis that matters is
-whether the time control carries an **increment**:
+Three details are easy to get wrong; each is pinned by a test in
+[`UciHandlerTest`](../src/test/java/org/michaelfl/mychess/UciHandlerTest.java):
 
-- **No increment (sudden death, e.g. `10+0`, `5+0`, `15+0`) or fixed
-  `movetime`** — the current handler is **already fully sufficient, rated
-  included**. myChess can go live and play rated games on these controls right now.
-- **With increment (`3+2`, `5+3`, `15+10`, …)** — myChess still plays legally and
-  will **not flag** (it under-budgets rather than over-budgets), but it manages
-  the clock too conservatively and leaves strength on the table. Add the fix
-  above before serious play on these controls.
+- **Only 80 % of the increment is spent.** `movestogo = 30` is a spending *rate*,
+  not a prognosis of the game's length: it is re-applied to the shrinking
+  remainder on every move, so the clock share decays geometrically (≈ 14 % of the
+  start clock left after 60 moves). Spending the increment in full would cancel
+  that decay and turn a 3+2 game into one played at exactly two seconds per move,
+  with the base time never touched.
+- **The remaining clock is a hard cap.** The increment is credited *after* the
+  move, so a budget of `clock + increment` flags on a short clock. `wtime 2000
+  winc 5000` therefore budgets 1950 ms, not 6000.
+- **The tokens are read independently.** UCI does not guarantee that `winc`
+  arrives together with `wtime`, and python-chess — what lichess-bot speaks —
+  emits each token on its own. An increment for one color only is accepted, and a
+  `winc` without any clock is ignored rather than mistaken for a budget.
 
-So there are two clean ways to go rated: (a) restrict the challenge config to
-no-increment controls (`min_increment: 0`, `max_increment: 0`) and play rated
-today, or (b) add `winc`/`binc` handling first and then accept any time control.
+**Which controls myChess can play: all of them.** Sudden death (`10+0`, `5+0`),
+fixed `movetime`, and increment controls (`3+2`, `5+3`, `15+10`) are all budgeted
+from the clock. Rated versus casual makes no difference at any point — the engine
+is never told which it is playing.
+
+**What is still missing** is everything *beyond* a flat per-move slice: no time
+hoarding across moves, no panic mode on a low clock, no complexity scaling. That
+is roadmap [§ 12.12 (Real time management heuristics)](roadmap.md#1212-real-time-management-heuristics--s--m--3060-elo);
+the increment handling is its first slice, not the whole entry.
+
+**Not yet measured in a match.** Self-play at `tc=40/60` has no increment, so it
+is null by construction — an SPRT there measures nothing. The measurement that
+would say something runs at a control that carries one, e.g. `tc=60+1`.
 
 ---
 
@@ -422,5 +429,5 @@ today, or (b) add `winc`/`binc` handling first and then accept any time control.
 - [ ] lichess-bot installed
 - [ ] built myChess version wired into `config.yml` (`ponder: false`, `chess960` listed)
 - [ ] account upgraded to BOT (irreversible)
-- [ ] **(recommended before increment time controls — rated or not)** `winc`/`binc` handling added to myChess (§7)
+- [x] `winc`/`binc` handling in myChess — done, so any time control is fair game (§7)
 - [ ] `python3 lichess-bot.py` running on an always-on host
