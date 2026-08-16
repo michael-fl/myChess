@@ -272,6 +272,92 @@ when nothing constrains the opening. Enabling the book is therefore the cheap
 lever, and adding a development term the expensive one — and § 12.7.2's lesson
 (flat standalone terms measure neutral for this engine) argues against the latter.
 
+### Two more opening signals, noted 2026-08-15 and not yet counted
+
+The development metric above asks *whether* the minor pieces come out. A game from
+the 4.4.1 anchor bracket suggests a second question worth counting: *where the pawns
+go*. myChess as White vs TSCP (round 4 of `test-results/match-4.4.1-vs-tscp.pgn`,
+lost) had **no pawn in the c4–f5 band from move 3 until move 14**, while Black built
+up to three. Its first central pawn move, `14.d4`, is also the move at which the
+position finally collapsed.
+
+What makes it more than an anecdote is where Stockfish disagreed. On moves 7 and 8 it
+wanted `d4` both times; myChess played `7.b6+` and `8.d3`, running the b-pawn to win a
+pawn on a7. It rated that plan `+0.92 / +0.65 / +0.86` while the position was already
+around −1 — roughly **two pawns of misjudgment in favor of the material grab**. The
+knight tells the same story: `5.Ng5` where Stockfish wanted `Nd4`, then `11.Nh3` back
+to the rim, where `Bxh3 gxh3` wrecked the kingside.
+
+The hypothesis is therefore that **material outweighs placement in the opening**, the
+same shape as [`corner-grab`](testing.md) and the material-only shortcut, one phase
+earlier — which is notable because central preference is exactly what the PeSTO
+tables are supposed to supply, and they were worth +32.6 Elo.
+
+#### A second game, and the split that matters
+
+Round 5 of the same match (myChess as Black, also lost) gives three more disagreements
+of the same kind — and taking them apart shows they do **not** share a cause.
+
+| move | Stockfish wants | myChess plays |
+|---|---|---|
+| 8… | `d5` (centre) | `Bh6` |
+| 9… | `Nc6` (development) | `Be3` |
+| 11… | `Nc6` (development) | `h6` |
+
+The b8 knight does not move until move 15.
+
+**The bishop excursion is not a preference — the evaluation is simply flat.** Comparing
+the same position with the bishop on g7 and on e3 through the engine's own component
+dump (`fen <FEN>` then `w` in the REPL):
+
+| term | g7 | e3 |
+|---|---:|---:|
+| material | +1.00 | +1.00 |
+| position (PSTs) | −0.83 | −0.79 |
+| mobility | +0.06 | −0.05 |
+| **total (White POV)** | **+0.80** | **+0.72** |
+
+Eight hundredths of a pawn between them. The PeSTO tables actually prefer `g7` and are
+outvoted by mobility, which is worth 0.11 here — six extra squares at the bishop's
+mobility weight of 30, scaled by `mobilityFactor = 0.1`. With the options that close
+together the choice falls to whatever the search turns up a few plies out.
+
+**The real gap is one level down.** Stockfish rates that position −1.95 for White while
+myChess's static evaluation says +0.80: nearly **three pawns apart before the bishop
+moves at all**. The breakdown says why — White is a pawn up from `3.dxc5`, worth a flat
++1.00, and Black's entire compensation (centre, development, the kingside loosened by
+`f3`/`g4`) registers as −0.20 across *all* positional terms combined.
+
+**But `11…h6` is a different failure and must not be counted with the others.** It costs
+3.9 pawns (+1.40 → −2.48) and looks like the same thing, yet the engine knows better:
+
+| depth | move | score |
+|---|---|---|
+| 7 (what the game reached) | `h6` | −0.36 |
+| 8 | `h6` | −0.82 |
+| **10** | **`Nc6`** | −0.59 |
+
+That is a horizon effect, not an evaluation defect — and an expensive one: depth 10 took
+40 M nodes and 27 s where the time control allowed about 3 s.
+
+#### What to count, and treat all of it as n = 2 until then
+
+The first four plies of the round-4 game came from `2moves_v2.pgn`, and `2.Qa4` is a move
+no engine would choose, so White was already misplaced before deciding anything itself.
+Three counts would settle it, all over the existing archives and all far cheaper than an
+Elo run:
+
+1. **Central pawn presence by move 10 and 12**, myChess versus opponents, split by
+   book / no-book exactly as the development table above is — the split is what showed
+   that the development finding was about the book rather than the engine.
+2. **Disagreement count**: positions in the first fifteen moves where Stockfish's best
+   move is central or developing and myChess plays a flank pawn, a rim knight or a
+   bishop excursion. If that rate is no higher than the opponents', it dissolves.
+3. **Split every hit by cause** — re-search each disagreement at the game depth and at
+   +3 plies. Hits the engine fixes on its own are search, not evaluation, and belong to
+   the [search cluster](roadmap.md) rather than here. Without this split the two levers
+   get averaged into one number that recommends neither.
+
 ### Measurement pitfall: MapDB takes an exclusive file lock
 
 Anyone measuring book-vs-no-book must know this first.
