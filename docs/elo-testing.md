@@ -147,6 +147,38 @@ H0.
   without early termination and reports a final ELO estimate and
   confidence interval based on the full match.
 
+### When the effect is too small for the score — count the event instead
+
+Some changes are real but too rare to move a match score detectably. The § 12.23
+repetition fix is the worked example: a shift worth roughly +10 Elo hides inside the
+±14 confidence interval of a 1600-game run, and resolving +7 with confidence would take
+five figures of games. Running more games is not the answer there.
+
+The answer is to count the *event the change targets* rather than the score it moves.
+The PGN cutechess writes already contains everything needed — the result, the
+termination reason, and each engine's own evaluation per move — so the count costs no
+extra games. For the repetition fix the event was "a game drawn by repetition from a
+position one side believed it was winning", split by which engine that side was, and
+tested against the 50/50 that engine symmetry predicts under the null:
+
+| | corrected | uncorrected | p |
+|---|---:|---:|---|
+| threw (ahead, took the repetition) | 0 | 18 | 7.6 × 10⁻⁶ |
+| rescued (behind, saved half a point) | 13 | 1 | 0.0018 |
+
+321 games. The SPRT on the same match accepted H1 at +42.4 ± 29.4 — a number inflated
+by the early stop, and far less informative than the 0-to-18.
+
+**Three things make this work.** The prediction must be stated *before* the run, or the
+count is post-hoc pattern-matching. There must be a **negative control** — here the
+2026-08-11 hybrid match where both builds carry the bug, which the same script scores at
+95 to 85, p = 0.5. And the counting script must be validated against previously
+published figures, so a parsing error cannot masquerade as a finding.
+
+`tools/analyze-repetition-match.py` is the implementation for this particular event;
+the pattern generalizes to any change whose target is a nameable, countable game
+situation.
+
 ### Other flags
 
 | Flag | Purpose |

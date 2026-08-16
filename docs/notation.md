@@ -272,11 +272,13 @@ private final List<Command> commands = List.of(
         new QuitCommand(),
         new AutoGameCommand(),
         new NewGameCommand(),
+        new BenchCommand(),               // `bench [depth]` — node signature, added v4.3.5
         new MoveCommand(),
         new ImportCommand(),
         new PrintCommand(),
         new BoardCommand(),
         new ExportCommand(),
+        new PgnCommand(),                 // `pgn` — the game so far as PGN move text
         new RevertCommand(),
         new TipCommand(),
         new LastCommand(),
@@ -288,7 +290,8 @@ private final List<Command> commands = List.of(
         new SetDepthCommand(),
         new SetIterationDepthCommand(),
         new PossibleMovesCommand(),
-        new FenCommand(),
+        new LoadFenCommand(),             // `fen <FEN>` — load a position; must precede FenCommand
+        new FenCommand(),                 // `fen` — print the current position
         new HashCommand(),
         new OpeningCommand(),
         new OpeningMoveCommand()
@@ -360,4 +363,4 @@ The handlers are wired but the implementations are commented out — see [`SetDe
 
 ### Adding a new command
 
-The shape is fixed: define a nested `final` subclass of `Command` inside [`CommandHandler`](../src/main/java/org/michaelfl/mychess/CommandHandler.java), implement `canHandle(String)` (returns `true` iff this command should claim the line) and `handle(String) throws Exception`, then append a new instance to the `commands` list in `CommandHandler`'s constructor. The list order matters only when two commands could accept the same line — the existing list is hand-ordered so the most specific predicate wins (e.g. `AutoGameCommand` for the bare word `auto` before `MoveCommand` would even try to parse it). See [§ 2.5 REPL and main loop](../README.md#25-repl-and-main-loop) for the dispatch mechanism.
+The shape is fixed: define a nested `final` subclass of `Command` inside [`CommandHandler`](../src/main/java/org/michaelfl/mychess/CommandHandler.java), implement `canHandle(String)` (returns `true` iff this command should claim the line) and `handle(String) throws Exception`, then append a new instance to the `commands` list in `CommandHandler`'s constructor. The list order matters only when two commands could accept the same line — the existing list is hand-ordered so the most specific predicate wins (e.g. `AutoGameCommand` for the bare word `auto` before `MoveCommand` would even try to parse it). See [§ 2.5 REPL and main loop](../README.md#25-entry-points-repl-and-uci) for the dispatch mechanism.

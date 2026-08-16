@@ -1,6 +1,6 @@
 # 6. Search Algorithm
 
-The search lives in [`PositionSearch`](src/main/java/org/michaelfl/mychess/engines/PositionSearch.java) (374 lines). It is constructed fresh per move, runs to completion (or to timeout), and returns a `MoveAndWeight` containing the chosen move, its score in centipawns, the game-result classification, and the full principal variation.
+The search lives in [`PositionSearch`](../src/main/java/org/michaelfl/mychess/engines/PositionSearch.java) (523 lines). It is constructed fresh per move, runs to completion (or to timeout), and returns a `MoveAndWeight` containing the chosen move, its score in centipawns, the game-result classification, and the full principal variation.
 
 The control flow has three nested loops:
 
@@ -184,7 +184,7 @@ __assert(() -> !(countMoves > 0 && bestKnownNextMove != 0 && bestKnownNextMove !
 
 A purely fixed-depth alpha-beta search suffers from the **horizon effect**: if the last move at `maxDepth` was a capture, the search evaluates a position mid-exchange. White trades a queen for a pawn at depth 6, the search bottoms out and reports "+8 pawns for white", and never sees that black recaptures the queen at depth 7. The static evaluation is wildly wrong because the position isn't *quiet*.
 
-myChess handles this with [`QuiescenceSearch`](src/main/java/org/michaelfl/mychess/QuiescenceSearch.java) — a second alpha-beta layer that takes over at **every** leaf and resolves **all available captures** until the position is quiet.
+myChess handles this with [`QuiescenceSearch`](../src/main/java/org/michaelfl/mychess/QuiescenceSearch.java) — a second alpha-beta layer that takes over at **every** leaf and resolves **all available captures** until the position is quiet.
 
 > **Status (v4.2.1, July 2026).** Since v4.2.0 this is a proper all-captures quiescence search: it is entered at **every** leaf (not only after a capturing move) and follows **every** legal capture (not only recaptures on the last-contested square). That upgrade ([roadmap § 12.6.1](roadmap.md#1261-enter-at-every-leaf-and-follow-all-captures--done-60-elo)) measured **+60.4 ± 9.7 Elo** vs v4.1.1 (3200-game fixed-N, LOS 100 %). **v4.2.1** then added **Static Exchange Evaluation**: QSearch captures are now ordered by SEE and losing captures (SEE < 0) are pruned ([§ 12.6.2](roadmap.md#1262-capture-ordering-in-qsearch--done-v421-shipped-as-see-ordering) + [§ 12.6.3](roadmap.md#1263-see-pruning-of-losing-captures-in-qsearch--done-406-elo), **+40.6 ± 9.4 Elo** vs v4.2.0, LOS 100 %). It still does *not* delta-prune, extend on checks, or consult the transposition table — the remaining refinements in [§ 12.6.4–12.6.5](roadmap.md#126-quiescence-search-upgrade). What follows describes the current (v4.2.1) behavior.
 
@@ -243,7 +243,7 @@ The all-captures search also changes the premise of an earlier eval-side closure
 
 - **Delta pruning** — skip captures where stand-pat + captured material + safety margin still falls below α; [§ 12.6.4](roadmap.md#1264-delta-pruning-in-qsearch--s--515-elo). The only remaining QSearch sub-item still open.
 - **Check extensions** — pursue forcing check sequences past the QSearch border; [§ 12.4 check extensions](roadmap.md#124-check-extensions--s--1530-elo).
-- **TT lookup / store inside QSearch** — score and best-move reuse for transposed leaves; **tried and shelved** ([§ 12.6.5](roadmap.md#1265-tt-integration-in-qsearch--tried-shelved-11-elo-los-4), a separate full table cost −11 Elo — only a shared-TT retry would be worth revisiting).
+- **TT lookup / store inside QSearch** — score and best-move reuse for transposed leaves; **tried and shelved** ([§ 12.6.5](roadmap.md#1265-tt-integration-in-qsearch--tried-shelved-11-elo-los-4-), a separate full table cost −11 Elo — only a shared-TT retry would be worth revisiting).
 
 (SEE-based capture ordering and SEE < 0 pruning — formerly the top items on this list — shipped in v4.2.1; see the *Following all captures* paragraph above.)
 
@@ -428,7 +428,21 @@ public static SearchNodeResult stalemate() {
 **Where does the search realize the game is over at the *root*, not at an interior node?** Two places intercept this *before* the search ever runs:
 
 1. `ChessEngine.calculateNextMove` short-circuits when `game.getResult() != ONGOING`, returning a synthesized `MoveAndWeight` with `move = 0` and the appropriate game-over score (`−CHECKMATE_WEIGHT_HIGH` for mate, `0` for stalemate/draw).
-2. The same method also short-circuits on the 50-move rule and threefold repetition, returning `(0, 0, DRAW)`.
+2. The same method also short-circuits on the 50-move rule and threefold repetition, returning `(0, 0, DRAW)`. Note that this root check uses the *game rule* — `Board.isThreefoldRepetition()`, three occurrences. The search uses a stricter one; see [§ 6.7](#67-repetitions-inside-the-search--the-second-occurrence-is-a-draw).
+
+## 6.7 Repetitions inside the search — the second occurrence is a draw
+
+`alphaBetaSearchPre` opens with a draw test, and since 4.4.1 it asks `Board.isTwofoldRepetition()`: a position that has appeared **twice** counting the search path scores as a draw, rather than the three occurrences the rules require. Both predicates share `hasOccurredAtLeast(int occurrences)`, which counts backwards through the `GameStatus` stack in steps of two and stops at the last irreversible move.
+
+**Two things about the placement are load-bearing, not incidental.**
+
+*It runs before the transposition-table lookup.* That order is the entire fix. With the three-occurrence test the check declined at the second occurrence, the node fell through to the table, and the table answered with a score stored before the position was a repetition — so the third occurrence was never reached at any depth, however deep the search ran. A position hash is path-independent; a repetition draw is not.
+
+*It returns before the only `tt.put`.* The path-local draw is therefore never written into the table under that position's hash, which would poison every later visit that is not a repetition. A visible consequence: on a build with the fix, positions that are twofold repetitions simply do not appear in the table — their absence is the fix working, not a failed search.
+
+**Why the second occurrence rather than the third.** Not because a repetition can be forced — it cannot; going around a cycle changes the cycle's payoffs, and the opponent may simply deviate. The justification is that chess is very nearly Markovian in the position: the same moves with the same consequences are available however the position was reached, so a winning continuation at the second occurrence existed at the first and the search has already seen it. "Very nearly", because two parts of the state are not in the hash — the half-move clock and the repetition count. That is the Graph History Interaction problem, and it makes this a standard approximation rather than a theorem.
+
+The game rule is deliberately untouched at three occurrences, and `ThreefoldRepetitionTest.secondOccurrenceIsNotYetADraw` is what keeps the two apart. Full account in [known-issues.md](known-issues.md) and [roadmap § 12.23](roadmap.md); measured at ≈ +15 Elo.
 
 The search proper only sees terminal positions that arise **mid-search**, never as the starting position. That terminal detection is what `checkmateOrStalemate` and the `Moves.ILLEGAL` machinery are for.
 
@@ -494,11 +508,12 @@ This is because the PV is only meaningful for the *first* sibling tried at each 
 
 ## 7.2 Killer moves
 
-[`KillerMoves`](src/main/java/org/michaelfl/mychess/KillerMoves.java) stores, per search depth, the two most recent **quiet** moves that caused a beta cutoff at that depth in a *sibling* node:
+[`KillerMoves`](../src/main/java/org/michaelfl/mychess/KillerMoves.java) stores, per search depth, the two most recent **quiet** moves that caused a beta cutoff at that depth in a *sibling* node:
 
 ```java
 public final class KillerMoves {
-    private final int[][] moves = new int[50][2];     // 50 depths × 2 slots
+    // Dimensioned from the search cap, not a literal — see the note below.
+    private final int[][] moves = new int[PositionSearch.MAX_SEARCH_DEPTH + 1][2];
 
     public boolean isKillerMove(int move, int depth) {
         final var m = moves[depth];
@@ -514,6 +529,8 @@ public final class KillerMoves {
     }
 }
 ```
+
+**Why the dimension is derived, not written out.** It used to be `new int[50][2]` while `PositionSearch.MAX_SEARCH_DEPTH` was 64, and every search that reached depth 50 threw `ArrayIndexOutOfBoundsException`. That is not theoretical: in a fully blocked position every node returns immediately — repetition, fifty-move, no legal progress — so the iteration races upward, and rated game [WuqwLqOw](https://lichess.org/WuqwLqOw) hit depth 50 in four milliseconds and crashed three times in one game. It went unnoticed because `UciHandler.awaitAndEmitBestmove` catches the throw, logs "Search failed" and still emits the move from the last completed iteration, so myChess kept playing. Two numbers describing one limit need one source; `DeepIterationRegressionTest` guards the pair.
 
 **The heuristic.** At a given ply depth, sibling positions often share tactical themes — if move *X* refuted line A at depth `d`, the same move *X* often refutes line B at depth `d`. The pattern is especially strong for quiet positional moves (a knight outpost, a key blockade square) that recur across many candidate lines.
 
@@ -698,7 +715,7 @@ The `Move` *wrapper class* exists only for boundary uses: printing in error mess
 
 ## 7.6 Beta cutoff and pruning statistics
 
-The search records two principal counters via [`Statistics`](src/main/java/org/michaelfl/mychess/Statistics.java):
+The search records two principal counters via [`Statistics`](../src/main/java/org/michaelfl/mychess/Statistics.java):
 
 ```java
 public final class Statistics {
@@ -811,7 +828,7 @@ A popular line is more likely to be chosen than a rare one, but the engine doesn
 
 ## 7.8 Move sorting (`SortableMovesBucket`)
 
-The full ordering policy lives in [`MoveSorterImpl`](src/main/java/org/michaelfl/mychess/engines/MoveSorterImpl.java). Every generated move is routed into one of six **buckets** plus two singleton slots, and the final move list is concatenated bucket-by-bucket in a fixed order.
+The full ordering policy lives in [`MoveSorterImpl`](../src/main/java/org/michaelfl/mychess/engines/MoveSorterImpl.java). Every generated move is routed into one of six **buckets** plus two singleton slots, and the final move list is concatenated bucket-by-bucket in a fixed order.
 
 **The buckets:**
 

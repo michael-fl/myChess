@@ -28,7 +28,7 @@ The full UCI protocol is large, but the subset needed for **"plays in HIARCS or 
 | `bestmove e2e4` | engine → GUI | the result of `go` |
 | `quit` | GUI → engine | exit |
 
-Optional `info depth … nodes … pv …` lines during search make the GUI's analysis panel light up but aren't strictly required to play. Now feasible as follow-up work since both prerequisites have landed: `setoption name Hash` (TT is now in master, [§ 12.1](roadmap-done.md#121-transposition-table--done-93-elo)) and `setoption name UCI_Chess960` (Chess960 is in master, [§ 12.11](roadmap-backlog.md#1211-chess960-fischer-random-support--m-no-elo-on-standard-chess-but-opens-a-new-variant)). `ponder` remains out of scope for a first version. The `Hash` option specifically is motivated by the v4.0.1 null-effect finding ([§ 12.1 follow-up](roadmap-done.md#follow-up-4-tt-default-size-in-v401--null-effect-at-tc-4060)): exposing the knob lets the user pick a TC-appropriate value instead of relying on a default that may be over- or under-dimensioned for their use case.
+Optional `info depth … nodes … pv …` lines during search make the GUI's analysis panel light up but aren't strictly required to play. Now feasible as follow-up work since both prerequisites have landed: `setoption name Hash` (TT is now in master, [§ 12.1](roadmap-done.md#121-transposition-table--done-93-elo)) and `setoption name UCI_Chess960` (Chess960 is in master, [§ 12.11](roadmap-backlog.md#1211-chess960-fischer-random-support--done)). `ponder` remains out of scope for a first version. The `Hash` option specifically is motivated by the v4.0.1 null-effect finding ([§ 12.1 follow-up](roadmap-done.md#follow-up-4-tt-default-size-in-v401--null-effect-at-tc-4060)): exposing the knob lets the user pick a TC-appropriate value instead of relying on a default that may be over- or under-dimensioned for their use case.
 
 Three concrete sub-steps:
 
@@ -159,7 +159,16 @@ Small, self-contained change in `Pgn` with unit tests over annotated fixtures; n
 
 With (1)+(2)+(3) in place, every roadmap entry can be measured locally before merging. UCI becomes a sanity check, not a prerequisite.
 
-## 12.11 Chess960 (Fischer Random) support — **M, no Elo on standard chess but opens a new variant**
+## 12.11 ~~Chess960 (Fischer Random) support~~ — **DONE**
+
+> **Shipped.** myChess plays Chess960: `UCI_Chess960` is handled in `UciHandler`, castling and
+> the 960 start positions are implemented in `Board`/`Fen`, and the bot accepts the variant on
+> lichess. Covered by `Chess960CastlingTest`, `Chess960StartPositionsTest`, `FenChess960ImportTest`
+> and randomized 960 walks in `ZobristHashingTest`. The design record is
+> [Chess960-project.md](Chess960-project.md); what remains open there is evaluation *tuning* for
+> 960, not support — see § 12.11.1 below.
+
+The entry is kept for the reasoning that shaped the implementation.
 
 [Chess960](https://en.wikipedia.org/wiki/Fischer_random_chess) is the variant invented by Bobby Fischer where the back-rank pieces are placed in one of 960 randomized starting positions (constrained so that bishops are on opposite colors and the king stands between the two rooks). Pawn moves and piece moves are unchanged; only the starting setup and the castling rules differ. All major modern engines (Stockfish, Lc0, Komodo) support it.
 

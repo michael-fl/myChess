@@ -1102,7 +1102,7 @@ passing. Assert the property the fix changes, not one that merely correlates wit
 
 ### How large the problem is, and where the fix is tracked
 
-Scheduled as [§ 12.23](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--s-correctness-fix--0-in-self-play-but-real-half-points-against-others),
+Scheduled as [§ 12.23](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--done-2026-08-15--15-elo),
 which carries the measurement: in the 2000-game hybrid-vs-v4.3.4 match of
 2026-08-11, 586 of 687 draws (85 %) came from threefold repetition, and 203 of the
 628 non-adjudicated draws had one side reporting **≥ +2.00** within the last twelve

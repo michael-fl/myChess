@@ -35,7 +35,7 @@ The REPL opens `db/openings.db` (MapDB) on start and creates it on first run if 
 
 `MyChessMain` runs an interactive loop dispatched through `CommandHandler`. Each command is a nested `Command` subclass with `canHandle(line)`/`handle(line)`. To add a command, add a new inner class and register it in the command list inside `CommandHandler`. Existing commands:
 
-`quit`/`exit`/`q`, `new`, `auto` (engine self-play), `import <pgn-or-moves>`/`imp`, `l` (last imported), `print`/`p`, `board`, `export`/`exp`, `pgn` (game as PGN move text), `revert`/`r`, `tip`, `last`, `dw` (deep weight), `weight`/`w`, `go`/`g` (engine plays one move), `moves`, `fen`, `hash`, `o…` (opening DB lookup). Anything else is parsed as a move in algebraic notation.
+`quit`/`exit`/`q`, `new`, `auto` (engine self-play), `import <pgn-or-moves>`/`imp`, `l` (last imported), `print`/`p`, `board`, `export`/`exp`, `pgn` (game as PGN move text), `revert`/`r`, `tip`, `last`, `dw` (deep weight), `weight`/`w`, `go`/`g` (engine plays one move), `moves`, `fen` (print) / `fen <FEN>` (load), `hash`, `bench [depth]` (node signature), `o…` (opening DB lookup). Anything else is parsed as a move in algebraic notation.
 
 ## Architecture
 
@@ -65,7 +65,7 @@ Moves are packed into a single `int` (`fromField | toField<<8 | capturedPiece<<1
 - **Material-only shortcut**: if cumulative material delta during search exceeds `EVALUATE_MATERIAL_ONLY_THRESHOLD` (200 centipawns) the full positional eval (`WeightingFunction` + `PieceSquareTables`) is skipped — only material is returned. This is a load-bearing pruning heuristic, not a defensive bail-out.
 - **Async execution**: `ChessEngine.nextMoveAsync` runs the search on a single-thread executor and returns a `NextMoveTask` that exposes a `Future`-style API plus cooperative cancellation (`task.isCanceled()` is polled inside the search and throws `CancellationException`).
 
-`ChessEngine.calculateNextMove` short-circuits the search when the game is already over, when the 50-move / threefold-repetition rule fires, or when the opening DB has a candidate move (≥100 occurrences, ≥20% win, <45% loss — weighted random pick by frequency). The `weightFactor` (`+1` for white, `−1` for black) is applied at the boundary so the search itself runs in pure negamax form.
+`ChessEngine.calculateNextMove` short-circuits the search when the game is already over, when the 50-move / threefold-repetition rule fires, or when the opening DB has a candidate move (≥100 occurrences, ≥20% win, <45% loss — weighted random pick by frequency). The `weightFactor` (`+1` for white, `−1` for black) is applied at the boundary so the search itself runs in pure negamax form. The search itself uses a **stricter** repetition rule than the root check: `PositionSearch.alphaBetaSearchPre` asks `Board.isTwofoldRepetition()`, so a position recurring along the search path scores as a draw at the *second* occurrence rather than the third. That check must stay above the transposition-table lookup and must not store its result — both properties are load-bearing (roadmap § 12.23).
 
 ### Game lifecycle (`Game.java`)
 

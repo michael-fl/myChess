@@ -1,10 +1,22 @@
 # Tapered Evaluation (Phase-Dependent Piece-Square Tables) — Design Notes
 
+> **Status: shipped.** This began as a pre-implementation design note and is kept
+> for its reasoning, not as a plan. The staged rollout it proposes was carried out
+> across **v4.3.0 – v4.4.0**: pawn endgame tables first (+22.3 Elo), then the king
+> endgame table (+7.7), then material (queen 900 → 1000, +12.6), the bishop pair
+> (+31.3), the full joint MG+EG tune (+23.0), and finally the PeSTO tables (+32.6).
+> Roughly **+130 Elo** in total, and the largest theme in the project's history.
+>
+> Sections 7–9 were written as checklists of things to decide; they now record what
+> *was* decided and what the outcome was. For what the tables and the phase blend
+> look like today, see [evaluation.md § 5.2](evaluation.md#52-piece-square-tables);
+> the values themselves live in
+> [`PieceSquareTables`](../src/main/java/org/michaelfl/mychess/PieceSquareTables.java).
+
 Conceptual design notes for introducing a *tapered* (phase-interpolated)
 evaluation into myChess. This document explains the **idea and the decisions**
 in more depth than [roadmap § 12.7.1](roadmap.md#1271-tapered-evaluation--staged-rollout-strategy);
-it deliberately contains **no concrete code** — the implementation is the
-author's to write.
+it deliberately contains **no concrete code**.
 
 Related material: [§ 5 Evaluation Function](evaluation.md#5-evaluation-function),
 [roadmap § 12.7.1](roadmap.md#1271-tapered-evaluation--staged-rollout-strategy)
@@ -192,7 +204,7 @@ independent of our tuner. Then compare our tuned result against that reference.
 
 ---
 
-## 7. Design decisions and gotchas (a checklist for implementation)
+## 7. Design decisions and gotchas — as decided
 
 - **Rounding.** The evaluation is integer centipawns; the interpolation divides
   by `PHASE_MAX`, so pick a consistent rounding and keep it symmetric between
@@ -214,22 +226,28 @@ independent of our tuner. Then compare our tuned result against that reference.
 
 ---
 
-## 8. Open questions to settle while implementing
+## 8. The open questions, and how they were answered
 
-- **Taper material too?** Yes — the MG/EG split is most of the point for the
-  king and pawns, but material values are also mildly phase-dependent (e.g. a
-  rook is worth a touch more in the endgame) and are cheap to include as MG/EG
-  pairs.
+- **Taper material too?** Answered **no, in the end** — and the reason is worth
+  keeping. A tapered-endgame-material experiment measured neutral and was shelved;
+  so did a joint endgame-PST tune. Re-reading both told the real story: what looked
+  like an endgame-material signal was a uniform per-piece offset, which is a
+  *material* signal rather than a placement one. The queen was simply undervalued
+  in the midgame. Raising it 900 → 1000 outright captured the whole effect at
+  **+12.6 Elo**, without any phase dependence (roadmap § 12.7.3). Lesson: a uniform
+  offset in an endgame-PST tune is telling you about material, not about squares.
 - **Which pieces get a split?** All six. Even where MG ≈ EG (e.g. knights), a
   negligible split costs nothing and keeps the model uniform.
 - **Phase granularity.** Integer `0..24` is standard and sufficient.
-- **Phase-scaling the non-PST terms** (king safety especially) — deferred to a
-  follow-up, but worth keeping in mind so the phase scalar is exposed in a way
-  those terms can reuse.
+- **Phase-scaling the non-PST terms** (king safety especially) — still deferred.
+  The phase scalar is exposed and reusable, but king safety itself remains open
+  (roadmap § 12.21, 13 pinned cases). Three hand-built attempts measured
+  net-negative; the pinned cases suggest why, and that the term would have to be
+  worth more than a pawn to change the decisions they capture.
 
 ---
 
-## 9. Success criteria
+## 9. Success criteria — and the result
 
 - **Step 0** measures Elo-neutral (plumbing correct).
 - **Step 1/2** measure non-negative-to-positive by SPRT against the step-0
@@ -240,3 +258,31 @@ independent of our tuner. Then compare our tuned result against that reference.
   [STS suite](https://www.chessprogramming.org/Strategic_Test_Suite) gives a
   direct read once phase-scaled king safety ([§ 12.21](roadmap.md#1221-king-safety--m--3060-elo))
   is layered on top.
+
+**How it turned out.** Step 0 measured neutral as required, and steps 1 and 2 landed
+positive — but the criterion that proved most informative was the third one, in the
+negative. The tuning proxy did start moving *with* Elo, which confirmed the phase
+confound was the thing that had blocked every earlier attempt.
+
+| Step | Change | Measured |
+|---|---|---|
+| v4.3.0 | tapered pawn endgame tables | **+22.3** |
+| v4.3.1 | king endgame table | **+7.7** |
+| v4.3.2 | queen 900 → 1000 (see § 8) | **+12.6** |
+| v4.3.3 | bishop-pair bonus | **+31.3** |
+| v4.3.4 | full joint MG+EG tune | **+23.0** |
+| v4.4.0 | PeSTO tables replace the tuned ones | **+32.6** |
+
+Two results deserve to be read together with the plan above, because they qualify it.
+
+**The first tapered attempt measured −15.6 Elo and was nearly abandoned.** The tuning
+was sound; the tables were stored in `byte[]` and the doubled values silently
+overflowed. A container bug had been read as a failed idea. Nothing in the checklist in
+§ 7 would have caught it — a storage-range check belongs there.
+
+**The last step overturned the conclusion of the one before it.** After the full joint
+tune, a PeSTO ceiling test measured ≈ 0 and was read as "the piece-square lever is
+exhausted, move on to search". Keeping both changes separately showed that null was two
+effects cancelling: PeSTO's tables are worth ≈ +33 over our tuned ones, and our
+non-table terms ≈ +36 on top of PeSTO's. A null result from changing two things at once
+says nothing about either.

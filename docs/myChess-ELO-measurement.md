@@ -4,9 +4,9 @@ How to get a defensible **absolute** Elo estimate for myChess — a number on
 the CCRL/FIDE scale, not just a relative "is this patch better?" delta.
 
 - **Relative** A/B testing (self-play SPRT) is covered by
-  [elo-testing.md](elo-testing.md) and the
-  [sprt-cutechess-template](../../.claude/projects/-Users-mf--PRIVAT--New-Stuff-myChess/memory/reference_sprt_cutechess_template.md)
-  memory — that is the everyday tool for measuring a change.
+  [elo-testing.md](elo-testing.md), which carries the canonical cutechess command
+  and the project's conventions (candidate engine first, `elo0=-3 elo1=15`,
+  `-ratinginterval 10`) — that is the everyday tool for measuring a change.
 - **This** document is the occasional, expensive measurement that re-anchors
   the whole [version-history.md](version-history.md) absolute-Elo column to
   reality: play myChess against externally-rated engines and let Ordo place it
@@ -305,8 +305,9 @@ is **≥ ~50 Elo**, i.e. at milestones:
 - For smaller per-version deltas, trust the version-history SPRT deltas — a full
   bracket (~15 h) would land inside its own error bar.
 
-See the [project_absolute_reanchor](../../.claude/projects/-Users-mf--PRIVAT--New-Stuff-myChess/memory/project_absolute_reanchor.md)
-memory for the standing plan and the exact launch command.
+The launch command is at the top of
+[`tools/run-anchor-bracket.sh`](../tools/run-anchor-bracket.sh), which is also where
+the anchor set and the tuning knobs live — the script is the standing plan.
 
 ---
 
