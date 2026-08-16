@@ -387,9 +387,14 @@ hoarding across moves, no panic mode on a low clock, no complexity scaling. That
 is roadmap [§ 12.12 (Real time management heuristics)](roadmap.md#1212-real-time-management-heuristics--s--m--3060-elo);
 the increment handling is its first slice, not the whole entry.
 
-**Not yet measured in a match.** Self-play at `tc=40/60` has no increment, so it
-is null by construction — an SPRT there measures nothing. The measurement that
-would say something runs at a control that carries one, e.g. `tc=60+1`.
+**Not yet measured in a match, and the usual SPRT would not measure it.** At
+`tc=40/60` — the control every measurement in this project uses — no `winc` is
+sent, so the increment branch never runs. What a self-play SPRT there *would*
+pick up is the other half of the same change: the per-move budget went from
+`clock / (movestogo + 1) − 50 ms` to `clock / (movestogo + 1)`, about **+3.5 %
+thinking time**, worth a couple of Elo at most and far inside the noise of any
+affordable run. Measuring the increment itself needs a control that carries one
+(e.g. `tc=60+1` or `3+2`) against a 4.4.1 baseline, which ignores it.
 
 ---
 
