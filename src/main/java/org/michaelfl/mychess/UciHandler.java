@@ -25,9 +25,16 @@ import java.util.concurrent.atomic.AtomicReference;
  *
  * <p>Supported commands: {@code uci}, {@code isready}, {@code ucinewgame},
  * {@code position [startpos|fen ...] [moves ...]},
- * {@code go [movetime N | wtime A btime B [movestogo K] | depth D | infinite]},
- * {@code stop}, {@code quit}. Anything else is silently ignored per the UCI
- * specification.
+ * {@code go [movetime N | wtime A btime B [winc I] [binc J] [movestogo K]
+ * | depth D | infinite]}, {@code stop}, {@code quit}. Anything else is
+ * silently ignored per the UCI specification.
+ *
+ * <p>In the clock branch only the side-to-move's own {@code wtime} /
+ * {@code btime} is required. {@code winc} / {@code binc} and {@code movestogo}
+ * are optional and are read independently of one another, because the protocol
+ * guarantees no grouping — a GUI may send an increment for one color only.
+ * A missing {@code movestogo} falls back to {@link #DEFAULT_MOVES_TO_GO}, a
+ * missing increment to zero; see {@link #computeClockBudgetMillis}.
  *
  * @author Michael Fleischhauer
  */
@@ -54,6 +61,9 @@ final class UciHandler {
 
     /** Ceiling on go infinite / go depth N (effectively unbounded). 24 h in ms. */
     private static final int INFINITE_MILLIS = 24 * 60 * 60 * 1_000;
+
+    /** Percentage of the increment to be used per move. */
+    private static final int INCREMENT_USE_PERCENTAGE = 80;
 
     private final MyChessEnv env;
     private final BufferedReader in;
@@ -528,12 +538,14 @@ final class UciHandler {
         int fullMoveNumber = (plyCountAtStart / 2) + 1;
 
         Log.info(String.format(Locale.ROOT,
-                "[go] game=%s color=%s move=%d wtime=%s btime=%s movestogo=%s movetime=%s budget=%d",
+                "[go] game=%s color=%s move=%d wtime=%s btime=%s movestogo=%s movetime=%s winc=%s binc=%s budget=%d",
                 shortGameId(), color, fullMoveNumber,
                 formatNullable(args.wtime()),
                 formatNullable(args.btime()),
                 formatNullable(args.movestogo()),
                 formatNullable(args.movetimeMs()),
+                formatNullable(args.winc()),
+                formatNullable(args.binc()),
                 args.timeBudgetMillis()));
     }
 
@@ -729,14 +741,16 @@ final class UciHandler {
     // ---- Time management ----
 
     /**
-     * Decoded {@code go} command. {@code wtime}/{@code btime}/{@code movestogo}/
-     * {@code movetimeMs} are kept as nullable carry-throughs from the raw
-     * tokens so that {@link #handleGo} can log them verbatim in the
-     * {@code [go]} diagnostic line for post-mortem time-budget analysis.
+     * Decoded {@code go} command. {@code wtime}/{@code btime}/{@code winc}/
+     * {@code binc}/{@code movestogo}/{@code movetimeMs} are kept as nullable
+     * carry-throughs from the raw tokens so that {@link #handleGo} can log them
+     * verbatim in the {@code [go]} diagnostic line for post-mortem time-budget
+     * analysis. Nullable rather than defaulted: the log has to distinguish
+     * "the GUI sent no increment" from "the GUI sent zero".
      */
     private record GoArgs(int maxDepth, int timeBudgetMillis,
                           Integer wtime, Integer btime, Integer movestogo,
-                          Integer movetimeMs) {}
+                          Integer movetimeMs, Integer winc, Integer binc) {}
 
     /** Mutable intermediate holder for the raw {@code go ...} tokens. */
     private static final class RawGoTokens {
@@ -746,6 +760,8 @@ final class UciHandler {
         Integer btime;
         Integer movestogo;
         boolean infinite;
+        Integer winc;
+        Integer binc;
     }
 
     private static GoArgs parseGoArgs(String line, int turn) {
@@ -753,7 +769,7 @@ final class UciHandler {
         int budgetMillis = computeBudgetMillis(raw, turn);
 
         return new GoArgs(raw.maxDepth, budgetMillis,
-                raw.wtime, raw.btime, raw.movestogo, raw.movetimeMs);
+                raw.wtime, raw.btime, raw.movestogo, raw.movetimeMs, raw.winc, raw.binc);
     }
 
     @SuppressWarnings("java:S127")
@@ -769,6 +785,8 @@ final class UciHandler {
                 case "btime" -> raw.btime = readIntValue(tokens, ++i, 0);
                 case "movestogo" -> raw.movestogo = readIntValue(tokens, ++i, 0);
                 case "infinite" -> raw.infinite = true;
+                case "winc" -> raw.winc = readIntValue(tokens, ++i, 0);
+                case "binc" -> raw.binc = readIntValue(tokens, ++i, 0);
                 default -> { /* ignore unknown go-args */ }
             }
         }
@@ -786,18 +804,41 @@ final class UciHandler {
             // Strict GUIs treat that as a time forfeit.
             return Math.max(MIN_BUDGET_MS, raw.movetimeMs - TIME_SAFETY_MARGIN_MS);
         }
-        if (raw.wtime != null && raw.btime != null) {
-            return computeClockBudgetMillis(raw, turn);
+
+        Integer ourMs = (turn == GameStatus.TURN_WHITE) ? raw.wtime : raw.btime;
+        if (ourMs != null) {
+            Integer ourIncMs = (turn == GameStatus.TURN_WHITE) ? raw.winc : raw.binc;
+            int movesToGo = raw.movestogo != null ? raw.movestogo : DEFAULT_MOVES_TO_GO;
+            return computeClockBudgetMillis(ourMs, ourIncMs != null ? ourIncMs : 0, movesToGo);
         }
 
         return INFINITE_MILLIS;   // depth-only or no args
     }
 
-    private static int computeClockBudgetMillis(RawGoTokens raw, int turn) {
-        int ourMs = (turn == GameStatus.TURN_WHITE) ? raw.wtime : raw.btime;
-        int movesToGo = raw.movestogo != null ? raw.movestogo : DEFAULT_MOVES_TO_GO;
+    /**
+     * Per-move budget from the side-to-move's own clock: a share of the remaining
+     * time plus {@link #INCREMENT_USE_PERCENTAGE} of the increment it is about to
+     * earn back, never more than the clock itself minus
+     * {@link #TIME_SAFETY_MARGIN_MS} and never less than {@link #MIN_BUDGET_MS}.
+     *
+     * <p>{@code movesToGo} is a spending <em>rate</em>, not a prediction of the
+     * game's length: it is re-applied to the shrinking remainder on every move, so
+     * the budget decays geometrically rather than running out at move
+     * {@code movesToGo}. Spending less than the full increment keeps that decay
+     * from being cancelled out on increment controls.
+     *
+     * @param ourMs     remaining clock of the side to move, in milliseconds; may
+     *                  be zero or negative when the GUI reports an overstepped clock
+     * @param ourIncMs  per-move increment of the side to move, zero if none was sent
+     * @param movesToGo moves the budget is spread over — {@code movestogo} if the
+     *                  GUI sent one, otherwise {@link #DEFAULT_MOVES_TO_GO}
+     * @return the search budget in milliseconds, at least {@link #MIN_BUDGET_MS}
+     */
+    private static int computeClockBudgetMillis(int ourMs, int ourIncMs, int movesToGo) {
+        int clockBudgetMs = ourMs / (movesToGo + 1) + (INCREMENT_USE_PERCENTAGE * ourIncMs) / 100;
 
-        return Math.max(MIN_BUDGET_MS, ourMs / (movesToGo + 1) - TIME_SAFETY_MARGIN_MS);
+        //noinspection MathClampMigration
+        return Math.max(Math.min(clockBudgetMs, ourMs - TIME_SAFETY_MARGIN_MS), MIN_BUDGET_MS);
     }
 
     /**

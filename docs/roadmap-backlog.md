@@ -23,7 +23,7 @@ The full UCI protocol is large, but the subset needed for **"plays in HIARCS or 
 | `isready` | GUI → engine | reply `readyok` |
 | `ucinewgame` | GUI → engine | reset per-game state (empty handler for now) |
 | `position [startpos\|fen …] [moves …]` | GUI → engine | rebuild `Board` from FEN, replay moves |
-| `go [movetime N \| wtime N btime N \| depth N]` | GUI → engine | start `nextMoveAsync`, write `bestmove` when done |
+| `go [movetime N \| wtime N btime N [winc N binc N] \| depth N]` | GUI → engine | start `nextMoveAsync`, write `bestmove` when done |
 | `stop` | GUI → engine | `NextMoveTask.cancel()` |
 | `bestmove e2e4` | engine → GUI | the result of `go` |
 | `quit` | GUI → engine | exit |
@@ -47,7 +47,7 @@ A new class parallel to [`CommandHandler`](../src/main/java/org/michaelfl/myches
 - Reads stdin line-by-line via `IO.readln()` (same pattern as the REPL).
 - Token-parses the eight commands above.
 - Long-algebraic move parser: UCI sends `e2e4` (no dash, no piece letter); reuse [`SimpleNotationImporter`](../src/main/java/org/michaelfl/mychess/SimpleNotationImporter.java) with a trivial pre-processor that re-inserts the dash.
-- Time management: at `go wtime 300000 btime 300000 movestogo 40` allocate roughly `wtime / (movestogo + safety)` for this move. `go movetime 5000` is trivial: that many seconds. *This is a flat per-move budget — no clock-aware time hoarding, panic mode, or complexity-based scaling; see [§ 12.12](roadmap.md#1212-real-time-management-heuristics--s--m--3060-elo).*
+- Time management: at `go wtime 300000 btime 300000 movestogo 40` allocate roughly `wtime / (movestogo + safety)` for this move. `go movetime 5000` is trivial: that many seconds. *This is a flat per-move budget — no clock-aware time hoarding, panic mode, or complexity-based scaling; see [§ 12.12](roadmap.md#1212-real-time-management-heuristics--s--m--3060-elo).* **As built, it also adds 80 % of `winc`/`binc`** when the GUI sends one, capped by the remaining clock.
 - **Important:** `System.out.flush()` after every reply line, otherwise the GUI never sees output (Java's default stdout is line-buffered when connected to a pipe — many GUIs hang silently on this).
 - Start-up: in `MyChessMain`, if `args[0].equals("uci")` (or simply if the first stdin line is `uci`), run the `UciHandler` instead of the REPL.
 
