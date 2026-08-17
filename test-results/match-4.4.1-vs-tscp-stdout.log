@@ -1,0 +1,1434 @@
+Indexing opening suite...
+Started game 1 of 400 (myChess-4.4.1 vs TSCP)
+Started game 4 of 400 (TSCP vs myChess-4.4.1)
+Started game 2 of 400 (TSCP vs myChess-4.4.1)
+Started game 3 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 1 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 1 - 0 - 0  [1.000] 1
+Started game 5 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 4 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 2 - 0 - 0  [1.000] 2
+Started game 6 of 400 (TSCP vs myChess-4.4.1)
+Finished game 5 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 3 - 0 - 0  [1.000] 3
+Started game 7 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 3 (myChess-4.4.1 vs TSCP): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs TSCP: 3 - 0 - 1  [0.875] 4
+Started game 8 of 400 (TSCP vs myChess-4.4.1)
+Finished game 7 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 3 - 1 - 1  [0.700] 5
+Started game 9 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 6 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 3 - 2 - 1  [0.583] 6
+Started game 10 of 400 (TSCP vs myChess-4.4.1)
+Finished game 2 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 3 - 3 - 1  [0.500] 7
+Started game 11 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 9 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 4 - 3 - 1  [0.563] 8
+Started game 12 of 400 (TSCP vs myChess-4.4.1)
+Finished game 8 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 5 - 3 - 1  [0.611] 9
+Started game 13 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 11 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 6 - 3 - 1  [0.650] 10
+...      myChess-4.4.1 playing White: 4 - 1 - 1  [0.750] 6
+...      myChess-4.4.1 playing Black: 2 - 2 - 0  [0.500] 4
+...      White vs Black: 6 - 3 - 1  [0.650] 10
+Elo difference: 107.5 +/- 268.4, LOS: 84.1 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 14 of 400 (TSCP vs myChess-4.4.1)
+Finished game 10 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 6 - 4 - 1  [0.591] 11
+Started game 15 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 12 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 7 - 4 - 1  [0.625] 12
+Started game 16 of 400 (TSCP vs myChess-4.4.1)
+Finished game 14 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 8 - 4 - 1  [0.654] 13
+Started game 17 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 15 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 8 - 5 - 1  [0.607] 14
+Started game 18 of 400 (TSCP vs myChess-4.4.1)
+Finished game 13 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 9 - 5 - 1  [0.633] 15
+Started game 19 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 19 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 10 - 5 - 1  [0.656] 16
+Started game 20 of 400 (TSCP vs myChess-4.4.1)
+Finished game 17 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 11 - 5 - 1  [0.676] 17
+Started game 21 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 18 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 12 - 5 - 1  [0.694] 18
+Started game 22 of 400 (TSCP vs myChess-4.4.1)
+Finished game 16 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 13 - 5 - 1  [0.711] 19
+Started game 23 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 20 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 14 - 5 - 1  [0.725] 20
+...      myChess-4.4.1 playing White: 7 - 2 - 1  [0.750] 10
+...      myChess-4.4.1 playing Black: 7 - 3 - 0  [0.700] 10
+...      White vs Black: 10 - 9 - 1  [0.525] 20
+Elo difference: 168.4 +/- 193.0, LOS: 98.1 %, DrawRatio: 5.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 24 of 400 (TSCP vs myChess-4.4.1)
+Finished game 21 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 15 - 5 - 1  [0.738] 21
+Started game 25 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 23 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 16 - 5 - 1  [0.750] 22
+Started game 26 of 400 (TSCP vs myChess-4.4.1)
+Finished game 25 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 17 - 5 - 1  [0.761] 23
+Started game 27 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 24 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 18 - 5 - 1  [0.771] 24
+Started game 28 of 400 (TSCP vs myChess-4.4.1)
+Finished game 26 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 19 - 5 - 1  [0.780] 25
+Started game 29 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 29 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 20 - 5 - 1  [0.788] 26
+Started game 30 of 400 (TSCP vs myChess-4.4.1)
+Finished game 28 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 21 - 5 - 1  [0.796] 27
+Started game 31 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 30 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 22 - 5 - 1  [0.804] 28
+Started game 32 of 400 (TSCP vs myChess-4.4.1)
+Finished game 22 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs TSCP: 22 - 5 - 2  [0.793] 29
+Started game 33 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 32 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 23 - 5 - 2  [0.800] 30
+...      myChess-4.4.1 playing White: 11 - 2 - 1  [0.821] 14
+...      myChess-4.4.1 playing Black: 12 - 3 - 1  [0.781] 16
+...      White vs Black: 14 - 14 - 2  [0.500] 30
+Elo difference: 240.8 +/- 172.5, LOS: 100.0 %, DrawRatio: 6.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 34 of 400 (TSCP vs myChess-4.4.1)
+Finished game 31 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 24 - 5 - 2  [0.806] 31
+Started game 35 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 27 (myChess-4.4.1 vs TSCP): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs TSCP: 24 - 5 - 3  [0.797] 32
+Started game 36 of 400 (TSCP vs myChess-4.4.1)
+Finished game 33 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 25 - 5 - 3  [0.803] 33
+Started game 37 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 36 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 26 - 5 - 3  [0.809] 34
+Started game 38 of 400 (TSCP vs myChess-4.4.1)
+Finished game 35 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 27 - 5 - 3  [0.814] 35
+Started game 39 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 34 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 28 - 5 - 3  [0.819] 36
+Started game 40 of 400 (TSCP vs myChess-4.4.1)
+Finished game 38 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 29 - 5 - 3  [0.824] 37
+Started game 41 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 37 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 29 - 6 - 3  [0.803] 38
+Started game 42 of 400 (TSCP vs myChess-4.4.1)
+Finished game 41 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 30 - 6 - 3  [0.808] 39
+Started game 43 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 42 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 31 - 6 - 3  [0.813] 40
+...      myChess-4.4.1 playing White: 15 - 3 - 2  [0.800] 20
+...      myChess-4.4.1 playing Black: 16 - 3 - 1  [0.825] 20
+...      White vs Black: 18 - 19 - 3  [0.487] 40
+Elo difference: 254.7 +/- 145.6, LOS: 100.0 %, DrawRatio: 7.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 44 of 400 (TSCP vs myChess-4.4.1)
+Finished game 39 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 32 - 6 - 3  [0.817] 41
+Started game 45 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 40 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 32 - 7 - 3  [0.798] 42
+Started game 46 of 400 (TSCP vs myChess-4.4.1)
+Finished game 44 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 33 - 7 - 3  [0.802] 43
+Started game 47 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 43 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 34 - 7 - 3  [0.807] 44
+Started game 48 of 400 (TSCP vs myChess-4.4.1)
+Finished game 46 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 35 - 7 - 3  [0.811] 45
+Started game 49 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 47 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 36 - 7 - 3  [0.815] 46
+Started game 50 of 400 (TSCP vs myChess-4.4.1)
+Finished game 45 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 37 - 7 - 3  [0.819] 47
+Started game 51 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 48 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 38 - 7 - 3  [0.823] 48
+Started game 52 of 400 (TSCP vs myChess-4.4.1)
+Finished game 49 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 39 - 7 - 3  [0.827] 49
+Started game 53 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 51 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 40 - 7 - 3  [0.830] 50
+...      myChess-4.4.1 playing White: 21 - 3 - 2  [0.846] 26
+...      myChess-4.4.1 playing Black: 19 - 4 - 1  [0.813] 24
+...      White vs Black: 25 - 22 - 3  [0.530] 50
+Elo difference: 275.5 +/- 135.3, LOS: 100.0 %, DrawRatio: 6.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 54 of 400 (TSCP vs myChess-4.4.1)
+Finished game 50 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 41 - 7 - 3  [0.833] 51
+Started game 55 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 53 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 42 - 7 - 3  [0.837] 52
+Started game 56 of 400 (TSCP vs myChess-4.4.1)
+Finished game 54 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 42 - 8 - 3  [0.821] 53
+Started game 57 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 56 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 42 - 9 - 3  [0.806] 54
+Started game 58 of 400 (TSCP vs myChess-4.4.1)
+Finished game 52 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs TSCP: 42 - 9 - 4  [0.800] 55
+Started game 59 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 57 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 43 - 9 - 4  [0.804] 56
+Started game 60 of 400 (TSCP vs myChess-4.4.1)
+Finished game 55 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 44 - 9 - 4  [0.807] 57
+Started game 61 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 58 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 45 - 9 - 4  [0.810] 58
+Started game 62 of 400 (TSCP vs myChess-4.4.1)
+Finished game 60 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 46 - 9 - 4  [0.814] 59
+Started game 63 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 59 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 46 - 10 - 4  [0.800] 60
+...      myChess-4.4.1 playing White: 24 - 4 - 2  [0.833] 30
+...      myChess-4.4.1 playing Black: 22 - 6 - 2  [0.767] 30
+...      White vs Black: 30 - 26 - 4  [0.533] 60
+Elo difference: 240.8 +/- 111.3, LOS: 100.0 %, DrawRatio: 6.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 64 of 400 (TSCP vs myChess-4.4.1)
+Finished game 62 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 47 - 10 - 4  [0.803] 61
+Started game 65 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 63 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 48 - 10 - 4  [0.806] 62
+Started game 66 of 400 (TSCP vs myChess-4.4.1)
+Finished game 65 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 49 - 10 - 4  [0.810] 63
+Started game 67 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 64 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 50 - 10 - 4  [0.813] 64
+Started game 68 of 400 (TSCP vs myChess-4.4.1)
+Finished game 61 (myChess-4.4.1 vs TSCP): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs TSCP: 50 - 10 - 5  [0.808] 65
+Started game 69 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 66 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 51 - 10 - 5  [0.811] 66
+Started game 70 of 400 (TSCP vs myChess-4.4.1)
+Finished game 67 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 52 - 10 - 5  [0.813] 67
+Started game 71 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 69 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 53 - 10 - 5  [0.816] 68
+Started game 72 of 400 (TSCP vs myChess-4.4.1)
+Finished game 70 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 53 - 11 - 5  [0.804] 69
+Started game 73 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 68 (TSCP vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs TSCP: 54 - 11 - 5  [0.807] 70
+...      myChess-4.4.1 playing White: 28 - 4 - 3  [0.843] 35
+...      myChess-4.4.1 playing Black: 26 - 7 - 2  [0.771] 35
+...      White vs Black: 35 - 30 - 5  [0.536] 70
+Elo difference: 248.7 +/- 103.0, LOS: 100.0 %, DrawRatio: 7.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 74 of 400 (TSCP vs myChess-4.4.1)
+Finished game 72 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 55 - 11 - 5  [0.810] 71
+Started game 75 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 73 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 56 - 11 - 5  [0.813] 72
+Started game 76 of 400 (TSCP vs myChess-4.4.1)
+Finished game 74 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 57 - 11 - 5  [0.815] 73
+Started game 77 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 71 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 58 - 11 - 5  [0.818] 74
+Started game 78 of 400 (TSCP vs myChess-4.4.1)
+Finished game 77 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 59 - 11 - 5  [0.820] 75
+Started game 79 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 75 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 60 - 11 - 5  [0.822] 76
+Started game 80 of 400 (TSCP vs myChess-4.4.1)
+Finished game 76 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 61 - 11 - 5  [0.825] 77
+Started game 81 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 78 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 62 - 11 - 5  [0.827] 78
+Started game 82 of 400 (TSCP vs myChess-4.4.1)
+Finished game 79 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 62 - 12 - 5  [0.816] 79
+Started game 83 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 81 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 63 - 12 - 5  [0.819] 80
+...      myChess-4.4.1 playing White: 33 - 5 - 3  [0.841] 41
+...      myChess-4.4.1 playing Black: 30 - 7 - 2  [0.795] 39
+...      White vs Black: 40 - 35 - 5  [0.531] 80
+Elo difference: 261.9 +/- 99.0, LOS: 100.0 %, DrawRatio: 6.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 84 of 400 (TSCP vs myChess-4.4.1)
+Finished game 80 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 64 - 12 - 5  [0.821] 81
+Started game 85 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 82 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs TSCP: 64 - 12 - 6  [0.817] 82
+Started game 86 of 400 (TSCP vs myChess-4.4.1)
+Finished game 85 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 64 - 13 - 6  [0.807] 83
+Started game 87 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 86 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 65 - 13 - 6  [0.810] 84
+Started game 88 of 400 (TSCP vs myChess-4.4.1)
+Finished game 84 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 65 - 14 - 6  [0.800] 85
+Started game 89 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 87 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 66 - 14 - 6  [0.802] 86
+Started game 90 of 400 (TSCP vs myChess-4.4.1)
+Finished game 88 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 67 - 14 - 6  [0.805] 87
+Started game 91 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 89 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 68 - 14 - 6  [0.807] 88
+Started game 92 of 400 (TSCP vs myChess-4.4.1)
+Finished game 91 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 69 - 14 - 6  [0.809] 89
+Started game 93 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 90 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 70 - 14 - 6  [0.811] 90
+...      myChess-4.4.1 playing White: 36 - 6 - 3  [0.833] 45
+...      myChess-4.4.1 playing Black: 34 - 8 - 3  [0.789] 45
+...      White vs Black: 44 - 40 - 6  [0.522] 90
+Elo difference: 253.1 +/- 90.7, LOS: 100.0 %, DrawRatio: 6.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 94 of 400 (TSCP vs myChess-4.4.1)
+Finished game 83 (myChess-4.4.1 vs TSCP): 1/2-1/2 {Draw by adjudication}
+Score of myChess-4.4.1 vs TSCP: 70 - 14 - 7  [0.808] 91
+Started game 95 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 92 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 71 - 14 - 7  [0.810] 92
+Started game 96 of 400 (TSCP vs myChess-4.4.1)
+Finished game 95 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 71 - 15 - 7  [0.801] 93
+Started game 97 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 93 (myChess-4.4.1 vs TSCP): 1/2-1/2 {Draw by adjudication}
+Score of myChess-4.4.1 vs TSCP: 71 - 15 - 8  [0.798] 94
+Started game 98 of 400 (TSCP vs myChess-4.4.1)
+Finished game 96 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs TSCP: 71 - 15 - 9  [0.795] 95
+Started game 99 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 98 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 72 - 15 - 9  [0.797] 96
+Started game 100 of 400 (TSCP vs myChess-4.4.1)
+Finished game 100 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 73 - 15 - 9  [0.799] 97
+Started game 101 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 97 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 74 - 15 - 9  [0.801] 98
+Started game 102 of 400 (TSCP vs myChess-4.4.1)
+Finished game 94 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of myChess-4.4.1 vs TSCP: 74 - 15 - 10  [0.798] 99
+Started game 103 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 99 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 75 - 15 - 10  [0.800] 100
+...      myChess-4.4.1 playing White: 38 - 7 - 5  [0.810] 50
+...      myChess-4.4.1 playing Black: 37 - 8 - 5  [0.790] 50
+...      White vs Black: 46 - 44 - 10  [0.510] 100
+Elo difference: 240.8 +/- 81.0, LOS: 100.0 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 104 of 400 (TSCP vs myChess-4.4.1)
+Finished game 103 (myChess-4.4.1 vs TSCP): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs TSCP: 75 - 15 - 11  [0.797] 101
+Started game 105 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 101 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 76 - 15 - 11  [0.799] 102
+Started game 106 of 400 (TSCP vs myChess-4.4.1)
+Finished game 102 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs TSCP: 76 - 15 - 12  [0.796] 103
+Started game 107 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 104 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 76 - 16 - 12  [0.788] 104
+Started game 108 of 400 (TSCP vs myChess-4.4.1)
+Finished game 105 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 77 - 16 - 12  [0.790] 105
+Started game 109 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 106 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 78 - 16 - 12  [0.792] 106
+Started game 110 of 400 (TSCP vs myChess-4.4.1)
+Finished game 107 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 79 - 16 - 12  [0.794] 107
+Started game 111 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 109 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 80 - 16 - 12  [0.796] 108
+Started game 112 of 400 (TSCP vs myChess-4.4.1)
+Finished game 108 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 81 - 16 - 12  [0.798] 109
+Started game 113 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 110 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 82 - 16 - 12  [0.800] 110
+...      myChess-4.4.1 playing White: 42 - 7 - 6  [0.818] 55
+...      myChess-4.4.1 playing Black: 40 - 9 - 6  [0.782] 55
+...      White vs Black: 51 - 47 - 12  [0.518] 110
+Elo difference: 240.8 +/- 76.3, LOS: 100.0 %, DrawRatio: 10.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 114 of 400 (TSCP vs myChess-4.4.1)
+Finished game 112 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 83 - 16 - 12  [0.802] 111
+Started game 115 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 111 (myChess-4.4.1 vs TSCP): 1-0 {Black makes an illegal move: e2e1q}
+Score of myChess-4.4.1 vs TSCP: 84 - 16 - 12  [0.804] 112
+Started game 116 of 400 (TSCP vs myChess-4.4.1)
+Finished game 115 (myChess-4.4.1 vs TSCP): 1-0 {White mates}
+Score of myChess-4.4.1 vs TSCP: 85 - 16 - 12  [0.805] 113
+Started game 117 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 113 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 85 - 17 - 12  [0.798] 114
+Started game 118 of 400 (TSCP vs myChess-4.4.1)
+Finished game 114 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 86 - 17 - 12  [0.800] 115
+Started game 119 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 119 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 87 - 17 - 12  [0.802] 116
+Started game 120 of 400 (TSCP vs myChess-4.4.1)
+Finished game 117 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 88 - 17 - 12  [0.803] 117
+Started game 121 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 121 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 89 - 17 - 12  [0.805] 118
+Started game 122 of 400 (TSCP vs myChess-4.4.1)
+Finished game 116 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 90 - 17 - 12  [0.807] 119
+Started game 123 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 120 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 91 - 17 - 12  [0.808] 120
+...      myChess-4.4.1 playing White: 47 - 8 - 6  [0.820] 61
+...      myChess-4.4.1 playing Black: 44 - 9 - 6  [0.797] 59
+...      White vs Black: 56 - 52 - 12  [0.517] 120
+Elo difference: 250.0 +/- 74.6, LOS: 100.0 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 124 of 400 (TSCP vs myChess-4.4.1)
+Finished game 123 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 92 - 17 - 12  [0.810] 121
+Started game 125 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 118 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs TSCP: 92 - 17 - 13  [0.807] 122
+Started game 126 of 400 (TSCP vs myChess-4.4.1)
+Finished game 125 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 93 - 17 - 13  [0.809] 123
+Started game 127 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 124 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 93 - 18 - 13  [0.802] 124
+Started game 128 of 400 (TSCP vs myChess-4.4.1)
+Finished game 122 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs TSCP: 93 - 18 - 14  [0.800] 125
+Started game 129 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 126 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 94 - 18 - 14  [0.802] 126
+Started game 130 of 400 (TSCP vs myChess-4.4.1)
+Finished game 127 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 95 - 18 - 14  [0.803] 127
+Started game 131 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 128 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 95 - 19 - 14  [0.797] 128
+Started game 132 of 400 (TSCP vs myChess-4.4.1)
+Finished game 129 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 96 - 19 - 14  [0.798] 129
+Started game 133 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 130 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 97 - 19 - 14  [0.800] 130
+...      myChess-4.4.1 playing White: 51 - 8 - 6  [0.831] 65
+...      myChess-4.4.1 playing Black: 46 - 11 - 8  [0.769] 65
+...      White vs Black: 62 - 54 - 14  [0.531] 130
+Elo difference: 240.8 +/- 69.9, LOS: 100.0 %, DrawRatio: 10.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 134 of 400 (TSCP vs myChess-4.4.1)
+Finished game 132 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 98 - 19 - 14  [0.802] 131
+Started game 135 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 134 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 99 - 19 - 14  [0.803] 132
+Started game 136 of 400 (TSCP vs myChess-4.4.1)
+Finished game 133 (myChess-4.4.1 vs TSCP): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs TSCP: 99 - 19 - 15  [0.801] 133
+Started game 137 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 131 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 100 - 19 - 15  [0.802] 134
+Started game 138 of 400 (TSCP vs myChess-4.4.1)
+Finished game 136 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 101 - 19 - 15  [0.804] 135
+Started game 139 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 135 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 102 - 19 - 15  [0.805] 136
+Started game 140 of 400 (TSCP vs myChess-4.4.1)
+Finished game 137 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 103 - 19 - 15  [0.807] 137
+Started game 141 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 139 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 104 - 19 - 15  [0.808] 138
+Started game 142 of 400 (TSCP vs myChess-4.4.1)
+Finished game 138 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 105 - 19 - 15  [0.809] 139
+Started game 143 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 140 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 106 - 19 - 15  [0.811] 140
+...      myChess-4.4.1 playing White: 55 - 8 - 7  [0.836] 70
+...      myChess-4.4.1 playing Black: 51 - 11 - 8  [0.786] 70
+...      White vs Black: 66 - 59 - 15  [0.525] 140
+Elo difference: 252.7 +/- 68.5, LOS: 100.0 %, DrawRatio: 10.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 144 of 400 (TSCP vs myChess-4.4.1)
+Finished game 141 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 107 - 19 - 15  [0.812] 141
+Started game 145 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 143 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 108 - 19 - 15  [0.813] 142
+Started game 146 of 400 (TSCP vs myChess-4.4.1)
+Finished game 144 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 109 - 19 - 15  [0.815] 143
+Started game 147 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 147 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 110 - 19 - 15  [0.816] 144
+Started game 148 of 400 (TSCP vs myChess-4.4.1)
+Finished game 145 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 111 - 19 - 15  [0.817] 145
+Started game 149 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 142 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 112 - 19 - 15  [0.818] 146
+Started game 150 of 400 (TSCP vs myChess-4.4.1)
+Finished game 146 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 113 - 19 - 15  [0.820] 147
+Started game 151 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 149 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 114 - 19 - 15  [0.821] 148
+Started game 152 of 400 (TSCP vs myChess-4.4.1)
+Finished game 150 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 114 - 20 - 15  [0.815] 149
+Started game 153 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 151 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 114 - 21 - 15  [0.810] 150
+...      myChess-4.4.1 playing White: 60 - 9 - 7  [0.836] 76
+...      myChess-4.4.1 playing Black: 54 - 12 - 8  [0.784] 74
+...      White vs Black: 72 - 63 - 15  [0.530] 150
+Elo difference: 251.9 +/- 66.5, LOS: 100.0 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 154 of 400 (TSCP vs myChess-4.4.1)
+Finished game 148 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 114 - 22 - 15  [0.805] 151
+Started game 155 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 152 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 114 - 23 - 15  [0.799] 152
+Started game 156 of 400 (TSCP vs myChess-4.4.1)
+Finished game 156 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 115 - 23 - 15  [0.801] 153
+Started game 157 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 153 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 116 - 23 - 15  [0.802] 154
+Started game 158 of 400 (TSCP vs myChess-4.4.1)
+Finished game 155 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 116 - 24 - 15  [0.797] 155
+Started game 159 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 154 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 117 - 24 - 15  [0.798] 156
+Started game 160 of 400 (TSCP vs myChess-4.4.1)
+Finished game 157 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 118 - 24 - 15  [0.799] 157
+Started game 161 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 160 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 118 - 25 - 15  [0.794] 158
+Started game 162 of 400 (TSCP vs myChess-4.4.1)
+Finished game 159 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 119 - 25 - 15  [0.796] 159
+Started game 163 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 163 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 120 - 25 - 15  [0.797] 160
+...      myChess-4.4.1 playing White: 64 - 10 - 7  [0.833] 81
+...      myChess-4.4.1 playing Black: 56 - 15 - 8  [0.759] 79
+...      White vs Black: 79 - 66 - 15  [0.541] 160
+Elo difference: 237.5 +/- 63.2, LOS: 100.0 %, DrawRatio: 9.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 164 of 400 (TSCP vs myChess-4.4.1)
+Finished game 161 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 120 - 26 - 15  [0.792] 161
+Started game 165 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 162 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 121 - 26 - 15  [0.793] 162
+Started game 166 of 400 (TSCP vs myChess-4.4.1)
+Finished game 164 (TSCP vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs TSCP: 122 - 26 - 15  [0.794] 163
+Started game 167 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 167 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 123 - 26 - 15  [0.796] 164
+Started game 168 of 400 (TSCP vs myChess-4.4.1)
+Finished game 166 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 124 - 26 - 15  [0.797] 165
+Started game 169 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 165 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 125 - 26 - 15  [0.798] 166
+Started game 170 of 400 (TSCP vs myChess-4.4.1)
+Terminating process of engine TSCP(5)
+Finished game 158 (TSCP vs myChess-4.4.1): 0-1 {White's connection stalls}
+Score of myChess-4.4.1 vs TSCP: 126 - 26 - 15  [0.799] 167
+Started game 171 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 168 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 126 - 27 - 15  [0.795] 168
+Started game 172 of 400 (TSCP vs myChess-4.4.1)
+Finished game 169 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 126 - 28 - 15  [0.790] 169
+Started game 173 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 170 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 127 - 28 - 15  [0.791] 170
+...      myChess-4.4.1 playing White: 66 - 12 - 7  [0.818] 85
+...      myChess-4.4.1 playing Black: 61 - 16 - 8  [0.765] 85
+...      White vs Black: 82 - 73 - 15  [0.526] 170
+Elo difference: 231.4 +/- 61.0, LOS: 100.0 %, DrawRatio: 8.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 174 of 400 (TSCP vs myChess-4.4.1)
+Finished game 172 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 128 - 28 - 15  [0.792] 171
+Started game 175 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 175 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 129 - 28 - 15  [0.794] 172
+Started game 176 of 400 (TSCP vs myChess-4.4.1)
+Finished game 174 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 130 - 28 - 15  [0.795] 173
+Started game 177 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 173 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 131 - 28 - 15  [0.796] 174
+Started game 178 of 400 (TSCP vs myChess-4.4.1)
+Finished game 171 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 132 - 28 - 15  [0.797] 175
+Started game 179 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 177 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 133 - 28 - 15  [0.798] 176
+Started game 180 of 400 (TSCP vs myChess-4.4.1)
+Finished game 176 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs TSCP: 133 - 28 - 16  [0.797] 177
+Started game 181 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 179 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 134 - 28 - 16  [0.798] 178
+Started game 182 of 400 (TSCP vs myChess-4.4.1)
+Finished game 178 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 135 - 28 - 16  [0.799] 179
+Started game 183 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 180 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 136 - 28 - 16  [0.800] 180
+...      myChess-4.4.1 playing White: 71 - 12 - 7  [0.828] 90
+...      myChess-4.4.1 playing Black: 65 - 16 - 9  [0.772] 90
+...      White vs Black: 87 - 77 - 16  [0.528] 180
+Elo difference: 240.8 +/- 60.0, LOS: 100.0 %, DrawRatio: 8.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 184 of 400 (TSCP vs myChess-4.4.1)
+Finished game 183 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 137 - 28 - 16  [0.801] 181
+Started game 185 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 181 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 138 - 28 - 16  [0.802] 182
+Started game 186 of 400 (TSCP vs myChess-4.4.1)
+Finished game 182 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 139 - 28 - 16  [0.803] 183
+Started game 187 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 184 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 140 - 28 - 16  [0.804] 184
+Started game 188 of 400 (TSCP vs myChess-4.4.1)
+Finished game 186 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 141 - 28 - 16  [0.805] 185
+Started game 189 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 187 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 142 - 28 - 16  [0.806] 186
+Started game 190 of 400 (TSCP vs myChess-4.4.1)
+Finished game 185 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 143 - 28 - 16  [0.807] 187
+Started game 191 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 189 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 143 - 29 - 16  [0.803] 188
+Started game 192 of 400 (TSCP vs myChess-4.4.1)
+Finished game 191 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 144 - 29 - 16  [0.804] 189
+Started game 193 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 190 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 145 - 29 - 16  [0.805] 190
+...      myChess-4.4.1 playing White: 76 - 13 - 7  [0.828] 96
+...      myChess-4.4.1 playing Black: 69 - 16 - 9  [0.782] 94
+...      White vs Black: 92 - 82 - 16  [0.526] 190
+Elo difference: 246.6 +/- 59.1, LOS: 100.0 %, DrawRatio: 8.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 194 of 400 (TSCP vs myChess-4.4.1)
+Finished game 194 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 145 - 30 - 16  [0.801] 191
+Started game 195 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 192 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 146 - 30 - 16  [0.802] 192
+Started game 196 of 400 (TSCP vs myChess-4.4.1)
+Finished game 188 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs TSCP: 146 - 30 - 17  [0.801] 193
+Started game 197 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 193 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 147 - 30 - 17  [0.802] 194
+Started game 198 of 400 (TSCP vs myChess-4.4.1)
+Finished game 196 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 148 - 30 - 17  [0.803] 195
+Started game 199 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 195 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 148 - 31 - 17  [0.798] 196
+Started game 200 of 400 (TSCP vs myChess-4.4.1)
+Finished game 197 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 149 - 31 - 17  [0.799] 197
+Started game 201 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 199 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 150 - 31 - 17  [0.801] 198
+Started game 202 of 400 (TSCP vs myChess-4.4.1)
+Finished game 198 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 151 - 31 - 17  [0.802] 199
+Started game 203 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 200 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 152 - 31 - 17  [0.802] 200
+...      myChess-4.4.1 playing White: 79 - 14 - 7  [0.825] 100
+...      myChess-4.4.1 playing Black: 73 - 17 - 10  [0.780] 100
+...      White vs Black: 96 - 87 - 17  [0.522] 200
+Elo difference: 243.6 +/- 57.3, LOS: 100.0 %, DrawRatio: 8.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 204 of 400 (TSCP vs myChess-4.4.1)
+Finished game 201 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 153 - 31 - 17  [0.803] 201
+Started game 205 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 202 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 154 - 31 - 17  [0.804] 202
+Started game 206 of 400 (TSCP vs myChess-4.4.1)
+Finished game 205 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 155 - 31 - 17  [0.805] 203
+Started game 207 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 203 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 156 - 31 - 17  [0.806] 204
+Started game 208 of 400 (TSCP vs myChess-4.4.1)
+Finished game 204 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 156 - 32 - 17  [0.802] 205
+Started game 209 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 206 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 157 - 32 - 17  [0.803] 206
+Started game 210 of 400 (TSCP vs myChess-4.4.1)
+Finished game 208 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 158 - 32 - 17  [0.804] 207
+Started game 211 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 207 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 159 - 32 - 17  [0.805] 208
+Started game 212 of 400 (TSCP vs myChess-4.4.1)
+Finished game 209 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 160 - 32 - 17  [0.806] 209
+Started game 213 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 212 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 161 - 32 - 17  [0.807] 210
+...      myChess-4.4.1 playing White: 84 - 14 - 7  [0.833] 105
+...      myChess-4.4.1 playing Black: 77 - 18 - 10  [0.781] 105
+...      White vs Black: 102 - 91 - 17  [0.526] 210
+Elo difference: 248.7 +/- 56.5, LOS: 100.0 %, DrawRatio: 8.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 214 of 400 (TSCP vs myChess-4.4.1)
+Finished game 210 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 162 - 32 - 17  [0.808] 211
+Started game 215 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 213 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 163 - 32 - 17  [0.809] 212
+Started game 216 of 400 (TSCP vs myChess-4.4.1)
+Finished game 211 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 164 - 32 - 17  [0.810] 213
+Started game 217 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 216 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 165 - 32 - 17  [0.811] 214
+Started game 218 of 400 (TSCP vs myChess-4.4.1)
+Finished game 215 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 166 - 32 - 17  [0.812] 215
+Started game 219 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 217 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 166 - 33 - 17  [0.808] 216
+Started game 220 of 400 (TSCP vs myChess-4.4.1)
+Finished game 219 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 167 - 33 - 17  [0.809] 217
+Started game 221 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 218 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 168 - 33 - 17  [0.810] 218
+Started game 222 of 400 (TSCP vs myChess-4.4.1)
+Finished game 221 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 169 - 33 - 17  [0.811] 219
+Started game 223 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 214 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 170 - 33 - 17  [0.811] 220
+...      myChess-4.4.1 playing White: 89 - 15 - 7  [0.833] 111
+...      myChess-4.4.1 playing Black: 81 - 18 - 10  [0.789] 109
+...      White vs Black: 107 - 96 - 17  [0.525] 220
+Elo difference: 253.4 +/- 55.8, LOS: 100.0 %, DrawRatio: 7.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 224 of 400 (TSCP vs myChess-4.4.1)
+Finished game 222 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 171 - 33 - 17  [0.812] 221
+Started game 225 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 220 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs TSCP: 171 - 33 - 18  [0.811] 222
+Started game 226 of 400 (TSCP vs myChess-4.4.1)
+Finished game 223 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 171 - 34 - 18  [0.807] 223
+Started game 227 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 226 (TSCP vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs TSCP: 172 - 34 - 18  [0.808] 224
+Started game 228 of 400 (TSCP vs myChess-4.4.1)
+Finished game 224 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 172 - 35 - 18  [0.804] 225
+Started game 229 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 228 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 173 - 35 - 18  [0.805] 226
+Started game 230 of 400 (TSCP vs myChess-4.4.1)
+Finished game 225 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 174 - 35 - 18  [0.806] 227
+Started game 231 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 229 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 174 - 36 - 18  [0.803] 228
+Started game 232 of 400 (TSCP vs myChess-4.4.1)
+Finished game 227 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 175 - 36 - 18  [0.803] 229
+Started game 233 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 233 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 175 - 37 - 18  [0.800] 230
+...      myChess-4.4.1 playing White: 91 - 18 - 7  [0.815] 116
+...      myChess-4.4.1 playing Black: 84 - 19 - 11  [0.785] 114
+...      White vs Black: 110 - 102 - 18  [0.517] 230
+Elo difference: 240.8 +/- 53.4, LOS: 100.0 %, DrawRatio: 7.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 234 of 400 (TSCP vs myChess-4.4.1)
+Finished game 231 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 176 - 37 - 18  [0.801] 231
+Started game 235 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 232 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 177 - 37 - 18  [0.802] 232
+Started game 236 of 400 (TSCP vs myChess-4.4.1)
+Finished game 235 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 178 - 37 - 18  [0.803] 233
+Started game 237 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 234 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 179 - 37 - 18  [0.803] 234
+Started game 238 of 400 (TSCP vs myChess-4.4.1)
+Finished game 237 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 179 - 38 - 18  [0.800] 235
+Started game 239 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 236 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 179 - 39 - 18  [0.797] 236
+Started game 240 of 400 (TSCP vs myChess-4.4.1)
+Finished game 230 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs TSCP: 179 - 39 - 19  [0.795] 237
+Started game 241 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 241 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 179 - 40 - 19  [0.792] 238
+Started game 242 of 400 (TSCP vs myChess-4.4.1)
+Finished game 239 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 180 - 40 - 19  [0.793] 239
+Started game 243 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 238 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 181 - 40 - 19  [0.794] 240
+...      myChess-4.4.1 playing White: 94 - 20 - 7  [0.806] 121
+...      myChess-4.4.1 playing Black: 87 - 20 - 12  [0.782] 119
+...      White vs Black: 114 - 107 - 19  [0.515] 240
+Elo difference: 234.1 +/- 51.6, LOS: 100.0 %, DrawRatio: 7.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 244 of 400 (TSCP vs myChess-4.4.1)
+Finished game 244 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 182 - 40 - 19  [0.795] 241
+Started game 245 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 240 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of myChess-4.4.1 vs TSCP: 182 - 40 - 20  [0.793] 242
+Started game 246 of 400 (TSCP vs myChess-4.4.1)
+Finished game 242 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 182 - 41 - 20  [0.790] 243
+Started game 247 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 247 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 183 - 41 - 20  [0.791] 244
+Started game 248 of 400 (TSCP vs myChess-4.4.1)
+Finished game 243 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 184 - 41 - 20  [0.792] 245
+Started game 249 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 245 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 185 - 41 - 20  [0.793] 246
+Started game 250 of 400 (TSCP vs myChess-4.4.1)
+Finished game 246 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of myChess-4.4.1 vs TSCP: 185 - 41 - 21  [0.791] 247
+Started game 251 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 249 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 186 - 41 - 21  [0.792] 248
+Started game 252 of 400 (TSCP vs myChess-4.4.1)
+Finished game 250 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 186 - 42 - 21  [0.789] 249
+Started game 253 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 248 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 187 - 42 - 21  [0.790] 250
+...      myChess-4.4.1 playing White: 98 - 20 - 7  [0.812] 125
+...      myChess-4.4.1 playing Black: 89 - 22 - 14  [0.768] 125
+...      White vs Black: 120 - 109 - 21  [0.522] 250
+Elo difference: 230.2 +/- 50.0, LOS: 100.0 %, DrawRatio: 8.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 254 of 400 (TSCP vs myChess-4.4.1)
+Finished game 251 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 188 - 42 - 21  [0.791] 251
+Started game 255 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 252 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 189 - 42 - 21  [0.792] 252
+Started game 256 of 400 (TSCP vs myChess-4.4.1)
+Finished game 255 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 190 - 42 - 21  [0.792] 253
+Started game 257 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 253 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 191 - 42 - 21  [0.793] 254
+Started game 258 of 400 (TSCP vs myChess-4.4.1)
+Finished game 254 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 192 - 42 - 21  [0.794] 255
+Started game 259 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 258 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 193 - 42 - 21  [0.795] 256
+Started game 260 of 400 (TSCP vs myChess-4.4.1)
+Finished game 256 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 194 - 42 - 21  [0.796] 257
+Started game 261 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 257 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 195 - 42 - 21  [0.797] 258
+Started game 262 of 400 (TSCP vs myChess-4.4.1)
+Finished game 259 (myChess-4.4.1 vs TSCP): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs TSCP: 195 - 42 - 22  [0.795] 259
+Started game 263 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 261 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 196 - 42 - 22  [0.796] 260
+...      myChess-4.4.1 playing White: 103 - 20 - 8  [0.817] 131
+...      myChess-4.4.1 playing Black: 93 - 22 - 14  [0.775] 129
+...      White vs Black: 125 - 113 - 22  [0.523] 260
+Elo difference: 236.7 +/- 49.5, LOS: 100.0 %, DrawRatio: 8.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 264 of 400 (TSCP vs myChess-4.4.1)
+Finished game 260 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 197 - 42 - 22  [0.797] 261
+Started game 265 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 262 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 198 - 42 - 22  [0.798] 262
+Started game 266 of 400 (TSCP vs myChess-4.4.1)
+Finished game 263 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 199 - 42 - 22  [0.798] 263
+Started game 267 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 264 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 200 - 42 - 22  [0.799] 264
+Started game 268 of 400 (TSCP vs myChess-4.4.1)
+Finished game 265 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 201 - 42 - 22  [0.800] 265
+Started game 269 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 267 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 202 - 42 - 22  [0.801] 266
+Started game 270 of 400 (TSCP vs myChess-4.4.1)
+Finished game 266 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of myChess-4.4.1 vs TSCP: 202 - 42 - 23  [0.800] 267
+Started game 271 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 268 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 203 - 42 - 23  [0.800] 268
+Started game 272 of 400 (TSCP vs myChess-4.4.1)
+Finished game 269 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 204 - 42 - 23  [0.801] 269
+Started game 273 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 271 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 205 - 42 - 23  [0.802] 270
+...      myChess-4.4.1 playing White: 108 - 20 - 8  [0.824] 136
+...      myChess-4.4.1 playing Black: 97 - 22 - 15  [0.780] 134
+...      White vs Black: 130 - 117 - 23  [0.524] 270
+Elo difference: 242.8 +/- 49.0, LOS: 100.0 %, DrawRatio: 8.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 274 of 400 (TSCP vs myChess-4.4.1)
+Finished game 270 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 206 - 42 - 23  [0.803] 271
+Started game 275 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 272 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 206 - 43 - 23  [0.800] 272
+Started game 276 of 400 (TSCP vs myChess-4.4.1)
+Finished game 273 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 207 - 43 - 23  [0.800] 273
+Started game 277 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 274 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 208 - 43 - 23  [0.801] 274
+Started game 278 of 400 (TSCP vs myChess-4.4.1)
+Finished game 276 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 208 - 44 - 23  [0.798] 275
+Started game 279 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 277 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 209 - 44 - 23  [0.799] 276
+Started game 280 of 400 (TSCP vs myChess-4.4.1)
+Finished game 275 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 210 - 44 - 23  [0.800] 277
+Started game 281 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 279 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 211 - 44 - 23  [0.800] 278
+Started game 282 of 400 (TSCP vs myChess-4.4.1)
+Finished game 280 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 212 - 44 - 23  [0.801] 279
+Started game 283 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 281 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 213 - 44 - 23  [0.802] 280
+...      myChess-4.4.1 playing White: 113 - 20 - 8  [0.830] 141
+...      myChess-4.4.1 playing Black: 100 - 24 - 15  [0.773] 139
+...      White vs Black: 137 - 120 - 23  [0.530] 280
+Elo difference: 242.8 +/- 48.2, LOS: 100.0 %, DrawRatio: 8.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 284 of 400 (TSCP vs myChess-4.4.1)
+Finished game 283 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 213 - 45 - 23  [0.799] 281
+Started game 285 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 284 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 214 - 45 - 23  [0.800] 282
+Started game 286 of 400 (TSCP vs myChess-4.4.1)
+Finished game 282 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 215 - 45 - 23  [0.800] 283
+Started game 287 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 278 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by stalemate}
+Score of myChess-4.4.1 vs TSCP: 215 - 45 - 24  [0.799] 284
+Started game 288 of 400 (TSCP vs myChess-4.4.1)
+Finished game 287 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 216 - 45 - 24  [0.800] 285
+Started game 289 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 288 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 217 - 45 - 24  [0.801] 286
+Started game 290 of 400 (TSCP vs myChess-4.4.1)
+Finished game 285 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 218 - 45 - 24  [0.801] 287
+Started game 291 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 286 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 219 - 45 - 24  [0.802] 288
+Started game 292 of 400 (TSCP vs myChess-4.4.1)
+Finished game 292 (TSCP vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs TSCP: 220 - 45 - 24  [0.803] 289
+Started game 293 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 289 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 221 - 45 - 24  [0.803] 290
+...      myChess-4.4.1 playing White: 116 - 21 - 8  [0.828] 145
+...      myChess-4.4.1 playing Black: 105 - 24 - 16  [0.779] 145
+...      White vs Black: 140 - 126 - 24  [0.524] 290
+Elo difference: 244.6 +/- 47.4, LOS: 100.0 %, DrawRatio: 8.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 294 of 400 (TSCP vs myChess-4.4.1)
+Finished game 290 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 222 - 45 - 24  [0.804] 291
+Started game 295 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 291 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 223 - 45 - 24  [0.805] 292
+Started game 296 of 400 (TSCP vs myChess-4.4.1)
+Finished game 294 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs TSCP: 223 - 45 - 25  [0.804] 293
+Started game 297 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 293 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 224 - 45 - 25  [0.804] 294
+Started game 298 of 400 (TSCP vs myChess-4.4.1)
+Finished game 296 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 225 - 45 - 25  [0.805] 295
+Started game 299 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 298 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 226 - 45 - 25  [0.806] 296
+Started game 300 of 400 (TSCP vs myChess-4.4.1)
+Finished game 297 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 227 - 45 - 25  [0.806] 297
+Started game 301 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 299 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 228 - 45 - 25  [0.807] 298
+Started game 302 of 400 (TSCP vs myChess-4.4.1)
+Finished game 295 (myChess-4.4.1 vs TSCP): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs TSCP: 228 - 45 - 26  [0.806] 299
+Started game 303 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 300 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 229 - 45 - 26  [0.807] 300
+...      myChess-4.4.1 playing White: 120 - 21 - 9  [0.830] 150
+...      myChess-4.4.1 playing Black: 109 - 24 - 17  [0.783] 150
+...      White vs Black: 144 - 130 - 26  [0.523] 300
+Elo difference: 248.2 +/- 46.7, LOS: 100.0 %, DrawRatio: 8.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 304 of 400 (TSCP vs myChess-4.4.1)
+Finished game 301 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 230 - 45 - 26  [0.807] 301
+Started game 305 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 303 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 231 - 45 - 26  [0.808] 302
+Started game 306 of 400 (TSCP vs myChess-4.4.1)
+Finished game 302 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 232 - 45 - 26  [0.809] 303
+Started game 307 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 305 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 233 - 45 - 26  [0.809] 304
+Started game 308 of 400 (TSCP vs myChess-4.4.1)
+Finished game 307 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 233 - 46 - 26  [0.807] 305
+Started game 309 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 306 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 234 - 46 - 26  [0.807] 306
+Started game 310 of 400 (TSCP vs myChess-4.4.1)
+Finished game 304 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 235 - 46 - 26  [0.808] 307
+Started game 311 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 308 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 236 - 46 - 26  [0.808] 308
+Started game 312 of 400 (TSCP vs myChess-4.4.1)
+Finished game 310 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 237 - 46 - 26  [0.809] 309
+Started game 313 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 311 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 238 - 46 - 26  [0.810] 310
+...      myChess-4.4.1 playing White: 124 - 22 - 9  [0.829] 155
+...      myChess-4.4.1 playing Black: 114 - 24 - 17  [0.790] 155
+...      White vs Black: 148 - 136 - 26  [0.519] 310
+Elo difference: 251.5 +/- 46.3, LOS: 100.0 %, DrawRatio: 8.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 314 of 400 (TSCP vs myChess-4.4.1)
+Finished game 309 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 239 - 46 - 26  [0.810] 311
+Started game 315 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 313 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 240 - 46 - 26  [0.811] 312
+Started game 316 of 400 (TSCP vs myChess-4.4.1)
+Finished game 312 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs TSCP: 240 - 46 - 27  [0.810] 313
+Started game 317 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 314 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 240 - 47 - 27  [0.807] 314
+Started game 318 of 400 (TSCP vs myChess-4.4.1)
+Finished game 315 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 241 - 47 - 27  [0.808] 315
+Started game 319 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 316 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 242 - 47 - 27  [0.809] 316
+Started game 320 of 400 (TSCP vs myChess-4.4.1)
+Finished game 318 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 243 - 47 - 27  [0.809] 317
+Started game 321 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 320 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 243 - 48 - 27  [0.807] 318
+Started game 322 of 400 (TSCP vs myChess-4.4.1)
+Finished game 317 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 244 - 48 - 27  [0.807] 319
+Started game 323 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 321 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 245 - 48 - 27  [0.808] 320
+...      myChess-4.4.1 playing White: 129 - 22 - 9  [0.834] 160
+...      myChess-4.4.1 playing Black: 116 - 26 - 18  [0.781] 160
+...      White vs Black: 155 - 138 - 27  [0.527] 320
+Elo difference: 249.4 +/- 45.4, LOS: 100.0 %, DrawRatio: 8.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 324 of 400 (TSCP vs myChess-4.4.1)
+Finished game 323 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 246 - 48 - 27  [0.808] 321
+Started game 325 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 319 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 247 - 48 - 27  [0.809] 322
+Started game 326 of 400 (TSCP vs myChess-4.4.1)
+Finished game 324 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 248 - 48 - 27  [0.810] 323
+Started game 327 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 322 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 249 - 48 - 27  [0.810] 324
+Started game 328 of 400 (TSCP vs myChess-4.4.1)
+Finished game 325 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 250 - 48 - 27  [0.811] 325
+Started game 329 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 329 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 251 - 48 - 27  [0.811] 326
+Started game 330 of 400 (TSCP vs myChess-4.4.1)
+Finished game 327 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 252 - 48 - 27  [0.812] 327
+Started game 331 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 328 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 253 - 48 - 27  [0.813] 328
+Started game 332 of 400 (TSCP vs myChess-4.4.1)
+Finished game 330 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 254 - 48 - 27  [0.813] 329
+Started game 333 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 331 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 255 - 48 - 27  [0.814] 330
+...      myChess-4.4.1 playing White: 135 - 22 - 9  [0.840] 166
+...      myChess-4.4.1 playing Black: 120 - 26 - 18  [0.787] 164
+...      White vs Black: 161 - 142 - 27  [0.529] 330
+Elo difference: 256.0 +/- 45.3, LOS: 100.0 %, DrawRatio: 8.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 334 of 400 (TSCP vs myChess-4.4.1)
+Finished game 326 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs TSCP: 255 - 48 - 28  [0.813] 331
+Started game 335 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 332 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 256 - 48 - 28  [0.813] 332
+Started game 336 of 400 (TSCP vs myChess-4.4.1)
+Finished game 335 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 257 - 48 - 28  [0.814] 333
+Started game 337 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 333 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 258 - 48 - 28  [0.814] 334
+Started game 338 of 400 (TSCP vs myChess-4.4.1)
+Finished game 334 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 259 - 48 - 28  [0.815] 335
+Started game 339 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 336 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 259 - 49 - 28  [0.813] 336
+Started game 340 of 400 (TSCP vs myChess-4.4.1)
+Finished game 337 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 260 - 49 - 28  [0.813] 337
+Started game 341 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 339 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 261 - 49 - 28  [0.814] 338
+Started game 342 of 400 (TSCP vs myChess-4.4.1)
+Finished game 341 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 262 - 49 - 28  [0.814] 339
+Started game 343 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 340 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 263 - 49 - 28  [0.815] 340
+...      myChess-4.4.1 playing White: 140 - 22 - 9  [0.845] 171
+...      myChess-4.4.1 playing Black: 123 - 27 - 19  [0.784] 169
+...      White vs Black: 167 - 145 - 28  [0.532] 340
+Elo difference: 257.3 +/- 44.6, LOS: 100.0 %, DrawRatio: 8.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 344 of 400 (TSCP vs myChess-4.4.1)
+Finished game 338 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 264 - 49 - 28  [0.815] 341
+Started game 345 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 343 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 265 - 49 - 28  [0.816] 342
+Started game 346 of 400 (TSCP vs myChess-4.4.1)
+Finished game 344 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 266 - 49 - 28  [0.816] 343
+Started game 347 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 345 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 267 - 49 - 28  [0.817] 344
+Started game 348 of 400 (TSCP vs myChess-4.4.1)
+Finished game 342 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs TSCP: 267 - 49 - 29  [0.816] 345
+Started game 349 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 346 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 268 - 49 - 29  [0.816] 346
+Started game 350 of 400 (TSCP vs myChess-4.4.1)
+Finished game 347 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 269 - 49 - 29  [0.817] 347
+Started game 351 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 348 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 270 - 49 - 29  [0.818] 348
+Started game 352 of 400 (TSCP vs myChess-4.4.1)
+Finished game 352 (TSCP vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs TSCP: 271 - 49 - 29  [0.818] 349
+Started game 353 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 351 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 271 - 50 - 29  [0.816] 350
+...      myChess-4.4.1 playing White: 143 - 23 - 9  [0.843] 175
+...      myChess-4.4.1 playing Black: 128 - 27 - 20  [0.789] 175
+...      White vs Black: 170 - 151 - 29  [0.527] 350
+Elo difference: 258.4 +/- 44.0, LOS: 100.0 %, DrawRatio: 8.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 354 of 400 (TSCP vs myChess-4.4.1)
+Finished game 349 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 272 - 50 - 29  [0.816] 351
+Started game 355 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 354 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 272 - 51 - 29  [0.814] 352
+Started game 356 of 400 (TSCP vs myChess-4.4.1)
+Finished game 353 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 273 - 51 - 29  [0.814] 353
+Started game 357 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 350 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs TSCP: 273 - 51 - 30  [0.814] 354
+Started game 358 of 400 (TSCP vs myChess-4.4.1)
+Finished game 355 (myChess-4.4.1 vs TSCP): 1-0 {Black makes an illegal move: g3d3}
+Score of myChess-4.4.1 vs TSCP: 274 - 51 - 30  [0.814] 355
+Started game 359 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 358 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 275 - 51 - 30  [0.815] 356
+Started game 360 of 400 (TSCP vs myChess-4.4.1)
+Finished game 357 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 275 - 52 - 30  [0.812] 357
+Started game 361 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 360 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 276 - 52 - 30  [0.813] 358
+Started game 362 of 400 (TSCP vs myChess-4.4.1)
+Finished game 356 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 276 - 53 - 30  [0.811] 359
+Started game 363 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 359 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 277 - 53 - 30  [0.811] 360
+...      myChess-4.4.1 playing White: 147 - 24 - 9  [0.842] 180
+...      myChess-4.4.1 playing Black: 130 - 29 - 21  [0.781] 180
+...      White vs Black: 176 - 154 - 30  [0.531] 360
+Elo difference: 253.1 +/- 43.0, LOS: 100.0 %, DrawRatio: 8.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 364 of 400 (TSCP vs myChess-4.4.1)
+Finished game 363 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 278 - 53 - 30  [0.812] 361
+Started game 365 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 361 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 279 - 53 - 30  [0.812] 362
+Started game 366 of 400 (TSCP vs myChess-4.4.1)
+Finished game 364 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 279 - 54 - 30  [0.810] 363
+Started game 367 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 362 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs TSCP: 279 - 54 - 31  [0.809] 364
+Started game 368 of 400 (TSCP vs myChess-4.4.1)
+Finished game 366 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 280 - 54 - 31  [0.810] 365
+Started game 369 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 367 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 281 - 54 - 31  [0.810] 366
+Started game 370 of 400 (TSCP vs myChess-4.4.1)
+Finished game 368 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 282 - 54 - 31  [0.811] 367
+Started game 371 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 365 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 283 - 54 - 31  [0.811] 368
+Started game 372 of 400 (TSCP vs myChess-4.4.1)
+Finished game 369 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 284 - 54 - 31  [0.812] 369
+Started game 373 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 373 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 285 - 54 - 31  [0.812] 370
+...      myChess-4.4.1 playing White: 153 - 24 - 9  [0.847] 186
+...      myChess-4.4.1 playing Black: 132 - 30 - 22  [0.777] 184
+...      White vs Black: 183 - 156 - 31  [0.536] 370
+Elo difference: 254.3 +/- 42.5, LOS: 100.0 %, DrawRatio: 8.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 374 of 400 (TSCP vs myChess-4.4.1)
+Finished game 371 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 286 - 54 - 31  [0.813] 371
+Started game 375 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 372 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 287 - 54 - 31  [0.813] 372
+Started game 376 of 400 (TSCP vs myChess-4.4.1)
+Finished game 370 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 288 - 54 - 31  [0.814] 373
+Started game 377 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 375 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 288 - 55 - 31  [0.811] 374
+Started game 378 of 400 (TSCP vs myChess-4.4.1)
+Finished game 377 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 289 - 55 - 31  [0.812] 375
+Started game 379 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 374 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 290 - 55 - 31  [0.813] 376
+Started game 380 of 400 (TSCP vs myChess-4.4.1)
+Finished game 379 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 291 - 55 - 31  [0.813] 377
+Started game 381 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 378 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 292 - 55 - 31  [0.813] 378
+Started game 382 of 400 (TSCP vs myChess-4.4.1)
+Finished game 380 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 293 - 55 - 31  [0.814] 379
+Started game 383 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 382 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 294 - 55 - 31  [0.814] 380
+...      myChess-4.4.1 playing White: 156 - 25 - 9  [0.845] 190
+...      myChess-4.4.1 playing Black: 138 - 30 - 22  [0.784] 190
+...      White vs Black: 186 - 163 - 31  [0.530] 380
+Elo difference: 257.0 +/- 42.2, LOS: 100.0 %, DrawRatio: 8.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 384 of 400 (TSCP vs myChess-4.4.1)
+Finished game 376 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of myChess-4.4.1 vs TSCP: 294 - 55 - 32  [0.814] 381
+Started game 385 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 384 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 295 - 55 - 32  [0.814] 382
+Started game 386 of 400 (TSCP vs myChess-4.4.1)
+Finished game 385 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 296 - 55 - 32  [0.815] 383
+Started game 387 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 383 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 297 - 55 - 32  [0.815] 384
+Started game 388 of 400 (TSCP vs myChess-4.4.1)
+Finished game 386 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 298 - 55 - 32  [0.816] 385
+Started game 389 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 389 (myChess-4.4.1 vs TSCP): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 298 - 56 - 32  [0.813] 386
+Started game 390 of 400 (TSCP vs myChess-4.4.1)
+Finished game 387 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 299 - 56 - 32  [0.814] 387
+Started game 391 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 381 (myChess-4.4.1 vs TSCP): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs TSCP: 299 - 56 - 33  [0.813] 388
+Started game 392 of 400 (TSCP vs myChess-4.4.1)
+Finished game 388 (TSCP vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs TSCP: 299 - 56 - 34  [0.812] 389
+Started game 393 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 390 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 300 - 56 - 34  [0.813] 390
+...      myChess-4.4.1 playing White: 159 - 26 - 10  [0.841] 195
+...      myChess-4.4.1 playing Black: 141 - 30 - 24  [0.785] 195
+...      White vs Black: 189 - 167 - 34  [0.528] 390
+Elo difference: 255.1 +/- 41.3, LOS: 100.0 %, DrawRatio: 8.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 394 of 400 (TSCP vs myChess-4.4.1)
+Finished game 393 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 301 - 56 - 34  [0.813] 391
+Started game 395 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 391 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 302 - 56 - 34  [0.814] 392
+Started game 396 of 400 (TSCP vs myChess-4.4.1)
+Finished game 394 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 303 - 56 - 34  [0.814] 393
+Started game 397 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 395 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 304 - 56 - 34  [0.815] 394
+Started game 398 of 400 (TSCP vs myChess-4.4.1)
+Finished game 392 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 305 - 56 - 34  [0.815] 395
+Started game 399 of 400 (myChess-4.4.1 vs TSCP)
+Finished game 396 (TSCP vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 306 - 56 - 34  [0.816] 396
+Started game 400 of 400 (TSCP vs myChess-4.4.1)
+Finished game 397 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 307 - 56 - 34  [0.816] 397
+Finished game 400 (TSCP vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs TSCP: 308 - 56 - 34  [0.817] 398
+Finished game 398 (TSCP vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 308 - 57 - 34  [0.815] 399
+Finished game 399 (myChess-4.4.1 vs TSCP): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs TSCP: 309 - 57 - 34  [0.815] 400
+...      myChess-4.4.1 playing White: 164 - 26 - 10  [0.845] 200
+...      myChess-4.4.1 playing Black: 145 - 31 - 24  [0.785] 200
+...      White vs Black: 195 - 171 - 34  [0.530] 400
+Elo difference: 257.6 +/- 41.0, LOS: 100.0 %, DrawRatio: 8.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+
+Player: myChess-4.4.1
+   "Draw by 3-fold repetition": 9
+   "Draw by adjudication": 7
+   "Draw by fifty moves rule": 7
+   "Draw by insufficient mating material": 10
+   "Draw by stalemate": 1
+   "Loss: Black wins by adjudication": 26
+   "Loss: White wins by adjudication": 31
+   "Win: Black makes an illegal move: e2e1q": 1
+   "Win: Black makes an illegal move: g3d3": 1
+   "Win: Black mates": 6
+   "Win: Black wins by adjudication": 138
+   "Win: White mates": 1
+   "Win: White wins by adjudication": 161
+   "Win: White's connection stalls": 1
+Player: TSCP
+   "Draw by 3-fold repetition": 9
+   "Draw by adjudication": 7
+   "Draw by fifty moves rule": 7
+   "Draw by insufficient mating material": 10
+   "Draw by stalemate": 1
+   "Loss: Black makes an illegal move: e2e1q": 1
+   "Loss: Black makes an illegal move: g3d3": 1
+   "Loss: Black mates": 6
+   "Loss: Black wins by adjudication": 138
+   "Loss: White mates": 1
+   "Loss: White wins by adjudication": 161
+   "Loss: White's connection stalls": 1
+   "Win: Black wins by adjudication": 26
+   "Win: White wins by adjudication": 31
+Finished match

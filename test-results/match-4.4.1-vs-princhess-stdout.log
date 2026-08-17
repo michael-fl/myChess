@@ -1,0 +1,1427 @@
+Indexing opening suite...
+Started game 3 of 400 (myChess-4.4.1 vs Princhess)
+Started game 2 of 400 (Princhess vs myChess-4.4.1)
+Started game 1 of 400 (myChess-4.4.1 vs Princhess)
+Started game 4 of 400 (Princhess vs myChess-4.4.1)
+Finished game 4 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 0 - 1 - 0  [0.000] 1
+Started game 5 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 2 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 0 - 2 - 0  [0.000] 2
+Started game 6 of 400 (Princhess vs myChess-4.4.1)
+Finished game 3 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 0 - 3 - 0  [0.000] 3
+Started game 7 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 5 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 0 - 4 - 0  [0.000] 4
+Started game 8 of 400 (Princhess vs myChess-4.4.1)
+Finished game 1 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 0 - 5 - 0  [0.000] 5
+Started game 9 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 6 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 0 - 6 - 0  [0.000] 6
+Started game 10 of 400 (Princhess vs myChess-4.4.1)
+Finished game 7 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 0 - 7 - 0  [0.000] 7
+Started game 11 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 8 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 0 - 8 - 0  [0.000] 8
+Started game 12 of 400 (Princhess vs myChess-4.4.1)
+Finished game 9 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 1 - 8 - 0  [0.111] 9
+Started game 13 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 11 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 1 - 9 - 0  [0.100] 10
+...      myChess-4.4.1 playing White: 1 - 5 - 0  [0.167] 6
+...      myChess-4.4.1 playing Black: 0 - 4 - 0  [0.000] 4
+...      White vs Black: 5 - 5 - 0  [0.500] 10
+Elo difference: -381.7 +/- nan, LOS: 0.6 %, DrawRatio: 0.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 14 of 400 (Princhess vs myChess-4.4.1)
+Finished game 12 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 2 - 9 - 0  [0.182] 11
+Started game 15 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 10 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 2 - 10 - 0  [0.167] 12
+Started game 16 of 400 (Princhess vs myChess-4.4.1)
+Finished game 15 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 2 - 11 - 0  [0.154] 13
+Started game 17 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 16 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 2 - 12 - 0  [0.143] 14
+Started game 18 of 400 (Princhess vs myChess-4.4.1)
+Finished game 14 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 3 - 12 - 0  [0.200] 15
+Started game 19 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 13 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 4 - 12 - 0  [0.250] 16
+Started game 20 of 400 (Princhess vs myChess-4.4.1)
+Finished game 17 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 4 - 13 - 0  [0.235] 17
+Started game 21 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 20 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 4 - 14 - 0  [0.222] 18
+Started game 22 of 400 (Princhess vs myChess-4.4.1)
+Finished game 21 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 5 - 14 - 0  [0.263] 19
+Started game 23 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 19 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 5 - 14 - 1  [0.275] 20
+...      myChess-4.4.1 playing White: 3 - 7 - 1  [0.318] 11
+...      myChess-4.4.1 playing Black: 2 - 7 - 0  [0.222] 9
+...      White vs Black: 10 - 9 - 1  [0.525] 20
+Elo difference: -168.4 +/- 193.0, LOS: 1.9 %, DrawRatio: 5.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 24 of 400 (Princhess vs myChess-4.4.1)
+Finished game 22 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 5 - 15 - 1  [0.262] 21
+Started game 25 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 18 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 5 - 16 - 1  [0.250] 22
+Started game 26 of 400 (Princhess vs myChess-4.4.1)
+Finished game 23 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 6 - 16 - 1  [0.283] 23
+Started game 27 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 24 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 7 - 16 - 1  [0.313] 24
+Started game 28 of 400 (Princhess vs myChess-4.4.1)
+Finished game 25 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 7 - 16 - 2  [0.320] 25
+Started game 29 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 28 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 7 - 17 - 2  [0.308] 26
+Started game 30 of 400 (Princhess vs myChess-4.4.1)
+Finished game 26 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 8 - 17 - 2  [0.333] 27
+Started game 31 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 30 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 8 - 18 - 2  [0.321] 28
+Started game 32 of 400 (Princhess vs myChess-4.4.1)
+Finished game 27 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 8 - 19 - 2  [0.310] 29
+Started game 33 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 29 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 9 - 19 - 2  [0.333] 30
+...      myChess-4.4.1 playing White: 5 - 8 - 2  [0.400] 15
+...      myChess-4.4.1 playing Black: 4 - 11 - 0  [0.267] 15
+...      White vs Black: 16 - 12 - 2  [0.567] 30
+Elo difference: -120.4 +/- 135.3, LOS: 2.9 %, DrawRatio: 6.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 34 of 400 (Princhess vs myChess-4.4.1)
+Finished game 33 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 9 - 20 - 2  [0.323] 31
+Started game 35 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 31 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 9 - 20 - 3  [0.328] 32
+Started game 36 of 400 (Princhess vs myChess-4.4.1)
+Finished game 32 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 9 - 21 - 3  [0.318] 33
+Started game 37 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 35 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 9 - 22 - 3  [0.309] 34
+Started game 38 of 400 (Princhess vs myChess-4.4.1)
+Finished game 34 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 9 - 23 - 3  [0.300] 35
+Started game 39 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 37 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 10 - 23 - 3  [0.319] 36
+Started game 40 of 400 (Princhess vs myChess-4.4.1)
+Finished game 38 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 11 - 23 - 3  [0.338] 37
+Started game 41 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 39 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 12 - 23 - 3  [0.355] 38
+Started game 42 of 400 (Princhess vs myChess-4.4.1)
+Finished game 36 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 12 - 23 - 4  [0.359] 39
+Started game 43 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 41 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 12 - 24 - 4  [0.350] 40
+...      myChess-4.4.1 playing White: 7 - 11 - 3  [0.405] 21
+...      myChess-4.4.1 playing Black: 5 - 13 - 1  [0.289] 19
+...      White vs Black: 20 - 16 - 4  [0.550] 40
+Elo difference: -107.5 +/- 111.0, LOS: 2.3 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 44 of 400 (Princhess vs myChess-4.4.1)
+Finished game 42 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 12 - 25 - 4  [0.341] 41
+Started game 45 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 43 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 12 - 26 - 4  [0.333] 42
+Started game 46 of 400 (Princhess vs myChess-4.4.1)
+Finished game 40 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 13 - 26 - 4  [0.349] 43
+Started game 47 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 46 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 13 - 27 - 4  [0.341] 44
+Started game 48 of 400 (Princhess vs myChess-4.4.1)
+Finished game 44 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 14 - 27 - 4  [0.356] 45
+Started game 49 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 47 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 15 - 27 - 4  [0.370] 46
+Started game 50 of 400 (Princhess vs myChess-4.4.1)
+Finished game 45 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 15 - 27 - 5  [0.372] 47
+Started game 51 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 48 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 15 - 28 - 5  [0.365] 48
+Started game 52 of 400 (Princhess vs myChess-4.4.1)
+Finished game 51 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 15 - 29 - 5  [0.357] 49
+Started game 53 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 49 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 16 - 29 - 5  [0.370] 50
+...      myChess-4.4.1 playing White: 9 - 13 - 4  [0.423] 26
+...      myChess-4.4.1 playing Black: 7 - 16 - 1  [0.313] 24
+...      White vs Black: 25 - 20 - 5  [0.550] 50
+Elo difference: -92.5 +/- 97.1, LOS: 2.6 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 54 of 400 (Princhess vs myChess-4.4.1)
+Finished game 53 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 16 - 30 - 5  [0.363] 51
+Started game 55 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 54 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 16 - 31 - 5  [0.356] 52
+Started game 56 of 400 (Princhess vs myChess-4.4.1)
+Finished game 50 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 16 - 31 - 6  [0.358] 53
+Started game 57 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 52 (Princhess vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 17 - 31 - 6  [0.370] 54
+Started game 58 of 400 (Princhess vs myChess-4.4.1)
+Finished game 57 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 17 - 32 - 6  [0.364] 55
+Started game 59 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 55 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 18 - 32 - 6  [0.375] 56
+Started game 60 of 400 (Princhess vs myChess-4.4.1)
+Finished game 56 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 18 - 33 - 6  [0.368] 57
+Started game 61 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 59 (myChess-4.4.1 vs Princhess): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 18 - 34 - 6  [0.362] 58
+Started game 62 of 400 (Princhess vs myChess-4.4.1)
+Finished game 58 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 19 - 34 - 6  [0.373] 59
+Started game 63 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 61 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 20 - 34 - 6  [0.383] 60
+...      myChess-4.4.1 playing White: 11 - 16 - 4  [0.419] 31
+...      myChess-4.4.1 playing Black: 9 - 18 - 2  [0.345] 29
+...      White vs Black: 29 - 25 - 6  [0.533] 60
+Elo difference: -82.6 +/- 87.5, LOS: 2.8 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 64 of 400 (Princhess vs myChess-4.4.1)
+Finished game 62 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 20 - 35 - 6  [0.377] 61
+Started game 65 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 63 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 20 - 36 - 6  [0.371] 62
+Started game 66 of 400 (Princhess vs myChess-4.4.1)
+Finished game 60 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 20 - 37 - 6  [0.365] 63
+Started game 67 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 64 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 20 - 38 - 6  [0.359] 64
+Started game 68 of 400 (Princhess vs myChess-4.4.1)
+Finished game 66 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 20 - 39 - 6  [0.354] 65
+Started game 69 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 67 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 20 - 40 - 6  [0.348] 66
+Started game 70 of 400 (Princhess vs myChess-4.4.1)
+Finished game 65 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 21 - 40 - 6  [0.358] 67
+Started game 71 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 71 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 21 - 41 - 6  [0.353] 68
+Started game 72 of 400 (Princhess vs myChess-4.4.1)
+Finished game 68 (Princhess vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 22 - 41 - 6  [0.362] 69
+Started game 73 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 70 (Princhess vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 23 - 41 - 6  [0.371] 70
+...      myChess-4.4.1 playing White: 12 - 19 - 4  [0.400] 35
+...      myChess-4.4.1 playing Black: 11 - 22 - 2  [0.343] 35
+...      White vs Black: 34 - 30 - 6  [0.529] 70
+Elo difference: -91.4 +/- 81.9, LOS: 1.2 %, DrawRatio: 8.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 74 of 400 (Princhess vs myChess-4.4.1)
+Finished game 72 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 23 - 42 - 6  [0.366] 71
+Started game 75 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 73 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 23 - 42 - 7  [0.368] 72
+Started game 76 of 400 (Princhess vs myChess-4.4.1)
+Finished game 69 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 23 - 43 - 7  [0.363] 73
+Started game 77 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 74 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 23 - 44 - 7  [0.358] 74
+Started game 78 of 400 (Princhess vs myChess-4.4.1)
+Finished game 76 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 23 - 45 - 7  [0.353] 75
+Started game 79 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 78 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 23 - 46 - 7  [0.349] 76
+Started game 80 of 400 (Princhess vs myChess-4.4.1)
+Finished game 79 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 24 - 46 - 7  [0.357] 77
+Started game 81 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 75 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 24 - 47 - 7  [0.353] 78
+Started game 82 of 400 (Princhess vs myChess-4.4.1)
+Finished game 77 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 25 - 47 - 7  [0.361] 79
+Started game 83 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 81 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 25 - 48 - 7  [0.356] 80
+...      myChess-4.4.1 playing White: 14 - 22 - 5  [0.402] 41
+...      myChess-4.4.1 playing Black: 11 - 26 - 2  [0.308] 39
+...      White vs Black: 40 - 33 - 7  [0.544] 80
+Elo difference: -102.8 +/- 77.0, LOS: 0.4 %, DrawRatio: 8.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 84 of 400 (Princhess vs myChess-4.4.1)
+Finished game 80 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 25 - 49 - 7  [0.352] 81
+Started game 85 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 84 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 25 - 50 - 7  [0.348] 82
+Started game 86 of 400 (Princhess vs myChess-4.4.1)
+Finished game 82 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 25 - 51 - 7  [0.343] 83
+Started game 87 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 83 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 26 - 51 - 7  [0.351] 84
+Started game 88 of 400 (Princhess vs myChess-4.4.1)
+Finished game 87 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 27 - 51 - 7  [0.359] 85
+Started game 89 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 85 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 28 - 51 - 7  [0.366] 86
+Started game 90 of 400 (Princhess vs myChess-4.4.1)
+Finished game 86 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 28 - 52 - 7  [0.362] 87
+Started game 91 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 88 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 28 - 53 - 7  [0.358] 88
+Started game 92 of 400 (Princhess vs myChess-4.4.1)
+Finished game 89 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 28 - 54 - 7  [0.354] 89
+Started game 93 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 92 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 28 - 55 - 7  [0.350] 90
+...      myChess-4.4.1 playing White: 17 - 23 - 5  [0.433] 45
+...      myChess-4.4.1 playing Black: 11 - 32 - 2  [0.267] 45
+...      White vs Black: 49 - 34 - 7  [0.583] 90
+Elo difference: -107.5 +/- 73.2, LOS: 0.2 %, DrawRatio: 7.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 94 of 400 (Princhess vs myChess-4.4.1)
+Finished game 90 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 28 - 56 - 7  [0.346] 91
+Started game 95 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 91 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 28 - 57 - 7  [0.342] 92
+Started game 96 of 400 (Princhess vs myChess-4.4.1)
+Finished game 94 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 28 - 58 - 7  [0.339] 93
+Started game 97 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 96 (Princhess vs myChess-4.4.1): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 28 - 59 - 7  [0.335] 94
+Started game 98 of 400 (Princhess vs myChess-4.4.1)
+Finished game 93 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 29 - 59 - 7  [0.342] 95
+Started game 99 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 95 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 30 - 59 - 7  [0.349] 96
+Started game 100 of 400 (Princhess vs myChess-4.4.1)
+Finished game 99 (myChess-4.4.1 vs Princhess): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 30 - 60 - 7  [0.345] 97
+Started game 101 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 98 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 31 - 60 - 7  [0.352] 98
+Started game 102 of 400 (Princhess vs myChess-4.4.1)
+Finished game 97 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 31 - 61 - 7  [0.348] 99
+Started game 103 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 102 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 31 - 61 - 8  [0.350] 100
+...      myChess-4.4.1 playing White: 19 - 26 - 5  [0.430] 50
+...      myChess-4.4.1 playing Black: 12 - 35 - 3  [0.270] 50
+...      White vs Black: 54 - 38 - 8  [0.580] 100
+Elo difference: -107.5 +/- 69.2, LOS: 0.1 %, DrawRatio: 8.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 104 of 400 (Princhess vs myChess-4.4.1)
+Finished game 103 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 31 - 62 - 8  [0.347] 101
+Started game 105 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 100 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 31 - 62 - 9  [0.348] 102
+Started game 106 of 400 (Princhess vs myChess-4.4.1)
+Finished game 101 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 31 - 63 - 9  [0.345] 103
+Started game 107 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 105 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 31 - 64 - 9  [0.341] 104
+Started game 108 of 400 (Princhess vs myChess-4.4.1)
+Finished game 106 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 31 - 65 - 9  [0.338] 105
+Started game 109 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 107 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 31 - 65 - 10  [0.340] 106
+Started game 110 of 400 (Princhess vs myChess-4.4.1)
+Finished game 108 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 32 - 65 - 10  [0.346] 107
+Started game 111 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 109 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 32 - 66 - 10  [0.343] 108
+Started game 112 of 400 (Princhess vs myChess-4.4.1)
+Finished game 104 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 32 - 66 - 11  [0.344] 109
+Started game 113 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 110 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 32 - 67 - 11  [0.341] 110
+...      myChess-4.4.1 playing White: 19 - 30 - 6  [0.400] 55
+...      myChess-4.4.1 playing Black: 13 - 37 - 5  [0.282] 55
+...      White vs Black: 56 - 43 - 11  [0.559] 110
+Elo difference: -114.5 +/- 65.5, LOS: 0.0 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 114 of 400 (Princhess vs myChess-4.4.1)
+Finished game 113 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 33 - 67 - 11  [0.347] 111
+Started game 115 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 111 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 33 - 68 - 11  [0.344] 112
+Started game 116 of 400 (Princhess vs myChess-4.4.1)
+Finished game 114 (Princhess vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 34 - 68 - 11  [0.350] 113
+Started game 117 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 115 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 35 - 68 - 11  [0.355] 114
+Started game 118 of 400 (Princhess vs myChess-4.4.1)
+Finished game 112 (Princhess vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 36 - 68 - 11  [0.361] 115
+Started game 119 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 118 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 36 - 69 - 11  [0.358] 116
+Started game 120 of 400 (Princhess vs myChess-4.4.1)
+Finished game 116 (Princhess vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 37 - 69 - 11  [0.363] 117
+Started game 121 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 119 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 37 - 70 - 11  [0.360] 118
+Started game 122 of 400 (Princhess vs myChess-4.4.1)
+Finished game 117 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 37 - 70 - 12  [0.361] 119
+Started game 123 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 120 (Princhess vs myChess-4.4.1): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 37 - 71 - 12  [0.358] 120
+...      myChess-4.4.1 playing White: 21 - 32 - 7  [0.408] 60
+...      myChess-4.4.1 playing Black: 16 - 39 - 5  [0.308] 60
+...      White vs Black: 60 - 48 - 12  [0.550] 120
+Elo difference: -101.2 +/- 61.9, LOS: 0.1 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 124 of 400 (Princhess vs myChess-4.4.1)
+Finished game 123 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 37 - 72 - 12  [0.355] 121
+Started game 125 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 124 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 37 - 73 - 12  [0.352] 122
+Started game 126 of 400 (Princhess vs myChess-4.4.1)
+Finished game 121 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 38 - 73 - 12  [0.358] 123
+Started game 127 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 122 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 38 - 74 - 12  [0.355] 124
+Started game 128 of 400 (Princhess vs myChess-4.4.1)
+Finished game 125 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 38 - 74 - 13  [0.356] 125
+Started game 129 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 127 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 38 - 75 - 13  [0.353] 126
+Started game 130 of 400 (Princhess vs myChess-4.4.1)
+Finished game 126 (Princhess vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 39 - 75 - 13  [0.358] 127
+Started game 131 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 131 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 39 - 76 - 13  [0.355] 128
+Started game 132 of 400 (Princhess vs myChess-4.4.1)
+Finished game 130 (Princhess vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 40 - 76 - 13  [0.360] 129
+Started game 133 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 129 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 41 - 76 - 13  [0.365] 130
+...      myChess-4.4.1 playing White: 23 - 35 - 8  [0.409] 66
+...      myChess-4.4.1 playing Black: 18 - 41 - 5  [0.320] 64
+...      White vs Black: 64 - 53 - 13  [0.542] 130
+Elo difference: -95.9 +/- 59.2, LOS: 0.1 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 134 of 400 (Princhess vs myChess-4.4.1)
+Finished game 128 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 42 - 76 - 13  [0.370] 131
+Started game 135 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 133 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 43 - 76 - 13  [0.375] 132
+Started game 136 of 400 (Princhess vs myChess-4.4.1)
+Finished game 134 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 43 - 77 - 13  [0.372] 133
+Started game 137 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 132 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 44 - 77 - 13  [0.377] 134
+Started game 138 of 400 (Princhess vs myChess-4.4.1)
+Finished game 135 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 44 - 78 - 13  [0.374] 135
+Started game 139 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 137 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 45 - 78 - 13  [0.379] 136
+Started game 140 of 400 (Princhess vs myChess-4.4.1)
+Finished game 136 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 45 - 78 - 14  [0.380] 137
+Started game 141 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 139 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 46 - 78 - 14  [0.384] 138
+Started game 142 of 400 (Princhess vs myChess-4.4.1)
+Finished game 138 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 46 - 79 - 14  [0.381] 139
+Started game 143 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 140 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 46 - 80 - 14  [0.379] 140
+...      myChess-4.4.1 playing White: 26 - 36 - 8  [0.429] 70
+...      myChess-4.4.1 playing Black: 20 - 44 - 6  [0.329] 70
+...      White vs Black: 70 - 56 - 14  [0.550] 140
+Elo difference: -86.1 +/- 56.6, LOS: 0.1 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 144 of 400 (Princhess vs myChess-4.4.1)
+Finished game 141 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 47 - 80 - 14  [0.383] 141
+Started game 145 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 142 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 48 - 80 - 14  [0.387] 142
+Started game 146 of 400 (Princhess vs myChess-4.4.1)
+Finished game 144 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 48 - 81 - 14  [0.385] 143
+Started game 147 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 143 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 49 - 81 - 14  [0.389] 144
+Started game 148 of 400 (Princhess vs myChess-4.4.1)
+Finished game 148 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 49 - 81 - 15  [0.390] 145
+Started game 149 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 146 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 49 - 82 - 15  [0.387] 146
+Started game 150 of 400 (Princhess vs myChess-4.4.1)
+Finished game 145 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 49 - 82 - 16  [0.388] 147
+Started game 151 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 150 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 49 - 83 - 16  [0.385] 148
+Started game 152 of 400 (Princhess vs myChess-4.4.1)
+Finished game 147 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 49 - 84 - 16  [0.383] 149
+Started game 153 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 149 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 49 - 84 - 17  [0.383] 150
+...      myChess-4.4.1 playing White: 28 - 37 - 10  [0.440] 75
+...      myChess-4.4.1 playing Black: 21 - 47 - 7  [0.327] 75
+...      White vs Black: 75 - 58 - 17  [0.557] 150
+Elo difference: -82.6 +/- 54.1, LOS: 0.1 %, DrawRatio: 11.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 154 of 400 (Princhess vs myChess-4.4.1)
+Finished game 152 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 49 - 85 - 17  [0.381] 151
+Started game 155 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 153 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 50 - 85 - 17  [0.385] 152
+Started game 156 of 400 (Princhess vs myChess-4.4.1)
+Finished game 151 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 50 - 86 - 17  [0.382] 153
+Started game 157 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 154 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs Princhess: 50 - 86 - 18  [0.383] 154
+Started game 158 of 400 (Princhess vs myChess-4.4.1)
+Finished game 156 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 50 - 87 - 18  [0.381] 155
+Started game 159 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 158 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 50 - 88 - 18  [0.378] 156
+Started game 160 of 400 (Princhess vs myChess-4.4.1)
+Finished game 155 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 50 - 89 - 18  [0.376] 157
+Started game 161 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 157 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 50 - 90 - 18  [0.373] 158
+Started game 162 of 400 (Princhess vs myChess-4.4.1)
+Finished game 159 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 51 - 90 - 18  [0.377] 159
+Started game 163 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 161 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 51 - 91 - 18  [0.375] 160
+...      myChess-4.4.1 playing White: 30 - 41 - 10  [0.432] 81
+...      myChess-4.4.1 playing Black: 21 - 50 - 8  [0.316] 79
+...      White vs Black: 80 - 62 - 18  [0.556] 160
+Elo difference: -88.7 +/- 52.6, LOS: 0.0 %, DrawRatio: 11.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 164 of 400 (Princhess vs myChess-4.4.1)
+Finished game 162 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 51 - 92 - 18  [0.373] 161
+Started game 165 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 164 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 52 - 92 - 18  [0.377] 162
+Started game 166 of 400 (Princhess vs myChess-4.4.1)
+Finished game 163 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 52 - 93 - 18  [0.374] 163
+Started game 167 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 165 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 53 - 93 - 18  [0.378] 164
+Started game 168 of 400 (Princhess vs myChess-4.4.1)
+Finished game 166 (Princhess vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 54 - 93 - 18  [0.382] 165
+Started game 169 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 160 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 55 - 93 - 18  [0.386] 166
+Started game 170 of 400 (Princhess vs myChess-4.4.1)
+Finished game 168 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 56 - 93 - 18  [0.389] 167
+Started game 171 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 170 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 56 - 94 - 18  [0.387] 168
+Started game 172 of 400 (Princhess vs myChess-4.4.1)
+Finished game 167 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 56 - 94 - 19  [0.388] 169
+Started game 173 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 171 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 57 - 94 - 19  [0.391] 170
+...      myChess-4.4.1 playing White: 32 - 42 - 11  [0.441] 85
+...      myChess-4.4.1 playing Black: 25 - 52 - 8  [0.341] 85
+...      White vs Black: 84 - 67 - 19  [0.550] 170
+Elo difference: -76.8 +/- 50.6, LOS: 0.1 %, DrawRatio: 11.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 174 of 400 (Princhess vs myChess-4.4.1)
+Finished game 173 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 58 - 94 - 19  [0.395] 171
+Started game 175 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 174 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 59 - 94 - 19  [0.398] 172
+Started game 176 of 400 (Princhess vs myChess-4.4.1)
+Finished game 172 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 59 - 95 - 19  [0.396] 173
+Started game 177 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 175 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 59 - 96 - 19  [0.394] 174
+Started game 178 of 400 (Princhess vs myChess-4.4.1)
+Finished game 176 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 59 - 97 - 19  [0.391] 175
+Started game 179 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 169 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 59 - 98 - 19  [0.389] 176
+Started game 180 of 400 (Princhess vs myChess-4.4.1)
+Finished game 177 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 60 - 98 - 19  [0.393] 177
+Started game 181 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 178 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 61 - 98 - 19  [0.396] 178
+Started game 182 of 400 (Princhess vs myChess-4.4.1)
+Finished game 179 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 61 - 99 - 19  [0.394] 179
+Started game 183 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 181 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 62 - 99 - 19  [0.397] 180
+...      myChess-4.4.1 playing White: 35 - 45 - 11  [0.445] 91
+...      myChess-4.4.1 playing Black: 27 - 54 - 8  [0.348] 89
+...      White vs Black: 89 - 72 - 19  [0.547] 180
+Elo difference: -72.4 +/- 49.2, LOS: 0.2 %, DrawRatio: 10.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 184 of 400 (Princhess vs myChess-4.4.1)
+Finished game 182 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 63 - 99 - 19  [0.401] 181
+Started game 185 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 183 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 64 - 99 - 19  [0.404] 182
+Started game 186 of 400 (Princhess vs myChess-4.4.1)
+Finished game 185 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 64 - 100 - 19  [0.402] 183
+Started game 187 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 180 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 64 - 100 - 20  [0.402] 184
+Started game 188 of 400 (Princhess vs myChess-4.4.1)
+Finished game 186 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 65 - 100 - 20  [0.405] 185
+Started game 189 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 184 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 65 - 101 - 20  [0.403] 186
+Started game 190 of 400 (Princhess vs myChess-4.4.1)
+Finished game 188 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 65 - 101 - 21  [0.404] 187
+Started game 191 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 187 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 65 - 102 - 21  [0.402] 188
+Started game 192 of 400 (Princhess vs myChess-4.4.1)
+Finished game 190 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 65 - 102 - 22  [0.402] 189
+Started game 193 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 189 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 66 - 102 - 22  [0.405] 190
+...      myChess-4.4.1 playing White: 37 - 47 - 11  [0.447] 95
+...      myChess-4.4.1 playing Black: 29 - 55 - 11  [0.363] 95
+...      White vs Black: 92 - 76 - 22  [0.542] 190
+Elo difference: -66.6 +/- 47.5, LOS: 0.3 %, DrawRatio: 11.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 194 of 400 (Princhess vs myChess-4.4.1)
+Finished game 192 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 66 - 103 - 22  [0.403] 191
+Started game 195 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 191 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 67 - 103 - 22  [0.406] 192
+Started game 196 of 400 (Princhess vs myChess-4.4.1)
+Finished game 193 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 68 - 103 - 22  [0.409] 193
+Started game 197 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 194 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 68 - 103 - 23  [0.410] 194
+Started game 198 of 400 (Princhess vs myChess-4.4.1)
+Finished game 196 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 68 - 104 - 23  [0.408] 195
+Started game 199 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 197 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 68 - 105 - 23  [0.406] 196
+Started game 200 of 400 (Princhess vs myChess-4.4.1)
+Finished game 195 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 68 - 106 - 23  [0.404] 197
+Started game 201 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 198 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 68 - 107 - 23  [0.402] 198
+Started game 202 of 400 (Princhess vs myChess-4.4.1)
+Finished game 199 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 68 - 107 - 24  [0.402] 199
+Started game 203 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 200 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 68 - 107 - 25  [0.403] 200
+...      myChess-4.4.1 playing White: 39 - 49 - 12  [0.450] 100
+...      myChess-4.4.1 playing Black: 29 - 58 - 13  [0.355] 100
+...      White vs Black: 97 - 78 - 25  [0.547] 200
+Elo difference: -68.6 +/- 46.0, LOS: 0.2 %, DrawRatio: 12.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 204 of 400 (Princhess vs myChess-4.4.1)
+Finished game 202 (Princhess vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 69 - 107 - 25  [0.405] 201
+Started game 205 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 203 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 70 - 107 - 25  [0.408] 202
+Started game 206 of 400 (Princhess vs myChess-4.4.1)
+Finished game 205 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 70 - 108 - 25  [0.406] 203
+Started game 207 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 201 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 70 - 108 - 26  [0.407] 204
+Started game 208 of 400 (Princhess vs myChess-4.4.1)
+Finished game 204 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 70 - 109 - 26  [0.405] 205
+Started game 209 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 206 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 70 - 110 - 26  [0.403] 206
+Started game 210 of 400 (Princhess vs myChess-4.4.1)
+Finished game 210 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 70 - 111 - 26  [0.401] 207
+Started game 211 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 208 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 71 - 111 - 26  [0.404] 208
+Started game 212 of 400 (Princhess vs myChess-4.4.1)
+Finished game 209 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 72 - 111 - 26  [0.407] 209
+Started game 213 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 207 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 72 - 112 - 26  [0.405] 210
+...      myChess-4.4.1 playing White: 41 - 51 - 13  [0.452] 105
+...      myChess-4.4.1 playing Black: 31 - 61 - 13  [0.357] 105
+...      White vs Black: 102 - 82 - 26  [0.548] 210
+Elo difference: -67.0 +/- 44.9, LOS: 0.2 %, DrawRatio: 12.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 214 of 400 (Princhess vs myChess-4.4.1)
+Finished game 211 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 73 - 112 - 26  [0.408] 211
+Started game 215 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 212 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 74 - 112 - 26  [0.410] 212
+Started game 216 of 400 (Princhess vs myChess-4.4.1)
+Finished game 213 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 74 - 113 - 26  [0.408] 213
+Started game 217 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 214 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 74 - 113 - 27  [0.409] 214
+Started game 218 of 400 (Princhess vs myChess-4.4.1)
+Finished game 216 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 75 - 113 - 27  [0.412] 215
+Started game 219 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 217 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 76 - 113 - 27  [0.414] 216
+Started game 220 of 400 (Princhess vs myChess-4.4.1)
+Finished game 215 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 77 - 113 - 27  [0.417] 217
+Started game 221 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 220 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 77 - 114 - 27  [0.415] 218
+Started game 222 of 400 (Princhess vs myChess-4.4.1)
+Finished game 219 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 77 - 115 - 27  [0.413] 219
+Started game 223 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 221 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 77 - 116 - 27  [0.411] 220
+...      myChess-4.4.1 playing White: 44 - 54 - 13  [0.455] 111
+...      myChess-4.4.1 playing Black: 33 - 62 - 14  [0.367] 109
+...      White vs Black: 106 - 87 - 27  [0.543] 220
+Elo difference: -62.2 +/- 43.8, LOS: 0.2 %, DrawRatio: 12.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 224 of 400 (Princhess vs myChess-4.4.1)
+Finished game 222 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 77 - 117 - 27  [0.410] 221
+Started game 225 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 224 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 78 - 117 - 27  [0.412] 222
+Started game 226 of 400 (Princhess vs myChess-4.4.1)
+Finished game 223 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 79 - 117 - 27  [0.415] 223
+Started game 227 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 218 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 79 - 117 - 28  [0.415] 224
+Started game 228 of 400 (Princhess vs myChess-4.4.1)
+Finished game 227 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 80 - 117 - 28  [0.418] 225
+Started game 229 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 226 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 81 - 117 - 28  [0.420] 226
+Started game 230 of 400 (Princhess vs myChess-4.4.1)
+Finished game 229 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 82 - 117 - 28  [0.423] 227
+Started game 231 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 228 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 82 - 118 - 28  [0.421] 228
+Started game 232 of 400 (Princhess vs myChess-4.4.1)
+Finished game 225 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 82 - 119 - 28  [0.419] 229
+Started game 233 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 232 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 82 - 120 - 28  [0.417] 230
+...      myChess-4.4.1 playing White: 47 - 55 - 13  [0.465] 115
+...      myChess-4.4.1 playing Black: 35 - 65 - 15  [0.370] 115
+...      White vs Black: 112 - 90 - 28  [0.548] 230
+Elo difference: -57.9 +/- 42.8, LOS: 0.4 %, DrawRatio: 12.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 234 of 400 (Princhess vs myChess-4.4.1)
+Finished game 231 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 83 - 120 - 28  [0.420] 231
+Started game 235 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 233 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 83 - 120 - 29  [0.420] 232
+Started game 236 of 400 (Princhess vs myChess-4.4.1)
+Finished game 234 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 83 - 121 - 29  [0.418] 233
+Started game 237 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 230 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 83 - 121 - 30  [0.419] 234
+Started game 238 of 400 (Princhess vs myChess-4.4.1)
+Finished game 237 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 84 - 121 - 30  [0.421] 235
+Started game 239 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 238 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 85 - 121 - 30  [0.424] 236
+Started game 240 of 400 (Princhess vs myChess-4.4.1)
+Finished game 236 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 86 - 121 - 30  [0.426] 237
+Started game 241 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 235 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 86 - 121 - 31  [0.426] 238
+Started game 242 of 400 (Princhess vs myChess-4.4.1)
+Finished game 242 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 86 - 122 - 31  [0.425] 239
+Started game 243 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 239 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 86 - 123 - 31  [0.423] 240
+...      myChess-4.4.1 playing White: 49 - 56 - 15  [0.471] 120
+...      myChess-4.4.1 playing Black: 37 - 67 - 16  [0.375] 120
+...      White vs Black: 116 - 93 - 31  [0.548] 240
+Elo difference: -54.0 +/- 41.6, LOS: 0.5 %, DrawRatio: 12.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 244 of 400 (Princhess vs myChess-4.4.1)
+Finished game 241 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 86 - 124 - 31  [0.421] 241
+Started game 245 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 240 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 86 - 124 - 32  [0.421] 242
+Started game 246 of 400 (Princhess vs myChess-4.4.1)
+Finished game 243 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 86 - 125 - 32  [0.420] 243
+Started game 247 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 247 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 86 - 126 - 32  [0.418] 244
+Started game 248 of 400 (Princhess vs myChess-4.4.1)
+Finished game 245 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 86 - 126 - 33  [0.418] 245
+Started game 249 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 244 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 86 - 127 - 33  [0.417] 246
+Started game 250 of 400 (Princhess vs myChess-4.4.1)
+Finished game 246 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 86 - 128 - 33  [0.415] 247
+Started game 251 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 251 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 86 - 129 - 33  [0.413] 248
+Started game 252 of 400 (Princhess vs myChess-4.4.1)
+Finished game 248 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 86 - 130 - 33  [0.412] 249
+Started game 253 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 250 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 86 - 131 - 33  [0.410] 250
+...      myChess-4.4.1 playing White: 49 - 60 - 16  [0.456] 125
+...      myChess-4.4.1 playing Black: 37 - 71 - 17  [0.364] 125
+...      White vs Black: 120 - 97 - 33  [0.546] 250
+Elo difference: -63.2 +/- 40.8, LOS: 0.1 %, DrawRatio: 13.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 254 of 400 (Princhess vs myChess-4.4.1)
+Finished game 249 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 87 - 131 - 33  [0.412] 251
+Started game 255 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 254 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 87 - 132 - 33  [0.411] 252
+Started game 256 of 400 (Princhess vs myChess-4.4.1)
+Finished game 252 (Princhess vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 88 - 132 - 33  [0.413] 253
+Started game 257 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 256 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 89 - 132 - 33  [0.415] 254
+Started game 258 of 400 (Princhess vs myChess-4.4.1)
+Finished game 255 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 90 - 132 - 33  [0.418] 255
+Started game 259 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 258 (Princhess vs myChess-4.4.1): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 90 - 133 - 33  [0.416] 256
+Started game 260 of 400 (Princhess vs myChess-4.4.1)
+Finished game 259 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 91 - 133 - 33  [0.418] 257
+Started game 261 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 260 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 91 - 134 - 33  [0.417] 258
+Started game 262 of 400 (Princhess vs myChess-4.4.1)
+Finished game 253 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 91 - 134 - 34  [0.417] 259
+Started game 263 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 261 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 91 - 134 - 35  [0.417] 260
+...      myChess-4.4.1 playing White: 52 - 60 - 18  [0.469] 130
+...      myChess-4.4.1 playing Black: 39 - 74 - 17  [0.365] 130
+...      White vs Black: 126 - 99 - 35  [0.552] 260
+Elo difference: -58.0 +/- 39.9, LOS: 0.2 %, DrawRatio: 13.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 264 of 400 (Princhess vs myChess-4.4.1)
+Finished game 263 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 92 - 134 - 35  [0.420] 261
+Started game 265 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 257 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 93 - 134 - 35  [0.422] 262
+Started game 266 of 400 (Princhess vs myChess-4.4.1)
+Finished game 262 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 94 - 134 - 35  [0.424] 263
+Started game 267 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 265 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 94 - 135 - 35  [0.422] 264
+Started game 268 of 400 (Princhess vs myChess-4.4.1)
+Finished game 267 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 94 - 136 - 35  [0.421] 265
+Started game 269 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 266 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 94 - 136 - 36  [0.421] 266
+Started game 270 of 400 (Princhess vs myChess-4.4.1)
+Finished game 268 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 94 - 136 - 37  [0.421] 267
+Started game 271 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 270 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 95 - 136 - 37  [0.424] 268
+Started game 272 of 400 (Princhess vs myChess-4.4.1)
+Finished game 269 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs Princhess: 95 - 136 - 38  [0.424] 269
+Started game 273 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 272 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 95 - 137 - 38  [0.422] 270
+...      myChess-4.4.1 playing White: 54 - 62 - 19  [0.470] 135
+...      myChess-4.4.1 playing Black: 41 - 75 - 19  [0.374] 135
+...      White vs Black: 129 - 103 - 38  [0.548] 270
+Elo difference: -54.5 +/- 38.9, LOS: 0.3 %, DrawRatio: 14.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 274 of 400 (Princhess vs myChess-4.4.1)
+Finished game 271 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 96 - 137 - 38  [0.424] 271
+Started game 275 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 274 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 96 - 138 - 38  [0.423] 272
+Started game 276 of 400 (Princhess vs myChess-4.4.1)
+Finished game 273 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 97 - 138 - 38  [0.425] 273
+Started game 277 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 264 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 98 - 138 - 38  [0.427] 274
+Started game 278 of 400 (Princhess vs myChess-4.4.1)
+Finished game 278 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 98 - 139 - 38  [0.425] 275
+Started game 279 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 275 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 99 - 139 - 38  [0.428] 276
+Started game 280 of 400 (Princhess vs myChess-4.4.1)
+Finished game 277 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 99 - 140 - 38  [0.426] 277
+Started game 281 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 276 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 99 - 141 - 38  [0.424] 278
+Started game 282 of 400 (Princhess vs myChess-4.4.1)
+Finished game 280 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 100 - 141 - 38  [0.427] 279
+Started game 283 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 281 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 100 - 142 - 38  [0.425] 280
+...      myChess-4.4.1 playing White: 57 - 64 - 19  [0.475] 140
+...      myChess-4.4.1 playing Black: 43 - 78 - 19  [0.375] 140
+...      White vs Black: 135 - 107 - 38  [0.550] 280
+Elo difference: -52.5 +/- 38.3, LOS: 0.3 %, DrawRatio: 13.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 284 of 400 (Princhess vs myChess-4.4.1)
+Finished game 279 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 100 - 143 - 38  [0.423] 281
+Started game 285 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 282 (Princhess vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 101 - 143 - 38  [0.426] 282
+Started game 286 of 400 (Princhess vs myChess-4.4.1)
+Finished game 284 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 101 - 144 - 38  [0.424] 283
+Started game 287 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 285 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 101 - 145 - 38  [0.423] 284
+Started game 288 of 400 (Princhess vs myChess-4.4.1)
+Finished game 283 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 101 - 146 - 38  [0.421] 285
+Started game 289 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 286 (Princhess vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 102 - 146 - 38  [0.423] 286
+Started game 290 of 400 (Princhess vs myChess-4.4.1)
+Finished game 288 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 102 - 147 - 38  [0.422] 287
+Started game 291 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 287 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 103 - 147 - 38  [0.424] 288
+Started game 292 of 400 (Princhess vs myChess-4.4.1)
+Finished game 290 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 103 - 148 - 38  [0.422] 289
+Started game 293 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 289 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 103 - 149 - 38  [0.421] 290
+...      myChess-4.4.1 playing White: 58 - 68 - 19  [0.466] 145
+...      myChess-4.4.1 playing Black: 45 - 81 - 19  [0.376] 145
+...      White vs Black: 139 - 113 - 38  [0.545] 290
+Elo difference: -55.6 +/- 37.8, LOS: 0.2 %, DrawRatio: 13.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 294 of 400 (Princhess vs myChess-4.4.1)
+Finished game 292 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 104 - 149 - 38  [0.423] 291
+Started game 295 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 291 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 105 - 149 - 38  [0.425] 292
+Started game 296 of 400 (Princhess vs myChess-4.4.1)
+Finished game 294 (Princhess vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 106 - 149 - 38  [0.427] 293
+Started game 297 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 293 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 106 - 150 - 38  [0.425] 294
+Started game 298 of 400 (Princhess vs myChess-4.4.1)
+Finished game 295 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 106 - 151 - 38  [0.424] 295
+Started game 299 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 297 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 107 - 151 - 38  [0.426] 296
+Started game 300 of 400 (Princhess vs myChess-4.4.1)
+Finished game 296 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 108 - 151 - 38  [0.428] 297
+Started game 301 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 298 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 108 - 152 - 38  [0.426] 298
+Started game 302 of 400 (Princhess vs myChess-4.4.1)
+Finished game 300 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 109 - 152 - 38  [0.428] 299
+Started game 303 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 299 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 109 - 152 - 39  [0.428] 300
+...      myChess-4.4.1 playing White: 60 - 70 - 20  [0.467] 150
+...      myChess-4.4.1 playing Black: 49 - 82 - 19  [0.390] 150
+...      White vs Black: 142 - 119 - 39  [0.538] 300
+Elo difference: -50.1 +/- 37.1, LOS: 0.4 %, DrawRatio: 13.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 304 of 400 (Princhess vs myChess-4.4.1)
+Finished game 302 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 109 - 152 - 40  [0.429] 301
+Started game 305 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 304 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 109 - 153 - 40  [0.427] 302
+Started game 306 of 400 (Princhess vs myChess-4.4.1)
+Finished game 301 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 109 - 153 - 41  [0.427] 303
+Started game 307 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 305 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 109 - 153 - 42  [0.428] 304
+Started game 308 of 400 (Princhess vs myChess-4.4.1)
+Finished game 303 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 109 - 154 - 42  [0.426] 305
+Started game 309 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 307 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 109 - 155 - 42  [0.425] 306
+Started game 310 of 400 (Princhess vs myChess-4.4.1)
+Finished game 306 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 109 - 156 - 42  [0.423] 307
+Started game 311 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 311 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 109 - 157 - 42  [0.422] 308
+Started game 312 of 400 (Princhess vs myChess-4.4.1)
+Finished game 309 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 109 - 157 - 43  [0.422] 309
+Started game 313 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 310 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 110 - 157 - 43  [0.424] 310
+...      myChess-4.4.1 playing White: 60 - 73 - 23  [0.458] 156
+...      myChess-4.4.1 playing Black: 50 - 84 - 20  [0.390] 154
+...      White vs Black: 144 - 123 - 43  [0.534] 310
+Elo difference: -53.1 +/- 36.3, LOS: 0.2 %, DrawRatio: 13.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 314 of 400 (Princhess vs myChess-4.4.1)
+Finished game 313 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 110 - 158 - 43  [0.423] 311
+Started game 315 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 308 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 110 - 159 - 43  [0.421] 312
+Started game 316 of 400 (Princhess vs myChess-4.4.1)
+Finished game 312 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of myChess-4.4.1 vs Princhess: 110 - 159 - 44  [0.422] 313
+Started game 317 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 315 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 111 - 159 - 44  [0.424] 314
+Started game 318 of 400 (Princhess vs myChess-4.4.1)
+Finished game 314 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 112 - 159 - 44  [0.425] 315
+Started game 319 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 317 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 113 - 159 - 44  [0.427] 316
+Started game 320 of 400 (Princhess vs myChess-4.4.1)
+Finished game 318 (Princhess vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 114 - 159 - 44  [0.429] 317
+Started game 321 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 320 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 114 - 160 - 44  [0.428] 318
+Started game 322 of 400 (Princhess vs myChess-4.4.1)
+Finished game 316 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 114 - 160 - 45  [0.428] 319
+Started game 323 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 319 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 114 - 161 - 45  [0.427] 320
+...      myChess-4.4.1 playing White: 62 - 75 - 23  [0.459] 160
+...      myChess-4.4.1 playing Black: 52 - 86 - 22  [0.394] 160
+...      White vs Black: 148 - 127 - 45  [0.533] 320
+Elo difference: -51.4 +/- 35.7, LOS: 0.2 %, DrawRatio: 14.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 324 of 400 (Princhess vs myChess-4.4.1)
+Finished game 323 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 114 - 162 - 45  [0.425] 321
+Started game 325 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 324 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 115 - 162 - 45  [0.427] 322
+Started game 326 of 400 (Princhess vs myChess-4.4.1)
+Finished game 325 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 115 - 163 - 45  [0.426] 323
+Started game 327 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 322 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 115 - 163 - 46  [0.426] 324
+Started game 328 of 400 (Princhess vs myChess-4.4.1)
+Finished game 321 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 115 - 163 - 47  [0.426] 325
+Started game 329 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 326 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 116 - 163 - 47  [0.428] 326
+Started game 330 of 400 (Princhess vs myChess-4.4.1)
+Finished game 328 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 116 - 164 - 47  [0.427] 327
+Started game 331 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 327 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 117 - 164 - 47  [0.428] 328
+Started game 332 of 400 (Princhess vs myChess-4.4.1)
+Finished game 329 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 117 - 165 - 47  [0.427] 329
+Started game 333 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 330 (Princhess vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 118 - 165 - 47  [0.429] 330
+...      myChess-4.4.1 playing White: 63 - 78 - 24  [0.455] 165
+...      myChess-4.4.1 playing Black: 55 - 87 - 23  [0.403] 165
+...      White vs Black: 150 - 133 - 47  [0.526] 330
+Elo difference: -49.8 +/- 35.1, LOS: 0.3 %, DrawRatio: 14.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 334 of 400 (Princhess vs myChess-4.4.1)
+Finished game 331 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by adjudication}
+Score of myChess-4.4.1 vs Princhess: 118 - 165 - 48  [0.429] 331
+Started game 335 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 334 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 119 - 165 - 48  [0.431] 332
+Started game 336 of 400 (Princhess vs myChess-4.4.1)
+Finished game 333 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 120 - 165 - 48  [0.432] 333
+Started game 337 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 332 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 120 - 165 - 49  [0.433] 334
+Started game 338 of 400 (Princhess vs myChess-4.4.1)
+Finished game 335 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 120 - 166 - 49  [0.431] 335
+Started game 339 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 337 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 120 - 167 - 49  [0.430] 336
+Started game 340 of 400 (Princhess vs myChess-4.4.1)
+Finished game 338 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 121 - 167 - 49  [0.432] 337
+Started game 341 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 340 (Princhess vs myChess-4.4.1): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 121 - 168 - 49  [0.430] 338
+Started game 342 of 400 (Princhess vs myChess-4.4.1)
+Finished game 339 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 121 - 169 - 49  [0.429] 339
+Started game 343 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 341 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 121 - 170 - 49  [0.428] 340
+...      myChess-4.4.1 playing White: 64 - 82 - 25  [0.447] 171
+...      myChess-4.4.1 playing Black: 57 - 88 - 24  [0.408] 169
+...      White vs Black: 152 - 139 - 49  [0.519] 340
+Elo difference: -50.4 +/- 34.5, LOS: 0.2 %, DrawRatio: 14.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 344 of 400 (Princhess vs myChess-4.4.1)
+Finished game 342 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 121 - 171 - 49  [0.427] 341
+Started game 345 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 336 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 121 - 172 - 49  [0.425] 342
+Started game 346 of 400 (Princhess vs myChess-4.4.1)
+Finished game 343 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 121 - 173 - 49  [0.424] 343
+Started game 347 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 345 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 121 - 174 - 49  [0.423] 344
+Started game 348 of 400 (Princhess vs myChess-4.4.1)
+Finished game 348 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 121 - 175 - 49  [0.422] 345
+Started game 349 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 344 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 121 - 176 - 49  [0.421] 346
+Started game 350 of 400 (Princhess vs myChess-4.4.1)
+Finished game 346 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 121 - 177 - 49  [0.419] 347
+Started game 351 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 350 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 121 - 178 - 49  [0.418] 348
+Started game 352 of 400 (Princhess vs myChess-4.4.1)
+Finished game 349 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 121 - 179 - 49  [0.417] 349
+Started game 353 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 351 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 121 - 180 - 49  [0.416] 350
+...      myChess-4.4.1 playing White: 64 - 86 - 25  [0.437] 175
+...      myChess-4.4.1 playing Black: 57 - 94 - 24  [0.394] 175
+...      White vs Black: 158 - 143 - 49  [0.521] 350
+Elo difference: -59.1 +/- 34.2, LOS: 0.0 %, DrawRatio: 14.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 354 of 400 (Princhess vs myChess-4.4.1)
+Finished game 352 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of myChess-4.4.1 vs Princhess: 121 - 180 - 50  [0.416] 351
+Started game 355 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 347 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs Princhess: 121 - 180 - 51  [0.416] 352
+Started game 356 of 400 (Princhess vs myChess-4.4.1)
+Finished game 353 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 121 - 180 - 52  [0.416] 353
+Started game 357 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 355 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 122 - 180 - 52  [0.418] 354
+Started game 358 of 400 (Princhess vs myChess-4.4.1)
+Finished game 356 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 122 - 181 - 52  [0.417] 355
+Started game 359 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 354 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 122 - 182 - 52  [0.416] 356
+Started game 360 of 400 (Princhess vs myChess-4.4.1)
+Finished game 357 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 123 - 182 - 52  [0.417] 357
+Started game 361 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 358 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 123 - 182 - 53  [0.418] 358
+Started game 362 of 400 (Princhess vs myChess-4.4.1)
+Finished game 359 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 124 - 182 - 53  [0.419] 359
+Started game 363 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 360 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 124 - 183 - 53  [0.418] 360
+...      myChess-4.4.1 playing White: 67 - 86 - 27  [0.447] 180
+...      myChess-4.4.1 playing Black: 57 - 97 - 26  [0.389] 180
+...      White vs Black: 164 - 143 - 53  [0.529] 360
+Elo difference: -57.5 +/- 33.6, LOS: 0.0 %, DrawRatio: 14.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 364 of 400 (Princhess vs myChess-4.4.1)
+Finished game 363 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 125 - 183 - 53  [0.420] 361
+Started game 365 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 361 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by adjudication}
+Score of myChess-4.4.1 vs Princhess: 125 - 183 - 54  [0.420] 362
+Started game 366 of 400 (Princhess vs myChess-4.4.1)
+Finished game 366 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 125 - 184 - 54  [0.419] 363
+Started game 367 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 362 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 125 - 185 - 54  [0.418] 364
+Started game 368 of 400 (Princhess vs myChess-4.4.1)
+Finished game 365 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 126 - 185 - 54  [0.419] 365
+Started game 369 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 364 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 127 - 185 - 54  [0.421] 366
+Started game 370 of 400 (Princhess vs myChess-4.4.1)
+Finished game 368 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 127 - 186 - 54  [0.420] 367
+Started game 371 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 370 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 127 - 187 - 54  [0.418] 368
+Started game 372 of 400 (Princhess vs myChess-4.4.1)
+Finished game 371 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 127 - 187 - 55  [0.419] 369
+Started game 373 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 367 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 127 - 188 - 55  [0.418] 370
+...      myChess-4.4.1 playing White: 69 - 87 - 29  [0.451] 185
+...      myChess-4.4.1 playing Black: 58 - 101 - 26  [0.384] 185
+...      White vs Black: 170 - 145 - 55  [0.534] 370
+Elo difference: -57.8 +/- 33.1, LOS: 0.0 %, DrawRatio: 14.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 374 of 400 (Princhess vs myChess-4.4.1)
+Finished game 374 (Princhess vs myChess-4.4.1): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 127 - 189 - 55  [0.416] 371
+Started game 375 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 369 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 127 - 190 - 55  [0.415] 372
+Started game 376 of 400 (Princhess vs myChess-4.4.1)
+Finished game 373 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 128 - 190 - 55  [0.417] 373
+Started game 377 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 376 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 129 - 190 - 55  [0.418] 374
+Started game 378 of 400 (Princhess vs myChess-4.4.1)
+Finished game 372 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 129 - 191 - 55  [0.417] 375
+Started game 379 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 375 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 129 - 192 - 55  [0.416] 376
+Started game 380 of 400 (Princhess vs myChess-4.4.1)
+Finished game 377 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 129 - 192 - 56  [0.416] 377
+Started game 381 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 378 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 130 - 192 - 56  [0.418] 378
+Started game 382 of 400 (Princhess vs myChess-4.4.1)
+Finished game 381 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 131 - 192 - 56  [0.420] 379
+Started game 383 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 379 (myChess-4.4.1 vs Princhess): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 132 - 192 - 56  [0.421] 380
+...      myChess-4.4.1 playing White: 72 - 89 - 30  [0.455] 191
+...      myChess-4.4.1 playing Black: 60 - 103 - 26  [0.386] 189
+...      White vs Black: 175 - 149 - 56  [0.534] 380
+Elo difference: -55.3 +/- 32.6, LOS: 0.0 %, DrawRatio: 14.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 384 of 400 (Princhess vs myChess-4.4.1)
+Finished game 380 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 132 - 193 - 56  [0.420] 381
+Started game 385 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 383 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 132 - 194 - 56  [0.419] 382
+Started game 386 of 400 (Princhess vs myChess-4.4.1)
+Finished game 382 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 132 - 194 - 57  [0.419] 383
+Started game 387 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 385 (myChess-4.4.1 vs Princhess): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 132 - 195 - 57  [0.418] 384
+Started game 388 of 400 (Princhess vs myChess-4.4.1)
+Finished game 384 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 132 - 195 - 58  [0.418] 385
+Started game 389 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 386 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 132 - 196 - 58  [0.417] 386
+Started game 390 of 400 (Princhess vs myChess-4.4.1)
+Finished game 389 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 133 - 196 - 58  [0.419] 387
+Started game 391 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 387 (myChess-4.4.1 vs Princhess): 1/2-1/2 {Draw by adjudication}
+Score of myChess-4.4.1 vs Princhess: 133 - 196 - 59  [0.419] 388
+Started game 392 of 400 (Princhess vs myChess-4.4.1)
+Finished game 388 (Princhess vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs Princhess: 133 - 196 - 60  [0.419] 389
+Started game 393 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 390 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 133 - 197 - 60  [0.418] 390
+...      myChess-4.4.1 playing White: 73 - 91 - 31  [0.454] 195
+...      myChess-4.4.1 playing Black: 60 - 106 - 29  [0.382] 195
+...      White vs Black: 179 - 151 - 60  [0.536] 390
+Elo difference: -57.5 +/- 32.1, LOS: 0.0 %, DrawRatio: 15.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 394 of 400 (Princhess vs myChess-4.4.1)
+Finished game 391 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 133 - 198 - 60  [0.417] 391
+Started game 395 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 394 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 133 - 199 - 60  [0.416] 392
+Started game 396 of 400 (Princhess vs myChess-4.4.1)
+Finished game 392 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 134 - 199 - 60  [0.417] 393
+Started game 397 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 395 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 135 - 199 - 60  [0.419] 394
+Started game 398 of 400 (Princhess vs myChess-4.4.1)
+Finished game 396 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 136 - 199 - 60  [0.420] 395
+Started game 399 of 400 (myChess-4.4.1 vs Princhess)
+Finished game 398 (Princhess vs myChess-4.4.1): 0-1 {Black mates}
+Score of myChess-4.4.1 vs Princhess: 137 - 199 - 60  [0.422] 396
+Started game 400 of 400 (Princhess vs myChess-4.4.1)
+Finished game 397 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 138 - 199 - 60  [0.423] 397
+Finished game 399 (myChess-4.4.1 vs Princhess): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 138 - 200 - 60  [0.422] 398
+Finished game 400 (Princhess vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs Princhess: 138 - 201 - 60  [0.421] 399
+Finished game 393 (myChess-4.4.1 vs Princhess): 1-0 {White mates}
+Score of myChess-4.4.1 vs Princhess: 139 - 201 - 60  [0.422] 400
+...      myChess-4.4.1 playing White: 76 - 93 - 31  [0.458] 200
+...      myChess-4.4.1 playing Black: 63 - 108 - 29  [0.388] 200
+...      White vs Black: 184 - 156 - 60  [0.535] 400
+Elo difference: -54.3 +/- 31.8, LOS: 0.0 %, DrawRatio: 15.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+
+Player: myChess-4.4.1
+   "Draw by 3-fold repetition": 52
+   "Draw by adjudication": 5
+   "Draw by insufficient mating material": 3
+   "Loss: Black mates": 3
+   "Loss: Black wins by adjudication": 90
+   "Loss: White mates": 5
+   "Loss: White wins by adjudication": 103
+   "Win: Black mates": 47
+   "Win: Black wins by adjudication": 16
+   "Win: White mates": 55
+   "Win: White wins by adjudication": 21
+Player: Princhess
+   "Draw by 3-fold repetition": 52
+   "Draw by adjudication": 5
+   "Draw by insufficient mating material": 3
+   "Loss: Black mates": 47
+   "Loss: Black wins by adjudication": 16
+   "Loss: White mates": 55
+   "Loss: White wins by adjudication": 21
+   "Win: Black mates": 3
+   "Win: Black wins by adjudication": 90
+   "Win: White mates": 5
+   "Win: White wins by adjudication": 103
+Finished match

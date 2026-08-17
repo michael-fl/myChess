@@ -482,9 +482,11 @@ affordable run. Measuring the increment itself needs a control that carries one
 - **Test locally first.** Before going live, drive `mychess-uci.sh` by hand
   (`uci`, `isready`, `position …`, `go movetime 1000`) or play a few cutechess
   games — exactly what this repo already does.
-- **Strength context.** myChess is roughly in the ~1800s Elo range (Pulse-anchored
-  estimate); expect it to settle somewhere in the mid bot pool. Fine for casual
-  play and a public presence.
+- **Strength context.** myChess measures **1928 ± 21 CCRL Blitz** as of v4.4.1
+  ([re-anchor 2026-08-17](myChess-ELO-measurement.md#the-v441-re-anchor--measured-2026-08-17),
+  2000 games against five externally rated engines) — roughly rank 700 of 2918 on that
+  list, the upper half. Its lichess blitz rating sits near the same value, which is a
+  coincidence worth not over-reading: different pool, different time control.
 - **Be a good citizen.** Don't spam challenges via matchmaking; respect Lichess's
   API rate limits (lichess-bot handles back-off, but aggressive config can still
   trip limits). It did trip them on 2026-08-11 — see

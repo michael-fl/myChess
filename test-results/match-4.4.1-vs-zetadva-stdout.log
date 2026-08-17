@@ -1,0 +1,1423 @@
+Indexing opening suite...
+Started game 1 of 400 (myChess-4.4.1 vs ZetaDva)
+Started game 4 of 400 (ZetaDva vs myChess-4.4.1)
+Started game 3 of 400 (myChess-4.4.1 vs ZetaDva)
+Started game 2 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 1 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 1 - 0 - 0  [1.000] 1
+Started game 5 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 3 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 2 - 0 - 0  [1.000] 2
+Started game 6 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 4 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 2 - 1 - 0  [0.667] 3
+Started game 7 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 2 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 2 - 1 - 1  [0.625] 4
+Started game 8 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 5 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 3 - 1 - 1  [0.700] 5
+Started game 9 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 7 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 4 - 1 - 1  [0.750] 6
+Started game 10 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 6 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 5 - 1 - 1  [0.786] 7
+Started game 11 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 9 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 6 - 1 - 1  [0.813] 8
+Started game 12 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 10 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 7 - 1 - 1  [0.833] 9
+Started game 13 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 11 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 8 - 1 - 1  [0.850] 10
+...      myChess-4.4.1 playing White: 6 - 0 - 0  [1.000] 6
+...      myChess-4.4.1 playing Black: 2 - 1 - 1  [0.625] 4
+...      White vs Black: 7 - 2 - 1  [0.750] 10
+Elo difference: 301.3 +/- nan, LOS: 99.0 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 14 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 12 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 9 - 1 - 1  [0.864] 11
+Started game 15 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 8 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 9 - 1 - 2  [0.833] 12
+Started game 16 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 14 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 10 - 1 - 2  [0.846] 13
+Started game 17 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 16 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 11 - 1 - 2  [0.857] 14
+Started game 18 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 17 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 12 - 1 - 2  [0.867] 15
+Started game 19 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 15 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 12 - 2 - 2  [0.813] 16
+Started game 20 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 19 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 13 - 2 - 2  [0.824] 17
+Started game 21 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 18 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 13 - 3 - 2  [0.778] 18
+Started game 22 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 21 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 14 - 3 - 2  [0.789] 19
+Started game 23 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 22 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 15 - 3 - 2  [0.800] 20
+...      myChess-4.4.1 playing White: 9 - 1 - 0  [0.900] 10
+...      myChess-4.4.1 playing Black: 6 - 2 - 2  [0.700] 10
+...      White vs Black: 11 - 7 - 2  [0.600] 20
+Elo difference: 240.8 +/- 228.2, LOS: 99.8 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 24 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 24 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 16 - 3 - 2  [0.810] 21
+Started game 25 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 20 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 17 - 3 - 2  [0.818] 22
+Started game 26 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 13 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 17 - 3 - 3  [0.804] 23
+Started game 27 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 23 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 18 - 3 - 3  [0.813] 24
+Started game 28 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 27 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 19 - 3 - 3  [0.820] 25
+Started game 29 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 25 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 20 - 3 - 3  [0.827] 26
+Started game 30 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 29 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 21 - 3 - 3  [0.833] 27
+Started game 31 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 28 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 21 - 4 - 3  [0.804] 28
+Started game 32 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 26 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 22 - 4 - 3  [0.810] 29
+Started game 33 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 32 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 23 - 4 - 3  [0.817] 30
+...      myChess-4.4.1 playing White: 13 - 1 - 1  [0.900] 15
+...      myChess-4.4.1 playing Black: 10 - 3 - 2  [0.733] 15
+...      White vs Black: 16 - 11 - 3  [0.583] 30
+Elo difference: 259.5 +/- 173.8, LOS: 100.0 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 34 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 31 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 23 - 5 - 3  [0.790] 31
+Started game 35 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 33 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 23 - 6 - 3  [0.766] 32
+Started game 36 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 30 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 23 - 7 - 3  [0.742] 33
+Started game 37 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 35 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 23 - 8 - 3  [0.721] 34
+Started game 38 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 37 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 23 - 9 - 3  [0.700] 35
+Started game 39 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 38 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 24 - 9 - 3  [0.708] 36
+Started game 40 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 34 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 24 - 9 - 4  [0.703] 37
+Started game 41 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 40 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 25 - 9 - 4  [0.711] 38
+Started game 42 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 36 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 26 - 9 - 4  [0.718] 39
+Started game 43 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 43 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 27 - 9 - 4  [0.725] 40
+...      myChess-4.4.1 playing White: 14 - 5 - 1  [0.725] 20
+...      myChess-4.4.1 playing Black: 13 - 4 - 3  [0.725] 20
+...      White vs Black: 18 - 18 - 4  [0.500] 40
+Elo difference: 168.4 +/- 119.9, LOS: 99.9 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 44 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 42 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 27 - 9 - 5  [0.720] 41
+Started game 45 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 44 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 28 - 9 - 5  [0.726] 42
+Started game 46 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 45 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 29 - 9 - 5  [0.733] 43
+Started game 47 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 46 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 30 - 9 - 5  [0.739] 44
+Started game 48 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 39 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 31 - 9 - 5  [0.744] 45
+Started game 49 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 47 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 31 - 10 - 5  [0.728] 46
+Started game 50 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 49 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 32 - 10 - 5  [0.734] 47
+Started game 51 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 50 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 32 - 11 - 5  [0.719] 48
+Started game 52 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 51 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 32 - 12 - 5  [0.704] 49
+Started game 53 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 41 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 32 - 12 - 6  [0.700] 50
+...      myChess-4.4.1 playing White: 17 - 7 - 2  [0.692] 26
+...      myChess-4.4.1 playing Black: 15 - 5 - 4  [0.708] 24
+...      White vs Black: 22 - 22 - 6  [0.500] 50
+Elo difference: 147.2 +/- 101.3, LOS: 99.9 %, DrawRatio: 12.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 54 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 48 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 32 - 13 - 6  [0.686] 51
+Started game 55 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 52 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 33 - 13 - 6  [0.692] 52
+Started game 56 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 53 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 34 - 13 - 6  [0.698] 53
+Started game 57 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 56 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 34 - 14 - 6  [0.685] 54
+Started game 58 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 54 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 35 - 14 - 6  [0.691] 55
+Started game 59 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 55 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 35 - 15 - 6  [0.679] 56
+Started game 60 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 60 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 36 - 15 - 6  [0.684] 57
+Started game 61 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 58 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 36 - 16 - 6  [0.672] 58
+Started game 62 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 59 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 37 - 16 - 6  [0.678] 59
+Started game 63 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 57 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 37 - 16 - 7  [0.675] 60
+...      myChess-4.4.1 playing White: 19 - 8 - 3  [0.683] 30
+...      myChess-4.4.1 playing Black: 18 - 8 - 4  [0.667] 30
+...      White vs Black: 27 - 26 - 7  [0.508] 60
+Elo difference: 127.0 +/- 89.9, LOS: 99.8 %, DrawRatio: 11.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 64 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 62 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 37 - 16 - 8  [0.672] 61
+Started game 65 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 63 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 38 - 16 - 8  [0.677] 62
+Started game 66 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 61 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 39 - 16 - 8  [0.683] 63
+Started game 67 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 64 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 40 - 16 - 8  [0.688] 64
+Started game 68 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 65 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 40 - 17 - 8  [0.677] 65
+Started game 69 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 66 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 40 - 17 - 9  [0.674] 66
+Started game 70 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 67 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 41 - 17 - 9  [0.679] 67
+Started game 71 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 69 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 41 - 18 - 9  [0.669] 68
+Started game 72 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 68 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 42 - 18 - 9  [0.674] 69
+Started game 73 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 70 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 42 - 19 - 9  [0.664] 70
+...      myChess-4.4.1 playing White: 22 - 10 - 3  [0.671] 35
+...      myChess-4.4.1 playing Black: 20 - 9 - 6  [0.657] 35
+...      White vs Black: 31 - 30 - 9  [0.507] 70
+Elo difference: 118.6 +/- 81.6, LOS: 99.8 %, DrawRatio: 12.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 74 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 71 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 42 - 20 - 9  [0.655] 71
+Started game 75 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 72 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 42 - 20 - 10  [0.653] 72
+Started game 76 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 73 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 43 - 20 - 10  [0.658] 73
+Started game 77 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 75 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 44 - 20 - 10  [0.662] 74
+Started game 78 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 74 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 45 - 20 - 10  [0.667] 75
+Started game 79 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 78 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 45 - 21 - 10  [0.658] 76
+Started game 80 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 77 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 46 - 21 - 10  [0.662] 77
+Started game 81 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 79 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 47 - 21 - 10  [0.667] 78
+Started game 82 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 76 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 47 - 22 - 10  [0.658] 79
+Started game 83 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 82 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 48 - 22 - 10  [0.662] 80
+...      myChess-4.4.1 playing White: 26 - 11 - 3  [0.688] 40
+...      myChess-4.4.1 playing Black: 22 - 11 - 7  [0.637] 40
+...      White vs Black: 37 - 33 - 10  [0.525] 80
+Elo difference: 117.2 +/- 76.1, LOS: 99.9 %, DrawRatio: 12.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 84 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 80 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 49 - 22 - 10  [0.667] 81
+Started game 85 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 83 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 49 - 23 - 10  [0.659] 82
+Started game 86 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 84 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 50 - 23 - 10  [0.663] 83
+Started game 87 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 81 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 50 - 23 - 11  [0.661] 84
+Started game 88 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 86 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 51 - 23 - 11  [0.665] 85
+Started game 89 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 87 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 52 - 23 - 11  [0.669] 86
+Started game 90 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 85 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 52 - 24 - 11  [0.661] 87
+Started game 91 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 89 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 53 - 24 - 11  [0.665] 88
+Started game 92 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 91 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 54 - 24 - 11  [0.669] 89
+Started game 93 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 88 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 54 - 24 - 12  [0.667] 90
+...      myChess-4.4.1 playing White: 29 - 13 - 4  [0.674] 46
+...      myChess-4.4.1 playing Black: 25 - 11 - 8  [0.659] 44
+...      White vs Black: 40 - 38 - 12  [0.511] 90
+Elo difference: 120.4 +/- 71.4, LOS: 100.0 %, DrawRatio: 13.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 94 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 90 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 55 - 24 - 12  [0.670] 91
+Started game 95 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 93 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 55 - 25 - 12  [0.663] 92
+Started game 96 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 92 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 55 - 26 - 12  [0.656] 93
+Started game 97 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 94 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 56 - 26 - 12  [0.660] 94
+Started game 98 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 95 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 56 - 27 - 12  [0.653] 95
+Started game 99 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 97 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 57 - 27 - 12  [0.656] 96
+Started game 100 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 96 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 58 - 27 - 12  [0.660] 97
+Started game 101 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 99 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 59 - 27 - 12  [0.663] 98
+Started game 102 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 98 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 59 - 27 - 13  [0.662] 99
+Started game 103 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 101 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 60 - 27 - 13  [0.665] 100
+...      myChess-4.4.1 playing White: 32 - 15 - 4  [0.667] 51
+...      myChess-4.4.1 playing Black: 28 - 12 - 9  [0.663] 49
+...      White vs Black: 44 - 43 - 13  [0.505] 100
+Elo difference: 119.1 +/- 67.7, LOS: 100.0 %, DrawRatio: 13.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 104 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 100 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 61 - 27 - 13  [0.668] 101
+Started game 105 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 102 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 61 - 28 - 13  [0.662] 102
+Started game 106 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 104 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 62 - 28 - 13  [0.665] 103
+Started game 107 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 105 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 62 - 28 - 14  [0.663] 104
+Started game 108 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 103 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 62 - 28 - 15  [0.662] 105
+Started game 109 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 107 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 63 - 28 - 15  [0.665] 106
+Started game 110 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 108 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 64 - 28 - 15  [0.668] 107
+Started game 111 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 106 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 64 - 28 - 16  [0.667] 108
+Started game 112 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 110 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 64 - 28 - 17  [0.665] 109
+Started game 113 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 111 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 65 - 28 - 17  [0.668] 110
+...      myChess-4.4.1 playing White: 34 - 15 - 6  [0.673] 55
+...      myChess-4.4.1 playing Black: 31 - 13 - 11  [0.664] 55
+...      White vs Black: 47 - 46 - 17  [0.505] 110
+Elo difference: 121.6 +/- 63.5, LOS: 100.0 %, DrawRatio: 15.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 114 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 109 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 65 - 28 - 18  [0.667] 111
+Started game 115 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 113 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 66 - 28 - 18  [0.670] 112
+Started game 116 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 112 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 66 - 28 - 19  [0.668] 113
+Started game 117 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 115 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 67 - 28 - 19  [0.671] 114
+Started game 118 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 116 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 68 - 28 - 19  [0.674] 115
+Started game 119 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 114 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 68 - 29 - 19  [0.668] 116
+Started game 120 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 117 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 69 - 29 - 19  [0.671] 117
+Started game 121 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 118 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 70 - 29 - 19  [0.674] 118
+Started game 122 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 119 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 70 - 29 - 20  [0.672] 119
+Started game 123 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 120 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 71 - 29 - 20  [0.675] 120
+...      myChess-4.4.1 playing White: 37 - 15 - 8  [0.683] 60
+...      myChess-4.4.1 playing Black: 34 - 14 - 12  [0.667] 60
+...      White vs Black: 51 - 49 - 20  [0.508] 120
+Elo difference: 127.0 +/- 60.5, LOS: 100.0 %, DrawRatio: 16.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 124 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 121 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 72 - 29 - 20  [0.678] 121
+Started game 125 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 124 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 72 - 30 - 20  [0.672] 122
+Started game 126 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 122 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 73 - 30 - 20  [0.675] 123
+Started game 127 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 125 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 74 - 30 - 20  [0.677] 124
+Started game 128 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 127 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 74 - 31 - 20  [0.672] 125
+Started game 129 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 126 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 75 - 31 - 20  [0.675] 126
+Started game 130 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 128 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 75 - 32 - 20  [0.669] 127
+Started game 131 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 123 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 75 - 32 - 21  [0.668] 128
+Started game 132 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 130 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 76 - 32 - 21  [0.671] 129
+Started game 133 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 129 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 76 - 32 - 22  [0.669] 130
+...      myChess-4.4.1 playing White: 39 - 16 - 10  [0.677] 65
+...      myChess-4.4.1 playing Black: 37 - 16 - 12  [0.662] 65
+...      White vs Black: 55 - 53 - 22  [0.508] 130
+Elo difference: 122.4 +/- 57.7, LOS: 100.0 %, DrawRatio: 16.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 134 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 133 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 77 - 32 - 22  [0.672] 131
+Started game 135 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 132 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 78 - 32 - 22  [0.674] 132
+Started game 136 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 131 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 79 - 32 - 22  [0.677] 133
+Started game 137 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 135 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 80 - 32 - 22  [0.679] 134
+Started game 138 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 134 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 81 - 32 - 22  [0.681] 135
+Started game 139 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 136 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 82 - 32 - 22  [0.684] 136
+Started game 140 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 139 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 83 - 32 - 22  [0.686] 137
+Started game 141 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 137 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 84 - 32 - 22  [0.688] 138
+Started game 142 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 140 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 85 - 32 - 22  [0.691] 139
+Started game 143 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 138 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 85 - 32 - 23  [0.689] 140
+...      myChess-4.4.1 playing White: 44 - 16 - 10  [0.700] 70
+...      myChess-4.4.1 playing Black: 41 - 16 - 13  [0.679] 70
+...      White vs Black: 60 - 57 - 23  [0.511] 140
+Elo difference: 138.4 +/- 56.5, LOS: 100.0 %, DrawRatio: 16.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 144 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 142 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 86 - 32 - 23  [0.691] 141
+Started game 145 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 143 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 87 - 32 - 23  [0.694] 142
+Started game 146 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 141 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 87 - 33 - 23  [0.689] 143
+Started game 147 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 145 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 88 - 33 - 23  [0.691] 144
+Started game 148 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 146 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 89 - 33 - 23  [0.693] 145
+Started game 149 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 144 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 89 - 34 - 23  [0.688] 146
+Started game 150 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 147 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 90 - 34 - 23  [0.690] 147
+Started game 151 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 148 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 91 - 34 - 23  [0.693] 148
+Started game 152 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 150 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 91 - 35 - 23  [0.688] 149
+Started game 153 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 149 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 91 - 36 - 23  [0.683] 150
+...      myChess-4.4.1 playing White: 47 - 18 - 10  [0.693] 75
+...      myChess-4.4.1 playing Black: 44 - 18 - 13  [0.673] 75
+...      White vs Black: 65 - 62 - 23  [0.510] 150
+Elo difference: 133.6 +/- 54.8, LOS: 100.0 %, DrawRatio: 15.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 154 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 151 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 92 - 36 - 23  [0.685] 151
+Started game 155 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 152 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 93 - 36 - 23  [0.688] 152
+Started game 156 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 155 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 94 - 36 - 23  [0.690] 153
+Started game 157 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 156 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 95 - 36 - 23  [0.692] 154
+Started game 158 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 153 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 96 - 36 - 23  [0.694] 155
+Started game 159 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 154 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 96 - 37 - 23  [0.689] 156
+Started game 160 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 158 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 97 - 37 - 23  [0.691] 157
+Started game 161 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 157 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 98 - 37 - 23  [0.693] 158
+Started game 162 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 162 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 99 - 37 - 23  [0.695] 159
+Started game 163 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 160 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 99 - 38 - 23  [0.691] 160
+...      myChess-4.4.1 playing White: 51 - 18 - 10  [0.709] 79
+...      myChess-4.4.1 playing Black: 48 - 20 - 13  [0.673] 81
+...      White vs Black: 71 - 66 - 23  [0.516] 160
+Elo difference: 139.5 +/- 53.6, LOS: 100.0 %, DrawRatio: 14.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 164 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 163 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 100 - 38 - 23  [0.693] 161
+Started game 165 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 159 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 101 - 38 - 23  [0.694] 162
+Started game 166 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 165 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 102 - 38 - 23  [0.696] 163
+Started game 167 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 161 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 103 - 38 - 23  [0.698] 164
+Started game 168 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 166 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 103 - 38 - 24  [0.697] 165
+Started game 169 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 164 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 103 - 38 - 25  [0.696] 166
+Started game 170 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 167 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 103 - 38 - 26  [0.695] 167
+Started game 171 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 168 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 104 - 38 - 26  [0.696] 168
+Started game 172 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 169 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 105 - 38 - 26  [0.698] 169
+Started game 173 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 170 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 106 - 38 - 26  [0.700] 170
+...      myChess-4.4.1 playing White: 56 - 18 - 11  [0.724] 85
+...      myChess-4.4.1 playing Black: 50 - 20 - 15  [0.676] 85
+...      White vs Black: 76 - 68 - 26  [0.524] 170
+Elo difference: 147.2 +/- 52.0, LOS: 100.0 %, DrawRatio: 15.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 174 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 173 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 107 - 38 - 26  [0.702] 171
+Started game 175 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 171 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 108 - 38 - 26  [0.703] 172
+Started game 176 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 172 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 108 - 39 - 26  [0.699] 173
+Started game 177 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 174 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 109 - 39 - 26  [0.701] 174
+Started game 178 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 177 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 110 - 39 - 26  [0.703] 175
+Started game 179 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 175 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 111 - 39 - 26  [0.705] 176
+Started game 180 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 176 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 111 - 39 - 27  [0.703] 177
+Started game 181 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 179 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 112 - 39 - 27  [0.705] 178
+Started game 182 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 178 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 113 - 39 - 27  [0.707] 179
+Started game 183 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 181 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 114 - 39 - 27  [0.708] 180
+...      myChess-4.4.1 playing White: 62 - 18 - 11  [0.742] 91
+...      myChess-4.4.1 playing Black: 52 - 21 - 16  [0.674] 89
+...      White vs Black: 83 - 70 - 27  [0.536] 180
+Elo difference: 154.1 +/- 51.0, LOS: 100.0 %, DrawRatio: 15.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 184 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 180 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 115 - 39 - 27  [0.710] 181
+Started game 185 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 183 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 116 - 39 - 27  [0.712] 182
+Started game 186 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 182 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 117 - 39 - 27  [0.713] 183
+Started game 187 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 184 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 118 - 39 - 27  [0.715] 184
+Started game 188 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 185 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 119 - 39 - 27  [0.716] 185
+Started game 189 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 188 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 119 - 40 - 27  [0.712] 186
+Started game 190 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 186 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 120 - 40 - 27  [0.714] 187
+Started game 191 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 189 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 121 - 40 - 27  [0.715] 188
+Started game 192 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 187 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 122 - 40 - 27  [0.717] 189
+Started game 193 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 190 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 123 - 40 - 27  [0.718] 190
+...      myChess-4.4.1 playing White: 66 - 18 - 11  [0.753] 95
+...      myChess-4.4.1 playing Black: 57 - 22 - 16  [0.684] 95
+...      White vs Black: 88 - 75 - 27  [0.534] 190
+Elo difference: 162.7 +/- 50.3, LOS: 100.0 %, DrawRatio: 14.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 194 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 191 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 124 - 40 - 27  [0.720] 191
+Started game 195 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 194 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 124 - 41 - 27  [0.716] 192
+Started game 196 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 193 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 125 - 41 - 27  [0.718] 193
+Started game 197 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 192 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 126 - 41 - 27  [0.719] 194
+Started game 198 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 198 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 127 - 41 - 27  [0.721] 195
+Started game 199 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 195 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 127 - 41 - 28  [0.719] 196
+Started game 200 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 197 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 127 - 42 - 28  [0.716] 197
+Started game 201 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 196 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 128 - 42 - 28  [0.717] 198
+Started game 202 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 200 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 128 - 43 - 28  [0.714] 199
+Started game 203 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 199 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 128 - 44 - 28  [0.710] 200
+...      myChess-4.4.1 playing White: 68 - 20 - 12  [0.740] 100
+...      myChess-4.4.1 playing Black: 60 - 24 - 16  [0.680] 100
+...      White vs Black: 92 - 80 - 28  [0.530] 200
+Elo difference: 155.5 +/- 48.8, LOS: 100.0 %, DrawRatio: 14.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 204 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 203 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 128 - 45 - 28  [0.706] 201
+Started game 205 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 204 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 128 - 46 - 28  [0.703] 202
+Started game 206 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 201 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 129 - 46 - 28  [0.704] 203
+Started game 207 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 202 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 129 - 46 - 29  [0.703] 204
+Started game 208 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 205 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 130 - 46 - 29  [0.705] 205
+Started game 209 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 206 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 131 - 46 - 29  [0.706] 206
+Started game 210 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 207 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 132 - 46 - 29  [0.708] 207
+Started game 211 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 210 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 133 - 46 - 29  [0.709] 208
+Started game 212 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 209 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 133 - 47 - 29  [0.706] 209
+Started game 213 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 208 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 134 - 47 - 29  [0.707] 210
+...      myChess-4.4.1 playing White: 71 - 22 - 12  [0.733] 105
+...      myChess-4.4.1 playing Black: 63 - 25 - 17  [0.681] 105
+...      White vs Black: 96 - 85 - 29  [0.526] 210
+Elo difference: 153.1 +/- 47.5, LOS: 100.0 %, DrawRatio: 13.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 214 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 211 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 135 - 47 - 29  [0.709] 211
+Started game 215 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 212 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 135 - 48 - 29  [0.705] 212
+Started game 216 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 215 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 136 - 48 - 29  [0.707] 213
+Started game 217 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 213 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 136 - 49 - 29  [0.703] 214
+Started game 218 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 214 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 136 - 50 - 29  [0.700] 215
+Started game 219 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 217 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 137 - 50 - 29  [0.701] 216
+Started game 220 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 218 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 138 - 50 - 29  [0.703] 217
+Started game 221 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 216 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 138 - 50 - 30  [0.702] 218
+Started game 222 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 219 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 139 - 50 - 30  [0.703] 219
+Started game 223 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 222 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 140 - 50 - 30  [0.705] 220
+...      myChess-4.4.1 playing White: 75 - 23 - 12  [0.736] 110
+...      myChess-4.4.1 playing Black: 65 - 27 - 18  [0.673] 110
+...      White vs Black: 102 - 88 - 30  [0.532] 220
+Elo difference: 151.0 +/- 46.4, LOS: 100.0 %, DrawRatio: 13.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 224 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 221 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 141 - 50 - 30  [0.706] 221
+Started game 225 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 220 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 141 - 51 - 30  [0.703] 222
+Started game 226 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 224 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 142 - 51 - 30  [0.704] 223
+Started game 227 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 225 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 143 - 51 - 30  [0.705] 224
+Started game 228 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 226 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 144 - 51 - 30  [0.707] 225
+Started game 229 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 223 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 145 - 51 - 30  [0.708] 226
+Started game 230 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 228 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 145 - 52 - 30  [0.705] 227
+Started game 231 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 229 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 146 - 52 - 30  [0.706] 228
+Started game 232 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 227 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 147 - 52 - 30  [0.707] 229
+Started game 233 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 230 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 148 - 52 - 30  [0.709] 230
+...      myChess-4.4.1 playing White: 80 - 23 - 12  [0.748] 115
+...      myChess-4.4.1 playing Black: 68 - 29 - 18  [0.670] 115
+...      White vs Black: 109 - 91 - 30  [0.539] 230
+Elo difference: 154.4 +/- 45.7, LOS: 100.0 %, DrawRatio: 13.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 234 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 233 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 149 - 52 - 30  [0.710] 231
+Started game 235 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 232 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 149 - 53 - 30  [0.707] 232
+Started game 236 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 234 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 150 - 53 - 30  [0.708] 233
+Started game 237 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 231 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 151 - 53 - 30  [0.709] 234
+Started game 238 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 235 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 152 - 53 - 30  [0.711] 235
+Started game 239 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 237 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 153 - 53 - 30  [0.712] 236
+Started game 240 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 236 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 153 - 53 - 31  [0.711] 237
+Started game 241 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 239 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 153 - 54 - 31  [0.708] 238
+Started game 242 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 238 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 154 - 54 - 31  [0.709] 239
+Started game 243 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 240 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 155 - 54 - 31  [0.710] 240
+...      myChess-4.4.1 playing White: 84 - 24 - 12  [0.750] 120
+...      myChess-4.4.1 playing Black: 71 - 30 - 19  [0.671] 120
+...      White vs Black: 114 - 95 - 31  [0.540] 240
+Elo difference: 155.9 +/- 44.8, LOS: 100.0 %, DrawRatio: 12.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 244 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 242 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 156 - 54 - 31  [0.712] 241
+Started game 245 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 243 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 157 - 54 - 31  [0.713] 242
+Started game 246 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 246 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 158 - 54 - 31  [0.714] 243
+Started game 247 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 245 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 158 - 55 - 31  [0.711] 244
+Started game 248 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 244 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 158 - 56 - 31  [0.708] 245
+Started game 249 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 247 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 158 - 56 - 32  [0.707] 246
+Started game 250 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 249 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 159 - 56 - 32  [0.709] 247
+Started game 251 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 241 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 159 - 56 - 33  [0.708] 248
+Started game 252 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 248 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 160 - 56 - 33  [0.709] 249
+Started game 253 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 253 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 161 - 56 - 33  [0.710] 250
+...      myChess-4.4.1 playing White: 87 - 25 - 14  [0.746] 126
+...      myChess-4.4.1 playing Black: 74 - 31 - 19  [0.673] 124
+...      White vs Black: 118 - 99 - 33  [0.538] 250
+Elo difference: 155.5 +/- 43.8, LOS: 100.0 %, DrawRatio: 13.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 254 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 252 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 161 - 57 - 33  [0.707] 251
+Started game 255 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 251 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 162 - 57 - 33  [0.708] 252
+Started game 256 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 250 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 163 - 57 - 33  [0.709] 253
+Started game 257 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 254 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 164 - 57 - 33  [0.711] 254
+Started game 258 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 255 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 165 - 57 - 33  [0.712] 255
+Started game 259 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 256 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 166 - 57 - 33  [0.713] 256
+Started game 260 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 258 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 166 - 58 - 33  [0.710] 257
+Started game 261 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 257 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 166 - 58 - 34  [0.709] 258
+Started game 262 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 259 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 167 - 58 - 34  [0.710] 259
+Started game 263 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 260 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 168 - 58 - 34  [0.712] 260
+...      myChess-4.4.1 playing White: 90 - 25 - 15  [0.750] 130
+...      myChess-4.4.1 playing Black: 78 - 33 - 19  [0.673] 130
+...      White vs Black: 123 - 103 - 34  [0.538] 260
+Elo difference: 156.8 +/- 43.0, LOS: 100.0 %, DrawRatio: 13.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 264 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 261 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 169 - 58 - 34  [0.713] 261
+Started game 265 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 262 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 169 - 58 - 35  [0.712] 262
+Started game 266 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 265 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 170 - 58 - 35  [0.713] 263
+Started game 267 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 263 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 170 - 59 - 35  [0.710] 264
+Started game 268 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 266 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 171 - 59 - 35  [0.711] 265
+Started game 269 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 264 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 171 - 60 - 35  [0.709] 266
+Started game 270 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 267 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 171 - 61 - 35  [0.706] 267
+Started game 271 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 269 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 172 - 61 - 35  [0.707] 268
+Started game 272 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 270 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 172 - 62 - 35  [0.704] 269
+Started game 273 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 272 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 173 - 62 - 35  [0.706] 270
+...      myChess-4.4.1 playing White: 93 - 27 - 15  [0.744] 135
+...      myChess-4.4.1 playing Black: 80 - 35 - 20  [0.667] 135
+...      White vs Black: 128 - 107 - 35  [0.539] 270
+Elo difference: 151.8 +/- 42.0, LOS: 100.0 %, DrawRatio: 13.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 274 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 273 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 173 - 63 - 35  [0.703] 271
+Started game 275 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 268 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 173 - 63 - 36  [0.702] 272
+Started game 276 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 274 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 174 - 63 - 36  [0.703] 273
+Started game 277 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 271 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 174 - 64 - 36  [0.701] 274
+Started game 278 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 275 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 174 - 65 - 36  [0.698] 275
+Started game 279 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 276 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 174 - 65 - 37  [0.697] 276
+Started game 280 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 278 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 175 - 65 - 37  [0.699] 277
+Started game 281 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 277 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 176 - 65 - 37  [0.700] 278
+Started game 282 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 280 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 176 - 66 - 37  [0.697] 279
+Started game 283 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 282 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 177 - 66 - 37  [0.698] 280
+...      myChess-4.4.1 playing White: 94 - 30 - 15  [0.730] 139
+...      myChess-4.4.1 playing Black: 83 - 36 - 22  [0.667] 141
+...      White vs Black: 130 - 113 - 37  [0.530] 280
+Elo difference: 145.7 +/- 40.9, LOS: 100.0 %, DrawRatio: 13.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 284 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 281 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 178 - 66 - 37  [0.699] 281
+Started game 285 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 279 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 178 - 67 - 37  [0.697] 282
+Started game 286 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 283 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 179 - 67 - 37  [0.698] 283
+Started game 287 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 287 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 180 - 67 - 37  [0.699] 284
+Started game 288 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 285 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 181 - 67 - 37  [0.700] 285
+Started game 289 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 284 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 182 - 67 - 37  [0.701] 286
+Started game 290 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 286 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 182 - 67 - 38  [0.700] 287
+Started game 291 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 289 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 182 - 68 - 38  [0.698] 288
+Started game 292 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 288 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by stalemate}
+Score of myChess-4.4.1 vs ZetaDva: 182 - 68 - 39  [0.697] 289
+Started game 293 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 291 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 183 - 68 - 39  [0.698] 290
+...      myChess-4.4.1 playing White: 99 - 32 - 15  [0.729] 146
+...      myChess-4.4.1 playing Black: 84 - 36 - 24  [0.667] 144
+...      White vs Black: 135 - 116 - 39  [0.533] 290
+Elo difference: 145.8 +/- 40.1, LOS: 100.0 %, DrawRatio: 13.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 294 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 292 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 184 - 68 - 39  [0.699] 291
+Started game 295 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 293 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 184 - 69 - 39  [0.697] 292
+Started game 296 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 295 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 184 - 70 - 39  [0.695] 293
+Started game 297 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 296 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 184 - 71 - 39  [0.692] 294
+Started game 298 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 290 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 184 - 71 - 40  [0.692] 295
+Started game 299 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 297 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 185 - 71 - 40  [0.693] 296
+Started game 300 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 298 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 185 - 72 - 40  [0.690] 297
+Started game 301 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 294 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 185 - 72 - 41  [0.690] 298
+Started game 302 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 299 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 186 - 72 - 41  [0.691] 299
+Started game 303 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 300 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 186 - 72 - 42  [0.690] 300
+...      myChess-4.4.1 playing White: 101 - 34 - 15  [0.723] 150
+...      myChess-4.4.1 playing Black: 85 - 38 - 27  [0.657] 150
+...      White vs Black: 139 - 119 - 42  [0.533] 300
+Elo difference: 139.0 +/- 39.1, LOS: 100.0 %, DrawRatio: 14.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 304 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 301 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 187 - 72 - 42  [0.691] 301
+Started game 305 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 302 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 188 - 72 - 42  [0.692] 302
+Started game 306 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 304 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 188 - 73 - 42  [0.690] 303
+Started game 307 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 306 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 188 - 74 - 42  [0.688] 304
+Started game 308 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 305 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 189 - 74 - 42  [0.689] 305
+Started game 309 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 303 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 189 - 75 - 42  [0.686] 306
+Started game 310 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 308 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 190 - 75 - 42  [0.687] 307
+Started game 311 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 309 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 191 - 75 - 42  [0.688] 308
+Started game 312 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 307 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 191 - 76 - 42  [0.686] 309
+Started game 313 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 313 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 192 - 76 - 42  [0.687] 310
+...      myChess-4.4.1 playing White: 105 - 36 - 15  [0.721] 156
+...      myChess-4.4.1 playing Black: 87 - 40 - 27  [0.653] 154
+...      White vs Black: 145 - 123 - 42  [0.535] 310
+Elo difference: 136.6 +/- 38.4, LOS: 100.0 %, DrawRatio: 13.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 314 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 310 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 193 - 76 - 42  [0.688] 311
+Started game 315 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 312 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 194 - 76 - 42  [0.689] 312
+Started game 316 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 311 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 194 - 76 - 43  [0.688] 313
+Started game 317 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 315 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 195 - 76 - 43  [0.689] 314
+Started game 318 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 316 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 196 - 76 - 43  [0.690] 315
+Started game 319 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 317 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 197 - 76 - 43  [0.691] 316
+Started game 320 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 319 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 197 - 77 - 43  [0.689] 317
+Started game 321 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 314 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 197 - 77 - 44  [0.689] 318
+Started game 322 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 321 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 197 - 78 - 44  [0.687] 319
+Started game 323 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 320 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 198 - 78 - 44  [0.688] 320
+...      myChess-4.4.1 playing White: 107 - 38 - 16  [0.714] 161
+...      myChess-4.4.1 playing Black: 91 - 40 - 28  [0.660] 159
+...      White vs Black: 147 - 129 - 44  [0.528] 320
+Elo difference: 137.0 +/- 37.8, LOS: 100.0 %, DrawRatio: 13.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 324 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 324 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 198 - 78 - 45  [0.687] 321
+Started game 325 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 318 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of myChess-4.4.1 vs ZetaDva: 198 - 78 - 46  [0.686] 322
+Started game 326 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 322 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 199 - 78 - 46  [0.687] 323
+Started game 327 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 323 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 199 - 79 - 46  [0.685] 324
+Started game 328 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 327 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 200 - 79 - 46  [0.686] 325
+Started game 329 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 325 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 201 - 79 - 46  [0.687] 326
+Started game 330 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 328 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 201 - 80 - 46  [0.685] 327
+Started game 331 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 329 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 202 - 80 - 46  [0.686] 328
+Started game 332 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 326 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 203 - 80 - 46  [0.687] 329
+Started game 333 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 330 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 204 - 80 - 46  [0.688] 330
+...      myChess-4.4.1 playing White: 110 - 39 - 16  [0.715] 165
+...      myChess-4.4.1 playing Black: 94 - 41 - 30  [0.661] 165
+...      White vs Black: 151 - 133 - 46  [0.527] 330
+Elo difference: 137.3 +/- 37.2, LOS: 100.0 %, DrawRatio: 13.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 334 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 331 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 205 - 80 - 46  [0.689] 331
+Started game 335 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 333 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 206 - 80 - 46  [0.690] 332
+Started game 336 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 336 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 206 - 81 - 46  [0.688] 333
+Started game 337 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 335 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 207 - 81 - 46  [0.689] 334
+Started game 338 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 334 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 207 - 81 - 47  [0.688] 335
+Started game 339 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 339 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 208 - 81 - 47  [0.689] 336
+Started game 340 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 332 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by stalemate}
+Score of myChess-4.4.1 vs ZetaDva: 208 - 81 - 48  [0.688] 337
+Started game 341 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 337 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 209 - 81 - 48  [0.689] 338
+Started game 342 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 338 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 209 - 82 - 48  [0.687] 339
+Started game 343 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 340 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 210 - 82 - 48  [0.688] 340
+...      myChess-4.4.1 playing White: 115 - 39 - 16  [0.724] 170
+...      myChess-4.4.1 playing Black: 95 - 43 - 32  [0.653] 170
+...      White vs Black: 158 - 134 - 48  [0.535] 340
+Elo difference: 137.6 +/- 36.6, LOS: 100.0 %, DrawRatio: 14.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 344 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 343 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 211 - 82 - 48  [0.689] 341
+Started game 345 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 341 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 211 - 83 - 48  [0.687] 342
+Started game 346 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 344 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 211 - 84 - 48  [0.685] 343
+Started game 347 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 342 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 211 - 84 - 49  [0.685] 344
+Started game 348 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 346 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 212 - 84 - 49  [0.686] 345
+Started game 349 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 345 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 212 - 84 - 50  [0.685] 346
+Started game 350 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 350 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 213 - 84 - 50  [0.686] 347
+Started game 351 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 347 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 213 - 84 - 51  [0.685] 348
+Started game 352 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 349 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 214 - 84 - 51  [0.686] 349
+Started game 353 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 348 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 214 - 84 - 52  [0.686] 350
+...      myChess-4.4.1 playing White: 117 - 40 - 18  [0.720] 175
+...      myChess-4.4.1 playing Black: 97 - 44 - 34  [0.651] 175
+...      White vs Black: 161 - 137 - 52  [0.534] 350
+Elo difference: 135.5 +/- 35.8, LOS: 100.0 %, DrawRatio: 14.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 354 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 352 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 215 - 84 - 52  [0.687] 351
+Started game 355 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 353 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 215 - 84 - 53  [0.686] 352
+Started game 356 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 351 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 216 - 84 - 53  [0.687] 353
+Started game 357 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 355 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 217 - 84 - 53  [0.688] 354
+Started game 358 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 356 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 218 - 84 - 53  [0.689] 355
+Started game 359 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 354 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 219 - 84 - 53  [0.690] 356
+Started game 360 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 358 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 220 - 84 - 53  [0.690] 357
+Started game 361 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 360 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 221 - 84 - 53  [0.691] 358
+Started game 362 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 359 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 222 - 84 - 53  [0.692] 359
+Started game 363 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 361 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 223 - 84 - 53  [0.693] 360
+...      myChess-4.4.1 playing White: 121 - 40 - 19  [0.725] 180
+...      myChess-4.4.1 playing Black: 102 - 44 - 34  [0.661] 180
+...      White vs Black: 165 - 142 - 53  [0.532] 360
+Elo difference: 141.5 +/- 35.5, LOS: 100.0 %, DrawRatio: 14.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 364 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 362 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 224 - 84 - 53  [0.694] 361
+Started game 365 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 357 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 225 - 84 - 53  [0.695] 362
+Started game 366 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 365 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 225 - 85 - 53  [0.693] 363
+Started game 367 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 364 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 226 - 85 - 53  [0.694] 364
+Started game 368 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 366 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 227 - 85 - 53  [0.695] 365
+Started game 369 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 367 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 228 - 85 - 53  [0.695] 366
+Started game 370 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 370 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 229 - 85 - 53  [0.696] 367
+Started game 371 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 369 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 229 - 86 - 53  [0.694] 368
+Started game 372 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 368 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 230 - 86 - 53  [0.695] 369
+Started game 373 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 363 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 230 - 86 - 54  [0.695] 370
+...      myChess-4.4.1 playing White: 123 - 42 - 20  [0.719] 185
+...      myChess-4.4.1 playing Black: 107 - 44 - 34  [0.670] 185
+...      White vs Black: 167 - 149 - 54  [0.524] 370
+Elo difference: 142.7 +/- 35.1, LOS: 100.0 %, DrawRatio: 14.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 374 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 371 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 231 - 86 - 54  [0.695] 371
+Started game 375 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 374 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 232 - 86 - 54  [0.696] 372
+Started game 376 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 373 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 232 - 87 - 54  [0.694] 373
+Started game 377 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 375 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 233 - 87 - 54  [0.695] 374
+Started game 378 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 376 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of myChess-4.4.1 vs ZetaDva: 233 - 87 - 55  [0.695] 375
+Started game 379 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 377 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 234 - 87 - 55  [0.695] 376
+Started game 380 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 372 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 234 - 87 - 56  [0.695] 377
+Started game 381 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 379 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 235 - 87 - 56  [0.696] 378
+Started game 382 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 378 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 235 - 88 - 56  [0.694] 379
+Started game 383 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 381 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 236 - 88 - 56  [0.695] 380
+...      myChess-4.4.1 playing White: 128 - 43 - 20  [0.723] 191
+...      myChess-4.4.1 playing Black: 108 - 45 - 36  [0.667] 189
+...      White vs Black: 173 - 151 - 56  [0.529] 380
+Elo difference: 142.9 +/- 34.6, LOS: 100.0 %, DrawRatio: 14.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 384 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 380 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 237 - 88 - 56  [0.696] 381
+Started game 385 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 382 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 237 - 89 - 56  [0.694] 382
+Started game 386 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 384 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 238 - 89 - 56  [0.695] 383
+Started game 387 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 386 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 239 - 89 - 56  [0.695] 384
+Started game 388 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 387 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 239 - 90 - 56  [0.694] 385
+Started game 389 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 385 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 239 - 91 - 56  [0.692] 386
+Started game 390 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 388 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 240 - 91 - 56  [0.693] 387
+Started game 391 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 390 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 241 - 91 - 56  [0.693] 388
+Started game 392 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 389 (myChess-4.4.1 vs ZetaDva): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 241 - 92 - 56  [0.692] 389
+Started game 393 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 383 (myChess-4.4.1 vs ZetaDva): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 241 - 92 - 57  [0.691] 390
+...      myChess-4.4.1 playing White: 128 - 46 - 21  [0.710] 195
+...      myChess-4.4.1 playing Black: 113 - 46 - 36  [0.672] 195
+...      White vs Black: 174 - 159 - 57  [0.519] 390
+Elo difference: 139.8 +/- 34.1, LOS: 100.0 %, DrawRatio: 14.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 394 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 391 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 242 - 92 - 57  [0.692] 391
+Started game 395 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 393 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 243 - 92 - 57  [0.693] 392
+Started game 396 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 394 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 244 - 92 - 57  [0.693] 393
+Started game 397 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 396 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 244 - 93 - 57  [0.692] 394
+Started game 398 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 395 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 245 - 93 - 57  [0.692] 395
+Started game 399 of 400 (myChess-4.4.1 vs ZetaDva)
+Finished game 397 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 246 - 93 - 57  [0.693] 396
+Started game 400 of 400 (ZetaDva vs myChess-4.4.1)
+Finished game 392 (ZetaDva vs myChess-4.4.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of myChess-4.4.1 vs ZetaDva: 246 - 93 - 58  [0.693] 397
+Finished game 399 (myChess-4.4.1 vs ZetaDva): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 247 - 93 - 58  [0.693] 398
+Finished game 400 (ZetaDva vs myChess-4.4.1): 0-1 {Black wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 248 - 93 - 58  [0.694] 399
+Finished game 398 (ZetaDva vs myChess-4.4.1): 1-0 {White wins by adjudication}
+Score of myChess-4.4.1 vs ZetaDva: 248 - 94 - 58  [0.693] 400
+...      myChess-4.4.1 playing White: 133 - 46 - 21  [0.718] 200
+...      myChess-4.4.1 playing Black: 115 - 48 - 37  [0.667] 200
+...      White vs Black: 181 - 161 - 58  [0.525] 400
+Elo difference: 141.0 +/- 33.7, LOS: 100.0 %, DrawRatio: 14.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+
+Player: myChess-4.4.1
+   "Draw by 3-fold repetition": 19
+   "Draw by adjudication": 2
+   "Draw by fifty moves rule": 18
+   "Draw by insufficient mating material": 17
+   "Draw by stalemate": 2
+   "Loss: Black wins by adjudication": 46
+   "Loss: White wins by adjudication": 48
+   "Win: Black wins by adjudication": 115
+   "Win: White wins by adjudication": 133
+Player: ZetaDva
+   "Draw by 3-fold repetition": 19
+   "Draw by adjudication": 2
+   "Draw by fifty moves rule": 18
+   "Draw by insufficient mating material": 17
+   "Draw by stalemate": 2
+   "Loss: Black wins by adjudication": 115
+   "Loss: White wins by adjudication": 133
+   "Win: Black wins by adjudication": 46
+   "Win: White wins by adjudication": 48
+Finished match

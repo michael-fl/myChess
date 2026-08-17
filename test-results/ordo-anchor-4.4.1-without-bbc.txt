@@ -1,0 +1,11 @@
+
+   # PLAYER           :  RATING  POINTS  PLAYED   (%)
+   1 Kojiro           :  1997.7   240.0     400    60
+   2 Princhess        :  1985.0   231.0     400    58
+   3 myChess-4.4.1    :  1924.6   932.0    1600    58
+   4 ZetaDva          :  1801.0   123.0     400    31
+   5 TSCP             :  1607.0    74.0     400    18
+
+White advantage = 0.00
+Draw rate (equal opponents) = 50.00 %
+
