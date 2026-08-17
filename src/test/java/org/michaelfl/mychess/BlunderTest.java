@@ -1979,10 +1979,7 @@ class BlunderTest {
     // cannot see the punishment.
     // ----------------------------------------------------------------
 
-    /** Black to move, before {@code 21...Qa3}. Material is level; white's g4/h4 pawns face the castled king. */
-    private static final String BEFORE_QA3_FEN = "4r1k1/1b1r1pp1/p1p2b1p/2p1pN2/Pq1pP1PP/1P1P1N2/2PQ1PK1/3RR3 b - - 2 21";
-
-    /** The same position after {@code 21...Qa3}; white (myChess) to move and, objectively, winning. */
+    /** After {@code 21...Qa3}; white (myChess) to move and, objectively, winning. */
     private static final String AFTER_QA3_FEN = "4r1k1/1b1r1pp1/p1p2b1p/2p1pN2/P2pP1PP/qP1P1N2/2PQ1PK1/3RR3 w - - 3 22";
 
     /**
@@ -2029,7 +2026,8 @@ class BlunderTest {
      * <p><b>Characterization, not a goal.</b> It passes because the defect is present. When
      * king safety lands, this score rises past {@link #QA3_ATTACK_BOUND} and the test must be
      * rewritten — as a positive assertion that white finds {@code 22.g5}, and as an avoidance
-     * test against {@code Qa3} from {@link #BEFORE_QA3_FEN} at the depth a blitz game reaches.
+     * test against {@code Qa3} at the depth a blitz game reaches, from the position one ply
+     * earlier: {@code 4r1k1/1b1r1pp1/p1p2b1p/2p1pN2/Pq1pP1PP/1P1P1N2/2PQ1PK1/3RR3 b - - 2 21}.
      *
      * <p><b>Test family:</b> king-safety (defect)
      */
@@ -2046,7 +2044,258 @@ class BlunderTest {
                         + "myChess must still read the position as near-equal because no term prices the "
                         + "pawn storm. If it now reports more than " + QA3_ATTACK_BOUND + ", king safety has "
                         + "landed — turn this into a positive assertion on 22.g5 and add an avoidance test "
-                        + "for Qa3 from BEFORE_QA3_FEN; white-POV eval " + result.weight());
+                        + "for Qa3 from the position one ply earlier (see this test's JavaDoc); white-POV "
+                        + "eval " + result.weight());
+    }
+
+    // ================================================================
+    // From the absolute-Elo anchor bracket, 2026-08-17.
+    //
+    // Every case above came from a lichess game. These four come from
+    // the 2000-game bracket against externally rated engines, found by
+    // `tools/scan-anchor-blunders.py`: Stockfish measured every move
+    // myChess played in the 151 games it LOST to the two weakest
+    // anchors — TSCP 1609 and Zeta Dva ~1785 — and 81 losses of three
+    // pawns or more survived a depth-20 re-check.
+    //
+    // Why those two opponents: a loss to an engine of known *lower*
+    // rating almost always means something concrete went wrong, while a
+    // loss to a stronger one may simply be a stronger opponent. All
+    // four cases below are TSCP games, i.e. myChess losing to an engine
+    // 320 Elo below it.
+    //
+    // What the corpus says as a whole, beyond the individual moves:
+    //
+    //   * 69 of the 81 are EVALUATION defects — myChess's own score for
+    //     the move stayed at least two pawns above the truth after it,
+    //     so more search depth would not have helped. Only a handful
+    //     are horizon effects.
+    //   * 21 of the 81 (26 %) carry a score that is an exact number of
+    //     pawns — the signature of the material-only shortcut having
+    //     skipped the positional evaluation (see search § 7.3). Worth
+    //     recording as a corpus statistic, but NOT usable as a
+    //     mechanism claim for any single case: the implication runs one
+    //     way only, material-only ⇒ whole pawns, never the reverse.
+    //   * 63 are middlegame positions, 18 endgames.
+    //
+    // Four of the five reproduce from the bare FEN at SCANNER_DEPTH,
+    // which is why they are pinned as *move* characterizations rather
+    // than as score bounds: the engine picks the losing move outright,
+    // so each inverts into an ordinary avoidance test the day it stops.
+    // The fifth (55...Bxd4) does not reproduce, so it pins the
+    // evaluation instead — the same split the earlier 49.Kd4 case made.
+    // ================================================================
+
+    /**
+     * Asserts the engine still reproduces a known blunder — the inverse of
+     * {@link #assertEngineAvoids}, for defects whose move choice is stable.
+     *
+     * <p>Preferred over a score bound where the engine really does pick the losing move:
+     * it fails the moment the behavior changes, and the failure message then names the
+     * move it chose instead, which is the first thing anyone wants to know.
+     */
+    private static void assertEngineStillPlays(MoveAndWeight result, int blunderFrom, int blunderTo,
+                                               String blunderName, String truth) {
+        int chosen = result.move();
+        boolean isBlunder = Move.getFromField(chosen) == blunderFrom && Move.getToField(chosen) == blunderTo;
+
+        assertTrue(isBlunder,
+                "characterization: myChess must still choose " + blunderName + " ("
+                        + ChessUtil.moveToString(blunderFrom, blunderTo) + "), " + truth
+                        + ". It chose " + ChessUtil.moveToString(chosen) + " instead, with white-POV eval "
+                        + result.weight() + " — if that is a better move, the defect is fixed and this test "
+                        + "should become an assertEngineAvoids for the same position.");
+    }
+
+    /** Black (myChess) to move before {@code 25...Qc3??}, which abandons the rook on d8. */
+    private static final String BEFORE_QC3_FEN = "rn1r4/pp3kPp/4b3/4R3/1P1p1P1Q/P4qP1/2P5/R1K2B2 b - - 0 25";
+
+    /**
+     * The plainest blunder the anchor scan turned up: a queen move that leaves a rook to be
+     * taken, in a position that was level.
+     *
+     * <p>Stockfish 18 (depth 20) rates the position before the move at <b>0.00</b> and after
+     * it at <b>−8.23</b> — the refutation is simply {@code 26.Qxd8}, and the follow-up
+     * {@code 26...Qxa1+ 27.Kd2 Qc3+ 28.Ke2 Qxc2+} wins nothing back. {@code 25...Nd7} holds
+     * the balance. myChess reads the position at −0.49 at {@link #SCANNER_DEPTH}, i.e. it is
+     * <em>not</em> wildly optimistic about the position — it simply fails to notice that the
+     * queen was the rook's only defender.
+     *
+     * <p>That makes this the one case of the four where the primary defect looks like
+     * <em>move selection</em> rather than evaluation: a two-ply material loss that the
+     * quiescence search should see. It belongs next to {@code 21.Nf3} and {@code 39.Rxd5},
+     * both of which had the same shape and are now repaired.
+     *
+     * <p><b>Test family:</b> tactical-oversight (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void qc3_vsTscp_characterizesAbandoningTheRookOnD8() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_QC3_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.f3, Board.c3, "25...Qc3",
+                "which drops the rook on d8 to 26.Qxd8 and turns 0.00 into −8.23 (Stockfish, depth 20); "
+                        + "25...Nd7 holds");
+    }
+
+    /** Black (myChess) to move before {@code 67...Rf4??}, ignoring the b6 pawn. */
+    private static final String BEFORE_RF4_FEN = "5k2/R4P2/1P2b3/5n2/1r6/8/1R6/1K6 b - - 18 67";
+
+    /**
+     * A nine-piece endgame decided by a passed pawn myChess does not race.
+     *
+     * <p>Stockfish has the position at <b>−0.32</b> — close to level — and at <b>−8.40</b>
+     * after {@code 67...Rf4}, because {@code 68.b7} then runs: the b-pawn is two squares from
+     * promotion and nothing stops it. {@code 67...Rxb2+} is the move, trading into a defensible
+     * ending. myChess reads −0.90 and plays {@code Rf4} anyway.
+     *
+     * <p>It is the third open case in {@code endgame-technique} and the second to involve a
+     * passed pawn: the family already holds a bishop that fails to occupy a promotion square
+     * ({@code 75.Ba1}) and a won knight endgame priced at a fifth of its value
+     * ({@code 49.Kd4}). Together they point at the same missing knowledge — the value of a
+     * pawn that is about to become a queen, which no piece-square table expresses.
+     *
+     * <p><b>Test family:</b> endgame-technique (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void rf4_vsTscp_characterizesNotRacingThePassedBPawn() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_RF4_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.b4, Board.f4, "67...Rf4",
+                "which lets 68.b7 run and turns −0.32 into −8.40 (Stockfish, depth 20); 67...Rxb2+ holds");
+    }
+
+    /** Black (myChess) to move before {@code 32...Ba4??}, with white's battery aimed at g7. */
+    private static final String BEFORE_BA4_FEN = "4r1k1/1p3ppp/1q6/nPb1pP2/4P3/Pb3RR1/3QB2P/7K b - - 2 32";
+
+    /**
+     * The sharpest king-safety case in the suite, because the misjudgement runs in the
+     * <b>wrong direction by four pawns and a sign</b>.
+     *
+     * <p>myChess believes it is <b>+2.09 ahead</b>. Stockfish has the position at +1.65 for
+     * black before the move — so far so good — and at <b>−5.94</b> after {@code 32...Ba4},
+     * because white's attack simply arrives: {@code 33.f6 g6 34.Qh6 Bf8 35.Rxg6+ hxg6} and the
+     * king on g8 has no cover left. {@code 32...Rd8} defends. Three white pieces already bear
+     * on the kingside — {@code Qd2}, {@code Rf3} and {@code Rg3} stacked on the g-file, with
+     * the {@code f5} pawn one push from prising g6 open — and none of that is priced.
+     *
+     * <p>This is the fifteenth open case in the family and the first from a game against an
+     * externally rated engine rather than from lichess. It is also the clearest illustration
+     * of what [roadmap § 12.21](../../../../../docs/roadmap.md) describes as missing: a
+     * non-linear attacker-count term. Two attackers near a king are far more than twice one
+     * attacker, and myChess scores the difference at zero.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void ba4_vsTscp_characterizesTheBatteryOnTheGFile() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_BA4_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.b3, Board.a4, "32...Ba4",
+                "which allows 33.f6 g6 34.Qh6 Bf8 35.Rxg6+ and turns +1.65 into −5.94 (Stockfish, "
+                        + "depth 20) while myChess reads +2.09 for itself; 32...Rd8 defends");
+    }
+
+    /** White (myChess) to move before {@code 20.Bxf5??}, with its own king airy on b2. */
+    private static final String BEFORE_BXF5_FEN = "r5nr/1pp1qkpp/8/5p2/3p4/3P1P1B/PKP2P1P/R3Q2R w - - 2 20";
+
+    /**
+     * The same blind spot seen from the other side of the board: myChess grabs a pawn while
+     * its <em>own</em> king sits on b2 with the a- and b-files open.
+     *
+     * <p>Stockfish rates the position at <b>−2.55</b> for white before the move — already
+     * worse than myChess's −0.55 — and at <b>−10.23</b> after {@code 20.Bxf5}, because
+     * {@code 20...Qa3+ 21.Kb1 Ra6} arrives with the rook joining on the a-file and nothing
+     * defending. {@code 20.Qxe7+} is the move, trading the attacker off.
+     *
+     * <p>Pairing it with {@link #ba4_vsTscp_characterizesTheBatteryOnTheGFile} is the point:
+     * one case has myChess failing to see an attack <em>against</em> it after castling short,
+     * the other after its king walked to b2. The term that is missing does not care which
+     * king it is.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void bxf5_vsTscp_characterizesIgnoringTheAttackOnItsOwnKing() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_BXF5_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.h3, Board.f5, "20.Bxf5",
+                "which allows 20...Qa3+ 21.Kb1 Ra6 and turns −2.55 into −10.23 (Stockfish, depth 20); "
+                        + "20.Qxe7+ trades the attacker off");
+    }
+
+    /** Black (myChess) to move before {@code 55...Bxd4??}, king on f7 and white's queen loose. */
+    private static final String BEFORE_BXD4_FEN = "r7/P1p2k2/2p1pb2/2P2p2/3PpP2/2q1P1Qp/7P/6RK b - - 7 55";
+
+    /**
+     * Ceiling on what myChess may read for black here. Measured on v4.4.2 it reports
+     * <b>+2.98</b> for black at {@link #SCANNER_DEPTH} where Stockfish has <b>−1.03</b>, so a
+     * bound of +1.0 sits well below the reading and well above the truth.
+     */
+    private static final float BXD4_OPTIMISM_BOUND = -1.0f;
+
+    /**
+     * The fifth anchor-bracket case, and the one that pins a <em>score</em> rather than a
+     * move — with a note about a mechanism that looked obvious and is not provable.
+     *
+     * <p>myChess played {@code 55...Bxd4} in the game and reported <b>0.00</b> for it.
+     * Stockfish 18 (depth 20) has the position at <b>−1.03</b> for black beforehand and
+     * <b>−9.52</b> after; {@code 55...Ke7} was the move. The refutation is a queen hunt
+     * against the king on f7 — {@code 56.Qg6+ Kf8 57.Qg8+ Ke7 58.Qh7+} — with white's a7 pawn
+     * one square from promoting behind it.
+     *
+     * <p><b>Why it is here and not in {@code MaterialOnlyShortcutEvalTest}.</b> An exact 0.00
+     * in a 19-piece unbalanced position is the signature of the material-only shortcut, and
+     * that is where this case was first headed. Two findings stopped it. Replaying myChess's
+     * own depth-10 principal variation shows it trading into <em>material equality</em>
+     * (queen, rook and five pawns each) and scoring that at zero — no repetition anywhere in
+     * the line, so the 0.00 is not a draw score either. And the signature is depth-dependent:
+     * at {@code SCANNER_DEPTH} the engine reads +2.98, which is not a whole number of pawns at
+     * all. Since the implication only runs one way — material-only ⇒ whole pawns, never the
+     * reverse — the shortcut cannot be shown to be the mechanism, and claiming it would put an
+     * unproven cause into a test name.
+     *
+     * <p>What <em>is</em> demonstrable is the optimism, and its subject is the same as in the
+     * two cases above: a king with no cover. Hence this family.
+     *
+     * <p><b>Characterization, not a goal.</b> Unlike the other four anchor cases the move does
+     * not reproduce from the bare FEN — at {@link #SCANNER_DEPTH} myChess prefers {@code Rh8} —
+     * so there is nothing to assert about the choice, exactly as with
+     * {@link #kd4_atMove49_characterizesNotSeeingTheWonKnightEndgame}. When king safety lands,
+     * this score falls below {@link #BXD4_OPTIMISM_BOUND} and the test must be rewritten.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void bxd4_vsTscp_characterizesOptimismWithItsKingOnF7() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_BXD4_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertTrue(result.weight() < BXD4_OPTIMISM_BOUND,
+                "characterization: black's king on f7 is about to be hunted by the queen "
+                        + "(56.Qg6+ Kf8 57.Qg8+ Ke7 58.Qh7+) with a7 promoting behind it, and Stockfish has "
+                        + "black at −1.03. myChess must still read this as good for black, because no term "
+                        + "prices an exposed king. A white-POV score below " + BXD4_OPTIMISM_BOUND
+                        + " means king safety has landed — rewrite this to require it; got "
+                        + result.weight());
     }
 
 }
