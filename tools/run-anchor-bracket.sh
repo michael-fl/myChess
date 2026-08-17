@@ -2,17 +2,23 @@
 #
 # run-anchor-bracket.sh — unattended absolute-Elo re-anchor measurement.
 #
-# Runs the four anchor matches SEQUENTIALLY (never in parallel — a single
-# cutechess match already saturates the cores, and overlapping runs would
-# distort the time-based TC), then combines them with Ordo into one absolute
-# Elo estimate. Designed to be launched in the background and left overnight:
-# it re-execs itself under `caffeinate` so the Mac will not sleep mid-run.
+# Runs the anchor matches SEQUENTIALLY (never in parallel — a single cutechess
+# match already saturates the cores, and overlapping runs would distort the
+# time-based TC), then combines them with Ordo into one absolute Elo estimate.
+# Designed to be launched in the background and left overnight: it re-execs
+# itself under `caffeinate` so the Mac will not sleep mid-run.
 #
-# The anchor bracket (for myChess ~1795, post-v4.3.0):
-#   TSCP 1.81      1607   fixed   (lower anchor,  xboard)
-#   Zeta Dva 0402  1801   fixed   (near anchor,   xboard)   <- carries the most info
+# The anchor bracket (for myChess ~1920, post-v4.4.1):
+#   TSCP 1.81      1609   fixed   (lower anchor,  xboard)
+#   Zeta Dva 0402  1801   fixed   (near anchor,   xboard)   <- see the caveat below
 #   Princhess 0.7  1985   fixed   (upper anchor,  UCI)
+#   BBC 1.1        2019   fixed   (upper anchor,  UCI)      <- best-sampled of the set
 #   Kojiro 0.1.4  (1984)  FREE    (Ordo estimates it -> cross-checks the upper end)
+#
+# The opening suite bounds the book depth, not `plies`: 2moves_v2.pgn carries
+# exactly 4 plies per line, so cutechess takes min(requested, available) and any
+# value above 4 is a no-op. It read `plies=8` until 2026-08-17, which suggested
+# an opening phase twice as deep as the one actually played.
 #
 # GIVE EVERY UCI ANCHOR A REAL HASH. Learned the hard way on 2026-08-16: the
 # first Princhess match ran at the engine's own default of 16 MB and produced
@@ -108,12 +114,28 @@ MYCHESS="./versions/${VERSION}/mychess-uci.sh"
 # defensive choice: it is inside the range CCRL uses for its blitz lists, so it
 # does not lift an anchor above the rating it was measured at. The xboard
 # anchors get nothing; TSCP has no options at all and ZetaDva none that matter.
+#
+# BBC is the exception: it caps Hash at 128 MB (max 128 in its option line), the
+# other value CCRL permits. Its own default is 64, so passing nothing would
+# repeat the mistake that invalidated the first Princhess match.
 ANCHOR_HASH_MB=256
+BBC_HASH_MB=128
 
+# Ratings read off the CCRL Blitz list on 2026-08-16, with the sample size that
+# backs each one -- the number matters as much as the rating:
+#   TSCP 1.81       1609  +-19  1067 games   solid
+#   Princhess 0.7.0 1985  +-18  1202 games   solid
+#   BBC 1.1         2019  +-17  1243 games   solid; NB BBC 1.2 lists 74 Elo LOWER
+#   Zeta Dva 0310   1801  +-52   114 games   thin, and we built 0402, not listed
+#   Kojiro 0.1.4    1984  +-85    40 games   below CCRL's own 100-game threshold
+# Kojiro is therefore left FREE by design. Zeta Dva is kept fixed here so the
+# automated result stays comparable with earlier runs; the variant that frees it
+# as well is a one-line anchors.csv change on the finished bracket PGN.
 ANCHORS="
-TSCP|./engines/tscp-1.81-elo1607/tscp.sh|xboard|1607|
+TSCP|./engines/tscp-1.81-elo1607/tscp.sh|xboard|1609|
 ZetaDva|./engines/ZetaDva-0402-elo1801/zetadva.sh|xboard|1801|
 Princhess|./engines/princhess-0.7.0-elo1985/princhess.sh|uci|1985|option.Hash=$ANCHOR_HASH_MB
+BBC|./engines/BBC-1.1-elo2019/bbc.sh|uci|2019|option.Hash=$BBC_HASH_MB
 Kojiro|./engines/Kojiro-0.1.4-elo1984/kojiro.sh|uci||option.Hash=$ANCHOR_HASH_MB
 "
 
@@ -132,6 +154,7 @@ for wrapper in \
     ./engines/tscp-1.81-elo1607/tscp.sh \
     ./engines/ZetaDva-0402-elo1801/zetadva.sh \
     ./engines/princhess-0.7.0-elo1985/princhess.sh \
+    ./engines/BBC-1.1-elo2019/bbc.sh \
     ./engines/Kojiro-0.1.4-elo1984/kojiro.sh; do
     check "$wrapper"
 done
@@ -189,7 +212,7 @@ run_match() {
         -engine name="$name" cmd="$wrapper" proto="$proto" $opts \
         -each tc="$TC" \
         -rounds "$ROUNDS" -games 2 -repeat \
-        -openings file="$OPENINGS" format=pgn order=random plies=8 \
+        -openings file="$OPENINGS" format=pgn order=random plies=4 \
         -concurrency "$CONCURRENCY" -ratinginterval "$RATING_INTERVAL" \
         -recover \
         -draw movenumber=40 movecount=8 score=40 \

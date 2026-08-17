@@ -26,6 +26,7 @@ This roadmap is split across three files. Section numbers (§ 12.x) are **stable
 | 12.20 | Principal Variation Search (PVS) | S, ≈ 10–25 |
 | 12.21 | King safety | M, ≈ 30–60 |
 | 12.23 | ~~Repetition draws invisible to the search~~ — *correctness* | **DONE 2026-08-15** — SPRT H1 at 321 games, +42.4 ± 29.4; read as ≈ +15 |
+| 12.24 | Endgame scaling — unconvertible material advantages | S, ≈ 5–20 |
 
 **[Completed & investigated → `roadmap-done.md`](roadmap-done.md).** Shipped features and closed investigations (kept as knowledge):
 
@@ -352,6 +353,39 @@ So one game in ten ended as a draw while an engine believed it was at least two 
 **Pinned by four tests**, now all green. `ThreefoldRepetitionTest.secondOccurrenceIsNotYetADraw` guards the game rule so the fix cannot have been achieved by loosening it. `repetition_withWarmTable_findsTheBlockDespiteTheTable` in `BlunderTest` was the characterization that went red on the fix and is now its regression test; `repetition_withColdTable_blocksTheCheckAndAvoidsTheDraw` is the control that always passed. `engineNeitherStalematesNorRepeatsWhenWinning` asserts the principal variation contains no repetition, paired with `withRepetitionDetectionDisabledTheShuffleReturns`, which brings the shuffle back with the check off — without that pair the no-repetition assertion could pass for an unrelated reason.
 
 **A correction the fix surfaced.** The second case in [known-issues.md](known-issues.md) recorded that myChess declined a free rook six times running. It is not free: every one of those captures is **stalemate** (bare black king, boxed by `Qf8` and `Rg4`). Declining was correct, and the engine gets there correctly — depth 1 picks the capture at +20, depth 2 finds the stalemate. The defect was only ever the repetition. Because the old test asserted the refusal, which held both before and after the fix, a real improvement in that position produced no signal in the suite at all.
+
+---
+
+## 12.24 Endgame scaling — material advantages that cannot be converted — **S, ≈ 5–20 Elo**
+
+myChess prices every extra piece at face value, including in endgames where it is provably worth nothing. Rook and knight against rook is a **draw** with correct defence; myChess reads it as **+3.6 pawns** and plays on.
+
+**Measured against a proof, not an estimate.** Four positions of that material, all confirmed drawn by the Syzygy tablebase (five pieces, exhaustively solved), scored on v4.4.2:
+
+| position | tablebase | depth 8 | depth 12 |
+|---|---|---:|---:|
+| [OcR3sqSx](https://lichess.org/OcR3sqSx) after ply 134 (R+N vs R) | draw | −3.62 | −3.63 |
+| R+N vs R, defender centralized | draw | +3.53 | +3.67 |
+| R+N vs R, defending king cornered | draw | +3.66 | +3.69 |
+| R+B vs R, defending king on the edge | draw | +3.71 | +3.61 |
+
+Four extra plies move the score by at most 0.15, so **this is not a horizon problem** — no amount of search fixes it. Pinned by `DrawnEndgameEvalTest`, family `drawn-endgame-overvaluation`.
+
+**What it costs.** Rated rapid game [OcR3sqSx](https://lichess.org/OcR3sqSx) (rust-in-pieces 2118 vs myChessJava 2114, ½-½). The last capture fell on ply 134; the tablebase says draw at every point after it, verified at twelve sample plies. myChess then spent the **entire fifty-move budget — 100 plies** — trying to win a proven draw, and the game ended by the fifty-move rule on move 118. The same pattern accounts for a good share of the drawn games in the anchor bracket: 18 of 58 draws against Zeta Dva ended by the fifty-move rule, 7 of 34 against TSCP.
+
+**A flat "drawn material" table would be wrong.** The obvious fix — return 0.00 for known-drawn signatures — throws away real wins. Sampling 70 random legal positions per material against the tablebase:
+
+- **R+N vs R: 36 % are wins** (mate in 4–14, median 9)
+- **R+B vs R: 43 % are wins**
+- and R vs N / R vs B are not automatically drawn either — two hand-built probes for the test above came back as wins
+
+Those wins are overwhelmingly positions where the defence has already collapsed, but they are wins, and a search that scores the material at zero will not steer into them.
+
+**The right shape is a scaling factor**, applied to the final score, that pulls it toward zero for material configurations known to be hard to convert — the standard approach in strong engines. The advantage survives as a preference (so the engine still tries, and still finds the third of positions that are winnable) without masquerading as decisive. Candidates for the first table: R+N vs R, R+B vs R, R vs R, plus the classic single-piece cases.
+
+**Where it belongs in the code.** [`WeightingFunction`](../src/main/java/org/michaelfl/mychess/WeightingFunction.java) already computes the game phase for the tapered PSTs, and [`GameStatus`](../src/main/java/org/michaelfl/mychess/GameStatus.java) carries incremental per-side non-pawn material from § 12.2 — both inputs a scaling factor needs, so no new bookkeeping is required. Note the interaction with the material-only shortcut ([search § 7.3](search.md#73-material-only-evaluation-shortcut)): in the positions above material is *static*, so `materialDelta` stays near zero and the positional terms do run. The scaling therefore has to sit in the final score, not in the positional part alone, or the shortcut path would bypass it.
+
+**Why the Elo estimate is modest.** It converts nothing into wins — those games are drawn either way. What it buys is time not wasted on unwinnable positions (which on a clock is real), fewer fifty-move shuffles, and an evaluation that stops lying to the search about how good its position is. The last of those is the one that could show up as Elo, and it is also why this is worth doing rather than reaching for tablebases, which the closing note of the [suggested implementation order](#suggested-implementation-order) puts explicitly out of scope.
 
 ---
 
