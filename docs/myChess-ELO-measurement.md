@@ -70,10 +70,11 @@ below).
 
 ## 3. The anchor set
 
-myChess's current (propagated) estimate is **~1800** (post-v4.3.1; the last
-*direct* measurement was 1422.7 at v3.1.x — see §7). The anchors are chosen to
-**bracket ~1800**, with one anchor close to it (closest to 50% → most
-information) and anchors clearly below and above.
+myChess **measures 1928 ± 21** as of v4.4.1 (direct, 2026-08-17 — see § 7; the
+previous direct measurement was 1422.7 at v3.1.x). The anchors are chosen to
+**bracket** that value, with anchors close to it (closest to 50 % → most
+information) and anchors clearly below and above. The set below did exactly that:
+myChess beat the two lower anchors and lost to the three upper ones.
 
 Ratings below were read off the CCRL Blitz list on **2026-08-16**, with the sample
 size that backs each one. **Quote the date**: the list is revised continuously —
@@ -81,8 +82,8 @@ TSCP moved 1607 → 1609 between May and August 2026.
 
 | Engine | CCRL Blitz | Sample | Role | Proto | Wrapper |
 |---|---:|---|---|---|---|
-| **TSCP 1.81** | 1609 | ±19, 1067 games | anchor — **lower** (fixed) | xboard | `engines/tscp-1.81-elo1607/tscp.sh` |
-| **Zeta Dva 0402** | ~1801 | ±52, **114 games** | anchor — **near** (fixed), see caveat | xboard | `engines/ZetaDva-0402-elo1801/zetadva.sh` |
+| **TSCP 1.81** | 1609 | ±19, 1067 games | anchor — **lower** (fixed) | xboard | `engines/tscp-1.81-elo1609/tscp.sh` |
+| **Zeta Dva 0402** | ~1801 | ±52, **114 games** | anchor — **near** (fixed), see caveat | xboard | `engines/ZetaDva-0402-unrated/zetadva.sh` |
 | **Princhess 0.7.0** | 1985 | ±18, 1202 games | anchor — **upper** (fixed) | UCI | `engines/princhess-0.7.0-elo1985/princhess.sh` |
 | **BBC 1.1** | 2019 | ±17, 1243 games | anchor — **upper** (fixed), best-sampled of the set | UCI | `engines/BBC-1.1-elo2019/bbc.sh` |
 | **Kojiro 0.1.4** | (1984) | ±85, **40 games** | **free** — Ordo estimates it; cross-checks the upper end | UCI | `engines/Kojiro-0.1.4-elo1984/kojiro.sh` |
@@ -95,14 +96,17 @@ listed number is not automatically a usable anchor:
   threshold. Leaving it free was right for a second reason too: its neighbouring
   version rates *higher* (0.1.3 = 2033), and it emits "Illegal PV move" warnings
   by the thousand. Exactly the engine not to pin. On the v4.4.1 bracket Ordo
-  placed it at 1998.5 ± 37.3 against its listed 1984 — a 14-Elo agreement, and
-  the cross-check the free slot exists for.
+  placed it at 2003.9 ± 35.3 (all four anchors pinned) and 1999.5 ± 37.3 (only the
+  well-sampled three pinned) against its listed 1984 — 15 to 20 Elo, inside its own
+  ±35, and the cross-check the free slot exists for.
 - **Zeta Dva is the open caveat.** The 1801 belongs to version **0310** and rests
   on 114 games with ±52; the build in this repo is **0402**, which the list does
   not carry at all. Its predecessor 0303 rates 1899 — 98 Elo *above* 0310 on
   seven times the games, which is the signature of a noisy number rather than a
-  real regression. Freeing it as well moves the myChess estimate by ~10 Elo
-  (1925 → 1914) and places Zeta Dva itself at 1774 rather than 1801.
+  real regression. Freeing it as well moves the myChess estimate by only ~4 Elo
+  (1930.8 → 1926.5) and places Zeta Dva itself at 1785 rather than 1801. That the
+  effect shrank from ~10 Elo on four engines to ~4 on five is what the fifth anchor
+  bought: the bracket is stiff enough that one thin value barely shows.
 
 **A version's rating never transfers to a neighbouring version**, in either
 direction: Kojiro 0.1.3 = 2033 vs 0.1.4 = 1984, Princhess 0.7.0 = 1985 vs
@@ -119,7 +123,7 @@ UCI) as a firmer floor — adds one more gauntlet (~an extra night).
 > **Version trap — always verify the *exact* version's CCRL entry before a run.**
 > A rating can swing hundreds of Elo across an engine's release history, so
 > "latest" is a reliable way to pick a useless anchor. Cases hit during setup:
-> Kojiro 0.1.3 = 2033 vs 0.1.4 = 1984; Princhess 0.7.0 = 1985 vs 0.21 = 3329;
+> Kojiro 0.1.3 = 2033 vs 0.1.4 = 1984; Princhess 0.7.0 = 1985 vs 0.21 = 3327;
 > Stash 35 = 3347 (not the ~2400 an old draft assumed); Bagatur 1.7e is gone
 > (only v5.x ~2900+ remains). Both Stash and Bagatur are far too strong and are
 > **not used**. Pin the version *and* its rating in the directory name and
@@ -136,21 +140,26 @@ network at 1 node/move — a "human-feel" curiosity, *not* a CCRL anchor).
 ## 4. Building the anchors
 
 All engines live under `engines/<name>-<version>-elo<rating>/` (git-ignored).
+**The rating in the path is always the externally verifiable CCRL value, never one
+Ordo estimated** — a self-derived number in a directory name invites exactly the
+circular pinning § 5 warns against. Builds the list does not carry are marked
+`-unrated` instead, as `ZetaDva-0402-unrated` is: the 1801 belongs to version 0310.
+Renamed 2026-08-17; `tscp-1.81-elo1607` became `-elo1609` when the list moved.
 
 **TSCP 1.81** (xboard) — single-file C:
 ```sh
 cd /tmp && curl -O http://www.tckerrigan.com/Chess/TSCP/tscp181.zip
 unzip tscp181.zip -d tscp181
 clang -O2 -o tscp181/tscp tscp181/*.c
-mkdir -p engines/tscp-1.81-elo1607 && mv tscp181 engines/tscp-1.81-elo1607/
+mkdir -p engines/tscp-1.81-elo1609 && mv tscp181 engines/tscp-1.81-elo1609/
 ```
 Wrapper `tscp.sh`: `cd` into `tscp181`, `exec ./tscp`. Use `proto=xboard`.
 
 **Zeta Dva 0402** (xboard) — GitLab source; drop `--static` from the Makefile
 CFLAGS (no full-static libc on macOS):
 ```sh
-cd engines && git clone https://gitlab.com/smatovic/ZetaDva.git ZetaDva-0402-elo1801
-cd ZetaDva-0402-elo1801 && git checkout v0402 && cd src && make   # after removing -static
+cd engines && git clone https://gitlab.com/smatovic/ZetaDva.git ZetaDva-0402-unrated
+cd ZetaDva-0402-unrated && git checkout v0402 && cd src && make   # after removing -static
 ```
 Wrapper `zetadva.sh`: `cd` into `src`, `exec ./zetadva`. Use `proto=xboard`.
 
@@ -206,7 +215,7 @@ Per anchor, one match — replace the myChess path and the anchor:
 ```sh
 /Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
     -engine name=myChess-4.3.2 cmd=./versions/4.3.2/mychess-uci.sh proto=uci \
-    -engine name=TSCP          cmd=./engines/tscp-1.81-elo1607/tscp.sh proto=xboard \
+    -engine name=TSCP          cmd=./engines/tscp-1.81-elo1609/tscp.sh proto=xboard \
     -each tc=40/120 \
     -rounds 200 -games 2 -repeat \
     -openings file=2moves_v2.pgn format=pgn order=random plies=8 \

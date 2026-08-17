@@ -81,6 +81,7 @@ TC="40/120"
 ROUNDS=200            # -> 400 games per match (games=2, repeat)
 CONCURRENCY=4         # matches the baseline timing conditions; 8 P-cores allow 6 if you accept a small drift
 RATING_INTERVAL=10
+ORDO_SIMULATIONS=1000   # simulations Ordo uses to derive the error margins
 
 # --- arguments --------------------------------------------------------------
 VERSION=""
@@ -132,8 +133,8 @@ BBC_HASH_MB=128
 # automated result stays comparable with earlier runs; the variant that frees it
 # as well is a one-line anchors.csv change on the finished bracket PGN.
 ANCHORS="
-TSCP|./engines/tscp-1.81-elo1607/tscp.sh|xboard|1609|
-ZetaDva|./engines/ZetaDva-0402-elo1801/zetadva.sh|xboard|1801|
+TSCP|./engines/tscp-1.81-elo1609/tscp.sh|xboard|1609|
+ZetaDva|./engines/ZetaDva-0402-unrated/zetadva.sh|xboard|1801|
 Princhess|./engines/princhess-0.7.0-elo1985/princhess.sh|uci|1985|option.Hash=$ANCHOR_HASH_MB
 BBC|./engines/BBC-1.1-elo2019/bbc.sh|uci|2019|option.Hash=$BBC_HASH_MB
 Kojiro|./engines/Kojiro-0.1.4-elo1984/kojiro.sh|uci||option.Hash=$ANCHOR_HASH_MB
@@ -151,8 +152,8 @@ check "$MYCHESS"
 # check the anchor wrappers in-process (a `... | while` subshell could not
 # set `fail`, so the paths are listed explicitly here)
 for wrapper in \
-    ./engines/tscp-1.81-elo1607/tscp.sh \
-    ./engines/ZetaDva-0402-elo1801/zetadva.sh \
+    ./engines/tscp-1.81-elo1609/tscp.sh \
+    ./engines/ZetaDva-0402-unrated/zetadva.sh \
     ./engines/princhess-0.7.0-elo1985/princhess.sh \
     ./engines/BBC-1.1-elo2019/bbc.sh \
     ./engines/Kojiro-0.1.4-elo1984/kojiro.sh; do
@@ -272,7 +273,17 @@ if [ "$found" -ne 1 ]; then
     exit 4
 fi
 
-"$ORDO" -p "$bracket_pgn" -m "$anchors_csv" -o "$ordo_txt" -c "$ordo_csv"
+# -W -D -s are NOT optional -- Ordo's defaults are silent placeholders, not
+# measurements. Without -s there is no ERROR column at all, and any +/- quoted
+# next to the rating is guesswork. Without -W and -D the output prints
+# "White advantage = 0.00" and "Draw rate = 50.00 %", which read like results and
+# are merely the defaults: measured on the v4.4.1 bracket they are 26.2 +/- 7.7
+# Elo and 19.0 +/- 1.0 %. The point estimate barely moves (1924.6 -> 1925.0 on
+# four engines), so the switches buy the error bars almost for free -- colour-
+# balanced matches cancel the white advantage out of the ratings, and the draw
+# rate acts mainly on the simulation. See myChess-ELO-measurement.md section 5.
+"$ORDO" -W -D -s "$ORDO_SIMULATIONS" \
+    -p "$bracket_pgn" -m "$anchors_csv" -o "$ordo_txt" -c "$ordo_csv"
 
 echo
 echo "========================================================================"
