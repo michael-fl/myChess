@@ -75,20 +75,45 @@ myChess's current (propagated) estimate is **~1800** (post-v4.3.1; the last
 **bracket ~1800**, with one anchor close to it (closest to 50% → most
 information) and anchors clearly below and above.
 
-| Engine | CCRL Blitz | Role | Proto | Wrapper |
-|---|---:|---|---|---|
-| **TSCP 1.81** | 1607 | anchor — **lower** (fixed) | xboard | `engines/tscp-1.81-elo1607/tscp.sh` |
-| **Zeta Dva 0402** | ~1801 | anchor — **near** (fixed), carries the most info | xboard | `engines/ZetaDva-0402-elo1801/zetadva.sh` |
-| **Princhess 0.7.0** | 1985 | anchor — **upper** (fixed) | UCI | `engines/princhess-0.7.0-elo1985/princhess.sh` |
-| **Kojiro 0.1.4** | (1984) | **free** — Ordo estimates it; cross-checks the upper end | UCI | `engines/Kojiro-0.1.4-elo1984/kojiro.sh` |
+Ratings below were read off the CCRL Blitz list on **2026-08-16**, with the sample
+size that backs each one. **Quote the date**: the list is revised continuously —
+TSCP moved 1607 → 1609 between May and August 2026.
 
-**Why Kojiro is left free.** Its version rating is the shakiest (0.1.3 = 2033 vs
-0.1.4 = 1984) and it emits cosmetic "Illegal PV move" warnings — exactly the
-engine not to pin. If Ordo places it near Princhess (~1985), the upper end is
-double-confirmed; if not, the free slot absorbs the discrepancy without touching
-the myChess number.
+| Engine | CCRL Blitz | Sample | Role | Proto | Wrapper |
+|---|---:|---|---|---|---|
+| **TSCP 1.81** | 1609 | ±19, 1067 games | anchor — **lower** (fixed) | xboard | `engines/tscp-1.81-elo1607/tscp.sh` |
+| **Zeta Dva 0402** | ~1801 | ±52, **114 games** | anchor — **near** (fixed), see caveat | xboard | `engines/ZetaDva-0402-elo1801/zetadva.sh` |
+| **Princhess 0.7.0** | 1985 | ±18, 1202 games | anchor — **upper** (fixed) | UCI | `engines/princhess-0.7.0-elo1985/princhess.sh` |
+| **BBC 1.1** | 2019 | ±17, 1243 games | anchor — **upper** (fixed), best-sampled of the set | UCI | `engines/BBC-1.1-elo2019/bbc.sh` |
+| **Kojiro 0.1.4** | (1984) | ±85, **40 games** | **free** — Ordo estimates it; cross-checks the upper end | UCI | `engines/Kojiro-0.1.4-elo1984/kojiro.sh` |
 
-**Optional 5th anchor:** **Pulse 1.7.3 = 1505** (`engines/pulse-1.7.3-elo1505/pulse.sh`,
+**The sample size decides whether an anchor may be pinned.** CCRL publishes a
+rating from 100 games upward and warns that "early ratings may fluctuate", so a
+listed number is not automatically a usable anchor:
+
+- **Kojiro 0.1.4 rests on 40 games with ±85** — below CCRL's own publication
+  threshold. Leaving it free was right for a second reason too: its neighbouring
+  version rates *higher* (0.1.3 = 2033), and it emits "Illegal PV move" warnings
+  by the thousand. Exactly the engine not to pin. On the v4.4.1 bracket Ordo
+  placed it at 1998.5 ± 37.3 against its listed 1984 — a 14-Elo agreement, and
+  the cross-check the free slot exists for.
+- **Zeta Dva is the open caveat.** The 1801 belongs to version **0310** and rests
+  on 114 games with ±52; the build in this repo is **0402**, which the list does
+  not carry at all. Its predecessor 0303 rates 1899 — 98 Elo *above* 0310 on
+  seven times the games, which is the signature of a noisy number rather than a
+  real regression. Freeing it as well moves the myChess estimate by ~10 Elo
+  (1925 → 1914) and places Zeta Dva itself at 1774 rather than 1801.
+
+**A version's rating never transfers to a neighbouring version**, in either
+direction: Kojiro 0.1.3 = 2033 vs 0.1.4 = 1984, Princhess 0.7.0 = 1985 vs
+0.21 = 3327, Zeta Dva 0303 = 1899 vs 0310 = 1801, BBC 1.1 = 2019 vs 1.2 = 1945.
+Build the exact tag, and verify what the engine reports about itself.
+
+**Every UCI anchor needs an explicit `option.Hash`** — see
+[§ 5 `option.Hash`](#optionhash--the-parameter-that-invalidated-a-whole-match).
+Skipping it invalidated a whole 400-game match once.
+
+**Optional further anchor:** **Pulse 1.7.3 = 1505** (`engines/pulse-1.7.3-elo1505/pulse.sh`,
 UCI) as a firmer floor — adds one more gauntlet (~an extra night).
 
 > **Version trap — always verify the *exact* version's CCRL entry before a run.**
@@ -199,11 +224,13 @@ Then combine with Ordo — the fixed anchors go in `anchors.csv`, Kojiro does
 ```sh
 cat test-results/match-4.3.2-vs-*.pgn > /tmp/bracket.pgn
 cat > /tmp/anchors.csv <<'EOF'
-"TSCP",1607
+"TSCP",1609
 "ZetaDva",1801
 "Princhess",1985
+"BBC",2019
 EOF
 /Users/mf/_PRIVAT_/New-Stuff/ordo/ordo \
+    -W -D -s 1000 \
     -p /tmp/bracket.pgn -m /tmp/anchors.csv \
     -o test-results/ordo-anchor-4.3.2.txt -c test-results/ordo-anchor-4.3.2.csv
 ```
@@ -211,6 +238,76 @@ EOF
 `-m` pins the listed engines with zero uncertainty. For per-anchor CCRL error
 bars, use `-y anchors-with-error.csv` (a third σ column) so Ordo propagates the
 anchor uncertainty into the myChess number.
+
+#### The three switches that are not optional — `-W -D -s`
+
+Ordo's defaults are silent placeholders, not measurements. Left off, the output
+carries **no error margin at all**, and it reports `White advantage = 0.00` /
+`Draw rate = 50.00 %` — which reads like a result and is merely the default.
+
+| switch | what it does | why |
+|---|---|---|
+| `-s 1000` | 1000 simulations to derive error margins | without it there is **no** `ERROR` column, and any ± quoted alongside the number is guesswork |
+| `-W` | fits the white advantage instead of assuming 0 | measured 29.3 ± 8.8 Elo over the 1600-game 4.4.1 bracket — real, and worth knowing |
+| `-D` | fits the draw rate instead of assuming 50 % | actual rates ran 8.5 % (vs TSCP) to 24 % (vs Kojiro), pooled 17.7 % — the default was off by a factor of three |
+
+**Measured on the v4.4.1 bracket (2026-08-17), the point estimate barely moves:**
+1924.6 with the defaults against 1925.0 ± 20.3 with `-W -D -s 1000`. That is not
+an argument for omitting them — it is the reason to use them without worrying
+about comparability with older runs. Colour-balanced matches (`-games 2 -repeat`)
+cancel the white advantage out of the ratings, and the draw rate acts mainly on
+the simulation, so the switches buy the error bars almost for free.
+
+What the pinned anchors do **not** carry is their own uncertainty: they print
+`----` in the `ERROR` column because `-m` fixes them exactly. The CCRL sample
+behind each one (±17 to ±19 for a well-measured engine, ±52 for a thin one) has
+to be added on top by hand, or fed in through `-y` instead.
+
+#### Never pin an engine at a rating Ordo itself estimated
+
+Tempting after a finished run: the free engines now have numbers, so why not feed
+them back as anchors and get a tighter result? Because it is circular, and the
+tightening is fake.
+
+Measured on the v4.4.1 bracket:
+
+| | myChess | Kojiro |
+|---|---|---|
+| Kojiro **free** (as run) | 1925.0 ± 20.3 | 1998.5 ± 37.3 |
+| Kojiro **pinned at its own 1998.5** | 1925.0 ± **17.0** | 1998.5 `----` |
+
+The estimate does not move at all and the error margin shrinks by 3.3 Elo. No
+uncertainty was removed — it was hidden. **An anchor has to carry information from
+outside the tournament**, and Kojiro's 1998.5 was derived from the very 1600 games
+being evaluated: it adds no bit that is not already in the PGN, it only removes a
+degree of freedom.
+
+That degree of freedom had a job. While Kojiro is free it can absorb disagreement
+between the anchors — TSCP implies myChess ≈ 1865, Princhess ≈ 1931 — and the
+residual spreads across everything unpinned. Pin Kojiro and the residual has to go
+somewhere, and the only remaining candidate is the myChess estimate. That it did
+not move here is luck, not method.
+
+The worse failure is interpretive: re-running with the self-estimate pinned and
+reading the unchanged 1925.0 as *confirmation* mistakes an **identity** for an
+agreement. The number cannot come out differently — same data, plus an assertion
+drawn from that same data.
+
+And it destroys the one real cross-check the bracket provides. Kojiro's value is
+worth something **because** it was free: Ordo said 1998.5 where CCRL lists 1984, a
+14-Elo agreement that tests whether the whole scale holds. Pin it and nothing
+checks the scale any more.
+
+Zeta Dva is the same rule from the other side: there the **fixed** value is the
+doubtful one (1801 for version 0310, 114 games, ±52 — the build here is 0402), so
+the correct move is to **free it**, not to keep it. That costs 10 Elo on the
+estimate (1925 → 1914) and replaces a poorly-supported assertion with a
+measurement.
+
+**The rule: pin exactly those anchors whose rating was well measured outside this
+tournament** — here TSCP (±19, 1067 games), Princhess (±18, 1202) and BBC (±17,
+1243) — **and leave everything else free.** Five engines, three anchors, two
+touchstones.
 
 ### Parameter rationale
 
@@ -226,6 +323,38 @@ anchor uncertainty into the myChess number.
 - **`-recover`** — one misbehaving game does not abort the match.
 - **No `-sprt`** — this is a precision estimate, not a hypothesis test; run the
   full 400-game budget per match.
+- **`plies=4`** for the opening suite — and note that `2moves_v2.pgn` carries
+  exactly 4 plies per line, so cutechess takes `min(requested, available)` and any
+  larger value is a no-op. The script read `plies=8` until 2026-08-17, which
+  suggested an opening phase twice as deep as the one actually played.
+
+### `option.Hash` — the parameter that invalidated a whole match
+
+**Every UCI anchor gets an explicit `option.Hash`.** This is not tuning: CCRL's
+published blitz conditions require *"the same value of either 128 or 256 MB for
+all engines in a match or tourney"*, so it is part of the conditions the anchor
+rating was established under. Engine defaults are not comparable to anything.
+
+The cost of learning this, on 2026-08-16: the first Princhess match of the v4.4.1
+bracket ran at Princhess's own default of **16 MB**. Princhess is an MCTS engine —
+every tree node lives in the hash — so the table filled after ~9 600 nodes and the
+search **stopped**: 0.07 s per move against myChess's 2.89 s, a factor of 40. The
+match scored 86.4 % for myChess, implying ~2300 Elo. Re-run at 256 MB it scored
+**42.2 %**. Same board, same engines, same time control: **a 310-Elo swing from one
+setting.** Defaults seen so far: Princhess 16 MB, Kojiro **1 MB**, BBC 64 MB
+(capped at 128, so BBC gets 128 and not 256).
+
+**The check that catches this class of defect in a minute** — compare the per-move
+times recorded in the PGN comments. Two engines at one time control belong within
+a factor of ~2 of each other, never 40:
+
+```sh
+# mean seconds per move, per engine, from the {+0.60/9 1.5s} comments
+grep -o '{[^}]*}' test-results/match-<v>-vs-<engine>.pgn | grep -oE '[0-9.]+s'
+```
+
+Run it after **every** match, before believing any score. On the finished v4.4.1
+bracket all five engines sat between 1.46 s and 2.92 s against myChess's 2.89 s.
 
 ---
 
