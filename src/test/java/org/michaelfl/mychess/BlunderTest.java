@@ -2298,4 +2298,198 @@ class BlunderTest {
                         + result.weight());
     }
 
+    // ================================================================
+    // lichess keBKOXd1 — the game that shows both halves of the king-
+    // safety problem in one place, and separates them.
+    //
+    // Rated rapid, 600+5, myChessJava (2104) vs JDoss_BOT (2172), 1-0
+    // in 58 moves. myChess won it, and the result is the least
+    // interesting thing about it: it was mated in six on move 19 and
+    // survived because the opponent missed a mate in two.
+    //
+    // Reconstructed move by move against Stockfish 18 at depth 22, with
+    // myChess's own scores taken from the bot's engine log rather than
+    // from lichess (lichess stores only its own analysis):
+    //
+    //   mv 10  h3      SF  +1.70  myChess +1.74   blindness starts here;
+    //                                             SF wanted Be4, and h3
+    //                                             turns +1.70 into -0.59
+    //   mv 14  Nxa8    SF  -2.09  myChess +3.00   the rook grab IS SF's
+    //                                             best move — the
+    //                                             position was already
+    //                                             bad, and myChess is
+    //                                             five pawns out
+    //   mv 18  Qxf8    SF  -3.99  myChess +4.95   peak divergence: 8.94
+    //   mv 19  Nb6+    SF   M-6   myChess +0.00   mated in six, reads level
+    //   mv 20  Qxe7+   SF   M-5   myChess  -M5    SEEN, and exactly right
+    //   mv 21  Nd5+    SF   M-4   myChess  -M4    from here to -M2 the
+    //   mv 22  Nf4+    SF   M-3   myChess  -M3    distances all match
+    //   mv 23  gxf3    SF   M-2   myChess  -M2
+    //   mv 24  Re1     SF  +0.00                  23...Kf5?? threw it away;
+    //                                             23...Rxh3+ 24.Kg2 Rh2#
+    //   mv 27  Rexc1   SF  +3.86  myChess +3.60   won from here; every
+    //                                             reading to move 45 is
+    //                                             within half a pawn
+    //   mv 46  d6+     SF +15.30 -> +6.63         8.7 pawns given back,
+    //                                             costing nothing
+    //
+    // The line at move 20 is the one that matters. Up to move 19 this is
+    // an EVALUATION defect: nine moves of counting material while its
+    // own king is surrounded, with no term pricing the danger. From move
+    // 20 the search is flawless — every mate distance correct. So the
+    // two tests below are a pair, and neither means much alone:
+    //
+    //   * the defect test pins the evaluation at move 19
+    //   * the guard pins that the search finds a mate when one is in
+    //     range, which is what rules out "it just needed more depth"
+    //
+    // Full game:
+    //
+    // 1. e4 c5 2. Nc3 e6 3. Nf3 d5 4. exd5 exd5 5. Bb5+ Bd7 6. Qe2+ Be7
+    // 7. Nxd5 Nc6 8. O-O a6 9. Bd3 Bg4 10. h3 Nd4 11. Qe5 f6 12. Nc7+ Kd7
+    // 13. Qg3 Bxf3 14. Nxa8 Bd6 15. Qxg7+ Ne7 16. Bxh7 Ne2+ 17. Kh1 Qf8
+    // 18. Qxf8 Rxh7 19. Nb6+ Ke6 20. Qxe7+ Kxe7 21. Nd5+ Ke6 22. Nf4+ Bxf4
+    // 23. gxf3 Kf5 24. Re1 Rxh3+ 25. Kg2 Rh2+ 26. Kf1 Nxc1 27. Rexc1 Rh7
+    // 28. Rab1 c4 29. Rd1 Rh8 30. b3 cxb3 31. Rxb3 Rc8 32. Rc3 Rh8
+    // 33. Rc4 b5 34. Rc6 Ra8 35. d4 a5 36. Rc5+ Ke6 37. Rxb5 Rc8
+    // 38. Re1+ Kd7 39. Re2 a4 40. Rf5 Bd6 41. Rxf6 Ba3 42. d5 Bb2
+    // 43. Rg6 Rf8 44. Re4 Rh8 45. Rxa4 Kc7 46. d6+ Kc6 47. Ra6+ Kb7
+    // 48. d7 Kc7 49. Ra7+ Kb8 50. Rga6 Bf6 51. Ra8+ Kc7 52. R6a7+ Kc6
+    // 53. Rxh8 Be7 54. d8=Q Bd6 55. Ra6+ Kc5 56. Rxd6 Kc4 57. Qb8 Kc5
+    // 58. Rc8# 1-0
+    // ================================================================
+
+    /** White (myChess) to move before {@code 19.Nb6+}, and mated in six. */
+    private static final String KEBKOXD1_MATED_FEN =
+            "N4Q2/1p1kn2r/p2b1p2/2p5/8/5b1P/PPPPnPP1/R1B2R1K w - - 0 19";
+
+    /**
+     * Ceiling on what myChess may read while being mated in six. Measured on v4.4.2 from a
+     * cold table at {@link #SCANNER_DEPTH} it reports <b>+5.00</b> — worse than the +0.00 it
+     * logged in the game, which came from a deeper search with a warm table. A bound of +1.0
+     * therefore sits four pawns below the reading and is still generous: anything at all
+     * positive is wrong here.
+     */
+    private static final float KEBKOXD1_MATED_BOUND = 1.0f;
+
+    /**
+     * The largest evaluation error in the suite: <b>+5.00 while mated in six</b>.
+     *
+     * <p>Three white pieces are stranded on the wrong side of the board — the knight on a8,
+     * the queen on f8 — while black's knight on e2, bishop on f3 and rook on h7 surround the
+     * king on h1 with the g-file already open. Stockfish 18 (depth 26) has a forced mate in
+     * six. myChess reads five pawns <em>for itself</em>.
+     *
+     * <p>{@code 19.Nb6+} is <b>Stockfish's own best move</b>, so nothing is being asserted
+     * about move choice: the position is lost whatever white plays, and the defect is purely
+     * that myChess cannot see it. That makes this the cleanest evaluation characterization
+     * available — no move-ordering effect, no horizon argument, no alternative line to
+     * dispute.
+     *
+     * <p>The mate is six plies away at the point of measurement and
+     * {@link #SCANNER_DEPTH} is eight, so it is <em>inside</em> the search horizon by two
+     * plies. That the engine still reports +5.00 is the strongest single piece of evidence in
+     * this class that the missing term is in the evaluation and not in the search —
+     * corroborated by {@link #keBKOXd1_afterGxf3_findsTheMateTheOpponentMissed}, which shows
+     * the same engine handling a mate correctly once nothing masks it.
+     *
+     * <p><b>Characterization, not a goal.</b> It passes because the defect is present. When
+     * king safety lands this score collapses and the test must be rewritten to require a
+     * losing evaluation instead.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void keBKOXd1_atMove19_characterizesReadingFivePawnsWhileMatedInSix() throws Exception {
+        var game = gameFromFenAtDepth(KEBKOXD1_MATED_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertTrue(result.weight() > KEBKOXD1_MATED_BOUND,
+                "characterization: white is mated in six here (Stockfish, depth 26) and myChess must "
+                        + "still read a large advantage for itself, because no term prices the three black "
+                        + "pieces around its king on the opened g-file. A score at or below "
+                        + KEBKOXD1_MATED_BOUND + " means king safety has landed — rewrite this to require a "
+                        + "losing evaluation; white-POV eval " + result.weight());
+    }
+
+    /** Black to move after {@code 23.gxf3} — mate in two is on the board. */
+    private static final String KEBKOXD1_MATE_IN_TWO_FEN =
+            "8/1p5r/p3kp2/2p5/5b2/5P1P/PPPPnP2/R1B2R1K b - - 0 23";
+
+    /**
+     * The guard the {@code king-safety} family never had: the search <b>does</b> find a mate
+     * in this exact position class — it is the evaluation that is blind.
+     *
+     * <p>This is also the game's punchline. In the position after {@code 23.gxf3} black has
+     * {@code 23...Rxh3+ 24.Kg2 Rh2#}. JDoss_BOT (2172) played {@code 23...Kf5} instead and
+     * lost from a won game; myChess, asked the same question from the black side, finds
+     * {@code Rxh3+} and scores it as a mate. Its own log for the white side agrees — it had
+     * been reporting {@code -M2} one ply earlier, so both sides of the board had it right and
+     * only the opponent did not.
+     *
+     * <h2>Two mates on the same square, and why white cannot choose between them</h2>
+     *
+     * <p>{@code Rxh3} mates in two different ways depending on what white does one move
+     * earlier, and the second is caused by the move that prevents the first. Worth spelling
+     * out, because it is what the search had to see and therefore what this guard protects.
+     *
+     * <p><b>Without {@code gxf3} — mate at once.</b> One ply earlier the black bishop still
+     * stands on f3 and white's pawn on g2. {@code Rxh3+} is then immediate mate, with four
+     * black pieces each doing exactly one job and none of them twice:
+     *
+     * <pre>
+     *   rook h3      gives the check along the h-file
+     *   bishop f3    pins g2 to the king, so gxh3 is illegal
+     *   knight e2    covers g1
+     *   bishop f4    covers h2
+     * </pre>
+     *
+     * <p>The pin is the heart of it: the one pawn that could take the rook is the one pawn
+     * forbidden to move. Verified — white has <em>zero</em> legal replies.
+     *
+     * <p><b>With {@code gxf3} — mate one move later, for the opposite reason.</b> Capturing on
+     * f3 removes the pinning bishop and frees g2. But the pawn arrives <em>on f3</em>, and
+     * after {@code 23...Rxh3+ 24.Kg2 Rh2+} the king's escape to the f-file is walled off by
+     * white's own men: rook on f1, pawn on f2, and the pawn that just captured on f3.
+     * {@code Kxh2} is denied by the bishop on f4, {@code Kg1} and {@code Kg3} by the knight and
+     * that same bishop.
+     *
+     * <p>So the move that dissolves the pin builds the wall. White can postpone the mate by one
+     * ply and cannot avoid it — which is precisely why myChess reported {@code -M2} rather than
+     * {@code -M1} before playing {@code gxf3}: it had costed both roads and taken the longer one.
+     *
+     * <p><b>Why a guard here matters.</b> Before this test the family held seventeen open
+     * defects and not one guard, which left an obvious counter-argument unanswered: perhaps
+     * myChess simply cannot search these positions deeply enough, and there is no evaluation
+     * problem at all. This rules that out on a position from the same game, the same king,
+     * the same open g-file — the search returns a correct mate score. Paired with
+     * {@link #keBKOXd1_atMove19_characterizesReadingFivePawnsWhileMatedInSix}, the two
+     * together locate the defect rather than merely reporting it.
+     *
+     * <p>Carries a {@code guard} marker rather than {@code fixed}: nothing was repaired here,
+     * this pins behavior that was always correct and must stay correct.
+     *
+     * <p><b>Test family:</b> king-safety (guard)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void keBKOXd1_afterGxf3_findsTheMateTheOpponentMissed() throws Exception {
+        var game = gameFromFenAtDepth(KEBKOXD1_MATE_IN_TWO_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.h7, Board.h3, "23...Rxh3+",
+                "the first move of 23...Rxh3+ 24.Kg2 Rh2#, which the 2172-rated opponent missed in "
+                        + "favour of 23...Kf5 and thereby lost a won game");
+        assertTrue(result.weight() < -MATE_SCORE_FLOOR,
+                "the score must be a mating one for black, since Rxh3+ mates next move. A non-mating "
+                        + "score means the search stopped finding this — which would invalidate the pairing "
+                        + "with the move-19 characterization; white-POV eval " + result.weight());
+    }
+
+
 }
