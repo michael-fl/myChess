@@ -415,9 +415,62 @@ DoctorB — the older, lower bracket that fit myChess at the time):
   precisely *because* it was left free. This is the pattern to watch on the free
   slot (now Kojiro).
 
-Everything after v3.1.x in [version-history.md](version-history.md)'s absolute
-column is **propagated** from per-version SPRT deltas, not re-measured. A fresh
-bracket replaces that propagated number with a measured one.
+### The v4.4.1 re-anchor — measured 2026-08-17
+
+The second direct measurement, and the one that closes the propagated chain.
+**2000 games, five opponents, TC 40/120**, anchors read off the CCRL Blitz list on
+2026-08-16:
+
+| opponent | role | CCRL | sample | myChess score | Δ Elo |
+|---|---|---:|---|---|---:|
+| BBC 1.1 | anchor | 2019 | ±17 / 1243 | 113-197-90, 39.5 % | −74.1 ± 30.5 |
+| Kojiro 0.1.4 | **free** | (1984) | ±85 / 40 | 112-192-96, 40.0 % | −70.4 ± 30.1 |
+| Princhess 0.7.0 | anchor | 1985 | ±18 / 1202 | 139-201-60, 42.2 % | −54.3 ± 31.8 |
+| Zeta Dva 0402 | anchor | 1801 | ±52 / 114 | 248-94-58, 69.3 % | +141.0 ± 33.7 |
+| TSCP 1.81 | anchor | 1609 | ±19 / 1067 | 309-57-34, 81.5 % | +257.6 ± 41.0 |
+
+```
+   # PLAYER           :  RATING  ERROR  POINTS  PLAYED   (%)
+   1 BBC              :  2019.0   ----   242.0     400    60
+   2 Kojiro           :  2003.9   35.3   240.0     400    60
+   3 Princhess        :  1985.0   ----   231.0     400    58
+   4 myChess-4.4.1    :  1930.8   17.2  1090.0    2000    54
+   5 ZetaDva          :  1801.0   ----   123.0     400    31
+   6 TSCP             :  1609.0   ----    74.0     400    18
+
+White advantage = 26.18 +/- 7.69
+Draw rate (equal opponents) = 18.99 % +/- 0.95
+```
+
+**Result: myChess 4.4.1 ≈ 1928 ± 21 CCRL Blitz.** The two anchor choices bracket
+it — 1930.8 ± 17.2 with all four fixed, 1926.5 ± 20.5 with only the well-sampled
+three fixed and Zeta Dva freed as well. Four Elo apart, which is why the number is
+quoted rounded. Add the CCRL uncertainty of the pinned anchors (±17 to ±19) on top,
+and subtract nothing for the two deviations recorded in § 5: no endgame tablebases
+(which makes our anchors slightly weaker than their rating, so the number errs
+high) and TC 40/120 instead of CCRL's own 2'+1".
+
+**The free slot did its job twice.** Kojiro, never pinned, came out at 2003.9
+(variant A) / 1999.5 (variant B) against its listed 1984 — 15 to 20 Elo, inside its
+own ±35. Zeta Dva, freed in variant B, came out at 1785.2 against the 1801 assumed
+for it, which supports the suspicion that a 114-game rating for the wrong version
+was reading slightly high. Neither discrepancy is the port artifact DoctorB showed
+in May; the scale holds.
+
+**TSCP is the outlier and was expected to be.** Its implied value for myChess is
+~1867, against ~1929 to ~1945 from the other four. At 258 Elo of separation almost
+every game is decisive (8.5 % draws) and the Elo scale compresses. Ordo weights it
+accordingly rather than averaging it in — which is the entire reason for solving the
+graph instead of computing per-anchor differences by hand.
+
+**What the measurement settles.** Everything after v3.1.x in
+[version-history.md](version-history.md)'s absolute column was **propagated** from
+per-version SPRT deltas, and the docs put the accumulated uncertainty at ±40 while
+warning that self-play gains are not expected to transfer one-for-one. The chain
+predicted **~1915**; the measurement says **1928**. Over roughly 500 Elo and a dozen
+versions the self-play deltas transferred almost exactly. That is a result about the
+*method*, not just about this version, and it is the strongest argument the project
+has for continuing to steer by self-play SPRTs between re-anchors.
 
 ---
 

@@ -1,0 +1,12 @@
+
+   # PLAYER           :  RATING  ERROR  POINTS  PLAYED   (%)
+   1 BBC              :  2019.0   ----   242.0     400    60
+   2 Kojiro           :  1999.5   37.3   240.0     400    60
+   3 Princhess        :  1985.0   ----   231.0     400    58
+   4 myChess-4.4.1    :  1926.5   20.5  1090.0    2000    54
+   5 ZetaDva          :  1785.2   39.4   123.0     400    31
+   6 TSCP             :  1609.0   ----    74.0     400    18
+
+White advantage = 26.32 +/- 7.70
+Draw rate (equal opponents) = 19.04 % +/- 0.95
+
