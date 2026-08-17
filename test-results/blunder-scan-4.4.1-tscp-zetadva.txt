@@ -1,0 +1,50 @@
+
+=== 2 file(s), myChess-4.4.1, scan depth 15, 6 process(es) ===
+
+   tscp          400 games,   57 scanned,  2914 moves
+   zetadva       400 games,   94 scanned,  5401 moves
+
+8315 positions to measure (~17 min)
+
+scan found 101 loss(es) >= 3.00; re-checking at depth 20
+81 survive verification
+
+  # anchor      mv played   SF before  SF after   loss myChess said  defect
+---------------------------------------------------------------------------
+  1 tscp        55 Bxd4         -1.03     -9.52   8.49        +0.00    EVAL
+  2 tscp        25 Qc3          +0.00     -8.23   8.23        +0.51    EVAL
+  3 tscp        67 Rf4          -0.32     -8.40   8.08        -0.25    EVAL
+  4 tscp        32 Ba4          +1.65     -5.94   7.59        +2.09    EVAL
+  5 tscp        20 Bxf5         -2.55    -10.23   7.45        -0.55    EVAL
+  6 tscp        61 Bc3+         +3.60     -3.71   7.31        +0.00    EVAL
+  7 tscp        29 Rxa5         -0.27     -7.18   6.91        -0.37    EVAL
+  8 tscp        33 Rae1         +6.92     +0.39   6.53        +2.51    EVAL
+  9 tscp        14 Nh3          -3.55    -10.85   6.45        -0.35    EVAL
+ 10 tscp        14 Re8          -3.01     -8.73   5.72        -1.65    EVAL
+ 11 tscp        54 Qc3          +3.46     -1.82   5.28        +3.73    EVAL
+ 12 tscp        58 Rbb8         +0.00     -5.24   5.24        -0.17    EVAL
+ 13 tscp        47 Qd3          -1.29     -6.51   5.22        -1.16    EVAL
+ 14 tscp        43 Bxe5         -0.25     -5.44   5.19        +2.00    EVAL
+ 15 tscp        26 Qh1+         +4.75     -0.22   4.97        +0.42 horizon
+ 16 tscp        26 Qxb2         +1.96     -2.93   4.89        -1.00 horizon
+ 17 tscp        23 Be6          -5.17    -99.87   4.83        -2.85    EVAL
+ 18 tscp        23 gxh5         -0.37     -5.06   4.69        +0.68    EVAL
+ 19 tscp        48 h4           -0.31     -4.62   4.31        +1.06    EVAL
+ 20 tscp        52 Re7+         -0.13     -4.26   4.13        +1.00    EVAL
+ 21 tscp        24 Qxb2         -0.84     -4.94   4.10        -0.53    EVAL
+ 22 tscp        39 Nd5          -2.80     -6.81   4.01        -1.71    EVAL
+ 23 tscp        14 c5           -0.87     -4.81   3.94        +0.95    EVAL
+ 24 tscp        30 Bd2          -0.57     -4.45   3.88        +0.41    EVAL
+ 25 tscp        22 Bxc6+        +1.71     -2.15   3.86        +1.37    EVAL
+
+FENs before the suspect moves (top 6):
+   r7/P1p2k2/2p1pb2/2P2p2/3PpP2/2q1P1Qp/7P/6RK b - - 7 55   played f6d4  (tscp, loss 8.49)
+   rn1r4/pp3kPp/4b3/4R3/1P1p1P1Q/P4qP1/2P5/R1K2B2 b - - 0 25   played f3c3  (tscp, loss 8.23)
+   5k2/R4P2/1P2b3/5n2/1r6/8/1R6/1K6 b - - 18 67   played b4f4  (tscp, loss 8.08)
+   4r1k1/1p3ppp/1q6/nPb1pP2/4P3/Pb3RR1/3QB2P/7K b - - 2 32   played b3a4  (tscp, loss 7.59)
+   r5nr/1pp1qkpp/8/5p2/3p4/3P1P1B/PKP2P1P/R3Q2R w - - 2 20   played h3f5  (tscp, loss 7.45)
+   8/3P3p/6p1/K2Qp1k1/3bP1P1/8/8/5q2 b - - 38 61   played d4c3  (tscp, loss 7.31)
+
+69/81 are EVAL defects — myChess's own score for the move stayed at least 2 pawns above the truth after it, so more depth would not have helped. The rest are horizon cases.
+
+findings written to test-results/blunder-scan-findings.json
