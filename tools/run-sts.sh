@@ -12,7 +12,18 @@
 #   tools/run-sts.sh 6 king          # King Activity only, depth 6 (~30 s)
 #   tools/run-sts.sh 8 11 5          # 5 positions of theme 11, for a shape check
 #
-# Arguments are passed straight through to StsRunner: [depth] [theme] [limit].
+# Arguments are passed straight through to StsRunner: [depth] [theme] [limit] [--out FILE].
+#
+# INTERRUPTIBLE RUNS. Anything past the default depth belongs in a file via --out, and the
+# same command then resumes it:
+#
+#   tools/run-sts.sh 10 all 0 --out test-results/sts-4.4.2-d10.txt
+#
+# With --out the runner writes the file itself and flushes after every position, and on a
+# second invocation it reads back what is already there and measures only the rest. Shell
+# redirection cannot do either: stdout is block-buffered into a file, so ~80 measured
+# positions are unwritten at any moment and a kill loses them with nothing to resume from.
+# Depth 10 measured ~6 h on an M1 Pro, which is longer than a laptop stays awake.
 #
 # WHY THIS SCRIPT AND NOT `mvn exec:java`. exec:java runs the class inside the
 # Maven JVM and then waits for every non-daemon thread to finish. `Game.shutdown()`

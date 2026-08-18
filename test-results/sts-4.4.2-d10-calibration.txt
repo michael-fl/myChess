@@ -1,0 +1,1261 @@
+sts suite=all depth=10 positions=1188
+   1/1188  Undermine.001                                  played f4f5  pts 100  nodes   38,703,711  time  20105 ms
+   2/1188  Undermine.002                                  played h6f4  pts  29  nodes   10,468,331  time   4720 ms
+   3/1188  Undermine.003                                  played c4c5  pts   1  nodes    7,412,779  time   2938 ms
+   4/1188  Undermine.005                                  played b8c8  pts  78  nodes   21,843,429  time  12818 ms
+   5/1188  Undermine.006                                  played e4e5  pts 100  nodes   27,937,533  time  13072 ms
+   6/1188  Undermine.007                                  played h5h4  pts 100  nodes   28,109,429  time  11657 ms
+   7/1188  Undermine.008                                  played g4f3  pts   0  nodes   73,500,253  time  36163 ms
+   8/1188  Undermine.009                                  played e4e5  pts 100  nodes   50,622,917  time  26305 ms
+   9/1188  Undermine.010                                  played d3d4  pts 100  nodes   35,176,626  time  20090 ms
+  10/1188  Undermine.011                                  played c4c5  pts 100  nodes   30,000,047  time  12973 ms
+  11/1188  Undermine.012                                  played b2b4  pts 100  nodes   53,234,134  time  29709 ms
+  12/1188  Undermine.013                                  played f8d8  pts  28  nodes   87,829,121  time  50580 ms
+  13/1188  Undermine.014                                  played f5f4  pts 100  nodes   15,167,671  time   6618 ms
+  14/1188  Undermine.015                                  played b5c6  pts   0  nodes    9,341,848  time   4574 ms
+  15/1188  Undermine.016                                  played a2a4  pts   0  nodes   61,336,395  time  35113 ms
+  16/1188  Undermine.017                                  played g5e6  pts  39  nodes   94,779,351  time  53645 ms
+  17/1188  Undermine.019                                  played h4h5  pts 100  nodes      822,908  time    354 ms
+  18/1188  Undermine.020                                  played c4c5  pts 100  nodes    9,136,103  time   4163 ms
+  19/1188  Undermine.021                                  played a4a5  pts 100  nodes   44,292,405  time  25200 ms
+  20/1188  Undermine.022                                  played a1e1  pts 100  nodes   38,137,206  time  18110 ms
+  21/1188  Undermine.023                                  played f1e1  pts  13  nodes   34,639,016  time  25944 ms
+  22/1188  Undermine.024                                  played d3h3  pts  57  nodes   29,116,182  time  11882 ms
+  23/1188  Undermine.025                                  played c4c5  pts 100  nodes    3,752,262  time   1535 ms
+  24/1188  Undermine.026                                  played e5e6  pts 100  nodes   16,526,546  time   8524 ms
+  25/1188  Undermine.027                                  played c1c5  pts  37  nodes   19,364,462  time   9325 ms
+  26/1188  Undermine.028                                  played c5c4  pts 100  nodes    3,334,665  time   1479 ms
+  27/1188  Undermine.029                                  played d4d5  pts 100  nodes   55,797,965  time  26643 ms
+  28/1188  Undermine.030                                  played a5a6  pts  88  nodes   75,658,354  time  36689 ms
+  29/1188  Undermine.031                                  played h5h4  pts 100  nodes   21,701,063  time   9902 ms
+  30/1188  Undermine.032                                  played g5g6  pts 100  nodes   60,973,848  time  34443 ms
+  31/1188  Undermine.033                                  played d6d5  pts 100  nodes   26,359,844  time  13011 ms
+  32/1188  Undermine.034                                  played c5c4  pts  63  nodes    7,506,939  time   3120 ms
+  33/1188  Undermine.035                                  played f2f4  pts   0  nodes   69,223,922  time  37384 ms
+  34/1188  Undermine.037                                  played h6g7  pts   0  nodes   29,094,817  time  13567 ms
+  35/1188  Undermine.038                                  played g4g5  pts 100  nodes    9,166,131  time   4477 ms
+  36/1188  Undermine.039                                  played b6b5  pts 100  nodes    8,600,266  time   3787 ms
+  37/1188  Undermine.040                                  played d3d4  pts 100  nodes    4,171,528  time   1685 ms
+  38/1188  Undermine.041                                  played c1g5  pts  12  nodes   86,647,352  time  53923 ms
+  39/1188  Undermine.042                                  played f1b1  pts  48  nodes   10,383,182  time   5201 ms
+  40/1188  Undermine.043                                  played a7a5  pts 100  nodes    6,957,869  time   3342 ms
+  41/1188  Undermine.044                                  played a2a4  pts 100  nodes   29,499,824  time  15430 ms
+  42/1188  Undermine.045                                  played c3d5  pts  81  nodes   54,039,704  time  31577 ms
+  43/1188  Undermine.047                                  played g3g4  pts 100  nodes   10,957,260  time   4896 ms
+  44/1188  Undermine.048                                  played h4h5  pts 100  nodes   77,733,903  time  38388 ms
+  45/1188  Undermine.050                                  played f2f4  pts 100  nodes   44,719,033  time  22889 ms
+  46/1188  Undermine.051                                  played f4d2  pts 100  nodes   31,709,408  time  13776 ms
+  47/1188  Undermine.052                                  played a4a5  pts 100  nodes   29,265,066  time  14621 ms
+  48/1188  Undermine.054                                  played f4f5  pts 100  nodes    1,970,938  time    927 ms
+  49/1188  Undermine.055                                  played f1d3  pts   1  nodes    5,432,730  time   2388 ms
+  50/1188  Undermine.056                                  played a2a3  pts 100  nodes    9,211,888  time   4355 ms
+  51/1188  Undermine.057                                  played a4a5  pts   1  nodes   24,763,358  time  12848 ms
+  52/1188  Undermine.058                                  played f4f3  pts 100  nodes   32,798,258  time  14905 ms
+  53/1188  Undermine.059                                  played c3c4  pts 100  nodes   61,669,176  time  24330 ms
+  54/1188  Undermine.060                                  played f5f4  pts  81  nodes   40,458,150  time  26342 ms
+  55/1188  Undermine.061                                  played h4h5  pts 100  nodes   16,335,418  time   7202 ms
+  56/1188  Undermine.062                                  played c4c5  pts 100  nodes    7,092,179  time   4141 ms
+  57/1188  Undermine.065                                  played d6d5  pts 100  nodes    7,165,118  time   3153 ms
+  58/1188  Undermine.066                                  played h8c8  pts  78  nodes   16,551,497  time   8355 ms
+  59/1188  Undermine.067                                  played f5f4  pts 100  nodes  104,161,589  time  46623 ms
+  60/1188  Undermine.068                                  played d4d5  pts  99  nodes      175,239  time     71 ms
+  61/1188  Undermine.069                                  played f5f6  pts 100  nodes    1,695,403  time    660 ms
+  62/1188  Undermine.070                                  played e5e4  pts 100  nodes    7,047,848  time   2649 ms
+  63/1188  Undermine.072                                  played e3e4  pts 100  nodes    4,002,384  time   2150 ms
+  64/1188  Undermine.073                                  played g6e5  pts  12  nodes   20,912,442  time   9814 ms
+  65/1188  Undermine.074                                  played h4h8  pts  47  nodes    4,536,052  time   1743 ms
+  66/1188  Undermine.075                                  played e6e5  pts 100  nodes   22,805,960  time  12483 ms
+  67/1188  Undermine.076                                  played c5c6  pts 100  nodes   32,193,198  time  19260 ms
+  68/1188  Undermine.077                                  played h4h5  pts 100  nodes   22,949,369  time  11386 ms
+  69/1188  Undermine.078                                  played f5f6  pts 100  nodes    7,164,116  time   2779 ms
+  70/1188  Undermine.079                                  played b4b5  pts 100  nodes   55,983,605  time  31759 ms
+  71/1188  Undermine.080                                  played f3g5  pts  56  nodes   69,692,061  time  39337 ms
+  72/1188  Undermine.082                                  played d2b2  pts  24  nodes   36,295,893  time  16629 ms
+  73/1188  Undermine.083                                  played c5c4  pts 100  nodes   61,953,599  time  33824 ms
+  74/1188  Undermine.085                                  played f4f5  pts 100  nodes   37,275,172  time  19295 ms
+  75/1188  Undermine.087                                  played d4e5  pts  49  nodes   18,160,357  time   9422 ms
+  76/1188  Undermine.088                                  played c4c5  pts 100  nodes   44,728,544  time  23604 ms
+  77/1188  Undermine.090                                  played d1d2  pts  14  nodes   50,897,779  time  24589 ms
+  78/1188  Undermine.091                                  played h4h5  pts 100  nodes   44,849,729  time  21817 ms
+  79/1188  Undermine.092                                  played c1d2  pts  74  nodes   17,779,765  time   7964 ms
+  80/1188  Undermine.093                                  played c4c5  pts 100  nodes    3,778,374  time   2019 ms
+  81/1188  Undermine.096                                  played a7a6  pts  32  nodes   76,320,467  time  35725 ms
+  82/1188  Undermine.097                                  played a8d8  pts   0  nodes   13,049,313  time   6603 ms
+  83/1188  Undermine.098                                  played d1b3  pts   0  nodes   29,042,609  time  16316 ms
+  84/1188  Undermine.099                                  played a2a4  pts  74  nodes   49,792,662  time  26758 ms
+  85/1188  Undermine.100                                  played g3g4  pts   0  nodes   49,878,638  time  28478 ms
+  86/1188  Open Files and Diagonals.002                   played a7e7  pts 100  nodes   12,624,295  time   5316 ms
+  87/1188  Open Files and Diagonals.003                   played a1d1  pts  43  nodes   49,307,144  time  22655 ms
+  88/1188  Open Files and Diagonals.004                   played c6d7  pts 100  nodes   10,773,188  time   4641 ms
+  89/1188  Open Files and Diagonals.005                   played f4e3  pts  14  nodes   32,470,370  time  17513 ms
+  90/1188  Open Files and Diagonals.007                   played a6a7  pts   0  nodes   34,375,962  time  16203 ms
+  91/1188  Open Files and Diagonals.009                   played d2c1  pts 100  nodes    7,776,647  time   3566 ms
+  92/1188  Open Files and Diagonals.010                   played e8c6  pts  97  nodes   22,190,470  time  11670 ms
+  93/1188  Open Files and Diagonals.012                   played f8e8  pts 100  nodes   12,036,096  time   5830 ms
+  94/1188  Open Files and Diagonals.013                   played b8f8  pts   5  nodes    3,615,863  time   1612 ms
+  95/1188  Open Files and Diagonals.014                   played f3g4  pts 100  nodes   14,536,044  time   6822 ms
+  96/1188  Open Files and Diagonals.015                   played h1h2  pts  90  nodes    4,921,627  time   2209 ms
+  97/1188  Open Files and Diagonals.016                   played g2f4  pts  59  nodes    5,031,669  time   2281 ms
+  98/1188  Open Files and Diagonals.017                   played e2e3  pts   0  nodes   52,956,099  time  26326 ms
+  99/1188  Open Files and Diagonals.018                   played f1d1  pts 100  nodes   10,142,585  time   4769 ms
+ 100/1188  Open Files and Diagonals.019                   played g4g7  pts  94  nodes   10,100,886  time   4040 ms
+ 101/1188  Open Files and Diagonals.020                   played d2c3  pts  12  nodes   33,590,450  time  13263 ms
+ 102/1188  Open Files and Diagonals.021                   played c6e5  pts  32  nodes    9,172,075  time   4403 ms
+ 103/1188  Open Files and Diagonals.022                   played d4h4  pts 100  nodes   14,736,606  time   7145 ms
+ 104/1188  Open Files and Diagonals.024                   played f1h3  pts 100  nodes    6,035,566  time   3081 ms
+ 105/1188  Open Files and Diagonals.025                   played c5e3  pts  84  nodes   14,969,701  time   6830 ms
+ 106/1188  Open Files and Diagonals.026                   played d1c1  pts 100  nodes   19,078,883  time   9015 ms
+ 107/1188  Open Files and Diagonals.027                   played b2d2  pts  97  nodes    8,262,061  time   3858 ms
+ 108/1188  Open Files and Diagonals.028                   played g7f8  pts 100  nodes   25,657,808  time  11807 ms
+ 109/1188  Open Files and Diagonals.029                   played e7b7  pts 100  nodes   11,314,767  time   4574 ms
+ 110/1188  Open Files and Diagonals.030                   played f8c5  pts  53  nodes  121,066,034  time  79345 ms
+ 111/1188  Open Files and Diagonals.031                   played h6e3  pts 100  nodes    3,477,588  time   1538 ms
+ 112/1188  Open Files and Diagonals.032                   played e3e4  pts   1  nodes   54,859,834  time  25196 ms
+ 113/1188  Open Files and Diagonals.033                   played b3f3  pts  29  nodes   27,059,894  time  11563 ms
+ 114/1188  Open Files and Diagonals.034                   played f1f4  pts   3  nodes   19,018,506  time   8421 ms
+ 115/1188  Open Files and Diagonals.035                   played g2f3  pts  63  nodes    8,387,733  time   3635 ms
+ 116/1188  Open Files and Diagonals.036                   played c2a4  pts 100  nodes   11,003,266  time   4665 ms
+ 117/1188  Open Files and Diagonals.037                   played e7b4  pts  82  nodes    3,333,237  time   1475 ms
+ 118/1188  Open Files and Diagonals.038                   played b2a3  pts  78  nodes   27,616,176  time  12902 ms
+ 119/1188  Open Files and Diagonals.039                   played d8e8  pts 100  nodes   24,463,452  time  10027 ms
+ 120/1188  Open Files and Diagonals.040                   played e7c7  pts 100  nodes    2,343,597  time   1050 ms
+ 121/1188  Open Files and Diagonals.041                   played e7f8  pts   0  nodes   41,987,952  time  18472 ms
+ 122/1188  Open Files and Diagonals.043                   played e5h5  pts 100  nodes   56,562,035  time  23753 ms
+ 123/1188  Open Files and Diagonals.046                   played e8d7  pts 100  nodes   19,715,608  time   9705 ms
+ 124/1188  Open Files and Diagonals.047                   played f1e1  pts  50  nodes   29,903,306  time  14573 ms
+ 125/1188  Open Files and Diagonals.050                   played h4g3  pts  19  nodes   51,957,041  time  23773 ms
+ 126/1188  Open Files and Diagonals.051                   played e1c1  pts 100  nodes    6,673,378  time   2922 ms
+ 127/1188  Open Files and Diagonals.052                   played f2e2  pts  49  nodes   47,799,701  time  21346 ms
+ 128/1188  Open Files and Diagonals.053                   played b7a6  pts 100  nodes   39,938,677  time  21592 ms
+ 129/1188  Open Files and Diagonals.054                   played e3c3  pts   0  nodes    3,341,900  time   1294 ms
+ 130/1188  Open Files and Diagonals.055                   played a1b2  pts  39  nodes    6,447,155  time   2846 ms
+ 131/1188  Open Files and Diagonals.056                   played e3e4  pts  53  nodes   22,126,171  time   9637 ms
+ 132/1188  Open Files and Diagonals.057                   played e7b4  pts  52  nodes   23,325,156  time  11290 ms
+ 133/1188  Open Files and Diagonals.058                   played f3d4  pts  35  nodes   18,815,138  time   7606 ms
+ 134/1188  Open Files and Diagonals.059                   played e2f3  pts 100  nodes    8,945,361  time   4151 ms
+ 135/1188  Open Files and Diagonals.060                   played g1h2  pts  71  nodes   28,809,630  time  14132 ms
+ 136/1188  Open Files and Diagonals.061                   played b7c8  pts 100  nodes   12,777,197  time   5948 ms
+ 137/1188  Open Files and Diagonals.063                   played e2e3  pts   0  nodes   27,631,471  time  12516 ms
+ 138/1188  Open Files and Diagonals.065                   played c3b3  pts   0  nodes   69,200,635  time  30615 ms
+ 139/1188  Open Files and Diagonals.066                   played a7d4  pts  78  nodes    3,350,281  time   1454 ms
+ 140/1188  Open Files and Diagonals.067                   played g2h3  pts 100  nodes    2,472,569  time   1168 ms
+ 141/1188  Open Files and Diagonals.069                   played h6e6  pts 100  nodes    6,200,584  time   2809 ms
+ 142/1188  Open Files and Diagonals.070                   played g4h3  pts  90  nodes   15,631,248  time   6290 ms
+ 143/1188  Open Files and Diagonals.072                   played d1h1  pts 100  nodes    2,520,463  time   1078 ms
+ 144/1188  Open Files and Diagonals.073                   played d1b1  pts 100  nodes   35,301,881  time  16051 ms
+ 145/1188  Open Files and Diagonals.074                   played f7f8  pts  15  nodes    3,695,462  time   1539 ms
+ 146/1188  Open Files and Diagonals.075                   played a6d6  pts 100  nodes    5,373,765  time   2051 ms
+ 147/1188  Open Files and Diagonals.076                   played d7b5  pts 100  nodes   33,650,301  time  16295 ms
+ 148/1188  Open Files and Diagonals.078                   played f2b6  pts  30  nodes   10,203,434  time   5150 ms
+ 149/1188  Open Files and Diagonals.079                   played f1e1  pts  64  nodes   57,247,643  time  28432 ms
+ 150/1188  Open Files and Diagonals.080                   played f1e1  pts 100  nodes   35,997,993  time  17269 ms
+ 151/1188  Open Files and Diagonals.081                   played c8g4  pts 100  nodes   11,482,959  time   4719 ms
+ 152/1188  Open Files and Diagonals.083                   played f1d3  pts 100  nodes   12,379,985  time   5610 ms
+ 153/1188  Open Files and Diagonals.084                   played c8e6  pts 100  nodes   30,738,447  time  14159 ms
+ 154/1188  Open Files and Diagonals.085                   played c1a3  pts 100  nodes   14,864,153  time   6847 ms
+ 155/1188  Open Files and Diagonals.086                   played c8e6  pts 100  nodes   54,708,601  time  27709 ms
+ 156/1188  Open Files and Diagonals.087                   played f2f4  pts  40  nodes   43,418,334  time  21209 ms
+ 157/1188  Open Files and Diagonals.089                   played c1g5  pts  23  nodes   10,112,812  time   4436 ms
+ 158/1188  Open Files and Diagonals.091                   played e1b1  pts 100  nodes   89,714,001  time  51140 ms
+ 159/1188  Open Files and Diagonals.092                   played c2e2  pts 100  nodes   13,689,569  time   6638 ms
+ 160/1188  Open Files and Diagonals.093                   played d2e3  pts  65  nodes   58,981,372  time  33749 ms
+ 161/1188  Open Files and Diagonals.095                   played f8f5  pts  19  nodes   13,261,120  time   5705 ms
+ 162/1188  Open Files and Diagonals.096                   played a8d8  pts 100  nodes   56,448,731  time  26690 ms
+ 163/1188  Open Files and Diagonals.098                   played d2b4  pts  48  nodes   21,572,902  time  10011 ms
+ 164/1188  Open Files and Diagonals.099                   played a3a2  pts  19  nodes    3,525,804  time   1578 ms
+ 165/1188  Open Files and Diagonals.100                   played a1e1  pts 100  nodes  100,688,290  time  64341 ms
+ 166/1188  Knight Outposts/Repositioning/Centralization.001 played f7f5  pts 100  nodes   47,586,277  time  22754 ms
+ 167/1188  Knight Outposts/Repositioning/Centralization.002 played f1d3  pts   1  nodes   13,376,972  time   6460 ms
+ 168/1188  Knight Outposts/Repositioning/Centralization.003 played f8e8  pts  40  nodes   73,277,985  time  35755 ms
+ 169/1188  Knight Outposts/Repositioning/Centralization.004 played b6d5  pts 100  nodes   31,572,280  time  14133 ms
+ 170/1188  Knight Outposts/Repositioning/Centralization.005 played f5d4  pts 100  nodes   26,133,279  time  13377 ms
+ 171/1188  Knight Outposts/Repositioning/Centralization.007 played f6d7  pts 100  nodes   14,932,459  time   6894 ms
+ 172/1188  Knight Outposts/Repositioning/Centralization.008 played f3d2  pts  83  nodes   87,605,149  time  54466 ms
+ 173/1188  Knight Outposts/Repositioning/Centralization.009 played f4e6  pts 100  nodes  104,161,948  time  46830 ms
+ 174/1188  Knight Outposts/Repositioning/Centralization.012 played d7e5  pts 100  nodes   12,162,865  time   5872 ms
+ 175/1188  Knight Outposts/Repositioning/Centralization.013 played g2g1  pts  67  nodes   31,438,796  time  16932 ms
+ 176/1188  Knight Outposts/Repositioning/Centralization.014 played a1c1  pts  28  nodes   26,686,645  time  13332 ms
+ 177/1188  Knight Outposts/Repositioning/Centralization.015 played d1a4  pts  82  nodes   10,557,620  time   5595 ms
+ 178/1188  Knight Outposts/Repositioning/Centralization.016 played a2a4  pts  41  nodes   17,644,034  time   8069 ms
+ 179/1188  Knight Outposts/Repositioning/Centralization.017 played c5d3  pts 100  nodes   22,507,237  time  11431 ms
+ 180/1188  Knight Outposts/Repositioning/Centralization.018 played c3d5  pts  76  nodes  159,475,347  time 112853 ms
+ 181/1188  Knight Outposts/Repositioning/Centralization.019 played h4f5  pts 100  nodes   12,811,017  time   6429 ms
+ 182/1188  Knight Outposts/Repositioning/Centralization.020 played g6e7  pts  61  nodes   28,080,114  time  13067 ms
+ 183/1188  Knight Outposts/Repositioning/Centralization.021 played f2f4  pts  68  nodes   34,199,906  time  16280 ms
+ 184/1188  Knight Outposts/Repositioning/Centralization.022 played d8c7  pts  65  nodes   36,647,662  time  20237 ms
+ 185/1188  Knight Outposts/Centralization/Repositioning.023 played a8c8  pts  72  nodes   26,203,509  time  12256 ms
+ 186/1188  Knight Outposts/Repositioning/Centralization.024 played f3h4  pts 100  nodes   43,366,341  time  25834 ms
+ 187/1188  Knight Outposts/Repositioning/Centralization.025 played f6d7  pts 100  nodes   14,984,089  time   6960 ms
+ 188/1188  Knight Outposts/Repositioning/Centralization.029 played c3b5  pts 100  nodes   24,343,153  time  11728 ms
+ 189/1188  Knight Outposts/Repositioning/Centralization.030 played c3b5  pts 100  nodes   68,925,130  time  32616 ms
+ 190/1188  Knight Outposts/Repositioning/Centralization.031 played c3d5  pts 100  nodes   53,280,635  time  21565 ms
+ 191/1188  Knight Outposts/Repositioning/Centralization.032 played g7e6  pts 100  nodes   10,170,579  time   4313 ms
+ 192/1188  Knight Outposts/Repositioning/Centralization.034 played e6d4  pts 100  nodes   51,253,251  time  21492 ms
+ 193/1188  Knight Outposts/Repositioning/Centralization.035 played f3d4  pts 100  nodes   33,728,429  time  15331 ms
+ 194/1188  Knight Outposts/Repositioning/Centralization.036 played f5e3  pts 100  nodes   57,867,434  time  32725 ms
+ 195/1188  Knight Outposts/Repositioning/Centralization.037 played c2b4  pts 100  nodes    7,787,575  time   3133 ms
+ 196/1188  Knight Outposts/Repositioning/Centralization.038 played d7b6  pts   0  nodes   36,504,442  time  16692 ms
+ 197/1188  Knight Outposts/Repositioning/Centralization.039 played h7h6  pts   0  nodes   75,341,786  time  35105 ms
+ 198/1188  Knight Outposts/Repositioning/Centralization.040 played f3d4  pts 100  nodes   11,753,236  time   5236 ms
+ 199/1188  Knight Outposts/Repositioning/Centralization.041 played f1h1  pts 100  nodes    5,246,822  time   2287 ms
+ 200/1188  Knight Outposts/Repositioning/Centralization.042 played c6e5  pts 100  nodes    9,136,330  time   3523 ms
+ 201/1188  Knight Outposts/Repositioning/Centralization.043 played e5f3  pts 100  nodes    9,422,552  time   3751 ms
+ 202/1188  Knight Outposts/Repositioning/Centralization.044 played c3e4  pts 100  nodes   11,890,038  time   5684 ms
+ 203/1188  Knight Outposts/Repositioning/Centralization.045 played f3d4  pts 100  nodes   16,848,918  time   7965 ms
+ 204/1188  Knight Outposts/Repositioning/Centralization.046 played d4e5  pts  32  nodes   51,134,488  time  22820 ms
+ 205/1188  Knight Outposts/Repositioning/Centralization.047 played h4g3  pts  45  nodes  116,797,745  time  50146 ms
+ 206/1188  Knight Outposts/Repositioning/Centralization.048 played e8a8  pts  54  nodes  166,619,243  time  75940 ms
+ 207/1188  Knight Outposts/Repositioning/Centralization.049 played h1g1  pts  46  nodes   27,932,469  time  13043 ms
+ 208/1188  Knight Outposts/Repositioning/Centralization.050 played b6d5  pts 100  nodes    6,329,449  time   2946 ms
+ 209/1188  Knight Outposts/Repositioning/Centralization.051 played e5d3  pts   0  nodes   78,549,803  time  38641 ms
+ 210/1188  Knight Outposts/Repositioning/Centralization.053 played f1b1  pts  50  nodes   18,154,423  time   8147 ms
+ 211/1188  Knight Outposts/Repositioning/Centralization.055 played f3d4  pts 100  nodes   44,390,140  time  22505 ms
+ 212/1188  Knight Outposts/Repositioning/Centralization.056 played h6f5  pts  69  nodes   13,675,027  time   6589 ms
+ 213/1188  Knight Outposts/Repositioning/Centralization.057 played h6g6  pts  75  nodes   39,352,503  time  17216 ms
+ 214/1188  Knight Outposts/Repositioning/Centralization.059 played f3e5  pts 100  nodes    9,399,270  time   4238 ms
+ 215/1188  Knight Outposts/Repositioning/Centralization.060 played c3b3  pts   0  nodes   11,749,713  time   5772 ms
+ 216/1188  Knight Outposts/Repositioning/Centralization.061 played e6f4  pts 100  nodes    1,844,171  time    717 ms
+ 217/1188  Knight Outposts/Repositioning/Centralization.064 played c3b5  pts  62  nodes   22,477,817  time  10376 ms
+ 218/1188  Knight Outposts/Repositioning/Centralization.065 played c3e2  pts  82  nodes   15,717,962  time   6945 ms
+ 219/1188  Knight Outposts/Repositioning/Centralization.066 played e3d5  pts 100  nodes   93,899,583  time  54260 ms
+ 220/1188  Knight Outposts/Repositioning/Centralization.067 played c3e4  pts 100  nodes   50,797,109  time  27336 ms
+ 221/1188  Knight Outposts/Repositioning/Centralization.068 played d6f5  pts 100  nodes   17,911,416  time   6702 ms
+ 222/1188  Knight Outposts/Repositioning/Centralization.069 played c4b6  pts 100  nodes   22,946,031  time  10873 ms
+ 223/1188  Knight Outposts/Repositioning/Centralization.070 played c8b7  pts  96  nodes   16,571,810  time   6754 ms
+ 224/1188  Knight Outposts/Repositioning/Centralization.071 played c3d5  pts 100  nodes   21,939,053  time  10996 ms
+ 225/1188  Knight Outposts/Repositioning/Centralization.072 played f3d4  pts  67  nodes   28,963,592  time  17989 ms
+ 226/1188  Knight Outposts/Repositioning/Centralization.073 played d2e4  pts 100  nodes   21,223,710  time   9614 ms
+ 227/1188  Knight Outposts/Repositioning/Centralization.074 played c6d4  pts 100  nodes   56,172,674  time  32329 ms
+ 228/1188  Knight Outposts/Repositioning/Centralization.075 played h3f2  pts  31  nodes   41,122,907  time  18461 ms
+ 229/1188  Knight Outposts/Repositioning/Centralization.076 played b4d5  pts 100  nodes   23,215,715  time  11101 ms
+ 230/1188  Knight Outposts/Repositioning/Centralization.077 played a2a4  pts   0  nodes   49,163,650  time  27843 ms
+ 231/1188  Knight Outposts/Repositioning/Centralization.078 played e7g5  pts  99  nodes   16,739,238  time   7761 ms
+ 232/1188  Knight Outposts/Repositioning/Centralization.080 played f4g5  pts  74  nodes   37,454,617  time  16242 ms
+ 233/1188  Knight Outposts/Repositioning/Centralization.081 played c3a2  pts  74  nodes   46,173,724  time  31038 ms
+ 234/1188  Knight Outposts/Repositioning/Centralization.082 played g6d3  pts  86  nodes   11,171,801  time   4737 ms
+ 235/1188  Knight Outposts/Repositioning/Centralization.083 played c3d5  pts  83  nodes   34,464,332  time  18228 ms
+ 236/1188  Knight Outposts/Repositioning/Centralization.084 played h4h3  pts  20  nodes   79,712,329  time  45422 ms
+ 237/1188  Knight Outposts/Repositioning/Centralization.085 played c3d5  pts 100  nodes   16,916,695  time   8014 ms
+ 238/1188  Knight Outposts/Repositioning/Centralization.086 played d7e5  pts 100  nodes   58,482,946  time  25471 ms
+ 239/1188  Knight Outposts/Repositioning/Centralization.087 played f3g5  pts 100  nodes   77,991,342  time  41636 ms
+ 240/1188  Knight Outposts/Repositioning/Centralization.088 played d2e4  pts 100  nodes   51,018,142  time  28386 ms
+ 241/1188  Knight Outposts/Repositioning/Centralization.089 played f4g5  pts  19  nodes   48,913,462  time  22171 ms
+ 242/1188  Knight Outposts/Repositioning/Centralization.091 played f2e4  pts 100  nodes   24,679,683  time  11727 ms
+ 243/1188  Knight Outposts/Repositioning/Centralization.092 played e3f5  pts 100  nodes    8,881,798  time   4810 ms
+ 244/1188  Knight Outposts/Repositioning/Centralization.093 played e3f5  pts 100  nodes   97,205,165  time  80024 ms
+ 245/1188  Knight Outposts/Repositioning/Centralization.094 played e2b2  pts   0  nodes  163,946,243  time  85947 ms
+ 246/1188  Knight Outposts/Repositioning/Centralization.095 played a8c8  pts 100  nodes   69,214,286  time  32503 ms
+ 247/1188  Knight Outposts/Repositioning/Centralization.096 played c3e4  pts 100  nodes   71,460,903  time  38981 ms
+ 248/1188  Knight Outposts/Repositioning/Centralization.097 played d6b5  pts 100  nodes   31,357,863  time  14984 ms
+ 249/1188  Knight Outposts/Repositioning/Centralization.098 played c5b5  pts  68  nodes   12,207,474  time   5901 ms
+ 250/1188  Knight Outposts/Repositioning/Centralization.099 played f6d5  pts 100  nodes   96,359,241  time  50139 ms
+ 251/1188  Knight Outposts/Repositioning/Centralization.100 played h5f4  pts 100  nodes   31,195,221  time  17630 ms
+ 252/1188  Square Vacancy.001                             played h5d5  pts 100  nodes   20,807,190  time  10743 ms
+ 253/1188  Square Vacancy.002                             played e3c5  pts 100  nodes   29,251,700  time  11948 ms
+ 254/1188  Square Vacancy.003                             played a1a5  pts 100  nodes   15,895,041  time   7969 ms
+ 255/1188  Square Vacancy.004                             played h8h4  pts 100  nodes   22,760,601  time  11031 ms
+ 256/1188  Square Vacancy.005                             played a3a7  pts 100  nodes   17,005,927  time   8333 ms
+ 257/1188  Square Vacancy.006                             played c1c4  pts 100  nodes   27,455,930  time  12937 ms
+ 258/1188  Square Vacancy.007                             played b3b5  pts  55  nodes    5,700,217  time   2568 ms
+ 259/1188  Square Vacancy.008                             played a1b1  pts 100  nodes    1,976,975  time   1006 ms
+ 260/1188  Square Vacancy.009                             played h5e2  pts 100  nodes   17,096,057  time   6650 ms
+ 261/1188  Square Vacancy.010                             played f3e5  pts  54  nodes   10,405,250  time   4632 ms
+ 262/1188  Square Vacancy.011                             played c5a3  pts  86  nodes   45,172,303  time  17695 ms
+ 263/1188  Square Vacancy.012                             played f6f5  pts 100  nodes   29,676,043  time  15985 ms
+ 264/1188  Square Vacancy.013                             played g1g6  pts 100  nodes   14,376,878  time   6160 ms
+ 265/1188  Square Vacancy.014                             played d1g4  pts 100  nodes    6,772,096  time   3901 ms
+ 266/1188  Square Vacancy.016                             played g6e4  pts 100  nodes   23,066,402  time  11246 ms
+ 267/1188  Square Vacancy.017                             played e6b3  pts 100  nodes    3,194,325  time   1387 ms
+ 268/1188  Square Vacancy.018                             played e6h3  pts 100  nodes   13,732,493  time   5663 ms
+ 269/1188  Square Vacancy.019                             played d2g2  pts  19  nodes   80,764,414  time  35622 ms
+ 270/1188  Square Vacancy.021                             played e3e5  pts 100  nodes   27,937,352  time  14765 ms
+ 271/1188  Square Vacancy.022                             played h7d3  pts 100  nodes   16,504,704  time   7227 ms
+ 272/1188  Square Vacancy.023                             played b2d3  pts  49  nodes   57,452,490  time  38142 ms
+ 273/1188  Square Vacancy.024                             played d2g5  pts 100  nodes   31,957,199  time  15348 ms
+ 274/1188  Square Vacancy.025                             played a8f8  pts  96  nodes   18,813,225  time   7796 ms
+ 275/1188  Square Vacancy.026                             played h7h5  pts  14  nodes   22,495,978  time  13753 ms
+ 276/1188  Square Vacancy.027                             played d2h6  pts 100  nodes    5,399,320  time   2380 ms
+ 277/1188  Square Vacancy.028                             played h4h3  pts  62  nodes   32,864,163  time  15164 ms
+ 278/1188  Square Vacancy.029                             played d8d1  pts  36  nodes   35,593,510  time  16177 ms
+ 279/1188  Square Vacancy.030                             played e5f4  pts  93  nodes   70,028,771  time  35050 ms
+ 280/1188  Square Vacancy.031                             played h5f3  pts 100  nodes   18,580,393  time   8207 ms
+ 281/1188  Square Vacancy.032                             played f4e5  pts   2  nodes    8,853,077  time   3778 ms
+ 282/1188  Square Vacancy.033                             played f8e7  pts  98  nodes   20,351,268  time   7535 ms
+ 283/1188  Square Vacancy.034                             played a6a4  pts 100  nodes   13,708,079  time   6897 ms
+ 284/1188  Square Vacancy.035                             played e3b6  pts  53  nodes   33,024,077  time  18662 ms
+ 285/1188  Square Vacancy.036                             played g3g8  pts  29  nodes    3,399,473  time   1488 ms
+ 286/1188  Square Vacancy.038                             played b8b3  pts 100  nodes   15,547,631  time   7058 ms
+ 287/1188  Square Vacancy.039                             played c2a4  pts  25  nodes    5,127,528  time   2309 ms
+ 288/1188  Square Vacancy.040                             played f3d5  pts 100  nodes   15,183,175  time   7949 ms
+ 289/1188  Square Vacancy.041                             played c5f2  pts  28  nodes   16,704,404  time   7957 ms
+ 290/1188  Square Vacancy.043                             played d8g5  pts 100  nodes   12,409,198  time   6345 ms
+ 291/1188  Square Vacancy.044                             played c8c3  pts 100  nodes    5,686,479  time   2466 ms
+ 292/1188  Square Vacancy.045                             played e1c1  pts  88  nodes   12,827,771  time   6024 ms
+ 293/1188  Square Vacancy.046                             played g1g2  pts  91  nodes    2,843,368  time   1224 ms
+ 294/1188  Square Vacancy.047                             played g4f4  pts 100  nodes   19,336,457  time   8190 ms
+ 295/1188  Square Vacancy.048                             played b5b3  pts 100  nodes    4,694,543  time   2393 ms
+ 296/1188  Square Vacancy.049                             played f6d7  pts  40  nodes   57,298,307  time  24134 ms
+ 297/1188  Square Vacancy.050                             played e1f2  pts  68  nodes    2,807,925  time   1113 ms
+ 298/1188  Square Vacancy.051                             played c7c4  pts 100  nodes   24,708,757  time  10084 ms
+ 299/1188  Square Vacancy.052                             played h5g4  pts 100  nodes   21,922,049  time  10093 ms
+ 300/1188  Square Vacancy.054                             played g8a8  pts   0  nodes   63,520,020  time  27048 ms
+ 301/1188  Square Vacancy.055                             played d3f5  pts 100  nodes    3,425,652  time   1565 ms
+ 302/1188  Square Vacancy.056                             played c5e4  pts  95  nodes   14,563,609  time   6797 ms
+ 303/1188  Square Vacancy.057                             played b3d5  pts   0  nodes   98,508,541  time  46789 ms
+ 304/1188  Square Vacancy.059                             played d7g4  pts 100  nodes    5,272,853  time   2399 ms
+ 305/1188  Square Vacancy.060                             played b5b8  pts   1  nodes    8,859,003  time   3744 ms
+ 306/1188  Square Vacancy.061                             played d3f5  pts  97  nodes   53,191,387  time  26031 ms
+ 307/1188  Square Vacancy.062                             played f5f2  pts  14  nodes    5,035,142  time   2011 ms
+ 308/1188  Square Vacancy.063                             played b1h1  pts 100  nodes   10,626,002  time   5393 ms
+ 309/1188  Square Vacancy.064                             played d7b5  pts 100  nodes   15,738,026  time   7724 ms
+ 310/1188  Square Vacancy.065                             played f7f3  pts 100  nodes    5,872,075  time   2190 ms
+ 311/1188  Square Vacancy.066                             played c2c6  pts 100  nodes    4,789,968  time   2153 ms
+ 312/1188  Square Vacancy.067                             played c7e7  pts  93  nodes    4,485,167  time   1909 ms
+ 313/1188  Square Vacancy.068                             played d4g4  pts 100  nodes   20,123,769  time   8904 ms
+ 314/1188  Square Vacancy.069                             played b5b8  pts  98  nodes   18,849,023  time   7315 ms
+ 315/1188  Square Vacancy.071                             played f3c6  pts 100  nodes    3,273,899  time   1345 ms
+ 316/1188  Square Vacancy.072                             played c3d5  pts  83  nodes   13,605,890  time   5767 ms
+ 317/1188  Square Vacancy.073                             played f1f5  pts 100  nodes   20,468,320  time   8926 ms
+ 318/1188  Square Vacancy.074                             played b2b5  pts 100  nodes   12,256,217  time   5736 ms
+ 319/1188  Square Vacancy.075                             played b6a6  pts  14  nodes    7,351,842  time   3351 ms
+ 320/1188  Square Vacancy.076                             played f1f6  pts 100  nodes   40,288,440  time  19386 ms
+ 321/1188  Square Vacancy.078                             played e2c4  pts 100  nodes   15,033,499  time   6037 ms
+ 322/1188  Square Vacancy.079                             played a5a3  pts   0  nodes   26,057,569  time  13382 ms
+ 323/1188  Square Vacancy.082                             played e2e5  pts  30  nodes    4,378,057  time   2340 ms
+ 324/1188  Square Vacancy.083                             played c3e5  pts 100  nodes   10,385,215  time   4956 ms
+ 325/1188  Square Vacancy.084                             played b6f2  pts 100  nodes   87,607,617  time  32376 ms
+ 326/1188  Square Vacancy.085                             played g5h4  pts  45  nodes   16,611,240  time   6551 ms
+ 327/1188  Square Vacancy.087                             played c5c1  pts  40  nodes    6,968,586  time   3010 ms
+ 328/1188  Square Vacancy.088                             played c2c6  pts 100  nodes   31,379,354  time  14423 ms
+ 329/1188  Square Vacancy.089                             played d1g4  pts  43  nodes   34,509,159  time  19051 ms
+ 330/1188  Square Vacancy.090                             played e4c2  pts 100  nodes    9,307,857  time   3908 ms
+ 331/1188  Square Vacancy.091                             played f6g5  pts 100  nodes   18,296,925  time   7962 ms
+ 332/1188  Square Vacancy.092                             played a7a2  pts  71  nodes    7,603,795  time   3106 ms
+ 333/1188  Square Vacancy.093                             played f3e5  pts  46  nodes   28,225,452  time  13355 ms
+ 334/1188  Square Vacancy.094                             played f6f4  pts 100  nodes   14,264,972  time   6247 ms
+ 335/1188  Square Vacancy.095                             played f3g4  pts  62  nodes   76,268,737  time  42401 ms
+ 336/1188  Square Vacancy.096                             played a8d8  pts  43  nodes   52,588,028  time  26399 ms
+ 337/1188  Square Vacancy.097                             played e1d1  pts  11  nodes   30,846,555  time  13323 ms
+ 338/1188  Square Vacancy.098                             played e2b5  pts  29  nodes   41,367,476  time  18626 ms
+ 339/1188  Square Vacancy.099                             played d7d4  pts   0  nodes   24,791,814  time  10175 ms
+ 340/1188  Square Vacancy.100                             played h2h5  pts 100  nodes    9,472,195  time   4124 ms
+ 341/1188  Bishop vs Knight.001                           played d2e4  pts  73  nodes   19,580,283  time   8280 ms
+ 342/1188  Bishop vs Knight.003                           played a4a3  pts  35  nodes   73,963,656  time  32711 ms
+ 343/1188  Bishop vs Knight.004                           played g4d7  pts 100  nodes   65,764,787  time  37904 ms
+ 344/1188  Bishop vs Knight.005                           played d4f6  pts  86  nodes    9,761,012  time   4546 ms
+ 345/1188  Bishop vs Knight.006                           played e5g6  pts 100  nodes   18,381,990  time   8269 ms
+ 346/1188  Bishop vs Knight.008                           played c7d8  pts  97  nodes   23,391,796  time  10336 ms
+ 347/1188  Bishop vs Knight.009                           played d4c5  pts 100  nodes   31,154,946  time  14490 ms
+ 348/1188  Bishop vs Knight.010                           played a6a8  pts   1  nodes   34,996,918  time  15122 ms
+ 349/1188  Bishop vs Knight.011                           played a5c6  pts 100  nodes   71,711,111  time  34898 ms
+ 350/1188  Bishop vs Knight.013                           played e5c4  pts   0  nodes   64,496,153  time  29460 ms
+ 351/1188  Bishop vs Knight.014                           played f6c3  pts 100  nodes    8,988,479  time   3646 ms
+ 352/1188  Bishop vs Knight.016                           played h4g6  pts 100  nodes    3,583,914  time   1568 ms
+ 353/1188  Bishop vs Knight.018                           played f8c5  pts  78  nodes   11,669,561  time   5077 ms
+ 354/1188  Bishop vs Knight.019                           played h3f5  pts 100  nodes    8,958,409  time   4430 ms
+ 355/1188  Bishop vs Knight.020                           played a7a6  pts  37  nodes   24,923,671  time  11119 ms
+ 356/1188  Bishop vs Knight.022                           played e3f4  pts  58  nodes   30,176,113  time  13998 ms
+ 357/1188  Bishop vs Knight.023                           played c5e4  pts 100  nodes   50,989,588  time  25504 ms
+ 358/1188  Bishop vs Knight.024                           played c1b2  pts  59  nodes   56,466,111  time  31249 ms
+ 359/1188  Bishop vs Knight.026                           played c8c1  pts 100  nodes    9,410,204  time   3808 ms
+ 360/1188  Bishop vs Knight.027                           played c3b4  pts  58  nodes   42,070,874  time  18974 ms
+ 361/1188  Bishop vs Knight.028                           played f3e5  pts  61  nodes   18,647,383  time   8444 ms
+ 362/1188  Bishop vs Knight.029                           played d1c1  pts  29  nodes   11,764,910  time   5250 ms
+ 363/1188  Bishop vs Knight.030                           played d8c7  pts  32  nodes   76,482,920  time  34009 ms
+ 364/1188  Bishop vs Knight.031                           played e6d5  pts 100  nodes    9,313,063  time   4180 ms
+ 365/1188  Bishop vs Knight.032                           played e6g5  pts 100  nodes   19,819,178  time  10140 ms
+ 366/1188  Bishop vs Knight.033                           played a5b3  pts 100  nodes  117,413,209  time  50310 ms
+ 367/1188  Bishop vs Knight.034                           played d5f3  pts 100  nodes   18,789,237  time   9243 ms
+ 368/1188  Bishop vs Knight.035                           played b3c4  pts 100  nodes   26,968,076  time  12664 ms
+ 369/1188  Bishop vs Knight.036                           played c5d4  pts  67  nodes   69,373,332  time  38457 ms
+ 370/1188  Bishop vs Knight.037                           played g6f4  pts 100  nodes   33,851,229  time  17729 ms
+ 371/1188  Bishop vs Knight.038                           played d4e6  pts 100  nodes   59,088,374  time  38687 ms
+ 372/1188  Bishop vs Knight.039                           played d8d4  pts  38  nodes  116,881,427  time  59326 ms
+ 373/1188  Bishop vs Knight.040                           played b3b4  pts  31  nodes    3,197,804  time   1488 ms
+ 374/1188  Bishop vs Knight.041                           played f2e3  pts 100  nodes   20,363,216  time   8702 ms
+ 375/1188  Bishop vs Knight.042                           played e3d4  pts 100  nodes   17,531,002  time   7788 ms
+ 376/1188  Bishop vs Knight.043                           played b7f3  pts 100  nodes   15,463,652  time   7105 ms
+ 377/1188  Bishop vs Knight.044                           played h7h5  pts 100  nodes   76,784,300  time  34755 ms
+ 378/1188  Bishop vs Knight.045                           played d5e3  pts 100  nodes   19,432,643  time   7966 ms
+ 379/1188  Bishop vs Knight.046                           played c6d4  pts 100  nodes   16,691,745  time   8267 ms
+ 380/1188  Bishop vs Knight.047                           played d5f3  pts 100  nodes    7,102,578  time   3140 ms
+ 381/1188  Bishop vs Knight.049                           played d7b8  pts  31  nodes   16,395,001  time   7430 ms
+ 382/1188  Bishop vs Knight.050                           played e3c5  pts  92  nodes    6,963,097  time   3258 ms
+ 383/1188  Bishop vs Knight.051                           played e4f5  pts 100  nodes   11,240,787  time   4227 ms
+ 384/1188  Bishop vs Knight.052                           played b7c8  pts  97  nodes    9,465,097  time   4044 ms
+ 385/1188  Bishop vs Knight.053                           played d5b4  pts 100  nodes   24,164,560  time  10842 ms
+ 386/1188  Bishop vs Knight.054                           played h3e6  pts 100  nodes    3,374,935  time   1456 ms
+ 387/1188  Bishop vs Knight.055                           played g6f4  pts 100  nodes   14,746,159  time   6208 ms
+ 388/1188  Bishop vs Knight.056                           played d6f4  pts 100  nodes   56,003,310  time  28781 ms
+ 389/1188  Bishop vs Knight.058                           played g5f6  pts 100  nodes   24,283,170  time   9871 ms
+ 390/1188  Bishop vs Knight.059                           played d6c5  pts 100  nodes    5,126,118  time   2204 ms
+ 391/1188  Bishop vs Knight.060                           played f3e4  pts 100  nodes    1,507,934  time    689 ms
+ 392/1188  Bishop vs Knight.061                           played c4f7  pts 100  nodes    7,515,708  time   2972 ms
+ 393/1188  Bishop vs Knight.062                           played f2e3  pts  37  nodes    1,921,032  time    865 ms
+ 394/1188  Bishop vs Knight.063                           played d2f4  pts 100  nodes    1,649,980  time    757 ms
+ 395/1188  Bishop vs Knight.064                           played d5e6  pts  89  nodes   31,549,280  time  12630 ms
+ 396/1188  Bishop vs Knight.065                           played h1e1  pts  65  nodes   29,785,799  time  12404 ms
+ 397/1188  Bishop vs Knight.066                           played g5e6  pts  79  nodes   65,412,157  time  40496 ms
+ 398/1188  Bishop vs Knight.067                           played d7e6  pts 100  nodes   17,546,606  time   7956 ms
+ 399/1188  Bishop vs Knight.068                           played f5d6  pts 100  nodes  109,267,824  time  66230 ms
+ 400/1188  Bishop vs Knight.069                           played c2e4  pts 100  nodes    9,193,528  time   3926 ms
+ 401/1188  Bishop vs Knight.070                           played e4c5  pts 100  nodes   13,618,683  time   6249 ms
+ 402/1188  Bishop vs Knight.071                           played b5c6  pts 100  nodes   45,316,947  time  25193 ms
+ 403/1188  Bishop vs Knight.073                           played f3e5  pts 100  nodes   15,736,084  time   8518 ms
+ 404/1188  Bishop vs Knight.074                           played g5g4  pts  80  nodes   30,590,335  time  14167 ms
+ 405/1188  Bishop vs Knight.076                           played e2h5  pts 100  nodes   36,413,494  time  17312 ms
+ 406/1188  Bishop vs Knight.077                           played c6d4  pts  53  nodes   68,300,582  time  32398 ms
+ 407/1188  Bishop vs Knight.079                           played g5e6  pts 100  nodes   24,196,850  time  21550 ms
+ 408/1188  Bishop vs Knight.081                           played e3f4  pts  98  nodes   17,728,606  time  21017 ms
+ 409/1188  Bishop vs Knight.083                           played e2h5  pts 100  nodes   16,256,155  time  80601 ms
+ 410/1188  Bishop vs Knight.084                           played f3g5  pts 100  nodes   13,273,156  time 176218 ms
+ 411/1188  Bishop vs Knight.085                           played c5d3  pts 100  nodes   21,259,841  time 947688 ms
+ 412/1188  Bishop vs Knight.086                           played g4e3  pts 100  nodes   17,227,355  time 152518 ms
+ 413/1188  Bishop vs Knight.087                           played d4e6  pts  79  nodes   34,064,849  time 162470 ms
+ 414/1188  Bishop vs Knight.088                           played e8c8  pts  44  nodes   32,957,822  time  15947 ms
+ 415/1188  Bishop vs Knight.089                           played f8d6  pts  62  nodes   41,742,618  time  21955 ms
+ 416/1188  Bishop vs Knight.090                           played d5e7  pts 100  nodes   67,228,191  time  36175 ms
+ 417/1188  Bishop vs Knight.091                           played e3f5  pts 100  nodes   18,460,793  time   8361 ms
+ 418/1188  Bishop vs Knight.092                           played e6f5  pts  73  nodes   27,439,879  time  12137 ms
+ 419/1188  Bishop vs Knight.093                           played d5b4  pts   0  nodes   48,961,204  time  22668 ms
+ 420/1188  Bishop vs Knight.094                           played a8e8  pts  14  nodes   21,212,736  time   8964 ms
+ 421/1188  Bishop vs Knight.095                           played c5d7  pts 100  nodes   38,804,483  time  23628 ms
+ 422/1188  Bishop vs Knight.096                           played b4d3  pts 100  nodes   62,562,228  time  31168 ms
+ 423/1188  Bishop vs Knight.097                           played d7c5  pts  96  nodes   19,619,581  time   7741 ms
+ 424/1188  Bishop vs Knight.098                           played d2f4  pts 100  nodes   15,566,103  time   7069 ms
+ 425/1188  Bishop vs Knight.100                           played g5e6  pts 100  nodes   67,334,796  time  40563 ms
+ 426/1188  Recapturing.001                                played c1b1  pts   8  nodes   24,112,817  time  11897 ms
+ 427/1188  Recapturing.002                                played b2c3  pts  92  nodes    4,226,323  time   1478 ms
+ 428/1188  Recapturing.003                                played d3d8  pts  88  nodes    5,078,470  time   2090 ms
+ 429/1188  Recapturing.004                                played f2g3  pts  95  nodes      553,711  time    190 ms
+ 430/1188  Recapturing.005                                played d2f4  pts  31  nodes   17,196,875  time   8079 ms
+ 431/1188  Recapturing.006                                played b7b3  pts  53  nodes   38,040,352  time  19059 ms
+ 432/1188  Recapturing.007                                played b5c4  pts 100  nodes    9,961,350  time   4816 ms
+ 433/1188  Recapturing.008                                played e2d4  pts 100  nodes    7,036,886  time   2792 ms
+ 434/1188  Recapturing.010                                played e4d5  pts 100  nodes    1,629,747  time    654 ms
+ 435/1188  Recapturing.011                                played d7c5  pts 100  nodes   17,012,360  time   9083 ms
+ 436/1188  Recapturing.012                                played c3d5  pts 100  nodes    2,873,345  time   1389 ms
+ 437/1188  Recapturing.014                                played d2f4  pts  65  nodes   15,406,822  time   7714 ms
+ 438/1188  Recapturing.016                                played d7e5  pts  44  nodes   28,075,089  time  16269 ms
+ 439/1188  Recapturing.017                                played b7b3  pts  93  nodes   13,958,599  time   6550 ms
+ 440/1188  Recapturing.019                                played e5d4  pts 100  nodes    9,632,751  time   4585 ms
+ 441/1188  Recapturing.020                                played c5d4  pts 100  nodes    3,916,224  time   1655 ms
+ 442/1188  Recapturing.021                                played c5d4  pts 100  nodes    4,485,546  time   1942 ms
+ 443/1188  Recapturing.022                                played c5d4  pts  98  nodes   10,824,702  time   4689 ms
+ 444/1188  Recapturing.023                                played b6d5  pts 100  nodes    5,432,348  time   2170 ms
+ 445/1188  Recapturing.024                                played d2f4  pts  49  nodes   27,540,029  time  13029 ms
+ 446/1188  Recapturing.025                                played f8c5  pts 100  nodes   12,262,853  time   5209 ms
+ 447/1188  Recapturing.026                                played d7c5  pts 100  nodes   38,614,414  time  19372 ms
+ 448/1188  Recapturing.027                                played d2f4  pts  65  nodes   32,033,862  time  16490 ms
+ 449/1188  Recapturing.028                                played d4e5  pts  98  nodes    6,941,937  time   2111 ms
+ 450/1188  Recapturing.029                                played d4e5  pts  97  nodes    3,836,454  time   1327 ms
+ 451/1188  Recapturing.030                                played d7c5  pts 100  nodes   38,765,700  time  19229 ms
+ 452/1188  Recapturing.031                                played f1c4  pts  88  nodes    5,008,930  time   1588 ms
+ 453/1188  Recapturing.032                                played h5f4  pts 100  nodes   24,895,414  time  10792 ms
+ 454/1188  Recapturing.033                                played e7f6  pts 100  nodes   13,341,482  time   6339 ms
+ 455/1188  Recapturing.034                                played b5c4  pts  96  nodes   10,017,948  time   4769 ms
+ 456/1188  Recapturing.035                                played b5c4  pts  96  nodes    3,633,074  time   1559 ms
+ 457/1188  Recapturing.037                                played c3d4  pts 100  nodes   16,695,485  time   9696 ms
+ 458/1188  Recapturing.038                                played b7c6  pts  89  nodes    8,742,017  time   3616 ms
+ 459/1188  Recapturing.039                                played h4g5  pts 100  nodes   21,969,182  time  12260 ms
+ 460/1188  Recapturing.040                                played a7b6  pts  72  nodes    6,725,063  time   2366 ms
+ 461/1188  Recapturing.043                                played d8d5  pts  85  nodes   19,425,543  time   8626 ms
+ 462/1188  Recapturing.044                                played d8d5  pts  92  nodes   21,613,860  time   9511 ms
+ 463/1188  Recapturing.048                                played b2c1  pts 100  nodes    1,166,622  time    332 ms
+ 464/1188  Recapturing.049                                played f1f4  pts  86  nodes    5,330,294  time   2415 ms
+ 465/1188  Recapturing.050                                played e2f4  pts 100  nodes   24,442,884  time  11084 ms
+ 466/1188  Recapturing.051                                played e5f4  pts  44  nodes    3,365,450  time   1057 ms
+ 467/1188  Recapturing.053                                played d7f5  pts  96  nodes   13,313,190  time   6090 ms
+ 468/1188  Recapturing.055                                played g4h4  pts  89  nodes   15,311,740  time   6656 ms
+ 469/1188  Recapturing.056                                played e4d5  pts  85  nodes   10,162,113  time   4571 ms
+ 470/1188  Recapturing.057                                played e4d5  pts  70  nodes   11,431,348  time   5372 ms
+ 471/1188  Recapturing.058                                played f5g6  pts  36  nodes    9,802,183  time   4604 ms
+ 472/1188  Recapturing.059                                played a6c5  pts 100  nodes   11,214,558  time   6185 ms
+ 473/1188  Recapturing.060                                played d2b3  pts  54  nodes   41,583,424  time  25678 ms
+ 474/1188  Recapturing.061                                played d2b3  pts 100  nodes   28,977,969  time  15329 ms
+ 475/1188  Recapturing.062                                played f6d5  pts 100  nodes   24,276,502  time   9562 ms
+ 476/1188  Recapturing.063                                played d4e5  pts 100  nodes    4,551,926  time   1802 ms
+ 477/1188  Recapturing.064                                played h5e5  pts  63  nodes   42,457,810  time  19030 ms
+ 478/1188  Recapturing.065                                played c4d3  pts  86  nodes   20,079,953  time   8272 ms
+ 479/1188  Recapturing.067                                played e4d5  pts  85  nodes    4,960,139  time   2077 ms
+ 480/1188  Recapturing.068                                played e4d5  pts  68  nodes   20,626,573  time   8951 ms
+ 481/1188  Recapturing.069                                played d7c5  pts 100  nodes    5,276,374  time   2314 ms
+ 482/1188  Recapturing.070                                played d3c5  pts 100  nodes   15,889,063  time   7926 ms
+ 483/1188  Recapturing.071                                played d3c5  pts  93  nodes   21,806,010  time  10760 ms
+ 484/1188  Recapturing.072                                played d3c5  pts  81  nodes   39,304,639  time  20999 ms
+ 485/1188  Recapturing.073                                played d6c5  pts  95  nodes    6,406,591  time   2969 ms
+ 486/1188  Recapturing.074                                played b5d4  pts  96  nodes    9,510,940  time   3561 ms
+ 487/1188  Recapturing.075                                played f3d4  pts 100  nodes   18,632,212  time   9850 ms
+ 488/1188  Recapturing.076                                played f2e3  pts  80  nodes    6,114,972  time   2155 ms
+ 489/1188  Recapturing.077                                played f2e3  pts 100  nodes    2,301,256  time    853 ms
+ 490/1188  Recapturing.078                                played a2b3  pts  95  nodes    9,071,203  time   4703 ms
+ 491/1188  Recapturing.080                                played a2b3  pts  92  nodes    3,020,593  time   1425 ms
+ 492/1188  Recapturing.082                                played d2c4  pts 100  nodes   24,959,502  time  13535 ms
+ 493/1188  Recapturing.085                                played e7f6  pts 100  nodes   41,964,326  time  23534 ms
+ 494/1188  Recapturing.086                                played a5b6  pts  86  nodes    3,404,783  time   1391 ms
+ 495/1188  Recapturing.087                                played b7e4  pts 100  nodes    9,165,354  time   4129 ms
+ 496/1188  Recapturing.089                                played g2f3  pts  95  nodes    1,583,031  time    530 ms
+ 497/1188  Recapturing.090                                played g2f3  pts  92  nodes      481,147  time    166 ms
+ 498/1188  Recapturing.091                                played g2e4  pts 100  nodes   29,321,237  time  14182 ms
+ 499/1188  Recapturing.092                                played c3e2  pts  92  nodes    6,435,849  time   2365 ms
+ 500/1188  Recapturing.093                                played e4f5  pts  79  nodes    5,369,299  time   2079 ms
+ 501/1188  Recapturing.095                                played h7g6  pts 100  nodes    9,179,335  time   3920 ms
+ 502/1188  Recapturing.097                                played c3d4  pts 100  nodes   30,495,601  time  17888 ms
+ 503/1188  Recapturing.098                                played e7d5  pts  95  nodes   65,378,778  time  33080 ms
+ 504/1188  Recapturing.099                                played c6b4  pts  53  nodes   26,824,596  time  12169 ms
+ 505/1188  Recapturing.100                                played f4e5  pts 100  nodes   17,259,005  time   7843 ms
+ 506/1188  Offer of Simplification.001                    played b1b6  pts 100  nodes    9,932,289  time   4067 ms
+ 507/1188  Offer of Simplification.002                    played b8e5  pts 100  nodes   10,158,348  time   4161 ms
+ 508/1188  Offer of Simplification.003                    played e7f5  pts 100  nodes   10,488,441  time   5296 ms
+ 509/1188  Offer of Simplification.004                    played a5f5  pts 100  nodes   11,169,431  time   4879 ms
+ 510/1188  Offer of Simplification.005                    played d3f5  pts  74  nodes   12,188,204  time   5794 ms
+ 511/1188  Offer of Simplification.006                    played e8b5  pts 100  nodes   50,629,729  time  24580 ms
+ 512/1188  Offer of Simplification.007                    played f2f4  pts  86  nodes   48,885,857  time  22454 ms
+ 513/1188  Offer of Simplification.008                    played d4g7  pts  80  nodes   21,299,579  time   8844 ms
+ 514/1188  Offer of Simplification.009                    played c3b2  pts  44  nodes   56,787,615  time  24129 ms
+ 515/1188  Offer of Simplification.010                    played c2b3  pts 100  nodes   37,858,239  time  17080 ms
+ 516/1188  Offer of Simplification.011                    played d2c3  pts 100  nodes   40,652,154  time  23931 ms
+ 517/1188  Offer of Simplification.012                    played b4b5  pts  59  nodes   16,982,264  time   7712 ms
+ 518/1188  Offer of Simplification.013                    played b8e8  pts  88  nodes   42,365,340  time  20008 ms
+ 519/1188  Offer of Simplification.014                    played e3c5  pts 100  nodes   13,257,056  time   6533 ms
+ 520/1188  Offer of Simplification.015                    played b3b5  pts 100  nodes   16,506,882  time   6799 ms
+ 521/1188  Offer of Simplification.016                    played d2e3  pts 100  nodes   56,702,840  time  33338 ms
+ 522/1188  Offer of Simplification.017                    played d2d3  pts  77  nodes   18,243,601  time   7924 ms
+ 523/1188  Offer of Simplification.019                    played e6d4  pts  51  nodes  101,743,529  time  41619 ms
+ 524/1188  Offer of Simplification.021                    played f3h5  pts  26  nodes   62,169,197  time  45062 ms
+ 525/1188  Offer of Simplification.022                    played d1e1  pts  13  nodes   77,342,815  time  32977 ms
+ 526/1188  Offer of Simplification.023                    played b5b4  pts   0  nodes   30,164,521  time  13451 ms
+ 527/1188  Offer of Simplification.025                    played e7a3  pts  34  nodes   32,439,763  time  13505 ms
+ 528/1188  Offer of Simplification.027                    played f3d2  pts   0  nodes   98,808,098  time  48616 ms
+ 529/1188  Offer of Simplification.028                    played g7e5  pts 100  nodes   40,455,269  time  18000 ms
+ 530/1188  Offer of Simplification.029                    played c3d1  pts  73  nodes  114,600,355  time  44652 ms
+ 531/1188  Offer of Simplification.030                    played c8d8  pts 100  nodes    2,348,221  time    978 ms
+ 532/1188  Offer of Simplification.031                    played h5f6  pts  92  nodes   30,340,231  time  15544 ms
+ 533/1188  Offer of Simplification.033                    played g1g3  pts  69  nodes   19,024,164  time   9845 ms
+ 534/1188  Offer of Simplification.034                    played d2d7  pts 100  nodes   28,095,962  time  10784 ms
+ 535/1188  Offer of Simplification.035                    played c3b5  pts 100  nodes    5,268,426  time   2272 ms
+ 536/1188  Offer of Simplification.036                    played a3c5  pts 100  nodes   30,266,010  time  12821 ms
+ 537/1188  Offer of Simplification.037                    played g2f2  pts  36  nodes    5,662,412  time   2309 ms
+ 538/1188  Offer of Simplification.039                    played c3b5  pts   0  nodes   42,760,081  time  20581 ms
+ 539/1188  Offer of Simplification.041                    played c6d5  pts  37  nodes   13,311,951  time   6328 ms
+ 540/1188  Offer of Simplification.042                    played h1d1  pts 100  nodes    3,900,060  time   1597 ms
+ 541/1188  Offer of Simplification.043                    played d4c2  pts 100  nodes   12,102,134  time   5197 ms
+ 542/1188  Offer of Simplification.044                    played f2d2  pts 100  nodes   34,674,984  time  14754 ms
+ 543/1188  Offer of Simplification.045                    played e6d5  pts  28  nodes   83,747,390  time  48432 ms
+ 544/1188  Offer of Simplification.046                    played b1f5  pts  75  nodes   10,499,222  time   4371 ms
+ 545/1188  Offer of Simplification.048                    played g2g4  pts  35  nodes   60,279,374  time  27493 ms
+ 546/1188  Offer of Simplification.049                    played b5b6  pts  44  nodes   22,848,107  time  10551 ms
+ 547/1188  Offer of Simplification.050                    played c4d3  pts 100  nodes   30,891,470  time  12348 ms
+ 548/1188  Offer of Simplification.051                    played c3e4  pts  51  nodes   74,124,280  time  32719 ms
+ 549/1188  Offer of Simplification.052                    played f4g5  pts  92  nodes    9,933,337  time   3897 ms
+ 550/1188  Offer of Simplification.057                    played d5c7  pts  37  nodes   27,637,909  time  10488 ms
+ 551/1188  Offer of Simplification.058                    played h3h7  pts  84  nodes    9,884,465  time   4910 ms
+ 552/1188  Offer of Simplification.059                    played e2e3  pts 100  nodes    8,058,773  time   3399 ms
+ 553/1188  Offer of Simplification.060                    played e5d4  pts 100  nodes    6,738,682  time   2424 ms
+ 554/1188  Offer of Simplification.061                    played e7d7  pts 100  nodes   29,236,219  time  10581 ms
+ 555/1188  Offer of Simplification.062                    played f3e2  pts   0  nodes   32,274,573  time  14172 ms
+ 556/1188  Offer of Simplification.063                    played b2e2  pts   0  nodes   33,172,865  time  11759 ms
+ 557/1188  Offer of Simplification.064                    played d1d2  pts 100  nodes  116,183,416  time  56753 ms
+ 558/1188  Offer of Simplification.065                    played h4f3  pts  73  nodes   52,615,436  time  23756 ms
+ 559/1188  Offer of Simplification.066                    played h5g4  pts   3  nodes   33,478,032  time  17862 ms
+ 560/1188  Offer of Simplification.067                    played d4f5  pts  85  nodes   20,447,544  time   9304 ms
+ 561/1188  Offer of Simplification.068                    played e3e4  pts   6  nodes    5,522,716  time   2016 ms
+ 562/1188  Offer of Simplification.070                    played a6a7  pts  44  nodes   20,654,790  time   8883 ms
+ 563/1188  Offer of Simplification.071                    played d2e4  pts 100  nodes   11,610,146  time   5605 ms
+ 564/1188  Offer of Simplification.072                    played h6g4  pts   0  nodes   50,038,332  time  22528 ms
+ 565/1188  Offer of Simplification.073                    played h5h4  pts 100  nodes   18,232,843  time   8485 ms
+ 566/1188  Offer of Simplification.074                    played f5g4  pts  72  nodes    8,727,558  time   3607 ms
+ 567/1188  Offer of Simplification.075                    played c4d5  pts 100  nodes    5,107,762  time   2442 ms
+ 568/1188  Offer of Simplification.077                    played f3g4  pts 100  nodes   21,435,150  time  12429 ms
+ 569/1188  Offer of Simplification.078                    played f3e5  pts 100  nodes  113,873,300  time  63785 ms
+ 570/1188  Offer of Simplification.079                    played f8e8  pts  55  nodes   13,288,198  time   4612 ms
+ 571/1188  Offer of Simplification.080                    played f2f4  pts  46  nodes   95,465,111  time  51344 ms
+ 572/1188  Offer of Simplification.082                    played c8e6  pts 100  nodes    2,923,215  time   1078 ms
+ 573/1188  Offer of Simplification.083                    played e2e4  pts  73  nodes   56,273,383  time  28751 ms
+ 574/1188  Offer of Simplification.084                    played f6f5  pts  84  nodes   37,956,136  time  15850 ms
+ 575/1188  Offer of Simplification.085                    played d7c5  pts  31  nodes   65,326,611  time  28720 ms
+ 576/1188  Offer of Simplification.086                    played e2g4  pts  48  nodes   79,120,737  time  41374 ms
+ 577/1188  Offer of Simplification.087                    played c1f4  pts  75  nodes   22,201,134  time  10321 ms
+ 578/1188  Offer of Simplification.088                    played e5c6  pts 100  nodes   55,603,749  time  24372 ms
+ 579/1188  Offer of Simplification.089                    played c4a6  pts  95  nodes   22,616,837  time  11338 ms
+ 580/1188  Offer of Simplification.090                    played g5f6  pts  20  nodes   17,854,087  time   8258 ms
+ 581/1188  Offer of Simplification.091                    played e4g3  pts 100  nodes    8,917,395  time   4068 ms
+ 582/1188  Offer of Simplification.094                    played a4a1  pts  41  nodes   30,462,312  time  13868 ms
+ 583/1188  Offer of Simplification.095                    played c4c3  pts 100  nodes   35,218,287  time  17787 ms
+ 584/1188  Offer of Simplification.097                    played g2f3  pts  92  nodes    4,640,430  time   1765 ms
+ 585/1188  Offer of Simplification.098                    played b2b7  pts  30  nodes   19,670,340  time   8918 ms
+ 586/1188  Offer of Simplification.099                    played e4e5  pts 100  nodes   18,474,496  time   9411 ms
+ 587/1188  Offer of Simplification.100                    played b8a7  pts  67  nodes  108,406,432  time  60566 ms
+ 588/1188  AKPC.001                                       played b6d4  pts  83  nodes   38,236,917  time  21286 ms
+ 589/1188  AKPC.002                                       played d8b6  pts   0  nodes   40,993,877  time  19281 ms
+ 590/1188  AKPC.004                                       played f5f4  pts  71  nodes   35,463,889  time  15751 ms
+ 591/1188  AKPC.006                                       played f5f4  pts 100  nodes   18,802,579  time   8909 ms
+ 592/1188  AKPC.007                                       played a6e6  pts  51  nodes   53,680,258  time  25790 ms
+ 593/1188  AKPC.008                                       played b5c4  pts  68  nodes   51,687,748  time  29435 ms
+ 594/1188  AKPC.009                                       played e1f3  pts   1  nodes   24,581,500  time  13146 ms
+ 595/1188  AKPC.010                                       played h7h8  pts   0  nodes   23,186,321  time  11026 ms
+ 596/1188  AKPC.012                                       played c4a6  pts  45  nodes   14,773,607  time   7360 ms
+ 597/1188  AKPC.013                                       played g5e3  pts   1  nodes   79,576,332  time  33626 ms
+ 598/1188  AKPC.014                                       played f8g8  pts  28  nodes   52,534,600  time  24502 ms
+ 599/1188  AKPC.015                                       played g2g4  pts 100  nodes   16,584,032  time   8013 ms
+ 600/1188  AKPC.017                                       played f2f4  pts 100  nodes   21,752,267  time  11688 ms
+ 601/1188  AKPC.018                                       played d4b5  pts  60  nodes   51,660,151  time  26889 ms
+ 602/1188  AKPC.020                                       played g2g4  pts 100  nodes    9,512,385  time   4435 ms
+ 603/1188  AKPC.021                                       played g2d5  pts  45  nodes   35,456,445  time  12625 ms
+ 604/1188  AKPC.023                                       played e3d4  pts  13  nodes   14,101,609  time   5900 ms
+ 605/1188  AKPC.024                                       played c4a4  pts   0  nodes   49,975,514  time  25057 ms
+ 606/1188  AKPC.025                                       played h7h5  pts   1  nodes   46,620,482  time  21448 ms
+ 607/1188  AKPC.026                                       played f7f5  pts 100  nodes    5,832,991  time   2163 ms
+ 608/1188  AKPC.028                                       played h4h5  pts  70  nodes   44,866,933  time  22594 ms
+ 609/1188  AKPC.029                                       played d8a8  pts   1  nodes   47,822,874  time  21190 ms
+ 610/1188  AKPC.030                                       played d8c7  pts  53  nodes   14,559,545  time   6177 ms
+ 611/1188  AKPC.031                                       played b5b4  pts   0  nodes   25,519,579  time  11332 ms
+ 612/1188  AKPC.032                                       played f7f5  pts 100  nodes   59,358,124  time  31999 ms
+ 613/1188  AKPC.033                                       played h8g8  pts   0  nodes   22,901,058  time  11023 ms
+ 614/1188  AKPC.034                                       played h7h5  pts 100  nodes   85,434,167  time  47775 ms
+ 615/1188  AKPC.035                                       played g7g6  pts 100  nodes   12,957,461  time   6854 ms
+ 616/1188  AKPC.036                                       played f2d2  pts   5  nodes   23,866,841  time  11299 ms
+ 617/1188  AKPC.039                                       played g7g5  pts 100  nodes   17,212,031  time   8548 ms
+ 618/1188  AKPC.040                                       played f3f4  pts 100  nodes    9,417,595  time   4252 ms
+ 619/1188  AKPC.041                                       played e7f6  pts  30  nodes   60,019,903  time  32146 ms
+ 620/1188  AKPC.042                                       played a6a5  pts  81  nodes   58,228,008  time  30760 ms
+ 621/1188  AKPC.043                                       played e5g3  pts  80  nodes   35,882,256  time  16910 ms
+ 622/1188  AKPC.044                                       played d7d2  pts  42  nodes   16,157,023  time   8038 ms
+ 623/1188  AKPC.045                                       played e4d6  pts  29  nodes   64,584,096  time  31815 ms
+ 624/1188  AKPC.046                                       played h7h5  pts 100  nodes   16,372,943  time   7704 ms
+ 625/1188  AKPC.047                                       played h5h4  pts 100  nodes   29,867,521  time  12834 ms
+ 626/1188  AKPC.048                                       played c3b4  pts  89  nodes   11,189,296  time   4432 ms
+ 627/1188  AKPC.049                                       played h2h3  pts 100  nodes   13,919,638  time   6139 ms
+ 628/1188  AKPC.050                                       played h7h5  pts 100  nodes   79,096,052  time  40030 ms
+ 629/1188  AKPC.051                                       played h6h5  pts 100  nodes   37,231,295  time  22098 ms
+ 630/1188  AKPC.052                                       played g1f1  pts  21  nodes   38,591,191  time  17871 ms
+ 631/1188  AKPC.053                                       played f6f5  pts 100  nodes    6,282,383  time   2348 ms
+ 632/1188  AKPC.054                                       played e1b1  pts  40  nodes  112,506,767  time  51664 ms
+ 633/1188  AKPC.055                                       played h2h4  pts 100  nodes   39,265,558  time  17520 ms
+ 634/1188  AKPC.057                                       played g2g4  pts 100  nodes   30,758,403  time  14183 ms
+ 635/1188  AKPC.058                                       played b3c3  pts  42  nodes   14,297,248  time   6027 ms
+ 636/1188  AKPC.059                                       played h7h5  pts 100  nodes   51,127,643  time  26201 ms
+ 637/1188  AKPC.060                                       played f3f4  pts 100  nodes   13,268,621  time   5753 ms
+ 638/1188  AKPC.061                                       played f7f5  pts 100  nodes   10,509,748  time   5109 ms
+ 639/1188  AKPC.062                                       played g2g3  pts 100  nodes   51,661,189  time  24333 ms
+ 640/1188  AKPC.063                                       played h3h4  pts  11  nodes    4,763,015  time   2272 ms
+ 641/1188  AKPC.065                                       played f5g5  pts  23  nodes   29,740,455  time  11437 ms
+ 642/1188  AKPC.066                                       played f7f5  pts 100  nodes   15,307,369  time   7562 ms
+ 643/1188  AKPC.067                                       played f7f5  pts 100  nodes   18,710,540  time   9140 ms
+ 644/1188  AKPC.068                                       played a8c6  pts   0  nodes  111,256,962  time  56993 ms
+ 645/1188  AKPC.069                                       played f4f5  pts  94  nodes   33,568,307  time  17707 ms
+ 646/1188  AKPC.070                                       played h2h4  pts 100  nodes   58,851,727  time  28294 ms
+ 647/1188  AKPC.071                                       played e7f6  pts  54  nodes    6,559,766  time   2969 ms
+ 648/1188  AKPC.072                                       played f3f4  pts 100  nodes   82,807,097  time  43317 ms
+ 649/1188  AKPC.073                                       played f2f4  pts 100  nodes   42,025,302  time  24766 ms
+ 650/1188  AKPC.074                                       played h6h5  pts  94  nodes   29,985,055  time  15254 ms
+ 651/1188  AKPC.076                                       played f7f5  pts  95  nodes   21,947,105  time   9889 ms
+ 652/1188  AKPC.078                                       played f4f5  pts 100  nodes   42,964,540  time  24866 ms
+ 653/1188  AKPC.079                                       played g3g4  pts 100  nodes  102,155,428  time  61621 ms
+ 654/1188  AKPC.082                                       played g6g5  pts 100  nodes   26,348,317  time  13912 ms
+ 655/1188  AKPC.085                                       played h7h5  pts 100  nodes   41,949,581  time  20186 ms
+ 656/1188  AKPC.086                                       played f2f4  pts 100  nodes   28,359,314  time  12682 ms
+ 657/1188  AKPC.088                                       played e2e4  pts  62  nodes   16,699,857  time   8326 ms
+ 658/1188  AKPC.089                                       played g6g5  pts 100  nodes   31,247,046  time  14736 ms
+ 659/1188  AKPC.090                                       played g4h5  pts   0  nodes   15,771,440  time   8488 ms
+ 660/1188  AKPC.092                                       played h5h4  pts 100  nodes   72,132,512  time  31671 ms
+ 661/1188  AKPC.093                                       played a8d8  pts  15  nodes   43,038,115  time  25080 ms
+ 662/1188  AKPC.095                                       played a3c4  pts 100  nodes   49,772,356  time  26072 ms
+ 663/1188  AKPC.096                                       played f7f6  pts  90  nodes   25,703,359  time  12738 ms
+ 664/1188  AKPC.097                                       played g6g5  pts 100  nodes   36,473,503  time  19030 ms
+ 665/1188  AKPC.098                                       played f7f5  pts 100  nodes   46,876,547  time  17807 ms
+ 666/1188  AKPC.099                                       played a2a3  pts  64  nodes   37,215,895  time  18416 ms
+ 667/1188  AKPC.100                                       played h5h4  pts 100  nodes   25,253,794  time  13416 ms
+ 668/1188  Advancement of a/b/c pawns.001                 played d7f6  pts  19  nodes   11,425,006  time   5951 ms
+ 669/1188  Advancement of a/b/c pawns.002                 played f4d3  pts  57  nodes   92,835,719  time  51049 ms
+ 670/1188  Advancement of a/b/c pawns.003                 played b4b5  pts  82  nodes   15,272,306  time   6146 ms
+ 671/1188  Advancement of a/b/c pawns.004                 played b4b5  pts 100  nodes   11,423,520  time   5602 ms
+ 672/1188  Advancement of a/b/c pawns.005                 played b8c8  pts  78  nodes   21,843,429  time  12767 ms
+ 673/1188  Advancement of a/b/c pawns.007                 played d5f6  pts   0  nodes   19,471,064  time   9197 ms
+ 674/1188  Advancement of a/b/c pawns.008                 played c6c5  pts 100  nodes   39,819,798  time  20101 ms
+ 675/1188  Advancement of a/b/c pawns.009                 played a7a5  pts  10  nodes   19,254,144  time   7646 ms
+ 676/1188  Advancement of a/b/c pawns.010                 played a4a5  pts  53  nodes   18,388,771  time  10483 ms
+ 677/1188  Advancement of a/b/c pawns.012                 played b2b4  pts 100  nodes   57,997,563  time  30005 ms
+ 678/1188  Advancement of a/b/c pawns.013                 played f1e1  pts  23  nodes   42,422,406  time  23220 ms
+ 679/1188  Advancement of a/b/c pawns.014                 played b4b5  pts 100  nodes    7,612,741  time   3165 ms
+ 680/1188  Advancement of a/b/c pawns.015                 played b3b4  pts 100  nodes   46,613,544  time  23580 ms
+ 681/1188  Advancement of a/b/c pawns.018                 played c4c5  pts  75  nodes   55,983,764  time  23869 ms
+ 682/1188  Advancement of a/b/c pawns.019                 played c6c5  pts 100  nodes   55,355,432  time  23780 ms
+ 683/1188  Advancement of a/b/c pawns.020                 played d2b4  pts   0  nodes   28,393,819  time  14072 ms
+ 684/1188  Advancement of a/b/c pawns.023                 played b5a7  pts  87  nodes   40,513,548  time  20849 ms
+ 685/1188  Advancement of a/b/c pawns.025                 played a7a8  pts 100  nodes  120,798,438  time  57174 ms
+ 686/1188  Advancement of a/b/c pawns.026                 played b2b4  pts 100  nodes   44,925,261  time  25386 ms
+ 687/1188  Advancement of a/b/c pawns.027                 played c2b3  pts   0  nodes   28,172,233  time  12937 ms
+ 688/1188  Advancement of a/b/c pawns.028                 played f2f4  pts   2  nodes   76,649,866  time  37476 ms
+ 689/1188  Advancement of a/b/c pawns.030                 played b2b3  pts 100  nodes   11,168,954  time   4615 ms
+ 690/1188  Advancement of a/b/c pawns.031                 played a3a4  pts 100  nodes   26,177,994  time  14256 ms
+ 691/1188  Advancement of a/b/c pawns.032                 played d4c6  pts  10  nodes    3,965,645  time   1944 ms
+ 692/1188  Advancement of a/b/c pawns.034                 played b2b4  pts 100  nodes   18,605,371  time   8548 ms
+ 693/1188  Advancement of a/b/c pawns.035                 played e5d7  pts  23  nodes   41,719,430  time  22901 ms
+ 694/1188  Advancement of a/b/c pawns.036                 played b5b4  pts 100  nodes   16,238,613  time   6412 ms
+ 695/1188  Advancement of a/b/c pawns.038                 played f8d7  pts  47  nodes   94,863,546  time  43766 ms
+ 696/1188  Advancement of a/b/c pawns.039                 played c7c5  pts 100  nodes   15,331,363  time   7830 ms
+ 697/1188  Advancement of a/b/c pawns.040                 played c3e4  pts  72  nodes   27,019,643  time  14750 ms
+ 698/1188  Advancement of a/b/c pawns.041                 played b4b5  pts 100  nodes   17,884,741  time   8749 ms
+ 699/1188  Advancement of a/b/c pawns.042                 played c6c5  pts 100  nodes    8,154,889  time   3912 ms
+ 700/1188  Advancement of a/b/c pawns.045                 played b4b7  pts  13  nodes    8,431,485  time   3235 ms
+ 701/1188  Advancement of a/b/c pawns.046                 played c2c4  pts 100  nodes   73,020,249  time  41044 ms
+ 702/1188  Advancement of a/b/c pawns.047                 played c1b1  pts  94  nodes   20,296,090  time   9916 ms
+ 703/1188  Advancement of a/b/c pawns.049                 played b6b4  pts  75  nodes   61,927,731  time  27955 ms
+ 704/1188  Advancement of a/b/c pawns.055                 played g7g6  pts   1  nodes  128,421,555  time  70488 ms
+ 705/1188  Advancement of a/b/c pawns.058                 played a3a4  pts 100  nodes   78,908,030  time  38971 ms
+ 706/1188  Advancement of a/b/c pawns.059                 played b3b4  pts 100  nodes   33,223,161  time  19339 ms
+ 707/1188  Advancement of a/b/c pawns.062                 played d1d5  pts  51  nodes    8,419,496  time   4258 ms
+ 708/1188  Advancement of a/b/c pawns.065                 played b2b4  pts 100  nodes    5,398,131  time   2304 ms
+ 709/1188  Advancement of a/b/c pawns.066                 played b3b4  pts 100  nodes    5,071,647  time   2066 ms
+ 710/1188  Advancement of a/b/c pawns.067                 played c2c4  pts 100  nodes   69,295,849  time  38491 ms
+ 711/1188  Advancement of a/b/c pawns.068                 played a8b7  pts  16  nodes   28,255,097  time  13339 ms
+ 712/1188  Advancement of a/b/c pawns.069                 played a2a4  pts 100  nodes   51,746,450  time  28035 ms
+ 713/1188  Advancement of a/b/c pawns.070                 played e4f6  pts  31  nodes   94,866,241  time  63715 ms
+ 714/1188  Advancement of a/b/c pawns.072                 played g2g3  pts  83  nodes   11,387,168  time   6236 ms
+ 715/1188  Advancement of a/b/c pawns.073                 played b5b4  pts 100  nodes   21,335,810  time  10992 ms
+ 716/1188  Advancement of a/b/c pawns.074                 played b4b5  pts 100  nodes   29,358,986  time  16531 ms
+ 717/1188  Advancement of a/b/c pawns.075                 played c4d5  pts   1  nodes   19,899,997  time   9992 ms
+ 718/1188  Advancement of a/b/c pawns.076                 played c6c5  pts 100  nodes   24,878,918  time   9576 ms
+ 719/1188  Advancement of a/b/c pawns.078                 played a2a3  pts 100  nodes   47,868,920  time  22534 ms
+ 720/1188  Advancement of a/b/c pawns.079                 played e7c6  pts  81  nodes   16,324,043  time   7831 ms
+ 721/1188  Advancement of a/b/c pawns.080                 played a8c8  pts  86  nodes   23,228,296  time  12122 ms
+ 722/1188  Advancement of a/b/c pawns.081                 played b5b4  pts 100  nodes   48,838,208  time  24881 ms
+ 723/1188  Advancement of a/b/c pawns.082                 played b6b5  pts  75  nodes   55,347,373  time  21537 ms
+ 724/1188  Advancement of a/b/c pawns.083                 played d1e2  pts  35  nodes  130,981,152  time  66138 ms
+ 725/1188  Advancement of a/b/c pawns.084                 played c1c3  pts  25  nodes   10,801,405  time   4960 ms
+ 726/1188  Advancement of a/b/c pawns.085                 played a6a5  pts 100  nodes   40,706,004  time  20056 ms
+ 727/1188  Advancement of a/b/c pawns.086                 played g5f6  pts  67  nodes   56,357,267  time  30090 ms
+ 728/1188  Advancement of a/b/c pawns.087                 played d4d5  pts   0  nodes   19,608,436  time   9079 ms
+ 729/1188  Advancement of a/b/c pawns.088                 played c4c5  pts 100  nodes   34,137,220  time  16255 ms
+ 730/1188  Advancement of a/b/c pawns.089                 played c3e2  pts  67  nodes   14,370,415  time   7850 ms
+ 731/1188  Advancement of a/b/c pawns.091                 played b1d1  pts   5  nodes   49,776,231  time  25849 ms
+ 732/1188  Advancement of a/b/c pawns.094                 played f3f4  pts  67  nodes   14,240,078  time   7941 ms
+ 733/1188  Advancement of a/b/c pawns.095                 played e2d3  pts   0  nodes   21,598,370  time  12131 ms
+ 734/1188  Advancement of a/b/c pawns.096                 played b4b5  pts 100  nodes  127,089,526  time  67107 ms
+ 735/1188  Advancement of a/b/c pawns.097                 played e3c3  pts  92  nodes   34,718,735  time  15525 ms
+ 736/1188  Advancement of a/b/c pawns.098                 played h8h7  pts  18  nodes   20,057,661  time   8411 ms
+ 737/1188  Advancement of a/b/c pawns.099                 played c5c4  pts 100  nodes   26,705,092  time  13621 ms
+ 738/1188  Advancement of a/b/c pawns.100                 played c2c6  pts  63  nodes   10,623,994  time   4509 ms
+ 739/1188  Simplification.001                             played b8e5  pts 100  nodes   41,873,323  time  16660 ms
+ 740/1188  Simplification.002                             played a6a5  pts   1  nodes   65,384,778  time  30020 ms
+ 741/1188  Simplification.003                             played b7a6  pts 100  nodes   31,250,274  time  13086 ms
+ 742/1188  Simplification.004                             played c4d3  pts 100  nodes    6,217,789  time   2668 ms
+ 743/1188  Simplification.005                             played a5a4  pts  46  nodes    2,821,401  time   1362 ms
+ 744/1188  Simplification.006                             played f7e7  pts  37  nodes   20,748,530  time   9817 ms
+ 745/1188  Simplification.007                             played d3f5  pts 100  nodes   29,341,518  time  11931 ms
+ 746/1188  Simplification.008                             played c2g6  pts   0  nodes   18,214,972  time   7892 ms
+ 747/1188  Simplification.009                             played g5f6  pts   0  nodes   76,430,062  time  34684 ms
+ 748/1188  Simplification.010                             played a4c3  pts  76  nodes   54,135,808  time  24318 ms
+ 749/1188  Simplification.011                             played b8c8  pts  96  nodes   12,706,001  time   5045 ms
+ 750/1188  Simplification.012                             played b8c8  pts  89  nodes   25,914,296  time   9118 ms
+ 751/1188  Simplification.013                             played c4d5  pts 100  nodes   41,240,423  time  18340 ms
+ 752/1188  Simplification.014                             played g4h4  pts  95  nodes   69,365,157  time  35342 ms
+ 753/1188  Simplification.016                             played f3d2  pts  77  nodes   39,315,073  time  18504 ms
+ 754/1188  Simplification.017                             played d2g5  pts 100  nodes   61,420,110  time  26840 ms
+ 755/1188  Simplification.018                             played h4h5  pts  13  nodes    5,307,496  time   2290 ms
+ 756/1188  Simplification.019                             played d1d4  pts 100  nodes    5,336,414  time   2070 ms
+ 757/1188  Simplification.020                             played a1e1  pts  45  nodes    9,185,763  time   4276 ms
+ 758/1188  Simplification.021                             played d6d5  pts   0  nodes   34,748,023  time  14244 ms
+ 759/1188  Simplification.023                             played b7b4  pts  96  nodes    3,397,023  time   1416 ms
+ 760/1188  Simplification.024                             played b4c5  pts 100  nodes    7,315,676  time   2731 ms
+ 761/1188  Simplification.025                             played b1b8  pts 100  nodes    3,764,138  time   1459 ms
+ 762/1188  Simplification.026                             played e6f8  pts 100  nodes   28,869,330  time  14524 ms
+ 763/1188  Simplification.027                             played e4c5  pts 100  nodes   21,009,087  time   9095 ms
+ 764/1188  Simplification.028                             played b2b3  pts  78  nodes   18,187,908  time   7678 ms
+ 765/1188  Simplification.029                             played b4c5  pts   9  nodes   48,762,494  time  33028 ms
+ 766/1188  Simplification.030                             played g5e3  pts 100  nodes    7,074,391  time   3253 ms
+ 767/1188  Simplification.032                             played b2g7  pts 100  nodes    9,494,504  time   4365 ms
+ 768/1188  Simplification.033                             played c1c2  pts 100  nodes   15,177,421  time   6128 ms
+ 769/1188  Simplification.034                             played a4c6  pts 100  nodes   39,895,148  time  22036 ms
+ 770/1188  Simplification.035                             played c8c1  pts 100  nodes    1,354,861  time    593 ms
+ 771/1188  Simplification.036                             played c1c8  pts 100  nodes    7,770,175  time   3286 ms
+ 772/1188  Simplification.037                             played e7d6  pts  16  nodes   17,518,585  time   7396 ms
+ 773/1188  Simplification.038                             played d5b6  pts  79  nodes  150,480,473  time  98431 ms
+ 774/1188  Simplification.039                             played c2c8  pts 100  nodes   14,586,020  time   6251 ms
+ 775/1188  Simplification.040                             played c1c3  pts  77  nodes   32,200,384  time  13215 ms
+ 776/1188  Simplification.041                             played c1c8  pts 100  nodes    2,923,144  time   1166 ms
+ 777/1188  Simplification.042                             played g7g6  pts  63  nodes   25,660,229  time  12737 ms
+ 778/1188  Simplification.043                             played b4d2  pts 100  nodes   16,581,253  time   7824 ms
+ 779/1188  Simplification.044                             played b5c4  pts 100  nodes    6,931,520  time   3501 ms
+ 780/1188  Simplification.045                             played c3c7  pts 100  nodes   10,997,907  time   5067 ms
+ 781/1188  Simplification.046                             played c4c6  pts 100  nodes    8,304,883  time   3700 ms
+ 782/1188  Simplification.047                             played b1b6  pts 100  nodes    7,036,330  time   3373 ms
+ 783/1188  Simplification.049                             played d1d8  pts 100  nodes   13,122,152  time   5595 ms
+ 784/1188  Simplification.050                             played e3g5  pts  70  nodes   34,796,817  time  18607 ms
+ 785/1188  Simplification.052                             played d8d3  pts 100  nodes    2,837,417  time   1135 ms
+ 786/1188  Simplification.053                             played f4g5  pts  71  nodes   10,304,886  time   4413 ms
+ 787/1188  Simplification.054                             played b5e8  pts 100  nodes  128,368,847  time  67001 ms
+ 788/1188  Simplification.055                             played g4e6  pts 100  nodes    8,794,351  time   4095 ms
+ 789/1188  Simplification.056                             played e8e1  pts 100  nodes   16,931,848  time   7626 ms
+ 790/1188  Simplification.058                             played e3c5  pts 100  nodes   51,178,297  time  24508 ms
+ 791/1188  Simplification.059                             played d1e1  pts  52  nodes   49,504,112  time  27509 ms
+ 792/1188  Simplification.060                             played d5d4  pts 100  nodes   16,768,865  time   8508 ms
+ 793/1188  Simplification.061                             played e1h1  pts  94  nodes    7,202,022  time   2868 ms
+ 794/1188  Simplification.062                             played f1f8  pts 100  nodes    6,571,503  time   3392 ms
+ 795/1188  Simplification.063                             played g2g3  pts  50  nodes   11,038,086  time   4806 ms
+ 796/1188  Simplification.066                             played a4a3  pts  97  nodes    9,336,305  time   4488 ms
+ 797/1188  Simplification.067                             played b4d4  pts 100  nodes    6,228,022  time   2791 ms
+ 798/1188  Simplification.069                             played b5d7  pts 100  nodes      856,095  time    409 ms
+ 799/1188  Simplification.070                             played e5d4  pts  78  nodes    3,666,191  time   1729 ms
+ 800/1188  Simplification.071                             played g8c8  pts  27  nodes   57,484,643  time  23985 ms
+ 801/1188  Simplification.074                             played f7h6  pts  59  nodes    9,488,901  time   3726 ms
+ 802/1188  Simplification.075                             played c1c7  pts 100  nodes   27,800,104  time  13946 ms
+ 803/1188  Simplification.076                             played b4b3  pts  80  nodes    2,892,717  time   1232 ms
+ 804/1188  Simplification.078                             played b8b2  pts  96  nodes   21,721,782  time  10568 ms
+ 805/1188  Simplification.079                             played g1h2  pts 100  nodes   52,259,312  time  20684 ms
+ 806/1188  Simplification.080                             played b3b8  pts 100  nodes   26,238,975  time  11030 ms
+ 807/1188  Simplification.081                             played b8b1  pts 100  nodes    3,600,309  time   1726 ms
+ 808/1188  Simplification.083                             played e4f6  pts 100  nodes   13,932,369  time   5652 ms
+ 809/1188  Simplification.084                             played d6e6  pts 100  nodes   19,255,467  time   8449 ms
+ 810/1188  Simplification.086                             played e1e8  pts 100  nodes   14,473,806  time   7031 ms
+ 811/1188  Simplification.090                             played f6f5  pts  38  nodes   52,007,376  time  23610 ms
+ 812/1188  Simplification.091                             played f6h4  pts  79  nodes    9,346,375  time   4014 ms
+ 813/1188  Simplification.093                             played f7f6  pts   1  nodes   37,854,624  time  17573 ms
+ 814/1188  Simplification.094                             played b7d5  pts 100  nodes   10,673,693  time   4260 ms
+ 815/1188  Simplification.095                             played b3e6  pts 100  nodes   16,583,909  time   7059 ms
+ 816/1188  Simplification.097                             played g2g4  pts  87  nodes   20,516,679  time   8715 ms
+ 817/1188  Simplification.098                             played h3g4  pts 100  nodes   13,820,669  time   6037 ms
+ 818/1188  King Activity.001                              played b8c8  pts  53  nodes   14,788,023  time   6731 ms
+ 819/1188  King Activity.002                              played h2g2  pts  16  nodes    7,870,781  time   3556 ms
+ 820/1188  King Activity.003                              played b8a7  pts 100  nodes    4,944,919  time   1962 ms
+ 821/1188  King Activity.004                              played b1a1  pts 100  nodes   23,878,193  time  11181 ms
+ 822/1188  King Activity.005                              played f6e4  pts   1  nodes   18,050,624  time   9316 ms
+ 823/1188  King Activity.008                              played c7b5  pts  12  nodes    7,009,571  time   3134 ms
+ 824/1188  King Activity.009                              played f8e7  pts 100  nodes   14,196,194  time   6497 ms
+ 825/1188  King Activity.011                              played e3d4  pts  40  nodes   33,427,046  time  16209 ms
+ 826/1188  King Activity.012                              played b5b4  pts  52  nodes   39,223,490  time  21755 ms
+ 827/1188  King Activity.013                              played c8b8  pts 100  nodes  124,763,950  time  71513 ms
+ 828/1188  King Activity.015                              played g3h2  pts 100  nodes    9,510,319  time   4388 ms
+ 829/1188  King Activity.017                              played b7b6  pts  18  nodes   28,184,417  time  10859 ms
+ 830/1188  King Activity.019                              played g1f1  pts 100  nodes   32,465,628  time  12730 ms
+ 831/1188  King Activity.020                              played f1e2  pts 100  nodes    3,316,804  time   1623 ms
+ 832/1188  King Activity.022                              played b7f7  pts  92  nodes   13,556,086  time   5697 ms
+ 833/1188  King Activity.023                              played g8g7  pts  69  nodes   45,975,373  time  20975 ms
+ 834/1188  King Activity.024                              played f3f4  pts  52  nodes   84,044,459  time  38209 ms
+ 835/1188  King Activity.025                              played g1g2  pts 100  nodes    9,454,197  time   4856 ms
+ 836/1188  King Activity.026                              played d7c6  pts  93  nodes    1,534,529  time    693 ms
+ 837/1188  King Activity.030                              played f2g1  pts  94  nodes   15,333,440  time   6933 ms
+ 838/1188  King Activity.033                              played g6f5  pts 100  nodes    5,763,321  time   2598 ms
+ 839/1188  King Activity.034                              played h7g6  pts 100  nodes    8,409,431  time   3846 ms
+ 840/1188  King Activity.035                              played c5c6  pts   0  nodes    2,073,307  time    898 ms
+ 841/1188  King Activity.037                              played g8f8  pts 100  nodes   22,881,875  time   8627 ms
+ 842/1188  King Activity.039                              played c7b8  pts 100  nodes   34,551,673  time  16810 ms
+ 843/1188  King Activity.041                              played d8a8  pts  79  nodes    1,072,335  time    468 ms
+ 844/1188  King Activity.042                              played h1g1  pts 100  nodes   25,653,553  time  11685 ms
+ 845/1188  King Activity.044                              played f8e7  pts 100  nodes   15,080,466  time   7387 ms
+ 846/1188  King Activity.045                              played d6c5  pts  87  nodes   28,654,760  time  12756 ms
+ 847/1188  King Activity.046                              played c7b7  pts  61  nodes   25,737,819  time  12160 ms
+ 848/1188  King Activity.047                              played e8d8  pts 100  nodes    9,026,998  time   3959 ms
+ 849/1188  King Activity.048                              played f2g2  pts   6  nodes    3,261,066  time   1412 ms
+ 850/1188  King Activity.049                              played d3c2  pts 100  nodes   13,448,185  time   6653 ms
+ 851/1188  King Activity.050                              played c3c2  pts 100  nodes    4,712,938  time   1682 ms
+ 852/1188  King Activity.053                              played d4e3  pts  35  nodes    6,175,088  time   2551 ms
+ 853/1188  King Activity.054                              played g2f3  pts 100  nodes    5,920,904  time   2772 ms
+ 854/1188  King Activity.055                              played h8h7  pts  38  nodes   16,496,797  time   7883 ms
+ 855/1188  King Activity.057                              played g3g2  pts 100  nodes   10,349,617  time   3997 ms
+ 856/1188  King Activity.058                              played e2f3  pts 100  nodes    1,049,238  time    467 ms
+ 857/1188  King Activity.061                              played f1e2  pts 100  nodes    2,044,803  time    878 ms
+ 858/1188  King Activity.062                              played g1f2  pts 100  nodes    7,621,899  time   3409 ms
+ 859/1188  King Activity.063                              played g1g2  pts 100  nodes   16,972,666  time   7515 ms
+ 860/1188  King Activity.065                              played f8g7  pts   0  nodes    2,188,493  time   1029 ms
+ 861/1188  King Activity.067                              played g6f5  pts  39  nodes    5,727,915  time   2611 ms
+ 862/1188  King Activity.068                              played b5b6  pts   0  nodes   19,316,426  time   8532 ms
+ 863/1188  King Activity.069                              played f1e2  pts 100  nodes   38,579,491  time  18158 ms
+ 864/1188  King Activity.070                              played g8f8  pts 100  nodes    6,469,475  time   2709 ms
+ 865/1188  King Activity.071                              played c5c6  pts  37  nodes    1,022,797  time    418 ms
+ 866/1188  King Activity.073                              played g7f8  pts 100  nodes    2,602,706  time   1120 ms
+ 867/1188  King Activity.074                              played g1g2  pts 100  nodes   16,878,678  time   7753 ms
+ 868/1188  King Activity.075                              played d7e5  pts  12  nodes   11,527,097  time   5186 ms
+ 869/1188  King Activity.076                              played h4h3  pts 100  nodes    7,918,252  time   3472 ms
+ 870/1188  King Activity.078                              played a2b2  pts 100  nodes   54,450,847  time  25739 ms
+ 871/1188  King Activity.079                              played h1h2  pts 100  nodes    2,763,098  time   1227 ms
+ 872/1188  King Activity.080                              played f7g6  pts 100  nodes   18,762,976  time   8403 ms
+ 873/1188  King Activity.081                              played b6b5  pts  82  nodes   17,475,364  time   7855 ms
+ 874/1188  King Activity.083                              played c7c6  pts 100  nodes   26,191,181  time  12249 ms
+ 875/1188  King Activity.084                              played d7e6  pts 100  nodes    2,371,427  time    959 ms
+ 876/1188  King Activity.085                              played g3g4  pts   1  nodes    3,220,753  time   1374 ms
+ 877/1188  King Activity.087                              played e5g5  pts  54  nodes    9,695,742  time   3943 ms
+ 878/1188  King Activity.088                              played a5a6  pts  63  nodes    3,665,362  time   1792 ms
+ 879/1188  King Activity.091                              played g1g2  pts 100  nodes    8,164,139  time   4026 ms
+ 880/1188  King Activity.092                              played e2a6  pts  24  nodes    6,591,593  time   2896 ms
+ 881/1188  King Activity.093                              played f6g7  pts 100  nodes   10,471,173  time   4664 ms
+ 882/1188  King Activity.094                              played e7f6  pts  63  nodes  180,916,211  time 103391 ms
+ 883/1188  King Activity.095                              played g8h7  pts   0  nodes   32,250,294  time  13956 ms
+ 884/1188  King Activity.097                              played g7f6  pts  71  nodes   17,658,809  time   9987 ms
+ 885/1188  King Activity.098                              played f8d6  pts  82  nodes   30,123,122  time  17886 ms
+ 886/1188  King Activity.099                              played b2b1  pts  96  nodes   12,317,522  time   5388 ms
+ 887/1188  King Activity.100                              played c4c3  pts   2  nodes    1,415,167  time    535 ms
+ 888/1188  Center Control.001                             played a4c5  pts   1  nodes   45,940,193  time  21345 ms
+ 889/1188  Center Control.002                             played b3e6  pts  66  nodes   23,889,646  time  11260 ms
+ 890/1188  Center Control.003                             played d6e5  pts 100  nodes   36,973,372  time  18786 ms
+ 891/1188  Center Control.005                             played c3e4  pts 100  nodes   62,173,840  time  27245 ms
+ 892/1188  Center Control.008                             played b6d5  pts 100  nodes   31,572,280  time  14085 ms
+ 893/1188  Center Control.009                             played c6d5  pts  96  nodes    4,488,420  time   2213 ms
+ 894/1188  Center Control.010                             played d2e4  pts 100  nodes   25,264,106  time  15275 ms
+ 895/1188  Center Control.011                             played e3d4  pts 100  nodes   20,334,231  time   8351 ms
+ 896/1188  Center Control.012                             played g2d5  pts 100  nodes   20,233,798  time   9304 ms
+ 897/1188  Center Control.014                             played b8c8  pts  65  nodes   56,237,391  time  26383 ms
+ 898/1188  Center Control.015                             played d7e5  pts 100  nodes   59,502,755  time  32189 ms
+ 899/1188  Center Control.016                             played d2d4  pts 100  nodes   27,506,951  time  14972 ms
+ 900/1188  Center Control.017                             played a4d4  pts  85  nodes   22,968,924  time   9385 ms
+ 901/1188  Center Control.018                             played e3d4  pts 100  nodes   72,475,391  time  33321 ms
+ 902/1188  Center Control.019                             played f3e5  pts 100  nodes   15,393,617  time   6830 ms
+ 903/1188  Center Control.020                             played f6e4  pts 100  nodes   55,691,627  time  24009 ms
+ 904/1188  Center Control.021                             played b4d5  pts 100  nodes   23,769,390  time  12125 ms
+ 905/1188  Center Control.023                             played d1d4  pts 100  nodes   28,708,042  time  12728 ms
+ 906/1188  Center Control.024                             played f4e5  pts  80  nodes  105,974,037  time  72357 ms
+ 907/1188  Center Control.025                             played d1d4  pts 100  nodes   80,636,013  time  37166 ms
+ 908/1188  Center Control.027                             played c2e4  pts 100  nodes   18,724,116  time   8980 ms
+ 909/1188  Center Control.028                             played d1d5  pts 100  nodes    8,208,763  time   4085 ms
+ 910/1188  Center Control.029                             played d6d5  pts  58  nodes   88,311,585  time  41437 ms
+ 911/1188  Center Control.030                             played b7e4  pts 100  nodes   28,478,692  time  13973 ms
+ 912/1188  Center Control.032                             played d8d5  pts 100  nodes   25,132,146  time  12092 ms
+ 913/1188  Center Control.033                             played f6d5  pts  67  nodes   50,414,679  time  22371 ms
+ 914/1188  Center Control.034                             played c4d5  pts 100  nodes   15,817,575  time   8625 ms
+ 915/1188  Center Control.035                             played d4d5  pts 100  nodes   17,993,818  time   7549 ms
+ 916/1188  Center Control.036                             played e1e5  pts 100  nodes   40,254,326  time  18909 ms
+ 917/1188  Center Control.037                             played h5g4  pts  66  nodes   28,179,985  time  13555 ms
+ 918/1188  Center Control.038                             played c3e4  pts 100  nodes   16,273,233  time   7144 ms
+ 919/1188  Center Control.039                             played f6d4  pts 100  nodes   13,659,920  time   6315 ms
+ 920/1188  Center Control.040                             played c6c8  pts  97  nodes   56,045,640  time  25159 ms
+ 921/1188  Center Control.041                             played e3e4  pts 100  nodes    9,025,722  time   3773 ms
+ 922/1188  Center Control.042                             played e3e5  pts 100  nodes   21,461,408  time  10162 ms
+ 923/1188  Center Control.043                             played a7b6  pts  92  nodes   10,725,754  time   4321 ms
+ 924/1188  Center Control.044                             played h7h5  pts  53  nodes   27,440,786  time  14441 ms
+ 925/1188  Center Control.047                             played b3d4  pts 100  nodes   29,449,747  time  14867 ms
+ 926/1188  Center Control.048                             played g5f3  pts  84  nodes   45,206,142  time  21073 ms
+ 927/1188  Center Control.049                             played f2d4  pts 100  nodes   21,763,868  time   9565 ms
+ 928/1188  Center Control.052                             played f4e5  pts 100  nodes   11,231,643  time   4821 ms
+ 929/1188  Center Control.054                             played h8g8  pts  48  nodes   18,909,624  time   7789 ms
+ 930/1188  Center Control.055                             played e4e5  pts 100  nodes   15,884,529  time   7355 ms
+ 931/1188  Center Control.057                             played d1d5  pts 100  nodes   41,033,567  time  21023 ms
+ 932/1188  Center Control.060                             played d3e4  pts   0  nodes   63,142,965  time  32553 ms
+ 933/1188  Center Control.061                             played d5d1  pts  60  nodes   36,680,076  time  13317 ms
+ 934/1188  Center Control.062                             played b1e4  pts 100  nodes   10,461,958  time   4760 ms
+ 935/1188  Center Control.064                             played e7e5  pts 100  nodes   10,905,373  time   5126 ms
+ 936/1188  Center Control.065                             played h5e5  pts  81  nodes    4,346,709  time   2094 ms
+ 937/1188  Center Control.070                             played g2e4  pts 100  nodes   17,718,969  time   7459 ms
+ 938/1188  Center Control.071                             played d3e2  pts  61  nodes   97,667,932  time  47669 ms
+ 939/1188  Center Control.073                             played a8a7  pts  92  nodes    6,705,394  time   3197 ms
+ 940/1188  Center Control.075                             played f4e5  pts 100  nodes   22,288,645  time  11183 ms
+ 941/1188  Center Control.076                             played e2b5  pts   0  nodes  239,172,414  time 150768 ms
+ 942/1188  Center Control.077                             played d2e4  pts 100  nodes   21,223,710  time   9583 ms
+ 943/1188  Center Control.078                             played d1d5  pts 100  nodes  120,086,096  time  60920 ms
+ 944/1188  Center Control.079                             played a8c8  pts  84  nodes   24,654,218  time  11158 ms
+ 945/1188  Center Control.080                             played d2e3  pts  54  nodes   87,802,212  time  46444 ms
+ 946/1188  Center Control.081                             played d7e5  pts  61  nodes   48,569,364  time  22972 ms
+ 947/1188  Center Control.082                             played d8d2  pts  95  nodes   39,487,186  time  17266 ms
+ 948/1188  Center Control.083                             played d1d4  pts 100  nodes    6,251,998  time   3415 ms
+ 949/1188  Center Control.084                             played b2b3  pts  48  nodes  101,616,281  time  61237 ms
+ 950/1188  Center Control.086                             played f6d5  pts  79  nodes   38,348,884  time  14900 ms
+ 951/1188  Center Control.087                             played g3d6  pts  63  nodes   21,811,217  time  11004 ms
+ 952/1188  Center Control.088                             played f4d6  pts  92  nodes   21,166,773  time   8752 ms
+ 953/1188  Center Control.089                             played c6e7  pts 100  nodes   16,884,154  time   7107 ms
+ 954/1188  Center Control.090                             played e6d5  pts 100  nodes   21,183,840  time   9674 ms
+ 955/1188  Center Control.091                             played a1c1  pts 100  nodes  157,091,592  time 119739 ms
+ 956/1188  Center Control.094                             played d1d5  pts 100  nodes   86,407,136  time  40102 ms
+ 957/1188  Center Control.095                             played e1b1  pts  56  nodes   40,169,616  time  17623 ms
+ 958/1188  Center Control.096                             played c4e5  pts 100  nodes   20,320,414  time   9833 ms
+ 959/1188  Center Control.097                             played e5e4  pts  95  nodes   21,931,067  time  10168 ms
+ 960/1188  Center Control.098                             played d3e5  pts 100  nodes   10,441,129  time   4635 ms
+ 961/1188  Center Control.100                             played b3a4  pts  84  nodes    9,009,248  time   3399 ms
+ 962/1188  Pawn Play in the Center.003                    played e5e4  pts 100  nodes   26,869,172  time  12470 ms
+ 963/1188  Pawn Play in the Center.004                    played e4e5  pts 100  nodes   16,507,558  time   8408 ms
+ 964/1188  Pawn Play in the Center.005                    played e6e5  pts 100  nodes   22,774,789  time  10653 ms
+ 965/1188  Pawn Play in the Center.006                    played e2e4  pts 100  nodes   21,590,402  time   9782 ms
+ 966/1188  Pawn Play in the Center.008                    played d5d4  pts 100  nodes   13,783,643  time   5301 ms
+ 967/1188  Pawn Play in the Center.009                    played d4c5  pts  70  nodes   46,184,749  time  20938 ms
+ 968/1188  Pawn Play in the Center.010                    played e6e5  pts  41  nodes   16,270,439  time   6838 ms
+ 969/1188  Pawn Play in the Center.011                    played e4e5  pts  91  nodes   21,113,968  time  10695 ms
+ 970/1188  Pawn Play in the Center.012                    played b1d1  pts  49  nodes   45,798,748  time  23386 ms
+ 971/1188  Pawn Play in the Center.013                    played e3e4  pts 100  nodes   15,251,264  time   6484 ms
+ 972/1188  Pawn Play in the Center.014                    played e1g3  pts  93  nodes   17,419,988  time   7841 ms
+ 973/1188  Pawn Play in the Center.015                    played d3d4  pts 100  nodes   46,138,214  time  21256 ms
+ 974/1188  Pawn Play in the Center.016                    played e2f3  pts  44  nodes   14,697,628  time   6308 ms
+ 975/1188  Pawn Play in the Center.017                    played c4c5  pts   1  nodes    9,548,263  time   4886 ms
+ 976/1188  Pawn Play in the Center.019                    played e4e5  pts 100  nodes   42,480,525  time  30666 ms
+ 977/1188  Pawn Play in the Center.020                    played d6d5  pts 100  nodes   41,894,925  time  19626 ms
+ 978/1188  Pawn Play in the Center.021                    played c3b5  pts  77  nodes   67,442,240  time  32094 ms
+ 979/1188  Pawn Play in the Center.022                    played e5e4  pts 100  nodes   12,179,616  time   6253 ms
+ 980/1188  Pawn Play in the Center.023                    played f1e2  pts  37  nodes   21,103,544  time  11521 ms
+ 981/1188  Pawn Play in the Center.024                    played e4e5  pts 100  nodes   62,537,130  time  36503 ms
+ 982/1188  Pawn Play in the Center.025                    played h2h3  pts 100  nodes   66,200,422  time  37333 ms
+ 983/1188  Pawn Play in the Center.026                    played e3e4  pts 100  nodes   15,771,327  time   8712 ms
+ 984/1188  Pawn Play in the Center.027                    played e6e5  pts 100  nodes   54,692,091  time  30083 ms
+ 985/1188  Pawn Play in the Center.028                    played e6e5  pts 100  nodes   36,176,053  time  17454 ms
+ 986/1188  Pawn Play in the Center.030                    played a6b7  pts  25  nodes   36,056,542  time  18803 ms
+ 987/1188  Pawn Play in the Center.032                    played e2e4  pts 100  nodes   31,699,022  time  16346 ms
+ 988/1188  Pawn Play in the Center.033                    played d2e3  pts  81  nodes   56,225,861  time  33236 ms
+ 989/1188  Pawn Play in the Center.034                    played e6e5  pts 100  nodes  221,010,900  time 155787 ms
+ 990/1188  Pawn Play in the Center.036                    played e2e4  pts  75  nodes   26,782,025  time  10152 ms
+ 991/1188  Pawn Play in the Center.037                    played d7c6  pts  11  nodes   51,937,412  time  29045 ms
+ 992/1188  Pawn Play in the Center.038                    played e3e4  pts 100  nodes   26,502,882  time  13494 ms
+ 993/1188  Pawn Play in the Center.039                    played e5e4  pts 100  nodes   27,890,584  time  12632 ms
+ 994/1188  Pawn Play in the Center.040                    played e4e5  pts 100  nodes   14,419,616  time   5422 ms
+ 995/1188  Pawn Play in the Center.043                    played d5d4  pts 100  nodes   16,887,107  time   8460 ms
+ 996/1188  Pawn Play in the Center.044                    played e4e5  pts 100  nodes    7,494,300  time   3684 ms
+ 997/1188  Pawn Play in the Center.045                    played e7e5  pts 100  nodes   65,163,483  time  32871 ms
+ 998/1188  Pawn Play in the Center.046                    played d3d4  pts 100  nodes   33,118,512  time  17183 ms
+ 999/1188  Pawn Play in the Center.049                    played e4e5  pts 100  nodes   22,762,274  time  12079 ms
+1000/1188  Pawn Play in the Center.050                    played d6f8  pts  95  nodes    1,641,455  time    728 ms
+1001/1188  Pawn Play in the Center.052                    played e7e5  pts 100  nodes   26,354,534  time  13665 ms
+1002/1188  Pawn Play in the Center.053                    played f7f5  pts   0  nodes   80,714,819  time  46948 ms
+1003/1188  Pawn Play in the Center.054                    played e6e5  pts  27  nodes   24,441,486  time  13411 ms
+1004/1188  Pawn Play in the Center.055                    played d5d4  pts 100  nodes   13,417,779  time   6549 ms
+1005/1188  Pawn Play in the Center.057                    played d4d5  pts 100  nodes   14,871,672  time   7735 ms
+1006/1188  Pawn Play in the Center.059                    played d6d5  pts 100  nodes   12,881,623  time   5748 ms
+1007/1188  Pawn Play in the Center.060                    played e4e5  pts 100  nodes   23,166,496  time  11230 ms
+1008/1188  Pawn Play in the Center.061                    played g2g3  pts  54  nodes   91,218,268  time  53990 ms
+1009/1188  Pawn Play in the Center.062                    played e6e5  pts  64  nodes   82,799,785  time  40625 ms
+1010/1188  Pawn Play in the Center.063                    played e6e5  pts 100  nodes   29,659,079  time  14284 ms
+1011/1188  Pawn Play in the Center.064                    played e3e4  pts  85  nodes   17,668,917  time  10723 ms
+1012/1188  Pawn Play in the Center.065                    played e3e4  pts 100  nodes   25,293,478  time  11305 ms
+1013/1188  Pawn Play in the Center.067                    played e2e4  pts 100  nodes   70,527,346  time  38438 ms
+1014/1188  Pawn Play in the Center.068                    played e2e4  pts 100  nodes   21,160,476  time  11382 ms
+1015/1188  Pawn Play in the Center.069                    played c4f7  pts   0  nodes   22,694,797  time  10067 ms
+1016/1188  Pawn Play in the Center.070                    played e4e5  pts 100  nodes   32,855,985  time  18235 ms
+1017/1188  Pawn Play in the Center.071                    played h4g3  pts  53  nodes   19,177,677  time   9074 ms
+1018/1188  Pawn Play in the Center.072                    played d4d5  pts 100  nodes   24,174,349  time  10983 ms
+1019/1188  Pawn Play in the Center.073                    played d6d5  pts 100  nodes   24,437,395  time  12701 ms
+1020/1188  Pawn Play in the Center.074                    played c1d2  pts  76  nodes   37,390,764  time  17997 ms
+1021/1188  Pawn Play in the Center.076                    played d6d5  pts 100  nodes   31,018,699  time  14818 ms
+1022/1188  Pawn Play in the Center.077                    played e5e4  pts 100  nodes    9,476,945  time   4071 ms
+1023/1188  Pawn Play in the Center.080                    played e6c6  pts  37  nodes   43,569,425  time  21098 ms
+1024/1188  Pawn Play in the Center.082                    played d4d5  pts 100  nodes   31,296,800  time  17579 ms
+1025/1188  Pawn Play in the Center.086                    played f2f3  pts  21  nodes   22,052,035  time   8500 ms
+1026/1188  Pawn Play in the Center.087                    played d2d4  pts 100  nodes   25,734,987  time  12699 ms
+1027/1188  Pawn Play in the Center.088                    played d5c4  pts 100  nodes   37,850,784  time  20775 ms
+1028/1188  Pawn Play in the Center.089                    played d7e5  pts  17  nodes   40,474,585  time  23117 ms
+1029/1188  Pawn Play in the Center.091                    played b6c7  pts  60  nodes   50,182,164  time  27823 ms
+1030/1188  Pawn Play in the Center.092                    played h7h5  pts  20  nodes   84,225,043  time  46608 ms
+1031/1188  Pawn Play in the Center.093                    played d5d4  pts 100  nodes   13,162,945  time   5798 ms
+1032/1188  Pawn Play in the Center.095                    played c5c4  pts   0  nodes   17,718,686  time   8456 ms
+1033/1188  Pawn Play in the Center.096                    played g2g4  pts  42  nodes   86,523,375  time  49996 ms
+1034/1188  Pawn Play in the Center.097                    played e4e5  pts 100  nodes   14,295,533  time   7140 ms
+1035/1188  Pawn Play in the Center.098                    played g2g4  pts   0  nodes   57,474,582  time  29795 ms
+1036/1188  Pawn Play in the Center.100                    played e6e5  pts 100  nodes    7,756,496  time   3819 ms
+1037/1188  7th Rank.001                                   played g4g7  pts 100  nodes   18,990,638  time   8931 ms
+1038/1188  7th Rank.002                                   played c1c7  pts 100  nodes   21,445,616  time  10289 ms
+1039/1188  7th Rank.004                                   played a6a7  pts 100  nodes   13,191,830  time   5744 ms
+1040/1188  7th Rank.005                                   played c1c7  pts 100  nodes   14,400,489  time   6249 ms
+1041/1188  7th Rank.006                                   played f4c7  pts 100  nodes   24,300,706  time   9774 ms
+1042/1188  7th Rank.007                                   played d8d2  pts 100  nodes    4,690,850  time   2020 ms
+1043/1188  7th Rank.008                                   played c6a6  pts   0  nodes   33,041,429  time  13108 ms
+1044/1188  7th Rank.009                                   played c2c7  pts 100  nodes   24,865,693  time  12618 ms
+1045/1188  7th Rank.011                                   played c2c7  pts 100  nodes   13,439,131  time   5257 ms
+1046/1188  7th Rank.012                                   played f2f7  pts 100  nodes   19,525,047  time   8636 ms
+1047/1188  7th Rank.013                                   played a2a7  pts 100  nodes   11,198,432  time   5277 ms
+1048/1188  7th Rank.014                                   played g2g4  pts   1  nodes    7,818,323  time   3583 ms
+1049/1188  7th Rank.015                                   played b7b2  pts 100  nodes   13,549,673  time   6369 ms
+1050/1188  7th Rank.017                                   played d4a7  pts 100  nodes   71,500,477  time  35981 ms
+1051/1188  7th Rank.018                                   played d6f4  pts  96  nodes   38,323,112  time  17489 ms
+1052/1188  7th Rank.019                                   played f2a7  pts 100  nodes   13,630,549  time   6256 ms
+1053/1188  7th Rank.020                                   played h3h2  pts 100  nodes    4,494,414  time   2032 ms
+1054/1188  7th Rank.021                                   played a3a7  pts 100  nodes   41,198,050  time  17839 ms
+1055/1188  7th Rank.022                                   played e4e5  pts  80  nodes   74,023,518  time  39945 ms
+1056/1188  7th Rank.023                                   played e1e7  pts 100  nodes    8,043,627  time   3528 ms
+1057/1188  7th Rank.024                                   played f2e3  pts   9  nodes    2,787,904  time   1279 ms
+1058/1188  7th Rank.025                                   played d6e6  pts  87  nodes   78,762,587  time  36254 ms
+1059/1188  7th Rank.026                                   played c8c2  pts 100  nodes   12,632,223  time   5366 ms
+1060/1188  7th Rank.027                                   played a3b2  pts 100  nodes   33,205,605  time  14028 ms
+1061/1188  7th Rank.029                                   played a2a7  pts  89  nodes    3,957,331  time   1745 ms
+1062/1188  7th Rank.030                                   played d3d7  pts 100  nodes   19,241,425  time   8882 ms
+1063/1188  7th Rank.031                                   played b4a3  pts  57  nodes   22,698,637  time  10577 ms
+1064/1188  7th Rank.032                                   played c4c5  pts  15  nodes   15,773,250  time   7161 ms
+1065/1188  7th Rank.033                                   played d3d7  pts 100  nodes    9,073,812  time   4060 ms
+1066/1188  7th Rank.034                                   played d8d2  pts 100  nodes    5,198,897  time   2415 ms
+1067/1188  7th Rank.035                                   played e4b7  pts 100  nodes   32,703,174  time  14401 ms
+1068/1188  7th Rank.036                                   played a3a7  pts 100  nodes    5,675,791  time   2466 ms
+1069/1188  7th Rank.037                                   played h6g7  pts 100  nodes    7,821,705  time   3671 ms
+1070/1188  7th Rank.038                                   played b2b7  pts 100  nodes   12,870,726  time   5202 ms
+1071/1188  7th Rank.039                                   played e5f4  pts   0  nodes   21,570,771  time   8015 ms
+1072/1188  7th Rank.043                                   played d8d7  pts  55  nodes    2,896,682  time   1271 ms
+1073/1188  7th Rank.044                                   played e2d2  pts 100  nodes    9,702,785  time   4016 ms
+1074/1188  7th Rank.045                                   played b2d3  pts  90  nodes   18,636,140  time   8237 ms
+1075/1188  7th Rank.046                                   played e5f5  pts  81  nodes    7,961,740  time   3571 ms
+1076/1188  7th Rank.047                                   played d7d2  pts 100  nodes    5,291,589  time   2251 ms
+1077/1188  7th Rank.048                                   played b6b7  pts 100  nodes   16,309,602  time   7007 ms
+1078/1188  7th Rank.050                                   played e6e2  pts 100  nodes   14,553,201  time   7469 ms
+1079/1188  7th Rank.052                                   played c4c3  pts  88  nodes   15,317,060  time   5917 ms
+1080/1188  7th Rank.053                                   played b5b2  pts 100  nodes    4,673,308  time   2162 ms
+1081/1188  7th Rank.054                                   played e8e2  pts 100  nodes    9,891,679  time   4055 ms
+1082/1188  7th Rank.055                                   played h2e5  pts  60  nodes    3,951,362  time   1582 ms
+1083/1188  7th Rank.056                                   played f8g7  pts  69  nodes   15,057,011  time   6757 ms
+1084/1188  7th Rank.057                                   played b6f2  pts 100  nodes    5,052,973  time   2364 ms
+1085/1188  7th Rank.058                                   played d7d2  pts 100  nodes   19,356,315  time   9193 ms
+1086/1188  7th Rank.059                                   played e5h2  pts 100  nodes   10,799,243  time   4359 ms
+1087/1188  7th Rank.062                                   played c3c5  pts  32  nodes    9,698,696  time   4113 ms
+1088/1188  7th Rank.063                                   played c4c2  pts 100  nodes    4,709,452  time   1939 ms
+1089/1188  7th Rank.064                                   played d6d2  pts 100  nodes    7,393,763  time   3043 ms
+1090/1188  7th Rank.065                                   played a5a7  pts  46  nodes    5,301,231  time   2154 ms
+1091/1188  7th Rank.067                                   played g6g2  pts 100  nodes   21,282,302  time  10381 ms
+1092/1188  7th Rank.068                                   played b7b2  pts 100  nodes   16,566,769  time   6831 ms
+1093/1188  7th Rank.069                                   played h4h2  pts 100  nodes      869,775  time    333 ms
+1094/1188  7th Rank.070                                   played h6h1  pts 100  nodes    4,138,371  time   1738 ms
+1095/1188  7th Rank.071                                   played a1a7  pts 100  nodes    8,371,262  time   3540 ms
+1096/1188  7th Rank.072                                   played f4f2  pts 100  nodes   20,497,457  time   8841 ms
+1097/1188  7th Rank.074                                   played b6f2  pts 100  nodes    8,686,062  time   4485 ms
+1098/1188  7th Rank.075                                   played b5c6  pts  94  nodes   27,033,482  time  13714 ms
+1099/1188  7th Rank.076                                   played g3g7  pts 100  nodes    9,087,221  time   4529 ms
+1100/1188  7th Rank.077                                   played f1e2  pts  71  nodes   63,285,443  time  27538 ms
+1101/1188  7th Rank.078                                   played e1g1  pts  10  nodes   25,313,577  time  10279 ms
+1102/1188  7th Rank.079                                   played d5a2  pts 100  nodes   26,856,383  time  14536 ms
+1103/1188  7th Rank.080                                   played c5c7  pts 100  nodes   42,078,536  time  21165 ms
+1104/1188  7th Rank.082                                   played e6d7  pts  44  nodes   28,282,000  time  13625 ms
+1105/1188  7th Rank.084                                   played f4h5  pts  53  nodes    9,387,871  time   4181 ms
+1106/1188  7th Rank.085                                   played b5b7  pts 100  nodes    4,279,458  time   1936 ms
+1107/1188  7th Rank.088                                   played b1b7  pts 100  nodes   17,117,969  time  10021 ms
+1108/1188  7th Rank.089                                   played d5d7  pts 100  nodes   29,369,427  time  13119 ms
+1109/1188  7th Rank.090                                   played f3f8  pts  12  nodes   42,786,490  time  20140 ms
+1110/1188  7th Rank.091                                   played d3e4  pts  93  nodes   32,035,812  time  14480 ms
+1111/1188  7th Rank.093                                   played c1c7  pts 100  nodes   11,025,057  time   4550 ms
+1112/1188  7th Rank.095                                   played b5b2  pts 100  nodes    8,521,196  time   3671 ms
+1113/1188  7th Rank.097                                   played c2c7  pts 100  nodes   35,591,596  time  15588 ms
+1114/1188  7th Rank.099                                   played c3b2  pts 100  nodes   19,180,932  time   8623 ms
+1115/1188  7th Rank.100                                   played a8a6  pts  78  nodes    1,334,916  time    470 ms
+1116/1188  AT.001                                         played d4d2  pts  84  nodes  206,707,236  time 122801 ms
+1117/1188  AT.002                                         played d3a6  pts  19  nodes   46,049,000  time  26203 ms
+1118/1188  AT.006                                         played b5a4  pts  33  nodes   28,410,277  time  11515 ms
+1119/1188  AT.007                                         played c7c5  pts  41  nodes  116,100,106  time  60004 ms
+1120/1188  AT.008                                         played b4e7  pts  90  nodes   36,361,090  time  16438 ms
+1121/1188  AT.009                                         played d3b3  pts  83  nodes   38,201,176  time  17119 ms
+1122/1188  AT.011                                         played e2c2  pts  93  nodes   31,020,800  time  17307 ms
+1123/1188  AT.012                                         played f3g3  pts 100  nodes  167,883,884  time 100140 ms
+1124/1188  AT.014                                         played c1e3  pts 100  nodes   10,417,286  time   4653 ms
+1125/1188  AT.015                                         played b4d2  pts  92  nodes   16,202,656  time   8059 ms
+1126/1188  AT.016                                         played b4b6  pts 100  nodes   20,120,979  time   9020 ms
+1127/1188  AT.017                                         played f8e8  pts  39  nodes   77,062,071  time  30845 ms
+1128/1188  AT.019                                         played a2a3  pts  39  nodes  203,831,177  time 117854 ms
+1129/1188  AT.021                                         played g2f1  pts   1  nodes   60,316,668  time  28207 ms
+1130/1188  AT.022                                         played f6a6  pts 100  nodes   84,580,783  time  42876 ms
+1131/1188  AT.024                                         played d1a4  pts 100  nodes  128,669,392  time  73245 ms
+1132/1188  AT.025                                         played c1d2  pts  34  nodes   36,062,527  time  19565 ms
+1133/1188  AT.026                                         played e3e4  pts  23  nodes   55,936,003  time  33732 ms
+1134/1188  AT.027                                         played f4e5  pts  91  nodes   27,694,246  time  14710 ms
+1135/1188  AT.028                                         played a1c1  pts   0  nodes  166,807,637  time  98105 ms
+1136/1188  AT.032                                         played f3h4  pts  98  nodes   16,688,336  time   6858 ms
+1137/1188  AT.033                                         played a4d7  pts 100  nodes   13,661,811  time   6910 ms
+1138/1188  AT.035                                         played e3d2  pts   2  nodes   38,329,038  time  18107 ms
+1139/1188  AT.036                                         played b6e3  pts 100  nodes    2,889,403  time   1341 ms
+1140/1188  AT.039                                         played b1a1  pts  23  nodes   10,246,181  time   4767 ms
+1141/1188  AT.040                                         played f6h4  pts  32  nodes    9,651,743  time   4790 ms
+1142/1188  AT.041                                         played h6d6  pts 100  nodes   25,828,519  time  11087 ms
+1143/1188  AT.043                                         played d3d4  pts 100  nodes    3,632,624  time   1811 ms
+1144/1188  AT.044                                         played h3h4  pts  41  nodes   33,645,643  time  16042 ms
+1145/1188  AT.047                                         played d5a5  pts  40  nodes   20,870,678  time  11059 ms
+1146/1188  AT.049                                         played d2b2  pts  83  nodes   69,828,092  time  34174 ms
+1147/1188  AT.050                                         played e5d4  pts  54  nodes   17,436,003  time   7198 ms
+1148/1188  AT.051                                         played f5f3  pts 100  nodes   12,960,674  time   6298 ms
+1149/1188  AT.052                                         played d4f4  pts 100  nodes   21,729,350  time   9879 ms
+1150/1188  AT.053                                         played b1e1  pts  83  nodes   22,319,407  time  10639 ms
+1151/1188  AT.054                                         played g3d6  pts  82  nodes    7,922,723  time   3221 ms
+1152/1188  AT.055                                         played d2d3  pts  34  nodes   20,595,914  time   8963 ms
+1153/1188  AT.056                                         played e2c4  pts  64  nodes   20,728,631  time   9478 ms
+1154/1188  AT.057                                         played e4e5  pts  32  nodes   37,783,430  time  16693 ms
+1155/1188  AT.058                                         played d7d3  pts 100  nodes   22,023,639  time  10133 ms
+1156/1188  AT.059                                         played a5b5  pts 100  nodes   30,238,616  time  13563 ms
+1157/1188  AT.061                                         played d5b5  pts  92  nodes   21,029,567  time   9716 ms
+1158/1188  AT.062                                         played f3f6  pts  33  nodes   18,003,020  time   8895 ms
+1159/1188  AT.063                                         played c6f3  pts   1  nodes   14,446,956  time   6859 ms
+1160/1188  AT.064                                         played d4f4  pts  32  nodes   58,083,013  time  30262 ms
+1161/1188  AT.065                                         played c7a5  pts  91  nodes   13,729,907  time   5509 ms
+1162/1188  AT.066                                         played e3g3  pts 100  nodes   35,594,694  time  14316 ms
+1163/1188  AT.067                                         played c6a4  pts  79  nodes   47,339,818  time  20430 ms
+1164/1188  AT.069                                         played f5d5  pts  91  nodes   25,471,259  time  13020 ms
+1165/1188  AT.070                                         played d7e6  pts 100  nodes   79,918,313  time  34659 ms
+1166/1188  AT.071                                         played d7a4  pts  98  nodes   16,134,908  time   8440 ms
+1167/1188  AT.072                                         played d2b2  pts  91  nodes   64,083,744  time  35046 ms
+1168/1188  AT.073                                         played e4g2  pts  97  nodes    8,769,819  time   3771 ms
+1169/1188  AT.074                                         played d2b2  pts 100  nodes  100,637,458  time  53788 ms
+1170/1188  AT.076                                         played d8d4  pts 100  nodes   71,194,255  time  34355 ms
+1171/1188  AT.077                                         played h4g6  pts   5  nodes  111,505,972  time  53870 ms
+1172/1188  AT.079                                         played d2h6  pts 100  nodes    8,149,554  time   3542 ms
+1173/1188  AT.080                                         played d3h3  pts 100  nodes   55,383,054  time  30412 ms
+1174/1188  AT.081                                         played e2c4  pts 100  nodes   30,935,346  time  13088 ms
+1175/1188  AT.082                                         played d3c3  pts  95  nodes    5,374,944  time   2425 ms
+1176/1188  AT.083                                         played h6f8  pts  86  nodes   17,408,934  time   9047 ms
+1177/1188  AT.084                                         played a7d4  pts  69  nodes   75,130,696  time  39466 ms
+1178/1188  AT.085                                         played g5g3  pts  36  nodes   67,206,044  time  34270 ms
+1179/1188  AT.086                                         played h5g5  pts  45  nodes   59,579,728  time  30886 ms
+1180/1188  AT.089                                         played d6a6  pts   8  nodes   16,782,084  time   8144 ms
+1181/1188  AT.090                                         played c2d2  pts 100  nodes   75,122,960  time  36778 ms
+1182/1188  AT.092                                         played e5d5  pts  66  nodes   15,480,114  time   7456 ms
+1183/1188  AT.094                                         played d2c4  pts 100  nodes   19,745,833  time   9303 ms
+1184/1188  AT.095                                         played g3e2  pts  49  nodes   26,730,049  time  14425 ms
+1185/1188  AT.096                                         played f3g2  pts 100  nodes    6,954,991  time   3017 ms
+1186/1188  AT.097                                         played f4c7  pts  78  nodes    5,563,464  time   2805 ms
+1187/1188  AT.098                                         played e8e2  pts  18  nodes   22,425,818  time  10496 ms
+1188/1188  AT.100                                         played a3a5  pts  86  nodes   38,816,773  time  18633 ms
+===============================================================
+STS  Theme                                         pos          score     pct   best   miss
+  1  Undermine                                      85   6216/8500      73.1%     50      8
+  2  Open Files and Diagonals                       80   5495/8000      68.7%     37      6
+  3  Knight Outposts/Repositioning/Centralization   86   6716/8600      78.1%     48      6
+  4  Square Vacancy                                 89   6701/8900      75.3%     47      4
+  5  Bishop vs Knight                               85   7029/8500      82.7%     51      2
+  6  Recapturing                                    80   6980/8000      87.3%     33      0
+  7  Offer of Simplification                        82   5725/8200      69.8%     33      6
+  8  AKPC                                           80   5452/8000      68.2%     38      7
+  9  Advancement of a/b/c pawns                     71   4784/7100      67.4%     31      5
+ 10  Simplification                                 79   6372/7900      80.7%     44      3
+ 11  King Activity                                  70   5024/7000      71.8%     35      4
+ 12  Center Control                                 74   6363/7400      86.0%     43      2
+ 13  Pawn Play in the Center                        75   5846/7500      77.9%     45      4
+ 14  7th Rank                                       79   6710/7900      84.9%     53      2
+ 15  AT                                             73   5076/7300      69.5%     23      1
+===============================================================
+Weakest themes : 9 Advancement of a/b/c pawns 67.4% | 8 AKPC 68.2% | 2 Open Files and Diagonals 68.7%
+Positions      : 1,188 at depth 10
+STS score      : 90,489 / 118,800 (76.2 %)
+Best-move hits : 611 (51.4 %)
+Misses (0 pts) : 60 (5.1 %)
+Total time     : 19,564,922 ms
+Nodes searched : 36,201,927,946
+NPS            : 1,850,348
+
+Read the best/miss columns with the percentage: the same score can mean
+"half-good everywhere" or "a third perfect, the rest off the list".
+
+Positions scoring zero (60) — candidates for a characterization test:
+  Undermine.008                  played g4f3  expected g5g6   1r1b2k1/2r2ppp/p1qp4/3R1NPP/1pn1PQB1/8/PPP3R1/1K6 w - - 0 1
+  Undermine.015                  played b5c6  expected d3d4   1r4k1/1rq2pp1/3b1nn1/pBpPp3/P1N4p/2PP1Q1P/6PB/2R2RK1 w - - 0 1
+  Undermine.016                  played a2a4  expected h2h4   1r4k1/p1rqbp1p/b1p1p1p1/NpP1P3/3PB3/3Q2P1/P4P1P/3RR1K1 w - - 0 1
+  Undermine.035                  played f2f4  expected a3a4   2r2rk1/1bb2ppp/p2ppn2/1p4q1/1PnNP3/P1N4P/2P1QPPB/3RRBK1 w - - 0 1
+  Undermine.037                  played h6g7  expected h2h4   2r4k/pp3q1b/5PpQ/3p4/3Bp3/1P6/P5RP/6K1 w - - 0 1
+  Undermine.097                  played a8d8  expected h5h4   r4rk1/pp1b2b1/n2p1nq1/2pP1p1p/2P1pP2/PP4PP/1BQ1N1B1/R3RNK1 b - - 0 1
+  Undermine.098                  played d1b3  expected h2h4   rn3rk1/p1p1qp2/1pbppn1p/6p1/P1PP4/2PBP1B1/3N1P1P/R2QK1R1 w Q - 0 1
+  Undermine.100                  played g3g4  expected a2a3   rr3n1k/q3bpn1/2p1p1p1/2PpP2p/pP1P1N1P/2BB1NP1/P2Q1P2/6RK w - - 0 1
+  Open Files and Diagonals.007   played a6a7  expected a2c2   1r1n2k1/5r1p/P2qp1p1/3p4/1p3pP1/1Q3P1P/R4P2/2R2BK1 w - - 0 1
+  Open Files and Diagonals.017   played e2e3  expected g2e4   1rbr2k1/pp3pp1/q6p/4P3/3p1P2/6P1/P2QP1BP/R1R3K1 w - - 0 1
+  Open Files and Diagonals.041   played e7f8  expected d8h8   3r4/3pkpp1/4p3/2p3q1/6r1/1P6/P5B1/2R1RQK1 b - - 0 1
+  Open Files and Diagonals.054   played e3c3  expected b6d4   5b2/1p1q3n/pB1p2k1/P4N1p/6pP/4R3/6P1/5RK1 w - - 0 1
+  Open Files and Diagonals.063   played e2e3  expected b3c3   6k1/1q5p/5np1/pb1pNp2/3P1B1P/1Q6/1P2PP2/6K1 w - - 0 1
+  Open Files and Diagonals.065   played c3b3  expected b7c8   6k1/pb4p1/1p1b2q1/1P1p3p/3Pn3/P1r2N1P/4QPB1/2B1R1K1 b - - 0 1
+  Knight Outposts/Repositioning/Centralization.038 played d7b6  expected d7e5   3rr1k1/pb1n1pp1/2q2b1p/2p5/2P1p2N/1P2B1P1/P1QR1PBP/3R2K1 b - - 0 1
+  Knight Outposts/Repositioning/Centralization.039 played h7h6  expected d5f4   3rr3/p3b1kp/2p2pp1/1q1np3/4Q1PB/1NP5/PP3P1P/R2R2K1 b - - 0 1
+  Knight Outposts/Repositioning/Centralization.051 played e5d3  expected a3e3   5r1k/2p3q1/1p1npr2/pPn1N1pp/P1PN4/R4PPP/4Q1K1/3R4 w - - 0 1
+  Knight Outposts/Repositioning/Centralization.060 played c3b3  expected f6e8   8/1p2kp2/p3pn2/4n1p1/1P2P3/P1r1NB1P/5PPK/R7 b - - 0 1
+  Knight Outposts/Repositioning/Centralization.077 played a2a4  expected f3d4   r2q1k2/2p2pb1/p2n2rp/1p1RB1p1/8/2PQRN1P/P4PP1/6K1 w - - 0 1
+  Knight Outposts/Repositioning/Centralization.094 played e2b2  expected c3b5   r4rk1/1pq1bppp/1n2p3/p1n1P3/2PR4/2N1BN2/P3QPPP/1R4K1 w - - 0 1
+  Square Vacancy.054             played g8a8  expected c5d4   6r1/4pp1k/3p3p/2qP1P2/r3P1PK/1R6/4Q3/1R6 b - - 0 1
+  Square Vacancy.057             played b3d5  expected d2f4   2rqrbk1/1b1n1p2/p2p1npp/1p6/4P2B/1B3NNP/PP1Q1PP1/3RR1K1 w - - 0 1
+  Square Vacancy.079             played a5a3  expected a5c3   r1b2rk1/p6p/1p1P1pp1/q1p5/2P1PQ2/P7/1R2B1PP/5R1K b - - 0 1
+  Square Vacancy.099             played d7d4  expected a3e3   3r4/k1pr4/npR1p3/p3Pp1p/P1QP2pN/q5P1/6PP/1R5K b - - 0 1
+  Bishop vs Knight.013           played e5c4  expected e5g4   2b1rr2/4q1pk/p2ppb1p/1p2n3/4PNB1/P1N4Q/1PP3PP/R4R1K b - - 0 1
+  Bishop vs Knight.093           played d5b4  expected d6e5   r4rk1/1bq2pp1/1p1bpn1p/p2nN3/P1BP4/5NP1/1P1BQPKP/R3R3 b - - 0 1
+  Offer of Simplification.023    played b5b4  expected e7f6   2r1r1k1/pN2b1p1/2p4p/1p1nBp1P/3P2n1/1NP5/PP2KPP1/3R3R b - - 0 1
+  Offer of Simplification.027    played f3d2  expected f3h4   2r2rk1/p3qp1p/2b1pp1Q/2b5/1n6/2N2NP1/1P2PPBP/R2R2K1 w - - 0 1
+  Offer of Simplification.039    played c3b5  expected a5a7   3qr3/2n1rpbk/3p2np/R1pP2p1/P3P3/2N2P1P/2QB2P1/1R3B1K w - - 0 1
+  Offer of Simplification.062    played f3e2  expected h4g3   5r1k/2q2rpp/2BbRn2/p1pP1P2/1p1p2PB/1P1P1Q1P/6K1/R7 w - - 0 1
+  Offer of Simplification.063    played b2e2  expected g6f4   5r2/6pk/5qnp/4p3/2QpP3/P2R1NP1/1r3P1P/2R3K1 b - - 0 1
+  Offer of Simplification.072    played h6g4  expected c2f5   7r/2q2pkp/2b1n1pN/3pP3/2pP4/4Q2P/2B2PP1/R5K1 w - - 0 1
+  AKPC.002                       played d8b6  expected f6f5   1r1qr1k1/p5b1/2p2ppp/3p4/1Pp5/P1Nn1Q2/3BN1PP/R4RK1 b - - 0 1
+  AKPC.010                       played h7h8  expected g4g5   2b2kn1/5ppQ/1r5p/p2pN3/1qpP1PP1/5P2/P6P/1B4RK w - - 0 1
+  AKPC.024                       played c4a4  expected f3f4   2rr1bk1/p4pp1/1p2q2p/1PpN4/2Q1P3/P4PP1/3R3P/3R2K1 w - - 0 1
+  AKPC.031                       played b5b4  expected g6g5   3qr1k1/5r1p/p1p1n1p1/Ppp1Q3/4Pp2/1P1P1N1P/2P2RPK/R7 b - - 0 1
+  AKPC.033                       played h8g8  expected h6h5   3r1r1k/1p2q2b/p1p1p2p/2P1P3/PPQP1pPP/5B2/7K/4BR2 b - - 0 1
+  AKPC.068                       played a8c6  expected d5e7   b5k1/6bp/3qp1p1/3n2P1/5P1K/2rBB3/6NP/3R1Q2 b - - 0 1
+  AKPC.090                       played g4h5  expected f3f4   r3r1k1/4qpp1/2p5/p1ppP2p/6P1/1PQ2P1P/P1P5/3RR1K1 w - - 0 1
+  Advancement of a/b/c pawns.007 played d5f6  expected d1d2   1r1qr1k1/1p3pp1/p1n1bn1p/2NN4/4P3/6P1/PP3PB1/2RQR1K1 w - - 0 1
+  ... 20 more not shown
