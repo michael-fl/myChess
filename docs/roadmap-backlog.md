@@ -108,6 +108,17 @@ Optional companion: a `@Tag("slow")` JUnit test that pins the node signature as 
 
 ### 12.10.2 EPD test-suite runner — **S, 1 day** (assuming FEN-import from § 12.9 is in place)
 
+**Status (2026-08-18) — the STS half is shipped; WAC is still open.** The order below was inverted on purpose: STS was built first because the search side is now stable (the PeSTO ceiling result in [roadmap § 12.7.1](roadmap.md) says the remaining lever is search, not tables) and because the immediate consumer is the king-safety defect family, which STS addresses directly through its 70-position *King Activity* theme. WAC measures tactics, which `bench` and the `EngineTest` regressions already cover.
+
+What was built: [`Sts`](../src/test/java/org/michaelfl/mychess/Sts.java) (EPD parsing, search loop, per-theme scoring), [`StsRunner`](../src/test/java/org/michaelfl/mychess/StsRunner.java) plus `tools/run-sts.sh`, and `StsTest`. Both classes live in the **test** sources, matching every other measurement driver in this project — an STS score, unlike `bench`'s node signature, need not be reproducible from a shipped artifact, and this keeps 402 KB of third-party data out of the jar. Results and the measurement policy: [`docs/sts-history.md`](sts-history.md).
+
+Four corrections to the description below, all learned in the build:
+
+- **The tracked asset holds 1188 positions, not 1500.** The LAN v6 form keeps only positions where the best move leads the second by ≥ 10 cp.
+- **Scoring is partial credit, not `Solved: 251/300`.** Each position lists up to ten candidate moves (`c9`) with a point value each (`c8`, best = 100); the engine earns the value of what it played. A move worth 46 is a different diagnosis from one worth 1, and binary scoring discards that resolution.
+- **Fixed depth, not "allowed N seconds".** A time-based run is not reproducible across machines or under load. The cost is that the number is *not* comparable to published STS ratings, which are measured at fixed time.
+- **A WAC runner is not free reuse.** `Sts.parseLine` requires `c8`/`c9`; WAC ships only `bm`, and in SAN rather than from-to notation. That needs a separate SAN comparison path — an extension point, not an inheritance.
+
 [EPD (Extended Position Description)](https://www.chessprogramming.org/Extended_Position_Description) is FEN plus a `bm` ("best move") tag. The engine is given each position, allowed N seconds, and the proposed move is checked against `bm`. Score = % positions solved.
 
 **Recommended starter suite: [WAC ("Win at Chess")](https://www.chessprogramming.org/Win_at_Chess) — 300 tactical positions.** It's the canonical hobby-engine benchmark for three reasons:
@@ -116,7 +127,7 @@ Optional companion: a `@Tag("slow")` JUnit test that pins the node signature as 
 2. **Small and freely available.** ~25 KB, plain text, no licensing issue. Easy to embed under `src/test/resources/` or `data/`.
 3. **Tactical focus matches what myChess will improve first.** The search optimizations in §§ 12.1–12.6 are tactical; WAC measures exactly that. Strategic suites (see below) make more sense after the search is solid.
 
-When the WAC score plateaus, graduate to **[STS ("Strategic Test Suite")](https://www.chessprogramming.org/Strategic_Test_Suite) — 1500 positions in 15 themes** (open files, pawn structure, king safety, ...). STS gives a per-category breakdown, which directly tells you *which* evaluation component (§ 12.7) is weakest. STS is the right benchmark for measuring eval upgrades; it's worth the extra setup once the search side is stable.
+When the WAC score plateaus, graduate to **[STS ("Strategic Test Suite")](https://www.chessprogramming.org/Strategic_Test_Suite) — 1500 positions in 15 themes** (open files, pawn structure, king safety, ...). STS gives a per-category breakdown, which directly tells you *which* evaluation component (§ 12.7) is weakest. STS is the right benchmark for measuring eval upgrades; it's worth the extra setup once the search side is stable. **Done 2026-08-18** — see the status paragraph above; the tracked LAN v6 asset holds 1188 of those 1500 positions.
 
 Code: a `Pgn`-style parser for EPD (~50 LOC) plus a runner that hooks into `Game.getEngine().nextMoveAsync(...)` and matches the resulting move against `bm` (~50 LOC). Output: `Solved: 251/300 (83.7%), avg time 3.2s, total 16:01`.
 
@@ -152,9 +163,9 @@ Small, self-contained change in `Pgn` with unit tests over annotated fixtures; n
 ### Recommended order
 
 1. **Build § 12.10.1 (node bench) first.** Half a day, immediate feedback on every search change.
-2. **Build § 12.10.2 with WAC next**, after FEN-import lands (which § 12.9 needs anyway). Catches search-correctness regressions and tactical eval changes.
+2. **Build § 12.10.2 with WAC next**, after FEN-import lands (which § 12.9 needs anyway). Catches search-correctness regressions and tactical eval changes. — *Still open; STS was built first instead, see the status paragraph in § 12.10.2.*
 3. **Build § 12.10.3 (self-play loop) third.** Slower per signal but the only of the three that measures end-to-end playing strength.
-4. **Add STS later**, once the eval upgrades in § 12.7 begin.
+4. **Add STS later**, once the eval upgrades in § 12.7 begin. — **Done 2026-08-18**, and ahead of WAC: the eval upgrades of § 12.7 are through, so this step's precondition arrived before step 2's consumer did.
 5. **§ 12.9 UCI on top of all this** validates the in-process numbers against external opponents — Stockfish at fixed-depth-1 is a well-known hobby-engine yardstick (~1500 Elo).
 
 With (1)+(2)+(3) in place, every roadmap entry can be measured locally before merging. UCI becomes a sanity check, not a prerequisite.

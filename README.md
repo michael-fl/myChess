@@ -107,7 +107,8 @@ In separate files under [`docs/`](docs/):
 14. [Known issues](docs/known-issues.md) — open bugs and ongoing investigations.
 15. [Measuring playing strength with cutechess](docs/elo-testing.md) — the cutechess-cli match setup, SPRT parameters, opening-book choices, and how to read the output. See also the [version history](docs/version-history.md) and the [absolute-Elo measurement notes](docs/myChess-ELO-measurement.md).
 16. [Bench history](docs/bench-history.md) — the `bench` node signature per release (depth 8 for the whole series, depth 9 from 4.3.4 on), what each jump attributes to, and why the node count is an equivalence oracle rather than a strength metric.
-17. [Running myChess on lichess](docs/myChess-on-lichess.md) — setting the engine up as a UCI bot behind the lichess-bot bridge.
+17. [STS history](docs/sts-history.md) — the Strategic Test Suite score per theme and release, what the number does and does not say, and why a run is only worth doing when the `bench` signature moved.
+18. [Running myChess on lichess](docs/myChess-on-lichess.md) — setting the engine up as a UCI bot behind the lichess-bot bridge.
 
 ---
 
@@ -115,7 +116,7 @@ In separate files under [`docs/`](docs/):
 
 ### 1.1 What is myChess?
 
-myChess is a small, self-contained chess engine written from scratch in Java. It is a personal hobby project — the original tag line is *"yet another chess engine, just for fun"* — and the codebase reflects that: clarity over micro-optimization, no third-party engine framework, and no neural-network evaluation. The one piece of borrowed material is the set of piece-square tables, adopted from PeSTO in v4.4.0 and credited under [Credits and third-party material](#credits-and-third-party-material). It has grown well past a toy, though: it now plays a competitive-hobby-level game, is playable in any UCI GUI, and supports Chess960.
+myChess is a small, self-contained chess engine written from scratch in Java. It is a personal hobby project — the original tag line is *"yet another chess engine, just for fun"* — and the codebase reflects that: clarity over micro-optimization, no third-party engine framework, and no neural-network evaluation. The one piece of borrowed material in the engine itself is the set of piece-square tables, adopted from PeSTO in v4.4.0; the test tree additionally carries the Strategic Test Suite as measurement data. Both are credited under [Credits and third-party material](#credits-and-third-party-material). It has grown well past a toy, though: it now plays a competitive-hobby-level game, is playable in any UCI GUI, and supports Chess960.
 
 The engine plays a full game of chess against itself or against a human opponent. It implements the complete rules of chess (including castling, en passant, pawn promotion, the fifty-move rule, and threefold repetition), generates moves with a [hand-written generator](docs/move-generation.md) over a [12×12 mailbox board](docs/data-types.md#31-board-representation-1212-mailbox), [evaluates positions](docs/evaluation.md) with a [tapered](docs/tapered-evaluation.md) material + positional + mobility weighted sum, and [searches](docs/search.md) via iterative-deepening alpha-beta with a [transposition table](docs/search.md#7-search-optimizations), null-move pruning, [quiescence search](docs/search.md#64-quiescence-search), [killer-move heuristics](docs/search.md#72-killer-moves), SEE-ordered captures, and a small opening book backed by [MapDB](https://mapdb.org/).
 
@@ -439,7 +440,7 @@ Adding a new REPL command is a two-step change: define a new nested `Command` su
 ## Credits and third-party material
 
 myChess is written from scratch, and the search, board representation, move
-generation, and evaluation architecture are original work. Two things in the tree
+generation, and evaluation architecture are original work. Three things in the tree
 are not, and are credited here.
 
 **Piece-square tables — PeSTO, by Ronald Friederich.** Since **v4.4.0** the twelve
@@ -466,6 +467,32 @@ tree and are still usable.
 (checked 2026-08-11). The Chess Programming Wiki page that publishes them is
 licensed [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) by its
 contributors. They are credited here because attribution is owed either way.
+
+**Strategic Test Suite — by Dann Corbit and Swaminathan Natarajan.** Since **v4.4.2**
+the tree carries the [Strategic Test
+Suite](https://www.chessprogramming.org/Strategic_Test_Suite) at
+[`src/test/resources/sts/`](src/test/resources/sts/), a curated collection of
+positions grouped into 15 strategic themes (undermining, open files, knight
+outposts, king activity, …). It is used by
+[`Sts`](src/test/java/org/michaelfl/mychess/Sts.java) to score the evaluation per
+theme and so name the weakest component instead of guessing at it; see
+[`docs/sts-history.md`](docs/sts-history.md).
+
+The positions and their theme grouping are Corbit's and Natarajan's. The file used
+here is the **LAN v6** form redistributed by
+[`fsmosca/STS-Rating`](https://github.com/fsmosca/STS-Rating), which annotates each
+position with up to ten candidate moves and a point value per move, produced with
+Stockfish 15 at 60 s per position and `multipv 10`. That form keeps only positions
+where the best move leads the second by at least 10 centipawns, which is why it
+holds **1188** of the original 1500. Nothing was modified — myChess reads the file
+as published.
+
+**License:** the redistributed file is MIT-licensed (© 2019 fsmosca); the notice
+travels with it at
+[`src/test/resources/sts/LICENSE-STS-Rating.txt`](src/test/resources/sts/LICENSE-STS-Rating.txt).
+No explicit license accompanies the suite itself at its origin (checked
+2026-08-18); it is credited here because attribution is owed either way. The file
+lives in the test resources, so it is not packaged into any distributed artifact.
 
 **Opening book source data.** The MapDB opening book is built from
 [KingBase](https://www.kingbase-chess.net/) PGN archives by `OpeningDBImporter`. The

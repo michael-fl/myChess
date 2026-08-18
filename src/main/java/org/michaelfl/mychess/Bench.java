@@ -59,8 +59,17 @@ public final class Bench {
      */
     public static final int DEFAULT_DEPTH = 8;
 
-    /** Effectively unbounded per-move time budget so depth is the only limit (24 h in ms). */
-    private static final int INFINITE_MILLIS = 24 * 60 * 60 * 1_000;
+    /**
+     * Effectively unbounded per-move time budget so depth is the only limit (24 h in ms).
+     *
+     * <p>Package-private rather than private because {@code Sts} (the Strategic
+     * Test Suite runner in the test sources) needs the identical budget for the
+     * identical reason, and a second copy of the constant would be a second thing
+     * to keep in sync. Both runners depend on the budget being large enough that
+     * {@code PositionSearch}'s skip-hopeless-iteration heuristic can never fire,
+     * which is what makes a fixed-depth run reproducible.
+     */
+    static final int INFINITE_MILLIS = 24 * 60 * 60 * 1_000;
 
     private static final String STANDARD_FENS = "/bench/stockfish-standard.fen";
     private static final String MIDDLEGAME_FENS = "/bench/mychess-middlegames.fen";

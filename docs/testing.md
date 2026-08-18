@@ -4,10 +4,10 @@ The test suite is the executable specification for myChess: it pins down move ge
 
 | Metric | Value |
 |---|---|
-| Test classes | 76 `*Test.java` (+ 23 helpers and Texel-tuning drivers under the same source root) |
-| Test methods (`@Test` + `@ParameterizedTest`) | 901 declared; 1 215 executed, parameterized cases counted per invocation |
-| Currently passing | all non-`@Disabled` (last full run 2026-08-16: 1 215 run, 0 failures, 4 skipped) |
-| Currently `@Disabled` | 4 |
+| Test classes | 78 `*Test.java` (+ 25 helpers and measurement drivers under the same source root, counted 2026-08-18) |
+| Test methods (`@Test` + `@ParameterizedTest`) | 901 declared; 1 215 executed, parameterized cases counted per invocation — measured 2026-08-16, before the 2026-08-18 additions |
+| Currently passing | all (last full run 2026-08-16: 1 215 run, 0 failures, 4 skipped; the four skipped were retired on 2026-08-18) |
+| Currently `@Disabled` | 0 — see [Retired disabled tests](#retired-disabled-tests) |
 | Test source lines | ~24 550 |
 | Framework | JUnit Jupiter 5.11 |
 | Execution | `mvn test` (Maven Surefire 3.5.2) |
@@ -40,7 +40,7 @@ The test classes cluster into seven groups. The per-group line counts below were
 |---|---|---|---|
 | **Data structures & encoding** (13) | `BoardTest`, `ChessUtilTest`, `GameStatusTest`, `MoveTest`, `MoveDescriptionTest`, `PositionEncodingTest`, `PieceSquareTablesTest`, `SortableMovesBucketTest`, `BitOpsTest`, `IntArrayTest`, `CastlingSlotTest`, `BoardCastlingRookFilesTest`, `Chess960StartPositionsTest` | ~3750 | Bit-packing, board layout, color/turn bit invariants, sortable bucket sort order, piece-square table inversion, mailbox indexing, castling-slot / rook-file resolution, the 960 start-position table, notation parsing. |
 | **Move generation & rules** (7) | `MoveGeneratorTest`, `GameTest`, `PerftTest`, `Chess960CastlingTest`, `MoveSorterImplTest`, `KillerMovesTest`, `SimpleNotationImporterTest` (`BoardTest` overlaps) | ~1510 | Pseudo-legal generation, castling legality (standard + 960), en passant, check / checkmate / stalemate detection, move ordering; **Perft node-count verification** against the Chess-Programming-Wiki reference values. |
-| **Search & evaluation** (20) | `EngineTest`, `EngineSmokeTest`, `DeepWeightTest`, `WeightingFunctionTest`, `QuiescenceSearchTest`, `StaticExchangeEvaluationTest`, `PositionSearchTest`, `engines/SearchNodeContextTest`, `engines/IterationTimingsTest`, `MirrorEvalTest`, `HangingPiecesEvalTest`, `BlunderTest`, `ChessEngineTest`, `NextMoveTaskTest`, `EvalRegressionTest`, `IllegalPvRegressionTest`, `StalemateAvoidanceRegressionTest`, `MoveSortInvariantRegressionTest`, `ZobristHashingTest`, `PositionHashConsistencyRegressionTest` | ~5205 | Position regressions, eval component ranges, mirror-symmetry of eval, quiescence depth, static exchange evaluation (SEE) for quiescence capture ordering and SEE < 0 pruning, PV-legality regressions, iterative-deepening timings, async task lifecycle, and Zobrist-hash correctness (incremental vs from-scratch, en-passant round-trips, perft-style + randomized Chess960 consistency walks). |
+| **Search & evaluation** (21) | `EngineTest`, `EngineSmokeTest`, `DeepWeightTest`, `WeightingFunctionTest`, `QuiescenceSearchTest`, `StaticExchangeEvaluationTest`, `PositionSearchTest`, `engines/SearchNodeContextTest`, `engines/IterationTimingsTest`, `MirrorEvalTest`, `HangingPiecesEvalTest`, `BlunderTest`, `ChessEngineTest`, `NextMoveTaskTest`, `EvalRegressionTest`, `IllegalPvRegressionTest`, `StalemateAvoidanceRegressionTest`, `MoveSortInvariantRegressionTest`, `ZobristHashingTest`, `PositionHashConsistencyRegressionTest`, `StsTest` | ~5205 | Position regressions, eval component ranges, mirror-symmetry of eval, quiescence depth, static exchange evaluation (SEE) for quiescence capture ordering and SEE < 0 pruning, PV-legality regressions, iterative-deepening timings, async task lifecycle, and Zobrist-hash correctness (incremental vs from-scratch, en-passant round-trips, perft-style + randomized Chess960 consistency walks). |
 | **Transposition table** (3) | `TranspositionTableTest`, `TranspositionTableIntegrationTest`, `ScoreTTAdjustmentTest` | ~525 | Bucket replacement / eviction policy, `TTEntryView` round-trips, end-to-end TT plumbing through the engine, mate-score depth adjustment on store / probe. |
 | **Draw rules** (2) | `ThreefoldRepetitionTest`, `FiftyMovesRuleTest` | ~180 | Detection + opt-out toggle for both rules. |
 | **Notation & I/O** (8) | `FenTest`, `PgnTest`, `PGNImporterTest`, `FenChess960ImportTest`, `PGNConverterTest`, `UciMoveParserTest`, `UciHandlerTest`, `LogTest` | ~2910 | FEN export/import (standard + 960 / Shredder), PGN parsing (strict + lenient) and end-to-end replay from arbitrary start positions, UCI move parsing and protocol handling, log routing. |
@@ -80,16 +80,18 @@ import static org.michaelfl.mychess.EngineTest.testPosition;
 
 `EngineTest.engineConfig()` returns a standard depth-8 `EngineConfig`; `EngineTest.testPosition(...)` is the four-overload position-regression harness used by both `EngineTest` and `DeepWeightTest`. There is no top-level test base class; helpers are loose static functions.
 
-### Disabled tests (4)
+### Retired disabled tests
 
-| File | Method | Reason |
-|---|---|---|
-| `EngineTest` | `dontCaptureWithKingPawn` | Open bug — the search picks a king-pawn capture in a position where the test author considers it strictly worse. Disabled until the evaluation function distinguishes "good" from "bad" pawn captures. |
-| `PGNImporterTest` | `testImportLargePGNFile` | Requires a large external PGN file not present in the repo. |
-| `PGNImporterTest` | `testImportMultipleLargePGNFiles` | Same. |
-| `PgnTest` | `testReadLargePGNFile` | Same. |
+The suite has **no `@Disabled` tests**. It had four until 2026-08-18, and how they were retired is the policy for any future one: a test nobody re-enables is a test nobody reads, so each was either rewritten to be green and meaningful or deleted outright.
 
-The three large-file tests are useful for ad-hoc verification when populating an opening DB but are skipped in CI because the inputs are not checked in.
+| File | Method | Why it was disabled | Outcome |
+|---|---|---|---|
+| `EngineTest` | `dontCaptureWithKingPawn` | Open bug — the search recaptures with the g-pawn and opens its own king's cover. Note said "re-enable once positional evaluation is tightened". | Re-measured: **still red for exactly the stated reason**, and Stockfish confirms the premise (`18...Bxf6` = −0.29 vs `18...gxf6` = −3.90, refuted by `19.Bg4 f5 20.Bh3 Ne4 21.Qh5`). Rewritten as the characterization `captureOnF6WithTheGPawn_characterizesShreddingItsOwnKingCover`, pinning `g7-f6` with a TODO to restore the original expectation. Counted in the `king-safety` family below. |
+| `PgnTest` | `testReadLargePGNFile` | Needed a 194 MB external PGN not checked into the repo. | Rewritten as `readingManyConcatenatedGames_yieldsThemAllIntact`, generating 20 000 games into a `@TempDir` — 0.19 s. |
+| `PGNImporterTest` | `testImportLargePGNFile` | Same. | Re-measured on a machine where the file exists: **it passed, in 7 816 s.** Never red — just 2 h 10 min of wall-clock, which is why nobody ran it. Replaced by `importingManyConcatenatedGames_replaysEveryOne`: 500 synthetic games whose bodies each carry a move kind that is hard for the *importer* (castling both ways, check with king recapture, en passant, promotion to queen and to knight, file disambiguation), asserting parsed move count against replayed ply count per game. |
+| `PGNImporterTest` | `testImportMultipleLargePGNFiles` | Same, over a hard-coded `KingBase2019-pgn/` directory. | **Deleted.** It covered nothing the replacement above does not. |
+
+The lesson worth keeping: three of the four were disabled for **cost, not for failure**, and the cost came entirely from depending on external data. A generated fixture reaches the same coverage in under a second, so that dependency was never necessary. The fourth was a real open defect hidden behind an annotation — which is the worse failure mode, because a disabled test reports neither red nor green.
 
 ### What is not tested
 
@@ -147,6 +149,28 @@ The gold-standard move-generator correctness test. Enumerates every strictly leg
 Split into a default set (each position at two depths, ~2 s total) and a `@Tag("slow")` set one depth deeper per position (~40 s, ~600 M nodes). The `MoveGenerator` runs in `allPromotions = true` mode so all four promotion piece types are generated, matching the reference counts (production skips bishop under-promotion — see [§ 4.0.6](version-history.md)).
 
 This suite surfaced the latent en-passant Zobrist-drift bug fixed in v4.0.7: the count mismatch appeared only in the two positions whose sub-trees contain en-passant captures, which pointed straight at the ep move handling. Complemented by [`PositionHashConsistencyRegressionTest`](../src/test/java/org/michaelfl/mychess/PositionHashConsistencyRegressionTest.java), which walks the same kind of exhaustive / randomized move sequences asserting incremental-hash consistency at every ply.
+
+### `Sts` / `StsTest` — the Strategic Test Suite, and the difference between a measurement and a test
+
+`Sts` is a **measurement tool, not a graded test** — the same role `tools/run-anchor-bracket.sh` has for Elo. It runs the [Strategic Test Suite](https://www.chessprogramming.org/Strategic_Test_Suite) (1188 positions, 15 themes) and reports a score per theme, so the weakest evaluation component can be *named* rather than guessed at. Launch it with `tools/run-sts.sh`; results and the measurement policy live in [`sts-history.md`](sts-history.md). Credits: [README](../README.md#credits-and-third-party-material).
+
+Three properties are easy to get wrong and worth stating:
+
+- **Partial credit, not best-move-only.** Every position lists up to ten candidate moves (`c9`) with a point value each (`c8`), the best worth 100. myChess earns the value of whichever it plays. An engine that plays the 46-point second choice is measurably different from one that plays the 1-point tenth choice, and binary scoring throws that away. Always read the printed `best` and `miss` columns next to the percentage: the same score can mean "half-good everywhere" or "a third perfect, the rest off the list", which are different diagnoses.
+- **Fixed depth, not fixed time.** Each position is searched to a fixed depth with a 24 h per-move budget, so the score is reproducible and machine-independent. Consequence: **the number is not comparable to published STS ratings**, which are measured at fixed time — only to another myChess run at the same depth. And what is measured is "move quality at depth N", evaluation *and* search: a search change that surfaces a different move at the same depth moves the score too.
+- **`bm` is SAN while `c9` is from-to notation.** `bm f5` versus `c9 "f4f5 …"`, so `bm` cannot be string-compared against the engine's move; comparison runs against `c9` alone. `bm` does equal `c7`'s first token on every line, which `StsTest` uses as a cheap integrity check.
+
+`StsTest` covers three different things, and conflating them would oversell it:
+
+1. **Unit tests of the parser and the scoring arithmetic**, on hand-written fixtures — independent of the suite file.
+2. **The notation contract**, and this is the only part that guards myChess code. For all 1188 positions it asserts every `c9` candidate lies in `{ toUci(m, board) : m legal in board }`. A candidate outside that image is *unreachable* — its points can never be awarded at any depth, and the symptom is indistinguishable from the engine simply playing worse. The assertion goes red when `UciMoveParser.toUci`, the Chess960 castling branch, or move generation drifts. Move generation alone suffices: the search only *chooses* among generated moves and can never produce a string outside that image.
+3. **Asset-swap detection** — the position counts, per-theme sizes, and candidate-list shape. Over a tracked, unchanging file these cannot fail on their own; their sole purpose is to go red if the file is *replaced* (a newer STS release, or the bare-FEN variant in the same upstream download). Honest bookkeeping, not a test of the engine.
+
+None of the three starts the engine, so a fourth test does: a wiring proof over three positions at depth 2, asserting structure only — never which move or how many points. Without it, a wrong board handed to `toUci` or an inverted theme filter would surface only in the measurement run.
+
+**Deliberately no score threshold and no `@Tag("slow")` suite run.** A floor can only be derived from a baseline, making it a snapshot of today's engine: every improvement loosens it, and if nobody raises it the test is green while guarding nothing — the exact failure mode that cost four `@Disabled` tests (see above). Reinforcing this, `pom.xml` sets no Surefire `<excludedGroups>`, so a `@Tag("slow")` test is paid on every `mvn test`. Regression protection stays with `bench` (node signature, seconds) and SPRT.
+
+Aggregation keys on the **theme number**, not the theme name: theme 3 appears in the suite under two orderings of the same name (`Knight Outposts/Repositioning/Centralization` 85 times, `.../Centralization/Repositioning` once), and keying by name would split it into two rows.
 
 ### `ThreefoldRepetitionTest` (×4) — engine plays into the draw
 
@@ -324,6 +348,17 @@ grep -hoE "Test family:</b> [a-z-]+ \([a-z]+\)" src/test/java/org/michaelfl/mych
   | sed 's/.*<\/b> //' | sort | uniq -c | sort -rn        # topic + status
 grep -c "Test family:</b> king-safety (defect)" src/test/java/org/michaelfl/mychess/*.java
 ```
+
+**What must NOT carry the marker: aggregate measurements.** `StsTest` and `EvalBenchmarkTest`
+deliberately have no `Test family:` line, and neither should any future suite-level metric.
+The marker classifies *per-position characterizations*, whose status can be `defect`, `fixed`,
+or `guard`; a score over 70 or 1188 positions is none of the three. Adding the marker to
+"complete" the taxonomy would corrupt the grep-based counts above, which are the whole reason
+the marker exists. The `king-safety` family therefore now has two kinds of evidence that are
+counted separately: 19 individual cases, and — outside the tally — the STS *King Activity*
+theme score in [`sts-history.md`](sts-history.md). The depth-8 misses list printed by
+`StsRunner` is the intended feed for new individual cases; it arrives in exactly the shape
+[§ 11.3](#113-turning-a-lost-game-into-a-test) asks for (position, played move, best move).
 
 The marker says **`Test family`, not `Blunder family`** — it was renamed once the first
 family arrived whose tests are not blunders. The narrower word had already started to
