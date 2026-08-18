@@ -420,10 +420,16 @@ class BlunderTest {
      */
     private static final int DEPTH_BOUND_BUDGET_MS = 120_000;
 
-    /** JUnit safety timeout for the fixed-depth cases; above {@link #DEPTH_BOUND_BUDGET_MS}. */
-    private static final int DEPTH_BOUND_TIMEOUT_S = 150;
+    /**
+     * JUnit safety timeout for the fixed-depth cases; above {@link #DEPTH_BOUND_BUDGET_MS}.
+     *
+     * <p>Package-private, like the three depth-bound helpers below, so
+     * {@code StsDefectTest} can share this harness instead of copying it -- see
+     * the cross-test sharing convention in {@code docs/testing.md} § 11.1.
+     */
+    static final int DEPTH_BOUND_TIMEOUT_S = 150;
 
-    private static Game gameFromFenAtDepth(String fen, int depth, TranspositionTable tt) {
+    static Game gameFromFenAtDepth(String fen, int depth, TranspositionTable tt) {
         var engineConfig = new EngineConfig.Builder()
                 .maxDepth(depth)
                 .millisPerMove(DEPTH_BOUND_BUDGET_MS)
@@ -435,7 +441,7 @@ class BlunderTest {
     }
 
     /** Like {@link #searchCurrentPosition}, but waits long enough for {@link #DEPTH_BOUND_BUDGET_MS}. */
-    private static MoveAndWeight searchCurrentPositionDeep(Game game) throws Exception {
+    static MoveAndWeight searchCurrentPositionDeep(Game game) throws Exception {
         return game.getEngine().nextMoveAsync().getResult(DEPTH_BOUND_TIMEOUT_S - 10, TimeUnit.SECONDS);
     }
 
@@ -2094,8 +2100,8 @@ class BlunderTest {
      * it fails the moment the behavior changes, and the failure message then names the
      * move it chose instead, which is the first thing anyone wants to know.
      */
-    private static void assertEngineStillPlays(MoveAndWeight result, int blunderFrom, int blunderTo,
-                                               String blunderName, String truth) {
+    static void assertEngineStillPlays(MoveAndWeight result, int blunderFrom, int blunderTo,
+                                       String blunderName, String truth) {
         int chosen = result.move();
         boolean isBlunder = Move.getFromField(chosen) == blunderFrom && Move.getToField(chosen) == blunderTo;
 

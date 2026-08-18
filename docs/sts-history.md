@@ -121,3 +121,70 @@ Cost: **1 973 751 ms (32.9 min)**, 3 673 067 545 nodes, 1 860 957 NPS. Time and 
 informative only. Apple M1 Pro (10 cores), macOS 15.6.1, Corretto JDK 25.0.2; the machine
 was **not** fully idle (a `mvn test-compile` ran during the measurement), which affects the
 time columns and nothing else — the score is depth-bound and therefore unaffected.
+
+#### What the zero-scoring positions turned out to be — a qualification
+
+The 87 misses were followed up in two stages, and the result narrows what may be concluded
+from them. `tools/scan-sts-misses.py` measured each one's real centipawn loss with
+Stockfish, because the suite's point values are a **ranking rescaled per position** — the
+best move is worth 100 whether it leads the second by a tenth of a pawn or by three, so a
+zero says nothing about magnitude. **32 of the 87 lose less than a pawn**: those are
+preferences, and a zero there is ranking noise. The 55 survivors were then re-searched at
+depths 8 to 13 to see whether myChess keeps the move (evaluation hole) or abandons it
+(horizon effect).
+
+Of the 25 classified, **all 25 are horizon effects**, and the abandonment depths cluster at
+**depth 9** — one single ply beyond the measurement depth; not one survived to depth 13.
+Ranking misses by centipawn loss turns out to select horizon effects *systematically*: a
+large loss usually means something concrete and tactical, and tactics are exactly what extra
+depth resolves.
+
+#### Where the evaluation defects actually are
+
+The same pipeline applied to the **low-score band** — moves worth 1 to 20 points, i.e. moves
+that *are* among Stockfish's ten candidates but worth a fifth of the best or less — finds the
+opposite. Such a move carries no refutation a ply deeper would reveal, so keeping it is a
+preference rather than a reach problem.
+
+Both filters are needed, and the cheap one first. Of the 191 positions scoring 0–20 points,
+**91 lose less than a pawn** and are ranking noise; of the 45 survivors in the low-score
+band, the depth sweep over 8–11 classified **27 as horizon** and **18 as evaluation
+defects** (11 holding the same point value at every depth, 7 changing to something no
+better). 14 are clean under the stricter reading that the maximum across depths must also
+stay low.
+
+`King Activity.100` is the case that proves the loss filter earns its keep: myChess's
+2-point move and the suite's 100-point move both score **exactly 0.00** to Stockfish 18, so
+the 98-point gap is Stockfish 15 disagreeing with Stockfish 18. Selecting on point values
+alone would have made it a test.
+
+Five of the 18 became characterization tests in `StsDefectTest`, chosen for **aggregate
+backing** rather than loss size — four of their five themes are among the five weakest in
+the table above, so each case stands on more than its own position. Ranking by loss would
+have picked three cases from a single theme. New families: `pointless-exchange` (2 cases),
+`king-activity`, `flank-pawn-advance`, `passed-pawn`; see [`testing.md`](testing.md).
+
+Raw data for all of it is tracked: `sts-4.4.2-d8-losses-to-20pt.json`,
+`sts-4.4.2-d8-classified-misses.jsonl`, `sts-4.4.2-d8-eval-trajectories.jsonl`.
+
+**What this does not overturn:** the theme table above. The misses are the extreme tail,
+7.3 % of positions; the score itself comes overwhelmingly from partial credit, i.e. from
+positions where myChess plays a listed-but-worse move. Those are not shown to be
+depth artifacts.
+
+**What it does mean:** that the theme ranking reflects *evaluation* rather than search
+depth is a plausible reading, not a measured one, and the flank-pawn interpretation above
+should be read with that caveat. `Center Control.071` is the concrete warning — myChess
+plays `1.h3`, the literal move shape of several open `king-safety` cases, and it is
+measurably a horizon effect there, corrected at depth 10. Not every flank-pawn nudge is the
+same defect.
+
+**The measurement that would settle it** is a second full run at a deeper depth: themes
+whose score rises sharply with depth are search-limited, themes that stay flat are
+evaluation-limited. That is a direct read of the split at theme level and costs one more
+run. Until it exists, treat the ranking as "where myChess plays worst at depth 8", which is
+what it literally is.
+
+The five deepest-correcting cases became characterization tests in `StsDefectTest`, family
+`search-horizon (defect)` — evidence for the search work in roadmap §§ 12.1–12.6 rather
+than for the evaluation.
