@@ -98,6 +98,14 @@ Measurement work here routinely runs for minutes to hours — engine matches, ST
 
 **2. The process must be wrapped in a two-minute heartbeat that reports liveness and, where possible, progress.** Use `Monitor` with a `sleep 120` loop that prints on every tick — not only on change, and not only on completion. It must state whether the process is still alive, how far it has come, and on exit whether a result exists. The reason for the fixed tick: a monitor that only speaks when something changes makes silence ambiguous, and a stalled run then looks exactly like a working one. Two runs were assumed to be progressing while they were dead. (The interval was 60 s until 2026-08-18 and was widened to 120 s — a minute produced more chat noise than the added resolution was worth.)
 
-**Do not diagnose liveness with clever one-liners.** `pgrep -fc <pattern>` returned 0 on this machine while `pgrep -f <pattern>` listed four PIDs, and a `ps | grep my-chess-4.4.2.jar` filter found nothing because `mychess-uci.sh` launches with `-cp target/classes:target/dependency/*` and carries no jar name. Both led to a wrong "the run is hung" conclusion about a run that was computing at 99 % CPU. Use `ps -eo …,command | grep -c <literal>` and verify the filter matches something *known to be running* before trusting a zero.
+**The heartbeat must end itself when the run does.** Watch for the process, not for log lines: check whether it still exists, and `break` out of the loop when it is gone — printing either the finished result or a resume hint. A `tail -f` on a log file never exits on its own; one left over from the anchor-bracket run was still going **2 days and 18 hours** after that run finished, and nobody noticed. A self-terminating monitor also makes its final message the answer: "done, here is the footer" or "interrupted at N, resume with this command".
+
+**Do not diagnose liveness with clever one-liners.** Three different ones misfired in a single afternoon:
+
+- `pgrep -fc <pattern>` returned 0 while `pgrep -f <pattern>` listed four PIDs.
+- `ps | grep my-chess-4.4.2.jar` found nothing, because `mychess-uci.sh` launches with `-cp target/classes:target/dependency/*` and carries no jar name.
+- `ps -eo etime,command | grep <script>.py` matched the *launching shell* as well, whose command line was the whole heredoc that wrote the script — so the "elapsed time" field came back as several lines of Python source.
+
+The first two produced a confident "the run is hung" about a run at 99 % CPU. Use `ps -eo …,command` with an **anchored** match on the interpreter or binary (`awk '/bin\/python3 .*script\.py$/'`), take the PID and ask for the elapsed time separately (`ps -o etime= -p $pid`), and verify the filter matches something *known to be running* before trusting a zero.
 
 **Scope kills to your own processes.** `pkill -f "MyChessMain uci"` also matches the lichess bot's engine, because the bot runs the same main class. Match the specific wrapper path, or keep the PIDs you started. Killing a Python parent also leaves its engine children orphaned at full CPU — check for and clean up strays afterwards.

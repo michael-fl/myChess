@@ -274,11 +274,20 @@ class StsDefectTest {
     // replacement, where there is one, is no better. Extra search does not help,
     // so the evidence is for the evaluation.
     //
-    // All five are backed by an independent aggregate signal: four of their five
-    // themes are among the five weakest in the v4.4.2 run (docs/sts-history.md),
-    // so each case stands on more than its own position. Selection was by that
-    // backing rather than by loss size -- ranking by loss alone would have picked
-    // three cases from one theme.
+    // These five were selected by "aggregate backing" -- their themes were among the
+    // weakest in the v4.4.2 depth-8 run -- and a later depth-10 run over the same
+    // 1188 positions showed that criterion to be largely wrong. A low theme score
+    // does NOT mean the theme is evaluation-limited: six of the fifteen gain more
+    // than a fifth of their remaining headroom from two extra plies, so their low
+    // score was reach, not knowledge (docs/sts-history.md).
+    //
+    // Of these five, three sit on themes that are evaluation-limited after all
+    // (Square Vacancy 11 %, Offer of Simplification 10 %, AT 18 % of headroom
+    // captured) and two do not (King Activity 24 %, AKPC 21 % -- both depth-limited).
+    // The two are marked in place. Every case below stands regardless, because each
+    // is pinned by its own measurement: a verified centipawn loss and a point value
+    // that does not move between depth 8 and depth 11. It is the borrowed argument
+    // that failed, not the finding.
     // -----------------------------------------------------------------------
 
     /**
@@ -326,16 +335,24 @@ class StsDefectTest {
      * <p>Measured loss <b>1.93 pawns</b>, and the choice is worth <b>1 of 100 points at
      * every depth from 8 to 11</b> — one of the flattest trajectories in the whole scan.
      *
-     * <p>This case joins the two findings of the v4.4.2 theme table in one position: theme
-     * 11 (King Activity) scores 62.6 %, and the two weakest themes of the run are both
-     * flank-pawn advancement. Here the engine prefers the flank pawn *to* the king move,
-     * which is the same mis-weighting seen from the other side in the open
-     * {@code king-safety} cases (`20.h3`, `33.f3`).
+     * <p>The engine prefers the flank pawn *to* the king move, which is the same
+     * mis-weighting the open {@code king-safety} cases show from the other side
+     * (`20.h3`, `33.f3`) — but that is a resemblance between positions, not shared evidence.
+     *
+     * <p><b>Two things written here first were wrong and are corrected.</b> The case was
+     * presented as joining the theme table's findings; it does not. Theme 11 captures
+     * <b>24 % of its remaining headroom</b> at depth 10 and is depth-limited, so its 62.6 %
+     * says myChess cannot calculate these endings out — this position, flat at 1 point across
+     * four depths, is an exception within it. And theme 11 is <em>King Activity</em>, the
+     * king used as an active piece; the STS has no theme for <em>king safety</em>, the king
+     * under attack, so nothing here is evidence for [roadmap § 12.21] in either direction.
+     * That case rests on the 19 game-derived cases and the keBKOXd1 guard, untouched by this
+     * run. See docs/sts-history.md.
      *
      * <p><b>Test family:</b> king-activity (defect)
      *
-     * <p>TODO: invert to {@code assertEngineAvoids} once king activity is priced;
-     * tracked with [roadmap § 12.21].
+     * <p>TODO: invert to {@code assertEngineAvoids} once king activity is priced. Not tracked
+     * with § 12.21 — that section is about king *safety*, which is a different defect.
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -359,12 +376,19 @@ class StsDefectTest {
      * myChess plays the neutral {@code 1.Rd2} and the edge evaporates to <b>−0.09</b>.
      *
      * <p>Measured loss <b>1.23 pawns</b>, worth <b>5 of 100 points at every depth from 8 to
-     * 11</b>. Theme 8, *Advancement of f/g/h pawns*, is the weakest of the fifteen at
-     * <b>59.5 %</b> with the joint-highest miss count, so the aggregate and this single case
-     * say the same thing. Note what the position does *not* contain: no tactic, no capture,
-     * nothing a deeper search would stumble over. What is missing is the idea that a pawn
-     * advance on the side where the opponent's king sits is worth something, and myChess has
-     * no term that could express it.
+     * 11</b>. Note what the position does *not* contain: no tactic, no capture, nothing a
+     * deeper search would stumble over. What is missing is the idea that a pawn advance on
+     * the side where the opponent's king sits is worth something, and myChess has no term
+     * that could express it.
+     *
+     * <p><b>Its theme does not back this case, contrary to what was written here first.</b>
+     * Theme 8 is the weakest of the fifteen at depth 8 (59.5 %), which is why the case was
+     * picked — but the depth-10 run showed the theme captures <b>21 % of its remaining
+     * headroom</b> from two extra plies and is therefore depth-limited, not
+     * evaluation-limited (docs/sts-history.md). The theme's low score says myChess cannot
+     * calculate these positions out, not that it lacks the concept. This position is the
+     * exception within it: flat at 5 points across four depths, so here the concept really
+     * is missing. Do not cite theme 8 as evidence for a flank-advance term.
      *
      * <p><b>Test family:</b> flank-pawn-advance (defect)
      *
@@ -394,8 +418,10 @@ class StsDefectTest {
      *
      * <p>Measured loss <b>1.72 pawns</b>, worth <b>18 of 100 points at every depth from 8 to
      * 11</b>. Theme 15, *Avoid Pointless Exchange*, produced only <b>19 best moves out of
-     * 73</b> in the v4.4.2 run — the lowest best-move count of any theme — so this case sits
-     * on the strongest aggregate signal in the table. An engine whose quiescence search is
+     * 73</b> in the v4.4.2 run — the lowest best-move count of any theme — and the depth-10
+     * run confirms the theme is <b>evaluation-limited</b>: two extra plies capture only 18 %
+     * of its remaining headroom. So the aggregate does back this case, which is not true of
+     * every case in this section (see the note above). An engine whose quiescence search is
      * driven by captures and whose evaluation has no term for keeping tension is biased
      * toward exactly this move.
      *
@@ -449,5 +475,288 @@ class StsDefectTest {
         assertEngineStillPlays(result, Board.g5, Board.f6, "Bxf6",
                 "which drops +2.12 to +0.22, where the suite's Ne4 keeps +2.26 and takes on "
                         + "f6 two moves later. Worth 20 of 100 points at every depth from 8 to 11");
+    }
+
+    // -----------------------------------------------------------------------
+    // Rook activation — the family the second pass produced, and the deepest
+    // evaluation family in the suite with four cases.
+    //
+    // In each one the better move activates a rook (to the seventh, or onto an
+    // open file or rank) and myChess plays a quiet piece move or a trade instead.
+    // Mobility rewards squares a rook can see and the piece-square tables reward
+    // centralization, but neither prices a rook ON the seventh or the tempo of
+    // seizing a file, because those pay off later than the search horizon.
+    // -----------------------------------------------------------------------
+
+    /**
+     * STS {@code 7th Rank.078} — castling short instead of taking the seventh rank, and the
+     * whole advantage goes with it.
+     *
+     * <p>{@code r1b2rk1/1p2q1b1/1n4p1/pP1p4/3Pp3/6BN/P2QBPP1/2R1K2R w K - 0 1}, white to move
+     * at +1.58. The suite plays {@code 1.Rc7} and holds +1.65. myChess plays {@code 1.0-0},
+     * a move that is never *wrong* and here costs everything: <b>0.00</b> after
+     * {@code 1...Bxh3 2.gxh3 Rac8 3.Rxc8 Nxc8 4.Qxa5 Bxd4}, because black gets the c-file
+     * first.
+     *
+     * <p>Measured loss <b>1.51 pawns</b>, worth 10 of 100 points at every depth from 8 to 11.
+     * Note which move myChess prefers: the safe developing one. Castling is cheap to like —
+     * king safety and rook connection both score — while {@code Rc7} pays off only once the
+     * rook is there.
+     *
+     * <p><b>Test family:</b> rook-activation (defect)
+     *
+     * <p>TODO: invert to {@code assertEngineAvoids} once a rook-on-the-seventh or
+     * open-file-tempo term exists.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void seventhRank078_castlesInsteadOfTakingTheSeventhRank() throws Exception {
+        var game = gameFromFenAtDepth("r1b2rk1/1p2q1b1/1n4p1/pP1p4/3Pp3/6BN/P2QBPP1/2R1K2R w K - 0 1",
+                PIN_DEPTH, tt);
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.e1, Board.g1, "0-0",
+                "which turns +1.58 into 0.00 because black takes the c-file first, where the "
+                        + "suite's Rc7 holds +1.65. Worth 10 of 100 points at every depth from 8 to 11");
+    }
+
+    /**
+     * STS {@code 7th Rank.090} — the rooks traded off instead of one planted on the seventh.
+     *
+     * <p>{@code r4rk1/pp2n2p/4P1p1/2Qp2q1/1P6/5R2/P5PP/4RBK1 w - - 0 1}, white to move at
+     * +1.05. {@code 1.Rf7} keeps +1.09. myChess plays {@code 1.Rxf8+} — a check, so it looks
+     * like progress — and after {@code 1...Rxf8 2.Qxa7 Qd2} the advantage is <b>+0.05</b>.
+     *
+     * <p>Measured loss <b>1.05 pawns</b>, worth 12 of 100 points at all four depths. This is
+     * the family's overlap with {@code pointless-exchange}: the move is both a trade and a
+     * refusal to activate, and it is filed here because what is lost is the seventh rank
+     * rather than a piece's quality.
+     *
+     * <p><b>Test family:</b> rook-activation (defect)
+     *
+     * <p>TODO: invert to {@code assertEngineAvoids}; one term should move this and
+     * {@code seventhRank078} together.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void seventhRank090_tradesTheRooksInsteadOfPlantingOneOnTheSeventh() throws Exception {
+        var game = gameFromFenAtDepth("r4rk1/pp2n2p/4P1p1/2Qp2q1/1P6/5R2/P5PP/4RBK1 w - - 0 1",
+                PIN_DEPTH, tt);
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.f3, Board.f8, "Rxf8+",
+                "a check that trades the advantage away, +1.05 down to +0.05, where the "
+                        + "suite's Rf7 keeps +1.09. Worth 12 of 100 points at every depth from 8 to 11");
+    }
+
+    /**
+     * STS {@code Open Files and Diagonals.041} — a pawn nudged instead of the rook swung to
+     * the open h-file, and the clearest instance of an unstable trajectory.
+     *
+     * <p>{@code 3r4/3pkpp1/4p3/2p3q1/6r1/1P6/P5B1/2R1RQK1 b - - 0 1}, black to move at +2.61.
+     * {@code 1...Rh8} keeps +2.74 by taking the file the white king sits on. myChess plays
+     * {@code 1...d6} and the game is level, <b>0.00</b>, after {@code 2.Rc4 Rxc4 3.Qxc4}.
+     *
+     * <p>Measured loss <b>2.13 pawns</b>. The point trajectory is <b>1 → 12 → 0 → 22</b>
+     * across depths 8 to 11: the choice churns without ever becoming good, and at depth 10 it
+     * is *worse* than at depth 8. That rules out a horizon effect by definition — extra
+     * search cannot make a position worse if the earlier choice was merely short-sighted.
+     *
+     * <p><b>Test family:</b> rook-activation (defect)
+     *
+     * <p>TODO: invert to {@code assertEngineAvoids} once seizing an open file toward the enemy
+     * king is priced.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void openFiles041_nudgesAPawnInsteadOfSwingingTheRookToTheOpenFile() throws Exception {
+        var game = gameFromFenAtDepth("3r4/3pkpp1/4p3/2p3q1/6r1/1P6/P5B1/2R1RQK1 b - - 0 1",
+                PIN_DEPTH, tt);
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.d7, Board.d6, "d6",
+                "which levels a +2.61 position at 0.00, where the suite's Rh8 keeps +2.74. "
+                        + "Point value churns 1/12/0/22 over depths 8 to 11 without ever getting good");
+    }
+
+    /**
+     * STS {@code Center Control.001} — a knight sortie that walks into a rook capture, where
+     * the rook belonged in the center.
+     *
+     * <p>{@code 1k1r4/4bp2/p1q1pnr1/6B1/NppP3P/6P1/1P3P2/2RQR1K1 w - - 0 1}, white to move at
+     * +1.31. {@code 1.Re5} keeps +1.34. myChess plays {@code 1.Nc5} and after
+     * {@code 1...Rxg5! 2.Nxa6+ Qxa6 3.hxg5} it is <b>−0.48</b> — the knight leaves the g5
+     * bishop unsupported.
+     *
+     * <p>Measured loss <b>1.47 pawns</b>, worth <b>1 of 100 points at every depth from 8 to
+     * 11</b> — one of the flattest trajectories in the scan, and the reason it is filed here
+     * rather than under a tactical family: four depths of search never reconsider it.
+     *
+     * <p><b>Test family:</b> rook-activation (defect)
+     *
+     * <p>TODO: invert to {@code assertEngineAvoids}.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void centerControl001_sortiesTheKnightWhereTheRookBelongedInTheCenter() throws Exception {
+        var game = gameFromFenAtDepth("1k1r4/4bp2/p1q1pnr1/6B1/NppP3P/6P1/1P3P2/2RQR1K1 w - - 0 1",
+                PIN_DEPTH, tt);
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.a4, Board.c5, "Nc5",
+                "which loses the g5 bishop to 1...Rxg5 and turns +1.31 into −0.48, where the "
+                        + "suite's Re5 holds +1.34. Worth 1 of 100 points at every depth from 8 to 11");
+    }
+
+    // -----------------------------------------------------------------------
+    // Pawn thrusts, king activity, an exchange, and a defensive resource.
+    // -----------------------------------------------------------------------
+
+    /**
+     * STS {@code Undermine.023} — the queenside thrust declined for a quiet queen move.
+     *
+     * <p>{@code 2kr2r1/1bpnqp2/1p1ppn2/p5pp/P1PP4/4PP2/1P1NBBPP/R2Q1RK1 w - - 0 1}, white to
+     * move at +1.31. {@code 1.b4!} undermines the a5/b6 pawn pair in front of the black king
+     * and holds +1.39. myChess plays {@code 1.Qc2} and black consolidates with {@code 1...c5}
+     * to <b>0.00</b>.
+     *
+     * <p>Measured loss <b>1.26 pawns</b>, trajectory <b>13 → 9 → 13 → 13</b>: at depth 9 it
+     * briefly prefers something *worse*.
+     *
+     * <p><b>Test family:</b> pawn-thrust (defect)
+     *
+     * <p>TODO: invert to {@code assertEngineAvoids} once pawn thrusts against a castled or
+     * queenside king are priced — the same term as {@code akpc036} above, from the other wing.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void undermine023_declinesTheB4ThrustForAQuietQueenMove() throws Exception {
+        var game = gameFromFenAtDepth("2kr2r1/1bpnqp2/1p1ppn2/p5pp/P1PP4/4PP2/1P1NBBPP/R2Q1RK1 w - - 0 1",
+                PIN_DEPTH, tt);
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.d1, Board.c2, "Qc2",
+                "after which 1...c5 levels the game at 0.00, where the suite's b4! undermines "
+                        + "a5/b6 for +1.39. Worth 13 points at depth 8, and only 9 at depth 9");
+    }
+
+    /**
+     * STS {@code Undermine.073} — a winning position halved by moving a knight instead of
+     * pushing the pawn that breaks the chain.
+     *
+     * <p>{@code k1qbr1n1/1p4p1/p1p1p1Np/2P2p1P/3P4/R7/PP2Q1P1/1K1R4 w - - 0 1}, white to move
+     * and <b>winning at +3.65</b>. {@code 1.d5!} cracks the c6/e6 pawn pair open and keeps
+     * +3.75. myChess plays {@code 1.Ne5} and drops to <b>+1.35</b> — still better, but a
+     * winning position turned into a mere edge.
+     *
+     * <p>Measured loss <b>1.24 pawns</b>, worth 12 of 100 points at all four depths.
+     *
+     * <p><b>Test family:</b> pawn-thrust (defect)
+     *
+     * <p>TODO: invert to {@code assertEngineAvoids} together with {@code undermine023}.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void undermine073_movesTheKnightInsteadOfBreakingThePawnChainWithD5() throws Exception {
+        var game = gameFromFenAtDepth("k1qbr1n1/1p4p1/p1p1p1Np/2P2p1P/3P4/R7/PP2Q1P1/1K1R4 w - - 0 1",
+                PIN_DEPTH, tt);
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.g6, Board.e5, "Ne5",
+                "which lets a won +3.65 shrink to +1.35, where the suite's d5! keeps +3.75 by "
+                        + "breaking the c6/e6 chain. Worth 12 of 100 points at every depth from 8 to 11");
+    }
+
+    /**
+     * STS {@code King Activity.005} — the second case of that family: a knight sortie that
+     * simply loses a piece, where the king wanted to step up.
+     *
+     * <p>{@code 1r2r3/1p1b3k/2p2n2/p1Pp4/P2N1PpP/1R2p3/1P2P1BP/3R2K1 b - - 0 1}, black to
+     * move in a balanced position (0.00). {@code 1...Kg6} holds it. myChess plays
+     * {@code 1...Ne4} and after {@code 2.Bxe4+ Rxe4 3.Kg2 Rxf4 4.Kg3} it is <b>−1.08</b>.
+     *
+     * <p>Measured loss <b>1.37 pawns</b>, worth <b>1 of 100 points at every depth from 8 to
+     * 11</b>. Together with {@code kingActivity085} the family now has two cases in unrelated
+     * positions, so the gap is a property of the evaluation rather than a quirk of one
+     * position — which is what the family was missing.
+     *
+     * <p><b>Test family:</b> king-activity (defect)
+     *
+     * <p>TODO: invert to {@code assertEngineAvoids} once king activity is priced; tracked with
+     * [roadmap § 12.21].
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void kingActivity005_sortiesTheKnightIntoBxe4WhereTheKingWantedToStepUp() throws Exception {
+        var game = gameFromFenAtDepth("1r2r3/1p1b3k/2p2n2/p1Pp4/P2N1PpP/1R2p3/1P2P1BP/3R2K1 b - - 0 1",
+                PIN_DEPTH, tt);
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.f6, Board.e4, "Ne4",
+                "which loses a piece to 2.Bxe4+ and turns a level game into −1.08, where the "
+                        + "suite's Kg6 holds 0.00. Worth 1 of 100 points at every depth from 8 to 11");
+    }
+
+    /**
+     * STS {@code AT.063} — the third case of {@code pointless-exchange}: the queen given away
+     * on f3 for nothing.
+     *
+     * <p>{@code 3rrbk1/5ppp/b1q5/p1p2P2/p1P5/4BQN1/PP1R2PP/2R3K1 b - - 0 1}, black to move at
+     * +1.10. {@code 1...Qf6} keeps +1.23. myChess plays {@code 1...Qxf3}, and after
+     * {@code 2.gxf3 Rxd2 3.Bxd2} the game is level at <b>0.00</b>: the trade repairs white's
+     * structure and removes black's best piece.
+     *
+     * <p>Measured loss <b>1.13 pawns</b>, worth <b>1 of 100 points at every depth from 8 to
+     * 11</b>. Three cases now share this family, all of them a queen or bishop given up for
+     * an equal-material trade that costs the position — the pattern behind theme 15's
+     * 19-best-moves-of-73, the worst best-move count in the run.
+     *
+     * <p><b>Test family:</b> pointless-exchange (defect)
+     *
+     * <p>TODO: invert to {@code assertEngineAvoids} together with {@code at098} and
+     * {@code offerOfSimplification090} — one term should move all three.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void at063_givesTheQueenAwayOnF3ForAnEqualMaterialTrade() throws Exception {
+        var game = gameFromFenAtDepth("3rrbk1/5ppp/b1q5/p1p2P2/p1P5/4BQN1/PP1R2PP/2R3K1 b - - 0 1",
+                PIN_DEPTH, tt);
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.c6, Board.f3, "Qxf3",
+                "which repairs white's structure and levels a +1.10 position at 0.00, where "
+                        + "the suite's Qf6 keeps +1.23. Worth 1 of 100 points at all four depths");
+    }
+
+    /**
+     * STS {@code Square Vacancy.019} — the only line that holds is a forcing one, and myChess
+     * plays a quiet rook move instead.
+     *
+     * <p>{@code 1Q6/1p2p2k/1r4pp/p1p2P2/q2nr1P1/7R/1P1R4/5NK1 w - - 0 1}, white to move in a
+     * position Stockfish reads as <b>exactly balanced</b> — but only because {@code 1.Qf8}
+     * keeps checking; black's Nd4, Re4, Rb6 and Qa4 are otherwise overwhelming. myChess plays
+     * {@code 1.Rg2} and after {@code 1...Kg7 2.Ne3 g5} it is <b>−4.44</b>.
+     *
+     * <p>Measured loss <b>3.88 pawns</b>, the second largest verified evaluation loss in the
+     * scan. Trajectory <b>19 → 0 → 19 → 19</b>: depth 9 picks something worse still. The
+     * defect is not that myChess misses a tactic — it is that a position needing a forcing
+     * continuation is scored as if a quiet move were available, so nothing pushes the search
+     * toward the checks.
+     *
+     * <p><b>Test family:</b> defensive-resource (defect)
+     *
+     * <p>TODO: invert to {@code assertEngineAvoids}. Single case so far — treat the family as
+     * provisional until a second one turns up.
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void squareVacancy019_playsAQuietRookMoveWhereOnlyPerpetualChecksHold() throws Exception {
+        var game = gameFromFenAtDepth("1Q6/1p2p2k/1r4pp/p1p2P2/q2nr1P1/7R/1P1R4/5NK1 w - - 0 1",
+                PIN_DEPTH, tt);
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.d2, Board.g2, "Rg2",
+                "which collapses a balanced position to −4.44, where only the suite's Qf8 and "
+                        + "its checks hold 0.00. Worth 19 points at depth 8 and 0 at depth 9");
     }
 }
