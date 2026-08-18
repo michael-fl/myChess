@@ -1,7 +1,7 @@
 package org.michaelfl.mychess;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.michaelfl.mychess.Pgn.Result;
 
 import java.io.BufferedReader;
@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -345,24 +346,95 @@ class PgnTest {
         }
     }
 
-    @Test
-    @Disabled("Manual benchmark: requires a non-versioned 'large.pgn' test resource.")
-    void testReadLargePGNFile() throws IOException {
-        var classLoader = getClass().getClassLoader();
-        var resource = classLoader.getResource("large.pgn");
-        assert resource != null;
-        var path = Path.of(resource.getFile());
-        var counter = new AtomicInteger();
+    /**
+     * Games written into the synthetic archive. Large enough that the reader crosses its
+     * buffer boundary many thousands of times — which is the only thing a "large file" test
+     * can actually catch that the small fixtures above cannot — and small enough to stay
+     * around a second.
+     */
+    private static final int SYNTHETIC_GAME_COUNT = 20_000;
 
-        try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.ISO_8859_1)) {
-            Pgn.parse(reader, false).forEach(_ -> {
-                if (counter.incrementAndGet() % 1000 == 0) {
-                    System.out.println(counter);
-                }
+    /** Three bodies of differing length, so the archive is not one string repeated. */
+    private static final String[] SYNTHETIC_BODIES = {
+            "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 1/2-1/2",
+            "1. d4 d5 2. c4 e6 3. Nc3 Nf6 4. Bg5 Be7 5. e3 O-O 1-0",
+            "1. c4 c5 2. Nf3 Nf6 3. d4 cxd4 4. Nxd4 e6 5. g3 Qc7 6. Bg2 Bb4+ 7. Nc3 0-1"
+    };
+
+    /**
+     * Writes an archive of {@code games} concatenated PGNs and returns its path.
+     *
+     * <p>The {@code Round} tag counts up so a parse failure can be traced to a game number,
+     * and the body rotates through {@link #SYNTHETIC_BODIES} so the stream carries records of
+     * three different lengths rather than one repeated block.
+     */
+    @SuppressWarnings("SameParameterValue")
+    private static Path writeSyntheticArchive(Path directory, int games) throws IOException {
+        Path archive = directory.resolve("synthetic.pgn");
+
+        try (var writer = Files.newBufferedWriter(archive, StandardCharsets.ISO_8859_1)) {
+            for (int i = 1; i <= games; i++) {
+                writer.write("""
+                        [Event "Synthetic archive"]
+                        [Site "-"]
+                        [Round "%d"]
+                        [White "White %d"]
+                        [Black "Black %d"]
+                        [Result "*"]
+
+                        %s
+
+                        """.formatted(i, i, i, SYNTHETIC_BODIES[i % SYNTHETIC_BODIES.length]));
+            }
+        }
+
+        return archive;
+    }
+
+    /**
+     * Reading an archive of many concatenated games yields exactly that many, with the last
+     * one intact.
+     *
+     * <p>Replaces a benchmark that was {@code @Disabled} because it needed a 194 MB
+     * {@code large.pgn} resource which {@code .gitignore} excludes — so it could only ever run
+     * on the one machine that happened to have the file, and on a fresh clone it failed with a
+     * null resource. The expectation it carried (276 670 games) was in fact still correct, and
+     * verifying that is what prompted writing this replacement rather than deleting it: the
+     * test was worth having, the fixture was not.
+     *
+     * <p>Generating the archive instead makes the test portable and fast, and it keeps the one
+     * property a large-file test uniquely covers — that {@code Pgn.parse} streams correctly
+     * across many thousands of buffer boundaries.
+     *
+     * <p>The count alone would be a weak assertion: a parser that emitted one {@code Pgn} per
+     * {@code [Event} line while mangling the moves would pass it. So the last game is checked
+     * as well, and its {@code Round} tag confirms the archive was read to the end rather than
+     * truncated somewhere in the middle.
+     */
+    @Test
+    void readingManyConcatenatedGames_yieldsThemAllIntact(@TempDir Path directory) throws IOException {
+        Path archive = writeSyntheticArchive(directory, SYNTHETIC_GAME_COUNT);
+        var counter = new AtomicInteger();
+        var last = new AtomicReference<Pgn>();
+
+        try (BufferedReader reader = Files.newBufferedReader(archive, StandardCharsets.ISO_8859_1)) {
+            Pgn.parse(reader, false).forEach(pgn -> {
+                counter.incrementAndGet();
+                last.set(pgn);
             });
         }
 
-        assertEquals(276670, counter.get(), "wrong number of PGNs");
+        assertEquals(SYNTHETIC_GAME_COUNT, counter.get(),
+                "every concatenated game must be parsed exactly once");
+
+        Pgn lastGame = last.get();
+        assertNotNull(lastGame, "the stream must have produced at least one game");
+        assertEquals(String.valueOf(SYNTHETIC_GAME_COUNT), lastGame.getTag("Round"),
+                "the last game parsed must be the last one written, or the archive was truncated");
+
+        // SYNTHETIC_GAME_COUNT % 3 == 2, so the final body is the third one: 13 half-moves.
+        assertEquals(13, lastGame.moves.size(),
+                "the last game's moves must survive intact, not merely its Event line");
     }
 
     static final String PGN_9 = """
