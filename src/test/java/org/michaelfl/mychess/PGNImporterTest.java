@@ -1,7 +1,7 @@
 package org.michaelfl.mychess;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.michaelfl.mychess.Game.GameResult;
 
 import java.io.BufferedReader;
@@ -63,58 +63,104 @@ class PGNImporterTest {
         testPGN(pgn, GameResult.ONGOING, GameStatus.TURN_WHITE, 47, Board.blackQueen, Board.c6, Board.whiteRook, Board.g4);
     }
 
-    @Test
-    @Disabled("Manual benchmark: requires a non-versioned 'large.pgn' test resource.")
-    void testImportLargePGNFile() throws IOException {
-        var classLoader = getClass().getClassLoader();
-        var resource = classLoader.getResource("large.pgn");
-        assert resource != null;
-        var path = Path.of(resource.getFile());
+    /**
+     * Games written into the synthetic archive. Two orders of magnitude below the count
+     * {@link PgnTest} uses, because every game here is also <em>replayed</em> on a board
+     * rather than merely parsed — the per-game cost is a hundred times higher.
+     */
+    private static final int SYNTHETIC_GAME_COUNT = 500;
 
-        int count = testImportLargePGNFile(path);
-        assertEquals(276670, count, "wrong number of PGNs");
+    /**
+     * Bodies covering the move kinds that make importing harder than parsing, one per entry:
+     * castling both ways, a check with a king recapture, en passant, promotion to a queen,
+     * promotion to a knight, and file disambiguation. An archive of one repeated quiet game
+     * would exercise almost nothing of {@link PGNImporter}, which unlike the parser has to
+     * resolve every symbolic move against a real position.
+     *
+     * <p>Each was verified to contain what its comment claims — an earlier version of this
+     * comment listed en passant and promotion when neither appeared in any body.
+     */
+    private static final String[] SYNTHETIC_BODIES = {
+            // castling on both sides
+            "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 b5 5. Bb3 Nf6 6. O-O Be7 7. Re1 O-O 1/2-1/2",
+            // a check, and a king recapturing
+            "1. d4 d5 2. c4 dxc4 3. e4 e5 4. dxe5 Qxd1+ 5. Kxd1 Nc6 6. f4 Bb4 1-0",
+            // en passant: 3.exf6 takes the pawn that has just passed
+            "1. e4 d5 2. e5 f5 3. exf6 exf6 4. d4 Bb4+ 5. c3 Be7 *",
+            // promotion, by capture, to a queen
+            "1. h4 g5 2. hxg5 h6 3. gxh6 Nf6 4. h7 Rg8 5. hxg8=Q Nxg8 *",
+            // promotion to a knight — the importer must not assume a queen
+            "1. h4 g5 2. hxg5 h6 3. gxh6 Nf6 4. h7 Rg8 5. hxg8=N Nxg8 *",
+            // file disambiguation: two knights can reach e2 / e7
+            "1. c4 c5 2. g3 g6 3. Bg2 Bg7 4. Nc3 Nc6 5. e3 e6 6. Nge2 Nge7 7. O-O O-O *"
+    };
 
+    /**
+     * Writes an archive of {@code games} concatenated PGNs and returns its path.
+     *
+     * <p>The {@code Round} tag counts up so a failure can be traced to a game number, and the
+     * body rotates through {@link #SYNTHETIC_BODIES}.
+     */
+    @SuppressWarnings("SameParameterValue")
+    private static Path writeSyntheticArchive(Path directory, int games) throws IOException {
+        Path archive = directory.resolve("synthetic.pgn");
+
+        try (var writer = Files.newBufferedWriter(archive, StandardCharsets.ISO_8859_1)) {
+            for (int i = 1; i <= games; i++) {
+                writer.write("""
+                        [Event "Synthetic archive"]
+                        [Site "-"]
+                        [Round "%d"]
+                        [White "White %d"]
+                        [Black "Black %d"]
+                        [Result "*"]
+
+                        %s
+
+                        """.formatted(i, i, i, SYNTHETIC_BODIES[i % SYNTHETIC_BODIES.length]));
+            }
+        }
+
+        return archive;
     }
 
+    /**
+     * Every game in a multi-game archive imports without throwing, and every one produces a
+     * board.
+     *
+     * <p>Replaces a benchmark that was {@code @Disabled} because it needed a 194 MB
+     * {@code large.pgn} resource excluded by {@code .gitignore}, so it could only run on the
+     * machine that happened to hold the file. Its sibling in {@link PgnTest} covered the same
+     * ground for parsing; this one covers <em>importing</em>, which is the harder half —
+     * {@link PGNImporter} has to resolve every symbolic move against a real position, so it
+     * fails on ambiguity and disambiguation where a parser does not care.
+     *
+     * <p>The deleted third benchmark walked a hard-coded KingBase directory outside the repo.
+     * That path no longer exists on this machine, and once the archive is generated it added
+     * nothing this test does not do portably.
+     *
+     * <p>Asserting only "did not throw" would be weak, so the imported move count is checked
+     * per game: the importer must replay exactly the moves the parser produced.
+     */
     @Test
-    @Disabled("Manual benchmark: hard-coded path to a local KingBase PGN archive outside the repo.")
-    void testImportMultipleLargePGNFiles() throws IOException {
-        var dir = Path.of("/Users/mf/_PRIVAT_/Schach/KingBase2019-pgn/");
-        try (var paths = Files.list(dir)) {
-            paths.forEach(pgnFile -> {
-                try {
-                    System.out.println("Importing PGN file " + pgnFile);
-                    testImportLargePGNFile(pgnFile);
-                } catch (IOException e) {
-                    fail(e);
-                }
-            });
-        }
-    }
+    void importingManyConcatenatedGames_replaysEveryOne(@TempDir Path directory) throws IOException {
+        Path archive = writeSyntheticArchive(directory, SYNTHETIC_GAME_COUNT);
+        var imported = new AtomicInteger();
 
-    private int testImportLargePGNFile(Path path) throws IOException {
-        var counter = new AtomicInteger();
+        try (BufferedReader reader = Files.newBufferedReader(archive, StandardCharsets.ISO_8859_1)) {
+            Pgn.parse(reader, false).forEach(pgn -> {
+                var game = new PGNImporter(pgn).importGame();
+                imported.incrementAndGet();
 
-        try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.ISO_8859_1)) {
-            Pgn.parse(reader, true).forEach(pgn -> {
-                if (counter.incrementAndGet() > 0 && pgn.moves.getFirst().turn() == GameStatus.TURN_WHITE) { // skip PGNs starting with black
-                    var importer = new PGNImporter(pgn);
-                    try {
-                        importer.importGame();
-                    } catch (RuntimeException e) {
-                        System.err.println("Error when importing file " + path);
-                        System.err.println(pgn);
-                        throw e;
-                    }
-                }
-                if (counter.get() % 1000 == 0) {
-                    System.out.println(counter);
-                }
+                assertNotNull(game.getBoard(),
+                        "game " + pgn.getTag("Round") + " must have produced a board");
+                assertEquals(pgn.moves.size(), game.getGameStatus().getPlyCount(),
+                        "game " + pgn.getTag("Round") + ": the importer must replay every parsed move");
             });
         }
 
-        assertTrue(counter.get() > 10000, "Not enough PGNs");
-        return counter.get();
+        assertEquals(SYNTHETIC_GAME_COUNT, imported.get(),
+                "every concatenated game must be imported exactly once");
     }
 
     private void testPGN(String pgn, GameResult result, int turn, int moveCount, byte piece1, int field1, byte piece2, int field2) {
@@ -372,7 +418,7 @@ class PGNImporterTest {
     @Test
     void chess960AutoDetection_standardStartFenIsNotChess960() {
         // Verify that passing the canonical standard-chess starting FEN
-        // explicitly still parses under standard-chess rules — the auto-
+        // explicitly still parses under standard-chess rules — the auto
         // detector must recognize the RNBQKBNR back rank and defer to
         // Fen.importFEN rather than Fen.importChess960FEN.
         var moveText = "1. e4 e5 *";

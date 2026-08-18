@@ -17,8 +17,11 @@ buildNumber.properties
 db/
 mychess-stderr.log
 
-# Large non-versioned PGN test fixture, used by @Disabled benchmark tests
-# in PgnTest / PGNImporterTest and by the manual OpeningDB import workflow.
+# Large local PGN fixture. Nothing references it any more: the two benchmarks that did were
+# @Disabled precisely because it is not versioned, and on 2026-08-18 both were rewritten to
+# generate their own archive into a @TempDir (PgnTest, PGNImporterTest). The OpeningDB import
+# workflow reads its own hard-coded KingBase directory, not this file. Kept ignored so an
+# existing local copy does not surface in git status — it can simply be deleted.
 src/test/resources/large.pgn
 
 # Cutechess match artifacts at the project root: the test/ snapshot dir
