@@ -455,21 +455,26 @@ a move were re-searched at depths 8-12 (`test-results/kingsafety-depth-stability
 details in [`testing.md`](testing.md)). The result was expected to weaken this argument and
 does the opposite:
 
-- **2 cases keep the wrong move at every depth** — both misjudgments of a position rather
-  than missed sequences (`qd2_atMove23`, `hxg4_atMove21`).
-- **6 converge** — wrong to some depth, then right and staying right. These six are what the
-  search cluster would fix as a side effect, and they are the honest deduction from the
-  nineteen.
+- **7 are depth-stable evaluation defects** — `qd2`, `hxg4`, `captureOnF6`, `qb4`, `bxd4`
+  and the two already documented, `keBKOXd1` and `21...Qa3`. Two of them are the strongest
+  evidence the family has: at depth 12 myChess still reads −0.45 where the truth is
+  **−8.10** (`qb4`), and exactly 0.00 where it is **−3.00** (`bxd4`), without converging
+  over five depths.
 - **5 oscillate** — right at one depth, wrong at the next, right again. `33.f3` is one of
   them: this section already cites its 8→9 regression, and the check supplies the 9→10
   recovery. `20.h3` is right at depth 11 and wrong again at 12.
+- **6 converge** — wrong to some depth, then right and staying right. These six are what the
+  search cluster would fix as a side effect.
+- **1 has a questionable premise** — `strippedKing` reads +1.7 to +1.9 against material of
+  +2.20 where Stockfish reads +1.55, so the underweighting is ~0.3 pawns rather than the
+  "shelter worth ~0 cp" its JavaDoc claimed. Corrected in place.
 
 Oscillation is the load-bearing observation. A sound evaluation converges with depth instead
 of flip-flopping; flip-flopping means two moves sit within noise of each other and the winner
 depends on which depth the clock happened to allow. Deeper search does not repair that — it
 reaches the coin-flip sooner. So the count that matters for step 3 is not nineteen and not
-two: seven of thirteen are cases better search would not fix, and five of those seven it could
-make worse.
+two: **twelve of nineteen are cases better search would not fix**, one of those twelve is thin,
+and the five oscillating ones are cases deeper search could make *worse*.
 
 **One caveat that cuts the other way.** This is measured against *today's* search. Once
 LMR/PVS/history land and game depth reaches 11 or 12, the six converging cases stop being
