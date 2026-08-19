@@ -808,6 +808,24 @@ class BlunderTest {
      * because the defect is present, and must be rewritten once a king-safety
      * term makes the score fall away from the bare material count.
      *
+     * <p><b>Two claims above were measured on 2026-08-19 and do not hold as
+     * written</b> ({@code test-results/kingsafety-score-stability-4.4.2.jsonl}).
+     * Stockfish 18 at depth 24 reads this position at <b>+1.55</b> for white, so
+     * black does <em>not</em> hold a perpetual — a perpetual would be 0.00. And the
+     * king shelter is not worth "~0 cp" to the evaluation: material here is
+     * <b>+2.20</b> by classical values, myChess reads +1.71 to +1.95 across depths
+     * 8-12, so it does deduct roughly <b>0.3 pawns</b> for the airy king. Stockfish
+     * deducts 0.65. The defect is therefore real but <b>small</b> — an
+     * underweighting by about a third of a pawn, not a blind spot — and this case is
+     * the weakest of the nineteen rather than a headline one. It is the only case in
+     * the family whose premise did not survive checking; see the family entry in
+     * {@code docs/testing.md} for how the tally accounts for it.
+     *
+     * <p>TODO: re-derive the assertion from the measured numbers rather than from the
+     * "pure material" framing — a threshold of 1.5 passes for a position whose truth
+     * is 1.55, so the test as written would still pass if the evaluation were
+     * perfect.
+     *
      * <p><b>Test family:</b> king-safety (defect)
      */
     @Test
