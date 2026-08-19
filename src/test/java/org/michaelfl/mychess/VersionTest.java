@@ -23,9 +23,12 @@ class VersionTest {
         assertNotEquals(Version.UNKNOWN, version,
                 "version.properties must be on the classpath and filtered; getting \"" + Version.UNKNOWN
                         + "\" means Maven resource filtering is not doing its job");
-        assertTrue(version.matches("\\d+(\\.\\d+)+(-\\w+)?"),
+        // The qualifier may itself contain hyphens and dots: Maven's own scheme has
+        // 1.0-alpha-1 and 1.0-beta-2 as canonical examples, and branch builds such as
+        // 4.5.0-complete-pv follow the same shape. A \\w+ qualifier would reject those.
+        assertTrue(version.matches("\\d+(\\.\\d+)+(-[\\w.-]+)?"),
                 "the version must look like a Maven version — digits separated by dots, optionally with a "
-                        + "qualifier such as -SNAPSHOT; got " + version);
+                        + "qualifier such as -SNAPSHOT or -alpha-1; got " + version);
     }
 
     @Test

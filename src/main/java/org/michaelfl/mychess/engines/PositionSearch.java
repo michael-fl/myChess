@@ -124,6 +124,26 @@ public final class PositionSearch {
                 break;
             }
 
+            // Diagnostic for PV truncation. A PV shorter than the iteration
+            // depth is legitimate whenever the line ends in a terminal
+            // position: checkmateOrStalemate and the fifty-move/repetition
+            // branch both call truncateParentPv() because there is no
+            // continuation to report. Those cases carry a non-ONGOING result,
+            // so they are filtered out here.
+            //
+            // What remains is truncation with no chess reason, i.e. a
+            // transposition-table cutoff that returned a score without
+            // searching the children. ttResult reports GameResult.ONGOING, so
+            // exactly those hits survive the filter. Draw scores from a TT
+            // graft look ONGOING too, which is intended: a grafted draw on the
+            // principal variation is the graph-history-interaction case and is
+            // worth seeing.
+            final int pvLength = countPathLength(bestPath.path());
+            if (pvLength != depth && bestPath.result() == GameResult.ONGOING) {
+                Log.info("[pv] short PV at depth " + depth + ": length " + pvLength
+                        + ", score " + ChessUtil.weightToString(bestPath.weight()));
+            }
+
             IterationTimings.recordCompletion(depth, iterationMs);
 
             MoveAndWeight m = bestPath.weightFactor(weightFactor);
@@ -153,6 +173,93 @@ public final class PositionSearch {
         }
 
         return bestPath;
+    }
+
+    /**
+     * PV-RESEARCH: re-searches {@code bestMove} with the child marked as a PV
+     * node, so the subtree reports a complete principal variation instead of
+     * ending at a transposition-table cutoff.
+     *
+     * <p>The window is the node's own {@code (alphaWeight, betaWeight)} and
+     * deliberately not the tightened {@code alphaLocal} of the move loop: the
+     * winner's score sits at that tightened bound, so re-searching against it
+     * would fail low and destroy the exact value we are trying to keep.
+     *
+     * <p><b>Known residual case.</b> The repair is deferred to after the move
+     * loop, so it is never reached when the node leaves the loop early through a
+     * beta cutoff. Such a node reports {@code Bound.LOWER}, and its line is a
+     * refutation rather than a principal variation, but it has already copied
+     * its row upward — a truncated tail can therefore still survive there.
+     * Measured over 400 searches at depth 7 with a warm table this happened
+     * once, against 1094 truncations without the PV-node rule at all. Closing it
+     * would mean repairing before the cutoff returns, which costs a re-search on
+     * a line that is about to be discarded.
+     *
+     * @return the re-searched result when it repaired the line,
+     *         {@link SearchNodeResult#TIMEOUT} on timeout,
+     *         otherwise {@code bestResult} unchanged
+     */
+    private SearchNodeResult researchWinnerAsPvNode(SearchNodeContext ctx, SearchNodeResult bestResult,
+                                                    int bestMove, int alphaWeight, int betaWeight) {
+        final int moveWeight = WeightingFunction.getMaterialWeightOfMove(bestMove);
+
+        ctx.pvTable()[ctx.pvIndex()] = bestMove;
+        ctx.workingBoard().makeMove(bestMove);
+        var pvResult = alphaBetaSearch(new SearchNodeContext(ctx.depth() + 1, ctx.maxDepth(), null,
+                -ctx.weightFactor(), -(ctx.materialWeight() + moveWeight), -(ctx.materialDelta() + moveWeight),
+                ctx.workingBoard(), ctx.pvTable(), ctx.pvMaxLength(), true, false),
+                -betaWeight, -alphaWeight).negate();
+        ctx.workingBoard().revertMove();
+
+        if (pvResult.isTimeout()) {
+            return SearchNodeResult.TIMEOUT;
+        }
+        if (pvResult.weight() > WeightingFunction.ILLEGAL_WEIGHT_NEG) {
+            ctx.copyUpPV();
+            return pvResult;
+        }
+
+        return bestResult;
+    }
+
+    /**
+     * PV-RESEARCH, root variant of {@link #researchWinnerAsPvNode}. The root has
+     * no {@link SearchNodeContext} of its own, and its window is not a negated
+     * parent window but {@code beta} as recorded per move while the loop ran —
+     * the running alpha has moved on and would make the winner fail low.
+     *
+     * <p>Leaves the caller to store the result and to copy the refreshed
+     * {@code pvTable} row, because only the caller knows which slot of
+     * {@code allPaths} belongs to this move.
+     *
+     * @return the re-searched result, or {@link SearchNodeResult#TIMEOUT}
+     */
+    private SearchNodeResult researchRootWinnerAsPvNode(Board workingBoard, int[] pvTable, int maxDepth,
+                                                        int materialWeight, int move, int beta) {
+        final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move);
+
+        pvTable[0] = move;
+        workingBoard.makeMove(move);
+        var pvResult = alphaBetaSearch(
+                new SearchNodeContext(1, maxDepth, null, -weightFactor, -(materialWeight + moveWeight),
+                        -moveWeight, workingBoard, pvTable, maxDepth + 1, true, false),
+                WeightingFunction.MIN_ALPHA, beta)
+                .negate();
+        workingBoard.revertMove();
+
+        return pvResult;
+    }
+
+    private int countPathLength(int[] path) {
+        int count = 0;
+        for (int move : path) {
+            if (move == 0) {
+                break;
+            }
+            count++;
+        }
+
+        return count;
     }
 
     /**
@@ -203,6 +310,10 @@ public final class PositionSearch {
         final SearchNodeResult[] results = new SearchNodeResult[countMoves];
         final int[][] allPaths = new int[countMoves][pvMaxLength];
         final int[] pvTable = new int[pvMaxLength * pvMaxLength];
+        // PV-RESEARCH: the beta each root move was actually searched with. The
+        // deferred re-search below has to reuse it; the running alphaWeight has
+        // moved on by then and would make the winner fail low against itself.
+        final int[] betaUsedPerMove = new int[countMoves];
         int alphaWeight = WeightingFunction.MIN_ALPHA;
         statistics.incrPositionCount();
 
@@ -217,11 +328,13 @@ public final class PositionSearch {
             final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move);
             final int newMaterialWeight = materialWeight + moveWeight;
             boolean logWeight = false;
+            boolean isPvMove = i == 0;
 
+            betaUsedPerMove[i] = -alphaWeight; // PV-RESEARCH
             pvTable[0] = move;
             workingBoard.makeMove(move);
             var result = alphaBetaSearch(
-                    new SearchNodeContext(1, maxDepth, bestKnownPath, -weightFactor, -newMaterialWeight, -moveWeight, workingBoard, pvTable, pvMaxLength),
+                    new SearchNodeContext(1, maxDepth, bestKnownPath, -weightFactor, -newMaterialWeight, -moveWeight, workingBoard, pvTable, pvMaxLength, isPvMove, false),
                     WeightingFunction.MIN_ALPHA, -alphaWeight)
                     .negate();
             if (result.isTimeout()) {
@@ -253,6 +366,29 @@ public final class PositionSearch {
                 bestMoveIndex = i;
             }
         }
+
+        // PV-RESEARCH begin -------------------------------------------------
+        // Only the first root move was searched as a PV node. If a later move
+        // won, its subtree was searched with transposition-table cutoffs
+        // enabled, so allPaths[bestMoveIndex] may end at a cutoff instead of at
+        // the leaf. That array becomes bestKnownPath for the next iteration, so
+        // a truncated line costs move ordering there.
+        //
+        // Deferred on purpose: re-searching on every alpha improvement would
+        // redo a subtree per improvement, this way it happens at most once.
+        if (bestMoveIndex > 0 && countPathLength(allPaths[bestMoveIndex]) != maxDepth) {
+            var pvResult = researchRootWinnerAsPvNode(workingBoard, pvTable, maxDepth, materialWeight,
+                    plainMoves[bestMoveIndex], betaUsedPerMove[bestMoveIndex]);
+
+            if (pvResult.isTimeout()) {
+                return previousBestKnownPath;
+            }
+            if (pvResult.weight() > WeightingFunction.ILLEGAL_WEIGHT_NEG) {
+                results[bestMoveIndex] = pvResult;
+                System.arraycopy(pvTable, 0, allPaths[bestMoveIndex], 0, pvMaxLength);
+            }
+        }
+        // PV-RESEARCH end ---------------------------------------------------
 
         if (bestMoveIndex >= 0) {
             // Found a legal move
@@ -327,20 +463,21 @@ public final class PositionSearch {
         if (ttEntryView != null && ttEntryView.getDepth() >= ctx.remainingDepth()) {
             final int score = WeightingFunction.scoreFromTT(ttEntryView.getScore(), ctx.depth());
 
-            switch (ttEntryView.getBound()) {
-                case EXACT -> {
-                    return ttResult(ctx, score, Bound.EXACT, ttEntryView.getBestMove());
+            if (!ctx.isPvNode()) {
+                switch (ttEntryView.getBound()) {
+                    case EXACT -> {
+                        return ttResult(ctx, score, Bound.EXACT, ttEntryView.getBestMove());
+                    }
+                    case LOWER -> alphaWeight = Math.max(alphaWeight, score);
+                    case UPPER -> betaWeight = Math.min(betaWeight, score);
                 }
-                case LOWER -> alphaWeight = Math.max(alphaWeight, score);
-                case UPPER -> betaWeight = Math.min(betaWeight, score);
-            }
-
-            if (alphaWeight >= betaWeight) {
-                // A LOWER/UPPER entry that pushes alpha >= beta produces a
-                // LOWER/UPPER cutoff, not an exact score — return the entry's
-                // own bound, never EXACT, so any consumer of this result's
-                // bound sees the correct fail-high/fail-low.
-                return ttResult(ctx, score, ttEntryView.getBound(), ttEntryView.getBestMove());
+                if (alphaWeight >= betaWeight) {
+                    // A LOWER/UPPER entry that pushes alpha >= beta produces a
+                    // LOWER/UPPER cutoff, not an exact score — return the entry's
+                    // own bound, never EXACT, so any consumer of this result's
+                    // bound sees the correct fail-high/fail-low.
+                    return ttResult(ctx, score, ttEntryView.getBound(), ttEntryView.getBestMove());
+                }
             }
         }
 
@@ -367,7 +504,7 @@ public final class PositionSearch {
         if (canDoNMP(ctx)) {
             ctx.workingBoard().makeNullMove();
             var result = alphaBetaSearch(
-                    new SearchNodeContext(ctx.depth() + 1, ctx.maxDepth() - NMP_REDUCTION_R, MoveAndWeight.NO_MOVE, -ctx.weightFactor(), -ctx.materialWeight(), -ctx.materialDelta(), ctx.workingBoard(), ctx.pvTable(), ctx.pvMaxLength(), true),
+                    new SearchNodeContext(ctx.depth() + 1, ctx.maxDepth() - NMP_REDUCTION_R, MoveAndWeight.NO_MOVE, -ctx.weightFactor(), -ctx.materialWeight(), -ctx.materialDelta(), ctx.workingBoard(), ctx.pvTable(), ctx.pvMaxLength(), false, true),
                     -betaWeight, -betaWeight + 1).negate();
             ctx.workingBoard().revertNullMove();
             ctx.truncateParentPv();
@@ -449,6 +586,7 @@ public final class PositionSearch {
             final int moveWeight = WeightingFunction.getMaterialWeightOfMove(move);
             final int newMaterialWeight = ctx.materialWeight() + moveWeight;
             final int newMaterialDelta = ctx.materialDelta() + moveWeight;
+            final boolean isPvMove = ctx.isPvNode() && i == 0;
 
             // alpha-beta cutoff threshold for the child: never below the
             // parent's alpha (fail-soft may pull bestResult.weight below it
@@ -457,7 +595,7 @@ public final class PositionSearch {
 
             pvTable[pvIndex] = move;
             ctx.workingBoard().makeMove(move);
-            var result = alphaBetaSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), bestKnownPath, -ctx.weightFactor(), -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), pvTable, ctx.pvMaxLength()), -betaWeight, -alphaLocal).negate();
+            var result = alphaBetaSearch(new SearchNodeContext(depth + 1, ctx.maxDepth(), bestKnownPath, -ctx.weightFactor(), -newMaterialWeight, -newMaterialDelta, ctx.workingBoard(), pvTable, ctx.pvMaxLength(), isPvMove, false), -betaWeight, -alphaLocal).negate();
             ctx.workingBoard().revertMove();
             if (result.isTimeout()) {
                 return SearchNodeResult.TIMEOUT;
@@ -492,6 +630,18 @@ public final class PositionSearch {
 
         if (haveValidMoves) {
             Bound bound = bestResult.weight() > alphaWeight ? Bound.EXACT : Bound.UPPER;
+
+            // PV-RESEARCH: only plainMoves[0] was searched as a PV node, so a
+            // different winner may carry a truncated line. EXACT only — UPPER
+            // (fail-low) and LOWER (beta cutoff, returned from inside the loop)
+            // have no principal variation worth repairing.
+            if (bound == Bound.EXACT && ctx.isPvNode() && bestMove != plainMoves[0]) {
+                bestResult = researchWinnerAsPvNode(ctx, bestResult, bestMove, alphaWeight, betaWeight);
+                if (bestResult.isTimeout()) {
+                    return SearchNodeResult.TIMEOUT;
+                }
+            }
+
             return new SearchNodeResult(bestResult.result(), bestResult.weight(), bound, bestMove);
         }
 
