@@ -107,6 +107,7 @@ public final class PositionSearch {
         final int maxDepth = Math.min(engineConfig.getMaxDepth(), MAX_SEARCH_DEPTH);
         final long startMs = System.currentTimeMillis();
         long previousIterationEndMs = startMs;
+        int reachedDepth = 0;
 
         for (int depth = 1; depth <= maxDepth && !isTimeout(); depth++) {
             if (depth > 1 && shouldSkipIteration(depth)) {
@@ -124,25 +125,7 @@ public final class PositionSearch {
                 break;
             }
 
-            // Diagnostic for PV truncation. A PV shorter than the iteration
-            // depth is legitimate whenever the line ends in a terminal
-            // position: checkmateOrStalemate and the fifty-move/repetition
-            // branch both call truncateParentPv() because there is no
-            // continuation to report. Those cases carry a non-ONGOING result,
-            // so they are filtered out here.
-            //
-            // What remains is truncation with no chess reason, i.e. a
-            // transposition-table cutoff that returned a score without
-            // searching the children. ttResult reports GameResult.ONGOING, so
-            // exactly those hits survive the filter. Draw scores from a TT
-            // graft look ONGOING too, which is intended: a grafted draw on the
-            // principal variation is the graph-history-interaction case and is
-            // worth seeing.
-            final int pvLength = countPathLength(bestPath.path());
-            if (pvLength != depth && bestPath.result() == GameResult.ONGOING) {
-                Log.info("[pv] short PV at depth " + depth + ": length " + pvLength
-                        + ", score " + ChessUtil.weightToString(bestPath.weight()));
-            }
+            reachedDepth = depth;
 
             IterationTimings.recordCompletion(depth, iterationMs);
 
@@ -166,6 +149,21 @@ public final class PositionSearch {
                     Arrays.copyOf(bestPath.path(), bestPath.path().length)));
         }
 
+        if (bestPath != null) {
+            final int weight = (int) (bestPath.weight() * 100);
+            final var pv = bestPath.path();
+            if (weight != 0 && !WeightingFunction.isCheckmateWeight(weight)
+                    && mayBeMaterialOnlyWeight(weight)
+                    && reachedDepth == countPathLength(pv)) {
+                final int materialWeight = weightFactor * WeightingFunction.calculateMaterialWeight(game.getBoard());
+                if (Math.abs(materialWeight - weight) > EVALUATE_MATERIAL_ONLY_THRESHOLD) {
+                    int actualWeight = calculatePvWeight(pv);
+                    log("Material only shortcut: currentMaterialWeight=" + materialWeight + ", materialWeight=" + weight + ", actualWeight=" + actualWeight + ", pv=" + ChessUtil.pathToString(pv));
+                    System.out.println();
+                }
+            }
+        }
+
         // The last path component may be an illegal move (because this is not checked on the leaf nodes).
         // Hence, we just shorten the path by one to avoid returning an invalid path.
         if (bestPath != null && bestPath.path().length >= maxDepth) {
@@ -173,6 +171,27 @@ public final class PositionSearch {
         }
 
         return bestPath;
+    }
+
+    private boolean mayBeMaterialOnlyWeight(int weight) {
+        return weight % 100 == 0;
+    }
+
+    int calculatePvWeight(int[] pv) {
+        var workingBoard = game.getBoard().copy();
+        int depth = 0;
+        int wFactor = weightFactor;
+
+        for (int move : pv) {
+            if (move == 0) {
+                break;
+            }
+            workingBoard.makeMove(move);
+            depth++;
+            wFactor = -wFactor;
+        }
+
+        return quiescenceSearch.quiescenceSearchNoMaterialWeightShortcut(workingBoard, depth, wFactor, WeightingFunction.MIN_ALPHA, WeightingFunction.MAX_BETA);
     }
 
     /**
@@ -376,7 +395,7 @@ public final class PositionSearch {
         //
         // Deferred on purpose: re-searching on every alpha improvement would
         // redo a subtree per improvement, this way it happens at most once.
-        if (bestMoveIndex > 0 && countPathLength(allPaths[bestMoveIndex]) != maxDepth) {
+        if (false && bestMoveIndex > 0 && countPathLength(allPaths[bestMoveIndex]) != maxDepth) {
             var pvResult = researchRootWinnerAsPvNode(workingBoard, pvTable, maxDepth, materialWeight,
                     plainMoves[bestMoveIndex], betaUsedPerMove[bestMoveIndex]);
 
@@ -635,7 +654,7 @@ public final class PositionSearch {
             // different winner may carry a truncated line. EXACT only — UPPER
             // (fail-low) and LOWER (beta cutoff, returned from inside the loop)
             // have no principal variation worth repairing.
-            if (bound == Bound.EXACT && ctx.isPvNode() && bestMove != plainMoves[0]) {
+            if (false && bound == Bound.EXACT && ctx.isPvNode() && bestMove != plainMoves[0]) {
                 bestResult = researchWinnerAsPvNode(ctx, bestResult, bestMove, alphaWeight, betaWeight);
                 if (bestResult.isTimeout()) {
                     return SearchNodeResult.TIMEOUT;
