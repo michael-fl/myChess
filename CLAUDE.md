@@ -108,4 +108,6 @@ Measurement work here routinely runs for minutes to hours — engine matches, ST
 
 The first two produced a confident "the run is hung" about a run at 99 % CPU. Use `ps -eo …,command` with an **anchored** match on the interpreter or binary (`awk '/bin\/python3 .*script\.py$/'`), take the PID and ask for the elapsed time separately (`ps -o etime= -p $pid`), and verify the filter matches something *known to be running* before trusting a zero.
 
+**The same applies to counting inside log files.** Surefire prints `<<< FAILURE!` twice per failing test — once on the class summary line, once on the method line — so `grep -c "<<< FAILURE"` reports double and a heartbeat built on it announces failures that do not exist. Count the thing you actually mean (`grep -c "^\[ERROR\] org\.michaelfl"` for methods, or read the final `Tests run: … Failures: …` line) and cross-check a surprising count against a second source before reporting it.
+
 **Scope kills to your own processes.** `pkill -f "MyChessMain uci"` also matches the lichess bot's engine, because the bot runs the same main class. Match the specific wrapper path, or keep the PIDs you started. Killing a Python parent also leaves its engine children orphaned at full CPU — check for and clean up strays afterwards.
