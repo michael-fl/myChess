@@ -43,7 +43,7 @@ class NodeCountTest {
      */
     /* 140 -> 82 with the PeSTO piece-square tables (v4.4.0): a sharper evaluation orders
      * moves better, so alpha-beta cuts more of the depth-2 tree.
-     * 82 -> 83 with the PV-RESEARCH change (v4.5.0): at depth 1 a move other than the
+     * 82 -> 83 with the complete-PV change (v4.5.0): at depth 1 a move other than the
      * first-ordered one wins, and the PV repair re-searches that child as a PV node so the
      * reported principal variation does not end at a transposition-table cutoff. Exactly one
      * position is therefore visited twice on purpose. The guard keeps its force either way —

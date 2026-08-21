@@ -262,24 +262,46 @@ class ThreefoldRepetitionTest {
 
         move = game.getEngine().nextMoveAsync().getResult(1, TimeUnit.MINUTES);
 
-        // The property under test is not the shape of the principal variation but the
-        // decision: White is winning here — mate in 14 according to Stockfish — so the
-        // engine must not settle for a draw.
+        // CHARACTERIZATION, and the assertion is deliberately the wrong way round: White is
+        // winning here — mate in 14 according to Stockfish — so a correct engine would not
+        // settle for a draw. It does, and this pins that it does.
         //
-        // Asserting on the PV was measured to be the wrong instrument. Before the PV
-        // repair landed this line read assertFalse(containsRepetition(...)) and passed,
-        // but only because a transposition-table cutoff truncated the variation two plies
-        // in, before the repetition became visible — and that same cutoff grafted in a
-        // score of +15.8 from the detection-off search above, which merely looked like a
-        // win. With a complete PV the engine reports what it actually plays: a draw.
+        // The defect is that entries computed with repetition detection OFF are not valid
+        // inputs for a search with it ON, and nothing stops the second search from using
+        // them. The repetition check is path-local by design and deliberately not stored
+        // (roadmap § 12.23), so a table hit of sufficient depth returns a score without
+        // visiting the children — and on lines where it hits before the repetition has
+        // accumulated on the path, the search never reaches the check and inherits the
+        // other rule set's score.
         //
-        // The failure is specific to the table poisoned by the phase above. Its cold-table
-        // counterpart, withAFreshTableTheEngineAvoidsTheRepetitionInTheWonPosition, is
-        // green: there the engine walks its king out and keeps +15.05. Entries computed
-        // with repetition detection off are not valid inputs for a search with it on.
-        assertNotEquals(GameResult.DRAW, move.result(),
-                "White is winning here (mate in 14), so the engine must not settle for a draw even when the "
-                        + "table still holds scores from the detection-off search above; score " + move.weight()
+        // Cannot happen in play: both rules default to on, and the one place in src/main
+        // that turns them off (PGNImporter.importGame) uses a table of its own. It is
+        // reachable through the public importGame(GameConfig), and through any future tool
+        // that toggles a rule while sharing a table.
+        //
+        // Why it surfaced with the v4.5.0 complete-PV work rather than before: the
+        // truncating cutoff used to hide it twice over. It cut the variation two plies in,
+        // before the repetition became visible, and it supplied a score of +15.8 from the
+        // detection-off search above. This line therefore read
+        // assertFalse(containsRepetition(...)) and passed — it looked like a win. With a
+        // complete PV the engine reports what it actually plays.
+        //
+        // The cold-table counterpart withAFreshTableTheEngineAvoidsTheRepetitionInTheWonPosition
+        // stays green: there the engine walks its king out and keeps +15.05. That pair is
+        // what makes this characterization attributable to the poisoned table rather than to
+        // the position.
+        //
+        // TODO invert to assertNotEquals once the rule set is part of the table identity —
+        // XOR a constant derived from isEnableThreefoldRepetition() and
+        // isEnableFiftyMovesRule() into the key at the two access points in
+        // PositionSearch (tt.get / tt.put). Same rule set means the same key, so the bench
+        // node signature must not move, which makes the fix cheap to verify.
+        //
+        // Test family: repetition (defect)
+        assertEquals(GameResult.DRAW, move.result(),
+                "characterization: with the table poisoned by the detection-off search above the engine "
+                        + "settles for a draw in a won position (mate in 14). If this now reports a "
+                        + "non-draw, the defect is fixed — invert the assertion; score " + move.weight()
                         + ", pv " + pathToString(move.path()));
     }
 
