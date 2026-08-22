@@ -4,13 +4,13 @@ The test suite is the executable specification for myChess: it pins down move ge
 
 | Metric | Value |
 |---|---|
-| Test classes | 80 `*Test.java` (+ 25 helpers and measurement drivers under the same source root, counted 2026-08-21) |
-| Test methods (`@Test` + `@ParameterizedTest`) | 1 271 executed, parameterized cases counted per invocation — full run 2026-08-21 measured 1 272, one method removed since |
-| Currently passing | **all** — the two failures of 2026-08-21 were the same defect twice; it is now characterized in `ThreefoldRepetitionTest`, see the `repetition` family |
+| Test classes | 80 `*Test.java` (+ 25 helpers and measurement drivers under the same source root, counted 2026-08-22) |
+| Test methods (`@Test` + `@ParameterizedTest`) | 1 271 executed, parameterized cases counted per invocation — full run 2026-08-22 |
+| Currently passing | **all** — full run 2026-08-22: 1 271 run, 0 failures, 0 errors, **0 skipped**. The last red pair, on 2026-08-21, was one defect seen twice; it is now characterized in `ThreefoldRepetitionTest`, see the `repetition` family |
 | Currently `@Disabled` | 0 — see [Retired disabled tests](#retired-disabled-tests) |
 | Test source lines | ~28 260 |
 | Framework | JUnit Jupiter 5.11 |
-| Execution | `mvn test` (Maven Surefire 3.5.2), 11:18 min for the full run on an M1 Pro (measured 2026-08-18; not re-measured since) |
+| Execution | `mvn test` (Maven Surefire 3.5.2), 11:07 min for the full run on an M1 Pro (measured 2026-08-22) |
 
 Run from the project root:
 
