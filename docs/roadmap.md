@@ -389,7 +389,7 @@ Those wins are overwhelmingly positions where the defence has already collapsed,
 
 ---
 
-## 12.25 Tried — full-window PV re-search, reverted (**−44.4 Elo**)
+## 12.25 Tried — repairing the root's move choice after the PV re-search, reverted twice (**−44.4 and −166 Elo**)
 
 The v4.5.0 complete-PV work repairs a truncated principal variation by re-searching the
 winning move with the child marked as a PV node. That re-search reuses **the beta the move
@@ -424,21 +424,53 @@ answers the question. Same lesson as
 [§ 12.7.2](#1272-tried--rook-file--battery-bonus-shelved-neutral), one level deeper: there the
 number was right and the conclusion wrong; here the number was right and the *question* wrong.
 
-**What survives.** The other two findings were cheap and stay fixed: the root now re-derives
-its best move after the re-search corrects a score, walking the remaining moves in descending
-recorded score (the correction had made the argmax stale, which was a move-selection
-regression), and a node re-derives its `Bound` from the corrected weight. Both are guarded —
-the first by an assertion in `PositionSearch`, checked on every root iteration rather than in
-hand-picked positions.
+### The second attempt, and why the defect is not cheaply fixable
 
-**What stays open.** The fail-high residual is back and documented at
+The first review finding is real: the re-search may lower the winner's score, and the argmax
+that selected it is not re-run, so the root can return a move it now rates below another one in
+the same array. That is a move-selection regression, not a display bug.
+
+The fix walked the remaining moves in descending recorded score and verified each one that could
+still beat the best verified value. Together with the full window that is **correct**, and it is
+what the −44.4 Elo bought. Reverting the window while keeping the descent looked like the cheap
+combination. It measured **−166.0 ± 50.0 Elo over 180 games** (LLR −1.49), and it is not a cost
+but a bug:
+
+A candidate in the descent is re-searched against **the beta it was originally searched with**.
+That candidate failed low at the time — otherwise it would be the winner — so re-searching it
+against the same beta fails *high*, essentially by construction. A fail-high child returns a
+lower bound on its own value, which negates into an **upper bound** on the root value of that
+move. The descent then compares the winner's honest score against a candidate's over-estimate,
+and switches to the worse move. Not occasionally: in every position where it runs.
+
+So the two known fixes are **correct and unaffordable**, or **cheap and wrong**. There is no
+third option, and the reason is structural: any fallback needs a trustworthy value for the
+alternative, and the only way to get one is a re-search that cannot fail high — a full window,
+hence the cost. The descent is therefore reverted as well, and finding 1 stays **open**.
+
+`bench` was blind to this too, and for the same structural reason as the affordability question:
+with a table cleared before every position the descent almost never runs, so a bug that corrupts
+move choice on nearly every real move showed up as **−320 nodes on 336 million**. An unchanged
+signature does not establish correctness either — only that the paths `bench` exercises are
+unchanged.
+
+**What survives.** A node re-derives its `Bound` from the corrected weight (finding 2), which is
+free, and the re-search is skipped when the line legitimately ends in mate, stalemate or a draw
+(finding 3), which saves work. Both stay.
+
+**What stays open.** Finding 1 above, and the fail-high residual documented at
 `researchWinnerAsPvNode`. Measured frequency: 9 of 358 root re-searches over the 1188
 Strategic Test Suite positions at depth 6, and in none of them was the returned line actually
 short — so the symptom the full window was meant to remove did not occur even once. Whether it
 is worth anything at all should be settled before the next attempt. The affordable home for
-the fix is **[§ 12.20 PVS](#1220-principal-variation-search-pvs--negascout--s--1025-elo)**:
-with a null-window scout the re-search becomes the cheap operation it is in other engines, and
-this whole construction can be reconsidered.
+both is **[§ 12.20 PVS](#1220-principal-variation-search-pvs--negascout--s--1025-elo)**: with a
+null-window scout the re-search becomes the cheap operation it is in other engines, a
+full-window verification becomes affordable, and the whole construction — deferred repair,
+recorded betas, no re-selection — can be reconsidered from a position where the correct answer
+is also the cheap one.
+
+**Do not attempt either fix again before PVS exists.** Both have now been measured, one at
+−44.4 and one at −166, and both measurements cost a day.
 
 ---
 
