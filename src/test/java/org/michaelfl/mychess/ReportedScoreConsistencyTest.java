@@ -24,10 +24,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * <p><b>Why this is not covered elsewhere.</b> Nothing else in the suite checks score-versus-move
  * consistency. {@code ThreefoldRepetitionTest} covers the same position from the other side, but
  * its assertions are about the principal variation and the game result — the score appears there
- * only in a comment. And the {@code __assert} in {@code PositionSearch.calculateNextMove}
- * guarantees that move, score and line all come from the same index, which closes the
- * mixed-up-index defect but says nothing about whether the value at that index was computed by
- * searching that move at all. That last gap is what this class covers.
+ * only in a comment. Move, score and line do all come from the same index at the return
+ * statement, so they cannot be mixed up — but that says nothing about whether the value at that
+ * index was computed by searching that move at all. That last gap is what this class covers.
+ *
+ * <p>It does <b>not</b> cover the root's move choice. The re-search can lower the winner's score
+ * below another move's recorded score without the selection being re-run; both known repairs
+ * measured −44.4 and −166 Elo and were reverted (roadmap § 12.25). This test would stay green
+ * through that defect, because the score it checks belongs to the move that was returned either
+ * way.
  *
  * <p>Both numbers are White-POV — {@code ChessEngine.calculateNextMove} applies the weightFactor
  * (+1 white, −1 black) at the boundary — so they are directly comparable and must not be negated

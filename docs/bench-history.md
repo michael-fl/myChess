@@ -264,7 +264,12 @@ comma on every machine and the output is diffable regardless of system locale.
    table being *warm*, and which shows up as wall-clock rather than as nodes, is
    invisible to it **by construction**. Whenever a change adds work to such a path,
    the signature is the wrong instrument and only a time-controlled match answers
-   the question (see [roadmap § 12.25](roadmap.md#1225-tried--full-window-pv-re-search-reverted-444-elo)).
+   the question. **Nor does an unchanged signature establish correctness**: the same
+   section records a move-selection bug that corrupted nearly every real move and
+   showed up as −320 nodes on 336 million, because the path it broke almost never
+   runs with a table cleared before every position. A signature speaks only about
+   the paths `bench` exercises (see
+   [roadmap § 12.25](roadmap.md#1225-tried--repairing-the-roots-move-choice-after-the-pv-re-search-reverted-twice-444-and-166-elo)).
 
 The Chess960 suite (10 positions, `bench 960`) is deliberately excluded from this
 table: comparability across the older releases is not established. It can be
