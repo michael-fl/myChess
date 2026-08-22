@@ -255,6 +255,16 @@ comma on every machine and the output is diffable regardless of system locale.
 3. **Archive the per-position output**, not just the totals (see below).
 4. **Never assert on time or NPS.** Record them with machine and date, or leave
    them out.
+5. **An unchanged signature proves logical neutrality, never affordability.** The
+   two are different claims and the difference is not academic: the full-window PV
+   re-search of 2026-08-21 moved the depth-8 signature by **+93 nodes on 336
+   million** — +0.00003 % — and cost **−44.4 ± 17.2 Elo** over 1180 games at
+   `tc=40/60`. Both numbers are correct. `bench` clears the table before every
+   position and searches to a fixed depth, so a change whose cost depends on the
+   table being *warm*, and which shows up as wall-clock rather than as nodes, is
+   invisible to it **by construction**. Whenever a change adds work to such a path,
+   the signature is the wrong instrument and only a time-controlled match answers
+   the question (see [roadmap § 12.25](roadmap.md#1225-tried--full-window-pv-re-search-reverted-444-elo)).
 
 The Chess960 suite (10 positions, `bench 960`) is deliberately excluded from this
 table: comparability across the older releases is not established. It can be
