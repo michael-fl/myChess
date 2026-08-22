@@ -315,7 +315,7 @@ public final class PositionSearch {
 
             final var rootMoves = new RootMoves(plainMoves, results, allPaths, betaUsedPerMove);
 
-            if (repairWinnerPv(bestMoveIndex, maxDepth, workingBoard, pvTable, rootMoves, materialWeight)) {
+            if (repairRootWinnerPv(bestMoveIndex, maxDepth, workingBoard, pvTable, rootMoves, materialWeight)) {
                 return previousBestKnownPath;
             }
 
@@ -359,7 +359,7 @@ public final class PositionSearch {
      * @return {@code true} if the search timed out, in which case the caller must fall back to
      *         the previous iteration and nothing computed here may be trusted
      */
-    private boolean repairWinnerPv(final int bestMoveIndex, final int maxDepth,
+    private boolean repairRootWinnerPv(final int bestMoveIndex, final int maxDepth,
                                    final Board workingBoard, final int[] pvTable,
                                    final RootMoves rootMoves, final int materialWeight) {
         final SearchNodeResult[] results = rootMoves.results();
@@ -378,10 +378,10 @@ public final class PositionSearch {
         final var repaired = pvResult;
         __assert(() -> !repaired.isIllegal(), () -> "The best found move must be a legal one");
 
-        if (pvResult.weight() > WeightingFunction.ILLEGAL_WEIGHT_NEG) {
-            results[bestMoveIndex] = pvResult;
-            System.arraycopy(pvTable, 0, allPaths[bestMoveIndex], 0, maxDepth + 1);
-        }
+        results[bestMoveIndex] = pvResult;
+        // The destination row was sized pvMaxLength at the root, so it carries the length
+        // itself — no second place to keep maxDepth + 1 in sync.
+        System.arraycopy(pvTable, 0, allPaths[bestMoveIndex], 0, allPaths[bestMoveIndex].length);
 
         return false;
     }
