@@ -60,8 +60,8 @@ class ReportedScoreConsistencyTest {
     /**
      * How far the reported score may sit below an independent measurement of the same move.
      *
-     * <p>Two pawns. Generous on purpose: the reference search runs with its own fresh table and
-     * a full window while the root searches with a narrowing one, so centipawn-level
+     * <p>Two pawns. Generous on purpose: the reference search runs with its own fresh table
+     * while the root searches with a shared one and a narrowing window, so centipawn-level
      * disagreement is normal and must not fail the test. What this catches is a swing of whole
      * pawns — the warm-table case that motivated the class reports 0.0 where the same move is
      * worth 15.05.

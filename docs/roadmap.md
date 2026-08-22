@@ -389,6 +389,59 @@ Those wins are overwhelmingly positions where the defence has already collapsed,
 
 ---
 
+## 12.25 Tried — full-window PV re-search, reverted (**−44.4 Elo**)
+
+The v4.5.0 complete-PV work repairs a truncated principal variation by re-searching the
+winning move with the child marked as a PV node. That re-search reuses **the beta the move
+was originally searched with**. Three follow-up defects were found by code review on top of
+it, and one of them — the child can fail high against that recorded beta, returning a
+refutation instead of a variation — has an obvious-looking fix: give the re-search a **full
+window**, so it can fail neither high nor low and its result is exact wherever it lands.
+
+It cost **−44.4 ± 17.2 Elo** over 1180 games (LLR −2.74 against a −2.94 bound, `tc=40/60`,
+4.5.0-complete-pv vs 4.4.2). The branch *without* it had measured **−2.6 ± 13.4** over 1880
+games — neutral. Reverted; the narrow window is back.
+
+**Why it costs that much.** Without a null-window scout every root move is already searched
+full-width on the beta side, so a re-search costs about as much as the original search — and
+with a full window it costs *more*, because it forgoes the transposition-table cutoffs inside
+the subtree it re-visits. How often that happens depends on the table: with a warm one the
+truncation this repairs is the common case (1094 truncations over 400 searches at depth 7),
+with a cold one it is rare.
+
+**Why `bench` could not see it, and this is the transferable lesson.** `bench` clears the
+table before every position and searches to a **fixed depth**. Both work against exactly this
+cost: cold means the re-search branch rarely fires, and fixed depth means extra work per node
+shows up in wall-clock time, which this project deliberately never asserts on. It measured
+**+93 nodes on 336 million, +0.00003 %** — and was accepted as evidence that the change was
+free. In a game the conditions are inverted: the table is warm, so the branch fires often, and
+the time is fixed, so every extra node costs search depth.
+
+The rule that follows: **an unchanged `bench` signature proves logical neutrality, never
+affordability.** For any change that adds work to a path whose frequency depends on the table
+being warm, `bench` is the wrong instrument by construction, and only a time-controlled match
+answers the question. Same lesson as
+[§ 12.7.2](#1272-tried--rook-file--battery-bonus-shelved-neutral), one level deeper: there the
+number was right and the conclusion wrong; here the number was right and the *question* wrong.
+
+**What survives.** The other two findings were cheap and stay fixed: the root now re-derives
+its best move after the re-search corrects a score, walking the remaining moves in descending
+recorded score (the correction had made the argmax stale, which was a move-selection
+regression), and a node re-derives its `Bound` from the corrected weight. Both are guarded —
+the first by an assertion in `PositionSearch`, checked on every root iteration rather than in
+hand-picked positions.
+
+**What stays open.** The fail-high residual is back and documented at
+`researchWinnerAsPvNode`. Measured frequency: 9 of 358 root re-searches over the 1188
+Strategic Test Suite positions at depth 6, and in none of them was the returned line actually
+short — so the symptom the full window was meant to remove did not occur even once. Whether it
+is worth anything at all should be settled before the next attempt. The affordable home for
+the fix is **[§ 12.20 PVS](#1220-principal-variation-search-pvs--negascout--s--1025-elo)**:
+with a null-window scout the re-search becomes the cheap operation it is in other engines, and
+this whole construction can be reconsidered.
+
+---
+
 ## Search cluster plan — History → PVS → LMR
 
 The three remaining low-effort search items — [§ 12.5 history](roadmap.md#125-history-heuristic--s--3050-elo), [§ 12.20 PVS](roadmap.md#1220-principal-variation-search-pvs--negascout--s--1025-elo), and [§ 12.3 LMR](roadmap.md#123-late-move-reductions-lmr--s--50100-elo) — are the highest-leverage work once the tapered evaluation ([§ 12.7](roadmap.md#127-evaluation-upgrades--m--4080-elo-combined)) has landed. They reinforce each other, so the order and the measurement baselines matter more than the raw Elo estimates. This expands step 4 of the [suggested implementation order](roadmap.md#suggested-implementation-order) below into a concrete build-and-measure plan.
