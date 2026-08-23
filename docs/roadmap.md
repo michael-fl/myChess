@@ -389,6 +389,111 @@ Those wins are overwhelmingly positions where the defence has already collapsed,
 
 ---
 
+## 12.25 Tried — repairing the root's move choice after the PV re-search, reverted twice (**−44.4 and −166 Elo**)
+
+The v4.5.0 complete-PV work repairs a truncated principal variation by re-searching the
+winning move with the child marked as a PV node. That re-search reuses **the beta the move
+was originally searched with**. Three follow-up defects were found by code review on top of
+it, and one of them — the child can fail high against that recorded beta, returning a
+refutation instead of a variation — has an obvious-looking fix: give the re-search a **full
+window**, so it can fail neither high nor low and its result is exact wherever it lands.
+
+It cost **−44.4 ± 17.2 Elo** over 1180 games (LLR −2.74 against a −2.94 bound, `tc=40/60`,
+4.5.0-complete-pv vs 4.4.2). The branch *without* it had measured **−2.6 ± 13.4** over 1880
+games — neutral. Reverted; the narrow window is back.
+
+**Why it costs that much.** Without a null-window scout every root move is already searched
+full-width on the beta side, so a re-search costs about as much as the original search — and
+with a full window it costs *more*, because it forgoes the transposition-table cutoffs inside
+the subtree it re-visits. How often that happens depends on the table: with a warm one the
+truncation this repairs is the common case (1094 truncations over 400 searches at depth 7),
+with a cold one it is rare.
+
+**Why `bench` could not see it, and this is the transferable lesson.** `bench` clears the
+table before every position and searches to a **fixed depth**. Both work against exactly this
+cost: cold means the re-search branch rarely fires, and fixed depth means extra work per node
+shows up in wall-clock time, which this project deliberately never asserts on. It measured
+**+93 nodes on 336 million, +0.00003 %** — and was accepted as evidence that the change was
+free. In a game the conditions are inverted: the table is warm, so the branch fires often, and
+the time is fixed, so every extra node costs search depth.
+
+The rule that follows: **an unchanged `bench` signature proves logical neutrality, never
+affordability.** For any change that adds work to a path whose frequency depends on the table
+being warm, `bench` is the wrong instrument by construction, and only a time-controlled match
+answers the question. Same lesson as
+[§ 12.7.2](#1272-tried--rook-file--battery-bonus-shelved-neutral), one level deeper: there the
+number was right and the conclusion wrong; here the number was right and the *question* wrong.
+
+### The second attempt, and why the defect is not cheaply fixable
+
+The first review finding is real: the re-search may lower the winner's score, and the argmax
+that selected it is not re-run, so the root can return a move it now rates below another one in
+the same array. That is a move-selection regression, not a display bug.
+
+The fix walked the remaining moves in descending recorded score and verified each one that could
+still beat the best verified value. Together with the full window that is **correct**, and it is
+what the −44.4 Elo bought. Reverting the window while keeping the descent looked like the cheap
+combination. It measured **−166.0 ± 50.0 Elo over 180 games** (LLR −1.49), and it is not a cost
+but a bug:
+
+A candidate in the descent is re-searched against **the beta it was originally searched with**.
+That candidate failed low at the time — otherwise it would be the winner — so re-searching it
+against the same beta fails *high*, essentially by construction. A fail-high child returns a
+lower bound on its own value, which negates into an **upper bound** on the root value of that
+move. The descent then compares the winner's honest score against a candidate's over-estimate,
+and switches to the worse move. Not occasionally: in every position where it runs.
+
+So the two known fixes are **correct and unaffordable**, or **cheap and wrong**. There is no
+third option, and the reason is structural: any fallback needs a trustworthy value for the
+alternative, and the only way to get one is a re-search that cannot fail high — a full window,
+hence the cost. The descent is therefore reverted as well, and finding 1 stays **open**.
+
+`bench` was blind to this too, and for the same structural reason as the affordability question:
+with a table cleared before every position the descent almost never runs, so a bug that corrupts
+move choice on nearly every real move showed up as **−320 nodes on 336 million**. The release
+measurement made it sharper still: the depth-8 signature is **336,412,842 both with the descent
+and without it** — byte-identical, so on these 55 positions the broken code never executed a
+single time. An unchanged signature does not establish correctness either, only that the paths
+`bench` exercises are unchanged.
+
+**What survives.** A node re-derives its `Bound` from the corrected weight (finding 2), which is
+free, and the re-search is skipped when the line legitimately ends in mate, stalemate or a draw
+(finding 3), which saves work. Both stay.
+
+**What stays open.** Finding 1 above, and the fail-high residual documented at
+`researchWinnerAsPvNode`. Measured frequency: 9 of 358 root re-searches over the 1188
+Strategic Test Suite positions at depth 6, and in none of them was the returned line actually
+short — so the symptom the full window was meant to remove did not occur even once. Whether it
+is worth anything at all should be settled before the next attempt. The affordable home for
+both is **[§ 12.20 PVS](#1220-principal-variation-search-pvs--negascout--s--1025-elo)**: with a
+null-window scout the re-search becomes the cheap operation it is in other engines, a
+full-window verification becomes affordable, and the whole construction — deferred repair,
+recorded betas, no re-selection — can be reconsidered from a position where the correct answer
+is also the cheap one.
+
+**Do not attempt either fix again before PVS exists.** Both have now been measured, one at
+−44.4 and one at −166, and both measurements cost a day.
+
+### What shipped, and what it measured
+
+**v4.5.0** carries the complete principal variation plus the two cheap findings, and nothing
+else from this section: the re-search keeps the recorded beta, a node re-derives its `Bound`
+from the corrected weight, and the repair is skipped when the line legitimately ends in mate,
+stalemate or a draw. Measured against 4.4.2 at `tc=40/60`: **+1.8 ± 11.6 over 2463 games**,
+which excludes a cost worse than about 10 Elo. The SPRT gave no verdict and could not — at a
+true value on the `elo1 = 0` boundary its LLR is a random walk, so the interval is the
+measurement and stopping to read it was the plan, not a concession.
+
+Two runs now say the same thing from different code: the repair alone measured −2.6 ± 13.4 over
+1880 games, the shipped state +1.8 ± 11.6 over 2463. Both intervals straddle zero and overlap
+heavily. Read it as **neutral**, and specifically not as the +4.4 the two midpoints suggest.
+
+The release is therefore justified on correctness, not on strength — the reported score and line
+are what the blunder scanner, the score-pinning tests and the UCI output all read — and it is
+the first entry in [version history](version-history.md) whose case rests on that alone.
+
+---
+
 ## Search cluster plan — History → PVS → LMR
 
 The three remaining low-effort search items — [§ 12.5 history](roadmap.md#125-history-heuristic--s--3050-elo), [§ 12.20 PVS](roadmap.md#1220-principal-variation-search-pvs--negascout--s--1025-elo), and [§ 12.3 LMR](roadmap.md#123-late-move-reductions-lmr--s--50100-elo) — are the highest-leverage work once the tapered evaluation ([§ 12.7](roadmap.md#127-evaluation-upgrades--m--4080-elo-combined)) has landed. They reinforce each other, so the order and the measurement baselines matter more than the raw Elo estimates. This expands step 4 of the [suggested implementation order](roadmap.md#suggested-implementation-order) below into a concrete build-and-measure plan.

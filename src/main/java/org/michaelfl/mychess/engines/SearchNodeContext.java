@@ -141,7 +141,8 @@ import java.util.Arrays;
 public record SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnownPath,
                                 int weightFactor,
                                 int materialWeight, int materialDelta,
-                                Board workingBoard, int[] pvTable, int pvMaxLength,
+                                Board workingBoard,
+                                int[] pvTable, int pvMaxLength, boolean isPvNode,
                                 boolean lastMoveWasNull) {
 
     /**
@@ -155,7 +156,7 @@ public record SearchNodeContext(int depth, int maxDepth, MoveAndWeight bestKnown
                       int weightFactor,
                       int materialWeight, int materialDelta,
                       Board workingBoard, int[] pvTable, int pvMaxLength) {
-        this(depth, maxDepth, bestKnownPath, weightFactor, materialWeight, materialDelta, workingBoard, pvTable, pvMaxLength, false);
+        this(depth, maxDepth, bestKnownPath, weightFactor, materialWeight, materialDelta, workingBoard, pvTable, pvMaxLength, false, false);
     }
 
     /**

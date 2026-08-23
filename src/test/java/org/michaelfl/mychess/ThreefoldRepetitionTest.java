@@ -262,7 +262,79 @@ class ThreefoldRepetitionTest {
 
         move = game.getEngine().nextMoveAsync().getResult(1, TimeUnit.MINUTES);
 
-        assertFalse(containsRepetition(STALEMATE_TRAP_FEN, move.path()), "with repetition detection enabled the principal variation must not repeat");
+        // CHARACTERIZATION, and the assertion is deliberately the wrong way round: White is
+        // winning here — mate in 14 according to Stockfish — so a correct engine would not
+        // settle for a draw. It does, and this pins that it does.
+        //
+        // The defect is that entries computed with repetition detection OFF are not valid
+        // inputs for a search with it ON, and nothing stops the second search from using
+        // them. The repetition check is path-local by design and deliberately not stored
+        // (roadmap § 12.23), so a table hit of sufficient depth returns a score without
+        // visiting the children — and on lines where it hits before the repetition has
+        // accumulated on the path, the search never reaches the check and inherits the
+        // other rule set's score.
+        //
+        // Cannot happen in play: both rules default to on, and the one place in src/main
+        // that turns them off (PGNImporter.importGame) uses a table of its own. It is
+        // reachable through the public importGame(GameConfig), and through any future tool
+        // that toggles a rule while sharing a table.
+        //
+        // Why it surfaced with the v4.5.0 complete-PV work rather than before: the
+        // truncating cutoff used to hide it twice over. It cut the variation two plies in,
+        // before the repetition became visible, and it supplied a score of +15.8 from the
+        // detection-off search above. This line therefore read
+        // assertFalse(containsRepetition(...)) and passed — it looked like a win. With a
+        // complete PV the engine reports what it actually plays.
+        //
+        // The cold-table counterpart withAFreshTableTheEngineAvoidsTheRepetitionInTheWonPosition
+        // stays green: there the engine walks its king out and keeps +15.05. That pair is
+        // what makes this characterization attributable to the poisoned table rather than to
+        // the position.
+        //
+        // TODO invert to assertNotEquals once the rule set is part of the table identity —
+        // XOR a constant derived from isEnableThreefoldRepetition() and
+        // isEnableFiftyMovesRule() into the key at the two access points in
+        // PositionSearch (tt.get / tt.put). Same rule set means the same key, so the bench
+        // node signature must not move, which makes the fix cheap to verify.
+        //
+        // Test family: repetition (defect)
+        assertEquals(GameResult.DRAW, move.result(),
+                "characterization: with the table poisoned by the detection-off search above the engine "
+                        + "settles for a draw in a won position (mate in 14). If this now reports a "
+                        + "non-draw, the defect is fixed — invert the assertion; score " + move.weight()
+                        + ", pv " + pathToString(move.path()));
+    }
+
+    /**
+     * Cold-table counterpart of {@link #withRepetitionDetectionDisabledTheShuffleReturns}:
+     * same position, same depth, repetition detection on — but the table has never seen a
+     * search with detection off, so no score computed under the other rule set can be
+     * grafted into this one.
+     *
+     * <p>This is what localises the defect the sibling test exposes. Measured here: the
+     * engine walks its king out ({@code d1-e1 e1-f1 f1-f2}) instead of shuffling back,
+     * scores {@code +15.05} and reports no repetition. Repetition avoidance itself
+     * therefore works; what fails above is the reuse of a table across a changed rule.
+     */
+    @Test
+    void withAFreshTableTheEngineAvoidsTheRepetitionInTheWonPosition() throws Exception {
+        // Mirrors the depth of the sibling test so the two stay comparable.
+        final int sharedHelperMaxDepth = 8;
+
+        var config = new EngineConfig.Builder()
+                .maxDepth(sharedHelperMaxDepth)
+                .enableThreefoldRepetition(true)
+                .setTranspositionTable(tt) // fresh from setup(), never warmed with detection off
+                .build();
+        var game = new Game(new GameConfig(MyChessEngine.class, config), Fen.importFEN(STALEMATE_TRAP_FEN));
+
+        MoveAndWeight move = game.getEngine().nextMoveAsync().getResult(1, TimeUnit.MINUTES);
+
+        assertFalse(containsRepetition(STALEMATE_TRAP_FEN, move.path()),
+                "with a fresh table the principal variation must not repeat; pv " + pathToString(move.path()));
+        assertNotEquals(GameResult.DRAW, move.result(),
+                "White is winning here (mate in 14), so a fresh-table search must not report a draw; score "
+                        + move.weight() + ", pv " + pathToString(move.path()));
     }
 
     /**

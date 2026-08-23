@@ -55,7 +55,7 @@ not a sole cause.
 ## 2. Depth 8 — the full series
 
 Suite: `standard` (49 Stockfish benchmark positions + 6 myChess middlegames = 55).
-All ten runs completed every position at the requested depth; no run was
+All eleven runs completed every position at the requested depth; no run was
 time-truncated.
 
 | Version | Nodes @ d8 | Δ nodes vs prev. row | Dominant change in span | Δ Elo (measured) | ~CCRL |
@@ -71,6 +71,7 @@ time-truncated.
 | **4.3.4** | 350,506,008 | **−6.6 %** | full-joint MG+EG PST tune | +23.0 ± 12.9 | ~1870 |
 | **4.4.0** | 335,919,557 | **−4.2 %** | PeSTO piece-square tables | +32.6 ± 12.4 | ~1900 |
 | **4.4.1** | 335,946,428 | **+0.008 %** | Repetition fix (§ 12.23) | ≈ +15 (SPRT H1 at 321 games, +42.4 ± 29.4) | **1928 ± 21** |
+| **4.5.0** | 336,412,842 | **+0.139 %** | Complete principal variation ([§ 12.25](roadmap.md#1225-tried--repairing-the-roots-move-choice-after-the-pv-re-search-reverted-twice-444-and-166-elo)) | +1.8 ± 11.6 over 2463 games — **neutral** | ~1928 |
 
 **The `~CCRL` column is propagated except for one row.** 4.4.1 carries a *measured* absolute rating — 1928 ± 21 from the 2026-08-17 re-anchor, 2000 games against five externally rated engines (see [ELO measurement § 7](myChess-ELO-measurement.md#the-v441-re-anchor--measured-2026-08-17)). Every other value in that column is carried forward from per-version SPRT deltas. The propagated chain had predicted ~1915 for this row, so the deltas proved well calibrated over the ~500 Elo since the previous direct measurement.
 
@@ -114,7 +115,8 @@ and are historically closed.
 |---|---:|---:|---:|
 | **4.3.4** | 916,947,170 | 350,506,008 | **2.62** |
 | **4.4.0** | 920,132,868 | 335,919,557 | **2.74** |
-| **4.4.1** | 918,718,652 | 335,946,428 | **2.74** |
+| **4.4.1** | 918,718,652 | 335,946,428 | **2.73** |
+| **4.5.0** | 919,377,788 | 336,412,842 | **2.73** |
 
 The **d9/d8 ratio is the effective branching factor** and the most interesting
 single number here. At 2.62–2.74 it is far below the ~5.9 (√35) that perfect move
@@ -255,6 +257,25 @@ comma on every machine and the output is diffable regardless of system locale.
 3. **Archive the per-position output**, not just the totals (see below).
 4. **Never assert on time or NPS.** Record them with machine and date, or leave
    them out.
+5. **An unchanged signature proves logical neutrality, never affordability.** The
+   two are different claims and the difference is not academic: the full-window PV
+   re-search of 2026-08-21 moved the depth-8 signature by **+93 nodes on 336
+   million** — +0.00003 % — and cost **−44.4 ± 17.2 Elo** over 1180 games at
+   `tc=40/60`. Both numbers are correct. `bench` clears the table before every
+   position and searches to a fixed depth, so a change whose cost depends on the
+   table being *warm*, and which shows up as wall-clock rather than as nodes, is
+   invisible to it **by construction**. Whenever a change adds work to such a path,
+   the signature is the wrong instrument and only a time-controlled match answers
+   the question. **Nor does an unchanged signature establish correctness**: the same
+   section records a move-selection bug that corrupted nearly every real move and
+   showed up as −320 nodes on 336 million, because the path it broke almost never
+   runs with a table cleared before every position. A signature speaks only about
+   the paths `bench` exercises. The sharpest evidence for that came from this very
+   table: the depth-8 signature is **336,412,842 both with and without** the
+   descent over the root move list — byte-identical, because with the table
+   cleared before every position that code never ran once on these 55 positions,
+   while in play it corrupted nearly every move (see
+   [roadmap § 12.25](roadmap.md#1225-tried--repairing-the-roots-move-choice-after-the-pv-re-search-reverted-twice-444-and-166-elo)).
 
 The Chess960 suite (10 positions, `bench 960`) is deliberately excluded from this
 table: comparability across the older releases is not established. It can be

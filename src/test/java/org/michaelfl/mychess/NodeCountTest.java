@@ -30,7 +30,7 @@ class NodeCountTest {
     private static final int EXPECTED_DEPTH_1_NODES = 21;
 
     /**
-     * A depth-2 search from the start position visits 138 positions with the
+     * A depth-2 search from the start position visits 83 positions with the
      * current search. Depth 1 has no interior nodes, so it cannot catch a
      * re-introduced interior double-count (a node counted in both
      * {@code alphaBetaSearchPre} and {@code alphaBetaSearchMain}); this guards
@@ -42,8 +42,13 @@ class NodeCountTest {
      * Stockfish bench number), never to mask an accidental miscount.
      */
     /* 140 -> 82 with the PeSTO piece-square tables (v4.4.0): a sharper evaluation orders
-     * moves better, so alpha-beta cuts more of the depth-2 tree. */
-    private static final int EXPECTED_DEPTH_2_NODES = 82;
+     * moves better, so alpha-beta cuts more of the depth-2 tree.
+     * 82 -> 83 with the complete-PV change (v4.5.0): at depth 1 a move other than the
+     * first-ordered one wins, and the PV repair re-searches that child as a PV node so the
+     * reported principal variation does not end at a transposition-table cutoff. Exactly one
+     * position is therefore visited twice on purpose. The guard keeps its force either way —
+     * an accidental interior double-count would roughly double this value, not add one. */
+    private static final int EXPECTED_DEPTH_2_NODES = 83;
 
     private static final int SEARCH_TIMEOUT_SECONDS = 20;
 
@@ -65,8 +70,10 @@ class NodeCountTest {
         long nodes = searchNodeCount(Board.createNewGame(), 2);
 
         assertEquals(EXPECTED_DEPTH_2_NODES, nodes,
-                "a depth-2 search must count each position once; a higher value suggests interior "
-                        + "nodes are counted in both alphaBetaSearchPre and alphaBetaSearchMain");
+                "a depth-2 search must visit exactly this many positions; a markedly higher value "
+                        + "suggests interior nodes are counted in both alphaBetaSearchPre and "
+                        + "alphaBetaSearchMain (the single deliberate re-visit from the PV repair is "
+                        + "already part of the expected count)");
     }
 
     /**
