@@ -291,11 +291,26 @@ class ThreefoldRepetitionTest {
         // what makes this characterization attributable to the poisoned table rather than to
         // the position.
         //
-        // TODO invert to assertNotEquals once the rule set is part of the table identity —
-        // XOR a constant derived from isEnableThreefoldRepetition() and
-        // isEnableFiftyMovesRule() into the key at the two access points in
-        // PositionSearch (tt.get / tt.put). Same rule set means the same key, so the bench
-        // node signature must not move, which makes the fix cheap to verify.
+        // WON'T FIX — decided 2026-08-23, and deliberately not left as a TODO.
+        //
+        // The fix would be to make the rule set part of the table identity: XOR a constant
+        // derived from isEnableThreefoldRepetition() and isEnableFiftyMovesRule() into the
+        // key at the two access points in PositionSearch (tt.get / tt.put). Two XOR, and
+        // provably neutral, since the same rule set gives the same key.
+        //
+        // It is not worth carrying anyway. The defect cannot occur in play, so the fix
+        // would be production code exercised only by this test, and the whole v4.5.0
+        // episode is the argument against that trade: two defects that were equally real
+        // in the code and equally absent in practice cost -44.4 and -166 Elo to repair
+        // (roadmap § 12.25). A defect with zero occurrences does not earn a change to the
+        // search.
+        //
+        // What would change the decision: a caller that hands importGame(GameConfig) a
+        // shared table with a rule switched off, or a second config-dependent rule in the
+        // early-exit condition of alphaBetaSearchPre — which already tests two flags, so
+        // this is a class of hazard rather than one instance. Until then this assertion
+        // stays as it is, pinning the behavior so that a future change to the table cannot
+        // alter it unnoticed.
         //
         // Test family: repetition (defect)
         assertEquals(GameResult.DRAW, move.result(),
