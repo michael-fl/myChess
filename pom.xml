@@ -12,7 +12,67 @@
     <maven.compiler.release>25</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.jupiter.version>5.11.4</junit.jupiter.version>
+
+    <!-- Pinned because mapdb 3.0.8 declares open version ranges for these; see
+         dependencyManagement below. -->
+    <guava.version>33.7.1-jre</guava.version>
+    <eclipse.collections.version>13.0.0</eclipse.collections.version>
+    <kotlin.version>1.2.71</kotlin.version>
   </properties>
+
+  <!--
+    Pin the dependencies mapdb resolves through open version ranges.
+
+    mapdb 3.0.8 declares guava as [15.0,) and eclipse-collections as [7.0.0,) -
+    unbounded, so Maven picks whatever is newest at build time. The build was
+    therefore not reproducible: two `mvn package` runs on the same commit could
+    produce different lib/ contents with an identical jar, and nothing in the
+    output said so. It happened between 4.4.2 and 4.5.0, where guava moved
+    33.6.0 -> 33.7.1 and pulled newer error_prone_annotations and jspecify with
+    it.
+
+    That matters most for docs/bench-history.md, whose whole method rests on an
+    unchanged node signature proving neutrality. A silent library swap breaks the
+    attribution of any comparison across releases, however unlikely it is that
+    guava affects the search.
+
+    kotlin-stdlib is [1.2.41,1.2.90) - bounded above, so it cannot drift far, but
+    it is pinned for the same reason: a version in a build artifact should be a
+    decision, not a timestamp.
+
+    The values are the ones 4.5.0 was built and measured with (2463 games,
+    2026-08-23). Bumping any of them is a deliberate act that belongs in its own
+    commit, with a bench run to show it changed nothing.
+  -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>${guava.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.collections</groupId>
+        <artifactId>eclipse-collections</artifactId>
+        <version>${eclipse.collections.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.collections</groupId>
+        <artifactId>eclipse-collections-api</artifactId>
+        <version>${eclipse.collections.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.collections</groupId>
+        <artifactId>eclipse-collections-forkjoin</artifactId>
+        <version>${eclipse.collections.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-stdlib</artifactId>
+        <version>${kotlin.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
 
