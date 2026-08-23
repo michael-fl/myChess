@@ -450,9 +450,11 @@ hence the cost. The descent is therefore reverted as well, and finding 1 stays *
 
 `bench` was blind to this too, and for the same structural reason as the affordability question:
 with a table cleared before every position the descent almost never runs, so a bug that corrupts
-move choice on nearly every real move showed up as **−320 nodes on 336 million**. An unchanged
-signature does not establish correctness either — only that the paths `bench` exercises are
-unchanged.
+move choice on nearly every real move showed up as **−320 nodes on 336 million**. The release
+measurement made it sharper still: the depth-8 signature is **336,412,842 both with the descent
+and without it** — byte-identical, so on these 55 positions the broken code never executed a
+single time. An unchanged signature does not establish correctness either, only that the paths
+`bench` exercises are unchanged.
 
 **What survives.** A node re-derives its `Bound` from the corrected weight (finding 2), which is
 free, and the re-search is skipped when the line legitimately ends in mate, stalemate or a draw
@@ -471,6 +473,24 @@ is also the cheap one.
 
 **Do not attempt either fix again before PVS exists.** Both have now been measured, one at
 −44.4 and one at −166, and both measurements cost a day.
+
+### What shipped, and what it measured
+
+**v4.5.0** carries the complete principal variation plus the two cheap findings, and nothing
+else from this section: the re-search keeps the recorded beta, a node re-derives its `Bound`
+from the corrected weight, and the repair is skipped when the line legitimately ends in mate,
+stalemate or a draw. Measured against 4.4.2 at `tc=40/60`: **+1.8 ± 11.6 over 2463 games**,
+which excludes a cost worse than about 10 Elo. The SPRT gave no verdict and could not — at a
+true value on the `elo1 = 0` boundary its LLR is a random walk, so the interval is the
+measurement and stopping to read it was the plan, not a concession.
+
+Two runs now say the same thing from different code: the repair alone measured −2.6 ± 13.4 over
+1880 games, the shipped state +1.8 ± 11.6 over 2463. Both intervals straddle zero and overlap
+heavily. Read it as **neutral**, and specifically not as the +4.4 the two midpoints suggest.
+
+The release is therefore justified on correctness, not on strength — the reported score and line
+are what the blunder scanner, the score-pinning tests and the UCI output all read — and it is
+the first entry in [version history](version-history.md) whose case rests on that alone.
 
 ---
 
