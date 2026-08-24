@@ -22,6 +22,7 @@ public final class QuiescenceSearch {
     private final int maxQuiescenceDepth;
     private final long timeout;
     private boolean isTimeout;
+    private boolean materialOnlyShortcutEnabled = true;
 
     public QuiescenceSearch(MoveGenerator moveGenerator, WeightingFunction weightingFunction, Statistics statistics, int maxQuiescenceDepth, long timeout) {
         this.moveGenerator = moveGenerator;
@@ -131,9 +132,11 @@ public final class QuiescenceSearch {
     }
 
     private int calculatePositionWeight(final Board workingBoard, final int weightFactor, final int materialWeight, final int materialDelta) {
-        if (materialDelta > PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD || materialDelta < -PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD) {
+        if (materialOnlyShortcutEnabled
+                && (materialDelta > PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD || materialDelta < -PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD)) {
             return materialWeight;
         }
+
         return weightingFunction.calculate(workingBoard) * weightFactor;
     }
 
@@ -142,6 +145,10 @@ public final class QuiescenceSearch {
             isTimeout = statistics.getPositionsCount() % 10000 == 0 && System.currentTimeMillis() >= timeout;
         }
         return isTimeout;
+    }
+
+    public void setMaterialOnlyShortcutEnabled(boolean materialOnlyShortcutEnabled) {
+        this.materialOnlyShortcutEnabled = materialOnlyShortcutEnabled;
     }
 
 }

@@ -275,6 +275,10 @@ public final class PositionSearch {
 
             betaUsedPerMove[i] = -alphaWeight;
             pvTable[0] = move;
+
+            // Only use the material shortcut for quiet moves
+            quiescenceSearch.setMaterialOnlyShortcutEnabled(Move.getCapturedPiece(move) == 0);
+
             workingBoard.makeMove(move);
             var result = alphaBetaSearch(
                     new SearchNodeContext(1, maxDepth, bestKnownPath, -weightFactor, -newMaterialWeight, -moveWeight, workingBoard, pvTable, pvMaxLength, isPvMove, false),
