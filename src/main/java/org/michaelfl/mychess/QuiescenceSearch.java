@@ -22,6 +22,7 @@ public final class QuiescenceSearch {
     private final int maxQuiescenceDepth;
     private final long timeout;
     private boolean isTimeout;
+    private boolean materialOnlyShortcutEnabled = true;
 
     public QuiescenceSearch(MoveGenerator moveGenerator, WeightingFunction weightingFunction, Statistics statistics, int maxQuiescenceDepth, long timeout) {
         this.moveGenerator = moveGenerator;
@@ -29,6 +30,10 @@ public final class QuiescenceSearch {
         this.statistics = statistics;
         this.maxQuiescenceDepth = maxQuiescenceDepth;
         this.timeout = timeout;
+    }
+
+    public void setMaterialOnlyShortcutEnabled(boolean materialOnlyShortcutEnabled) {
+        this.materialOnlyShortcutEnabled = materialOnlyShortcutEnabled;
     }
 
     public int quiescenceSearch(final Board workingBoard, final int depth, final int weightFactor, final int alphaWeight, final int betaWeight, final int materialWeight, final int materialDelta) {
@@ -131,7 +136,8 @@ public final class QuiescenceSearch {
     }
 
     private int calculatePositionWeight(final Board workingBoard, final int weightFactor, final int materialWeight, final int materialDelta) {
-        if (materialDelta > PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD || materialDelta < -PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD) {
+        if (materialOnlyShortcutEnabled
+                && (materialDelta > PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD || materialDelta < -PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD)) {
             return materialWeight;
         }
         return weightingFunction.calculate(workingBoard) * weightFactor;
