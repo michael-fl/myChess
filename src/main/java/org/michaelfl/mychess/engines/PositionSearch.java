@@ -712,7 +712,11 @@ public final class PositionSearch {
     }
 
     private int quiescenceSearch(final SearchNodeContext ctx, final int alphaWeight, final int betaWeight) {
-        return quiescenceSearch.quiescenceSearch(ctx.workingBoard(), ctx.depth(), ctx.weightFactor(), alphaWeight, betaWeight, ctx.materialWeight(), ctx.materialDelta());
+        quiescenceSearch.setMaterialOnlyShortcutEnabled(!ctx.isPvNode());
+        int weight = quiescenceSearch.quiescenceSearch(ctx.workingBoard(), ctx.depth(), ctx.weightFactor(), alphaWeight, betaWeight, ctx.materialWeight(), ctx.materialDelta());
+        quiescenceSearch.setMaterialOnlyShortcutEnabled(true);
+
+        return weight;
     }
 
     private void log(String s) {
