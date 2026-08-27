@@ -138,6 +138,17 @@ public final class WeightingFunction {
     /** Phase of the full starting material (4·1 knights + 4·1 bishops + 4·2 rooks + 2·4 queens); the phase is clamped to this. */
     private static final int MAX_PHASE = 24;
 
+    /**
+     * Compile-time gate for {@link EvalWorkCounters}, mirroring {@code Assert.ENABLED}.
+     *
+     * <p><b>Must stay {@code false} in any build that plays or is measured for strength.</b> Being
+     * a compile-time constant, javac removes every guarded increment outright, so the counting
+     * costs nothing when off — verify with {@code javap -c -p WeightingFunction}, which must then
+     * contain no reference to {@code EvalWorkCounters}. Flip to {@code true} and rebuild for a
+     * counting build.
+     */
+    private static final boolean COUNT_EVAL_WORK = false;
+
     private static final float mobilityFactor = 0.1f;
     private static final float positionFactor = 0.5f;
     private static final float threadWeightFactor = 0.02f;
@@ -275,6 +286,11 @@ public final class WeightingFunction {
         this.pstEndGameWeight[0] = 0;
         this.pstEndGameWeight[1] = 0;
 
+        if (COUNT_EVAL_WORK) {
+            EvalWorkCounters.evalCalls++;
+            EvalWorkCounters.tempBoardCopies++;
+        }
+
         System.arraycopy(board, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
 
         final int stopField = Board.h8 + 1;
@@ -296,6 +312,10 @@ public final class WeightingFunction {
                 pstEndGameWeight[color] += (short) ((packed + 0x8000) >> 16);
 
                 phase += phaseWeightOfPiece[piece];
+
+                if (COUNT_EVAL_WORK) {
+                    EvalWorkCounters.pieceWalks++;
+                }
 
                 calculationFunctions[piece].calculate(this, field, color);
             }
@@ -453,6 +473,11 @@ public final class WeightingFunction {
     }
 
     private void calculateForWhitePawn(int field, int color) {
+        if (COUNT_EVAL_WORK) {
+            // single step, plus the two squares the double step inspects when it applies
+            EvalWorkCounters.squareProbes += fieldToRow(field) == 1 ? 3 : 1;
+        }
+
         // single step
         int to = field + Board.LENGTH;
         if (board[to] == Board.empty) {
@@ -477,6 +502,10 @@ public final class WeightingFunction {
         if (fieldToRow(field) == 4) {
             int lastMove = game.getLastMove();
             if (lastMove != 0) {
+                if (COUNT_EVAL_WORK) {
+                    EvalWorkCounters.squareProbes += 2;
+                }
+
                 if (board[field - 1] == Board.blackPawn
                         && Move.getToField(lastMove) == field - 1
                         && Move.getFromField(lastMove) == field - 1 + 2 * Board.LENGTH) {
@@ -493,6 +522,10 @@ public final class WeightingFunction {
         // means only the LOWER pawn in a pair finds its partner, so each
         // pair is counted exactly once.
         for (var f = field + Board.LENGTH; board[f] != Board.illegal; f += Board.LENGTH) {
+            if (COUNT_EVAL_WORK) {
+                EvalWorkCounters.doubledPawnScanFields++;
+            }
+
             if (board[f] == Board.whitePawn) {
                 doublePawnCount[color]++;
                 break;
@@ -501,6 +534,10 @@ public final class WeightingFunction {
     }
 
     private void captureOrDefendWithPawn(final int to, final int myTurn, final int oppositeTurn, final byte movingPawn, final int color) {
+        if (COUNT_EVAL_WORK) {
+            EvalWorkCounters.squareProbes++;
+        }
+
         if ((board[to] & oppositeTurn) == oppositeTurn) {
             capture(to, movingPawn, color, board[to]);
         } else if ((board[to] & myTurn) == myTurn) {
@@ -517,6 +554,11 @@ public final class WeightingFunction {
     }
 
     private void calculateForBlackPawn(int field, int color) {
+        if (COUNT_EVAL_WORK) {
+            // single step, plus the two squares the double step inspects when it applies
+            EvalWorkCounters.squareProbes += fieldToRow(field) == 6 ? 3 : 1;
+        }
+
         // single step
         int to = field - Board.LENGTH;
         if (board[to] == Board.empty) {
@@ -543,6 +585,10 @@ public final class WeightingFunction {
         if (fieldToRow(field) == 3) {
             int lastMove = game.getLastMove();
             if (lastMove != 0) {
+                if (COUNT_EVAL_WORK) {
+                    EvalWorkCounters.squareProbes += 2;
+                }
+
                 if (board[field - 1] == Board.whitePawn
                         && Move.getToField(lastMove) == field - 1
                         && Move.getFromField(lastMove) == field - 1 - 2 * Board.LENGTH) {
@@ -559,6 +605,10 @@ public final class WeightingFunction {
         // means only the UPPER pawn in a pair finds its partner, so each
         // pair is counted exactly once.
         for (var f = field - Board.LENGTH; board[f] != Board.illegal; f -= Board.LENGTH) {
+            if (COUNT_EVAL_WORK) {
+                EvalWorkCounters.doubledPawnScanFields++;
+            }
+
             if (board[f] == Board.blackPawn) {
                 doublePawnCount[color]++;
                 break;
@@ -677,6 +727,10 @@ public final class WeightingFunction {
 
     @SuppressWarnings({"unused", "java:S1117"})
     private boolean move(final byte movingPiece, final int from, final int to, final int color, final int weight) {
+        if (COUNT_EVAL_WORK) {
+            EvalWorkCounters.squareProbes++;
+        }
+
         final byte piece = board[to];
         final int oppositeColor = WeightingFunction.oppositeColor[color];
 
@@ -752,6 +806,10 @@ public final class WeightingFunction {
 
     private void calculateUndefendedPiecesCount() {
         for (int field = Board.a1; field <= Board.h8; field++) {
+            if (COUNT_EVAL_WORK) {
+                EvalWorkCounters.undefendedScanFields++;
+            }
+
             final byte piece = tempBoard[field];
             if ((piece & ATTACK_MARK_BIT) == ATTACK_MARK_BIT) {
                 if ((piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE && piece != WHITE_KING_ATTACKED) {
