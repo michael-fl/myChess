@@ -417,17 +417,29 @@ class BlunderTest {
      * only bound, so the requested iteration always completes instead of the
      * clock cutting it short and the result falling back to a shallower — and
      * differently-decided — iteration.
+     *
+     * <p><b>Raised 120 s → 300 s in v4.6.0</b>, because exactly that happened. Disabling the
+     * material-only shortcut in capture subtrees ([roadmap § 12.26]) made depth 13 in the
+     * {@code Qxa1} position cost more than 120 s, so {@code qxa1_atDepth13} fell back to a
+     * shallower iteration and played the blunder it exists to refute. Measured with a 900 s
+     * budget: the case passes and the whole test takes 214 s, so the refutation is intact and
+     * only the harness was too tight. 300 s is that measurement plus headroom.
+     *
+     * <p>Only cases that actually reach the cap get slower — the rest finish long before it, so
+     * the suite cost is bounded by the handful that are genuinely deep.
      */
-    private static final int DEPTH_BOUND_BUDGET_MS = 120_000;
+    private static final int DEPTH_BOUND_BUDGET_MS = 300_000;
 
     /**
      * JUnit safety timeout for the fixed-depth cases; above {@link #DEPTH_BOUND_BUDGET_MS}.
+     *
+     * <p>Raised with the budget in v4.6.0 — see there for why.
      *
      * <p>Package-private, like the three depth-bound helpers below, so
      * {@code StsDefectTest} can share this harness instead of copying it -- see
      * the cross-test sharing convention in {@code docs/testing.md} § 11.1.
      */
-    static final int DEPTH_BOUND_TIMEOUT_S = 150;
+    static final int DEPTH_BOUND_TIMEOUT_S = 330;
 
     static Game gameFromFenAtDepth(String fen, int depth, TranspositionTable tt) {
         var engineConfig = new EngineConfig.Builder()

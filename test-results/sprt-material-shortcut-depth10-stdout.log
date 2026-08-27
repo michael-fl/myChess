@@ -1,0 +1,1265 @@
+Indexing opening suite...
+Started game 4 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Started game 3 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Started game 2 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Started game 1 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 2 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 0 - 1 - 0  [0.000] 1
+Started game 5 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 1 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 0 - 2 - 0  [0.000] 2
+Started game 6 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 4 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 1 - 2 - 0  [0.333] 3
+Started game 7 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 3 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 2 - 2 - 0  [0.500] 4
+Started game 8 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 6 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black mates}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 3 - 2 - 0  [0.600] 5
+Started game 9 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 7 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 3 - 3 - 0  [0.500] 6
+Started game 10 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 9 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 3 - 3 - 1  [0.500] 7
+Started game 11 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 5 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 3 - 4 - 1  [0.438] 8
+Started game 12 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 8 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 3 - 4 - 2  [0.444] 9
+Started game 13 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 13 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 3 - 5 - 2  [0.400] 10
+...      mychess-material-shortcut-depth10 playing White: 1 - 4 - 1  [0.250] 6
+...      mychess-material-shortcut-depth10 playing Black: 2 - 1 - 1  [0.625] 4
+...      White vs Black: 2 - 6 - 2  [0.300] 10
+Elo difference: -70.4 +/- 226.4, LOS: 24.0 %, DrawRatio: 20.0 %
+SPRT: llr -0.102 (-3.5%), lbound -2.94, ubound 2.94
+Started game 14 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 10 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 3 - 5 - 3  [0.409] 11
+Started game 15 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 11 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 3 - 6 - 3  [0.375] 12
+Started game 16 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 12 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 4 - 6 - 3  [0.423] 13
+Started game 17 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 14 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 4 - 7 - 3  [0.393] 14
+Started game 18 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 17 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 4 - 8 - 3  [0.367] 15
+Started game 19 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 18 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 4 - 9 - 3  [0.344] 16
+Started game 20 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 15 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 4 - 9 - 4  [0.353] 17
+Started game 21 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 19 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 5 - 9 - 4  [0.389] 18
+Started game 22 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 16 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 5 - 9 - 5  [0.395] 19
+Started game 23 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 20 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 6 - 9 - 5  [0.425] 20
+...      mychess-material-shortcut-depth10 playing White: 2 - 6 - 2  [0.300] 10
+...      mychess-material-shortcut-depth10 playing Black: 4 - 3 - 3  [0.550] 10
+...      White vs Black: 5 - 10 - 5  [0.375] 20
+Elo difference: -52.5 +/- 140.4, LOS: 21.9 %, DrawRatio: 25.0 %
+SPRT: llr -0.163 (-5.5%), lbound -2.94, ubound 2.94
+Started game 24 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 22 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 6 - 10 - 5  [0.405] 21
+Started game 25 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 23 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 6 - 11 - 5  [0.386] 22
+Started game 26 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 21 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 6 - 11 - 6  [0.391] 23
+Started game 27 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 24 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 6 - 11 - 7  [0.396] 24
+Started game 28 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 25 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 7 - 11 - 7  [0.420] 25
+Started game 29 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 28 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 7 - 11 - 8  [0.423] 26
+Started game 30 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 26 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 8 - 11 - 8  [0.444] 27
+Started game 31 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 27 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 8 - 12 - 8  [0.429] 28
+Started game 32 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 29 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 8 - 12 - 9  [0.431] 29
+Started game 33 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 30 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 8 - 12 - 10  [0.433] 30
+...      mychess-material-shortcut-depth10 playing White: 3 - 8 - 4  [0.333] 15
+...      mychess-material-shortcut-depth10 playing Black: 5 - 4 - 6  [0.533] 15
+...      White vs Black: 7 - 13 - 10  [0.400] 30
+Elo difference: -46.6 +/- 105.1, LOS: 18.6 %, DrawRatio: 33.3 %
+SPRT: llr -0.244 (-8.3%), lbound -2.94, ubound 2.94
+Started game 34 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 31 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 9 - 12 - 10  [0.452] 31
+Started game 35 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 32 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 10 - 12 - 10  [0.469] 32
+Started game 36 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 33 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 10 - 13 - 10  [0.455] 33
+Started game 37 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 36 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 11 - 13 - 10  [0.471] 34
+Started game 38 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 35 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 11 - 13 - 11  [0.471] 35
+Started game 39 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 34 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 11 - 14 - 11  [0.458] 36
+Started game 40 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 37 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 11 - 14 - 12  [0.459] 37
+Started game 41 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 40 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 11 - 15 - 12  [0.447] 38
+Started game 42 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 38 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 11 - 16 - 12  [0.436] 39
+Started game 43 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 41 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 12 - 16 - 12  [0.450] 40
+...      mychess-material-shortcut-depth10 playing White: 5 - 9 - 6  [0.400] 20
+...      mychess-material-shortcut-depth10 playing Black: 7 - 7 - 6  [0.500] 20
+...      White vs Black: 12 - 16 - 12  [0.450] 40
+Elo difference: -34.9 +/- 92.4, LOS: 22.5 %, DrawRatio: 30.0 %
+SPRT: llr -0.238 (-8.1%), lbound -2.94, ubound 2.94
+Started game 44 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 39 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 12 - 17 - 12  [0.439] 41
+Started game 45 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 44 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 13 - 17 - 12  [0.452] 42
+Started game 46 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 42 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 14 - 17 - 12  [0.465] 43
+Started game 47 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 43 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 14 - 18 - 12  [0.455] 44
+Started game 48 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 46 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 14 - 18 - 13  [0.456] 45
+Started game 49 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 45 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 14 - 18 - 14  [0.457] 46
+Started game 50 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 48 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 14 - 19 - 14  [0.447] 47
+Started game 51 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 47 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 14 - 20 - 14  [0.438] 48
+Started game 52 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 49 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 14 - 20 - 15  [0.439] 49
+Started game 53 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 50 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 15 - 20 - 15  [0.450] 50
+...      mychess-material-shortcut-depth10 playing White: 5 - 12 - 8  [0.360] 25
+...      mychess-material-shortcut-depth10 playing Black: 10 - 8 - 7  [0.540] 25
+...      White vs Black: 13 - 22 - 15  [0.410] 50
+Elo difference: -34.9 +/- 82.2, LOS: 19.9 %, DrawRatio: 30.0 %
+SPRT: llr -0.297 (-10.1%), lbound -2.94, ubound 2.94
+Started game 54 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 51 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 15 - 21 - 15  [0.441] 51
+Started game 55 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 52 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 15 - 22 - 15  [0.433] 52
+Started game 56 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 54 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 15 - 22 - 16  [0.434] 53
+Started game 57 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 55 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 16 - 22 - 16  [0.444] 54
+Started game 58 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 53 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 16 - 23 - 16  [0.436] 55
+Started game 59 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 56 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 16 - 24 - 16  [0.429] 56
+Started game 60 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 57 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 17 - 24 - 16  [0.439] 57
+Started game 61 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 58 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 17 - 25 - 16  [0.431] 58
+Started game 62 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 60 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 18 - 25 - 16  [0.441] 59
+Started game 63 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 59 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 18 - 26 - 16  [0.433] 60
+...      mychess-material-shortcut-depth10 playing White: 7 - 15 - 8  [0.367] 30
+...      mychess-material-shortcut-depth10 playing Black: 11 - 11 - 8  [0.500] 30
+...      White vs Black: 18 - 26 - 16  [0.433] 60
+Elo difference: -46.6 +/- 76.9, LOS: 11.4 %, DrawRatio: 26.7 %
+SPRT: llr -0.444 (-15.1%), lbound -2.94, ubound 2.94
+Started game 64 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 61 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 19 - 26 - 16  [0.443] 61
+Started game 65 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 62 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 20 - 26 - 16  [0.452] 62
+Started game 66 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 63 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 20 - 26 - 17  [0.452] 63
+Started game 67 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 65 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 20 - 27 - 17  [0.445] 64
+Started game 68 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 68 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 21 - 27 - 17  [0.454] 65
+Started game 69 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 66 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 21 - 28 - 17  [0.447] 66
+Started game 70 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 67 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 22 - 28 - 17  [0.455] 67
+Started game 71 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 69 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 23 - 28 - 17  [0.463] 68
+Started game 72 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 64 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 23 - 28 - 18  [0.464] 69
+Started game 73 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 71 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 23 - 28 - 19  [0.464] 70
+...      mychess-material-shortcut-depth10 playing White: 10 - 16 - 10  [0.417] 36
+...      mychess-material-shortcut-depth10 playing Black: 13 - 12 - 9  [0.515] 34
+...      White vs Black: 22 - 29 - 19  [0.450] 70
+Elo difference: -24.9 +/- 70.4, LOS: 24.2 %, DrawRatio: 27.1 %
+SPRT: llr -0.295 (-10.0%), lbound -2.94, ubound 2.94
+Started game 74 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 72 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 23 - 29 - 19  [0.458] 71
+Started game 75 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 74 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 23 - 30 - 19  [0.451] 72
+Started game 76 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 70 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 23 - 31 - 19  [0.445] 73
+Started game 77 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 73 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 23 - 32 - 19  [0.439] 74
+Started game 78 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 76 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 23 - 32 - 20  [0.440] 75
+Started game 79 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 77 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 23 - 33 - 20  [0.434] 76
+Started game 80 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 78 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 23 - 34 - 20  [0.429] 77
+Started game 81 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 75 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 24 - 34 - 20  [0.436] 78
+Started game 82 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 81 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 25 - 34 - 20  [0.443] 79
+Started game 83 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 79 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 26 - 34 - 20  [0.450] 80
+...      mychess-material-shortcut-depth10 playing White: 13 - 18 - 10  [0.439] 41
+...      mychess-material-shortcut-depth10 playing Black: 13 - 16 - 10  [0.462] 39
+...      White vs Black: 29 - 31 - 20  [0.487] 80
+Elo difference: -34.9 +/- 66.9, LOS: 15.1 %, DrawRatio: 25.0 %
+SPRT: llr -0.442 (-15.0%), lbound -2.94, ubound 2.94
+Started game 84 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 82 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 26 - 35 - 20  [0.444] 81
+Started game 85 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 85 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 26 - 36 - 20  [0.439] 82
+Started game 86 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 83 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 26 - 37 - 20  [0.434] 83
+Started game 87 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 84 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 26 - 38 - 20  [0.429] 84
+Started game 88 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 80 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 27 - 38 - 20  [0.435] 85
+Started game 89 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 86 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 28 - 38 - 20  [0.442] 86
+Started game 90 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 88 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 28 - 39 - 20  [0.437] 87
+Started game 91 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 89 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 29 - 39 - 20  [0.443] 88
+Started game 92 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 87 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 29 - 40 - 20  [0.438] 89
+Started game 93 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 90 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 30 - 40 - 20  [0.444] 90
+...      mychess-material-shortcut-depth10 playing White: 14 - 21 - 10  [0.422] 45
+...      mychess-material-shortcut-depth10 playing Black: 16 - 19 - 10  [0.467] 45
+...      White vs Black: 33 - 37 - 20  [0.478] 90
+Elo difference: -38.8 +/- 64.2, LOS: 11.6 %, DrawRatio: 22.2 %
+SPRT: llr -0.528 (-17.9%), lbound -2.94, ubound 2.94
+Started game 94 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 93 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 30 - 41 - 20  [0.440] 91
+Started game 95 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 94 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 30 - 42 - 20  [0.435] 92
+Started game 96 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 91 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 31 - 42 - 20  [0.441] 93
+Started game 97 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 95 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 32 - 42 - 20  [0.447] 94
+Started game 98 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 96 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 32 - 42 - 21  [0.447] 95
+Started game 99 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 98 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 32 - 43 - 21  [0.443] 96
+Started game 100 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 92 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 32 - 43 - 22  [0.443] 97
+Started game 101 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 99 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 33 - 43 - 22  [0.449] 98
+Started game 102 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 97 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 33 - 44 - 22  [0.444] 99
+Started game 103 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 101 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 33 - 44 - 23  [0.445] 100
+...      mychess-material-shortcut-depth10 playing White: 17 - 23 - 11  [0.441] 51
+...      mychess-material-shortcut-depth10 playing Black: 16 - 21 - 12  [0.449] 49
+...      White vs Black: 38 - 39 - 23  [0.495] 100
+Elo difference: -38.4 +/- 60.6, LOS: 10.5 %, DrawRatio: 23.0 %
+SPRT: llr -0.587 (-20.0%), lbound -2.94, ubound 2.94
+Started game 104 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 100 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 33 - 44 - 24  [0.446] 101
+Started game 105 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 103 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 33 - 45 - 24  [0.441] 102
+Started game 106 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 102 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 34 - 45 - 24  [0.447] 103
+Started game 107 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 105 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 35 - 45 - 24  [0.452] 104
+Started game 108 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 104 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 35 - 45 - 25  [0.452] 105
+Started game 109 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 107 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 35 - 46 - 25  [0.448] 106
+Started game 110 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 108 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 36 - 46 - 25  [0.453] 107
+Started game 111 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 106 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 37 - 46 - 25  [0.458] 108
+Started game 112 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 109 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 37 - 47 - 25  [0.454] 109
+Started game 113 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 110 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 37 - 48 - 25  [0.450] 110
+...      mychess-material-shortcut-depth10 playing White: 18 - 26 - 11  [0.427] 55
+...      mychess-material-shortcut-depth10 playing Black: 19 - 22 - 14  [0.473] 55
+...      White vs Black: 40 - 45 - 25  [0.477] 110
+Elo difference: -34.9 +/- 57.7, LOS: 11.6 %, DrawRatio: 22.7 %
+SPRT: llr -0.59 (-20.0%), lbound -2.94, ubound 2.94
+Started game 114 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 111 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 37 - 49 - 25  [0.446] 111
+Started game 115 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 113 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 38 - 49 - 25  [0.451] 112
+Started game 116 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 112 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 38 - 50 - 25  [0.447] 113
+Started game 117 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 116 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 39 - 50 - 25  [0.452] 114
+Started game 118 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 115 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 39 - 50 - 26  [0.452] 115
+Started game 119 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 114 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 39 - 50 - 27  [0.453] 116
+Started game 120 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 117 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 39 - 51 - 27  [0.449] 117
+Started game 121 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 118 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 39 - 51 - 28  [0.449] 118
+Started game 122 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 119 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 40 - 51 - 28  [0.454] 119
+Started game 123 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 121 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 40 - 52 - 28  [0.450] 120
+...      mychess-material-shortcut-depth10 playing White: 20 - 29 - 12  [0.426] 61
+...      mychess-material-shortcut-depth10 playing Black: 20 - 23 - 16  [0.475] 59
+...      White vs Black: 43 - 49 - 28  [0.475] 120
+Elo difference: -34.9 +/- 55.0, LOS: 10.5 %, DrawRatio: 23.3 %
+SPRT: llr -0.648 (-22.0%), lbound -2.94, ubound 2.94
+Started game 124 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 122 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 40 - 52 - 29  [0.450] 121
+Started game 125 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 120 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 40 - 52 - 30  [0.451] 122
+Started game 126 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 123 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 41 - 52 - 30  [0.455] 123
+Started game 127 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 124 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 41 - 52 - 31  [0.456] 124
+Started game 128 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 127 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 41 - 52 - 32  [0.456] 125
+Started game 129 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 125 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 42 - 52 - 32  [0.460] 126
+Started game 130 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 126 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 42 - 52 - 33  [0.461] 127
+Started game 131 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 129 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 42 - 53 - 33  [0.457] 128
+Started game 132 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 128 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 42 - 54 - 33  [0.453] 129
+Started game 133 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 131 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 42 - 54 - 34  [0.454] 130
+...      mychess-material-shortcut-depth10 playing White: 22 - 30 - 14  [0.439] 66
+...      mychess-material-shortcut-depth10 playing Black: 20 - 24 - 20  [0.469] 64
+...      White vs Black: 46 - 50 - 34  [0.485] 130
+Elo difference: -32.2 +/- 51.8, LOS: 11.0 %, DrawRatio: 26.2 %
+SPRT: llr -0.678 (-23.0%), lbound -2.94, ubound 2.94
+Started game 134 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 132 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 43 - 54 - 34  [0.458] 131
+Started game 135 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 130 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 43 - 54 - 35  [0.458] 132
+Started game 136 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 134 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 44 - 54 - 35  [0.462] 133
+Started game 137 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 133 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 44 - 55 - 35  [0.459] 134
+Started game 138 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 136 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 44 - 56 - 35  [0.456] 135
+Started game 139 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 135 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 44 - 57 - 35  [0.452] 136
+Started game 140 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 140 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 45 - 57 - 35  [0.456] 137
+Started game 141 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 138 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 45 - 58 - 35  [0.453] 138
+Started game 142 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 139 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 45 - 59 - 35  [0.450] 139
+Started game 143 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 143 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 45 - 60 - 35  [0.446] 140
+...      mychess-material-shortcut-depth10 playing White: 22 - 34 - 14  [0.414] 70
+...      mychess-material-shortcut-depth10 playing Black: 23 - 26 - 21  [0.479] 70
+...      White vs Black: 48 - 57 - 35  [0.468] 140
+Elo difference: -37.4 +/- 50.3, LOS: 7.2 %, DrawRatio: 25.0 %
+SPRT: llr -0.824 (-28.0%), lbound -2.94, ubound 2.94
+Started game 144 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 137 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 45 - 60 - 36  [0.447] 141
+Started game 145 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 142 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 46 - 60 - 36  [0.451] 142
+Started game 146 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 141 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 47 - 60 - 36  [0.455] 143
+Started game 147 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 144 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 47 - 61 - 36  [0.451] 144
+Started game 148 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 145 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 47 - 62 - 36  [0.448] 145
+Started game 149 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 146 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 47 - 62 - 37  [0.449] 146
+Started game 150 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 150 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 47 - 62 - 38  [0.449] 147
+Started game 151 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 148 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 47 - 62 - 39  [0.449] 148
+Started game 152 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 149 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 47 - 63 - 39  [0.446] 149
+Started game 153 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 147 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 47 - 63 - 40  [0.447] 150
+...      mychess-material-shortcut-depth10 playing White: 23 - 36 - 16  [0.413] 75
+...      mychess-material-shortcut-depth10 playing Black: 24 - 27 - 24  [0.480] 75
+...      White vs Black: 50 - 60 - 40  [0.467] 150
+Elo difference: -37.2 +/- 48.0, LOS: 6.4 %, DrawRatio: 26.7 %
+SPRT: llr -0.899 (-30.5%), lbound -2.94, ubound 2.94
+Started game 154 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 151 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 47 - 64 - 40  [0.444] 151
+Started game 155 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 154 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 48 - 64 - 40  [0.447] 152
+Started game 156 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 153 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 48 - 65 - 40  [0.444] 153
+Started game 157 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 152 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 49 - 65 - 40  [0.448] 154
+Started game 158 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 155 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 50 - 65 - 40  [0.452] 155
+Started game 159 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 156 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 51 - 65 - 40  [0.455] 156
+Started game 160 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 158 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 51 - 66 - 40  [0.452] 157
+Started game 161 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 157 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 51 - 66 - 41  [0.453] 158
+Started game 162 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 160 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 51 - 67 - 41  [0.450] 159
+Started game 163 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 161 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 52 - 67 - 41  [0.453] 160
+...      mychess-material-shortcut-depth10 playing White: 25 - 38 - 17  [0.419] 80
+...      mychess-material-shortcut-depth10 playing Black: 27 - 29 - 24  [0.487] 80
+...      White vs Black: 54 - 65 - 41  [0.466] 160
+Elo difference: -32.7 +/- 46.8, LOS: 8.5 %, DrawRatio: 25.6 %
+SPRT: llr -0.84 (-28.5%), lbound -2.94, ubound 2.94
+Started game 164 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 162 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 52 - 68 - 41  [0.450] 161
+Started game 165 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 159 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 52 - 68 - 42  [0.451] 162
+Started game 166 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 163 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 52 - 68 - 43  [0.451] 163
+Started game 167 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 165 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 53 - 68 - 43  [0.454] 164
+Started game 168 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 164 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 53 - 69 - 43  [0.452] 165
+Started game 169 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 168 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 53 - 70 - 43  [0.449] 166
+Started game 170 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 166 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 53 - 70 - 44  [0.449] 167
+Started game 171 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 167 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 54 - 70 - 44  [0.452] 168
+Started game 172 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 170 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 54 - 71 - 44  [0.450] 169
+Started game 173 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 169 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 55 - 71 - 44  [0.453] 170
+...      mychess-material-shortcut-depth10 playing White: 28 - 38 - 19  [0.441] 85
+...      mychess-material-shortcut-depth10 playing Black: 27 - 33 - 25  [0.465] 85
+...      White vs Black: 61 - 65 - 44  [0.488] 170
+Elo difference: -32.8 +/- 45.3, LOS: 7.7 %, DrawRatio: 25.9 %
+SPRT: llr -0.898 (-30.5%), lbound -2.94, ubound 2.94
+Started game 174 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 172 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 55 - 71 - 45  [0.453] 171
+Started game 175 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 174 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 55 - 72 - 45  [0.451] 172
+Started game 176 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 173 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 56 - 72 - 45  [0.454] 173
+Started game 177 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 171 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 57 - 72 - 45  [0.457] 174
+Started game 178 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 177 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 57 - 73 - 45  [0.454] 175
+Started game 179 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 175 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 57 - 73 - 46  [0.455] 176
+Started game 180 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 176 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by stalemate}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 57 - 73 - 47  [0.455] 177
+Started game 181 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 179 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 58 - 73 - 47  [0.458] 178
+Started game 182 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 181 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 58 - 74 - 47  [0.455] 179
+Started game 183 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 180 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 58 - 74 - 48  [0.456] 180
+...      mychess-material-shortcut-depth10 playing White: 31 - 40 - 20  [0.451] 91
+...      mychess-material-shortcut-depth10 playing Black: 27 - 34 - 28  [0.461] 89
+...      White vs Black: 65 - 67 - 48  [0.494] 180
+Elo difference: -31.0 +/- 43.7, LOS: 8.2 %, DrawRatio: 26.7 %
+SPRT: llr -0.913 (-31.0%), lbound -2.94, ubound 2.94
+Started game 184 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 178 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 58 - 74 - 49  [0.456] 181
+Started game 185 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 183 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 58 - 75 - 49  [0.453] 182
+Started game 186 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 182 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 58 - 76 - 49  [0.451] 183
+Started game 187 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 184 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 58 - 77 - 49  [0.448] 184
+Started game 188 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 185 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 59 - 77 - 49  [0.451] 185
+Started game 189 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 187 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 59 - 77 - 50  [0.452] 186
+Started game 190 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 186 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 59 - 77 - 51  [0.452] 187
+Started game 191 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 188 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 59 - 78 - 51  [0.449] 188
+Started game 192 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 190 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 59 - 78 - 52  [0.450] 189
+Started game 193 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 189 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 59 - 79 - 52  [0.447] 190
+...      mychess-material-shortcut-depth10 playing White: 32 - 42 - 21  [0.447] 95
+...      mychess-material-shortcut-depth10 playing Black: 27 - 37 - 31  [0.447] 95
+...      White vs Black: 69 - 69 - 52  [0.500] 190
+Elo difference: -36.7 +/- 42.4, LOS: 4.4 %, DrawRatio: 27.4 %
+SPRT: llr -1.14 (-38.6%), lbound -2.94, ubound 2.94
+Started game 194 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 192 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 60 - 79 - 52  [0.450] 191
+Started game 195 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 194 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 60 - 80 - 52  [0.448] 192
+Started game 196 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 191 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 61 - 80 - 52  [0.451] 193
+Started game 197 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 193 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 61 - 81 - 52  [0.448] 194
+Started game 198 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 196 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 61 - 82 - 52  [0.446] 195
+Started game 199 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 195 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 61 - 83 - 52  [0.444] 196
+Started game 200 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 197 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 62 - 83 - 52  [0.447] 197
+Started game 201 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 198 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 62 - 83 - 53  [0.447] 198
+Started game 202 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 199 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 62 - 83 - 54  [0.447] 199
+Started game 203 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 200 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 62 - 83 - 55  [0.448] 200
+...      mychess-material-shortcut-depth10 playing White: 34 - 44 - 22  [0.450] 100
+...      mychess-material-shortcut-depth10 playing Black: 28 - 39 - 33  [0.445] 100
+...      White vs Black: 73 - 72 - 55  [0.502] 200
+Elo difference: -36.6 +/- 41.3, LOS: 4.1 %, DrawRatio: 27.5 %
+SPRT: llr -1.19 (-40.6%), lbound -2.94, ubound 2.94
+Started game 204 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 201 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 62 - 83 - 56  [0.448] 201
+Started game 205 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 203 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 62 - 83 - 57  [0.448] 202
+Started game 206 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 204 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black mates}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 63 - 83 - 57  [0.451] 203
+Started game 207 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 205 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 63 - 84 - 57  [0.449] 204
+Started game 208 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 202 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 64 - 84 - 57  [0.451] 205
+Started game 209 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 206 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 64 - 84 - 58  [0.451] 206
+Started game 210 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 207 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 64 - 85 - 58  [0.449] 207
+Started game 211 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 209 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 64 - 85 - 59  [0.450] 208
+Started game 212 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 208 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 65 - 85 - 59  [0.452] 209
+Started game 213 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 211 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 65 - 86 - 59  [0.450] 210
+...      mychess-material-shortcut-depth10 playing White: 34 - 47 - 25  [0.439] 106
+...      mychess-material-shortcut-depth10 playing Black: 31 - 39 - 34  [0.462] 104
+...      White vs Black: 73 - 78 - 59  [0.488] 210
+Elo difference: -34.9 +/- 40.1, LOS: 4.4 %, DrawRatio: 28.1 %
+SPRT: llr -1.21 (-41.1%), lbound -2.94, ubound 2.94
+Started game 214 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 210 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 66 - 86 - 59  [0.453] 211
+Started game 215 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 212 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 66 - 87 - 59  [0.450] 212
+Started game 216 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 214 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 66 - 88 - 59  [0.448] 213
+Started game 217 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 215 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 67 - 88 - 59  [0.451] 214
+Started game 218 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 216 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 67 - 89 - 59  [0.449] 215
+Started game 219 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 217 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 68 - 89 - 59  [0.451] 216
+Started game 220 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 213 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 69 - 89 - 59  [0.454] 217
+Started game 221 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 218 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 69 - 90 - 59  [0.452] 218
+Started game 222 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 220 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 70 - 90 - 59  [0.454] 219
+Started game 223 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 219 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 70 - 91 - 59  [0.452] 220
+...      mychess-material-shortcut-depth10 playing White: 37 - 48 - 25  [0.450] 110
+...      mychess-material-shortcut-depth10 playing Black: 33 - 43 - 34  [0.455] 110
+...      White vs Black: 80 - 81 - 59  [0.498] 220
+Elo difference: -33.3 +/- 39.5, LOS: 4.9 %, DrawRatio: 26.8 %
+SPRT: llr -1.19 (-40.5%), lbound -2.94, ubound 2.94
+Started game 224 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 221 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 70 - 92 - 59  [0.450] 221
+Started game 225 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 222 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 70 - 93 - 59  [0.448] 222
+Started game 226 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 223 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by stalemate}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 70 - 93 - 60  [0.448] 223
+Started game 227 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 225 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 71 - 93 - 60  [0.451] 224
+Started game 228 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 224 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 71 - 94 - 60  [0.449] 225
+Started game 229 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 226 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 71 - 95 - 60  [0.447] 226
+Started game 230 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 227 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 71 - 96 - 60  [0.445] 227
+Started game 231 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 228 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 72 - 96 - 60  [0.447] 228
+Started game 232 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 229 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 73 - 96 - 60  [0.450] 229
+Started game 233 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 232 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 74 - 96 - 60  [0.452] 230
+...      mychess-material-shortcut-depth10 playing White: 39 - 50 - 26  [0.452] 115
+...      mychess-material-shortcut-depth10 playing Black: 35 - 46 - 34  [0.452] 115
+...      White vs Black: 85 - 85 - 60  [0.500] 230
+Elo difference: -33.3 +/- 38.8, LOS: 4.6 %, DrawRatio: 26.1 %
+SPRT: llr -1.24 (-42.0%), lbound -2.94, ubound 2.94
+Started game 234 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 230 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 74 - 97 - 60  [0.450] 231
+Started game 235 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 231 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 74 - 97 - 61  [0.450] 232
+Started game 236 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 233 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 74 - 98 - 61  [0.448] 233
+Started game 237 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 234 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 74 - 98 - 62  [0.449] 234
+Started game 238 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 235 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 74 - 98 - 63  [0.449] 235
+Started game 239 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 239 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 74 - 98 - 64  [0.449] 236
+Started game 240 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 236 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 74 - 99 - 64  [0.447] 237
+Started game 241 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 241 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 74 - 100 - 64  [0.445] 238
+Started game 242 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 238 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 74 - 100 - 65  [0.446] 239
+Started game 243 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 240 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 75 - 100 - 65  [0.448] 240
+...      mychess-material-shortcut-depth10 playing White: 39 - 52 - 29  [0.446] 120
+...      mychess-material-shortcut-depth10 playing Black: 36 - 48 - 36  [0.450] 120
+...      White vs Black: 87 - 88 - 65  [0.498] 240
+Elo difference: -36.3 +/- 37.8, LOS: 2.9 %, DrawRatio: 27.1 %
+SPRT: llr -1.41 (-48.0%), lbound -2.94, ubound 2.94
+Started game 244 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 237 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 75 - 101 - 65  [0.446] 241
+Started game 245 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 242 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 76 - 101 - 65  [0.448] 242
+Started game 246 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 243 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 77 - 101 - 65  [0.451] 243
+Started game 247 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 245 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 77 - 102 - 65  [0.449] 244
+Started game 248 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 247 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 78 - 102 - 65  [0.451] 245
+Started game 249 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 248 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White mates}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 78 - 103 - 65  [0.449] 246
+Started game 250 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 244 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 78 - 104 - 65  [0.447] 247
+Started game 251 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 246 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 78 - 105 - 65  [0.446] 248
+Started game 252 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 251 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 78 - 106 - 65  [0.444] 249
+Started game 253 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 250 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 79 - 106 - 65  [0.446] 250
+...      mychess-material-shortcut-depth10 playing White: 41 - 55 - 29  [0.444] 125
+...      mychess-material-shortcut-depth10 playing Black: 38 - 51 - 36  [0.448] 125
+...      White vs Black: 92 - 93 - 65  [0.498] 250
+Elo difference: -37.7 +/- 37.3, LOS: 2.4 %, DrawRatio: 26.0 %
+SPRT: llr -1.5 (-51.0%), lbound -2.94, ubound 2.94
+Started game 254 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 249 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 79 - 106 - 66  [0.446] 251
+Started game 255 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 252 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 79 - 107 - 66  [0.444] 252
+Started game 256 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 254 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 79 - 108 - 66  [0.443] 253
+Started game 257 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 257 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 79 - 109 - 66  [0.441] 254
+Started game 258 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 253 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 79 - 110 - 66  [0.439] 255
+Started game 259 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 255 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 79 - 111 - 66  [0.438] 256
+Started game 260 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 256 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 79 - 112 - 66  [0.436] 257
+Started game 261 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 260 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 79 - 112 - 67  [0.436] 258
+Started game 262 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 258 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 79 - 112 - 68  [0.436] 259
+Started game 263 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 262 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 80 - 112 - 68  [0.438] 260
+...      mychess-material-shortcut-depth10 playing White: 41 - 58 - 30  [0.434] 129
+...      mychess-material-shortcut-depth10 playing Black: 39 - 54 - 38  [0.443] 131
+...      White vs Black: 95 - 97 - 68  [0.496] 260
+Elo difference: -43.0 +/- 36.6, LOS: 1.0 %, DrawRatio: 26.2 %
+SPRT: llr -1.77 (-60.0%), lbound -2.94, ubound 2.94
+Started game 264 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 259 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 80 - 113 - 68  [0.437] 261
+Started game 265 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 265 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 80 - 113 - 69  [0.437] 262
+Started game 266 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 264 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 81 - 113 - 69  [0.439] 263
+Started game 267 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 261 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 81 - 114 - 69  [0.438] 264
+Started game 268 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 263 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 81 - 115 - 69  [0.436] 265
+Started game 269 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 266 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 81 - 115 - 70  [0.436] 266
+Started game 270 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 267 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 81 - 116 - 70  [0.434] 267
+Started game 271 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 270 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 82 - 116 - 70  [0.437] 268
+Started game 272 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 268 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 82 - 116 - 71  [0.437] 269
+Started game 273 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 269 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 82 - 117 - 71  [0.435] 270
+...      mychess-material-shortcut-depth10 playing White: 41 - 63 - 31  [0.419] 135
+...      mychess-material-shortcut-depth10 playing Black: 41 - 54 - 40  [0.452] 135
+...      White vs Black: 95 - 104 - 71  [0.483] 270
+Elo difference: -45.3 +/- 35.9, LOS: 0.7 %, DrawRatio: 26.3 %
+SPRT: llr -1.93 (-65.5%), lbound -2.94, ubound 2.94
+Started game 274 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 274 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 82 - 117 - 72  [0.435] 271
+Started game 275 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 273 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 82 - 117 - 73  [0.436] 272
+Started game 276 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 271 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 83 - 117 - 73  [0.438] 273
+Started game 277 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 272 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 84 - 117 - 73  [0.440] 274
+Started game 278 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 275 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 85 - 117 - 73  [0.442] 275
+Started game 279 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 277 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 85 - 117 - 74  [0.442] 276
+Started game 280 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 276 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 85 - 118 - 74  [0.440] 277
+Started game 281 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 279 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 85 - 119 - 74  [0.439] 278
+Started game 282 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 281 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 85 - 120 - 74  [0.437] 279
+Started game 283 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 278 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 85 - 121 - 74  [0.436] 280
+...      mychess-material-shortcut-depth10 playing White: 43 - 65 - 33  [0.422] 141
+...      mychess-material-shortcut-depth10 playing Black: 42 - 56 - 41  [0.450] 139
+...      White vs Black: 99 - 107 - 74  [0.486] 280
+Elo difference: -44.9 +/- 35.2, LOS: 0.6 %, DrawRatio: 26.4 %
+SPRT: llr -1.99 (-67.5%), lbound -2.94, ubound 2.94
+Started game 284 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 280 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 85 - 122 - 74  [0.434] 281
+Started game 285 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 285 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 86 - 122 - 74  [0.436] 282
+Started game 286 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 284 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 86 - 122 - 75  [0.436] 283
+Started game 287 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 283 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 86 - 122 - 76  [0.437] 284
+Started game 288 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 286 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 86 - 123 - 76  [0.435] 285
+Started game 289 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 282 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 86 - 123 - 77  [0.435] 286
+Started game 290 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 289 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 86 - 124 - 77  [0.434] 287
+Started game 291 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 287 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 86 - 125 - 77  [0.432] 288
+Started game 292 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 288 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 86 - 125 - 78  [0.433] 289
+Started game 293 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 290 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 86 - 125 - 79  [0.433] 290
+...      mychess-material-shortcut-depth10 playing White: 44 - 67 - 34  [0.421] 145
+...      mychess-material-shortcut-depth10 playing Black: 42 - 58 - 45  [0.445] 145
+...      White vs Black: 102 - 109 - 79  [0.488] 290
+Elo difference: -47.0 +/- 34.4, LOS: 0.4 %, DrawRatio: 27.2 %
+SPRT: llr -2.17 (-73.8%), lbound -2.94, ubound 2.94
+Started game 294 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 291 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 86 - 126 - 79  [0.431] 291
+Started game 295 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 292 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 87 - 126 - 79  [0.433] 292
+Started game 296 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 294 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 87 - 126 - 80  [0.433] 293
+Started game 297 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 293 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 88 - 126 - 80  [0.435] 294
+Started game 298 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 295 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 88 - 127 - 80  [0.434] 295
+Started game 299 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 297 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 88 - 128 - 80  [0.432] 296
+Started game 300 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 296 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 88 - 129 - 80  [0.431] 297
+Started game 301 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 298 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 88 - 130 - 80  [0.430] 298
+Started game 302 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 301 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 88 - 131 - 80  [0.428] 299
+Started game 303 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 299 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 88 - 131 - 81  [0.428] 300
+...      mychess-material-shortcut-depth10 playing White: 45 - 71 - 35  [0.414] 151
+...      mychess-material-shortcut-depth10 playing Black: 43 - 60 - 46  [0.443] 149
+...      White vs Black: 105 - 114 - 81  [0.485] 300
+Elo difference: -50.1 +/- 33.9, LOS: 0.2 %, DrawRatio: 27.0 %
+SPRT: llr -2.38 (-80.8%), lbound -2.94, ubound 2.94
+Started game 304 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 302 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 89 - 131 - 81  [0.430] 301
+Started game 305 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 303 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 89 - 131 - 82  [0.430] 302
+Started game 306 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 300 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 89 - 131 - 83  [0.431] 303
+Started game 307 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 306 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 89 - 132 - 83  [0.429] 304
+Started game 308 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 304 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 89 - 132 - 84  [0.430] 305
+Started game 309 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 308 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 89 - 133 - 84  [0.428] 306
+Started game 310 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 309 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 90 - 133 - 84  [0.430] 307
+Started game 311 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 305 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 90 - 133 - 85  [0.430] 308
+Started game 312 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 311 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 91 - 133 - 85  [0.432] 309
+Started game 313 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 312 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White mates}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 91 - 134 - 85  [0.431] 310
+...      mychess-material-shortcut-depth10 playing White: 47 - 71 - 37  [0.423] 155
+...      mychess-material-shortcut-depth10 playing Black: 44 - 63 - 48  [0.439] 155
+...      White vs Black: 110 - 115 - 85  [0.492] 310
+Elo difference: -48.5 +/- 33.2, LOS: 0.2 %, DrawRatio: 27.4 %
+SPRT: llr -2.4 (-81.4%), lbound -2.94, ubound 2.94
+Started game 314 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 310 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 92 - 134 - 85  [0.432] 311
+Started game 315 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 307 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 92 - 134 - 86  [0.433] 312
+Started game 316 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 313 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 92 - 134 - 87  [0.433] 313
+Started game 317 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 314 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 93 - 134 - 87  [0.435] 314
+Started game 318 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 315 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 93 - 135 - 87  [0.433] 315
+Started game 319 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 316 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 94 - 135 - 87  [0.435] 316
+Started game 320 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 317 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 94 - 136 - 87  [0.434] 317
+Started game 321 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 318 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 94 - 137 - 87  [0.432] 318
+Started game 322 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 319 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 94 - 137 - 88  [0.433] 319
+Started game 323 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 320 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 95 - 137 - 88  [0.434] 320
+...      mychess-material-shortcut-depth10 playing White: 47 - 73 - 40  [0.419] 160
+...      mychess-material-shortcut-depth10 playing Black: 48 - 64 - 48  [0.450] 160
+...      White vs Black: 111 - 121 - 88  [0.484] 320
+Elo difference: -45.9 +/- 32.6, LOS: 0.3 %, DrawRatio: 27.5 %
+SPRT: llr -2.35 (-79.9%), lbound -2.94, ubound 2.94
+Started game 324 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 321 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 95 - 138 - 88  [0.433] 321
+Started game 325 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 322 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 95 - 138 - 89  [0.433] 322
+Started game 326 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 323 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 95 - 138 - 90  [0.433] 323
+Started game 327 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 326 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 96 - 138 - 90  [0.435] 324
+Started game 328 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 325 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 96 - 139 - 90  [0.434] 325
+Started game 329 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 324 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 96 - 139 - 91  [0.434] 326
+Started game 330 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 327 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White mates}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 97 - 139 - 91  [0.436] 327
+Started game 331 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 328 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 97 - 140 - 91  [0.434] 328
+Started game 332 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 330 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 97 - 140 - 92  [0.435] 329
+Started game 333 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 331 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black mates}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 97 - 141 - 92  [0.433] 330
+...      mychess-material-shortcut-depth10 playing White: 48 - 76 - 41  [0.415] 165
+...      mychess-material-shortcut-depth10 playing Black: 49 - 65 - 51  [0.452] 165
+...      White vs Black: 113 - 125 - 92  [0.482] 330
+Elo difference: -46.6 +/- 32.1, LOS: 0.2 %, DrawRatio: 27.9 %
+SPRT: llr -2.47 (-84.0%), lbound -2.94, ubound 2.94
+Started game 334 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 332 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 97 - 141 - 93  [0.434] 331
+Started game 335 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 333 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 97 - 141 - 94  [0.434] 332
+Started game 336 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 329 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 98 - 141 - 94  [0.435] 333
+Started game 337 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 334 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 98 - 141 - 95  [0.436] 334
+Started game 338 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 335 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 99 - 141 - 95  [0.437] 335
+Started game 339 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 337 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 99 - 142 - 95  [0.436] 336
+Started game 340 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 336 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 100 - 142 - 95  [0.438] 337
+Started game 341 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 341 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 100 - 143 - 95  [0.436] 338
+Started game 342 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 339 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 100 - 143 - 96  [0.437] 339
+Started game 343 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 343 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 100 - 144 - 96  [0.435] 340
+...      mychess-material-shortcut-depth10 playing White: 50 - 79 - 43  [0.416] 172
+...      mychess-material-shortcut-depth10 playing Black: 50 - 65 - 53  [0.455] 168
+...      White vs Black: 115 - 129 - 96  [0.479] 340
+Elo difference: -45.2 +/- 31.5, LOS: 0.2 %, DrawRatio: 28.2 %
+SPRT: llr -2.49 (-84.6%), lbound -2.94, ubound 2.94
+Started game 344 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 340 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 100 - 145 - 96  [0.434] 341
+Started game 345 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 342 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 100 - 145 - 97  [0.434] 342
+Started game 346 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 338 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 100 - 145 - 98  [0.434] 343
+Started game 347 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 344 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 100 - 146 - 98  [0.433] 344
+Started game 348 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 345 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 101 - 146 - 98  [0.435] 345
+Started game 349 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 349 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 101 - 147 - 98  [0.434] 346
+Started game 350 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 348 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 101 - 147 - 99  [0.434] 347
+Started game 351 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 346 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 101 - 148 - 99  [0.432] 348
+Started game 352 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 347 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 101 - 148 - 100  [0.433] 349
+Started game 353 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 353 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 102 - 148 - 100  [0.434] 350
+...      mychess-material-shortcut-depth10 playing White: 52 - 80 - 44  [0.420] 176
+...      mychess-material-shortcut-depth10 playing Black: 50 - 68 - 56  [0.448] 174
+...      White vs Black: 120 - 130 - 100  [0.486] 350
+Elo difference: -45.9 +/- 31.0, LOS: 0.2 %, DrawRatio: 28.6 %
+SPRT: llr -2.61 (-88.8%), lbound -2.94, ubound 2.94
+Started game 354 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 351 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 102 - 149 - 100  [0.433] 351
+Started game 355 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 352 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 102 - 150 - 100  [0.432] 352
+Started game 356 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 350 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1/2-1/2 {Draw by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 102 - 150 - 101  [0.432] 353
+Started game 357 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 354 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 102 - 151 - 101  [0.431] 354
+Started game 358 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 356 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 102 - 152 - 101  [0.430] 355
+Started game 359 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 355 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 102 - 153 - 101  [0.428] 356
+Started game 360 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 357 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 103 - 153 - 101  [0.430] 357
+Started game 361 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 360 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 0-1 {Black wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 104 - 153 - 101  [0.432] 358
+Started game 362 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)
+Finished game 358 (mychess-4.5.0 vs mychess-material-shortcut-depth10): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 104 - 154 - 101  [0.430] 359
+Started game 363 of 3000 (mychess-material-shortcut-depth10 vs mychess-4.5.0)
+Finished game 361 (mychess-material-shortcut-depth10 vs mychess-4.5.0): 1-0 {White wins by adjudication}
+Score of mychess-material-shortcut-depth10 vs mychess-4.5.0: 105 - 154 - 101  [0.432] 360
+...      mychess-material-shortcut-depth10 playing White: 54 - 82 - 44  [0.422] 180
+...      mychess-material-shortcut-depth10 playing Black: 51 - 72 - 57  [0.442] 180
+...      White vs Black: 126 - 133 - 101  [0.490] 360
+Elo difference: -47.6 +/- 30.7, LOS: 0.1 %, DrawRatio: 28.1 %
+SPRT: llr -2.76 (-93.7%), lbound -2.94, ubound 2.94
+Started game 364 of 3000 (mychess-4.5.0 vs mychess-material-shortcut-depth10)

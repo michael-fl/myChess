@@ -43,7 +43,13 @@ public class EngineSmokeTest extends EngineTestBase {
         testPosition(pgn,
                 "e7-e6",
                 12.0f,
-                13.0f,  // TODO: M8
+                // TODO still M8: the truth here is a forced mate, and the band only pins that
+                // myChess sees a decisive advantage without seeing the mate. Raised from 13.0
+                // in v4.6.0, which moved the score to 13.85 — toward the mate, not away from
+                // it, since the shortcut no longer flattens this capture subtree to a piece
+                // count. Widen again if a later eval change pushes it further up; the band
+                // becomes a real assertion only once the search reports the mate.
+                14.5f,
                 new GameConfig(ENGINE, engineConfig())
         );
     }

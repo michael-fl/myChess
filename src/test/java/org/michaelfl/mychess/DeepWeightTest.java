@@ -76,8 +76,13 @@ class DeepWeightTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6
                 """;
         testPosition(pgn,
-                0.0f,
-                0.1f,
+                // [0.0, 0.1] -> [0.3, 0.9] in v4.6.0, which moved the score to 0.56. The old band
+                // was simply wrong, not merely outgrown: Stockfish depth 22 has this position at
+                // +0.46 for White, so 0.56 is close and ~0 was the material-only shortcut
+                // flattening a sharp Najdorf where White has played g4, f4 and castled long.
+                // Black recaptures with Nxf6, a capture, so § 12.26 now runs the full evaluation.
+                0.3f,
+                0.9f,
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
     }
