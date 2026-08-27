@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 /**
  * REPL dispatcher for {@link MyChessMain}. Reads one input line via
@@ -660,31 +661,51 @@ final class CommandHandler {
             if (all) {
                 printAll(depth);
             } else {
-                printResult(Bench.run(depth, chess960));
+                printResult(Bench.run(depth, chess960, progressPrinter(depth, chess960)));
             }
         }
 
+        /**
+         * Prints one line per position as the suite progresses, so a run that takes minutes at
+         * depth 8 and tens of minutes at depth 9 is distinguishable from a hung one.
+         *
+         * <p>Carries the running totals rather than an estimate of what is left: the suite's
+         * positions span three orders of magnitude in size, so extrapolating from the count
+         * completed would be badly wrong early on. What is printed is what is known.
+         */
+        private Consumer<Bench.PositionResult> progressPrinter(int depth, boolean chess960) {
+            System.out.printf(Locale.ROOT, "bench suite=%s depth=%d — running, one line per position%n",
+                    chess960 ? "chess960" : "standard", depth);
+
+            var done = new int[1];
+            var nodes = new long[1];
+            var startMs = System.currentTimeMillis();
+
+            return position -> {
+                done[0]++;
+                nodes[0] += position.nodes();
+
+                System.out.printf(Locale.ROOT, "%3d  nodes %,12d  time %6d ms   total %,14d in %,6d ms   %s%n",
+                        done[0], position.nodes(), position.timeMs(), nodes[0],
+                        System.currentTimeMillis() - startMs, shortFen(position.fen()));
+            };
+        }
+
         private void printResult(Bench.BenchResult result) {
-            System.out.printf(Locale.ROOT, "bench suite=%s depth=%d positions=%d%n",
-                    result.chess960() ? "chess960" : "standard", result.depth(), result.positions().size());
-
-            int index = 1;
-            int count = result.positions().size();
-
-            for (var position : result.positions()) {
-                System.out.printf(Locale.ROOT, "%3d/%d  nodes %,12d  time %6d ms   %s%n",
-                        index++, count, position.nodes(), position.timeMs(), shortFen(position.fen()));
-            }
-
             System.out.println("===========================================================");
+            System.out.printf(Locale.ROOT, "suite=%s depth=%d positions=%d%n",
+                    result.chess960() ? "chess960" : "standard", result.depth(),
+                    result.positions().size());
             System.out.printf(Locale.ROOT, "Total time     : %,d ms%n", result.totalTimeMs());
             System.out.printf(Locale.ROOT, "Nodes searched : %,d%n", result.totalNodes());
             System.out.printf(Locale.ROOT, "NPS            : %,d%n", result.nps());
         }
 
         private void printAll(int depth) {
-            var standard = Bench.run(depth, false);
-            var chess960 = Bench.run(depth, true);
+            // Both suites get the progress printer too — this path is the longest of all, since
+            // it runs the standard suite and then the Chess960 one.
+            var standard = Bench.run(depth, false, progressPrinter(depth, false));
+            var chess960 = Bench.run(depth, true, progressPrinter(depth, true));
 
             printResult(standard);
             System.out.println();

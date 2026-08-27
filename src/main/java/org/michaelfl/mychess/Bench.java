@@ -15,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Consumer;
 
 /**
  * Node-count benchmark ("bench"): runs the engine over a fixed, frozen suite of
@@ -104,7 +105,11 @@ public final class Bench {
     }
 
     /**
-     * Run the benchmark suite at a fixed depth.
+     * Run the benchmark suite at a fixed depth, reporting nothing until it finishes.
+     *
+     * <p>Prefer {@link #run(int, boolean, Consumer)} for anything interactive: a depth-8 run
+     * takes minutes and a depth-9 run tens of minutes, and this overload is silent for all of
+     * it.
      *
      * @param depth    fixed search depth in plies
      * @param chess960 when {@code true}, run the Chess960 suite in 960 mode;
@@ -113,6 +118,38 @@ public final class Bench {
      * @throws BenchException if a suite resource is missing or a search fails
      */
     public static BenchResult run(int depth, boolean chess960) {
+        return run(depth, chess960, position -> {
+            // Nothing to report — the silent overload exists for callers that only want the
+            // aggregate, such as EvalBenchmarkTest.
+        });
+    }
+
+    /**
+     * Run the benchmark suite at a fixed depth, reporting each position as it completes.
+     *
+     * <p>{@code onPosition} fires once per position, in suite order, immediately after that
+     * position's search returns. It exists because the aggregate arrives only at the end: a
+     * depth-8 run is minutes and a depth-9 run tens of minutes, and without this there is no
+     * way to tell a working run from a hung one, nor to keep anything if it is interrupted.
+     * That cost real time twice in August 2026 — see the long-running-process rules in
+     * {@code CLAUDE.md}, whose first requirement this overload is what satisfies.
+     *
+     * <p>Deliberately a callback rather than printing here: the caller decides whether the
+     * lines go to the console, to the per-position archive of
+     * {@code docs/bench-history.md} § 7, or nowhere. {@code Sts#run} uses the same shape.
+     *
+     * <p><b>No remaining-time estimate is offered, and one should not be added from the
+     * position count.</b> The suite's positions span 48 nodes to 19.2 million, so extrapolating
+     * over positions completed is badly wrong for the first half of a run. Report what is
+     * known — how many are done and how long it has taken.
+     *
+     * @param depth      fixed search depth in plies
+     * @param chess960   when {@code true}, run the Chess960 suite in 960 mode;
+     *                   otherwise the standard suite (regular + middlegame FENs)
+     * @param onPosition invoked once per completed position, in suite order
+     * @return the per-position and aggregate node/time results
+     */
+    public static BenchResult run(int depth, boolean chess960, Consumer<PositionResult> onPosition) {
         List<String> fens = chess960
                 ? loadFens(CHESS960_FENS)
                 : concat(loadFens(STANDARD_FENS), loadFens(MIDDLEGAME_FENS));
@@ -159,9 +196,13 @@ public final class Bench {
             }
 
             long timeMs = System.currentTimeMillis() - startMs;
-            results.add(new PositionResult(fen, nodes.get(), timeMs));
+            var positionResult = new PositionResult(fen, nodes.get(), timeMs);
+
+            results.add(positionResult);
             totalNodes += nodes.get();
             totalTimeMs += timeMs;
+
+            onPosition.accept(positionResult);
         }
 
         return new BenchResult(depth, chess960, List.copyOf(results), totalNodes, totalTimeMs);
