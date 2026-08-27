@@ -4,7 +4,7 @@ The test suite is the executable specification for myChess: it pins down move ge
 
 | Metric | Value |
 |---|---|
-| Test classes | 80 `*Test.java` (+ 25 helpers and measurement drivers under the same source root, counted 2026-08-22) |
+| Test classes | 81 `*Test.java` (+ 25 helpers and measurement drivers under the same source root, class count re-counted 2026-08-27, helper count 2026-08-22) |
 | Test methods (`@Test` + `@ParameterizedTest`) | 1 271 executed, parameterized cases counted per invocation — full run 2026-08-27 |
 | Currently passing | **all** — full run 2026-08-27: 1 271 run, 0 failures, 0 errors, **0 skipped** |
 | Currently `@Disabled` | 0 — see [Retired disabled tests](#retired-disabled-tests) |
@@ -34,13 +34,21 @@ JDK 25 must be active for `mvn test` (set `JAVA_HOME` if the system default diff
 
 ### Categories
 
-The test classes cluster into seven groups. The per-group line counts below were taken when the suite was ~14 475 lines and have not been re-measured since; the group membership is still accurate, the numbers are indicative:
+The test classes cluster into seven groups. The per-group line counts below were taken when the suite was ~14 475 lines and have not been re-measured since; the group membership is accurate for the classes it names, and the numbers are indicative.
+
+**The lists name 63 of the 81 test classes** (checked 2026-08-27). The 18 that are missing are not a random remainder: 10 of them are the Texel-tuning and dataset infrastructure (`TexelTunerTest`, the six `*TexelDataTest` adapters, `HybridDatasetBuilderTest`, `PgnQuietEpdExtractorTest`, `Chess960OpeningBookGeneratorTest`), which arrived as a cluster after these groups were written and arguably wants an eighth group of its own; the rest are evaluation (`BishopPairTest`, `NonPawnMaterialWeightTest`, `TaperedEvaluationTest`), search (`BoardNullMoveTest`, `DeepIterationRegressionTest`, `DisableSkipHeuristicExtensionTest`) and I/O (`PgnAnnotationImportTest`, `VersionTest`). Reproduce the check with:
+
+```sh
+for f in $(find src/test -name "*Test.java" | sed 's|.*/||; s|\.java$||' | sort); do
+    grep -q "\`\(engines/\|openingdb/\)\?$f\`" docs/testing.md || echo "unnamed: $f"
+done
+```
 
 | Group | Files (count) | Lines | What it covers |
 |---|---|---|---|
 | **Data structures & encoding** (13) | `BoardTest`, `ChessUtilTest`, `GameStatusTest`, `MoveTest`, `MoveDescriptionTest`, `PositionEncodingTest`, `PieceSquareTablesTest`, `SortableMovesBucketTest`, `BitOpsTest`, `IntArrayTest`, `CastlingSlotTest`, `BoardCastlingRookFilesTest`, `Chess960StartPositionsTest` | ~3750 | Bit-packing, board layout, color/turn bit invariants, sortable bucket sort order, piece-square table inversion, mailbox indexing, castling-slot / rook-file resolution, the 960 start-position table, notation parsing. |
 | **Move generation & rules** (7) | `MoveGeneratorTest`, `GameTest`, `PerftTest`, `Chess960CastlingTest`, `MoveSorterImplTest`, `KillerMovesTest`, `SimpleNotationImporterTest` (`BoardTest` overlaps) | ~1510 | Pseudo-legal generation, castling legality (standard + 960), en passant, check / checkmate / stalemate detection, move ordering; **Perft node-count verification** against the Chess-Programming-Wiki reference values. |
-| **Search & evaluation** (23) | `EngineTest`, `EngineSmokeTest`, `DeepWeightTest`, `WeightingFunctionTest`, `QuiescenceSearchTest`, `StaticExchangeEvaluationTest`, `PositionSearchTest`, `engines/SearchNodeContextTest`, `engines/IterationTimingsTest`, `MirrorEvalTest`, `HangingPiecesEvalTest`, `BlunderTest`, `ChessEngineTest`, `NextMoveTaskTest`, `EvalRegressionTest`, `IllegalPvRegressionTest`, `StalemateAvoidanceRegressionTest`, `MoveSortInvariantRegressionTest`, `ZobristHashingTest`, `PositionHashConsistencyRegressionTest`, `StsTest`, `StsDefectTest`, `ReportedScoreConsistencyTest` | ~5290 | Position regressions, eval component ranges, mirror-symmetry of eval, quiescence depth, static exchange evaluation (SEE) for quiescence capture ordering and SEE < 0 pruning, PV-legality regressions, iterative-deepening timings, async task lifecycle, and Zobrist-hash correctness (incremental vs from-scratch, en-passant round-trips, perft-style + randomized Chess960 consistency walks). |
+| **Search & evaluation** (26) | `EngineTest`, `EngineSmokeTest`, `DeepWeightTest`, `WeightingFunctionTest`, `QuiescenceSearchTest`, `StaticExchangeEvaluationTest`, `PositionSearchTest`, `engines/SearchNodeContextTest`, `engines/IterationTimingsTest`, `MirrorEvalTest`, `HangingPiecesEvalTest`, `BlunderTest`, `ChessEngineTest`, `NextMoveTaskTest`, `EvalRegressionTest`, `IllegalPvRegressionTest`, `StalemateAvoidanceRegressionTest`, `MoveSortInvariantRegressionTest`, `ZobristHashingTest`, `PositionHashConsistencyRegressionTest`, `StsTest`, `StsDefectTest`, `ReportedScoreConsistencyTest`, `NodeCountTest`, `BenchResultTest`, `EvalBenchmarkTest` | ~5290 | Position regressions, eval component ranges, mirror-symmetry of eval, quiescence depth, static exchange evaluation (SEE) for quiescence capture ordering and SEE < 0 pruning, PV-legality regressions, iterative-deepening timings, async task lifecycle, and Zobrist-hash correctness (incremental vs from-scratch, en-passant round-trips, perft-style + randomized Chess960 consistency walks). The last three guard `bench` rather than the engine: that the search counts each visited position exactly once (`NodeCountTest`), that the aggregate arithmetic over a run is right (`BenchResultTest`), and that the suite still runs end to end (`EvalBenchmarkTest`). A miscount there would silently corrupt every comparison in [bench-history](bench-history.md). |
 | **Transposition table** (3) | `TranspositionTableTest`, `TranspositionTableIntegrationTest`, `ScoreTTAdjustmentTest` | ~525 | Bucket replacement / eviction policy, `TTEntryView` round-trips, end-to-end TT plumbing through the engine, mate-score depth adjustment on store / probe. |
 | **Draw rules** (2) | `ThreefoldRepetitionTest`, `FiftyMovesRuleTest` | ~180 | Detection + opt-out toggle for both rules. |
 | **Notation & I/O** (8) | `FenTest`, `PgnTest`, `PGNImporterTest`, `FenChess960ImportTest`, `PGNConverterTest`, `UciMoveParserTest`, `UciHandlerTest`, `LogTest` | ~2910 | FEN export/import (standard + 960 / Shredder), PGN parsing (strict + lenient) and end-to-end replay from arbitrary start positions, UCI move parsing and protocol handling, log routing. |

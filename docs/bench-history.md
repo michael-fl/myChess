@@ -55,24 +55,24 @@ not a sole cause.
 ## 2. Depth 8 — the full series
 
 Suite: `standard` (49 Stockfish benchmark positions + 6 myChess middlegames = 55).
-All twelve runs completed every position at the requested depth; no run was
+All thirteen runs completed every position at the requested depth; no run was
 time-truncated.
 
-| Version | Nodes @ d8 | Δ nodes vs prev. row | Dominant change in span | Δ Elo (measured) | ~CCRL |
-|---|---:|---:|---|---|---|
-| **3.5.2** | 791,340,172 | — (baseline) | — | −5.6 ± 21.3 (noise) | ~1441 |
-| **3.6.0** | 832,797,076 | **+5.2 %** | eval: pawn structure / weights | +28.1 ± 20.5 | ~1469 |
-| **4.0.7** | 370,196,066 | **−55.5 %** | **transposition table** (4.0.0) + en-passant Zobrist fix | +92.7 for the TT itself | ~1587 |
-| **4.1.0** | 194,309,372 | **−47.5 %** | **null-move pruning** | +76.0 ± 10.1 | ~1663 |
-| **4.2.1** | 487,757,233 | **+151.0 %** | **quiescence: all captures + MVV-LVA + SEE** | +40.6 ± 9.4 | ~1764 |
-| **4.2.3** | 390,641,100 | **−19.9 %** | **PV-table bug fix** (correct best-known-move ordering) | +8.7 ± 13.2 | ~1773 |
-| **4.3.2** | 368,432,487 | **−5.7 %** | tapered + Texel-tuned endgame PSTs, queen 900→1000 | +12.6 ± 13.3 | ~1816 |
-| **4.3.3** | 375,242,151 | **+1.8 %** | bishop-pair bonus | +31.3 ± 24.1 | ~1847 |
-| **4.3.4** | 350,506,008 | **−6.6 %** | full-joint MG+EG PST tune | +23.0 ± 12.9 | ~1870 |
-| **4.4.0** | 335,919,557 | **−4.2 %** | PeSTO piece-square tables | +32.6 ± 12.4 | ~1900 |
-| **4.4.1** | 335,946,428 | **+0.008 %** | Repetition fix (§ 12.23) | ≈ +15 (SPRT H1 at 321 games, +42.4 ± 29.4) | **1928 ± 21** |
-| **4.5.0** | 336,412,842 | **+0.139 %** | Complete principal variation ([§ 12.25](roadmap.md#1225-tried--repairing-the-roots-move-choice-after-the-pv-re-search-reverted-twice-444-and-166-elo)) | +1.8 ± 11.6 over 2463 games — **neutral** | ~1928 |
-| **4.6.0** (`415a6ac`) | 1,300,002,835 | **+286 %** | Material-only shortcut only for quiet root moves ([§ 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460)) | **+14.8 ± 10.5** over 3000 games | ~1943 |
+| Version | Nodes @ d8 | Δ nodes vs prev. row | 53 realistic positions | Dominant change in span | Δ Elo (measured) | ~CCRL |
+|---|---:|---:|---:|---|---|---|
+| **3.5.2** | 791,340,172 | — (baseline) | 543,710,965 | — | −5.6 ± 21.3 (noise) | ~1441 |
+| **3.6.0** | 832,797,076 | **+5.2 %** | 580,029,043 (+6.7 %) | eval: pawn structure / weights | +28.1 ± 20.5 | ~1469 |
+| **4.0.7** | 370,196,066 | **−55.5 %** | 275,025,711 (−52.6 %) | **transposition table** (4.0.0) + en-passant Zobrist fix | +92.7 for the TT itself | ~1587 |
+| **4.1.0** | 194,309,372 | **−47.5 %** | 161,986,703 (−41.1 %) | **null-move pruning** | +76.0 ± 10.1 | ~1663 |
+| **4.2.1** | 487,757,233 | **+151.0 %** | 199,631,831 (+23.2 %) | **quiescence: all captures + MVV-LVA + SEE** | +40.6 ± 9.4 | ~1764 |
+| **4.2.3** | 390,641,100 | **−19.9 %** | 121,405,860 (−39.2 %) | **PV-table bug fix** (correct best-known-move ordering) | +8.7 ± 13.2 | ~1773 |
+| **4.3.2** | 368,432,487 | **−5.7 %** | 121,930,761 (+0.4 %) | tapered + Texel-tuned endgame PSTs, queen 900→1000 | +12.6 ± 13.3 | ~1816 |
+| **4.3.3** | 375,242,151 | **+1.8 %** | 128,265,386 (+5.2 %) | bishop-pair bonus | +31.3 ± 24.1 | ~1847 |
+| **4.3.4** | 350,506,008 | **−6.6 %** | 93,759,041 (−26.9 %) | full-joint MG+EG PST tune | +23.0 ± 12.9 | ~1870 |
+| **4.4.0** | 335,919,557 | **−4.2 %** | 98,908,027 (+5.5 %) | PeSTO piece-square tables | +32.6 ± 12.4 | ~1900 |
+| **4.4.1** | 335,946,428 | **+0.008 %** | 101,431,971 (+2.6 %) | Repetition fix (§ 12.23) | ≈ +15 (SPRT H1 at 321 games, +42.4 ± 29.4) | **1928 ± 21** |
+| **4.5.0** | 336,412,842 | **+0.139 %** | 101,553,277 (+0.1 %) | Complete principal variation ([§ 12.25](roadmap.md#1225-tried--repairing-the-roots-move-choice-after-the-pv-re-search-reverted-twice-444-and-166-elo)) | +1.8 ± 11.6 over 2463 games — **neutral** | ~1928 |
+| **4.6.0** (`415a6ac`) | 1,300,002,835 | **+286 %** | 101,626,447 (+0.1 %) | Material-only shortcut only for quiet root moves ([§ 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460)) | **+14.8 ± 10.5** over 3000 games | ~1943 |
 
 **Read the 4.6.0 row with its own warning.** +286 % nodes at a fixed depth alongside **+14.8
 Elo** is not a contradiction, it is this table's third demonstration that the signature answers a
@@ -87,9 +87,12 @@ distributed, the plies lost under the clock is the comparable quantity and the n
 Across the whole series, 4.4.0 needs **2.36× fewer nodes than 3.5.2** for the
 same depth (−57.6 %) while playing roughly **460 Elo stronger**.
 
-Time and NPS for the same runs — **informative only**, all measured
-2026-08-09 (4.4.0: 2026-08-11) on an Apple M1 Pro (10 cores), macOS 15.6.1, Corretto JDK 25.0.2,
-each engine with `-Xms256m -Xmx256m -XX:+UseSerialGC`:
+Time and NPS for the same runs — **informative only**. Rows 3.5.2 to 4.4.1 were measured
+2026-08-09 (4.4.0: 2026-08-11); 4.5.0 and 4.6.0 on 2026-08-27, when their archives were
+backfilled. Same machine throughout: an Apple M1 Pro (10 cores), macOS 15.6.1, Corretto
+JDK 25.0.2, each engine with `-Xms256m -Xmx256m -XX:+UseSerialGC`. Two measurement dates in
+one table is exactly the mixing rule 4 exists to make harmless — these columns are never
+compared, only recorded:
 
 | Version | Time @ d8 | NPS |
 |---|---:|---:|
@@ -104,11 +107,21 @@ each engine with `-Xms256m -Xmx256m -XX:+UseSerialGC`:
 | 4.3.4 | 3:06 | 1,875,577 |
 | 4.4.0 | 3:00 | 1,861,173 |
 | 4.4.1 | 3:00 | 1,861,394 |
+| 4.5.0 | 2:57 | 1,900,573 |
+| 4.6.0 | **17:18** | 1,251,215 |
 
 The NPS decline from ~3.0 M to ~1.9 M is the cost of the richer evaluation and
 the deeper quiescence search: fewer nodes per second, but each node is worth
 more. It is not a performance regression, and — being a time-derived figure — it
 is not a number to optimize against.
+
+**4.6.0's 17:18 is not the engine having become six times slower**, and its NPS
+drop to 1.25 M is not a throughput regression either. Both are the two artificial
+stress positions: position 37 alone burns **15:35** of that wall clock and
+position 38 another 0:47. The 53 realistic positions together take **0:55** — the
+whole rest of the suite costs less than a minute, and 90 % of a seventeen-minute
+benchmark is spent on one position that cannot occur in a game. This row is why
+policy rule 1's cost argument had to be rewritten.
 
 ---
 
@@ -120,13 +133,13 @@ search runs, so a single-depth table would understate exactly the work planned
 next. Older releases are not measured at depth 9 — they predate the TT and NMP
 and are historically closed.
 
-| Version | Nodes @ d9 | Nodes @ d8 | d9 / d8 |
-|---|---:|---:|---:|
-| **4.3.4** | 916,947,170 | 350,506,008 | **2.62** |
-| **4.4.0** | 920,132,868 | 335,919,557 | **2.74** |
-| **4.4.1** | 918,718,652 | 335,946,428 | **2.73** |
-| **4.5.0** | 919,377,788 | 336,412,842 | **2.73** |
-| **4.6.0** (`415a6ac`) | 2,352,454,034 | 1,300,002,835 | **1.81** |
+| Version | Nodes @ d9 | Nodes @ d8 | d9 / d8 | 53 realistic @ d9 | d9 / d8, realistic |
+|---|---:|---:|---:|---:|---:|
+| **4.3.4** | 916,947,170 | 350,506,008 | **2.62** | 334,123,988 | **3.56** |
+| **4.4.0** | 920,132,868 | 335,919,557 | **2.74** | 366,672,809 | **3.71** |
+| **4.4.1** | 918,718,652 | 335,946,428 | **2.73** | 372,117,621 | **3.67** |
+| **4.5.0** | 919,377,788 | 336,412,842 | **2.73** | 372,430,743 | **3.67** |
+| **4.6.0** (`415a6ac`) | 2,352,454,034 | 1,300,002,835 | **1.81** | 372,716,472 | **3.67** |
 
 **The 4.6.0 row breaks the comparability of this column, and must not be read as a search
 improvement.** Its 1.81 is the lowest value in the table by a wide margin, and none of it comes
@@ -134,11 +147,16 @@ from better search. The material-only shortcut change inflates the depth-8 tree 
 depth-9 tree by only 2.56×, because the cost of the accurate evaluation is front-loaded and falls
 away relatively with depth. A ratio between two differently inflated numbers drops mechanically.
 
+That is no longer only an argument. The rightmost column measures it: on the 53 realistic
+positions 4.6.0's ratio is **3.67, unchanged from 4.4.1 and 4.5.0 to two decimals**. The whole
+collapse from 2.73 to 1.81 lives in the two artificial stress positions, and the search's
+effective branching factor did not move — see [§ 4](#4-what-the-numbers-say).
+
 The inverse reading is just as wrong. "One more ply now costs 1.81× instead of 2.73×" sounds like
 good news, and against a fixed node budget it predicts a loss of more than a whole ply; the
 measured loss under the clock is **0.13 plies**. Whenever a release changes what an evaluation
-costs *as a function of depth*, this ratio stops being comparable across the boundary and the
-plies lost under the clock is the quantity that is
+costs *as a function of depth*, this ratio stops being comparable across the boundary, and the
+plies lost under the clock is the quantity that still tracks strength
 (see [roadmap § 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460)).
 
 The **d9/d8 ratio is the effective branching factor** and the most interesting
@@ -147,6 +165,12 @@ ordering would give in a plain alpha-beta search: transposition-table hits and
 null-move cutoffs remove whole subtrees, and the previous iteration's principal
 variation orders the next one. Tracking this ratio across future releases
 measures search quality more directly than either absolute count does.
+
+**Read the realistic column for that, not the full one.** The 2.62–2.74 band is
+depressed by the two artificial positions, which are saturated at depth 8 and so
+gain proportionally less from the extra ply. On the 53 realistic positions the
+factor is **3.56–3.71** — a third higher, and the honest figure for how well the
+search actually prunes.
 
 **4.4.0 raised it, from 2.62 to 2.74 — and that is not a regression.** The PeSTO
 tables shrank the depth-8 tree by 4.2 % while leaving depth 9 essentially unchanged
@@ -204,6 +228,137 @@ and **nothing measurable at depth 9** (+0.3 %). A sharper evaluation helps exact
 where no other ordering information exists yet; deeper down, the transposition
 table, the previous iteration's principal variation, and the killer moves have
 already done the work.
+
+### Where the nodes actually are — two positions carry the signature
+
+Every reading above is a reading of the **total**, and the total is composed very
+unevenly. The suite's 55 positions include exactly two that are not chess: the
+pawnless, figure-dense stress positions at index 37 and 38, inherited from
+Stockfish's own bench, with 24 and 22 non-king pieces against 11 to 16 pawns in
+every other position. The separation is absolute — there is no borderline case.
+
+Those two have grown from a quarter of the depth-8 signature to almost all of it:
+
+| Version | Nodes @ d8 | Positions 37 + 38 | Their share | 53 realistic positions | Δ vs prev. |
+|---|---:|---:|---:|---:|---:|
+| **3.5.2** | 791,340,172 | 247,629,207 | 31.3 % | 543,710,965 | — |
+| **3.6.0** | 832,797,076 | 252,768,033 | 30.4 % | 580,029,043 | +6.7 % |
+| **4.0.7** | 370,196,066 | 95,170,355 | 25.7 % | 275,025,711 | −52.6 % |
+| **4.1.0** | 194,309,372 | 32,322,669 | **16.6 %** | 161,986,703 | −41.1 % |
+| **4.2.1** | 487,757,233 | 288,125,402 | 59.1 % | 199,631,831 | +23.2 % |
+| **4.2.3** | 390,641,100 | 269,235,240 | 68.9 % | 121,405,860 | −39.2 % |
+| **4.3.2** | 368,432,487 | 246,501,726 | 66.9 % | 121,930,761 | +0.4 % |
+| **4.3.3** | 375,242,151 | 246,976,765 | 65.8 % | 128,265,386 | +5.2 % |
+| **4.3.4** | 350,506,008 | 256,746,967 | 73.3 % | 93,759,041 | −26.9 % |
+| **4.4.0** | 335,919,557 | 237,011,530 | 70.6 % | 98,908,027 | +5.5 % |
+| **4.4.1** | 335,946,428 | 234,514,457 | 69.8 % | 101,431,971 | +2.6 % |
+| **4.5.0** | 336,412,842 | 234,859,565 | 69.8 % | 101,553,277 | +0.1 % |
+| **4.6.0** | 1,300,002,835 | 1,198,376,388 | **92.2 %** | 101,626,447 | +0.1 % |
+
+**The consequence is blunt: conclusions drawn from the total across this series
+were dominated by two positions that cannot occur in a game.** From 4.1.0 to
+4.5.0 the total rose 73 % while the realistic positions got **37 % cheaper**
+(162 M → 102 M). The two series do not merely differ in scale, they point in
+opposite directions.
+
+**The single largest jump in this table is mostly not what it appears to be.**
+4.2.1 — all-captures quiescence with MVV-LVA and SEE — shows **+151 %** on the
+total but only **+23.2 %** on the realistic positions. In a pawnless position
+where nearly every move is a capture, an all-captures quiescence has nothing to
+prune; the change looked six times more expensive than it was where games are
+actually played. Its share jumps from 16.6 % to 59.1 % in that one release and
+never comes back down.
+
+**The identity of the most expensive position is not stable, which is why nothing
+here is keyed to an index.** Through 4.1.0 the largest single position was **38**;
+from 4.2.1 onward it is **37**. A diagnostic hard-wired to one index would have
+reported the wrong position for four archived versions without ever failing.
+`BenchResult.largestPosition()` therefore reports the maximum, and this table
+excludes the *pair*, which is the quantity that stays comparable across the whole
+series.
+
+**The reduced figure is a healthy aggregate, unlike the total.** Among the 53
+realistic positions the largest single contributor is 7.5 % and the top five are
+5 to 8 % each (measured on 4.4.1 and 4.5.0), so no one position can move it much.
+That is what makes it readable as a cost figure rather than as one position's cost.
+
+**But it is emphatically not a neutrality oracle, and 4.6.0 is the proof.** Its
+reduced total moved **+0.1 %** — 101,553,277 to 101,626,447 — for a release whose
+full signature tripled and which measured +14.8 Elo. Read as a sum, the realistic
+positions would have declared that release neutral. Read one at a time they catch
+it easily: 28 of the 53 diverge. The reduced number answers *"what does the search
+cost where games are actually played"*; the question *"did anything change at
+all"* is answered by the per-position diff of § 7 over the full 55, and by nothing
+else.
+
+That flatness is itself the most striking number in this section. Across 4.4.1,
+4.5.0 and 4.6.0 — a repetition fix, a principal-variation correctness release and
+an evaluation-regime change worth +14.8 Elo — the realistic positions cost
+101.4, 101.6 and 101.6 million nodes at depth 8. Three consecutive releases,
+one part in a thousand apart, while the headline signature went from 336 million
+to 1.3 billion.
+
+#### It also corrects the effective branching factor, and explains 4.6.0's collapse
+
+§ 3 calls the d9/d8 ratio the most interesting single number here and puts it at
+2.62–2.74, far below the ≈5.9 that √35 would give. On the realistic positions it
+is **3.67**. The two artificial positions are already saturated at depth 8 — one
+more ply adds proportionally less there than in a normal position — so they pull
+the published figure down by roughly a third. The search prunes noticeably less
+well than this document has been claiming, which strengthens rather than weakens
+the case for the § 12.3 search cluster.
+
+**And it settles what happened to 4.6.0's ratio.** § 3 warns that its 1.81 must
+not be read as a search improvement and calls the drop mechanical. That is now
+measured rather than argued: on the realistic positions 4.6.0's ratio is
+**3.67 — unchanged from 4.4.1 and 4.5.0 to two decimals**, while the full-suite
+figure fell from 2.73 to 1.81. The entire collapse is two positions. The effective
+branching factor of the search did not move at all.
+
+The same holds for the depth-9 cost itself: 372.1, 372.4 and 372.7 million nodes
+over 4.4.1, 4.5.0 and 4.6.0 — the identical one-part-in-a-thousand flatness the
+depth-8 column shows, from an independent measurement.
+
+#### What this does not justify
+
+**The artificial positions are not privileged divergence detectors, and the
+earlier argument that they were does not survive measurement.** Comparing
+consecutive archives position by position, real changes move nearly the whole
+suite: 45 of 55 positions for 4.4.0 → 4.4.1, and 53 of 55 for both
+4.3.3 → 4.3.4 and 4.4.1 → 4.5.0. Position 37 was outright *blind* to the
+repetition fix while ten realistic positions caught it. On this evidence the two
+carry no sensitivity that the other 53 do not, and their 70 to 90 % share is cost
+without a matching detection benefit.
+
+**4.6.0 was the fairest possible test of the opposite view, and it did not rescue
+it.** That release is the only one in the series whose change is aimed squarely at
+capture subtrees — precisely where a pawnless, figure-dense position should be the
+uniquely sensitive probe. It moves only **30 of 55** positions, the narrowest
+divergence in the table, and both artificial positions are among them. But so are
+**28 realistic ones**, so the change was never at risk of going unnoticed. What
+the two artificial positions contribute is not detection but magnitude: position
+37 alone grows from 150,230,710 to 1,129,861,147 nodes (**+652 %**) and accounts
+for essentially the entire +286 % headline, while position 38 gets 19 % *cheaper*
+over the same change. They are where the cost shows up, not where the change is
+found.
+
+**They stay in the suite anyway, and the reason is comparability alone.** Removing
+them would silently redefine the signature and devalue twelve archived versions,
+while the reduced column recovers every analysis above without discarding
+anything. Where the runtime becomes an obstacle, the honest shortcut is to run
+the 53 realistic positions for a quick intermediate check — **55 seconds against
+seventeen minutes**, measured on the 4.6.0 archive — and keep the full 55 for
+anything that goes into this table. Compare them per position, never as a sum,
+for the reason given above.
+
+Reproduce every number in this section from the archives, for example:
+
+```sh
+LC_ALL=C awk '/\/55  nodes/ {gsub(/,/, "", $3); n[$1] = $3}
+     END { for (k in n) { t += n[k]; if (k ~ /^3[78]\//) a += n[k] }
+           printf "total %d  artificial %d  reduced %d  share %.1f %%\n", t, a, t - a, 100 * a / t }' \
+    test-results/bench/4.4.1-d8.txt
+```
 
 ---
 
@@ -271,10 +426,30 @@ comma on every machine and the output is diffable regardless of system locale.
 1. **Measure every release, not only those that touch search or evaluation.** The
    value of a signature is that an *unchanged* number proves neutrality. Skipping
    a "tooling only" release forfeits exactly the case worth catching — an
-   unintended behavioral change. At three minutes for depth 8, the cost is
-   negligible against a documented "identical to the previous release, hence
-   provably neutral" line. (Historical precedent: 4.2.2 was declared "no runtime
-   strength change" — asserted, never demonstrated.)
+   unintended behavioral change. (Historical precedent: 4.2.2 was declared "no
+   runtime strength change" — asserted, never demonstrated.)
+
+   **The rule stands, but its old justification does not.** This entry used to
+   read "at three minutes for depth 8, the cost is negligible". That was true
+   through v4.4.1 and is no longer: v4.6.0 takes **17 minutes at depth 8 and 29
+   at depth 9**, so a full release measurement is about **47 minutes** rather than
+   the ten it once was. The rule survives on a different argument — 47 minutes is
+   still an order of magnitude below the SPRT that accompanies any real change,
+   and it buys a proof rather than an estimate.
+
+   Two things follow. Do **not** read the new cost as the engine having become
+   slow: essentially all of it is two positions (see § 4), and across 4.4.1,
+   4.5.0 and 4.6.0 the other 53 stayed flat at 101.4, 101.6 and 101.6 million.
+
+   And a cheap intermediate check on the 53 realistic positions — **55 seconds
+   against seventeen minutes** — must be run as a **per-position comparison, never
+   as a reduced total.** The distinction is not pedantic: 4.6.0 moved the reduced
+   total by **+0.1 %**, so a sum over the realistic positions would have called
+   the release neutral while the full signature tripled. The same 53 positions
+   caught it perfectly well one at a time — 28 of them diverge — which is why the
+   diff recipe in § 7 is the instrument and the sum is not. What gets **archived
+   and tabulated stays the full 55**, because a signature is only worth anything
+   next to signatures measured the same way, and the series reaches back to 3.5.2.
 2. **Record both depth 8 and depth 9** from 4.3.4 onward, and track the d9/d8
    ratio.
 3. **Archive the per-position output**, not just the totals (see below).
@@ -348,15 +523,61 @@ outputs are therefore archived per run:
 test-results/bench/<version>-d<depth>.txt
 ```
 
-To find out where two builds diverge:
+To find out where two builds diverge, compare the node counts **without the time
+column** — every line carries a wall-clock time, so a plain `diff` reports all 55
+positions as changed even between two runs of the same build:
 
 ```sh
-diff test-results/bench/4.3.3-d8.txt test-results/bench/4.3.4-d8.txt
+nodes() { awk '/\/55  nodes/ {print $1, $3, $NF}' "$1"; }
+diff <(nodes test-results/bench/4.3.3-d8.txt) <(nodes test-results/bench/4.3.4-d8.txt)
 ```
+
+This matters most for the instrument's primary use. A neutral refactor must produce
+**no output at all** here; a plain `diff` produces 114 changed lines for it, so in
+that form the archive cannot express neutrality — the one thing the signature
+exists to prove. It also removes false positives in the other direction: between
+4.4.1 and 4.5.0, 53 positions genuinely diverge while the plain `diff` implicates
+all 55.
+
+A long diff is not itself a problem. Most real changes move nearly every position
+(30 to 53 of 55 across the four transitions checked in § 4); a *short* one is the
+interesting case, because it localizes the change to a handful of positions.
 
 These files are committed alongside this document, so the per-position detail of
 every measured release is available from a fresh clone — not just the totals
 tabulated above.
+
+### The archive is now a by-product of the run, not a separate step
+
+**It was missed twice, for 4.5.0 and 4.6.0.** Both releases were measured — their
+totals are in the tables above and reproduce exactly from the sealed jars — but
+the per-position output was never written to disk, so rule 1 was followed while
+rule 3 was not. The mechanism is worth naming, because it is not forgetfulness:
+the total is what gets transcribed into the table, so reading it off the screen
+completes the visible task, while archiving is an extra redirect whose payoff
+arrives months later. Nothing enforced it.
+
+The cost landed immediately. The concentration finding in § 4 came *out of* these
+archives — it is only computable retroactively because twelve versions had been
+archived — and the two runs whose archives were skipped were exactly the two
+versions in which the concentration exploded. Both were backfilled on 2026-08-27
+from `versions/4.5.0` and `versions/4.6.0`, which is possible only because the
+sealed jars still exist; had they been overwritten, those rows would have been
+permanently unarchivable.
+
+**The structural fix is that `bench` now streams its per-position lines during the
+run** instead of collecting them and printing at the end. Producing the archive is
+therefore no longer a step anyone has to remember:
+
+```sh
+printf 'bench 8\nq\n' | java -cp "my-chess-4.7.0.jar:lib/*" \
+    org.michaelfl.mychess.MyChessMain | tee test-results/bench/4.7.0-d8.txt
+```
+
+This is also why the progress line kept the archive's existing column layout
+(`n/total  nodes N  time T ms  fen`) rather than a more readable one with running
+totals: a by-product is only worth having if it diffs against the fourteen files
+that came before it.
 
 Incidentally, the first cross-check already paid for itself: the depth-8 and
 depth-9 signatures of the current `master` are identical to those of the released
