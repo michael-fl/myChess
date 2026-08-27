@@ -669,36 +669,52 @@ final class CommandHandler {
          * Prints one line per position as the suite progresses, so a run that takes minutes at
          * depth 8 and tens of minutes at depth 9 is distinguishable from a hung one.
          *
-         * <p>Carries the running totals rather than an estimate of what is left: the suite's
-         * positions span three orders of magnitude in size, so extrapolating from the count
-         * completed would be badly wrong early on. What is printed is what is known.
+         * <p><b>The line format is fixed by the archive, not chosen here.</b> These lines are
+         * what gets redirected into {@code test-results/bench/<version>-d<depth>.txt}, whose
+         * whole purpose is that one version's line diffs against another's to localize a
+         * changed signature to a position. Every archive since 3.5.2 uses
+         * {@code n/total  nodes N  time T ms  fen}, so that is what is printed — a running
+         * total or an extra column would be more informative on screen and would misalign 14
+         * existing files.
+         *
+         * <p>No estimate of remaining time either: the suite's positions span three orders of
+         * magnitude in size, so extrapolating from the count completed would be badly wrong
+         * early on. The position index against the total is what is actually known.
          */
         private Consumer<Bench.PositionResult> progressPrinter(int depth, boolean chess960) {
-            System.out.printf(Locale.ROOT, "bench suite=%s depth=%d — running, one line per position%n",
-                    chess960 ? "chess960" : "standard", depth);
+            int total = Bench.suiteSize(chess960);
+
+            System.out.printf(Locale.ROOT, "bench suite=%s depth=%d positions=%d%n",
+                    chess960 ? "chess960" : "standard", depth, total);
 
             var done = new int[1];
-            var nodes = new long[1];
-            var startMs = System.currentTimeMillis();
 
             return position -> {
                 done[0]++;
-                nodes[0] += position.nodes();
 
-                System.out.printf(Locale.ROOT, "%3d  nodes %,12d  time %6d ms   total %,14d in %,6d ms   %s%n",
-                        done[0], position.nodes(), position.timeMs(), nodes[0],
-                        System.currentTimeMillis() - startMs, shortFen(position.fen()));
+                System.out.printf(Locale.ROOT, "%3d/%d  nodes %,12d  time %6d ms   %s%n",
+                        done[0], total, position.nodes(), position.timeMs(), shortFen(position.fen()));
             };
         }
 
         private void printResult(Bench.BenchResult result) {
             System.out.println("===========================================================");
-            System.out.printf(Locale.ROOT, "suite=%s depth=%d positions=%d%n",
-                    result.chess960() ? "chess960" : "standard", result.depth(),
-                    result.positions().size());
             System.out.printf(Locale.ROOT, "Total time     : %,d ms%n", result.totalTimeMs());
             System.out.printf(Locale.ROOT, "Nodes searched : %,d%n", result.totalNodes());
             System.out.printf(Locale.ROOT, "NPS            : %,d%n", result.nps());
+
+            // How the total is composed, not just how large it is — in this suite one position
+            // has reached 87 % of the signature, which the sum alone hides. Appended below the
+            // established three lines so the archive's existing footer stays byte-comparable.
+            var largest = result.largestPosition();
+
+            System.out.printf(Locale.ROOT, "Largest pos.   : %,d nodes (%.1f %% of total, %,d ms)   %s%n",
+                    largest.nodes(), result.largestPositionShare(), largest.timeMs(),
+                    shortFen(largest.fen()));
+            System.out.printf(Locale.ROOT, "Without it     : %,d nodes, %,d ms, NPS %,d%n",
+                    result.nodesWithoutLargestPosition(),
+                    result.totalTimeMs() - largest.timeMs(),
+                    result.npsWithoutLargestPosition());
         }
 
         private void printAll(int depth) {
