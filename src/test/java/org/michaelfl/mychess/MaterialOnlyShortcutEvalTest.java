@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -25,6 +26,41 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * {@code QuiescenceSearch#calculatePositionWeight}: the positional evaluation
  * ({@link WeightingFunction} + {@code PieceSquareTables}) is skipped and only the
  * raw material balance is returned. The tests probe three faces of that behavior.
+ *
+ * <h2>Read the five case analyses below as pre-v4.6.0</h2>
+ *
+ * <p>Since v4.6.0 the shortcut is disabled in the subtrees of <em>capturing</em> root moves and
+ * kept in the subtrees of quiet ones. Every case here is a recapture, so four of the five now
+ * run with the full evaluation, and the fifth does not — and the split falls exactly along that
+ * line, which is the sharpest confirmation of the change that exists:
+ *
+ * <table border="1">
+ *   <caption>What v4.6.0 did to the five cases</caption>
+ *   <tr><th>Case</th><th>chosen root move</th><th>capture?</th><th>then</th><th>now</th></tr>
+ *   <tr><td>1 development lead</td><td>{@code Bxd4}</td><td>yes</td><td>~0</td>
+ *       <td><b>1.93</b> (SF ~1.6) — fixed</td></tr>
+ *   <tr><td>2 trapped knight</td><td>{@code Nxb3}</td><td>yes</td><td>~0</td>
+ *       <td><b>1.27</b> (SF ~2.3) — fixed, about half arrives</td></tr>
+ *   <tr><td>3 queen recapture</td><td>{@code axb3} → {@code Nxb3}</td><td>yes</td>
+ *       <td>tie at 1.0, worst recapture</td><td><b>2.52</b>, best recapture — fixed</td></tr>
+ *   <tr><td>4 exchange sacrifice</td><td>{@code Qxb5}</td><td>yes</td><td>exactly 6.00</td>
+ *       <td><b>6.21</b>, same wrong move — <b>still open</b></td></tr>
+ *   <tr><td>5 Immortal Draw</td><td>{@code Ne7}, {@code Kf8}, {@code b6+}, {@code Ba6+}</td>
+ *       <td><b>no</b></td><td>exactly 8.00 ×4</td><td>exactly 8.00 ×4 — unchanged</td></tr>
+ * </table>
+ *
+ * <p><b>Case 5 is the control, and nobody designed it as one.</b> Its four root moves are the
+ * only quiet ones in the class, so the shortcut still covers them and the score is still exactly
+ * eight pawns, four times over. Four capture subtrees changed, one quiet subtree did not.
+ *
+ * <p><b>Case 4 refutes its own analysis.</b> The section below argues the blunder is caused by
+ * the shortcut discarding the positional value of the exchange sacrifice. The shortcut is gone
+ * from that subtree now — the score is no longer a round piece count — and myChess still plays
+ * {@code Qxb5}. So the evaluation was not the cause, or not the only one. The analysis is kept
+ * because its measurements are correct and its mechanism is real; only its conclusion about
+ * <em>this</em> position does not survive.
+ *
+ * <p>Measured: +14.8 ± 10.5 Elo over 3000 games at tc=40/60 against 4.5.0.
  *
  * <h2>1. Blind to a positional advantage &mdash; {@code developmentLead...}</h2>
  *
@@ -179,7 +215,14 @@ class MaterialOnlyShortcutEvalTest {
      * positional surplus is erased") is unambiguous while tolerating minor
      * quiescence leakage. Observed on v4.2.3: both positions read exactly 0.00.
      */
-    private static final float COLLAPSE_TOLERANCE = 0.10f;
+    /**
+     * Floor the deep evaluation must now clear where it used to collapse to ~0.
+     *
+     * <p>One pawn, deliberately far below the measured values (1.93 and 1.27) and far above
+     * zero. The point is to pin that the positional advantage reaches the score at all, not
+     * how much of it does — the latter moves with every table change.
+     */
+    private static final float SEES_POSITIONAL_MIN = 1.0f;
 
     // --- Position 1: shortcut blind to a positional (development) advantage ---
 
@@ -228,7 +271,6 @@ class MaterialOnlyShortcutEvalTest {
 
     /** The material-only tie value the three recaptures collapse to (White +1 pawn). */
     private static final float TRAP_TIE_WEIGHT = 1.0f;
-    private static final float TRAP_TIE_TOLERANCE = 0.20f;
 
     /** Case 4: white to move, a piece up, black's knight just planted on f6 en prise. */
     private static final String EXCHANGE_SACRIFICE_FEN =
@@ -241,16 +283,6 @@ class MaterialOnlyShortcutEvalTest {
     private static final float STOCKFISH_EXCHANGE_SACRIFICE = 7.76f;
     private static final float STOCKFISH_PAWN_GRAB = 5.71f;
 
-    /**
-     * The score myChess reports for {@code Qxb5}: exactly six pawns, the material
-     * balance at the leaf of its own principal variation. Pinned to the pawn because
-     * the <em>exactness</em> is the finding: a material-only score has to be a whole
-     * number, material values being multiples of 100 cp. A positional evaluation can
-     * land on one too, so on a single position this is evidence rather than proof —
-     * here it is corroborated by the +6.27 the search reports one depth deeper, and in
-     * case 5 by four whole numbers in a row.
-     */
-    private static final float PURE_MATERIAL_WEIGHT = 6.0f;
 
     /** Tolerance for the above: tight enough that any positional contribution breaks it. */
     private static final float PURE_MATERIAL_TOLERANCE = 0.001f;
@@ -269,10 +301,13 @@ class MaterialOnlyShortcutEvalTest {
     private static final String[] IMMORTAL_DRAW_LABELS = {"12.Kxc5", "13.Bb5+", "14.Bc6", "15.Kb5"};
 
     /**
-     * Case 1 of the class comment, which carries the full analysis: the move is forced and
-     * correct, and the evaluation of the resulting position is what fails.
+     * Case 1 of the class comment, which carries the full analysis.
      *
-     * <p><b>Test family:</b> material-only-shortcut (defect)
+     * <p><b>Fixed in v4.6.0.</b> The recapture {@code Bxd4} is a capture, so the shortcut is now
+     * off in its subtree and the development lead reaches the score: <b>1.93</b> against
+     * Stockfish's ~+1.6, where it used to read ~0.
+     *
+     * <p><b>Test family:</b> material-only-shortcut (fixed)
      */
     @Test
     @Timeout(value = 120, unit = TimeUnit.SECONDS)
@@ -286,20 +321,26 @@ class MaterialOnlyShortcutEvalTest {
         assertEquals(DEVELOPMENT_LEAD_RECAPTURE, eval.move(),
                 "engine must recapture the hanging knight on d4 to restore material equality");
 
-        // ...yet it scores the resulting equal-material position at ~0: the
-        // recapture's > 200 cp material swing trips the material-only shortcut,
-        // discarding White's decisive development lead (SF ~+1.6).
-        assertTrue(Math.abs(eval.weight()) <= COLLAPSE_TOLERANCE,
-                "deep eval collapses to ~0 via the material-only shortcut instead of Stockfish's ~+"
-                        + STOCKFISH_DEVELOPMENT_LEAD + " for White; got " + ChessUtil.weightToString(eval.weight()));
+        // ...and it now scores the resulting equal-material position in White's favor. Before
+        // v4.6.0 this read ~0: the recapture's > 200 cp swing tripped the shortcut and discarded
+        // the development lead. Bxd4 is a capture, so the shortcut is off in its subtree now.
+        assertTrue(eval.weight() >= SEES_POSITIONAL_MIN,
+                "the development lead must reach the score (measured 1.93 against Stockfish's ~+"
+                        + STOCKFISH_DEVELOPMENT_LEAD + "); a value near 0 means the material-only "
+                        + "shortcut is covering this subtree again; got "
+                        + ChessUtil.weightToString(eval.weight()));
     }
 
     /**
-     * Case 2 of the class comment, which carries the full analysis. The one case here that
-     * asserts myChess doing the right thing: it marks the <em>limit</em> of the blindness,
-     * since material is the dimension the shortcut never discards.
+     * Case 2 of the class comment, which carries the full analysis.
      *
-     * <p><b>Test family:</b> material-only-shortcut (guard)
+     * <p><b>Fixed in v4.6.0, partially.</b> Its first half was always a guard — material is the
+     * dimension the shortcut never discards, so the move was found even while the score was
+     * blind. That half still holds. The second half has flipped: the positional surplus now
+     * reaches the score at <b>1.27</b> against Stockfish's ~+2.3, so roughly half of it arrives.
+     * Recorded as fixed because the blindness it documented is gone, not because the gap is.
+     *
+     * <p><b>Test family:</b> material-only-shortcut (fixed)
      */
     @Test
     @Timeout(value = 120, unit = TimeUnit.SECONDS)
@@ -316,19 +357,24 @@ class MaterialOnlyShortcutEvalTest {
         assertEquals(TRAPPED_KNIGHT_RECAPTURE, eval.move(),
                 "engine must recapture with the trapped a5 knight (Nxb3); any other recapture loses it to ...b6");
 
-        // The eval itself still reads ~0: the ~+2.3 edge remaining after Nxb3 is
-        // positional and stays invisible to the shortcut — material discriminates
-        // the move, positional value never reaches the score.
-        assertTrue(Math.abs(eval.weight()) <= COLLAPSE_TOLERANCE,
-                "deep eval stays at ~0 (shortcut blind to the positional surplus) instead of Stockfish's ~+"
-                        + STOCKFISH_TRAPPED_KNIGHT + " for White; got " + ChessUtil.weightToString(eval.weight()));
+        // The eval now carries part of the positional surplus. Before v4.6.0 it read ~0 — the
+        // ~+2.3 edge after Nxb3 is positional and the shortcut discarded all of it.
+        assertTrue(eval.weight() >= SEES_POSITIONAL_MIN,
+                "the positional surplus must reach the score (measured 1.27 of Stockfish's ~+"
+                        + STOCKFISH_TRAPPED_KNIGHT + "); a value near 0 means the shortcut is covering "
+                        + "this subtree again; got " + ChessUtil.weightToString(eval.weight()));
     }
 
     /**
-     * Case 3 of the class comment, which carries the full analysis: a material tie the move
-     * ordering then resolves in favor of the worst of the three recaptures.
+     * Case 3 of the class comment, which carries the full analysis.
      *
-     * <p><b>Test family:</b> material-only-shortcut (defect)
+     * <p><b>Fixed in v4.6.0, and the strongest of the flips.</b> The three recaptures no longer
+     * tie at the material value, so the decision no longer falls to move ordering: myChess plays
+     * {@code Nxb3}, the objectively best of them, and scores it <b>2.52</b> instead of the
+     * material-only <b>1.0</b>. This was the case where the blindness turned into a real blunder,
+     * and it is gone.
+     *
+     * <p><b>Test family:</b> material-only-shortcut (fixed)
      */
     @Test
     @Timeout(value = 120, unit = TimeUnit.SECONDS)
@@ -337,29 +383,41 @@ class MaterialOnlyShortcutEvalTest {
 
         Eval eval = deepEval(QUEEN_RECAPTURE_TRAP_FEN);
 
-        // The blunder: three pieces recapture the hanging queen, all keep material
-        // equal, so the queen-sized delta swing keeps the shortcut engaged and
-        // ties them at +1.0. MoveSorter orders captures by (captured - mover), so
-        // the cheapest attacker (the pawn) is tried first and, only tied and never
-        // beaten, is kept. myChess plays axb3 — the objectively worst recapture
-        // (SF Nxb3 +4.2 vs axb3 +3.1: axb3 doubles the b-pawns and keeps the
-        // offside a5 knight), a difference the material-only shortcut cannot see.
-        assertEquals(TRAP_INFERIOR_MOVE, eval.move(),
-                "material-only tie + cheapest-attacker ordering must make myChess play the inferior pawn recapture "
-                        + TRAP_INFERIOR_MOVE + " instead of the objectively best " + TRAP_BEST_MOVE
-                        + " (SF " + STOCKFISH_TRAP_BEST + " vs " + STOCKFISH_TRAP_INFERIOR + ")");
+        // Before v4.6.0 the queen-sized delta swing kept the shortcut engaged through the whole
+        // subtree, so all three recaptures tied at exactly the material value. With the eval a
+        // genuine tie the decision fell to move ordering — MoveSorter ranks captures by
+        // (captured - mover), so the cheapest attacker went first and, only tied and never
+        // beaten, was kept. myChess played the pawn recapture axb3, the objectively worst of the
+        // three (SF Nxb3 +4.2 vs axb3 +3.1: axb3 doubles the b-pawns and leaves the offside a5
+        // knight in place). Nxb3 is a capture, so the shortcut is off in its subtree now, the tie
+        // is broken on merit, and the best recapture wins.
+        assertEquals(TRAP_BEST_MOVE, eval.move(),
+                "myChess must play the objectively best recapture " + TRAP_BEST_MOVE + " (SF "
+                        + STOCKFISH_TRAP_BEST + ") rather than the inferior " + TRAP_INFERIOR_MOVE
+                        + " (SF " + STOCKFISH_TRAP_INFERIOR + "). Reverting to " + TRAP_INFERIOR_MOVE
+                        + " means the recaptures tie at the material value again and move ordering "
+                        + "decides");
 
-        // The three recaptures collapse to the pure material value (White up one
-        // pawn); the ~1.1-pawn positional gap between them is invisible.
-        assertTrue(Math.abs(eval.weight() - TRAP_TIE_WEIGHT) <= TRAP_TIE_TOLERANCE,
-                "the recaptures tie at the material-only value (~+" + TRAP_TIE_WEIGHT
-                        + ", White up a pawn); got " + ChessUtil.weightToString(eval.weight()));
+        // And the score is no longer the pure material value: the positional gap between the
+        // recaptures is now visible, which is what broke the tie.
+        assertTrue(eval.weight() > TRAP_TIE_WEIGHT + SEES_POSITIONAL_MIN,
+                "the score must exceed the material-only tie of ~+" + TRAP_TIE_WEIGHT
+                        + " that used to make the three recaptures indistinguishable (measured 2.52); got "
+                        + ChessUtil.weightToString(eval.weight()));
     }
 
     /**
      * Case 4 of the class comment, which carries the full analysis. Kept here rather than in
      * {@code BlunderTest} because the mechanism, not the provenance, is what someone chasing
      * this behavior will search for.
+     *
+     * <p><b>Still open after v4.6.0 — and that refutes what this case used to claim.</b> The
+     * shortcut no longer covers this subtree: the score moved from exactly <b>6.00</b> to
+     * <b>6.21</b>, so the positional evaluation runs. myChess plays {@code Qxb5} anyway. The
+     * blunder was therefore not caused by the shortcut, or not by it alone — the class comment
+     * below still argues that it was, and that argument is now known to be incomplete. What
+     * remains open is why the piece-winning {@code Rxf6} is rejected with an accurate evaluation
+     * available.
      *
      * <p><b>Test family:</b> material-only-shortcut (defect)
      */
@@ -380,12 +438,15 @@ class MaterialOnlyShortcutEvalTest {
                         + "). If it now plays the sacrifice, the shortcut no longer decides this position — "
                         + "check roadmap § 12.18 before adjusting");
 
-        // The score must be exactly the leaf material of its own PV. That exactness
-        // is what shows the positional evaluation never ran, so an unround value
-        // means the shortcut no longer covers this subtree.
-        assertEquals(PURE_MATERIAL_WEIGHT, eval.weight(), PURE_MATERIAL_TOLERANCE,
-                "the score must be exactly the leaf material of its own principal variation, which is what "
-                        + "shows the positional evaluation was skipped; got " + ChessUtil.weightToString(eval.weight()));
+        // The score is no longer the exact leaf material of its own PV — it was exactly 6.00 at
+        // depths 8 to 10 before v4.6.0, and Qxb5 is a capture, so the positional evaluation now
+        // runs in this subtree. Pinning that inexactness is what keeps the two halves of this
+        // case apart: the evaluation is no longer the explanation, the move choice is still wrong.
+        assertFalse(isWholePawns(eval.weight()),
+                "the score must no longer be an exact number of pawns: Qxb5 is a capture, so the "
+                        + "positional evaluation runs here since v4.6.0 (measured 6.21 against the "
+                        + "earlier exactly 6.00). A whole number means the shortcut is covering this "
+                        + "subtree again; got " + ChessUtil.weightToString(eval.weight()));
     }
 
     /**

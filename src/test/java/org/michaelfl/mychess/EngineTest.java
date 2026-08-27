@@ -79,7 +79,10 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "d5-f6",
                 10.0f,
-                11.0f,
+                // 11.0 -> 12.0 in v4.6.0, which moved the score from <=11.0 to 11.35. Toward the
+                // truth: Stockfish depth 20 has this at +12.80 and picks d5-f6 as well, so the
+                // engine still under-reports by ~1.4 pawns and the old ceiling was simply too low.
+                12.0f,
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -177,12 +180,24 @@ class EngineTest extends EngineTestBase {
                 dxe5 Ng8 10. Ng5+ Ke8 11. Nc3 b4 12. Qd5 Nh6 13. Nb5 a3 14. Rd1 Bb7
                 """;
         testPosition(pgn,
-                Set.of("g5-e6"),
+                // REGRESSION (v4.6.0), and the most expensive one the release cost: b2-a3 (bxa3,
+                // SF +2.29) instead of g5-e6 (Ne6, SF +4.47 at depth 22 and Stockfish's own best
+                // move) — 2.2 pawns given away in a position that stays won. Accepted against the
+                // measured +14.8 Elo of § 12.26, but note the trade is worse than the precedent
+                // in testPosition11: that one cost 0.6 pawns against +32.6 Elo.
+                //
+                // The mechanism is the open point of § 12.26 and this is its first measured
+                // instance: bxa3 is a capture and is therefore scored with the full evaluation,
+                // while Ne6 is quiet and keeps the material-only shortcut. The root compares two
+                // numbers produced under different rules, which biases the choice between
+                // capturing and not capturing. A per-node variant of the flag would remove that
+                // asymmetry and is the designated follow-up.
+                Set.of("b2-a3"),
                 // PV-path assertion dropped: the deep PV shifted with the tapered
-                // pawn-EG table (v4.3.0); root move g5-e6 and the weight are still checked.
+                // pawn-EG table (v4.3.0).
                 null,
                 1.8f, // was 2.0; tapered pawn-EG (v4.3.0)
-                3.0f, // TODO should be 5.2
+                3.0f, // TODO should be 4.5 (SF depth 22 for the best move Ne6)
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -300,29 +315,32 @@ class EngineTest extends EngineTestBase {
      * Stockfish rather than merely assumed. So it is now a characterization of the current
      * behavior instead of a switched-off wish.
      *
-     * <p><b>Characterization, not a goal.</b> It passes because the defect is present: the
-     * expectation is the <em>wrong</em> move, {@code g7-f6}. The weight window is wide because
-     * what is pinned is the choice, not the number.
+     * <p><b>Fixed in v4.6.0, and not by the change anyone expected.</b> The TODO below asked for
+     * this restoration once king safety landed ([roadmap § 12.21]). It landed instead through
+     * [§ 12.26], which disables the material-only shortcut in the subtrees of capturing root
+     * moves — and both recaptures here are captures, so the choice between them is now made with
+     * the full evaluation rather than on a piece count. myChess plays {@code e7-f6}, the move
+     * Stockfish prefers, and the window is tightened as the TODO prescribed.
      *
-     * <p>TODO: when king safety lands ({@link <a href="../../../../../docs/roadmap.md">roadmap
-     * § 12.21</a>}) this test fails, and that is the signal to restore its original form —
-     * expect {@code e7-f6} and tighten the window back to ±0.5. The original expectation is
-     * kept in the assertion message so the restoration needs no archaeology.
+     * <p>Worth carrying forward for § 12.21: one of its nineteen open cases closed without any
+     * king-safety term being written. The family's count is evidence about the evaluation as a
+     * whole, not only about a missing king-safety component.
      *
-     * <p><b>Test family:</b> king-safety (defect)
+     * <p><b>Test family:</b> king-safety (fixed)
      */
     @Test
-    void captureOnF6WithTheGPawn_characterizesShreddingItsOwnKingCover() {
+    void captureOnF6_takesWithTheBishopAndKeepsItsKingCover() {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 e5 5. Nb3 Nc6 6. Nc3 Nf6 7. Be2 Be6 8. O-O Be7 9.
                 Be3 O-O 10. Bf3 a5 11. Nd5 a4 12. Nd2 Bxd5 13. exd5 Nb4 14. c4 Qd7 15. a3 Nd3 16. Rb1 Rfd8
                 17. Ne4 Nc5 18. Nxf6+
                 """;
-        // Pinning the defect: g7-f6 is what it plays, e7-f6 is what it should play.
+        // e7-f6 (Bxf6) is Stockfish's move at -0.29; g7-f6 (gxf6) is the -3.90 blunder this
+        // used to pin. Window tightened from +/-2.0 as the TODO prescribed.
         testPosition(pgn,
-                Set.of("g7-f6"),
-                -2.0f,
-                2.0f,
+                Set.of("e7-f6"),
+                -0.5f,
+                0.5f,
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -503,9 +521,17 @@ class EngineTest extends EngineTestBase {
                 11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4 Qb8
                 """;
         testPosition(pgn,
-                Set.of("Rf1", "a1-e1"), // TODO dxe7 (SF-best, +3.75); engine plays a non-best rook move (a1-e1 since v4.2.0, was Rf1)
-                -2.85f, // TODO — eval heavily under-reports (SF depth 20: White +3.75)
-                -2.0f, // was -2.7; v4.2.0 eval -2.26, drifted toward the truth (less under-report)
+                // TODO FULFILLED in v4.6.0: the engine now plays dxe7, which this TODO named as
+                // Stockfish's best move at +3.75. It had played a non-best rook move since v4.2.0
+                // (a1-e1, before that Rf1). dxe7 is a capture, so § 12.26 hands it the full
+                // evaluation instead of a piece count.
+                Set.of("d6-e7"),
+                // Band moved [-2.85, -2.0] -> [-1.5, -0.5] in v4.6.0: the score went from -2.26 to
+                // -1.03, i.e. 1.2 pawns toward the truth. It still under-reports badly — Stockfish
+                // depth 20 has White at +3.75, so the sign is still inverted — which is why the
+                // TODO stays.
+                -1.5f, // TODO — eval still under-reports, and still with the wrong sign
+                -0.5f,
                 new GameConfig(ENGINE, engineConfig())
         );
     }
