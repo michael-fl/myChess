@@ -730,6 +730,67 @@ faithful version instruments the search and samples where the gate actually open
 error in a *score*, not in Elo — a large error at a node whose value never propagates costs nothing.
 Both caveats are recorded in the analysis class's JavaDoc.
 
+### How much work the cheap pass would skip — counted, 2026-08-27
+
+The accuracy question above said lazy evaluation is *possible*. This one asks whether it is *worth
+it*, and it is deliberately answered as a **count** rather than a wall-clock time: a count is
+reproducible, machine-independent and immune to CPU contention, so it could be taken while a
+time-controlled SPRT was running. The same reasoning [bench-history](bench-history.md) rests on —
+count nodes, never compare times.
+
+Per evaluation, over 200 000 positions from each corpus:
+
+| | `hybrid` | `quiet-labeled` |
+|---|---:|---:|
+| pieces walked — *a cheap pass still pays this* | 17.54 | 17.34 |
+| **square probes** | **117.71** | **116.57** |
+| `tempBoard` copies (144 bytes, undefended machinery only) | 1.00 | 1.00 |
+| undefended-scan fields | 92.00 | 92.00 |
+| doubled-pawn scan fields | 44.35 | 43.74 |
+| **skippable** | **255.06** | **253.31** |
+| **still paid** | **17.54** | **17.34** |
+
+**A cheap pass does roughly 6–7 % of the counted work.** The units are not equal in cost — a square
+probe reads the array and branches, a scan field reads and bit-tests, a piece walk includes a PST
+lookup and a dispatch — so this is emphatically **not** a 14× time ratio. But the direction is
+unambiguous, and that changes the role of the timing measurement from *discovering* whether there
+is anything to save to *confirming* how much of it converts to wall clock.
+
+**Two structural findings came out of placing the counters.**
+
+1. **The four expensive terms are one switch, not four.** Mobility, threats, the check count and
+   undefended pieces all come from a single shared per-piece walk: `move(...)` accumulates mobility,
+   `capture(...)` accumulates threats and the check count and sets the attack mark, `defend(...)`
+   clears `tempBoard`, and `calculateUndefendedPiecesCount()` reads it afterwards. There is no
+   partial variant to tune.
+2. **Two cheap terms are trapped inside the expensive routines.** `doublePawnCount` is accumulated
+   in the pawn routine and `bishopCount` in the bishop routine, so a pass that skips the walk loses
+   them too. Row C of the table above is therefore **not achievable today**. The achievable cheap
+   part is material + PST + castling — measured as a new row **B2: sd 31.2 cp, sound margin
+   172 / 164 cp**, which is still comfortably usable. Row C's 129 / 140 cp is what a small refactor
+   moving those two counters into the main piece loop would unlock, and it is optional rather than a
+   prerequisite.
+
+**Side finding, unrelated to lazy evaluation.** The undefended scan iterates **92 fields to examine
+64 real squares**, because it walks the two-file border between ranks of the 12×12 board. About 30 %
+of that loop is wasted on every evaluation, and fixing it needs no design decision.
+
+**Where the instrumentation lives.** Branch `eval-work-counters`, commit `187d005` — `EvalWorkCounters`
+plus eleven guarded sites in `WeightingFunction` and the row-B2 extension of the analysis driver.
+Not on master, because it is production code in the hot path whose merge depends on the outcome.
+Master's driver reports rows A, B and C only.
+
+It is gated by `WeightingFunction.COUNT_EVAL_WORK`, a compile-time constant mirroring
+`Assert.ENABLED`, so javac removes every increment when it is off. That is **proved rather than
+assumed**: with the gate false, `javap -c -p WeightingFunction` contains zero references to
+`EvalWorkCounters`, not even in the constant pool; with it true, 24. Behaviour neutrality is shown
+the same way — the accuracy rows are byte-identical with counting on and off.
+
+Eleven sites rather than one, because square probes have **two entry paths**: non-pawn pieces funnel
+through the five-argument `move(...)`, while pawns inspect the board directly for the single step,
+the double step, en passant and the doubled-pawn walk. Pawns are about half the pieces, so
+instrumenting only `move(...)` would have understated the saving by roughly a factor of two.
+
 **Also open, and cheap: an asymmetric gate.** The condition is symmetric today, but the two sides
 are not. With material *gained*, the raw count has the right sign and positional detail rarely flips
 the decision; with material *lost*, positional resources are exactly what the search is looking for.
