@@ -554,14 +554,38 @@ given away** in a position that stays won. `bxa3` is a capture and therefore sco
 measured over 3000 games with this bias already inside it, but the trade is worse than the
 precedent it follows: `testPosition11` cost 0.6 pawns against +32.6 Elo.
 
-**The follow-up is the per-node variant** — set the flag from the move just made rather than once
-per root move. All subtrees then obey the same rule and the root comparison is commensurable
-again. Its sign is genuinely open: the finer-grained variants along the *depth* axis measured
-−2.6 and −47.6, though that is a different axis and the warning is weaker than it looks.
+**The per-node variant was the planned follow-up — and it is now withdrawn, unmeasured.** The idea
+was to set the flag from the move just made rather than once per root move, so all subtrees obey
+the same rule and the root comparison becomes commensurable again. Three arguments killed it, and
+none of them needed a match.
 
-**Measure it against 4.6.0, not against 4.5.0.** Against 4.5.0 it would bundle two changes, and
-this project has twice paid for that mistake — see the PeSTO ceiling result, whose ≈ 0 was two
-effects cancelling and said nothing about either.
+1. **Where the flag is read makes it nearly a no-op-in-reverse.** The flag is consulted only in
+   `QuiescenceSearch.calculatePositionWeight`, and the quiescence generator is capture-only. So
+   inside quiescence "the move just made" is *always* a capture, and a strict per-node rule would
+   switch the shortcut **off almost everywhere it currently applies**. That configuration is not
+   novel — it is what removing the shortcut does, already measured at **−34 Elo**.
+   The milder reading — update per main-search ply, freeze inside quiescence — is at least
+   well-defined, but it inherits the objection: the flag is read at leaves, so binding it to any
+   single move on the path is arbitrary. Why the last move and not the one before it?
+2. **Commensurability is empirically the wrong goal.** Before 4.6.0 the rule was uniform — shortcut
+   on everywhere — and that is precisely the configuration this section's +14.8 Elo *beat*. The
+   gain came from making the rules non-uniform. Restoring uniformity walks back toward the weaker
+   build, which makes "its sign is genuinely open" too generous a description; there is a measured
+   argument against it.
+3. **It treats the symptom.** The [gate-quantity measurement](#the-gate-decides-on-the-wrong-quantity--measured-2026-08-27)
+   shows the gate decides on something unrelated to the error it introduces. Making an irrelevant
+   criterion *consistent* does not make it relevant — it trades an unevenly wrong rule for a
+   uniformly wrong one.
+
+Credit where due: the objection came from the author, twice — first as "the flag only takes effect
+at the quiescence leaves", then as "deciding four nodes up and re-deciding three nodes later looks
+arbitrary". Both readings were right, and the second is the general form.
+
+**The `testPosition12` defect above stands as a characterized defect** — 2.2 pawns given away, and
+worth re-checking after the search cluster lands. What is withdrawn is this particular fix for it.
+Had it been measured anyway, the rule would still have applied: **against 4.6.0, not against
+4.5.0**, since against 4.5.0 it would bundle two changes — see the PeSTO ceiling result, whose ≈ 0
+was two effects cancelling and said nothing about either.
 
 ### What it also closed, unexpectedly
 
