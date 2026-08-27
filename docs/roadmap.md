@@ -576,6 +576,100 @@ the case for § 12.21. And more usefully: part of what looked like missing *king
 was missing *evaluation accuracy in capture subtrees* — worth re-checking the remaining eighteen
 against that possibility before writing a king-safety term for them.
 
+### The gate decides on the wrong quantity — measured 2026-08-27
+
+`QuiescenceSearch.calculatePositionWeight` uses **two different quantities**, and it is worth
+keeping them apart, because the project's prose has repeatedly blurred them into "material":
+
+- **`materialDelta`** — the material *swing* accumulated since the root. It is used **only as the
+  gate**: `|materialDelta| > EVALUATE_MATERIAL_ONLY_THRESHOLD`.
+- **`materialWeight`** — the material *balance on the board*, side-to-move relative. It is the
+  **value returned** when the gate opens.
+
+`materialDelta` is a difference and `materialWeight` a position score; only the latter is
+commensurable with alpha and beta. **The gate therefore decides on a property of how the node was
+reached, not on a property of the position.** Two nodes with the identical board and the identical
+`materialWeight` are evaluated by different rules depending on whether the path there ran through a
+queen trade or through quiet moves. That is the same incommensurability § 12.26 fixed at the root,
+one level deeper, and it also explains the cross-rule-set table poisoning characterized elsewhere
+without needing a separate mechanism.
+
+**What the shortcut discards, measured.** The error the shortcut introduces when it fires is
+exactly the positional component,
+`diff = (evaluation(board) − materialWeight(board)) × weightFactor`. Measured over 200 000
+positions per corpus with
+[`MaterialShortcutMarginAnalysis`](../src/test/java/org/michaelfl/mychess/MaterialShortcutMarginAnalysis.java):
+
+| | `hybrid.epd` | `quiet-labeled.epd` |
+|---|---:|---:|
+| mean | −11.7 cp | −11.5 cp |
+| standard deviation | 70.2 cp | 69.9 cp |
+| median | −10 cp | −10 cp |
+| p1 / p99.9 | −196 / +241 cp | −194 / +240 cp |
+| min / max | −507 / +466 cp | −520 / +432 cp |
+| eval below material by > 100 cp | 9.45 % | 9.45 % |
+| eval below material by > 200 cp | 0.88 % | 0.83 % |
+
+**The distribution is a property of the evaluation function, not of the data.** Two unrelated
+corpora agree to within rounding on every statistic. That is the strongest thing this measurement
+says, because it means the numbers can be reused instead of re-measured.
+
+Three readings, in decreasing comfort:
+
+1. **The typical loss is small.** Median 10 cp, and about three quarters of positions sit within
+   ±50 cp. So the shortcut usually discards very little, which supports the standing interpretation
+   that the **−34 Elo** measured for removing it was mostly the depth its cheapness buys rather than
+   evaluation accuracy.
+2. **The tail is fat.** 9.45 % of positions lose more than a pawn and 0.88 % more than two, with a
+   maximum near five. A single such node on the principal variation is enough to change a move
+   choice, which is what `EngineTest.testPosition12` shows at the root.
+3. **Gate and error are unrelated.** The gate fires on `|materialDelta| > 200` while the error has
+   a standard deviation of 70 cp and a range of ±500 cp — no part of that spread is predicted by the
+   swing the gate measures. This is the finding that motivates restructuring rather than retuning,
+   and it is why the threshold sweep is expected to find a shallow optimum: it is tuning a knob on
+   the wrong axis.
+
+**But sound lazy evaluation is not viable here, and that is the deflating half.** A lazy cutoff
+`materialWeight − MARGIN ≥ beta` is only correct if `materialWeight − MARGIN` is a genuine lower
+bound on the evaluation, so `MARGIN` must cover the negative tail:
+
+| coverage | MARGIN, `hybrid` | MARGIN, `quiet-labeled` |
+|---|---:|---:|
+| 99 % | 196 cp | 194 cp |
+| 99.9 % | 285 cp | 279 cp |
+| 99.99 % | 367 cp | 363 cp |
+| every position | **507 cp** | **520 cp** |
+
+The quantiles agree across corpora, but the "every position" row does not and cannot: it is a
+maximum over a finite sample, so it grows with the sample rather than converging. Any margin
+claiming full soundness would have to be derived from the evaluation's term bounds, not measured —
+which is a further argument that the sound variant is not the interesting one.
+
+At 507 cp a sound cutoff fires only when material already exceeds beta by five pawns — almost never,
+so it would save essentially nothing. Lazy evaluation is therefore only interesting as an
+**approximation**, at `MARGIN ≈ 200`, wrong in roughly 1 % of firings. That is not obviously worse
+than the status quo, which is wrong by *some* amount on essentially every firing; the difference is
+that lazy evaluation errs only near the cutoff boundary, where being wrong can actually change an
+answer, whereas today's gate errs regardless of whether the node's value ever propagates. Whether
+that trade is worth Elo is unmeasured, and the sign is open.
+
+**What is deliberately not claimed.** The corpora are root-like positions, whereas the gate fires at
+quiescence leaves reached after a capture sequence and therefore often materially lopsided; the
+faithful version instruments the search and samples where the gate actually opens. And `diff` is an
+error in a *score*, not in Elo — a large error at a node whose value never propagates costs nothing.
+Both caveats are recorded in the analysis class's JavaDoc.
+
+**Also open, and cheap: an asymmetric gate.** The condition is symmetric today, but the two sides
+are not. With material *gained*, the raw count has the right sign and positional detail rarely flips
+the decision; with material *lost*, positional resources are exactly what the search is looking for.
+One condition, and a hypothesis the symmetric sweep cannot reach.
+
+**Test gap.** No test covers the gate's boundary. All five cases in
+`MaterialOnlyShortcutEvalTest` turn on piece captures worth 300 to 1000 cp, so they behave
+identically at 100 and at 200 — which is why the fast suite stayed green at 1145 tests under a
+halved threshold. A case in the 100–200 cp band belongs here, written once the sweep says where the
+boundary should sit.
+
 ---
 
 ## Search cluster plan — History → PVS → LMR
