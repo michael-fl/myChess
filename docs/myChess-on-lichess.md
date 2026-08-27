@@ -462,6 +462,34 @@ thinking time**, worth a couple of Elo at most and far inside the noise of any
 affordable run. Measuring the increment itself needs a control that carries one
 (e.g. `tc=60+1` or `3+2`) against a 4.4.1 baseline, which ignores it.
 
+**Two separable questions, and only the cheap one is worth running now.**
+
+*Does the increment branch ever flag?* This is a safety check, not a strength
+measurement, and it needs **no baseline at all** — any opponent will do, because
+the quantity is myChess's own clock behavior. Roughly **50 games at `tc=60+1`**,
+then grep the PGN for the termination reason:
+
+```sh
+grep -c "loses on time" test-results/<match>.pgn     # expected: 0
+```
+
+**Deliberately not an SPRT.** An SPRT answers "is A stronger than B", and the
+question here is "does the budget ever overdraw the clock" — a single forfeit is a
+defect regardless of the score, and zero forfeits over 50 games is the whole
+result. Reading it as an Elo delta would also be a category error: the risk the
+check covers is that spending 80 % of an increment *before* it is credited flags
+in a scramble, which shows up as a lost game on time, not as a gradual score
+shift.
+
+*Is the increment handling worth Elo?* Harder, and it has aged. The only baseline
+that ignores the increment is **4.4.1**, now four versions back, so a `tc=60+1`
+match against it would bundle the increment with everything from 4.4.2 through
+4.6.0 — including the +14.8 of [§ 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460) — and attribute the sum to time management.
+Isolating it properly needs a **4.6.0 build with the increment term switched
+off** as the opponent, which is a throwaway variant rather than a released
+version. Worth doing when § 12.12's remaining slices land and there is more than
+one time-management change to justify the build.
+
 ---
 
 ## 8. Additional notes / gotchas

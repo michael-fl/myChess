@@ -72,7 +72,7 @@ time-truncated.
 | **4.4.0** | 335,919,557 | **−4.2 %** | PeSTO piece-square tables | +32.6 ± 12.4 | ~1900 |
 | **4.4.1** | 335,946,428 | **+0.008 %** | Repetition fix (§ 12.23) | ≈ +15 (SPRT H1 at 321 games, +42.4 ± 29.4) | **1928 ± 21** |
 | **4.5.0** | 336,412,842 | **+0.139 %** | Complete principal variation ([§ 12.25](roadmap.md#1225-tried--repairing-the-roots-move-choice-after-the-pv-re-search-reverted-twice-444-and-166-elo)) | +1.8 ± 11.6 over 2463 games — **neutral** | ~1928 |
-| **4.6.0** | 1,300,002,835 | **+286 %** | Material-only shortcut only for quiet root moves ([§ 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460)) | **+14.8 ± 10.5** over 3000 games | ~1943 |
+| **4.6.0** (`415a6ac`) | 1,300,002,835 | **+286 %** | Material-only shortcut only for quiet root moves ([§ 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460)) | **+14.8 ± 10.5** over 3000 games | ~1943 |
 
 **Read the 4.6.0 row with its own warning.** +286 % nodes at a fixed depth alongside **+14.8
 Elo** is not a contradiction, it is this table's third demonstration that the signature answers a
@@ -126,7 +126,7 @@ and are historically closed.
 | **4.4.0** | 920,132,868 | 335,919,557 | **2.74** |
 | **4.4.1** | 918,718,652 | 335,946,428 | **2.73** |
 | **4.5.0** | 919,377,788 | 336,412,842 | **2.73** |
-| **4.6.0** | 2,352,454,034 | 1,300,002,835 | **1.81** |
+| **4.6.0** (`415a6ac`) | 2,352,454,034 | 1,300,002,835 | **1.81** |
 
 **The 4.6.0 row breaks the comparability of this column, and must not be read as a search
 improvement.** Its 1.81 is the lowest value in the table by a wide margin, and none of it comes
@@ -280,7 +280,32 @@ comma on every machine and the output is diffable regardless of system locale.
 3. **Archive the per-position output**, not just the totals (see below).
 4. **Never assert on time or NPS.** Record them with machine and date, or leave
    them out.
-5. **An unchanged signature proves logical neutrality, never affordability — and a
+5. **Record the commit the number was measured at, in the same cell as the
+   version.** A measurement cannot be attributed to a code state after the fact.
+   This was learned on 2026-08-27, when the 4.6.0 depth-8 figure had already been
+   written into this table, into [version history](version-history.md) and into the
+   `v4.6.0` tag message before anyone asked which build produced it — and the
+   commit timestamp could not answer, because it records when `git commit` was
+   typed and not when the change was in the tree. The depth-9 figure was
+   attributable only by accident, because no commit had touched `src/main` since.
+   A jar can be checked against its bytecode afterwards; a measurement has no
+   equivalent. Rows before 4.6.0 carry no hash and none should be invented for
+   them: the release tag is not evidence that the bench ran at that commit, and
+   filling it in would assert precisely what was never recorded.
+
+   **Measure from the version jar, not from `target/classes`.** The latter is a
+   working directory that can change under a running process: Java loads classes
+   lazily, so a `mvn compile` during a bench run can hand new bytecode to a JVM
+   that is already minutes in. That happened on 2026-08-27 and cost the run. The
+   jar under `versions/<v>/` is sealed once copied and checkable against its own
+   bytecode, which makes the attribution structural rather than a matter of
+   timestamps:
+
+   ```sh
+   cd versions/4.6.0 && printf 'bench 8\nq\n' \
+       | java -cp "my-chess-4.6.0.jar:lib/*" org.michaelfl.mychess.MyChessMain
+   ```
+6. **An unchanged signature proves logical neutrality, never affordability — and a
    changed one does not measure cost.** Three distinct failures of this instrument were
    learned in one week, each at the price of a measurement. The third: the signature
    **overstates the cost of any change whose extra work sits in prunable branches**,
