@@ -494,6 +494,90 @@ the first entry in [version history](version-history.md) whose case rests on tha
 
 ---
 
+## 12.26 Material-only shortcut only for quiet root moves — DONE (+14.8 Elo, v4.6.0)
+
+`QuiescenceSearch#calculatePositionWeight` returns raw material instead of the full evaluation
+once the running `materialDelta` passes ±200 cp. That fires systematically in capture subtrees
+and rarely in quiet ones. v4.6.0 keeps the shortcut in the subtrees of **quiet** root moves and
+disables it in the subtrees of **capturing** ones — one test per root move, governing that
+move's whole subtree.
+
+**Measured +14.8 ± 10.5 Elo over 3000 games** at `tc=40/60` against 4.5.0, LOS 99.7 %, run to
+completion with no early stop.
+
+### Three experiments, and the quantity that predicts Elo
+
+| Variant | Shortcut disabled in | Nodes @ d8 | Plies lost under the clock | Elo |
+|---|---|---:|---:|---:|
+| 4.5.0 | — | 336,412,842 (1.00×) | — | 0 |
+| threshold 8 | iterations 1–7 | 716,906,044 (2.13×) | — | −2.6 ± 21.9 |
+| **quiet (shipped)** | capture-root subtrees | 1,300,002,835 (**3.86×**) | **−0.13** | **+14.8 ± 10.5** |
+| threshold 10 | iterations 1–9 | 1,385,683,727 (4.12×) | −0.29 | −47.6 ± 30.7 |
+
+**The tree size does not order the Elo; the depth lost under the clock does.** The shipped
+variant and the −47.6 one differ by 6 % in nodes at fixed depth and by 62 Elo in play, while
+their depth loss differs by a factor of two.
+
+The reason is a property `bench` cannot see: the shipped variant concentrates its extra work in
+capture subtrees, and alpha-beta prunes those away once they prove worse. At a fixed depth you
+are charged for them; under a clock you frequently are not. `threshold 10` makes every branch
+more expensive, including the one that gets played.
+
+**Third distinct way the node signature misleads**, after "proves neither affordability" and
+"proves neither correctness" in [bench history § 6](bench-history.md#6-policy-for-future-releases):
+**it overstates the cost of any change whose extra work sits in prunable branches.** All three
+were learned within a week and all three cost a measurement to learn.
+
+### What it closed, and what it did not
+
+Three of the five `material-only-shortcut` characterizations flipped — see
+[testing § 11.3](testing.md). The split falls exactly along "was the chosen root move a capture",
+including the one case that did not change, whose four root moves are the only quiet ones in the
+class. That is the mechanism confirmed on five independent positions.
+
+**One case refutes its own explanation.** `qxb5AtMove36` argued the blunder came from the
+shortcut discarding the positional value of an exchange sacrifice. The shortcut is gone from that
+subtree now and myChess still plays `36.Qxb5` rather than the piece-winning `36.Rxf6`. Why an
+accurate evaluation still rejects it is open, and it is the more interesting question of the two.
+
+### Open follow-up — and it now has a measured motivation
+
+**Sibling root moves are scored under different rules and then compared.** A capturing root move
+gets the full evaluation; a quiet one keeps the shortcut wherever it fires. The root argmax puts
+those two numbers side by side as if they were commensurable, which biases the choice between
+capturing and not capturing.
+
+That was a suspicion when this shipped. It now has an instance: `EngineTest.testPosition12` plays
+`bxa3` (Stockfish **+2.29**) instead of `Ne6` (**+4.47**, Stockfish's own best move) — **2.2 pawns
+given away** in a position that stays won. `bxa3` is a capture and therefore scored accurately;
+`Ne6` is quiet and is not. Accepted and documented at that test, because the +14.8 Elo was
+measured over 3000 games with this bias already inside it, but the trade is worse than the
+precedent it follows: `testPosition11` cost 0.6 pawns against +32.6 Elo.
+
+**The follow-up is the per-node variant** — set the flag from the move just made rather than once
+per root move. All subtrees then obey the same rule and the root comparison is commensurable
+again. Its sign is genuinely open: the finer-grained variants along the *depth* axis measured
+−2.6 and −47.6, though that is a different axis and the warning is weaker than it looks.
+
+**Measure it against 4.6.0, not against 4.5.0.** Against 4.5.0 it would bundle two changes, and
+this project has twice paid for that mistake — see the PeSTO ceiling result, whose ≈ 0 was two
+effects cancelling and said nothing about either.
+
+### What it also closed, unexpectedly
+
+`EngineTest.captureOnF6` was the nineteenth open case of the **king-safety** family
+([§ 12.21](#1221-king-safety--m--3060-elo)), pinning that myChess recaptures with the g-pawn and
+opens its own king's file (−3.90 against −0.29 for the bishop recapture). It now plays the bishop
+recapture. No king-safety term was written: both moves are captures, so the choice is decided by
+the full evaluation rather than a piece count.
+
+Two consequences. The family reads **18 open, not 19**, and quoting the old number would overstate
+the case for § 12.21. And more usefully: part of what looked like missing *king-safety knowledge*
+was missing *evaluation accuracy in capture subtrees* — worth re-checking the remaining eighteen
+against that possibility before writing a king-safety term for them.
+
+---
+
 ## Search cluster plan — History → PVS → LMR
 
 The three remaining low-effort search items — [§ 12.5 history](roadmap.md#125-history-heuristic--s--3050-elo), [§ 12.20 PVS](roadmap.md#1220-principal-variation-search-pvs--negascout--s--1025-elo), and [§ 12.3 LMR](roadmap.md#123-late-move-reductions-lmr--s--50100-elo) — are the highest-leverage work once the tapered evaluation ([§ 12.7](roadmap.md#127-evaluation-upgrades--m--4080-elo-combined)) has landed. They reinforce each other, so the order and the measurement baselines matter more than the raw Elo estimates. This expands step 4 of the [suggested implementation order](roadmap.md#suggested-implementation-order) below into a concrete build-and-measure plan.
