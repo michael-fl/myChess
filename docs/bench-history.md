@@ -55,7 +55,7 @@ not a sole cause.
 ## 2. Depth 8 — the full series
 
 Suite: `standard` (49 Stockfish benchmark positions + 6 myChess middlegames = 55).
-All eleven runs completed every position at the requested depth; no run was
+All twelve runs completed every position at the requested depth; no run was
 time-truncated.
 
 | Version | Nodes @ d8 | Δ nodes vs prev. row | Dominant change in span | Δ Elo (measured) | ~CCRL |
@@ -72,6 +72,15 @@ time-truncated.
 | **4.4.0** | 335,919,557 | **−4.2 %** | PeSTO piece-square tables | +32.6 ± 12.4 | ~1900 |
 | **4.4.1** | 335,946,428 | **+0.008 %** | Repetition fix (§ 12.23) | ≈ +15 (SPRT H1 at 321 games, +42.4 ± 29.4) | **1928 ± 21** |
 | **4.5.0** | 336,412,842 | **+0.139 %** | Complete principal variation ([§ 12.25](roadmap.md#1225-tried--repairing-the-roots-move-choice-after-the-pv-re-search-reverted-twice-444-and-166-elo)) | +1.8 ± 11.6 over 2463 games — **neutral** | ~1928 |
+| **4.6.0** | 1,300,002,835 | **+286 %** | Material-only shortcut only for quiet root moves ([§ 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460)) | **+14.8 ± 10.5** over 3000 games | ~1943 |
+
+**Read the 4.6.0 row with its own warning.** +286 % nodes at a fixed depth alongside **+14.8
+Elo** is not a contradiction, it is this table's third demonstration that the signature answers a
+different question than the one being asked. The extra work sits in capture subtrees, which
+alpha-beta prunes once they prove worse: at a fixed depth every one of them is paid for, under a
+clock most are not. The variant lost **0.13 plies** in play, against 0.29 for a variant with the
+same tree that measured −47.6 Elo. When comparing releases whose extra work is unevenly
+distributed, the plies lost under the clock is the comparable quantity and the node count is not.
 
 **The `~CCRL` column is propagated except for one row.** 4.4.1 carries a *measured* absolute rating — 1928 ± 21 from the 2026-08-17 re-anchor, 2000 games against five externally rated engines (see [ELO measurement § 7](myChess-ELO-measurement.md#the-v441-re-anchor--measured-2026-08-17)). Every other value in that column is carried forward from per-version SPRT deltas. The propagated chain had predicted ~1915 for this row, so the deltas proved well calibrated over the ~500 Elo since the previous direct measurement.
 
@@ -117,6 +126,20 @@ and are historically closed.
 | **4.4.0** | 920,132,868 | 335,919,557 | **2.74** |
 | **4.4.1** | 918,718,652 | 335,946,428 | **2.73** |
 | **4.5.0** | 919,377,788 | 336,412,842 | **2.73** |
+| **4.6.0** | 2,352,454,034 | 1,300,002,835 | **1.81** |
+
+**The 4.6.0 row breaks the comparability of this column, and must not be read as a search
+improvement.** Its 1.81 is the lowest value in the table by a wide margin, and none of it comes
+from better search. The material-only shortcut change inflates the depth-8 tree by 3.86× and the
+depth-9 tree by only 2.56×, because the cost of the accurate evaluation is front-loaded and falls
+away relatively with depth. A ratio between two differently inflated numbers drops mechanically.
+
+The inverse reading is just as wrong. "One more ply now costs 1.81× instead of 2.73×" sounds like
+good news, and against a fixed node budget it predicts a loss of more than a whole ply; the
+measured loss under the clock is **0.13 plies**. Whenever a release changes what an evaluation
+costs *as a function of depth*, this ratio stops being comparable across the boundary and the
+plies lost under the clock is the quantity that is
+(see [roadmap § 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460)).
 
 The **d9/d8 ratio is the effective branching factor** and the most interesting
 single number here. At 2.62–2.74 it is far below the ~5.9 (√35) that perfect move
@@ -257,7 +280,13 @@ comma on every machine and the output is diffable regardless of system locale.
 3. **Archive the per-position output**, not just the totals (see below).
 4. **Never assert on time or NPS.** Record them with machine and date, or leave
    them out.
-5. **An unchanged signature proves logical neutrality, never affordability.** The
+5. **An unchanged signature proves logical neutrality, never affordability — and a
+   changed one does not measure cost.** Three distinct failures of this instrument were
+   learned in one week, each at the price of a measurement. The third: the signature
+   **overstates the cost of any change whose extra work sits in prunable branches**,
+   because a fixed depth charges for subtrees a clock would abandon. v4.6.0 is +286 %
+   nodes and +14.8 Elo (see [§ 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460)).
+   The first two: The
    two are different claims and the difference is not academic: the full-window PV
    re-search of 2026-08-21 moved the depth-8 signature by **+93 nodes on 336
    million** — +0.00003 % — and cost **−44.4 ± 17.2 Elo** over 1180 games at

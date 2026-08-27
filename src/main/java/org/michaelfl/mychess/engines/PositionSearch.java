@@ -275,6 +275,25 @@ public final class PositionSearch {
 
             betaUsedPerMove[i] = -alphaWeight;
             pvTable[0] = move;
+
+            // Use the material-only shortcut in the subtrees of quiet root moves, and the full
+            // evaluation in the subtrees of capturing ones. The flag is set per ROOT move and
+            // governs that move's whole subtree — it is not re-evaluated at deeper captures, so
+            // a quiet root move leading into an exchange sequence keeps the shortcut. That is
+            // the point rather than a shortcoming: the shortcut only fires once materialDelta
+            // passes its threshold, which is what capture subtrees do systematically and quiet
+            // ones do rarely, so this buys the accurate evaluation where it applies without
+            // paying for it everywhere.
+            //
+            // Measured at tc=40/60 against 4.5.0: this variant +18.4 (H1 accepted, read down -
+            // the estimate wandered 13..19 and the stop caught the high end), against -2.6 for
+            // disabling the shortcut in iterations 1-7 and -47.6 for disabling it in 1-9. The
+            // quantity that tracks Elo across the three is the depth lost under the clock
+            // (-0.13, -, -0.29 plies), not the tree size at fixed depth, where this variant is
+            // 3.86x the baseline and the -47.6 one 4.12x. bench cannot see the difference,
+            // because it spends unlimited time at a fixed depth.
+            quiescenceSearch.setMaterialOnlyShortcutEnabled(Move.getCapturedPiece(move) == 0);
+
             workingBoard.makeMove(move);
             var result = alphaBetaSearch(
                     new SearchNodeContext(1, maxDepth, bestKnownPath, -weightFactor, -newMaterialWeight, -moveWeight, workingBoard, pvTable, pvMaxLength, isPvMove, false),
@@ -368,6 +387,14 @@ public final class PositionSearch {
         if (results[bestMoveIndex].result() != GameResult.ONGOING || countPathLength(allPaths[bestMoveIndex]) == maxDepth) {
             return false;
         }
+
+        // Restore the evaluation regime this move was originally searched with. The move loop
+        // sets the flag per root move and leaves it holding the LAST move's value, so without
+        // this the winner would be re-searched under a regime belonging to an unrelated move —
+        // and the re-search exists precisely to reproduce the same subtree as a PV node, not a
+        // differently evaluated one.
+        quiescenceSearch.setMaterialOnlyShortcutEnabled(
+                Move.getCapturedPiece(rootMoves.moves()[bestMoveIndex]) == 0);
 
         var pvResult = researchRootWinnerAsPvNode(workingBoard, pvTable, maxDepth, materialWeight,
                 rootMoves.moves()[bestMoveIndex], rootMoves.betaUsed()[bestMoveIndex]);
