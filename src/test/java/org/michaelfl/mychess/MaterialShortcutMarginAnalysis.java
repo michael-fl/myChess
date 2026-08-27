@@ -95,6 +95,19 @@ public final class MaterialShortcutMarginAnalysis {
     /** Index of the tapered piece-square-table factor. */
     private static final int PST_FACTOR = 0;
 
+    /**
+     * Factors a cheap pass could produce <b>without restructuring</b> {@code WeightingFunction}:
+     * the tapered PST (0), summed in the main piece loop, and the castling state (3), which comes
+     * from its own call.
+     *
+     * <p>Doubled pawns (5) and the bishop pair (7) are cheap <i>in principle</i> but are
+     * accumulated <b>inside</b> the per-piece calculation functions — {@code doublePawnCount} in
+     * the pawn routine, {@code bishopCount} in the bishop routine — so a pass that skips the piece
+     * walk loses them too. That is why row C of this report is not achievable today and row B2 is:
+     * B2 is the honest cheap part, C is what a small refactor would unlock.
+     */
+    private static final int[] CHEAP_WITHOUT_REFACTOR = {0, 3};
+
     /** Percentiles reported for the signed distribution. */
     private static final double[] PERCENTILES = {0.1, 1, 5, 25, 50, 75, 95, 99, 99.9};
 
@@ -123,9 +136,18 @@ public final class MaterialShortcutMarginAnalysis {
         report(residuals[1]);
 
         System.out.println();
-        System.out.println("=== C: full evaluation - every cheap term "
-                + "(the four expensive terms alone) ===");
+        System.out.println("=== B2: full evaluation - (material + PST + castling) "
+                + "(the cheap part achievable WITHOUT restructuring) ===");
         report(residuals[2]);
+
+        System.out.println();
+        System.out.println("=== C: full evaluation - every cheap term "
+                + "(what a small refactor would unlock) ===");
+        report(residuals[3]);
+
+        System.out.println();
+        System.out.println("=== work done per evaluation (counts, not times) ===");
+        System.out.println(EvalWorkCounters.report());
     }
 
     /**
@@ -141,11 +163,17 @@ public final class MaterialShortcutMarginAnalysis {
 
         var withoutMaterialOnly = new int[limit];
         var withoutMaterialAndPst = new int[limit];
+        var withoutCheapAchievable = new int[limit];
         var expensiveOnly = new int[limit];
 
         int count = 0;
         int rejected = 0;
         int crossCheckFailures = 0;
+
+        // Reports "no evaluations counted" unless WeightingFunction.COUNT_EVAL_WORK was flipped
+        // and the build redone — which is the honest answer for a normal build rather than a
+        // silent zero.
+        EvalWorkCounters.reset();
 
         try (var lines = Files.lines(epd, StandardCharsets.UTF_8)) {
             var iterator = lines.iterator();
@@ -172,6 +200,12 @@ public final class MaterialShortcutMarginAnalysis {
                     expensive += breakdown.features()[index] * factors[index];
                 }
 
+                double cheapAchievable = 0;
+
+                for (int index : CHEAP_WITHOUT_REFACTOR) {
+                    cheapAchievable += breakdown.features()[index] * factors[index];
+                }
+
                 // Cross-check: eval minus every factored term must be the material part, which
                 // calculateMaterialWeight computes independently. A mismatch beyond rounding
                 // means the factor list and the evaluation have drifted apart.
@@ -181,6 +215,7 @@ public final class MaterialShortcutMarginAnalysis {
 
                 withoutMaterialOnly[count] = (int) Math.round(all) * weightFactor;
                 withoutMaterialAndPst[count] = (int) Math.round(all - pst) * weightFactor;
+                withoutCheapAchievable[count] = (int) Math.round(all - cheapAchievable) * weightFactor;
                 expensiveOnly[count] = (int) Math.round(expensive) * weightFactor;
                 count++;
             }
@@ -200,6 +235,7 @@ public final class MaterialShortcutMarginAnalysis {
         return new int[][]{
                 Arrays.copyOf(withoutMaterialOnly, count),
                 Arrays.copyOf(withoutMaterialAndPst, count),
+                Arrays.copyOf(withoutCheapAchievable, count),
                 Arrays.copyOf(expensiveOnly, count)
         };
     }
