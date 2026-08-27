@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -52,11 +53,18 @@ public final class Bench {
      * depth — the depth is part of the signature's label, not of its quality —
      * while the cost is not: the suite's two artificial many-piece stress
      * positions dominate the run, and every extra ply multiplies the whole
-     * benchmark by roughly the branching factor. Eight keeps a full run in the
-     * low minutes, which is what makes the "is this refactor neutral?" check
-     * cheap enough to actually run on every refactor. It also sits inside the
-     * depth 6-8 band the roadmap calibrates myChess's own resolution to
-     * ({@code docs/roadmap-backlog.md} § 12.10.2).
+     * benchmark by roughly the branching factor. Eight is also the lowest depth
+     * that still sits inside the depth 6-8 band the roadmap calibrates myChess's
+     * own resolution to ({@code docs/roadmap-backlog.md} § 12.10.2).
+     *
+     * <p><b>It no longer keeps a run in the low minutes.</b> That was true through
+     * v4.4.1 (about three minutes) and stopped being true in v4.6.0, which takes
+     * <b>17 minutes</b> at this depth and 29 at depth 9 — not because the search
+     * got broadly more expensive, but because a single position did. See
+     * {@link BenchResult#largestPosition()}; on the other 54 positions the
+     * depth-8 count actually fell. The depth stays at eight regardless, since a
+     * signature is only comparable to signatures at the same depth, and the whole
+     * value of {@code docs/bench-history.md} is the series.
      */
     public static final int DEFAULT_DEPTH = 8;
 
@@ -85,6 +93,84 @@ public final class Bench {
         /** Nodes per second across the whole run (0 when no time elapsed). */
         public long nps() {
             return totalTimeMs == 0 ? 0 : totalNodes * 1_000L / totalTimeMs;
+        }
+
+        /**
+         * The single most expensive position of the run, by node count.
+         *
+         * <p>Reported next to the total because the total alone hides how it is composed, and
+         * in this suite it is composed very unevenly. The standard suite's position 37 — an
+         * artificial 26-piece, no-pawn stress position inherited from Stockfish's bench — grew
+         * from 5.2 % of the depth-8 signature in v4.1.0 to <b>86.9 %</b> in v4.6.0, a factor of
+         * 112 in its own node count. That went unnoticed for four releases because only the
+         * sum was ever recorded, and the sum moved for what looked like ordinary reasons.
+         *
+         * <p>Deliberately the largest position rather than that one by index or FEN: an index
+         * shifts the moment a suite file is edited, and privileging one position in code would
+         * stop being true as soon as a different one dominated. What matters is that the
+         * concentration is visible at all, whichever position carries it.
+         *
+         * @return the position with the highest node count
+         * @throws BenchException if the run contains no positions, which means a broken suite
+         *                        resource rather than an empty result
+         */
+        public PositionResult largestPosition() {
+            if (positions.isEmpty()) {
+                throw new BenchException("benchmark run contains no positions");
+            }
+
+            return positions.stream()
+                    .max(Comparator.comparingLong(PositionResult::nodes))
+                    .orElseThrow();
+        }
+
+        /**
+         * Share of {@link #totalNodes()} consumed by {@link #largestPosition()}, in percent.
+         *
+         * @return the share in percent, or 0 when the run visited no nodes at all
+         * @throws BenchException if the run contains no positions
+         */
+        public double largestPositionShare() {
+            // Resolved before the zero check so an empty run fails here too, rather than
+            // reporting a share of 0 for a suite that never ran.
+            long largest = largestPosition().nodes();
+
+            return totalNodes == 0 ? 0.0 : 100.0 * largest / totalNodes;
+        }
+
+        /**
+         * Node count over every position except {@link #largestPosition()}.
+         *
+         * <p>The signature of the rest of the suite. It answers a question the total cannot
+         * once one position dominates: the depth-8 total rose 286 % from v4.5.0 to v4.6.0
+         * while this figure <i>fell</i>, from 189 M in v4.3.4 to 170 M — the search got
+         * cheaper on the 54 realistic positions and more expensive on the one artificial
+         * stress position, and the sum reports only the second half of that.
+         *
+         * @return the total minus the largest position's nodes
+         * @throws BenchException if the run contains no positions
+         */
+        public long nodesWithoutLargestPosition() {
+            return totalNodes - largestPosition().nodes();
+        }
+
+        /**
+         * Nodes per second over every position except {@link #largestPosition()}.
+         *
+         * <p>Worth reading next to {@link #nps()} because the dominant position is not a
+         * typical one — it is figure-dense and pawnless, so its cost per node differs from the
+         * rest of the suite, and while it carries most of the run it also sets most of the
+         * headline NPS. Machine-dependent and informative only, exactly like {@link #nps()}:
+         * never assert on it (policy rule 4 in {@code docs/bench-history.md}).
+         *
+         * @return nodes per second excluding the largest position, or 0 when no time remains
+         *         outside it
+         * @throws BenchException if the run contains no positions
+         */
+        public long npsWithoutLargestPosition() {
+            long timeMs = totalTimeMs - largestPosition().timeMs();
+
+            return timeMs <= 0 ? 0 : nodesWithoutLargestPosition() * 1_000L / timeMs;
         }
     }
 
@@ -149,6 +235,26 @@ public final class Bench {
      * @param onPosition invoked once per completed position, in suite order
      * @return the per-position and aggregate node/time results
      */
+    /**
+     * Number of positions in a suite, without running it.
+     *
+     * <p>Exists so a progress callback can print {@code n/55} rather than a bare counter: the
+     * per-position lines are redirected into the archive of § 7 in
+     * {@code docs/bench-history.md}, and that archive is only useful if a line from one version
+     * diffs cleanly against the same line from another. The leading fields therefore have to
+     * stay byte-identical across releases, which means the total has to be known before the
+     * first position finishes.
+     *
+     * @param chess960 when {@code true}, the Chess960 suite; otherwise the standard one
+     * @return the number of positions the corresponding {@code run} will search
+     * @throws BenchException if a suite resource is missing
+     */
+    public static int suiteSize(boolean chess960) {
+        return chess960
+                ? loadFens(CHESS960_FENS).size()
+                : loadFens(STANDARD_FENS).size() + loadFens(MIDDLEGAME_FENS).size();
+    }
+
     public static BenchResult run(int depth, boolean chess960, Consumer<PositionResult> onPosition) {
         List<String> fens = chess960
                 ? loadFens(CHESS960_FENS)
