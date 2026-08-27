@@ -35,6 +35,24 @@ import java.util.Locale;
  *       conflating them into {@code |diff|} would size both bounds by the worse of the two.</li>
  * </ul>
  *
+ * <p><b>Three decompositions are reported</b>, because the answer depends entirely on what the
+ * "cheap part" is taken to be — and getting that wrong once already produced a wrong conclusion:
+ *
+ * <ul>
+ *   <li><b>A</b> — full evaluation minus <i>material alone</i>. This is what today's gate
+ *       discards.</li>
+ *   <li><b>B</b> — minus <i>material and the tapered PST</i>. This is what textbook lazy
+ *       evaluation discards, since the PST is a table sum in a piece loop that runs anyway.</li>
+ *   <li><b>C</b> — minus <i>every cheap term</i> (material, PST, castling state, doubled pawns,
+ *       bishop pair), leaving only mobility, threats, the check count and undefended pieces.</li>
+ * </ul>
+ *
+ * <p>The decomposition goes through {@link WeightingFunction#analyzeFactors} rather than a formula
+ * re-implemented here, because the evaluation is linear in its factors: every term's contribution
+ * is therefore computed by production code. It is cross-checked per position — the evaluation minus
+ * every factored term must equal {@link WeightingFunction#calculateMaterialWeight} — and the run
+ * aborts rather than reporting numbers if that ever fails.
+ *
  * <p><b>Two limits on what this can claim.</b> The positions come from an EPD corpus, so they are
  * root-like — whereas the shortcut fires at quiescence leaves, reached after a capture sequence
  * and therefore often materially lopsided. The faithful version instruments the search itself and
@@ -57,6 +75,26 @@ public final class MaterialShortcutMarginAnalysis {
     private static final String DEFAULT_EPD = "tuning-data/hybrid.epd";
     private static final int DEFAULT_LIMIT = 200_000;
 
+    /**
+     * Indices into {@link WeightingFunction#TUNABLE_FACTOR_NAMES} whose terms are <b>expensive</b>
+     * — they need per-piece move generation or attack detection rather than a table lookup in the
+     * piece loop that runs anyway.
+     *
+     * <p>mobility (1) and threats (2) walk each piece's moves; the check count (4) and the
+     * undefended-pieces count (6) need attack detection. The remaining four — tapered PST (0),
+     * castling state (3), doubled pawns (5) and the bishop pair (7) — fall out of counters the
+     * evaluation already maintains.
+     *
+     * <p><b>This is a claim about cost, and it is not measured here.</b> Whether skipping these
+     * terms actually saves wall clock depends on how much of their work is shared with the piece
+     * loop; that needs its own timing measurement. What is measured here is only how much
+     * <i>accuracy</i> they carry.
+     */
+    private static final int[] EXPENSIVE_FACTORS = {1, 2, 4, 6};
+
+    /** Index of the tapered piece-square-table factor. */
+    private static final int PST_FACTOR = 0;
+
     /** Percentiles reported for the signed distribution. */
     private static final double[] PERCENTILES = {0.1, 1, 5, 25, 50, 75, 95, 99, 99.9};
 
@@ -73,9 +111,21 @@ public final class MaterialShortcutMarginAnalysis {
 
         System.out.printf(Locale.ROOT, "corpus=%s limit=%,d%n", epd, limit);
 
-        int[] diffs = collect(epd, limit);
+        int[][] residuals = collect(epd, limit);
 
-        report(diffs);
+        System.out.println("=== A: full evaluation - material only ".repeat(1)
+                + "(what today's shortcut discards) ===");
+        report(residuals[0]);
+
+        System.out.println();
+        System.out.println("=== B: full evaluation - (material + tapered PST) "
+                + "(what textbook lazy evaluation would discard) ===");
+        report(residuals[1]);
+
+        System.out.println();
+        System.out.println("=== C: full evaluation - every cheap term "
+                + "(the four expensive terms alone) ===");
+        report(residuals[2]);
     }
 
     /**
@@ -85,11 +135,17 @@ public final class MaterialShortcutMarginAnalysis {
      * @param limit maximum number of positions to read
      * @return one entry per parsed position, in file order
      */
-    private static int[] collect(Path epd, int limit) {
+    private static int[][] collect(Path epd, int limit) {
         var evaluator = new WeightingFunction();
-        var diffs = new int[limit];
+        double[] factors = WeightingFunction.tunableFactorValues();
+
+        var withoutMaterialOnly = new int[limit];
+        var withoutMaterialAndPst = new int[limit];
+        var expensiveOnly = new int[limit];
+
         int count = 0;
         int rejected = 0;
+        int crossCheckFailures = 0;
 
         try (var lines = Files.lines(epd, StandardCharsets.UTF_8)) {
             var iterator = lines.iterator();
@@ -103,17 +159,60 @@ public final class MaterialShortcutMarginAnalysis {
                 }
 
                 int weightFactor = board.getGameStatus().getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
-                int positional = evaluator.calculate(board) - WeightingFunction.calculateMaterialWeight(board);
 
-                diffs[count++] = positional * weightFactor;
+                // The evaluation is linear in the factors, so every term's contribution comes
+                // from production code rather than from a formula re-implemented here — which is
+                // the whole reason for going through analyzeFactors.
+                var breakdown = evaluator.analyzeFactors(board);
+                double all = weighted(breakdown, factors, 0, factors.length);
+                double pst = weighted(breakdown, factors, PST_FACTOR, PST_FACTOR + 1);
+                double expensive = 0;
+
+                for (int index : EXPENSIVE_FACTORS) {
+                    expensive += breakdown.features()[index] * factors[index];
+                }
+
+                // Cross-check: eval minus every factored term must be the material part, which
+                // calculateMaterialWeight computes independently. A mismatch beyond rounding
+                // means the factor list and the evaluation have drifted apart.
+                if (Math.abs(breakdown.eval() - all - WeightingFunction.calculateMaterialWeight(board)) > 2.0) {
+                    crossCheckFailures++;
+                }
+
+                withoutMaterialOnly[count] = (int) Math.round(all) * weightFactor;
+                withoutMaterialAndPst[count] = (int) Math.round(all - pst) * weightFactor;
+                expensiveOnly[count] = (int) Math.round(expensive) * weightFactor;
+                count++;
             }
         } catch (IOException e) {
             throw new UncheckedIOException("failed to read " + epd, e);
         }
 
-        System.out.printf(Locale.ROOT, "parsed=%,d rejected=%,d%n%n", count, rejected);
+        System.out.printf(Locale.ROOT, "parsed=%,d rejected=%,d cross-check failures=%,d%n%n",
+                count, rejected, crossCheckFailures);
 
-        return Arrays.copyOf(diffs, count);
+        if (crossCheckFailures > 0) {
+            throw new IllegalStateException("the factor decomposition does not reproduce the "
+                    + "evaluation on " + crossCheckFailures + " positions — the factor list and "
+                    + "WeightingFunction have drifted apart, so every number below would be wrong");
+        }
+
+        return new int[][]{
+                Arrays.copyOf(withoutMaterialOnly, count),
+                Arrays.copyOf(withoutMaterialAndPst, count),
+                Arrays.copyOf(expensiveOnly, count)
+        };
+    }
+
+    /** Sum of {@code features[i] * factors[i]} over {@code [from, to)}. */
+    private static double weighted(WeightingFunction.FactorBreakdown breakdown, double[] factors, int from, int to) {
+        double sum = 0;
+
+        for (int i = from; i < to; i++) {
+            sum += breakdown.features()[i] * factors[i];
+        }
+
+        return sum;
     }
 
     /**

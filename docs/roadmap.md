@@ -653,9 +653,13 @@ Three readings, in decreasing comfort:
    and it is why the threshold sweep is expected to find a shallow optimum: it is tuning a knob on
    the wrong axis.
 
-**But sound lazy evaluation is not viable here, and that is the deflating half.** A lazy cutoff
-`materialWeight − MARGIN ≥ beta` is only correct if `materialWeight − MARGIN` is a genuine lower
-bound on the evaluation, so `MARGIN` must cover the negative tail:
+**A first pass concluded that sound lazy evaluation is not viable here. That conclusion was wrong,
+and the correction is below** — it came from testing lazy evaluation against the wrong cheap
+baseline. The original reasoning and its numbers are kept, because the margin table for
+material-only is still the right table for *today's* mechanism.
+
+A lazy cutoff `materialWeight − MARGIN ≥ beta` is only correct if `materialWeight − MARGIN` is a
+genuine lower bound on the evaluation, so `MARGIN` must cover the negative tail:
 
 | coverage | MARGIN, `hybrid` | MARGIN, `quiet-labeled` |
 |---|---:|---:|
@@ -670,12 +674,55 @@ claiming full soundness would have to be derived from the evaluation's term boun
 which is a further argument that the sound variant is not the interesting one.
 
 At 507 cp a sound cutoff fires only when material already exceeds beta by five pawns — almost never,
-so it would save essentially nothing. Lazy evaluation is therefore only interesting as an
-**approximation**, at `MARGIN ≈ 200`, wrong in roughly 1 % of firings. That is not obviously worse
-than the status quo, which is wrong by *some* amount on essentially every firing; the difference is
-that lazy evaluation errs only near the cutoff boundary, where being wrong can actually change an
-answer, whereas today's gate errs regardless of whether the node's value ever propagates. Whether
-that trade is worth Elo is unmeasured, and the sign is open.
+so it would save essentially nothing.
+
+### Correction — lazy evaluation was tested against the wrong cheap baseline
+
+The paragraph above compared the full evaluation against **material alone**. Textbook lazy
+evaluation does not do that: its cheap part is material **plus the piece-square tables**, which are
+a table sum inside a piece loop that runs anyway. Measuring the wrong baseline made the technique
+look unusable. Re-measured with the decomposition, on the same two corpora of 200 000 positions
+each (`hybrid` / `quiet-labeled`):
+
+| cheap part | std. dev. | range | MARGIN, 99.9 % | MARGIN, all |
+|---|---:|---:|---:|---:|
+| **A** material only — *today's gate* | 70.2 / 69.9 cp | −507…+466 / −520…+432 | 285 / 279 cp | 507 / 520 cp |
+| **B** material + tapered PST | 40.3 / 40.3 cp | −220…+207 / −230…+200 | 162 / 161 cp | **220 / 230 cp** |
+| **C** every cheap term | 23.6 / 23.6 cp | −129…+111 / −140…+103 | 90 / 90 cp | **129 / 140 cp** |
+
+Row C's cheap part is material, tapered PST, castling state, doubled pawns and the bishop pair —
+everything the evaluation gets from counters it already maintains. What remains expensive is
+mobility, threats, the check count and the undefended-pieces count, which need per-piece move
+generation or attack detection.
+
+**Adding the PST halves the spread; adding the remaining cheap terms halves it again.** At row C a
+*fully sound* margin is about 140 cp, and 90 cp covers 99.9 %. In quiescence, where material swings
+by whole pieces, a cutoff at `cheapEval − 140 ≥ beta` fires constantly. **Sound lazy evaluation is
+viable here after all**, and the fail-low direction works too: row C's positive tail is +66 cp at
+p99.9 and +111 cp at maximum.
+
+**Method note.** The decomposition comes from `WeightingFunction.analyzeFactors`, because the
+evaluation is linear in its factors — so every term's contribution is computed by production code
+rather than by a formula re-implemented in the analysis. It is cross-checked per position: the
+evaluation minus every factored term must equal `calculateMaterialWeight`, and the driver aborts if
+that fails. It held on all 400 000 positions.
+
+**The open risk is cost, not accuracy, and it is the harder half.** Today mobility and threats are
+accumulated inside the same piece loop that sums the PST, so "skip the expensive terms" is not yet
+a code path that exists — `WeightingFunction.calculate` would have to be split into a cheap pass
+and a completion. Whether that split saves enough wall clock to pay for the extra pass is
+unmeasured, and it is where this idea can still die: the current mechanism is *cheaper still*,
+since it skips the PST sum as well.
+
+So the shape of the experiment is now clear, and it is what the author proposed: remove the
+material-delta gate, split the evaluation, and gate on `cheapEval ± MARGIN` against the window.
+Order of work — split the evaluation and **measure the timing first**, because that is the part
+that can refute the whole idea; only then an SPRT.
+
+For the record, the weaker fallback still stands if the split proves too expensive: lazy evaluation
+as an **approximation** at `MARGIN ≈ 200` over material alone, wrong in roughly 1 % of firings. Not
+obviously worse than a status quo that is wrong by *some* amount on essentially every firing, the
+difference being that it errs only near the cutoff boundary where being wrong can change an answer.
 
 **What is deliberately not claimed.** The corpora are root-like positions, whereas the gate fires at
 quiescence leaves reached after a capture sequence and therefore often materially lopsided; the
