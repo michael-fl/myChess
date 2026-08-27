@@ -26,8 +26,12 @@ public final class PositionSearch {
      * If the player has gained/lost more than this threshold in material weight during the current search,
      * only material weight on the board is considered in the evaluation function.
      * Otherwise, the full evaluation of the position is done.
+     *
+     * <p><b>Experiment (branch {@code material-threshold-100}): lowered from 200 to 100.</b> A lower
+     * threshold makes the shortcut fire <i>more</i> often — one pawn of swing is enough — so leaves
+     * get cheaper and blinder. Under measurement against v4.6.0; do not merge before the SPRT reports.
      */
-    public static final int EVALUATE_MATERIAL_ONLY_THRESHOLD = 200;
+    public static final int EVALUATE_MATERIAL_ONLY_THRESHOLD = 100;
 
     /**
      * Hard cap on the iterative-deepening target depth. UCI's
