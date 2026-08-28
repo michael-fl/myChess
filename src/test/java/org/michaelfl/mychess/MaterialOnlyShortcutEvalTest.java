@@ -210,12 +210,6 @@ class MaterialOnlyShortcutEvalTest {
     private static final int SEARCH_BUDGET_MS = 60_000;
 
     /**
-     * Tolerance around 0 for the material-only collapse: comfortably clear of
-     * both positions' large Stockfish advantages, so the tests' meaning ("the
-     * positional surplus is erased") is unambiguous while tolerating minor
-     * quiescence leakage. Observed on v4.2.3: both positions read exactly 0.00.
-     */
-    /**
      * Floor the deep evaluation must now clear where it used to collapse to ~0.
      *
      * <p>One pawn, deliberately far below the measured values (1.93 and 1.27) and far above
