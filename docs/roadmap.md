@@ -802,6 +802,52 @@ identically at 100 and at 200 — which is why the fast suite stayed green at 11
 halved threshold. A case in the 100–200 cp band belongs here, written once the sweep says where the
 boundary should sit.
 
+### The threshold sweep — 100 measured at −0.7 ± 14.4, a clean null
+
+Halving `EVALUATE_MATERIAL_ONLY_THRESHOLD` from 200 to 100 makes the shortcut fire more often: one
+pawn of swing during the search is enough instead of two. Measured against released 4.6.0, branch
+`material-threshold-100`, commit `2909b84`, jar in `versions/4.6.0-material-threshold-100/`.
+
+| | |
+|---|---|
+| result | **−0.7 ± 14.4** over the full **1600 games** |
+| score | 568 − 571 − 461, draw rate 28.8 %, LOS 46.5 % |
+| verdict | **none** — LLR ended at −2.23 against bounds ±2.94 |
+| control | tc=40/60, `2moves_v2.pgn`, concurrency 4, `elo0=-3 elo1=15`, alpha=beta=0.05 |
+| run | 2026-08-27 15:45 → 2026-08-28 10:13, 18.5 h, 0 time forfeits, 0 illegal moves, 0 disconnects |
+| raw | [`sprt-material-threshold-100.pgn`](../test-results/sprt-material-threshold-100.pgn), [stdout](../test-results/sprt-material-threshold-100-stdout.log) |
+
+**No verdict is the expected outcome here, not a failed run.** An SPRT tests between two point
+hypotheses, −3 and +15 Elo; a truth near zero sits between them and leaves the LLR a random walk, so
+it runs to the game cap. The same thing happened to 4.5.0. The compensation is better than a
+verdict: a fixed-N estimate with an interval, and at 1600 games that interval is ±14.4.
+
+**This is the prediction from the gate-quantity measurement, confirmed.** That measurement said the
+gate decides on `materialDelta` while the error it introduces is unrelated to it, and concluded the
+sweep would find a shallow optimum because it tunes a knob on the wrong axis. A change that moves
+the knob by half and measures −0.7 ± 14.4 is what "wrong axis" looks like in a match.
+
+**The interim readings were misleading for a long time, and that is worth recording.** At 420 games
+the run read **−19.9 ± 28.2** with the LLR 77 % of the way to the H0 bound, and it was described to
+the author as heading for a decision against the candidate. It was noise:
+
+| games | reading |
+|---|---|
+| 420 | −19.9 ± 28.2 |
+| 560 | −16.2 ± 27.4 |
+| ~900 | +0.5 ± 21.2 |
+| ~1200 | 0.0 ± 17.9 |
+| 1473 | 0.0 ± 15.0 |
+| **1600** | **−0.7 ± 14.4** |
+
+Two lessons, both already project policy and both violated in the reading rather than the method:
+never read an interim SPRT standing without its interval, and never read a sequence of them as a
+trend — the LLR retreated from −2.26 to −1.62 and back twice.
+
+**What this does not say.** It does not say the shortcut is worthless — removing it entirely still
+costs **−34 Elo**. It says the *threshold* is not where the value sits, which is consistent with
+everything else in this section.
+
 ---
 
 ## Search cluster plan — History → PVS → LMR
