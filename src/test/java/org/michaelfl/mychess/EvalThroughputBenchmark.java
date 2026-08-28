@@ -81,7 +81,43 @@ public final class EvalThroughputBenchmark {
             nanosPerPass[i] = System.nanoTime() - startNanos;
         }
 
-        report(nanosPerPass, boards.size(), checksum);
+        System.out.println("=== full evaluation ===");
+        long fullBest = report(nanosPerPass, boards.size(), checksum);
+
+        for (int i = 0; i < WARMUP_PASSES; i++) {
+            cheapPassOnly(evaluator, boards);
+        }
+
+        var cheapNanos = new long[repetitions];
+        long cheapChecksum = 0;
+
+        for (int i = 0; i < repetitions; i++) {
+            long startNanos = System.nanoTime();
+            cheapChecksum = cheapPassOnly(evaluator, boards);
+            cheapNanos[i] = System.nanoTime() - startNanos;
+        }
+
+        System.out.println();
+        System.out.println("=== cheap pass only (what a lazy cutoff would pay) ===");
+        long cheapBest = report(cheapNanos, boards.size(), cheapChecksum);
+
+        System.out.printf(Locale.ROOT,
+                "%n=== the number that decides lazy evaluation ===%n"
+                + "cheap pass is %.1f %% of a full evaluation, so a cutoff that fires saves %.1f %%%n"
+                + "of the evaluation's cost at that node — before counting the capture generation%n"
+                + "it also skips.%n",
+                100.0 * cheapBest / fullBest, 100.0 * (fullBest - cheapBest) / fullBest);
+    }
+
+    /** One pass calling only the cheap half, which is what a lazy cutoff pays before returning. */
+    private static long cheapPassOnly(WeightingFunction evaluator, List<Board> boards) {
+        long checksum = 0;
+
+        for (Board board : boards) {
+            checksum += evaluator.cheapPass(board);
+        }
+
+        return checksum;
     }
 
     /**
@@ -100,7 +136,7 @@ public final class EvalThroughputBenchmark {
         return checksum;
     }
 
-    private static void report(long[] nanosPerPass, int positions, long checksum) {
+    private static long report(long[] nanosPerPass, int positions, long checksum) {
         long[] sorted = nanosPerPass.clone();
         Arrays.sort(sorted);
 
@@ -123,8 +159,10 @@ public final class EvalThroughputBenchmark {
                 median / NANOS_PER_MS, (double) median / positions);
         System.out.printf(Locale.ROOT, "worst  %,7d ms   %6.1f ns/eval   (spread %+.1f %% over best)%n",
                 worst / NANOS_PER_MS, (double) worst / positions, 100.0 * (worst - best) / best);
-        System.out.printf(Locale.ROOT, "%nA spread above ~5 %% means the machine was not quiet enough to trust "
-                + "a difference smaller than that.%n");
+        System.out.printf(Locale.ROOT, "spread %+.1f %% over best — above ~5 %% the machine was not quiet enough%n",
+                100.0 * (worst - best) / best);
+
+        return best;
     }
 
     /** Reads positions eagerly, so parsing never lands inside a timed pass. */
