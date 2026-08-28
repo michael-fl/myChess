@@ -849,6 +849,61 @@ trend — the LLR retreated from −2.26 to −1.62 and back twice.
 costs **−34 Elo**. It says the *threshold* is not where the value sits, which is consistent with
 everything else in this section.
 
+### The other bracket — 300 is worse, and the bracket is not symmetric
+
+Raising the same constant to 300 makes the shortcut fire *less* often, so the full evaluation runs
+more, leaves get more accurate and the tree grows. Branch `material-threshold-300`, commit
+`12d06da`, jar in `versions/4.6.0-material-threshold-300/`, same control as the 100 side.
+
+| | |
+|---|---|
+| result | **−18.3 ± 23.7** at **611 games** |
+| score | 207 − 239 − 162, draw rate 26.6 %, LOS 6.5 % |
+| verdict | **H0 accepted** — LLR −3.01 against a lower bound of −2.94 |
+| run | 2026-08-28 10:20 → 17:23, 7 h, 0 time forfeits, 0 illegal moves, 0 disconnects |
+| raw | [`sprt-material-threshold-300.pgn`](../test-results/sprt-material-threshold-300.pgn), [stdout](../test-results/sprt-material-threshold-300-stdout.log) |
+
+**H0 accepted bounds the change; it does not measure it.** The statement is "consistent with −3 Elo
+or worse", i.e. not worth shipping. It is *not* "this costs 18 Elo": the interval runs from −42.0 to
++5.4 and still contains zero, and an early stop biases the magnitude by construction — the LLR
+crossed because the data happened to run unusually far in that direction. Every precedent in this
+project is an H1 read down (4.4.1 +42.4 → ≈ +15, 4.4.0 +39.8 → +32.6, 4.6.0 +18.4 → +14.8) and the
+same arithmetic applies here. The honest reading is **"worse, by an amount smaller than 18 and not
+established"**.
+
+**The shape of the sweep, and it was not predicted.** Both sides were expected to measure null,
+because the gate decides on a quantity unrelated to the error it introduces. One side did:
+
+| threshold | direction | measured |
+|---|---|---|
+| 100 | cheaper, blinder | −0.7 ± 14.4 over 1600 games — flat |
+| **200** | shipped | baseline |
+| 300 | more accurate, slower | H0 accepted, worse |
+
+**Going cheaper is free; going more expensive costs.** So 200 is not a peak with slopes on both
+sides — the curve is flat from 100 to 200 and falls after it. The gate-quantity finding explains
+half of that (accuracy bought through this gate is poorly targeted, so it buys little) and the cost
+asymmetry explains the other half: accuracy is paid in evaluation time, and evaluation time converts
+into plies lost under the clock, which is the quantity that tracks Elo in this project.
+
+#### This is a partial pre-measurement of lazy evaluation, and it is bad news for it
+
+The 300 side is not merely the second bracket. **It measures one half of what a lazy-evaluation
+replacement would do**, and the half it measures came back negative.
+
+Replacing the delta gate means that at nodes where the cheap estimate does *not* settle the window,
+the full evaluation runs — nodes that today return raw material. That is exactly the direction of
+raising the threshold. And there is a second, subtler push the same way: today's stand-pat cutoff
+tests `material >= beta` with **no margin at all**, which is unsound as a bound but fires often. A
+sound lazy cutoff tests `cheap − 172 >= beta` and is therefore strictly *more conservative* — it
+fires **less** often than what is there now, so more nodes go on to generate captures.
+
+So lazy evaluation pushes twice in the direction that just measured H0-accepted, and its saving has
+to more than pay for both. That does not kill it — the saving is real and counted at roughly 93 % of
+the evaluation work where it fires — but it moves the risk from "will the split pay for its extra
+pass" to "will it pay for the accuracy it forces". **Weight the timing measurement (§ 12.26 task
+list) accordingly, and treat a marginal timing result as a stop rather than a go.**
+
 ---
 
 ## 12.27 Reverse futility pruning (static null-move pruning) — **S, ≈ 10–40 Elo, sign not obvious**

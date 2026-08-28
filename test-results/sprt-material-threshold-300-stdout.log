@@ -1,0 +1,2174 @@
+Indexing opening suite...
+Started game 2 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Started game 4 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Started game 1 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Started game 3 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 2 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 0 - 1 - 0  [0.000] 1
+Started game 5 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 1 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 1 - 1 - 0  [0.500] 2
+Started game 6 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 3 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 2 - 1 - 0  [0.667] 3
+Started game 7 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 6 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 2 - 2 - 0  [0.500] 4
+Started game 8 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 7 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 2 - 3 - 0  [0.400] 5
+Started game 9 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 5 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 3 - 3 - 0  [0.500] 6
+Started game 10 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 8 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 4 - 3 - 0  [0.571] 7
+Started game 11 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 4 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 4 - 3 - 1  [0.563] 8
+Started game 12 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 9 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 5 - 3 - 1  [0.611] 9
+Started game 13 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 10 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 6 - 3 - 1  [0.650] 10
+...      mychess-threshold-300 playing White: 4 - 1 - 0  [0.800] 5
+...      mychess-threshold-300 playing Black: 2 - 2 - 1  [0.500] 5
+...      White vs Black: 6 - 3 - 1  [0.650] 10
+Elo difference: 107.5 +/- 268.4, LOS: 84.1 %, DrawRatio: 10.0 %
+SPRT: llr 0.169 (5.7%), lbound -2.94, ubound 2.94
+Started game 14 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 11 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 7 - 3 - 1  [0.682] 11
+Started game 15 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 12 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 7 - 4 - 1  [0.625] 12
+Started game 16 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 13 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 7 - 4 - 2  [0.615] 13
+Started game 17 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 14 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 7 - 5 - 2  [0.571] 14
+Started game 18 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 15 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 8 - 5 - 2  [0.600] 15
+Started game 19 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 16 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 9 - 5 - 2  [0.625] 16
+Started game 20 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 17 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 9 - 6 - 2  [0.588] 17
+Started game 21 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 19 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 10 - 6 - 2  [0.611] 18
+Started game 22 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 20 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 11 - 6 - 2  [0.632] 19
+Started game 23 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 18 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 11 - 6 - 3  [0.625] 20
+...      mychess-threshold-300 playing White: 7 - 2 - 1  [0.750] 10
+...      mychess-threshold-300 playing Black: 4 - 4 - 2  [0.500] 10
+...      White vs Black: 11 - 6 - 3  [0.625] 20
+Elo difference: 88.7 +/- 155.4, LOS: 88.7 %, DrawRatio: 15.0 %
+SPRT: llr 0.29 (9.8%), lbound -2.94, ubound 2.94
+Started game 24 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 21 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 11 - 7 - 3  [0.595] 21
+Started game 25 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 22 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 11 - 7 - 4  [0.591] 22
+Started game 26 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 23 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 12 - 7 - 4  [0.609] 23
+Started game 27 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 24 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 12 - 7 - 5  [0.604] 24
+Started game 28 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 26 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 12 - 7 - 6  [0.600] 25
+Started game 29 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 25 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 12 - 7 - 7  [0.596] 26
+Started game 30 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 27 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 12 - 8 - 7  [0.574] 27
+Started game 31 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 28 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 12 - 9 - 7  [0.554] 28
+Started game 32 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 29 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 13 - 9 - 7  [0.569] 29
+Started game 33 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 30 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 13 - 9 - 8  [0.567] 30
+...      mychess-threshold-300 playing White: 9 - 4 - 2  [0.667] 15
+...      mychess-threshold-300 playing Black: 4 - 5 - 6  [0.467] 15
+...      White vs Black: 14 - 8 - 8  [0.600] 30
+Elo difference: 46.6 +/- 110.7, LOS: 80.3 %, DrawRatio: 26.7 %
+SPRT: llr 0.247 (8.4%), lbound -2.94, ubound 2.94
+Started game 34 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 31 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 13 - 10 - 8  [0.548] 31
+Started game 35 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 33 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 14 - 10 - 8  [0.563] 32
+Started game 36 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 32 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 14 - 11 - 8  [0.545] 33
+Started game 37 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 34 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 14 - 12 - 8  [0.529] 34
+Started game 38 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 35 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 14 - 13 - 8  [0.514] 35
+Started game 39 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 36 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 14 - 14 - 8  [0.500] 36
+Started game 40 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 37 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 15 - 14 - 8  [0.514] 37
+Started game 41 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 38 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 15 - 14 - 9  [0.513] 38
+Started game 42 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 40 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 16 - 14 - 9  [0.526] 39
+Started game 43 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 39 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 16 - 14 - 10  [0.525] 40
+...      mychess-threshold-300 playing White: 11 - 6 - 3  [0.625] 20
+...      mychess-threshold-300 playing Black: 5 - 8 - 7  [0.425] 20
+...      White vs Black: 19 - 11 - 10  [0.600] 40
+Elo difference: 17.4 +/- 95.5, LOS: 64.2 %, DrawRatio: 25.0 %
+SPRT: llr 0.0891 (3.0%), lbound -2.94, ubound 2.94
+Started game 44 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 42 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 16 - 15 - 10  [0.512] 41
+Started game 45 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 44 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 16 - 16 - 10  [0.500] 42
+Started game 46 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 43 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 17 - 16 - 10  [0.512] 43
+Started game 47 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 41 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 17 - 16 - 11  [0.511] 44
+Started game 48 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 46 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 18 - 16 - 11  [0.522] 45
+Started game 49 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 45 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 18 - 17 - 11  [0.511] 46
+Started game 50 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 47 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 19 - 17 - 11  [0.521] 47
+Started game 51 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 49 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 19 - 17 - 12  [0.521] 48
+Started game 52 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 48 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 19 - 18 - 12  [0.510] 49
+Started game 53 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 50 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 19 - 19 - 12  [0.500] 50
+...      mychess-threshold-300 playing White: 13 - 7 - 5  [0.620] 25
+...      mychess-threshold-300 playing Black: 6 - 12 - 7  [0.380] 25
+...      White vs Black: 25 - 13 - 12  [0.620] 50
+Elo difference: 0.0 +/- 85.5, LOS: 50.0 %, DrawRatio: 24.0 %
+SPRT: llr -0.0608 (-2.1%), lbound -2.94, ubound 2.94
+Started game 54 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 53 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 19 - 20 - 12  [0.490] 51
+Started game 55 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 52 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 20 - 20 - 12  [0.500] 52
+Started game 56 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 51 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 20 - 21 - 12  [0.491] 53
+Started game 57 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 54 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 21 - 21 - 12  [0.500] 54
+Started game 58 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 55 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 22 - 21 - 12  [0.509] 55
+Started game 59 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 57 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 22 - 22 - 12  [0.500] 56
+Started game 60 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 58 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 22 - 22 - 13  [0.500] 57
+Started game 61 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 56 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 22 - 22 - 14  [0.500] 58
+Started game 62 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 61 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 22 - 23 - 14  [0.492] 59
+Started game 63 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 59 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 23 - 23 - 14  [0.500] 60
+...      mychess-threshold-300 playing White: 15 - 11 - 5  [0.565] 31
+...      mychess-threshold-300 playing Black: 8 - 12 - 9  [0.431] 29
+...      White vs Black: 27 - 19 - 14  [0.567] 60
+Elo difference: 0.0 +/- 78.2, LOS: 50.0 %, DrawRatio: 23.3 %
+SPRT: llr -0.072 (-2.4%), lbound -2.94, ubound 2.94
+Started game 64 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 60 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 23 - 23 - 15  [0.500] 61
+Started game 65 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 62 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 23 - 23 - 16  [0.500] 62
+Started game 66 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 63 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 23 - 23 - 17  [0.500] 63
+Started game 67 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 66 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 24 - 23 - 17  [0.508] 64
+Started game 68 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 65 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 25 - 23 - 17  [0.515] 65
+Started game 69 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 67 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 25 - 24 - 17  [0.508] 66
+Started game 70 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 69 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 25 - 25 - 17  [0.500] 67
+Started game 71 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 68 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 26 - 25 - 17  [0.507] 68
+Started game 72 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 64 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-threshold-300 vs mychess-4.6.0: 26 - 25 - 18  [0.507] 69
+Started game 73 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 71 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 26 - 25 - 19  [0.507] 70
+...      mychess-threshold-300 playing White: 16 - 13 - 7  [0.542] 36
+...      mychess-threshold-300 playing Black: 10 - 12 - 12  [0.471] 34
+...      White vs Black: 28 - 23 - 19  [0.536] 70
+Elo difference: 5.0 +/- 70.3, LOS: 55.6 %, DrawRatio: 27.1 %
+SPRT: llr -0.0167 (-0.6%), lbound -2.94, ubound 2.94
+Started game 74 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 70 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 27 - 25 - 19  [0.514] 71
+Started game 75 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 72 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 28 - 25 - 19  [0.521] 72
+Started game 76 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 73 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 28 - 25 - 20  [0.521] 73
+Started game 77 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 75 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 29 - 25 - 20  [0.527] 74
+Started game 78 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 74 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 30 - 25 - 20  [0.533] 75
+Started game 79 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 76 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 30 - 25 - 21  [0.533] 76
+Started game 80 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 78 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 30 - 26 - 21  [0.526] 77
+Started game 81 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 77 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 30 - 26 - 22  [0.526] 78
+Started game 82 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 82 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 31 - 26 - 22  [0.532] 79
+Started game 83 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 80 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 31 - 26 - 23  [0.531] 80
+...      mychess-threshold-300 playing White: 17 - 13 - 9  [0.551] 39
+...      mychess-threshold-300 playing Black: 14 - 13 - 14  [0.512] 41
+...      White vs Black: 30 - 27 - 23  [0.519] 80
+Elo difference: 21.7 +/- 65.0, LOS: 74.6 %, DrawRatio: 28.7 %
+SPRT: llr 0.262 (8.9%), lbound -2.94, ubound 2.94
+Started game 84 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 81 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 31 - 27 - 23  [0.525] 81
+Started game 85 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 83 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 31 - 27 - 24  [0.524] 82
+Started game 86 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 84 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 31 - 28 - 24  [0.518] 83
+Started game 87 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 79 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by stalemate}
+Score of mychess-threshold-300 vs mychess-4.6.0: 31 - 28 - 25  [0.518] 84
+Started game 88 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 85 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 32 - 28 - 25  [0.524] 85
+Started game 89 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 86 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 33 - 28 - 25  [0.529] 86
+Started game 90 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 87 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 34 - 28 - 25  [0.534] 87
+Started game 91 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 89 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 34 - 29 - 25  [0.528] 88
+Started game 92 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 88 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 34 - 30 - 25  [0.522] 89
+Started game 93 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 90 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 34 - 31 - 25  [0.517] 90
+...      mychess-threshold-300 playing White: 19 - 15 - 11  [0.544] 45
+...      mychess-threshold-300 playing Black: 15 - 16 - 14  [0.489] 45
+...      White vs Black: 35 - 30 - 25  [0.528] 90
+Elo difference: 11.6 +/- 61.6, LOS: 64.5 %, DrawRatio: 27.8 %
+SPRT: llr 0.102 (3.5%), lbound -2.94, ubound 2.94
+Started game 94 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 91 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 34 - 31 - 26  [0.516] 91
+Started game 95 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 93 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 34 - 32 - 26  [0.511] 92
+Started game 96 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 92 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 34 - 32 - 27  [0.511] 93
+Started game 97 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 96 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 35 - 32 - 27  [0.516] 94
+Started game 98 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 94 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 35 - 32 - 28  [0.516] 95
+Started game 99 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 98 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 35 - 33 - 28  [0.510] 96
+Started game 100 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 99 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 36 - 33 - 28  [0.515] 97
+Started game 101 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 97 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-threshold-300 vs mychess-4.6.0: 36 - 33 - 29  [0.515] 98
+Started game 102 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 100 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 37 - 33 - 29  [0.520] 99
+Started game 103 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 95 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 37 - 34 - 29  [0.515] 100
+...      mychess-threshold-300 playing White: 20 - 17 - 13  [0.530] 50
+...      mychess-threshold-300 playing Black: 17 - 17 - 16  [0.500] 50
+...      White vs Black: 37 - 34 - 29  [0.515] 100
+Elo difference: 10.4 +/- 57.8, LOS: 63.9 %, DrawRatio: 29.0 %
+SPRT: llr 0.0912 (3.1%), lbound -2.94, ubound 2.94
+Started game 104 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 102 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 38 - 34 - 29  [0.520] 101
+Started game 105 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 103 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 38 - 34 - 30  [0.520] 102
+Started game 106 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 104 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 38 - 35 - 30  [0.515] 103
+Started game 107 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 101 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 38 - 36 - 30  [0.510] 104
+Started game 108 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 105 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 39 - 36 - 30  [0.514] 105
+Started game 109 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 108 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 39 - 37 - 30  [0.509] 106
+Started game 110 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 107 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 39 - 38 - 30  [0.505] 107
+Started game 111 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 109 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 39 - 39 - 30  [0.500] 108
+Started game 112 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 111 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 40 - 39 - 30  [0.505] 109
+Started game 113 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 110 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 41 - 39 - 30  [0.509] 110
+...      mychess-threshold-300 playing White: 22 - 20 - 14  [0.518] 56
+...      mychess-threshold-300 playing Black: 19 - 19 - 16  [0.500] 54
+...      White vs Black: 41 - 39 - 30  [0.509] 110
+Elo difference: 6.3 +/- 55.8, LOS: 58.8 %, DrawRatio: 27.3 %
+SPRT: llr 0.00534 (0.2%), lbound -2.94, ubound 2.94
+Started game 114 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 106 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 41 - 40 - 30  [0.505] 111
+Started game 115 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 114 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 42 - 40 - 30  [0.509] 112
+Started game 116 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 112 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 42 - 41 - 30  [0.504] 113
+Started game 117 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 115 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 43 - 41 - 30  [0.509] 114
+Started game 118 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 113 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 44 - 41 - 30  [0.513] 115
+Started game 119 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 116 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 44 - 42 - 30  [0.509] 116
+Started game 120 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 117 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 44 - 43 - 30  [0.504] 117
+Started game 121 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 118 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 44 - 43 - 31  [0.504] 118
+Started game 122 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 121 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 44 - 43 - 32  [0.504] 119
+Started game 123 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 119 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 44 - 44 - 32  [0.500] 120
+...      mychess-threshold-300 playing White: 24 - 22 - 15  [0.516] 61
+...      mychess-threshold-300 playing Black: 20 - 22 - 17  [0.483] 59
+...      White vs Black: 46 - 42 - 32  [0.517] 120
+Elo difference: 0.0 +/- 53.6, LOS: 50.0 %, DrawRatio: 26.7 %
+SPRT: llr -0.148 (-5.0%), lbound -2.94, ubound 2.94
+Started game 124 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 120 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 44 - 45 - 32  [0.496] 121
+Started game 125 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 123 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 45 - 45 - 32  [0.500] 122
+Started game 126 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 125 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 45 - 46 - 32  [0.496] 123
+Started game 127 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 122 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 45 - 47 - 32  [0.492] 124
+Started game 128 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 126 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 45 - 48 - 32  [0.488] 125
+Started game 129 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 127 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 45 - 49 - 32  [0.484] 126
+Started game 130 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 124 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 45 - 49 - 33  [0.484] 127
+Started game 131 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 131 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 45 - 50 - 33  [0.480] 128
+Started game 132 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 130 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 46 - 50 - 33  [0.484] 129
+Started game 133 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 128 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 47 - 50 - 33  [0.488] 130
+...      mychess-threshold-300 playing White: 25 - 25 - 15  [0.500] 65
+...      mychess-threshold-300 playing Black: 22 - 25 - 18  [0.477] 65
+...      White vs Black: 50 - 47 - 33  [0.512] 130
+Elo difference: -8.0 +/- 51.9, LOS: 38.0 %, DrawRatio: 25.4 %
+SPRT: llr -0.366 (-12.4%), lbound -2.94, ubound 2.94
+Started game 134 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 132 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 47 - 50 - 34  [0.489] 131
+Started game 135 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 133 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 47 - 51 - 34  [0.485] 132
+Started game 136 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 134 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 48 - 51 - 34  [0.489] 133
+Started game 137 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 129 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 48 - 51 - 35  [0.489] 134
+Started game 138 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 137 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 48 - 52 - 35  [0.485] 135
+Started game 139 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 138 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 49 - 52 - 35  [0.489] 136
+Started game 140 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 136 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 49 - 53 - 35  [0.485] 137
+Started game 141 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 139 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 50 - 53 - 35  [0.489] 138
+Started game 142 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 135 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-threshold-300 vs mychess-4.6.0: 50 - 53 - 36  [0.489] 139
+Started game 143 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 141 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 50 - 54 - 36  [0.486] 140
+...      mychess-threshold-300 playing White: 26 - 28 - 17  [0.486] 71
+...      mychess-threshold-300 playing Black: 24 - 26 - 19  [0.486] 69
+...      White vs Black: 52 - 52 - 36  [0.500] 140
+Elo difference: -9.9 +/- 49.9, LOS: 34.7 %, DrawRatio: 25.7 %
+SPRT: llr -0.45 (-15.3%), lbound -2.94, ubound 2.94
+Started game 144 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 143 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 50 - 55 - 36  [0.482] 141
+Started game 145 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 145 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 50 - 55 - 37  [0.482] 142
+Started game 146 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 140 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 50 - 56 - 37  [0.479] 143
+Started game 147 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 144 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 51 - 56 - 37  [0.483] 144
+Started game 148 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 147 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 51 - 56 - 38  [0.483] 145
+Started game 149 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 148 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 51 - 56 - 39  [0.483] 146
+Started game 150 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 142 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-threshold-300 vs mychess-4.6.0: 51 - 56 - 40  [0.483] 147
+Started game 151 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 149 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 52 - 56 - 40  [0.486] 148
+Started game 152 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 151 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 52 - 57 - 40  [0.483] 149
+Started game 153 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 146 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 52 - 57 - 41  [0.483] 150
+...      mychess-threshold-300 playing White: 27 - 30 - 19  [0.480] 76
+...      mychess-threshold-300 playing Black: 25 - 27 - 22  [0.486] 74
+...      White vs Black: 54 - 55 - 41  [0.497] 150
+Elo difference: -11.6 +/- 47.6, LOS: 31.6 %, DrawRatio: 27.3 %
+SPRT: llr -0.544 (-18.5%), lbound -2.94, ubound 2.94
+Started game 154 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 150 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 52 - 58 - 41  [0.480] 151
+Started game 155 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 152 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 52 - 58 - 42  [0.480] 152
+Started game 156 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 153 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 52 - 59 - 42  [0.477] 153
+Started game 157 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 155 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 52 - 60 - 42  [0.474] 154
+Started game 158 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 156 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 53 - 60 - 42  [0.477] 155
+Started game 159 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 158 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 53 - 61 - 42  [0.474] 156
+Started game 160 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 157 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 54 - 61 - 42  [0.478] 157
+Started game 161 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 159 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 54 - 62 - 42  [0.475] 158
+Started game 162 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 154 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 54 - 62 - 43  [0.475] 159
+Started game 163 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 161 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 54 - 63 - 43  [0.472] 160
+...      mychess-threshold-300 playing White: 28 - 34 - 19  [0.463] 81
+...      mychess-threshold-300 playing Black: 26 - 29 - 24  [0.481] 79
+...      White vs Black: 57 - 60 - 43  [0.491] 160
+Elo difference: -19.6 +/- 46.3, LOS: 20.3 %, DrawRatio: 26.9 %
+SPRT: llr -0.837 (-28.4%), lbound -2.94, ubound 2.94
+Started game 164 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 162 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 55 - 63 - 43  [0.475] 161
+Started game 165 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 160 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 56 - 63 - 43  [0.478] 162
+Started game 166 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 164 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 57 - 63 - 43  [0.482] 163
+Started game 167 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 166 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 57 - 64 - 43  [0.479] 164
+Started game 168 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 163 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 57 - 64 - 44  [0.479] 165
+Started game 169 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 167 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 57 - 65 - 44  [0.476] 166
+Started game 170 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 165 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 58 - 65 - 44  [0.479] 167
+Started game 171 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 168 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 59 - 65 - 44  [0.482] 168
+Started game 172 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 171 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 59 - 66 - 44  [0.479] 169
+Started game 173 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 170 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 59 - 67 - 44  [0.476] 170
+...      mychess-threshold-300 playing White: 29 - 36 - 20  [0.459] 85
+...      mychess-threshold-300 playing Black: 30 - 31 - 24  [0.494] 85
+...      White vs Black: 60 - 66 - 44  [0.482] 170
+Elo difference: -16.4 +/- 45.2, LOS: 23.8 %, DrawRatio: 25.9 %
+SPRT: llr -0.767 (-26.1%), lbound -2.94, ubound 2.94
+Started game 174 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 169 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 60 - 67 - 44  [0.480] 171
+Started game 175 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 172 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 61 - 67 - 44  [0.483] 172
+Started game 176 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 174 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 62 - 67 - 44  [0.486] 173
+Started game 177 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 173 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 62 - 67 - 45  [0.486] 174
+Started game 178 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 176 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 62 - 68 - 45  [0.483] 175
+Started game 179 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 177 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 62 - 68 - 46  [0.483] 176
+Started game 180 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 180 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 62 - 68 - 47  [0.483] 177
+Started game 181 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 178 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 63 - 68 - 47  [0.486] 178
+Started game 182 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 175 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 64 - 68 - 47  [0.489] 179
+Started game 183 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 179 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 65 - 68 - 47  [0.492] 180
+...      mychess-threshold-300 playing White: 32 - 36 - 22  [0.478] 90
+...      mychess-threshold-300 playing Black: 33 - 32 - 25  [0.506] 90
+...      White vs Black: 64 - 69 - 47  [0.486] 180
+Elo difference: -5.8 +/- 43.8, LOS: 39.7 %, DrawRatio: 26.1 %
+SPRT: llr -0.43 (-14.6%), lbound -2.94, ubound 2.94
+Started game 184 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 184 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 66 - 68 - 47  [0.494] 181
+Started game 185 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 183 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 66 - 69 - 47  [0.492] 182
+Started game 186 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 181 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 66 - 69 - 48  [0.492] 183
+Started game 187 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 182 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 66 - 70 - 48  [0.489] 184
+Started game 188 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 186 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 66 - 70 - 49  [0.489] 185
+Started game 189 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 187 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 66 - 71 - 49  [0.487] 186
+Started game 190 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 188 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 67 - 71 - 49  [0.489] 187
+Started game 191 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 185 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-threshold-300 vs mychess-4.6.0: 67 - 71 - 50  [0.489] 188
+Started game 192 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 190 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 68 - 71 - 50  [0.492] 189
+Started game 193 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 189 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 68 - 72 - 50  [0.489] 190
+...      mychess-threshold-300 playing White: 32 - 39 - 24  [0.463] 95
+...      mychess-threshold-300 playing Black: 36 - 33 - 26  [0.516] 95
+...      White vs Black: 65 - 75 - 50  [0.474] 190
+Elo difference: -7.3 +/- 42.6, LOS: 36.8 %, DrawRatio: 26.3 %
+SPRT: llr -0.514 (-17.5%), lbound -2.94, ubound 2.94
+Started game 194 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 193 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 69 - 72 - 50  [0.492] 191
+Started game 195 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 192 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 70 - 72 - 50  [0.495] 192
+Started game 196 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 194 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 71 - 72 - 50  [0.497] 193
+Started game 197 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 191 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 71 - 73 - 50  [0.495] 194
+Started game 198 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 196 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 72 - 73 - 50  [0.497] 195
+Started game 199 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 198 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 72 - 74 - 50  [0.495] 196
+Started game 200 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 199 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 72 - 74 - 51  [0.495] 197
+Started game 201 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 197 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 72 - 74 - 52  [0.495] 198
+Started game 202 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 195 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 72 - 74 - 53  [0.495] 199
+Started game 203 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 200 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 72 - 74 - 54  [0.495] 200
+...      mychess-threshold-300 playing White: 33 - 40 - 27  [0.465] 100
+...      mychess-threshold-300 playing Black: 39 - 34 - 27  [0.525] 100
+...      White vs Black: 67 - 79 - 54  [0.470] 200
+Elo difference: -3.5 +/- 41.3, LOS: 43.4 %, DrawRatio: 27.0 %
+SPRT: llr -0.389 (-13.2%), lbound -2.94, ubound 2.94
+Started game 204 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 201 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 72 - 75 - 54  [0.493] 201
+Started game 205 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 203 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 72 - 76 - 54  [0.490] 202
+Started game 206 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 204 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 73 - 76 - 54  [0.493] 203
+Started game 207 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 205 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 74 - 76 - 54  [0.495] 204
+Started game 208 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 202 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 74 - 76 - 55  [0.495] 205
+Started game 209 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 206 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 74 - 77 - 55  [0.493] 206
+Started game 210 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 208 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 74 - 78 - 55  [0.490] 207
+Started game 211 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 209 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 74 - 78 - 56  [0.490] 208
+Started game 212 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 211 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 75 - 78 - 56  [0.493] 209
+Started game 213 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 212 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 75 - 79 - 56  [0.490] 210
+...      mychess-threshold-300 playing White: 35 - 42 - 28  [0.467] 105
+...      mychess-threshold-300 playing Black: 40 - 37 - 28  [0.514] 105
+...      White vs Black: 72 - 82 - 56  [0.476] 210
+Elo difference: -6.6 +/- 40.4, LOS: 37.4 %, DrawRatio: 26.7 %
+SPRT: llr -0.541 (-18.4%), lbound -2.94, ubound 2.94
+Started game 214 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 207 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-threshold-300 vs mychess-4.6.0: 75 - 79 - 57  [0.491] 211
+Started game 215 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 210 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 76 - 79 - 57  [0.493] 212
+Started game 216 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 213 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 76 - 80 - 57  [0.491] 213
+Started game 217 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 216 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 76 - 80 - 58  [0.491] 214
+Started game 218 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 215 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 77 - 80 - 58  [0.493] 215
+Started game 219 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 214 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 77 - 80 - 59  [0.493] 216
+Started game 220 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 217 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 77 - 81 - 59  [0.491] 217
+Started game 221 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 218 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 78 - 81 - 59  [0.493] 218
+Started game 222 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 219 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 78 - 82 - 59  [0.491] 219
+Started game 223 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 222 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 78 - 83 - 59  [0.489] 220
+...      mychess-threshold-300 playing White: 36 - 45 - 29  [0.459] 110
+...      mychess-threshold-300 playing Black: 42 - 38 - 30  [0.518] 110
+...      White vs Black: 74 - 87 - 59  [0.470] 220
+Elo difference: -7.9 +/- 39.4, LOS: 34.7 %, DrawRatio: 26.8 %
+SPRT: llr -0.625 (-21.2%), lbound -2.94, ubound 2.94
+Started game 224 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 220 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 78 - 83 - 60  [0.489] 221
+Started game 225 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 223 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 79 - 83 - 60  [0.491] 222
+Started game 226 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 221 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 79 - 84 - 60  [0.489] 223
+Started game 227 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 225 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 79 - 85 - 60  [0.487] 224
+Started game 228 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 224 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 79 - 86 - 60  [0.484] 225
+Started game 229 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 227 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 79 - 87 - 60  [0.482] 226
+Started game 230 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 226 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 79 - 87 - 61  [0.482] 227
+Started game 231 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 229 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 80 - 87 - 61  [0.485] 228
+Started game 232 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 228 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 80 - 87 - 62  [0.485] 229
+Started game 233 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 230 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 80 - 87 - 63  [0.485] 230
+...      mychess-threshold-300 playing White: 38 - 48 - 29  [0.457] 115
+...      mychess-threshold-300 playing Black: 42 - 39 - 34  [0.513] 115
+...      White vs Black: 77 - 90 - 63  [0.472] 230
+Elo difference: -10.6 +/- 38.4, LOS: 29.4 %, DrawRatio: 27.4 %
+SPRT: llr -0.785 (-26.7%), lbound -2.94, ubound 2.94
+Started game 234 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 231 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 81 - 87 - 63  [0.487] 231
+Started game 235 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 233 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 82 - 87 - 63  [0.489] 232
+Started game 236 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 234 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 82 - 88 - 63  [0.487] 233
+Started game 237 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 232 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 83 - 88 - 63  [0.489] 234
+Started game 238 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 235 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 84 - 88 - 63  [0.491] 235
+Started game 239 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 236 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 85 - 88 - 63  [0.494] 236
+Started game 240 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 237 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 86 - 88 - 63  [0.496] 237
+Started game 241 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 238 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 86 - 89 - 63  [0.494] 238
+Started game 242 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 241 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 86 - 89 - 64  [0.494] 239
+Started game 243 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 240 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 86 - 89 - 65  [0.494] 240
+...      mychess-threshold-300 playing White: 42 - 48 - 30  [0.475] 120
+...      mychess-threshold-300 playing Black: 44 - 41 - 35  [0.512] 120
+...      White vs Black: 83 - 92 - 65  [0.481] 240
+Elo difference: -4.3 +/- 37.6, LOS: 41.0 %, DrawRatio: 27.1 %
+SPRT: llr -0.51 (-17.3%), lbound -2.94, ubound 2.94
+Started game 244 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 239 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 87 - 89 - 65  [0.496] 241
+Started game 245 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 242 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 88 - 89 - 65  [0.498] 242
+Started game 246 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 243 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 89 - 89 - 65  [0.500] 243
+Started game 247 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 245 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 89 - 90 - 65  [0.498] 244
+Started game 248 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 246 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 90 - 90 - 65  [0.500] 245
+Started game 249 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 244 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 90 - 91 - 65  [0.498] 246
+Started game 250 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 247 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 90 - 91 - 66  [0.498] 247
+Started game 251 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 248 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 90 - 91 - 67  [0.498] 248
+Started game 252 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 251 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 91 - 91 - 67  [0.500] 249
+Started game 253 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 250 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 91 - 91 - 68  [0.500] 250
+...      mychess-threshold-300 playing White: 45 - 49 - 31  [0.484] 125
+...      mychess-threshold-300 playing Black: 46 - 42 - 37  [0.516] 125
+...      White vs Black: 87 - 95 - 68  [0.484] 250
+Elo difference: 0.0 +/- 36.8, LOS: 50.0 %, DrawRatio: 27.2 %
+SPRT: llr -0.309 (-10.5%), lbound -2.94, ubound 2.94
+Started game 254 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 249 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 92 - 91 - 68  [0.502] 251
+Started game 255 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 252 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 92 - 92 - 68  [0.500] 252
+Started game 256 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 253 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 92 - 92 - 69  [0.500] 253
+Started game 257 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 256 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 92 - 93 - 69  [0.498] 254
+Started game 258 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 255 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 92 - 94 - 69  [0.496] 255
+Started game 259 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 254 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 92 - 94 - 70  [0.496] 256
+Started game 260 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 257 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 92 - 95 - 70  [0.494] 257
+Started game 261 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 260 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 93 - 95 - 70  [0.496] 258
+Started game 262 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 258 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 93 - 96 - 70  [0.494] 259
+Started game 263 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 261 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 94 - 96 - 70  [0.496] 260
+...      mychess-threshold-300 playing White: 47 - 51 - 32  [0.485] 130
+...      mychess-threshold-300 playing Black: 47 - 45 - 38  [0.508] 130
+...      White vs Black: 92 - 98 - 70  [0.488] 260
+Elo difference: -2.7 +/- 36.2, LOS: 44.2 %, DrawRatio: 26.9 %
+SPRT: llr -0.462 (-15.7%), lbound -2.94, ubound 2.94
+Started game 264 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 262 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 94 - 97 - 70  [0.494] 261
+Started game 265 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 259 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 95 - 97 - 70  [0.496] 262
+Started game 266 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 263 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 95 - 97 - 71  [0.496] 263
+Started game 267 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 264 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 95 - 97 - 72  [0.496] 264
+Started game 268 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 265 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 95 - 97 - 73  [0.496] 265
+Started game 269 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 267 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 96 - 97 - 73  [0.498] 266
+Started game 270 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 268 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 97 - 97 - 73  [0.500] 267
+Started game 271 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 266 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 98 - 97 - 73  [0.502] 268
+Started game 272 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 269 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 98 - 97 - 74  [0.502] 269
+Started game 273 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 271 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 98 - 98 - 74  [0.500] 270
+...      mychess-threshold-300 playing White: 49 - 52 - 35  [0.489] 136
+...      mychess-threshold-300 playing Black: 49 - 46 - 39  [0.511] 134
+...      White vs Black: 95 - 101 - 74  [0.489] 270
+Elo difference: 0.0 +/- 35.4, LOS: 50.0 %, DrawRatio: 27.4 %
+SPRT: llr -0.335 (-11.4%), lbound -2.94, ubound 2.94
+Started game 274 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 273 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 98 - 99 - 74  [0.498] 271
+Started game 275 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 270 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 98 - 99 - 75  [0.498] 272
+Started game 276 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 272 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 99 - 99 - 75  [0.500] 273
+Started game 277 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 277 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 100 - 99 - 75  [0.502] 274
+Started game 278 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 274 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 100 - 100 - 75  [0.500] 275
+Started game 279 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 276 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 100 - 101 - 75  [0.498] 276
+Started game 280 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 275 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 100 - 101 - 76  [0.498] 277
+Started game 281 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 279 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black mates}
+Score of mychess-threshold-300 vs mychess-4.6.0: 100 - 102 - 76  [0.496] 278
+Started game 282 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 278 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 100 - 103 - 76  [0.495] 279
+Started game 283 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 280 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 100 - 103 - 77  [0.495] 280
+...      mychess-threshold-300 playing White: 50 - 54 - 36  [0.486] 140
+...      mychess-threshold-300 playing Black: 50 - 49 - 41  [0.504] 140
+...      White vs Black: 99 - 104 - 77  [0.491] 280
+Elo difference: -3.7 +/- 34.7, LOS: 41.7 %, DrawRatio: 27.5 %
+SPRT: llr -0.562 (-19.1%), lbound -2.94, ubound 2.94
+Started game 284 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 281 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 100 - 103 - 78  [0.495] 281
+Started game 285 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 282 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 101 - 103 - 78  [0.496] 282
+Started game 286 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 284 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 101 - 104 - 78  [0.495] 283
+Started game 287 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 286 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 101 - 105 - 78  [0.493] 284
+Started game 288 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 283 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 101 - 106 - 78  [0.491] 285
+Started game 289 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 285 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 101 - 107 - 78  [0.490] 286
+Started game 290 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 287 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 101 - 108 - 78  [0.488] 287
+Started game 291 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 289 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 101 - 108 - 79  [0.488] 288
+Started game 292 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 288 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 101 - 109 - 79  [0.486] 289
+Started game 293 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 292 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 102 - 109 - 79  [0.488] 290
+...      mychess-threshold-300 playing White: 50 - 57 - 38  [0.476] 145
+...      mychess-threshold-300 playing Black: 52 - 52 - 41  [0.500] 145
+...      White vs Black: 102 - 109 - 79  [0.488] 290
+Elo difference: -8.4 +/- 34.2, LOS: 31.5 %, DrawRatio: 27.2 %
+SPRT: llr -0.857 (-29.1%), lbound -2.94, ubound 2.94
+Started game 294 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 293 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 103 - 109 - 79  [0.490] 291
+Started game 295 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 291 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 103 - 110 - 79  [0.488] 292
+Started game 296 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 294 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 103 - 110 - 80  [0.488] 293
+Started game 297 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 290 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-threshold-300 vs mychess-4.6.0: 103 - 110 - 81  [0.488] 294
+Started game 298 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 295 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 103 - 111 - 81  [0.486] 295
+Started game 299 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 297 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 104 - 111 - 81  [0.488] 296
+Started game 300 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 298 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 104 - 112 - 81  [0.487] 297
+Started game 301 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 296 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 104 - 112 - 82  [0.487] 298
+Started game 302 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 299 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 104 - 113 - 82  [0.485] 299
+Started game 303 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 300 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 105 - 113 - 82  [0.487] 300
+...      mychess-threshold-300 playing White: 52 - 60 - 38  [0.473] 150
+...      mychess-threshold-300 playing Black: 53 - 53 - 44  [0.500] 150
+...      White vs Black: 105 - 113 - 82  [0.487] 300
+Elo difference: -9.3 +/- 33.6, LOS: 29.4 %, DrawRatio: 27.3 %
+SPRT: llr -0.942 (-32.0%), lbound -2.94, ubound 2.94
+Started game 304 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 302 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 105 - 113 - 83  [0.487] 301
+Started game 305 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 301 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 105 - 113 - 84  [0.487] 302
+Started game 306 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 303 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 106 - 113 - 84  [0.488] 303
+Started game 307 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 306 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 106 - 114 - 84  [0.487] 304
+Started game 308 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 304 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 107 - 114 - 84  [0.489] 305
+Started game 309 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 305 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 107 - 115 - 84  [0.487] 306
+Started game 310 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 308 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 107 - 116 - 84  [0.485] 307
+Started game 311 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 307 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 107 - 117 - 84  [0.484] 308
+Started game 312 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 309 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 107 - 118 - 84  [0.482] 309
+Started game 313 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 310 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 107 - 119 - 84  [0.481] 310
+...      mychess-threshold-300 playing White: 53 - 63 - 39  [0.468] 155
+...      mychess-threshold-300 playing Black: 54 - 56 - 45  [0.494] 155
+...      White vs Black: 109 - 117 - 84  [0.487] 310
+Elo difference: -13.5 +/- 33.1, LOS: 21.2 %, DrawRatio: 27.1 %
+SPRT: llr -1.24 (-42.0%), lbound -2.94, ubound 2.94
+Started game 314 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 311 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 107 - 120 - 84  [0.479] 311
+Started game 315 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 313 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 107 - 121 - 84  [0.478] 312
+Started game 316 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 314 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 108 - 121 - 84  [0.479] 313
+Started game 317 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 315 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 108 - 122 - 84  [0.478] 314
+Started game 318 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 316 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 108 - 123 - 84  [0.476] 315
+Started game 319 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 312 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 108 - 123 - 85  [0.476] 316
+Started game 320 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 317 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 108 - 124 - 85  [0.475] 317
+Started game 321 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 318 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 108 - 125 - 85  [0.473] 318
+Started game 322 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 319 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 109 - 125 - 85  [0.475] 319
+Started game 323 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 321 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 109 - 126 - 85  [0.473] 320
+...      mychess-threshold-300 playing White: 54 - 68 - 39  [0.457] 161
+...      mychess-threshold-300 playing Black: 55 - 58 - 46  [0.491] 159
+...      White vs Black: 112 - 123 - 85  [0.483] 320
+Elo difference: -18.5 +/- 32.7, LOS: 13.4 %, DrawRatio: 26.6 %
+SPRT: llr -1.59 (-54.1%), lbound -2.94, ubound 2.94
+Started game 324 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 320 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 109 - 127 - 85  [0.472] 321
+Started game 325 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 323 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 110 - 127 - 85  [0.474] 322
+Started game 326 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 325 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 110 - 128 - 85  [0.472] 323
+Started game 327 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 322 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 110 - 128 - 86  [0.472] 324
+Started game 328 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 326 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 110 - 129 - 86  [0.471] 325
+Started game 329 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 329 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 111 - 129 - 86  [0.472] 326
+Started game 330 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 324 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 111 - 129 - 87  [0.472] 327
+Started game 331 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 327 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 111 - 129 - 88  [0.473] 328
+Started game 332 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 328 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 112 - 129 - 88  [0.474] 329
+Started game 333 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 331 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 112 - 130 - 88  [0.473] 330
+...      mychess-threshold-300 playing White: 56 - 70 - 40  [0.458] 166
+...      mychess-threshold-300 playing Black: 56 - 60 - 48  [0.488] 164
+...      White vs Black: 116 - 126 - 88  [0.485] 330
+Elo difference: -19.0 +/- 32.2, LOS: 12.4 %, DrawRatio: 26.7 %
+SPRT: llr -1.68 (-57.0%), lbound -2.94, ubound 2.94
+Started game 334 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 332 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 113 - 130 - 88  [0.474] 331
+Started game 335 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 334 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 114 - 130 - 88  [0.476] 332
+Started game 336 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 330 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 114 - 130 - 89  [0.476] 333
+Started game 337 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 333 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 115 - 130 - 89  [0.478] 334
+Started game 338 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 335 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 115 - 130 - 90  [0.478] 335
+Started game 339 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 337 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 115 - 131 - 90  [0.476] 336
+Started game 340 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 339 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 116 - 131 - 90  [0.478] 337
+Started game 341 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 338 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by stalemate}
+Score of mychess-threshold-300 vs mychess-4.6.0: 116 - 131 - 91  [0.478] 338
+Started game 342 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 341 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 116 - 131 - 92  [0.478] 339
+Started game 343 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 336 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 116 - 131 - 93  [0.478] 340
+...      mychess-threshold-300 playing White: 58 - 71 - 42  [0.462] 171
+...      mychess-threshold-300 playing Black: 58 - 60 - 51  [0.494] 169
+...      White vs Black: 118 - 129 - 93  [0.484] 340
+Elo difference: -15.3 +/- 31.5, LOS: 17.0 %, DrawRatio: 27.4 %
+SPRT: llr -1.49 (-50.7%), lbound -2.94, ubound 2.94
+Started game 344 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 342 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 116 - 131 - 94  [0.478] 341
+Started game 345 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 340 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 117 - 131 - 94  [0.480] 342
+Started game 346 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 343 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 117 - 132 - 94  [0.478] 343
+Started game 347 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 344 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 118 - 132 - 94  [0.480] 344
+Started game 348 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 348 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 119 - 132 - 94  [0.481] 345
+Started game 349 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 346 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 119 - 133 - 94  [0.480] 346
+Started game 350 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 347 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 119 - 134 - 94  [0.478] 347
+Started game 351 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 349 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 120 - 134 - 94  [0.480] 348
+Started game 352 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 345 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-threshold-300 vs mychess-4.6.0: 120 - 134 - 95  [0.480] 349
+Started game 353 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 352 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 120 - 135 - 95  [0.479] 350
+...      mychess-threshold-300 playing White: 59 - 73 - 43  [0.460] 175
+...      mychess-threshold-300 playing Black: 61 - 62 - 52  [0.497] 175
+...      White vs Black: 121 - 134 - 95  [0.481] 350
+Elo difference: -14.9 +/- 31.1, LOS: 17.4 %, DrawRatio: 27.1 %
+SPRT: llr -1.5 (-50.9%), lbound -2.94, ubound 2.94
+Started game 354 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 351 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 120 - 136 - 95  [0.477] 351
+Started game 355 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 353 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 121 - 136 - 95  [0.479] 352
+Started game 356 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 350 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-threshold-300 vs mychess-4.6.0: 121 - 136 - 96  [0.479] 353
+Started game 357 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 354 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 121 - 137 - 96  [0.477] 354
+Started game 358 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 356 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 122 - 137 - 96  [0.479] 355
+Started game 359 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 355 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 122 - 138 - 96  [0.478] 356
+Started game 360 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 357 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 123 - 138 - 96  [0.479] 357
+Started game 361 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 358 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 123 - 139 - 96  [0.478] 358
+Started game 362 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 361 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 124 - 139 - 96  [0.479] 359
+Started game 363 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 362 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 124 - 140 - 96  [0.478] 360
+...      mychess-threshold-300 playing White: 62 - 75 - 43  [0.464] 180
+...      mychess-threshold-300 playing Black: 62 - 65 - 53  [0.492] 180
+...      White vs Black: 127 - 137 - 96  [0.486] 360
+Elo difference: -15.5 +/- 30.8, LOS: 16.2 %, DrawRatio: 26.7 %
+SPRT: llr -1.57 (-53.4%), lbound -2.94, ubound 2.94
+Started game 364 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 360 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 124 - 141 - 96  [0.476] 361
+Started game 365 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 359 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 124 - 141 - 97  [0.477] 362
+Started game 366 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 364 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 125 - 141 - 97  [0.478] 363
+Started game 367 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 366 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 125 - 142 - 97  [0.477] 364
+Started game 368 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 365 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 126 - 142 - 97  [0.478] 365
+Started game 369 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 363 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 126 - 142 - 98  [0.478] 366
+Started game 370 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 368 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 127 - 142 - 98  [0.480] 367
+Started game 371 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 369 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 127 - 143 - 98  [0.478] 368
+Started game 372 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 367 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 127 - 144 - 98  [0.477] 369
+Started game 373 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 371 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 127 - 145 - 98  [0.476] 370
+...      mychess-threshold-300 playing White: 63 - 78 - 45  [0.460] 186
+...      mychess-threshold-300 playing Black: 64 - 67 - 53  [0.492] 184
+...      White vs Black: 130 - 142 - 98  [0.484] 370
+Elo difference: -16.9 +/- 30.4, LOS: 13.8 %, DrawRatio: 26.5 %
+SPRT: llr -1.72 (-58.5%), lbound -2.94, ubound 2.94
+Started game 374 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 370 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 128 - 145 - 98  [0.477] 371
+Started game 375 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 372 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 128 - 146 - 98  [0.476] 372
+Started game 376 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 374 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 128 - 147 - 98  [0.475] 373
+Started game 377 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 375 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 128 - 148 - 98  [0.473] 374
+Started game 378 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 373 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 129 - 148 - 98  [0.475] 375
+Started game 379 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 376 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 130 - 148 - 98  [0.476] 376
+Started game 380 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 377 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 131 - 148 - 98  [0.477] 377
+Started game 381 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 378 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 131 - 149 - 98  [0.476] 378
+Started game 382 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 380 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 131 - 150 - 98  [0.475] 379
+Started game 383 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 381 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 131 - 151 - 98  [0.474] 380
+...      mychess-threshold-300 playing White: 65 - 80 - 45  [0.461] 190
+...      mychess-threshold-300 playing Black: 66 - 71 - 53  [0.487] 190
+...      White vs Black: 136 - 146 - 98  [0.487] 380
+Elo difference: -18.3 +/- 30.2, LOS: 11.7 %, DrawRatio: 25.8 %
+SPRT: llr -1.86 (-63.1%), lbound -2.94, ubound 2.94
+Started game 384 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 379 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 131 - 152 - 98  [0.472] 381
+Started game 385 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 384 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White mates}
+Score of mychess-threshold-300 vs mychess-4.6.0: 131 - 153 - 98  [0.471] 382
+Started game 386 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 382 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 131 - 154 - 98  [0.470] 383
+Started game 387 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 383 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 131 - 154 - 99  [0.470] 384
+Started game 388 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 385 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 131 - 155 - 99  [0.469] 385
+Started game 389 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 386 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 132 - 155 - 99  [0.470] 386
+Started game 390 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 390 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 132 - 155 - 100  [0.470] 387
+Started game 391 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 388 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 132 - 156 - 100  [0.469] 388
+Started game 392 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 387 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 132 - 157 - 100  [0.468] 389
+Started game 393 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 389 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 132 - 158 - 100  [0.467] 390
+...      mychess-threshold-300 playing White: 65 - 84 - 46  [0.451] 195
+...      mychess-threshold-300 playing Black: 67 - 74 - 54  [0.482] 195
+...      White vs Black: 139 - 151 - 100  [0.485] 390
+Elo difference: -23.2 +/- 29.8, LOS: 6.3 %, DrawRatio: 25.6 %
+SPRT: llr -2.29 (-77.7%), lbound -2.94, ubound 2.94
+Started game 394 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 391 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 133 - 158 - 100  [0.468] 391
+Started game 395 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 392 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 134 - 158 - 100  [0.469] 392
+Started game 396 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 393 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 135 - 158 - 100  [0.471] 393
+Started game 397 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 394 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 135 - 159 - 100  [0.470] 394
+Started game 398 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 395 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 136 - 159 - 100  [0.471] 395
+Started game 399 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 396 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 136 - 160 - 100  [0.470] 396
+Started game 400 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 399 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 136 - 161 - 100  [0.469] 397
+Started game 401 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 397 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 136 - 162 - 100  [0.467] 398
+Started game 402 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 398 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 137 - 162 - 100  [0.469] 399
+Started game 403 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 400 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 138 - 162 - 100  [0.470] 400
+...      mychess-threshold-300 playing White: 68 - 86 - 46  [0.455] 200
+...      mychess-threshold-300 playing Black: 70 - 76 - 54  [0.485] 200
+...      White vs Black: 144 - 156 - 100  [0.485] 400
+Elo difference: -20.9 +/- 29.6, LOS: 8.3 %, DrawRatio: 25.0 %
+SPRT: llr -2.14 (-72.7%), lbound -2.94, ubound 2.94
+Started game 404 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 403 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 139 - 162 - 100  [0.471] 401
+Started game 405 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 404 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 139 - 163 - 100  [0.470] 402
+Started game 406 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 401 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 140 - 163 - 100  [0.471] 403
+Started game 407 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 402 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 140 - 163 - 101  [0.472] 404
+Started game 408 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 405 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 140 - 163 - 102  [0.472] 405
+Started game 409 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 407 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 140 - 164 - 102  [0.470] 406
+Started game 410 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 406 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 140 - 165 - 102  [0.469] 407
+Started game 411 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 408 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 141 - 165 - 102  [0.471] 408
+Started game 412 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 409 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 141 - 165 - 103  [0.471] 409
+Started game 413 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 411 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 141 - 166 - 103  [0.470] 410
+...      mychess-threshold-300 playing White: 70 - 88 - 48  [0.456] 206
+...      mychess-threshold-300 playing Black: 71 - 78 - 55  [0.483] 204
+...      White vs Black: 148 - 159 - 103  [0.487] 410
+Elo difference: -21.2 +/- 29.2, LOS: 7.7 %, DrawRatio: 25.1 %
+SPRT: llr -2.22 (-75.6%), lbound -2.94, ubound 2.94
+Started game 414 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 412 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 142 - 166 - 103  [0.471] 411
+Started game 415 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 410 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 143 - 166 - 103  [0.472] 412
+Started game 416 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 413 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 144 - 166 - 103  [0.473] 413
+Started game 417 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 416 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 144 - 166 - 104  [0.473] 414
+Started game 418 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 414 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 144 - 166 - 105  [0.473] 415
+Started game 419 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 417 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 144 - 166 - 106  [0.474] 416
+Started game 420 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 415 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 144 - 166 - 107  [0.474] 417
+Started game 421 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 420 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 145 - 166 - 107  [0.475] 418
+Started game 422 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 418 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 146 - 166 - 107  [0.476] 419
+Started game 423 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 419 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 146 - 166 - 108  [0.476] 420
+...      mychess-threshold-300 playing White: 71 - 88 - 51  [0.460] 210
+...      mychess-threshold-300 playing Black: 75 - 78 - 57  [0.493] 210
+...      White vs Black: 149 - 163 - 108  [0.483] 420
+Elo difference: -16.6 +/- 28.7, LOS: 12.9 %, DrawRatio: 25.7 %
+SPRT: llr -1.9 (-64.7%), lbound -2.94, ubound 2.94
+Started game 424 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 422 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 146 - 167 - 108  [0.475] 421
+Started game 425 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 421 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 147 - 167 - 108  [0.476] 422
+Started game 426 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 423 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 147 - 168 - 108  [0.475] 423
+Started game 427 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 424 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 147 - 168 - 109  [0.475] 424
+Started game 428 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 426 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 148 - 168 - 109  [0.476] 425
+Started game 429 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 425 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 149 - 168 - 109  [0.478] 426
+Started game 430 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 427 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 150 - 168 - 109  [0.479] 427
+Started game 431 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 429 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 151 - 168 - 109  [0.480] 428
+Started game 432 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 430 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 151 - 169 - 109  [0.479] 429
+Started game 433 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 432 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 152 - 169 - 109  [0.480] 430
+...      mychess-threshold-300 playing White: 75 - 89 - 51  [0.467] 215
+...      mychess-threshold-300 playing Black: 77 - 80 - 58  [0.493] 215
+...      White vs Black: 155 - 166 - 109  [0.487] 430
+Elo difference: -13.7 +/- 28.4, LOS: 17.1 %, DrawRatio: 25.3 %
+SPRT: llr -1.7 (-57.7%), lbound -2.94, ubound 2.94
+Started game 434 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 428 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 152 - 169 - 110  [0.480] 431
+Started game 435 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 431 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 152 - 170 - 110  [0.479] 432
+Started game 436 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 433 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 152 - 171 - 110  [0.478] 433
+Started game 437 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 435 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 152 - 172 - 110  [0.477] 434
+Started game 438 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 434 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 153 - 172 - 110  [0.478] 435
+Started game 439 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 436 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 153 - 173 - 110  [0.477] 436
+Started game 440 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 438 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 153 - 173 - 111  [0.477] 437
+Started game 441 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 439 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 154 - 173 - 111  [0.478] 438
+Started game 442 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 437 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 154 - 173 - 112  [0.478] 439
+Started game 443 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 442 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 154 - 174 - 112  [0.477] 440
+...      mychess-threshold-300 playing White: 76 - 92 - 52  [0.464] 220
+...      mychess-threshold-300 playing Black: 78 - 82 - 60  [0.491] 220
+...      White vs Black: 158 - 170 - 112  [0.486] 440
+Elo difference: -15.8 +/- 28.1, LOS: 13.5 %, DrawRatio: 25.5 %
+SPRT: llr -1.92 (-65.3%), lbound -2.94, ubound 2.94
+Started game 444 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 441 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 155 - 174 - 112  [0.478] 441
+Started game 445 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 440 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 156 - 174 - 112  [0.480] 442
+Started game 446 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 443 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 157 - 174 - 112  [0.481] 443
+Started game 447 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 444 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 158 - 174 - 112  [0.482] 444
+Started game 448 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 445 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 158 - 175 - 112  [0.481] 445
+Started game 449 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 446 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 158 - 176 - 112  [0.480] 446
+Started game 450 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 449 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 158 - 176 - 113  [0.480] 447
+Started game 451 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 447 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 158 - 176 - 114  [0.480] 448
+Started game 452 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 450 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 158 - 177 - 114  [0.479] 449
+Started game 453 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 448 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 158 - 178 - 114  [0.478] 450
+...      mychess-threshold-300 playing White: 78 - 93 - 54  [0.467] 225
+...      mychess-threshold-300 playing Black: 80 - 85 - 60  [0.489] 225
+...      White vs Black: 163 - 173 - 114  [0.489] 450
+Elo difference: -15.5 +/- 27.8, LOS: 13.8 %, DrawRatio: 25.3 %
+SPRT: llr -1.93 (-65.6%), lbound -2.94, ubound 2.94
+Started game 454 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 451 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 159 - 178 - 114  [0.479] 451
+Started game 455 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 452 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 160 - 178 - 114  [0.480] 452
+Started game 456 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 453 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 161 - 178 - 114  [0.481] 453
+Started game 457 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 454 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 161 - 179 - 114  [0.480] 454
+Started game 458 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 455 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 161 - 180 - 114  [0.479] 455
+Started game 459 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 456 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 161 - 181 - 114  [0.478] 456
+Started game 460 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 457 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 161 - 182 - 114  [0.477] 457
+Started game 461 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 458 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 161 - 183 - 114  [0.476] 458
+Started game 462 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 459 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by stalemate}
+Score of mychess-threshold-300 vs mychess-4.6.0: 161 - 183 - 115  [0.476] 459
+Started game 463 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 460 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 162 - 183 - 115  [0.477] 460
+...      mychess-threshold-300 playing White: 80 - 95 - 55  [0.467] 230
+...      mychess-threshold-300 playing Black: 82 - 88 - 60  [0.487] 230
+...      White vs Black: 168 - 177 - 115  [0.490] 460
+Elo difference: -15.9 +/- 27.5, LOS: 12.9 %, DrawRatio: 25.0 %
+SPRT: llr -2 (-68.0%), lbound -2.94, ubound 2.94
+Started game 464 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 461 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 163 - 183 - 115  [0.478] 461
+Started game 465 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 462 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 163 - 184 - 115  [0.477] 462
+Started game 466 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 464 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 163 - 184 - 116  [0.477] 463
+Started game 467 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 463 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 163 - 184 - 117  [0.477] 464
+Started game 468 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 465 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 164 - 184 - 117  [0.478] 465
+Started game 469 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 466 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 164 - 185 - 117  [0.477] 466
+Started game 470 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 469 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 165 - 185 - 117  [0.479] 467
+Started game 471 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 470 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 166 - 185 - 117  [0.480] 468
+Started game 472 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 468 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 166 - 186 - 117  [0.479] 469
+Started game 473 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 467 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 166 - 186 - 118  [0.479] 470
+...      mychess-threshold-300 playing White: 83 - 95 - 57  [0.474] 235
+...      mychess-threshold-300 playing Black: 83 - 91 - 61  [0.483] 235
+...      White vs Black: 174 - 178 - 118  [0.496] 470
+Elo difference: -14.8 +/- 27.2, LOS: 14.3 %, DrawRatio: 25.1 %
+SPRT: llr -1.95 (-66.2%), lbound -2.94, ubound 2.94
+Started game 474 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 473 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 166 - 186 - 119  [0.479] 471
+Started game 475 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 472 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 166 - 187 - 119  [0.478] 472
+Started game 476 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 474 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 166 - 187 - 120  [0.478] 473
+Started game 477 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 476 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 166 - 188 - 120  [0.477] 474
+Started game 478 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 477 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 166 - 189 - 120  [0.476] 475
+Started game 479 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 475 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by stalemate}
+Score of mychess-threshold-300 vs mychess-4.6.0: 166 - 189 - 121  [0.476] 476
+Started game 480 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 471 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-threshold-300 vs mychess-4.6.0: 166 - 189 - 122  [0.476] 477
+Started game 481 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 478 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 166 - 189 - 123  [0.476] 478
+Started game 482 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 479 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 167 - 189 - 123  [0.477] 479
+Started game 483 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 480 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 168 - 189 - 123  [0.478] 480
+...      mychess-threshold-300 playing White: 84 - 96 - 60  [0.475] 240
+...      mychess-threshold-300 playing Black: 84 - 93 - 63  [0.481] 240
+...      White vs Black: 177 - 180 - 123  [0.497] 480
+Elo difference: -15.2 +/- 26.8, LOS: 13.3 %, DrawRatio: 25.6 %
+SPRT: llr -2.04 (-69.4%), lbound -2.94, ubound 2.94
+Started game 484 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 483 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 168 - 190 - 123  [0.477] 481
+Started game 485 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 482 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 168 - 190 - 124  [0.477] 482
+Started game 486 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 481 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 168 - 190 - 125  [0.477] 483
+Started game 487 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 485 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 168 - 190 - 126  [0.477] 484
+Started game 488 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 486 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 168 - 190 - 127  [0.477] 485
+Started game 489 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 487 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 169 - 190 - 127  [0.478] 486
+Started game 490 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 484 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-threshold-300 vs mychess-4.6.0: 169 - 190 - 128  [0.478] 487
+Started game 491 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 489 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 169 - 191 - 128  [0.477] 488
+Started game 492 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 492 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 169 - 192 - 128  [0.476] 489
+Started game 493 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 490 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 170 - 192 - 128  [0.478] 490
+...      mychess-threshold-300 playing White: 85 - 98 - 62  [0.473] 245
+...      mychess-threshold-300 playing Black: 85 - 94 - 66  [0.482] 245
+...      White vs Black: 179 - 183 - 128  [0.496] 490
+Elo difference: -15.6 +/- 26.5, LOS: 12.4 %, DrawRatio: 26.1 %
+SPRT: llr -2.14 (-72.7%), lbound -2.94, ubound 2.94
+Started game 494 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 488 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 170 - 193 - 128  [0.477] 491
+Started game 495 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 491 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 171 - 193 - 128  [0.478] 492
+Started game 496 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 495 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 172 - 193 - 128  [0.479] 493
+Started game 497 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 493 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 173 - 193 - 128  [0.480] 494
+Started game 498 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 496 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 174 - 193 - 128  [0.481] 495
+Started game 499 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 497 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 174 - 193 - 129  [0.481] 496
+Started game 500 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 494 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 174 - 194 - 129  [0.480] 497
+Started game 501 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 498 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 174 - 195 - 129  [0.479] 498
+Started game 502 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 499 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 174 - 196 - 129  [0.478] 499
+Started game 503 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 500 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 175 - 196 - 129  [0.479] 500
+...      mychess-threshold-300 playing White: 88 - 99 - 63  [0.478] 250
+...      mychess-threshold-300 playing Black: 87 - 97 - 66  [0.480] 250
+...      White vs Black: 185 - 186 - 129  [0.499] 500
+Elo difference: -14.6 +/- 26.3, LOS: 13.8 %, DrawRatio: 25.8 %
+SPRT: llr -2.07 (-70.4%), lbound -2.94, ubound 2.94
+Started game 504 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 501 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 175 - 196 - 130  [0.479] 501
+Started game 505 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 504 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 175 - 197 - 130  [0.478] 502
+Started game 506 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 505 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 175 - 197 - 131  [0.478] 503
+Started game 507 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 502 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 175 - 197 - 132  [0.478] 504
+Started game 508 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 503 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 175 - 198 - 132  [0.477] 505
+Started game 509 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 507 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 176 - 198 - 132  [0.478] 506
+Started game 510 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 506 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 177 - 198 - 132  [0.479] 507
+Started game 511 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 508 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 178 - 198 - 132  [0.480] 508
+Started game 512 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 510 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 178 - 199 - 132  [0.479] 509
+Started game 513 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 511 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 178 - 199 - 133  [0.479] 510
+...      mychess-threshold-300 playing White: 89 - 100 - 66  [0.478] 255
+...      mychess-threshold-300 playing Black: 89 - 99 - 67  [0.480] 255
+...      White vs Black: 188 - 189 - 133  [0.499] 510
+Elo difference: -14.3 +/- 26.0, LOS: 14.0 %, DrawRatio: 26.1 %
+SPRT: llr -2.09 (-71.1%), lbound -2.94, ubound 2.94
+Started game 514 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 512 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 178 - 200 - 133  [0.478] 511
+Started game 515 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 509 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-threshold-300 vs mychess-4.6.0: 178 - 200 - 134  [0.479] 512
+Started game 516 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 513 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 179 - 200 - 134  [0.480] 513
+Started game 517 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 515 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 179 - 201 - 134  [0.479] 514
+Started game 518 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 514 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 179 - 202 - 134  [0.478] 515
+Started game 519 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 516 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 180 - 202 - 134  [0.479] 516
+Started game 520 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 518 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 180 - 202 - 135  [0.479] 517
+Started game 521 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 517 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 180 - 203 - 135  [0.478] 518
+Started game 522 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 520 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 180 - 204 - 135  [0.477] 519
+Started game 523 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 522 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 180 - 205 - 135  [0.476] 520
+...      mychess-threshold-300 playing White: 90 - 102 - 67  [0.477] 259
+...      mychess-threshold-300 playing Black: 90 - 103 - 68  [0.475] 261
+...      White vs Black: 193 - 192 - 135  [0.501] 520
+Elo difference: -16.7 +/- 25.7, LOS: 10.1 %, DrawRatio: 26.0 %
+SPRT: llr -2.38 (-80.9%), lbound -2.94, ubound 2.94
+Started game 524 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 524 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 181 - 205 - 135  [0.477] 521
+Started game 525 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 521 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 182 - 205 - 135  [0.478] 522
+Started game 526 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 519 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 182 - 205 - 136  [0.478] 523
+Started game 527 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 525 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 183 - 205 - 136  [0.479] 524
+Started game 528 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 523 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 183 - 205 - 137  [0.479] 525
+Started game 529 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 526 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 183 - 206 - 137  [0.478] 526
+Started game 530 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 527 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 183 - 207 - 137  [0.477] 527
+Started game 531 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 528 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 183 - 208 - 137  [0.476] 528
+Started game 532 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 531 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White mates}
+Score of mychess-threshold-300 vs mychess-4.6.0: 184 - 208 - 137  [0.477] 529
+Started game 533 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 529 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by stalemate}
+Score of mychess-threshold-300 vs mychess-4.6.0: 184 - 208 - 138  [0.477] 530
+...      mychess-threshold-300 playing White: 93 - 103 - 70  [0.481] 266
+...      mychess-threshold-300 playing Black: 91 - 105 - 68  [0.473] 264
+...      White vs Black: 198 - 194 - 138  [0.504] 530
+Elo difference: -15.7 +/- 25.5, LOS: 11.3 %, DrawRatio: 26.0 %
+SPRT: llr -2.33 (-79.0%), lbound -2.94, ubound 2.94
+Started game 534 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 530 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 184 - 209 - 138  [0.476] 531
+Started game 535 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 533 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 184 - 210 - 138  [0.476] 532
+Started game 536 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 534 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 185 - 210 - 138  [0.477] 533
+Started game 537 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 532 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 185 - 211 - 138  [0.476] 534
+Started game 538 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 535 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 186 - 211 - 138  [0.477] 535
+Started game 539 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 536 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 186 - 212 - 138  [0.476] 536
+Started game 540 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 538 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 186 - 212 - 139  [0.476] 537
+Started game 541 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 537 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 186 - 212 - 140  [0.476] 538
+Started game 542 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 541 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 186 - 212 - 141  [0.476] 539
+Started game 543 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 540 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 186 - 213 - 141  [0.475] 540
+...      mychess-threshold-300 playing White: 94 - 104 - 72  [0.481] 270
+...      mychess-threshold-300 playing Black: 92 - 109 - 69  [0.469] 270
+...      White vs Black: 203 - 196 - 141  [0.506] 540
+Elo difference: -17.4 +/- 25.2, LOS: 8.8 %, DrawRatio: 26.1 %
+SPRT: llr -2.55 (-86.6%), lbound -2.94, ubound 2.94
+Started game 544 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 542 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 187 - 213 - 141  [0.476] 541
+Started game 545 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 539 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by stalemate}
+Score of mychess-threshold-300 vs mychess-4.6.0: 187 - 213 - 142  [0.476] 542
+Started game 546 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 543 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 188 - 213 - 142  [0.477] 543
+Started game 547 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 545 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 189 - 213 - 142  [0.478] 544
+Started game 548 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 547 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 189 - 214 - 142  [0.477] 545
+Started game 549 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 544 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 190 - 214 - 142  [0.478] 546
+Started game 550 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 546 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 190 - 215 - 142  [0.477] 547
+Started game 551 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 548 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 190 - 215 - 143  [0.477] 548
+Started game 552 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 552 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 190 - 216 - 143  [0.476] 549
+Started game 553 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 550 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 190 - 217 - 143  [0.475] 550
+...      mychess-threshold-300 playing White: 96 - 105 - 73  [0.484] 274
+...      mychess-threshold-300 playing Black: 94 - 112 - 70  [0.467] 276
+...      White vs Black: 208 - 199 - 143  [0.508] 550
+Elo difference: -17.1 +/- 25.0, LOS: 9.0 %, DrawRatio: 26.0 %
+SPRT: llr -2.56 (-86.9%), lbound -2.94, ubound 2.94
+Started game 554 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 551 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 190 - 218 - 143  [0.475] 551
+Started game 555 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 549 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 190 - 218 - 144  [0.475] 552
+Started game 556 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 553 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 190 - 219 - 144  [0.474] 553
+Started game 557 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 554 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 191 - 219 - 144  [0.475] 554
+Started game 558 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 556 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 191 - 219 - 145  [0.475] 555
+Started game 559 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 557 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 192 - 219 - 145  [0.476] 556
+Started game 560 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 555 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 193 - 219 - 145  [0.477] 557
+Started game 561 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 558 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 193 - 220 - 145  [0.476] 558
+Started game 562 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 559 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 193 - 220 - 146  [0.476] 559
+Started game 563 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 563 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 194 - 220 - 146  [0.477] 560
+...      mychess-threshold-300 playing White: 99 - 107 - 75  [0.486] 281
+...      mychess-threshold-300 playing Black: 95 - 113 - 71  [0.468] 279
+...      White vs Black: 212 - 202 - 146  [0.509] 560
+Elo difference: -16.1 +/- 24.8, LOS: 10.1 %, DrawRatio: 26.1 %
+SPRT: llr -2.5 (-85.0%), lbound -2.94, ubound 2.94
+Started game 564 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 561 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 194 - 221 - 146  [0.476] 561
+Started game 565 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 562 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 194 - 222 - 146  [0.475] 562
+Started game 566 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 564 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 195 - 222 - 146  [0.476] 563
+Started game 567 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 560 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 195 - 222 - 147  [0.476] 564
+Started game 568 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 566 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 195 - 222 - 148  [0.476] 565
+Started game 569 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 567 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 195 - 223 - 148  [0.475] 566
+Started game 570 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 565 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 196 - 223 - 148  [0.476] 567
+Started game 571 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 568 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 197 - 223 - 148  [0.477] 568
+Started game 572 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 572 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 197 - 223 - 149  [0.477] 569
+Started game 573 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 571 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 197 - 224 - 149  [0.476] 570
+...      mychess-threshold-300 playing White: 100 - 110 - 75  [0.482] 285
+...      mychess-threshold-300 playing Black: 97 - 114 - 74  [0.470] 285
+...      White vs Black: 214 - 207 - 149  [0.506] 570
+Elo difference: -16.5 +/- 24.5, LOS: 9.4 %, DrawRatio: 26.1 %
+SPRT: llr -2.59 (-87.9%), lbound -2.94, ubound 2.94
+Started game 574 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 569 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 198 - 224 - 149  [0.477] 571
+Started game 575 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 573 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 198 - 224 - 150  [0.477] 572
+Started game 576 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 574 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 198 - 225 - 150  [0.476] 573
+Started game 577 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 575 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 198 - 225 - 151  [0.476] 574
+Started game 578 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 576 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 199 - 225 - 151  [0.477] 575
+Started game 579 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 578 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 200 - 225 - 151  [0.478] 576
+Started game 580 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 577 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 200 - 226 - 151  [0.477] 577
+Started game 581 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 570 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 200 - 226 - 152  [0.478] 578
+Started game 582 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 580 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 200 - 227 - 152  [0.477] 579
+Started game 583 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 581 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 201 - 227 - 152  [0.478] 580
+...      mychess-threshold-300 playing White: 102 - 111 - 77  [0.484] 290
+...      mychess-threshold-300 playing Black: 99 - 116 - 75  [0.471] 290
+...      White vs Black: 218 - 210 - 152  [0.507] 580
+Elo difference: -15.6 +/- 24.3, LOS: 10.4 %, DrawRatio: 26.2 %
+SPRT: llr -2.53 (-86.0%), lbound -2.94, ubound 2.94
+Started game 584 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 579 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 201 - 227 - 153  [0.478] 581
+Started game 585 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 583 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 201 - 228 - 153  [0.477] 582
+Started game 586 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 582 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 201 - 228 - 154  [0.477] 583
+Started game 587 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 585 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 202 - 228 - 154  [0.478] 584
+Started game 588 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 584 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 202 - 228 - 155  [0.478] 585
+Started game 589 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 587 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 203 - 228 - 155  [0.479] 586
+Started game 590 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 586 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 203 - 228 - 156  [0.479] 587
+Started game 591 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 588 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 203 - 228 - 157  [0.479] 588
+Started game 592 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 589 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 203 - 228 - 158  [0.479] 589
+Started game 593 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 591 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 203 - 228 - 159  [0.479] 590
+...      mychess-threshold-300 playing White: 104 - 112 - 80  [0.486] 296
+...      mychess-threshold-300 playing Black: 99 - 116 - 79  [0.471] 294
+...      White vs Black: 220 - 211 - 159  [0.508] 590
+Elo difference: -14.7 +/- 24.0, LOS: 11.4 %, DrawRatio: 26.9 %
+SPRT: llr -2.5 (-84.9%), lbound -2.94, ubound 2.94
+Started game 594 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 590 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 203 - 229 - 159  [0.478] 591
+Started game 595 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 592 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 204 - 229 - 159  [0.479] 592
+Started game 596 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 594 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 205 - 229 - 159  [0.480] 593
+Started game 597 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 593 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 205 - 230 - 159  [0.479] 594
+Started game 598 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 596 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 205 - 231 - 159  [0.478] 595
+Started game 599 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 598 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 205 - 232 - 159  [0.477] 596
+Started game 600 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 595 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 205 - 233 - 159  [0.477] 597
+Started game 601 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 597 (mychess-threshold-300 vs mychess-4.6.0): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 206 - 233 - 159  [0.477] 598
+Started game 602 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 600 (mychess-4.6.0 vs mychess-threshold-300): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 207 - 233 - 159  [0.478] 599
+Started game 603 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 601 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 207 - 233 - 160  [0.478] 600
+...      mychess-threshold-300 playing White: 105 - 114 - 81  [0.485] 300
+...      mychess-threshold-300 playing Black: 102 - 119 - 79  [0.472] 300
+...      White vs Black: 224 - 216 - 160  [0.507] 600
+Elo difference: -15.1 +/- 23.8, LOS: 10.8 %, DrawRatio: 26.7 %
+SPRT: llr -2.57 (-87.4%), lbound -2.94, ubound 2.94
+Started game 604 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 599 (mychess-threshold-300 vs mychess-4.6.0): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-threshold-300 vs mychess-4.6.0: 207 - 233 - 161  [0.478] 601
+Started game 605 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 602 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 207 - 234 - 161  [0.478] 602
+Started game 606 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 603 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 207 - 235 - 161  [0.477] 603
+Started game 607 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 605 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 207 - 236 - 161  [0.476] 604
+Started game 608 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 607 (mychess-threshold-300 vs mychess-4.6.0): 0-1 {Black wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 207 - 237 - 161  [0.475] 605
+Started game 609 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 606 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 207 - 238 - 161  [0.474] 606
+Started game 610 of 1600 (mychess-4.6.0 vs mychess-threshold-300)
+Finished game 604 (mychess-4.6.0 vs mychess-threshold-300): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-threshold-300 vs mychess-4.6.0: 207 - 238 - 162  [0.474] 607
+Started game 611 of 1600 (mychess-threshold-300 vs mychess-4.6.0)
+Finished game 608 (mychess-4.6.0 vs mychess-threshold-300): 1-0 {White wins by adjudication}
+Score of mychess-threshold-300 vs mychess-4.6.0: 207 - 239 - 162  [0.474] 608
+Finished game 610 (mychess-4.6.0 vs mychess-threshold-300): * {No result}
+Score of mychess-threshold-300 vs mychess-4.6.0: 207 - 239 - 162  [0.474] 608
+Finished game 611 (mychess-threshold-300 vs mychess-4.6.0): * {No result}
+Score of mychess-threshold-300 vs mychess-4.6.0: 207 - 239 - 162  [0.474] 608
+...      mychess-threshold-300 playing White: 105 - 117 - 82  [0.480] 304
+...      mychess-threshold-300 playing Black: 102 - 122 - 80  [0.467] 304
+...      White vs Black: 227 - 219 - 162  [0.507] 608
+Elo difference: -18.3 +/- 23.7, LOS: 6.5 %, DrawRatio: 26.6 %
+SPRT: llr -3.01 (-102.1%), lbound -2.94, ubound 2.94 - H0 was accepted
+Finished game 609 (mychess-threshold-300 vs mychess-4.6.0): * {No result}
+Score of mychess-threshold-300 vs mychess-4.6.0: 207 - 239 - 162  [0.474] 608
+...      mychess-threshold-300 playing White: 105 - 117 - 82  [0.480] 304
+...      mychess-threshold-300 playing Black: 102 - 122 - 80  [0.467] 304
+...      White vs Black: 227 - 219 - 162  [0.507] 608
+Elo difference: -18.3 +/- 23.7, LOS: 6.5 %, DrawRatio: 26.6 %
+SPRT: llr -3.01 (-102.1%), lbound -2.94, ubound 2.94 - H0 was accepted
+
+Player: mychess-threshold-300
+   "Draw by 3-fold repetition": 69
+   "Draw by adjudication": 52
+   "Draw by fifty moves rule": 12
+   "Draw by insufficient mating material": 23
+   "Draw by stalemate": 6
+   "Loss: Black mates": 1
+   "Loss: Black wins by adjudication": 116
+   "Loss: White mates": 1
+   "Loss: White wins by adjudication": 121
+   "No result": 3
+   "Win: Black wins by adjudication": 102
+   "Win: White mates": 1
+   "Win: White wins by adjudication": 104
+Player: mychess-4.6.0
+   "Draw by 3-fold repetition": 69
+   "Draw by adjudication": 52
+   "Draw by fifty moves rule": 12
+   "Draw by insufficient mating material": 23
+   "Draw by stalemate": 6
+   "Loss: Black wins by adjudication": 102
+   "Loss: White mates": 1
+   "Loss: White wins by adjudication": 104
+   "No result": 3
+   "Win: Black mates": 1
+   "Win: Black wins by adjudication": 116
+   "Win: White mates": 1
+   "Win: White wins by adjudication": 121
+Finished match
