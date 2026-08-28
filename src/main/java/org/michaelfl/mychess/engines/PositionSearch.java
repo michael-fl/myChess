@@ -523,6 +523,9 @@ public final class PositionSearch {
                 return SearchNodeResult.TIMEOUT;
             }
 
+            // Bound.EXACT is a placeholder: quiescence returns a bare int, and its two cutoff
+            // exits are really LOWER bounds. Safe only because no caller reads a child's bound
+            // and this path returns before the transposition-table store below.
             return SearchNodeResult.create(GameResult.ONGOING, weight, Bound.EXACT, 0);
         }
 
@@ -560,6 +563,20 @@ public final class PositionSearch {
         result = alphaBetaSearchMain(ctx, alphaWeight, betaWeight, bestMove);
 
         if (!result.isTimeout() && !result.isIllegal()) {
+            // An EXACT bound claims the node's true value, so for an ongoing position it can only
+            // hold strictly inside the window; terminal mate/stalemate scores are exempt. Fires if
+            // the leaf's placeholder bound (see above) is ever routed into this store.
+            final var stored = result;
+            final int alpha = alphaWeight;
+            final int beta = betaWeight;
+
+            __assert(() -> stored.bound() != Bound.EXACT
+                            || stored.result() != GameResult.ONGOING
+                            || (stored.weight() > alpha && stored.weight() < beta),
+                    () -> "EXACT stored outside the window: weight=" + stored.weight()
+                            + ", alpha=" + alpha + ", beta=" + beta
+                            + ", depth=" + ctx.depth() + ", remaining=" + ctx.remainingDepth());
+
             // Store result in transposition table
             int score = WeightingFunction.scoreToTT(result.weight(), ctx.depth());
             tt.put(gameStatus.getPositionHash(), ctx.remainingDepth(), score, result.bound(), result.bestMove());
