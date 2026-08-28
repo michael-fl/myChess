@@ -27,6 +27,7 @@ This roadmap is split across three files. Section numbers (§ 12.x) are **stable
 | 12.21 | King safety | M, ≈ 30–60 |
 | 12.23 | ~~Repetition draws invisible to the search~~ — *correctness* | **DONE 2026-08-15** — SPRT H1 at 321 games, +42.4 ± 29.4; read as ≈ +15 |
 | 12.24 | Endgame scaling — unconvertible material advantages | S, ≈ 5–20 |
+| 12.27 | Reverse futility pruning (static null-move pruning) | S, ≈ 10–40, sign not obvious |
 
 **[Completed & investigated → `roadmap-done.md`](roadmap-done.md).** Shipped features and closed investigations (kept as knowledge):
 
@@ -850,6 +851,107 @@ everything else in this section.
 
 ---
 
+## 12.27 Reverse futility pruning (static null-move pruning) — **S, ≈ 10–40 Elo, sign not obvious**
+
+Skip a whole subtree at an *interior* node when a cheap static evaluation is already far enough
+above beta that searching cannot plausibly change the answer:
+
+```
+alphaBetaSearchPre(board, alpha, beta, remainingDepth):
+    ... 50-move / repetition check, transposition-table probe ...
+
+    cheap = material + tapered PST + castling state
+    if cheap - margin(remainingDepth) >= beta:
+        return cheap                        // whole subtree skipped
+
+    ... null-move pruning, then the normal move loop ...
+```
+
+**Where it would go, and why that is a change in kind.** Today the evaluation is invoked at
+exactly one place — `QuiescenceSearch.java:140` — plus one `calculateMaterialWeight` at the root.
+Interior nodes of `alphaBetaSearchMain` **never evaluate**; they recurse. So this does not move an
+existing computation, it introduces one where none exists. That is the opposite of
+[lazy evaluation](#correction--lazy-evaluation-was-tested-against-the-wrong-cheap-baseline), which
+*removes* work at quiescence leaves:
+
+| | lazy evaluation | reverse futility pruning |
+|---|---|---|
+| where | quiescence leaves | interior nodes |
+| effect on work | **saves** an expensive evaluation | **adds** an evaluation that did not exist |
+| what is saved | evaluation time at one node | **an entire subtree** |
+| correctness | sound, with a measured bound | **a heuristic — it can be wrong** |
+| margin | fixed, 172 cp | must grow with remaining depth |
+
+The payoff is potentially much larger — a skipped subtree outweighs a skipped evaluation by orders
+of magnitude — which is why it is worth its own entry rather than a footnote.
+
+**The prerequisite is the cheap-evaluation split**, § 12.26's task list. Without it the cheap part
+is not a code path, and using the *full* evaluation at every interior node would almost certainly
+cost more than the pruning saves. So this shares an enabler with lazy evaluation, and that is the
+main reason to sequence the two together.
+
+**The margin cannot come from the measurement that gave lazy evaluation its 172 cp.** That number
+bounds the *static* difference between the cheap part and the full evaluation. Here the question is
+different: how much can a *search* of `remainingDepth` plies move the score away from the static
+estimate? That grows with depth, so the margin has to as well — typically on the order of a pawn per
+ply — and it has to be tuned rather than derived.
+
+### It overlaps with the null-move pruning myChess already has
+
+The alternative name, *static* null-move pruning, is the clue. Null-move pruning proves the position
+is good enough by doing a reduced **search** (`NMP_REDUCTION_R = 2`, child depth at least
+`NMP_MIN_CHILD_DEPTH = 2`); this would *guess* the same thing from a static number with no search at
+all. They catch overlapping sets of nodes.
+
+Two consequences, both worth predicting before measuring. The gain will come in **below** published
+figures, because those usually describe engines gaining both techniques rather than adding this one
+to an engine that already prunes with null moves. And where it does fire it is *cheaper* than the
+null-move search it replaces, so part of the payoff is not new cutoffs but the same cutoffs bought
+at a lower price — which is a real gain that the node count will show and the Elo may barely register.
+
+### The project-specific risk, and it is the serious one
+
+**This is the search technique most exposed to evaluation error, and myChess has measured
+evaluation error of the exact kind that hurts it.** The pruning decision trusts a static estimate to
+say a subtree need not be examined. Where that estimate is wrong, the subtree is skipped on a false
+belief and, unlike deeper search, nothing can recover it.
+
+The [current plan](#current-plan-2026-08-12) already puts evaluation before search on measured
+grounds: `9.Qe5` stays wrong through depth 13 and 640 million nodes at +0.78 where Stockfish has
+−2.72, and `33.f3` discards Stockfish's own best move at depth 9. The depth-stability check found
+**7 depth-stable evaluation defects**, two of them reading −0.45 where the truth is −8.10 and
+exactly 0.00 where it is −3.00. A margin of one pawn per ply does not cover an eight-pawn
+misjudgement.
+
+That argues for a **conservative margin and the tactical suite as a hard gate**, and it argues
+against measuring this before the king-safety work in step 3 of the current plan.
+
+### Recommended order
+
+**Inside the search cluster, immediately before LMR — and behind the evaluation work.**
+
+| | step | why here |
+|---|---|---|
+| 0 | cheap-evaluation split (§ 12.26) | hard prerequisite for both this and lazy evaluation |
+| 1 | lazy evaluation SPRT | the **sound** use of the same split; if the split does not pay for itself there, this inherits a worse starting point and a heuristic on top of it is the wrong next bet |
+| 2 | king safety (step 3 of the current plan) | reduces the evaluation error this technique prunes on |
+| 3 | history, then PVS | orthogonal to this; keep the existing cluster order, neither is a prerequisite |
+| 4 | **reverse futility pruning** | the simpler of the two pruning changes — one condition at the top of a node against LMR's reduction formula with its exclusion list. Do the cheap experiment first |
+| 5 | LMR | tune it on the tree this has already thinned; the reverse order would credit LMR with gains this then takes back |
+
+**Why before LMR rather than after.** Both prune, so whichever is measured first is credited with
+the overlap. Measuring the simple one first keeps the attribution honest and leaves LMR's high-variance
+tuning to happen once, on the tree it will actually run on.
+
+**Why not bundled with lazy evaluation**, even though they share the split: two changes in one SPRT
+and the result says nothing about either. This project has paid for that twice — the PeSTO ceiling
+result measured ≈ 0 from two effects cancelling and said nothing about either of them.
+
+**Effort** is small — one condition, one tuned margin, and the guard. The uncertainty is not in the
+implementation but in whether a heuristic that trusts this evaluation is affordable yet.
+
+---
+
 ## Search cluster plan — History → PVS → LMR
 
 The three remaining low-effort search items — [§ 12.5 history](roadmap.md#125-history-heuristic--s--3050-elo), [§ 12.20 PVS](roadmap.md#1220-principal-variation-search-pvs--negascout--s--1025-elo), and [§ 12.3 LMR](roadmap.md#123-late-move-reductions-lmr--s--50100-elo) — are the highest-leverage work once the tapered evaluation ([§ 12.7](roadmap.md#127-evaluation-upgrades--m--4080-elo-combined)) has landed. They reinforce each other, so the order and the measurement baselines matter more than the raw Elo estimates. This expands step 4 of the [suggested implementation order](roadmap.md#suggested-implementation-order) below into a concrete build-and-measure plan.
@@ -860,6 +962,15 @@ The three remaining low-effort search items — [§ 12.5 history](roadmap.md#125
 
 **Step 2 — PVS (NegaScout), alone.** A low-risk search reformulation: search non-first moves on a null window and re-search on a fail-high. Small direct gain, but it provides the null-window / re-search scaffold that LMR plugs into. It must be *result-equivalent* to plain alpha-beta — the same best move and score at a fixed depth, only fewer nodes — so add a regression test; any divergence is a bug. Measure against `V_hist`; the gate is "no regression" plus a hopefully small gain → `V_pvs`.
 
+**Step 2b — reverse futility pruning, before LMR.** Added 2026-08-28 as
+[§ 12.27](#1227-reverse-futility-pruning-static-null-move-pruning--s--1040-elo-sign-not-obvious), which
+carries the full reasoning. It belongs here rather than at the end because both it and LMR prune, so
+whichever is measured first is credited with the overlap — and this is by far the simpler of the two,
+one condition at the top of a node against LMR's reduction formula and exclusion list. It has a hard
+prerequisite the rest of this cluster does not: the cheap-evaluation split from § 12.26, since
+interior nodes currently do not evaluate at all. It is also the technique most exposed to evaluation
+error, which is why it sits behind the king-safety work. → `V_rfp`
+
 **Step 3 — LMR, on top of PVS.** The large but high-variance payoff. It needs *both* good ordering (history) and the null-window scaffold (PVS); built on plain alpha-beta it would be less efficient and would rework the same move loop twice. Get the reduction formula and the exclusions right — do not reduce captures, promotions, check-givers, killers, or the TT move — and re-search at full depth on a fail-high, reusing the PVS re-search. Measure against `V_pvs`; this is the payoff measurement — if it comes back flat or negative, retune the reduction rather than discarding it. Guard with the tactical suite (WAC / behavior tests): too-aggressive LMR misses tactics. → `V_cluster`.
 
 **Baselines — decide incrementally, track cumulatively.**
@@ -868,7 +979,8 @@ The three remaining low-effort search items — [§ 12.5 history](roadmap.md#125
 |---|---|---|
 | 1 | History | `V_tapered` |
 | 2 | PVS | `V_hist` |
-| 3 | LMR | `V_pvs` |
+| 2b | Reverse futility pruning ([§ 12.27](#1227-reverse-futility-pruning-static-null-move-pruning--s--1040-elo-sign-not-obvious)) | `V_pvs` |
+| 3 | LMR | `V_rfp` |
 | — | whole cluster (for the record) | `V_tapered`; plus the fixed anchor (4.2.2 / Pulse) for the common Elo scale |
 
 The keep/discard **decision** is always the incremental SPRT against the immediate predecessor — clean attribution, as with the tapered null test against 4.2.2. The cumulative gain is additionally tracked against the fixed anchor so every version stays on one scale.
