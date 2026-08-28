@@ -274,7 +274,7 @@ public final class WeightingFunction {
      */
     public int calculate(Board theBoard) {
         cheapPass(theBoard);
-        completeEvaluation();
+        completeEvaluation(theBoard);
 
         return calculatePositionWeight();
     }
@@ -381,17 +381,24 @@ public final class WeightingFunction {
      * because they are accumulated inside the pawn and bishop routines rather than in the main
      * loop. Moving them out would let a cheap-only caller have them too.
      *
-     * <p>Must run after {@link #cheapPass(Board)}: it consumes {@link #occupiedFields} and relies
-     * on the counters that pass reset.
+     * <p><b>Must run after {@link #cheapPass(Board)} on the same position.</b> It consumes
+     * {@link #occupiedFields} and the counters that pass reset, which is a coupling the signature
+     * cannot express — so the board is taken as a parameter rather than read from the field
+     * {@code cheapPass} happened to set, to keep the two calls symmetric at the call site and make
+     * a mismatched pair look wrong where it is written.
+     *
+     * @param theBoard the position {@code cheapPass} was called with
      */
-    void completeEvaluation() {
+    void completeEvaluation(Board theBoard) {
+        final byte[] rawBoard = theBoard.getRawBoard();
+
         // Only the undefended-pieces machinery needs this copy, so it belongs on this side of the
         // split rather than in the cheap pass.
-        System.arraycopy(board, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
+        System.arraycopy(rawBoard, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
 
         for (int i = 0; i < occupiedCount; i++) {
             final int field = occupiedFields[i];
-            final byte piece = board[field];
+            final byte piece = rawBoard[field];
             final int color = (piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE ? 0 : 1;
 
             calculationFunctions[piece].calculate(this, field, color);
