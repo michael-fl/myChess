@@ -24,6 +24,17 @@ public final class QuiescenceSearch {
     private boolean isTimeout;
     private boolean materialOnlyShortcutEnabled = true;
 
+    /**
+     * Compile-time gate for {@link LazyCutoffCounters}, mirroring {@code Assert.ENABLED}. Must stay
+     * {@code false} outside a counting build: javac then removes the increments and the probing
+     * cheap-pass call, verifiable with {@code javap -c -p QuiescenceSearch}.
+     */
+    private static final boolean COUNT_LAZY_CUTOFFS = false;
+
+    /** Sound margins to probe: 172 cp is achievable today, 129 needs the row-C refactor. */
+    private static final int SOUND_MARGIN_B2 = 172;
+    private static final int SOUND_MARGIN_C = 129;
+
     public QuiescenceSearch(MoveGenerator moveGenerator, WeightingFunction weightingFunction, Statistics statistics, int maxQuiescenceDepth, long timeout) {
         this.moveGenerator = moveGenerator;
         this.weightingFunction = weightingFunction;
@@ -58,6 +69,10 @@ public final class QuiescenceSearch {
         }
 
         int standPat = calculatePositionWeight(ctx.workingBoard(), ctx.weightFactor(), ctx.materialWeight(), ctx.materialDelta());
+
+        if (COUNT_LAZY_CUTOFFS) {
+            countLazyCutoffOpportunity(ctx, standPat, alphaWeight, betaWeight);
+        }
 
         // Fail-soft stand-pat cutoff: return the actual stand-pat value, not
         // the beta bound. Caller (and a future TT) get a tighter lower bound.
@@ -145,6 +160,37 @@ public final class QuiescenceSearch {
             isTimeout = statistics.getPositionsCount() % 10000 == 0 && System.currentTimeMillis() >= timeout;
         }
         return isTimeout;
+    }
+
+    /**
+     * Records whether a sound lazy cutoff would have fired here, without changing anything.
+     *
+     * <p>Runs the cheap pass a second time purely to ask the question, so a counting build is
+     * slower than a normal one — irrelevant, because the output is a ratio and no search decision
+     * depends on it. The bench signature must be unchanged with the gate on or off.
+     */
+    private void countLazyCutoffOpportunity(final SearchNodeContext ctx, final int standPat,
+                                            final int alphaWeight, final int betaWeight) {
+        LazyCutoffCounters.nodes++;
+
+        if (standPat >= betaWeight) {
+            LazyCutoffCounters.standPatCutoffs++;
+        }
+
+        final int cheap = weightingFunction.cheapPass(ctx.workingBoard()) * ctx.weightFactor();
+
+        if (cheap - SOUND_MARGIN_B2 >= betaWeight) {
+            LazyCutoffCounters.soundHigh172++;
+        }
+        if (cheap + SOUND_MARGIN_B2 <= alphaWeight) {
+            LazyCutoffCounters.soundLow172++;
+        }
+        if (cheap - SOUND_MARGIN_C >= betaWeight) {
+            LazyCutoffCounters.soundHigh129++;
+        }
+        if (cheap + SOUND_MARGIN_C <= alphaWeight) {
+            LazyCutoffCounters.soundLow129++;
+        }
     }
 
     public void setMaterialOnlyShortcutEnabled(boolean materialOnlyShortcutEnabled) {

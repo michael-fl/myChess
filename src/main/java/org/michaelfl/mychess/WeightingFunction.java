@@ -193,7 +193,7 @@ public final class WeightingFunction {
 
     /**
      * Fields holding a piece, filled by {@link #cheapPass(Board)} and consumed by
-     * {@link #completeEvaluation()} so the completion walks ~17 pieces instead of re-scanning
+     * {@link #completeEvaluation(Board)} so the completion walks ~17 pieces instead of re-scanning
      * the board. A reused instance field, not a local, because the search must not allocate in
      * the hot path.
      *
@@ -269,7 +269,7 @@ public final class WeightingFunction {
      * Calculate weight of position in centi pawns.
      *
      * <p>Composed of the two halves the split introduced — {@link #cheapPass(Board)} and
-     * {@link #completeEvaluation()} — so this method's result is unchanged by construction and
+     * {@link #completeEvaluation(Board)} — so this method's result is unchanged by construction and
      * the bench signature must stay bit-identical.
      */
     public int calculate(Board theBoard) {
@@ -285,7 +285,7 @@ public final class WeightingFunction {
      * board that has to happen anyway.
      *
      * <p>Also records the occupied fields into {@link #occupiedFields}, so
-     * {@link #completeEvaluation()} can walk the pieces instead of re-scanning the board. Without
+     * {@link #completeEvaluation(Board)} can walk the pieces instead of re-scanning the board. Without
      * that the split would cost a second full traversal on every full evaluation — about a quarter
      * more counted work on exactly the path that is already the expensive one.
      *
