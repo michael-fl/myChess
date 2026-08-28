@@ -96,13 +96,46 @@ Given a list and "arbeite sie selbständig ab", **finish a task and begin the ne
 
 **Waiting on a machine is a legitimate turn end. Ending a turn with nothing running and tasks open is a bug.** That state occurred twice on 2026-08-28 and the user asked both times what was happening; the answer was "nothing", which is the failure.
 
-Three causes worth naming, because they recur:
+**The mechanism, found on the second attempt after the first fix failed within ten minutes: announcing the next task in prose is what substitutes for starting it.** Every failure that day had the same shape — the turn ended with a sentence *about* the next task instead of the tool call that begins it:
+
+| how the turn ended | state | |
+|---|---|---|
+| "Ich melde mich, wenn der SPRT entschieden hat." | measurement running | correct |
+| "Soll ich mit #36 loslegen?" | nothing running | bug |
+| "Ich mache mit #34 weiter." | nothing running | bug |
+| "Weiter mit #35." | nothing running | bug |
+
+Writing "weiter mit X" *feels* like the transition, and once written, the turn feels complete. So the rule is mechanical rather than motivational:
+
+> **Never end a turn with a sentence announcing the next task.** If it is unblocked, the next thing after the tool result is the tool call that starts it — prose comes after, or not at all.
+
+Self-check: any future-tense sentence about own work ("ich mache weiter mit", "als nächstes", "soll ich") with nothing running is the bug, regardless of how reasonable the surrounding message looks.
+
+Three contributing causes, because they recur:
 
 - **Long reports end turns.** The rhythm slips from "do, do, do, brief report" to "do, long report, stop". A report that reads like a conclusion becomes one. Detail belongs in the commit message and the roadmap, which is where it gets read later anyway.
 - **Mid-turn corrections train it.** After six or seven interruptions in a row, the learned pattern becomes "deliver a small unit and hand back". The corrections were right; the generalization was not.
 - **A correction about *how* something was done does not revoke permission to do it.** Being told off for pushing unasked is a rule about pushes, not about forward motion.
 
 Autonomy covers *doing the work*. Commits and pushes still each need their own instruction.
+
+**Arm the idle watchdog in the same turn autonomous work starts** — the user's idea, 2026-08-28, after the written rule alone failed three times in one evening. A persistent `Monitor` that fires every 10 minutes and reports whether any job process is alive:
+
+```sh
+while true; do
+  sleep 600
+  busy=$(ps -eo command | grep -cE '(cutechess-cli -engine|java .*MyChessMain|<other job patterns>)')
+  if [ "$busy" -gt 0 ]; then
+    echo "machine BUSY ($busy job process(es)) — nothing to check"
+  else
+    echo "IDLE — nothing is running. If the task list has an unblocked task, resume it NOW with a tool call, not with a sentence about resuming it."
+  fi
+done
+```
+
+Not elegant, and deliberately so: it moves the check outside my own state, which is the point — the three failures that evening were all failures of a good intention. Over a night that is roughly 60 messages and the user has explicitly accepted the volume; stretch to 20 minutes only if asked.
+
+Three things it is not. **"BUSY" only means something is running**, not that the right thing is running or that I am not waiting on the wrong signal. **It dies with the session**, which is why the rule lives here as well. And **it detects rather than prevents** — up to ten minutes late. The real fix is the no-announcement rule above; treating the watchdog as the mechanism would build in that ten-minute delay as normal.
 
 ## Hot-path production code stays on a branch until a measurement justifies it
 
