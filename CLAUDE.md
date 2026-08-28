@@ -90,6 +90,19 @@ Moves are packed into a single `int` (`fromField | toField<<8 | capturedPiece<<1
 - **The `engines/` package is a one-way dependency** on the root package, not vice-versa. Root-package classes (`Game`, `Board`, …) reference engines only through the abstract `ChessEngine` base class.
 - **US English everywhere — no British spellings.** Identifiers, comments, JavaDoc, log/exception messages, commit subjects, doc files under `docs/`, and chat-facing summaries about code all use US English. `color` not `colour`, `center` not `centre`, `behavior` not `behaviour`, `analyze` not `analyse`, `optimize` not `optimise`, `serialize` not `serialise`, `cancel(l)ed` (single `l`), `favor` not `favour`. The global rule in `~/.claude/CLAUDE.md` covers this; this entry is a local reminder because the convention is easy to slip on when writing prose comments.
 
+## Hot-path production code stays on a branch until a measurement justifies it
+
+**An unchanged bench signature proves the behavior is identical. It proves nothing about cost.** Those are different questions, and conflating them is how four separate changes to `WeightingFunction` and `PositionSearch` reached the mainline in one evening (2026-08-28) — each individually "proven neutral", together an unmeasured refactor of the evaluation's hot path. The one number that argued against it, a wall clock 12 % above the previous run, went into a commit message instead of stopping the commit.
+
+So, for anything inside the search or the evaluation:
+
+- **Branch first.** The mainline gets it after a measurement says it is at worst free, not before. `bench-history.md` rule 6 already draws this distinction; this entry exists because writing it down was not enough.
+- **A signature match is the entry ticket, not the verdict.** It says the change is safe to measure. It does not say the change should ship.
+- **Cheap and provably-neutral is still not free.** "One or two percent of evaluation time, unmeasurable" is a prediction. Several of them in a row are a refactor.
+- **A timing reading that points the wrong way is a stop signal**, even when it is a single unpaired number that proves nothing. Unproven and ignorable are not the same thing: measure it properly or leave the change on the branch.
+
+Docs, tests and measurement tooling are exempt — they cannot cost plies.
+
 ## Long-running processes: persist as you go, and always watch them
 
 Measurement work here routinely runs for minutes to hours — engine matches, STS runs, Stockfish scans, depth sweeps. Two rules apply to **every** process expected to run longer than a minute. Both exist because each was violated and cost real time.
