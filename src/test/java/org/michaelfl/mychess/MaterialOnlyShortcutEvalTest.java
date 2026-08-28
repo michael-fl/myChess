@@ -481,6 +481,132 @@ class MaterialOnlyShortcutEvalTest {
         }
     }
 
+    // ---------------------------------------------------------------------------------------
+    // The gate's boundary. Everything above probes the shortcut through a real search; the two
+    // tests below probe the gate itself, by calling QuiescenceSearch with a chosen materialDelta.
+    // ---------------------------------------------------------------------------------------
+
+    /**
+     * A quiet position — no captures available anywhere, so quiescence returns its stand-pat
+     * immediately and the returned score <em>is</em> the gate's output, with no search in between.
+     *
+     * <p>White king e1, white pawn e2, black king e8. Raw material is +100; the full evaluation
+     * differs from it, which is what makes the two branches of the gate distinguishable at all.
+     */
+    private static final String QUIET_BOUNDARY_FEN = "4k3/8/8/8/8/8/4P3/4K3 w - - 0 1";
+
+    /** Quiescence depth cap and time budget for the direct gate calls; neither is reached. */
+    private static final int BOUNDARY_QUIESCENCE_DEPTH = 20;
+    private static final int BOUNDARY_BUDGET_MS = 60_000;
+
+    /**
+     * The full evaluation must still run at a running swing of <b>200 cp</b>.
+     *
+     * <p>This is the guard that was missing, and its absence was measured rather than suspected:
+     * lowering {@code EVALUATE_MATERIAL_ONLY_THRESHOLD} from 200 to 100 left the entire fast
+     * suite green at 1145 tests, because all five cases above turn on piece captures worth 300 to
+     * 1000 cp and therefore behave identically at either value. The existing characterizations are
+     * one-sided — they detect the shortcut <em>ceasing</em> to fire, never it <em>starting</em> to
+     * fire somewhere new.
+     *
+     * <p>200 cp is the only delta that separates a threshold of 100 from one of 200. Every piece
+     * value in {@link WeightingFunction#weightOfPiece} is a multiple of 100 — pawn 100, knight and
+     * bishop 300, rook 500, queen 1000 — so {@code materialDelta} is always a multiple of 100 and
+     * the "100 to 200 band" this test was originally described as covering is empty. The gate is
+     * strict ({@code > threshold}), so a swing of 200 does <em>not</em> fire the gate at a threshold
+     * of 200 and does fire it at 100.
+     *
+     * <p><b>The swing is injected rather than played out</b> — see {@link #SWING_BELOW_GATE}. The
+     * fixture holds a single pawn and is not meant to embody the swing; it only has to be quiet and
+     * to have a positional score that differs from its material.
+     *
+     * <p>Asserts against the evaluation computed on the spot rather than against a pinned number,
+     * so an evaluation retune cannot break it. What it pins is the <b>gate</b>, and only the gate.
+     */
+    @Test
+    void theFullEvaluationStillRunsAtASwingOf200Centipawns() {
+        var board = Fen.importFEN(QUIET_BOUNDARY_FEN);
+        int weightFactor = board.getGameStatus().getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
+        int material = weightFactor * WeightingFunction.calculateMaterialWeight(board);
+        int fullEvaluation = weightFactor * new WeightingFunction().calculate(board);
+
+        assertNotEquals(material, fullEvaluation,
+                "test premise: the fixture must be a position where the positional terms move the "
+                        + "score, otherwise neither branch of the gate is observable");
+
+        for (int delta : new int[]{SWING_BELOW_GATE, -SWING_BELOW_GATE}) {
+            assertEquals(fullEvaluation, gateOutput(board, weightFactor, material, delta),
+                    "at a swing of " + delta + " cp the gate must not fire, so the full evaluation "
+                            + "runs — this fails if EVALUATE_MATERIAL_ONLY_THRESHOLD drops to 100");
+        }
+    }
+
+    /**
+     * The shortcut must take over at a running swing of <b>300 cp</b>.
+     *
+     * <p>The upper edge of the same gate, and the counterpart to the test above: 300 cp is the
+     * delta that separates a threshold of 200 from one of 300. The suite already had an unlabelled case here —
+     * {@code QuiescenceSearchTest.testPositionAfterCapture} is a bishop-for-knight trade, so its
+     * swing is exactly 300 cp and it failed when the threshold was raised to 300. This states the
+     * same edge directly instead of as a side effect.
+     *
+     * <p>Together the two tests pin the threshold to <b>exactly 200</b>. That is deliberate: moving
+     * the constant should be a decision that updates a test, not a change the suite sleeps through.
+     */
+    @Test
+    void theShortcutTakesOverAtASwingOf300Centipawns() {
+        var board = Fen.importFEN(QUIET_BOUNDARY_FEN);
+        int weightFactor = board.getGameStatus().getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
+        int material = weightFactor * WeightingFunction.calculateMaterialWeight(board);
+
+        for (int delta : new int[]{SWING_ABOVE_GATE, -SWING_ABOVE_GATE}) {
+            assertEquals(material, gateOutput(board, weightFactor, material, delta),
+                    "at a swing of " + delta + " cp the gate must fire, so only material is "
+                            + "returned — this fails if EVALUATE_MATERIAL_ONLY_THRESHOLD rises to 300");
+        }
+    }
+
+    /**
+     * A running swing of 200 cp — the largest value that does <em>not</em> open the gate at the
+     * shipped threshold, and the value that separates a threshold of 100 from one of 200.
+     *
+     * <p><b>Injected, not enacted.</b> This is handed to {@code QuiescenceSearch} as its
+     * {@code materialDelta} argument; the fixture does not play two pawns' worth of captures to
+     * produce it. That directness is the point — the gate reads nothing but this number, so
+     * supplying it is what isolates the gate from the search around it. A fixture that tried to
+     * accumulate the swing through a real capture chain would test move generation, ordering and
+     * SEE pruning at the same time, and would break whenever any of those changed.
+     *
+     * <p>The pairing with the fixture's own material is realistic rather than contrived: the delta
+     * is measured from the root while the material balance is absolute, so "+100 on the board after
+     * a +200 swing" is simply a root position where the side to move was a pawn down.
+     */
+    private static final int SWING_BELOW_GATE = 200;
+
+    /** A running swing of 300 cp: the smallest value that opens the gate at the shipped threshold. */
+    private static final int SWING_ABOVE_GATE = 300;
+
+    /**
+     * The gate's output for one {@code materialDelta}, taken from a fresh quiescence search over a
+     * position with no captures — so the stand-pat is returned unchanged and nothing else can
+     * influence the number.
+     *
+     * @param board        the quiet fixture; not mutated, a copy is searched
+     * @param weightFactor {@code +1} when white is to move, {@code -1} otherwise
+     * @param material     the side-to-move-relative material balance
+     * @param materialDelta the running swing to present to the gate
+     * @return whatever {@code QuiescenceSearch} returns, which for a quiet position is exactly the
+     *         gate's choice between the full evaluation and raw material
+     */
+    private static int gateOutput(Board board, int weightFactor, int material, int materialDelta) {
+        var quiescenceSearch = new QuiescenceSearch(
+                MoveGenerator.forQuiescenceSearch(), new WeightingFunction(), new Statistics(),
+                BOUNDARY_QUIESCENCE_DEPTH, System.currentTimeMillis() + BOUNDARY_BUDGET_MS);
+
+        return quiescenceSearch.quiescenceSearch(board.copy(), 0, weightFactor,
+                WeightingFunction.MIN_ALPHA, WeightingFunction.MAX_BETA, material, materialDelta);
+    }
+
     /** Whether {@code weight} is an exact number of pawns, the signature of a piece count. */
     private static boolean isWholePawns(float weight) {
         return Math.abs(weight - Math.round(weight)) < PURE_MATERIAL_TOLERANCE;

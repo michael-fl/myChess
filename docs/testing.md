@@ -5,7 +5,7 @@ The test suite is the executable specification for myChess: it pins down move ge
 | Metric | Value |
 |---|---|
 | Test classes | 81 `*Test.java` (+ 25 helpers and measurement drivers under the same source root, class count re-counted 2026-08-27, helper count 2026-08-22) |
-| Test methods (`@Test` + `@ParameterizedTest`) | 1 271 executed, parameterized cases counted per invocation — full run 2026-08-27 |
+| Test methods (`@Test` + `@ParameterizedTest`) | 1 273 — the 1 271 of the full run on 2026-08-27 plus the two gate-boundary tests added 2026-08-28; derived rather than re-measured, since a full run costs 17 minutes and the machine was busy with an SPRT. Parameterized cases counted per invocation |
 | Currently passing | **all** — full run 2026-08-27: 1 271 run, 0 failures, 0 errors, **0 skipped** |
 | Currently `@Disabled` | 0 — see [Retired disabled tests](#retired-disabled-tests) |
 | Test source lines | ~28 260 |
@@ -429,8 +429,22 @@ grep -hoE "Test family:</b> [a-z-]+ \([a-z]+\)" src/test/java/org/michaelfl/mych
 grep -c "Test family:</b> king-safety (defect)" src/test/java/org/michaelfl/mychess/*.java
 ```
 
-**What must NOT carry the marker: aggregate measurements.** `StsTest` and `EvalBenchmarkTest`
-deliberately have no `Test family:` line, and neither should any future suite-level metric.
+**What must NOT carry the marker: aggregate measurements, and constant-boundary guards.**
+`StsTest` and `EvalBenchmarkTest` deliberately have no `Test family:` line, and neither should any
+future suite-level metric. The same applies to
+`MaterialOnlyShortcutEvalTest.theFullEvaluationStillRunsAtASwingOf200Centipawns` and
+`theShortcutTakesOverAtASwingOf300Centipawns` (added 2026-08-28): they pin the two edges of
+`EVALUATE_MATERIAL_ONLY_THRESHOLD` and are guards over a *design constant*, not evidence about an
+evaluation weakness. Counting them in the `material-only-shortcut` family would inflate a number
+that is meant to measure evaluation defects. They sit in that class because that is where someone
+chasing this behavior looks — provenance follows the mechanism, per the rule further down.
+
+Their absence had been measured rather than suspected: lowering the threshold from 200 to 100 left
+the entire fast suite green, because all five family cases turn on piece captures worth 300 to
+1000 cp and behave identically at either value. The family's characterizations are **one-sided
+guards** — they detect the shortcut *ceasing* to fire, never it *starting* to fire somewhere new.
+Both new tests were verified to fail when the constant moves, at 100 and at 300 respectively; a
+boundary test that has not been shown to fail is not a guard.
 The marker classifies *per-position characterizations*, whose status can be `defect`, `fixed`,
 or `guard`; a score over 70 or 1188 positions is none of the three. Adding the marker to
 "complete" the taxonomy would corrupt the grep-based counts above, which are the whole reason
