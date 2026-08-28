@@ -190,6 +190,23 @@ public final class WeightingFunction {
     private Board theBoard; // For debugger only
     private byte[] board;
     private final byte[] tempBoard = new byte[Board.LENGTH * Board.LENGTH];
+
+    /**
+     * Fields holding a piece, filled by {@link #cheapPass(Board)} and consumed by
+     * {@link #completeEvaluation()} so the completion walks ~17 pieces instead of re-scanning
+     * the board. A reused instance field, not a local, because the search must not allocate in
+     * the hot path.
+     *
+     * <p>Sized for <b>every playable square</b>, not for the 32 pieces a legal game has. The
+     * evaluation is handed positions from FEN import, from tests and from promotion-heavy lines,
+     * and nothing in its contract forbids more material than the starting position — which is
+     * precisely why {@code phase} is clamped to {@link #MAX_PHASE}. A 32-entry buffer threw
+     * {@code ArrayIndexOutOfBoundsException} on {@code TaperedEvaluationTest}'s clamping case.
+     */
+    private final int[] occupiedFields = new int[FILES * FILES];
+
+    /** Number of valid entries in {@link #occupiedFields}. */
+    private int occupiedCount;
     private final int[] chessCount = new int[2];
     private final float[] piecesWeight = new float[2];
     private final int[] mobilityWeight = new int[2];
@@ -248,8 +265,39 @@ public final class WeightingFunction {
         };
     }
 
-    /** Calculate weight of position in centi pawns. */
+    /**
+     * Calculate weight of position in centi pawns.
+     *
+     * <p>Composed of the two halves the split introduced — {@link #cheapPass(Board)} and
+     * {@link #completeEvaluation()} — so this method's result is unchanged by construction and
+     * the bench signature must stay bit-identical.
+     */
     public int calculate(Board theBoard) {
+        cheapPass(theBoard);
+        completeEvaluation();
+
+        return calculatePositionWeight();
+    }
+
+    /**
+     * The half of the evaluation that needs no per-piece move generation: material, the tapered
+     * piece-square tables, and the castling state. Everything here falls out of one pass over the
+     * board that has to happen anyway.
+     *
+     * <p>Also records the occupied fields into {@link #occupiedFields}, so
+     * {@link #completeEvaluation()} can walk the pieces instead of re-scanning the board. Without
+     * that the split would cost a second full traversal on every full evaluation — about a quarter
+     * more counted work on exactly the path that is already the expensive one.
+     *
+     * <p><b>This pass cannot detect an illegal position.</b> {@code containsIllegalMove} is set in
+     * {@link #capture}, which only runs in the completion, so a caller that stops after the cheap
+     * pass has no illegality signal and must probe separately — {@code QuiescenceSearch} already
+     * does exactly that for the material-only shortcut, for the same reason.
+     *
+     * @param theBoard position to evaluate; not modified
+     * @return the cheap partial evaluation in centipawns, White's point of view
+     */
+    int cheapPass(Board theBoard) {
         this.game = theBoard.getGameStatus();
         this.turn = game.getTurn() == GameStatus.TURN_WHITE ? 0 : 1;
         this.theBoard = theBoard;
@@ -278,29 +326,35 @@ public final class WeightingFunction {
         this.pstEndGameWeight[0] = 0;
         this.pstEndGameWeight[1] = 0;
 
-        System.arraycopy(board, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
+        this.occupiedCount = 0;
 
-        final int stopField = Board.h8 + 1;
         int phase = 0;
 
-        for (int field = Board.a1; field < stopField; field++) {
-            final byte piece = board[field];
-            if (piece != Board.empty && piece != Board.illegal) {
-                final int color = (piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE ? 0 : 1;
+        // Rank by rank: the index range a1..h8 is 92 fields for 64 real squares, and this loop
+        // runs on every evaluation. No Board.illegal test needed — createEmptyRawBoard writes it
+        // only to border indices, which this never visits.
+        for (int rankStart = Board.a1; rankStart <= Board.a8; rankStart += Board.LENGTH) {
+            final int rankEnd = rankStart + FILES;
 
-                piecesWeight[color] += weightOfPiece[piece];
+            for (int field = rankStart; field < rankEnd; field++) {
+                final byte piece = board[field];
+                if (piece != Board.empty) {
+                    final int color = (piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE ? 0 : 1;
 
-                // Accumulate every piece's PST (both phases; blended by phase
-                // afterwards). The king is no longer excepted here: the crude
-                // endgame king-PST skip (isEndGame / plyCount > 60) has been
-                // removed, so the tapered king endgame table handles centralization.
-                int packed = PieceSquareTables.getCombinedWeight(piece, field);
-                pstMidGameWeight[color] += (short) packed;
-                pstEndGameWeight[color] += (short) ((packed + 0x8000) >> 16);
+                    piecesWeight[color] += weightOfPiece[piece];
 
-                phase += phaseWeightOfPiece[piece];
+                    // Accumulate every piece's PST (both phases; blended by phase
+                    // afterwards). The king is no longer excepted here: the crude
+                    // endgame king-PST skip (isEndGame / plyCount > 60) has been
+                    // removed, so the tapered king endgame table handles centralization.
+                    int packed = PieceSquareTables.getCombinedWeight(piece, field);
+                    pstMidGameWeight[color] += (short) packed;
+                    pstEndGameWeight[color] += (short) ((packed + 0x8000) >> 16);
 
-                calculationFunctions[piece].calculate(this, field, color);
+                    phase += phaseWeightOfPiece[piece];
+
+                    occupiedFields[occupiedCount++] = field;
+                }
             }
         }
 
@@ -312,9 +366,54 @@ public final class WeightingFunction {
 
         calculateCastlingState();
 
-        calculateUndefendedPiecesCount();
+        return cheapWeight();
+    }
 
-        return calculatePositionWeight();
+    /**
+     * The half that needs the per-piece walk: mobility, threats, the check count and the
+     * undefended-pieces count. They are not four independent terms but one shared traversal —
+     * {@code move} accumulates mobility, {@code capture} accumulates threats and the check count
+     * and sets the attack mark, {@code defend} clears {@link #tempBoard}, and
+     * {@link #calculateUndefendedPiecesCount()} reads it afterwards — so there is no partial
+     * variant of this.
+     *
+     * <p>Doubled pawns and the bishop pair ride along here despite being cheap in principle,
+     * because they are accumulated inside the pawn and bishop routines rather than in the main
+     * loop. Moving them out would let a cheap-only caller have them too.
+     *
+     * <p>Must run after {@link #cheapPass(Board)}: it consumes {@link #occupiedFields} and relies
+     * on the counters that pass reset.
+     */
+    void completeEvaluation() {
+        // Only the undefended-pieces machinery needs this copy, so it belongs on this side of the
+        // split rather than in the cheap pass.
+        System.arraycopy(board, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
+
+        for (int i = 0; i < occupiedCount; i++) {
+            final int field = occupiedFields[i];
+            final byte piece = board[field];
+            final int color = (piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE ? 0 : 1;
+
+            calculationFunctions[piece].calculate(this, field, color);
+        }
+
+        calculateUndefendedPiecesCount();
+    }
+
+    /**
+     * The cheap pass's own score: the terms it can produce, combined with the same factors and
+     * rounding {@link #calculatePositionWeight()} uses.
+     *
+     * <p>Deliberately omits the illegal-move sentinel — {@code containsIllegalMove} is only ever
+     * set in the completion, so there is nothing to report here yet.
+     *
+     * @return material, tapered piece-square tables and castling state, in centipawns
+     */
+    private int cheapWeight() {
+        return roundSymmetric((
+                  (piecesWeight[0] - piecesWeight[1]) / 100f
+                + (positionWeight[0] - positionWeight[1]) / 100f * positionFactor
+                + (castlingState[0] - castlingState[1]) * castlingFactor) * 100);
     }
 
     /**

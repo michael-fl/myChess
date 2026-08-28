@@ -530,4 +530,82 @@ class WeightingFunctionTest {
         assertEquals(0, WeightingFunction.getMaterialWeightOfMove(move),
                 "castling produces no material delta");
     }
+
+    /** Positions spanning opening, middlegame, endgame and a pawnless piece cluster. */
+    private static final String[] CHEAP_PASS_FIXTURES = {
+            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+            "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1",
+            "2rqr1k1/1p1bbppp/p3p3/2npP3/3Q4/P1N1BN2/1PP2PPP/R3R1K1 w - - 4 17",
+            "8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - - 0 1",
+            "k7/2n1n3/1nbNbn2/2NbRBn1/1nbRQR2/2NBRBN1/3N1N2/7K w - - 0 1",
+            "4k3/8/8/8/8/8/4P3/4K3 b - - 0 1",
+    };
+
+    /** Indices into {@link WeightingFunction#TUNABLE_FACTOR_NAMES} the cheap pass produces. */
+    private static final int PST_FACTOR = 0;
+    private static final int CASTLING_FACTOR = 3;
+
+    /** One centipawn, to absorb the two expressions rounding their sums at different points. */
+    private static final int ROUNDING_SLACK = 1;
+
+    /**
+     * The cheap pass must agree with the full evaluation on the terms it claims to cover.
+     *
+     * <p>{@code cheapPass} sums material, the tapered piece-square tables and the castling state
+     * with the same factors {@code calculatePositionWeight} uses — <b>a second copy of that
+     * arithmetic</b>. Nothing in the compiler ties the two together, so a retune that touches
+     * {@code positionFactor} or {@code castlingFactor}, or a term moved onto the cheap side, can
+     * silently make them disagree. This pins the relationship instead of a comment asking people
+     * to remember.
+     *
+     * <p>The expected value comes from {@link WeightingFunction#analyzeFactors}, which is the
+     * production decomposition and is itself cross-checked per position against
+     * {@code calculateMaterialWeight}. So the test compares two independent routes to the same
+     * number rather than restating one of them.
+     */
+    @Test
+    void cheapPass_agreesWithTheFullEvaluationOnItsOwnTerms() {
+        var evaluator = new WeightingFunction();
+        double[] factors = WeightingFunction.tunableFactorValues();
+
+        for (String fen : CHEAP_PASS_FIXTURES) {
+            Board board = Fen.importFEN(fen);
+
+            var breakdown = evaluator.analyzeFactors(board);
+            double expected = WeightingFunction.calculateMaterialWeight(board)
+                    + breakdown.features()[PST_FACTOR] * factors[PST_FACTOR]
+                    + breakdown.features()[CASTLING_FACTOR] * factors[CASTLING_FACTOR];
+
+            int actual = evaluator.cheapPass(board);
+
+            assertEquals(Math.round(expected), actual, ROUNDING_SLACK,
+                    "cheap pass against the full evaluation's material + PST + castling terms, "
+                            + "position " + fen);
+        }
+    }
+
+    /**
+     * The cheap pass alone must not produce the full evaluation — otherwise there is nothing
+     * cheap about it and the split is pointless.
+     *
+     * <p>Guards against the failure where the two halves drift into computing the same thing, which
+     * would make {@link #cheapPass_agreesWithTheFullEvaluationOnItsOwnTerms()} pass vacuously.
+     */
+    @Test
+    void cheapPass_omitsTheExpensiveTerms() {
+        var evaluator = new WeightingFunction();
+        int differences = 0;
+
+        for (String fen : CHEAP_PASS_FIXTURES) {
+            Board board = Fen.importFEN(fen);
+
+            if (evaluator.cheapPass(board) != evaluator.calculate(board)) {
+                differences++;
+            }
+        }
+
+        assertTrue(differences > 0,
+                "on at least one fixture the expensive terms must move the score, otherwise the "
+                        + "agreement test above proves nothing");
+    }
 }
