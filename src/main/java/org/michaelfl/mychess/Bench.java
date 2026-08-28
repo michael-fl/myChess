@@ -211,6 +211,26 @@ public final class Bench {
     }
 
     /**
+     * Number of positions in a suite, without running it.
+     *
+     * <p>Exists so a progress callback can print {@code n/55} rather than a bare counter: the
+     * per-position lines are redirected into the archive of § 7 in
+     * {@code docs/bench-history.md}, and that archive is only useful if a line from one version
+     * diffs cleanly against the same line from another. The leading fields therefore have to
+     * stay byte-identical across releases, which means the total has to be known before the
+     * first position finishes.
+     *
+     * @param chess960 when {@code true}, the Chess960 suite; otherwise the standard one
+     * @return the number of positions the corresponding {@code run} will search
+     * @throws BenchException if a suite resource is missing
+     */
+    public static int suiteSize(boolean chess960) {
+        return chess960
+                ? loadFens(CHESS960_FENS).size()
+                : loadFens(STANDARD_FENS).size() + loadFens(MIDDLEGAME_FENS).size();
+    }
+
+    /**
      * Run the benchmark suite at a fixed depth, reporting each position as it completes.
      *
      * <p>{@code onPosition} fires once per position, in suite order, immediately after that
@@ -235,26 +255,6 @@ public final class Bench {
      * @param onPosition invoked once per completed position, in suite order
      * @return the per-position and aggregate node/time results
      */
-    /**
-     * Number of positions in a suite, without running it.
-     *
-     * <p>Exists so a progress callback can print {@code n/55} rather than a bare counter: the
-     * per-position lines are redirected into the archive of § 7 in
-     * {@code docs/bench-history.md}, and that archive is only useful if a line from one version
-     * diffs cleanly against the same line from another. The leading fields therefore have to
-     * stay byte-identical across releases, which means the total has to be known before the
-     * first position finishes.
-     *
-     * @param chess960 when {@code true}, the Chess960 suite; otherwise the standard one
-     * @return the number of positions the corresponding {@code run} will search
-     * @throws BenchException if a suite resource is missing
-     */
-    public static int suiteSize(boolean chess960) {
-        return chess960
-                ? loadFens(CHESS960_FENS).size()
-                : loadFens(STANDARD_FENS).size() + loadFens(MIDDLEGAME_FENS).size();
-    }
-
     public static BenchResult run(int depth, boolean chess960, Consumer<PositionResult> onPosition) {
         List<String> fens = chess960
                 ? loadFens(CHESS960_FENS)

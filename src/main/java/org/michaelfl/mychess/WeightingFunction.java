@@ -46,6 +46,9 @@ public final class WeightingFunction {
     private static final byte WHITE_KING_ATTACKED = Board.whiteKing | ATTACK_MARK_BIT;
     private static final byte BLACK_KING_ATTACKED = Board.blackKing | ATTACK_MARK_BIT;
 
+    /** Playable files per rank, i.e. how many of the 12 board columns are not border. */
+    private static final int FILES = 8;
+
     /**
      * Piece weight in centipawns. The queen is 1000 (not the classical 900) as a
      * v4.3.2 candidate: "two rooks = one queen", and it lifts myChess's
@@ -750,14 +753,32 @@ public final class WeightingFunction {
         return undefendedPiecesCount[color];
     }
 
+    /**
+     * Counts attacked-but-undefended pieces from the attack marks {@code capture} left in
+     * {@link #tempBoard}.
+     *
+     * <p>Walks the eight ranks rather than the index range {@code a1..h8}: on the 12×12 board those
+     * indices are 26 and 117, so a single range loop visits <b>92 fields to examine 64</b> — the
+     * four border files between consecutive ranks are stepped over 28 times per evaluation, on
+     * every evaluation. Measured at 92.00 fields per evaluation over 400 000 positions before this
+     * changed.
+     *
+     * <p>Purely a loop-bounds change: the border fields hold {@link Board#illegal}, which carries
+     * no {@link #ATTACK_MARK_BIT}, so skipping them cannot alter the counts. The bench signature
+     * is therefore required to be bit-identical, and that is the whole acceptance test.
+     */
     private void calculateUndefendedPiecesCount() {
-        for (int field = Board.a1; field <= Board.h8; field++) {
-            final byte piece = tempBoard[field];
-            if ((piece & ATTACK_MARK_BIT) == ATTACK_MARK_BIT) {
-                if ((piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE && piece != WHITE_KING_ATTACKED) {
-                    undefendedPiecesCount[0]++;
-                } else if ((piece & GameStatus.TURN_BLACK) == GameStatus.TURN_BLACK && piece != BLACK_KING_ATTACKED) {
-                    undefendedPiecesCount[1]++;
+        for (int rankStart = Board.a1; rankStart <= Board.a8; rankStart += Board.LENGTH) {
+            final int rankEnd = rankStart + FILES;
+
+            for (int field = rankStart; field < rankEnd; field++) {
+                final byte piece = tempBoard[field];
+                if ((piece & ATTACK_MARK_BIT) == ATTACK_MARK_BIT) {
+                    if ((piece & GameStatus.TURN_WHITE) == GameStatus.TURN_WHITE && piece != WHITE_KING_ATTACKED) {
+                        undefendedPiecesCount[0]++;
+                    } else if ((piece & GameStatus.TURN_BLACK) == GameStatus.TURN_BLACK && piece != BLACK_KING_ATTACKED) {
+                        undefendedPiecesCount[1]++;
+                    }
                 }
             }
         }
