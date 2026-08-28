@@ -86,9 +86,23 @@ Moves are packed into a single `int` (`fromField | toField<<8 | capturedPiece<<1
 
 - **Don't allocate in the search hot path.** Moves are `int`s, move lists are `Moves`/`MovesArray` backed by reusable `int[]`, and `Board.makeMove`/`revertMove` mutate the same board (no copy-on-make in the inner loop — `calculateNextMove` copies the board once at the root). New code in `PositionSearch`, `MoveGenerator`, `WeightingFunction`, `QuiescenceSearch` should preserve this.
 - **The `GameStatus` stack is the source of truth for reversibility.** Any mutation of board state inside `Board.makeMove` must have a matching undo in `revertMove`, or threefold-repetition and the search's `makeMove`/`revertMove` pairing will silently corrupt state.
-- **Invariants are encoded via `Assert.__assert(Supplier, Supplier)`** with lazy message construction so they're cheap when disabled — use the same pattern when adding new invariants in the search.
+- **Invariants are encoded via `Assert.__assert(Supplier, Supplier)`** with lazy message construction — use the same pattern when adding new invariants in the search. **They cost nothing measurable, and that is measured, not assumed** (2026-08-28): a depth-6 bench over three variants — assertions active, `Assert.ENABLED = false`, and all eleven hot-path call sites physically removed — came out at 126,993 / 126,679 / 129,588 ms best-of-three. The removal variant is the *slowest*, which cannot be a real effect and is therefore the proof that the spread within each variant (1.5 / 8.1 / 4.8 %) swamps any difference between them. So keep them on, keep adding them, and do not trade the diagnostics for a saving that does not exist — the "first move must be the best known move" invariant alone once surfaced 6290 illegal PVs in a single 1600-game match. Note there are **eleven** call sites, not the eight an incomplete grep suggests: three live in `StaticExchangeEvaluation`, which runs in move ordering for every capture.
 - **The `engines/` package is a one-way dependency** on the root package, not vice-versa. Root-package classes (`Game`, `Board`, …) reference engines only through the abstract `ChessEngine` base class.
 - **US English everywhere — no British spellings.** Identifiers, comments, JavaDoc, log/exception messages, commit subjects, doc files under `docs/`, and chat-facing summaries about code all use US English. `color` not `colour`, `center` not `centre`, `behavior` not `behaviour`, `analyze` not `analyse`, `optimize` not `optimise`, `serialize` not `serialise`, `cancel(l)ed` (single `l`), `favor` not `favour`. The global rule in `~/.claude/CLAUDE.md` covers this; this entry is a local reminder because the convention is easy to slip on when writing prose comments.
+
+## Working a task list: start the next task in the same turn
+
+Given a list and "arbeite sie selbständig ab", **finish a task and begin the next unblocked one without handing back**. End the turn only when (a) a measurement is running and nothing can proceed until it reports, (b) a decision is needed that cannot be derived from the code and the brief, or (c) the list is empty.
+
+**Waiting on a machine is a legitimate turn end. Ending a turn with nothing running and tasks open is a bug.** That state occurred twice on 2026-08-28 and the user asked both times what was happening; the answer was "nothing", which is the failure.
+
+Three causes worth naming, because they recur:
+
+- **Long reports end turns.** The rhythm slips from "do, do, do, brief report" to "do, long report, stop". A report that reads like a conclusion becomes one. Detail belongs in the commit message and the roadmap, which is where it gets read later anyway.
+- **Mid-turn corrections train it.** After six or seven interruptions in a row, the learned pattern becomes "deliver a small unit and hand back". The corrections were right; the generalization was not.
+- **A correction about *how* something was done does not revoke permission to do it.** Being told off for pushing unasked is a rule about pushes, not about forward motion.
+
+Autonomy covers *doing the work*. Commits and pushes still each need their own instruction.
 
 ## Hot-path production code stays on a branch until a measurement justifies it
 
