@@ -792,6 +792,46 @@ through the five-argument `move(...)`, while pawns inspect the board directly fo
 the double step, en passant and the doubled-pawn walk. Pawns are about half the pieces, so
 instrumenting only `move(...)` would have understated the saving by roughly a factor of two.
 
+### The economics, finished — measured 2026-08-28
+
+The counting above is superseded by timing and by a firing rate. Both were cheap, both came in worse
+than the count predicted, and together they settle whether lazy evaluation is ever worth an SPRT.
+Work on branch `eval-cheap-pass`.
+
+| question | answer | how |
+|---|---|---|
+| does the cheap/expensive split cost anything? | **no** — 1109.6 vs 1116.1 ns/eval, inside a 1.5–2.4 % spread, identical checksums | warm in-process throughput loop, 200 000 positions |
+| what does the cheap pass cost? | **391.1 ns** against the full evaluation's 1098.4 | same |
+| so a firing cutoff saves | **64.4 %** of the evaluation at that node, plus the capture generation it skips | derived |
+| how often does a *sound* cutoff fire? | **23.0 %** at MARGIN 172, 30.1 % at 129 — against today's margin-less test at 46.3 % | compile-time-gated counters over 149 M quiescence nodes |
+| **total saving** | **14.8 % of evaluation time** (19.4 % at MARGIN 129) | product of the two |
+
+**The counted-work estimate was optimistic by a factor of 1.5.** Counting said 93 % of the work was
+skippable; timing says 64 %. The units are not equally expensive — the cheap half is PST lookups,
+phase arithmetic and interpolation, each dearer than the expensive half's array-read-and-branch. The
+caveat was recorded when the counting was done and turned out to matter.
+
+**A second self-correction, caught while reading the output.** The firing-rate instrument also
+counted a fail-low rate of 28.7 % and folded it into the saving, which would have reported 33.3 %.
+That number is unusable: in quiescence the stand-pat is a *lower* bound on the node's value, since a
+side can always decline to capture. So `standPat >= beta` is a sound cutoff while `standPat <= alpha`
+says nothing — a capture may still lift the value above alpha, and cutting there would prune exactly
+the captures quiescence exists to resolve. Today's code has no fail-low exit for that reason. Only
+the fail-high column is actionable.
+
+**The design must change from replacement to addition.** Framed as *replacing* the material gate,
+lazy evaluation forces full evaluations at nodes that today return raw material — the same direction
+that measured H0-accepted as threshold 300. Framed as an *addition* — keep the gate, add the lazy
+cutoff as an earlier exit — there is no accuracy change at all, only one more way out. The cheapest
+test must run first, or the 391 ns cheap pass gets paid at nodes the material gate would have
+answered immediately.
+
+**Verdict: not now.** 14.8 % of evaluation time is perhaps 5–7 % of search time, on the order of a
+tenth of a ply, which this project's own calibration puts in the single-digit Elo range at best —
+inside the noise of any affordable run. The idea is not dead: as an addition it carries no strength
+risk, and the machine is idle at night. But it belongs **behind the search cluster**, because LMR and
+PVS change the node mix and the firing rate is a property of that mix.
+
 **Also open, and cheap: an asymmetric gate.** The condition is symmetric today, but the two sides
 are not. With material *gained*, the raw count has the right sign and positional detail rarely flips
 the decision; with material *lost*, positional resources are exactly what the search is looking for.
