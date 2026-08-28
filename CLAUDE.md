@@ -98,7 +98,27 @@ Measurement work here routinely runs for minutes to hours — engine matches, ST
 
 **2. The process must be wrapped in a two-minute heartbeat that reports liveness and, where possible, progress.** Use `Monitor` with a `sleep 120` loop that prints on every tick — not only on change, and not only on completion. It must state whether the process is still alive, how far it has come, and on exit whether a result exists. The reason for the fixed tick: a monitor that only speaks when something changes makes silence ambiguous, and a stalled run then looks exactly like a working one. Two runs were assumed to be progressing while they were dead. (The interval was 60 s until 2026-08-18 and was widened to 120 s — a minute produced more chat noise than the added resolution was worth.)
 
-**The ticking heartbeat is for runs that would otherwise be silent — not for every long run.** The question is not "does this take more than a minute" but **"does the process report and persist by itself?"** If it does, a single completion notification is the right instrument and a two-minute tick is pure noise: `cutechess-cli` grows its PGN per game, prints every result and a rating interval every 10 games, and `mvn test` streams Surefire output — for those, line count and mtime answer "is it alive and how far" in one command whenever somebody asks, so silence is never ambiguous. Use a background command that waits for the process to disappear (or for the decision line to appear) and then reports once. If the process does **not** report — a script that prints only at the end, `pool.map`, anything whose output appears in one burst — the fixed tick is mandatory, because that is the case where a dead run and a working one look identical. Applying the tick to an hours-long SPRT produces ~180 messages that displace real work, and with a measurement it is actively harmful: reading interim SPRT standings without their error interval is how a run gets called too early.
+**Every long run reports in the chat, whether or not it writes a log file** (stated 2026-08-28, correcting the rule that stood here before). Whether the process persists its own output is irrelevant to this: a log file the user is not watching is not a report. If it runs longer than a couple of minutes, it ticks here.
+
+An earlier version of this rule said the opposite — that a self-reporting process needs only a completion notification, because line count and mtime answer "alive and how far" whenever somebody asks. That reasoning served *me*, not the user: it optimized for my ability to check on demand rather than for the user seeing progress without asking. It was written after an objection to a two-minute tick on a six-hour SPRT, and generalized far too widely from it.
+
+**The objection it came from was about frequency, not about reporting.** ~180 messages over a six-hour run displace real work, and reading interim SPRT standings without their error interval is how a run gets called too early — both still true. So scale the interval to the run, and never quote an interim figure without its interval:
+
+| run length | interval |
+|---|---|
+| up to ~30 min (bench, test suite) | 2 min |
+| 30 min – 2 h | 10 min |
+| multi-hour (SPRT, anchor bracket) | 30 min, and the standing must carry its error interval |
+
+Report progress, not just liveness: "position 36 of 55", "game 420 of 1600", not "still running".
+
+**Numbers first in the message, and keep the monitor description short.** The description is static and cannot change per tick, so it names the run and nothing more (`bench 8 · 55 positions`); a wordy one just crowds out the line that carries data. Put the counts at the very start of the emitted line, because that is what survives if the view truncates:
+
+```
+36/55 done, 4min elapsed, pos 37 running 14min (Nr.37 = die langsame, ~15min)
+```
+
+**Say when a standing counter is expected.** The bench spends ~15 of its ~17 minutes on position 37, so seven consecutive ticks read the same count and look exactly like a hang — which is the ambiguity the heartbeat exists to remove. Carry the per-item elapsed time and name the known-slow item.
 
 **The heartbeat must end itself when the run does.** Watch for the process, not for log lines: check whether it still exists, and `break` out of the loop when it is gone — printing either the finished result or a resume hint. A `tail -f` on a log file never exits on its own; one left over from the anchor-bracket run was still going **2 days and 18 hours** after that run finished, and nobody noticed. A self-terminating monitor also makes its final message the answer: "done, here is the footer" or "interrupted at N, resume with this command".
 
