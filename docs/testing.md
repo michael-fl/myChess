@@ -5,7 +5,7 @@ The test suite is the executable specification for myChess: it pins down move ge
 | Metric | Value |
 |---|---|
 | Test classes | 81 `*Test.java` (+ 26 helpers and measurement drivers under the same source root, class count re-counted 2026-08-27, helper count 2026-08-29 — `ProbeVsEvalBenchmark` added, see [roadmap § 12.26](roadmap.md)) |
-| Test methods (`@Test` + `@ParameterizedTest`) | 1 288 — the 1 271 of the full run on 2026-08-27, plus two gate-boundary and five `containsIllegalMove` sentinel tests (2026-08-28) and ten anchor-bracket cases (2026-08-29). Derived rather than re-measured, since a full run costs 17 minutes; the counts for the changed classes *are* measured — `WeightingFunctionTest` 58, `BlunderTest` 50. Parameterized cases counted per invocation |
+| Test methods (`@Test` + `@ParameterizedTest`) | 1 298 — the 1 271 of the full run on 2026-08-27, plus two gate-boundary and five `containsIllegalMove` sentinel tests (2026-08-28) and twenty anchor-bracket cases (2026-08-29). Derived rather than re-measured, since a full run costs 17 minutes; the counts for the changed classes *are* measured — `WeightingFunctionTest` 58, `BlunderTest` 60. Parameterized cases counted per invocation |
 | Currently passing | **all** — full run 2026-08-27: 1 271 run, 0 failures, 0 errors, **0 skipped** |
 | Currently `@Disabled` | 0 — see [Retired disabled tests](#retired-disabled-tests) |
 | Test source lines | ~28 260 |
@@ -299,8 +299,8 @@ A single test exercising the full chain `long algebraic input → MoveDescriptio
 
 ## 11.3 Turning a lost game into a test
 
-`BlunderTest` grew to 50 cases by pinning real defeats, first from cutechess matches, then
-mostly from lichess, and since 2026-08-29 from the anchor bracket as well. It costs 9 min 20 s
+`BlunderTest` grew to 60 cases by pinning real defeats, first from cutechess matches, then
+mostly from lichess, and since 2026-08-29 from the anchor bracket as well. It costs about 9 min 40 s
 on its own — the largest single item in the slow suite, and the reason the class carries
 `@Tag("slow")`. The route below is worth following exactly, because every step of it exists
 because a shortcut went wrong once.
@@ -421,15 +421,47 @@ both and the findings file has only the two evaluations. Result in
 the damage: **all 58 still measure 3.00 pawns or more**, none shrank, so the original
 depth-20 verification holds under two more plies.
 
-Ten of them are now tests — five characterizations and five guards, listed under *Anchor
-bracket, second harvest* in `BlunderTest`. Eight come from the Zeta Dva half that had never
-been touched. The headline case is `32.Rc7+`: myChess holds a **forced mate**, reports a
-routine +4.00, plays a check that loses, and ends at −12.78 — a swing above twenty pawns in
-one move, with the refutation four plies deep and well inside the search.
+Twenty of them are now tests, in two batches.
 
-That leaves **45 re-verified, classified candidates** uncovered — 29 characterizations, of
-which 21 are pinnable at `SCANNER_DEPTH`, and 16 guards. (13 of the 58 are now covered: the
-ten above plus three of the original five; the other two of those five start from a lost
+*Second harvest* — five characterizations and five guards, eight from the Zeta Dva half that
+had never been touched. The headline case is `32.Rc7+`: myChess holds a **forced mate**,
+reports a routine +4.00, plays a check that loses, and ends at −12.78 — a swing above twenty
+pawns in one move.
+
+That case is also the clearest warning against trusting the scan's automatic
+horizon-versus-evaluation label. By its criterion — own score far above the truth after the
+move — it reads as an evaluation defect. It is not: six checks are available, `Re8+` mates in
+9 and the other five lose to a forced mate against, so both the win and the punishment sit far
+beyond any depth myChess reaches. With neither visible the engine falls back on material, and
+the played check wins a bishop. The rule of thumb is a heuristic over two evaluations; it
+cannot tell a mating position from a positional one, and every adopted case needs the check
+its comment records.
+
+*Third harvest* — ten more characterizations, **chosen for spread rather than for damage**.
+Taking the ten largest remaining losses would have produced six variations on "grabbed
+material and got punished", which pins one defect ten times. These ten cover seven families
+across four endgames, five middlegames and one opening, five from each anchor, and they cost
+15.8 s of search between them:
+
+| | |
+|---|---|
+| `king-safety` | `29.Rxa5` (grabs a pawn into a mating attack), `33.Rae1` (opens its own king while winning +7.10) |
+| `corner-grab` | `26.Qxb7` — the *same move* as the existing `12.Qxb7`, other game, other anchor — and `17...Qxh1+` |
+| `passed-pawn` | `42.b3` (declines a forced promotion one square away), `47...Rd6` |
+| `king-activity` | `48.h4` — ten pieces, where `48.Kf2` holds and one tempo later does not |
+| `search-horizon` | `26...Qh1+`, the one case of the ten the original scan itself classified as horizon |
+| `tactical-oversight` | `52.Re7+`, a check preferred to simply taking the rook |
+| `pointless-exchange` | `13...Nxd4`, thirty pieces, the only opening case in the corpus |
+
+Two of those choices earn their place by *pairing* rather than by size. `48.h4` is the
+smallest position in the suite to carry a five-pawn error, so it is the cheapest available
+probe of whether an endgame king term does anything. And `26...Qh1+` is kept deliberately as
+a control: if a search change repairs it and leaves the others, that is evidence the scan's
+horizon-versus-evaluation classification was sound.
+
+That leaves **35 re-verified, classified candidates** uncovered — 19 characterizations, of
+which 11 are pinnable at `SCANNER_DEPTH`, and 16 guards. (23 of the 58 are now covered: the
+twenty above plus three of the original five; the other two of those five start from a lost
 position and are excluded from the 58 in the first place.)
 
 They are no longer a raw JSON file.
@@ -671,7 +703,7 @@ rule instead of tightening the search, which is the opposite concern from § 12.
 mechanism the other three cases indict, and it is what establishes that material is the one
 dimension the shortcut never discards. That belongs in the family; the row states its role.
 
-The 18 open king-safety cases are the argument for the roadmap's ordering, and two of them —
+The 20 open king-safety cases are the argument for the roadmap's ordering, and two of them —
 `15...Ne8` and `21.hxg4` — additionally bound how *large* the term has to be: in both, correct
 positional signal loses to a piece or a pawn of material, so a penalty worth a few dozen
 centipawns would not change either decision. All three shelved attempts in § 12.21 were scaled
