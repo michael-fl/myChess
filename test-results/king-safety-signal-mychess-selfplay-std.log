@@ -1,0 +1,183 @@
+  50,000 read, 28,948 kept (0.1 min)
+
+read 94,863, kept 55,879 at material within ±50 cp
+
+################ midgame — 41,340 positions ################
+
+=== midgame / shield (white minus black) ===
+  diff   positions   white score   implied cp
+    -3         320        0.5000           +0  (thin)
+    -2       3,006        0.5101           +7
+    -1       9,694        0.5058           +4
+     0      16,434        0.5197          +14
+     1       9,297        0.5289          +20
+     2       2,409        0.5419          +29
+     3         180        0.5389          +27  (thin)
+  -> +6 cp per unit across the usable range
+
+=== midgame / open_files (white minus black) ===
+  diff   positions   white score   implied cp
+    -3         180        0.5389          +27  (thin)
+    -2       2,409        0.5419          +29
+    -1       9,297        0.5289          +20
+     0      16,434        0.5197          +14
+     1       9,694        0.5058           +4
+     2       3,006        0.5101           +7
+     3         320        0.5000           +0  (thin)
+  -> -6 cp per unit across the usable range
+
+=== midgame / attackers (white minus black) ===
+  diff   positions   white score   implied cp
+    -5           5        0.8000         +241  (thin)
+    -4          17        0.7647         +205  (thin)
+    -3         116        0.6810         +132  (thin)
+    -2       1,079        0.6149          +81
+    -1       7,653        0.5453          +32
+     0      25,065        0.5189          +13
+     1       6,429        0.4844          -11
+     2         853        0.4291          -50
+     3         109        0.3073         -141  (thin)
+     4          12        0.2917         -154  (thin)
+     5           2        0.7500         +191  (thin)
+  -> -33 cp per unit across the usable range
+
+=== midgame / defenders (white minus black) ===
+  diff   positions   white score   implied cp
+    -6          11        0.5909          +64  (thin)
+    -5          57        0.5614          +43  (thin)
+    -4         317        0.5110           +8  (thin)
+    -3       1,338        0.5377          +26
+    -2       3,675        0.5305          +21
+    -1       8,011        0.5110           +8
+     0      13,735        0.5239          +17
+     1       9,054        0.5161          +11
+     2       3,704        0.5169          +12
+     3       1,149        0.4978           -2
+     4         241        0.4979           -1  (thin)
+     5          40        0.3750          -89  (thin)
+     6           6        0.2500         -191  (thin)
+     7           2        0.5000           +0  (thin)
+  -> -5 cp per unit across the usable range
+
+################ late-midgame — 8,827 positions ################
+
+=== late-midgame / shield (white minus black) ===
+  diff   positions   white score   implied cp
+    -3         106        0.5519          +36  (thin)
+    -2         668        0.5030           +2
+    -1       2,035        0.5059           +4
+     0       3,134        0.5112           +8
+     1       2,067        0.5073           +5
+     2         714        0.5266          +19
+     3         103        0.4951           -3  (thin)
+  -> +4 cp per unit across the usable range
+
+=== late-midgame / open_files (white minus black) ===
+  diff   positions   white score   implied cp
+    -3         103        0.4951           -3  (thin)
+    -2         714        0.5266          +19
+    -1       2,067        0.5073           +5
+     0       3,134        0.5112           +8
+     1       2,035        0.5059           +4
+     2         668        0.5030           +2
+     3         106        0.5519          +36  (thin)
+  -> -4 cp per unit across the usable range
+
+=== late-midgame / attackers (white minus black) ===
+  diff   positions   white score   implied cp
+    -5          10        0.8000         +241  (thin)
+    -4          40        0.6250          +89  (thin)
+    -3         128        0.5273          +19  (thin)
+    -2         528        0.5748          +52
+    -1       1,857        0.5463          +32
+     0       3,884        0.5028           +2
+     1       1,784        0.4851          -10
+     2         471        0.4395          -42  (thin)
+     3         101        0.4307          -48  (thin)
+     4          21        0.5476          +33  (thin)
+     5           3        0.8333         +280  (thin)
+  -> -21 cp per unit across the usable range
+
+=== late-midgame / defenders (white minus black) ===
+  diff   positions   white score   implied cp
+    -6           1        1.0000            —  (thin)
+    -5          16        0.5938          +66  (thin)
+    -4          66        0.4470          -37  (thin)
+    -3         298        0.5067           +5  (thin)
+    -2         927        0.4973           -2
+    -1       1,829        0.5011           +1
+     0       2,604        0.5117           +8
+     1       1,813        0.5160          +11
+     2         882        0.5130           +9
+     3         293        0.5427          +30  (thin)
+     4          76        0.5329          +23  (thin)
+     5          16        0.5938          +66  (thin)
+     6           6        0.5833          +58  (thin)
+  -> +3 cp per unit across the usable range
+
+################ endgame — 5,712 positions ################
+
+=== endgame / shield (white minus black) ===
+  diff   positions   white score   implied cp
+    -3          61        0.6230          +87  (thin)
+    -2         413        0.5714          +50  (thin)
+    -1       1,312        0.5324          +23
+     0       2,201        0.4991           -1
+     1       1,274        0.4827          -12
+     2         394        0.4365          -44  (thin)
+     3          57        0.4474          -37  (thin)
+  -> -17 cp per unit across the usable range
+
+=== endgame / open_files (white minus black) ===
+  diff   positions   white score   implied cp
+    -3          57        0.4474          -37  (thin)
+    -2         394        0.4365          -44  (thin)
+    -1       1,274        0.4827          -12
+     0       2,201        0.4991           -1
+     1       1,312        0.5324          +23
+     2         413        0.5714          +50  (thin)
+     3          61        0.6230          +87  (thin)
+  -> +17 cp per unit across the usable range
+
+=== endgame / attackers (white minus black) ===
+  diff   positions   white score   implied cp
+    -5           2        0.5000           +0  (thin)
+    -4          20        0.3500         -108  (thin)
+    -3         111        0.4820          -13  (thin)
+    -2         447        0.4553          -31  (thin)
+    -1       1,267        0.5043           +3
+     0       1,991        0.5018           +1
+     1       1,290        0.5112           +8
+     2         457        0.5427          +30  (thin)
+     3         110        0.5682          +48  (thin)
+     4          16        0.6250          +89  (thin)
+     5           1        0.5000           +0  (thin)
+  -> +2 cp per unit across the usable range
+
+=== endgame / defenders (white minus black) ===
+  diff   positions   white score   implied cp
+    -5           2        0.2500         -191  (thin)
+    -4          36        0.4028          -68  (thin)
+    -3         179        0.4581          -29  (thin)
+    -2         576        0.4609          -27
+    -1       1,227        0.4951           -3
+     0       1,678        0.5072           +5
+     1       1,196        0.5213          +15
+     2         600        0.5300          +21
+     3         181        0.5635          +44  (thin)
+     4          35        0.5286          +20  (thin)
+     5           2        0.2500         -191  (thin)
+  -> +12 cp per unit across the usable range
+
+################ summary: cp per unit, by phase ################
+
+feature                midgame    late-midgame         endgame
+shield                      +6              +4             -17
+open_files                  -6              -4             +17
+attackers                  -33             -21              +2
+defenders                   -5              +3             +12
+
+A feature that is a real king-safety signal should be strongest in the midgame and fade — or invert — toward the endgame, where the king wants to be active rather than sheltered.
+-> test-results/king-safety-signal-mychess-selfplay-std.json
+
+A monotone column means the feature carries information. A column that wanders around 0.5000 means there is nothing to tune, and three failed attempts are explained.

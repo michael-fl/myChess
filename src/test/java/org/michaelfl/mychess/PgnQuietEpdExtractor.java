@@ -239,14 +239,50 @@ public final class PgnQuietEpdExtractor {
                 games, emitted, output, chess960Games);
     }
 
+    /**
+     * Reads a {@code --sampling skipOpening,skipEnding,minGap,maxPerGame,dedup} argument, if
+     * present, and returns the resulting configuration.
+     *
+     * <p>Exposed on the command line because the sampling rules turned out to be a
+     * <em>measurement variable</em>, not a fixed detail. Two corpora extracted from the same
+     * games with different settings gave king-shelter values a factor of four apart
+     * ({@code docs/king-safety.md} § 4.3), and the only way to tell an artifact from a real
+     * difference is to vary the settings while holding the games fixed. Hard-coding
+     * {@link Config#defaults()} made that experiment impossible to run.
+     */
+    private static Config samplingFrom(List<String> arguments) {
+        int index = arguments.indexOf("--sampling");
+
+        if (index < 0 || index + 1 >= arguments.size()) {
+            return Config.defaults();
+        }
+
+        String[] parts = arguments.get(index + 1).split(",");
+
+        if (parts.length != 5) {
+            throw new IllegalArgumentException(
+                    "--sampling needs skipOpening,skipEnding,minGap,maxPerGame,dedup");
+        }
+
+        arguments.subList(index, index + 2).clear();
+
+        return new Config(Integer.parseInt(parts[0].trim()), Integer.parseInt(parts[1].trim()),
+                Integer.parseInt(parts[2].trim()), Integer.parseInt(parts[3].trim()),
+                Boolean.parseBoolean(parts[4].trim()));
+    }
+
     static void main(String[] args) throws IOException {
-        Path output = args.length > 0 ? Path.of(args[0]) : DEFAULT_OUTPUT;
-        int maxGames = args.length > 1 ? Integer.parseInt(args[1]) : Integer.MAX_VALUE;
+        var arguments = new ArrayList<>(List.of(args));
+        Config config = samplingFrom(arguments);
+
+        Path output = !arguments.isEmpty() ? Path.of(arguments.getFirst()) : DEFAULT_OUTPUT;
+        int maxGames = arguments.size() > 1 ? Integer.parseInt(arguments.get(1)) : Integer.MAX_VALUE;
 
         List<Path> pgnFiles = new ArrayList<>();
-        if (args.length > 2) {
-            for (int i = 2; i < args.length; i++) {
-                pgnFiles.add(Path.of(args[i]));
+
+        if (arguments.size() > 2) {
+            for (int i = 2; i < arguments.size(); i++) {
+                pgnFiles.add(Path.of(arguments.get(i)));
             }
         } else {
             try (DirectoryStream<Path> stream = Files.newDirectoryStream(DEFAULT_PGN_DIR, "*.pgn")) {
@@ -255,8 +291,9 @@ public final class PgnQuietEpdExtractor {
             pgnFiles.sort(null);
         }
 
-        System.out.printf("Extracting quiet positions from %,d PGN file(s) -> %s%n", pgnFiles.size(), output);
-        extractToFile(pgnFiles, output, Config.defaults(), maxGames);
+        System.out.printf("Extracting quiet positions from %,d PGN file(s) -> %s  sampling=%s%n",
+                pgnFiles.size(), output, config);
+        extractToFile(pgnFiles, output, config, maxGames);
     }
 
     private static String resultLabel(Pgn.Result result) {
