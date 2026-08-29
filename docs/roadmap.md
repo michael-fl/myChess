@@ -229,6 +229,48 @@ myChess currently reads `wtime`/`btime`/`winc`/`binc`/`movestogo` from the GUI a
 
 **First slice already in place: increment handling.** The budget is `ourClock / (movestogo + 1) + 80 % × ourIncrement`, capped by the remaining clock (the increment is credited only *after* the move, so spending it up front would flag) and floored at 50 ms. Deliberately partial: 80 % rather than the full increment, because `movestogo = 30` is a spending *rate* re-applied to the shrinking remainder each move, and paying out the whole increment would cancel that decay. Details and the tests that pin them in [lichess § 7](myChess-on-lichess.md#7-time-increment--implemented). Unmeasured so far, and the project's standard SPRT cannot fix that: at `tc=40/60` no `winc` is sent, so the increment branch never runs. Such a run would only pick up the accompanying change to the no-increment path — the budget went from `clock / (movestogo + 1) − 50 ms` to `clock / (movestogo + 1)`, ≈ +3.5 % thinking time, a couple of Elo at most and inside the noise. The increment itself needs a control that carries one (e.g. `tc=60+1`).
 
+*Run at `tc=60+1`, 2026-08-28 (v4.6.0 vs v4.4.1, 50 games, `test-results/increment-forfeit-60plus1.pgn`).*
+**No forfeit, and the risk the run was built to probe never materialized — but it also never came
+under real pressure, so read the result narrowly.** 4.4.1 is the opponent on purpose: it ignores
+`winc`/`binc` entirely, so both clock behaviors ran in the same match and a flag on either side
+would have been informative. Zero `loses on time`, cross-checked three ways — the string `time`
+appears **0 times** in the whole run log, every `[Termination]` tag reads `adjudication`, and the
+filter demonstrably matches things (32 adjudication hits), so the zero is a real zero rather than a
+broken grep.
+
+The margin says more than the count does. Over 5 409 timed moves the mean was **1.45 s** and the
+maximum **2.8 s**; nothing exceeded 3 s. Per game and per side, the **tightest remaining clock was
+15.2 s** of the 60 s base plus increments — a quarter of the base still in hand at the worst point
+in fifty games. The mechanism is self-limiting: the budget is a share of the *remaining* clock, so
+a drawdown of ~0.45 s per move shrinks along with the clock instead of spiraling.
+
+So the specific defect — crediting 80 % of an increment that is only paid after the move — does not
+flag at this control. What that run did **not** show is behavior in an actual scramble: 37 of 50
+games ended by adjudication, and no clock ever got near its last few seconds.
+
+*Harsher control, `tc=10+0.1`, same day (50 games, `test-results/increment-forfeit-10plus01.pgn`).*
+**This one did reach a scramble, and there is still no forfeit.** At a 10 s base the increment
+dominates rather than tops up, so the suspect branch is under real pressure: the tightest clock
+across the run fell to **2.45 s**, and the longest game ran 188 half-moves. Zero `loses on time`,
+`time` again absent from the run log entirely, 44 of 50 adjudicated.
+
+The split by engine is what makes it evidence rather than an absence:
+
+| | tightest clock | mean remaining |
+|---|---|---|
+| mychess-4.6.0 (uses the increment) | **2.45 s** | 4.52 s |
+| mychess-4.4.1 (ignores it) | 5.68 s | 6.94 s |
+
+4.6.0 runs its clock consistently lower than the opponent that leaves the increment on the table —
+which is precisely what increment handling is *for*, and it confirms the branch was exercised
+rather than merely present. It spends the extra time and still never overdraws: the conservative
+80 % credit is doing its job, with roughly 2.5 s of headroom left at the worst point in fifty
+games. The increment path can be considered covered.
+
+(4.6.0 also scored 0.620 here against 0.570 at `tc=60+1`. Not an SPRT and not a strength claim —
+50 games with an adjudication-heavy setup — but consistent with spending the increment being worth
+something rather than merely safe.)
+
 **Partial implementation already in place: skip-hopeless-iteration heuristic.** `PositionSearch` now tracks a per-depth moving average of past iteration times in [`IterationTimings`](../src/main/java/org/michaelfl/mychess/engines/IterationTimings.java) and skips a deepening iteration whose estimated cost exceeds the remaining budget; recovered time stays on the clock and feeds later moves in clock-based TCs. A probing override with a remaining-time ratio gate prevents the SMA from freezing permanently. Tuning knobs live in [`EngineTuning`](../src/main/java/org/michaelfl/mychess/engines/EngineTuning.java). See [search § 6.5.1](search.md#651-skip-hopeless-iteration-heuristic) for the design details.
 
 That's protocol-compliant and good enough for tests and casual play, but in long real games against any Stockfish-grade opponent it still leaves Elo on the table because the budget is wrong on most moves:
@@ -943,6 +985,90 @@ to more than pay for both. That does not kill it — the saving is real and coun
 the evaluation work where it fires — but it moves the risk from "will the split pay for its extra
 pass" to "will it pay for the accuracy it forces". **Weight the timing measurement (§ 12.26 task
 list) accordingly, and treat a marginal timing result as a stop rather than a go.**
+
+#### The evaluation's `containsIllegalMove` sentinel is not redundant — keep it
+
+Raised while reading the cheap-pass split: the evaluation carries its own illegal-position
+detector, and the search appears to catch the same condition twice more, so the sentinel looked
+like a candidate for removal.
+
+**Within the search it is indeed redundant, and all three detectors agree on the sign.** The
+sentinel fires when the side to move attacks the enemy king, i.e. the previous move left a king en
+prise. The evaluation returns an absolute, white-positive score, so it must encode that as
+`turn == 0 ? ILLEGAL_WEIGHT_POS : ILLEGAL_WEIGHT_NEG`; `QuiescenceSearch` then multiplies by
+`weightFactor`, which is `+1` exactly when white is to move at that node. Both branches therefore
+arrive at **`+ILLEGAL_WEIGHT_POS` from the node's own perspective** — the same value
+`Moves.ILLEGAL` and the `canCaptureOpposingKing()` probe return directly. There is no sign
+disagreement; the two-branch form is the negamax conversion, not a second convention.
+
+The three detectors also cover the search's paths exhaustively. Interior nodes never evaluate:
+`PositionSearch.alphaBetaSearchMain` dispatches to quiescence at `remainingDepth() == 0` before it
+generates moves, and above that line illegality is caught by `moves.isIllegal()`. At a quiescence
+entry the stand-pat is computed *before* move generation, so an illegal position does reach the
+evaluation — but whichever way it leaves, the answer is the same: the early-return paths are
+covered by the `canCaptureOpposingKing()` probe, and the fall-through path by `Moves.ILLEGAL` from
+the capture generator.
+
+**What settles it is a consumer outside the search.** Every Texel corpus builder —
+`CombinedTexelData`, `AllPstTexelData`, `FactorTexelData`, `PawnPstTexelData`,
+`MaterialPstTexelData`, `KingPstTaperedTexelData`, `PawnPstTaperedTexelData`,
+`JointMgEgPstTaperedTexelData` — calls `WeightingFunction.analyzeFactors` directly on a corpus
+position and drops it when `isIllegalWeight(breakdown.eval())`. There is no move generator and no
+quiescence around that call, so **neither of the other two detectors exists on that path**.
+Removing the sentinel would not fail a test or move the bench signature; it would silently admit
+illegal positions into every tuning corpus, with ±1 000 000 replaced by an ordinary-looking score.
+That is the worst available failure mode: invisible, and it corrupts the input of the one procedure
+whose output is a shipped evaluation change. The REPL's `weight`/`w` command loses its "illegal"
+display for the same reason.
+
+So the sentinel stays. Note the general lesson, which is why this is recorded rather than dropped:
+**a bit-identical bench signature would have "proved" the removal safe.** The bench only exercises
+the search, and the search is exactly where the sentinel *is* redundant. An equivalence oracle is
+only as wide as the paths it runs — see rule 6 in `docs/bench-history.md`.
+
+One optimization the analysis does surface, worth a measurement rather than an assumption: at a
+quiescence entry the illegal case currently pays a **full evaluation** before the sentinel is read,
+where hoisting `canCaptureOpposingKing()` above the stand-pat would settle it earlier.
+
+**The firing count, depth-6 bench, 2026-08-29:** 135 977 710 evaluation calls, of which
+**8 334 918 fire the sentinel — 6.13 %**, split near-evenly by side to move (3.90 M white,
+4.43 M black). So roughly one evaluation in sixteen is spent on a position that is thrown away, and
+the sentinel is emphatically not dead code. That also retires the methodological worry the task was
+opened with: a bit-identical bench signature after removal *would* have been measured over a path
+that executes eight million times, so it would have been a real statement about the search — and
+still the wrong conclusion, for the Texel reason above.
+
+**6.13 % is not 6.13 % saved, and the hoist does not pay.** The probe would run on 100 % of leaves
+to save work on 6.13 % of them, so it has to be **16.3× cheaper** than the evaluation to break even.
+Measured on the 50 000-position `hybrid.epd` corpus, warm loop, best of nine
+(`ProbeVsEvalBenchmark`, 2026-08-29):
+
+| | ns/call | vs. evaluation | verdict |
+|---|---|---|---|
+| evaluation | 1 077.8 | — | |
+| `canCaptureOpposingKing()` as it is | 269.3 | 4.0× cheaper | **loss, −18.9 %** of evaluation time |
+| attack test alone (king square free) | 173.3 | 6.2× cheaper | **loss, −10.0 %** |
+| break-even | 66.1 | 16.3× cheaper | |
+
+The reason is the one the code suggests: `canCaptureOpposingKing` calls `findKingField`, a linear
+scan over the 64 squares, before `isFieldAttackedBy` — and the evaluation also walks the board
+exactly once, so the two are within one order of magnitude by construction.
+
+**The second row kills the obvious rescue.** Tracking the king square incrementally in `GameStatus`
+(which already carries incremental non-pawn material) would remove the scan — the row measures that
+idea at its theoretical limit, charging *nothing* for the lookup a real implementation still needs.
+It reaches 6.2×, still less than half of break-even. So the hoist is not worth doing, not worth
+doing after an incremental-king refactor, and the refactor is not worth doing for this reason. The
+spreads (4.8 / 10.6 / 32.7 %) are nowhere near large enough to reopen it.
+
+Two notes on why the measurement is trustworthy in the pessimistic direction. The corpus contains
+**no** illegal positions (probe checksum 0), so every probe call runs its full negative path — which
+is exactly the case that dominates at a real leaf, where 93.9 % of positions are legal. And the
+change would have been provably behavior-neutral, returning `+ILLEGAL_WEIGHT_POS` either way with an
+unchanged bench signature — a reminder that "safe to ship" and "worth shipping" are independent
+questions, and that only the second one needed a measurement here.
+
+Task closed unmeasured-to-measured; the sentinel stays exactly where it is.
 
 ---
 
