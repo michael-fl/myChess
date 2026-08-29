@@ -530,4 +530,88 @@ class WeightingFunctionTest {
         assertEquals(0, WeightingFunction.getMaterialWeightOfMove(move),
                 "castling produces no material delta");
     }
+
+    // --- the containsIllegalMove sentinel -------------------------------------------------
+    //
+    // A position in which the side to move can capture the enemy king is unreachable by legal
+    // play: it means the previous move left its own king en prise. The evaluation detects this
+    // itself and answers ILLEGAL_WEIGHT instead of a score.
+    //
+    // Inside the search that detection is redundant — MoveGenerator returns Moves.ILLEGAL and
+    // QuiescenceSearch probes canCaptureOpposingKing(). It is NOT redundant for the Texel corpus
+    // builders, which call analyzeFactors directly, with no move generator and no quiescence
+    // around it, and drop a position on isIllegalWeight. Nothing covered that until these tests,
+    // so removing the sentinel would have left the bench signature bit-identical and every test
+    // green while silently admitting illegal positions into every tuning corpus.
+
+    /** White rook on e8 attacks the black king on e5 while it is white's turn. */
+    private static final String ILLEGAL_WHITE_TO_MOVE = "4R3/8/8/4k3/8/8/8/4K3 w - - 0 1";
+
+    /** The mirror image: black rook on e1 attacks the white king on e4 while it is black's turn. */
+    private static final String ILLEGAL_BLACK_TO_MOVE = "4k3/8/8/8/4K3/8/8/4r3 b - - 0 1";
+
+    /** Same material as {@link #ILLEGAL_WHITE_TO_MOVE}, but the rook does not attack the king. */
+    private static final String LEGAL_SAME_MATERIAL = "7R/8/8/4k3/8/8/8/4K3 w - - 0 1";
+
+    @Test
+    void illegalPosition_whiteToMove_evaluatesToIllegalWeightPos() {
+        var evaluator = new WeightingFunction();
+
+        int weight = evaluator.calculate(Fen.importFEN(ILLEGAL_WHITE_TO_MOVE));
+
+        assertEquals(WeightingFunction.ILLEGAL_WEIGHT_POS, weight,
+                "white to move and able to capture the black king must evaluate to ILLEGAL_WEIGHT_POS");
+    }
+
+    @Test
+    void illegalPosition_blackToMove_evaluatesToIllegalWeightNeg() {
+        var evaluator = new WeightingFunction();
+
+        int weight = evaluator.calculate(Fen.importFEN(ILLEGAL_BLACK_TO_MOVE));
+
+        assertEquals(WeightingFunction.ILLEGAL_WEIGHT_NEG, weight,
+                "the evaluation is white-positive, so the same condition with black to move must be "
+                        + "ILLEGAL_WEIGHT_NEG; QuiescenceSearch multiplies by weightFactor and both "
+                        + "branches arrive at +ILLEGAL_WEIGHT_POS from the node's own perspective");
+    }
+
+    @Test
+    void illegalPosition_isRecognizedByIsIllegalWeight() {
+        var evaluator = new WeightingFunction();
+
+        assertTrue(WeightingFunction.isIllegalWeight(evaluator.calculate(Fen.importFEN(ILLEGAL_WHITE_TO_MOVE))),
+                "isIllegalWeight is the predicate every caller outside the search uses");
+        assertTrue(WeightingFunction.isIllegalWeight(evaluator.calculate(Fen.importFEN(ILLEGAL_BLACK_TO_MOVE))),
+                "isIllegalWeight must recognize the negative branch as well");
+    }
+
+    /**
+     * The path the Texel corpus builders take: {@code analyzeFactors} rather than
+     * {@code calculate}. They drop a position when its eval is an illegal weight, so this is the
+     * one consumer that has no other detector behind it.
+     */
+    @Test
+    void illegalPosition_isReportedByAnalyzeFactors() {
+        var evaluator = new WeightingFunction();
+
+        var breakdown = evaluator.analyzeFactors(Fen.importFEN(ILLEGAL_WHITE_TO_MOVE));
+
+        assertTrue(WeightingFunction.isIllegalWeight(breakdown.eval()),
+                "analyzeFactors must surface the sentinel, or every Texel corpus silently keeps "
+                        + "illegal positions with an ordinary-looking score");
+    }
+
+    /**
+     * Guards the four tests above from passing vacuously: with the same material on the board but
+     * the rook off the king's file, the sentinel must stay silent and an ordinary score come back.
+     */
+    @Test
+    void legalPosition_withTheSameMaterial_doesNotFireTheSentinel() {
+        var evaluator = new WeightingFunction();
+
+        int weight = evaluator.calculate(Fen.importFEN(LEGAL_SAME_MATERIAL));
+
+        assertFalse(WeightingFunction.isIllegalWeight(weight),
+                "a rook that does not attack the enemy king must produce an ordinary score, got " + weight);
+    }
 }
