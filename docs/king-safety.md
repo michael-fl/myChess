@@ -325,6 +325,107 @@ Running the SPRT first is how the previous three attempts each burned 900–2200
 
 ---
 
+### 4.4 What the Audax fork already measured — and the trap it found
+
+`../myChess-Audax` is a fork of myChess **4.3.4** built to play aggressively. It carries a
+king-attack term derived from *our* `attack-units` branch, and it has played three matches this
+plan did not know about. Its `docs/` are worth reading in full; what follows is what bears on
+this section.
+
+| Audax build | change | result vs 4.3.4 |
+|---|---|---|
+| `0.1.0` | attack term + material threshold 500 | **−46.5 ± 10.2**, 3 000 games (+31.9 at *fixed depth*) |
+| `attack-threshold-200` | the same, threshold back at 200 | **−67.1 ± 42.0**, H0 at 173 games, LOS 0.1 % |
+| `defend-units` | a defense-only term instead | **−12.1 ± 20.4**, H0 at 660 games |
+
+#### The trap: the attack term and the material-only shortcut fight each other
+
+This is the finding, and no measurement in § 4.2 or § 4.3 could have produced it — those
+measure the *signal*, this measures the *implementation inside this engine*.
+
+The shortcut fires once the material swing from the root passes
+`EVALUATE_MATERIAL_ONLY_THRESHOLD` = 200 cp. A minor piece is 300, so **every piece sacrifice
+is past it**. At the root the engine weighs `−300 for the piece` against `+X for the attack`;
+if X is large enough the trade looks good, it plays it — and at the leaves beyond, the shortcut
+switches the positional evaluation off. **The attack term is part of that evaluation, so it
+goes silent exactly in the positions it steered into.** The engine is left holding a sacrifice
+whose compensation it can no longer see.
+
+Either half alone is harmless. Together they are worse than neither: `attack-threshold-200`
+measures **worse than having no attack term at all**. Audax's own reading — "with the threshold
+at 500 it sees the compensation; without the attack term it never steers there; having one
+without the other is the bad combination" — is supported by its draw rate (35.8 %, close to the
+aggressive build's 33.4 %): the engine still plays sharply, it just cannot calculate what it
+walked into.
+
+#### Why −67.1 is not the verdict on our branch
+
+Three differences, every one of them making the Audax term *louder*:
+
+| attack units | our `05f337d` | Audax |
+|---|---:|---:|
+| 6 — median attack, present in 90.6 % of games | 15 | **45** |
+| 10 | 50 | **150** |
+| 14 — "heavy artillery" | 130 | **325** |
+
+Audax deliberately calibrated the top of the curve to **one minor piece**, so that a piece
+sacrifice would look worth calculating. That is a *style* goal, and it is precisely what arms
+the trap. It also adds battery and x-ray ray continuation, so the term fires far more often.
+And § 4.2's independent figure — 34–57 cp per attacker — supports the magnitude of our
+inherited table, not the reshaped one.
+
+(The README's feature list still mentions an "Audax perspective tilt"; that was removed long
+ago and the played builds construct `new WeightingFunction()` with no root color, i.e.
+symmetric.)
+
+#### The condition this adds to step 2
+
+> **The term's maximum contribution must stay below the material-only threshold, so that it can
+> never on its own make a material investment look profitable.**
+
+A cap under 200 cp, with margin — 150 is the suggestion. This bites on our inherited curve,
+which reads 130 at 14 units but 235 at 17 and 400 at 20, so it crosses the threshold from index
+17 upward, a range Audax's distribution reaches in under 10 % of games.
+
+The number arrives from two independent directions, which is what makes it credible: § 4.2's
+outcome measurement puts three attackers at 100–170 cp, and the shortcut argument says "under
+200". They agree, so the condition costs nothing the data wanted anyway. Audax's 325 lies
+outside both.
+
+**Note what phase scaling does *not* fix.** F1 and § 4.2 are about the *endgame*, where the sign
+inverts. This trap is a *midgame* phenomenon and is untouched by any amount of phase scaling.
+A term that fixes only F1 would walk into it exactly as Audax did, just more quietly.
+
+Two checks make the condition testable before an SPRT is spent:
+
+1. **Static** — assert the curve's cap against `EVALUATE_MATERIAL_ONLY_THRESHOLD`, so the test
+   goes red if either constant moves toward the other.
+2. **Empirical** — Audax's *conviction games* metric, the share of games containing a deliberate
+   material investment. The fork went from the parent's 0.3 % to 2.0 %, a factor of 6.7. If our
+   sacrifice rate rises materially, the trap is armed whatever the Elo says.
+
+#### What else transfers
+
+- **The defense-only architecture is settled — do not repeat it.** −12.1 Elo, and its draw rate
+  rose to 40.8 % against 33.4 %: measurable passivity, which is exactly what § 4.3 predicts from
+  a shelter measure whose negative half carries no information.
+- **The S-shape is confirmed by a second, independent method.** Audax's Texel fit of the defense
+  curve gives 0 → 1 defender = 6 cp and 1 → 2 = **29 cp**; § 4.2's outcome correlation gives
+  0 → 1 attacker = 20 cp and 1 → 2 = **53 cp**. Two different methods on two different features
+  agree that the *second* unit carries the information. Nothing linear will do.
+- **The silent fraction repeats.** Audax's defend index differs by 0 in 30.1 % of positions and
+  by 1 in another 44.1 %, so the term acts through a single step in three quarters of all
+  positions — the same shape as § 4.1's finding that two of four move-choice cases had zero
+  differential on every measure.
+- **Tooling worth borrowing:** `KingAttackDiagnostics`, `DefendUnitDiagnostics`,
+  `KingDefendTexelData`, `TexelKingDefendTuner`; the **isolating bench** (three builds P/B/A so
+  two changes separate cleanly, with the factors multiplying out as a built-in control); and the
+  depth-from-PGN analysis together with its own control — run the same parser over a
+  *fixed-depth* PGN, where every comment must read the same depth, which is how a silent ply
+  parity bug was caught there.
+
+---
+
 ## 5. Build plan
 
 ### Step 0 — does the signal carry information? — **DONE, and it clears**
@@ -383,12 +484,18 @@ The term does not have to be written; § 1.1 has it ported and tested on branch 
    king PST already encodes is not something the data separates, and double-counting it would
    be worse than ignoring it.
 3. **Re-calibrate the curve against § 4.2.** One attacker measures 34–57 cp in the midgame.
-   The inherited table gives two light pieces (4 units) only 15 cp, which is far too little,
-   and reaches 800 cp at 20 units, which never occurs. The shape — progressive — is confirmed
-   by the data; the values are not.
+   The inherited table on `05f337d` reads `0 0 5 5 10 10 15 15 25 35 50 65 85 105 130 160 195
+   235 285 340 400`: two light pieces (4 units) get **10 cp**, which is far too little, while
+   the top of the range reaches 400 at 20 units, which never occurs. (The older `e93fea4`
+   curve topped out at 800 — do not take numbers from that one.) The shape — progressive — is
+   confirmed by the data; the values are not.
 4. **Replace the `≥ 2 attackers` gate** (F2). It asks whether enough pieces are present, not
    whether the position is dangerous.
-5. **Settle the two deferred test expectations.** `WeightingFunctionTest.testPosition34/35`
+5. **Cap the curve below `EVALUATE_MATERIAL_ONLY_THRESHOLD`** (§ 4.4). The inherited table
+   crosses 200 cp at index 17; a cap at 150 keeps the term from ever making a piece sacrifice
+   look profitable on its own, which is the trap that cost the Audax fork 67 Elo. Guard it with
+   a test that compares the two constants, and watch the sacrifice rate in the match.
+6. **Settle the two deferred test expectations.** `WeightingFunctionTest.testPosition34/35`
    read higher on the branch because the term fires; the commit left them unadjusted on
    purpose, pending a decision on whether the term stays.
 
