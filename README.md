@@ -96,6 +96,7 @@ In separate files under [`docs/`](docs/):
 4. [Move Generation](docs/move-generation.md) — pseudo-legal generation per piece, castling (standard + Chess960), en passant, king-capture detection, ordering hook.
 5. [Evaluation Function](docs/evaluation.md) — material, piece-square tables, mobility, threats, castling, opening, double pawns, checks, composition.
    - [Tapered evaluation](docs/tapered-evaluation.md) — phase-interpolated midgame/endgame tables, the PeSTO-derived piece-square tables (see [credits](#credits-and-third-party-material)), and the bishop-pair term.
+   - [King safety](docs/king-safety.md) — build plan for the one large evaluation term still missing, with the three shelved attempts and why each measured negative.
 6. [Search Algorithm](docs/search.md#6-search-algorithm) — iterative-deepening negamax alpha-beta, PV table, quiescence, time management, mate scoring.
 7. [Search Optimizations](docs/search.md#7-search-optimizations) — transposition table, null-move pruning, SEE-ordered captures, best-known-move ordering, killers, material-only shortcut, make/undo, packed moves, opening book, full sorting policy.
 8. [Game Lifecycle and Result Detection](docs/game-lifecycle.md)

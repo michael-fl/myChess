@@ -1,0 +1,800 @@
+{
+ "epd": "tuning-data/human-masters.epd",
+ "read": 855479,
+ "kept": 580849,
+ "material_window_cp": 50,
+ "features": {
+  "midgame": {
+   "shield": [
+    {
+     "diff": -3,
+     "positions": 7032,
+     "mean_score": 0.513509670079636,
+     "implied_cp": 9.389765696705672
+    },
+    {
+     "diff": -2,
+     "positions": 45762,
+     "mean_score": 0.5013766880818146,
+     "implied_cp": 0.9566232769919966
+    },
+    {
+     "diff": -1,
+     "positions": 124335,
+     "mean_score": 0.5001930269031246,
+     "implied_cp": 0.13412883688083932
+    },
+    {
+     "diff": 0,
+     "positions": 189587,
+     "mean_score": 0.523203067720888,
+     "implied_cp": 16.134731704331802
+    },
+    {
+     "diff": 1,
+     "positions": 68681,
+     "mean_score": 0.5569007440194522,
+     "implied_cp": 39.71071092420936
+    },
+    {
+     "diff": 2,
+     "positions": 17457,
+     "mean_score": 0.5768746061751733,
+     "implied_cp": 53.84493265319244
+    },
+    {
+     "diff": 3,
+     "positions": 879,
+     "mean_score": 0.5910125142207053,
+     "implied_cp": 63.95466286971789
+    }
+   ],
+   "shield_cp_per_unit": 9.09414952883537,
+   "open_files": [
+    {
+     "diff": -3,
+     "positions": 879,
+     "mean_score": 0.5910125142207053,
+     "implied_cp": 63.95466286971789
+    },
+    {
+     "diff": -2,
+     "positions": 17457,
+     "mean_score": 0.5768746061751733,
+     "implied_cp": 53.84493265319244
+    },
+    {
+     "diff": -1,
+     "positions": 68681,
+     "mean_score": 0.5569007440194522,
+     "implied_cp": 39.71071092420936
+    },
+    {
+     "diff": 0,
+     "positions": 189587,
+     "mean_score": 0.523203067720888,
+     "implied_cp": 16.134731704331802
+    },
+    {
+     "diff": 1,
+     "positions": 124335,
+     "mean_score": 0.5001930269031246,
+     "implied_cp": 0.13412883688083932
+    },
+    {
+     "diff": 2,
+     "positions": 45762,
+     "mean_score": 0.5013766880818146,
+     "implied_cp": 0.9566232769919966
+    },
+    {
+     "diff": 3,
+     "positions": 7032,
+     "mean_score": 0.513509670079636,
+     "implied_cp": 9.389765696705672
+    }
+   ],
+   "open_files_cp_per_unit": -9.09414952883537,
+   "attackers": [
+    {
+     "diff": -7,
+     "positions": 1,
+     "mean_score": 1.0,
+     "implied_cp": null
+    },
+    {
+     "diff": -5,
+     "positions": 23,
+     "mean_score": 0.782608695652174,
+     "implied_cp": 222.52100030691494
+    },
+    {
+     "diff": -4,
+     "positions": 213,
+     "mean_score": 0.7582159624413145,
+     "implied_cp": 198.54611905037223
+    },
+    {
+     "diff": -3,
+     "positions": 1812,
+     "mean_score": 0.6868101545253863,
+     "implied_cp": 136.41161403178066
+    },
+    {
+     "diff": -2,
+     "positions": 13346,
+     "mean_score": 0.6120185823467705,
+     "implied_cp": 79.18147319200023
+    },
+    {
+     "diff": -1,
+     "positions": 83348,
+     "mean_score": 0.5551902865095744,
+     "implied_cp": 38.50703865894719
+    },
+    {
+     "diff": 0,
+     "positions": 281849,
+     "mean_score": 0.5174792175952372,
+     "implied_cp": 12.150755794737258
+    },
+    {
+     "diff": 1,
+     "positions": 64937,
+     "mean_score": 0.4875648705668571,
+     "implied_cp": -8.642595146124393
+    },
+    {
+     "diff": 2,
+     "positions": 7383,
+     "mean_score": 0.42401462819991875,
+     "implied_cp": -53.21224566538854
+    },
+    {
+     "diff": 3,
+     "positions": 728,
+     "mean_score": 0.33447802197802196,
+     "implied_cp": -119.51792633445241
+    },
+    {
+     "diff": 4,
+     "positions": 80,
+     "mean_score": 0.26875,
+     "implied_cp": -173.88696246663002
+    },
+    {
+     "diff": 5,
+     "positions": 11,
+     "mean_score": 0.2727272727272727,
+     "implied_cp": -170.3874929089125
+    },
+    {
+     "diff": 6,
+     "positions": 2,
+     "mean_score": 0.0,
+     "implied_cp": null
+    }
+   ],
+   "attackers_cp_per_unit": -42.65492339437218,
+   "defenders": [
+    {
+     "diff": -8,
+     "positions": 4,
+     "mean_score": 0.75,
+     "implied_cp": 190.84850188786498
+    },
+    {
+     "diff": -7,
+     "positions": 11,
+     "mean_score": 0.7272727272727273,
+     "implied_cp": 170.3874929089125
+    },
+    {
+     "diff": -6,
+     "positions": 123,
+     "mean_score": 0.532520325203252,
+     "implied_cp": 22.62938212086101
+    },
+    {
+     "diff": -5,
+     "positions": 1568,
+     "mean_score": 0.5127551020408163,
+     "implied_cp": 8.865076069104525
+    },
+    {
+     "diff": -4,
+     "positions": 7827,
+     "mean_score": 0.5281078318640603,
+     "implied_cp": 19.551935442713972
+    },
+    {
+     "diff": -3,
+     "positions": 25044,
+     "mean_score": 0.5344992812649736,
+     "implied_cp": 24.010707873622035
+    },
+    {
+     "diff": -2,
+     "positions": 56382,
+     "mean_score": 0.5274821751622858,
+     "implied_cp": 19.115836927121144
+    },
+    {
+     "diff": -1,
+     "positions": 94712,
+     "mean_score": 0.5228798885040966,
+     "implied_cp": 15.909685859500755
+    },
+    {
+     "diff": 0,
+     "positions": 117759,
+     "mean_score": 0.5213996382442107,
+     "implied_cp": 14.87908118697406
+    },
+    {
+     "diff": 1,
+     "positions": 94232,
+     "mean_score": 0.5150904151455981,
+     "implied_cp": 10.489079990931705
+    },
+    {
+     "diff": 2,
+     "positions": 41265,
+     "mean_score": 0.52074397188901,
+     "implied_cp": 14.422666842894547
+    },
+    {
+     "diff": 3,
+     "positions": 11919,
+     "mean_score": 0.5221075593590067,
+     "implied_cp": 15.37192814226824
+    },
+    {
+     "diff": 4,
+     "positions": 2571,
+     "mean_score": 0.5054453520031116,
+     "implied_cp": 3.783967730121455
+    },
+    {
+     "diff": 5,
+     "positions": 285,
+     "mean_score": 0.5157894736842106,
+     "implied_cp": 10.975299338775882
+    },
+    {
+     "diff": 6,
+     "positions": 29,
+     "mean_score": 0.6206896551724138,
+     "implied_cp": 85.55192797803242
+    },
+    {
+     "diff": 7,
+     "positions": 2,
+     "mean_score": 0.25,
+     "implied_cp": -190.84850188786498
+    }
+   ],
+   "defenders_cp_per_unit": -0.5645675932203411
+  },
+  "late-midgame": {
+   "shield": [
+    {
+     "diff": -3,
+     "positions": 959,
+     "mean_score": 0.5145985401459854,
+     "implied_cp": 10.146988675317644
+    },
+    {
+     "diff": -2,
+     "positions": 7277,
+     "mean_score": 0.49910677476982274,
+     "implied_cp": -0.6206771219783476
+    },
+    {
+     "diff": -1,
+     "positions": 22298,
+     "mean_score": 0.49248811552605615,
+     "implied_cp": -5.220184740430123
+    },
+    {
+     "diff": 0,
+     "positions": 32399,
+     "mean_score": 0.5001851909009537,
+     "implied_cp": 0.128683824097021
+    },
+    {
+     "diff": 1,
+     "positions": 18473,
+     "mean_score": 0.512423537054079,
+     "implied_cp": 8.634534955287148
+    },
+    {
+     "diff": 2,
+     "positions": 6181,
+     "mean_score": 0.5113250283125708,
+     "implied_cp": 7.870781839318472
+    },
+    {
+     "diff": 3,
+     "positions": 715,
+     "mean_score": 0.5132867132867133,
+     "implied_cp": 9.234728122203354
+    }
+   ],
+   "shield_cp_per_unit": -0.15204342551904837,
+   "open_files": [
+    {
+     "diff": -3,
+     "positions": 715,
+     "mean_score": 0.5132867132867133,
+     "implied_cp": 9.234728122203354
+    },
+    {
+     "diff": -2,
+     "positions": 6181,
+     "mean_score": 0.5113250283125708,
+     "implied_cp": 7.870781839318472
+    },
+    {
+     "diff": -1,
+     "positions": 18473,
+     "mean_score": 0.512423537054079,
+     "implied_cp": 8.634534955287148
+    },
+    {
+     "diff": 0,
+     "positions": 32399,
+     "mean_score": 0.5001851909009537,
+     "implied_cp": 0.128683824097021
+    },
+    {
+     "diff": 1,
+     "positions": 22298,
+     "mean_score": 0.49248811552605615,
+     "implied_cp": -5.220184740430123
+    },
+    {
+     "diff": 2,
+     "positions": 7277,
+     "mean_score": 0.49910677476982274,
+     "implied_cp": -0.6206771219783476
+    },
+    {
+     "diff": 3,
+     "positions": 959,
+     "mean_score": 0.5145985401459854,
+     "implied_cp": 10.146988675317644
+    }
+   ],
+   "open_files_cp_per_unit": 0.15204342551904837,
+   "attackers": [
+    {
+     "diff": -8,
+     "positions": 1,
+     "mean_score": 1.0,
+     "implied_cp": null
+    },
+    {
+     "diff": -7,
+     "positions": 4,
+     "mean_score": 0.125,
+     "implied_cp": -338.0392160057027
+    },
+    {
+     "diff": -6,
+     "positions": 19,
+     "mean_score": 0.42105263157894735,
+     "implied_cp": -55.321079266512605
+    },
+    {
+     "diff": -5,
+     "positions": 82,
+     "mean_score": 0.5426829268292683,
+     "implied_cp": 29.73149730128511
+    },
+    {
+     "diff": -4,
+     "positions": 443,
+     "mean_score": 0.6523702031602708,
+     "implied_cp": 109.35084876803387
+    },
+    {
+     "diff": -3,
+     "positions": 1810,
+     "mean_score": 0.5911602209944752,
+     "implied_cp": 64.06082318169342
+    },
+    {
+     "diff": -2,
+     "positions": 6817,
+     "mean_score": 0.5508288103271234,
+     "implied_cp": 35.44190199117799
+    },
+    {
+     "diff": -1,
+     "positions": 19764,
+     "mean_score": 0.5238059097348715,
+     "implied_cp": 16.5545570403354
+    },
+    {
+     "diff": 0,
+     "positions": 35942,
+     "mean_score": 0.49948528184296925,
+     "implied_cp": -0.35766293487735623
+    },
+    {
+     "diff": 1,
+     "positions": 17068,
+     "mean_score": 0.47348839934380127,
+     "implied_cp": -18.439440551437702
+    },
+    {
+     "diff": 2,
+     "positions": 4752,
+     "mean_score": 0.43949915824915825,
+     "implied_cp": -42.24728860788339
+    },
+    {
+     "diff": 3,
+     "positions": 1184,
+     "mean_score": 0.41173986486486486,
+     "implied_cp": -61.97860029017064
+    },
+    {
+     "diff": 4,
+     "positions": 311,
+     "mean_score": 0.409967845659164,
+     "implied_cp": -63.25035352725366
+    },
+    {
+     "diff": 5,
+     "positions": 90,
+     "mean_score": 0.45,
+     "implied_cp": -34.86007028756008
+    },
+    {
+     "diff": 6,
+     "positions": 12,
+     "mean_score": 0.5,
+     "implied_cp": 0.0
+    },
+    {
+     "diff": 7,
+     "positions": 3,
+     "mean_score": 0.5,
+     "implied_cp": 0.0
+    }
+   ],
+   "attackers_cp_per_unit": -21.006570578644013,
+   "defenders": [
+    {
+     "diff": -6,
+     "positions": 17,
+     "mean_score": 0.5588235294117647,
+     "implied_cp": 41.06493675885911
+    },
+    {
+     "diff": -5,
+     "positions": 257,
+     "mean_score": 0.5019455252918288,
+     "implied_cp": 1.3518962605522389
+    },
+    {
+     "diff": -4,
+     "positions": 1259,
+     "mean_score": 0.4988085782366958,
+     "implied_cp": -0.8278862027752896
+    },
+    {
+     "diff": -3,
+     "positions": 4192,
+     "mean_score": 0.48139312977099236,
+     "implied_cp": -12.935351139753607
+    },
+    {
+     "diff": -2,
+     "positions": 9970,
+     "mean_score": 0.5003510531594785,
+     "implied_cp": 0.24393676010907894
+    },
+    {
+     "diff": -1,
+     "positions": 18561,
+     "mean_score": 0.5022628091158882,
+     "implied_cp": 1.5723715549637114
+    },
+    {
+     "diff": 0,
+     "positions": 23753,
+     "mean_score": 0.4978108028459563,
+     "implied_cp": -1.5212197108935681
+    },
+    {
+     "diff": 1,
+     "positions": 17922,
+     "mean_score": 0.5059145184689209,
+     "implied_cp": 4.110020081535091
+    },
+    {
+     "diff": 2,
+     "positions": 8530,
+     "mean_score": 0.5062719812426729,
+     "implied_cp": 4.358447562482643
+    },
+    {
+     "diff": 3,
+     "positions": 2951,
+     "mean_score": 0.521179261267367,
+     "implied_cp": 14.72566944674147
+    },
+    {
+     "diff": 4,
+     "positions": 757,
+     "mean_score": 0.5198150594451784,
+     "implied_cp": 13.776128600010692
+    },
+    {
+     "diff": 5,
+     "positions": 123,
+     "mean_score": 0.524390243902439,
+     "implied_cp": 16.961539421234942
+    },
+    {
+     "diff": 6,
+     "positions": 9,
+     "mean_score": 0.3888888888888889,
+     "implied_cp": -78.51785805758729
+    },
+    {
+     "diff": 7,
+     "positions": 1,
+     "mean_score": 1.0,
+     "implied_cp": null
+    }
+   ],
+   "defenders_cp_per_unit": 1.8255018503482476
+  },
+  "endgame": {
+   "shield": [
+    {
+     "diff": -3,
+     "positions": 343,
+     "mean_score": 0.5743440233236151,
+     "implied_cp": 52.04534815086232
+    },
+    {
+     "diff": -2,
+     "positions": 3022,
+     "mean_score": 0.5226671078755791,
+     "implied_cp": 15.761523365359531
+    },
+    {
+     "diff": -1,
+     "positions": 9659,
+     "mean_score": 0.5196707733719846,
+     "implied_cp": 13.67571180372453
+    },
+    {
+     "diff": 0,
+     "positions": 14880,
+     "mean_score": 0.4940188172043011,
+     "implied_cp": -4.156349756425101
+    },
+    {
+     "diff": 1,
+     "positions": 8232,
+     "mean_score": 0.459365889212828,
+     "implied_cp": -28.297880256158336
+    },
+    {
+     "diff": 2,
+     "positions": 2399,
+     "mean_score": 0.44476865360566903,
+     "implied_cp": -38.53592216392496
+    },
+    {
+     "diff": 3,
+     "positions": 279,
+     "mean_score": 0.4211469534050179,
+     "implied_cp": -55.25386402374668
+    }
+   ],
+   "shield_cp_per_unit": -13.574361382321122,
+   "open_files": [
+    {
+     "diff": -3,
+     "positions": 279,
+     "mean_score": 0.4211469534050179,
+     "implied_cp": -55.25386402374668
+    },
+    {
+     "diff": -2,
+     "positions": 2399,
+     "mean_score": 0.44476865360566903,
+     "implied_cp": -38.53592216392496
+    },
+    {
+     "diff": -1,
+     "positions": 8232,
+     "mean_score": 0.459365889212828,
+     "implied_cp": -28.297880256158336
+    },
+    {
+     "diff": 0,
+     "positions": 14880,
+     "mean_score": 0.4940188172043011,
+     "implied_cp": -4.156349756425101
+    },
+    {
+     "diff": 1,
+     "positions": 9659,
+     "mean_score": 0.5196707733719846,
+     "implied_cp": 13.67571180372453
+    },
+    {
+     "diff": 2,
+     "positions": 3022,
+     "mean_score": 0.5226671078755791,
+     "implied_cp": 15.761523365359531
+    },
+    {
+     "diff": 3,
+     "positions": 343,
+     "mean_score": 0.5743440233236151,
+     "implied_cp": 52.04534815086232
+    }
+   ],
+   "open_files_cp_per_unit": 13.574361382321122,
+   "attackers": [
+    {
+     "diff": -5,
+     "positions": 27,
+     "mean_score": 0.5555555555555556,
+     "implied_cp": 38.764005203222595
+    },
+    {
+     "diff": -4,
+     "positions": 188,
+     "mean_score": 0.4148936170212766,
+     "implied_cp": -59.71923298709785
+    },
+    {
+     "diff": -3,
+     "positions": 1032,
+     "mean_score": 0.46511627906976744,
+     "implied_cp": -24.279136141444702
+    },
+    {
+     "diff": -2,
+     "positions": 3762,
+     "mean_score": 0.49189261031366294,
+     "implied_cp": -5.634085169566546
+    },
+    {
+     "diff": -1,
+     "positions": 8501,
+     "mean_score": 0.4883543112574991,
+     "implied_cp": -8.093717168111754
+    },
+    {
+     "diff": 0,
+     "positions": 12180,
+     "mean_score": 0.49170771756978654,
+     "implied_cp": -5.7625963714784385
+    },
+    {
+     "diff": 1,
+     "positions": 8055,
+     "mean_score": 0.49335816263190563,
+     "implied_cp": -4.6154927997898305
+    },
+    {
+     "diff": 2,
+     "positions": 3690,
+     "mean_score": 0.5013550135501355,
+     "implied_cp": 0.9415621573909199
+    },
+    {
+     "diff": 3,
+     "positions": 1123,
+     "mean_score": 0.5218165627782725,
+     "implied_cp": 15.169332127414028
+    },
+    {
+     "diff": 4,
+     "positions": 217,
+     "mean_score": 0.5207373271889401,
+     "implied_cp": 14.418041673855733
+    },
+    {
+     "diff": 5,
+     "positions": 37,
+     "mean_score": 0.6756756756756757,
+     "implied_cp": 127.50350504976508
+    },
+    {
+     "diff": 6,
+     "positions": 2,
+     "mean_score": 0.5,
+     "implied_cp": 0.0
+    }
+   ],
+   "attackers_cp_per_unit": 6.5747447114764554,
+   "defenders": [
+    {
+     "diff": -6,
+     "positions": 4,
+     "mean_score": 0.5,
+     "implied_cp": 0.0
+    },
+    {
+     "diff": -5,
+     "positions": 46,
+     "mean_score": 0.532608695652174,
+     "implied_cp": 22.69104977957089
+    },
+    {
+     "diff": -4,
+     "positions": 333,
+     "mean_score": 0.40540540540540543,
+     "implied_cp": -66.53256870660995
+    },
+    {
+     "diff": -3,
+     "positions": 1567,
+     "mean_score": 0.4524569240587109,
+     "implied_cp": -33.13642106625557
+    },
+    {
+     "diff": -2,
+     "positions": 4365,
+     "mean_score": 0.445475372279496,
+     "implied_cp": -38.03885579737198
+    },
+    {
+     "diff": -1,
+     "positions": 8422,
+     "mean_score": 0.4727499406316789,
+     "implied_cp": -18.95406173401152
+    },
+    {
+     "diff": 0,
+     "positions": 10455,
+     "mean_score": 0.497895743663319,
+     "implied_cp": -1.4621956974877395
+    },
+    {
+     "diff": 1,
+     "positions": 8214,
+     "mean_score": 0.5128439250060872,
+     "implied_cp": 8.926837059767141
+    },
+    {
+     "diff": 2,
+     "positions": 3996,
+     "mean_score": 0.5267767767767768,
+     "implied_cp": 18.624228530658986
+    },
+    {
+     "diff": 3,
+     "positions": 1182,
+     "mean_score": 0.5651438240270727,
+     "implied_cp": 45.525337392107986
+    },
+    {
+     "diff": 4,
+     "positions": 212,
+     "mean_score": 0.5424528301886793,
+     "implied_cp": 29.570442434946763
+    },
+    {
+     "diff": 5,
+     "positions": 18,
+     "mean_score": 0.5833333333333334,
+     "implied_cp": 58.45121427129523
+    }
+   ],
+   "defenders_cp_per_unit": 13.110293076393924
+  }
+ }
+}

@@ -69,3 +69,51 @@ be fed to cutechess directly:
 cutechess-cli -variant fischerandom \
   -openings file=book-960.epd format=epd order=sequential ...
 ```
+
+## The other sets in this directory
+
+All are git-ignored like `quiet-labeled`, and all are reproducible from the commands below.
+Line counts as of 2026-08-29.
+
+| File | Lines | Built from |
+|---|---:|---|
+| `hybrid.epd` | 1 487 619 | `quiet-labeled` + 4.0 % myChess self-play (39 619 Chess960, 20 000 standard) |
+| `mychess-selfplay-std.epd` | 94 863 | myChess self-play, standard chess |
+| `mychess-selfplay-960.epd` | 39 619 | myChess self-play, Chess960 |
+| `mychess-anchor.epd` | 15 756 | the 2 000 anchor-bracket games against five externally rated engines |
+| `human-masters.epd` | 855 479 | 120 000 games of `src/test/resources/large.pgn`, default sampling |
+| `human-dense.epd` | 2 956 584 | the *same* 120 000 games, sampled 40 per game with no end-skip |
+
+`src/test/resources/large.pgn` is a 523 856-game extract of KingBase — human tournament games,
+median rating 2333, 75 % at 2200 or above. It is git-ignored and also used by the PGN parser
+tests.
+
+### Rebuilding them
+
+```sh
+# self-play / anchor / human sets, all via the same extractor
+java -cp target/classes:target/test-classes:target/dependency/* \
+    org.michaelfl.mychess.PgnQuietEpdExtractor \
+    tuning-data/mychess-anchor.epd 999999 test-results/bracket-4.4.1.pgn
+
+# same games, different sampling — the --sampling flag is
+# skipOpening,skipEnding,minGap,maxPerGame,dedup
+java -cp target/classes:target/test-classes:target/dependency/* \
+    org.michaelfl.mychess.PgnQuietEpdExtractor --sampling 8,0,2,40,true \
+    tuning-data/human-dense.epd 120000 src/test/resources/large.pgn
+
+# the hybrid
+java -cp target/classes:target/test-classes:target/dependency/* \
+    org.michaelfl.mychess.HybridDatasetBuilder tuning-data/hybrid.epd 42 \
+    tuning-data/quiet-labeled.epd tuning-data/mychess-selfplay-960.epd \
+    tuning-data/mychess-selfplay-std-20k.epd
+```
+
+### The sampling rules are a measurement variable, not a detail
+
+`human-masters.epd` and `human-dense.epd` are the *same games* extracted two ways, and they
+exist because that had to be proven rather than assumed: the king-shelter signal measured a
+factor of four apart across corpora, and denser sampling was the obvious suspect. It was not —
++9 against +11 — which is what established that the corpora genuinely differ. See
+[`docs/king-safety.md`](../docs/king-safety.md) § 4.3. Keep both files, or the experiment has
+to be re-run to be believed.
