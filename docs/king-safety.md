@@ -36,16 +36,45 @@ This matters concretely in § 4: the obvious-looking metric is named after the w
 
 ## 1. What has already been tried, and what it cost
 
-| Attempt | Branch | Result vs v4.2.1 | Games |
+| Attempt | Where it lives | Result vs v4.2.1 | Games |
 |---|---|---|---|
-| Attacker-count term | `4.3.0-attack-units` | **−14.7 ± 11.5** | 2220 |
-| Pawn shield, standalone | `4.3.0-pawn-shield` | **−57.5 ± 17.5** | 920 |
-| King-dependent pawn PSTs | `king-safety-pst` | **−18.1 ± 11.6** | 2068, LOS 0.1 % |
+| Attacker-count term | branch `4.3.0-king-safety`, `e93fea4` | **−14.7 ± 11.5** | 2220 |
+| Pawn shield, standalone | branch `4.3.0-pawn-shield` | **−57.5 ± 17.5** | 920 |
+| King-dependent pawn PSTs | branch `king-safety-pst` | **−18.1 ± 11.6** | 2068, LOS 0.1 % |
+
+**Note the branch names**, because § 12.21 and earlier drafts of this document got the first
+one wrong: `4.3.0-attack-units` is the *build* name under `versions/`, not a branch. The
+measured commit `e93fea4` sits on `4.3.0-king-safety`, where the term was still WIP and gated
+off behind `if (false && …)`.
 
 Three independent designs, three conclusive losses. That is the central fact this plan has to
 answer for: **adding a king-safety term to myChess has, so far, always made it weaker.**
 
-### 1.1 Forensic state of the shelved branches (surveyed 2026-08-29)
+### 1.1 There is a fourth branch, and it is the starting point
+
+**`attack-units`, tip `05f337d`, 2026-08-08 — an unmeasured port of the attacker term onto
+today's evaluation.** Its own commit message says so: *"Known effect, pending self-play
+measurement."* It was never played.
+
+What it already carries: the 3×3 king zone, per-piece attack units (P1 N2 B2 R3 Q5, king 0)
+deduplicated by origin square, the progressive `KING_ATTACK_PENALTY` curve, the ≥ 2-attacker
+gate, and a migrated test class `WeightingFunctionAttackUnitTest` with 12 tests — including
+suites that were `@Disabled` on the old branch and are active here. The pawn-shield experiment
+was deliberately left behind, which matches § 4.3's conclusion that the two halves should be
+measured apart.
+
+**It is genuinely resumable, unlike `king-safety-pst`.** 106 commits behind master rather than
+171, and — checked, not assumed — `WeightingFunction.java` is **byte-identical between the
+branch point and current master** despite those 106 commits, so a rebase meets no conflict in
+the file that matters.
+
+**What it is missing is exactly the one thing § 4.2 measured.** The term enters the sum as
+`(penalty[white] − penalty[black]) × kingAttackFactor` with `kingAttackFactor = 0.01` fixed and
+**no reference to the game phase**. "Tapered" in the commit subject refers to the surrounding
+evaluation it was ported onto, not to the term. So it would run at full strength in the
+endgame, where the measured sign is **+12 cp rather than −34** — finding F1, unaddressed.
+
+### 1.2 Forensic state of the shelved branches (surveyed 2026-08-29)
 
 Worth recording before anyone tries to resume one of them.
 
@@ -76,7 +105,7 @@ structurally incompatible with the tapered representation.
 
 ## 2. Why the attempts failed — the three forensic findings
 
-From the review of `4.3.0-attack-units` (`e93fea4`) alongside its match log. Each points at a
+From the review of `e93fea4` (branch `4.3.0-king-safety`) alongside its match log. Each points at a
 fix beyond "just run a tuner over it".
 
 **F1 — no phase scaling.** The term fired at full magnitude in the endgame, where two pieces
@@ -339,27 +368,33 @@ pawns, or an open file toward the king.
 - Gate: the set has to be large enough to tune a bucket curve. If it is not, say so and stop —
   a curve tuned on a few thousand positions is a hand-picked curve with extra steps.
 
-### Step 2 — the term, phase-scaled from the start
+### Step 2 — resume `attack-units` and add the one missing thing
 
-Attack units on the king ring feeding a progressive penalty, as before, but:
+The term does not have to be written; § 1.1 has it ported and tested on branch `attack-units`
+(`05f337d`), never measured. The work is therefore short and each item is checkable:
 
-- **interpolated to zero toward the endgame** through the existing phase (F1);
-- **capped low** — start well under the −0.9 pawns that made the shield passive (F4);
-- **gated on real danger, not presence** (F2). The concrete lever: require attackers of
-  different types, or weight by whether the ring squares are actually defended, rather than
-  counting distinct attackers;
-- **one-sided on the shelter half** (§ 4.3). Reward shield pawns, do not penalize their
-  absence: over 1.77 M master positions the negative half of that column carries no
-  information, and penalizing it is what makes the engine decline sound pawn advances.
+1. **Rebase `attack-units` onto master.** `WeightingFunction.java` is byte-identical between
+   the branch point and master, so the file that matters carries no conflict.
+2. **Multiply the penalty by the game phase.** One expression. Today it is
+   `(penalty[white] − penalty[black]) × kingAttackFactor` with a fixed factor and no phase
+   term, which is finding F1 and, per § 4.2, means the wrong *sign* in the endgame rather than
+   merely the wrong size. Scaling to zero at the endgame end is the safe form; whether the
+   measured +12 cp there is real king-safety information or just the king activity the tapered
+   king PST already encodes is not something the data separates, and double-counting it would
+   be worse than ignoring it.
+3. **Re-calibrate the curve against § 4.2.** One attacker measures 34–57 cp in the midgame.
+   The inherited table gives two light pieces (4 units) only 15 cp, which is far too little,
+   and reaches 800 cp at 20 units, which never occurs. The shape — progressive — is confirmed
+   by the data; the values are not.
+4. **Replace the `≥ 2 attackers` gate** (F2). It asks whether enough pieces are present, not
+   whether the position is dangerous.
+5. **Settle the two deferred test expectations.** `WeightingFunctionTest.testPosition34/35`
+   read higher on the branch because the term fires; the commit left them unadjusted on
+   purpose, pending a decision on whether the term stays.
 
-Order within the term matters too. The attacker count is the well-supported half — robust at
-−34 to −57 across every corpus measured, and progressive in shape. **Build and measure that
-alone first**; the shelter half is the one with a contested calibration and the history of
-causing passivity.
-
-The per-piece pseudo-move scan in `WeightingFunction` already enumerates every attack relation
-— the same scan that feeds the hanging-pieces term — so this adds a side table, not a second
-sweep. Keep it out of the material-only shortcut path's assumptions.
+Keep the shelter half out of this measurement entirely. § 4.3 leaves it with two conflicting
+calibrations, and combining them would repeat the mistake all three earlier attempts made —
+a negative result that does not say which half caused it.
 
 ### Step 3 — tune what can be tuned, fix the rest
 
