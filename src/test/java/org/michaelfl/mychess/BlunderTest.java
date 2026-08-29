@@ -2527,5 +2527,313 @@ class BlunderTest {
                         + "with the move-19 characterization; white-POV eval " + result.weight());
     }
 
+    // ================================================================
+    // Anchor bracket, second harvest — 2026-08-29
+    //
+    // The 2026-08-17 scan produced 81 verified findings and five became
+    // tests, all five from TSCP; the Zeta Dva half, 54 of the 81, was
+    // never touched. These ten come from that half plus the strongest
+    // remaining TSCP cases.
+    //
+    // Every one was re-probed against the current build first, because
+    // the findings are one version old and v4.6.0 changed which
+    // evaluation regime a subtree runs under. That step was not
+    // ceremony: of 58 findings whose position was not already lost, 37
+    // still reproduce and 21 do not, so pinning straight from the old
+    // list would have written red tests for a third of them. Eight of
+    // the 37 also do not reproduce at SCANNER_DEPTH but only deeper,
+    // which is why the pin depth here comes from the measurement rather
+    // than from the constant. Data:
+    // test-results/anchor-reprobe-4.6.0.jsonl.
+    //
+    // Stockfish 18 at depth 22 re-confirmed all 58 at 3.00 pawns or
+    // more — none shrank — and supplied the holding move and the
+    // refutation line each case comment quotes; the original scan had
+    // only the two evaluations. Data:
+    // test-results/anchor-refutations.jsonl.
+    // ================================================================
+
+    /** White (myChess) to move before {@code 32.Rc7+??}, holding a forced mate. */
+    private static final String BEFORE_RC7_FEN = "QR3b1r/4k1pp/bB1pp3/5p2/3PB3/4P1P1/r2q3P/2R3K1 w - - 6 32";
+
+    /**
+     * The most expensive single move in the whole anchor corpus: a forced mate turned into a
+     * lost position.
+     *
+     * <p>Stockfish 18 (depth 22) has white mating from the diagram — {@code 32.Re8+ Kf6
+     * 33.Qd8+ Kg6} and it is over. myChess plays {@code 32.Rc7+} instead and after
+     * {@code 32...Kf6 33.Rxf8+ Kg6 34.Bxf5+ Kh6} stands at <b>−12.78</b>. A swing of more
+     * than 20 pawns in one move.
+     *
+     * <p>The diagnosis is in myChess's own number: it reports <b>+4.00</b> at
+     * {@link #SCANNER_DEPTH}, a comfortable material edge and nothing more. It never sees the
+     * mate, so it never has anything to give up — from its own point of view {@code Rc7+} is
+     * simply another good check. That makes this an evaluation case rather than a horizon one:
+     * the refutation is four plies deep and well inside the search.
+     *
+     * <p><b>Test family:</b> tactical-oversight (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void rc7_vsZetaDva_characterizesAbandoningAForcedMate() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_RC7_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.c1, Board.c7, "32.Rc7+",
+                "which gives up a forced mate: 32.Re8+ Kf6 33.Qd8+ mates, while after 32.Rc7+ Kf6 "
+                        + "33.Rxf8+ Kg6 34.Bxf5+ Kh6 the position is −12.78 (Stockfish 18, depth 22)");
+    }
+
+    /** White (myChess) to move before {@code 36.Ne4??}, with a winning fork available. */
+    private static final String BEFORE_NE4_FEN = "r3rk2/p1p1bp2/1pQ1p1p1/1P4N1/R5P1/8/PqP2PK1/4R3 w - - 7 36";
+
+    /**
+     * A knight that retreats from a fork instead of playing it.
+     *
+     * <p>{@code 36.Nxe6+} wins on the spot — {@code 36...Kg8 37.Nxc7} picks up a second piece
+     * and Stockfish 18 rates the position <b>+4.93</b> before the move. myChess plays
+     * {@code 36.Ne4}, and after {@code 36...Qe5 37.Re3 Red8 38.Rf3} the advantage is gone:
+     * <b>−0.54</b>.
+     *
+     * <p>Sits next to {@code 21.Nf3} and {@code 39.Rxd5} in shape — a two-ply tactic the
+     * quiescence search is meant to see — except that both of those are repaired and this one
+     * is not. The difference is that the winning move here is itself a *check*, so the
+     * capture-only quiescence generator sees it, but only after the knight has already moved
+     * elsewhere in the ordering.
+     *
+     * <p><b>Test family:</b> tactical-oversight (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void ne4_vsZetaDva_characterizesRetreatingInsteadOfForking() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_NE4_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.g5, Board.e4, "36.Ne4",
+                "which gives up the fork 36.Nxe6+ Kg8 37.Nxc7 and turns +4.93 into −0.54 "
+                        + "(Stockfish 18, depth 22)");
+    }
+
+    /** White (myChess) to move before {@code 37.Re7??}, abandoning the c2 pawn's defender. */
+    private static final String BEFORE_RE7_FEN = "2r5/5p1k/R5p1/7p/3q4/2r5/2P1RPPP/Q5K1 w - - 6 37";
+
+    /**
+     * A rook that leaves the square it was defending from.
+     *
+     * <p>The rook on e2 is the only thing holding c2. {@code 37.Re7} abandons it, and
+     * {@code 37...Rxc2 38.Qe1 Rc1} collects: <b>+0.01</b> becomes <b>−4.80</b> (Stockfish 18,
+     * depth 22). {@code 37.h3} keeps the balance.
+     *
+     * <p>The same shape as {@code 25...Qc3}, the plainest TSCP case — a piece moved without
+     * noticing it was a lone defender — which is why the two belong to one family. That case
+     * is a queen and this one a rook, so a fix aimed at either should move both.
+     *
+     * <p><b>Test family:</b> tactical-oversight (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void re7_vsZetaDva_characterizesMovingTheOnlyDefenderOfC2() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_RE7_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.e2, Board.e7, "37.Re7",
+                "which drops c2 to 37...Rxc2 38.Qe1 Rc1 and turns +0.01 into −4.80 "
+                        + "(Stockfish 18, depth 22); 37.h3 holds");
+    }
+
+    /** Black (myChess) to move before {@code 48...d3??} in a rook endgame. */
+    private static final String BEFORE_D3_FEN = "8/7R/1p1r1k2/8/3p2K1/P5P1/7P/8 b - - 2 48";
+
+    /**
+     * A passed pawn pushed one move too early, in a rook endgame that was level.
+     *
+     * <p>{@code 48...d3} looks natural and loses the rook: {@code 49.Rh6+ Ke5 50.Rxd6 Kxd6
+     * 51.Kf3} and the pawn falls too, <b>0.00</b> to <b>−6.64</b> (Stockfish 18, depth 22).
+     * {@code 48...Rd8} first, and the pawn goes on afterwards.
+     *
+     * <p>The third rook endgame in {@code endgame-technique} where the loss comes from moving
+     * the pawn before the rook is safe. Together with {@code 67...Rf4} — the same corpus, the
+     * same family, the same failure to price a passed pawn against a loose piece — it points
+     * at the gap the section already names: no term expresses what a pawn two squares from
+     * promotion is worth.
+     *
+     * <p><b>Test family:</b> endgame-technique (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void d3_vsZetaDva_characterizesPushingBeforeSecuringTheRook() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_D3_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.d4, Board.d3, "48...d3",
+                "which loses the rook to 49.Rh6+ Ke5 50.Rxd6 and turns 0.00 into −6.64 "
+                        + "(Stockfish 18, depth 22); 48...Rd8 first holds");
+    }
+
+    /** Black (myChess) to move before {@code 54...c1=Q??} in a pawn race. */
+    private static final String BEFORE_C1Q_FEN = "8/8/8/r5P1/5P1P/7K/1kp5/7R b - - 0 54";
+
+    /**
+     * Promoting into a capture, in a race that was drawn.
+     *
+     * <p>The rook on h1 covers c1. {@code 54...c1=Q 55.Rxc1 Kxc1} spends the pawn for nothing
+     * and white's three connected pawns then run: <b>0.00</b> to <b>−4.95</b> (Stockfish 18,
+     * depth 22). {@code 54...Ra1} pins the rook to its job first.
+     *
+     * <p>The purest case in the corpus for a specific hole: a promotion is scored as a
+     * promotion regardless of whether the new queen survives the reply. That is a
+     * quiescence question — {@code 55.Rxc1} is a capture, so the capture-only generator does
+     * produce it — which makes the case worth re-checking whenever move ordering changes.
+     *
+     * <p><b>Test family:</b> endgame-technique (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void c1Queen_vsZetaDva_characterizesPromotingIntoACapture() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_C1Q_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.c2, Board.c1, "54...c1=Q",
+                "which is met by 55.Rxc1 Kxc1 and turns 0.00 into −4.95 (Stockfish 18, depth 22); "
+                        + "54...Ra1 holds");
+    }
+
+    // ---- repaired since v4.4.1: these guard the repair ----
+
+    /** Black (myChess) to move before {@code 51...Rd8??}, which walked into mate. */
+    private static final String BEFORE_RD8_FEN = "2r3k1/5p2/4p1p1/4P1P1/q2P1PN1/1r6/3B4/3nK2Q b - - 1 51";
+
+    /**
+     * The largest repaired swing in the corpus: black stood at <b>+8.87</b> and
+     * {@code 51...Rd8} let white mate (Stockfish 18, depth 22). {@code 51...Rb1} wins.
+     *
+     * <p>The current build plays {@code 51...Rcc3} at {@link #SCANNER_DEPTH} and keeps the
+     * win, so this is a guard rather than a characterization. Worth keeping precisely because
+     * the failure it guards against is not "loses some advantage" but "converts a won game
+     * into a mate against" — the cheapest possible regression to detect and the most expensive
+     * to ship.
+     *
+     * <p><b>Test family:</b> tactical-oversight (fixed)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void rd8_vsZetaDva_engineNoLongerWalksIntoMate() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_RD8_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineAvoids(result, Board.c8, Board.d8, "51...Rd8");
+    }
+
+    /** Black (myChess) to move before {@code 42...Rf3??}, throwing away a won position. */
+    private static final String BEFORE_RF3_FEN = "6k1/7p/1p4p1/pP6/P1p5/2Pq4/1KR2r1P/1Q6 b - - 8 42";
+
+    /**
+     * From <b>+8.79</b> to <b>+0.03</b> in one move: {@code 42...Rf3} lets white consolidate,
+     * while {@code 42...Qxc2+} finishes (Stockfish 18, depth 22).
+     *
+     * <p>Repaired — the current build plays {@code 42...Rf1} at {@link #SCANNER_DEPTH}. Note
+     * that {@code Rf1} is not Stockfish's move either; the assertion is deliberately only that
+     * the losing rook move is avoided, because pinning the *best* move would fail on any
+     * change that picks a different winning continuation.
+     *
+     * <p><b>Test family:</b> tactical-oversight (fixed)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void rf3_vsZetaDva_engineNoLongerReleasesTheWin() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_RF3_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineAvoids(result, Board.f2, Board.f3, "42...Rf3");
+    }
+
+    /** White (myChess) to move before {@code 15.Bc2??}, from a level middlegame. */
+    private static final String BEFORE_BC2_FEN = "r1bk3r/pp3ppp/2pb4/3pn3/QP1B1q2/2PB1P2/P4PPP/RN2R1K1 w - - 6 15";
+
+    /**
+     * A bishop retreat that collapses a level position: <b>+0.27</b> to <b>−6.34</b>
+     * (Stockfish 18, depth 22). {@code 15.Be2} was the square.
+     *
+     * <p>Repaired — the current build plays {@code 15.Be3} at {@link #SCANNER_DEPTH}. The one
+     * middlegame case in this batch where the position before the move was genuinely balanced,
+     * which makes it the most representative of ordinary play: the other repaired cases all
+     * start from a large advantage, where a lot can go wrong before the result changes.
+     *
+     * <p><b>Test family:</b> tactical-oversight (fixed)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void bc2_vsZetaDva_engineNoLongerCollapsesALevelPosition() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_BC2_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineAvoids(result, Board.d3, Board.c2, "15.Bc2");
+    }
+
+    /** Black (myChess) to move before {@code 61...Bc3+??} in a queen endgame. */
+    private static final String BEFORE_BC3_FEN = "8/3P3p/6p1/K2Qp1k1/3bP1P1/8/8/5q2 b - - 38 61";
+
+    /**
+     * {@code 61...Bc3+} turns <b>+3.68</b> into <b>−4.06</b>; {@code 61...Qa1+} wins
+     * (Stockfish 18, depth 22).
+     *
+     * <p>Repaired, and repaired exactly: the current build plays {@code 61...Qa1+} at
+     * {@link #SCANNER_DEPTH} — Stockfish's move, not merely a different one. The strongest
+     * form a guard can take, since it pins both halves of the decision.
+     *
+     * <p><b>Test family:</b> endgame-technique (fixed)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void bc3_vsTscp_engineNowFindsTheWinningCheck() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_BC3_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineAvoids(result, Board.d4, Board.c3, "61...Bc3+");
+    }
+
+    /** Black (myChess) to move before {@code 83...R6xa7??} in a rook-and-pawn race. */
+    private static final String BEFORE_R6XA7_FEN = "r7/P6R/r4Pp1/7P/8/2K5/4R1p1/7k b - - 0 83";
+
+    /**
+     * Taking the a7 pawn with the wrong rook: <b>+2.90</b> to <b>−2.68</b>, where
+     * {@code 83...g5} holds the race (Stockfish 18, depth 22).
+     *
+     * <p>Repaired — the current build plays {@code 83...Rc6+} at {@link #SCANNER_DEPTH}. The
+     * position is a four-pawn race with both sides one move from promoting, which is the shape
+     * the {@code endgame-technique} family keeps returning to; that this one is now handled
+     * while {@code 48...d3} above is not gives the family a fixed and an open case in the same
+     * batch, from the same opponent.
+     *
+     * <p><b>Test family:</b> endgame-technique (fixed)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void r6xa7_vsZetaDva_engineNoLongerTakesWithTheWrongRook() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_R6XA7_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineAvoids(result, Board.a6, Board.a7, "83...R6xa7");
+    }
 
 }

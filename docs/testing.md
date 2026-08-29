@@ -4,8 +4,8 @@ The test suite is the executable specification for myChess: it pins down move ge
 
 | Metric | Value |
 |---|---|
-| Test classes | 81 `*Test.java` (+ 25 helpers and measurement drivers under the same source root, class count re-counted 2026-08-27, helper count 2026-08-22) |
-| Test methods (`@Test` + `@ParameterizedTest`) | 1 273 — the 1 271 of the full run on 2026-08-27 plus the two gate-boundary tests added 2026-08-28; derived rather than re-measured, since a full run costs 17 minutes and the machine was busy with an SPRT. Parameterized cases counted per invocation |
+| Test classes | 81 `*Test.java` (+ 26 helpers and measurement drivers under the same source root, class count re-counted 2026-08-27, helper count 2026-08-29 — `ProbeVsEvalBenchmark` added, see [roadmap § 12.26](roadmap.md)) |
+| Test methods (`@Test` + `@ParameterizedTest`) | 1 288 — the 1 271 of the full run on 2026-08-27, plus two gate-boundary and five `containsIllegalMove` sentinel tests (2026-08-28) and ten anchor-bracket cases (2026-08-29). Derived rather than re-measured, since a full run costs 17 minutes; the counts for the changed classes *are* measured — `WeightingFunctionTest` 58, `BlunderTest` 50. Parameterized cases counted per invocation |
 | Currently passing | **all** — full run 2026-08-27: 1 271 run, 0 failures, 0 errors, **0 skipped** |
 | Currently `@Disabled` | 0 — see [Retired disabled tests](#retired-disabled-tests) |
 | Test source lines | ~28 260 |
@@ -255,11 +255,40 @@ Four explicit cases:
 
 Plus two en-passant tests covering both colors, each verifying both the `enPassantField` state after the trigger move *and* the resulting capture move's presence in the generator's output.
 
-### `WeightingFunctionTest` (×39) — evaluation component coverage
+### `WeightingFunctionTest` (×58, re-counted 2026-08-28) — evaluation component coverage
 
 The single largest test file by method count. Each test pins down one component of the evaluation function for one specific position: a particular pawn structure produces a particular `doublePawnCount`, a particular development state produces a particular `openingState`, a king under attack produces a particular `chessCount`. Together they form the documented expected behavior for [Chapter 5](evaluation.md).
 
 Test names are very specific (`testWhiteWithDoublePawn`, `testStartPositionOpeningWeight`, `testBlackCastlingState`, …), so failures point straight at the responsible component without needing to read the test body.
+
+Five of them cover the `containsIllegalMove` sentinel, which was uncovered until 2026-08-28. They
+exist because of a near-miss rather than a failure: the sentinel looks redundant, since the search
+detects the same condition twice more (`Moves.ILLEGAL` and the `canCaptureOpposingKing()` probe),
+and removing it would have kept the bench signature bit-identical and the whole suite green. It is
+*not* redundant for the Texel corpus builders, which call `analyzeFactors` directly — no move
+generator, no quiescence — and drop a position on `isIllegalWeight`. The failure mode would have
+been invisible corruption of every tuning corpus. Four of the five fail when the sentinel is
+disabled; the fifth (`legalPosition_withTheSameMaterial_doesNotFireTheSentinel`) stays green on
+purpose, guarding the other four from passing vacuously. See § 12.26 of the
+[roadmap](roadmap.md).
+
+**The gap was searched for elsewhere and is not there** (audited 2026-08-29). Two passes: every
+method declared in `src/main` classified by whether any bench-reachable file calls it, and every
+sentinel-value convention in the codebase (`ILLEGAL_WEIGHT_*`, `CHECKMATE_WEIGHT_*`,
+`Moves.ILLEGAL`, `SearchNodeResult.INVALID`, `Board.illegal`/`empty`) traced to its consumers. Of
+538 methods, 210 have no caller inside the search — but that column does **not** mean untested, and
+reading it that way produced a false alarm on the entire UCI surface: `UciHandlerTest` is 893 lines
+and 27 tests driven through `handleLine(...)`, so `handleGo`, `handlePosition` and their siblings
+are exercised without ever being named. Testing through the public entry point is the intended
+style, not a gap. On the sentinel side, `CHECKMATE_WEIGHT_*` has no consumer outside the search at
+all, `SearchNodeResult.INVALID` is used only in `PositionSearch`, and every `Moves.isIllegal()` call
+outside the search sits behind a tested entry point.
+
+So the sentinel case is singular, and the reason names the category worth watching: its only
+uncovered consumer was a **measurement driver living in test sources** — the Texel corpus builders,
+which nothing tests by definition, because they *are* test-source code. Production behavior whose
+sole non-search consumer is a driver under `src/test` is the blind spot; there is exactly one, and
+it is now pinned.
 
 ### `GameTest.testToShortNotation` — round-trip notation
 
@@ -270,9 +299,11 @@ A single test exercising the full chain `long algebraic input → MoveDescriptio
 
 ## 11.3 Turning a lost game into a test
 
-`BlunderTest` grew to 27 cases by pinning real defeats, first from cutechess matches and
-now mostly from lichess. The route below is worth following exactly, because every step of
-it exists because a shortcut went wrong once.
+`BlunderTest` grew to 50 cases by pinning real defeats, first from cutechess matches, then
+mostly from lichess, and since 2026-08-29 from the anchor bracket as well. It costs 9 min 20 s
+on its own — the largest single item in the slow suite, and the reason the class carries
+`@Tag("slow")`. The route below is worth following exactly, because every step of it exists
+because a shortcut went wrong once.
 
 ### Finding the case
 
@@ -352,6 +383,65 @@ Princhess, BBC, Kojiro — have never been scanned at all, and being the *strong
 that is defensible rather than an omission. And a verified finding is a candidate, not yet
 a test: it still has to go through *Working the case up* below, which is where a third of
 the lichess candidates historically fall away.
+
+#### The 2026-08-29 re-probe, and the second harvest
+
+The first of those limits has since been removed by measurement.
+[`tools/reprobe-anchor-findings.py`](../tools/reprobe-anchor-findings.py) ran the current
+build over all 58 qualifying findings at depths 8, 10 and 12, one JSON object per line into
+[`anchor-reprobe-4.6.0.jsonl`](../test-results/anchor-reprobe-4.6.0.jsonl):
+
+| | |
+|---|---|
+| still reproduce | **37** (24 Zeta Dva, 13 TSCP) |
+| no longer reproduce | **21** (14 Zeta Dva, 7 TSCP) |
+
+**The step was not ceremony.** Pinning straight from the v4.4.1 list would have written a
+red test for well over a third of the set. It also found a subtler trap: **8 of the 37 do
+not reproduce at `SCANNER_DEPTH` at all**, only deeper — `39...d4` (10), `56...Nc5` and
+`58.Rbb8` (10 and 12), `44...Ng2`, `60...Rc2`, `68...Kf2`, `44.Kg3` and `22.Bxc6+` (12
+only). Pinned at the constant every one of them would have failed. The pin depth belongs to
+the case, not to the suite.
+
+Those eight depths were then checked against the run's own safety cap, since a search that
+hits it returns the deepest iteration it finished rather than the depth asked for. **Seven of
+the eight hit nothing** — their depths are real. The exception is `22.Bxc6+`, whose depth-10
+search was truncated and reported "does not reproduce"; its depth-12 result ran to completion,
+so the case is sound but nothing is known about depth 10 for it. Worth stating because the cap
+does bite elsewhere: **18 of the 174 searches hit it**, 16 at depth 12 and 2 at depth 10. Those
+two columns therefore mean "depth *n* or the deepest iteration finished within 60 s". Only the
+depth-8 column is unqualified — its slowest search took 12.96 s — which is a second reason the
+ten adopted cases are all pinned there.
+
+A second pass, [`tools/refute-anchor-findings.py`](../tools/refute-anchor-findings.py),
+asked Stockfish 18 at depth 22 for what the original scan never recorded — the move that
+*holds*, and the refutation line after the move played — because every case comment quotes
+both and the findings file has only the two evaluations. Result in
+[`anchor-refutations.jsonl`](../test-results/anchor-refutations.jsonl). It also re-confirmed
+the damage: **all 58 still measure 3.00 pawns or more**, none shrank, so the original
+depth-20 verification holds under two more plies.
+
+Ten of them are now tests — five characterizations and five guards, listed under *Anchor
+bracket, second harvest* in `BlunderTest`. Eight come from the Zeta Dva half that had never
+been touched. The headline case is `32.Rc7+`: myChess holds a **forced mate**, reports a
+routine +4.00, plays a check that loses, and ends at −12.78 — a swing above twenty pawns in
+one move, with the refutation four plies deep and well inside the search.
+
+That leaves **45 re-verified, classified candidates** uncovered — 29 characterizations, of
+which 21 are pinnable at `SCANNER_DEPTH`, and 16 guards. (13 of the 58 are now covered: the
+ten above plus three of the original five; the other two of those five start from a lost
+position and are excluded from the 58 in the first place.)
+
+They are no longer a raw JSON file.
+[`tools/report-anchor-blunders.py`](../tools/report-anchor-blunders.py) renders them as
+[`anchor-blunders-4.6.0.md`](../test-results/anchor-blunders-4.6.0.md), the anchor
+counterpart to `lichess/blunders.md` and with the same **Test** column, so an unconsumed case
+is visible at a glance. Each row carries the verdict, the pin depth, the holding move and the
+refutation line, which is exactly what *Working the case up* below otherwise has to
+regenerate. **That readability gap is the reason the reserve sat for twelve days**: the
+findings were verified the whole time, but choosing one meant re-running the tools, and the
+lichess corpus — which has had its report from the start — never accumulated a comparable
+backlog.
 
 ### Working the case up
 
@@ -581,12 +671,12 @@ rule instead of tightening the search, which is the opposite concern from § 12.
 mechanism the other three cases indict, and it is what establishes that material is the one
 dimension the shortcut never discards. That belongs in the family; the row states its role.
 
-The 13 open king-safety cases are the argument for the roadmap's ordering, and two of them —
+The 18 open king-safety cases are the argument for the roadmap's ordering, and two of them —
 `15...Ne8` and `21.hxg4` — additionally bound how *large* the term has to be: in both, correct
 positional signal loses to a piece or a pawn of material, so a penalty worth a few dozen
 centipawns would not change either decision. All three shelved attempts in § 12.21 were scaled
-in exactly that range. The four `fixed` cases carry a second lesson worth keeping in view:
-all four fell to *tables* (the v4.3.1 king endgame table, the v4.4.0 PeSTO tables) rather than
+in exactly that range. The five `fixed` cases carry a second lesson worth keeping in view:
+they fell to *tables* (the v4.3.1 king endgame table, the v4.4.0 PeSTO tables) rather than
 to a dedicated king-safety term. That is the cheaper mechanism, and it is the one to rule out
 before building a new term. Note also which
 families a king-safety term would *not* touch: `75.Ba1` is the one case where the
