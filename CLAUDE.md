@@ -182,13 +182,24 @@ Report progress, not just liveness: "position 36 of 55", "game 420 of 1600", not
 
 **The heartbeat must end itself when the run does.** Watch for the process, not for log lines: check whether it still exists, and `break` out of the loop when it is gone — printing either the finished result or a resume hint. A `tail -f` on a log file never exits on its own; one left over from the anchor-bracket run was still going **2 days and 18 hours** after that run finished, and nobody noticed. A self-terminating monitor also makes its final message the answer: "done, here is the footer" or "interrupted at N, resume with this command".
 
-**Do not diagnose liveness with clever one-liners.** Three different ones misfired in a single afternoon:
+**Keep the PID. Do not pattern-match for a process you started yourself.**
+
+```sh
+mycmd &                      # or: nohup ./runner.sh & …
+PID=$!
+while kill -0 "$PID" 2>/dev/null; do sleep 120; echo "läuft seit $(ps -o etime= -p $PID)"; done
+```
+
+`kill -0 <pid>` asks the kernel a question that has one right answer. Every text filter asks a question about *strings*, and the string you are searching for is, by construction, also present in the command line of the thing doing the searching. That is not an edge case to be outsmarted — it is the normal situation, and it has now misfired **four times** in this project:
 
 - `pgrep -fc <pattern>` returned 0 while `pgrep -f <pattern>` listed four PIDs.
 - `ps | grep my-chess-4.4.2.jar` found nothing, because `mychess-uci.sh` launches with `-cp target/classes:target/dependency/*` and carries no jar name.
 - `ps -eo etime,command | grep <script>.py` matched the *launching shell* as well, whose command line was the whole heredoc that wrote the script — so the "elapsed time" field came back as several lines of Python source.
+- **2026-08-29, the expensive one.** `while ps -eo args | grep -q surefirebooter; do sleep 20; done` — the loop's own shell carries the word `surefirebooter`, so the condition was permanently true. Two such waiters sat spinning for 26 and 19 minutes and *would never have exited*; a monitor built the same way reported a 26-minute elapsed time for a run two minutes old. The bracket trick (`[s]urefirebooter`) does not save this: it defeats a self-match on the *pattern* while the surrounding script text still contains the plain word.
 
-The first two produced a confident "the run is hung" about a run at 99 % CPU. Use `ps -eo …,command` with an **anchored** match on the interpreter or binary (`awk '/bin\/python3 .*script\.py$/'`), take the PID and ask for the elapsed time separately (`ps -o etime= -p $pid`), and verify the filter matches something *known to be running* before trusting a zero.
+The first two produced a confident "the run is hung" about a run at 99 % CPU. Note that this last one happened **while following the advice this paragraph used to give** — anchor the match on the interpreter. The anchor was on the wrong field, and no amount of care with regexes removes the class of error. Hence the rule above: keep the PID.
+
+**Only when you did not start it** — an orphan, something from a previous session — is matching unavoidable. Then use `ps -eo pid,args` with the anchor on the *executable field* (`awk '$2 ~ /bin\/java$/ && /surefirebooter/'`, since a shell has `-c` there and cannot match), take the PID once, and from that point on ask `kill -0` rather than re-running the filter. Verify the filter finds something *known to be running* before trusting a zero.
 
 **The same applies to counting inside log files.** Surefire prints `<<< FAILURE!` twice per failing test — once on the class summary line, once on the method line — so `grep -c "<<< FAILURE"` reports double and a heartbeat built on it announces failures that do not exist. Count the thing you actually mean (`grep -c "^\[ERROR\] org\.michaelfl"` for methods, or read the final `Tests run: … Failures: …` line) and cross-check a surprising count against a second source before reporting it.
 
