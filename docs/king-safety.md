@@ -14,7 +14,7 @@
 | **Why the bottom is zero** | not because it is insignificant — because its *sign* is disputed between corpora by more than their intervals allow |
 | **Where to build it** | branch `attack-units`, `05f337d` — already ported, never measured, 106 commits behind master with `WeightingFunction.java` byte-identical (§ 1.1) |
 | **The one missing change** | multiply by the game phase. Without it the term runs at full strength in the endgame, where the measured sign is the *opposite* one (§ 4.2) |
-| **How to implement it** | inside `WeightingFunction`'s existing per-piece scan, never as a second pass — a standalone scan costs more than the whole evaluation (§ 4.5) |
+| **How to implement it** | leave it where it is: branch `attack-units` already calls `increaseAttackUnit` from inside `move(...)`, the walk the evaluation performs anyway. Do **not** refactor it into a separate pass, however much tidier that looks — a standalone scan costs more than the entire evaluation (§ 4.5) |
 | **What will kill it** | steering into sacrifices the material-only shortcut then hides. Cap below 150 cp and watch the sacrifice rate (§ 4.4) |
 | **Expectation** | small. **Six** attempts across two projects measured −14.7, −18.1 and −57.5 in myChess, −46.5, −67.1 and −12.1 in the Audax fork. A **zero** would be progress; § 12.21's headline of 30–60 Elo is not the number to plan for |
 
@@ -612,12 +612,22 @@ per-piece walk, cost **1.17× per node** *including* its battery and x-ray widen
 alone bought it 0.68 plies less depth and turned +31.9 Elo at fixed depth into −46.5 under a
 clock.
 
-So this is an implementation instruction with a measurement behind it: **hang the term inside
-`WeightingFunction`'s existing per-piece scan, never as a second pass.** That scan already
-visits every piece and walks every ray; the marginal cost of accumulating units there is a
-comparison and an array write. Branch `attack-units` already does it that way — the point of
-measuring the standalone version was to find out what the alternative would cost, and the answer
-is that it is not an alternative.
+**This is not a change to make — it is one to avoid.** Branch `attack-units` already calls
+`increaseAttackUnit` from inside `move(byte, int, int, int, int)`, the method the evaluation
+invokes for every square a piece reaches anyway, alongside the mobility count and the capture
+bookkeeping. The marginal cost there is one comparison (*is this square in the enemy king's
+zone?*) and one array write for the dedup mark. No extra ray is walked and no square is visited
+twice.
+
+What the 1302 ns measures is `KingAttackUnits`, the standalone class in the test sources. It has
+to walk the rays itself because master exposes no attacker set, and it exists to fit the curve,
+not to ship.
+
+The instruction, then, is for whoever does the rebase: the temptation will be to pull the unit
+accumulation out of `move` into a tidy self-contained method called once per evaluation, because
+that reads better. **It would roughly double evaluation cost.** For scale, the Audax fork's
+1.17× per node — a fraction of that — already bought it 0.68 plies less depth and turned
++31.9 Elo at fixed depth into −46.5 under a clock.
 
 #### The step schedule was a ceiling, and it invalidated two conclusions
 
