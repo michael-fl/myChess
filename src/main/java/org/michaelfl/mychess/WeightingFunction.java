@@ -117,13 +117,20 @@ public final class WeightingFunction {
      * weigh more; the king contributes nothing (and is thus never counted as an
      * attacker). These weights are summed into {@link #attackUnit} and used to
      * index {@link #KING_ATTACK_PENALTY}.
+     *
+     * <p><b>They cannot be changed on their own.</b> The penalty table is a lookup
+     * <em>indexed by</em> these weights, not merely scaled by them: raise the queen to 9 and
+     * every position with a queen in the zone reads two entries further along a table nobody
+     * refitted. Package-private because {@code KingAttackUnits} — the standalone implementation
+     * the curve was fitted over, in test sources — reads them from here rather than repeating
+     * them, so the two cannot drift apart. Changing one means refitting the curve.
      */
-    private static final int ATTACK_UNIT_KING = 0;
-    private static final int ATTACK_UNIT_PAWN = 1;
-    private static final int ATTACK_UNIT_KNIGHT = 2;
-    private static final int ATTACK_UNIT_BISHOP = 2;
-    private static final int ATTACK_UNIT_ROOK = 3;
-    private static final int ATTACK_UNIT_QUEEN = 5;
+    static final int ATTACK_UNIT_KING = 0;
+    static final int ATTACK_UNIT_PAWN = 1;
+    static final int ATTACK_UNIT_KNIGHT = 2;
+    static final int ATTACK_UNIT_BISHOP = 2;
+    static final int ATTACK_UNIT_ROOK = 3;
+    static final int ATTACK_UNIT_QUEEN = 5;
 
     /** Attack-unit weight indexed by piece constant; see {@link #ATTACK_UNIT_KING}. */
     private static final int[] ATTACK_UNIT_OF_PIECE = new int[Board.blackKing + 1];
@@ -143,35 +150,42 @@ public final class WeightingFunction {
     }
 
     /**
-     * King-attack penalty in centipawns, indexed by the attacking side's
-     * accumulated {@link #attackUnit}. The table grows progressively, so piling
-     * several pieces onto the king zone is punished far more than the sum of the
-     * individual attackers would suggest. Applied only once at least two distinct
-     * pieces attack, and the index is clamped to the last entry (see
-     * {@link #calcKingAttackPenalty}).
+     * King-attack penalty at full midgame material, in centipawns, indexed by the attacking
+     * side's accumulated {@link #attackUnit} and scaled down by the game phase in
+     * {@link #calcKingAttackPenalty}.
+     *
+     * <p><b>Fitted, not shaped by hand</b> — see {@code docs/king-safety.md} § 4.6. The target
+     * was Stockfish's <em>static</em> evaluation minus this one, over a 39 619-position corpus,
+     * with monotonicity as a constraint of the fit rather than a property hoped for afterward.
+     * An earlier hand-built table ran to index 20 and rose to 400; the entries above 8 covered
+     * positions real play reaches in 0.3 % of samples, and its lower half carried a quarter to a
+     * half of what the fit puts there.
+     *
+     * <p><b>The flat runs are the measurement, not rounding.</b> Indices 5 to 7 share a value
+     * because the data place all three well above zero without distinguishing between them;
+     * where the unconstrained fit fell — which would score more attackers as less danger — the
+     * isotonic projection merges the offending indices into one level. Constraining the fit that
+     * way costs 0.077 % of residual, so the descent it removed was noise.
+     *
+     * <p>Indices 1 and 2 are zero because a single minor piece bearing on the king zone is the
+     * normal case rather than a danger, and their intervals do not separate from zero. Index 0
+     * is pinned: only the difference between the two sides reaches the score, so a constant on
+     * every entry would cancel.
+     *
+     * <p>Applied only once at least two distinct pieces attack, and the index is clamped to the
+     * last entry — both in {@link #calcKingAttackPenalty}, both deliberate, both explained
+     * there.
      */
     static final int[] KING_ATTACK_PENALTY = {
             0,    //  0
             0,    //  1
-            5,    //  2
-            5,    //  3
-            10,   //  4
-            10,   //  5
-            15,   //  6
-            15,   //  7
-            25,   //  8
-            35,   //  9
-            50,   // 10
-            65,   // 11
-            85,   // 12
-            105,  // 13
-            130,  // 14
-            160,  // 15
-            195,  // 16
-            235,  // 17
-            285,  // 18
-            340,  // 19
-            400   // 20
+            0,    //  2
+            13,   //  3
+            16,   //  4
+            47,   //  5
+            47,   //  6
+            47,   //  7
+            80    //  8
     };
 
     /**
@@ -209,8 +223,15 @@ public final class WeightingFunction {
     private static final int[] oppositeColor = new int[] { GameStatus.TURN_BLACK, GameStatus.TURN_WHITE };
     private static final int[] oppositeKing = new int[] { Board.blackKing, Board.whiteKing };
 
-    /** Phase of the full starting material (4·1 knights + 4·1 bishops + 4·2 rooks + 2·4 queens); the phase is clamped to this. */
-    private static final int MAX_PHASE = 24;
+    /**
+     * Phase of the full starting material (4·1 knights + 4·1 bishops + 4·2 rooks + 2·4 queens); the phase is clamped to this.
+     *
+     * <p>Package-private rather than private so {@code WeightingFunctionAttackUnitTest} can ask
+     * for the king-attack penalty at full midgame. Its fixtures build a {@link WeightingFunction}
+     * without calling {@link #calculate(Board)}, so their phase field is 0 and every phase-scaled
+     * term would come back as 0 — the assertions would pass while testing nothing.
+     */
+    static final int MAX_PHASE = 24;
 
     private static final float mobilityFactor = 0.1f;
     private static final float positionFactor = 0.5f;
@@ -408,7 +429,7 @@ public final class WeightingFunction {
                 piecesWeight[color] += weightOfPiece[piece];
 
                 // Accumulate every piece's PST (both phases; blended by phase
-                // afterwards). The king is no longer excepted here: the crude
+                // afterward). The king is no longer excepted here: the crude
                 // endgame king-PST skip (isEndGame / plyCount > 60) has been
                 // removed, so the tapered king endgame table handles centralization.
                 int packed = PieceSquareTables.getCombinedWeight(piece, field);
@@ -431,7 +452,7 @@ public final class WeightingFunction {
 
         calculateUndefendedPiecesCount();
 
-        return calculatePositionWeight();
+        return calculatePositionWeight(phase);
     }
 
     /**
@@ -518,7 +539,7 @@ public final class WeightingFunction {
         return new FactorBreakdown(eval, features);
     }
 
-    private int calculatePositionWeight() {
+    private int calculatePositionWeight(final int phase) {
         if (containsIllegalMove)
             return turn == 0 ? ILLEGAL_WEIGHT_POS : ILLEGAL_WEIGHT_NEG;
 
@@ -532,7 +553,7 @@ public final class WeightingFunction {
                 + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
                 + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor
                 + ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * bishopPairFactor
-                + (calcKingAttackPenalty(0) - calcKingAttackPenalty(1)) * kingAttackFactor) * 100);
+                + (calcKingAttackPenalty(0, phase) - calcKingAttackPenalty(1, phase)) * kingAttackFactor) * 100);
     }
 
     /**
@@ -580,21 +601,38 @@ public final class WeightingFunction {
     }
 
     /**
-     * King-attack penalty (in centipawns) for the given attacking color, looked
-     * up in {@link #KING_ATTACK_PENALTY} by that side's accumulated
-     * {@link #attackUnit}.
+     * King-attack penalty for the given attacking color, looked up in
+     * {@link #KING_ATTACK_PENALTY} by that side's accumulated {@link #attackUnit} and scaled by
+     * the game phase.
      *
-     * <p>Gated on at least two distinct attackers ({@link #kingAttackerCount}): a
-     * lone attacker cannot mount a real mating threat and scores zero. The
-     * attack-unit index is clamped to the last table entry.
+     * <p><b>The phase scaling is the whole reason this term was worth porting.</b> Branch
+     * {@code attack-units} carried it for weeks without any reference to the phase, so it ran at
+     * full strength in the endgame — where the measured effect is not merely smaller but of the
+     * <em>opposite</em> sign: roughly −34 cp per attacker in the midgame against +12 in the
+     * endgame ({@code docs/king-safety.md} § 4.2). An unscaled term therefore charges a penalty
+     * where the data show a small bonus. {@link #blend} against a zero endgame value applies it.
+     *
+     * <p><b>Gated on at least two distinct attackers</b> ({@link #kingAttackerCount}), and the
+     * gate is load-bearing for the calibration rather than a plausible-sounding filter. It is
+     * what makes an index mean one thing: without it, five units mixes a lone queen with a rook
+     * and a knight, and refitting under the gate moves that entry from 20 cp to 47 — the two
+     * differ by more than a factor of two. The table shipped here was fitted <em>with</em> the
+     * gate applied; removing the gate requires refitting, because the gate suppresses 41.4 % of
+     * the term's total mass and 33.5 % of all king samples carry exactly one attacker.
+     *
+     * <p>The attack-unit index is clamped to the last table entry. Units above 8 occur in 0.72 %
+     * of samples and cannot be fitted from the data; measured across the legal moves of a
+     * position the term still varies by a median of 18.3 cp, so the clamp does not flatten it
+     * where it has to discriminate.
      *
      * @param color attacking color (0 = white, 1 = black)
+     * @param phase game phase in {@code [0, }{@link #MAX_PHASE}{@code ]}; 0 switches the term off
      * @return the penalty the enemy king incurs, as a positive centipawn value
      */
-    float calcKingAttackPenalty(int color) {
+    int calcKingAttackPenalty(final int color, final int phase) {
         return kingAttackerCount[color] < 2 ?
                 0 :
-                KING_ATTACK_PENALTY[Math.min(attackUnit[color], KING_ATTACK_PENALTY.length - 1)];
+                blend(KING_ATTACK_PENALTY[Math.min(attackUnit[color], KING_ATTACK_PENALTY.length - 1)], 0, phase);
     }
 
     // --- Package-private accessors for attack-unit unit tests. The arrays are
@@ -639,8 +677,8 @@ public final class WeightingFunction {
                "doublePawnCount:       w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + DELTA_STR + (doublePawnCount[0] - doublePawnCount[1]) + WEIGHT_STR + round((doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) + '\n' +
                "chessCount:            w=" + chessCount[0] + ", b=" + chessCount[1] + DELTA_STR + (chessCount[0] - chessCount[1]) + WEIGHT_STR + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
                "undefendedPiecesCount: w=" + undefendedPiecesCount[0] + ", b=" + undefendedPiecesCount[1] + DELTA_STR + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) + WEIGHT_STR + round((undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor) + '\n' +
-               "attackUnit:            w=" + attackUnit[0] + ", b=" + attackUnit[1] + DELTA_STR + (attackUnit[0] - attackUnit[1]) + WEIGHT_STR + round((calcKingAttackPenalty(0) - calcKingAttackPenalty(1)) * kingAttackFactor) + '\n' +
-               "weight: " + calculatePositionWeight() / 100f;
+               "attackUnit:            w=" + attackUnit[0] + ", b=" + attackUnit[1] + DELTA_STR + (attackUnit[0] - attackUnit[1]) + WEIGHT_STR + round((calcKingAttackPenalty(0, phase) - calcKingAttackPenalty(1, phase)) * kingAttackFactor) + '\n' +
+               "weight: " + calculatePositionWeight(phase) / 100f;
     }
 
     private static float round(float v) {

@@ -3,10 +3,15 @@ package org.michaelfl.mychess;
 /**
  * Attack units bearing on a king's 3×3 zone, computed from a {@link Board} alone.
  *
- * <p>This is the quantity {@code KING_ATTACK_PENALTY} is indexed by on branch
- * {@code attack-units}: every enemy piece that attacks at least one square of the king's zone
- * contributes its weight — pawn 1, knight 2, bishop 2, rook 3, queen 5, king 0 — and each piece
- * counts <b>once</b> however many zone squares it bears on.
+ * <p>This is the quantity {@link WeightingFunction#KING_ATTACK_PENALTY} is indexed by: every
+ * enemy piece that attacks at least one square of the king's zone contributes its weight, and
+ * each piece counts <b>once</b> however many zone squares it bears on.
+ *
+ * <p><b>The weights are read from {@link WeightingFunction} rather than repeated here.</b> They
+ * were duplicated while the term lived only on an unmerged branch, which left the calibration
+ * resting on two copies of six numbers staying equal — a coupling nothing enforced and a test
+ * had to assert. Referencing the production constants removes the failure mode instead of
+ * guarding it.
  *
  * <p><b>Why this duplicates logic that already exists.</b> On the branch the units fall out of
  * {@code WeightingFunction}'s per-piece scan for free, and nothing here would be needed. But the
@@ -28,15 +33,6 @@ package org.michaelfl.mychess;
  * @author Michael Fleischhauer
  */
 final class KingAttackUnits {
-
-    static final int PAWN_UNITS = 1;
-    static final int KNIGHT_UNITS = 2;
-    static final int BISHOP_UNITS = 2;
-    static final int ROOK_UNITS = 3;
-    static final int QUEEN_UNITS = 5;
-
-    /** The king contributes nothing, so a king never counts as an attacker. */
-    static final int KING_UNITS = 0;
 
     private KingAttackUnits() {
         // utility
@@ -86,27 +82,27 @@ final class KingAttackUnits {
         final int back = attackerIsWhite ? -Board.LENGTH : Board.LENGTH;
 
         for (int side : new int[] {-1, 1}) {
-            units += take(squares, field + back + side, pawn, PAWN_UNITS, counted);
+            units += take(squares, field + back + side, pawn, WeightingFunction.ATTACK_UNIT_PAWN, counted);
         }
 
         final byte knight = attackerIsWhite ? Board.whiteKnight : Board.blackKnight;
 
         for (int offset : Board.KNIGHT_OFFSETS) {
-            units += take(squares, field + offset, knight, KNIGHT_UNITS, counted);
+            units += take(squares, field + offset, knight, WeightingFunction.ATTACK_UNIT_KNIGHT, counted);
         }
 
         final byte king = attackerIsWhite ? Board.whiteKing : Board.blackKing;
 
         for (int offset : Board.KING_ADJACENCY_OFFSETS) {
-            units += take(squares, field + offset, king, KING_UNITS, counted);
+            units += take(squares, field + offset, king, WeightingFunction.ATTACK_UNIT_KING, counted);
         }
 
         final byte bishop = attackerIsWhite ? Board.whiteBishop : Board.blackBishop;
         final byte rook = attackerIsWhite ? Board.whiteRook : Board.blackRook;
         final byte queen = attackerIsWhite ? Board.whiteQueen : Board.blackQueen;
 
-        units += alongRays(squares, field, Board.DIAGONAL_RAY_DIRS, bishop, BISHOP_UNITS, queen, counted);
-        units += alongRays(squares, field, Board.ORTHOGONAL_RAY_DIRS, rook, ROOK_UNITS, queen, counted);
+        units += alongRays(squares, field, Board.DIAGONAL_RAY_DIRS, bishop, WeightingFunction.ATTACK_UNIT_BISHOP, queen, counted);
+        units += alongRays(squares, field, Board.ORTHOGONAL_RAY_DIRS, rook, WeightingFunction.ATTACK_UNIT_ROOK, queen, counted);
 
         return units;
     }
@@ -131,7 +127,7 @@ final class KingAttackUnits {
             }
 
             units += take(squares, to, slider, sliderUnits, counted);
-            units += take(squares, to, queen, QUEEN_UNITS, counted);
+            units += take(squares, to, queen, WeightingFunction.ATTACK_UNIT_QUEEN, counted);
         }
 
         return units;
