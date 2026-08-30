@@ -1,0 +1,46 @@
+mychess-selfplay-960.epd: 39,619 lines, 30 replicates, block 8, reachable magnitude ~640
+  1/30 (0.0 min)
+  2/30 (0.1 min)
+  3/30 (0.1 min)
+  4/30 (0.1 min)
+  5/30 (0.1 min)
+  6/30 (0.2 min)
+  7/30 (0.2 min)
+  8/30 (0.2 min)
+  9/30 (0.2 min)
+  10/30 (0.3 min)
+  11/30 (0.3 min)
+  12/30 (0.3 min)
+  13/30 (0.3 min)
+  14/30 (0.4 min)
+  15/30 (0.4 min)
+  16/30 (0.4 min)
+  17/30 (0.4 min)
+  18/30 (0.5 min)
+  19/30 (0.5 min)
+  20/30 (0.5 min)
+  21/30 (0.5 min)
+  22/30 (0.6 min)
+  23/30 (0.6 min)
+  24/30 (0.6 min)
+  25/30 (0.6 min)
+  26/30 (0.7 min)
+  27/30 (0.7 min)
+  28/30 (0.7 min)
+  29/30 (0.7 min)
+  30/30 (0.8 min)
+
+ units   fitted       p5      p50      p95    width
+     0      0.0      0.0      0.0      0.0      0.0
+     1     18.5    -11.5     29.0     64.5     76.0
+     2      5.0     -7.5      6.0     15.0     22.5
+     3     11.5      2.5     13.0     32.0     29.5
+     4    -20.0    -46.0    -14.5     21.0     67.0
+     5     -3.0     -9.5      2.5     12.0     21.5
+     6     31.0      3.5     50.5     79.5     76.0
+     7     45.0     25.5     40.0     61.5     36.0
+     8     84.0     57.0     87.0    114.0     57.0
+
+-> test-results/king-attack-bootstrap-960.json
+
+An interval that straddles zero means the entry is not distinguishable from no term at all at that index. Compare the widths against the gap between corpora before treating that gap as a finding.

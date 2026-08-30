@@ -1,0 +1,52 @@
+=== King-attack curve, fitted against Stockfish's static evaluation instead of game results ===
+Date        2026-08-30
+Corpus      tuning-data/mychess-selfplay-960.epd, 39,619 positions, all usable
+Target      Stockfish 18 static NNUE `eval`  minus  WeightingFunction.calculate, both white-POV,
+            both static -- no search on either side. Clipped to +/-2000 cp.
+Features    phase-scaled attack-unit indicator, identical to KingAttackTexelData.featuresOf
+Estimator   ordinary least squares (ridge 1e-6), 200 block bootstrap replicates, block 8
+Units       KingAttackUnits (P1 N2 B2 R3 Q5), 3x3 king zone, rays stop at the first piece
+
+WHY. The outcome-labelled fit over this same corpus labels every position with the result of a
+myChess SELF-PLAY game. If myChess is blind to king attacks then neither side converts one, so the
+fit learns "attack units are worthless" from games that blindness produced. The positions are fine;
+only the label is circular. Replacing the label with a far stronger, independent evaluator removes
+that -- no game outcome enters at any point. Stockfish's NNUE is itself trained on games, so this
+is not a first-principles ground truth; it is a yardstick myChess's own play cannot have moved.
+
+PLACEBO. Bearing on the king zone also means having active pieces deep in enemy territory, and a
+regression cannot separate the two on its own. The placebo column repeats the whole fit over a 3x3
+zone on the king's rank, four files away -- same depth, same side of the board, no king. Whatever
+the placebo also earns is activity rather than danger.
+
+ units                 king zone              placebo zone  difference
+                fitted [p5, p95]          fitted [p5, p95]
+----------------------------------------------------------------------
+     1      10.9 [  -2.3,  23.3]     -15.3 [ -27.4,  -2.1]      +26.2
+     2       1.6 [  -1.4,   4.6]      -9.7 [ -13.0,  -7.1]      +11.3
+     3      34.3 [  27.7,  40.1]      17.7 [  11.9,  23.7]      +16.5
+     4      19.5 [  10.0,  28.7]      -3.7 [ -15.5,   6.2]      +23.2
+     5      15.2 [  11.0,  19.4]      -8.6 [ -12.3,  -3.4]      +23.8
+     6      44.2 [  29.1,  59.4]      -5.2 [ -21.1,   8.0]      +49.4
+     7      45.6 [  36.8,  54.4]     -14.1 [ -23.3,  -4.7]      +59.7
+     8      85.5 [  74.6,  95.7]      19.1 [   7.3,  28.7]      +66.4
+
+Frequency of each index in the corpus, both sides counted:
+  0: 40,038 (50.5%)   1: 2,252 (2.8%)   2: 12,845 (16.2%)   3: 7,319 (9.2%)
+  4:  2,918  (3.7%)   5: 8,971 (11.3%)  6:  1,370  (1.7%)   7: 2,028 (2.6%)   8: 1,497 (1.9%)
+
+READING IT. Indices 6-8 land at 44.2 / 45.6 / 85.5 against the shipped curve's 49 / 40 / 83 -- two
+estimators with different labels agreeing at the top. That agreement is what makes the disagreement
+at 3-5 credible: a systematically shifted estimator would have moved the top entries too. At index
+5 the outcome-labelled fit gives -3.0 [-9.5, +12.0] and this one +15.2 [11.0, 19.4], with the
+placebo at -8.6 [-12.3, -3.4] -- disjoint. Indices 1-2 remain indistinguishable from zero on both.
+
+CONSEQUENCE. docs/king-safety.md 4.5 zeroes indices 1-5 on the strength of overlapping bootstrap
+intervals from the outcome-labelled fits. On this evidence that zeroing is an artifact of the label
+for indices 3, 4 and 5. It is NOT a repair on its own: +15 cp stands against a 475 cp gap in the
+position that prompted the measurement (BlunderTest.staticEval960_afterDxc6, 5 units on the black
+king, myChess -194 where Stockfish reads +281 statically).
+
+Raw per-position data was not kept -- it is 39,619 lines of intermediate values and reproducible
+from the corpus. The driver itself is not yet in tools/: it needs a batch probe and a
+configurable-center variant of KingAttackUnits in test sources. Porting it is an open task.

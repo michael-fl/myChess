@@ -1,0 +1,45 @@
+=== Oberster Eintrag durch das enge Schrittweiten-Schema gedeckelt (max 90) — Ersatz: king-attack-fit-wide-*.log ===
+
+loading tuning-data/mychess-selfplay-960.epd
+39,619 samples: 31,695 training, 7,924 validation
+
+how often each index occurs (both sides counted):
+   0 units       46,303   58.4 %
+   1 units        1,990    2.5 %
+   2 units       10,087   12.7 %
+   3 units        6,006    7.6 %
+   4 units        2,678    3.4 %
+   5 units        7,457    9.4 %
+   6 units        1,326    1.7 %
+   7 units        1,960    2.5 %
+   8 units        1,431    1.8 %
+
+k = 0.005008
+before: training 0.135545   validation 0.135026
+
+  step  4.00  error 0.135510
+  step  4.00  error 0.135485
+  step  4.00  error 0.135465
+  step  4.00  error 0.135447
+  step  4.00  error 0.135432
+  step  4.00  error 0.135419
+  step  4.00  error 0.135408
+  step  4.00  error 0.135398
+  step  2.00  error 0.135394
+  step  1.00  error 0.135392
+  step  0.50  error 0.135391
+
+after:  training 0.135391   validation 0.134964
+
+fitted KING_ATTACK_PENALTY (centipawns, index 0 pinned at 0):
+   0 ->     0.0
+   1 ->    16.0   step   +16.0
+   2 ->     3.5   step   -12.5
+   3 ->     8.5   step    +5.0
+   4 ->   -22.5   step   -31.0
+   5 ->    -5.5   step   +17.0
+   6 ->    27.0   step   +32.5
+   7 ->    35.5   step    +8.5
+   8 ->    35.5   step    +0.0
+
+Read the steps, not only the values: a curve that rises steeply late is the progressive shape the design assumes, and one that rises and then falls is a sign the upper entries are fitted on too little data.

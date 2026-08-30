@@ -1,0 +1,44 @@
+loading tuning-data/mychess-selfplay-960.epd
+39,619 samples: 31,695 training, 7,924 validation
+
+how often each index occurs (both sides counted):
+   0 units       46,303   58.4 %
+   1 units        1,990    2.5 %
+   2 units       10,087   12.7 %
+   3 units        6,006    7.6 %
+   4 units        2,678    3.4 %
+   5 units        7,457    9.4 %
+   6 units        1,326    1.7 %
+   7 units        1,960    2.5 %
+   8 units        1,431    1.8 %
+
+k = 0.005008
+before: training 0.135545   validation 0.135026
+
+step schedule: initial 16.0, min 0.5, max 20 rounds (reachable magnitude ~640)
+
+  step 16.00  error 0.135457
+  step 16.00  error 0.135414
+  step 16.00  error 0.135387
+  step 16.00  error 0.135369
+  step 16.00  error 0.135363
+  step  8.00  error 0.135355
+  step  4.00  error 0.135354
+  step  2.00  error 0.135352
+  step  1.00  error 0.135352
+  step  0.50  error 0.135352
+
+after:  training 0.135352   validation 0.134878
+
+fitted KING_ATTACK_PENALTY (centipawns, index 0 pinned at 0):
+   0 ->     0.0
+   1 ->    18.5   step   +18.5
+   2 ->     5.0   step   -13.5
+   3 ->    11.5   step    +6.5
+   4 ->   -20.0   step   -31.5
+   5 ->    -3.0   step   +17.0
+   6 ->    31.0   step   +34.0
+   7 ->    45.0   step   +14.0
+   8 ->    84.0   step   +39.0
+
+Read the steps, not only the values: a curve that rises steeply late is the progressive shape the design assumes, and one that rises and then falls is a sign the upper entries are fitted on too little data.

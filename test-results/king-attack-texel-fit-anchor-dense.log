@@ -1,0 +1,58 @@
+loading tuning-data/mychess-anchor-dense.epd
+64,531 samples: 51,624 training, 12,907 validation
+
+how often each index occurs (both sides counted):
+   0 units       67,808   52.5 %
+   1 units        4,325    3.4 %
+   2 units       15,822   12.3 %
+   3 units       10,390    8.1 %
+   4 units        5,081    3.9 %
+   5 units       13,883   10.8 %
+   6 units        3,329    2.6 %
+   7 units        4,641    3.6 %
+   8 units        3,783    2.9 %
+
+k = 0.005481
+before: training 0.155115   validation 0.155881
+
+  step  4.00  error 0.154987
+  step  4.00  error 0.154870
+  step  4.00  error 0.154768
+  step  4.00  error 0.154678
+  step  4.00  error 0.154590
+  step  4.00  error 0.154514
+  step  4.00  error 0.154445
+  step  4.00  error 0.154379
+  step  4.00  error 0.154318
+  step  4.00  error 0.154261
+  step  4.00  error 0.154211
+  step  4.00  error 0.154165
+  step  2.00  error 0.154132
+  step  2.00  error 0.154109
+  step  2.00  error 0.154088
+  step  2.00  error 0.154068
+  step  2.00  error 0.154050
+  step  2.00  error 0.154031
+  step  2.00  error 0.154014
+  step  2.00  error 0.153997
+  step  2.00  error 0.153981
+  step  2.00  error 0.153966
+  step  2.00  error 0.153952
+  step  2.00  error 0.153939
+  step  1.00  error 0.153930
+  step  0.50  error 0.153926
+
+after:  training 0.153926   validation 0.154816
+
+fitted KING_ATTACK_PENALTY (centipawns, index 0 pinned at 0):
+   0 ->     0.0
+   1 ->    12.5   step   +12.5
+   2 ->    14.5   step    +2.0
+   3 ->    30.5   step   +16.0
+   4 ->    25.5   step    -5.0
+   5 ->    23.5   step    -2.0
+   6 ->    49.5   step   +26.0
+   7 ->    73.5   step   +24.0
+   8 ->    73.5   step    +0.0
+
+Read the steps, not only the values: a curve that rises steeply late is the progressive shape the design assumes, and one that rises and then falls is a sign the upper entries are fitted on too little data.

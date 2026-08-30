@@ -1,0 +1,44 @@
+=== UNGUELTIG fuer die Indizes 6-8: mit dem engen Schrittweiten-Schema gelaufen ===
+Der Tuner-Default erreicht hoechstens 12*(4+2+1+0.5) = 90, und die oberen Eintraege
+standen an dieser Wand. Ersatz: *-wide.log. Die Indizes 1-5 bleiben gueltig.
+
+human-dense.epd: 2,956,584 lines, 24 replicates, block 40
+  1/24 (1.1 min)
+  2/24 (2.2 min)
+  3/24 (3.3 min)
+  4/24 (4.4 min)
+  5/24 (5.5 min)
+  6/24 (6.5 min)
+  7/24 (7.6 min)
+  8/24 (8.7 min)
+  9/24 (9.8 min)
+  10/24 (10.8 min)
+  11/24 (11.9 min)
+  12/24 (13.0 min)
+  13/24 (14.1 min)
+  14/24 (15.2 min)
+  15/24 (16.2 min)
+  16/24 (17.3 min)
+  17/24 (18.4 min)
+  18/24 (19.5 min)
+  19/24 (20.6 min)
+  20/24 (21.7 min)
+  21/24 (22.7 min)
+  22/24 (23.8 min)
+  23/24 (24.9 min)
+  24/24 (26.0 min)
+
+ units   fitted       p5      p50      p95    width
+     0      0.0      0.0      0.0      0.0      0.0
+     1    -16.0    -19.5    -16.0     -9.0     10.5
+     2      4.0      2.5      4.0      5.0      2.5
+     3      7.0      5.0      6.5      9.0      4.0
+     4     14.5     10.5     14.0     19.5      9.0
+     5      4.5      3.5      5.0      5.5      2.0
+     6     46.0     38.0     45.5     51.5     13.5
+     7     38.0     35.0     38.5     40.5      5.5
+     8     51.5     47.5     51.5     51.5      4.0
+
+-> test-results/king-attack-bootstrap-human.json
+
+An interval that straddles zero means the entry is not distinguishable from no term at all at that index. Compare the widths against the gap between corpora before treating that gap as a finding.

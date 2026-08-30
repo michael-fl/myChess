@@ -1,0 +1,36 @@
+hybrid.epd: 1,487,619 lines, 20 replicates, block 1, reachable magnitude ~640
+  1/20 (0.7 min)
+  2/20 (1.4 min)
+  3/20 (2.1 min)
+  4/20 (2.8 min)
+  5/20 (3.5 min)
+  6/20 (4.2 min)
+  7/20 (4.9 min)
+  8/20 (5.6 min)
+  9/20 (6.3 min)
+  10/20 (7.0 min)
+  11/20 (7.8 min)
+  12/20 (8.5 min)
+  13/20 (9.2 min)
+  14/20 (9.9 min)
+  15/20 (10.6 min)
+  16/20 (11.3 min)
+  17/20 (12.0 min)
+  18/20 (12.7 min)
+  19/20 (13.4 min)
+  20/20 (14.1 min)
+
+ units   fitted       p5      p50      p95    width
+     0      0.0      0.0      0.0      0.0      0.0
+     1    -31.0    -34.0    -31.5    -28.5      5.5
+     2    -14.0    -15.0    -13.5    -12.0      3.0
+     3      1.5      0.0      2.0      4.0      4.0
+     4    -28.5    -30.0    -28.0    -25.0      5.0
+     5     -2.5     -3.5     -1.5     -0.5      3.0
+     6     12.5      2.5      9.5     17.5     15.0
+     7     25.5     22.0     25.0     28.5      6.5
+     8     77.5     70.5     75.5     79.5      9.0
+
+-> test-results/king-attack-bootstrap-hybrid.json
+
+An interval that straddles zero means the entry is not distinguishable from no term at all at that index. Compare the widths against the gap between corpora before treating that gap as a finding.
