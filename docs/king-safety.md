@@ -1,10 +1,29 @@
 # King Safety — Build Plan
 
-> **Status: not started. Three hand-crafted attempts have been measured and shelved,
-> all net-negative.** This document is the plan for a fourth attempt that does not repeat
-> them. It supersedes nothing in [roadmap § 12.21](roadmap.md#1221-king-safety--m--3060-elo),
-> which stays the short entry in the priority list; this is where the reasoning and the
-> concrete steps live.
+> **Status: nothing built, everything measured.** Three hand-crafted attempts were shelved
+> net-negative; a fourth is prepared and its numbers now come from data rather than intuition.
+> Supersedes nothing in [roadmap § 12.21](roadmap.md#1221-king-safety--m--3060-elo), which stays
+> the short entry in the priority list; the reasoning and the steps live here.
+
+## The short version
+
+| | |
+|---|---|
+| **Curve to start from** | `0 0 0 0 0 0 49 40 83`, indices 0–8, everything above clamped onto 8 |
+| **Where it comes from** | Texel fit against game results, phase-weighted, 2.37 M training positions (§ 4.5) |
+| **Why the bottom is zero** | not because it is insignificant — because its *sign* is disputed between corpora by more than their intervals allow |
+| **Where to build it** | branch `attack-units`, `05f337d` — already ported, never measured, 106 commits behind master with `WeightingFunction.java` byte-identical (§ 1.1) |
+| **The one missing change** | multiply by the game phase. Without it the term runs at full strength in the endgame, where the measured sign is the *opposite* one (§ 4.2) |
+| **How to implement it** | inside `WeightingFunction`'s existing per-piece scan, never as a second pass — a standalone scan costs more than the whole evaluation (§ 4.5) |
+| **What will kill it** | steering into sacrifices the material-only shortcut then hides. Cap below 150 cp and watch the sacrifice rate (§ 4.4) |
+| **Expectation** | small. **Six** attempts across two projects measured −14.7, −18.1 and −57.5 in myChess, −46.5, −67.1 and −12.1 in the Audax fork. A **zero** would be progress; § 12.21's headline of 30–60 Elo is not the number to plan for |
+
+**Read § 4.1 before using the seven depth-stable cases as a target** — they were the intended
+instrument and they are not usable as one.
+
+Several claims in this document were withdrawn as later measurements arrived; each is marked
+where it stood rather than deleted, because the reason a number was wrong is usually more useful
+than the number.
 
 King safety is step 3 of the [current plan](roadmap.md#current-plan-2026-08-12), ahead of the
 search cluster. myChess today has **no notion of how exposed a king is**: the only king-related
@@ -426,6 +445,340 @@ Two checks make the condition testable before an SPRT is spent:
 
 ---
 
+### 4.5 The curve, fitted (2026-08-29) — the first table in this project not placed by hand
+
+All three shelved attempts wrote their tables from intuition and measured the whole thing at
+once, which is why none of them could say afterwards whether the idea or the numbers were
+wrong. `TexelKingAttackTuner` fits the table entries directly against game results, with the
+current evaluation as the base, so what is fitted is the **residual** — what king pressure adds
+once everything myChess already knows has been accounted for.
+
+The feature is linear, which is what makes this possible at all: the term enters as
+`f(unitsWhite) − f(unitsBlack)`, so with the entries as parameters the derivative is a vector of
++1 and −1. Index 0 is pinned at zero, because only the difference reaches the score and adding
+a constant everywhere is an exact null direction. The table stops at 8 units: indices 0–8 carry
+**99.7 %** of all king samples, everything from 9 upward carries 0.3 %.
+
+#### The dead end that came first
+
+The obvious approach was to read the curve straight out of the data — take positions where the
+*opponent* has zero attack units, group by own units, and `f` falls out with no fit at all. The
+algebra is right and the answer was nonsense: **a single pawn bearing on the zone measured
++47 cp, a single queen +14**. Selecting on "the opponent has nothing" sorts positions by *which
+piece* is attacking, not by how much pressure there is, so the index measured its own selection.
+That failure is why the fit exists.
+
+#### Three corpora, three calibrations
+
+> **Superseded twice below — kept for the shape, not the values.** This table is fitted
+> *phase-blind* and with the narrow step schedule. The phase weight is applied further down and
+> the schedule corrected after that; the master top entry ends at **82.5**, not the +43.5 here.
+> What survives is the pattern: `hybrid` negative where the others are positive.
+
+| units | `hybrid` (engine, quiet) | master games | anchor, dense | anchor samples |
+|---:|---:|---:|---:|---:|
+| 1 | −22.5 | −8.5 | +12.5 | 4 325 |
+| 2 | **−13.0** | +3.0 | +14.5 | 15 822 |
+| 3 | **−9.0** | +2.0 | +30.5 | 10 390 |
+| 4 | **−24.5** | +5.0 | +25.5 | 5 081 |
+| 5 | **−5.5** | +5.5 | +23.5 | 13 883 |
+| 6 | −4.0 | +20.0 | +49.5 | 3 329 |
+| 7 | +16.5 | +29.0 | +73.5 | 4 641 |
+| 8 | +27.5 | +43.5 | +73.5 | 3 783 |
+
+**`hybrid` is the outlier and it is negative where it matters.** On 1 487 619 positions the
+fitted entry is negative for every index from 1 to 6 — the indices that carry 39 % of all king
+samples — and only turns positive at 7, which occurs in 2 %. Read literally: after the current
+evaluation has had its say, more pressure on the enemy king predicts a *worse* result. The
+figure is not noise; a 40 000-position trial run produced almost the same curve, at a 37× smaller
+sample.
+
+**Master games and the anchor corpus both disagree with it**, in the same direction and with the
+shape the design assumes: rising, progressive at the top. The anchor — myChess's own positions
+against externally rated opponents, the distribution the term must actually work in — runs about
+twice the master calibration.
+
+**Which reverses something § 4.3 claimed.** That section reported the attacker signal as robust
+across corpora (−34 to −57 everywhere) against a shelter signal that was not. That held for the
+*raw* outcome correlation. The **residual** after the engine's own evaluation behaves
+differently, and it is the residual that a term is made of. Both halves are corpus-dependent.
+
+#### What is trustworthy here and what is not
+
+The two anchor columns are the same 2 000 games extracted twice — 8 positions per game and 40.
+The sparse fit read +28.5 / +46 / +84.5 and saturated at three identical values from index 6, the
+signature of a fit that has run out of data. The dense one resolves that and comes back at
+roughly **half** the magnitude. So the sparse figures were inflated, and the dense ones are the
+ones to quote.
+
+But denser sampling raises the position count without raising **independence**: positions within
+a game are correlated, so the effective sample is far smaller than 64 531 and the error bars are
+narrower than they look. Two identical entries still sit at the top. The anchor supports a
+*direction*; it does not place a curve.
+
+The base error also differs too much between corpora for the error figures to be compared —
+0.0705 for `hybrid`, 0.1416 for master games, 0.1551 for the anchor. Denser sampling without an
+end-skip keeps more early, undecided positions, whose outcome is simply less predictable. Compare
+the shapes, not the errors.
+
+#### Re-fitted with the phase weight — and the low half turns out to be noise
+
+The fit above pooled all phases, which repeats in the tuner the mistake `king-safety-signal.py`
+made before it was split: § 4.2 measured the effect *inverting* toward the endgame, so a pooled
+fit averages two opposite effects. It is also not what gets implemented — step 2 multiplies the
+term by the phase — so a curve fitted phase-blind and then used phase-scaled would be neither
+the fitted nor the measured thing.
+
+Re-fitted with each sample weighted by `phase / 24`, which makes endgame positions contribute
+almost nothing and yields the **midgame** table directly:
+
+> **Still the narrow step schedule** — the top entries in this table are at the tuner's ceiling.
+> Corrected immediately below; read this one for the phase effect, not for the values.
+
+| units | `hybrid` | master | anchor | Chess960 self-play |
+|---:|---:|---:|---:|---:|
+| 1 | −27.5 | −16.0 | +33.5 | +16.0 |
+| 2 | −14.5 | +4.0 | +8.0 | +3.5 |
+| 3 | 0.0 | +7.0 | +61.5 | +8.5 |
+| 4 | −27.5 | +14.5 | +59.5 | −22.5 |
+| 5 | −3.5 | +4.5 | +17.0 | −5.5 |
+| **6** | **+10.5** | **+46.0** | **+73.5** | **+27.0** |
+| **7** | **+23.5** | **+38.0** | **+73.5** | **+35.5** |
+| **8** | **+27.5** | **+51.5** | **+73.5** | **+35.5** |
+
+**The upper half agrees across every corpus; the lower half does not.** At 6, 7 and 8 units all
+four fits are clearly positive — including `hybrid`, which was negative at index 6 before the
+phase weight and flips sign with it, exactly the correction F1 predicts. Below that the four
+disagree in sign and magnitude with no pattern, which is what one expects of entries carrying
+little information.
+
+That is a cleaner statement than § 4.5 could make: the term appears to carry information from
+about **6 units upward** — a queen and a minor, or a rook and two minors — and the indices below
+that are close to noise. Indices 6–8 together are roughly 6 % of king samples.
+
+**Chess960 broadly transfers.** The 960 self-play column tracks the master one at the top
+(+27.0 / +35.5 / +35.5 against +46.0 / +38.0 / +51.5). Piece-square tables were known to
+transfer to 960 and it was never checked for king safety, which is the term where one would
+least expect it — the king starts on a random file with a different pawn structure in front of
+it. It is the smallest corpus here (39 619 positions) so this is an indication rather than a
+result, but it points the right way for an engine whose owner plays mostly 960.
+
+The anchor column still saturates at +73.5 for indices 6–8. Dense sampling was assumed to be the
+cause and was not: the next section shows it was the tuner's step schedule, and the anchor's true
+top entry is **191**.
+
+#### Error bars, and what they say about the corpus disagreement
+
+24 bootstrap replicates over the master corpus, resampling **blocks of 40 consecutive
+positions** rather than individual ones — positions from one game are correlated, so a
+position-wise bootstrap reports intervals far too narrow. The extractor averages 24.6 positions
+per game against a cap of 40, so a block of 40 is conservative by construction: too large costs
+interval width, which is the safe direction.
+
+| units | fitted | p5 | p95 | width |
+|---:|---:|---:|---:|---:|
+| 1 | −16.0 | −19.5 | −9.0 | 10.5 |
+| 2 | +4.0 | +2.5 | +5.0 | **2.5** |
+| 3 | +7.0 | +5.0 | +9.0 | 4.0 |
+| 4 | +14.5 | +10.5 | +19.5 | 9.0 |
+| 5 | +4.5 | +3.5 | +5.5 | **2.0** |
+| 6 | +46.0 | +38.0 | +51.5 | 13.5 |
+| 7 | +38.0 | +35.0 | +40.5 | 5.5 |
+| 8 | +51.5 | +47.5 | +51.5 | 4.0 |
+
+**No interval straddles zero.** The small entries are small but real, and index 1 is
+significantly *negative*. An earlier reading of the four-corpus table guessed the lower half was
+noise and proposed dropping it — `0 0 0 0 0 0 46 38 52`. The bootstrap does not support that.
+
+**What it does establish is sharper.** Within one corpus the entries are resolved to 2–13 cp.
+Between corpora they differ by 50 cp and more — index 1 reads −27.5, −16.0 and +33.5 across
+`hybrid`, master games and the anchor. **The disagreement between corpora is an order of
+magnitude larger than the sampling error inside any of them**, so it is a real difference in
+what the corpora contain, not an artifact of sample size. No further scan settles which one
+transfers to engine-versus-engine play. That is what the SPRT is for.
+
+#### What the term costs, measured before it is built
+
+On a quiet machine, 50 000 positions, best of nine, spreads 4.2 % and 6.6 %:
+
+| | ns per position |
+|---|---:|
+| full evaluation | 1 099.9 |
+| zone scan, both colors, standalone | **1 302.2** |
+
+**A standalone scan costs more than the entire evaluation** — it would make evaluation 2.18×
+more expensive. For comparison, the Audax fork's version, embedded in the evaluation's existing
+per-piece walk, cost **1.17× per node** *including* its battery and x-ray widening, and that
+alone bought it 0.68 plies less depth and turned +31.9 Elo at fixed depth into −46.5 under a
+clock.
+
+So this is an implementation instruction with a measurement behind it: **hang the term inside
+`WeightingFunction`'s existing per-piece scan, never as a second pass.** That scan already
+visits every piece and walks every ray; the marginal cost of accumulating units there is a
+comparison and an array write. Branch `attack-units` already does it that way — the point of
+measuring the standalone version was to find out what the alternative would cost, and the answer
+is that it is not an alternative.
+
+#### The step schedule was a ceiling, and it invalidated two conclusions
+
+> **Correction, later the same night.** Everything above was fitted with the tuner's default
+> step schedule, and that schedule cannot reach large values. Coordinate descent from 0 with
+> steps 4 / 2 / 1 / 0.5 and at most 12 rounds each moves a parameter by at most
+> `12 × (4+2+1+0.5) = 90`. The top entry sat near that wall in every corpus.
+
+Re-fitted with a schedule reaching ~640 (`initial step 16, 20 rounds`), the top entry climbs in
+**all four** corpora:
+
+| units | hybrid | master | anchor | Chess960 |
+|---:|---:|---:|---:|---:|
+| 6 | +12.5 | +48.5 | +121.5 | +31.0 |
+| 7 | +25.5 | +40.0 | +116.5 | +45.0 |
+| 8 | **+77.5** | **+82.5** | **+191.0** | **+84.0** |
+
+against +27.5 / +51.5 / +73.5 / +35.5 under the narrow schedule.
+
+**Two things this overturns.**
+
+*The cap claim.* This document twice stated that the largest entry across all calibrations was
++73.5, comfortably under the 150 cp cap of § 4.4, and concluded the constraint costs nothing.
+That was an artifact. The anchor calibration reaches **191 cp** and would need capping; the
+master calibration reaches 82.5 and still does not. The cap is a real constraint again, not a
+formality — which is the safer state for it to be in.
+
+*The bootstrap.* The intervals reported for indices 6–8 — widths of 1.0 to 13.5 — were measuring
+the ceiling rather than the parameter. Forty replicates all stopping at 73.5 looks like precision
+and is its exact opposite. The bootstrap has been re-run with the wide schedule; the intervals
+below index 6 are unaffected, since those values are nowhere near the wall.
+
+**One thing it strengthens.** At the clamped top bucket the three larger corpora now agree
+closely — **+77.5, +82.5, +84.0** — despite disagreeing on sign at the low indices. That bucket
+absorbs everything from 8 units upward, so it aggregates the whole tail, which is where a king
+attack genuinely pays.
+
+Re-bootstrapped with the wide schedule, that agreement holds up as more than an eyeball match:
+
+| units | fitted | p5 | p95 | width |
+|---:|---:|---:|---:|---:|
+| 1 | −14.5 | −18.0 | −7.5 | 10.5 |
+| 2 | +5.0 | +3.5 | +6.0 | 2.5 |
+| 3 | +8.5 | +6.5 | +10.5 | 4.0 |
+| 4 | +16.0 | +12.5 | +21.0 | 8.5 |
+| 5 | +6.0 | +4.5 | +7.0 | 2.5 |
+| 6 | +48.5 | +40.5 | +56.5 | 16.0 |
+| 7 | +40.0 | +37.0 | +42.5 | 5.5 |
+| 8 | **+82.5** | **+79.0** | **+88.0** | 9.0 |
+
+Index 8 now has a width of 9.0 rather than the 4.0 it showed at the wall — a resolved parameter
+rather than a stuck one. No entry straddles zero.
+
+**Chess960, bootstrapped separately** (30 replicates, block 8 — that corpus is not shuffled),
+does not refute the transfer and cannot confirm it either. At 39 619 positions its intervals run
+21–76 cp wide and indices 1, 2, 4 and 5 straddle zero. What it does say is that its own interval
+at the top, **[57.0, 114.0]**, contains the master value of 82.5 comfortably. An earlier draft
+put this the other way round — "960's +84.0 falls inside the master interval [79.0, 88.0]" —
+which is the flattering direction and close to meaningless: with a 57 cp interval of its own, the
+point estimate landing 1.5 cp from the master one is substantially luck.
+
+**`hybrid` bootstrapped too** — 20 replicates, block 1, because that corpus is shuffled when it
+is built and consecutive lines are therefore independent. Its negative entries are not weakly
+determined; they are sharp:
+
+| units | `hybrid` | master | overlap |
+|---:|---|---|---|
+| 1 | −31.0 [−34.0, −28.5] | −14.5 [−18.0, −7.5] | none |
+| 2 | −14.0 **[−15.0, −12.0]** | +5.0 **[+3.5, +6.0]** | **none, opposite signs** |
+| 4 | −28.5 **[−30.0, −25.0]** | +16.0 **[+12.5, +21.0]** | **none, opposite signs** |
+| 5 | −2.5 [−3.5, −0.5] | +6.0 [+4.5, +7.0] | none, opposite signs |
+| 8 | +77.5 [70.5, 79.5] | +82.5 [79.0, 88.0] | 0.5 cp |
+
+So the uncomfortable reading is the correct one. **Two corpora state opposite things at the same
+indices, and both state them with conviction** — this is a disagreement about content, not a
+resolution problem.
+
+**A claim made earlier in this section is withdrawn.** It said the corpora "converge to within
+the error of a single one of them" at the top bucket. They do not: [70.5, 79.5] and [79.0, 88.0]
+overlap by half a centipawn. Closer than at the low indices by a wide margin — 5 cp apart
+against 20–45 with reversed signs — but not the same number.
+
+What survives is the ordering, and it is still the useful part: **the top of the curve is where
+the corpora nearly agree, the bottom is where they contradict each other.** A term built on the
+top rests on the firmest ground this investigation found. One built on its bottom is a bet on
+which kind of game myChess meets — engine play, where these data say attacking pressure predicts
+*worse* results once the evaluation has had its say, or master play, where it predicts better.
+No further scan settles that; only the SPRT does, and it will settle it for engine play, which
+is where myChess competes.
+
+#### The disagreement is not a composition artifact
+
+One confound remained. The Texel fit applies no material filter — correctly, since the base
+evaluation already accounts for material — but that lets corpus *composition* into the fit, and
+§ 4.3 measured `hybrid` as structurally unlike the others: **25.1 %** of its positions are
+material-balanced against 46–68 % elsewhere. In a corpus full of decided positions, "bears on the
+enemy king" might simply mark the side that is behind and has to attack.
+
+Both corpora re-fitted under an identical ±50 cp material window — 390 509 against 1 772 609
+positions, everything else equal:
+
+| units | hybrid unfiltered | hybrid ±50 | master unfiltered | master ±50 |
+|---:|---:|---:|---:|---:|
+| 2 | −14.0 | **−12.5** | +5.0 | **+7.5** |
+| 4 | −28.5 | **−18.0** | +16.0 | **+14.5** |
+| 6 | +12.5 | +11.5 | +48.5 | +49.5 |
+| 8 | +77.5 | **+89.5** | +82.5 | **+82.5** |
+
+**The opposite signs survive.** Composition explains part of the distance — hybrid's index 4
+moves from −28.5 to −18.0 — and none of the sign. So the corpora genuinely disagree about what
+low-level king pressure predicts, and the disagreement is about content.
+
+**The top bucket moves the other way and closes to 7 cp** (89.5 against 82.5) under matched
+conditions. Whatever separates these two corpora at the bottom of the curve does not separate
+them at the top.
+
+**But it is three corpora that agree there, not four.** Re-bootstrapped with the wide schedule,
+the anchor puts the top bucket at **191.0 [151.0, 234.0]** — disjoint from master's
+[79.0, 88.0] by a factor of 2.3, with no overlap at all. `hybrid` (89.5), master (82.5) and
+Chess960 (84.0, interval [57, 114]) cluster; the anchor does not.
+
+Two things follow. The recommendation is unaffected: it takes the master value, which agrees
+with the two corpora nearest it in size. And the § 4.4 cap is now unambiguously live — the
+anchor's *entire* interval sits above 150 cp, so a calibration on that corpus would breach it
+throughout rather than marginally.
+
+Which of them is right is not decidable from these data. The anchor is the distribution the term
+must work in and by far the smallest — 2 000 games, intervals 35–120 cp wide at the other
+indices, its low entries straddling zero. The three that agree are 20 to 75 times larger and
+none of them is myChess's own play. That is the same trade this section has run into at every
+turn, and the SPRT is where it gets settled.
+
+#### Recommended starting curve
+
+**Keep the top, zero the bottom: `0 0 0 0 0 0 49 40 83`.**
+
+The upper three entries are the master-game calibration, phase-weighted, wide step schedule.
+Three of the four corpora agree there — `hybrid` puts the top bucket at 89.5 under matched
+conditions against master's 82.5, and Chess960's own interval contains both. The anchor is the
+exception at 191.0 [151.0, 234.0], and it is the smallest corpus by a factor of 20.
+
+The lower entries are set to zero **not because they are insignificant** — the bootstrap shows
+each is well determined inside its own corpus — but because their *sign* is disputed between
+corpora by more than their intervals allow. Shipping them means betting on which corpus
+describes the games myChess will play; shipping zeros declines the bet at a cost of at most
+16 cp per entry.
+
+Two side effects, both wanted. A term that is silent below 6 units cannot fire in quiet
+positions, so it cannot steer the engine into the material-shortcut trap of § 4.4 — the failure
+that cost the Audax fork 67 Elo. And it makes the first SPRT a test of one claim rather than
+nine: *does pressure worth 6+ attack units help?* If it measures neutral, the low entries are
+the obvious second iteration, and by then there is an Elo baseline to add them to.
+
+It is the most conservative of the two positive fits; it rests on the largest independent
+sample by far — 2.37 million training positions from 120 000 games, against the anchor's 2 000
+games; and the history of this theme is a history of terms that were too loud. The anchor says
+there is room above it. That is the second iteration, if the first measures neutral or better —
+not the first.
+
+---
+
 ## 5. Build plan
 
 ### Step 0 — does the signal carry information? — **DONE, and it clears**
@@ -483,12 +836,15 @@ The term does not have to be written; § 1.1 has it ported and tested on branch 
    measured +12 cp there is real king-safety information or just the king activity the tapered
    king PST already encodes is not something the data separates, and double-counting it would
    be worse than ignoring it.
-3. **Re-calibrate the curve against § 4.2.** One attacker measures 34–57 cp in the midgame.
-   The inherited table on `05f337d` reads `0 0 5 5 10 10 15 15 25 35 50 65 85 105 130 160 195
-   235 285 340 400`: two light pieces (4 units) get **10 cp**, which is far too little, while
-   the top of the range reaches 400 at 20 units, which never occurs. (The older `e93fea4`
-   curve topped out at 800 — do not take numbers from that one.) The shape — progressive — is
-   confirmed by the data; the values are not.
+3. **Replace the curve with the fitted one** (§ 4.5): `0 0 0 0 0 0 49 40 83`, indices 0–8,
+   everything above clamped onto index 8. Measured, not chosen. The inherited table on
+   `05f337d` reads `0 0 5 5 10 10 15 15 25 35 50 65 85 105 130 160 195 235 285 340 400` — its
+   upper half covers indices real play reaches in 0.3 % of positions, and its lower half is
+   about a third of what the fit puts there.
+
+   The top entry is 83 cp against the § 4.4 cap of 150, so this calibration clears it — but only
+   by a factor of 1.8, and the anchor calibration would *not* clear it at 191. The test that
+   compares the two constants is therefore load-bearing, not decoration.
 4. **Replace the `≥ 2 attackers` gate** (F2). It asks whether enough pieces are present, not
    whether the position is dangerous.
 5. **Cap the curve below `EVALUATE_MATERIAL_ONLY_THRESHOLD`** (§ 4.4). The inherited table

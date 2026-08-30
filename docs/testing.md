@@ -4,8 +4,8 @@ The test suite is the executable specification for myChess: it pins down move ge
 
 | Metric | Value |
 |---|---|
-| Test classes | 81 `*Test.java` (+ 26 helpers and measurement drivers under the same source root, class count re-counted 2026-08-27, helper count 2026-08-29 — `ProbeVsEvalBenchmark` added, see [roadmap § 12.26](roadmap.md)) |
-| Test methods (`@Test` + `@ParameterizedTest`) | 1 298 — the 1 271 of the full run on 2026-08-27, plus two gate-boundary and five `containsIllegalMove` sentinel tests (2026-08-28) and twenty anchor-bracket cases (2026-08-29). Derived rather than re-measured, since a full run costs 17 minutes; the counts for the changed classes *are* measured — `WeightingFunctionTest` 58, `BlunderTest` 60. Parameterized cases counted per invocation |
+| Test classes | 82 `*Test.java` (+ 32 helpers and measurement drivers under the same source root, class count re-counted 2026-08-27, helper count 2026-08-30 — `ProbeVsEvalBenchmark`, `MatchStyleAnalysis`, `KingAttackUnits`, `KingAttackTexelData`, `TexelKingAttackTuner` added, see [roadmap § 12.26](roadmap.md)) |
+| Test methods (`@Test` + `@ParameterizedTest`) | 1 308 — the 1 271 of the full run on 2026-08-27, plus two gate-boundary and five `containsIllegalMove` sentinel tests (2026-08-28), twenty anchor-bracket cases and ten `KingAttackUnits` tests (2026-08-29). Derived rather than re-measured, since a full run costs 17 minutes; the counts for the changed classes *are* measured — `WeightingFunctionTest` 58, `BlunderTest` 60. Parameterized cases counted per invocation |
 | Currently passing | **all** — full run 2026-08-27: 1 271 run, 0 failures, 0 errors, **0 skipped** |
 | Currently `@Disabled` | 0 — see [Retired disabled tests](#retired-disabled-tests) |
 | Test source lines | ~28 260 |
