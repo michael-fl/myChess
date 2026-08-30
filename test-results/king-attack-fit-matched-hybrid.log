@@ -1,0 +1,45 @@
+loading tuning-data/hybrid.epd
+material window: +-50 cp
+390,509 samples: 312,407 training, 78,102 validation
+
+how often each index occurs (both sides counted):
+   0 units      533,295   68.3 %
+   1 units       18,091    2.3 %
+   2 units       83,264   10.7 %
+   3 units       46,899    6.0 %
+   4 units       18,177    2.3 %
+   5 units       57,814    7.4 %
+   6 units        7,245    0.9 %
+   7 units       10,990    1.4 %
+   8 units        5,243    0.7 %
+
+k = 0.006226
+before: training 0.118597   validation 0.118335
+
+step schedule: initial 16.0, min 0.5, max 20 rounds (reachable magnitude ~640)
+
+  step 16.00  error 0.118477
+  step 16.00  error 0.118442
+  step 16.00  error 0.118422
+  step 16.00  error 0.118409
+  step 16.00  error 0.118402
+  step  8.00  error 0.118399
+  step  4.00  error 0.118397
+  step  2.00  error 0.118396
+  step  1.00  error 0.118396
+  step  0.50  error 0.118396
+
+after:  training 0.118396   validation 0.118252
+
+fitted KING_ATTACK_PENALTY (centipawns, index 0 pinned at 0):
+   0 ->     0.0
+   1 ->   -25.5   step   -25.5
+   2 ->   -12.5   step   +13.0
+   3 ->     1.5   step   +14.0
+   4 ->   -18.0   step   -19.5
+   5 ->     0.0   step   +18.0
+   6 ->    11.5   step   +11.5
+   7 ->    32.5   step   +21.0
+   8 ->    89.5   step   +57.0
+
+Read the steps, not only the values: a curve that rises steeply late is the progressive shape the design assumes, and one that rises and then falls is a sign the upper entries are fitted on too little data.

@@ -1,0 +1,69 @@
+loading tuning-data/mychess-anchor.epd
+15,756 samples: 12,604 training, 3,152 validation
+
+how often each index occurs (both sides counted):
+   0 units       18,056   57.3 %
+   1 units          756    2.4 %
+   2 units        3,899   12.4 %
+   3 units        2,000    6.3 %
+   4 units        1,037    3.3 %
+   5 units        3,260   10.3 %
+   6 units          626    2.0 %
+   7 units        1,104    3.5 %
+   8 units          774    2.5 %
+
+k = 0.004605
+before: training 0.177646   validation 0.178799
+
+  step  4.00  error 0.177485
+  step  4.00  error 0.177337
+  step  4.00  error 0.177202
+  step  4.00  error 0.177080
+  step  4.00  error 0.176970
+  step  4.00  error 0.176866
+  step  4.00  error 0.176767
+  step  4.00  error 0.176676
+  step  4.00  error 0.176592
+  step  4.00  error 0.176512
+  step  4.00  error 0.176434
+  step  4.00  error 0.176362
+  step  2.00  error 0.176321
+  step  2.00  error 0.176286
+  step  2.00  error 0.176253
+  step  2.00  error 0.176220
+  step  2.00  error 0.176188
+  step  2.00  error 0.176158
+  step  2.00  error 0.176128
+  step  2.00  error 0.176099
+  step  2.00  error 0.176071
+  step  2.00  error 0.176044
+  step  2.00  error 0.176018
+  step  2.00  error 0.175992
+  step  1.00  error 0.175977
+  step  1.00  error 0.175964
+  step  1.00  error 0.175952
+  step  1.00  error 0.175940
+  step  1.00  error 0.175928
+  step  1.00  error 0.175917
+  step  1.00  error 0.175905
+  step  1.00  error 0.175894
+  step  1.00  error 0.175883
+  step  1.00  error 0.175873
+  step  1.00  error 0.175862
+  step  1.00  error 0.175852
+  step  0.50  error 0.175846
+
+after:  training 0.175846   validation 0.177022
+
+fitted KING_ATTACK_PENALTY (centipawns, index 0 pinned at 0):
+   0 ->     0.0
+   1 ->    28.5   step   +28.5
+   2 ->    30.0   step    +1.5
+   3 ->    46.0   step   +16.0
+   4 ->    38.5   step    -7.5
+   5 ->    30.5   step    -8.0
+   6 ->    84.5   step   +54.0
+   7 ->    84.5   step    +0.0
+   8 ->    84.5   step    +0.0
+
+Read the steps, not only the values: a curve that rises steeply late is the progressive shape the design assumes, and one that rises and then falls is a sign the upper entries are fitted on too little data.

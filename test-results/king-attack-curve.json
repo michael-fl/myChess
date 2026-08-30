@@ -1,0 +1,335 @@
+{
+ "epd": "/Users/mf/_PRIVAT_/New-Stuff/myChess/tuning-data/hybrid.epd",
+ "read": 1487619,
+ "kept": 390509,
+ "material_window_cp": 50,
+ "phases": {
+  "midgame": {
+   "samples": 472410,
+   "rows": [
+    {
+     "units": 0,
+     "positions": 255528,
+     "mean_score": 0.5,
+     "raw_cp": 0.0,
+     "share_of_all": 71.8420439872145,
+     "curve_cp": 0.0
+    },
+    {
+     "units": 1,
+     "positions": 1975,
+     "mean_score": 0.5678481012658227,
+     "raw_cp": 47.438300987293616,
+     "share_of_all": 0.7051078512309223,
+     "curve_cp": 47.438300987293616
+    },
+    {
+     "units": 2,
+     "positions": 40502,
+     "mean_score": 0.5282948990173325,
+     "raw_cp": 19.682337861160395,
+     "share_of_all": 12.871869774136872,
+     "curve_cp": 19.682337861160395
+    },
+    {
+     "units": 3,
+     "positions": 5417,
+     "mean_score": 0.5445818718848071,
+     "raw_cp": 31.061146595370797,
+     "share_of_all": 1.8968692449355433,
+     "curve_cp": 31.061146595370797
+    },
+    {
+     "units": 4,
+     "positions": 1884,
+     "mean_score": 0.6019108280254777,
+     "raw_cp": 71.82071646607507,
+     "share_of_all": 0.6655235917952625,
+     "curve_cp": 71.82071646607507
+    },
+    {
+     "units": 5,
+     "positions": 28073,
+     "mean_score": 0.5195383464538881,
+     "raw_cp": 13.583550470833758,
+     "share_of_all": 9.58955144895324,
+     "curve_cp": 13.583550470833758
+    },
+    {
+     "units": 6,
+     "positions": 420,
+     "mean_score": 0.6392857142857142,
+     "raw_cp": 99.41266287890019,
+     "share_of_all": 0.1932643254799856,
+     "curve_cp": 99.41266287890019
+    },
+    {
+     "units": 7,
+     "positions": 4165,
+     "mean_score": 0.5877551020408164,
+     "raw_cp": 61.61644732504288,
+     "share_of_all": 1.591837598696048,
+     "curve_cp": 61.61644732504288
+    },
+    {
+     "units": 8,
+     "positions": 973,
+     "mean_score": 0.6022610483042138,
+     "raw_cp": 72.07466039967171,
+     "share_of_all": 0.4369086175144472,
+     "curve_cp": 72.07466039967171
+    },
+    {
+     "units": 9,
+     "positions": 222,
+     "mean_score": 0.7184684684684685,
+     "raw_cp": 162.75226801964988,
+     "share_of_all": 0.0941978366249656,
+     "curve_cp": 162.75226801964988
+    },
+    {
+     "units": 10,
+     "positions": 188,
+     "mean_score": 0.7473404255319149,
+     "raw_cp": 188.3930858464929,
+     "share_of_all": 0.08975254545839419,
+     "curve_cp": 188.3930858464929
+    },
+    {
+     "units": 11,
+     "positions": 22,
+     "mean_score": 0.9318181818181818,
+     "raw_cp": 454.26504080002906,
+     "share_of_all": 0.01291251243623124,
+     "curve_cp": 454.26504080002906
+    },
+    {
+     "units": 12,
+     "positions": 15,
+     "mean_score": 0.4666666666666667,
+     "raw_cp": -23.196778791074703,
+     "share_of_all": 0.008255540737918333,
+     "curve_cp": -23.196778791074703
+    },
+    {
+     "units": 13,
+     "positions": 3,
+     "mean_score": 1.0,
+     "raw_cp": null,
+     "share_of_all": 0.0010584026587074787,
+     "curve_cp": null
+    },
+    {
+     "units": 14,
+     "positions": 1,
+     "mean_score": 1.0,
+     "raw_cp": null,
+     "share_of_all": 0.0006350415952244872,
+     "curve_cp": null
+    },
+    {
+     "units": 15,
+     "positions": 1,
+     "mean_score": 0.5,
+     "raw_cp": 0.0,
+     "share_of_all": 0.00021168053174149573,
+     "curve_cp": 0.0
+    }
+   ]
+  },
+  "late-midgame": {
+   "samples": 137692,
+   "rows": [
+    {
+     "units": 0,
+     "positions": 39028,
+     "mean_score": 0.5,
+     "raw_cp": 0.0,
+     "share_of_all": 48.18943729483195,
+     "curve_cp": 0.0
+    },
+    {
+     "units": 1,
+     "positions": 1530,
+     "mean_score": 0.5088235294117647,
+     "raw_cp": 6.1318527924848265,
+     "share_of_all": 2.8440287017401156,
+     "curve_cp": 6.1318527924848265
+    },
+    {
+     "units": 2,
+     "positions": 10197,
+     "mean_score": 0.5411885848779052,
+     "raw_cp": 28.685765229593272,
+     "share_of_all": 14.575283967115011,
+     "curve_cp": 28.685765229593272
+    },
+    {
+     "units": 3,
+     "positions": 5475,
+     "mean_score": 0.5272146118721461,
+     "raw_cp": 18.929357006710045,
+     "share_of_all": 8.79499172065189,
+     "curve_cp": 18.929357006710045
+    },
+    {
+     "units": 4,
+     "positions": 1341,
+     "mean_score": 0.5577926920208799,
+     "raw_cp": 40.33876180007945,
+     "share_of_all": 2.4888882433256834,
+     "curve_cp": 40.33876180007945
+    },
+    {
+     "units": 5,
+     "positions": 6271,
+     "mean_score": 0.5363578376654441,
+     "raw_cp": 25.308683447333973,
+     "share_of_all": 15.638526566539813,
+     "curve_cp": 25.308683447333973
+    },
+    {
+     "units": 6,
+     "positions": 970,
+     "mean_score": 0.5675257731958763,
+     "raw_cp": 47.2101432572206,
+     "share_of_all": 3.0277721290997297,
+     "curve_cp": 47.2101432572206
+    },
+    {
+     "units": 7,
+     "positions": 884,
+     "mean_score": 0.6199095022624435,
+     "raw_cp": 84.97651243781007,
+     "share_of_all": 2.5571565523051447,
+     "curve_cp": 84.97651243781007
+    },
+    {
+     "units": 8,
+     "positions": 508,
+     "mean_score": 0.6446850393700787,
+     "raw_cp": 103.49363923445003,
+     "share_of_all": 1.4590535397844464,
+     "curve_cp": 103.49363923445003
+    },
+    {
+     "units": 9,
+     "positions": 78,
+     "mean_score": 0.7307692307692307,
+     "raw_cp": 173.4622243754288,
+     "share_of_all": 0.25346425355140456,
+     "curve_cp": 173.4622243754288
+    },
+    {
+     "units": 10,
+     "positions": 57,
+     "mean_score": 0.7456140350877193,
+     "raw_cp": 186.80837112613463,
+     "share_of_all": 0.14307294541440316,
+     "curve_cp": 186.80837112613463
+    },
+    {
+     "units": 11,
+     "positions": 11,
+     "mean_score": 0.7272727272727273,
+     "raw_cp": 170.3874929089125,
+     "share_of_all": 0.024692792609592423,
+     "curve_cp": 170.3874929089125
+    },
+    {
+     "units": 12,
+     "positions": 3,
+     "mean_score": 1.0,
+     "raw_cp": null,
+     "share_of_all": 0.003631293030822415,
+     "curve_cp": null
+    }
+   ]
+  },
+  "endgame": {
+   "samples": 170916,
+   "rows": [
+    {
+     "units": 0,
+     "positions": 24590,
+     "mean_score": 0.5,
+     "raw_cp": 0.0,
+     "share_of_all": 33.07414168363407,
+     "curve_cp": 0.0
+    },
+    {
+     "units": 1,
+     "positions": 5471,
+     "mean_score": 0.4286236519831841,
+     "raw_cp": -49.9384506528264,
+     "share_of_all": 9.891993727913126,
+     "curve_cp": -49.9384506528264
+    },
+    {
+     "units": 2,
+     "positions": 7922,
+     "mean_score": 0.474122696288816,
+     "raw_cp": -17.99747280706149,
+     "share_of_all": 15.649207797982635,
+     "curve_cp": -17.99747280706149
+    },
+    {
+     "units": 3,
+     "positions": 12986,
+     "mean_score": 0.48325119359310026,
+     "raw_cp": -11.642618714292698,
+     "share_of_all": 25.573966158814855,
+     "curve_cp": -11.642618714292698
+    },
+    {
+     "units": 4,
+     "positions": 3242,
+     "mean_score": 0.46283158544108577,
+     "raw_cp": -25.87499161335342,
+     "share_of_all": 8.25961290926537,
+     "curve_cp": -25.87499161335342
+    },
+    {
+     "units": 5,
+     "positions": 1700,
+     "mean_score": 0.48411764705882354,
+     "raw_cp": -11.039903261508274,
+     "share_of_all": 5.390367197921786,
+     "curve_cp": -11.039903261508274
+    },
+    {
+     "units": 6,
+     "positions": 485,
+     "mean_score": 0.4865979381443299,
+     "raw_cp": -9.314937650251881,
+     "share_of_all": 1.7066863254464182,
+     "curve_cp": -9.314937650251881
+    },
+    {
+     "units": 7,
+     "positions": 113,
+     "mean_score": 0.4911504424778761,
+     "raw_cp": -6.1499446267817035,
+     "share_of_all": 0.3984413396054202,
+     "curve_cp": -6.1499446267817035
+    },
+    {
+     "units": 8,
+     "positions": 18,
+     "mean_score": 0.4166666666666667,
+     "raw_cp": -58.451214271295186,
+     "share_of_all": 0.051487280301434624,
+     "curve_cp": -58.451214271295186
+    },
+    {
+     "units": 9,
+     "positions": 2,
+     "mean_score": 0.5,
+     "raw_cp": 0.0,
+     "share_of_all": 0.004095579114886845,
+     "curve_cp": 0.0
+    }
+   ]
+  }
+ }
+}

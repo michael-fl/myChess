@@ -1,0 +1,44 @@
+loading tuning-data/human-dense.epd
+2,956,584 samples: 2,365,267 training, 591,317 validation
+
+how often each index occurs (both sides counted):
+   0 units    3,400,666   57.5 %
+   1 units      187,759    3.2 %
+   2 units      639,555   10.8 %
+   3 units      463,981    7.8 %
+   4 units      213,780    3.6 %
+   5 units      618,920   10.5 %
+   6 units      121,853    2.1 %
+   7 units      148,958    2.5 %
+   8 units      117,696    2.0 %
+
+k = 0.006958
+before: training 0.141592   validation 0.141538
+
+step schedule: initial 16.0, min 0.5, max 20 rounds (reachable magnitude ~640)
+
+  step 16.00  error 0.141443
+  step 16.00  error 0.141358
+  step 16.00  error 0.141316
+  step 16.00  error 0.141292
+  step 16.00  error 0.141285
+  step  8.00  error 0.141275
+  step  4.00  error 0.141269
+  step  2.00  error 0.141268
+  step  1.00  error 0.141268
+  step  0.50  error 0.141268
+
+after:  training 0.141268   validation 0.141237
+
+fitted KING_ATTACK_PENALTY (centipawns, index 0 pinned at 0):
+   0 ->     0.0
+   1 ->   -14.5   step   -14.5
+   2 ->     5.0   step   +19.5
+   3 ->     8.5   step    +3.5
+   4 ->    16.0   step    +7.5
+   5 ->     6.0   step   -10.0
+   6 ->    48.5   step   +42.5
+   7 ->    40.0   step    -8.5
+   8 ->    82.5   step   +42.5
+
+Read the steps, not only the values: a curve that rises steeply late is the progressive shape the design assumes, and one that rises and then falls is a sign the upper entries are fitted on too little data.

@@ -1,0 +1,51 @@
+loading tuning-data/mychess-anchor-dense.epd
+64,531 samples: 51,624 training, 12,907 validation
+
+how often each index occurs (both sides counted):
+   0 units       68,172   52.8 %
+   1 units        4,098    3.2 %
+   2 units       15,715   12.2 %
+   3 units       10,363    8.0 %
+   4 units        5,078    3.9 %
+   5 units       13,883   10.8 %
+   6 units        3,329    2.6 %
+   7 units        4,641    3.6 %
+   8 units        3,783    2.9 %
+
+k = 0.005481
+before: training 0.155115   validation 0.155881
+
+step schedule: initial 16.0, min 0.5, max 20 rounds (reachable magnitude ~640)
+
+  step 16.00  error 0.154807
+  step 16.00  error 0.154562
+  step 16.00  error 0.154365
+  step 16.00  error 0.154223
+  step 16.00  error 0.154110
+  step 16.00  error 0.154032
+  step 16.00  error 0.153977
+  step 16.00  error 0.153938
+  step 16.00  error 0.153910
+  step 16.00  error 0.153885
+  step 16.00  error 0.153873
+  step 16.00  error 0.153873
+  step  8.00  error 0.153830
+  step  4.00  error 0.153829
+  step  2.00  error 0.153828
+  step  1.00  error 0.153828
+  step  0.50  error 0.153828
+
+after:  training 0.153828   validation 0.154809
+
+fitted KING_ATTACK_PENALTY (centipawns, index 0 pinned at 0):
+   0 ->     0.0
+   1 ->    47.5   step   +47.5
+   2 ->    14.5   step   -33.0
+   3 ->    76.5   step   +62.0
+   4 ->    72.0   step    -4.5
+   5 ->    28.5   step   -43.5
+   6 ->   121.5   step   +93.0
+   7 ->   116.5   step    -5.0
+   8 ->   191.0   step   +74.5
+
+Read the steps, not only the values: a curve that rises steeply late is the progressive shape the design assumes, and one that rises and then falls is a sign the upper entries are fitted on too little data.

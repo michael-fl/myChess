@@ -1,0 +1,11 @@
+corpus=tuning-data/hybrid.epd positions=50,000 repetitions=9 warmup=3
+
+checksums: eval=662156 units=183423
+
+evaluation         best      54 ms   1099.9 ns   worst      57 ms  (spread +4.2 %)
+zone scan, 2 sides best      65 ms   1302.2 ns   worst      69 ms  (spread +6.6 %)
+
+BEST  evaluation  1099.9 ns   zone scan  1302.2 ns
+the scan adds +118.4 % to an evaluation
+
+That is the standalone upper bound. Inside WeightingFunction's existing per-piece scan the marginal cost is a comparison and an array write, so read this as the ceiling rather than the estimate. Compare against the Audax fork's measured 1.17x per node for its version of the term.

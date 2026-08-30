@@ -1,0 +1,43 @@
+=== Oberster Eintrag durch das enge Schrittweiten-Schema gedeckelt (max 90) — Ersatz: king-attack-fit-wide-*.log ===
+
+loading tuning-data/hybrid.epd
+1,487,619 samples: 1,190,095 training, 297,524 validation
+
+how often each index occurs (both sides counted):
+   0 units    1,714,715   57.6 %
+   1 units      117,580    4.0 %
+   2 units      332,754   11.2 %
+   3 units      243,438    8.2 %
+   4 units       96,150    3.2 %
+   5 units      299,039   10.1 %
+   6 units       54,141    1.8 %
+   7 units       65,077    2.2 %
+   8 units       52,344    1.8 %
+
+k = 0.008290
+before: training 0.070543   validation 0.070410
+
+  step  4.00  error 0.070502
+  step  4.00  error 0.070470
+  step  4.00  error 0.070447
+  step  4.00  error 0.070433
+  step  4.00  error 0.070423
+  step  4.00  error 0.070414
+  step  2.00  error 0.070410
+  step  1.00  error 0.070409
+  step  0.50  error 0.070408
+
+after:  training 0.070408   validation 0.070296
+
+fitted KING_ATTACK_PENALTY (centipawns, index 0 pinned at 0):
+   0 ->     0.0
+   1 ->   -27.5   step   -27.5
+   2 ->   -14.5   step   +13.0
+   3 ->     0.0   step   +14.5
+   4 ->   -27.5   step   -27.5
+   5 ->    -3.5   step   +24.0
+   6 ->    10.5   step   +14.0
+   7 ->    23.5   step   +13.0
+   8 ->    27.5   step    +4.0
+
+Read the steps, not only the values: a curve that rises steeply late is the progressive shape the design assumes, and one that rises and then falls is a sign the upper entries are fitted on too little data.
