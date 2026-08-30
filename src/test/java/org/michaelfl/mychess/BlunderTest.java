@@ -3170,4 +3170,167 @@ class BlunderTest {
                         + "into −3.24 (Stockfish 18, depth 22); 17...Qe6 holds");
     }
 
+    // ================================================================
+    // Chess960, from rated blitz game
+    // https://lichess.org/3RoDIOcC (ix-bot 1806 vs myChessJava 1829,
+    // 180+1, 1-0, −65 rating points). The first 960 cases in this
+    // class, and they are here because the variant is where the user
+    // actually plays: 960 was previously covered only by
+    // EvalRegressionTest's single a6-e2 anchor.
+    //
+    // The game is one long king-safety failure with two distinct
+    // halves, and each half needs its own assertion because they fail
+    // for different reasons:
+    //
+    //   * Move 5 — myChess castles toward the wing white is already
+    //     storming, at a moment when white has *zero* attack units on
+    //     its king. Nothing that indexes on attackers can see this.
+    //   * Move 12 — five attack units stand on the black king and the
+    //     static evaluation still reads two pawns for black.
+    //
+    // A walk of the whole game through both engines put the gap above
+    // 400 cp from move 7 onward and never below it again; myChess
+    // first agreed it was lost at move 23, which was mate in 3.
+    // ================================================================
+
+    /**
+     * Like {@link #gameFromFenAtDepth}, for a position whose castling field names rook files.
+     *
+     * <p>{@link Fen#importFEN(String)} happens to accept the Shredder form as well and to set the 960
+     * flag from the piece placement, so this is not routing around a failure. It pins the
+     * intent: these two positions are Chess960, and a test that documents a 960 defect should
+     * not depend on how tolerant the classical parser is today.
+     */
+    private static Game gameFromChess960FenAtDepth(String fen, int depth, TranspositionTable tt) {
+        var engineConfig = new EngineConfig.Builder()
+                .maxDepth(depth)
+                .millisPerMove(DEPTH_BOUND_BUDGET_MS)
+                .silent(true)
+                .setTranspositionTable(tt)
+                .build();
+
+        return new Game(new GameConfig(MyChessEngine.class, engineConfig), Fen.importChess960FEN(fen));
+    }
+
+    /**
+     * Black (myChess) to move before {@code 5...O-O}, from Chess960 start position
+     * {@code bqrknnrb/pppppppp/…}. Black's king starts on d8 and its rooks on c8 and g8, so
+     * castling short walks the king three files toward white's g4 pawn and the rook already
+     * standing on g1.
+     */
+    private static final String BEFORE_960_CASTLE_FEN =
+            "bqrk2rb/p1pppppp/4n3/1pP5/1P2n1P1/3N4/P2PPP1P/BQRK1NRB b GCgc - 0 5";
+
+    /**
+     * Castling into a pawn storm — a king-safety failure that no attack-unit term can reach.
+     *
+     * <p>White has played {@code 5.g4} and its rook already stands on g1; the black king sits
+     * safely on d8 with rooks on c8 and g8. myChess plays {@code 5...O-O}, moving its king to
+     * exactly the file being opened, and never recovers: {@code 6...g6} and {@code 7...gxf5}
+     * tear the shelter open by black's own hand and the game ends in mate on move 26.
+     *
+     * <p><b>The evaluation is wrong at every depth, which is why this pins the score and not
+     * the move.</b> White-POV, myChess reads −0.96, −0.61, −0.51, −0.65, −0.13, −0.33, +0.07,
+     * −0.17 at depths 4 through 11 — that is, black comfortably fine — against Stockfish 18's
+     * <b>+1.99</b> at depth 22 and <b>+1.51</b> from its static evaluation alone. Flat across
+     * eight depths rules out a horizon effect. The move choice would have been the more precise
+     * assertion ({@code 5...O-O} is chosen at every depth except 10, where it switches to
+     * {@code Ne4-g5} and still misreads the position at −0.07), but a characterization that
+     * flips on one depth in the middle of its range is not one worth pinning.
+     *
+     * <p><b>What makes this case different from the twenty other king-safety entries, and the
+     * reason it is worth its own test:</b> at the moment of the decision white has <b>zero</b>
+     * attack units on the black king. The planned {@code KING_ATTACK_PENALTY} term — and every
+     * variant of it, ours or the Audax fork's — indexes on attackers already bearing on the
+     * zone, so all of them score this position at exactly 0 and would leave {@code 5...O-O}
+     * just as attractive. This is the boundary of that term, recorded before it is built rather
+     * than discovered after it fails to move the needle. What the position needs is a judgment
+     * about where the enemy pawns are going, which is a different quantity.
+     *
+     * <p>It is also plausibly a Chess960 transfer failure: the piece-square tables were fitted
+     * on standard chess, where a king on g8 behind an intact f7/g7/h7 is the safe square almost
+     * by definition. Here it is the wrong wing, and the tables cannot say so.
+     *
+     * <p><b>This assertion is a characterization, not a goal.</b> It passes because the defect
+     * is present; when it starts failing, check whether the new score is right for the right
+     * reason before relaxing it.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void castling960_atMove5_characterizesChoosingTheStormedWing() throws Exception {
+        var game = gameFromChess960FenAtDepth(BEFORE_960_CASTLE_FEN, IN_GAME_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertTrue(result.weight() < 0.5f,
+                "characterization: myChess still reads this as fine for black, though white is "
+                        + "+1.99 (Stockfish 18, depth 22) and the black king is about to castle "
+                        + "into the g-file white is storming. If this now reports a white "
+                        + "advantage, something has learned to see the pawn storm — note that an "
+                        + "attack-unit term cannot be the cause, since white has 0 attack units "
+                        + "here. white-POV eval " + result.weight());
+    }
+
+    /**
+     * White to move after {@code 11...dxc6}, seven moves before mate. Black (myChess) is a rook
+     * for a bishop and a pawn ahead and completely lost.
+     */
+    private static final String AFTER_960_DXC6_FEN =
+            "1qr2rkb/p1p1ppnp/2p5/1p3P2/1P6/8/P2PPN1P/BQ1K2RB w G - 0 12";
+
+    /**
+     * The static evaluation, with five attack units on the black king, reading two pawns for
+     * black.
+     *
+     * <p>Deliberately search-free — the only test in this class that runs no search at all.
+     * Every other entry here has to argue that what it measured is the evaluation and not the
+     * horizon; this one calls {@link WeightingFunction#calculate} directly, so there is nothing
+     * to argue about. It also costs milliseconds rather than the half-minute the depth-bound
+     * cases cost.
+     *
+     * <p>The numbers. myChess scores this <b>−194 cp</b>. Stockfish 18's static NNUE evaluation
+     * of the same board, no search involved, is <b>+281 cp</b>; its depth-20 search says +981
+     * and at depth 40 it announces mate in 19 for white. Material is −300 for white, so
+     * myChess's positional terms hand white +106 for a position in which every white piece
+     * bears down on a king that has three of its own pieces smothering it.
+     *
+     * <p><b>Why this is the acceptance test for the king-attack work.</b> White has exactly
+     * <b>five</b> attack units on the black king here (bishop a1 and rook g1, both hitting g7),
+     * black has none, and the game phase is 19 of 24. The curve fitted in
+     * `docs/king-safety.md` § 4.5 — {@code 0 0 0 0 0 0 49 40 83} — contributes <b>0 cp</b> at
+     * index 5. So the term as currently calibrated changes this position by nothing, and this
+     * assertion will keep passing after it ships. That is the point of recording it: a
+     * regression over the 960 corpus, with Stockfish's static evaluation replacing the
+     * self-play game result as the label, puts index 5 at <b>+15.2 cp [11.0, 19.4]</b> against
+     * the zero the outcome-labelled fit produced, and a placebo zone four files from the king
+     * at −8.6 [−12.3, −3.4] over the same positions. The low indices are not noise; they were
+     * fitted on labels that myChess's own blindness produced.
+     *
+     * <p>Even so, +15 cp against a 475 cp gap is not the fix. The value of this test is that it
+     * states the size of the hole in one number that no search depth can explain away.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    void staticEval960_afterDxc6_characterizesBlindnessToFiveAttackers() {
+        var board = Fen.importChess960FEN(AFTER_960_DXC6_FEN);
+        var evaluator = new WeightingFunction();
+
+        int weight = evaluator.calculate(board);
+
+        assertEquals(5, KingAttackUnits.of(board, GameStatus.TURN_WHITE),
+                "white's attack units on the black king — the index the fitted curve reads, "
+                        + "pinned here so the case cannot silently change shape");
+        assertEquals(0, KingAttackUnits.of(board, GameStatus.TURN_BLACK),
+                "black has nothing pointing at the white king, so the term reduces to white's side");
+        assertTrue(weight < 0,
+                "characterization: myChess's static evaluation still favors black in a position "
+                        + "Stockfish 18 scores at +281 statically and mates in 19 from. If this is "
+                        + "now positive the evaluation has learned to see the smothered king — "
+                        + "record the new value and convert this into a bound. static eval " + weight);
+    }
+
 }

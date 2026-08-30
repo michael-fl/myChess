@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * {@link Board} as part of Chess960 Phase 1:
  * {@link Board#defaultCastlingRookFiles()},
  * {@link Board#getCastlingRookFile(CastlingSlot)}, and the wiring of those
- * files through both the {@link Board#Board(byte[], GameStatus, byte[])}
+ * files through both the {@link Board#Board(byte[], GameStatus, byte[], boolean)}
  * constructor and {@link Board#copy()}.
  *
  * <p>FEN-driven coverage of the same surface lives in

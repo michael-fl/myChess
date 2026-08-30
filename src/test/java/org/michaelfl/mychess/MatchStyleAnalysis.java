@@ -59,8 +59,10 @@ import java.util.regex.Pattern;
  * engine is systematically more optimistic, which is worth knowing on its own.
  * The <b>king-attack index</b> is reported last and as a secondary figure only:
  * not as evidence of aggression, but as a check that the curve in
- * {@link WeightingFunction#KING_ATTACK_BONUS} is being asked for the indices it
- * was calibrated for.
+ * {@code WeightingFunction.KING_ATTACK_BONUS} is being asked for the indices it
+ * was calibrated for. Deliberately not a {@code @link}: neither that constant nor
+ * our {@code KING_ATTACK_PENALTY} exists on master — both live on the branch this
+ * tool was ported to serve.
  *
  * <p>Both engines are measured <b>within the same games</b>, so the comparison
  * is paired: same openings, same opponent, same conditions. That removes a lot

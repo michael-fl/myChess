@@ -24,7 +24,8 @@ import java.util.List;
  *
  * <p><b>The feature is linear, which is what makes this fittable at all.</b> The term enters the
  * evaluation as {@code f(unitsWhite) − f(unitsBlack)}, so with the table entries as parameters
- * the derivative is a vector of +1 and −1 — exactly the shape {@link TexelTuner} expects.
+ * the derivative is a vector of +1 and −1 — exactly the shape
+ * {@link org.michaelfl.mychess.tuning.TexelTuner} expects.
  *
  * <p><b>Index 0 is pinned at zero and is not a parameter.</b> Only the difference reaches the
  * score, so adding a constant to every entry is an exact null direction: the fit would wander
