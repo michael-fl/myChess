@@ -1,0 +1,56 @@
+=== King-attack curve, monotone fit against Stockfish's static evaluation ===
+Date        2026-08-30
+Corpus      tuning-data/mychess-selfplay-960.epd, 39,619 positions
+Target      Stockfish 18 static NNUE `eval` minus WeightingFunction.calculate, both white-POV,
+            both static, clipped to +/-2000 cp.  See king-attack-vs-stockfish-960.log for why
+            the game result cannot be the label on a self-play corpus.
+Problem     minimise ||X b - y||^2  subject to  0 <= b1 <= b2 <= ... <= b8
+Method      projected gradient descent, projection onto the isotonic cone by
+            pool-adjacent-violators, then a clamp at zero.  200 block bootstrap replicates,
+            block 8 (consecutive corpus lines come from the same game).
+
+ units     free   monotone       p5      p95   evidence
+--------------------------------------------------------------
+     1     10.9        2.1      0.0      4.4   not separable from zero
+     2      1.6        2.1      0.0      4.7   not separable from zero
+     3     34.3       20.3     16.5     23.9   above zero
+     4     19.5       20.3     16.5     23.9   above zero
+     5     15.2       20.3     16.5     23.9   above zero
+     6     44.2       43.6     29.2     51.6   above zero
+     7     45.6       45.4     37.7     54.4   above zero
+     8     85.5       85.2     75.1     95.6   above zero
+
+KING_ATTACK_PENALTY = { 0, 2, 2, 20, 20, 20, 44, 45, 85 }
+monotone: yes    max 85 vs the 100 cp cap KingAttackCurveTest enforces: ok
+
+SOLVER.  462 PGD steps, solution feasible.  Residual rises from 6.272429e+08 unconstrained to
+6.277248e+08 constrained -- 0.077 %.  A monotone curve fits this data as well as a free one,
+so the free fit's descent from 34.3 to 15.2 across indices 3-5 was noise and not structure.
+Where the constraint binds, pool-adjacent-violators merges the offending indices into a single
+level, which is why 3, 4 and 5 share a value: the data place all three well above zero and do
+not distinguish between them.
+
+CHECKS.
+  * Indices 6-8 land at 44 / 45 / 85 against the outcome-labelled fit's 49 / 40 / 83 -- two
+    estimators, different labels, agreeing at the top.  That agreement is what makes the
+    disagreement below credible rather than a systematically shifted estimator.
+  * Placebo zone (same rank as the enemy king, four files away) at five units: -8.6
+    [-12.3, -3.4] over the same positions.  The signal is about the king, not about having
+    active pieces deep in enemy territory.
+  * Seeds 20260830 / 777 / 424242 give the same rounded curve, intervals stable to ~1 cp.
+  * A cold-started solve is bit-identical to the warm-started one, so the point estimate did
+    not seed its own bootstrap.
+
+READING THE BOTTOM.  Zero lies on the boundary of the constraint set, so a point estimate near
+it is not evidence -- only p5 > 0 is.  Indices 1 and 2 therefore keep their zeros in substance:
+2.1 cp with a lower bound of 0.0, and a single minor piece bearing on the king zone is the
+normal case rather than a danger.  Indices 3-5 do not: they carry 24.2 % of all king samples
+against 6.2 % for indices 6-8, so zeroing them would have left the term silent in roughly four
+fifths of the positions where it has anything to say -- and an SPRT on that curve could not
+have separated "the term does not work" from "the term was switched off where it mattered".
+
+NOT A REPAIR.  20 cp stands against the 475 cp gap in
+BlunderTest.staticEval960_afterDxc6_characterizesBlindnessToFiveAttackers, the position that
+prompted this measurement.  Stockfish's NNUE is itself trained on games and is not ground
+truth; it is an independent and far stronger yardstick that myChess's own play cannot have
+moved, which is the weaker and sufficient claim.

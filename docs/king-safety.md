@@ -9,9 +9,9 @@
 
 | | |
 |---|---|
-| **Curve to start from** | `0 0 0 0 0 0 49 40 83`, indices 0–8, everything above clamped onto 8 |
-| **Where it comes from** | Texel fit against game results, phase-weighted, 2.37 M training positions (§ 4.5) |
-| **Why the bottom is zero** | not because it is insignificant — because its *sign* is disputed between corpora by more than their intervals allow |
+| **Curve to start from** | `0 2 2 20 20 20 44 45 85`, indices 0–8, everything above clamped onto 8 (§ 4.6; supersedes § 4.5's `0 0 0 0 0 0 49 40 83`) |
+| **Where it comes from** | fitted against Stockfish's *static* evaluation rather than game results, phase-weighted, monotonicity as a constraint of the fit (§ 4.6). The game-result fits of § 4.5 are what it replaces: on a self-play corpus the label carries myChess's own blindness |
+| **Why only indices 1–2 are zero** | those two are not separable from zero (p5 = 0.0) and a single minor piece bearing on the king zone is the normal case. Indices 3–5 *were* zeroed by § 4.5 and are not: that was an artifact of the label, and they carry 24.2 % of king samples against 6.2 % for 6–8 (§ 4.6) |
 | **Where to build it** | branch `attack-units`, `05f337d` — already ported, never measured, 106 commits behind master with `WeightingFunction.java` byte-identical (§ 1.1) |
 | **The one missing change** | multiply by the game phase. Without it the term runs at full strength in the endgame, where the measured sign is the *opposite* one (§ 4.2) |
 | **How to implement it** | leave it where it is: branch `attack-units` already calls `increaseAttackUnit` from inside `move(...)`, the walk the evaluation performs anyway. Do **not** refactor it into a separate pass, however much tidier that looks — a standalone scan costs more than the entire evaluation (§ 4.5) |
@@ -44,8 +44,8 @@ before anything else in this document depends on it.
 | State in myChess | **missing entirely** — this document | **present** — tapered king endgame table, v4.3.1, +7.7 Elo |
 
 The tapered king PST already encodes both directions through the game phase. What is missing is
-only the danger side. The two also live apart in the test suite: **20 open `king-safety` cases**,
-all in `BlunderTest`, against **3 open `king-activity` cases** — one in `BlunderTest` and two in
+only the danger side. The two also live apart in the test suite: **23 open `king-safety` cases**,
+all but one in `BlunderTest`, against **3 open `king-activity` cases** — one in `BlunderTest` and two in
 `StsDefectTest`. That the activity cases come partly from the STS suite and the safety cases not
 at all is itself the point of § 4. Work on one is not work on the other.
 
@@ -784,6 +784,13 @@ turn, and the SPRT is where it gets settled.
 
 #### Recommended starting curve
 
+> **Superseded on 2026-08-30 by § 4.6.** Two of its three claims did not survive. The zeroing
+> below is now known to be an artifact of the *label*, not a property of the data, at indices 3,
+> 4 and 5; and the curve recommended here is not monotone — it falls from 49 to 40 between six
+> and seven attack units, which would score more attackers as less danger. The reasoning is left
+> standing because the argument it makes about corpus disagreement is sound and is exactly what
+> § 4.6 had to work around. Use `0 2 2 20 20 20 44 45 85`.
+
 **Keep the top, zero the bottom: `0 0 0 0 0 0 49 40 83`.**
 
 The upper three entries are the master-game calibration, phase-weighted, wide step schedule.
@@ -808,6 +815,102 @@ sample by far — 2.37 million training positions from 120 000 games, against th
 games; and the history of this theme is a history of terms that were too loud. The anchor says
 there is room above it. That is the second iteration, if the first measures neutral or better —
 not the first.
+
+---
+
+### 4.6 The label was circular — refit against Stockfish, under monotonicity (2026-08-30)
+
+**`KING_ATTACK_PENALTY = { 0, 2, 2, 20, 20, 20, 44, 45, 85 }`.** This replaces § 4.5.
+
+Two things forced the refit, and neither was visible while the curve was only ever compared
+against other fits of the same kind.
+
+**The Chess960 label is myChess's own play.** Every fit in § 4.5 labels a position with the
+result of the game it came from, and for `mychess-selfplay-960.epd` those games are self-play.
+If myChess is blind to king attacks then neither side converts one, so the fit learns "attack
+units are worthless" from games that the blindness produced. The positions are fine; only the
+label is circular. Replacing it with **Stockfish 18's static NNUE evaluation minus myChess's
+own** — both static, no search on either side, clipped to ±2000 cp — removes the outcome
+entirely. What the regression then reports per index is the evaluation myChess is missing there.
+
+**The unconstrained fit is not monotone, and neither was the recommended curve.** Free, the
+Stockfish-labelled fit gives 34.3 / 19.5 / 15.2 at three, four and five units — falling, which
+would mean more attackers scoring as less danger. § 4.5's own curve has the same defect at 49 →
+40. So monotonicity went into the fit rather than being patched in afterwards: minimize
+`||Xb − y||²` subject to `0 ≤ b₁ ≤ … ≤ b₈`, by projected gradient descent with a
+pool-adjacent-violators projection onto the isotonic cone.
+
+| units | free | **monotone** | p5 | p95 | |
+|---:|---:|---:|---:|---:|---|
+| 1 | 10.9 | 2.1 | 0.0 | 4.4 | not separable from zero |
+| 2 | 1.6 | 2.1 | 0.0 | 4.7 | not separable from zero |
+| 3 | 34.3 | **20.3** | 16.5 | 23.9 | above zero |
+| 4 | 19.5 | **20.3** | 16.5 | 23.9 | above zero |
+| 5 | 15.2 | **20.3** | 16.5 | 23.9 | above zero |
+| 6 | 44.2 | 43.6 | 29.2 | 51.6 | above zero |
+| 7 | 45.6 | 45.4 | 37.7 | 54.4 | above zero |
+| 8 | 85.5 | 85.2 | 75.1 | 95.6 | above zero |
+
+**The constraint is nearly free, and that is the finding about shape.** The residual rises from
+`6.272429e8` to `6.277248e8` — **0.077 %**. A monotone curve fits this data as well as an
+unconstrained one does, so the descent from 34.3 to 15.2 was noise rather than structure. Where
+the constraint binds, pool-adjacent-violators merges the offending indices into one level, which
+is why 3, 4 and 5 share a value: the data say all three are well above zero and do not
+distinguish between them.
+
+**Four checks before believing it.** Indices 6–8 come out at 44 / 45 / 85 against § 4.5's
+49 / 40 / 83 — two estimators with different labels, agreeing at the top, which is what makes
+the disagreement below credible rather than a shifted estimator. A **placebo zone**, same rank
+as the enemy king and four files away, sits at −8.6 [−12.3, −3.4] at five units over the same
+positions, so the signal is about the king and not about having active pieces deep in enemy
+territory. Three bootstrap seeds give the same rounded curve with intervals stable to about
+1 cp. And a cold-started solve is bit-identical to the warm-started one, so the point estimate
+did not seed its own bootstrap.
+
+**What it changes in practice.** § 4.5 zeroed indices 1–5, and indices 3–5 carry **24.2 %** of
+all king samples against 6.2 % for 6–8 — so the shipped curve would have been silent in roughly
+four fifths of the positions where it had anything to say. An SPRT on it could not have
+separated "the term does not work" from "the term was switched off where it mattered". Indices
+1 and 2 keep their zeros in substance: 2.1 cp with a lower bound on zero is not evidence, and a
+single minor piece bearing on the king zone is the normal case rather than a danger.
+
+**What it does not change.** § 4.5's cap argument stands untouched — the curve tops out at 85
+against the 100 cp limit `KingAttackCurveTest` enforces
+(`EVALUATE_MATERIAL_ONLY_THRESHOLD / 2`), so it still cannot pay for a piece sacrifice on its
+own. Stockfish's NNUE is itself trained on games and is not ground truth; it is an independent
+and far stronger yardstick that myChess's own play cannot have moved, which is a weaker and
+sufficient claim. And this is still not the repair: 20 cp stands against the 475 cp gap in
+`BlunderTest.staticEval960_afterDxc6`, the position that prompted the whole measurement.
+
+**`MAX_UNITS = 8` stays, and now for a better reason than frequency.** The cap was justified by
+indices 0–8 covering 99.7 % of king samples, which is an argument about how often the table is
+read and not about whether the clamp costs anything. The right question is whether the term
+still *distinguishes between the moves of one position* — a penalty that takes the same value
+after every legal move cancels in the search however large it is. Measured over 300 positions
+carrying at least three attack units, the spread of the term across their legal moves has a
+median of **18.3 cp**, p90 of 63.8, and is effectively constant in **3.3 %** of them. Only
+0.72 % of samples exceed eight units at all (highest observed: 14), and 33 positions of 39 619
+carry eight or more on both sides. Extending the table would buy resolution in a corner the fit
+cannot populate anyway. Numbers in
+[`king-attack-move-discrimination.log`](../test-results/king-attack-move-discrimination.log).
+
+**One thing no calibration of this curve repairs.** From lichess
+[SINwv7q4](https://lichess.org/SINwv7q4), myChess as white, `13.Qxd7` turns −1.47 into −5.22
+(Stockfish 18, depth 22; `13.f3` holds at −1.39). Black holds ten attack units on the white king and white none, so this looks
+like the family's own territory — and applying the curve to all 36 legal moves leaves `Qxd7`
+ranked **1 of 36**, exactly where the static evaluation already had it and where Stockfish puts
+it 15th at depth 18. The term is not silent here; it points the wrong way. `Qxd7` draws the *best* term of
+any move, because the queen on d7 bears along the seventh rank onto g7 and therefore counts as
+five attack units against the *black* king. "Piece bears on the king zone ⇒ attacker" does not
+ask whether that piece is needed elsewhere, and here it is precisely the defender white is
+sending away. Worth knowing before the SPRT: a neutral result will contain cases of this shape,
+and they are not evidence that the calibration is wrong.
+
+**Reproducing it.** Numbers in
+[`test-results/king-attack-isotonic-960.log`](../test-results/king-attack-isotonic-960.log) and
+[`king-attack-vs-stockfish-960.log`](../test-results/king-attack-vs-stockfish-960.log). The
+driver is not yet in `tools/`: it needs a batch probe and a configurable-center variant of
+`KingAttackUnits` in test sources, the latter being what the placebo control runs on.
 
 ---
 
@@ -868,11 +971,13 @@ The term does not have to be written; § 1.1 has it ported and tested on branch 
    measured +12 cp there is real king-safety information or just the king activity the tapered
    king PST already encodes is not something the data separates, and double-counting it would
    be worse than ignoring it.
-3. **Replace the curve with the fitted one** (§ 4.5): `0 0 0 0 0 0 49 40 83`, indices 0–8,
-   everything above clamped onto index 8. Measured, not chosen. The inherited table on
-   `05f337d` reads `0 0 5 5 10 10 15 15 25 35 50 65 85 105 130 160 195 235 285 340 400` — its
-   upper half covers indices real play reaches in 0.3 % of positions, and its lower half is
-   about a third of what the fit puts there.
+3. **Replace the curve with the fitted one** (§ 4.6): `0 2 2 20 20 20 44 45 85`, indices 0–8,
+   everything above clamped onto index 8. Measured, not chosen, and monotone by construction.
+   The inherited table on `05f337d` reads
+   `0 0 5 5 10 10 15 15 25 35 50 65 85 105 130 160 195 235 285 340 400` — its upper half covers
+   indices real play reaches in 0.3 % of positions, and across the fitted range it carries
+   25 % to 50 % of what the fit puts there — 5 against 20 at three units, 25 against 85 at
+   eight.
 
    The top entry is 83 cp against the § 4.4 cap of 150, so this calibration clears it — but only
    by a factor of 1.8, and the anchor calibration would *not* clear it at 191. The test that

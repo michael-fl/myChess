@@ -1,0 +1,44 @@
+=== Does the fitted curve distinguish between the moves of a single position? ===
+Date        2026-08-30
+Curve       KING_ATTACK_PENALTY = { 0, 2, 2, 20, 20, 20, 44, 45, 85 }  (king-attack-isotonic-960)
+Sample      300 positions drawn from tuning-data/mychess-selfplay-960.epd, restricted to the
+            19,163 that carry at least 3 attack units on one side -- positions where the term
+            has anything to say at all.  8,896 successor positions, one per legal move.
+Quantity    term = (curve[min(unitsWhite,8)] - curve[min(unitsBlack,8)]) * phase / 24,
+            evaluated after every legal move; reported as the spread max - min per position.
+
+WHY THIS AND NOT A FREQUENCY COUNT.  A penalty only changes a decision through the COMPARISON
+between the moves of one position.  A term that takes the same value after every legal move
+cancels in the search regardless of how large it is.  The corpus-level frequency of high unit
+counts cannot see that: it counts positions, and the question is about moves within a position.
+
+  spread of the term across the moves of one position (cp)
+    median            18.3
+    p25 / p75      7.5 / 41.2
+    p90               63.8
+    maximum          125.0
+
+  effectively constant (spread < 1 cp):   10 of 300   =  3.3 %
+  spread <  5 cp:                         45 of 300   = 15.0 %
+  spread < 10 cp:                         86 of 300   = 28.7 %
+  spread < 20 cp:                        157 of 300   = 52.3 %
+
+CONCLUSION: MAX_UNITS = 8 STAYS.  The clamp was suspected of flattening the term exactly where
+danger is highest, which would have argued for extending the table past index 8.  It does not.
+Only 0.72 % of king samples exceed 8 units at all (574 of 79,238; highest observed 14), only 33
+positions of 39,619 carry 8 or more on BOTH sides, and the term is effectively constant across
+moves in 3.3 % of positions.  Extending the table would buy resolution in a corner of the space
+that the fit cannot populate anyway -- indices above 8 hold 0.3 % of samples.
+
+WHERE THE SUSPICION CAME FROM, AND WHAT IT ACTUALLY SHOWS.  Lichess SINwv7q4, myChess as white,
+13.Qxd7 (-1.47 -> -5.22 by Stockfish 18 at depth 22; 13.f3 holds at -1.39).  Black holds 10 attack units on the white king, white 0,
+and applying the curve to all 36 legal moves leaves Qxd7 ranked 1 of 36 -- unchanged from the
+static ranking, where Stockfish puts it 15th.  But the term is not constant there; it points the
+WRONG WAY.  Qxd7 draws the best term of any move because the queen on d7 bears along the seventh
+rank onto g7 and therefore counts as five attack units against the black king.
+
+That is a limit of the quantity rather than of the curve.  "Piece bears on the king zone =>
+attacker" does not ask whether the piece is needed elsewhere, and here it is precisely the
+defender white is sending away.  No calibration of KING_ATTACK_PENALTY repairs it, and it is
+worth knowing before the term is measured: a neutral SPRT will contain cases like this one, and
+they are not evidence that the calibration is wrong.
