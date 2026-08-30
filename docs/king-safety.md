@@ -379,19 +379,41 @@ walked into.
 
 #### Why −67.1 is not the verdict on our branch
 
-Three differences, every one of them making the Audax term *louder*:
+**Five differences, corrected 2026-08-30.** An earlier version of this section compared the two
+curves *at the same table index* and concluded Audax was about three times louder. That was
+wrong: the two branches do not share a unit scale, so the same index means a different attack.
 
-| attack units | our `05f337d` | Audax |
-|---|---:|---:|
-| 6 — median attack, present in 90.6 % of games | 15 | **45** |
-| 10 | 50 | **150** |
-| 14 — "heavy artillery" | 130 | **325** |
+| | our `05f337d` | Audax `aa5f574` |
+|---|---|---|
+| attack units | P1 N2 B2 R3 Q5 | **P3 N4 B4 R6 Q10** |
+| defenders | none | **subtracted**: `max(0, attack − defence)` |
+| shield pawns | not counted | count as defenders inside the zone |
+| ray continuation | stops at the first piece | **through friendly sliders and one enemy piece** |
+| king zone, gate, factor | 3×3, `< 2 attackers`, 0.01 | *identical* |
+| phase scaling | none | **none either** |
 
-Audax deliberately calibrated the top of the curve to **one minor piece**, so that a piece
-sacrifice would look worth calculating. That is a *style* goal, and it is precisely what arms
-the trap. It also adds battery and x-ray ray continuation, so the term fires far more often.
-And § 4.2's independent figure — 34–57 cp per attacker — supports the magnitude of our
-inherited table, not the reshaped one.
+Audax's units are double ours (triple for a pawn), so its index 14 is our index 7. Compared at
+the same **physical** attack the gap is far larger than three:
+
+| attack | our units → cp | Audax units → cp | ratio |
+|---|---|---|---:|
+| queen alone | 5 → 10 | 10 → 150 | **15×** |
+| queen + knight | 7 → 15 | 14 → 325 | **22×** |
+| queen + rook | 8 → 25 | 16 → 405 | **16×** |
+| queen + rook + knight | 10 → 50 | 20 → 496 | 10× |
+| two minor pieces | 4 → 10 | 8 → 85 | 8.5× |
+
+**This makes § 4.4's finding stronger, not weaker.** The −67.1 Elo came from a term that awards
+an order of magnitude more evaluation for the same threat. Audax anchored the top of its curve
+at **one minor piece** so that a sacrifice would look worth calculating — a style goal, and
+precisely what arms the trap: at 325 cp for a queen and a knight, the term can justify giving up
+a 300 cp piece *on its own*, which is exactly the case the cap in the next subsection exists to
+forbid. The fitted curve of § 4.5 gives that same attack 15 cp — the difference between a hint
+and an invitation.
+
+The ray continuation compounds it, since batteries and x-rays make the term fire in positions
+where ours stays silent. And § 4.2's independent figure of 34–57 cp per attacker supports the
+magnitude of our scale, not the reshaped one.
 
 (The README's feature list still mentions an "Audax perspective tilt"; that was removed long
 ago and the played builds construct `new WeightingFunction()` with no root color, i.e.
