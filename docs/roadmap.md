@@ -271,6 +271,31 @@ games. The increment path can be considered covered.
 50 games with an adjudication-heavy setup — but consistent with spending the increment being worth
 something rather than merely safe.)
 
+*The command, recorded here because it is the only place it survives and because the standard
+SPRT cannot replace it — at `tc=40/60` no `winc` is sent, so the increment branch never runs:*
+
+```sh
+caffeinate -is <cutechess-cli> \
+    -engine name=mychess-4.6.0 cmd=./versions/4.6.0/mychess-uci.sh proto=uci \
+    -engine name=mychess-4.4.1 cmd=./versions/4.4.1/mychess-uci.sh proto=uci \
+    -each tc=10+0.1 \
+    -rounds 25 -games 2 -repeat \
+    -openings file=2moves_v2.pgn format=pgn order=random plies=8 \
+    -concurrency 4 -ratinginterval 10 -recover \
+    -draw movenumber=40 movecount=8 score=40 \
+    -resign movecount=4 score=600 \
+    -pgnout test-results/increment-forfeit-10plus01.pgn
+```
+
+Three choices in it are load-bearing rather than habit. **No `-sprt`:** a single forfeit is a
+defect whatever the score, so there is no hypothesis to test. **4.4.1 as the opponent:** it ignores
+`winc`/`binc` entirely, so both clock behaviors run inside one match and a flag on either side is
+informative — which is also what makes the per-engine clock split above readable. **`tc=10+0.1`
+rather than a longer control:** the increment has to *dominate* the base, or the branch under
+suspicion is never under pressure. The `tc=60+1` run is the cautionary case — zero forfeits, but no
+clock ever fell below 15.2 s, so it measured the easy half of the space. Swap the version pins and
+re-run this whenever `UciHandler.computeClockBudgetMillis` changes.
+
 **Partial implementation already in place: skip-hopeless-iteration heuristic.** `PositionSearch` now tracks a per-depth moving average of past iteration times in [`IterationTimings`](../src/main/java/org/michaelfl/mychess/engines/IterationTimings.java) and skips a deepening iteration whose estimated cost exceeds the remaining budget; recovered time stays on the clock and feeds later moves in clock-based TCs. A probing override with a remaining-time ratio gate prevents the SMA from freezing permanently. Tuning knobs live in [`EngineTuning`](../src/main/java/org/michaelfl/mychess/engines/EngineTuning.java). See [search § 6.5.1](search.md#651-skip-hopeless-iteration-heuristic) for the design details.
 
 That's protocol-compliant and good enough for tests and casual play, but in long real games against any Stockfish-grade opponent it still leaves Elo on the table because the budget is wrong on most moves:
