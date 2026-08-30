@@ -54,35 +54,35 @@ class KingAttackUnitsTest {
 
     @Test
     void rookBearingOnTheZone_countsThreeUnitsOnce() {
-        assertEquals(KingAttackUnits.ROOK_UNITS,
+        assertEquals(WeightingFunction.ATTACK_UNIT_ROOK,
                 KingAttackUnits.of(Fen.importFEN(ROOK_ON_THE_ZONE), GameStatus.TURN_WHITE),
                 "the rook attacks several zone squares but is one attacker");
     }
 
     @Test
     void queenBearingOnTheZone_countsFiveUnitsOnce() {
-        assertEquals(KingAttackUnits.QUEEN_UNITS,
+        assertEquals(WeightingFunction.ATTACK_UNIT_QUEEN,
                 KingAttackUnits.of(Fen.importFEN(QUEEN_ON_THE_ZONE), GameStatus.TURN_WHITE),
                 "the queen reaches the zone on file and diagonal, and still counts once");
     }
 
     @Test
     void twoAttackers_sumTheirUnits() {
-        assertEquals(KingAttackUnits.QUEEN_UNITS + KingAttackUnits.ROOK_UNITS,
+        assertEquals(WeightingFunction.ATTACK_UNIT_QUEEN + WeightingFunction.ATTACK_UNIT_ROOK,
                 KingAttackUnits.of(Fen.importFEN(QUEEN_AND_ROOK), GameStatus.TURN_WHITE),
                 "queen and rook each count once, and the weights add");
     }
 
     @Test
     void knightBearingOnTheZone_countsTwoUnits() {
-        assertEquals(KingAttackUnits.KNIGHT_UNITS,
+        assertEquals(WeightingFunction.ATTACK_UNIT_KNIGHT,
                 KingAttackUnits.of(Fen.importFEN(KNIGHT_NEAR), GameStatus.TURN_WHITE),
                 "a knight on f6 attacks e8 and d7");
     }
 
     @Test
     void pawnBearingOnTheZone_countsOneUnit() {
-        assertEquals(KingAttackUnits.PAWN_UNITS,
+        assertEquals(WeightingFunction.ATTACK_UNIT_PAWN,
                 KingAttackUnits.of(Fen.importFEN(PAWN_NEAR), GameStatus.TURN_WHITE),
                 "a white pawn on d6 attacks e7, a zone square");
     }
@@ -94,7 +94,7 @@ class KingAttackUnitsTest {
      */
     @Test
     void batteryRearPiece_isScreenedOff() {
-        assertEquals(KingAttackUnits.ROOK_UNITS,
+        assertEquals(WeightingFunction.ATTACK_UNIT_ROOK,
                 KingAttackUnits.of(Fen.importFEN(BATTERY_SCREENED), GameStatus.TURN_WHITE),
                 "only the front rook on e4 bears on the zone; the one on e1 is behind it");
     }
