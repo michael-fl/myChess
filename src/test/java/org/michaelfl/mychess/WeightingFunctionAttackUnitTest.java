@@ -10,11 +10,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Unit tests for the king-attack term of {@link WeightingFunction}: the 3x3 king
  * zone, the attack-unit accumulation for pieces bearing on the enemy king zone,
- * and the gated, progressive penalty table.
+ * the gated penalty table, and the game-phase scaling that multiplies it.
  *
  * <p>{@code calculate(Board)} populates the internal per-color arrays
  * (index 0 = white, 1 = black); the tests read them through the package-private
  * accessors. Positions are built with {@link Fen#importFEN(String)}.
+ *
+ * <p><b>Every assertion on the penalty passes an explicit phase</b>, usually
+ * {@link WeightingFunction#MAX_PHASE}. The fixtures in {@link KingAttackPenalty}
+ * construct a {@link WeightingFunction} and set the arrays by hand without calling
+ * {@code calculate}, so their phase field is 0 — reading it back would scale every
+ * expectation to zero and the assertions would pass while testing nothing.
  *
  * @author Michael Fleischhauer
  */
@@ -97,8 +103,14 @@ class WeightingFunctionAttackUnitTest {
 
             assertEquals(2, wf.getKingAttackerCount()[WHITE], "only the queen and the knight attack black's king zone");
             assertEquals(7, wf.getAttackUnit()[WHITE], "queen (5) + knight (2), each counted once");
-            assertEquals(WeightingFunction.KING_ATTACK_PENALTY[7], (int) wf.calcKingAttackPenalty(WHITE),
-                    "two attackers, 7 units -> penalty table entry 7, not the clamped maximum");
+            assertEquals(WeightingFunction.KING_ATTACK_PENALTY[7],
+                    wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE),
+                    "two attackers, 7 units -> penalty table entry 7 undiluted, not the clamped maximum");
+            assertEquals(WeightingFunction.blend(WeightingFunction.KING_ATTACK_PENALTY[7], 0, wf.getPhase()),
+                    wf.calcKingAttackPenalty(WHITE, wf.getPhase()),
+                    "at this position's own phase the same entry is scaled down: it is an endgame "
+                            + "(phase " + wf.getPhase() + " of " + WeightingFunction.MAX_PHASE
+                            + "), where the measured king-attack effect is weak or reversed");
         }
 
         @Test
@@ -107,12 +119,22 @@ class WeightingFunctionAttackUnitTest {
             // f7 king zone. Each PIECE counts once, but the dedup must be per piece, NOT
             // per piece type: four attackers with 14 units (2x5 + 2x2). The per-square bug
             // over-counts; a naive per-type dedup would under-count (2 / 7).
+            //
+            // 14 units is past the end of the fitted table, which stops at 8 (docs/king-safety.md
+            // 4.6: indices above that hold 0.3 % of samples and cannot be fitted from the data).
+            // Clamping is therefore the designed behavior, not a failure mode — this assertion
+            // read KING_ATTACK_PENALTY[14] while the table was 21 entries long and would now
+            // throw ArrayIndexOutOfBoundsException.
             var wf = evalFor("2Q5/p4k1N/8/5NQ1/8/8/8/K7 b - - 0 1");
 
             assertEquals(4, wf.getKingAttackerCount()[WHITE], "two queens + two knights = four distinct attackers");
             assertEquals(14, wf.getAttackUnit()[WHITE], "2 x queen(5) + 2 x knight(2) = 14, each piece once");
-            assertEquals(WeightingFunction.KING_ATTACK_PENALTY[14], (int) wf.calcKingAttackPenalty(WHITE),
-                    "four attackers, 14 units -> penalty table entry 14, not the clamped maximum");
+            int lastEntry = WeightingFunction.KING_ATTACK_PENALTY.length - 1;
+
+            assertEquals(WeightingFunction.KING_ATTACK_PENALTY[lastEntry],
+                    wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE),
+                    "four attackers, 14 units -> clamped onto the last fitted entry (index "
+                            + lastEntry + ")");
         }
 
         @Test
@@ -146,7 +168,9 @@ class WeightingFunctionAttackUnitTest {
 
             assertEquals(1, wf.getKingAttackerCount()[WHITE], "only the queen counts; the king is excluded");
             assertEquals(5, wf.getAttackUnit()[WHITE], "queen unit (5) for its single zone square, king contributes nothing");
-            assertEquals(0, (int) wf.calcKingAttackPenalty(WHITE), "one attacker is below the gate => no penalty");
+            assertEquals(0, wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE),
+                    "one attacker is below the gate => no penalty, and asserted at full midgame so "
+                            + "it is the gate rather than the phase scaling that produces the zero");
         }
     }
 
@@ -159,7 +183,8 @@ class WeightingFunctionAttackUnitTest {
             wf.getKingAttackerCount()[WHITE] = 1;
             wf.getAttackUnit()[WHITE] = 5;
 
-            assertEquals(0, (int) wf.calcKingAttackPenalty(WHITE), "fewer than two attackers => no penalty");
+            assertEquals(0, wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE),
+                    "fewer than two attackers => no penalty, even at full midgame");
         }
 
         @Test
@@ -168,7 +193,8 @@ class WeightingFunctionAttackUnitTest {
             wf.getKingAttackerCount()[WHITE] = 2;
             wf.getAttackUnit()[WHITE] = 8;
 
-            assertEquals(WeightingFunction.KING_ATTACK_PENALTY[8], (int) wf.calcKingAttackPenalty(WHITE),
+            assertEquals(WeightingFunction.KING_ATTACK_PENALTY[8],
+                    wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE),
                     "two attackers, 8 attack units => penalty table entry 8");
         }
 
@@ -179,7 +205,71 @@ class WeightingFunctionAttackUnitTest {
             wf.getAttackUnit()[WHITE] = 100; // far beyond the table
 
             int max = WeightingFunction.KING_ATTACK_PENALTY[WeightingFunction.KING_ATTACK_PENALTY.length - 1];
-            assertEquals(max, (int) wf.calcKingAttackPenalty(WHITE), "attack unit is clamped to the last table entry");
+
+            assertEquals(max, wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE),
+                    "attack unit is clamped to the last table entry");
+        }
+
+        /**
+         * The penalty is multiplied by the game phase, and that is the whole point of the port.
+         *
+         * <p>Branch {@code attack-units} carried the term for weeks with {@code kingAttackFactor}
+         * fixed at 0.01 and no reference to the phase, so it ran at full strength in the endgame.
+         * That is not merely wasteful, it is the wrong sign: measured over the corpus, the
+         * king-attack effect is about −34 cp per attacker in the midgame and **+12 in the
+         * endgame** (`docs/king-safety.md` § 4.2, finding F1). An unscaled term therefore pays a
+         * penalty where the data say there is a small bonus.
+         *
+         * <p>Three properties, and none of them was covered before: the term vanishes at
+         * {@code phase == 0}, reaches the table entry undiluted at {@link WeightingFunction#MAX_PHASE},
+         * and never decreases in between. The last one is what a handwritten scaling formula
+         * gets wrong — an off-by-one in the rounding shows up as a dip, not as a wrong endpoint.
+         */
+        @Test
+        void thePenaltyScalesWithTheGamePhaseAndVanishesInTheEndgame() {
+            var wf = new WeightingFunction();
+            wf.getKingAttackerCount()[WHITE] = 2;
+            wf.getAttackUnit()[WHITE] = 8;
+
+            int midgame = WeightingFunction.KING_ATTACK_PENALTY[8];
+
+            assertEquals(0, wf.calcKingAttackPenalty(WHITE, 0),
+                    "at phase 0 — bare kings — the king-attack penalty is switched off entirely");
+            assertEquals(midgame, wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE),
+                    "at full midgame material the table entry is applied undiluted");
+
+            int previous = -1;
+
+            for (int phase = 0; phase <= WeightingFunction.MAX_PHASE; phase++) {
+                int penalty = wf.calcKingAttackPenalty(WHITE, phase);
+
+                assertTrue(penalty >= previous,
+                        "the penalty must not fall as material grows: phase " + phase + " gives "
+                                + penalty + " against " + previous + " at phase " + (phase - 1));
+                previous = penalty;
+            }
+        }
+
+        /**
+         * The gate outranks the phase: below two attackers there is nothing to scale.
+         *
+         * <p>Worth its own case because the two guards multiply rather than compose. A
+         * refactoring that folded the phase into the table lookup — plausible, and cheaper —
+         * would still return zero here and look correct, while a refactoring that dropped the
+         * gate would produce a phase-scaled penalty for a lone queen. The corpus says that is
+         * 33.5 % of all king samples (`docs/king-safety.md` § 4.6), so the mistake would be
+         * large and silent.
+         */
+        @Test
+        void theGateAppliesAtEveryPhase() {
+            var wf = new WeightingFunction();
+            wf.getKingAttackerCount()[WHITE] = 1;
+            wf.getAttackUnit()[WHITE] = 5;
+
+            for (int phase = 0; phase <= WeightingFunction.MAX_PHASE; phase++) {
+                assertEquals(0, wf.calcKingAttackPenalty(WHITE, phase),
+                        "a single attacker is gated out at phase " + phase);
+            }
         }
     }
 }
