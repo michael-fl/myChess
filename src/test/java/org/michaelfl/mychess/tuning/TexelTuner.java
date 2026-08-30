@@ -77,6 +77,23 @@ public final class TexelTuner {
         }
 
         /** Anneal from a step of 4 down to 0.5, up to 12 passes per step. */
+        /**
+         * The schedule used by the piece-square tuners, whose parameters are small.
+         *
+         * <p><b>It is a ceiling, not only a pace.</b> Coordinate descent starting at zero moves
+         * a parameter by at most {@code maxRoundsPerStep × (initialStep + initialStep/2 + …)},
+         * which for these values is {@code 12 × 7.5 = 90}. A parameter whose optimum lies
+         * beyond that stops at the wall and reports a plausible number.
+         *
+         * <p>That happened on 2026-08-30 while fitting the king-attack curve: the top entry
+         * stopped near 73–90 in all four corpora, and a bootstrap over 40 replicates reported an
+         * interval width of <b>1.0</b> for it — every replicate hitting the same wall, which
+         * looks like precision and is its opposite. Re-fitted with {@code (16.0, 0.5, 20)} the
+         * same entry reached 191 in one corpus.
+         *
+         * <p>So: check the fitted values against the reachable magnitude before believing them,
+         * and widen the schedule for any parameter that is not a piece-square delta.
+         */
         public static Config defaults() {
             return new Config(4.0, 0.5, 12);
         }
