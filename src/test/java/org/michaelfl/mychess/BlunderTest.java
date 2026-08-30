@@ -3193,6 +3193,68 @@ class BlunderTest {
     // first agreed it was lost at move 23, which was mate in 3.
     // ================================================================
 
+    /** White (myChess) to move before {@code 13.Qxd7}, a pawn grab with the position level. */
+    private static final String BEFORE_QXD7_FEN =
+            "5rkr/p1pp2pp/bp2n3/2b5/4q3/2P1N3/PP3PPP/RNBQR1K1 w - - 1 13";
+
+    /**
+     * The defender walks away — and the planned king-attack term would encourage it.
+     *
+     * <p>From rated classical game <a href="https://lichess.org/SINwv7q4">SINwv7q4</a>
+     * (myChessJava 2062 vs Studyloversz-bot 1999, 1800+0, 0-1). Material is dead level.
+     * myChess takes the d7 pawn and its queen never returns: {@code 16.Qxc7}, {@code 20.Qc6},
+     * {@code 23.Qd5+} while black assembles {@code Nf4}, {@code Qg6}, {@code Nh3+},
+     * {@code Nxf2+} against a king it has left alone. Stockfish 18 reads the position before
+     * the move at −1.47 and after it at −5.22 (depth 22); {@code 13.f3} holds at −1.39.
+     *
+     * <p><b>Not a {@code corner-grab}, though it looks like one.</b> All five cases in that
+     * family turn on a piece that ends up <em>trapped</em> or stranded after taking — a1, b7,
+     * h1. This queen is never trapped and stays fully mobile for the rest of the game. What
+     * loses is that it is somewhere else, so the defect is a defender leaving rather than a
+     * piece getting stuck. It belongs here because "danger to its own king is not charged for"
+     * describes it exactly.
+     *
+     * <p><b>It also does not have the shape of the rest of this family</b>, which is what makes
+     * it worth its own entry. Elsewhere here myChess is optimistic — it rates itself
+     * <em>better</em> while being lost. Here it knows it is slightly worse (−45 to −82 white-POV
+     * across depths 4 to 12) and is merely wrong about the size, by some four pawns. Flat across
+     * nine depths, so this is the evaluation and not the horizon.
+     *
+     * <p><b>The measurement that makes this case load-bearing.</b> Black holds <b>ten</b> attack
+     * units on the white king here and white holds none, which is as clear a signature as this
+     * family produces — and the fitted {@code KING_ATTACK_PENALTY} of `docs/king-safety.md`
+     * § 4.6 does not help. Applying it to all 36 legal moves leaves {@code Qxd7} ranked
+     * <b>1 of 36</b>, exactly where the static evaluation already had it and where Stockfish
+     * puts it 15th (depth 18, all 36 successors scored). The term is not silent; it points the wrong way, because the queen landing
+     * on d7 bears along the seventh rank onto g7 and therefore counts as five attack units
+     * against the <em>black</em> king. "Piece bears on the king zone ⇒ attacker" never asks
+     * whether that piece was needed where it stood.
+     *
+     * <p>So this is the second case pinning a boundary of the planned term rather than arguing
+     * for it, next to {@link #castling960_atMove5_characterizesChoosingTheStormedWing}. Read
+     * them together before concluding anything from a neutral SPRT: a term that measures zero
+     * has still not been tested against either of them.
+     *
+     * <p><b>This assertion is a characterization, not a goal.</b> The move reproduces at every
+     * depth from 4 to 11, which is why it pins the move rather than a score.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void qxd7_vsStudylovers_characterizesSendingTheQueenAwayFromItsOwnKing() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_QXD7_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.d1, Board.d7, "13.Qxd7",
+                "which books a pawn and sends the only piece defending the kingside to the other "
+                        + "wing, turning −1.47 into −5.22 (Stockfish 18, depth 22); 13.f3 holds "
+                        + "at −1.39. Black already has ten attack units on the white king, and the "
+                        + "fitted king-attack curve still ranks this move first of 36");
+    }
+
     /**
      * Like {@link #gameFromFenAtDepth}, for a position whose castling field names rook files.
      *
