@@ -83,6 +83,7 @@ Line counts as of 2026-08-29.
 | `mychess-anchor.epd` | 15 756 | the 2 000 anchor-bracket games against five externally rated engines |
 | `human-masters.epd` | 855 479 | 120 000 games of `src/test/resources/large.pgn`, default sampling |
 | `human-dense.epd` | 2 956 584 | the *same* 120 000 games, sampled 40 per game with no end-skip |
+| `mychess-anchor-dense.epd` | 64 531 | the *same* 2 000 anchor games, sampled 40 per game with no end-skip |
 
 `src/test/resources/large.pgn` is a 523 856-game extract of KingBase — human tournament games,
 median rating 2333, 75 % at 2200 or above. It is git-ignored and also used by the PGN parser
@@ -108,6 +109,14 @@ java -cp target/classes:target/test-classes:target/dependency/* \
     tuning-data/quiet-labeled.epd tuning-data/mychess-selfplay-960.epd \
     tuning-data/mychess-selfplay-std-20k.epd
 ```
+
+### Averages, for anyone sizing a bootstrap block
+
+`human-dense.epd` averages **24.6** positions per game against a cap of 40;
+`mychess-anchor-dense.epd` averages **32.3** against the same cap. Positions from one game are
+correlated, so a bootstrap that resamples individual positions reports intervals far too narrow.
+`tools/king-attack-bootstrap.py` resamples contiguous blocks instead, and the block should be
+chosen *larger* than the average — too large costs width, which is the safe direction.
 
 ### The sampling rules are a measurement variable, not a detail
 
