@@ -1096,7 +1096,8 @@ runs anyway — is as cheap as § 4.5 assumed. What was never counted is the boo
 the mask usable.
 
 **The repair is small and does not touch the accumulation.** Three changes, none of them the
-forbidden second pass:
+forbidden second pass — and note that (1) and (2) together delete both helper arrays rather than
+making them cheaper:
 
 1. **Drop the zone mask.** Membership in a 3×3 zone is arithmetic on the 12-wide board: with
    `a = |toField − kingField|`, the square is in the zone exactly when `a ≤ 1 || (11 ≤ a ≤ 13)`.
@@ -1104,9 +1105,31 @@ forbidden second pass:
    excluded; two ranks give 23–25. `a == 0` is the king's own square, which belongs to the zone.
    That removes 288 writes per evaluation and both `Arrays.fill` calls, at the price of an
    absolute value and three comparisons per candidate square.
-2. **Stamp the dedup guard instead of clearing it.** Replace `boolean[] isKingAttackerCounted`
-   with an `int[]` compared against a counter incremented once per evaluation. Removes the third
-   144-element fill for 576 bytes of memory.
+2. **Drop the dedup array too — the scan already serializes it.** The outer loop of
+   `calculate` runs over *squares*, and for each square all of that piece's moves are generated
+   inside it (`for (int to = field + 1; move(myPiece, field, to, color); to++)` and its siblings),
+   with `field` passed as every call's `fromField`. So all reports for one piece arrive
+   consecutively, and the guard only has to remember whether the piece **currently being
+   scanned** was already counted — one `int lastCountedAttacker`, compared against `fromField`.
+   No array, no clearing, one comparison. Together with (1) that removes all 432 writes per
+   evaluation and both helper arrays.
+
+   *This paragraph first proposed a generation stamp* — an `int[]` compared against a counter
+   incremented once per evaluation, so stale entries fail the comparison and no clearing is
+   needed. That works and is the general technique when a guard genuinely needs random access,
+   but it is unnecessary here and carries a trap worth naming: the counter overflows. At ~1.4 M
+   evaluations per second, 2³¹ is reached after some 25 minutes of continuous search, so a
+   correct implementation needs a wrap guard that clears once — cheap when amortised, and a bug
+   that surfaces only after half an hour if forgotten. The simpler form above has no counter to
+   overflow.
+
+   **What it does have is a hidden coupling, and that is why it needs a test rather than a
+   comment.** It holds only while the scan reports each piece contiguously. Moving the
+   accumulation into a second pass, or reordering the loops, would make the guard silently
+   undercount where an array simply keeps working. § 5 forbids the second pass already, but a
+   prohibition in a document is not a test.
+   `WeightingFunctionAttackUnitTest.countsASingleThreateningPieceOnce` — a knight bearing on two
+   zone squares, asserted as one attacker — is the case that would catch it, and it exists.
 3. **Stop searching for the kings.** The two king squares are the only thing the arithmetic test
    needs. If `Board` carried them — it currently rescans in `isFieldAttackedBy` as well — the
    extra traversal disappears for this term and for that method at once. Otherwise keep the loop:
