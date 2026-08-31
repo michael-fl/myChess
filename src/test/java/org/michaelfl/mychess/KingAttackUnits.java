@@ -50,23 +50,115 @@ final class KingAttackUnits {
         final byte[] squares = board.getRawBoard();
         final boolean attackerIsWhite = attackerColor == GameStatus.TURN_WHITE;
         final byte enemyKing = attackerIsWhite ? Board.blackKing : Board.whiteKing;
-        final int kingField = findKing(squares, enemyKing);
+
+        return around(squares, findKing(squares, enemyKing), attackerIsWhite, null);
+    }
+
+    /**
+     * Units {@code attackerColor} accumulates on a 3×3 zone around an arbitrary square.
+     *
+     * <p>Exists for the placebo control of {@code tools/king-attack-vs-stockfish.py}. Bearing on
+     * the king zone also means having active pieces deep in enemy territory, and a regression
+     * cannot separate the two on its own; running the identical computation over a zone at the
+     * same rank and the same depth, but not where the king stands, isolates the part that is
+     * about the king. Whatever the placebo also earns is activity rather than danger.
+     *
+     * @param board         the position
+     * @param attackerColor the side doing the attacking
+     * @param centerField   the zone's center square, or a negative value for none
+     * @return the summed attack units
+     */
+    static int ofZone(Board board, int attackerColor, int centerField) {
+        return around(board.getRawBoard(), centerField,
+                attackerColor == GameStatus.TURN_WHITE, null);
+    }
+
+    /**
+     * The placebo zone's center: the enemy king's rank, {@link #PLACEBO_FILE_SHIFT} files away.
+     *
+     * <p>Four files guarantees the two 3×3 zones never overlap while keeping the control at the
+     * same rank and the same depth in enemy territory as the thing it controls for.
+     *
+     * @param board         the position
+     * @param attackerColor the side doing the attacking
+     * @return the center square, or −1 if the attacked king is not on the board
+     */
+    static int placeboCenter(Board board, int attackerColor) {
+        final byte[] squares = board.getRawBoard();
+        final boolean attackerIsWhite = attackerColor == GameStatus.TURN_WHITE;
+        final int kingField = findKing(squares, attackerIsWhite ? Board.blackKing : Board.whiteKing);
 
         if (kingField < 0) {
+            return -1;
+        }
+
+        final int relative = kingField - Board.a1;
+
+        return Board.a1 + relative / Board.LENGTH * Board.LENGTH
+                + (relative % Board.LENGTH + PLACEBO_FILE_SHIFT) % FILES;
+    }
+
+    /** Files the placebo zone is shifted by; 4 keeps the two 3×3 zones from overlapping. */
+    private static final int PLACEBO_FILE_SHIFT = 4;
+
+    private static final int FILES = 8;
+
+    /**
+     * Distinct pieces {@code attackerColor} has bearing on the other king's zone.
+     *
+     * <p>This is the quantity {@code WeightingFunction.calcKingAttackPenalty} gates on, and it is
+     * not derivable from the unit sum: five units is one queen or a rook and a knight, and the
+     * gate treats those differently. Measuring the gate's effect needs both numbers, which is why
+     * this exists alongside {@link #of}.
+     *
+     * @param board         the position
+     * @param attackerColor the side doing the attacking
+     * @return the number of distinct attacking pieces
+     */
+    static int attackersOf(Board board, int attackerColor) {
+        final byte[] squares = board.getRawBoard();
+        final boolean attackerIsWhite = attackerColor == GameStatus.TURN_WHITE;
+        final byte enemyKing = attackerIsWhite ? Board.blackKing : Board.whiteKing;
+        final int[] attackers = new int[1];
+
+        around(squares, findKing(squares, enemyKing), attackerIsWhite, attackers);
+
+        return attackers[0];
+    }
+
+    /**
+     * The shared walk: units over the 3×3 zone around {@code centerField}.
+     *
+     * @param counter when non-null, receives the number of distinct attackers in element 0
+     */
+    private static int around(byte[] squares, int centerField, boolean attackerIsWhite, int[] counter) {
+        if (centerField < 0) {
             return 0;
         }
 
         // Deduplication by origin square: a rook bearing on three zone squares is one attacker.
         final boolean[] counted = new boolean[Board.LENGTH * Board.LENGTH];
-        int units = 0;
-
-        units += unitsOn(squares, kingField, attackerIsWhite, counted);
+        int units = unitsOn(squares, centerField, attackerIsWhite, counted);
 
         for (int offset : Board.KING_ADJACENCY_OFFSETS) {
-            final int zoneField = kingField + offset;
+            final int zoneField = centerField + offset;
 
             if (squares[zoneField] != Board.illegal) {
                 units += unitsOn(squares, zoneField, attackerIsWhite, counted);
+            }
+        }
+
+        if (counter != null) {
+            // The dedup mask also marks the attacking king, which carries zero units and which
+            // the production gate does not count -- it increments only for a positive weight.
+            // Counting mask entries naively would report one attacker too many whenever a king
+            // stands next to the enemy king's zone, and the gate's threshold is two.
+            final byte king = attackerIsWhite ? Board.whiteKing : Board.blackKing;
+
+            for (int field = 0; field < counted.length; field++) {
+                if (counted[field] && squares[field] != king) {
+                    counter[0]++;
+                }
             }
         }
 

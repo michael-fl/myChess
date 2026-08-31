@@ -58,11 +58,14 @@ import java.util.regex.Pattern;
  * are a crude but cheap activity signal. <b>Mean own score</b> shows whether one
  * engine is systematically more optimistic, which is worth knowing on its own.
  * The <b>king-attack index</b> is reported last and as a secondary figure only:
- * not as evidence of aggression, but as a check that the curve in
- * {@code WeightingFunction.KING_ATTACK_BONUS} is being asked for the indices it
- * was calibrated for. Deliberately not a {@code @link}: neither that constant nor
- * our {@code KING_ATTACK_PENALTY} exists on master — both live on the branch this
- * tool was ported to serve.
+ * not as evidence of aggression, but as a check that
+ * {@link WeightingFunction#KING_ATTACK_PENALTY} is being asked for the indices it
+ * was calibrated for. Only plies where the gate lets the term speak are counted,
+ * because that is the number the table is actually indexed by; raw pressure the
+ * evaluation never priced would be the opposite of a calibration check. The
+ * defender half of the upstream original stays dropped — this branch subtracts no
+ * defenders. On master neither the constant nor the accessors exist, so this
+ * section is empty there rather than absent.
  *
  * <p>Both engines are measured <b>within the same games</b>, so the comparison
  * is paired: same openings, same opponent, same conditions. That removes a lot
@@ -132,6 +135,13 @@ public final class MatchStyleAnalysis {
      * simply coming straight back. A real sacrifice stays unpaid for a while.
      */
     private static final int MIN_PERSISTENCE_PLIES = 3;
+
+    /**
+     * Attackers the evaluation's gate demands before it prices an attack at all; mirrors
+     * {@code WeightingFunction.calcKingAttackPenalty}. Read here so the peak index reports what
+     * the term was actually indexed by rather than raw pressure it never scored.
+     */
+    private static final int GATE_ATTACKERS = 2;
 
     /** Centipawn stand-in for a mate score in a comment such as {@code +M5}. */
     private static final int MATE_CP = 10_000;
@@ -274,10 +284,22 @@ public final class MatchStyleAnalysis {
                 tally[mover].deepestDeficitHeld = Math.max(tally[mover].deepestDeficitHeld, deficit);
             }
 
-            // The peak king-attack index per game is dropped in this port: it needs
-            // getAttackUnit / getKingAttackerCount / getDefendUnit, which exist only on
-            // branch attack-units. Restore it there together with the term — it is five
-            // lines, and the upstream original in ../myChess-Audax has them.
+            // Restored 2026-08-30 now that the term exists here. The index is only read where
+            // the gate lets the term speak, because that is the number KING_ATTACK_PENALTY is
+            // actually indexed by -- recording units the gate suppresses would report pressure
+            // the evaluation never priced, which is the opposite of a calibration check.
+            //
+            // The defender half of the upstream original stays dropped: this branch subtracts
+            // no defenders, so there is nothing to read.
+            weightingFunction.calculate(board);
+
+            for (int color : new int[] {WHITE, BLACK}) {
+                if (weightingFunction.getKingAttackerCount()[color] >= GATE_ATTACKERS) {
+                    peakIndex[color] = Math.max(peakIndex[color],
+                            Math.min(weightingFunction.getAttackUnit()[color],
+                                    WeightingFunction.KING_ATTACK_PENALTY.length - 1));
+                }
+            }
         }
 
         for (int color : new int[] {WHITE, BLACK}) {
