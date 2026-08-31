@@ -9,14 +9,16 @@
 
 | | |
 |---|---|
-| **Curve to start from** | `0 2 2 20 20 20 44 45 85`, indices 0–8, everything above clamped onto 8 (§ 4.6; supersedes § 4.5's `0 0 0 0 0 0 49 40 83`) |
+| **Curve to start from** | `0 0 0 13 16 47 47 47 80`, indices 0–8, everything above clamped onto 8 (§ 4.7; supersedes § 4.6's ungated `0 2 2 20 20 20 44 45 85` and § 4.5's `0 0 0 0 0 0 49 40 83`) |
 | **Where it comes from** | fitted against Stockfish's *static* evaluation rather than game results, phase-weighted, monotonicity as a constraint of the fit (§ 4.6). The game-result fits of § 4.5 are what it replaces: on a self-play corpus the label carries myChess's own blindness |
 | **Why only indices 1–2 are zero** | those two are not separable from zero (p5 = 0.0) and a single minor piece bearing on the king zone is the normal case. Indices 3–5 *were* zeroed by § 4.5 and are not: that was an artifact of the label, and they carry 24.2 % of king samples against 6.2 % for 6–8 (§ 4.6) |
 | **Where to build it** | branch `attack-units`, `05f337d` — already ported, never measured, 106 commits behind master with `WeightingFunction.java` byte-identical (§ 1.1) |
 | **The one missing change** | multiply by the game phase. Without it the term runs at full strength in the endgame, where the measured sign is the *opposite* one (§ 4.2) |
 | **How to implement it** | leave it where it is: branch `attack-units` already calls `increaseAttackUnit` from inside `move(...)`, the walk the evaluation performs anyway. Do **not** refactor it into a separate pass, however much tidier that looks — a standalone scan costs more than the entire evaluation (§ 4.5) |
-| **What will kill it** | steering into sacrifices the material-only shortcut then hides. Cap below 150 cp and watch the sacrifice rate (§ 4.4) |
+| **What will kill it** | ~~steering into sacrifices the material-only shortcut then hides. Cap below 150 cp and watch the sacrifice rate (§ 4.4)~~ — measured, and it was **not** this: the cap held, 6 of 301 games. What killed it was a diffuse evaluation error plus **−21.9 % NPS** (§ 4.8, § 4.9) |
+| **The exchange rate** | the cap at 100 cp is forced by `EVALUATE_MATERIAL_ONLY_THRESHOLD`, so the term's maximum contribution is bounded there while it costs a fifth of the node rate. Any variant must buy a third of a ply's Elo with ≤ 100 cp (§ 4.9) |
 | **Expectation** | small. **Six** attempts across two projects measured −14.7, −18.1 and −57.5 in myChess, −46.5, −67.1 and −12.1 in the Audax fork. A **zero** would be progress; § 12.21's headline of 30–60 Elo is not the number to plan for |
+| **Measured 2026-08-31** | **−42.9 ± 33.9**, SPRT H0 accepted after 304 games at `tc=40/60`, LOS 0.6 %. The seventh attempt and the fourth failure — but on **standard chess**, which the backlog calls the wrong yardstick for this term. See § 4.8 |
 
 **Read § 4.1 before using the seven depth-stable cases as a target** — they were the intended
 instrument and they are not usable as one.
@@ -789,7 +791,7 @@ turn, and the SPRT is where it gets settled.
 > 4 and 5; and the curve recommended here is not monotone — it falls from 49 to 40 between six
 > and seven attack units, which would score more attackers as less danger. The reasoning is left
 > standing because the argument it makes about corpus disagreement is sound and is exactly what
-> § 4.6 had to work around. Use `0 2 2 20 20 20 44 45 85`.
+> § 4.6 had to work around. Use `0 0 0 13 16 47 47 47 80` (§ 4.7).
 
 **Keep the top, zero the bottom: `0 0 0 0 0 0 49 40 83`.**
 
@@ -819,6 +821,12 @@ not the first.
 ---
 
 ### 4.6 The label was circular — refit against Stockfish, under monotonicity (2026-08-30)
+
+> **The curve below is the *ungated* fit and is not what ships — see § 4.7.** Everything else in
+> this section stands: the circular label, the monotonicity constraint, the placebo control and
+> the four checks all carry over unchanged. What it missed is that the production code gates the
+> term on two attackers while the fit did not, so the two are calibrated on different
+> quantities. Refitting under the gate gives `0 0 0 13 16 47 47 47 80`.
 
 **`KING_ATTACK_PENALTY = { 0, 2, 2, 20, 20, 20, 44, 45, 85 }`.** This replaces § 4.5.
 
@@ -894,6 +902,23 @@ carry eight or more on both sides. Extending the table would buy resolution in a
 cannot populate anyway. Numbers in
 [`king-attack-move-discrimination.log`](../test-results/king-attack-move-discrimination.log).
 
+**A second reading of the same cap, from live games — preliminary.** The frequencies above count
+*samples*: index 8 is 1.9 % of them, which reads as "the top entry is rarely asked for". Per
+*game* it is the opposite. `MatchStyleAnalysis` over the first 90 games of the v4.6.0-attack-units
+match reports the peak index a side reaches in a game — counting only plies where the gate lets
+the term speak — and the **median is 8** for the candidate against 7 for the baseline, with both
+maxing out at 8. A game is ~120 plies, so a maximum over it naturally sits high and the two
+statistics do not conflict. What it means in practice is that the entry actually steering games is
+mostly the clamped 80 at the end of the curve — the one whose interval `[70.9, 90.9]` is the
+widest of the table.
+
+That does not reopen `MAX_UNITS`: the question a penalty has to answer is the comparison
+*between* the moves of one position, and there the term still varies by a median of 18.3 cp.
+It does mean the top entry deserves the most attention at the next re-fit, and that the
+candidate/baseline gap of 8 against 7 is the term doing what it is for — seeking the pressure the
+baseline only stumbles into. **Read as provisional**: it comes from 90 games of a match that was
+still running when this was written.
+
 **One thing no calibration of this curve repairs.** From lichess
 [SINwv7q4](https://lichess.org/SINwv7q4), myChess as white, `13.Qxd7` turns −1.47 into −5.22
 (Stockfish 18, depth 22; `13.f3` holds at −1.39). Black holds ten attack units on the white king and white none, so this looks
@@ -906,11 +931,198 @@ ask whether that piece is needed elsewhere, and here it is precisely the defende
 sending away. Worth knowing before the SPRT: a neutral result will contain cases of this shape,
 and they are not evidence that the calibration is wrong.
 
+### 4.7 The gate was in the code but not in the fit (2026-08-30)
+
+**`KING_ATTACK_PENALTY = { 0, 0, 0, 13, 16, 47, 47, 47, 80 }`.** This is what ships.
+
+§ 4.6 fitted the curve over `KingAttackUnits`, which sums attack units unconditionally.
+The production term does not: it scores zero unless at least two distinct pieces bear on the
+zone. So the table and the quantity indexing it were calibrated on different things, and the
+error is not small — **the gate suppresses 41.4 % of the term's total mass.**
+
+| attackers | share of king samples | |
+|---:|---:|---|
+| 0 | 49.9 % | term is zero anyway |
+| **1** | **33.5 %** | **suppressed by the gate** |
+| ≥ 2 | 16.6 % | term applies |
+
+Of the single-attacker samples, 21.1 % carry three units (a lone rook) and 23.8 % carry five (a
+lone queen) — 20 cp each under § 4.6's curve, zero behind the gate.
+
+**Refitting with the gate applied changes the middle of the curve, not its ends.**
+
+| units | § 4.6, ungated | **gated** | |
+|---:|---:|---:|---|
+| 1–2 | 2 | **0** | suppressed by the gate regardless |
+| 3 | 20 | **13** | [0.0, 21.1] — touches zero |
+| 4 | 20 | **16** | [8.1, 26.0] |
+| 5 | 20 | **47** | [40.3, 53.2] |
+| 6–7 | 44 / 45 | **47** | [40.3, 53.3] |
+| 8 | 85 | **80** | [70.9, 90.9] |
+
+**Index 5 more than doubles, and that is the argument for keeping the gate.** Ungated, that
+index mixes a lone queen with a rook and a knight; the two are not the same thing, and pooling
+them halves the estimate. With the gate the index means one thing — at least two pieces,
+together weighing five — and is worth 47 cp.
+
+On fit quality alone the two are a tie: residual `6.275496e8` gated against `6.277248e8`
+ungated, `6.358003e8` for no term at all. The gated model is better by 0.028 %, which decides
+nothing. What decides it is coherence of the index, and that the gate is already in the code:
+shipping the ungated curve would have meant reading a table calibrated for a quantity the
+engine does not compute.
+
+**This reverses step 4 of the build plan**, which said to replace the gate because "it asks
+whether enough pieces are present, not whether the position is dangerous". That was a design
+intuition, and the measurement contradicts it.
+
+**One entry stays disputable, and the shipped value is not quite the optimum.** Index 3 fits at
+13.1 with a lower bound of exactly 0.0 — the constraint set has zero on its boundary, so by the
+rule this document uses elsewhere (only `p5 > 0` is evidence) that entry is not separated from
+zero. It ships at **13**, which is what the first solve returned.
+
+Re-running the same objective through the ported
+[`tools/king-attack-vs-stockfish.py`](../tools/king-attack-vs-stockfish.py) gives **11** there,
+with a *lower* residual — `6.275280e8` against `6.275496e8` — so the tool converges further than
+the run that produced the shipped table. Every other entry is identical, and the ungated variant
+reproduces to every digit. Both values sit inside index 3's own interval `[0.0, 21.1]`.
+
+That is 2 cp in a bucket carrying 9.2 % of samples, well below anything an SPRT resolves, so the
+running match was not restarted for it. Recorded because the shipped number is not exactly the
+minimum of the objective this section states, and finding that out twice would be worse than
+writing it down once. Fold it in at the next re-fit.
+
+**And a number worth carrying into the SPRT.** Against "no term at all", the fitted term
+explains **1.3 %** of the residual variance between myChess's evaluation and Stockfish's. That
+is the size of what is being added.
+
+Numbers in
+[`king-attack-isotonic-960.log`](../test-results/king-attack-isotonic-960.log) (the ungated fit
+and the solver checks), [`king-attack-gate-refit.log`](../test-results/king-attack-gate-refit.log)
+(the gate) and
+[`king-attack-move-discrimination.log`](../test-results/king-attack-move-discrimination.log).
+
+---
+
 **Reproducing it.** Numbers in
 [`test-results/king-attack-isotonic-960.log`](../test-results/king-attack-isotonic-960.log) and
 [`king-attack-vs-stockfish-960.log`](../test-results/king-attack-vs-stockfish-960.log). The
-driver is not yet in `tools/`: it needs a batch probe and a configurable-center variant of
-`KingAttackUnits` in test sources, the latter being what the placebo control runs on.
+driver is `tools/king-attack-vs-stockfish.py`, ported 2026-08-30 **onto branch
+`attack-units`, where it has to stay** — with `KingAttackProbe` and the `ofZone` /
+`placeboCenter` / `attackersOf` additions to `KingAttackUnits` behind it. `KingAttackUnits` reads
+the six unit weights from `WeightingFunction` rather than repeating them, which is the right
+trade (the two cannot drift apart) and has the consequence that it no longer compiles on master:
+master's evaluation has no attack-unit constants at all. Reviving the fit means reviving the
+branch, or restoring local constants in that one class. **Read its warning before re-running it:** the target is
+`stockfish − myChess`, so fitting against a build that already applies `KING_ATTACK_PENALTY`
+measures the residual *after* the term. On branch `attack-units` the same corpus that gives
+1.30 % explained variance against master's evaluation gives **0.000 %** and an all-zero gated
+curve — the right answer to a different question, and indistinguishable from "no signal".
+
+### 4.8 What the match said (2026-08-31)
+
+**−42.9 ± 33.9 Elo, SPRT H0 accepted after 304 games**, LOS 0.6 %, score 0.439 (92–129–80). The
+interval runs −76.8 to −9.0 and excludes zero. Full numbers in
+[`sprt-attack-units-analysis.log`](../test-results/sprt-attack-units-analysis.log); the roadmap
+entry [§ 12.21](roadmap.md#1221-king-safety--m--3060-elo) carries the same result in its attempt
+log.
+
+**The cap worked, and that is worth separating from the loss.** § 4.4 argued the term's real
+danger was steering into sacrifices the material-only shortcut then hides — the combination that
+cost the Audax fork 67 Elo — and set the cap against it. The match says that is not what
+happened. The style analysis finds the candidate in a "down 300 cp and still confident" state in
+**6 of 301 games** against the baseline's 1, all seven drawn and none won, with the deepest
+deficit held at 800 cp against 400. Real, and in the predicted direction; far too rare to explain
+a win rate of 30.6 % against 42.9 %.
+
+**So the loss is diffuse, which is the failure this document expected and the one it could not
+design around.** More checks per game (4.9 against 4.0) and a peak attack index a full step
+higher (median 8 against 7) say the term does change the play in the intended direction. Its own
+mean score fell from +10 cp to −5: it rates its positions slightly worse and plays them a great
+deal worse. That is static noise added to a search which already resolves king attacks
+tactically, measured for the fourth time.
+
+**What did not get tested.** The three boundary cases recorded in § 4.7 and in `BlunderTest` are
+untouched by this result, by construction — a term that measures −42.9 has still not been tried
+against a position where it scores zero (`castling960_atMove5`), where it contributes 20 cp
+against a 475 cp gap (`staticEval960_afterDxc6`), or where it ranks the blunder first of 36
+(`qxd7_vsStudylovers`). They were written down before the match for exactly this moment.
+
+**And the yardstick, on the terms agreed in advance.** § 12.21 committed to treating a *neutral*
+standard result as inconclusive and running Chess960 before shelving anything. This result is not
+neutral, so by that rule standard chess is settled without the second run. Chess960 is a separate
+question and the whole apparatus survives to answer it: the curve, the fitted tooling in
+[`tools/king-attack-vs-stockfish.py`](../tools/king-attack-vs-stockfish.py), and a prepared
+invocation. Whether it is worth 17 more hours of machine time is a judgement about expected
+value, not about this measurement.
+
+**A second, independent reason to expect this result: the term is not nearly free.** NPS falls
+**21.9 %** and the wall clock to depth 8 rises **31.5 %** on the 53 realistic bench positions,
+while the tree is unchanged within 3 %. Under a clock that is depth given away, on top of an
+evaluation term that is independently wrong. § 4.9 has the measurement, the reason § 4.5 predicted
+otherwise, and a repair. (The total signature drops 65 %, which is one artificial position and
+means nothing.)
+
+**Do not quote −42.9 as "king safety does not work."** It is one calibration of one static term
+on one variant.
+
+---
+
+### 4.9 The term is not nearly free — and § 4.5 got that wrong for a nameable reason
+
+**−21.9 % NPS, +31.5 % wall clock to depth 8**, measured on the 53 realistic bench positions
+against the same baseline re-measured on the same machine. Nodes are unchanged within 3 %, so
+this is not the search exploring more — it is each node costing more. Full table in
+[`bench-history.md`](bench-history.md#measured-but-not-a-release--460-attack-units-2026-08-31).
+
+**§ 4.5 predicted the opposite, and the mistake is instructive.** It measured a *standalone* zone
+scan at +118 % of an evaluation, concluded that a separate pass was unaffordable, and inferred
+that hanging the accumulation on the existing per-piece walk would make it "nearly free". The
+first half is right and is why the build plan forbids refactoring it into a second pass. The
+second half compared the wrong two things: it costed the *scan* and assumed integration meant
+zero *setup*. The setup is where the cost is.
+
+Per call to `WeightingFunction.calculate`, the term adds:
+
+| | per evaluation |
+|---|---|
+| `Arrays.fill(isKingZoneField[0], false)` | 144 boolean writes |
+| `Arrays.fill(isKingZoneField[1], false)` | 144 boolean writes |
+| `Arrays.fill(isKingAttackerCounted, false)` | 144 boolean writes |
+| extra scan a1…h8 to locate the two kings | 92 reads, 184 comparisons |
+
+That is **432 writes and a second board traversal before the evaluation's own work begins**, at
+every leaf. The term's actual logic — `increaseAttackUnit`, two array accesses inside a loop that
+runs anyway — is as cheap as § 4.5 assumed. What was never counted is the bookkeeping that makes
+the mask usable.
+
+**The repair is small and does not touch the accumulation.** Three changes, none of them the
+forbidden second pass:
+
+1. **Drop the zone mask.** Membership in a 3×3 zone is arithmetic on the 12-wide board: with
+   `a = |toField − kingField|`, the square is in the zone exactly when `a ≤ 1 || (11 ≤ a ≤ 13)`.
+   A two-file gap on one rank gives 2 and is excluded; one rank and two files gives 10 or 14, also
+   excluded; two ranks give 23–25. `a == 0` is the king's own square, which belongs to the zone.
+   That removes 288 writes per evaluation and both `Arrays.fill` calls, at the price of an
+   absolute value and three comparisons per candidate square.
+2. **Stamp the dedup guard instead of clearing it.** Replace `boolean[] isKingAttackerCounted`
+   with an `int[]` compared against a counter incremented once per evaluation. Removes the third
+   144-element fill for 576 bytes of memory.
+3. **Stop searching for the kings.** The two king squares are the only thing the arithmetic test
+   needs. If `Board` carried them — it currently rescans in `isFieldAttackedBy` as well — the
+   extra traversal disappears for this term and for that method at once. Otherwise keep the loop:
+   it is the cheap part.
+
+**Why this matters beyond tidiness.** § 4.4 caps the curve at 100 cp, and that cap is not a
+choice — it is forced by `EVALUATE_MATERIAL_ONLY_THRESHOLD`. So the term's maximum contribution is
+bounded at 100 cp while its cost is a fifth of the node rate. **Any variant of this term has to
+buy more than a third of a ply's worth of Elo with at most 100 cp of evaluation**, and the shipped
+calibration tops out at 80. That exchange rate, not the −42.9 of one match, is the argument that
+the approach is finished.
+
+**Re-measure before drawing conclusions from a further match.** A 960 run against the term as it
+stands would measure the handicap as much as the idea.
+
+---
 
 ---
 
@@ -971,7 +1183,7 @@ The term does not have to be written; § 1.1 has it ported and tested on branch 
    measured +12 cp there is real king-safety information or just the king activity the tapered
    king PST already encodes is not something the data separates, and double-counting it would
    be worse than ignoring it.
-3. **Replace the curve with the fitted one** (§ 4.6): `0 2 2 20 20 20 44 45 85`, indices 0–8,
+3. **Replace the curve with the fitted one** (§ 4.7): `0 0 0 13 16 47 47 47 80`, indices 0–8,
    everything above clamped onto index 8. Measured, not chosen, and monotone by construction.
    The inherited table on `05f337d` reads
    `0 0 5 5 10 10 15 15 25 35 50 65 85 105 130 160 195 235 285 340 400` — its upper half covers
@@ -982,8 +1194,10 @@ The term does not have to be written; § 1.1 has it ported and tested on branch 
    The top entry is 83 cp against the § 4.4 cap of 150, so this calibration clears it — but only
    by a factor of 1.8, and the anchor calibration would *not* clear it at 191. The test that
    compares the two constants is therefore load-bearing, not decoration.
-4. **Replace the `≥ 2 attackers` gate** (F2). It asks whether enough pieces are present, not
-   whether the position is dangerous.
+4. ~~**Replace the `≥ 2 attackers` gate** (F2). It asks whether enough pieces are present, not
+   whether the position is dangerous.~~ **Reversed by measurement on 2026-08-30 — keep the
+   gate.** The piece-count question turned out to be doing real work: it is what makes an index
+   mean one thing. See § 4.7.
 5. **Cap the curve below `EVALUATE_MATERIAL_ONLY_THRESHOLD`** (§ 4.4). The inherited table
    crosses 200 cp at index 17; a cap at 150 keeps the term from ever making a piece sacrifice
    look profitable on its own, which is the trap that cost the Audax fork 67 Elo. Guard it with

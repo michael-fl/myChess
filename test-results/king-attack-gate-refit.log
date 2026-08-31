@@ -1,0 +1,76 @@
+=== The two-attacker gate: how much it suppresses, and the curve refitted under it ===
+Date        2026-08-30
+Corpus      tuning-data/mychess-selfplay-960.epd, 39,619 positions / 79,238 king samples
+Target      Stockfish 18 static NNUE eval minus WeightingFunction.calculate, both static,
+            clipped to +/-2000 cp.  Same estimator as king-attack-isotonic-960: monotone least
+            squares by projected gradient with a pool-adjacent-violators projection, 200 block
+            bootstrap replicates, block 8.
+
+WHY.  The curve in docs/king-safety.md 4.6 was fitted over KingAttackUnits, which sums attack
+units unconditionally.  The production term does not: it scores zero unless at least two
+distinct pieces bear on the zone.  Table and index were therefore calibrated on different
+quantities, and the mismatch is not small.
+
+  attackers on a king zone     count     share
+  ------------------------------------------------
+  0                           39,556     49.9 %    term is zero anyway
+  1                           26,534     33.5 %    SUPPRESSED BY THE GATE
+  2                            9,645     12.2 %
+  3                            2,714      3.4 %
+  4                              651      0.8 %
+  5                              120      0.2 %
+  6                               16      0.0 %
+  7                                2      0.0 %
+
+  Of the single-attacker samples: 45.8 % carry 2 units, 21.1 % carry 3 (a lone rook) and
+  23.8 % carry 5 (a lone queen).  Under the ungated curve the last two are worth 20 cp each.
+
+  Penalty mass swallowed by the gate: 163,821 of 396,050 cp = 41.4 %.
+
+REFIT.
+
+ units   ungated        [p5, p95]      GATED >= 2       [p5, p95]
+ ------------------------------------------------------------------
+     1       2.1    [  0.0,   4.4]           0.0    [  0.0,   6.6]
+     2       2.1    [  0.0,   4.7]           0.0    [  0.0,  16.4]
+     3      20.3    [ 16.5,  23.9]          13.1    [  0.0,  21.1]
+     4      20.3    [ 16.5,  23.9]          16.4    [  8.1,  26.0]
+     5      20.3    [ 16.5,  23.9]          46.9    [ 40.3,  53.2]
+     6      43.6    [ 29.2,  51.6]          46.9    [ 40.3,  53.2]
+     7      45.4    [ 37.7,  54.4]          46.9    [ 40.4,  53.3]
+     8      85.2    [ 75.1,  95.6]          80.4    [ 70.9,  90.9]
+
+  ungated: { 0, 2, 2, 20, 20, 20, 44, 45, 85 }
+  gated:   { 0, 0, 0, 13, 16, 47, 47, 47, 80 }   <- shipped
+
+READING IT.  The ends barely move; the middle does.  Index 5 goes from 20 to 47 because the
+ungated index pools a lone queen with a rook-plus-knight, and those are not the same thing.
+With the gate the index means one thing -- at least two pieces, together weighing five.
+
+RESIDUALS.  Fit quality alone does not decide between them.
+
+  model                        residual        explained vs no term
+  ---------------------------------------------------------------
+  no term (b = 0)          6.358003e+08              0.000 %
+  ungated                  6.277248e+08              1.270 %
+  gated (>= 2 attackers)   6.275496e+08              1.298 %
+
+The gated model is better by 0.028 %.  What decides it is that the gate is already in the code:
+shipping the ungated curve would mean reading a table calibrated for a quantity the engine does
+not compute.  This reverses step 4 of the build plan, which had said to replace the gate.
+
+CAVEAT.  Index 3 fits at 13.1 with a lower bound of exactly 0.0.  The constraint set has zero on
+its boundary, so by the rule used elsewhere in these measurements -- only p5 > 0 counts as
+evidence -- that entry is not separated from zero.  It ships at 13 because that is what this
+solve returned; zeroing it would also be defensible, and the difference is 13 cp in a bucket
+carrying 9.2 % of samples.
+
+  Addendum 2026-08-30: re-running the identical objective through the ported
+  tools/king-attack-vs-stockfish.py returns 11 at index 3 with a LOWER residual, 6.275280e+08
+  against the 6.275496e+08 below -- the tool converges further than this run did.  Every other
+  entry matches, and the ungated variant reproduces to every digit.  Both values lie inside
+  index 3's interval [0.0, 21.1].  The shipped table therefore carries 13 where the objective's
+  minimum is nearer 11; 2 cp in a bucket of 9.2 % of samples, below anything an SPRT resolves.
+
+SIZE OF THE WHOLE THING.  Against no term at all, the shipped term explains 1.3 % of the
+residual variance between myChess's evaluation and Stockfish's.

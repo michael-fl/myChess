@@ -74,6 +74,40 @@ time-truncated.
 | **4.5.0** | 336,412,842 | **+0.139 %** | 101,553,277 (+0.1 %) | Complete principal variation ([§ 12.25](roadmap.md#1225-tried--repairing-the-roots-move-choice-after-the-pv-re-search-reverted-twice-444-and-166-elo)) | +1.8 ± 11.6 over 2463 games — **neutral** | ~1928 |
 | **4.6.0** (`415a6ac`) | 1,300,002,835 | **+286 %** | 101,626,447 (+0.1 %) | Material-only shortcut only for quiet root moves ([§ 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460)) | **+14.8 ± 10.5** over 3000 games | ~1943 |
 
+### Measured but not a release — `4.6.0-attack-units` (2026-08-31)
+
+Shelved at **−42.9 ± 33.9 Elo** ([roadmap § 12.21](roadmap.md#1221-king-safety--m--3060-elo)), so
+it gets no row in the series above. Recorded here because its signature is the clearest example
+this document has of why the total is the wrong number to read, and because the run cost two
+JVM-hours that should not have to be spent twice.
+
+| | 4.6.0 | 4.6.0-attack-units | |
+|---|---:|---:|---|
+| Nodes @ d8, all 55 | 1,300,002,835 | 451,759,691 | **−65.2 %** |
+| Positions 37 + 38 | 1,198,376,388 (92.2 %) | 347,410,684 (76.9 %) | |
+| **53 realistic** | **101,626,447** | **104,349,007** | **+2.7 %** |
+| Time, 53 realistic | 56,651 ms | 74,480 ms | **+31.5 %** |
+| NPS, 53 realistic | 1,793,903 | 1,401,033 | **−21.9 %** |
+
+**A 65 % smaller signature that means nothing, and a 22 % NPS drop that means everything.** Read
+as a total, this looks like the largest tree reduction since null-move pruning. It is one
+position: number 37 alone falls from 1,130 M to 265 M, which is more than the entire delta. On
+the 53 realistic positions the tree is **unchanged within 3 %**, the median position moves by
+0.0 %, and 24 of 55 positions get *more* expensive. The king-attack term barely changes what the
+search explores; it changes how long each node takes.
+
+**That cost contradicts the estimate the term was built on.** `king-safety.md` § 4.5 measured a
+standalone king-zone scan at +118 % of an evaluation and concluded that hanging it on the
+existing per-piece walk instead would make it "nearly free" — the reason the build plan insists
+on not refactoring it into a separate pass. Nearly free is not what it is: **−21.9 % NPS**, so
+about +31.5 % wall clock to reach depth 8 on realistic positions. Under a clock that is depth,
+and it compounds with a term that was independently measured wrong.
+
+**Both figures reproduce exactly.** The 4.6.0 baseline was re-measured on the same machine
+immediately after the candidate and returned 1,300,002,835 total and 101,626,447 realistic —
+identical to the row above, to the digit. The two numbers are therefore comparable and the
+signature is deterministic, which is the property the whole instrument rests on.
+
 **Read the 4.6.0 row with its own warning.** +286 % nodes at a fixed depth alongside **+14.8
 Elo** is not a contradiction, it is this table's third demonstration that the signature answers a
 different question than the one being asked. The extra work sits in capture subtrees, which
