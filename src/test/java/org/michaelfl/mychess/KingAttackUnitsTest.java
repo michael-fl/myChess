@@ -135,4 +135,110 @@ class KingAttackUnitsTest {
         assertEquals(white, black, "a black pawn on d3 attacks e2 exactly as a white pawn on d6 attacks e7");
         assertTrue(white > 0, "the mirror check is worthless if both sides read zero");
     }
+
+    // ------------------------------------------------------------------------------------
+    // attackersOf / ofZone / placeboCenter — added 2026-08-30 for
+    // tools/king-attack-vs-stockfish.py. The attacker count is what the production gate reads
+    // and is NOT derivable from the unit sum (five units is one queen, or a rook and a knight,
+    // and the gate treats those differently); the zone variants carry its placebo control.
+    // ------------------------------------------------------------------------------------
+
+    /**
+     * Kings adjacent to the enemy king's zone must not count as attackers.
+     *
+     * <p>The one case where a naive implementation goes wrong, and it goes wrong in the
+     * direction that matters: the dedup mask marks every piece it walked over, including the
+     * king, whose weight is zero. Counting mask entries would report one attacker too many, and
+     * the production gate's threshold is <em>two</em> — so a lone rook beside a lone king would
+     * pass a gate it must not pass. Verified against {@code WeightingFunction}'s own counter
+     * over the 39 619-position calibration corpus: zero divergences.
+     */
+    @Test
+    void attackersOfExcludesTheKing() {
+        // White king e6 and white rook a7 both bear on black's e8 zone; only the rook counts.
+        var board = Fen.importFEN("4k3/R7/4K3/8/8/8/8/8 w - - 0 1");
+
+        assertEquals(1, KingAttackUnits.attackersOf(board, GameStatus.TURN_WHITE),
+                "the attacking king bears on the zone but carries zero units, so it is not an attacker");
+        assertEquals(WeightingFunction.ATTACK_UNIT_ROOK, KingAttackUnits.of(board, GameStatus.TURN_WHITE),
+                "and the unit sum is the rook's alone");
+    }
+
+    @Test
+    void attackersOfCountsEachPieceOnceNotEachAttackedSquare() {
+        var board = Fen.importFEN(QUEEN_AND_ROOK);
+
+        assertEquals(2, KingAttackUnits.attackersOf(board, GameStatus.TURN_WHITE),
+                "queen and rook are two attackers however many zone squares each of them hits");
+        assertEquals(0, KingAttackUnits.attackersOf(board, GameStatus.TURN_BLACK),
+                "black has nothing bearing on the white king");
+    }
+
+    @Test
+    void attackersOfIsZeroInAQuietPosition() {
+        assertEquals(0, KingAttackUnits.attackersOf(Fen.importFEN(QUIET), GameStatus.TURN_WHITE),
+                "bare kings far apart: no attackers");
+    }
+
+    /**
+     * The placebo centre sits on the king's rank, four files away, and wraps within the board.
+     *
+     * <p>Four files is what keeps the two 3×3 zones from ever overlapping — at three they would
+     * touch, and the control would partly measure the thing it controls for.
+     */
+    @Test
+    void placeboCenterIsFourFilesFromTheKingOnTheSameRank() {
+        // Black king e8; the placebo centre is a8 (e -> a), same rank.
+        int center = KingAttackUnits.placeboCenter(Fen.importFEN(QUIET), GameStatus.TURN_WHITE);
+
+        assertEquals(Board.a8, center,
+                "king on e8 (file 5) shifts by four files to a8, wrapping inside the board");
+
+        // White king e1 seen from black: the placebo centre is a1.
+        assertEquals(Board.a1, KingAttackUnits.placeboCenter(Fen.importFEN(QUIET), GameStatus.TURN_BLACK),
+                "the same shift applies to the other king");
+    }
+
+    /**
+     * The placebo zone is a different <em>place</em>, not a guarantee of a different answer.
+     *
+     * <p>Written first with a rook on e7 and the expectation of zero, which failed: a rook on
+     * the seventh rakes it, so it reaches a7/b7 in the a8 placebo zone as surely as it reaches
+     * the king's. That is not a defect in the control — it is what the control is for. Pieces
+     * placed to attack a king often sweep the rest of the rank too, and a regression cannot tell
+     * "bears on the king" from "is active deep in enemy territory" without measuring both. The
+     * placebo column earns whatever the second explanation earns; the difference between the two
+     * columns is the part that is about the king. Recording the failed expectation because the
+     * intuition behind it — "the control zone is somewhere else, so it should score zero" — is
+     * the one that would make someone quietly delete the control.
+     */
+    @Test
+    void placeboZoneIsADifferentPlaceNotADifferentAnswer() {
+        var raking = Fen.importFEN(ROOK_ON_THE_ZONE);
+        int rakingPlacebo = KingAttackUnits.placeboCenter(raking, GameStatus.TURN_WHITE);
+
+        assertEquals(WeightingFunction.ATTACK_UNIT_ROOK,
+                KingAttackUnits.ofZone(raking, GameStatus.TURN_WHITE, rakingPlacebo),
+                "a rook on the seventh reaches a7/b7 and therefore the a8 placebo zone as well");
+
+        // A knight is local, so here the two zones genuinely separate.
+        var local = Fen.importFEN(KNIGHT_NEAR);
+        int localPlacebo = KingAttackUnits.placeboCenter(local, GameStatus.TURN_WHITE);
+
+        assertEquals(WeightingFunction.ATTACK_UNIT_KNIGHT, KingAttackUnits.of(local, GameStatus.TURN_WHITE),
+                "the knight on f6 bears on the king zone");
+        assertEquals(0, KingAttackUnits.ofZone(local, GameStatus.TURN_WHITE, localPlacebo),
+                "and reaches nothing in the placebo zone four files away");
+    }
+
+    @Test
+    void placeboZoneUsesTheSameRulesAsTheKingZone() {
+        // A rook on a7 bears on a8/b7 and on the a8 zone; asked about that zone directly it
+        // must score exactly as it would if a king stood there.
+        var board = Fen.importFEN("4k3/R7/8/8/8/8/8/4K3 w - - 0 1");
+
+        assertEquals(WeightingFunction.ATTACK_UNIT_ROOK,
+                KingAttackUnits.ofZone(board, GameStatus.TURN_WHITE, Board.a8),
+                "the zone computation does not depend on a king being at its centre");
+    }
 }
