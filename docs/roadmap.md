@@ -349,11 +349,11 @@ The single largest evaluation term myChess is still missing. Today the only king
 
 **Tried — pawn shield alone, shelved (−57.5 ± 17.5 Elo).** The pawn-shield component was then built as its own eval term on branch `4.3.0-pawn-shield`: a per-file penalty for the three shield pawns in front of a king on its castling square, scored by how far each has advanced from its home rank (`0 / −5 / −15 / −30` for home / +1 / +2 / +3-or-missing), summed over the three files, gated to a king on its own rank 1–2 (`isKingNearOwnBackRank`) and scaled by `pawnShieldFactor = 0.01` (max −0.9 pawns for a fully exposed king). Measured standalone, with the attacker-count term above disabled. **Result: −57.5 ± 17.5 Elo vs v4.2.1** (fixed-N, aborted at 920 games, LOS 0.0 % — conclusively and heavily negative); the deficit is uniform across colors (≈ −0.082 per side once the first-move advantage is factored out) and match health was clean (0 time-losses, 0 crashes), so it is a genuine regression, not an artifact. That is roughly **four times worse** than the attacker-count term above. Suspected cause: at up to −0.9 pawns the penalty is far too strong and pushes the engine into passive play — shunning sound shield-pawn advances (kingside pawn storms, and the fianchetto g3/g6, which already costs −5 as "advanced"). Revisit only with a much smaller / capped factor (or via an eval tuner), and probably penalizing only the *missing* shield pawn rather than every advance. (The suspected passivity was investigated on the king-dependent-PST successor below and did **not** materialize.)
 
-**Tried — king-dependent pawn PSTs, shelved (−18.3 ± 11.6 Elo).** Next, the pawn shield was encoded directly into the piece-square tables (branch `king-safety-pst`, commit `e84d0de`): the pawn PST is selected by the own king's zone — queenside / center / kingside / endgame (`FIELD_2_KING_POS`, four tables per color) — instead of a single fixed table, so `getPieceSquareWeight` takes the king field. The king PST itself is dropped once the king may become active (`GameStatus.kingMayBecomeActive`: opponent non-pawn material ≤ 700). **Result: −18.3 ± 11.6 Elo vs v4.2.1** (fixed-N, 2050 games, LOS 0.1 % — conclusively negative), uniform across colors, match health clean; same ballpark as the attacker-count term.
+**Tried — king-dependent pawn PSTs, shelved (−18.1 ± 11.6 Elo).** Next, the pawn shield was encoded directly into the piece-square tables (branch `king-safety-pst`, commit `e84d0de`): the pawn PST is selected by the own king's zone — queenside / center / kingside / endgame (`FIELD_2_KING_POS`, four tables per color) — instead of a single fixed table, so `getPieceSquareWeight` takes the king field. The king PST itself is dropped once the king may become active (`GameStatus.kingMayBecomeActive`: opponent non-pawn material ≤ 700). **Result: −18.1 ± 11.6 Elo vs v4.2.1** (fixed-N, 2068 games, LOS 0.1 % — conclusively negative), uniform across colors, match health clean; same ballpark as the attacker-count term. (This section read −18.3 over 2050 games until 2026-08-30; `test-results/match-4.3.0-king-safety-pst-stdout.log` closes at 561–668–839 over 2068, a score of 0.474, which is −18.1. `king-safety.md` had it right.)
 
 **Passivity check — negative.** Because the standalone shield was suspected of causing passivity, this successor was checked directly: 4.2.1 vs the king-PST build at equal search on thematic positions (Najdorf O-O-O kingside storm, KID own-flank f5-f4 storm, a quiet Ruy). Both play the *same* move in 3 of 4 — including the thematic pawn advances (`Bxf6`, `f5-f4`); the king-PST does **not** suppress aggressive pawn play. So the regression is not passivity — it is diffuse: the four hand-crafted king-zone buckets shift pawn evals by a few cp across many positions, netting slightly worse than the single baseline pawn table (itself validated at +5.6 Elo). Likely architectural culprit: making the *same* pawn structure's value depend on king **position** introduces eval discontinuities (a king move re-buckets and re-values every pawn without any pawn moving) — a search-consistency risk a plain static PST does not have.
 
-**Net take-away from all three attempts.** Hand-crafted king-safety terms — attacker count (−14.7), standalone shield (−57.5), king-dependent PST (−18.3) — all measured net-negative. This confirms the "must be tuned" caveat above: the next serious attempt should run through an automated tuner (Texel/SPSA) rather than hand-picked tables/weights, and should keep the eval a pure function of the position (avoid king-position-dependent piece values).
+**Net take-away from all three attempts.** Hand-crafted king-safety terms — attacker count (−14.7), standalone shield (−57.5), king-dependent PST (−18.1) — all measured net-negative. This confirms the "must be tuned" caveat above: the next serious attempt should run through an automated tuner (Texel/SPSA) rather than hand-picked tables/weights, and should keep the eval a pure function of the position (avoid king-position-dependent piece values).
 
 **Forensic conditions for a tuned retry (`e93fea4` on branch `4.3.0-king-safety` — `4.3.0-attack-units` is the build name under `versions/`, not a branch; reviewed 2026-07).** Reading the shelved code alongside the match (`test-results/match-4.3.0-attack-units-stdout.log`: 662–753–819, [0.480] over 2235 games) surfaces *why* a plain Texel pass over the existing term would not be enough — three findings, each pointing at a fix beyond "just tune it":
 
@@ -362,6 +362,103 @@ The single largest evaluation term myChess is still missing. Today the only king
 - **What Texel can and cannot tune here.** The progressive `KING_ATTACK_PENALTY` curve is linear per bucket (each position lands in exactly one bucket → its bucket value is Texel-tunable), *but* the Zurichess `quiet-labeled` set under-samples the sharp, high-attack-unit positions the curve exists for, so tuning it on quiet data mostly *shrinks* the curve toward neutral rather than learning real attacking value. The attacker unit-weights (`ATTACK_UNIT_OF_PIECE`) set the table index and are therefore *non-linear* — not Texel-tunable; keep them fixed or SPSA them.
 
 A serious retry therefore needs three things together, not a lone tuner run: (1) **phase-scale** the term (do it with tapered eval); (2) **tune the curve on a dataset that includes real attacks**, not only quiet positions; (3) keep the **weights fixed / SPSA**, with **modest Elo expectations** — for an engine whose search already resolves king attacks tactically, the ceiling of a static king-safety term is likely well below this section's headline estimate. Sequence it after [§ 12.7.1](roadmap.md#1271-tapered-evaluation--staged-rollout-strategy).
+
+**Attempt four — shelved, −42.9 ± 33.9 Elo (2026-08-31).** SPRT accepted **H0** after
+**304 games** at `tc=40/60`: llr −3.0 against a −2.94 bound, LOS **0.6 %**, score 0.439
+(92–129–80). The interval runs −76.8 to −9.0 and excludes zero. Standard chess.
+
+**How it lost matters more than that it lost, and it is not the failure the cap was built for.**
+`MatchStyleAnalysis` over the finished PGN
+([`sprt-attack-units.pgn`](../test-results/sprt-attack-units.pgn)):
+
+| | attack-units | base |
+|---|---:|---:|
+| win rate | **30.6 %** | 42.9 % |
+| checks per game | 4.9 | 4.0 |
+| conviction games | 6 (2.0 %) | 1 (0.3 %) |
+| deepest deficit held while confident | 800 cp | 400 cp |
+| peak attack index per game, median | 8 | 7 |
+
+The term did what it was built to do — sharper play, more checks, deeper material investments,
+and it seeks the pressure the baseline only stumbles into. It also never paid: all six conviction
+games were drawn, none won.
+
+But **six games of 301 cannot explain a 12-point win-rate gap.** The damage is diffuse, not a
+handful of spectacular sacrifices, so the § 4.4 trap — steering into a sacrifice the material-only
+shortcut then hides — is *not* what happened here; the cap held and the loud failure it prevents
+did not occur. What is left is the failure mode this section named years of attempts ago and
+which has now been measured a fourth time: **static noise added to a search that already resolves
+king attacks tactically.** Its own mean score fell from +10 to −5 cp, i.e. it rates its own
+positions slightly worse and plays them a lot worse.
+
+**A second cause, and the one that makes the approach look finished.** The term is not nearly
+free: on the 53 realistic bench positions NPS falls **21.9 %** and the wall clock to reach depth 8
+rises **31.5 %**, with the tree unchanged within 3 %. The cost is bookkeeping, not the term — 432
+boolean writes and a second board traversal per evaluation — and it is repairable
+([`king-safety.md`](king-safety.md) § 4.9). But the exchange rate is not: § 4.4's cap at 100 cp is
+forced by `EVALUATE_MATERIAL_ONLY_THRESHOLD`, so **any** variant of this term has to buy a third
+of a ply's worth of Elo with at most 100 cp of evaluation. That, rather than one match, is the
+argument that attack units on a 3×3 zone are done.
+
+**Do not read this as a verdict on king safety, and the reason is written down in advance.** The
+three boundary cases below were recorded before the match, and none of them is touched by a
+result of −42.9. The yardstick question is open on the same terms as before: the run was standard
+chess, [`roadmap-backlog.md`](roadmap-backlog.md) calls 960 the decisive measurement for exactly
+this parameter class, and the earlier text of this paragraph committed to treating a *neutral*
+standard result as inconclusive. This one is not neutral — it is clearly negative, which by that
+same rule settles it **for standard chess** without a second run. Whether it settles 960 is a
+different question, and the fitted curve, the tooling and the prepared 960 command all survive to
+answer it. What must not happen is quoting −42.9 as "king safety does not work".
+
+*Previous text of this entry, kept because the reasoning it states is what the result has to be
+read against:*
+
+Built on branch `attack-units` as **v4.6.0-attack-units**, measured against v4.6.0 by SPRT at
+`tc=40/60`, `elo0=-3 elo1=15`, cap 1600 games. This is the first attempt that does all three
+things the forensic conditions above demanded, rather than one of them:
+
+- **Phase-scaled.** `calcKingAttackPenalty` blends against a zero endgame value, so the term
+  fades out where finding F1 measured the effect *inverting* — about −34 cp per attacker in the
+  midgame against +12 in the endgame. The branch had carried the term unscaled since 2026-08-08.
+- **Curve fitted on real attacks, and not on a circular label.** `{ 0, 0, 0, 13, 16, 47, 47, 47,
+  80 }`, fitted against Stockfish's *static* evaluation minus myChess's own rather than against
+  game results — the Chess960 corpus is myChess self-play, so a game-result label carries exactly
+  the blindness the term is meant to remove. Monotone as a constraint of the fit, and fitted with
+  the two-attacker gate applied, because the gate suppresses 41.4 % of the term's mass and a
+  curve fitted without it cannot be shipped with it. Derivation in
+  [`king-safety.md`](king-safety.md) §§ 4.6–4.7.
+- **Unit weights fixed**, as prescribed. They are non-linear in the index and were not tuned.
+
+**How to read the result when it lands.** The six prior attempts across two projects measured
+−14.7, −18.1 and −57.5 here and −46.5, −67.1 and −12.1 in the Audax fork, so **a zero is
+progress** and this section's 30–60 Elo headline is not the number to plan for. The term explains
+**1.3 %** of the residual variance between myChess's evaluation and Stockfish's — that is the
+size of what is being added.
+
+**And a neutral result would not be a verdict on king safety as such.** Three `BlunderTest` cases
+mark boundaries this term provably does not reach, each measured rather than assumed:
+`castling960_atMove5` (the king walks toward a pawn storm at a moment when the attacker has
+*zero* attack units, so no attacker-indexed term can score it), `staticEval960_afterDxc6` (the
+term contributes 20 cp against a 475 cp gap) and `qxd7_vsStudylovers` (the term ranks the blunder
+*first of 36*, because the queen abandoning the defense counts as an attacker on the far side).
+A term measuring zero has not been tested against any of them.
+
+**The yardstick is an open question, and the running match may be the wrong one.**
+[`roadmap-backlog.md`](roadmap-backlog.md) states the project's policy for exactly this class of
+parameter — *tune on standard, measure on 960* — and its table marks king-safety weights as
+**yes** under "measure on 960". Its argument is that the six prior results are themselves the
+artifact: in standard chess the king is almost always castled safely on g1, so a king-safety term
+has little to measure and reads net-negative, while 960 starts the king on a random file with no
+book to steer it to safety. The variant the user actually plays is 960.
+
+The match started on 2026-08-30 is **standard** `tc=40/60`, chosen for comparability with those
+six results before that policy entry was re-read. Both readings are defensible and they answer
+different questions — the standard run says whether the term hurts the variant master also has
+to serve; the 960 run is the one the policy calls decisive. **Treat a neutral or mildly negative
+standard result as inconclusive and run
+`cutechess-cli -variant fischerandom` with `src/test/resources/bench/chess960-openings.epd`
+before shelving anything.** A clearly negative standard result settles it without the second
+run.
 
 ---
 

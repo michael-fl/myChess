@@ -1,0 +1,1098 @@
+Indexing opening suite...
+Started game 2 of 1600 (base vs attack-units)
+Started game 1 of 1600 (attack-units vs base)
+Started game 4 of 1600 (base vs attack-units)
+Started game 3 of 1600 (attack-units vs base)
+Finished game 2 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 0 - 1 - 0  [0.000] 1
+Started game 5 of 1600 (attack-units vs base)
+Finished game 3 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 1 - 1 - 0  [0.500] 2
+Started game 6 of 1600 (base vs attack-units)
+Finished game 4 (base vs attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 1 - 1 - 1  [0.500] 3
+Started game 7 of 1600 (attack-units vs base)
+Finished game 5 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 2 - 1 - 1  [0.625] 4
+Started game 8 of 1600 (base vs attack-units)
+Finished game 1 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 2 - 2 - 1  [0.500] 5
+Started game 9 of 1600 (attack-units vs base)
+Finished game 7 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 3 - 2 - 1  [0.583] 6
+Started game 10 of 1600 (base vs attack-units)
+Finished game 8 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 3 - 3 - 1  [0.500] 7
+Started game 11 of 1600 (attack-units vs base)
+Finished game 6 (base vs attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 3 - 3 - 2  [0.500] 8
+Started game 12 of 1600 (base vs attack-units)
+Finished game 9 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 3 - 4 - 2  [0.444] 9
+Started game 13 of 1600 (attack-units vs base)
+Finished game 13 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 3 - 5 - 2  [0.400] 10
+...      attack-units playing White: 3 - 3 - 0  [0.500] 6
+...      attack-units playing Black: 0 - 2 - 2  [0.250] 4
+...      White vs Black: 5 - 3 - 2  [0.600] 10
+Elo difference: -70.4 +/- 226.4, LOS: 24.0 %, DrawRatio: 20.0 %
+SPRT: llr -0.147 (-5.0%), lbound -2.94, ubound 2.94
+Started game 14 of 1600 (base vs attack-units)
+Finished game 11 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 3 - 6 - 2  [0.364] 11
+Started game 15 of 1600 (attack-units vs base)
+Finished game 12 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 4 - 6 - 2  [0.417] 12
+Started game 16 of 1600 (base vs attack-units)
+Finished game 16 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 4 - 7 - 2  [0.385] 13
+Started game 17 of 1600 (attack-units vs base)
+Finished game 15 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 5 - 7 - 2  [0.429] 14
+Started game 18 of 1600 (base vs attack-units)
+Finished game 14 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 5 - 8 - 2  [0.400] 15
+Started game 19 of 1600 (attack-units vs base)
+Finished game 17 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 5 - 8 - 3  [0.406] 16
+Started game 20 of 1600 (base vs attack-units)
+Finished game 10 (base vs attack-units): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 5 - 8 - 4  [0.412] 17
+Started game 21 of 1600 (attack-units vs base)
+Finished game 21 (attack-units vs base): 1-0 {White mates}
+Score of attack-units vs base: 6 - 8 - 4  [0.444] 18
+Started game 22 of 1600 (base vs attack-units)
+Finished game 20 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 6 - 9 - 4  [0.421] 19
+Started game 23 of 1600 (attack-units vs base)
+Finished game 18 (base vs attack-units): 1/2-1/2 {Draw by stalemate}
+Score of attack-units vs base: 6 - 9 - 5  [0.425] 20
+...      attack-units playing White: 5 - 4 - 1  [0.550] 10
+...      attack-units playing Black: 1 - 5 - 4  [0.300] 10
+...      White vs Black: 10 - 5 - 5  [0.625] 20
+Elo difference: -52.5 +/- 140.4, LOS: 21.9 %, DrawRatio: 25.0 %
+SPRT: llr -0.236 (-8.0%), lbound -2.94, ubound 2.94
+Started game 24 of 1600 (base vs attack-units)
+Finished game 19 (attack-units vs base): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 6 - 9 - 6  [0.429] 21
+Started game 25 of 1600 (attack-units vs base)
+Finished game 22 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 7 - 9 - 6  [0.455] 22
+Started game 26 of 1600 (base vs attack-units)
+Finished game 24 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 8 - 9 - 6  [0.478] 23
+Started game 27 of 1600 (attack-units vs base)
+Finished game 23 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 9 - 9 - 6  [0.500] 24
+Started game 28 of 1600 (base vs attack-units)
+Finished game 25 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 9 - 9 - 7  [0.500] 25
+Started game 29 of 1600 (attack-units vs base)
+Finished game 26 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 9 - 10 - 7  [0.481] 26
+Started game 30 of 1600 (base vs attack-units)
+Finished game 29 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 9 - 10 - 8  [0.481] 27
+Started game 31 of 1600 (attack-units vs base)
+Finished game 27 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 10 - 10 - 8  [0.500] 28
+Started game 32 of 1600 (base vs attack-units)
+Finished game 28 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 10 - 11 - 8  [0.483] 29
+Started game 33 of 1600 (attack-units vs base)
+Finished game 30 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 11 - 11 - 8  [0.500] 30
+...      attack-units playing White: 7 - 4 - 4  [0.600] 15
+...      attack-units playing Black: 4 - 7 - 4  [0.400] 15
+...      White vs Black: 14 - 8 - 8  [0.600] 30
+Elo difference: 0.0 +/- 109.8, LOS: 50.0 %, DrawRatio: 26.7 %
+SPRT: llr -0.0386 (-1.3%), lbound -2.94, ubound 2.94
+Started game 34 of 1600 (base vs attack-units)
+Finished game 33 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 12 - 11 - 8  [0.516] 31
+Started game 35 of 1600 (attack-units vs base)
+Finished game 31 (attack-units vs base): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 12 - 11 - 9  [0.516] 32
+Started game 36 of 1600 (base vs attack-units)
+Finished game 32 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 13 - 11 - 9  [0.530] 33
+Started game 37 of 1600 (attack-units vs base)
+Finished game 34 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 14 - 11 - 9  [0.544] 34
+Started game 38 of 1600 (base vs attack-units)
+Finished game 36 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 14 - 12 - 9  [0.529] 35
+Started game 39 of 1600 (attack-units vs base)
+Finished game 35 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 14 - 13 - 9  [0.514] 36
+Started game 40 of 1600 (base vs attack-units)
+Finished game 39 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 14 - 14 - 9  [0.500] 37
+Started game 41 of 1600 (attack-units vs base)
+Finished game 38 (base vs attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 14 - 14 - 10  [0.500] 38
+Started game 42 of 1600 (base vs attack-units)
+Finished game 37 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 14 - 14 - 11  [0.500] 39
+Started game 43 of 1600 (attack-units vs base)
+Finished game 41 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 14 - 15 - 11  [0.487] 40
+...      attack-units playing White: 8 - 7 - 6  [0.524] 21
+...      attack-units playing Black: 6 - 8 - 5  [0.447] 19
+...      White vs Black: 16 - 13 - 11  [0.537] 40
+Elo difference: -8.7 +/- 93.8, LOS: 42.6 %, DrawRatio: 27.5 %
+SPRT: llr -0.123 (-4.2%), lbound -2.94, ubound 2.94
+Started game 44 of 1600 (base vs attack-units)
+Finished game 42 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 14 - 16 - 11  [0.476] 41
+Started game 45 of 1600 (attack-units vs base)
+Finished game 43 (attack-units vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 14 - 16 - 12  [0.476] 42
+Started game 46 of 1600 (base vs attack-units)
+Finished game 45 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 14 - 17 - 12  [0.465] 43
+Started game 47 of 1600 (attack-units vs base)
+Finished game 44 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 15 - 17 - 12  [0.477] 44
+Started game 48 of 1600 (base vs attack-units)
+Finished game 40 (base vs attack-units): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 15 - 17 - 13  [0.478] 45
+Started game 49 of 1600 (attack-units vs base)
+Finished game 47 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 15 - 18 - 13  [0.467] 46
+Started game 50 of 1600 (base vs attack-units)
+Finished game 48 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 16 - 18 - 13  [0.479] 47
+Started game 51 of 1600 (attack-units vs base)
+Finished game 49 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 16 - 18 - 14  [0.479] 48
+Started game 52 of 1600 (base vs attack-units)
+Finished game 50 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 17 - 18 - 14  [0.490] 49
+Started game 53 of 1600 (attack-units vs base)
+Finished game 46 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 18 - 18 - 14  [0.500] 50
+...      attack-units playing White: 8 - 9 - 8  [0.480] 25
+...      attack-units playing Black: 10 - 9 - 6  [0.520] 25
+...      White vs Black: 17 - 19 - 14  [0.480] 50
+Elo difference: 0.0 +/- 83.2, LOS: 50.0 %, DrawRatio: 28.0 %
+SPRT: llr -0.0641 (-2.2%), lbound -2.94, ubound 2.94
+Started game 54 of 1600 (base vs attack-units)
+Finished game 51 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 18 - 19 - 14  [0.490] 51
+Started game 55 of 1600 (attack-units vs base)
+Finished game 52 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 18 - 20 - 14  [0.481] 52
+Started game 56 of 1600 (base vs attack-units)
+Finished game 53 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 18 - 21 - 14  [0.472] 53
+Started game 57 of 1600 (attack-units vs base)
+Finished game 54 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 19 - 21 - 14  [0.481] 54
+Started game 58 of 1600 (base vs attack-units)
+Finished game 55 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 20 - 21 - 14  [0.491] 55
+Started game 59 of 1600 (attack-units vs base)
+Finished game 56 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 20 - 22 - 14  [0.482] 56
+Started game 60 of 1600 (base vs attack-units)
+Finished game 57 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 21 - 22 - 14  [0.491] 57
+Started game 61 of 1600 (attack-units vs base)
+Finished game 58 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 21 - 23 - 14  [0.483] 58
+Started game 62 of 1600 (base vs attack-units)
+Finished game 59 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 21 - 23 - 15  [0.483] 59
+Started game 63 of 1600 (attack-units vs base)
+Finished game 60 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 21 - 24 - 15  [0.475] 60
+...      attack-units playing White: 10 - 11 - 9  [0.483] 30
+...      attack-units playing Black: 11 - 13 - 6  [0.467] 30
+...      White vs Black: 23 - 22 - 15  [0.508] 60
+Elo difference: -17.4 +/- 77.4, LOS: 32.7 %, DrawRatio: 25.0 %
+SPRT: llr -0.282 (-9.6%), lbound -2.94, ubound 2.94
+Started game 64 of 1600 (base vs attack-units)
+Finished game 61 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 21 - 25 - 15  [0.467] 61
+Started game 65 of 1600 (attack-units vs base)
+Finished game 63 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 21 - 26 - 15  [0.460] 62
+Started game 66 of 1600 (base vs attack-units)
+Finished game 64 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 21 - 27 - 15  [0.452] 63
+Started game 67 of 1600 (attack-units vs base)
+Finished game 65 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 22 - 27 - 15  [0.461] 64
+Started game 68 of 1600 (base vs attack-units)
+Finished game 66 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 22 - 28 - 15  [0.454] 65
+Started game 69 of 1600 (attack-units vs base)
+Finished game 62 (base vs attack-units): 1/2-1/2 {Draw by fifty moves rule}
+Score of attack-units vs base: 22 - 28 - 16  [0.455] 66
+Started game 70 of 1600 (base vs attack-units)
+Finished game 68 (base vs attack-units): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 22 - 28 - 17  [0.455] 67
+Started game 71 of 1600 (attack-units vs base)
+Finished game 67 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 22 - 29 - 17  [0.449] 68
+Started game 72 of 1600 (base vs attack-units)
+Finished game 69 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 22 - 30 - 17  [0.442] 69
+Started game 73 of 1600 (attack-units vs base)
+Finished game 70 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 22 - 31 - 17  [0.436] 70
+...      attack-units playing White: 11 - 15 - 9  [0.443] 35
+...      attack-units playing Black: 11 - 16 - 8  [0.429] 35
+...      White vs Black: 27 - 26 - 17  [0.507] 70
+Elo difference: -44.9 +/- 72.2, LOS: 10.8 %, DrawRatio: 24.3 %
+SPRT: llr -0.706 (-24.0%), lbound -2.94, ubound 2.94
+Started game 74 of 1600 (base vs attack-units)
+Finished game 73 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 22 - 32 - 17  [0.430] 71
+Started game 75 of 1600 (attack-units vs base)
+Finished game 71 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 23 - 32 - 17  [0.438] 72
+Started game 76 of 1600 (base vs attack-units)
+Finished game 72 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 24 - 32 - 17  [0.445] 73
+Started game 77 of 1600 (attack-units vs base)
+Finished game 74 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 25 - 32 - 17  [0.453] 74
+Started game 78 of 1600 (base vs attack-units)
+Finished game 77 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 25 - 32 - 18  [0.453] 75
+Started game 79 of 1600 (attack-units vs base)
+Finished game 76 (base vs attack-units): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 25 - 32 - 19  [0.454] 76
+Started game 80 of 1600 (base vs attack-units)
+Finished game 75 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 25 - 33 - 19  [0.448] 77
+Started game 81 of 1600 (attack-units vs base)
+Finished game 78 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 25 - 34 - 19  [0.442] 78
+Started game 82 of 1600 (base vs attack-units)
+Finished game 81 (attack-units vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 25 - 34 - 20  [0.443] 79
+Started game 83 of 1600 (attack-units vs base)
+Finished game 82 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 25 - 35 - 20  [0.438] 80
+...      attack-units playing White: 12 - 17 - 11  [0.438] 40
+...      attack-units playing Black: 13 - 18 - 9  [0.438] 40
+...      White vs Black: 30 - 30 - 20  [0.500] 80
+Elo difference: -43.7 +/- 67.0, LOS: 9.8 %, DrawRatio: 25.0 %
+SPRT: llr -0.794 (-27.0%), lbound -2.94, ubound 2.94
+Started game 84 of 1600 (base vs attack-units)
+Finished game 79 (attack-units vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 25 - 35 - 21  [0.438] 81
+Started game 85 of 1600 (attack-units vs base)
+Finished game 84 (base vs attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 25 - 35 - 22  [0.439] 82
+Started game 86 of 1600 (base vs attack-units)
+Finished game 83 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 25 - 36 - 22  [0.434] 83
+Started game 87 of 1600 (attack-units vs base)
+Finished game 85 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 26 - 36 - 22  [0.440] 84
+Started game 88 of 1600 (base vs attack-units)
+Finished game 86 (base vs attack-units): 0-1 {Black mates}
+Score of attack-units vs base: 27 - 36 - 22  [0.447] 85
+Started game 89 of 1600 (attack-units vs base)
+Finished game 80 (base vs attack-units): 1/2-1/2 {Draw by fifty moves rule}
+Score of attack-units vs base: 27 - 36 - 23  [0.448] 86
+Started game 90 of 1600 (base vs attack-units)
+Finished game 88 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 27 - 37 - 23  [0.443] 87
+Started game 91 of 1600 (attack-units vs base)
+Finished game 89 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 28 - 37 - 23  [0.449] 88
+Started game 92 of 1600 (base vs attack-units)
+Finished game 87 (attack-units vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 28 - 37 - 24  [0.449] 89
+Started game 93 of 1600 (attack-units vs base)
+Finished game 90 (base vs attack-units): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 28 - 37 - 25  [0.450] 90
+...      attack-units playing White: 14 - 18 - 13  [0.456] 45
+...      attack-units playing Black: 14 - 19 - 12  [0.444] 45
+...      White vs Black: 33 - 32 - 25  [0.506] 90
+Elo difference: -34.9 +/- 61.8, LOS: 13.2 %, DrawRatio: 27.8 %
+SPRT: llr -0.763 (-25.9%), lbound -2.94, ubound 2.94
+Started game 94 of 1600 (base vs attack-units)
+Finished game 92 (base vs attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 28 - 37 - 26  [0.451] 91
+Started game 95 of 1600 (attack-units vs base)
+Finished game 94 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 29 - 37 - 26  [0.457] 92
+Started game 96 of 1600 (base vs attack-units)
+Finished game 91 (attack-units vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 29 - 37 - 27  [0.457] 93
+Started game 97 of 1600 (attack-units vs base)
+Finished game 93 (attack-units vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 29 - 37 - 28  [0.457] 94
+Started game 98 of 1600 (base vs attack-units)
+Finished game 95 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 29 - 38 - 28  [0.453] 95
+Started game 99 of 1600 (attack-units vs base)
+Finished game 96 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 30 - 38 - 28  [0.458] 96
+Started game 100 of 1600 (base vs attack-units)
+Finished game 97 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 31 - 38 - 28  [0.464] 97
+Started game 101 of 1600 (attack-units vs base)
+Finished game 99 (attack-units vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 31 - 38 - 29  [0.464] 98
+Started game 102 of 1600 (base vs attack-units)
+Finished game 101 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 32 - 38 - 29  [0.470] 99
+Started game 103 of 1600 (attack-units vs base)
+Finished game 98 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 33 - 38 - 29  [0.475] 100
+...      attack-units playing White: 16 - 19 - 16  [0.471] 51
+...      attack-units playing Black: 17 - 19 - 13  [0.480] 49
+...      White vs Black: 35 - 36 - 29  [0.495] 100
+Elo difference: -17.4 +/- 57.9, LOS: 27.6 %, DrawRatio: 29.0 %
+SPRT: llr -0.494 (-16.8%), lbound -2.94, ubound 2.94
+Started game 104 of 1600 (base vs attack-units)
+Finished game 102 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 34 - 38 - 29  [0.480] 101
+Started game 105 of 1600 (attack-units vs base)
+Finished game 100 (base vs attack-units): 1/2-1/2 {Draw by fifty moves rule}
+Score of attack-units vs base: 34 - 38 - 30  [0.480] 102
+Started game 106 of 1600 (base vs attack-units)
+Finished game 104 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 35 - 38 - 30  [0.485] 103
+Started game 107 of 1600 (attack-units vs base)
+Finished game 107 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 36 - 38 - 30  [0.490] 104
+Started game 108 of 1600 (base vs attack-units)
+Finished game 105 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 37 - 38 - 30  [0.495] 105
+Started game 109 of 1600 (attack-units vs base)
+Finished game 103 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 37 - 39 - 30  [0.491] 106
+Started game 110 of 1600 (base vs attack-units)
+Finished game 106 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 38 - 39 - 30  [0.495] 107
+Started game 111 of 1600 (attack-units vs base)
+Finished game 111 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 39 - 39 - 30  [0.500] 108
+Started game 112 of 1600 (base vs attack-units)
+Finished game 110 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 39 - 40 - 30  [0.495] 109
+Started game 113 of 1600 (attack-units vs base)
+Finished game 108 (base vs attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 39 - 40 - 31  [0.495] 110
+...      attack-units playing White: 19 - 20 - 16  [0.491] 55
+...      attack-units playing Black: 20 - 20 - 15  [0.500] 55
+...      White vs Black: 39 - 40 - 31  [0.495] 110
+Elo difference: -3.2 +/- 55.4, LOS: 45.5 %, DrawRatio: 28.2 %
+SPRT: llr -0.211 (-7.2%), lbound -2.94, ubound 2.94
+Started game 114 of 1600 (base vs attack-units)
+Finished game 109 (attack-units vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 39 - 40 - 32  [0.495] 111
+Started game 115 of 1600 (attack-units vs base)
+Finished game 115 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 39 - 41 - 32  [0.491] 112
+Started game 116 of 1600 (base vs attack-units)
+Finished game 114 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 40 - 41 - 32  [0.496] 113
+Started game 117 of 1600 (attack-units vs base)
+Finished game 113 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 40 - 41 - 33  [0.496] 114
+Started game 118 of 1600 (base vs attack-units)
+Finished game 112 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 40 - 42 - 33  [0.491] 115
+Started game 119 of 1600 (attack-units vs base)
+Finished game 116 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 40 - 43 - 33  [0.487] 116
+Started game 120 of 1600 (base vs attack-units)
+Finished game 117 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 40 - 44 - 33  [0.483] 117
+Started game 121 of 1600 (attack-units vs base)
+Finished game 118 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 40 - 45 - 33  [0.479] 118
+Started game 122 of 1600 (base vs attack-units)
+Finished game 119 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 40 - 46 - 33  [0.475] 119
+Started game 123 of 1600 (attack-units vs base)
+Finished game 120 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 40 - 47 - 33  [0.471] 120
+...      attack-units playing White: 19 - 23 - 18  [0.467] 60
+...      attack-units playing Black: 21 - 24 - 15  [0.475] 60
+...      White vs Black: 43 - 44 - 33  [0.496] 120
+Elo difference: -20.3 +/- 53.3, LOS: 22.6 %, DrawRatio: 27.5 %
+SPRT: llr -0.651 (-22.1%), lbound -2.94, ubound 2.94
+Started game 124 of 1600 (base vs attack-units)
+Finished game 121 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 40 - 48 - 33  [0.467] 121
+Started game 125 of 1600 (attack-units vs base)
+Finished game 123 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 40 - 48 - 34  [0.467] 122
+Started game 126 of 1600 (base vs attack-units)
+Finished game 122 (base vs attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 40 - 48 - 35  [0.467] 123
+Started game 127 of 1600 (attack-units vs base)
+Finished game 124 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 41 - 48 - 35  [0.472] 124
+Started game 128 of 1600 (base vs attack-units)
+Finished game 125 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 42 - 48 - 35  [0.476] 125
+Started game 129 of 1600 (attack-units vs base)
+Finished game 128 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 43 - 48 - 35  [0.480] 126
+Started game 130 of 1600 (base vs attack-units)
+Finished game 129 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 43 - 48 - 36  [0.480] 127
+Started game 131 of 1600 (attack-units vs base)
+Finished game 127 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 44 - 48 - 36  [0.484] 128
+Started game 132 of 1600 (base vs attack-units)
+Finished game 130 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 44 - 49 - 36  [0.481] 129
+Started game 133 of 1600 (attack-units vs base)
+Finished game 126 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 45 - 49 - 36  [0.485] 130
+...      attack-units playing White: 21 - 24 - 20  [0.477] 65
+...      attack-units playing Black: 24 - 25 - 16  [0.492] 65
+...      White vs Black: 46 - 48 - 36  [0.492] 130
+Elo difference: -10.7 +/- 51.1, LOS: 34.0 %, DrawRatio: 27.7 %
+SPRT: llr -0.45 (-15.3%), lbound -2.94, ubound 2.94
+Started game 134 of 1600 (base vs attack-units)
+Finished game 131 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 45 - 50 - 36  [0.481] 131
+Started game 135 of 1600 (attack-units vs base)
+Finished game 132 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 46 - 50 - 36  [0.485] 132
+Started game 136 of 1600 (base vs attack-units)
+Finished game 133 (attack-units vs base): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 46 - 50 - 37  [0.485] 133
+Started game 137 of 1600 (attack-units vs base)
+Finished game 135 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 47 - 50 - 37  [0.489] 134
+Started game 138 of 1600 (base vs attack-units)
+Finished game 134 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 48 - 50 - 37  [0.493] 135
+Started game 139 of 1600 (attack-units vs base)
+Finished game 136 (base vs attack-units): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 48 - 50 - 38  [0.493] 136
+Started game 140 of 1600 (base vs attack-units)
+Finished game 137 (attack-units vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 48 - 50 - 39  [0.493] 137
+Started game 141 of 1600 (attack-units vs base)
+Finished game 139 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 48 - 51 - 39  [0.489] 138
+Started game 142 of 1600 (base vs attack-units)
+Finished game 138 (base vs attack-units): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 48 - 51 - 40  [0.489] 139
+Started game 143 of 1600 (attack-units vs base)
+Finished game 142 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 48 - 52 - 40  [0.486] 140
+...      attack-units playing White: 22 - 26 - 22  [0.471] 70
+...      attack-units playing Black: 26 - 26 - 18  [0.500] 70
+...      White vs Black: 48 - 52 - 40  [0.486] 140
+Elo difference: -9.9 +/- 48.9, LOS: 34.5 %, DrawRatio: 28.6 %
+SPRT: llr -0.468 (-15.9%), lbound -2.94, ubound 2.94
+Started game 144 of 1600 (base vs attack-units)
+Finished game 140 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 48 - 53 - 40  [0.482] 141
+Started game 145 of 1600 (attack-units vs base)
+Finished game 141 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 48 - 54 - 40  [0.479] 142
+Started game 146 of 1600 (base vs attack-units)
+Finished game 143 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 48 - 55 - 40  [0.476] 143
+Started game 147 of 1600 (attack-units vs base)
+Finished game 146 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 48 - 56 - 40  [0.472] 144
+Started game 148 of 1600 (base vs attack-units)
+Finished game 144 (base vs attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 48 - 56 - 41  [0.472] 145
+Started game 149 of 1600 (attack-units vs base)
+Finished game 145 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 48 - 57 - 41  [0.469] 146
+Started game 150 of 1600 (base vs attack-units)
+Finished game 147 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 48 - 58 - 41  [0.466] 147
+Started game 151 of 1600 (attack-units vs base)
+Finished game 149 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 48 - 59 - 41  [0.463] 148
+Started game 152 of 1600 (base vs attack-units)
+Finished game 148 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 48 - 60 - 41  [0.460] 149
+Started game 153 of 1600 (attack-units vs base)
+Finished game 150 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 48 - 61 - 41  [0.457] 150
+...      attack-units playing White: 22 - 31 - 22  [0.440] 75
+...      attack-units playing Black: 26 - 30 - 19  [0.473] 75
+...      White vs Black: 52 - 57 - 41  [0.483] 150
+Elo difference: -30.2 +/- 47.7, LOS: 10.7 %, DrawRatio: 27.3 %
+SPRT: llr -1.12 (-37.9%), lbound -2.94, ubound 2.94
+Started game 154 of 1600 (base vs attack-units)
+Finished game 151 (attack-units vs base): 1-0 {White mates}
+Score of attack-units vs base: 49 - 61 - 41  [0.460] 151
+Started game 155 of 1600 (attack-units vs base)
+Finished game 154 (base vs attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 49 - 61 - 42  [0.461] 152
+Started game 156 of 1600 (base vs attack-units)
+Finished game 153 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 50 - 61 - 42  [0.464] 153
+Started game 157 of 1600 (attack-units vs base)
+Finished game 156 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 50 - 62 - 42  [0.461] 154
+Started game 158 of 1600 (base vs attack-units)
+Finished game 152 (base vs attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 50 - 62 - 43  [0.461] 155
+Started game 159 of 1600 (attack-units vs base)
+Finished game 155 (attack-units vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 50 - 62 - 44  [0.462] 156
+Started game 160 of 1600 (base vs attack-units)
+Finished game 159 (attack-units vs base): 0-1 {Black mates}
+Score of attack-units vs base: 50 - 63 - 44  [0.459] 157
+Started game 161 of 1600 (attack-units vs base)
+Finished game 157 (attack-units vs base): 1-0 {White mates}
+Score of attack-units vs base: 51 - 63 - 44  [0.462] 158
+Started game 162 of 1600 (base vs attack-units)
+Finished game 158 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 52 - 63 - 44  [0.465] 159
+Started game 163 of 1600 (attack-units vs base)
+Finished game 160 (base vs attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 52 - 63 - 45  [0.466] 160
+...      attack-units playing White: 25 - 32 - 23  [0.456] 80
+...      attack-units playing Black: 27 - 31 - 22  [0.475] 80
+...      White vs Black: 56 - 59 - 45  [0.491] 160
+Elo difference: -23.9 +/- 45.9, LOS: 15.3 %, DrawRatio: 28.1 %
+SPRT: llr -0.996 (-33.8%), lbound -2.94, ubound 2.94
+Started game 164 of 1600 (base vs attack-units)
+Finished game 162 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 53 - 63 - 45  [0.469] 161
+Started game 165 of 1600 (attack-units vs base)
+Finished game 161 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 53 - 64 - 45  [0.466] 162
+Started game 166 of 1600 (base vs attack-units)
+Finished game 164 (base vs attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 53 - 64 - 46  [0.466] 163
+Started game 167 of 1600 (attack-units vs base)
+Finished game 163 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 53 - 64 - 47  [0.466] 164
+Started game 168 of 1600 (base vs attack-units)
+Finished game 165 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 53 - 65 - 47  [0.464] 165
+Started game 169 of 1600 (attack-units vs base)
+Finished game 166 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 53 - 66 - 47  [0.461] 166
+Started game 170 of 1600 (base vs attack-units)
+Finished game 168 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 53 - 67 - 47  [0.458] 167
+Started game 171 of 1600 (attack-units vs base)
+Finished game 169 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 54 - 67 - 47  [0.461] 168
+Started game 172 of 1600 (base vs attack-units)
+Finished game 167 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 55 - 67 - 47  [0.464] 169
+Started game 173 of 1600 (attack-units vs base)
+Finished game 171 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 55 - 67 - 48  [0.465] 170
+...      attack-units playing White: 27 - 34 - 25  [0.459] 86
+...      attack-units playing Black: 28 - 33 - 23  [0.470] 84
+...      White vs Black: 60 - 62 - 48  [0.494] 170
+Elo difference: -24.6 +/- 44.5, LOS: 13.9 %, DrawRatio: 28.2 %
+SPRT: llr -1.08 (-36.8%), lbound -2.94, ubound 2.94
+Started game 174 of 1600 (base vs attack-units)
+Finished game 170 (base vs attack-units): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 55 - 67 - 49  [0.465] 171
+Started game 175 of 1600 (attack-units vs base)
+Finished game 174 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 56 - 67 - 49  [0.468] 172
+Started game 176 of 1600 (base vs attack-units)
+Finished game 173 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 56 - 68 - 49  [0.465] 173
+Started game 177 of 1600 (attack-units vs base)
+Finished game 172 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 57 - 68 - 49  [0.468] 174
+Started game 178 of 1600 (base vs attack-units)
+Finished game 175 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 57 - 69 - 49  [0.466] 175
+Started game 179 of 1600 (attack-units vs base)
+Finished game 176 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 57 - 70 - 49  [0.463] 176
+Started game 180 of 1600 (base vs attack-units)
+Finished game 177 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 57 - 71 - 49  [0.460] 177
+Started game 181 of 1600 (attack-units vs base)
+Finished game 178 (base vs attack-units): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 57 - 71 - 50  [0.461] 178
+Started game 182 of 1600 (base vs attack-units)
+Finished game 179 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 57 - 72 - 50  [0.458] 179
+Started game 183 of 1600 (attack-units vs base)
+Finished game 181 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 58 - 72 - 50  [0.461] 180
+...      attack-units playing White: 28 - 38 - 25  [0.445] 91
+...      attack-units playing Black: 30 - 34 - 25  [0.478] 89
+...      White vs Black: 62 - 68 - 50  [0.483] 180
+Elo difference: -27.1 +/- 43.4, LOS: 11.0 %, DrawRatio: 27.8 %
+SPRT: llr -1.23 (-41.9%), lbound -2.94, ubound 2.94
+Started game 184 of 1600 (base vs attack-units)
+Finished game 180 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 58 - 73 - 50  [0.459] 181
+Started game 185 of 1600 (attack-units vs base)
+Finished game 183 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 58 - 73 - 51  [0.459] 182
+Started game 186 of 1600 (base vs attack-units)
+Finished game 182 (base vs attack-units): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 58 - 73 - 52  [0.459] 183
+Started game 187 of 1600 (attack-units vs base)
+Finished game 184 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 59 - 73 - 52  [0.462] 184
+Started game 188 of 1600 (base vs attack-units)
+Finished game 186 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 59 - 74 - 52  [0.459] 185
+Started game 189 of 1600 (attack-units vs base)
+Finished game 185 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 59 - 75 - 52  [0.457] 186
+Started game 190 of 1600 (base vs attack-units)
+Finished game 187 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 60 - 75 - 52  [0.460] 187
+Started game 191 of 1600 (attack-units vs base)
+Finished game 188 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 60 - 76 - 52  [0.457] 188
+Started game 192 of 1600 (base vs attack-units)
+Finished game 190 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 60 - 77 - 52  [0.455] 189
+Started game 193 of 1600 (attack-units vs base)
+Finished game 191 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 61 - 77 - 52  [0.458] 190
+...      attack-units playing White: 30 - 39 - 26  [0.453] 95
+...      attack-units playing Black: 31 - 38 - 26  [0.463] 95
+...      White vs Black: 68 - 70 - 52  [0.495] 190
+Elo difference: -29.3 +/- 42.3, LOS: 8.7 %, DrawRatio: 27.4 %
+SPRT: llr -1.38 (-46.9%), lbound -2.94, ubound 2.94
+Started game 194 of 1600 (base vs attack-units)
+Finished game 189 (attack-units vs base): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 61 - 77 - 53  [0.458] 191
+Started game 195 of 1600 (attack-units vs base)
+Finished game 193 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 61 - 77 - 54  [0.458] 192
+Started game 196 of 1600 (base vs attack-units)
+Finished game 192 (base vs attack-units): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 61 - 77 - 55  [0.459] 193
+Started game 197 of 1600 (attack-units vs base)
+Finished game 195 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 61 - 78 - 55  [0.456] 194
+Started game 198 of 1600 (base vs attack-units)
+Finished game 196 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 61 - 79 - 55  [0.454] 195
+Started game 199 of 1600 (attack-units vs base)
+Finished game 194 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 62 - 79 - 55  [0.457] 196
+Started game 200 of 1600 (base vs attack-units)
+Finished game 198 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 62 - 80 - 55  [0.454] 197
+Started game 201 of 1600 (attack-units vs base)
+Finished game 197 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 62 - 81 - 55  [0.452] 198
+Started game 202 of 1600 (base vs attack-units)
+Finished game 199 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 63 - 81 - 55  [0.455] 199
+Started game 203 of 1600 (attack-units vs base)
+Finished game 201 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 63 - 81 - 56  [0.455] 200
+...      attack-units playing White: 31 - 41 - 29  [0.450] 101
+...      attack-units playing Black: 32 - 40 - 27  [0.460] 99
+...      White vs Black: 71 - 73 - 56  [0.495] 200
+Elo difference: -31.4 +/- 41.1, LOS: 6.7 %, DrawRatio: 28.0 %
+SPRT: llr -1.55 (-52.7%), lbound -2.94, ubound 2.94
+Started game 204 of 1600 (base vs attack-units)
+Finished game 200 (base vs attack-units): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 63 - 81 - 57  [0.455] 201
+Started game 205 of 1600 (attack-units vs base)
+Finished game 203 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 64 - 81 - 57  [0.458] 202
+Started game 206 of 1600 (base vs attack-units)
+Finished game 202 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 64 - 82 - 57  [0.456] 203
+Started game 207 of 1600 (attack-units vs base)
+Finished game 204 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 65 - 82 - 57  [0.458] 204
+Started game 208 of 1600 (base vs attack-units)
+Finished game 205 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 66 - 82 - 57  [0.461] 205
+Started game 209 of 1600 (attack-units vs base)
+Finished game 206 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 66 - 83 - 57  [0.459] 206
+Started game 210 of 1600 (base vs attack-units)
+Finished game 207 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 67 - 83 - 57  [0.461] 207
+Started game 211 of 1600 (attack-units vs base)
+Finished game 209 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 67 - 84 - 57  [0.459] 208
+Started game 212 of 1600 (base vs attack-units)
+Finished game 208 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 67 - 85 - 57  [0.457] 209
+Started game 213 of 1600 (attack-units vs base)
+Finished game 213 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 67 - 86 - 57  [0.455] 210
+...      attack-units playing White: 34 - 43 - 29  [0.458] 106
+...      attack-units playing Black: 33 - 43 - 28  [0.452] 104
+...      White vs Black: 77 - 76 - 57  [0.502] 210
+Elo difference: -31.5 +/- 40.3, LOS: 6.2 %, DrawRatio: 27.1 %
+SPRT: llr -1.62 (-54.9%), lbound -2.94, ubound 2.94
+Started game 214 of 1600 (base vs attack-units)
+Finished game 212 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 67 - 87 - 57  [0.453] 211
+Started game 215 of 1600 (attack-units vs base)
+Finished game 210 (base vs attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 67 - 87 - 58  [0.453] 212
+Started game 216 of 1600 (base vs attack-units)
+Finished game 211 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 68 - 87 - 58  [0.455] 213
+Started game 217 of 1600 (attack-units vs base)
+Finished game 214 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 68 - 88 - 58  [0.453] 214
+Started game 218 of 1600 (base vs attack-units)
+Finished game 215 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 68 - 89 - 58  [0.451] 215
+Started game 219 of 1600 (attack-units vs base)
+Finished game 217 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 69 - 89 - 58  [0.454] 216
+Started game 220 of 1600 (base vs attack-units)
+Finished game 218 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 69 - 90 - 58  [0.452] 217
+Started game 221 of 1600 (attack-units vs base)
+Finished game 219 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 69 - 91 - 58  [0.450] 218
+Started game 222 of 1600 (base vs attack-units)
+Finished game 216 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 69 - 92 - 58  [0.447] 219
+Started game 223 of 1600 (attack-units vs base)
+Finished game 221 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 69 - 93 - 58  [0.445] 220
+...      attack-units playing White: 36 - 46 - 29  [0.455] 111
+...      attack-units playing Black: 33 - 47 - 29  [0.436] 109
+...      White vs Black: 83 - 79 - 58  [0.509] 220
+Elo difference: -38.1 +/- 39.7, LOS: 3.0 %, DrawRatio: 26.4 %
+SPRT: llr -1.97 (-66.8%), lbound -2.94, ubound 2.94
+Started game 224 of 1600 (base vs attack-units)
+Finished game 220 (base vs attack-units): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 69 - 93 - 59  [0.446] 221
+Started game 225 of 1600 (attack-units vs base)
+Finished game 223 (attack-units vs base): 1-0 {White mates}
+Score of attack-units vs base: 70 - 93 - 59  [0.448] 222
+Started game 226 of 1600 (base vs attack-units)
+Finished game 224 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 70 - 94 - 59  [0.446] 223
+Started game 227 of 1600 (attack-units vs base)
+Finished game 222 (base vs attack-units): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 70 - 94 - 60  [0.446] 224
+Started game 228 of 1600 (base vs attack-units)
+Finished game 225 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 70 - 95 - 60  [0.444] 225
+Started game 229 of 1600 (attack-units vs base)
+Finished game 228 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 70 - 96 - 60  [0.442] 226
+Started game 230 of 1600 (base vs attack-units)
+Finished game 226 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 71 - 96 - 60  [0.445] 227
+Started game 231 of 1600 (attack-units vs base)
+Finished game 227 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 72 - 96 - 60  [0.447] 228
+Started game 232 of 1600 (base vs attack-units)
+Finished game 230 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 73 - 96 - 60  [0.450] 229
+Started game 233 of 1600 (attack-units vs base)
+Finished game 231 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 73 - 96 - 61  [0.450] 230
+...      attack-units playing White: 38 - 47 - 30  [0.461] 115
+...      attack-units playing Black: 35 - 49 - 31  [0.439] 115
+...      White vs Black: 87 - 82 - 61  [0.511] 230
+Elo difference: -34.9 +/- 38.7, LOS: 3.8 %, DrawRatio: 26.5 %
+SPRT: llr -1.91 (-64.9%), lbound -2.94, ubound 2.94
+Started game 234 of 1600 (base vs attack-units)
+Finished game 229 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 73 - 96 - 62  [0.450] 231
+Started game 235 of 1600 (attack-units vs base)
+Finished game 232 (base vs attack-units): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 73 - 96 - 63  [0.450] 232
+Started game 236 of 1600 (base vs attack-units)
+Finished game 233 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 73 - 97 - 63  [0.448] 233
+Started game 237 of 1600 (attack-units vs base)
+Finished game 234 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 73 - 98 - 63  [0.447] 234
+Started game 238 of 1600 (base vs attack-units)
+Finished game 235 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 73 - 99 - 63  [0.445] 235
+Started game 239 of 1600 (attack-units vs base)
+Finished game 236 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 74 - 99 - 63  [0.447] 236
+Started game 240 of 1600 (base vs attack-units)
+Finished game 238 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 74 - 100 - 63  [0.445] 237
+Started game 241 of 1600 (attack-units vs base)
+Finished game 237 (attack-units vs base): 1/2-1/2 {Draw by stalemate}
+Score of attack-units vs base: 74 - 100 - 64  [0.445] 238
+Started game 242 of 1600 (base vs attack-units)
+Finished game 240 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 75 - 100 - 64  [0.448] 239
+Started game 243 of 1600 (attack-units vs base)
+Finished game 241 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 75 - 101 - 64  [0.446] 240
+...      attack-units playing White: 38 - 50 - 32  [0.450] 120
+...      attack-units playing Black: 37 - 51 - 32  [0.442] 120
+...      White vs Black: 89 - 87 - 64  [0.504] 240
+Elo difference: -37.8 +/- 37.9, LOS: 2.5 %, DrawRatio: 26.7 %
+SPRT: llr -2.14 (-72.7%), lbound -2.94, ubound 2.94
+Started game 244 of 1600 (base vs attack-units)
+Finished game 242 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 75 - 102 - 64  [0.444] 241
+Started game 245 of 1600 (attack-units vs base)
+Finished game 239 (attack-units vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 75 - 102 - 65  [0.444] 242
+Started game 246 of 1600 (base vs attack-units)
+Finished game 244 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 76 - 102 - 65  [0.447] 243
+Started game 247 of 1600 (attack-units vs base)
+Finished game 243 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 76 - 103 - 65  [0.445] 244
+Started game 248 of 1600 (base vs attack-units)
+Finished game 245 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 76 - 104 - 65  [0.443] 245
+Started game 249 of 1600 (attack-units vs base)
+Finished game 247 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 77 - 104 - 65  [0.445] 246
+Started game 250 of 1600 (base vs attack-units)
+Finished game 246 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 77 - 105 - 65  [0.443] 247
+Started game 251 of 1600 (attack-units vs base)
+Finished game 251 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 78 - 105 - 65  [0.446] 248
+Started game 252 of 1600 (base vs attack-units)
+Finished game 248 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 78 - 106 - 65  [0.444] 249
+Started game 253 of 1600 (attack-units vs base)
+Finished game 249 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 78 - 107 - 65  [0.442] 250
+...      attack-units playing White: 40 - 53 - 33  [0.448] 126
+...      attack-units playing Black: 38 - 54 - 32  [0.435] 124
+...      White vs Black: 94 - 91 - 65  [0.506] 250
+Elo difference: -40.5 +/- 37.3, LOS: 1.6 %, DrawRatio: 26.0 %
+SPRT: llr -2.35 (-79.7%), lbound -2.94, ubound 2.94
+Started game 254 of 1600 (base vs attack-units)
+Finished game 252 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 78 - 108 - 65  [0.440] 251
+Started game 255 of 1600 (attack-units vs base)
+Finished game 253 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 78 - 108 - 66  [0.440] 252
+Started game 256 of 1600 (base vs attack-units)
+Finished game 250 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 78 - 109 - 66  [0.439] 253
+Started game 257 of 1600 (attack-units vs base)
+Finished game 254 (base vs attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 78 - 109 - 67  [0.439] 254
+Started game 258 of 1600 (base vs attack-units)
+Finished game 255 (attack-units vs base): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 78 - 109 - 68  [0.439] 255
+Started game 259 of 1600 (attack-units vs base)
+Finished game 257 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 78 - 110 - 68  [0.438] 256
+Started game 260 of 1600 (base vs attack-units)
+Finished game 258 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 79 - 110 - 68  [0.440] 257
+Started game 261 of 1600 (attack-units vs base)
+Finished game 256 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 79 - 111 - 68  [0.438] 258
+Started game 262 of 1600 (base vs attack-units)
+Finished game 261 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 79 - 112 - 68  [0.436] 259
+Started game 263 of 1600 (attack-units vs base)
+Finished game 259 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 80 - 112 - 68  [0.438] 260
+...      attack-units playing White: 41 - 55 - 35  [0.447] 131
+...      attack-units playing Black: 39 - 57 - 33  [0.430] 129
+...      White vs Black: 98 - 94 - 68  [0.508] 260
+Elo difference: -43.0 +/- 36.6, LOS: 1.0 %, DrawRatio: 26.2 %
+SPRT: llr -2.58 (-87.5%), lbound -2.94, ubound 2.94
+Started game 264 of 1600 (base vs attack-units)
+Finished game 260 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 80 - 113 - 68  [0.437] 261
+Started game 265 of 1600 (attack-units vs base)
+Finished game 263 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 80 - 113 - 69  [0.437] 262
+Started game 266 of 1600 (base vs attack-units)
+Finished game 262 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 81 - 113 - 69  [0.439] 263
+Started game 267 of 1600 (attack-units vs base)
+Finished game 265 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 81 - 113 - 70  [0.439] 264
+Started game 268 of 1600 (base vs attack-units)
+Finished game 264 (base vs attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 81 - 113 - 71  [0.440] 265
+Started game 269 of 1600 (attack-units vs base)
+Finished game 266 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 81 - 114 - 71  [0.438] 266
+Started game 270 of 1600 (base vs attack-units)
+Finished game 267 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 81 - 115 - 71  [0.436] 267
+Started game 271 of 1600 (attack-units vs base)
+Finished game 269 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 81 - 116 - 71  [0.435] 268
+Started game 272 of 1600 (base vs attack-units)
+Finished game 270 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 81 - 117 - 71  [0.433] 269
+Started game 273 of 1600 (attack-units vs base)
+Finished game 268 (base vs attack-units): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 81 - 117 - 72  [0.433] 270
+...      attack-units playing White: 41 - 57 - 37  [0.441] 135
+...      attack-units playing Black: 40 - 60 - 35  [0.426] 135
+...      White vs Black: 101 - 97 - 72  [0.507] 270
+Elo difference: -46.6 +/- 35.8, LOS: 0.5 %, DrawRatio: 26.7 %
+SPRT: llr -2.89 (-98.3%), lbound -2.94, ubound 2.94
+Started game 274 of 1600 (base vs attack-units)
+Finished game 273 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 82 - 117 - 72  [0.435] 271
+Started game 275 of 1600 (attack-units vs base)
+Finished game 271 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 83 - 117 - 72  [0.438] 272
+Started game 276 of 1600 (base vs attack-units)
+Finished game 272 (base vs attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 83 - 117 - 73  [0.438] 273
+Started game 277 of 1600 (attack-units vs base)
+Finished game 276 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 83 - 118 - 73  [0.436] 274
+Started game 278 of 1600 (base vs attack-units)
+Finished game 277 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 84 - 118 - 73  [0.438] 275
+Started game 279 of 1600 (attack-units vs base)
+Finished game 274 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 85 - 118 - 73  [0.440] 276
+Started game 280 of 1600 (base vs attack-units)
+Finished game 275 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 86 - 118 - 73  [0.442] 277
+Started game 281 of 1600 (attack-units vs base)
+Finished game 278 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 87 - 118 - 73  [0.444] 278
+Started game 282 of 1600 (base vs attack-units)
+Finished game 281 (attack-units vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 87 - 118 - 74  [0.444] 279
+Started game 283 of 1600 (attack-units vs base)
+Finished game 280 (base vs attack-units): 1/2-1/2 {Draw by insufficient mating material}
+Score of attack-units vs base: 87 - 118 - 75  [0.445] 280
+...      attack-units playing White: 45 - 57 - 38  [0.457] 140
+...      attack-units playing Black: 42 - 61 - 37  [0.432] 140
+...      White vs Black: 106 - 99 - 75  [0.512] 280
+Elo difference: -38.6 +/- 35.0, LOS: 1.5 %, DrawRatio: 26.8 %
+SPRT: llr -2.55 (-86.6%), lbound -2.94, ubound 2.94
+Started game 284 of 1600 (base vs attack-units)
+Finished game 279 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 87 - 119 - 75  [0.443] 281
+Started game 285 of 1600 (attack-units vs base)
+Finished game 282 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 87 - 120 - 75  [0.441] 282
+Started game 286 of 1600 (base vs attack-units)
+Finished game 286 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 87 - 121 - 75  [0.440] 283
+Started game 287 of 1600 (attack-units vs base)
+Finished game 283 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 87 - 122 - 75  [0.438] 284
+Started game 288 of 1600 (base vs attack-units)
+Finished game 284 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 88 - 122 - 75  [0.440] 285
+Started game 289 of 1600 (attack-units vs base)
+Finished game 287 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 89 - 122 - 75  [0.442] 286
+Started game 290 of 1600 (base vs attack-units)
+Finished game 289 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 89 - 122 - 76  [0.443] 287
+Started game 291 of 1600 (attack-units vs base)
+Finished game 288 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 90 - 122 - 76  [0.444] 288
+Started game 292 of 1600 (base vs attack-units)
+Finished game 285 (attack-units vs base): 1/2-1/2 {Draw by fifty moves rule}
+Score of attack-units vs base: 90 - 122 - 77  [0.445] 289
+Started game 293 of 1600 (attack-units vs base)
+Finished game 292 (base vs attack-units): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 91 - 122 - 77  [0.447] 290
+...      attack-units playing White: 46 - 59 - 40  [0.455] 145
+...      attack-units playing Black: 45 - 63 - 37  [0.438] 145
+...      White vs Black: 109 - 104 - 77  [0.509] 290
+Elo difference: -37.3 +/- 34.5, LOS: 1.7 %, DrawRatio: 26.6 %
+SPRT: llr -2.55 (-86.7%), lbound -2.94, ubound 2.94
+Started game 294 of 1600 (base vs attack-units)
+Finished game 291 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 91 - 123 - 77  [0.445] 291
+Started game 295 of 1600 (attack-units vs base)
+Finished game 293 (attack-units vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of attack-units vs base: 91 - 123 - 78  [0.445] 292
+Started game 296 of 1600 (base vs attack-units)
+Finished game 295 (attack-units vs base): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 92 - 123 - 78  [0.447] 293
+Started game 297 of 1600 (attack-units vs base)
+Finished game 294 (base vs attack-units): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 92 - 123 - 79  [0.447] 294
+Started game 298 of 1600 (base vs attack-units)
+Finished game 290 (base vs attack-units): 1/2-1/2 {Draw by adjudication}
+Score of attack-units vs base: 92 - 123 - 80  [0.447] 295
+Started game 299 of 1600 (attack-units vs base)
+Finished game 297 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 92 - 124 - 80  [0.446] 296
+Started game 300 of 1600 (base vs attack-units)
+Finished game 298 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 92 - 125 - 80  [0.444] 297
+Started game 301 of 1600 (attack-units vs base)
+Finished game 296 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 92 - 126 - 80  [0.443] 298
+Started game 302 of 1600 (base vs attack-units)
+Finished game 301 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 92 - 127 - 80  [0.441] 299
+Started game 303 of 1600 (attack-units vs base)
+Finished game 300 (base vs attack-units): 1-0 {White wins by adjudication}
+Score of attack-units vs base: 92 - 128 - 80  [0.440] 300
+...      attack-units playing White: 47 - 62 - 41  [0.450] 150
+...      attack-units playing Black: 45 - 66 - 39  [0.430] 150
+...      White vs Black: 113 - 107 - 80  [0.510] 300
+Elo difference: -41.9 +/- 33.9, LOS: 0.8 %, DrawRatio: 26.7 %
+SPRT: llr -2.93 (-99.4%), lbound -2.94, ubound 2.94
+Started game 304 of 1600 (base vs attack-units)
+Finished game 299 (attack-units vs base): 0-1 {Black wins by adjudication}
+Score of attack-units vs base: 92 - 129 - 80  [0.439] 301
+Finished game 302 (base vs attack-units): * {No result}
+Score of attack-units vs base: 92 - 129 - 80  [0.439] 301
+Finished game 303 (attack-units vs base): * {No result}
+Score of attack-units vs base: 92 - 129 - 80  [0.439] 301
+Finished game 304 (base vs attack-units): * {No result}
+Score of attack-units vs base: 92 - 129 - 80  [0.439] 301
+...      attack-units playing White: 47 - 63 - 41  [0.447] 151
+...      attack-units playing Black: 45 - 66 - 39  [0.430] 150
+...      White vs Black: 113 - 108 - 80  [0.508] 301
+Elo difference: -42.9 +/- 33.9, LOS: 0.6 %, DrawRatio: 26.6 %
+SPRT: llr -3 (-101.8%), lbound -2.94, ubound 2.94 - H0 was accepted
+
+Player: attack-units
+   "Draw by 3-fold repetition": 38
+   "Draw by adjudication": 17
+   "Draw by fifty moves rule": 4
+   "Draw by insufficient mating material": 19
+   "Draw by stalemate": 2
+   "Loss: Black mates": 1
+   "Loss: Black wins by adjudication": 62
+   "Loss: White wins by adjudication": 66
+   "No result": 3
+   "Win: Black mates": 1
+   "Win: Black wins by adjudication": 44
+   "Win: White mates": 4
+   "Win: White wins by adjudication": 43
+Player: base
+   "Draw by 3-fold repetition": 38
+   "Draw by adjudication": 17
+   "Draw by fifty moves rule": 4
+   "Draw by insufficient mating material": 19
+   "Draw by stalemate": 2
+   "Loss: Black mates": 1
+   "Loss: Black wins by adjudication": 44
+   "Loss: White mates": 4
+   "Loss: White wins by adjudication": 43
+   "No result": 3
+   "Win: Black mates": 1
+   "Win: Black wins by adjudication": 62
+   "Win: White wins by adjudication": 66
+Finished match

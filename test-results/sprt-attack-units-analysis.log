@@ -1,0 +1,57 @@
+=== v4.6.0-attack-units vs v4.6.0 — SPRT result and style analysis ===
+Date        2026-08-31 (match 2026-08-30 21:56 to 2026-08-31 01:28, 212 min)
+Setup       tc=40/60, elo0=-3 elo1=15 alpha=beta=0.05, 2moves_v2.pgn plies=8, concurrency 4,
+            draw movenumber=40 movecount=8 score=40, resign movecount=4 score=600
+Candidate   KING_ATTACK_PENALTY = { 0, 0, 0, 13, 16, 47, 47, 47, 80 }, phase-scaled,
+            gated on >= 2 distinct attackers, clamped at 8 units
+
+RESULT: H0 ACCEPTED after 304 games.
+
+  Elo difference  -42.9 +/- 33.9        interval -76.8 .. -9.0, excludes zero
+  LOS              0.6 %
+  llr             -3.0 against a -2.94 bound
+  score            0.439   (92 - 129 - 80 over 301 scored games)
+  draw ratio      26.6 %
+
+STYLE (MatchStyleAnalysis over the finished PGN, 3 games unreplayable and skipped):
+
+  engine          games   win%   draw%  plies  checks  convict%  conv/game  maxDef  meanScore
+  attack-units      301  30,6%   26,6%   59,0     4,9      2,0%       0,06     800         -5
+  base              301  42,9%   26,6%   58,9     4,0      0,3%       0,01     400         10
+
+  conviction games: attack-units 6, base 1.  ALL SEVEN DRAWN, none won.
+  peak king-attack index per game (gated plies only): attack-units median 8, base median 7.
+
+READING IT.
+
+The term did what it was built to do.  More checks, deeper material investments held with a
+non-negative score, and a peak attack index a full step above the baseline's -- it seeks the
+pressure the baseline only stumbles into.  It also never paid: not one of the six conviction
+games was won.
+
+But six games of 301 cannot explain a 12-point win-rate gap.  The damage is diffuse, not a
+handful of spectacular sacrifices.  That matters for attribution: the failure king-safety.md 4.4
+was built to prevent -- steering into a sacrifice whose compensation the material-only shortcut
+then hides, the combination that cost the Audax fork 67 Elo -- is NOT what happened here.  The
+cap held.  What is left is the failure mode roadmap 12.21 named after the first attempt and has
+now measured four times: static noise added to a search that already resolves king attacks
+tactically.  Its own mean score moved from +10 to -5 cp, so it rates its own positions slightly
+worse and plays them a great deal worse.
+
+WHAT THIS DOES NOT SETTLE.
+
+Three BlunderTest cases were recorded BEFORE the match as boundaries the term provably does not
+reach, and a result of -42.9 touches none of them:
+
+  castling960_atMove5           zero attack units at the moment of the decision
+  staticEval960_afterDxc6       term contributes 20 cp against a 475 cp gap
+  qxd7_vsStudylovers            term ranks the blunder first of 36, pointing the wrong way
+
+And the yardstick.  This was standard chess; roadmap-backlog.md calls Chess960 the decisive
+measurement for this parameter class, on the argument that a castled king on g1 gives a
+king-safety term almost nothing to measure.  The rule stated in advance was that a NEUTRAL
+standard result would be inconclusive.  This one is not neutral, so by that rule it settles the
+question for standard chess without a second run.  Whether it settles 960 is a separate question;
+the curve, the tooling and the prepared 960 invocation all survive to answer it.
+
+Do not quote -42.9 as "king safety does not work".

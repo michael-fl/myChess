@@ -4,8 +4,8 @@ The test suite is the executable specification for myChess: it pins down move ge
 
 | Metric | Value |
 |---|---|
-| Test classes | 82 `*Test.java` (+ 32 helpers and measurement drivers under the same source root, class count re-counted 2026-08-27, helper count 2026-08-30 — `ProbeVsEvalBenchmark`, `MatchStyleAnalysis`, `KingAttackUnits`, `KingAttackTexelData`, `TexelKingAttackTuner` added, see [roadmap § 12.26](roadmap.md)) |
-| Test methods (`@Test` + `@ParameterizedTest`) | 1 311 — the 1 271 of the full run on 2026-08-27, plus two gate-boundary and five `containsIllegalMove` sentinel tests (2026-08-28), twenty anchor-bracket cases and ten `KingAttackUnits` tests (2026-08-29), two Chess960 king-safety cases and one standard-chess one (2026-08-30). Derived rather than re-measured, since a full run costs 17 minutes; the counts for the changed classes *are* measured — `WeightingFunctionTest` 58, `BlunderTest` 63. Parameterized cases counted per invocation |
+| Test classes | **84** `*Test.java` on branch `attack-units` (82 on master, plus `KingAttackCurveTest` and `WeightingFunctionAttackUnitTest`) + **34** helpers and measurement drivers under the same source root — the helper figure said 32 until 2026-08-30 and was one low against a straight count on master. Class count re-counted 2026-08-27, helpers 2026-08-30 — `ProbeVsEvalBenchmark`, `MatchStyleAnalysis`, `KingAttackUnits`, `KingAttackTexelData`, `TexelKingAttackTuner` added, see [roadmap § 12.26](roadmap.md)) |
+| Test methods (`@Test` + `@ParameterizedTest`) | **1 336** on branch `attack-units`, 1 311 on master — the 1 271 of the full run on 2026-08-27, plus two gate-boundary and five `containsIllegalMove` sentinel tests (2026-08-28), twenty anchor-bracket cases and ten `KingAttackUnits` tests (2026-08-29), two Chess960 king-safety cases and one standard-chess one (2026-08-30). The branch adds `KingAttackCurveTest` 5, `WeightingFunctionAttackUnitTest` 14 and six cases in `KingAttackUnitsTest` (10 → 16) for the `attackersOf` / `ofZone` / `placeboCenter` additions that `tools/king-attack-vs-stockfish.py` runs on; `KingAttackProbe` is the branch's one new helper. Derived rather than re-measured, since a full run costs 17 minutes; the counts for the changed classes *are* measured — `WeightingFunctionTest` 58, `BlunderTest` 63. Parameterized cases counted per invocation |
 | Currently passing | **all** — full run 2026-08-27: 1 271 run, 0 failures, 0 errors, **0 skipped** |
 | Currently `@Disabled` | 0 — see [Retired disabled tests](#retired-disabled-tests) |
 | Test source lines | ~28 260 |
@@ -48,7 +48,7 @@ done
 |---|---|---|---|
 | **Data structures & encoding** (13) | `BoardTest`, `ChessUtilTest`, `GameStatusTest`, `MoveTest`, `MoveDescriptionTest`, `PositionEncodingTest`, `PieceSquareTablesTest`, `SortableMovesBucketTest`, `BitOpsTest`, `IntArrayTest`, `CastlingSlotTest`, `BoardCastlingRookFilesTest`, `Chess960StartPositionsTest` | ~3750 | Bit-packing, board layout, color/turn bit invariants, sortable bucket sort order, piece-square table inversion, mailbox indexing, castling-slot / rook-file resolution, the 960 start-position table, notation parsing. |
 | **Move generation & rules** (7) | `MoveGeneratorTest`, `GameTest`, `PerftTest`, `Chess960CastlingTest`, `MoveSorterImplTest`, `KillerMovesTest`, `SimpleNotationImporterTest` (`BoardTest` overlaps) | ~1510 | Pseudo-legal generation, castling legality (standard + 960), en passant, check / checkmate / stalemate detection, move ordering; **Perft node-count verification** against the Chess-Programming-Wiki reference values. |
-| **Search & evaluation** (26) | `EngineTest`, `EngineSmokeTest`, `DeepWeightTest`, `WeightingFunctionTest`, `QuiescenceSearchTest`, `StaticExchangeEvaluationTest`, `PositionSearchTest`, `engines/SearchNodeContextTest`, `engines/IterationTimingsTest`, `MirrorEvalTest`, `HangingPiecesEvalTest`, `BlunderTest`, `ChessEngineTest`, `NextMoveTaskTest`, `EvalRegressionTest`, `IllegalPvRegressionTest`, `StalemateAvoidanceRegressionTest`, `MoveSortInvariantRegressionTest`, `ZobristHashingTest`, `PositionHashConsistencyRegressionTest`, `StsTest`, `StsDefectTest`, `ReportedScoreConsistencyTest`, `NodeCountTest`, `BenchResultTest`, `EvalBenchmarkTest` | ~5290 | Position regressions, eval component ranges, mirror-symmetry of eval, quiescence depth, static exchange evaluation (SEE) for quiescence capture ordering and SEE < 0 pruning, PV-legality regressions, iterative-deepening timings, async task lifecycle, and Zobrist-hash correctness (incremental vs from-scratch, en-passant round-trips, perft-style + randomized Chess960 consistency walks). The last three guard `bench` rather than the engine: that the search counts each visited position exactly once (`NodeCountTest`), that the aggregate arithmetic over a run is right (`BenchResultTest`), and that the suite still runs end to end (`EvalBenchmarkTest`). A miscount there would silently corrupt every comparison in [bench-history](bench-history.md). |
+| **Search & evaluation** (26, +2 on branch `attack-units`) | `EngineTest`, `EngineSmokeTest`, `DeepWeightTest`, `WeightingFunctionTest`, `QuiescenceSearchTest`, `StaticExchangeEvaluationTest`, `PositionSearchTest`, `engines/SearchNodeContextTest`, `engines/IterationTimingsTest`, `MirrorEvalTest`, `HangingPiecesEvalTest`, `BlunderTest`, `ChessEngineTest`, `NextMoveTaskTest`, `EvalRegressionTest`, `IllegalPvRegressionTest`, `StalemateAvoidanceRegressionTest`, `MoveSortInvariantRegressionTest`, `ZobristHashingTest`, `PositionHashConsistencyRegressionTest`, `StsTest`, `StsDefectTest`, `ReportedScoreConsistencyTest`, `NodeCountTest`, `BenchResultTest`, `EvalBenchmarkTest`, and on branch `attack-units` `KingAttackCurveTest` + `WeightingFunctionAttackUnitTest` | ~5290 | Position regressions, eval component ranges, mirror-symmetry of eval, quiescence depth, static exchange evaluation (SEE) for quiescence capture ordering and SEE < 0 pruning, PV-legality regressions, iterative-deepening timings, async task lifecycle, and Zobrist-hash correctness (incremental vs from-scratch, en-passant round-trips, perft-style + randomized Chess960 consistency walks). The last three guard `bench` rather than the engine: that the search counts each visited position exactly once (`NodeCountTest`), that the aggregate arithmetic over a run is right (`BenchResultTest`), and that the suite still runs end to end (`EvalBenchmarkTest`). A miscount there would silently corrupt every comparison in [bench-history](bench-history.md). |
 | **Transposition table** (3) | `TranspositionTableTest`, `TranspositionTableIntegrationTest`, `ScoreTTAdjustmentTest` | ~525 | Bucket replacement / eviction policy, `TTEntryView` round-trips, end-to-end TT plumbing through the engine, mate-score depth adjustment on store / probe. |
 | **Draw rules** (2) | `ThreefoldRepetitionTest`, `FiftyMovesRuleTest` | ~180 | Detection + opt-out toggle for both rules. |
 | **Notation & I/O** (8) | `FenTest`, `PgnTest`, `PGNImporterTest`, `FenChess960ImportTest`, `PGNConverterTest`, `UciMoveParserTest`, `UciHandlerTest`, `LogTest` | ~2910 | FEN export/import (standard + 960 / Shredder), PGN parsing (strict + lenient) and end-to-end replay from arbitrary start positions, UCI move parsing and protocol handling, log routing. |
@@ -289,6 +289,42 @@ uncovered consumer was a **measurement driver living in test sources** — the T
 which nothing tests by definition, because they *are* test-source code. Production behavior whose
 sole non-search consumer is a driver under `src/test` is the blind spot; there is exactly one, and
 it is now pinned.
+
+### `KingAttackCurveTest` (×5, branch `attack-units`) — guarding a calibration, not behavior
+
+A fitted table needs different guards than hand-written code, and this class is the pattern for
+them. `WeightingFunction.KING_ATTACK_PENALTY` was produced by a regression
+(`docs/king-safety.md` §§ 4.6–4.7), so the usual question — does this method do what its name
+says — does not apply. What can go wrong is that the number stops being the number that was
+fitted.
+
+Four of the five assert properties the fit was required to have and a later edit can silently
+break: the table tops out below `EVALUATE_MATERIAL_ONLY_THRESHOLD / 2`, so the term can never on
+its own pay for a piece sacrifice whose compensation the material-only shortcut then hides —
+the combination that cost the Audax fork 67 Elo; it never decreases, so more attackers cannot
+score as less danger; index 0 stays pinned at zero, because only the difference between the two
+sides reaches the score and a constant would cancel; and the length matches the fitted range.
+Two of those are not hypothetical — the curve § 4.5 recommended fell from 49 to 40, and the
+unconstrained fit behind § 4.6 fell across indices 3 to 5.
+
+**The fifth is the one that makes the calibration mean anything.** The table is a lookup indexed
+by an attack-unit count, and it was fitted over `KingAttackUnits` — a second implementation in
+test sources, written because master had no attacker-set API when the fit was run. The shipped
+table is correct only while the number the evaluation computes equals the number the fit saw,
+and nothing else in the suite relates the two: `KingAttackUnitsTest` pins the reference
+implementation, `WeightingFunctionAttackUnitTest` pins the production one, and both stay green
+if they drift apart. So the test runs both over the 1188 STS positions — borrowed purely as
+tracked middlegame material — and asserts they agree. Four rules have to hold together for that:
+the per-piece weights, the 3×3 zone, deduplication by origin square, and rays that stop at the
+first piece. Only the weights are shared by construction, since `KingAttackUnits` reads them
+from `WeightingFunction`; the other three are what this actually guards, and it guards them by
+comparing results rather than representations. Measured over the 39 619-position calibration
+corpus when it was written: zero divergences.
+
+**No `Test family:` marker on any of them**, and none on `WeightingFunctionAttackUnitTest`
+either. They are guards over a design constant and over a calibration, which § 11.4 excludes for
+the same reason it excludes `StsTest` — the tally counts evidence about the engine's play, and a
+constant-boundary guard is not that.
 
 ### `GameTest.testToShortNotation` — round-trip notation
 
