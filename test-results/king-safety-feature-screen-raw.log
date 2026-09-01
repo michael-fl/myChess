@@ -1,0 +1,167 @@
+39,619 Stellungen aus dem Cache (Stockfish-Werte wiederverwendet)
+
+=== virtuelle Damen-Mobilitaet ===  erklaerte Residualvarianz 0.813 %  (PGD 20000 Schritte)
+ Index       cp       p5      p95   Anteil   Beleg
+     1      7.1      4.4     10.1    27.0%   ueber null
+     2     14.1      9.2     18.5    17.7%   ueber null
+     3     30.6     24.0     36.5    11.4%   ueber null
+     4     62.2     51.1     73.3     7.1%   ueber null
+     5     84.3     66.1    100.5     4.7%   ueber null
+     6    125.8     99.4    148.4     3.1%   ueber null
+     7    125.8    106.5    162.0     1.7%   ueber null
+     8    244.9    175.6    321.3     0.5%   ueber null
+
+=== Mobilitaet, Kontrollfeld ===  erklaerte Residualvarianz 0.000 %  (PGD 1 Schritte)
+ Index       cp       p5      p95   Anteil   Beleg
+     1      0.0      0.0      0.0    25.3%   nicht von null zu trennen
+     2      0.0      0.0      0.0    21.3%   nicht von null zu trennen
+     3      0.0      0.0      0.0    15.5%   nicht von null zu trennen
+     4      0.0      0.0      0.0     9.9%   nicht von null zu trennen
+     5      0.0      0.0      0.0     5.9%   nicht von null zu trennen
+     6      0.0      0.0      0.0     2.4%   nicht von null zu trennen
+     7      0.0      0.0      0.0     0.4%   nicht von null zu trennen
+     8      0.0      0.0     90.0     0.0%   nicht von null zu trennen
+
+=== Bauernsturm ===  erklaerte Residualvarianz 0.336 %  (PGD 20000 Schritte)
+ Index       cp       p5      p95   Anteil   Beleg
+     1     19.3     13.9     23.4    12.7%   ueber null
+     2     27.2     19.7     34.9     4.3%   ueber null
+     3     27.2     19.7     34.9     2.4%   ueber null
+     4     55.8     27.1     83.5     0.3%   ueber null
+     5     55.8     28.5     88.9     0.2%   ueber null
+     6     55.8     28.6    113.0     0.0%   ueber null
+     7    141.5     61.4    314.2     0.0%   ueber null
+     8    141.5     61.4    314.2     0.0%   ueber null
+
+=== Angriffspunkte (Referenz) ===  erklaerte Residualvarianz 1.270 %  (PGD 462 Schritte)
+ Index       cp       p5      p95   Anteil   Beleg
+     1      2.1      0.0      5.6     2.8%   nicht von null zu trennen
+     2      2.1      0.0      5.6    16.2%   nicht von null zu trennen
+     3     20.3     16.7     24.3     9.2%   ueber null
+     4     20.3     16.7     24.3     3.7%   ueber null
+     5     20.3     16.7     24.3    11.3%   ueber null
+     6     43.6     26.4     50.5     1.7%   ueber null
+     7     45.4     37.3     55.1     2.6%   ueber null
+     8     85.2     73.9     95.9     1.9%   ueber null
+
+=== Placebo-Zone (Kontrolle) ===  erklaerte Residualvarianz 0.061 %  (PGD 196 Schritte)
+ Index       cp       p5      p95   Anteil   Beleg
+     1      0.0      0.0      0.0     3.3%   nicht von null zu trennen
+     2      0.0      0.0      0.0    16.6%   nicht von null zu trennen
+     3      0.0      0.0      2.7     9.2%   nicht von null zu trennen
+     4      0.0      0.0      2.7     3.6%   nicht von null zu trennen
+     5      0.0      0.0      2.7    10.7%   nicht von null zu trennen
+     6      0.0      0.0      2.7     1.9%   nicht von null zu trennen
+     7      0.0      0.0      2.7     2.6%   nicht von null zu trennen
+     8     22.7     12.9     32.3     2.3%   ueber null
+
+
+=== Vergleich ===
+Kandidat                        Spitze cp   p5 dort   erklaert
+virtuelle Damen-Mobilitaet          244.9     175.6     0.813%
+Mobilitaet, Kontrollfeld              0.0       0.0     0.000%
+Bauernsturm                         141.5      61.4     0.336%
+Angriffspunkte (Referenz)            85.2      73.9     1.270%
+Placebo-Zone (Kontrolle)             22.7      12.9     0.061%
+
+Mobilitaets-Bucketing: 3 Felder je Stufe, geklemmt bei 8.
+
+
+=== Lauf 2026-09-01: Liniengefahr, Sechs-Stufen-Variante, Kontrollfenster ===
+
+HINWEIS: die Zielgroesse ist stockfish - myChess. Traegt dieses myChess den Kandidaten
+         bereits, misst der Fit die Restluecke NACH ihm, nicht die Luecke selbst.
+
+39,619 Stellungen aus dem Cache
+39,619 verwertbare Stellungen (0s)
+
+=== Liniengefahr, 6 Stufen ===  erklaerte Residualvarianz 2.336 %  (PGD 731 Schritte, zulaessig=True)
+ Index       cp       p5      p95   Anteil   Beleg
+     1     15.3      8.6     21.7    10.0%   ueber null
+     2     27.5     20.3     34.0    10.9%   ueber null
+     3     48.2     39.8     54.8     8.7%   ueber null
+     4     48.2     40.8     55.3     7.4%   ueber null
+     5     79.7     70.9     89.5     6.3%   ueber null
+     6     87.9     77.1     99.5     4.6%   ueber null
+     7    108.5     95.0    122.3     3.2%   ueber null
+     8    133.0    121.8    146.1    10.8%   ueber null
+
+=== Liniengefahr (offen/halboffen) ===  erklaerte Residualvarianz 2.238 %  (PGD 1084 Schritte, zulaessig=True)
+ Index       cp       p5      p95   Anteil   Beleg
+     1     20.7     16.2     24.6    18.1%   ueber null
+     2     41.8     33.3     47.7     3.5%   ueber null
+     3     41.8     36.3     51.2     9.3%   ueber null
+     4     76.6     68.2     86.1     6.7%   ueber null
+     5     90.7     78.3    101.5     2.5%   ueber null
+     6     93.4     83.1    111.6     4.2%   ueber null
+     7    133.4    116.3    155.9     2.2%   ueber null
+     8    176.7    156.7    200.1     3.2%   ueber null
+
+=== virtuelle Damen-Mobilitaet ===  erklaerte Residualvarianz 0.813 %  (PGD 20000 Schritte, zulaessig=True)
+ Index       cp       p5      p95   Anteil   Beleg
+     1      7.1      4.8      9.6    27.0%   ueber null
+     2     14.1      9.9     17.7    17.7%   ueber null
+     3     30.6     24.9     36.9    11.4%   ueber null
+     4     62.2     51.5     73.3     7.1%   ueber null
+     5     84.3     69.2    102.1     4.7%   ueber null
+     6    125.8     97.6    150.3     3.1%   ueber null
+     7    125.8    101.8    172.6     1.7%   ueber null
+     8    244.9    161.2    339.2     0.5%   ueber null
+
+=== Mobilitaet, Kontrollfeld ===  erklaerte Residualvarianz 0.000 %  (PGD 1 Schritte, zulaessig=True)
+ Index       cp       p5      p95   Anteil   Beleg
+     1      0.0      0.0      0.0    25.3%   nicht von null zu trennen
+     2      0.0      0.0      0.0    21.3%   nicht von null zu trennen
+     3      0.0      0.0      0.0    15.5%   nicht von null zu trennen
+     4      0.0      0.0      0.0     9.9%   nicht von null zu trennen
+     5      0.0      0.0      0.0     5.9%   nicht von null zu trennen
+     6      0.0      0.0      0.0     2.4%   nicht von null zu trennen
+     7      0.0      0.0      5.8     0.4%   nicht von null zu trennen
+     8      0.0      0.0    147.8     0.0%   nicht von null zu trennen
+
+=== Liniengefahr, Kontrollfenster ===  erklaerte Residualvarianz 0.000 %  (PGD 1 Schritte, zulaessig=True)
+ Index       cp       p5      p95   Anteil   Beleg
+     1      0.0      0.0      0.0    16.0%   nicht von null zu trennen
+     2      0.0      0.0      0.0     4.1%   nicht von null zu trennen
+     3      0.0      0.0      0.0     9.8%   nicht von null zu trennen
+     4      0.0      0.0      0.0     8.4%   nicht von null zu trennen
+     5      0.0      0.0      0.0     3.7%   nicht von null zu trennen
+     6      0.0      0.0      0.0     5.3%   nicht von null zu trennen
+     7      0.0      0.0      0.0     3.9%   nicht von null zu trennen
+     8      0.0      0.0      0.0     5.6%   nicht von null zu trennen
+
+=== Bauernsturm (dicht) ===  erklaerte Residualvarianz 0.282 %  (PGD 3250 Schritte, zulaessig=True)
+ Index       cp       p5      p95   Anteil   Beleg
+     1      0.0      0.0      0.0    30.3%   nicht von null zu trennen
+     2      5.8      2.6      8.8    34.8%   ueber null
+     3     13.4      9.2     17.1    16.6%   ueber null
+     4     27.8     19.9     33.6     5.4%   ueber null
+     5     28.5     21.6     42.2     1.4%   ueber null
+     6     28.5     21.6     42.2     0.5%   ueber null
+     7     28.5     21.6     42.2     0.1%   ueber null
+     8     28.5     22.1     46.1     0.1%   ueber null
+
+=== Bauernsturm (Erstfassung) ===  erklaerte Residualvarianz 0.336 %  (PGD 20000 Schritte, zulaessig=True)
+ Index       cp       p5      p95   Anteil   Beleg
+     1     19.3     14.9     23.6    12.7%   ueber null
+     2     27.2     19.5     35.7     4.3%   ueber null
+     3     27.2     19.5     35.7     2.4%   ueber null
+     4     55.8     28.8     83.3     0.3%   ueber null
+     5     55.8     29.2     91.9     0.2%   ueber null
+     6     55.8     29.2     98.3     0.0%   ueber null
+     7    141.5     65.8    304.1     0.0%   ueber null
+     8    141.5     65.8    304.1     0.0%   ueber null
+
+
+Kandidat                        Spitze cp   p5 dort   erklaert
+Liniengefahr, 6 Stufen                133     121.8     2.336%
+Liniengefahr (offen/halboffen)        177     156.7     2.238%
+virtuelle Damen-Mobilitaet            245     161.2     0.813%
+Mobilitaet, Kontrollfeld                0       0.0     0.000%
+Liniengefahr, Kontrollfenster           0       0.0     0.000%
+Bauernsturm (dicht)                    29      22.1     0.282%
+Bauernsturm (Erstfassung)             141      65.8     0.336%
+
+-> /Users/mf/_PRIVAT_/New-Stuff/myChess/test-results/king-safety-screen.json
+Mobilitaets-Bucketing: 3 Felder je Stufe, geklemmt bei 8.
+Ein flaches Ergebnis ist ein Stoppsignal; ein starkes ist keine Zusage. Und ein Koeffizient ohne seinen Besetzungsanteil sagt nichts.
