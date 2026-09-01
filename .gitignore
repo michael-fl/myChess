@@ -44,3 +44,8 @@ __pycache__/
 !/tuning-data/README.md
 
 
+
+# Local working cache of the king-safety screen: 96% of it is recomputed from this
+# repository's own code on every run, and a stored copy would go stale invisibly.
+# The irreplaceable half is tracked as test-results/king-safety-stockfish-evals.jsonl.
+test-results/king-safety-screen-cache.jsonl
