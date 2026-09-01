@@ -188,17 +188,6 @@ public final class WeightingFunction {
             80    //  8
     };
 
-    /**
-     * Board-index offsets from a king's square to the nine squares of its king
-     * zone (the king itself and its eight neighbors), used to populate
-     * {@link #isKingZoneField}.
-     */
-    private static final int[] KING_ZONE_OFFSETS = new int[] {
-            Board.LENGTH - 1, Board.LENGTH, Board.LENGTH + 1,
-            -1, 0, 1,
-            -Board.LENGTH - 1, -Board.LENGTH, -Board.LENGTH + 1
-    };
-
     @FunctionalInterface
     private interface CalculateWeight {
         void calculate(WeightingFunction generator, int field, int color);
@@ -373,29 +362,18 @@ public final class WeightingFunction {
     private final int[] doublePawnCount = new int[2];
     private final int[] undefendedPiecesCount = new int[2];
     private final int[] bishopCount = new int[2];
-    /**
-     * Per-color mask of the squares forming that color's king zone (the king's
-     * square plus its eight neighbors), indexed by board field. Rebuilt each
-     * {@link #calculate(Board)} by {@link #fillKingZone}.
-     */
-    private final boolean[][] isKingZoneField = new boolean[2][Board.LENGTH * Board.LENGTH];
     /** Accumulated attack units bearing on the enemy king zone, per attacking color. */
     private final int[] attackUnit = new int[2];
     /** Number of distinct pieces bearing on the enemy king zone, per attacking color. */
     private final int[] kingAttackerCount = new int[2];
-    /**
-     * Deduplication guard for {@link #increaseAttackUnit}, keyed by the
-     * attacker's origin square: guarantees each piece is counted at most once,
-     * no matter how many king-zone squares it attacks. Cleared each
-     * {@link #calculate(Board)}.
-     */
-    private final boolean[] isKingAttackerCounted = new boolean[Board.LENGTH * Board.LENGTH];
     /** Per-color sum of midgame piece-square values for the current position (index 0 = white, 1 = black). */
     private final int[] pstMidGameWeight = new int[2];
     /** Per-color sum of endgame piece-square values for the current position (index 0 = white, 1 = black). */
     private final int[] pstEndGameWeight = new int[2];
+    private final int[] kingField = new int[2];
     /** Game phase of the most recently evaluated position, {@code 0..}{@link #MAX_PHASE}; see {@link #phaseWeightOfPiece}. */
     private int phase;
+    private boolean isCurrentAttackerCounted;
 
     /** Material weight (delta white - black) in centi pawns. */
     public static int calculateMaterialWeight(Board theBoard) {
@@ -473,22 +451,16 @@ public final class WeightingFunction {
         this.pstEndGameWeight[1] = 0;
 
         System.arraycopy(board, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
-        Arrays.fill(isKingZoneField[0], false);
-        Arrays.fill(isKingZoneField[1], false);
-        Arrays.fill(isKingAttackerCounted, false);
 
         final int stopField = Board.h8 + 1;
         int phase = 0;
 
-        // Mark each king's 3x3 zone before the per-piece scan, so
-        // increaseAttackUnit can test attacks against an already-populated
-        // enemy king zone.
         for (int field = Board.a1; field < stopField; field++) {
             final byte piece = board[field];
             if (piece == Board.whiteKing) {
-                fillKingZone(field, 0);
+                kingField[0] = field;
             } else if (piece == Board.blackKing) {
-                fillKingZone(field, 1);
+                kingField[1] = field;
             }
         }
 
@@ -628,21 +600,6 @@ public final class WeightingFunction {
     }
 
     /**
-     * Marks the nine squares of {@code color}'s king zone (the king on
-     * {@code kingField} plus its eight neighbors) in {@link #isKingZoneField}.
-     * Off-board neighbors of an edge or corner king land on the board's illegal
-     * border cells, so no bounds check is needed.
-     *
-     * @param kingField board index of the king
-     * @param color     king's color (0 = white, 1 = black)
-     */
-    private void fillKingZone(int kingField, int color) {
-        for (int off : KING_ZONE_OFFSETS) {
-            isKingZoneField[color][kingField + off] = true;
-        }
-    }
-
-    /**
      * Records that the piece on {@code fromField} bears on {@code toField}. When
      * {@code toField} lies in the enemy king zone, the piece's
      * {@link #ATTACK_UNIT_OF_PIECE attack-unit weight} is added to
@@ -655,20 +612,31 @@ public final class WeightingFunction {
      * king itself has zero weight and is therefore never counted as an attacker.
      *
      * @param color     attacking color (0 = white, 1 = black)
-     * @param fromField origin square of the attacking piece
      * @param toField   attacked square
      * @param piece     the attacking piece
      */
-    private void increaseAttackUnit(final int color, final int fromField, final int toField, final byte piece) {
-        if (isKingZoneField[color ^ 1][toField] && !isKingAttackerCounted[fromField]) {
+    private void increaseAttackUnit(final int color, final int toField, final byte piece) {
+        if (!isCurrentAttackerCounted && isKingZoneField(toField, color ^ 1)) {
             final int score = ATTACK_UNIT_OF_PIECE[piece];
 
             if (score > 0) {
-                isKingAttackerCounted[fromField] = true;
+                isCurrentAttackerCounted = true;
                 kingAttackerCount[color]++;
                 attackUnit[color] += score;
             }
         }
+    }
+
+    private boolean isKingZoneField(int field, int color) {
+        if (board[field] == Board.illegal) {
+            return false;
+        }
+
+        final int delta = field - kingField[color];
+
+        return (delta >= - 1 && delta <= 1)
+                || (delta >= - Board.LENGTH - 1 && delta <= - Board.LENGTH + 1)
+                || (delta >= Board.LENGTH - 1 && delta <= Board.LENGTH + 1);
     }
 
     /**
@@ -718,7 +686,7 @@ public final class WeightingFunction {
     }
 
     boolean isInKingZone(int color, int field) {
-        return isKingZoneField[color][field];
+        return isKingZoneField(field, color);
     }
 
     /**
@@ -775,6 +743,8 @@ public final class WeightingFunction {
             }
         }
 
+        isCurrentAttackerCounted = false;
+
         // capture right
         captureOrDefendWithPawn(field, field + Board.LENGTH + 1, GameStatus.TURN_WHITE, GameStatus.TURN_BLACK, Board.whitePawn, color);
 
@@ -809,7 +779,7 @@ public final class WeightingFunction {
     }
 
     private void captureOrDefendWithPawn(final int from, final int to, final int myTurn, final int oppositeTurn, final byte movingPawn, final int color) {
-        increaseAttackUnit(color, from, to, movingPawn);
+        increaseAttackUnit(color, to, movingPawn);
 
         if ((board[to] & oppositeTurn) == oppositeTurn) {
             capture(to, movingPawn, color, board[to]);
@@ -840,6 +810,8 @@ public final class WeightingFunction {
                 mobilityWeight[color] += mobilityWeightOfPiece[Board.blackPawn];
             }
         }
+
+        isCurrentAttackerCounted = false;
 
         // capture right
         to = field - Board.LENGTH + 1;
@@ -883,6 +855,8 @@ public final class WeightingFunction {
     private void calculateForKnight(int field, int color) {
         final byte myPiece = board[field];
 
+        isCurrentAttackerCounted = false;
+
         move(myPiece, field, field + 2 * Board.LENGTH + 1, color);
         move(myPiece, field, field + 1 * Board.LENGTH + 2, color);
         move(myPiece, field, field - 1 * Board.LENGTH + 2, color);
@@ -903,6 +877,8 @@ public final class WeightingFunction {
         // count this bishop toward the side's bishop-pair bonus (awarded once in calculatePositionWeight)
         bishopCount[color]++;
 
+        isCurrentAttackerCounted = false;
+
         // move up-right
         for (int to = field + Board.LENGTH + 1; move(myPiece, field, to, color); to += Board.LENGTH + 1);
         // move down-right
@@ -921,6 +897,8 @@ public final class WeightingFunction {
         final byte myPiece = board[field];
         final int rankWeight = mobilityWeightOfPiece[myPiece] / 2;
 
+        isCurrentAttackerCounted = false;
+
         // move up — file mobility (full weight)
         for (int to = field + Board.LENGTH; move(myPiece, field, to, color); to += Board.LENGTH);
         // move down — file mobility (full weight)
@@ -937,6 +915,8 @@ public final class WeightingFunction {
 
     private void calculateForQueen(int field, int color) {
         final byte myPiece = board[field];
+
+        isCurrentAttackerCounted = false;
 
         // move up
         for (int to = field + Board.LENGTH; move(myPiece, field, to, color); to += Board.LENGTH);
@@ -962,6 +942,8 @@ public final class WeightingFunction {
 
     private void calculateForKing(int field, int color) {
         final byte myPiece = board[field];
+
+        isCurrentAttackerCounted = false;
 
         // move up
         move(myPiece, field, field + Board.LENGTH, color);
@@ -993,7 +975,7 @@ public final class WeightingFunction {
         if (piece == Board.illegal)
             return false;
 
-        increaseAttackUnit(color, from, to, movingPiece);
+        increaseAttackUnit(color, to, movingPiece);
 
         if (piece == Board.empty) {
             mobilityWeight[color] += weight;

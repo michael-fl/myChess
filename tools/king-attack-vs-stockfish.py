@@ -69,11 +69,13 @@ JVM at full tilt; an SPRT at `tc=40/60` would measure the contention.
 
 import argparse
 import json
-import random
 import subprocess
 import sys
 import time
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import isotonic_fit as iso                                          # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_EPD = REPO_ROOT / "tuning-data" / "mychess-selfplay-960.epd"
@@ -85,14 +87,10 @@ CLASSPATH = "target/classes:target/test-classes:target/dependency/*"
 PROBE = "org.michaelfl.mychess.KingAttackProbe"
 STOCKFISH = "/opt/homebrew/bin/stockfish"
 
-MAX_UNITS = 8
-MAX_PHASE = 24
-CLIP_CP = 2000          # a handful of extreme static evals must not dominate least squares
-BLOCK = 8               # consecutive corpus lines come from the same game
-REPLICATES = 200
-PGD_STEPS = 20000
-PGD_TOL = 1e-9
-PERCENTILES = (5, 95)
+MAX_UNITS = iso.MAX_INDEX
+CLIP_CP = iso.CLIP_CP
+REPLICATES = iso.REPLICATES
+PERCENTILES = iso.PERCENTILES
 RESULT_TAG = " c9 "
 
 
@@ -210,20 +208,10 @@ def collect(epd, limit, cache):
 
 
 # --------------------------------------------------------------------------- fitting
-
-
-def features(units_white, units_black, phase):
-    """Phase-scaled indicator, identical to what the evaluation computes."""
-    vector = [0.0] * MAX_UNITS
-    scale = phase / MAX_PHASE
-
-    if units_white > 0:
-        vector[min(units_white, MAX_UNITS) - 1] += scale
-
-    if units_black > 0:
-        vector[min(units_black, MAX_UNITS) - 1] -= scale
-
-    return vector
+#
+# The estimator lives in tools/isotonic_fit.py, shared with king-safety-screen.py. It was a second
+# copy here until 2026-09-01; two copies of numerical code drift, and the screening tool has to
+# work on master, where this one's probe does not compile.
 
 
 def rows_for(data, gated, placebo):
@@ -242,158 +230,17 @@ def rows_for(data, gated, placebo):
                 black = black if row["ab"] >= 2 else 0
 
         target = max(-CLIP_CP, min(CLIP_CP, row["sf"] - row["my"]))
-        rows.append((features(white, black, row["phase"]), target))
+        rows.append((iso.features(white, black, row["phase"]), target))
         total += target * target
 
     return rows, total
 
 
-def block_normals(rows, block):
-    """Per-block (X'X, X'y) so a bootstrap replicate is a sum rather than a re-scan."""
-    blocks = []
-
-    for start in range(0, len(rows), block):
-        left = [[0.0] * MAX_UNITS for _ in range(MAX_UNITS)]
-        right = [0.0] * MAX_UNITS
-
-        for vector, target in rows[start:start + block]:
-            for i in range(MAX_UNITS):
-                if vector[i] == 0.0:
-                    continue
-
-                right[i] += vector[i] * target
-
-                for j in range(MAX_UNITS):
-                    left[i][j] += vector[i] * vector[j]
-
-        blocks.append((left, right))
-
-    return blocks
-
-
-def combine(blocks, counts):
-    left = [[0.0] * MAX_UNITS for _ in range(MAX_UNITS)]
-    right = [0.0] * MAX_UNITS
-
-    for (block_left, block_right), times in zip(blocks, counts):
-        if not times:
-            continue
-
-        for i in range(MAX_UNITS):
-            right[i] += times * block_right[i]
-
-            for j in range(MAX_UNITS):
-                left[i][j] += times * block_left[i][j]
-
-    return left, right
-
-
-def pava(values):
-    """Projection onto the isotonic cone: pool adjacent violators, equal weights."""
-    pooled, weights = [], []
-
-    for value in values:
-        pooled.append(value)
-        weights.append(1.0)
-
-        while len(pooled) > 1 and pooled[-2] > pooled[-1]:
-            weight = weights[-2] + weights[-1]
-            mean = (pooled[-2] * weights[-2] + pooled[-1] * weights[-1]) / weight
-            pooled[-2:] = [mean]
-            weights[-2:] = [weight]
-
-    out = []
-
-    for mean, weight in zip(pooled, weights):
-        out.extend([mean] * int(weight))
-
-    return out
-
-
-def solve_isotonic(left, right, start=None):
-    """Projected gradient descent over {0 <= b1 <= ... <= b8}; returns the curve and the steps."""
-    lipschitz = max(sum(abs(value) for value in row) for row in left) or 1.0
-    step = 1.0 / lipschitz
-    current = list(start) if start else [0.0] * MAX_UNITS
-
-    for taken in range(PGD_STEPS):
-        gradient = [sum(left[i][j] * current[j] for j in range(MAX_UNITS)) - right[i]
-                    for i in range(MAX_UNITS)]
-        nxt = [max(0.0, value)
-               for value in pava([current[i] - step * gradient[i] for i in range(MAX_UNITS)])]
-        shift = max(abs(nxt[i] - current[i]) for i in range(MAX_UNITS))
-        current = nxt
-
-        if shift < PGD_TOL:
-            return current, taken + 1
-
-    return current, PGD_STEPS
-
-
-def solve_free(left, right):
-    """Unconstrained normal equations, for the reference column."""
-    matrix = [row[:] + [right[i]] for i, row in enumerate(left)]
-
-    for column in range(MAX_UNITS):
-        pivot = max(range(column, MAX_UNITS), key=lambda r: abs(matrix[r][column]))
-        matrix[column], matrix[pivot] = matrix[pivot], matrix[column]
-
-        if abs(matrix[column][column]) < 1e-12:
-            continue
-
-        for row in range(MAX_UNITS):
-            if row == column:
-                continue
-
-            factor = matrix[row][column] / matrix[column][column]
-
-            for k in range(column, MAX_UNITS + 1):
-                matrix[row][k] -= factor * matrix[column][k]
-
-    return [matrix[i][MAX_UNITS] / matrix[i][i] if abs(matrix[i][i]) > 1e-12 else 0.0
-            for i in range(MAX_UNITS)]
-
-
-def residual(left, right, curve, total):
-    quadratic = sum(curve[i] * sum(left[i][j] * curve[j] for j in range(MAX_UNITS))
-                    for i in range(MAX_UNITS))
-
-    return quadratic - 2 * sum(right[i] * curve[i] for i in range(MAX_UNITS)) + total
-
-
-def percentile(values, share):
-    ordered = sorted(values)
-    index = min(len(ordered) - 1, max(0, int(round(share / 100.0 * (len(ordered) - 1)))))
-
-    return ordered[index]
-
-
 def fit(data, gated, placebo, replicates, seed):
     """Point estimate, bootstrap draws and diagnostics for one variant."""
     rows, total = rows_for(data, gated, placebo)
-    blocks = block_normals(rows, BLOCK)
-    left, right = combine(blocks, [1] * len(blocks))
-    free = solve_free(left, right)
-    curve, steps = solve_isotonic(left, right)
-    rng = random.Random(seed)
-    draws = [[] for _ in range(MAX_UNITS)]
 
-    for _ in range(replicates):
-        counts = [0] * len(blocks)
-
-        for _ in range(len(blocks)):
-            counts[rng.randrange(len(blocks))] += 1
-
-        replicate_left, replicate_right = combine(blocks, counts)
-        estimate, _ = solve_isotonic(replicate_left, replicate_right, start=curve)
-
-        for k in range(MAX_UNITS):
-            draws[k].append(estimate[k])
-
-    feasible = all(curve[i] >= curve[i - 1] - 1e-9 for i in range(1, MAX_UNITS)) and min(curve) >= -1e-9
-
-    return {"free": free, "curve": curve, "draws": draws, "steps": steps, "feasible": feasible,
-            "residual": residual(left, right, curve, total), "no_term": total}
+    return iso.fit(rows, total, replicates, seed)
 
 
 def report(label, fitted):
@@ -405,7 +252,7 @@ def report(label, fitted):
     print("-" * 62)
 
     for k in range(MAX_UNITS):
-        low, high = (percentile(fitted["draws"][k], p) for p in PERCENTILES)
+        low, high = (iso.percentile(fitted["draws"][k], p) for p in PERCENTILES)
         verdict = "above zero" if low > 0.5 else "not separable from zero"
         print(f"{k + 1:>6}{fitted['free'][k]:>9.1f}{fitted['curve'][k]:>11.1f}"
               f"{low:>9.1f}{high:>9.1f}   {verdict}")
@@ -463,8 +310,8 @@ def main():
             "curve": report(label, fitted),
             "free": fitted["free"],
             "residual": fitted["residual"],
-            "p5": [percentile(fitted["draws"][k], 5) for k in range(MAX_UNITS)],
-            "p95": [percentile(fitted["draws"][k], 95) for k in range(MAX_UNITS)]}
+            "p5": [iso.percentile(fitted["draws"][k], 5) for k in range(MAX_UNITS)],
+            "p95": [iso.percentile(fitted["draws"][k], 95) for k in range(MAX_UNITS)]}
 
     Path(args.output).write_text(json.dumps(result, indent=1), encoding="utf-8")
     print(f"\n-> {args.output}")
