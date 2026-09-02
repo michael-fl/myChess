@@ -388,30 +388,96 @@ Multiple checks (double check) are counted multiply, so a discovered check that 
 
 **Scale factor.** `chessFactor = 0.25`. A single check is worth 25 centipawns to the checking side. A double check is worth 50. This is *positional*, not a replacement for actual mate-finding — actual mate is found by the search bottoming out at a position where the opponent has no legal moves and is in check (see [§ 6.6](search.md#66-checkmate-and-stalemate-scoring)).
 
-## 5.9 Composition formula
+## 5.9 King-line danger
 
-All eight components (material plus the seven positional terms) combine in `calculatePositionWeight()`:
+The three files at and beside the king, each classified on an ordered scale, summed, and looked up
+in a fitted table. Introduced in `4.6.0-king-line`.
+
+| The file, walking away from the king | Level |
+|---|---:|
+| an own pawn shelters it | 0 |
+| half-open, the enemy pawn still on its own half | 1 |
+| half-open, the enemy pawn past the middle | 2 |
+| open | 3 |
+| open, with an enemy rook or queen on it | 4 |
+
+Summed over three files that is 0–12, and the sum — not the individual level — indexes the penalty:
+
+```
+danger:  0    1    2    3    4    5    6    7    8    9   10   11   12
+cp:      0   21   42   42   77   91   95  134  138  223  223  223  223
+```
+
+**Three properties of that table are measurements rather than choices.** It comes from isotonic
+least squares against Stockfish's *static* NNUE evaluation minus this engine's, over the 39,619
+positions of the Chess960 self-play corpus, phase-scaled, with monotonicity as a constraint of the
+fit; intervals from a block bootstrap. Equal neighbors (42/42) are the fit saying it cannot
+separate those two levels. And indices 10–12 carry index 9's value deliberately: their own fitted
+values rest on 0.56 % of samples between them, which is the occupancy at which a coefficient means
+nothing.
+
+**Why the sum and not the parts.** Three half-open files are worse than three times one half-open
+file, and putting the non-linearity in the *index* rather than in per-file values is what lets the
+fit find that shape instead of assuming it.
+
+**Direction.** The walk starts one square in front of the king and runs to the far rank, so
+everything behind the king is ignored. Pawn shelter is directional — a pawn behind the king covers
+nothing — and the walk is anchored on the king rather than the back rank for the same reason: an
+own pawn the enemy has already walked past is not cover. The cost is a real blind spot, an enemy
+rook *behind* an advanced king, accepted because that rook is a concrete threat one ply deep which
+the search reads better than a static level could.
+
+**Phase.** `blend(table[danger], 0, phase)` — full strength in the midgame, nothing in the endgame.
+That is not a refinement but the term's central assumption: an exposed king in an endgame is often
+an *active* king, so the sign of king exposure reverses there.
+
+**Scale factor.** `kingLinePenaltyFactor = -0.01f`. Negative, like `doublePawnFactor` and
+`undefendedPiecesFactor` — the penalty is a positive "how bad is it" quantity and the sign lives in
+the factor. At `-0.01` the fitted table applies at exactly 1:1 in centipawns, because everything
+inside the composition sum is in pawns and the `* 100` is outside; so it is not a cautious starting
+value but the one at which the table means what it was fitted to mean. It is the ninth entry of
+`TUNABLE_FACTOR_NAMES`.
+
+**Cost.** Three files of at most eight squares per king, computed inside the piece walk the
+evaluation performs anyway rather than as a separate pass. Measured at **−5.55 % NPS** on a
+bit-identical tree; for contrast the shelved attack-unit term of § 12.21 cost −21.9 %. See
+[bench-history](bench-history.md).
+
+**What the fit does and does not license.** It says this quantity accounts for 2.238 % of what
+separates this evaluation from Stockfish's, against 1.270 % for the attack-unit term that was
+shelved at −42.9 Elo. That is a screen result, not an Elo prediction. See
+[king-safety.md § 4.11](king-safety.md).
+
+## 5.10 Composition formula
+
+All ten components (material plus the nine positional terms) combine in
+`calculatePositionWeight()`:
 
 ```java
 private int calculatePositionWeight() {
     if (containsIllegalMove)
         return turn == 0 ? ILLEGAL_WEIGHT_POS : ILLEGAL_WEIGHT_NEG;
 
-    final int plyCount = game.getPlyCount();
-    final float openingFactorCorrection =
-        plyCount > 20 ? (plyCount > 40 ? 0f : 0.5f) : 1.0f;
-
-    return Math.round((
-          (piecesWeight[0]    - piecesWeight[1])    / 100f
-        + (positionWeight[0]  - positionWeight[1])  / 100f * positionFactor
-        + (mobilityWeight[0]  - mobilityWeight[1])  / 100f * mobilityFactor
-        + (threadWeight[0]    - threadWeight[1])    / 100f * threadWeightFactor
-        + (castlingState[0]   - castlingState[1])          * castlingFactor
-        + (openingState[0]    - openingState[1])           * openingFactor * openingFactorCorrection
-        + (chessCount[0]      - chessCount[1])             * chessFactor
-        + (doublePawnCount[0] - doublePawnCount[1])        * doublePawnFactor) * 100);
+    return roundSymmetric((
+              (piecesWeight[0] - piecesWeight[1]) / 100f
+            + (positionWeight[0] - positionWeight[1]) / 100f * positionFactor
+            + (mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor
+            + (threadWeight[0] - threadWeight[1]) / 100f * threadWeightFactor
+            + (castlingState[0] - castlingState[1]) * castlingFactor
+            + (chessCount[0] - chessCount[1]) * chessFactor
+            + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
+            + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor
+            + ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * bishopPairFactor
+            + (calculateKingLinePenalty(0) - calculateKingLinePenalty(1)) * kingLinePenaltyFactor)
+            * 100);
 }
 ```
+
+> **This listing was three terms out of date until 2026-09-02** — it omitted the undefended-pieces
+> penalty and the bishop-pair bonus and still showed an `openingState` term and a `plyCount`-based
+> opening correction that the class no longer has. A stale copy of production code in a document is
+> worse than no copy, because it reads as authoritative. Re-paste it from
+> `WeightingFunction.calculatePositionWeight()` whenever a term is added.
 
 A few features of this formula worth noting:
 
