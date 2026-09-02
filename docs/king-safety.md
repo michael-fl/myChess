@@ -1243,29 +1243,61 @@ control.
   document's term is outranked rather than replaced, and a later combined term would not
   double-count.
 
-**Implementation notes.**
+**Built as `4.6.0-king-line`, commit `4306161` on master (2026-09-02).** The notes below are what
+the build followed; each is now history rather than instruction.
 
-- Build it on **master**, not on `attack-units`. The table is calibrated against master's
-  evaluation; on the branch the attack-unit term already fills part of the gap and the table would
-  count it twice.
-- **Wire it as the ninth tunable factor** — `TUNABLE_FACTOR_NAMES`, `tunableFactorValues()`, and the
-  `features[]` array of `analyzeFactors`, whose entry is `(penalty[0] - penalty[1]) * 100.0`. This is
-  correctness, not tuning: `analyzeFactors` asserts the evaluation is linear in the factors, and
-  `FactorTexelData` computes `baseEval = eval − dot(features, factors)`, so an unlisted term folds
-  into the supposedly constant base and every later tuning run tunes the other factors against a
-  base that moves with king danger. Branch `attack-units` demonstrates the failure: it adds its term
-  to `calculatePositionWeight` and not to `analyzeFactors`, and
+- Built on **master**, not on `attack-units`, because the table is calibrated against master's
+  evaluation and on the branch the attack-unit term already fills part of the gap.
+- **Wired as the ninth tunable factor** — `TUNABLE_FACTOR_NAMES`, `tunableFactorValues()`, and the
+  `features[]` entry `(penalty[0] - penalty[1]) * 100.0`. Correctness, not tuning: `analyzeFactors`
+  asserts the evaluation is linear in the factors and `FactorTexelData` computes
+  `baseEval = eval − dot(features, factors)`, so an unlisted term folds into the supposedly constant
+  base and every later tuning run tunes the other factors against something that moves with king
+  danger. Branch `attack-units` is the worked example of the failure — it adds its term to
+  `calculatePositionWeight` and not to `analyzeFactors`, so
   `FactorTexelDataTest.breakdownReconstructsTheRealEvaluation` fails there (209.0 against 190.9)
-  while passing on master.
-- **Do not touch the material-only shortcut**, even though it will silence this term in sacrificial
-  lines. Removing it measured −34 Elo, threshold 300 measured −18.3, threshold 100 was flat at −0.7:
-  letting more positional content through in swung-material lines is measurably harmful twice over.
-  Build the term inside the shortcut and let the SPRT judge the package.
-- The classification is already written and tested against hand-built positions, one per level, in
-  `KingSafetyFeatures.fileDangerAround` — test sources, no production dependency, ready to port.
+  and passes on master.
+- **The material-only shortcut was left alone**, so the term is silent in sacrificial lines. A
+  `Statistics.getMaterialOnlyLeafCount()` counter now makes that reach observable, which it was not
+  before. The blind spot stays because repairing it is what measured badly: removing the shortcut
+  −34 Elo, threshold 300 −18.3, threshold 100 flat at −0.7.
+- **One deliberate divergence from the fitted definition.** An enemy rook or queen met *before* the
+  own shield pawn scores level 4, where the fit stopped at the nearest own pawn and never looked for
+  majors — scoring the same file 0. The implementation's reading is the better one and the
+  divergence is below any resolvable level: 0.0697 % of king files in the calibration corpus, 163 of
+  233,799, in 161 of 39,619 positions. Same order as the overtaken-shield-pawn case (0.073 %) that
+  prompted the ordered shelter rule.
+
+**Cost, measured rather than predicted.** −5.55 % NPS on a bit-identical tree, and the tree at
+depth 8 shrinks 56 % (572,148,460 nodes against 1,300,002,835). Neutrality of the new code paths is
+proven, not argued: with the factor at 0 the signature comes back bit-identical to 4.6.0's. Details
+in [bench-history](bench-history.md); the contrast is § 4.9's −21.9 % on an *unchanged* tree.
+
+**What the characterization suites said before the SPRT.** `BlunderTest` 13 of 63 and
+`StsDefectTest` 6 of 19 turned red, which for a suite of pinned *bad* play is where the evidence
+lives:
+
+- **Five now play exactly the move their own text names as the one that holds** — `Rxf8` in
+  `rd3_atMove35`, `Be1` in `rxa5`, `Nb4` in `nxd4`, `Qe5+` in `qxb7`, and the `h4!` undermining
+  thrust in `undermine098`. The first two and the last are king-safety or kingside cases, so the
+  term fired in its own domain.
+- **Two stop opening the file at their own king** without finding the named move (`f3_atMove33`
+  plays Rd2 where Stockfish wants Rd1; `h3_atMove20` plays Rf4 where the test names Rd2).
+- **Nine are changes of unverified merit** — a different move, neither the pinned blunder nor the
+  named rescue.
+- **Three are regressions of previously-fixed cases, and two of those are king-safety**:
+  `h3_atMove12_engineNoLongerPushesTheUndefendedPawn` pushes h3 again, and
+  `nxe2_atMove19_engineMissesTheExchangeWinningSacrifice` misses the sacrifice again.
+
+That last line is the one to keep in view. The term demonstrably repairs positions of its own kind
+and breaks two others of the same kind. Neither set decides anything — 22 positions cannot — but a
+term whose regressions land in its own domain is not the clean picture the screen suggested.
 
 **And the standing caveat, unchanged.** A flat screen result is a reliable stop signal; a strong one
 is not a promise. Attack units screened at 1.270 % and produced §§ 4.8 and 4.10.
+
+**SPRT: running since 2026-09-02 23:46**, `4.6.0-king-line` against `4.6.0`, house template. Result
+to be recorded here.
 
 ---
 
