@@ -62,7 +62,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "c3-d5", // TODO
                 0.1f,
-                1.0f,
+                1.2f,  // was 1.0; shifted by the king-line danger term (4.6.0-king-line)
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -167,7 +167,7 @@ class EngineTest extends EngineTestBase {
                 "b3-f7", // MILD REGRESSION (v4.4.0): Bxf7 (SF +0.64) instead of Bd5 (SF +1.26), which is
                          // SF's own best move. Accepted against the measured +32.6 Elo of the PeSTO tables.
                 0.3f,
-                2.0f,
+                2.25f,  // was 2.0; shifted by the king-line danger term (4.6.0-king-line)
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -403,7 +403,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("Qf2", "h5", "Qg3"),
                 1.7f, // TODO > 4.5
-                2.7f, // was 2.0; tapered pawn-EG (v4.3.0) — TODO 5.0
+                2.85f, // was 2.0 (tapered pawn-EG v4.3.0), then 2.7; shifted by the king-line danger term (4.6.0-king-line) — TODO 5.0
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -424,7 +424,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("Rxh4"),
                 -0.45f, // was -0.2; Rxh4 is SF-best (SF depth 20: +0.58); v4.2.0 eval drift
-                0.5f, // king-EG (v4.3.1) then v4.3.3 bishop-pair (white holds the pair) → ~0.37
+                0.95f, // king-EG (v4.3.1) then v4.3.3 bishop-pair (white holds the pair) → ~0.37  // was 0.5; shifted by the king-line danger term (4.6.0-king-line)
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -585,7 +585,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "Nh8", // Nh8 is SF-best (g6h8)
                 0.3f, // TODO 4 (SF: +2.99); eval under-reports (pre-existing)
-                2.25f, // max was 1.0, then 1.6; v4.4.0 PeSTO tables -> 2.14
+                2.3f, // max was 1.0, then 1.6; v4.4.0 PeSTO tables -> 2.14  // was 2.25; shifted by the king-line danger term (4.6.0-king-line)
                 new GameConfig(ENGINE, engineConfig())
         );
     }

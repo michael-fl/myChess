@@ -134,6 +134,8 @@ public final class QuiescenceSearch {
     private int calculatePositionWeight(final Board workingBoard, final int weightFactor, final int materialWeight, final int materialDelta) {
         if (materialOnlyShortcutEnabled
                 && (materialDelta > PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD || materialDelta < -PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD)) {
+            statistics.incrMaterialOnlyLeafCount();
+
             return materialWeight;
         }
 

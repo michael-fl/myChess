@@ -18,6 +18,7 @@ public final class Statistics {
     private long quiescencePositionsCountCurrent;
     private long quiescencePositionsCountMax;
     private long quiescenceSearchesCount;
+    private long materialOnlyLeafCount;
 
     public void incrPositionCount() {
         positionsCount++;
@@ -31,8 +32,31 @@ public final class Statistics {
         quiescencePositionsCountCurrent++;
     }
 
+    /**
+     * Counts one leaf that returned raw material because the material swing since the search root
+     * passed {@link org.michaelfl.mychess.engines.PositionSearch#EVALUATE_MATERIAL_ONLY_THRESHOLD}.
+     *
+     * <p>Exists to make the shortcut's reach observable. Every positional term — the king-line
+     * danger among them — is silent in exactly those leaves, so a term that measures worse than
+     * expected raises the question of how often it was skipped at all. Read the count against
+     * {@link #getQuiescencePositionsCount()}: the check runs once per quiescence node entry, so
+     * the quotient is the firing rate.
+     */
+    public void incrMaterialOnlyLeafCount() {
+        materialOnlyLeafCount++;
+    }
+
     public void incrPrunedMovesCount(int increment) {
         prunedMovesCount += increment;
+    }
+
+    /**
+     * Leaves that returned raw material because the material-only shortcut fired.
+     *
+     * @return the count for this search, to be read against {@link #getQuiescencePositionsCount()}
+     */
+    public long getMaterialOnlyLeafCount() {
+        return materialOnlyLeafCount;
     }
 
     public void reachedDepth(int depth) {
