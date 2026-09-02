@@ -134,9 +134,90 @@ public final class WeightingFunction {
 
     private static final int[] oppositeColor = new int[] { GameStatus.TURN_BLACK, GameStatus.TURN_WHITE };
     private static final int[] oppositeKing = new int[] { Board.blackKing, Board.whiteKing };
+    /** Enemy rook by defending color, for the king-line walk. Index 0 = white defends. */
+    private static final int[] oppositeRook = new int[] { Board.blackRook, Board.whiteRook };
+    /** Enemy queen by defending color, same indexing as {@link #oppositeRook}. */
+    private static final int[] oppositeQueen = new int[] { Board.blackQueen, Board.whiteQueen };
+    /** Pawn of the given color; {@code ownPawn[color ^ 1]} is the enemy's. */
+    private static final int[] ownPawn = new int[] { Board.whitePawn, Board.blackPawn };
 
     /** Phase of the full starting material (4·1 knights + 4·1 bishops + 4·2 rooks + 2·4 queens); the phase is clamped to this. */
     private static final int MAX_PHASE = 24;
+
+    /**
+     * The ordered danger scale for one file at or beside the king, from safest to worst. Level 0
+     * has no constant: it is "an own pawn shelters this file" and is returned as a literal zero.
+     *
+     * <p>Ordinal, not additive — the distance between levels is not meaningful, only their order
+     * is. The centipawn values live in {@link #KING_LINE_PENALTY}, indexed by the sum over the
+     * three files, and that sum is where the non-linearity sits: three half-open files are worse
+     * than three times one.
+     */
+    final static int KING_DANGER_HALF_OPEN = 1;
+    /** Half-open and the enemy pawn has crossed onto the defending king's half. */
+    final static int KING_DANGER_HALF_OPEN_ADVANCED_OPPONENT_PAWN = 2;
+    /** No pawn of either color on the file. */
+    final static int KING_DANGER_OPEN = 3;
+    /** Open, and an enemy rook or queen stands on it. */
+    final static int KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE = 4;
+
+    /*
+     * The three mirroring lookups the king-line walk needs, all indexed by defending color
+     * (0 = white). They exist instead of `color == 0 ? … : …` at each use: this term is computed
+     * per color and the walk runs in opposite directions, which is the combination that hides a
+     * defect best — a mirror error leaves one color correct and makes the other silently
+     * constant. Every such branch removed is one place that can no longer go wrong.
+     */
+
+    /** Step from one rank to the next, away from the defending king's own back rank. */
+    private static final int[] ROW_OFFSET = { Board.LENGTH, -Board.LENGTH };
+    /** The rank the walk ends on: the defender's eighth. */
+    private static final int[] LAST_RANK = { 7, 0 };
+    /** Last rank still counted as the defender's own half, for the "advanced pawn" level. */
+    private static final int[] MIDDLE_RANK = { 3, 4 };
+
+    /**
+     * Penalty in centipawns for the summed king-line danger of the three files at and beside the
+     * king, indexed {@code 0..12} — three files of at most
+     * {@link #KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE}.
+     *
+     * <p><b>Fitted, not chosen.</b> Isotonic least squares against Stockfish's <em>static</em>
+     * NNUE evaluation minus this engine's, over the 39,619 positions of the Chess960 self-play
+     * corpus, phase-scaled, with monotonicity as a constraint of the fit rather than a repair
+     * afterwards; intervals from a block bootstrap. Full record in
+     * {@code test-results/king-safety-feature-screen.log}, tooling in
+     * {@code tools/king-safety-screen.py}.
+     *
+     * <p><b>Equal neighbors are the measurement, not rounding.</b> Where the monotonicity
+     * constraint binds, pool-adjacent-violators merges the indices it cannot separate — so 42/42
+     * means the corpus does not distinguish those two levels.
+     *
+     * <p><b>Indices 10 to 12 deliberately carry index 9's value.</b> Their own fitted values rest
+     * on 0.56 % of samples between them, and index 12's bootstrap interval collapses onto its
+     * point estimate — the signature of a coefficient resting on nothing. Shipping the fitted
+     * 436 cp there would repeat the first pawn-storm encoding's mistake, which read 141.5 cp on
+     * 0.5 % of the data and fell to 28.5 cp once the mass was spread.
+     *
+     * <p><b>What the fit does not license.</b> It says this quantity accounts for 2.238 % of what
+     * separates this evaluation from Stockfish's, against 1.270 % for the shelved attack-unit
+     * term. That is a screen result, not an Elo prediction: attack units screened at 1.270 % and
+     * then lost 42.9 Elo to their own cost. Only an SPRT settles the term.
+     */
+    static final int[] KING_LINE_PENALTY = {
+            0,   // 0
+            21,  // 1
+            42,  // 2
+            42,  // 3
+            77,  // 4
+            91,  // 5
+            95,  // 6
+            134, // 7
+            138, // 8
+            223, // 9
+            223, // 10
+            223, // 11
+            223  // 12
+    };
 
     private static final float mobilityFactor = 0.1f;
     private static final float positionFactor = 0.5f;
@@ -181,6 +262,22 @@ public final class WeightingFunction {
      */
     private static final float bishopPairFactor = 0.4f;
 
+    /**
+     * Scales {@link #KING_LINE_PENALTY} into the evaluation. <b>Negative on purpose</b>: the
+     * penalty itself is a positive "how bad is it" quantity, and that more is worse is expressed
+     * by the factor's sign — the same convention as {@link #doublePawnFactor} and
+     * {@link #undefendedPiecesFactor}. Read the two together or the sign in
+     * {@link #calculatePositionWeight()} looks inverted.
+     *
+     * <p>At {@code -0.01f} the fitted table applies at exactly 1:1 in centipawns, because
+     * everything inside the sum in {@link #calculatePositionWeight()} is in pawns and the
+     * {@code * 100} sits outside. So this is not a cautious starting guess — it is the value at
+     * which the table means what it was fitted to mean. The ninth entry of
+     * {@link #TUNABLE_FACTOR_NAMES}, so the scale can be tuned against game results later rather
+     * than guessed one SPRT at a time.
+     */
+    private static final float kingLinePenaltyFactor = -0.01f;
+
     private GameStatus game;
     private int turn; // 0 = white, 1 = black
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
@@ -201,6 +298,12 @@ public final class WeightingFunction {
     private final int[] pstMidGameWeight = new int[2];
     /** Per-color sum of endgame piece-square values for the current position (index 0 = white, 1 = black). */
     private final int[] pstEndGameWeight = new int[2];
+    /**
+     * Per-color summed king-line danger from the current evaluation, {@code 0..12}
+     * (index 0 = white). Written once per king by {@code _calculateForKing} during the ordinary
+     * piece walk, read by {@link #calculateKingLinePenalty(int)}.
+     */
+    private final int[] kingLineDanger = new int[2];
     /** Game phase of the most recently evaluated position, {@code 0..}{@link #MAX_PHASE}; see {@link #phaseWeightOfPiece}. */
     private int phase;
 
@@ -274,6 +377,8 @@ public final class WeightingFunction {
         this.pstMidGameWeight[1] = 0;
         this.pstEndGameWeight[0] = 0;
         this.pstEndGameWeight[1] = 0;
+        this.kingLineDanger[0] = 0;
+        this.kingLineDanger[1] = 0;
 
         System.arraycopy(board, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
 
@@ -342,6 +447,20 @@ public final class WeightingFunction {
         return phase;
     }
 
+    /**
+     * A copy of the per-color king-line danger sums from the last evaluation (index 0 = white,
+     * 1 = black), each the sum of the three files at and beside that king, {@code 0..12}.
+     *
+     * <p>Exists for {@code WeightingFunctionKingLineTest}: without it the term is only observable
+     * through the finished evaluation, where material, piece-square tables and mobility move too,
+     * so a phase-scaling defect could not be separated from any other change.
+     *
+     * @return a copy, so a caller cannot disturb the next evaluation
+     */
+    int[] getKingLineDanger() {
+        return Arrays.copyOf(kingLineDanger, kingLineDanger.length);
+    }
+
     /** A copy of the per-color midgame position-weight sums from the last evaluation (index 0 = white, 1 = black). */
     int[] getPstMidGameWeight() {
         return Arrays.copyOf(pstMidGameWeight, pstMidGameWeight.length);
@@ -356,7 +475,7 @@ public final class WeightingFunction {
     public static final String[] TUNABLE_FACTOR_NAMES = {
             "positionFactor", "mobilityFactor", "threadWeightFactor",
             "castlingFactor", "chessFactor", "doublePawnFactor", "undefendedPiecesFactor",
-            "bishopPairFactor"
+            "bishopPairFactor", "kingLinePenaltyFactor"
     };
 
     /** Current values of {@link #TUNABLE_FACTOR_NAMES}, in the same order. */
@@ -364,7 +483,7 @@ public final class WeightingFunction {
         return new double[] {
                 positionFactor, mobilityFactor, threadWeightFactor,
                 castlingFactor, chessFactor, doublePawnFactor, undefendedPiecesFactor,
-                bishopPairFactor
+                bishopPairFactor, kingLinePenaltyFactor
         };
     }
 
@@ -392,7 +511,8 @@ public final class WeightingFunction {
                 (chessCount[0] - chessCount[1]) * 100.0,
                 (doublePawnCount[0] - doublePawnCount[1]) * 100.0,
                 (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * 100.0,
-                ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * 100.0
+                ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * 100.0,
+                (calculateKingLinePenalty(0) - calculateKingLinePenalty(1)) * 100.0
         };
 
         return new FactorBreakdown(eval, features);
@@ -411,7 +531,27 @@ public final class WeightingFunction {
                 + (chessCount[0] - chessCount[1]) * chessFactor
                 + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
                 + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor
-                + ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * bishopPairFactor) * 100);
+                + ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * bishopPairFactor
+                + (calculateKingLinePenalty(0) - calculateKingLinePenalty(1)) * kingLinePenaltyFactor) * 100);
+    }
+
+    /**
+     * The king-line penalty for one color: the fitted table entry for that king's danger, blended
+     * toward zero by the game phase. <b>Positive</b> — that more is worse is carried by
+     * {@link #kingLinePenaltyFactor} being negative.
+     *
+     * <p>The blend fades the term to nothing in the endgame, which is the term's central design
+     * decision: an exposed king in an endgame is often an <em>active</em> king, so the sign of
+     * king exposure reverses there. An implementation that gets this backwards has no visible
+     * symptom — the evaluation stays plausible and only the played moves get worse. Hence
+     * package-private rather than private, so {@code WeightingFunctionKingLineTest} can assert
+     * the identity directly against {@link #blend(int, int, int)}.
+     *
+     * @param color the defending side, 0 = white
+     * @return the phase-scaled penalty, positive, {@code 0} once the phase reaches the endgame
+     */
+    int calculateKingLinePenalty(int color) {
+        return blend(KING_LINE_PENALTY[kingLineDanger[color]], 0, phase);
     }
 
     /**
@@ -441,6 +581,7 @@ public final class WeightingFunction {
                "doublePawnCount:       w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + DELTA_STR + (doublePawnCount[0] - doublePawnCount[1]) + WEIGHT_STR + round((doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) + '\n' +
                "chessCount:            w=" + chessCount[0] + ", b=" + chessCount[1] + DELTA_STR + (chessCount[0] - chessCount[1]) + WEIGHT_STR + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
                "undefendedPiecesCount: w=" + undefendedPiecesCount[0] + ", b=" + undefendedPiecesCount[1] + DELTA_STR + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) + WEIGHT_STR + round((undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor) + '\n' +
+               "kingLinePenalty:       w=" + calculateKingLinePenalty(0) + ", b=" + calculateKingLinePenalty(1) + DELTA_STR + (calculateKingLinePenalty(0) - calculateKingLinePenalty(1)) + WEIGHT_STR + round((calculateKingLinePenalty(0) - calculateKingLinePenalty(1)) * kingLinePenaltyFactor) + '\n' +
                "weight: " + calculatePositionWeight() / 100f;
     }
 
@@ -669,6 +810,76 @@ public final class WeightingFunction {
         move(myPiece, field, field - 1, color);
         // move up-left
         move(myPiece, field, field + Board.LENGTH - 1, color);
+
+        // The king's own file and its two neighbors. Computed here, inside the walk the evaluation
+        // performs anyway, rather than as a separate pass: a standalone scan for the shelved
+        // attack-unit term cost more than the entire evaluation. An off-board neighbor on the a-
+        // or h-file is not filtered out here — calculateKingLineDanger returns 0 for it.
+        kingLineDanger[color] = calculateKingLineDanger(color, field - 1)
+                + calculateKingLineDanger(color, field)
+                + calculateKingLineDanger(color, field + 1);
+    }
+
+    /**
+     * Classifies one file on the {@code KING_DANGER_*} scale by walking away from the king.
+     *
+     * <p>The walk starts one square in front of {@code startField} and runs to the far rank, so
+     * everything behind the king is ignored. That is deliberate: pawn shelter is directional, and
+     * a pawn behind the king covers nothing. It also means an enemy rook <em>behind</em> an
+     * advanced king is not seen — a real blind spot, accepted because such a rook is a concrete
+     * threat one ply deep that the search resolves better than a static level could.
+     *
+     * <p>The first pawn met decides the shelter question, which is why the walk is anchored on the
+     * king and not on the back rank: an own pawn the enemy has already passed is not cover.
+     *
+     * <p>One case diverges from the fitted definition: an enemy rook or queen met <em>before</em>
+     * the own shield pawn scores {@link #KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE}, whereas the fit
+     * stopped at the nearest own pawn and never looked for majors, scoring it as sheltered. The
+     * reading here is the better one, and the divergence is not measurable: it occurs on 0.0697 %
+     * of king files in the calibration corpus (163 of 233,799, in 161 of 39,619 positions).
+     *
+     * @param color      the defending side, 0 = white
+     * @param startField the king's square, or a neighboring file's square on the king's rank
+     * @return the danger level, or 0 if {@code startField} is off the board
+     */
+    int calculateKingLineDanger(final int color, final int startField) {
+        if (board[startField] == Board.illegal) {
+            return 0;
+        }
+
+        final int col = startField % Board.LENGTH - 2;
+        final int offset = ROW_OFFSET[color];
+        final int endField = ChessUtil.getFieldFromColAndRow(col, LAST_RANK[color]) + offset;
+        final int middleField = ChessUtil.getFieldFromColAndRow(col, MIDDLE_RANK[color]);
+        final int myPawn = ownPawn[color];
+        final int opponentPawn = ownPawn[color ^ 1];
+        final int opponentRook = oppositeRook[color];
+        final int opponentQueen = oppositeQueen[color];
+        boolean sawOpponentMajorPiece = false;
+
+        for (int field = startField + offset; field != endField; field += offset) {
+            final int piece = board[field];
+
+            if (piece == opponentPawn) {
+                // half open line
+                if (color == 0) {
+                    return field <= middleField ? KING_DANGER_HALF_OPEN_ADVANCED_OPPONENT_PAWN : KING_DANGER_HALF_OPEN;
+                } else {
+                    return field >= middleField ? KING_DANGER_HALF_OPEN_ADVANCED_OPPONENT_PAWN : KING_DANGER_HALF_OPEN;
+                }
+            }
+
+            if (piece == myPawn) {
+                return sawOpponentMajorPiece ? KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE : 0;
+            }
+
+            if (piece == opponentRook || piece == opponentQueen) {
+                sawOpponentMajorPiece = true;
+            }
+        }
+
+        // open line
+        return sawOpponentMajorPiece ? KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE : KING_DANGER_OPEN;
     }
 
     private boolean move(final byte movingPiece, final int from, final int to, int color) {

@@ -74,6 +74,43 @@ time-truncated.
 | **4.5.0** | 336,412,842 | **+0.139 %** | 101,553,277 (+0.1 %) | Complete principal variation ([§ 12.25](roadmap.md#1225-tried--repairing-the-roots-move-choice-after-the-pv-re-search-reverted-twice-444-and-166-elo)) | +1.8 ± 11.6 over 2463 games — **neutral** | ~1928 |
 | **4.6.0** (`415a6ac`) | 1,300,002,835 | **+286 %** | 101,626,447 (+0.1 %) | Material-only shortcut only for quiet root moves ([§ 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460)) | **+14.8 ± 10.5** over 3000 games | ~1943 |
 
+### Measured but not a release — `4.6.0-king-line` (2026-09-02)
+
+The king-line danger term: the three files at and beside the king, classified 0–4 and summed into
+a fitted penalty table ([king-safety.md § 4.11](king-safety.md)). Not a release row until its SPRT
+has run.
+
+| | Nodes @ d8 | NPS | Time |
+|---|---:|---:|---:|
+| **4.6.0** (baseline) | 1,300,002,835 | 1,251,215 | 17:18 |
+| **4.6.0-king-line, factor 0** | **1,300,002,835** | 1,181,726 | 18:20 |
+| **4.6.0-king-line** | 572,148,460 | 1,250,540 | 7:38 |
+
+**The middle row is the whole reason this entry exists.** With `kingLinePenaltyFactor = 0` the term
+is still computed and simply not applied, so the evaluation is identical to 4.6.0's — and the
+signature comes back **bit-identical**. That is the neutrality proof rule 2 asks for: the new code
+paths do not perturb the search, and the `Statistics` material-only leaf counter added in the same
+change is covered by it too.
+
+**It also makes the cost measurable without a confound.** Baseline and control search the same tree
+node for node, so the NPS gap is pure computation: **−5.55 %**. For contrast, the shelved
+attack-unit term of 2026-08-31 cost **−21.9 %** on an *unchanged* tree — four times as much for a
+weaker screen result. (Caveat: the 1,251,215 comes from a different run on a possibly
+differently-loaded machine. Identical trees remove the node-mix confound, not the machine's.)
+
+**The −56 % tree is a change, not an improvement.** At depth 8 the term reaches the same depth with
+less than half the nodes, and 7:38 against 17:18 is tempting to read as progress. It is not
+evidence of strength: fewer nodes means more cutoffs, and whether the *right* moves are cut only an
+SPRT can say. Rule 3 applies in full. Note also that the entire effect sits in **one position** —
+number 37 goes from 1,129,861,147 nodes to 385,435,203, −65.9 % — so this is not an average over
+55 positions but a single dominant case.
+
+**A correction to how this file gets quoted.** `336,412,842` is **4.5.0**, superseded twice over;
+the current baseline is 4.6.0's `1,300,002,835`, +286 % above it. That older number is the one
+written into `CLAUDE.md` as "the" signature, and quoting it from there produced a wrong reading of
+this very measurement on 2026-09-02: the tree looked 70 % *larger* when it is in fact 56 %
+*smaller*. Read the baseline out of the table above, never out of memory.
+
 ### Measured but not a release — `4.6.0-attack-units` (2026-08-31)
 
 Shelved at **−42.9 ± 33.9 Elo** ([roadmap § 12.21](roadmap.md#1221-king-safety--m--3060-elo)), so
@@ -143,6 +180,8 @@ compared, only recorded:
 | 4.4.1 | 3:00 | 1,861,394 |
 | 4.5.0 | 2:57 | 1,900,573 |
 | 4.6.0 | **17:18** | 1,251,215 |
+| 4.6.0-king-line | 7:38 | 1,250,540 |
+| 4.6.0-king-line, factor 0 | 18:20 | 1,181,726 |
 
 The NPS decline from ~3.0 M to ~1.9 M is the cost of the richer evaluation and
 the deeper quiescence search: fewer nodes per second, but each node is worth

@@ -294,20 +294,25 @@ final class KingSafetyFeatures {
     private static int splitFileDanger(byte[] squares, int file, boolean defenderIsWhite) {
         final byte ownPawn = defenderIsWhite ? Board.whitePawn : Board.blackPawn;
         final byte enemyPawn = defenderIsWhite ? Board.blackPawn : Board.whitePawn;
-        boolean ownSeen = false;
+        byte nearestPawn = Board.empty;
         boolean enemySeen = false;
 
-        for (int rank = 0; rank < FILES; rank++) {
+        for (int step = 0; step < FILES; step++) {
+            // Same king-outward walk and the same shelter rule as fileDanger, so the two scales
+            // cannot disagree about what counts as cover.
+            final int rank = defenderIsWhite ? step : FILES - 1 - step;
             final byte piece = squares[Board.a1 + rank * Board.LENGTH + file];
 
-            if (piece == ownPawn) {
-                ownSeen = true;
-            } else if (piece == enemyPawn) {
+            if (nearestPawn == Board.empty && (piece == ownPawn || piece == enemyPawn)) {
+                nearestPawn = piece;
+            }
+
+            if (piece == enemyPawn) {
                 enemySeen = true;
             }
         }
 
-        if (ownSeen) {
+        if (nearestPawn == ownPawn) {
             return enemySeen ? 0 : 1;
         }
 
@@ -359,15 +364,20 @@ final class KingSafetyFeatures {
         final byte enemyPawn = defenderIsWhite ? Board.blackPawn : Board.whitePawn;
         final byte enemyRook = defenderIsWhite ? Board.blackRook : Board.whiteRook;
         final byte enemyQueen = defenderIsWhite ? Board.blackQueen : Board.whiteQueen;
+        byte nearestPawn = Board.empty;
         boolean enemyPawnSeen = false;
         boolean enemyPawnPastMiddle = false;
         boolean enemyHeavySeen = false;
 
-        for (int rank = 0; rank < FILES; rank++) {
+        for (int step = 0; step < FILES; step++) {
+            // Walk outward from the defending king's own back rank, so that the first pawn met is
+            // the one nearest the king. An own pawn shelters only if nothing hostile stands
+            // between it and the king; a pawn the enemy has already passed covers nothing.
+            final int rank = defenderIsWhite ? step : FILES - 1 - step;
             final byte piece = squares[Board.a1 + rank * Board.LENGTH + file];
 
-            if (piece == ownPawn) {
-                return FILE_SHELTERED;
+            if (nearestPawn == Board.empty && (piece == ownPawn || piece == enemyPawn)) {
+                nearestPawn = piece;
             }
 
             if (piece == enemyPawn) {
@@ -380,6 +390,10 @@ final class KingSafetyFeatures {
             } else if (piece == enemyRook || piece == enemyQueen) {
                 enemyHeavySeen = true;
             }
+        }
+
+        if (nearestPawn == ownPawn) {
+            return FILE_SHELTERED;
         }
 
         if (enemyPawnSeen) {
