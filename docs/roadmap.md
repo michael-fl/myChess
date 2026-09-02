@@ -468,6 +468,31 @@ is worth acting on.
 A flat screen result is a reliable stop signal. A strong one is not a promise — attack units
 screened at 1.270 % and the two matches above are what came of it.
 
+**Attempt six — file danger, built and under measurement (2026-09-02).** Shipped as
+`4.6.0-king-line`, commit `4306161`: the three files at and beside the king classified 0–4 and
+summed into the fitted table `0 21 42 42 77 91 95 134 138 223 223 223 223`, phase-scaled to nothing
+in the endgame, wired as the ninth tunable factor. Build notes, the one deliberate divergence from
+the fitted definition, and the pre-match evidence live in
+[`king-safety.md § 4.11`](king-safety.md).
+
+Two numbers separate this attempt from the five before it. **Cost: −5.55 % NPS** on a bit-identical
+tree, against § 4.9's −21.9 % — and the depth-8 tree *shrinks* 56 %. **Neutrality: proven**, not
+argued: with the factor at zero the bench signature comes back bit-identical to 4.6.0's
+1,300,002,835, so the new code paths do not perturb the search
+([bench-history](bench-history.md)).
+
+The characterization suites, which pin *known-bad* play and therefore fail when play improves, split
+three ways: five positions now play exactly the move their own text names as the one that holds
+(`Rxf8`, `Be1`, `Nb4`, `Qe5+`, the `h4!` thrust), nine change to a move of unverified merit, and
+**three regress previously-fixed cases — two of them king-safety**. A term whose regressions land in
+its own domain is not what the screen's 2.238 % suggested, and 22 positions cannot settle it either
+way. The SPRT can, and is running.
+
+Note for whoever reads this next: the run started at 23:46 with the machine due to close around
+09:30, so a first reading is a partial standing of roughly 850 games (interval ≈ ±20) unless a
+bound is reached. Only a reached bound is a verdict, and an early-stopped one is
+overestimated — see § 12.23.
+
 *Previous text of this entry, kept because the reasoning it states is what the result has to be
 read against:*
 
