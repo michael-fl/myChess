@@ -3395,4 +3395,66 @@ class BlunderTest {
                         + "record the new value and convert this into a bound. static eval " + weight);
     }
 
+    /** White (myChess) to move before {@code 25.Nf6+??}, from a position with exactly one holding move. */
+    private static final String BEFORE_NF6_FEN = "2r2rk1/p4ppp/3R4/2QNq3/3n4/1P6/P3pPPP/4R1K1 w - - 1 25";
+
+    /**
+     * The sharpest single-move position in this file: <b>{@code 25.f4} holds at 0.00 and every
+     * other move loses.</b> Stockfish 18 at depth 22, multi-PV:
+     *
+     * <pre>
+     *   1. f4     +0.00      the only move
+     *   2. Nf6+   -4.99      myChess played this
+     *   3. Qxd4   -5.56
+     *   4. Qb4    -5.66
+     *   5. Rxc6   -6.23
+     * </pre>
+     *
+     * <p>That gap is why the case is worth pinning. There is no judgment call about what the
+     * target move is, and no argument about whether the played move is bad enough to count.
+     *
+     * <p><b>It is not a sacrifice, and it is not an evaluation failure about the e2 pawn.</b>
+     * {@code 25.Nf6+ gxf6 26.Qxd4} restores material exactly — 2400 against 2400 — so the knight
+     * comes back and nothing needs compensating. And the black pawn on e2, one square from
+     * promotion and defended by the knight on d4, is <em>correctly</em> valued: removing it from
+     * the position moves myChess's static evaluation by <b>206 cp</b> against Stockfish's
+     * <b>240 cp</b>, with the resulting positions read at +1.44 and +1.37. The PeSTO pawn table
+     * carries most of that (193 raw points of black's positional score sit on that one pawn).
+     *
+     * <p><b>What actually goes wrong is a horizon effect, missed by 2.2 seconds.</b> myChess's
+     * principal variation at depth 10 reads
+     * {@code Nf6+ Qxf6 Qxd4 Qxd4 Rxd4 Rc2 Re4 Rxa2 R4xe2 Ra3} and scores it +0.06 — it expects
+     * black to recapture with the <em>queen</em>, after which the queens come off and a rook
+     * collects the e2 pawn. Black recaptured with the <em>pawn</em>, {@code 25...gxf6}, keeping
+     * the queen on e5. One iteration deeper the engine agrees with Stockfish:
+     *
+     * <pre>
+     *   depth 10   4.2 s   Nf6+   +0.06
+     *   depth 11  19.2 s   f4     -0.21
+     * </pre>
+     *
+     * <p>The game gave it <b>17 seconds</b>. So the defect is not that the evaluation is blind to
+     * anything in the final position — it is that myChess does not credit black with shattering
+     * its own kingside in exchange for activity, and therefore searches the wrong reply first at
+     * the depth it reaches under a clock.
+     *
+     * <p>Read against {@code h3_atMove12} and {@code h3_atMove20}: those are the engine wrecking
+     * its <em>own</em> pawn cover. This is the mirror image — failing to expect an opponent to
+     * wreck theirs.
+     *
+     * <p><b>Test family:</b> search-horizon (defect)
+     */
+    @Test
+    void nf6_atMove25_characterizesTheKnightCheckWhereOnlyF4Holds() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_NF6_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.d5, Board.f6, "25.Nf6+",
+                "which turns 0.00 into −4.99 (Stockfish 18, depth 22) where 25.f4 is the only "
+                        + "move that holds; myChess expects the queen recapture 25...Qxf6 and "
+                        + "reads the line at +0.06, and finds 25.f4 only at depth 11, which costs "
+                        + "19.2 s against the 17 s the game allowed");
+    }
 }
