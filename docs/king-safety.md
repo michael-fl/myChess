@@ -1258,8 +1258,8 @@ the build followed; each is now history rather than instruction.
   `FactorTexelDataTest.breakdownReconstructsTheRealEvaluation` fails there (209.0 against 190.9)
   and passes on master.
 - **The material-only shortcut was left alone**, so the term is silent in sacrificial lines. A
-  `Statistics.getMaterialOnlyLeafCount()` counter now makes that reach observable, which it was not
-  before. The blind spot stays because repairing it is what measured badly: removing the shortcut
+  `Statistics.getMaterialOnlyLeafCount()` counter was added alongside the term to make that reach
+  observable; it lives on branch `king-line-tuned` with the rest and is **not on the mainline**. The blind spot stays because repairing it is what measured badly: removing the shortcut
   −34 Elo, threshold 300 −18.3, threshold 100 flat at −0.7.
 - **One deliberate divergence from the fitted definition.** An enemy rook or queen met *before* the
   own shield pawn scores level 4, where the fit stopped at the nearest own pawn and never looked for
