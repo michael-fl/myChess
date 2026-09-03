@@ -1,0 +1,1562 @@
+Indexing opening suite...
+Started game 2 of 1600 (base vs king-line)
+Started game 1 of 1600 (king-line vs base)
+Started game 4 of 1600 (base vs king-line)
+Started game 3 of 1600 (king-line vs base)
+Finished game 3 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 0 - 1 - 0  [0.000] 1
+Started game 5 of 1600 (king-line vs base)
+Finished game 1 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 1 - 1 - 0  [0.500] 2
+Started game 6 of 1600 (base vs king-line)
+Finished game 2 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 2 - 1 - 0  [0.667] 3
+Started game 7 of 1600 (king-line vs base)
+Finished game 5 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 3 - 1 - 0  [0.750] 4
+Started game 8 of 1600 (base vs king-line)
+Finished game 4 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 3 - 2 - 0  [0.600] 5
+Started game 9 of 1600 (king-line vs base)
+Finished game 6 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 3 - 3 - 0  [0.500] 6
+Started game 10 of 1600 (base vs king-line)
+Finished game 7 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 4 - 3 - 0  [0.571] 7
+Started game 11 of 1600 (king-line vs base)
+Finished game 8 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 5 - 3 - 0  [0.625] 8
+Started game 12 of 1600 (base vs king-line)
+Finished game 9 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 5 - 3 - 1  [0.611] 9
+Started game 13 of 1600 (king-line vs base)
+Finished game 12 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 6 - 3 - 1  [0.650] 10
+...      king-line playing White: 3 - 1 - 1  [0.700] 5
+...      king-line playing Black: 3 - 2 - 0  [0.600] 5
+...      White vs Black: 5 - 4 - 1  [0.550] 10
+Elo difference: 107.5 +/- 268.4, LOS: 84.1 %, DrawRatio: 10.0 %
+SPRT: llr 0.169 (5.7%), lbound -2.94, ubound 2.94
+Started game 14 of 1600 (base vs king-line)
+Finished game 10 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 6 - 3 - 2  [0.636] 11
+Started game 15 of 1600 (king-line vs base)
+Finished game 11 (king-line vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 6 - 3 - 3  [0.625] 12
+Started game 16 of 1600 (base vs king-line)
+Finished game 14 (base vs king-line): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 6 - 3 - 4  [0.615] 13
+Started game 17 of 1600 (king-line vs base)
+Finished game 15 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 7 - 3 - 4  [0.643] 14
+Started game 18 of 1600 (base vs king-line)
+Finished game 13 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 7 - 4 - 4  [0.600] 15
+Started game 19 of 1600 (king-line vs base)
+Finished game 16 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 7 - 5 - 4  [0.563] 16
+Started game 20 of 1600 (base vs king-line)
+Finished game 18 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 8 - 5 - 4  [0.588] 17
+Started game 21 of 1600 (king-line vs base)
+Finished game 17 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 9 - 5 - 4  [0.611] 18
+Started game 22 of 1600 (base vs king-line)
+Finished game 20 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 9 - 6 - 4  [0.579] 19
+Started game 23 of 1600 (king-line vs base)
+Finished game 21 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 9 - 7 - 4  [0.550] 20
+...      king-line playing White: 5 - 3 - 2  [0.600] 10
+...      king-line playing Black: 4 - 4 - 2  [0.500] 10
+...      White vs Black: 9 - 7 - 4  [0.550] 20
+Elo difference: 34.9 +/- 144.6, LOS: 69.1 %, DrawRatio: 20.0 %
+SPRT: llr 0.107 (3.6%), lbound -2.94, ubound 2.94
+Started game 24 of 1600 (base vs king-line)
+Finished game 19 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 10 - 7 - 4  [0.571] 21
+Started game 25 of 1600 (king-line vs base)
+Finished game 22 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 11 - 7 - 4  [0.591] 22
+Started game 26 of 1600 (base vs king-line)
+Finished game 23 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 12 - 7 - 4  [0.609] 23
+Started game 27 of 1600 (king-line vs base)
+Finished game 24 (base vs king-line): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 12 - 7 - 5  [0.604] 24
+Started game 28 of 1600 (base vs king-line)
+Finished game 25 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 12 - 8 - 5  [0.580] 25
+Started game 29 of 1600 (king-line vs base)
+Finished game 26 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 12 - 9 - 5  [0.558] 26
+Started game 30 of 1600 (base vs king-line)
+Finished game 27 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 12 - 9 - 6  [0.556] 27
+Started game 31 of 1600 (king-line vs base)
+Finished game 28 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 12 - 10 - 6  [0.536] 28
+Started game 32 of 1600 (base vs king-line)
+Finished game 31 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 12 - 11 - 6  [0.517] 29
+Started game 33 of 1600 (king-line vs base)
+Finished game 30 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 13 - 11 - 6  [0.533] 30
+...      king-line playing White: 7 - 5 - 3  [0.567] 15
+...      king-line playing Black: 6 - 6 - 3  [0.500] 15
+...      White vs Black: 13 - 11 - 6  [0.533] 30
+Elo difference: 23.2 +/- 115.3, LOS: 65.8 %, DrawRatio: 20.0 %
+SPRT: llr 0.0952 (3.2%), lbound -2.94, ubound 2.94
+Started game 34 of 1600 (base vs king-line)
+Finished game 32 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 13 - 12 - 6  [0.516] 31
+Started game 35 of 1600 (king-line vs base)
+Finished game 33 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 13 - 12 - 7  [0.516] 32
+Started game 36 of 1600 (base vs king-line)
+Finished game 29 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 13 - 12 - 8  [0.515] 33
+Started game 37 of 1600 (king-line vs base)
+Finished game 36 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 13 - 13 - 8  [0.500] 34
+Started game 38 of 1600 (base vs king-line)
+Finished game 35 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 13 - 14 - 8  [0.486] 35
+Started game 39 of 1600 (king-line vs base)
+Finished game 37 (king-line vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 13 - 14 - 9  [0.486] 36
+Started game 40 of 1600 (base vs king-line)
+Finished game 39 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 14 - 14 - 9  [0.500] 37
+Started game 41 of 1600 (king-line vs base)
+Finished game 38 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 14 - 14 - 10  [0.500] 38
+Started game 42 of 1600 (base vs king-line)
+Finished game 34 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 14 - 14 - 11  [0.500] 39
+Started game 43 of 1600 (king-line vs base)
+Finished game 41 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 14 - 15 - 11  [0.487] 40
+...      king-line playing White: 8 - 7 - 6  [0.524] 21
+...      king-line playing Black: 6 - 8 - 5  [0.447] 19
+...      White vs Black: 16 - 13 - 11  [0.537] 40
+Elo difference: -8.7 +/- 93.8, LOS: 42.6 %, DrawRatio: 27.5 %
+SPRT: llr -0.123 (-4.2%), lbound -2.94, ubound 2.94
+Started game 44 of 1600 (base vs king-line)
+Finished game 42 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 14 - 16 - 11  [0.476] 41
+Started game 45 of 1600 (king-line vs base)
+Finished game 44 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 14 - 17 - 11  [0.464] 42
+Started game 46 of 1600 (base vs king-line)
+Finished game 40 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 14 - 17 - 12  [0.465] 43
+Started game 47 of 1600 (king-line vs base)
+Finished game 45 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 15 - 17 - 12  [0.477] 44
+Started game 48 of 1600 (base vs king-line)
+Finished game 43 (king-line vs base): 1/2-1/2 {Draw by fifty moves rule}
+Score of king-line vs base: 15 - 17 - 13  [0.478] 45
+Started game 49 of 1600 (king-line vs base)
+Finished game 46 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 15 - 18 - 13  [0.467] 46
+Started game 50 of 1600 (base vs king-line)
+Finished game 47 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 15 - 18 - 14  [0.468] 47
+Started game 51 of 1600 (king-line vs base)
+Finished game 50 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 15 - 19 - 14  [0.458] 48
+Started game 52 of 1600 (base vs king-line)
+Finished game 51 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 15 - 19 - 15  [0.459] 49
+Started game 53 of 1600 (king-line vs base)
+Finished game 48 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 15 - 20 - 15  [0.450] 50
+...      king-line playing White: 9 - 7 - 9  [0.540] 25
+...      king-line playing Black: 6 - 13 - 6  [0.360] 25
+...      White vs Black: 22 - 13 - 15  [0.590] 50
+Elo difference: -34.9 +/- 82.2, LOS: 19.9 %, DrawRatio: 30.0 %
+SPRT: llr -0.438 (-14.9%), lbound -2.94, ubound 2.94
+Started game 54 of 1600 (base vs king-line)
+Finished game 52 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 16 - 20 - 15  [0.461] 51
+Started game 55 of 1600 (king-line vs base)
+Finished game 49 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 16 - 20 - 16  [0.462] 52
+Started game 56 of 1600 (base vs king-line)
+Finished game 54 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 17 - 20 - 16  [0.472] 53
+Started game 57 of 1600 (king-line vs base)
+Finished game 55 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 17 - 21 - 16  [0.463] 54
+Started game 58 of 1600 (base vs king-line)
+Finished game 56 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 17 - 22 - 16  [0.455] 55
+Started game 59 of 1600 (king-line vs base)
+Finished game 57 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 17 - 23 - 16  [0.446] 56
+Started game 60 of 1600 (base vs king-line)
+Finished game 53 (king-line vs base): 1/2-1/2 {Draw by stalemate}
+Score of king-line vs base: 17 - 23 - 17  [0.447] 57
+Started game 61 of 1600 (king-line vs base)
+Finished game 58 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 17 - 24 - 17  [0.440] 58
+Started game 62 of 1600 (base vs king-line)
+Finished game 59 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 17 - 25 - 17  [0.432] 59
+Started game 63 of 1600 (king-line vs base)
+Finished game 60 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 18 - 25 - 17  [0.442] 60
+...      king-line playing White: 9 - 10 - 11  [0.483] 30
+...      king-line playing Black: 9 - 15 - 6  [0.400] 30
+...      White vs Black: 24 - 19 - 17  [0.542] 60
+Elo difference: -40.7 +/- 75.9, LOS: 14.3 %, DrawRatio: 28.3 %
+SPRT: llr -0.587 (-19.9%), lbound -2.94, ubound 2.94
+Started game 64 of 1600 (base vs king-line)
+Finished game 61 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 19 - 25 - 17  [0.451] 61
+Started game 65 of 1600 (king-line vs base)
+Finished game 62 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 19 - 26 - 17  [0.444] 62
+Started game 66 of 1600 (base vs king-line)
+Finished game 64 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 19 - 27 - 17  [0.437] 63
+Started game 67 of 1600 (king-line vs base)
+Finished game 65 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 19 - 28 - 17  [0.430] 64
+Started game 68 of 1600 (base vs king-line)
+Finished game 66 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 20 - 28 - 17  [0.438] 65
+Started game 69 of 1600 (king-line vs base)
+Finished game 67 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 21 - 28 - 17  [0.447] 66
+Started game 70 of 1600 (base vs king-line)
+Finished game 63 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 21 - 28 - 18  [0.448] 67
+Started game 71 of 1600 (king-line vs base)
+Finished game 69 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 22 - 28 - 18  [0.456] 68
+Started game 72 of 1600 (base vs king-line)
+Finished game 68 (base vs king-line): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 22 - 28 - 19  [0.457] 69
+Started game 73 of 1600 (king-line vs base)
+Finished game 71 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 23 - 28 - 19  [0.464] 70
+...      king-line playing White: 13 - 11 - 12  [0.528] 36
+...      king-line playing Black: 10 - 17 - 7  [0.397] 34
+...      White vs Black: 30 - 21 - 19  [0.564] 70
+Elo difference: -24.9 +/- 70.4, LOS: 24.2 %, DrawRatio: 27.1 %
+SPRT: llr -0.445 (-15.1%), lbound -2.94, ubound 2.94
+Started game 74 of 1600 (base vs king-line)
+Finished game 72 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 23 - 28 - 20  [0.465] 71
+Started game 75 of 1600 (king-line vs base)
+Finished game 70 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 24 - 28 - 20  [0.472] 72
+Started game 76 of 1600 (base vs king-line)
+Finished game 73 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 24 - 29 - 20  [0.466] 73
+Started game 77 of 1600 (king-line vs base)
+Finished game 74 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 24 - 30 - 20  [0.459] 74
+Started game 78 of 1600 (base vs king-line)
+Finished game 76 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 24 - 31 - 20  [0.453] 75
+Started game 79 of 1600 (king-line vs base)
+Finished game 77 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 24 - 32 - 20  [0.447] 76
+Started game 80 of 1600 (base vs king-line)
+Finished game 75 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 24 - 33 - 20  [0.442] 77
+Started game 81 of 1600 (king-line vs base)
+Finished game 78 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 25 - 33 - 20  [0.449] 78
+Started game 82 of 1600 (base vs king-line)
+Finished game 79 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 25 - 34 - 20  [0.443] 79
+Started game 83 of 1600 (king-line vs base)
+Finished game 81 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 26 - 34 - 20  [0.450] 80
+...      king-line playing White: 14 - 15 - 12  [0.488] 41
+...      king-line playing Black: 12 - 19 - 8  [0.410] 39
+...      White vs Black: 33 - 27 - 20  [0.537] 80
+Elo difference: -34.9 +/- 66.9, LOS: 15.1 %, DrawRatio: 25.0 %
+SPRT: llr -0.653 (-22.2%), lbound -2.94, ubound 2.94
+Started game 84 of 1600 (base vs king-line)
+Finished game 82 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 26 - 34 - 21  [0.451] 81
+Started game 85 of 1600 (king-line vs base)
+Finished game 80 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 27 - 34 - 21  [0.457] 82
+Started game 86 of 1600 (base vs king-line)
+Finished game 84 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 27 - 34 - 22  [0.458] 83
+Started game 87 of 1600 (king-line vs base)
+Finished game 85 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 28 - 34 - 22  [0.464] 84
+Started game 88 of 1600 (base vs king-line)
+Finished game 86 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 28 - 35 - 22  [0.459] 85
+Started game 89 of 1600 (king-line vs base)
+Finished game 83 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 29 - 35 - 22  [0.465] 86
+Started game 90 of 1600 (base vs king-line)
+Finished game 88 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 29 - 36 - 22  [0.460] 87
+Started game 91 of 1600 (king-line vs base)
+Finished game 87 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 29 - 37 - 22  [0.455] 88
+Started game 92 of 1600 (base vs king-line)
+Finished game 90 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 29 - 38 - 22  [0.449] 89
+Started game 93 of 1600 (king-line vs base)
+Finished game 89 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 30 - 38 - 22  [0.456] 90
+...      king-line playing White: 17 - 16 - 12  [0.511] 45
+...      king-line playing Black: 13 - 22 - 10  [0.400] 45
+...      White vs Black: 39 - 29 - 22  [0.556] 90
+Elo difference: -31.0 +/- 63.2, LOS: 16.6 %, DrawRatio: 24.4 %
+SPRT: llr -0.66 (-22.4%), lbound -2.94, ubound 2.94
+Started game 94 of 1600 (base vs king-line)
+Finished game 91 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 30 - 38 - 23  [0.456] 91
+Started game 95 of 1600 (king-line vs base)
+Finished game 92 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 30 - 38 - 24  [0.457] 92
+Started game 96 of 1600 (base vs king-line)
+Finished game 93 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 31 - 38 - 24  [0.462] 93
+Started game 97 of 1600 (king-line vs base)
+Finished game 95 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 31 - 38 - 25  [0.463] 94
+Started game 98 of 1600 (base vs king-line)
+Finished game 94 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 31 - 39 - 25  [0.458] 95
+Started game 99 of 1600 (king-line vs base)
+Finished game 98 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 32 - 39 - 25  [0.464] 96
+Started game 100 of 1600 (base vs king-line)
+Finished game 96 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 33 - 39 - 25  [0.469] 97
+Started game 101 of 1600 (king-line vs base)
+Finished game 97 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 33 - 40 - 25  [0.464] 98
+Started game 102 of 1600 (base vs king-line)
+Finished game 99 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 34 - 40 - 25  [0.470] 99
+Started game 103 of 1600 (king-line vs base)
+Finished game 101 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 35 - 40 - 25  [0.475] 100
+...      king-line playing White: 20 - 17 - 14  [0.529] 51
+...      king-line playing Black: 15 - 23 - 11  [0.418] 49
+...      White vs Black: 43 - 32 - 25  [0.555] 100
+Elo difference: -17.4 +/- 59.5, LOS: 28.2 %, DrawRatio: 25.0 %
+SPRT: llr -0.468 (-15.9%), lbound -2.94, ubound 2.94
+Started game 104 of 1600 (base vs king-line)
+Finished game 100 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 35 - 41 - 25  [0.470] 101
+Started game 105 of 1600 (king-line vs base)
+Finished game 102 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 35 - 42 - 25  [0.466] 102
+Started game 106 of 1600 (base vs king-line)
+Finished game 103 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 35 - 42 - 26  [0.466] 103
+Started game 107 of 1600 (king-line vs base)
+Finished game 105 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 36 - 42 - 26  [0.471] 104
+Started game 108 of 1600 (base vs king-line)
+Finished game 107 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 37 - 42 - 26  [0.476] 105
+Started game 109 of 1600 (king-line vs base)
+Finished game 106 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 38 - 42 - 26  [0.481] 106
+Started game 110 of 1600 (base vs king-line)
+Finished game 104 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 38 - 43 - 26  [0.477] 107
+Started game 111 of 1600 (king-line vs base)
+Finished game 109 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 39 - 43 - 26  [0.481] 108
+Started game 112 of 1600 (base vs king-line)
+Finished game 111 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 39 - 44 - 26  [0.477] 109
+Started game 113 of 1600 (king-line vs base)
+Finished game 108 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 40 - 44 - 26  [0.482] 110
+...      king-line playing White: 23 - 18 - 15  [0.545] 56
+...      king-line playing Black: 17 - 26 - 11  [0.417] 54
+...      White vs Black: 49 - 35 - 26  [0.564] 110
+Elo difference: -12.6 +/- 57.2, LOS: 33.1 %, DrawRatio: 23.6 %
+SPRT: llr -0.403 (-13.7%), lbound -2.94, ubound 2.94
+Started game 114 of 1600 (base vs king-line)
+Finished game 110 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 40 - 44 - 27  [0.482] 111
+Started game 115 of 1600 (king-line vs base)
+Finished game 112 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 41 - 44 - 27  [0.487] 112
+Started game 116 of 1600 (base vs king-line)
+Finished game 113 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 41 - 44 - 28  [0.487] 113
+Started game 117 of 1600 (king-line vs base)
+Finished game 115 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 42 - 44 - 28  [0.491] 114
+Started game 118 of 1600 (base vs king-line)
+Finished game 117 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 42 - 45 - 28  [0.487] 115
+Started game 119 of 1600 (king-line vs base)
+Finished game 116 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 42 - 46 - 28  [0.483] 116
+Started game 120 of 1600 (base vs king-line)
+Finished game 114 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 42 - 47 - 28  [0.479] 117
+Started game 121 of 1600 (king-line vs base)
+Finished game 118 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 42 - 48 - 28  [0.475] 118
+Started game 122 of 1600 (base vs king-line)
+Finished game 121 (king-line vs base): 1-0 {White mates}
+Score of king-line vs base: 43 - 48 - 28  [0.479] 119
+Started game 123 of 1600 (king-line vs base)
+Finished game 119 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 44 - 48 - 28  [0.483] 120
+...      king-line playing White: 26 - 19 - 16  [0.557] 61
+...      king-line playing Black: 18 - 29 - 12  [0.407] 59
+...      White vs Black: 55 - 37 - 28  [0.575] 120
+Elo difference: -11.6 +/- 54.8, LOS: 33.8 %, DrawRatio: 23.3 %
+SPRT: llr -0.413 (-14.0%), lbound -2.94, ubound 2.94
+Started game 124 of 1600 (base vs king-line)
+Finished game 122 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 45 - 48 - 28  [0.488] 121
+Started game 125 of 1600 (king-line vs base)
+Finished game 124 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 45 - 49 - 28  [0.484] 122
+Started game 126 of 1600 (base vs king-line)
+Finished game 125 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 46 - 49 - 28  [0.488] 123
+Started game 127 of 1600 (king-line vs base)
+Finished game 123 (king-line vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 46 - 49 - 29  [0.488] 124
+Started game 128 of 1600 (base vs king-line)
+Finished game 120 (base vs king-line): 1/2-1/2 {Draw by fifty moves rule}
+Score of king-line vs base: 46 - 49 - 30  [0.488] 125
+Started game 129 of 1600 (king-line vs base)
+Finished game 126 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 47 - 49 - 30  [0.492] 126
+Started game 130 of 1600 (base vs king-line)
+Finished game 127 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 47 - 50 - 30  [0.488] 127
+Started game 131 of 1600 (king-line vs base)
+Finished game 128 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 47 - 51 - 30  [0.484] 128
+Started game 132 of 1600 (base vs king-line)
+Finished game 130 (base vs king-line): 0-1 {Black mates}
+Score of king-line vs base: 48 - 51 - 30  [0.488] 129
+Started game 133 of 1600 (king-line vs base)
+Finished game 129 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 48 - 51 - 31  [0.488] 130
+...      king-line playing White: 27 - 20 - 18  [0.554] 65
+...      king-line playing Black: 21 - 31 - 13  [0.423] 65
+...      White vs Black: 58 - 41 - 31  [0.565] 130
+Elo difference: -8.0 +/- 52.4, LOS: 38.2 %, DrawRatio: 23.8 %
+SPRT: llr -0.359 (-12.2%), lbound -2.94, ubound 2.94
+Started game 134 of 1600 (base vs king-line)
+Finished game 134 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 48 - 52 - 31  [0.485] 131
+Started game 135 of 1600 (king-line vs base)
+Finished game 132 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 49 - 52 - 31  [0.489] 132
+Started game 136 of 1600 (base vs king-line)
+Finished game 131 (king-line vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 49 - 52 - 32  [0.489] 133
+Started game 137 of 1600 (king-line vs base)
+Finished game 133 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 49 - 53 - 32  [0.485] 134
+Started game 138 of 1600 (base vs king-line)
+Finished game 135 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 49 - 54 - 32  [0.481] 135
+Started game 139 of 1600 (king-line vs base)
+Finished game 136 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 50 - 54 - 32  [0.485] 136
+Started game 140 of 1600 (base vs king-line)
+Finished game 137 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 50 - 54 - 33  [0.485] 137
+Started game 141 of 1600 (king-line vs base)
+Finished game 139 (king-line vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 50 - 54 - 34  [0.486] 138
+Started game 142 of 1600 (base vs king-line)
+Finished game 140 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 50 - 55 - 34  [0.482] 139
+Started game 143 of 1600 (king-line vs base)
+Finished game 138 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 51 - 55 - 34  [0.486] 140
+...      king-line playing White: 27 - 22 - 21  [0.536] 70
+...      king-line playing Black: 24 - 33 - 13  [0.436] 70
+...      White vs Black: 60 - 46 - 34  [0.550] 140
+Elo difference: -9.9 +/- 50.4, LOS: 34.9 %, DrawRatio: 24.3 %
+SPRT: llr -0.441 (-15.0%), lbound -2.94, ubound 2.94
+Started game 144 of 1600 (base vs king-line)
+Finished game 141 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 52 - 55 - 34  [0.489] 141
+Started game 145 of 1600 (king-line vs base)
+Finished game 142 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 53 - 55 - 34  [0.493] 142
+Started game 146 of 1600 (base vs king-line)
+Finished game 144 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 53 - 56 - 34  [0.490] 143
+Started game 147 of 1600 (king-line vs base)
+Finished game 146 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 53 - 56 - 35  [0.490] 144
+Started game 148 of 1600 (base vs king-line)
+Finished game 147 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 53 - 57 - 35  [0.486] 145
+Started game 149 of 1600 (king-line vs base)
+Finished game 145 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 54 - 57 - 35  [0.490] 146
+Started game 150 of 1600 (base vs king-line)
+Finished game 143 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 55 - 57 - 35  [0.493] 147
+Started game 151 of 1600 (king-line vs base)
+Finished game 150 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 55 - 57 - 36  [0.493] 148
+Started game 152 of 1600 (base vs king-line)
+Finished game 149 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 55 - 58 - 36  [0.490] 149
+Started game 153 of 1600 (king-line vs base)
+Finished game 152 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 56 - 58 - 36  [0.493] 150
+...      king-line playing White: 30 - 24 - 21  [0.540] 75
+...      king-line playing Black: 26 - 34 - 15  [0.447] 75
+...      White vs Black: 64 - 50 - 36  [0.547] 150
+Elo difference: -4.6 +/- 48.7, LOS: 42.6 %, DrawRatio: 24.0 %
+SPRT: llr -0.315 (-10.7%), lbound -2.94, ubound 2.94
+Started game 154 of 1600 (base vs king-line)
+Finished game 151 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 56 - 58 - 37  [0.493] 151
+Started game 155 of 1600 (king-line vs base)
+Finished game 148 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 56 - 59 - 37  [0.490] 152
+Started game 156 of 1600 (base vs king-line)
+Finished game 153 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 57 - 59 - 37  [0.493] 153
+Started game 157 of 1600 (king-line vs base)
+Finished game 156 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 58 - 59 - 37  [0.497] 154
+Started game 158 of 1600 (base vs king-line)
+Finished game 157 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 58 - 60 - 37  [0.494] 155
+Started game 159 of 1600 (king-line vs base)
+Finished game 155 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 58 - 60 - 38  [0.494] 156
+Started game 160 of 1600 (base vs king-line)
+Finished game 159 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 59 - 60 - 38  [0.497] 157
+Started game 161 of 1600 (king-line vs base)
+Finished game 158 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 59 - 61 - 38  [0.494] 158
+Started game 162 of 1600 (base vs king-line)
+Finished game 160 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 60 - 61 - 38  [0.497] 159
+Started game 163 of 1600 (king-line vs base)
+Finished game 154 (base vs king-line): 1/2-1/2 {Draw by stalemate}
+Score of king-line vs base: 60 - 61 - 39  [0.497] 160
+...      king-line playing White: 32 - 25 - 23  [0.544] 80
+...      king-line playing Black: 28 - 36 - 16  [0.450] 80
+...      White vs Black: 68 - 53 - 39  [0.547] 160
+Elo difference: -2.2 +/- 47.0, LOS: 46.4 %, DrawRatio: 24.4 %
+SPRT: llr -0.26 (-8.8%), lbound -2.94, ubound 2.94
+Started game 164 of 1600 (base vs king-line)
+Finished game 163 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 60 - 61 - 40  [0.497] 161
+Started game 165 of 1600 (king-line vs base)
+Finished game 161 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 60 - 62 - 40  [0.494] 162
+Started game 166 of 1600 (base vs king-line)
+Finished game 162 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 60 - 62 - 41  [0.494] 163
+Started game 167 of 1600 (king-line vs base)
+Finished game 165 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 60 - 63 - 41  [0.491] 164
+Started game 168 of 1600 (base vs king-line)
+Finished game 164 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 61 - 63 - 41  [0.494] 165
+Started game 169 of 1600 (king-line vs base)
+Finished game 166 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 62 - 63 - 41  [0.497] 166
+Started game 170 of 1600 (base vs king-line)
+Finished game 167 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 63 - 63 - 41  [0.500] 167
+Started game 171 of 1600 (king-line vs base)
+Finished game 171 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 63 - 63 - 42  [0.500] 168
+Started game 172 of 1600 (base vs king-line)
+Finished game 170 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 63 - 64 - 42  [0.497] 169
+Started game 173 of 1600 (king-line vs base)
+Finished game 168 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 63 - 64 - 43  [0.497] 170
+...      king-line playing White: 33 - 27 - 25  [0.535] 85
+...      king-line playing Black: 30 - 37 - 18  [0.459] 85
+...      White vs Black: 70 - 57 - 43  [0.538] 170
+Elo difference: -2.0 +/- 45.3, LOS: 46.5 %, DrawRatio: 25.3 %
+SPRT: llr -0.275 (-9.3%), lbound -2.94, ubound 2.94
+Started game 174 of 1600 (base vs king-line)
+Finished game 169 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 64 - 64 - 43  [0.500] 171
+Started game 175 of 1600 (king-line vs base)
+Finished game 172 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 65 - 64 - 43  [0.503] 172
+Started game 176 of 1600 (base vs king-line)
+Finished game 173 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 66 - 64 - 43  [0.506] 173
+Started game 177 of 1600 (king-line vs base)
+Finished game 176 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 66 - 64 - 44  [0.506] 174
+Started game 178 of 1600 (base vs king-line)
+Finished game 177 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 67 - 64 - 44  [0.509] 175
+Started game 179 of 1600 (king-line vs base)
+Finished game 174 (base vs king-line): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 67 - 64 - 45  [0.509] 176
+Started game 180 of 1600 (base vs king-line)
+Finished game 178 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 67 - 64 - 46  [0.508] 177
+Started game 181 of 1600 (king-line vs base)
+Finished game 181 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 67 - 64 - 47  [0.508] 178
+Started game 182 of 1600 (base vs king-line)
+Finished game 175 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 67 - 64 - 48  [0.508] 179
+Started game 183 of 1600 (king-line vs base)
+Finished game 179 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 67 - 65 - 48  [0.506] 180
+...      king-line playing White: 36 - 28 - 27  [0.544] 91
+...      king-line playing Black: 31 - 37 - 21  [0.466] 89
+...      White vs Black: 73 - 59 - 48  [0.539] 180
+Elo difference: 3.9 +/- 43.6, LOS: 56.9 %, DrawRatio: 26.7 %
+SPRT: llr -0.0802 (-2.7%), lbound -2.94, ubound 2.94
+Started game 184 of 1600 (base vs king-line)
+Finished game 180 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 68 - 65 - 48  [0.508] 181
+Started game 185 of 1600 (king-line vs base)
+Finished game 182 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 69 - 65 - 48  [0.511] 182
+Started game 186 of 1600 (base vs king-line)
+Finished game 183 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 70 - 65 - 48  [0.514] 183
+Started game 187 of 1600 (king-line vs base)
+Finished game 185 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 71 - 65 - 48  [0.516] 184
+Started game 188 of 1600 (base vs king-line)
+Finished game 187 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 72 - 65 - 48  [0.519] 185
+Started game 189 of 1600 (king-line vs base)
+Finished game 184 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 73 - 65 - 48  [0.522] 186
+Started game 190 of 1600 (base vs king-line)
+Finished game 189 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 73 - 66 - 48  [0.519] 187
+Started game 191 of 1600 (king-line vs base)
+Finished game 186 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 74 - 66 - 48  [0.521] 188
+Started game 192 of 1600 (base vs king-line)
+Finished game 190 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 74 - 67 - 48  [0.519] 189
+Started game 193 of 1600 (king-line vs base)
+Finished game 188 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 74 - 67 - 49  [0.518] 190
+...      king-line playing White: 39 - 29 - 27  [0.553] 95
+...      king-line playing Black: 35 - 38 - 22  [0.484] 95
+...      White vs Black: 77 - 64 - 49  [0.534] 190
+Elo difference: 12.8 +/- 42.7, LOS: 72.2 %, DrawRatio: 25.8 %
+SPRT: llr 0.258 (8.8%), lbound -2.94, ubound 2.94
+Started game 194 of 1600 (base vs king-line)
+Finished game 193 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 74 - 67 - 50  [0.518] 191
+Started game 195 of 1600 (king-line vs base)
+Finished game 192 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 74 - 67 - 51  [0.518] 192
+Started game 196 of 1600 (base vs king-line)
+Finished game 194 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 74 - 68 - 51  [0.516] 193
+Started game 197 of 1600 (king-line vs base)
+Finished game 191 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 75 - 68 - 51  [0.518] 194
+Started game 198 of 1600 (base vs king-line)
+Finished game 195 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 76 - 68 - 51  [0.521] 195
+Started game 199 of 1600 (king-line vs base)
+Finished game 196 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 76 - 69 - 51  [0.518] 196
+Started game 200 of 1600 (base vs king-line)
+Finished game 197 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 77 - 69 - 51  [0.520] 197
+Started game 201 of 1600 (king-line vs base)
+Finished game 198 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 77 - 70 - 51  [0.518] 198
+Started game 202 of 1600 (base vs king-line)
+Finished game 199 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 78 - 70 - 51  [0.520] 199
+Started game 203 of 1600 (king-line vs base)
+Finished game 200 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 78 - 71 - 51  [0.517] 200
+...      king-line playing White: 43 - 29 - 28  [0.570] 100
+...      king-line playing Black: 35 - 42 - 23  [0.465] 100
+...      White vs Black: 85 - 64 - 51  [0.552] 200
+Elo difference: 12.2 +/- 41.7, LOS: 71.7 %, DrawRatio: 25.5 %
+SPRT: llr 0.245 (8.3%), lbound -2.94, ubound 2.94
+Started game 204 of 1600 (base vs king-line)
+Finished game 202 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 78 - 71 - 52  [0.517] 201
+Started game 205 of 1600 (king-line vs base)
+Finished game 201 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 78 - 72 - 52  [0.515] 202
+Started game 206 of 1600 (base vs king-line)
+Finished game 203 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 78 - 73 - 52  [0.512] 203
+Started game 207 of 1600 (king-line vs base)
+Finished game 204 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 79 - 73 - 52  [0.515] 204
+Started game 208 of 1600 (base vs king-line)
+Finished game 205 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 79 - 73 - 53  [0.515] 205
+Started game 209 of 1600 (king-line vs base)
+Finished game 206 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 80 - 73 - 53  [0.517] 206
+Started game 210 of 1600 (base vs king-line)
+Finished game 209 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 80 - 74 - 53  [0.514] 207
+Started game 211 of 1600 (king-line vs base)
+Finished game 207 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 80 - 75 - 53  [0.512] 208
+Started game 212 of 1600 (base vs king-line)
+Finished game 208 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 81 - 75 - 53  [0.514] 209
+Started game 213 of 1600 (king-line vs base)
+Finished game 210 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 81 - 76 - 53  [0.512] 210
+...      king-line playing White: 43 - 33 - 29  [0.548] 105
+...      king-line playing Black: 38 - 43 - 24  [0.476] 105
+...      White vs Black: 86 - 71 - 53  [0.536] 210
+Elo difference: 8.3 +/- 40.8, LOS: 65.5 %, DrawRatio: 25.2 %
+SPRT: llr 0.0935 (3.2%), lbound -2.94, ubound 2.94
+Started game 214 of 1600 (base vs king-line)
+Finished game 213 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 82 - 76 - 53  [0.514] 211
+Started game 215 of 1600 (king-line vs base)
+Finished game 212 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 82 - 77 - 53  [0.512] 212
+Started game 216 of 1600 (base vs king-line)
+Finished game 214 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 83 - 77 - 53  [0.514] 213
+Started game 217 of 1600 (king-line vs base)
+Finished game 216 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 84 - 77 - 53  [0.516] 214
+Started game 218 of 1600 (base vs king-line)
+Finished game 215 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 84 - 78 - 53  [0.514] 215
+Started game 219 of 1600 (king-line vs base)
+Finished game 211 (king-line vs base): 1/2-1/2 {Draw by fifty moves rule}
+Score of king-line vs base: 84 - 78 - 54  [0.514] 216
+Started game 220 of 1600 (base vs king-line)
+Finished game 217 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 85 - 78 - 54  [0.516] 217
+Started game 221 of 1600 (king-line vs base)
+Finished game 219 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 85 - 79 - 54  [0.514] 218
+Started game 222 of 1600 (base vs king-line)
+Finished game 218 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 85 - 80 - 54  [0.511] 219
+Started game 223 of 1600 (king-line vs base)
+Finished game 221 (king-line vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 85 - 80 - 55  [0.511] 220
+...      king-line playing White: 45 - 35 - 31  [0.545] 111
+...      king-line playing Black: 40 - 45 - 24  [0.477] 109
+...      White vs Black: 90 - 75 - 55  [0.534] 220
+Elo difference: 7.9 +/- 39.9, LOS: 65.1 %, DrawRatio: 25.0 %
+SPRT: llr 0.0813 (2.8%), lbound -2.94, ubound 2.94
+Started game 224 of 1600 (base vs king-line)
+Finished game 220 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 86 - 80 - 55  [0.514] 221
+Started game 225 of 1600 (king-line vs base)
+Finished game 223 (king-line vs base): 0-1 {Black mates}
+Score of king-line vs base: 86 - 81 - 55  [0.511] 222
+Started game 226 of 1600 (base vs king-line)
+Finished game 222 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 87 - 81 - 55  [0.513] 223
+Started game 227 of 1600 (king-line vs base)
+Finished game 225 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 87 - 82 - 55  [0.511] 224
+Started game 228 of 1600 (base vs king-line)
+Finished game 227 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 88 - 82 - 55  [0.513] 225
+Started game 229 of 1600 (king-line vs base)
+Finished game 226 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 88 - 83 - 55  [0.511] 226
+Started game 230 of 1600 (base vs king-line)
+Finished game 224 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 88 - 84 - 55  [0.509] 227
+Started game 231 of 1600 (king-line vs base)
+Finished game 230 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 88 - 84 - 56  [0.509] 228
+Started game 232 of 1600 (base vs king-line)
+Finished game 228 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 88 - 85 - 56  [0.507] 229
+Started game 233 of 1600 (king-line vs base)
+Finished game 229 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 88 - 85 - 57  [0.507] 230
+...      king-line playing White: 46 - 37 - 32  [0.539] 115
+...      king-line playing Black: 42 - 48 - 25  [0.474] 115
+...      White vs Black: 94 - 79 - 57  [0.533] 230
+Elo difference: 4.5 +/- 39.1, LOS: 59.0 %, DrawRatio: 24.8 %
+SPRT: llr -0.0687 (-2.3%), lbound -2.94, ubound 2.94
+Started game 234 of 1600 (base vs king-line)
+Finished game 231 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 88 - 85 - 58  [0.506] 231
+Started game 235 of 1600 (king-line vs base)
+Finished game 232 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 88 - 86 - 58  [0.504] 232
+Started game 236 of 1600 (base vs king-line)
+Finished game 236 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 88 - 86 - 59  [0.504] 233
+Started game 237 of 1600 (king-line vs base)
+Finished game 233 (king-line vs base): 1/2-1/2 {Draw by stalemate}
+Score of king-line vs base: 88 - 86 - 60  [0.504] 234
+Started game 238 of 1600 (base vs king-line)
+Finished game 235 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 88 - 87 - 60  [0.502] 235
+Started game 239 of 1600 (king-line vs base)
+Finished game 237 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 88 - 88 - 60  [0.500] 236
+Started game 240 of 1600 (base vs king-line)
+Finished game 238 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 88 - 89 - 60  [0.498] 237
+Started game 241 of 1600 (king-line vs base)
+Finished game 239 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 89 - 89 - 60  [0.500] 238
+Started game 242 of 1600 (base vs king-line)
+Finished game 234 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 90 - 89 - 60  [0.502] 239
+Started game 243 of 1600 (king-line vs base)
+Finished game 241 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 90 - 90 - 60  [0.500] 240
+...      king-line playing White: 47 - 40 - 34  [0.529] 121
+...      king-line playing Black: 43 - 50 - 26  [0.471] 119
+...      White vs Black: 97 - 83 - 60  [0.529] 240
+Elo difference: 0.0 +/- 38.2, LOS: 50.0 %, DrawRatio: 25.0 %
+SPRT: llr -0.288 (-9.8%), lbound -2.94, ubound 2.94
+Started game 244 of 1600 (base vs king-line)
+Finished game 243 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 90 - 91 - 60  [0.498] 241
+Started game 245 of 1600 (king-line vs base)
+Finished game 244 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 90 - 92 - 60  [0.496] 242
+Started game 246 of 1600 (base vs king-line)
+Finished game 240 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 90 - 92 - 61  [0.496] 243
+Started game 247 of 1600 (king-line vs base)
+Finished game 245 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 90 - 93 - 61  [0.494] 244
+Started game 248 of 1600 (base vs king-line)
+Finished game 242 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 90 - 93 - 62  [0.494] 245
+Started game 249 of 1600 (king-line vs base)
+Finished game 246 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 91 - 93 - 62  [0.496] 246
+Started game 250 of 1600 (base vs king-line)
+Finished game 248 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 91 - 94 - 62  [0.494] 247
+Started game 251 of 1600 (king-line vs base)
+Finished game 249 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 91 - 94 - 63  [0.494] 248
+Started game 252 of 1600 (base vs king-line)
+Finished game 247 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 92 - 94 - 63  [0.496] 249
+Started game 253 of 1600 (king-line vs base)
+Finished game 250 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 92 - 95 - 63  [0.494] 250
+...      king-line playing White: 48 - 42 - 35  [0.524] 125
+...      king-line playing Black: 44 - 53 - 28  [0.464] 125
+...      White vs Black: 101 - 86 - 63  [0.530] 250
+Elo difference: -4.2 +/- 37.3, LOS: 41.3 %, DrawRatio: 25.2 %
+SPRT: llr -0.509 (-17.3%), lbound -2.94, ubound 2.94
+Started game 254 of 1600 (base vs king-line)
+Finished game 252 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 93 - 95 - 63  [0.496] 251
+Started game 255 of 1600 (king-line vs base)
+Finished game 251 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 93 - 96 - 63  [0.494] 252
+Started game 256 of 1600 (base vs king-line)
+Finished game 255 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 93 - 97 - 63  [0.492] 253
+Started game 257 of 1600 (king-line vs base)
+Finished game 254 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 93 - 98 - 63  [0.490] 254
+Started game 258 of 1600 (base vs king-line)
+Finished game 253 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 94 - 98 - 63  [0.492] 255
+Started game 259 of 1600 (king-line vs base)
+Finished game 256 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 94 - 98 - 64  [0.492] 256
+Started game 260 of 1600 (base vs king-line)
+Finished game 259 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 95 - 98 - 64  [0.494] 257
+Started game 261 of 1600 (king-line vs base)
+Finished game 261 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 96 - 98 - 64  [0.496] 258
+Started game 262 of 1600 (base vs king-line)
+Finished game 258 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 96 - 98 - 65  [0.496] 259
+Started game 263 of 1600 (king-line vs base)
+Finished game 260 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 96 - 99 - 65  [0.494] 260
+...      king-line playing White: 51 - 44 - 35  [0.527] 130
+...      king-line playing Black: 45 - 55 - 30  [0.462] 130
+...      White vs Black: 106 - 89 - 65  [0.533] 260
+Elo difference: -4.0 +/- 36.7, LOS: 41.5 %, DrawRatio: 25.0 %
+SPRT: llr -0.519 (-17.6%), lbound -2.94, ubound 2.94
+Started game 264 of 1600 (base vs king-line)
+Finished game 257 (king-line vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 96 - 99 - 66  [0.494] 261
+Started game 265 of 1600 (king-line vs base)
+Finished game 262 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 96 - 100 - 66  [0.492] 262
+Started game 266 of 1600 (base vs king-line)
+Finished game 263 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 96 - 100 - 67  [0.492] 263
+Started game 267 of 1600 (king-line vs base)
+Finished game 265 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 96 - 101 - 67  [0.491] 264
+Started game 268 of 1600 (base vs king-line)
+Finished game 264 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 96 - 101 - 68  [0.491] 265
+Started game 269 of 1600 (king-line vs base)
+Finished game 266 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 96 - 102 - 68  [0.489] 266
+Started game 270 of 1600 (base vs king-line)
+Finished game 268 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 96 - 103 - 68  [0.487] 267
+Started game 271 of 1600 (king-line vs base)
+Finished game 269 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 96 - 103 - 69  [0.487] 268
+Started game 272 of 1600 (base vs king-line)
+Finished game 267 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 96 - 104 - 69  [0.485] 269
+Started game 273 of 1600 (king-line vs base)
+Finished game 271 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 96 - 105 - 69  [0.483] 270
+...      king-line playing White: 51 - 47 - 38  [0.515] 136
+...      king-line playing Black: 45 - 58 - 31  [0.451] 134
+...      White vs Black: 109 - 92 - 69  [0.531] 270
+Elo difference: -11.6 +/- 35.8, LOS: 26.3 %, DrawRatio: 25.6 %
+SPRT: llr -0.953 (-32.4%), lbound -2.94, ubound 2.94
+Started game 274 of 1600 (base vs king-line)
+Finished game 270 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 96 - 105 - 70  [0.483] 271
+Started game 275 of 1600 (king-line vs base)
+Finished game 274 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 96 - 106 - 70  [0.482] 272
+Started game 276 of 1600 (base vs king-line)
+Finished game 272 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 97 - 106 - 70  [0.484] 273
+Started game 277 of 1600 (king-line vs base)
+Finished game 273 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 98 - 106 - 70  [0.485] 274
+Started game 278 of 1600 (base vs king-line)
+Finished game 275 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 99 - 106 - 70  [0.487] 275
+Started game 279 of 1600 (king-line vs base)
+Finished game 276 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 100 - 106 - 70  [0.489] 276
+Started game 280 of 1600 (base vs king-line)
+Finished game 277 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 101 - 106 - 70  [0.491] 277
+Started game 281 of 1600 (king-line vs base)
+Finished game 278 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 101 - 107 - 70  [0.489] 278
+Started game 282 of 1600 (base vs king-line)
+Finished game 281 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 102 - 107 - 70  [0.491] 279
+Started game 283 of 1600 (king-line vs base)
+Finished game 279 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 103 - 107 - 70  [0.493] 280
+...      king-line playing White: 56 - 47 - 38  [0.532] 141
+...      king-line playing Black: 47 - 60 - 32  [0.453] 139
+...      White vs Black: 116 - 94 - 70  [0.539] 280
+Elo difference: -5.0 +/- 35.3, LOS: 39.1 %, DrawRatio: 25.0 %
+SPRT: llr -0.612 (-20.8%), lbound -2.94, ubound 2.94
+Started game 284 of 1600 (base vs king-line)
+Finished game 282 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 103 - 108 - 70  [0.491] 281
+Started game 285 of 1600 (king-line vs base)
+Finished game 280 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 103 - 109 - 70  [0.489] 282
+Started game 286 of 1600 (base vs king-line)
+Finished game 283 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 103 - 110 - 70  [0.488] 283
+Started game 287 of 1600 (king-line vs base)
+Finished game 284 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 104 - 110 - 70  [0.489] 284
+Started game 288 of 1600 (base vs king-line)
+Finished game 287 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 104 - 111 - 70  [0.488] 285
+Started game 289 of 1600 (king-line vs base)
+Finished game 285 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 105 - 111 - 70  [0.490] 286
+Started game 290 of 1600 (base vs king-line)
+Finished game 286 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 105 - 112 - 70  [0.488] 287
+Started game 291 of 1600 (king-line vs base)
+Finished game 288 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 106 - 112 - 70  [0.490] 288
+Started game 292 of 1600 (base vs king-line)
+Finished game 290 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 107 - 112 - 70  [0.491] 289
+Started game 293 of 1600 (king-line vs base)
+Finished game 289 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 108 - 112 - 70  [0.493] 290
+...      king-line playing White: 58 - 49 - 38  [0.531] 145
+...      king-line playing Black: 50 - 63 - 32  [0.455] 145
+...      White vs Black: 121 - 99 - 70  [0.538] 290
+Elo difference: -4.8 +/- 34.9, LOS: 39.4 %, DrawRatio: 24.1 %
+SPRT: llr -0.617 (-21.0%), lbound -2.94, ubound 2.94
+Started game 294 of 1600 (base vs king-line)
+Finished game 291 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 109 - 112 - 70  [0.495] 291
+Started game 295 of 1600 (king-line vs base)
+Finished game 294 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 109 - 113 - 70  [0.493] 292
+Started game 296 of 1600 (base vs king-line)
+Finished game 292 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 109 - 113 - 71  [0.493] 293
+Started game 297 of 1600 (king-line vs base)
+Finished game 295 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 110 - 113 - 71  [0.495] 294
+Started game 298 of 1600 (base vs king-line)
+Finished game 293 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 110 - 114 - 71  [0.493] 295
+Started game 299 of 1600 (king-line vs base)
+Finished game 297 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 111 - 114 - 71  [0.495] 296
+Started game 300 of 1600 (base vs king-line)
+Finished game 298 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 111 - 115 - 71  [0.493] 297
+Started game 301 of 1600 (king-line vs base)
+Finished game 299 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 111 - 116 - 71  [0.492] 298
+Started game 302 of 1600 (base vs king-line)
+Finished game 296 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 111 - 116 - 72  [0.492] 299
+Started game 303 of 1600 (king-line vs base)
+Finished game 300 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 111 - 116 - 73  [0.492] 300
+...      king-line playing White: 61 - 51 - 38  [0.533] 150
+...      king-line playing Black: 50 - 65 - 35  [0.450] 150
+...      White vs Black: 126 - 101 - 73  [0.542] 300
+Elo difference: -5.8 +/- 34.3, LOS: 37.0 %, DrawRatio: 24.3 %
+SPRT: llr -0.699 (-23.7%), lbound -2.94, ubound 2.94
+Started game 304 of 1600 (base vs king-line)
+Finished game 302 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 111 - 117 - 73  [0.490] 301
+Started game 305 of 1600 (king-line vs base)
+Finished game 305 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 112 - 117 - 73  [0.492] 302
+Started game 306 of 1600 (base vs king-line)
+Finished game 301 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 113 - 117 - 73  [0.493] 303
+Started game 307 of 1600 (king-line vs base)
+Finished game 304 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 114 - 117 - 73  [0.495] 304
+Started game 308 of 1600 (base vs king-line)
+Finished game 303 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 114 - 118 - 73  [0.493] 305
+Started game 309 of 1600 (king-line vs base)
+Finished game 307 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 114 - 119 - 73  [0.492] 306
+Started game 310 of 1600 (base vs king-line)
+Finished game 306 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 114 - 120 - 73  [0.490] 307
+Started game 311 of 1600 (king-line vs base)
+Finished game 308 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 114 - 121 - 73  [0.489] 308
+Started game 312 of 1600 (base vs king-line)
+Finished game 309 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 115 - 121 - 73  [0.490] 309
+Started game 313 of 1600 (king-line vs base)
+Finished game 311 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 116 - 121 - 73  [0.492] 310
+...      king-line playing White: 65 - 53 - 38  [0.538] 156
+...      king-line playing Black: 51 - 68 - 35  [0.445] 154
+...      White vs Black: 133 - 104 - 73  [0.547] 310
+Elo difference: -5.6 +/- 33.9, LOS: 37.3 %, DrawRatio: 23.5 %
+SPRT: llr -0.704 (-23.9%), lbound -2.94, ubound 2.94
+Started game 314 of 1600 (base vs king-line)
+Finished game 312 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 116 - 122 - 73  [0.490] 311
+Started game 315 of 1600 (king-line vs base)
+Finished game 310 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 116 - 123 - 73  [0.489] 312
+Started game 316 of 1600 (base vs king-line)
+Finished game 314 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 116 - 124 - 73  [0.487] 313
+Started game 317 of 1600 (king-line vs base)
+Finished game 315 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 117 - 124 - 73  [0.489] 314
+Started game 318 of 1600 (base vs king-line)
+Finished game 313 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 118 - 124 - 73  [0.490] 315
+Started game 319 of 1600 (king-line vs base)
+Finished game 316 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 118 - 125 - 73  [0.489] 316
+Started game 320 of 1600 (base vs king-line)
+Finished game 317 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 118 - 126 - 73  [0.487] 317
+Started game 321 of 1600 (king-line vs base)
+Finished game 321 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 118 - 127 - 73  [0.486] 318
+Started game 322 of 1600 (base vs king-line)
+Finished game 319 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 118 - 127 - 74  [0.486] 319
+Started game 323 of 1600 (king-line vs base)
+Finished game 318 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 118 - 127 - 75  [0.486] 320
+...      king-line playing White: 67 - 55 - 39  [0.537] 161
+...      king-line playing Black: 51 - 72 - 36  [0.434] 159
+...      White vs Black: 139 - 106 - 75  [0.552] 320
+Elo difference: -9.8 +/- 33.4, LOS: 28.3 %, DrawRatio: 23.4 %
+SPRT: llr -0.985 (-33.5%), lbound -2.94, ubound 2.94
+Started game 324 of 1600 (base vs king-line)
+Finished game 320 (base vs king-line): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 118 - 127 - 76  [0.486] 321
+Started game 325 of 1600 (king-line vs base)
+Finished game 322 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 118 - 128 - 76  [0.484] 322
+Started game 326 of 1600 (base vs king-line)
+Finished game 324 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 118 - 128 - 77  [0.485] 323
+Started game 327 of 1600 (king-line vs base)
+Finished game 323 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 118 - 129 - 77  [0.483] 324
+Started game 328 of 1600 (base vs king-line)
+Finished game 325 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 118 - 130 - 77  [0.482] 325
+Started game 329 of 1600 (king-line vs base)
+Finished game 326 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 118 - 131 - 77  [0.480] 326
+Started game 330 of 1600 (base vs king-line)
+Finished game 328 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 119 - 131 - 77  [0.482] 327
+Started game 331 of 1600 (king-line vs base)
+Finished game 327 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 119 - 132 - 77  [0.480] 328
+Started game 332 of 1600 (base vs king-line)
+Finished game 330 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 119 - 133 - 77  [0.479] 329
+Started game 333 of 1600 (king-line vs base)
+Finished game 329 (king-line vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 119 - 133 - 78  [0.479] 330
+...      king-line playing White: 67 - 58 - 40  [0.527] 165
+...      king-line playing Black: 52 - 75 - 38  [0.430] 165
+...      White vs Black: 142 - 110 - 78  [0.548] 330
+Elo difference: -14.7 +/- 32.8, LOS: 18.9 %, DrawRatio: 23.6 %
+SPRT: llr -1.34 (-45.5%), lbound -2.94, ubound 2.94
+Started game 334 of 1600 (base vs king-line)
+Finished game 332 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 119 - 134 - 78  [0.477] 331
+Started game 335 of 1600 (king-line vs base)
+Finished game 331 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 119 - 134 - 79  [0.477] 332
+Started game 336 of 1600 (base vs king-line)
+Finished game 334 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 119 - 134 - 80  [0.477] 333
+Started game 337 of 1600 (king-line vs base)
+Finished game 333 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 119 - 135 - 80  [0.476] 334
+Started game 338 of 1600 (base vs king-line)
+Finished game 336 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 119 - 136 - 80  [0.475] 335
+Started game 339 of 1600 (king-line vs base)
+Finished game 335 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 119 - 137 - 80  [0.473] 336
+Started game 340 of 1600 (base vs king-line)
+Finished game 338 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 119 - 138 - 80  [0.472] 337
+Started game 341 of 1600 (king-line vs base)
+Finished game 337 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 120 - 138 - 80  [0.473] 338
+Started game 342 of 1600 (base vs king-line)
+Finished game 339 (king-line vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 120 - 138 - 81  [0.473] 339
+Started game 343 of 1600 (king-line vs base)
+Finished game 340 (base vs king-line): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 120 - 138 - 82  [0.474] 340
+...      king-line playing White: 68 - 60 - 42  [0.524] 170
+...      king-line playing Black: 52 - 78 - 40  [0.424] 170
+...      White vs Black: 146 - 112 - 82  [0.550] 340
+Elo difference: -18.4 +/- 32.2, LOS: 13.1 %, DrawRatio: 24.1 %
+SPRT: llr -1.63 (-55.5%), lbound -2.94, ubound 2.94
+Started game 344 of 1600 (base vs king-line)
+Finished game 341 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 120 - 139 - 82  [0.472] 341
+Started game 345 of 1600 (king-line vs base)
+Finished game 342 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 120 - 140 - 82  [0.471] 342
+Started game 346 of 1600 (base vs king-line)
+Finished game 343 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 120 - 140 - 83  [0.471] 343
+Started game 347 of 1600 (king-line vs base)
+Finished game 345 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 120 - 141 - 83  [0.469] 344
+Started game 348 of 1600 (base vs king-line)
+Finished game 346 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 121 - 141 - 83  [0.471] 345
+Started game 349 of 1600 (king-line vs base)
+Finished game 344 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 121 - 142 - 83  [0.470] 346
+Started game 350 of 1600 (base vs king-line)
+Finished game 348 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 122 - 142 - 83  [0.471] 347
+Started game 351 of 1600 (king-line vs base)
+Finished game 347 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 122 - 142 - 84  [0.471] 348
+Started game 352 of 1600 (base vs king-line)
+Finished game 351 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 122 - 143 - 84  [0.470] 349
+Started game 353 of 1600 (king-line vs base)
+Finished game 350 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 123 - 143 - 84  [0.471] 350
+...      king-line playing White: 68 - 63 - 44  [0.514] 175
+...      king-line playing Black: 55 - 80 - 40  [0.429] 175
+...      White vs Black: 148 - 118 - 84  [0.543] 350
+Elo difference: -19.9 +/- 31.8, LOS: 11.0 %, DrawRatio: 24.0 %
+SPRT: llr -1.78 (-60.4%), lbound -2.94, ubound 2.94
+Started game 354 of 1600 (base vs king-line)
+Finished game 349 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 123 - 144 - 84  [0.470] 351
+Started game 355 of 1600 (king-line vs base)
+Finished game 352 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 123 - 144 - 85  [0.470] 352
+Started game 356 of 1600 (base vs king-line)
+Finished game 353 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 124 - 144 - 85  [0.472] 353
+Started game 357 of 1600 (king-line vs base)
+Finished game 355 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 125 - 144 - 85  [0.473] 354
+Started game 358 of 1600 (base vs king-line)
+Finished game 356 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 126 - 144 - 85  [0.475] 355
+Started game 359 of 1600 (king-line vs base)
+Finished game 357 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 127 - 144 - 85  [0.476] 356
+Started game 360 of 1600 (base vs king-line)
+Finished game 358 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 127 - 145 - 85  [0.475] 357
+Started game 361 of 1600 (king-line vs base)
+Finished game 361 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 127 - 146 - 85  [0.473] 358
+Started game 362 of 1600 (base vs king-line)
+Finished game 354 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 128 - 146 - 85  [0.475] 359
+Started game 363 of 1600 (king-line vs base)
+Finished game 360 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 128 - 147 - 85  [0.474] 360
+...      king-line playing White: 71 - 65 - 44  [0.517] 180
+...      king-line playing Black: 57 - 82 - 41  [0.431] 180
+...      White vs Black: 153 - 122 - 85  [0.543] 360
+Elo difference: -18.4 +/- 31.4, LOS: 12.6 %, DrawRatio: 23.6 %
+SPRT: llr -1.71 (-58.2%), lbound -2.94, ubound 2.94
+Started game 364 of 1600 (base vs king-line)
+Finished game 359 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 129 - 147 - 85  [0.475] 361
+Started game 365 of 1600 (king-line vs base)
+Finished game 362 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 130 - 147 - 85  [0.477] 362
+Started game 366 of 1600 (base vs king-line)
+Finished game 364 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 131 - 147 - 85  [0.478] 363
+Started game 367 of 1600 (king-line vs base)
+Finished game 365 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 132 - 147 - 85  [0.479] 364
+Started game 368 of 1600 (base vs king-line)
+Finished game 363 (king-line vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 132 - 147 - 86  [0.479] 365
+Started game 369 of 1600 (king-line vs base)
+Finished game 367 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 132 - 148 - 86  [0.478] 366
+Started game 370 of 1600 (base vs king-line)
+Finished game 366 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 132 - 149 - 86  [0.477] 367
+Started game 371 of 1600 (king-line vs base)
+Finished game 368 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 132 - 150 - 86  [0.476] 368
+Started game 372 of 1600 (base vs king-line)
+Finished game 369 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 132 - 150 - 87  [0.476] 369
+Started game 373 of 1600 (king-line vs base)
+Finished game 371 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 132 - 151 - 87  [0.474] 370
+...      king-line playing White: 73 - 67 - 46  [0.516] 186
+...      king-line playing Black: 59 - 84 - 41  [0.432] 184
+...      White vs Black: 157 - 126 - 87  [0.542] 370
+Elo difference: -17.9 +/- 31.0, LOS: 12.9 %, DrawRatio: 23.5 %
+SPRT: llr -1.72 (-58.5%), lbound -2.94, ubound 2.94
+Started game 374 of 1600 (base vs king-line)
+Finished game 370 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 132 - 151 - 88  [0.474] 371
+Started game 375 of 1600 (king-line vs base)
+Finished game 374 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 132 - 152 - 88  [0.473] 372
+Started game 376 of 1600 (base vs king-line)
+Finished game 372 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 132 - 153 - 88  [0.472] 373
+Started game 377 of 1600 (king-line vs base)
+Finished game 373 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 132 - 153 - 89  [0.472] 374
+Started game 378 of 1600 (base vs king-line)
+Finished game 375 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 132 - 154 - 89  [0.471] 375
+Started game 379 of 1600 (king-line vs base)
+Finished game 378 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 132 - 154 - 90  [0.471] 376
+Started game 380 of 1600 (base vs king-line)
+Finished game 377 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 133 - 154 - 90  [0.472] 377
+Started game 381 of 1600 (king-line vs base)
+Finished game 379 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 133 - 154 - 91  [0.472] 378
+Started game 382 of 1600 (base vs king-line)
+Finished game 376 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 133 - 155 - 91  [0.471] 379
+Started game 383 of 1600 (king-line vs base)
+Finished game 381 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 133 - 156 - 91  [0.470] 380
+...      king-line playing White: 74 - 69 - 48  [0.513] 191
+...      king-line playing Black: 59 - 87 - 43  [0.426] 189
+...      White vs Black: 161 - 128 - 91  [0.543] 380
+Elo difference: -21.1 +/- 30.5, LOS: 8.8 %, DrawRatio: 23.9 %
+SPRT: llr -2.02 (-68.5%), lbound -2.94, ubound 2.94
+Started game 384 of 1600 (base vs king-line)
+Finished game 382 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 134 - 156 - 91  [0.471] 381
+Started game 385 of 1600 (king-line vs base)
+Finished game 383 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 135 - 156 - 91  [0.473] 382
+Started game 386 of 1600 (base vs king-line)
+Finished game 380 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 135 - 157 - 91  [0.471] 383
+Started game 387 of 1600 (king-line vs base)
+Finished game 385 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 136 - 157 - 91  [0.473] 384
+Started game 388 of 1600 (base vs king-line)
+Finished game 386 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 136 - 158 - 91  [0.471] 385
+Started game 389 of 1600 (king-line vs base)
+Finished game 387 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 136 - 159 - 91  [0.470] 386
+Started game 390 of 1600 (base vs king-line)
+Finished game 384 (base vs king-line): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 136 - 159 - 92  [0.470] 387
+Started game 391 of 1600 (king-line vs base)
+Finished game 389 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 137 - 159 - 92  [0.472] 388
+Started game 392 of 1600 (base vs king-line)
+Finished game 390 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 138 - 159 - 92  [0.473] 389
+Started game 393 of 1600 (king-line vs base)
+Finished game 388 (base vs king-line): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 138 - 159 - 93  [0.473] 390
+...      king-line playing White: 77 - 70 - 48  [0.518] 195
+...      king-line playing Black: 61 - 89 - 45  [0.428] 195
+...      White vs Black: 166 - 131 - 93  [0.545] 390
+Elo difference: -18.7 +/- 30.2, LOS: 11.2 %, DrawRatio: 23.8 %
+SPRT: llr -1.89 (-64.2%), lbound -2.94, ubound 2.94
+Started game 394 of 1600 (base vs king-line)
+Finished game 392 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 138 - 160 - 93  [0.472] 391
+Started game 395 of 1600 (king-line vs base)
+Finished game 393 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 139 - 160 - 93  [0.473] 392
+Started game 396 of 1600 (base vs king-line)
+Finished game 394 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 139 - 161 - 93  [0.472] 393
+Started game 397 of 1600 (king-line vs base)
+Finished game 395 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 139 - 161 - 94  [0.472] 394
+Started game 398 of 1600 (base vs king-line)
+Finished game 391 (king-line vs base): 1/2-1/2 {Draw by fifty moves rule}
+Score of king-line vs base: 139 - 161 - 95  [0.472] 395
+Started game 399 of 1600 (king-line vs base)
+Finished game 397 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 139 - 162 - 95  [0.471] 396
+Started game 400 of 1600 (base vs king-line)
+Finished game 396 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 139 - 162 - 96  [0.471] 397
+Started game 401 of 1600 (king-line vs base)
+Finished game 399 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 139 - 163 - 96  [0.470] 398
+Started game 402 of 1600 (base vs king-line)
+Finished game 398 (base vs king-line): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 139 - 163 - 97  [0.470] 399
+Started game 403 of 1600 (king-line vs base)
+Finished game 400 (base vs king-line): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 139 - 163 - 98  [0.470] 400
+...      king-line playing White: 78 - 72 - 50  [0.515] 200
+...      king-line playing Black: 61 - 91 - 48  [0.425] 200
+...      White vs Black: 169 - 133 - 98  [0.545] 400
+Elo difference: -20.9 +/- 29.7, LOS: 8.4 %, DrawRatio: 24.5 %
+SPRT: llr -2.13 (-72.2%), lbound -2.94, ubound 2.94
+Started game 404 of 1600 (base vs king-line)
+Finished game 401 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 140 - 163 - 98  [0.471] 401
+Started game 405 of 1600 (king-line vs base)
+Finished game 403 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 141 - 163 - 98  [0.473] 402
+Started game 406 of 1600 (base vs king-line)
+Finished game 404 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 141 - 164 - 98  [0.471] 403
+Started game 407 of 1600 (king-line vs base)
+Finished game 402 (base vs king-line): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 141 - 164 - 99  [0.472] 404
+Started game 408 of 1600 (base vs king-line)
+Finished game 405 (king-line vs base): 1/2-1/2 {Draw by adjudication}
+Score of king-line vs base: 141 - 164 - 100  [0.472] 405
+Started game 409 of 1600 (king-line vs base)
+Finished game 407 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 141 - 165 - 100  [0.470] 406
+Started game 410 of 1600 (base vs king-line)
+Finished game 406 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 141 - 166 - 100  [0.469] 407
+Started game 411 of 1600 (king-line vs base)
+Finished game 409 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 141 - 167 - 100  [0.468] 408
+Started game 412 of 1600 (base vs king-line)
+Finished game 410 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 141 - 168 - 100  [0.467] 409
+Started game 413 of 1600 (king-line vs base)
+Finished game 408 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 141 - 169 - 100  [0.466] 410
+...      king-line playing White: 80 - 74 - 51  [0.515] 205
+...      king-line playing Black: 61 - 95 - 49  [0.417] 205
+...      White vs Black: 175 - 135 - 100  [0.549] 410
+Elo difference: -23.8 +/- 29.3, LOS: 5.6 %, DrawRatio: 24.4 %
+SPRT: llr -2.41 (-81.8%), lbound -2.94, ubound 2.94
+Started game 414 of 1600 (base vs king-line)
+Finished game 411 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 141 - 170 - 100  [0.465] 411
+Started game 415 of 1600 (king-line vs base)
+Finished game 412 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 142 - 170 - 100  [0.466] 412
+Started game 416 of 1600 (base vs king-line)
+Finished game 414 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 143 - 170 - 100  [0.467] 413
+Started game 417 of 1600 (king-line vs base)
+Finished game 415 (king-line vs base): 0-1 {Black mates}
+Score of king-line vs base: 143 - 171 - 100  [0.466] 414
+Started game 418 of 1600 (base vs king-line)
+Finished game 413 (king-line vs base): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 143 - 171 - 101  [0.466] 415
+Started game 419 of 1600 (king-line vs base)
+Finished game 416 (base vs king-line): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 143 - 171 - 102  [0.466] 416
+Started game 420 of 1600 (base vs king-line)
+Finished game 419 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 143 - 172 - 102  [0.465] 417
+Started game 421 of 1600 (king-line vs base)
+Finished game 418 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 143 - 173 - 102  [0.464] 418
+Started game 422 of 1600 (base vs king-line)
+Finished game 417 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 143 - 174 - 102  [0.463] 419
+Started game 423 of 1600 (king-line vs base)
+Finished game 421 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 144 - 174 - 102  [0.464] 420
+...      king-line playing White: 81 - 78 - 52  [0.507] 211
+...      king-line playing Black: 63 - 96 - 50  [0.421] 209
+...      White vs Black: 177 - 141 - 102  [0.543] 420
+Elo difference: -24.9 +/- 29.0, LOS: 4.6 %, DrawRatio: 24.3 %
+SPRT: llr -2.56 (-86.8%), lbound -2.94, ubound 2.94
+Started game 424 of 1600 (base vs king-line)
+Finished game 422 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 144 - 175 - 102  [0.463] 421
+Started game 425 of 1600 (king-line vs base)
+Finished game 420 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 144 - 176 - 102  [0.462] 422
+Started game 426 of 1600 (base vs king-line)
+Finished game 423 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 144 - 177 - 102  [0.461] 423
+Started game 427 of 1600 (king-line vs base)
+Finished game 424 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 144 - 178 - 102  [0.460] 424
+Started game 428 of 1600 (base vs king-line)
+Finished game 425 (king-line vs base): 1/2-1/2 {Draw by 3-fold repetition}
+Score of king-line vs base: 144 - 178 - 103  [0.460] 425
+Started game 429 of 1600 (king-line vs base)
+Finished game 426 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 145 - 178 - 103  [0.461] 426
+Started game 430 of 1600 (base vs king-line)
+Finished game 427 (king-line vs base): 1-0 {White wins by adjudication}
+Score of king-line vs base: 146 - 178 - 103  [0.463] 427
+Started game 431 of 1600 (king-line vs base)
+Finished game 430 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 146 - 179 - 103  [0.461] 428
+Started game 432 of 1600 (base vs king-line)
+Finished game 429 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 146 - 180 - 103  [0.460] 429
+Started game 433 of 1600 (king-line vs base)
+Finished game 432 (base vs king-line): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 147 - 180 - 103  [0.462] 430
+...      king-line playing White: 82 - 80 - 53  [0.505] 215
+...      king-line playing Black: 65 - 100 - 50  [0.419] 215
+...      White vs Black: 182 - 145 - 103  [0.543] 430
+Elo difference: -26.7 +/- 28.7, LOS: 3.4 %, DrawRatio: 24.0 %
+SPRT: llr -2.76 (-93.8%), lbound -2.94, ubound 2.94
+Started game 434 of 1600 (base vs king-line)
+Finished game 428 (base vs king-line): 1/2-1/2 {Draw by insufficient mating material}
+Score of king-line vs base: 147 - 180 - 104  [0.462] 431
+Started game 435 of 1600 (king-line vs base)
+Finished game 431 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 147 - 181 - 104  [0.461] 432
+Started game 436 of 1600 (base vs king-line)
+Finished game 435 (king-line vs base): 0-1 {Black wins by adjudication}
+Score of king-line vs base: 147 - 182 - 104  [0.460] 433
+Started game 437 of 1600 (king-line vs base)
+Finished game 434 (base vs king-line): 1-0 {White wins by adjudication}
+Score of king-line vs base: 147 - 183 - 104  [0.459] 434
+Finished game 437 (king-line vs base): * {No result}
+Score of king-line vs base: 147 - 183 - 104  [0.459] 434
+Finished game 433 (king-line vs base): * {No result}
+Score of king-line vs base: 147 - 183 - 104  [0.459] 434
+Finished game 436 (base vs king-line): * {No result}
+Score of king-line vs base: 147 - 183 - 104  [0.459] 434
+...      king-line playing White: 82 - 82 - 53  [0.500] 217
+...      king-line playing Black: 65 - 101 - 51  [0.417] 217
+...      White vs Black: 183 - 147 - 104  [0.541] 434
+Elo difference: -28.9 +/- 28.6, LOS: 2.4 %, DrawRatio: 24.0 %
+SPRT: llr -2.97 (-100.9%), lbound -2.94, ubound 2.94 - H0 was accepted
+
+Player: king-line
+   "Draw by 3-fold repetition": 41
+   "Draw by adjudication": 34
+   "Draw by fifty moves rule": 4
+   "Draw by insufficient mating material": 22
+   "Draw by stalemate": 3
+   "Loss: Black mates": 2
+   "Loss: Black wins by adjudication": 80
+   "Loss: White wins by adjudication": 101
+   "No result": 3
+   "Win: Black mates": 1
+   "Win: Black wins by adjudication": 64
+   "Win: White mates": 1
+   "Win: White wins by adjudication": 81
+Player: base
+   "Draw by 3-fold repetition": 41
+   "Draw by adjudication": 34
+   "Draw by fifty moves rule": 4
+   "Draw by insufficient mating material": 22
+   "Draw by stalemate": 3
+   "Loss: Black mates": 1
+   "Loss: Black wins by adjudication": 64
+   "Loss: White mates": 1
+   "Loss: White wins by adjudication": 81
+   "No result": 3
+   "Win: Black mates": 2
+   "Win: Black wins by adjudication": 80
+   "Win: White wins by adjudication": 101
+Finished match

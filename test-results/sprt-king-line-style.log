@@ -1,0 +1,25 @@
+games skipped (no result / unreplayable): 3
+
+engine                          games    win%   draw%   plies   checks  convict% conv/game   maxDef meanScore
+-------------------------------------------------------------------------------------------------------------------
+king-line                         434   33,9%   24,0%    58,4      5,2      2,3%      0,06      700       -25
+base                              434   42,2%   24,0%    58,3      3,7      0,5%      0,03      400        32
+
+convict%   = games in which the engine was >= 300 cp down while its own score stayed between 0 and 300 cp,
+             for at least 3 of its own plies in a row
+conv/game  = such plies per game, counted from the 3rd onward, so a long episode weighs more
+maxDef     = deepest material deficit held with a non-negative score, in cp
+meanScore  = mean of the engine's own score over all its scored plies, in cp
+
+--- did the conviction pay off? (soundness, as opposed to boldness above) ---
+  engine                       conv.games     win%    draw%    loss%   vs overall mate plies
+  king-line                           10    40,0%    60,0%     0,0%        +6,1%          4
+  base                                 2     0,0%   100,0%     0,0%       -42,2%          4
+  vs overall = conviction win rate minus this engine's overall win rate;
+               a negative value means the material investment did not come back.
+  mate plies = plies down material with a MATE score — excluded from conviction,
+               since the position is decided rather than unclear.
+  Caveat: conviction games are not a random sample — being down material often
+  just means losing. Compare the two engines with each other, not against 50%.
+
+--- secondary: peak king-attack index per game (calibration check, not evidence) ---
