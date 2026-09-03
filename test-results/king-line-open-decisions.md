@@ -93,3 +93,29 @@ theme unasked would be against that.
   (local runs), possibly still written. 99 files and 10.6 GB of `versions/*/mychess-stderr.log`
   were deleted on request.
 - `../lichess-bot/engines/myChess/mychess-stderr.log`, 23 MB, untouched — outside this repo.
+
+---
+
+## 6. Parked: what the three file scans cost on their own (2026-09-03)
+
+`KingLineCostBenchmark`, same process, back-to-back passes so there is no cross-run confound:
+
+| positions | reps | the six scans | share of one evaluation | spread A / B |
+|---:|---:|---:|---:|---|
+| 20,000 | 7 | 90.5 ns | 6.45 % | 5.5 % / 3.5 % |
+| 39,619 | 25 | 101.2 ns | 7.42 % | 3.9 % / 3.0 % |
+
+**Read with the spread, not without it.** The difference being measured is of the same order as
+the run-to-run spread, so 6.45 % and 7.42 % are one borderline measurement, not two. Treat it as
+"the scans are somewhere around 6–8 % of an evaluation" and no more precise than that.
+
+The bench's **−5.55 % NPS** at `kingLinePenaltyFactor = 0` is the same quantity at node level, and
+it is the cleaner of the two because the tree was bit-identical — only its baseline came from a
+run recorded weeks earlier.
+
+**One thing does not add up and is worth chasing before this is quoted.** If the scans are ~7 % of
+an evaluation and removing their effect costs 5.55 % of node throughput, then evaluation would be
+roughly three quarters of node time. That is high for an engine that also generates moves, probes
+a transposition table and sorts. Either the eval-level figure is inflated by the extra
+king-square-free call path in pass B, or this engine really is eval-dominated — which would itself
+be worth knowing. Not resolved.

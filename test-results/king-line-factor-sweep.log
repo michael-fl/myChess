@@ -1,0 +1,63 @@
+############ hybrid.epd, voller Datensatz ############
+Loading up to 2.147.483.647 positions from tuning-data/hybrid.epd ...
+train=1.338.857  validation=148.762  k(shipped)=0,00829
+kingLinePenaltyFactor is factor 9 of 9; shipped value -0,0100
+
+    factor   MSE (fixed k)     MSE (own k)           own k
+----------------------------------------------------------
+   -0,0000      0,07046911      0,07046888         0,00830
+   -0,0010      0,07036366      0,07036302         0,00831
+   -0,0020      0,07027363      0,07027261         0,00832
+   -0,0030      0,07019906      0,07019776         0,00833
+   -0,0040      0,07013993      0,07013848         0,00833
+   -0,0050      0,07009622      0,07009477         0,00833
+   -0,0060      0,07006785      0,07006655         0,00833
+   -0,0080      0,07005673      0,07005606         0,00831
+   -0,0100      0,07010550      0,07010550         0,00829   <- shipped
+   -0,0120      0,07021272      0,07021279         0,00824
+   -0,0150      0,07047922      0,07047644         0,00816
+   -0,0200      0,07118785      0,07116449         0,00798
+
+minimum at factor -0,0080 (fixed k) and -0,0080 (own k)
+
+A minimum at 0.0000 means the term does not help predict game results at any
+strength — the cheapest possible verdict, and no SPRT would be needed.
+A minimum well below the shipped 0.0100 supports the overshoot hypothesis: the
+right idea applied too hard.
+A minimum at or above 0.0100 kills the overshoot hypothesis and leaves capping the
+table's loud top end as the only remaining variant.
+
+Either way this is a proxy objective on a labeled corpus, not Elo. It selects what
+to measure next; it does not measure it.
+
+############ quiet-labeled.epd, Gegenprobe ############
+Loading up to 2.147.483.647 positions from tuning-data/quiet-labeled.epd ...
+train=1.285.200  validation=142.800  k(shipped)=0,00844
+kingLinePenaltyFactor is factor 9 of 9; shipped value -0,0100
+
+    factor   MSE (fixed k)     MSE (own k)           own k
+----------------------------------------------------------
+   -0,0000      0,06778850      0,06778831         0,00845
+   -0,0010      0,06767976      0,06767865         0,00846
+   -0,0020      0,06758653      0,06758462         0,00847
+   -0,0030      0,06750884      0,06750632         0,00848
+   -0,0040      0,06744673      0,06744384         0,00849
+   -0,0050      0,06740018      0,06739719         0,00849
+   -0,0060      0,06736914      0,06736632         0,00849
+   -0,0080      0,06735323      0,06735150         0,00847
+   -0,0100      0,06739800      0,06739800         0,00844   <- shipped
+   -0,0120      0,06750206      0,06750376         0,00840
+   -0,0150      0,06776542      0,06776775         0,00832
+   -0,0200      0,06847285      0,06846277         0,00814
+
+minimum at factor -0,0080 (fixed k) and -0,0080 (own k)
+
+A minimum at 0.0000 means the term does not help predict game results at any
+strength — the cheapest possible verdict, and no SPRT would be needed.
+A minimum well below the shipped 0.0100 supports the overshoot hypothesis: the
+right idea applied too hard.
+A minimum at or above 0.0100 kills the overshoot hypothesis and leaves capping the
+table's loud top end as the only remaining variant.
+
+Either way this is a proxy objective on a labeled corpus, not Elo. It selects what
+to measure next; it does not measure it.

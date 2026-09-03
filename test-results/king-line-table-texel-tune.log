@@ -1,0 +1,60 @@
+checking the linear model on 5,000 positions ...
+  worst |eval - model| = 1.500 cp, mean 0.0670 cp, over 5000 positions
+  (blend rounds to an int, so a residual below ~1 cp is the expected floor; anything larger invalidates the method rather than the numbers)
+
+=== which scaling, and what table under it ===
+
+Each scaling is tuned from ZERO. Holding the table at the shipped values would rig
+the comparison: those values were fitted under PHASE and are calibrated for it, so
+PHASE would win whatever the data said. From zero, no scaling starts with an
+advantage.
+
+=== PHASE ===  (train=1,338,857  validation=148,762)
+  no term at all:        validation MSE 0.07046645
+  shipped table:         validation MSE 0.07010550
+  tuned from zero:       validation MSE 0.06993656
+  table: 0 26 32 66 68 73 91 97 74 125 153 232 232
+  monotone: NO
+
+=== OPPONENT_HEAVY ===  (train=1,338,857  validation=148,762)
+  no term at all:        validation MSE 0.07046645
+  shipped table:         validation MSE 0.07028471
+  tuned from zero:       validation MSE 0.06995657
+  table: 0 23 28 59 62 67 75 86 69 81 114 223 248
+  monotone: NO
+
+=== OPPONENT_NON_PAWN ===  (train=1,338,857  validation=148,762)
+  no term at all:        validation MSE 0.07046645
+  shipped table:         validation MSE 0.07020322
+  tuned from zero:       validation MSE 0.06994878
+  table: 0 27 34 67 69 75 81 92 71 72 127 160 160
+  monotone: NO
+
+scaling                          no term             tuned          gain
+------------------------------------------------------------------------
+PHASE                         0.07046645        0.06993656    0.00052989
+OPPONENT_HEAVY                0.07046645        0.06995657    0.00050989
+OPPONENT_NON_PAWN             0.07046645        0.06994878    0.00051767
+
+largest gain over having no term at all: PHASE
+
+'gain' is what the term buys under that scaling, against the same corpus with the
+term switched off entirely. That is the comparison that matters: a scaling whose
+tuned MSE is lower only because its termless baseline is lower has bought nothing.
+
+A proxy objective on a labeled corpus, not Elo. It selects what to measure.
+
+ index     shipped         PHASE     OPP_HEAVY  OPP_NON_PAWN
+------------------------------------------------------------
+     1          21          26.0          23.0          27.0
+     2          42          32.0          28.0          33.5
+     3          42          66.0          58.5          66.5
+     4          77          68.0          62.0          69.0
+     5          91          72.5          66.5          74.5
+     6          95          91.0          74.5          80.5
+     7         134          97.0          86.0          92.0
+     8         138          73.5          68.5          70.5
+     9         223         124.5          80.5          72.0
+    10         223         153.0         113.5         126.5
+    11         223         231.5         222.5         159.5
+    12         223         231.5         247.5         159.5

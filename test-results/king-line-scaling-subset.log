@@ -1,0 +1,58 @@
+loading tuning-data/hybrid.epd ...
+1,487,619 usable positions
+
+divergence = |phase scale - opponent-heavy scale| for the more affected king
+
+=== divergence 0.00 - 0.05 === 351,911 positions (23.7 %)
+scaling                        no term      global table   tuned in bucket
+--------------------------------------------------------------------------
+PHASE                       0.08708448        0.08669651        0.08665109
+OPPONENT_HEAVY              0.08708448        0.08668354        0.08666011
+OPPONENT_NON_PAWN           0.08708448        0.08677732        0.08661721
+  shipped table under PHASE: 0.08693891
+
+=== divergence 0.05 - 0.15 === 492,354 positions (33.1 %)
+scaling                        no term      global table   tuned in bucket
+--------------------------------------------------------------------------
+PHASE                       0.08341459        0.08271884        0.08269612
+OPPONENT_HEAVY              0.08341459        0.08278367        0.08277050
+OPPONENT_NON_PAWN           0.08341459        0.08273885        0.08269751
+  shipped table under PHASE: 0.08289816
+
+=== divergence 0.15 - 0.30 === 490,403 positions (33.0 %)
+scaling                        no term      global table   tuned in bucket
+--------------------------------------------------------------------------
+PHASE                       0.06324333        0.06262720        0.06259122
+OPPONENT_HEAVY              0.06324333        0.06260163        0.06257777
+OPPONENT_NON_PAWN           0.06324333        0.06259275        0.06255409
+  shipped table under PHASE: 0.06276918
+
+=== divergence 0.30 - 0.50 === 128,344 positions (8.6 %)
+scaling                        no term      global table   tuned in bucket
+--------------------------------------------------------------------------
+PHASE                       0.01647382        0.01627823        0.01621104
+OPPONENT_HEAVY              0.01647382        0.01630592        0.01626013
+OPPONENT_NON_PAWN           0.01647382        0.01629952        0.01623031
+  shipped table under PHASE: 0.01624420
+
+=== divergence 0.50 - 1.01 === 24,607 positions (1.7 %)
+scaling                        no term      global table   tuned in bucket
+--------------------------------------------------------------------------
+PHASE                       0.00197098        0.00197098        0.00197098
+OPPONENT_HEAVY              0.00197098        0.00197098        0.00197098
+OPPONENT_NON_PAWN           0.00197098        0.00197098        0.00197098
+  shipped table under PHASE: 0.00197098
+
+How to read it. Compare each scaling's 'global table' column against its own
+'no term' column in the SAME bucket — that difference is what the term buys there.
+Comparing across scalings without that anchor is meaningless, because the three
+have different termless baselines inside a bucket even though they share one over
+the whole corpus.
+
+If the opponent scalings only win in the high-divergence buckets, the phase scaling
+is firing the term where nothing can exploit an open file, exactly as suspected —
+and the corpus-wide mean was blind to it because those positions are a minority.
+If they do not win even there, the modelling argument is refuted.
+
+'tuned in bucket' overfits by construction and is the optimistic bound, not the
+candidate.
