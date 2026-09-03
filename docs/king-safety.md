@@ -1318,6 +1318,96 @@ tree shrinking 56 %. Capping it far lower is testable; anything else here is out
 
 ---
 
+### 4.12 Attempt seven — the table re-fitted against game results
+
+**The capping idea above was measured and is not the explanation.** A one-dimensional sweep of
+`kingLinePenaltyFactor` over two corpora and ~1.34 M labeled positions put the optimum at
+**−0.008** against the shipped **−0.010** — a 0.07 % difference in mean squared error, on a basin
+flat from −0.005 to −0.012 (`test-results/king-line-factor-sweep.log`). For scale, moving from
+*no term at all* to the optimum is eight times the improvement of moving from −0.010 to −0.008. The
+term was near-optimally scaled and still lost 29 Elo, so the error was never the overall volume.
+
+**But the term does do what it was built to do**, which had never been checked.
+`KingShelterAnalysis` replays all 434 SPRT games and counts, per engine, pawn moves on the three
+files at or beside its own king after which that king's danger rose — an action, not the
+evaluation's own quantity:
+
+| | king-line | base |
+|---|---:|---:|
+| shelter-opening pawn moves per 100 own moves | **1.12** | 1.38 |
+| any move raising own danger, per 100 | **5.94** | 7.45 |
+| own moves with danger ≥ 4 | 22.3 % | 40.5 % |
+| mean own king danger, 0–12 | 1.85 | 3.23 |
+
+Only the first row is evidence; the rest is the quantity the search minimises and falls by
+construction. So myChess opens its own king's shelter **about a fifth less often** with the term.
+That rules out the kinder of the two diagnoses: the term did not fail by doing nothing.
+
+**What was wrong is where the numbers came from.** The table was fitted for agreement with
+Stockfish's *static* evaluation. Re-fitted against game results — the objective that decides
+matches — the shape changes substantially and the proxy gain rises by half, from 0.00036 to
+**0.00053** mean squared error against having no term at all:
+
+```
+index      1   2   3   4   5   6   7   8    9   10   11   12
+vs SF     21  42  42  77  91  95 134 138  223  223  223  223
+vs games  26  32  66  68  73  91  91  91  125  153  153  153
+```
+
+The top halves; the middle rises. Indices 6–8 are pooled at 91 by pool-adjacent-violators over the
+occupancy weights, because the free fit dips at 7 and 8 under *every* scaling — a question the
+first fit could not raise, having imposed monotonicity as a constraint. Indices 11–12 carry index
+10's value: 0.02 % and 0.00 % occupancy leave them unconstrained.
+
+**The scaling question, and why it cannot be answered here.** Scaling by the *opponent's* heavy
+material rather than by the game phase is the better model — the standard phase counts both sides'
+non-pawn material, so a side with a queen and two rooks facing an opponent with none is still
+penalised at full strength for files nobody can use. Tuned over the whole corpus the three
+scalings sit within 4 % of each other. Bucketed by how far they diverge
+(`test-results/king-line-scaling-subset.log`) the reason appears:
+
+| divergence | share | MSE with no term | gain: phase / opp-heavy / opp-non-pawn |
+|---|---:|---:|---|
+| 0.00–0.05 | 23.7 % | 0.0871 | 0.000388 / **0.000401** / 0.000307 |
+| 0.05–0.15 | 33.1 % | 0.0834 | **0.000696** / 0.000631 / 0.000676 |
+| 0.15–0.30 | 33.0 % | 0.0632 | 0.000616 / 0.000642 / **0.000651** |
+| 0.30–0.50 | 8.6 % | 0.0165 | **0.000196** / 0.000168 / 0.000174 |
+| 0.50–1.01 | 1.7 % | 0.0020 | 0 / 0 / 0 |
+
+Read the third column. Where the scalings diverge most, one side is up a queen or more, the
+sigmoid is saturated, and no evaluation change moves the prediction at all — in the top bucket
+every column agrees to eight decimals. **The objective is blind exactly where the modelling error
+lives**, and where it does resolve, the three sit 1–3 % apart with no consistent winner. The phase
+scaling therefore stays, not because it is right but because nothing measurable argues for
+changing it. The argument for opponent material is recorded, unpriced.
+
+**Expectation, stated before the match, and it is not good.** Only 4 of the 27 evaluation windows
+in the test suite had to move for the new table, so in ordinary positions the evaluation barely
+changes. The proxy gain rose by half — and the old table also had a positive proxy value and lost
+29 Elo.
+
+Then the bench came back and made it worse. The re-fitted table **grows** the depth-8 tree by
+18.2 % and needs 27.6 % more wall clock than having no term at all, where the old table *shrank*
+the tree by 56 % ([bench-history](bench-history.md)). The loud old table cut whole variations; the
+quiet new one merely reorders moves, and worse than no term does. **That is the axis attempt four
+died on** — the attack-unit term lost 42.9 Elo to −21.9 % NPS — and this candidate stands worse on
+it than the table that already lost 29 Elo.
+
+`BlunderTest` says the same thing more concretely: 8 red instead of 13, with **the same two
+king-safety regressions unrepaired** (`h3_atMove12` pushes the pawn in front of its own king again,
+`nxe2_atMove19` misses the sacrifice again) and two of the old table's repairs lost — `rxa5` no
+longer finds `Be1`, `rd3_atMove35` no longer finds `Rxf8`, both cases of high line danger that the
+halved top no longer punishes. One new repair appears in `StsDefectTest`
+(`centerControl071`, the `h3` push that allowed the `f3` break), which is the classic shelter case.
+
+So: better numbers on the objective that decides matches, worse numbers on the cost axis that
+killed the last attempt, and a behavioural picture that is different rather than better. The match
+is worth running because these pull in opposite directions and nothing short of a match resolves
+that — not because the odds look good.
+
+
+---
+
 ---
 
 ## 5. Build plan

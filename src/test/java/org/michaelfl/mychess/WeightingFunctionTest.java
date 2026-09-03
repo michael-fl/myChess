@@ -91,7 +91,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4
                 """;
-        testPosition(pgn, -0.31f); // was -0.17; shifted by the PeSTO piece-square tables (v4.4.0), then 0.11; shifted by the king-line danger term (4.6.0-king-line)
+        testPosition(pgn, -0.21f); // was -0.17; shifted by the PeSTO piece-square tables (v4.4.0), then 0.11; shifted by the king-line danger term (4.6.0-king-line), then -0.31; re-fitted table (4.6.0-king-line-tuned)
     }
 
     @Test
@@ -107,7 +107,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6
                 """;
-        testPosition(pgn, 0.33f); // was 0.19; shifted by the PeSTO piece-square tables (v4.4.0), then 0.54; shifted by the king-line danger term (4.6.0-king-line)
+        testPosition(pgn, 0.28f); // was 0.19; shifted by the PeSTO piece-square tables (v4.4.0), then 0.54; shifted by the king-line danger term (4.6.0-king-line), then 0.33; re-fitted table (4.6.0-king-line-tuned)
     }
 
     @Test

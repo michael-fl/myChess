@@ -514,11 +514,20 @@ against the engine's own 33.9 % overall — the material investments came back, 
 where all six were drawn. And 10 of 434 games cannot move a win rate by 8.3 points either way. The
 damage is diffuse again.
 
-**What the follow-up should test, if there is one.** The table's top values are very loud: 223 cp
-from index 9 up, on 2.4 % of samples. That is more than a pawn of static score, and a static term
-that loud steers alpha-beta hard — consistent with the depth-8 tree shrinking 56 %. Capping the
-table far lower (the same occupancy argument that already void-flagged indices 10–12) is the one
-variant with a mechanism behind it rather than a hope. It would need its own SPRT.
+**The follow-up that suggested itself was measured and refuted.** This entry proposed capping the
+table's loud top (223 cp from index 9 up, on 2.4 % of samples) on the grounds that a static term
+louder than a pawn steers alpha-beta hard. A sweep of the scale factor over two corpora then put
+the optimum at **−0.008** against the shipped **−0.010**: a 0.07 % difference in mean squared
+error, on a basin flat across the whole plausible range. The term was near-optimally scaled and
+still lost 29 Elo, so volume was not the error.
+
+**What was wrong was the objective the table came from.** Re-fitted against game results rather
+than agreement with Stockfish's static evaluation, the shape changes substantially — the top
+halves, the middle rises — and the proxy gain rises by half. That is attempt seven, on branch
+`king-line-tuned`, and it is the last idea this theme has with a mechanism behind it. See
+[king-safety.md § 4.12](king-safety.md) for the fit, the shelter-behavior measurement that shows
+the term does change what it targets, and why the opponent-material scaling question cannot be
+priced by a Texel objective.
 
 **Do not read `meanScore` as pessimism.** The style table shows −25 cp for king-line against +32
 for base, and attempt four's entry above quotes the same statistic as "it rates its own positions
