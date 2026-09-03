@@ -17,7 +17,7 @@ This roadmap is split across three files. Section numbers (§ 12.x) are **stable
 | § | Item | Effort / Elo |
 |---|---|---|
 | 12.3 | Late move reductions (LMR) | S, ≈ 50–100 |
-| 12.4 | Check extensions | S, ≈ 15–30 |
+| 12.4 | Check extensions — *next up, step 4 of the current plan* | S, ≈ 15–30 |
 | 12.5 | History heuristic | S, ≈ 30–50 |
 | 12.6 | Quiescence search upgrade (remaining parts) | S, ≈ 5–15 (delta pruning) |
 | 12.7 | Evaluation upgrades / tapered PST — *in flight* | M, ≈ 40–80 |
@@ -63,10 +63,15 @@ After the first few moves at a node (those that have already passed [§ 7.1 PV /
 
 ## 12.4 Check extensions — **S, ≈ 15–30 Elo**
 
-When the side to move is in check, increment search depth by 1 instead of decrementing. Cheap, reliable, hard to get wrong.
+When the side to move is in check, increment search depth by 1 instead of decrementing. Small and self-contained, but see the two hazards below — the earlier "hard to get wrong" here was too generous.
 
-- Already detectable: [`Board.isKingChecked(moveGenerator)`](../src/main/java/org/michaelfl/mychess/Board.java) returns a boolean.
-- Watch the *extension budget* — uncontrolled extensions can blow up depth on long forced lines. A common cap is "total extensions per path ≤ ply at root".
+**Scheduled as [step 4 of the current plan](#current-plan-2026-08-12) (2026-09-03)** — ahead of the search cluster, so its Elo is not credited to LMR or § 12.27. That note carries the reasoning and the motivating case.
+
+- Already detectable: [`Board.isKingChecked()`](../src/main/java/org/michaelfl/mychess/Board.java) returns a boolean. It is an attack scan via `isFieldAttackedBy`, not a move generation — cheap, but paid per node, so the bench signature moves by construction and NPS drops slightly. Branch-first with an SPRT.
+- **The PV table must be resized at the root.** `pvMaxLength = maxDepth + 1` (`PositionSearch.java:243`), the table is `int[pvMaxLength * pvMaxLength]` indexed `depth * pvMaxLength + depth`, and `pvMaxLength` is handed down unchanged. A child carrying `ctx.maxDepth() + 1` therefore reaches `depth = maxDepth + 1` and runs past the array; `SearchNodeContext.copyUpPV` also computes `pvMaxLength() - depth` as a negative `arraycopy` length. Size the root at `maxDepth + maxExtensions + 1`. This fails as an exception mid-game, not as a wrong score.
+- Watch the *extension budget* — uncontrolled extensions can blow up depth on long forced lines. A common cap is "total extensions per path ≤ ply at root", which needs a counter threaded through `SearchNodeContext`. The cap is also what decides whether the extension lands where it is needed: identifying a missing ply does not guarantee the budget spends it there.
+- **Distinct from checks in quiescence.** The quiescence move generator is capture-only (`MoveGenerator.forQuiescenceSearch()`, `onlyCaptures == true`), so QSearch never sees a check at all. Published gains attributed to "check extensions" often bundle both; the ≈ 15–30 above is the main-tree extension only.
+- Unblocks the deferred `chessFactor` removal re-test, [§ 12.17](roadmap-done.md#1217-remove-chessfactor-term-from-the-evaluation-function--investigated-term-confirmed-productive) point 4 (+5–15 if the extension subsumes the term).
 
 ## 12.5 History heuristic — **S, ≈ 30–50 Elo**
 
@@ -1468,7 +1473,8 @@ overtaken by measurement. It is kept for the reasoning, not as a to-do list.
 | 1 | **Absolute re-anchor** — [`tools/run-anchor-bracket.sh 4.4.0`](../tools/run-anchor-bracket.sh), recipe in [myChess-ELO-measurement.md](myChess-ELO-measurement.md) | Every strength number since 4.0.0 is a propagated relative delta; [version-history](version-history.md) puts the accumulated uncertainty at **±40 Elo**. The last six releases added ~+130 Elo with no external measurement. | none — it *calibrates* the rest |
 | 2 | ~~[**§ 12.23 Repetition draws**](roadmap.md#1223-repetition-draws-are-invisible-to-the-search--done-2026-08-15--15-elo)~~ — **done 2026-08-15** | A correctness fix, small, with the opportunity quantified beforehand: 203 of 2000 games drawn while one side saw itself ≥ +2.00. Best effort-to-payoff ratio of anything open, and it delivered. | **≈ +15** (SPRT H1 at 321 games; event count 0 : 18) |
 | 3 | [**§ 12.21 King safety**](roadmap.md#1221-king-safety--m--3060-elo) (with the § 12.7 mobility-weight retune) | The largest missing evaluation term, and now the only theme with *isolated* test cases: `qe5_atMove9` and `f3_atMove33` in `BlunderTest`. Prerequisites for a tuned attempt are finally in place. | M, ≈ 30–60 |
-| 4 | [**Search cluster**](#search-cluster-plan--history--pvs--lmr) — § 12.5 history → § 12.20 PVS → § 12.3 LMR | Largest raw estimate, but see the caveat below. Has its own build-and-measure plan. | S, ≈ 80–175 combined |
+| 4 | [**§ 12.4 Check extensions**](roadmap.md#124-check-extensions--s--1530-elo) | The only search item with no dependency on the cluster, and it must be measured *before* it: extensions deepen forced lines while LMR and § 12.27 prune them, so whichever runs first is credited with the overlap — the same attribution rule that puts reverse futility pruning ahead of LMR. Also the prerequisite for the documented `chessFactor` re-test ([§ 12.17](roadmap-done.md#1217-remove-chessfactor-term-from-the-evaluation-function--investigated-term-confirmed-productive), +5–15 on top). Added 2026-09-03; see the note below. | S, ≈ 15–30 |
+| 5 | [**Search cluster**](#search-cluster-plan--history--pvs--lmr) — § 12.5 history → § 12.20 PVS → § 12.3 LMR | Largest raw estimate, but see the caveat below. Has its own build-and-measure plan. | S, ≈ 80–175 combined |
 
 **Why evaluation before search, against the older table's order.** Two independent games
 show that more depth makes a mis-evaluated move *more* likely, not less:
@@ -1481,8 +1487,10 @@ show that more depth makes a mis-evaluated move *more* likely, not less:
 
 Search improvements multiply whatever the evaluation believes. Where the belief is wrong
 by two to five pawns, deeper search converges faster on the wrong move — which is why
-step 4 sits behind step 3 rather than in front of it, reversing the original plan. This
-does not devalue the search work; it sequences it.
+the search cluster sits behind step 3 rather than in front of it, reversing the original
+plan. This does not devalue the search work; it sequences it. Note the argument is about
+*mis-evaluated* moves and therefore does not cover a pure horizon defect, which is the
+case step 4 was inserted for — see the next note.
 
 **Measured 2026-08-18, and the ordering survives.** All thirteen king-safety cases that pin
 a move were re-searched at depths 8-12 (`test-results/kingsafety-depth-stability-4.4.2.jsonl`,
@@ -1518,8 +1526,58 @@ numbers still hold. Note also that the STS suite cannot serve as the measuring i
 any of this: it has no king-safety theme (see [`sts-history.md`](sts-history.md) § 5), so a
 king-safety term has to be judged by SPRT.
 
+**Step 4 (check extensions) inserted 2026-09-03.** § 12.4 had been listed among the active
+items since the roadmap was written but appeared in no plan: not in the four steps above, not
+in the search-cluster plan, and terminated only in the *superseded* implementation order below
+(step 6, bundled with § 12.8 aspiration windows). That was an omission of sequencing rather
+than of judgment — the cluster was assembled around four items that condition each other,
+and check extensions condition nothing, so they fell out. Three reasons they belong here:
+
+- **Attribution.** Extensions deepen forced lines; LMR ([§ 12.3](roadmap.md#123-late-move-reductions-lmr--s--50100-elo))
+  and reverse futility pruning ([§ 12.27](#1227-reverse-futility-pruning-static-null-move-pruning--s--1040-elo-sign-not-obvious))
+  prune them, and LMR's exclusion list names check-givers explicitly. Whichever is measured
+  first is credited with the overlap — the identical argument this file already uses to put
+  § 12.27 ahead of LMR, and check extensions are simpler than either.
+- **It unblocks a second measurement.** `chessFactor = 0.25` is recorded in
+  [§ 12.17](roadmap-done.md#1217-remove-chessfactor-term-from-the-evaluation-function--investigated-term-confirmed-productive)
+  as *"a cheap proxy for the missing check-extension"*, with the removal re-test explicitly
+  deferred until § 12.4 exists. Before the cluster that is a clean follow-up; after it, it is
+  buried under four overlapping changes.
+- **The "evaluation before search" argument does not apply.** That note rests on two
+  *mis-evaluated* moves (`9.Qe5`, `33.f3`) and on the 2026-08-18 depth sweep, whose
+  load-bearing finding is oscillation. A pure horizon defect is the other kind, and
+  `29...Rac8` ([VujgmHwG](https://lichess.org/VujgmHwG), myChess Black, 2026-09-03) is the
+  first isolated instance measured: Stockfish rates `Rac8` +4.54 against `Rae8` +0.72, yet
+  myChess's evaluation of *every* position along its own principal variation agrees with
+  Stockfish — including the PV's end, which both read as good for Black. The single error is
+  White's 7th half-move, where the engine assumes `33.bxa7` (genuinely 0.00) instead of
+  `33.Qd7+` (+5.22). That node is reached at remaining depth 5, and searched standalone at
+  depth 5 it returns exactly `bxa7` with exactly the PV tail reported at the root; at depth 6
+  it returns `Qd7+` at **+236 against +14**. The refutation is a chain of checks with 5, 3, 3
+  and 1 legal replies against 34–38 in the quiet positions between them — the cheapest
+  possible ply to buy, and one ply is all that is missing. Confirmed by prediction: depths 13
+  and 14 both discard `Rac8`.
+
+**Expect a smaller number here than after LMR, and measure it anyway.** Extensions spend
+nodes where LMR frees them, and myChess is time-bound at game depth 10–12 (depth 13 on this
+position cost 113 s under load), so a larger tree can lose more root depth than it gains in
+accuracy. Pre-cluster is therefore the harsher test and the sign is not guaranteed. That is a
+reason to expect less, not to reorder: a small standalone number is worth more than a bundled
+one, and a negative standalone number is itself the argument for re-measuring after LMR —
+which bundling would never surface.
+
+**Two implementation hazards, because § 12.4's "hard to get wrong" understates it.** The PV
+table is sized to the *root* horizon: `pvMaxLength = maxDepth + 1` (`PositionSearch.java:243`),
+the table is `int[pvMaxLength * pvMaxLength]`, and `pvMaxLength` is passed down unchanged, so a
+child carrying `maxDepth + 1` reaches `depth = maxDepth + 1` and indexes past the array —
+`SearchNodeContext.copyUpPV` additionally computes a negative `arraycopy` length. The root must
+be sized `maxDepth + maxExtensions + 1`. And `Board.isKingChecked()` is an attack scan
+(`isFieldAttackedBy`), not a move generation — cheap, but paid per node, so the bench signature
+moves by construction and NPS drops slightly. Both mean this is branch-first with an SPRT, not
+a drop-in.
+
 **Step 1 is a measurement, not a feature**, and it is deliberately first: without it,
-steps 2–4 would each be judged against a baseline that is itself uncertain by ±40 Elo,
+the later steps would each be judged against a baseline that is itself uncertain by ±40 Elo,
 and the § 12.23 fix in particular is expected to show up *only* against external
 opponents.
 

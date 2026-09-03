@@ -393,7 +393,7 @@ This is the **cleanest negative result** in the eval-removal investigation serie
 
 3. **Cost/benefit is the inverse of §12.16.** `threadWeight` cost ~10 lines and delivered pooled-neutral Elo (so removal was defensible on simplification grounds, just not necessary). `chessFactor` costs ~5 lines and delivers ~+14 Elo (so removal would be a clear regression, simplification argument loses). The two terms look superficially similar in the code but play very different roles.
 
-4. **Possible follow-up: ~~remove~~ *upgrade* the term.** If `chessFactor` is a poor man's check-extension, then implementing [§ 12.4 (check extensions)](roadmap.md#124-check-extensions--s--1530-elo) properly might subsume the term and possibly add another +5–15 Elo on top. The natural sequence is: keep `chessFactor` for now → implement check extensions → re-run the removal experiment with extensions in place → expect the regression to shrink or vanish (if extensions fully cover the signal).
+4. **Possible follow-up: ~~remove~~ *upgrade* the term.** If `chessFactor` is a poor man's check-extension, then implementing [§ 12.4 (check extensions)](roadmap.md#124-check-extensions--s--1530-elo) properly might subsume the term and possibly add another +5–15 Elo on top. The natural sequence is: keep `chessFactor` for now → implement check extensions → re-run the removal experiment with extensions in place → expect the regression to shrink or vanish (if extensions fully cover the signal). **§ 12.4 was scheduled as step 4 of the [current plan](roadmap.md#current-plan-2026-08-12) on 2026-09-03**, partly for this reason, so the sequence now has a date attached rather than being open-ended.
 
 ### Methodology — SPRT self-tunes with adequate budget
 
