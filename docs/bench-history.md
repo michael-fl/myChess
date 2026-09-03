@@ -74,11 +74,13 @@ time-truncated.
 | **4.5.0** | 336,412,842 | **+0.139 %** | 101,553,277 (+0.1 %) | Complete principal variation ([§ 12.25](roadmap.md#1225-tried--repairing-the-roots-move-choice-after-the-pv-re-search-reverted-twice-444-and-166-elo)) | +1.8 ± 11.6 over 2463 games — **neutral** | ~1928 |
 | **4.6.0** (`415a6ac`) | 1,300,002,835 | **+286 %** | 101,626,447 (+0.1 %) | Material-only shortcut only for quiet root moves ([§ 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460)) | **+14.8 ± 10.5** over 3000 games | ~1943 |
 
-### Measured but not a release — `4.6.0-king-line` (2026-09-02)
+### Measured but not a release — `4.6.0-king-line` (2026-09-02, shelved 2026-09-03)
 
 The king-line danger term: the three files at and beside the king, classified 0–4 and summed into
-a fitted penalty table ([king-safety.md § 4.11](king-safety.md)). Not a release row until its SPRT
-has run.
+a fitted penalty table ([king-safety.md § 4.11](king-safety.md)). **Shelved — SPRT accepted H0
+after 437 games at −28.9 ± 28.6 Elo**, so it gets no row in the series above. The numbers below
+stay because they are the most instructive part of the attempt: this is what a *cheap* and
+*provably neutral* eval term looks like, and it still cost 29 Elo.
 
 | | Nodes @ d8 | NPS | Time |
 |---|---:|---:|---:|
@@ -98,7 +100,11 @@ attack-unit term of 2026-08-31 cost **−21.9 %** on an *unchanged* tree — fou
 weaker screen result. (Caveat: the 1,251,215 comes from a different run on a possibly
 differently-loaded machine. Identical trees remove the node-mix confound, not the machine's.)
 
-**The −56 % tree is a change, not an improvement.** At depth 8 the term reaches the same depth with
+**The −56 % tree is a change, not an improvement — and after the SPRT, a suspect.** The term lost
+29 Elo, and a static score reaching 223 cp is louder than a pawn; a term that loud steers
+alpha-beta hard, which is one mechanism that would produce both the halved tree and the lost Elo.
+Untested, but it is the only concrete hypothesis the attempt left behind. The original wording of
+this paragraph follows, because the caution in it was right for the wrong reason: At depth 8 the term reaches the same depth with
 less than half the nodes, and 7:38 against 17:18 is tempting to read as progress. It is not
 evidence of strength: fewer nodes means more cutoffs, and whether the *right* moves are cut only an
 SPRT can say. Rule 3 applies in full. Note also that the entire effect sits in **one position** —
@@ -180,7 +186,7 @@ compared, only recorded:
 | 4.4.1 | 3:00 | 1,861,394 |
 | 4.5.0 | 2:57 | 1,900,573 |
 | 4.6.0 | **17:18** | 1,251,215 |
-| 4.6.0-king-line | 7:38 | 1,250,540 |
+| 4.6.0-king-line (shelved, −28.9 Elo) | 7:38 | 1,250,540 |
 | 4.6.0-king-line, factor 0 | 18:20 | 1,181,726 |
 
 The NPS decline from ~3.0 M to ~1.9 M is the cost of the richer evaluation and

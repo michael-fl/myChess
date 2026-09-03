@@ -488,10 +488,43 @@ three ways: five positions now play exactly the move their own text names as the
 its own domain is not what the screen's 2.238 % suggested, and 22 positions cannot settle it either
 way. The SPRT can, and is running.
 
-Note for whoever reads this next: the run started at 23:46 with the machine due to close around
-09:30, so a first reading is a partial standing of roughly 850 games (interval ≈ ±20) unless a
-bound is reached. Only a reached bound is a verdict, and an early-stopped one is
-overestimated — see § 12.23.
+**Result: shelved. SPRT accepted H0 after 437 games** (2026-09-03, llr −2.97 against the −2.94
+bound): **147–183–104, score 0.459, −28.9 ± 28.6 Elo, LOS 2.4 %.** The interval excludes zero.
+Match health was clean — no time losses, no crashes. Early-stopped, so § 12.23's winner's-curse
+correction applies and the true cost is less extreme than −28.9.
+
+**Six attempts, six negatives, and this one had the best prerequisites of all of them.** The term
+was measured before it was built (2.238 % of the residual gap, a control at exactly 0.000 %), cost
+almost nothing (−5.55 % NPS against § 4.9's −21.9 %), was proven behaviourally neutral by a
+bit-identical bench signature at factor 0, and demonstrably repaired positions of its own kind —
+five characterizations flipped to the exact move their text names as the one that holds. It still
+lost 29 Elo.
+
+`MatchStyleAnalysis` over the finished PGN shows the same shape as attempt four:
+
+| | king-line | base |
+|---|---:|---:|
+| win rate | **33.9 %** | 42.2 % |
+| checks per game | 5.2 | 3.7 |
+| conviction games | 10 (2.3 %) | 2 (0.5 %) |
+| deepest deficit held while confident | 700 cp | 400 cp |
+
+**But the sacrifices are not the explanation this time.** The 10 conviction games scored 40 % wins
+against the engine's own 33.9 % overall — the material investments came back, unlike attempt four
+where all six were drawn. And 10 of 434 games cannot move a win rate by 8.3 points either way. The
+damage is diffuse again.
+
+**What the follow-up should test, if there is one.** The table's top values are very loud: 223 cp
+from index 9 up, on 2.4 % of samples. That is more than a pawn of static score, and a static term
+that loud steers alpha-beta hard — consistent with the depth-8 tree shrinking 56 %. Capping the
+table far lower (the same occupancy argument that already void-flagged indices 10–12) is the one
+variant with a mechanism behind it rather than a hope. It would need its own SPRT.
+
+**Do not read `meanScore` as pessimism.** The style table shows −25 cp for king-line against +32
+for base, and attempt four's entry above quotes the same statistic as "it rates its own positions
+slightly worse". That comparison is not sound across engines whose evaluations differ by a
+penalty term: the term subtracts from every score by construction. The 27 re-baselined evaluation
+windows moved by a systematic −0.21 pawns for the same mechanical reason.
 
 *Previous text of this entry, kept because the reasoning it states is what the result has to be
 read against:*

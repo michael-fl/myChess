@@ -1296,8 +1296,25 @@ term whose regressions land in its own domain is not the clean picture the scree
 **And the standing caveat, unchanged.** A flat screen result is a reliable stop signal; a strong one
 is not a promise. Attack units screened at 1.270 % and produced §§ 4.8 and 4.10.
 
-**SPRT: running since 2026-09-02 23:46**, `4.6.0-king-line` against `4.6.0`, house template. Result
-to be recorded here.
+**SPRT: H0 accepted after 437 games** (2026-09-03): **147–183–104, score 0.459,
+−28.9 ± 28.6 Elo, LOS 2.4 %**, llr −2.97 against the −2.94 bound, 5 h 03 at `tc=40/60`,
+concurrency 4. Clean match health. Early-stopped, so the true cost is less extreme than −28.9
+(§ 12.23).
+
+**Shelved**, by the rule agreed before the run: ship only if clearly positive.
+
+The uncomfortable part is how good the prerequisites were. Screened at 2.238 % with a control at
+exactly 0.000 %, cost −5.55 % NPS against § 4.9's −21.9 %, behavioural neutrality proven by a
+bit-identical bench signature, five characterizations flipping to the exact rescuing move their own
+text names. Every gate this document put up before the attempt, this attempt passed — and it lost
+29 Elo anyway. That is the strongest evidence in this file for the failure mode it has been naming
+since § 1: **a static evaluation term added to a search that already resolves king attacks
+tactically tends to cost more than it carries**, and no amount of pre-measurement of the *signal*
+predicts that.
+
+The one variant with a mechanism rather than a hope: the table reaches 223 cp from index 9 up, on
+2.4 % of samples. A static term louder than a pawn steers alpha-beta hard, which fits the depth-8
+tree shrinking 56 %. Capping it far lower is testable; anything else here is out of ideas.
 
 ---
 
