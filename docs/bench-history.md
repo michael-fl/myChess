@@ -100,11 +100,15 @@ attack-unit term of 2026-08-31 cost **−21.9 %** on an *unchanged* tree — fou
 weaker screen result. (Caveat: the 1,251,215 comes from a different run on a possibly
 differently-loaded machine. Identical trees remove the node-mix confound, not the machine's.)
 
-**The −56 % tree is a change, not an improvement — and after the SPRT, a suspect.** The term lost
-29 Elo, and a static score reaching 223 cp is louder than a pawn; a term that loud steers
-alpha-beta hard, which is one mechanism that would produce both the halved tree and the lost Elo.
-Untested, but it is the only concrete hypothesis the attempt left behind. The original wording of
-this paragraph follows, because the caution in it was right for the wrong reason: At depth 8 the term reaches the same depth with
+**The −56 % tree is a change, not an improvement.** The term lost 29 Elo, and this paragraph used
+to name the obvious suspect: a static score reaching 223 cp is louder than a pawn, and a term that
+loud steers alpha-beta hard. **That hypothesis has since been measured and does not hold.** A
+one-dimensional sweep of the scale factor put the optimum at −0.008 against the shipped −0.010 — a
+0.07 % difference in mean squared error on a flat basin, where moving from *no term* to the optimum
+is eight times larger ([king-safety.md § 4.12](king-safety.md)). The term was near-optimally
+scaled. What was wrong was the table's shape, which came from fitting agreement with Stockfish's
+static evaluation rather than game results. The original wording follows, because the caution in it
+was right for the wrong reason: At depth 8 the term reaches the same depth with
 less than half the nodes, and 7:38 against 17:18 is tempting to read as progress. It is not
 evidence of strength: fewer nodes means more cutoffs, and whether the *right* moves are cut only an
 SPRT can say. Rule 3 applies in full. Note also that the entire effect sits in **one position** —
@@ -116,6 +120,37 @@ the current baseline is 4.6.0's `1,300,002,835`, +286 % above it. That older num
 written into `CLAUDE.md` as "the" signature, and quoting it from there produced a wrong reading of
 this very measurement on 2026-09-02: the tree looked 70 % *larger* when it is in fact 56 %
 *smaller*. Read the baseline out of the table above, never out of memory.
+
+### Measured but not a release — `4.6.0-king-line-tuned` (2026-09-03)
+
+The same king-line term with its penalty table re-fitted against **game results** instead of
+against Stockfish's static evaluation ([king-safety.md § 4.12](king-safety.md)). Branch
+`king-line-tuned`.
+
+| | Nodes @ d8 | NPS | Time | Δ nodes vs 4.6.0 |
+|---|---:|---:|---:|---:|
+| **4.6.0** (baseline) | 1,300,002,835 | 1,251,215 | 17:18 | — |
+| 4.6.0-king-line, factor 0 | 1,300,002,835 | 1,181,726 | 18:20 | 0.0 % |
+| 4.6.0-king-line (Stockfish fit) | 572,148,460 | 1,250,540 | 7:38 | **−56.0 %** |
+| **4.6.0-king-line-tuned** | 1,536,419,866 | 1,159,476 | 22:05 | **+18.2 %** |
+
+**The re-fit reverses the sign of the search-cost effect, and that is the entry's point.** The old
+table shrank the depth-8 tree by 56 %; the new one grows it by 18 % and needs 28 % more wall clock
+than having no term at all. Almost the whole difference is one position — number 37 goes from
+385,435,203 nodes under the old table to 1,360,709,411 under the new, against 1,129,861,147 with no
+term.
+
+**A mechanism that fits.** The old table reached 223 cp from index 9 up, loud enough to cut whole
+variations — very fast, and it lost 29 Elo, so evidently the wrong ones. The new table's top is
+half that: quiet enough that it only *reorders* moves, and that ordering is worse than no term at
+all. A term can pay for itself with pruning or lose on ordering, and these two tables landed on
+opposite sides of that.
+
+**Which figure to trust.** The node counts are machine-independent and say +18.2 %. The wall clock
+mixes in machine state — the 17:18 baseline is a run from weeks earlier — so read the +27.6 % as
+directional. What both agree on is the direction, and it is the axis the attack-unit term died on
+(−21.9 % NPS on an unchanged tree, −42.9 Elo). Under a clock, more time per depth means less
+depth, and depth is what tracks Elo.
 
 ### Measured but not a release — `4.6.0-attack-units` (2026-08-31)
 
@@ -188,6 +223,7 @@ compared, only recorded:
 | 4.6.0 | **17:18** | 1,251,215 |
 | 4.6.0-king-line (shelved, −28.9 Elo) | 7:38 | 1,250,540 |
 | 4.6.0-king-line, factor 0 | 18:20 | 1,181,726 |
+| 4.6.0-king-line-tuned | 22:05 | 1,159,476 |
 
 The NPS decline from ~3.0 M to ~1.9 M is the cost of the richer evaluation and
 the deeper quiescence search: fewer nodes per second, but each node is worth
