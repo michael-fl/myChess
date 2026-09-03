@@ -410,6 +410,64 @@ same rule settles it **for standard chess** without a second run. Whether it set
 different question, and the fitted curve, the tooling and the prepared 960 command all survive to
 answer it. What must not happen is quoting −42.9 as "king safety does not work".
 
+**Attempt five — the same evaluation without the cost: +9.1 ± 14.5 Elo (2026-09-01), and it
+overturns two readings above.** The § 4.9 repairs were applied (arithmetic zone test instead of the
+432 boolean writes, single-`int` guard instead of the second traversal) and the identical curve was
+re-measured against 4.6.0 over the full 1600-game budget: **602–560–438, score 0.513, +9.1 ± 14.5,
+LOS 89.1 %, llr 1.02 against ±2.94 — neither hypothesis accepted.**
+
+Nothing about the evaluation changed between the two runs, so the difference between −42.9 and
++9.1 — roughly **52 Elo** — is the 21.9 % NPS regression and nothing else. Two corrections follow,
+both to text written above before this run existed:
+
+- **The "diffuse evaluation error" reading is refuted.** The paragraph above concluded "static
+  noise added to a search that already resolves king attacks tactically", having ruled out the
+  § 4.4 trap. That conclusion was drawn from a run whose dominant defect was speed, and it does not
+  survive: the same static noise, given its plies back, measures positive. The general failure mode
+  is real and documented three times over in this section; it is not what happened in attempt four.
+- **The conviction-rate table is a small-count statistic and should not be read.** 6 games against
+  1 became **7 against 6** on the second run of the same baseline binary. Two counts near zero
+  differ by chance; the row was evidence for nothing and is retained only so the mistake is
+  visible.
+
+A third caveat is owed to attempt four's own number: −42.9 came from an SPRT stopped at 304 games,
+and [§ 12.23](roadmap.md#1223-search-level-repetition-detection--done-230-elo-v441)'s
+winner's-curse correction applies to early stops in both directions. The true cost was less extreme
+than −42.9; the 52-Elo swing is therefore an upper bound on what the optimization bought.
+
+**Shelved anyway, and the wording matters.** +9.1 with an interval from −5.4 to +23.6 is not
+"clearly positive", which was the rule agreed before the run, so the term does not ship. The
+honest record is **"not shown to be worth ≥ 15 Elo at 1600 games"** — not "neutral" and not
+"king safety does not work". Resolving +9 as distinct from zero needs the interval below 9, about
+4 150 games or 47 hours, and that number would expire the moment a different king-safety term
+ships. Branch `attack-units` keeps the work.
+
+**The screen that replaces guessing about what to try next (2026-08-31/09-01).** Establishing what
+attack units are worth took four attempts, a fitted curve, an NPS regression and two matches over
+three weeks. The same question is now answerable in about an hour, before any production code
+exists: regress `Stockfish static NNUE − myChess static` on a candidate feature over the 39,619
+positions of the 960 self-play corpus and read how much of the gap it explains
+([`tools/king-safety-screen.py`](../tools/king-safety-screen.py), full record in
+[`test-results/king-safety-feature-screen.log`](../test-results/king-safety-feature-screen.log)).
+
+| candidate | top cp | explained | control |
+|---|---:|---:|---:|
+| **file danger** (open / half-open files at the king) | 177 | **2.238 %** | **0.000 %** |
+| attack units (this section) | 85 | 1.270 % | 0.061 % |
+| virtual queen mobility | 245 | 0.813 % | 0.000 % |
+| enemy pawn storm, dense encoding | 29 | 0.282 % | — |
+
+Three results carry beyond the table. **File danger subsumes virtual queen mobility** — mobility
+keeps 24 % of its solo figure once file danger is fitted first, so the two must never be added.
+**File danger and attack units are complementary** — 63 % and 78 % respectively survive the other,
+so this section's term is not superseded by the new candidate, merely outranked. And **both
+controls return zero**: the identical computation four files from the king explains nothing, which
+is what separates "this king is exposed" from "the position is open" and is the reason the 2.238 %
+is worth acting on.
+
+A flat screen result is a reliable stop signal. A strong one is not a promise — attack units
+screened at 1.270 % and the two matches above are what came of it.
+
 *Previous text of this entry, kept because the reasoning it states is what the result has to be
 read against:*
 

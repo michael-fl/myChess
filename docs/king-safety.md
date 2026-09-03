@@ -15,10 +15,12 @@
 | **Where to build it** | branch `attack-units`, `05f337d` — already ported, never measured, 106 commits behind master with `WeightingFunction.java` byte-identical (§ 1.1) |
 | **The one missing change** | multiply by the game phase. Without it the term runs at full strength in the endgame, where the measured sign is the *opposite* one (§ 4.2) |
 | **How to implement it** | leave it where it is: branch `attack-units` already calls `increaseAttackUnit` from inside `move(...)`, the walk the evaluation performs anyway. Do **not** refactor it into a separate pass, however much tidier that looks — a standalone scan costs more than the entire evaluation (§ 4.5) |
-| **What will kill it** | ~~steering into sacrifices the material-only shortcut then hides. Cap below 150 cp and watch the sacrifice rate (§ 4.4)~~ — measured, and it was **not** this: the cap held, 6 of 301 games. What killed it was a diffuse evaluation error plus **−21.9 % NPS** (§ 4.8, § 4.9) |
+| **What will kill it** | ~~steering into sacrifices the material-only shortcut then hides (§ 4.4)~~ — measured, and it was not this: the cap held. ~~A diffuse evaluation error plus −21.9 % NPS (§ 4.8, § 4.9)~~ — **also wrong.** Repairing only the speed moved the identical evaluation by ~52 Elo (§ 4.10). What kills this class of term is **cost**, and the evaluation was never the problem |
 | **The exchange rate** | the cap at 100 cp is forced by `EVALUATE_MATERIAL_ONLY_THRESHOLD`, so the term's maximum contribution is bounded there while it costs a fifth of the node rate. Any variant must buy a third of a ply's Elo with ≤ 100 cp (§ 4.9) |
 | **Expectation** | small. **Six** attempts across two projects measured −14.7, −18.1 and −57.5 in myChess, −46.5, −67.1 and −12.1 in the Audax fork. A **zero** would be progress; § 12.21's headline of 30–60 Elo is not the number to plan for |
-| **Measured 2026-08-31** | **−42.9 ± 33.9**, SPRT H0 accepted after 304 games at `tc=40/60`, LOS 0.6 %. The seventh attempt and the fourth failure — but on **standard chess**, which the backlog calls the wrong yardstick for this term. See § 4.8 |
+| **Measured 2026-08-31** | **−42.9 ± 33.9**, SPRT H0 accepted after 304 games at `tc=40/60`, LOS 0.6 %. See § 4.8 — and read § 4.10 before quoting it |
+| **Measured 2026-09-01** | the same evaluation with the § 4.9 repairs: **+9.1 ± 14.5** over the full 1600 games, LOS 89.1 %, no bound reached. Shelved as "not shown to be worth ≥ 15 Elo", which is not the same claim as "neutral" (§ 4.10) |
+| **What to build instead** | **file danger** — open and half-open files at the king. Screens at **2.238 %** explained residual variance against attack units' 1.270 %, with a control that returns exactly zero, and it subsumes virtual queen mobility. Fitted table and implementation notes in § 4.11 |
 
 **Read § 4.1 before using the seven depth-stable cases as a target** — they were the intended
 instrument and they are not usable as one.
@@ -1144,6 +1146,126 @@ the approach is finished.
 
 **Re-measure before drawing conclusions from a further match.** A 960 run against the term as it
 stands would measure the handicap as much as the idea.
+
+### 4.10 The repairs, measured: the cost *was* the failure
+
+The § 4.9 repairs went in — arithmetic zone test instead of 432 boolean writes per evaluation, a
+single-`int` guard instead of the second board traversal — and the identical curve was re-measured
+against 4.6.0 over the full budget.
+
+| | attempt four | attempt five |
+|---|---:|---:|
+| evaluation | the § 4.7 curve | **identical** |
+| implementation | § 4.8 | § 4.9 repairs applied |
+| result | −42.9 ± 33.9, H0 at 304 games | **+9.1 ± 14.5**, 1600 games, no bound |
+| score | 0.439 (92–129–80) | 0.513 (602–560–438) |
+| LOS | 0.6 % | 89.1 % |
+
+**Two readings in § 4.8 do not survive this**, and both were written with more confidence than the
+evidence carried:
+
+*The diffuse-evaluation-error conclusion is refuted.* § 4.8 ruled out the § 4.4 trap, found the
+damage spread across the whole match rather than concentrated in sacrifices, and concluded "static
+noise added to a search that already resolves king attacks tactically". The same static noise, given
+its plies back, measures positive. The general failure mode is real and this document records it
+three times over; attempt four was not an instance of it.
+
+*The conviction-game row was never evidence.* 6 games against 1 became **7 against 6** on the second
+run of the same baseline binary. Two counts near zero differ by chance, and a 2.0 %-against-0.3 %
+line reads like a finding. It is retained in § 4.8 only so the mistake stays visible.
+
+A caveat is owed in the other direction too: −42.9 came from an SPRT stopped at 304 games, so
+[roadmap § 12.23](roadmap.md)'s winner's-curse correction applies. The true cost was less extreme,
+and 52 Elo is therefore an **upper bound** on what the repairs bought.
+
+**Why it is still shelved.** +9.1 with an interval from −5.4 to +23.6 is not "clearly positive",
+which was the rule agreed before the run. Resolving +9 as distinct from zero wants the interval
+below 9 — about 4 150 games, 47 hours — and that number expires the moment a different king-safety
+term ships. The honest record is "not shown to be worth ≥ 15 Elo at 1600 games".
+
+---
+
+### 4.11 File danger — the candidate that outranks everything measured here
+
+The lesson of §§ 4.1–4.10 is not about attack units, it is about **cost of discovery**: four
+attempts, a fitted curve, an NPS regression and two matches over three weeks to learn what one term
+is worth. That is now an hour's work before a line of production code exists. Regress
+`Stockfish static NNUE − myChess static` on a candidate over the 39,619-position 960 self-play
+corpus and read how much of the gap it accounts for
+([`tools/king-safety-screen.py`](../tools/king-safety-screen.py); full record in
+[`test-results/king-safety-feature-screen.log`](../test-results/king-safety-feature-screen.log)).
+
+| candidate | top cp | explained | control |
+|---|---:|---:|---:|
+| **file danger** | 177 | **2.238 %** | **0.000 %** |
+| attack units (§§ 4.5–4.10) | 85 | 1.270 % | 0.061 % |
+| virtual queen mobility | 245 | 0.813 % | 0.000 % |
+| enemy pawn storm, dense | 29 | 0.282 % | — |
+
+**The feature.** Each of the three files at and beside the king is classified on an ordered scale,
+and the three are summed (raw 0–12):
+
+| the file | level |
+|---|---:|
+| own pawn on it | 0 |
+| half-open, enemy pawn still on its own half | 1 |
+| half-open, enemy pawn past the middle | 2 |
+| open | 3 |
+| open, with an enemy rook or queen on it | 4 |
+
+**The table**, fitted with twelve free parameters so the top is not a blend of five levels:
+
+```
+danger:  0    1    2    3    4    5    6    7    8    9   10   11   12
+cp:      0   21   42   42   77   91   95  134  138  223  223  223  223
+```
+
+Equal neighbors are the fit saying it cannot separate those levels. Indices 10–12 carry index 9's
+value deliberately: their own fitted values rest on 0.56 % of samples between them, and index 12's
+bootstrap interval collapses onto its point estimate — the same signature that made the first
+pawn-storm encoding's 141.5 cp worthless.
+
+**Why the control matters more than the coefficient.** Open files near a king also mean the position
+is open, and a regression cannot separate "this king is exposed" from "there is little left on the
+board". The identical classification read from a three-file window four files away returns
+**0.000 % explained, flat zero at every index**, at a *higher* occupancy than the real window
+(56.8 % against 47.7 %). Without that number the 2.238 % would be unusable. It was very nearly not
+measured — the mobility control had already returned zero and the first draft of the log carried
+"that control carries over" as an inference. A control that transfers by resemblance is not a
+control.
+
+**Two relationships, both measured** (`tools/king-safety-orthogonalize.py`):
+
+- **File danger subsumes virtual queen mobility.** Mobility keeps 24 % of its solo figure once file
+  danger is fitted first. The two must never be added — and the § 4-era recommendation of mobility
+  as the best next candidate is superseded.
+- **File danger and attack units are complementary.** 63 % and 78 % survive the other, so this
+  document's term is outranked rather than replaced, and a later combined term would not
+  double-count.
+
+**Implementation notes.**
+
+- Build it on **master**, not on `attack-units`. The table is calibrated against master's
+  evaluation; on the branch the attack-unit term already fills part of the gap and the table would
+  count it twice.
+- **Wire it as the ninth tunable factor** — `TUNABLE_FACTOR_NAMES`, `tunableFactorValues()`, and the
+  `features[]` array of `analyzeFactors`, whose entry is `(penalty[0] - penalty[1]) * 100.0`. This is
+  correctness, not tuning: `analyzeFactors` asserts the evaluation is linear in the factors, and
+  `FactorTexelData` computes `baseEval = eval − dot(features, factors)`, so an unlisted term folds
+  into the supposedly constant base and every later tuning run tunes the other factors against a
+  base that moves with king danger. Branch `attack-units` demonstrates the failure: it adds its term
+  to `calculatePositionWeight` and not to `analyzeFactors`, and
+  `FactorTexelDataTest.breakdownReconstructsTheRealEvaluation` fails there (209.0 against 190.9)
+  while passing on master.
+- **Do not touch the material-only shortcut**, even though it will silence this term in sacrificial
+  lines. Removing it measured −34 Elo, threshold 300 measured −18.3, threshold 100 was flat at −0.7:
+  letting more positional content through in swung-material lines is measurably harmful twice over.
+  Build the term inside the shortcut and let the SPRT judge the package.
+- The classification is already written and tested against hand-built positions, one per level, in
+  `KingSafetyFeatures.fileDangerAround` — test sources, no production dependency, ready to port.
+
+**And the standing caveat, unchanged.** A flat screen result is a reliable stop signal; a strong one
+is not a promise. Attack units screened at 1.270 % and produced §§ 4.8 and 4.10.
 
 ---
 
