@@ -228,13 +228,15 @@ All three GUIs listed under [§ 12.9](roadmap-backlog.md#129-uci-protocol--m-12-
 
 ### 12.11.1 Evaluation tuning for Chess960 — what transfers, what to re-measure
 
-*Forward-looking. The primary user plays predominantly Chess960 against myChess, so 960 strength is a real target. This records which evaluation parameters transfer from standard chess and which are worth tuning or measuring specifically on 960.*
+*Forward-looking. This records which evaluation parameters transfer from standard chess and which are worth tuning or measuring specifically on 960.*
+
+> **Premise withdrawn, 2026-09-04.** This section was written on "the primary user plays predominantly Chess960 against myChess, so 960 strength is a real target". The user has retracted that: they play well below the engine's strength, so their own games are not a strength signal, and lichess 960 traffic is thin. **Standard-chess Elo is the target metric. A 960 measurement never decides a keep/discard question, and where the two regimes disagree, standard decides.** Everything below about what *transfers* stands — a table fitted on standard positions is not invalidated for 960. What does not stand is any rule that makes 960 the yardstick; those are struck through in place. A term that only pays in 960 is tuned for a regime nobody measures.
 
 **PSTs are variant-agnostic — tune on standard, they transfer.** A piece-square table scores *where a piece stands*, not where it started. Center control, open-file and rank bonuses, and the entire endgame (king centralization, passed pawns) are identical in 960; even castling *targets* are the same (960 castling still lands the king on the c-/g-file squares), and the endgame is literally identical to standard chess. So the tapered-PST tuning of [§ 12.7.1](roadmap.md#1271-tapered-evaluation--staged-rollout-strategy) on the standard Zurichess dataset produces tables that serve 960 as well — **no 960-specific PST dataset is needed.** The only divergent slice is the *middlegame king table* and early-development squares, because a standard dataset over-fits "the king ends on g1."
 
 **Tune on standard, measure on 960.** Because PSTs transfer, keep tuning them on the standard 1.4M-position dataset — but run the *validation* SPRT under 960 conditions (`cutechess-cli -variant fischerandom` with 960 start positions; myChess already speaks `UCI_Chess960`) so the keep/discard decision reflects the variant actually played. This catches a change that helps standard chess but misfires in 960 (e.g. an MG king-table tweak that over-fits standard castling) without needing a 960 tuning dataset. cutechess is the *measuring device* here, not an optimizer — the optimizer is still the offline Texel tuner.
 
-**The marquee 960 item — re-measure the shelved king-safety terms on 960.** Every king-safety attempt so far was killed on *standard* chess ([§ 12.21](roadmap.md#1221-king-safety--m--3060-elo): attacker-units −14.7, standalone pawn-shield −57.5, king-dependent PST −18.1). In standard chess the king is almost always safely castled on g1, so a king-safety term measures almost nothing and reads net-negative. **960 stresses king safety far more** — the king starts on a random file, is often exposed before castling, and there is no opening book to steer it to safety. It is entirely plausible that a term that is neutral-to-negative on standard is *positive* on 960. The term logic already exists in the archived branches; only the weight needs re-fitting. And because it is a handful of scalars — not hundreds of PST cells — this is the one case where **SPSA-style tuning directly against 960 games** is feasible (the games are the signal, so no labeled 960 dataset is required).
+**~~The marquee 960 item — re-measure the shelved king-safety terms on 960.~~ — struck 2026-09-04, see the premise note above.** This paragraph was the single strongest consequence of the withdrawn premise, and it is the one that did damage: it gave every standard-chess neutral in the king-safety series an escape hatch, and [§ 12.21](roadmap.md#1221-king-safety--m--3060-elo)'s yardstick paragraph adopted it as "treat a neutral or mildly negative standard result as inconclusive". **With standard chess as the target metric, a standard result is the verdict — including a neutral one.** The 2026-09-03 file-danger match is the concrete case: ≈ 0 Elo on standard at essentially no cost, which under the old rule would have been "inconclusive, run 960 next" and is now simply the answer. Note also that 960 flatters this family by construction — the king's file is variable and natural shelter often absent, so a file- or shield-based term reads a non-zero quantity far more often there. That makes 960 the regime where such a term looks best, which is the opposite of what a validation yardstick should do. The reasoning is kept below because it is a correct description of *why the two regimes differ*; only its use as a decision rule is withdrawn. Every king-safety attempt so far was killed on *standard* chess ([§ 12.21](roadmap.md#1221-king-safety--m--3060-elo): attacker-units −14.7, standalone pawn-shield −57.5, king-dependent PST −18.1). In standard chess the king is almost always safely castled on g1, so a king-safety term measures almost nothing and reads net-negative. **960 stresses king safety far more** — the king starts on a random file, is often exposed before castling, and there is no opening book to steer it to safety. It is entirely plausible that a term that is neutral-to-negative on standard is *positive* on 960. The term logic already exists in the archived branches; only the weight needs re-fitting. And because it is a handful of scalars — not hundreds of PST cells — this is the one case where **SPSA-style tuning directly against 960 games** is feasible (the games are the signal, so no labeled 960 dataset is required).
 
 **A 960 profile for the few variant-sensitive scalars.** For the small set of genuinely 960-sensitive scalars — king-safety weight, and opening-phase time allocation (which matters more in 960 precisely because there is no book) — it makes sense to carry variant-dependent values switched on `UCI_Chess960`, rather than a second full evaluation. The bulk PSTs stay a single shared set.
 
@@ -242,13 +244,17 @@ All three GUIs listed under [§ 12.9](roadmap-backlog.md#129-uci-protocol--m-12-
 
 Summary — where each parameter class belongs:
 
-| Parameter | Tune on | Measure on 960 |
+Summary table, **revised 2026-09-04** — the "Measure on 960" column no longer carries a
+keep/discard decision anywhere. Standard chess decides; a 960 run is at most an informational
+cross-check, and never a reason to keep a term that measured neutral on standard.
+
+| Parameter | Tune on | 960 run |
 |---|---|---|
 | Bulk PSTs | standard (Texel, § 12.7.1) — they transfer | optional cross-check |
-| MG king PST | standard; a true 960 tune needs a 960 dataset | yes (hand variants) |
-| King-safety weights | SPSA-on-960 games (few scalars) or by hand | **yes** |
-| Opening time management | SPSA-on-960 games | **yes** |
-| Development / tempo term (if added) | standard | yes |
+| MG king PST | standard; a true 960 tune needs a 960 dataset | optional cross-check |
+| King-safety weights | **standard** — the previous entry said SPSA-on-960 games | ~~**yes**~~ → optional, decides nothing |
+| Opening time management | **standard** — previously SPSA-on-960 games | ~~**yes**~~ → optional, decides nothing |
+| Development / tempo term (if added) | standard | optional cross-check |
 
 Feasibility note: game-based tuning (SPSA/CLOP) against 960 games is only practical for a few scalars; a labeled 960 dataset for Texel PST tuning would have to be generated via self-play — a separate project, and unnecessary given PST transferability.
 

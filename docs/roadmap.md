@@ -581,6 +581,20 @@ standard result as inconclusive and run
 before shelving anything.** A clearly negative standard result settles it without the second
 run.
 
+> **The rule in the paragraph above is withdrawn, 2026-09-04.** It rested on
+> [§ 12.11.1](roadmap-backlog.md#12111-evaluation-tuning-for-chess960--what-transfers-what-to-re-measure)'s
+> premise that the user plays predominantly 960, which the user has retracted: they play well
+> below the engine's strength, and lichess 960 traffic is thin. **Standard-chess Elo is the
+> target metric, so a standard result is the verdict — a neutral one included.** There is no
+> longer an "inconclusive, run 960 next" branch for a king-safety term. This tightens the
+> series rather than loosening it: the 2026-09-03 file-danger match measured ≈ 0 on standard at
+> essentially no cost, which the old rule would have called inconclusive and the new one calls
+> the answer. It also cuts the other way and in the useful direction — attempt five's
+> **+9.1 ± 14.5 on standard** is now the only measurement in this section that a corrected
+> yardstick leaves standing as an open positive lead, and resolving it needs games rather than
+> a second variant. The 960 tooling and the fitted curve survive as an informational
+> cross-check; neither decides anything.
+
 ---
 
 ## 12.23 ~~Repetition draws are invisible to the search~~ — **DONE 2026-08-15, ≈ +15 Elo**
