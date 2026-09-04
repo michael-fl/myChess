@@ -587,7 +587,21 @@ that are close to noise. Indices 6–8 together are roughly 6 % of king samples.
 transfer to 960 and it was never checked for king safety, which is the term where one would
 least expect it — the king starts on a random file with a different pawn structure in front of
 it. It is the smallest corpus here (39 619 positions) so this is an indication rather than a
-result, but it points the right way for an engine whose owner plays mostly 960.
+result.
+
+**What this is not an argument for (corrected 2026-09-04).** An earlier version of this
+paragraph closed with "it points the right way for an engine whose owner plays mostly 960",
+and § 12.21 carried the same premise as a reason to re-measure the shelved king-safety terms
+under `-variant fischerandom`. The owner's own games are irrelevant to it: they play well below
+the engine's strength, and lichess 960 traffic is thin, so **standard-chess Elo is the target
+metric and 960 is not a yardstick for shipping decisions.** The transfer observation keeps its
+value in the direction it was made — a curve fitted on standard positions is not invalidated
+for 960 — but a 960 measurement cannot justify shipping a term for standard chess, and where
+the two regimes disagree, standard decides. A term that only pays in 960 is being tuned for a
+regime nobody measures. Note the asymmetry cuts against 960 twice over for *this* family: the
+king's file is variable there and natural shelter often absent, so the quantity a file- or
+shield-based term reads is far more often non-zero — which makes 960 the regime where such a
+term looks most valuable and standard chess the one where it must prove it.
 
 The anchor column still saturates at +73.5 for indices 6–8. Dense sampling was assumed to be the
 cause and was not: the next section shows it was the tuner's step schedule, and the anchor's true
