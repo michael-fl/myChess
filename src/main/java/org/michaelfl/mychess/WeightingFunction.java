@@ -188,6 +188,38 @@ public final class WeightingFunction {
             80    //  8
     };
 
+    /**
+     * Shifts the king-zone centre off the a- and h-file, indexed by the king's column
+     * (0 = a-file): {@code +1} on the a-file, {@code -1} on the h-file, nothing in between. So
+     * the zone of a king on h1 is the 3x3 block around g1, and an a1 king reads b1's.
+     *
+     * <p><b>Why the file and not the rank.</b> Without the shift the zone is the 3x3 block
+     * clipped to the board, which leaves a corner king four squares against nine inside — and
+     * since an attacker counts when it bears on <em>any</em> zone square, fewer squares mean
+     * fewer attackers qualify. The engine could then lower its own measured danger by walking
+     * the king toward the corner, which is usually less safe rather than more. The rank is
+     * deliberately <em>not</em> clamped: the resulting six-against-nine difference between the
+     * back rank and the one above it is the term's only remaining expression of whether the king
+     * sits behind its own pawns or has stepped out in front of them, and there its sign is
+     * right.
+     *
+     * <p><b>Package-private for the same reason as {@link #ATTACK_UNIT_OF_PIECE}:</b> the
+     * standalone {@code KingAttackUnits} in test sources — the implementation
+     * {@link #KING_ATTACK_PENALTY} was fitted over — reads this array from here rather than
+     * repeating it, so the two cannot drift. A disagreement about which squares belong to the
+     * zone would mean the table is indexed by a quantity nobody calibrated, and it would not
+     * fail loudly. {@code KingAttackCurveTest.theProductionScanCountsWhatTheCurveWasFittedOn}
+     * is the guard.
+     */
+    final static int[] KING_FIELD_CORRECTION_OFFSET = { 1, 0, 0, 0, 0, 0, 0, -1 };
+
+    private final static int[] COLOR_IF_KING = new int[Board.illegal + 1];
+    static {
+        Arrays.fill(COLOR_IF_KING, -1);
+        COLOR_IF_KING[Board.whiteKing] = 0;
+        COLOR_IF_KING[Board.blackKing] = 1;
+    }
+
     @FunctionalInterface
     private interface CalculateWeight {
         void calculate(WeightingFunction generator, int field, int color);
@@ -299,7 +331,7 @@ public final class WeightingFunction {
     private final int[] pstMidGameWeight = new int[2];
     /** Per-color sum of endgame piece-square values for the current position (index 0 = white, 1 = black). */
     private final int[] pstEndGameWeight = new int[2];
-    private final int[] kingField = new int[2];
+    private final int[] kingFieldCorrected = new int[2];
     /** Game phase of the most recently evaluated position, {@code 0..}{@link #MAX_PHASE}; see {@link #phaseWeightOfPiece}. */
     private int phase;
     private boolean isCurrentAttackerCounted;
@@ -385,11 +417,10 @@ public final class WeightingFunction {
         int phase = 0;
 
         for (int field = Board.a1; field < stopField; field++) {
-            final byte piece = board[field];
-            if (piece == Board.whiteKing) {
-                kingField[0] = field;
-            } else if (piece == Board.blackKing) {
-                kingField[1] = field;
+            final int color = COLOR_IF_KING[board[field]];
+            if (color != -1) {
+                final int col = field % Board.LENGTH - 2;
+                kingFieldCorrected[color] = field + KING_FIELD_CORRECTION_OFFSET[col];
             }
         }
 
@@ -529,16 +560,27 @@ public final class WeightingFunction {
     }
 
     /**
-     * Records that the piece on {@code fromField} bears on {@code toField}. When
+     * Records that the piece currently being walked bears on {@code toField}. When
      * {@code toField} lies in the enemy king zone, the piece's
      * {@link #ATTACK_UNIT_OF_PIECE attack-unit weight} is added to
      * {@link #attackUnit} and {@link #kingAttackerCount} is incremented.
      *
-     * <p>Each piece is counted at most once per evaluation, regardless of how
-     * many king-zone squares it attacks: {@link #isKingAttackerCounted}, keyed by
-     * the origin square, absorbs the repeated calls a sliding piece makes along
-     * its rays. Two like pieces on different squares still count separately. The
-     * king itself has zero weight and is therefore never counted as an attacker.
+     * <p>Each piece is counted at most once, regardless of how many king-zone
+     * squares it attacks: {@link #isCurrentAttackerCounted} is cleared once per
+     * piece walk and set as soon as that piece scores, which absorbs the repeated
+     * calls a sliding piece makes along its rays. Two like pieces on different
+     * squares still count separately, because each gets its own walk and its own
+     * reset. The king itself has zero weight and is therefore never counted as an
+     * attacker.
+     *
+     * <p>The mechanism is a single flag scoped to one walk, <b>not</b> a mask keyed
+     * by the origin square — this JavaDoc described the latter until 2026-09-04,
+     * along with a {@code fromField} parameter the method does not take and a field
+     * name that does not exist. The mask is what {@code KingAttackUnits} in test
+     * sources does; the two are equivalent in effect and differ in cost. The flag's
+     * correctness rests on every one of the seven {@code calculateFor…} walks
+     * clearing it, so a new piece walk that forgets to would silently drop that
+     * piece from the count whenever its predecessor scored.
      *
      * @param color     attacking color (0 = white, 1 = black)
      * @param toField   attacked square
@@ -561,7 +603,7 @@ public final class WeightingFunction {
             return false;
         }
 
-        final int delta = field - kingField[color];
+        final int delta = field - kingFieldCorrected[color];
 
         return (delta >= - 1 && delta <= 1)
                 || (delta >= - Board.LENGTH - 1 && delta <= - Board.LENGTH + 1)

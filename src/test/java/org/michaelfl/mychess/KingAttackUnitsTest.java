@@ -181,20 +181,20 @@ class KingAttackUnitsTest {
     }
 
     /**
-     * The placebo centre sits on the king's rank, four files away, and wraps within the board.
+     * The placebo center sits on the king's rank, four files away, and wraps within the board.
      *
      * <p>Four files is what keeps the two 3×3 zones from ever overlapping — at three they would
      * touch, and the control would partly measure the thing it controls for.
      */
     @Test
     void placeboCenterIsFourFilesFromTheKingOnTheSameRank() {
-        // Black king e8; the placebo centre is a8 (e -> a), same rank.
+        // Black king e8; the placebo center is a8 (e -> a), same rank.
         int center = KingAttackUnits.placeboCenter(Fen.importFEN(QUIET), GameStatus.TURN_WHITE);
 
         assertEquals(Board.a8, center,
                 "king on e8 (file 5) shifts by four files to a8, wrapping inside the board");
 
-        // White king e1 seen from black: the placebo centre is a1.
+        // White king e1 seen from black: the placebo center is a1.
         assertEquals(Board.a1, KingAttackUnits.placeboCenter(Fen.importFEN(QUIET), GameStatus.TURN_BLACK),
                 "the same shift applies to the other king");
     }
@@ -240,5 +240,66 @@ class KingAttackUnitsTest {
         assertEquals(WeightingFunction.ATTACK_UNIT_ROOK,
                 KingAttackUnits.ofZone(board, GameStatus.TURN_WHITE, Board.a8),
                 "the zone computation does not depend on a king being at its centre");
+    }
+
+    /**
+     * Agreement between this class and the production term, on hand-built positions.
+     *
+     * <p><b>The broad version of this check already exists</b> and is the stronger one:
+     * {@code KingAttackCurveTest.theProductionScanCountsWhatTheCurveWasFittedOn} compares the two
+     * over a whole corpus and names the disagreeing positions with both counts. This case is the
+     * targeted complement — a fixed, readable list built to isolate the one property a corpus
+     * cannot guarantee it contains, and it names the offending FEN directly rather than a count of
+     * mismatches.
+     *
+     * <p>Why the pair matters at all: the unit <em>weights</em> are shared with
+     * {@link WeightingFunction} by construction, precisely so they cannot drift — but the
+     * <b>zone walk is duplicated</b>. Since the curve is fitted through this class and applied by
+     * the production term, a disagreement about which squares belong to the zone means the table is
+     * indexed by a quantity nobody calibrated.
+     *
+     * <p>That duplication is exactly what the corner repair had to cross: clamping the king's file
+     * to b...g so a corner king reads its inward neighbor's zone had to land in
+     * {@code WeightingFunction.isKingZoneField} <em>and</em> in {@link KingAttackUnits}. The first
+     * six positions below are that case — three king placements per side, each paired with the
+     * square one file inward. The rest are corner, edge and interior kings plus ordinary
+     * middlegame positions, so agreement is not asserted only at the edge.
+     */
+    @Test
+    void agreesWithTheProductionTermOnEveryPosition() {
+        final String[] positions = {
+                // Attackers bearing only on the squares a corner king's zone drops.
+                "4kr2/8/8/8/8/3n4/8/6K1 w - - 0 1",
+                "4kr2/8/8/8/8/3n4/8/7K w - - 0 1",
+                "4kr2/8/8/8/8/4n3/8/1K6 w - - 0 1",
+                "4kr2/8/8/8/8/4n3/8/K7 w - - 0 1",
+                "6k1/8/3N4/8/8/8/8/4KR2 w - - 0 1",
+                "7k/8/3N4/8/8/8/8/4KR2 w - - 0 1",
+                // Kings on every kind of square: corner, edge, interior.
+                "7k/8/8/8/8/8/8/K7 w - - 0 1",
+                "4k3/8/8/8/8/8/8/4K3 w - - 0 1",
+                "8/8/8/3k4/4K3/8/8/8 w - - 0 1",
+                // And ordinary positions, so this is not an edge-only agreement.
+                QUEEN_AND_ROOK,
+                BATTERY_SCREENED,
+                "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 1",
+                "r3k2r/pp1n1ppp/2pbpn2/3p4/3P1B2/2NBP3/PP3PPP/R3K2R w KQkq - 0 1"
+        };
+
+        for (String fen : positions) {
+            final Board board = Fen.importFEN(fen);
+            final var production = new WeightingFunction();
+            production.calculate(Fen.importFEN(fen));
+
+            for (int turn : new int[] {GameStatus.TURN_WHITE, GameStatus.TURN_BLACK}) {
+                final int colorIndex = turn == GameStatus.TURN_WHITE ? 0 : 1;
+
+                assertEquals(production.getAttackUnit()[colorIndex],
+                        KingAttackUnits.of(board, turn),
+                        "the standalone walk and the production term must agree on the units "
+                                + (turn == GameStatus.TURN_WHITE ? "white" : "black")
+                                + " bears on the other king's zone, in " + fen);
+            }
+        }
     }
 }
