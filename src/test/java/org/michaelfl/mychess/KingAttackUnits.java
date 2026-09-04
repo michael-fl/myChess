@@ -136,12 +136,20 @@ final class KingAttackUnits {
             return 0;
         }
 
+        // Read from the production class rather than repeated here, exactly as the unit weights
+        // are: the curve is fitted through this class and applied by the production term, so a
+        // disagreement about which squares belong to the zone would index the table by a quantity
+        // nobody calibrated. Applied to whatever centre this method is given, the placebo centre
+        // included, so the control keeps obeying the same rules as the real zone.
+        final int corrected = centerField
+                + WeightingFunction.KING_FIELD_CORRECTION_OFFSET[centerField % Board.LENGTH - 2];
+
         // Deduplication by origin square: a rook bearing on three zone squares is one attacker.
         final boolean[] counted = new boolean[Board.LENGTH * Board.LENGTH];
-        int units = unitsOn(squares, centerField, attackerIsWhite, counted);
+        int units = unitsOn(squares, corrected, attackerIsWhite, counted);
 
         for (int offset : Board.KING_ADJACENCY_OFFSETS) {
-            final int zoneField = centerField + offset;
+            final int zoneField = corrected + offset;
 
             if (squares[zoneField] != Board.illegal) {
                 units += unitsOn(squares, zoneField, attackerIsWhite, counted);

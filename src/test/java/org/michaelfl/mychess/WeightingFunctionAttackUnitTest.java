@@ -52,16 +52,201 @@ class WeightingFunctionAttackUnitTest {
             }
         }
 
+        /**
+         * <b>Replaces {@code inTheCornerStaysInBoundsAndMarksTheReachableSquares}.</b> That test
+         * asserted the a1 zone was {@code a1, b1, a2, b2} with c1 outside — the unshifted 3x3
+         * clipped at the border, four squares against six for b1 and nine for b2. It described
+         * itself as a regression guard for "must not throw", which it was; what it also did was
+         * pin the discount below.
+         *
+         * <p><b>The defect.</b> The zone is the 3x3 block centred on the king, clipped to the
+         * board, so it holds 9 squares inside, 6 on an edge and 4 in a corner. An attacker is
+         * counted when it bears on any zone square, so <em>fewer squares means fewer attackers
+         * qualify</em> — and the engine can shrink its own measured danger by walking the king
+         * toward the corner, which chess theory says is usually less safe rather than more. The
+         * worst single move loses 5 of 9 squares (g2-h1). Measured on the 152 complete pairs of
+         * <code>sprt-attack-units.pgn</code> the candidate already sat on smaller zones than the
+         * baseline, −0.1008 squares (95 % −0.179...−0.023, t = −2.52) with 13.5 % more corner
+         * positions — under-powered and from the slow first build, so corroboration rather than
+         * proof. The proof is the arithmetic.
+         *
+         * <p><b>The repair: clamp the king's <em>file</em> to b...g, leave the rank alone.</b> So
+         * an a1 king reads the zone of a b1 king and a h1 king that of a g1 king. Clamping the
+         * rank as well would make every zone 9 squares and remove the last gradient, and it is
+         * deliberately <em>not</em> done — see
+         * {@link #theZoneKeepsSixSquaresOnTheBackRankAndNineAboveIt}.
+         */
         @Test
-        void inTheCornerStaysInBoundsAndMarksTheReachableSquares() {
-            // Regression guard: a corner king pushes zone offsets onto the border;
-            // it must not throw and must still mark the in-board zone squares.
+        void inTheCornerTheZoneShiftsInwardInsteadOfShrinking() {
             var wf = evalFor("4k3/8/8/8/8/8/8/K7 w - - 0 1"); // white king a1
 
-            for (int field : new int[] {Board.a1, Board.b1, Board.a2, Board.b2}) {
-                assertTrue(wf.isInKingZone(WHITE, field), "field " + ChessUtil.fieldToString(field) + " is in the a1 king zone");
+            for (int field : new int[] {Board.a1, Board.b1, Board.c1, Board.a2, Board.b2, Board.c2}) {
+                assertTrue(wf.isInKingZone(WHITE, field),
+                        "field " + ChessUtil.fieldToString(field) + " must be in the a1 king zone: "
+                                + "the window shifts onto the b-file rather than losing a third of itself");
             }
-            assertFalse(wf.isInKingZone(WHITE, Board.c1), "c1 is outside the a1 king zone");
+
+            for (int field : new int[] {Board.d1, Board.d2, Board.a3, Board.b3, Board.c3}) {
+                assertFalse(wf.isInKingZone(WHITE, field),
+                        "field " + ChessUtil.fieldToString(field) + " must stay outside: shifting the "
+                                + "window is not widening it, and the rank is not clamped");
+            }
+        }
+
+        /**
+         * The property the repair exists for, asserted as an equality so it does not restate the
+         * zone's shape a third time: a king on the a- or h-file must cover exactly what a king one
+         * file further in covers. Checked on both back ranks, where a castled king actually lives,
+         * and on a middle rank, where the zone is nine squares rather than six.
+         */
+        @Test
+        void aKingOnTheEdgeFileCoversTheSameZoneAsOneFileInward() {
+            record Pair(String edge, String inward, String what) {}
+
+            final Pair[] pairs = {
+                    new Pair("4k3/8/8/8/8/8/8/7K w - - 0 1", "4k3/8/8/8/8/8/8/6K1 w - - 0 1", "h1 against g1"),
+                    new Pair("4k3/8/8/8/8/8/8/K7 w - - 0 1", "4k3/8/8/8/8/8/8/1K6 w - - 0 1", "a1 against b1"),
+                    new Pair("4k3/8/8/8/7K/8/8/8 w - - 0 1", "4k3/8/8/8/6K1/8/8/8 w - - 0 1", "h4 against g4"),
+                    new Pair("4k3/8/8/8/K7/8/8/8 w - - 0 1", "4k3/8/8/8/1K6/8/8/8 w - - 0 1", "a4 against b4")
+            };
+
+            for (Pair p : pairs) {
+                final var edge = evalFor(p.edge());
+                final var inward = evalFor(p.inward());
+
+                for (int row = 0; row < 8; row++) {
+                    for (int col = 0; col < 8; col++) {
+                        final int field = ChessUtil.getFieldFromColAndRow(col, row);
+
+                        assertEquals(inward.isInKingZone(WHITE, field), edge.isInKingZone(WHITE, field),
+                                p.what() + ": " + ChessUtil.fieldToString(field)
+                                        + " must belong to both zones or to neither");
+                    }
+                }
+            }
+        }
+
+        /**
+         * <b>The design decision, pinned so it cannot be tidied away.</b> This case is green
+         * before the repair as well, and it is the one that fails if someone clamps the rank too.
+         *
+         * <p>Clamping both axes would make every zone nine squares and leave no gradient at all,
+         * which looks strictly better and is not. A king on g1 would then read the zone of a king
+         * on g2 — the two become <em>indistinguishable</em>, and the term loses the one thing it
+         * still expresses about shelter: whether the king sits behind its own pawns or has stepped
+         * out in front of them. Stockfish can afford to clamp both because its king ring sits
+         * beside a shelter and storm term that carries that distinction separately; myChess has no
+         * such companion, so the zone has to carry it.
+         *
+         * <p>So the surviving gradient — six squares on the back rank against nine above it — is
+         * kept on purpose, because its sign is right: stepping off the back rank in front of one's
+         * own pawns really is more dangerous. The corner gradient was removed because its sign was
+         * wrong.
+         */
+        @Test
+        void theZoneKeepsSixSquaresOnTheBackRankAndNineAboveIt() {
+            assertEquals(6, zoneSize(evalFor("4k3/8/8/8/8/8/8/6K1 w - - 0 1")),
+                    "a king on g1 has no rank below it, so its zone is 3 files by 2 ranks");
+            assertEquals(9, zoneSize(evalFor("4k3/8/8/8/8/8/6K1/8 w - - 0 1")),
+                    "a king on g2 has, and its zone is the full 3 by 3 — the term must be able to "
+                            + "tell the two apart, so the rank must not be clamped");
+            assertEquals(6, zoneSize(evalFor("4k3/8/8/8/8/8/8/7K w - - 0 1")),
+                    "and after the repair a king on h1 reads the same six as one on g1");
+        }
+
+        private static int zoneSize(WeightingFunction wf) {
+            int n = 0;
+
+            for (int row = 0; row < 8; row++) {
+                for (int col = 0; col < 8; col++) {
+                    if (wf.isInKingZone(WHITE, ChessUtil.getFieldFromColAndRow(col, row))) {
+                        n++;
+                    }
+                }
+            }
+
+            return n;
+        }
+    }
+
+    /**
+     * The consequence the repair is actually for: attackers that bear only on the squares a
+     * corner king's zone drops. Separate from {@link KingZone} because these read the accumulated
+     * units rather than the zone membership, and the two accessors use <b>opposite colour
+     * conventions</b> — {@code isInKingZone(colour, …)} is indexed by the king's owner, while
+     * {@code getAttackUnit()[colour]} is indexed by the <em>attacker</em>. Mixing them up produced
+     * a silent false negative once already (§ 4.11: an inverted feature fits to a flat zero and
+     * reads as "carries nothing").
+     */
+    @Nested
+    class CornerDiscount {
+
+        /**
+         * White king on g1 or h1, otherwise identical: a black rook on the open f-file bearing on
+         * f1 and f2, and a black knight on d3 bearing on f2. Neither touches g1, g2, h1 nor h2.
+         *
+         * <p>Both squares they reach — f1 and f2 — are in a g1 king's zone and neither is in a
+         * h1 king's, so before the repair <code>Kg1-h1</code> takes the reading from two attackers
+         * and five units to <b>zero of each</b>, which also drops it below the two-attacker gate.
+         * With a queen and a rook in place of these two the same move would take the penalty from
+         * the table's maximum to nothing.
+         */
+        @Test
+        void steppingIntoTheCornerKeepsTheAttackersCounted() {
+            final var onG1 = evalFor("4kr2/8/8/8/8/3n4/8/6K1 w - - 0 1");
+            final var onH1 = evalFor("4kr2/8/8/8/8/3n4/8/7K w - - 0 1");
+
+            assertEquals(2, onG1.getKingAttackerCount()[BLACK],
+                    "the premise: against the king on g1 the rook on f8 and the knight on d3 both "
+                            + "bear on the zone (f1/f2 and f2)");
+            assertEquals(5, onG1.getAttackUnit()[BLACK],
+                    "the premise: rook 3 plus knight 2, each counted once");
+
+            assertEquals(onG1.getKingAttackerCount()[BLACK], onH1.getKingAttackerCount()[BLACK],
+                    "stepping into the corner must not lose attackers — g1 counted "
+                            + onG1.getKingAttackerCount()[BLACK] + ", h1 counted "
+                            + onH1.getKingAttackerCount()[BLACK]);
+            assertEquals(onG1.getAttackUnit()[BLACK], onH1.getAttackUnit()[BLACK],
+                    "and must not lose units — g1 read " + onG1.getAttackUnit()[BLACK]
+                            + ", h1 read " + onH1.getAttackUnit()[BLACK]);
+        }
+
+        /** The same on the queenside, where the dropped squares are c1 and c2. */
+        @Test
+        void theQueensideCornerBehavesTheSameWay() {
+            final var onB1 = evalFor("4kr2/8/8/8/8/4n3/8/1K6 w - - 0 1");
+            final var onA1 = evalFor("4kr2/8/8/8/8/4n3/8/K7 w - - 0 1");
+
+            assertTrue(onB1.getAttackUnit()[BLACK] > 0,
+                    "the premise: black must actually reach the b1 king's zone, or both sides of "
+                            + "the comparison are zero and it holds for the wrong reason");
+            assertEquals(onB1.getKingAttackerCount()[BLACK], onA1.getKingAttackerCount()[BLACK],
+                    "b1 counted " + onB1.getKingAttackerCount()[BLACK] + ", a1 counted "
+                            + onA1.getKingAttackerCount()[BLACK]);
+            assertEquals(onB1.getAttackUnit()[BLACK], onA1.getAttackUnit()[BLACK],
+                    "b1 read " + onB1.getAttackUnit()[BLACK] + ", a1 read "
+                            + onA1.getAttackUnit()[BLACK]);
+        }
+
+        /**
+         * The mirror. A repair applied to one colour only does not crash and does not warn; it
+         * leaves half the evaluation wrong, and this term is computed through the same mirrored
+         * walk that made that failure mode worth guarding against for the king-line term.
+         */
+        @Test
+        void blackReadsItsOwnCornerTheSameWay() {
+            final var onG8 = evalFor("6k1/8/3N4/8/8/8/8/4KR2 w - - 0 1");
+            final var onH8 = evalFor("7k/8/3N4/8/8/8/8/4KR2 w - - 0 1");
+
+            assertEquals(2, onG8.getKingAttackerCount()[WHITE],
+                    "the premise, mirrored: the rook on f1 and the knight on d6 both bear on the "
+                            + "g8 king's zone");
+            assertEquals(onG8.getKingAttackerCount()[WHITE], onH8.getKingAttackerCount()[WHITE],
+                    "g8 counted " + onG8.getKingAttackerCount()[WHITE] + ", h8 counted "
+                            + onH8.getKingAttackerCount()[WHITE]);
+            assertEquals(onG8.getAttackUnit()[WHITE], onH8.getAttackUnit()[WHITE],
+                    "g8 read " + onG8.getAttackUnit()[WHITE] + ", h8 read "
+                            + onH8.getAttackUnit()[WHITE]);
         }
     }
 
