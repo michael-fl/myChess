@@ -161,6 +161,8 @@ public final class WeightingFunction {
     /** Open, and an enemy rook or queen stands on it. */
     final static int KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE = 4;
 
+    private final static int[] KING_LINE_OFFSETS = { 0, -1, -1, -1, -1, -1, -1, -2 };
+
     /*
      * The three mirroring lookups the king-line walk needs, all indexed by defending color
      * (0 = white). They exist instead of `color == 0 ? … : …` at each use: this term is computed
@@ -835,11 +837,12 @@ public final class WeightingFunction {
 
         // The king's own file and its two neighbors. Computed here, inside the walk the evaluation
         // performs anyway, rather than as a separate pass: a standalone scan for the shelved
-        // attack-unit term cost more than the entire evaluation. An off-board neighbor on the a-
-        // or h-file is not filtered out here — calculateKingLineDanger returns 0 for it.
-        kingLineDanger[color] = calculateKingLineDanger(color, field - 1)
-                + calculateKingLineDanger(color, field)
-                + calculateKingLineDanger(color, field + 1);
+        // attack-unit term cost more than the entire evaluation.
+        final int col = field % Board.LENGTH - 2;
+        final int startField = field + KING_LINE_OFFSETS[col];
+        kingLineDanger[color] = calculateKingLineDanger(color, startField)
+                + calculateKingLineDanger(color, startField + 1)
+                + calculateKingLineDanger(color, startField + 2);
     }
 
     /**
@@ -865,10 +868,6 @@ public final class WeightingFunction {
      * @return the danger level, or 0 if {@code startField} is off the board
      */
     int calculateKingLineDanger(final int color, final int startField) {
-        if (board[startField] == Board.illegal) {
-            return 0;
-        }
-
         final int col = startField % Board.LENGTH - 2;
         final int offset = ROW_OFFSET[color];
         final int endField = ChessUtil.getFieldFromColAndRow(col, LAST_RANK[color]) + offset;
