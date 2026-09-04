@@ -20,7 +20,9 @@
 | **Expectation** | small. **Six** attempts across two projects measured −14.7, −18.1 and −57.5 in myChess, −46.5, −67.1 and −12.1 in the Audax fork. A **zero** would be progress; § 12.21's headline of 30–60 Elo is not the number to plan for |
 | **Measured 2026-08-31** | **−42.9 ± 33.9**, SPRT H0 accepted after 304 games at `tc=40/60`, LOS 0.6 %. See § 4.8 — and read § 4.10 before quoting it |
 | **Measured 2026-09-01** | the same evaluation with the § 4.9 repairs: **+9.1 ± 14.5** over the full 1600 games, LOS 89.1 %, no bound reached. Shelved as "not shown to be worth ≥ 15 Elo", which is not the same claim as "neutral" (§ 4.10) |
-| **What to build instead** | **file danger** — open and half-open files at the king. Screens at **2.238 %** explained residual variance against attack units' 1.270 %, with a control that returns exactly zero, and it subsumes virtual queen mobility. Fitted table and implementation notes in § 4.11 |
+| **What to build instead** | ~~**file danger**~~ — screened at **2.238 %** explained residual variance against attack units' 1.270 %, which is why it was built (§ 4.11). **That ranking is now refuted:** file danger measured ≈ 0 Elo over 2255 games and attack units +9.1, so on the only two candidates with both a screen and a match the screen's order is inverted. Stop using it to *rank*; a flat screen is still a stop |
+| **Measured 2026-09-03** | file danger with the game-result table: **+0.8 ± 12.3** over 2255 games, stopped for a defect that discounted corner kings. Behavior confirmed (−34.6 % uncovered king files), cost six times smaller than the bench predicted (−0.041 plies), and the finding that matters: **exposure is a symptom, not a cause** — 70 Elo of association for the baseline, none for the candidate (§ 4.13) |
+| **Measured 2026-09-04** | the corner defect repaired; the Texel factor optimum moves from −0.008 back to the shipped −0.0100 and the term explains 20.5 % more. A 6000-game run of the repaired build is in flight (§ 4.13) |
 
 **Read § 4.1 before using the seven depth-stable cases as a target** — they were the intended
 instrument and they are not usable as one.
@@ -1405,8 +1407,126 @@ killed the last attempt, and a behavioural picture that is different rather than
 is worth running because these pull in opposite directions and nothing short of a match resolves
 that — not because the odds look good.
 
-
 ---
+
+### 4.13 What the match said, and the defect it exposed (2026-09-03/04)
+
+**Stopped at 2255 of 6000 games: 821–815–619, score 0.501, +0.8 ± 12.3 Elo.** Stopped rather than
+finished, because the scan carries a defect (below) that makes the figure the term *minus a
+discount* rather than the term. Artifacts kept at
+[`match-king-line-tuned.pgn`](../test-results/match-king-line-tuned.pgn) and its stdout log: the
+analyses below stand independently of the Elo number, and one of them is how the defect surfaced.
+
+**Two of § 4.12's expectations were wrong, and in opposite directions.**
+
+*The cost prediction was six times too pessimistic.* § 4.12 read the bench's +18.2 % tree and
++27.6 % wall clock as "worse on the cost axis that killed the last attempt". Under a clock the
+paired depth difference is **−0.0411 plies** (95 % −0.051 to −0.031, t = −7.96 over 1098 rounds).
+At an effective branching factor near 2.7, +27.6 % per node predicts roughly 0.25 plies; it costs
+0.04, and there were no time forfeits in 2255 games. So the bench's fixed-depth cost is a poor
+predictor of what iterative deepening actually gives up — worth remembering the next time a bench
+delta is read as a verdict.
+
+*The behavior change is much larger than the shelter count suggested.* § 4.12's action metric put
+it at "about a fifth less often". Measured on the quantity the term is indexed by — the share of
+the three king files carrying no own pawn — over 260 066 positions per side:
+
+| | uncovered king files |
+|---|---:|
+| `king-line-tuned` | **24.19 %** |
+| `4.6.0` | 36.97 % |
+
+**−34.6 % relative**, paired per round −12.82 pp ± 0.43 (SE), t = −30.2. Strongest in moves 16–50,
+where the phase scaling gives the term weight.
+
+**And a third finding, which is the sharpest thing in this document.** Exposure *is* punished in
+this environment — measured on the **baseline**, which has no term at all and is therefore
+untouched by the defect. In games balanced at move 20 (`|eval| ≤ 0.5`), bucketing that side's own
+exposure over moves 18–28:
+
+| exposure | n | score |
+|---|---:|---:|
+| low (0.000) | 336 | **0.5699** |
+| middle | 336 | 0.4896 |
+| high (0.333–1.000) | 337 | **0.4688** |
+
+A gap of 0.101, about **70 Elo**, monotone. So the correlated-blind-spot objection — "self-play
+does not punish what the term defends against" — does not hold here. Yet for the *candidate* the
+two-thirds of games with zero exposure scored **0.491** against **0.490** for the rest: the same
+categories that separate 70 Elo for the baseline separate nothing for it. Read together, the most
+consistent reading is that **exposure is largely a symptom of a worse position rather than its
+cause** — the correlation is real, the term removes it, and the result does not move. That reading
+is interpretation; the three tables are measurement. It bears on the whole family, because a term
+that suppresses a symptom cannot buy the Elo the symptom is correlated with.
+
+Two further notes from the same corpus. The *pawn-move* proxy points the other way — the candidate
+plays **12.7 % more** home-rank pawn moves beside its own king — which is coherent once the term is
+read precisely: it prices file *vacancy*, and `h2-h3` does not leave the h-file. "Pawn moves near
+the king" is the wrong proxy for it. And a paired analysis over the 1097 complete color pairs
+reproduces cutechess almost exactly (score 0.50091 ± 0.01730, ≈ +0.6 Elo) at an interval no
+narrower than the unpaired one — so opening variance is not the dominant noise source in this
+setup and pairing buys nothing here.
+
+#### The defect: a corner king was counted on two files
+
+The window was the king's file plus both neighbors, unconditionally. For a king on the a- or h-file
+one neighbor is off the board, and `calculateKingLineDanger` returned 0 for such a square. The
+danger index therefore had a **ceiling of 8 at the edge against 12 everywhere else**, and the same
+real exposure mapped to a lower penalty in the corner — a standing discount for standing on the
+edge. It never threw, never produced a wrong-looking number, and the fitted table absorbed it. The
+production comment named the behavior and treated it as harmless.
+
+The match shows it was not. The candidate's king sat on the **h-file in 10.28 %** of positions
+against 5.66 % for the baseline and on the g-file 48.36 % against 42.43 %, and by move 51 it stood
+**0.30 squares further from the center** on average — against a king endgame table worth +7.7 Elo
+for centralizing it (v4.3.1). The user spotted the corner drift from the analysis and asked whether
+the scan was to blame before the mechanism was found; it was.
+
+An obvious follow-up hypothesis did **not** confirm: candidate score by game-length tercile is
+0.511 ± 0.031 / 0.483 ± 0.032 / 0.510 ± 0.026, so the corner king is not visibly paid for in long
+games. Real and measurable, and without measurable cost of its own.
+
+**Repaired** by `KING_LINE_OFFSETS` in `WeightingFunction`, indexed by the king's column: 0 on the
+a-file, −2 on the h-file, −1 in between, so h1 reads f, g, h and a1 reads a, b, c. The
+`Board.illegal` guard inside the classifier went with it, since the caller can no longer pass an
+off-board square — note the exchange, because it makes a precondition load-bearing: a wrong offset
+would now walk the border column, find neither pawn nor major piece and fall through to "open
+file", **inventing** three points of danger rather than omitting them.
+`WeightingFunctionKingLineTest` grew to 29 cases; the pre-existing
+`anOffBoardFileContributesNothing` asserted the old behavior, which is to say it pinned the defect,
+and is replaced by two tests that assert the window stays on the board for all 64 king squares
+*and* that the offsets pick the three nearest files.
+
+#### The factor, re-swept on the corrected scan — and the overshoot reading dies
+
+[`king-line-factor-sweep-corrected.log`](../test-results/king-line-factor-sweep-corrected.log),
+same corpus as § 4.12 (1 338 857 training / 148 762 validation from `tuning-data/hybrid.epd`):
+
+| factor | with the defect | corrected |
+|---|---:|---:|
+| −0.0000 | 0.07046911 | 0.07046837 |
+| −0.0080 | **0.07005673** ← min | 0.06998560 |
+| −0.0100 | 0.07010550 | **0.06997137** ← min |
+| −0.0120 | 0.07021272 | 0.06999892 |
+
+**The optimum moves from −0.008 to −0.0100, the shipped value, in both columns** (fixed and
+refitted k). § 4.12's "the term was near-optimally scaled" survives; its −0.008 figure was an
+artifact of the defect. The corrected term also explains **20.5 % more** — the MSE reduction
+against a disabled term rises from 0.00041238 to 0.00049700. The factor-0 rows differ by 7.4·10⁻⁷,
+which they must, since the term is switched off there; that they do is the check that the two runs
+saw comparable data rather than differing by accident.
+
+The proxy is still a proxy, and this series has already falsified it once as an Elo predictor: file
+danger screened at 1.8× attack units and delivered ≈ 0 against +9.1.
+
+#### The pending run, and what is deliberately unchanged
+
+`versions/4.6.0-king-line-corner` against `4.6.0`, 6000 fixed-N games at `tc=40/60`, started
+2026-09-04. **Exactly one change from the build measured above**, which is why neither the factor
+nor the table was touched: the sweep says the factor is already optimal, and refitting the table
+would make the run measure two changes. The table's top entries (11, 12) are still the ones pooled
+down to index 10's value under 0.02 % and 0.00 % occupancy — occupancy the repair now makes
+reachable — so **a table refit is the designated next lever if this run comes back neutral.**
 
 ---
 
