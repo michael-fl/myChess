@@ -3457,4 +3457,147 @@ class BlunderTest {
                         + "reads the line at +0.06, and finds 25.f4 only at depth 11, which costs "
                         + "19.2 s against the 17 s the game allowed");
     }
+    // ===========================================================================================
+    // Three cases from blunders.txt (2026-09-05). Insert before BlunderTest's closing brace.
+    // ===========================================================================================
+
+    /** White (myChess) to move before 62.Nab6??, from a position where seven moves hold the draw. */
+    private static final String BEFORE_NAB6_FEN = "8/3n1k2/4R3/5P2/NpNp1K1b/1P1P2p1/2P5/6r1 w - - 2 62";
+
+    /**
+     * <b>An endgame with eight pieces where seven of eight candidate moves hold and myChess picks
+     * the eighth.</b> From lichess {@code cAOHiC9B} against {@code chester-bot}, blitz 300+3, with
+     * 5 seconds spent on the move. Stockfish 18, depth 22, multi-PV:
+     *
+     * <pre>
+     *   1. Re2     +0.07      5. Kg4     -0.03
+     *   2. Kf3      0.00      6. Nd2     -0.14
+     *   3. Rg6      0.00      7. Ke4     -0.15
+     *   4. Nd6+     0.00      8. Nab6    -2.12   myChess played this
+     * </pre>
+     *
+     * <p>The refutation runs nine plies and turns on black's g3 pawn:
+     * {@code 62...Rf1+ 63.Kg4 g2! 64.Nd6+ Kg7 65.Rg6+ Kh7 66.Kh3 Nxb6}, −2.76.
+     *
+     * <p><b>Why this case and not the two others of its shape.</b> myChess corrects itself one ply
+     * later, which is what makes it a horizon case rather than an evaluation one:
+     *
+     * <pre>
+     *   depth  8   0.5 s   Nab6   +1.02
+     *   depth 10   1.9 s   Nab6   +0.78
+     *   depth 11   5.0 s   Nab6   +0.95     the in-game depth
+     *   depth 12  17.0 s   Rg6    +0.30     one of Stockfish's drawing moves
+     * </pre>
+     *
+     * Two further cases from the same list ({@code zSSswgfy} 13...h4, {@code tyFGZrbP} 28...fxe4)
+     * have exactly this profile and were deliberately not added: the family already holds eight
+     * open cases, all of them middlegame or STS positions, and a third middlegame instance adds a
+     * count rather than a mechanism. This one is the family's first <em>endgame</em>, and the score
+     * error is its largest at three pawns — myChess reads +0.95 where the truth is −2.12.
+     *
+     * <p><b>Test family:</b> search-horizon (defect)
+     */
+    @Test
+    @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void nab6_atMove62_characterizesTheEndgameWhereSevenMovesHold() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_NAB6_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.a4, Board.b6, "62.Nab6",
+                "which turns a held draw into −2.12 (Stockfish 18, depth 22) where seven of the "
+                        + "eight candidate moves score between +0.07 and −0.15; myChess reads +1.02 "
+                        + "at this depth and only finds one of the seven (Rg6) at depth 12");
+    }
+
+    /** White (myChess) to move before 11.Be3??, which loses the f3 knight by force. */
+    private static final String BEFORE_BE3_FEN =
+            "r2qkb1r/pp3pp1/2npp3/1Bp4p/4P1b1/2NP1N2/PPP2P2/R1BQ1RK1 w kq - 0 11";
+
+    /**
+     * <b>A tactic myChess does not see at depth 12 after 280 seconds.</b> From lichess
+     * {@code JeXnaZll} against {@code rust-in-pieces}, 600+5, 13 seconds spent. The natural
+     * developing move {@code 11.Be3} loses a piece: {@code 11...Qf6!} adds a second attacker to
+     * the f3 knight that {@code Bg4} already pins against the queen, and after
+     * {@code 12.Bxc6+ bxc6 13.e5 Qxf3! 14.Qxf3 Bxf3} black is a piece up — Stockfish 18 reads the
+     * position after {@code Be3} at <b>−2.27</b> where {@code 11.Kg2} holds <b>+1.03</b>.
+     *
+     * <p><b>Depth does not repair it, and that is the point of pinning it.</b>
+     *
+     * <pre>
+     *   depth  8    2.4 s   Be3   +0.85
+     *   depth 10   21.5 s   Be3   +0.65
+     *   depth 12  280.6 s   Be3   +0.53
+     * </pre>
+     *
+     * Three pawns of error that five extra plies and four and a half minutes do not touch. The
+     * reason is visible in myChess's own line, {@code Be3 Qf6 Kg2 Be7 Rc1 O-O}: it plays
+     * Stockfish's move {@code Kg2} one ply later and never notices that the order is the whole
+     * point. It is not searching a losing continuation — it simply does not credit black with the
+     * forcing one.
+     *
+     * <p><b>Test family:</b> tactical-oversight (defect)
+     */
+    @Test
+    @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void be3_atMove11_characterizesTheUnseenKnightLoss() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_BE3_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.c1, Board.e3, "11.Be3",
+                "which loses the f3 knight to 11...Qf6 and reads −2.27 (Stockfish 18, depth 24) "
+                        + "against +1.03 for 11.Kg2; myChess rates it +0.85 here and still plays it "
+                        + "at depth 12 after 280 seconds");
+    }
+
+    /** Black (myChess) to move before 8...Bxf3??, after which white's attack is decisive. */
+    private static final String BEFORE_BXF3_FEN =
+            "r2q1rk1/ppp2ppp/2np1n2/2bNp1B1/2B1P1b1/3P1N2/PPPQ1PPP/R3K2R b KQ - 3 8";
+
+    /**
+     * <b>The third measured instance of one failure mode: myChess assumes the recapture.</b> From
+     * lichess {@code almGNl7P} against {@code PlayMarius}, 180+2, 3 seconds spent. {@code 8...Bxf3}
+     * takes the knight, and myChess's principal variation opens {@code Bxf3 gxf3} — it expects the
+     * pawn to come and take the bishop back. White does not: {@code 9.Bxf6! gxf6 10.Qh6} leaves the
+     * bishop on f3 alone and goes for the shattered king instead, and after
+     * {@code Bh5 11.Nxf6+ Qxf6 12.Qxf6} it is over. Stockfish 18 reads the position after
+     * {@code Bxf3} at <b>+4.52</b> for white; {@code 8...Be6} holds it to −2.46.
+     *
+     * <p><b>Depth-stable, like {@code be3_atMove11}:</b>
+     *
+     * <pre>
+     *   depth  8    2.2 s   Bxf3   −0.44
+     *   depth 10   12.6 s   Bxf3   −0.32
+     *   depth 12  222.8 s   Bxf3   −1.23
+     * </pre>
+     *
+     * At depth 12 the engine begins to smell it — the score triples — and plays the move anyway,
+     * three pawns short of the truth.
+     *
+     * <p><b>The pattern this case is kept for.</b> Two other cases in this file show the identical
+     * shape: {@code nf6_atMove25} expects {@code Qxf6} where black played {@code gxf6}, and the
+     * {@code VujgmHwG} analysis of {@code 29...Rac8} has myChess expecting {@code bxa7} where
+     * {@code Qd7+} wins. In all three the engine's line has the opponent restoring material, and in
+     * all three the opponent has something better. A single instance is a blunder; three
+     * independent ones with the same signature are a hypothesis about move ordering or about what
+     * the evaluation rewards at a recapture, and this case exists to keep that comparison possible.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void bxf3_atMove8_characterizesTheAssumedRecapture() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_BXF3_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.g4, Board.f3, "8...Bxf3",
+                "after which white ignores the bishop and plays 9.Bxf6 gxf6 10.Qh6 for +4.52 "
+                        + "(Stockfish 18, depth 24) against −2.46 for 8...Be6; myChess's own line "
+                        + "expects the recapture 9.gxf3 and still plays it at depth 12");
+    }
 }
