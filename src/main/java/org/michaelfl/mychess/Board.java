@@ -273,6 +273,7 @@ public final class Board {
     private final boolean is960;
 
     private int stackSize;
+    private final int[] kingFields;
 
     /**
      * Starting files of the castling rooks, indexed by
@@ -300,6 +301,20 @@ public final class Board {
         this.castlingRookFiles = castlingRookFiles;
         push(gameStatus);
         this.is960 = is960 || isChess960Position();
+
+        final int stopField = Board.h8 + 1;
+        kingFields = new int[2];
+
+        for (int field = Board.a1; field < stopField; field++) {
+            final byte piece = board[field];
+
+            if (piece == Board.whiteKing) {
+                kingFields[0] = field;
+            } else if (piece == Board.blackKing) {
+                kingFields[1] = field;
+            }
+        }
+
     }
 
     //    132           ...             143
@@ -318,6 +333,7 @@ public final class Board {
         board = createEmptyRawBoard();
         statusStack = new GameStatus[2000];
         is960 = false;
+        kingFields = new int[] { e1, e8 };
         castlingRookFiles = defaultCastlingRookFiles();
 
         board[a1] = whiteRook;
@@ -364,6 +380,7 @@ public final class Board {
         this.statusStack = Arrays.copyOf(other.statusStack, other.statusStack.length);
         this.is960 = other.is960;
         this.stackSize = other.stackSize;
+        this.kingFields = new int[] { other.kingFields[0], other.kingFields[1] };
         this.castlingRookFiles = Arrays.copyOf(other.castlingRookFiles, other.castlingRookFiles.length);
     }
 
@@ -447,6 +464,37 @@ public final class Board {
 
     public byte[] getRawBoard() {
         return board;
+    }
+
+    /**
+     * The square the given side's king stands on, carried incrementally rather than searched for.
+     *
+     * <p>Updated by every path that can move a king — both constructors, the copy constructor, the
+     * normal move and the two castling forms — and undone by the matching {@code revertMove}. It
+     * replaces two linear searches: the dedicated 92-square scan {@code WeightingFunction.calculate}
+     * used to run before its main pass, and the {@code findKingField} that {@link #isKingChecked()}
+     * and {@link #canCaptureOpposingKing()} called on every legality probe. The latter was the
+     * hotter of the two, since it ran per probe rather than per evaluated position.
+     *
+     * <p><b>The value is only meaningful while that king is on the board.</b> Move generation is
+     * pseudo-legal and does emit a king-capturing move, so a board without one is constructible —
+     * and there this returns the square the captured king last stood on, which the capturing king
+     * now occupies, rather than a sentinel. The scan it replaces threw
+     * {@code IllegalStateException} in that case; this does not, which is the one property the
+     * change gives up.
+     *
+     * <p>A search never sees it: the whole move list is rejected on {@code Moves.isIllegal()}
+     * before any move is made, and {@link #canCaptureOpposingKing()} answers by attack detection
+     * without moving a piece. The state also self-heals, since the revert puts the king back on
+     * exactly the square the stale value already names. {@code BoardKingFieldTest} pins both the
+     * invariant and this exception to it.
+     *
+     * @param color 0 for white, 1 for black — an index into the per-color array, <em>not</em> a
+     *              {@link GameStatus} turn constant, which would be 8 or 16 and throw
+     * @return the king's square as an index into the raw board
+     */
+    public int getKingField(final int color) {
+        return kingFields[color];
     }
 
     public byte getPieceAt(int col, int row) {
@@ -695,14 +743,15 @@ public final class Board {
     private long _makeNormalMove(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
+        final byte movedPiece = board[fromField];
 
         // Update position hash
-        final int movingPieceNo = ChessUtil.getPieceNumber12(board[fromField]);
+        final int movingPieceNo = ChessUtil.getPieceNumber12(movedPiece);
         final int toFieldNo = ChessUtil.getFieldNumber64(toField);
         long newPositionHash = getGameStatus().getPositionHash();
 
         if (movingPieceNo < 0 || movingPieceNo >= 12) {
-            throw new IllegalStateException("Wrong source piece: " + board[fromField]);
+            throw new IllegalStateException("Wrong source piece: " + movedPiece);
         }
 
         // Remove moving piece from source field
@@ -717,13 +766,19 @@ public final class Board {
 
         // Update en passant field
         newPositionHash = clearEnPassantHashContribution(newPositionHash, false);
-        byte enPassantField = Board.getEnPassantField(board[fromField], fromField, toField);
+        byte enPassantField = Board.getEnPassantField(movedPiece, fromField, toField);
         if (enPassantField != 0) {
             newPositionHash ^= RANDOM_NUMBERS[EN_PASSANT_INDEX + enPassantField % Board.LENGTH - 2];
         }
 
-        board[toField] = board[fromField];
+        board[toField] = movedPiece;
         board[fromField] = empty;
+
+        if (movedPiece == Board.whiteKing) {
+            kingFields[0] = toField;
+        } else if (movedPiece == Board.blackKing) {
+            kingFields[1] = toField;
+        }
 
         return newPositionHash;
     }
@@ -885,6 +940,8 @@ public final class Board {
             }
             board[f1] = whiteRook;
 
+            kingFields[0] = g1;
+
             // Update hash
             newPositionHash ^= RANDOM_NUMBERS[WHITE_KING_NO * 64 + ChessUtil.getFieldNumber64(fromField)]; // remove king
             newPositionHash ^= RANDOM_NUMBERS[WHITE_KING_NO * 64 + ChessUtil.getFieldNumber64(g1)];        // add king
@@ -897,6 +954,8 @@ public final class Board {
                 board[rookField] = empty;
             }
             board[f8] = blackRook;
+
+            kingFields[1] = g8;
 
             // Update hash
             newPositionHash ^= RANDOM_NUMBERS[BLACK_KING_NO * 64 + ChessUtil.getFieldNumber64(fromField)]; // remove king
@@ -932,6 +991,8 @@ public final class Board {
             }
             board[d1] = whiteRook;
 
+            kingFields[0] = c1;
+
             // Update hash
             newPositionHash ^= RANDOM_NUMBERS[WHITE_KING_NO * 64 + ChessUtil.getFieldNumber64(fromField)]; // remove king
             newPositionHash ^= RANDOM_NUMBERS[WHITE_KING_NO * 64 + ChessUtil.getFieldNumber64(c1)];        // add king
@@ -944,6 +1005,8 @@ public final class Board {
                 board[rookField] = empty;
             }
             board[d8] = blackRook;
+
+            kingFields[1] = c8;
 
             // Update hash
             newPositionHash ^= RANDOM_NUMBERS[BLACK_KING_NO * 64 + ChessUtil.getFieldNumber64(fromField)]; // remove king
@@ -983,9 +1046,16 @@ public final class Board {
     private void _revertNormalMove(int move) {
         final byte fromField = Move.getFromField(move);
         final byte toField = Move.getToField(move);
+        final byte movedPiece = board[toField];
 
         board[fromField] = board[toField];
         board[toField] = Move.getCapturedPiece(move);
+
+        if (movedPiece == Board.whiteKing) {
+            kingFields[0] = fromField;
+        } else if (movedPiece == Board.blackKing) {
+            kingFields[1] = fromField;
+        }
     }
 
     private static void revertEnPassantMove(Board board, int move) {
@@ -1029,6 +1099,8 @@ public final class Board {
         if (fromField != toField) {
             board[fromField] = board[toField];
             board[toField] = Board.empty;
+            final int color = board[fromField] == Board.whiteKing ? 0 : 1;
+            kingFields[color] = fromField;
         }
 
         if (toField == Board.g1) {
@@ -1055,6 +1127,8 @@ public final class Board {
         if (fromField != toField) {
             board[fromField] = board[toField];
             board[toField] = Board.empty;
+            final int color = board[fromField] == Board.whiteKing ? 0 : 1;
+            kingFields[color] = fromField;
         }
 
         if (toField == Board.c1) {
@@ -1353,10 +1427,10 @@ public final class Board {
 
     /** Returns true if the side to move's king is currently in check. */
     public boolean isKingChecked() {
-        final int myColor = getGameStatus().getTurn();
-        final byte myKing = (myColor == GameStatus.TURN_WHITE) ? whiteKing : blackKing;
-        final int enemyColor = getGameStatus().getOppositeColor();
-        return isFieldAttackedBy(findKingField(myKing), enemyColor);
+        final int turn = getGameStatus().getTurn();
+        final int color = (turn == GameStatus.TURN_WHITE) ? 0 : 1;
+        final int enemyTurn = getGameStatus().getOppositeColor();
+        return isFieldAttackedBy(getKingField(color), enemyTurn);
     }
 
     /**
@@ -1366,19 +1440,9 @@ public final class Board {
      * where no full move list is otherwise needed.
      */
     public boolean canCaptureOpposingKing() {
-        final int myColor = getGameStatus().getTurn();
-        final int enemyColor = getGameStatus().getOppositeColor();
-        final byte enemyKing = (enemyColor == GameStatus.TURN_WHITE) ? whiteKing : blackKing;
-        return isFieldAttackedBy(findKingField(enemyKing), myColor);
-    }
-
-    private int findKingField(byte king) {
-        for (int field = a1; field <= h8; field++) {
-            if (board[field] == king) {
-                return field;
-            }
-        }
-        throw new IllegalStateException("King not found on board: " + king);
+        final int turn = getGameStatus().getTurn();
+        final int enemyColor = turn == GameStatus.TURN_WHITE ? 1 : 0;
+        return isFieldAttackedBy(getKingField(enemyColor), turn);
     }
 
     public boolean isCheckmate(MoveGenerator moveGenerator) {

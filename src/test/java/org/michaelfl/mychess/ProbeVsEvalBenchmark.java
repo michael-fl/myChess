@@ -24,9 +24,15 @@ import java.util.Locale;
  * <pre>{@code probeCost < 0.0613 x evalCost}</pre>
  *
  * i.e. if the probe is more than about <b>16x cheaper</b> than the evaluation. That is a much
- * harder bar than it first looks, which is the reason for measuring: the probe calls
- * {@code findKingField}, a linear scan over all 64 squares, before it runs {@code isFieldAttackedBy}
- * — and the evaluation also walks the board exactly once.
+ * harder bar than it first looks, which is the reason for measuring: when this was written the
+ * probe called {@code findKingField}, a linear scan over all 64 squares, before it ran
+ * {@code isFieldAttackedBy} — and the evaluation also walks the board exactly once.
+ *
+ * <p><b>That scan no longer exists.</b> {@code Board} now tracks both king squares incrementally
+ * and the probe reads {@code getKingField}, so what the second line below reports as an optimistic
+ * bound — "assume the king search costs nothing" — has become the actual case rather than a bound.
+ * The first line is kept because it is what the archived measurement in
+ * {@code docs/roadmap.md} was taken against, and a comparison needs both.
  *
  * <p>Methodology is deliberately identical to {@link EvalThroughputBenchmark} so the two numbers are
  * comparable: same corpus, warm-up passes discarded, best-of-N reported with its spread, results
@@ -142,9 +148,10 @@ public final class ProbeVsEvalBenchmark {
         printVerdict("probe as it is today", evalPer, probePer, breakEven);
         printVerdict("with the king square tracked incrementally", evalPer, attackPer, breakEven);
 
-        System.out.printf(Locale.ROOT, "%nThe second line is the optimistic bound: it assumes findKingField costs "
-                + "nothing at all, which no implementation achieves. Read both against the spread above — a ratio "
-                + "close to break-even means 'no measurable difference', not 'marginally worth it'.%n");
+        System.out.printf(Locale.ROOT, "%nThe second line was the optimistic bound while the probe still scanned "
+                + "for the king; since Board tracks the square incrementally it is the case that actually ships. The "
+                + "first line is retained for comparison with the archived measurement. Read both against the spread "
+                + "above — a ratio close to break-even means 'no measurable difference', not 'marginally worth it'.%n");
     }
 
     private static void printVerdict(String label, double evalPer, double costPer, double breakEven) {
@@ -158,8 +165,8 @@ public final class ProbeVsEvalBenchmark {
     /**
      * The probe without its king search: {@code isFieldAttackedBy} on a fixed central square.
      *
-     * <p>Isolates what the probe would cost if {@code findKingField}'s linear scan were replaced by
-     * an incrementally tracked king square. The square is fixed rather than the real king field so
+     * <p>Isolates what the probe costs now that the linear king search has been replaced by an
+     * incrementally tracked square. The square is fixed rather than the real king field so
      * the pass measures the attack test alone, with no lookup of any kind in it — an optimistic
      * bound on any incremental scheme, since a real one still has to read the tracked value.
      */
