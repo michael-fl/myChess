@@ -202,6 +202,57 @@ whole rest of the suite costs less than a minute, and 90 % of a seventeen-minute
 benchmark is spent on one position that cannot occur in a game. This row is why
 policy rule 1's cost argument had to be rewritten.
 
+### A pure speed change, measured relatively — `king-field-tracking` (2026-09-05)
+
+**`Board` now carries both king squares instead of searching for them**, so
+`isKingChecked` and `canCaptureOpposingKing` read a field where they used to run a
+linear scan over a1..h8. Behavior is unchanged by construction, which makes the
+signature the entry ticket and the wall clock the only number the change can move.
+
+**Signature: 1,300,002,835 in all six runs**, master and candidate alike — the same
+value as 4.6.0, so the three commits master gained since that release (the
+material-only counter, the TT EXACT-bound guard, the extended bench output) are
+covered by this as neutral too.
+
+**The rows below are not table rows and must not be quoted as absolute figures.**
+They were taken while a 6000-game match held four cores, so every number here sits
+below what the same builds would produce idle — the candidate's 1,603,731 against
+4.6.0's archived 1,251,215 compares nothing. What survives the load is the
+*difference*, because both builds met the same load: six runs alternating
+`A B B A A B`, a sequence chosen so neither build systematically draws the earlier
+slots if the match's load drifts (slot sums 10 against 11; strict alternation would
+give 9 against 12).
+
+| | runs (NPS over 54 positions) | mean | SD |
+|---|---|---:|---:|
+| master `6b3f480` | 1,573,404 / 1,572,881 / 1,588,728 | 1,578,338 | 0.57 % |
+| + tracking `505d1f4` | 1,607,886 / 1,594,326 / 1,608,980 | **1,603,731** | 0.51 % |
+
+**+1.61 %**, SE of the difference 0.44 pp, t = 3.62 — and the raw values are
+**disjoint**: the fastest master run is below the slowest candidate run, which under
+the null has probability 1/20 at three against three.
+
+**The comparator is the 54-position figure, not the total, and that is the
+methodological point of this entry.** On total NPS the same six runs give +0.92 % at
+t = 1.28 with overlapping samples — indistinguishable from noise. The total is 86.9 %
+one position whose seventeen minutes are exposed to load drift end to end (master's
+SD 1.21 %), while the 54 short positions average it out (SD 0.57 %). A real effect
+was resolvable in one measure and invisible in the other. Rule 4 says never assert on
+time or NPS; this adds *which* time, when a relative reading is what is wanted.
+
+In Elo this is small and known to be small. Section 4.10 of
+[`king-safety.md`](king-safety.md) prices −21.9 % NPS at **up to** 52 Elo, an
+explicit upper bound; 1.61 % is therefore at most ~3.4 Elo and on the textbook
+60-per-doubling rate about 1.4. No match anyone would run resolves that — a 6000-game
+fixed-N reads ±12 — which is why this change was measured on the bench and shipped on
+the bench, without a match.
+
+**Open: a control measurement on an idle machine.** The relative result is what the
+merge decision needed and it is in hand, but the absolute pair belongs in the table
+above and cannot be taken under load. Re-run both builds once the machine is free and
+add the row then; until it exists, `4.6.0`'s 1,251,215 / 17:18 remains the last
+absolute reading in this document.
+
 ---
 
 ## 3. Depth 9 — from 4.3.4 onward
