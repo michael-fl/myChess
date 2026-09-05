@@ -213,13 +213,6 @@ public final class WeightingFunction {
      */
     final static int[] KING_FIELD_CORRECTION_OFFSET = { 1, 0, 0, 0, 0, 0, 0, -1 };
 
-    private final static int[] COLOR_IF_KING = new int[Board.illegal + 1];
-    static {
-        Arrays.fill(COLOR_IF_KING, -1);
-        COLOR_IF_KING[Board.whiteKing] = 0;
-        COLOR_IF_KING[Board.blackKing] = 1;
-    }
-
     @FunctionalInterface
     private interface CalculateWeight {
         void calculate(WeightingFunction generator, int field, int color);
@@ -416,13 +409,8 @@ public final class WeightingFunction {
         final int stopField = Board.h8 + 1;
         int phase = 0;
 
-        for (int field = Board.a1; field < stopField; field++) {
-            final int color = COLOR_IF_KING[board[field]];
-            if (color != -1) {
-                final int col = field % Board.LENGTH - 2;
-                kingFieldCorrected[color] = field + KING_FIELD_CORRECTION_OFFSET[col];
-            }
-        }
+        kingFieldCorrected[0] = calcKingFieldCorrected(0);
+        kingFieldCorrected[1] = calcKingFieldCorrected(1);
 
         for (int field = Board.a1; field < stopField; field++) {
             final byte piece = board[field];
@@ -456,6 +444,12 @@ public final class WeightingFunction {
         calculateUndefendedPiecesCount();
 
         return calculatePositionWeight(phase);
+    }
+
+    private int calcKingFieldCorrected(int color) {
+        final int field = theBoard.getKingField(color);
+        final int col = field % Board.LENGTH - 2;
+        return field + KING_FIELD_CORRECTION_OFFSET[col];
     }
 
     /**
