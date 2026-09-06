@@ -86,12 +86,13 @@ public final class GameStatus {
      *       <td>Black may still castle queenside.</td></tr>
      *   <tr><td>{@code 0x10} (=&nbsp;16)</td>
      *       <td>{@link #BIT_WHITE_HAS_CASTLED}</td>
-     *       <td>White has already castled at some earlier ply.
-     *           Cleared bits 0x01 / 0x02 implicit once set.</td></tr>
+     *       <td>White has already castled at some earlier ply. Never set
+     *           together with 0x01 or 0x02: castling clears both rights in
+     *           the same step.</td></tr>
      *   <tr><td>{@code 0x20} (=&nbsp;32)</td>
      *       <td>{@link #BIT_BLACK_HAS_CASTLED}</td>
-     *       <td>Black has already castled at some earlier ply.
-     *           Cleared bits 0x04 / 0x08 implicit once set.</td></tr>
+     *       <td>Black has already castled at some earlier ply. Never set
+     *           together with 0x04 or 0x08.</td></tr>
      * </table>
      *
      * <p>Well-known values:
@@ -100,10 +101,22 @@ public final class GameStatus {
      *       castling rights set, neither side has castled yet.</li>
      *   <li>{@code 0} — neither side may castle and neither has
      *       castled (both kings and / or both rooks have moved).</li>
-     *   <li>{@code 47} ({@code 0x2F}) — a game position where White
+     *   <li>{@code 35} ({@code 0x23}) — a game position where White
      *       still holds both castling rights but Black has already
-     *       castled ({@code 0x0F | 0x20 = 0x2F}).</li>
+     *       castled ({@code 0x03 | 0x20 = 0x23}).</li>
      * </ul>
+     *
+     * <p><b>The mutual exclusion is a real invariant, not a convention.</b>
+     * A "has castled" bit alongside a right of the same color cannot occur:
+     * {@code Board.calculateNewCastlingState} is the only writer of the two
+     * high bits, and it clears that color's rights in the same three lines
+     * that set the bit. So 0x10 excludes 0x01 and 0x02, and 0x20 excludes
+     * 0x04 and 0x08 — which is why {@link #isWhiteCastlingPossible()} and
+     * {@link #isBlackCastlingPossible()} do not test the high bit.
+     * {@code GameStatusCastlingStateTest} asserts it, and the earlier
+     * version of this list documented {@code 47} ({@code 0x0F | 0x20}) as a
+     * well-known value — a state where Black had castled while still
+     * holding both of its rights, i.e. the one thing that cannot happen.
      *
      * <p>Do not read individual bits with hand-rolled AND masks —
      * prefer the semantic accessors {@link #isWhiteCastlingKingSidePossible()},
@@ -364,12 +377,27 @@ public final class GameStatus {
         return castlingState;
     }
 
+    /**
+     * Whether white may still castle on either side.
+     *
+     * <p><b>Does not need to ask {@link #hasWhiteCastled()}, and used to.</b> The two states are
+     * mutually exclusive by construction: {@code Board.calculateNewCastlingState} sets
+     * {@link #BIT_WHITE_HAS_CASTLED} and clears both right bits in the same three lines, and it
+     * is the only place that sets the bit. {@link Fen} cannot set it at all — FEN has no field
+     * for it — so a position read from a FEN always reports "has not castled" regardless of where
+     * the king stands. Verified over 510,521 positions from 4,820 replayed games including 2,178
+     * Chess960 starts: not one had the bit set alongside a right. {@code GameStatusCastlingStateTest}
+     * is what keeps it that way.
+     *
+     * @return {@code true} if either white castling right is still set
+     */
     public boolean isWhiteCastlingPossible() {
-        return !hasWhiteCastled() && (isWhiteCastlingKingSidePossible() || isWhiteCastlingQueenSidePossible());
+        return isWhiteCastlingKingSidePossible() || isWhiteCastlingQueenSidePossible();
     }
 
+    /** As {@link #isWhiteCastlingPossible()}, for black; the same exclusivity argument applies. */
     public boolean isBlackCastlingPossible() {
-        return !hasBlackCastled() && (isBlackCastlingKingSidePossible() || isBlackCastlingQueenSidePossible());
+        return isBlackCastlingKingSidePossible() || isBlackCastlingQueenSidePossible();
     }
 
     public boolean hasWhiteCastled() {

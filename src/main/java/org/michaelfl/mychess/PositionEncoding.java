@@ -157,8 +157,6 @@ final class PositionEncoding {
         int turn = GameStatus.TURN_WHITE;
         byte enPassantField = 0;
         int castlingBitSet = 0;
-        boolean whiteCastlingPossible = false;
-        boolean blackCastlingPossible = false;
 
         for (int field = Board.a1; field <= Board.h8; field++) {
             if (rawBoard[field] != Board.illegal) {
@@ -172,7 +170,6 @@ final class PositionEncoding {
                         if (field <= Board.h1) {
                             // rook pre castle
                             castlingBitSet = setBit(castlingBitSet, field == Board.a1 ? GameStatus.BIT_WHITE_CASTLING_QUEEN_SIDE_POSSIBLE : GameStatus.BIT_WHITE_CASTLING_KING_SIDE_POSSIBLE, true);
-                            whiteCastlingPossible = true;
                             piece = WHITE_ROOK;
                         } else {
                             // en passant pawn
@@ -183,7 +180,6 @@ final class PositionEncoding {
                         if (field >= Board.a8) {
                             // rook pre castle
                             castlingBitSet = setBit(castlingBitSet, field == Board.a8 ? GameStatus.BIT_BLACK_CASTLING_QUEEN_SIDE_POSSIBLE : GameStatus.BIT_BLACK_CASTLING_KING_SIDE_POSSIBLE, true);
-                            blackCastlingPossible = true;
                             piece = BLACK_ROOK;
                         } else {
                             // en passant pawn
@@ -200,12 +196,21 @@ final class PositionEncoding {
             }
         }
 
-        // TODO set hasCastled bit correctly - where to get info from?
-        if (!whiteCastlingPossible) {
-            castlingBitSet = setBit(castlingBitSet, GameStatus.BIT_WHITE_HAS_CASTLED, true);
-        } else if (!blackCastlingPossible) {
-            castlingBitSet = setBit(castlingBitSet, GameStatus.BIT_BLACK_HAS_CASTLED, true);
-        }
+        // The two hasCastled bits stay clear, and there is nothing to fix here: "has castled" is
+        // a fact about the game's history, and this encoding — like a FEN — describes a position.
+        // A king on g1 with no rights left may have castled or may have walked there, and no
+        // amount of decoding can tell the two apart.
+        //
+        // The earlier code did try, deriving BIT_WHITE_HAS_CASTLED from "white holds no rights",
+        // and that is wrong twice over. It conflates losing the rights with having castled, so a
+        // king that ran to e2 decoded as castled. And the else-if meant black's bit was never set
+        // once white had no rights, whatever black had done. It also broke the invariant that
+        // GameStatus documents and Board.calculateNewCastlingState maintains — that a hasCastled
+        // bit never appears next to a right of the same color — for the one input where white
+        // still held a right and black did not.
+        //
+        // Leaving both bits clear matches Fen, which cannot set them either, and makes a decoded
+        // position report "has not castled" for both sides. That is the honest answer.
 
         var gameStatusTmp = new GameStatus(plyCount, turn, lastMove, halfMoveClock, castlingBitSet, enPassantField,
                 0, GameStatus.EMPTY_NON_PAWN_MATERIAL_WEIGHT);
