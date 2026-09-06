@@ -1,0 +1,30 @@
+Loading up to 2.147.483.647 positions from tuning-data/hybrid.epd ...
+train=1.338.857  validation=148.762  k(shipped)=0,00834
+kingLinePenaltyFactor is factor 9 of 9; shipped value -0,0100
+
+    factor   MSE (fixed k)     MSE (own k)           own k
+----------------------------------------------------------
+   -0,0000      0,07046837      0,07046866         0,00830
+   -0,0010      0,07037064      0,07037092         0,00831
+   -0,0020      0,07028356      0,07028372         0,00833
+   -0,0030      0,07020715      0,07020717         0,00834
+   -0,0040      0,07014145      0,07014132         0,00834
+   -0,0050      0,07008646      0,07008622         0,00835
+   -0,0060      0,07004217      0,07004187         0,00835
+   -0,0080      0,06998560      0,06998536         0,00835
+   -0,0100      0,06997137      0,06997137         0,00834   <- shipped
+   -0,0120      0,06999892      0,06999909         0,00831
+   -0,0150      0,07011687      0,07011632         0,00826
+   -0,0200      0,07050912      0,07050048         0,00814
+
+minimum at factor -0,0100 (fixed k) and -0,0100 (own k)
+
+A minimum at 0.0000 means the term does not help predict game results at any
+strength — the cheapest possible verdict, and no SPRT would be needed.
+A minimum well below the shipped 0.0100 supports the overshoot hypothesis: the
+right idea applied too hard.
+A minimum at or above 0.0100 kills the overshoot hypothesis and leaves capping the
+table's loud top end as the only remaining variant.
+
+Either way this is a proxy objective on a labeled corpus, not Elo. It selects what
+to measure next; it does not measure it.
