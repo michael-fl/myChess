@@ -273,6 +273,7 @@ private final List<Command> commands = List.of(
         new AutoGameCommand(),
         new NewGameCommand(),
         new BenchCommand(),               // `bench [depth]` — node signature, added v4.3.5
+        new BenchV2Command(),             // `benchv2 [depth]` — castling-mix suite, added v4.6.1
         new MoveCommand(),
         new ImportCommand(),
         new PrintCommand(),

@@ -536,6 +536,116 @@ UCI round-trip, so its totals run slightly below the built-in command's internal
 timing (187.0 s vs 190.0 s for the same 4.3.4 run, ~1.6 %). The node counts are
 unaffected, and time is informative only.
 
+### What this position set cannot see: the opening
+
+**49 of the 55 positions carry no castling rights at all**, and only 8 of the 110
+sides can still castle. Counted over both sides:
+
+| | sides |
+|---|---:|
+| already castled or the king has left for a wing | 74 |
+| king moved but stayed central (mostly endgames) | 25 |
+| **can still castle** | **8** |
+| on its home square with the rights already lost | 3 |
+
+The king stands on the g-file in 45 of 110 cases. The suite is, by construction,
+a collection of *decided* positions — which is right for a node signature, since
+those are where the search spends its time, and wrong for one specific question.
+
+**A term that behaves differently before castling is close to invisible here, and
+an unchanged signature would not mean what it usually means.** Suppose the
+king-line term were gated on castling rights, as was considered in
+[`king-safety.md` § 4.14](king-safety.md): 49 of 55 positions would produce a
+bit-identical signature — not because the gate is neutral, but because the suite
+barely contains the state in which the gate does anything. That is the same
+fallacy the screening tool fell into, one level down: the number describes the
+position set, not the change.
+
+It also explains a gap between two of this project's instruments. The 2989-game
+match measured the king-line term declining central pawn captures 16.5 % more
+often than the baseline while its king was still uncastled — a behavioural
+difference no depth-8 bench run over this suite could have shown, because
+essentially all of its 1.3 billion nodes are searched in positions where castling
+has long since happened.
+
+**So: for anything opening-dependent, the signature is silent rather than
+reassuring.** The `benchv2` command exists for that case, over a position set
+that is deliberately half uncastled and carries real castling rights; its
+signature is a separate series and must never be compared against the numbers in
+this document.
+
+### The `benchv2` position set
+
+`src/main/resources/bench/mychess-castling-mix.fen`, 60 positions, reached from
+the REPL as `benchv2 [depth]` and from code as `Bench.Suite.CASTLING_MIX`.
+
+| | positions | |
+|---|---:|---|
+| uncastled, side to move may still castle | 24 | the state the standard suite has 8 sides of |
+| uncastled, every castling right already lost | 6 | 10 %, against ~7 % in real games |
+| castled | 30 | |
+| **total** | **60** | **uncastled 30 : castled 30** |
+
+Counted on the **side to move** only, since that is whose king a
+castling-dependent term is evaluated for. 27 of the 60 FENs carry a non-empty
+castling field — the 24 above plus three where only the *opponent* still holds
+rights.
+
+The 6 rights-lost positions are the point of the 10 %: they are the only ones
+that distinguish a term gated on *"has castled"* from one gated on *"rights
+lost"*, and those two gates behave differently in exactly the case
+[`king-safety.md` § 4.14](king-safety.md) was worried about.
+
+**Sources: 46 from `test-results/bracket-4.4.1.pgn`**, spread evenly over its
+five foreign opponents (BBC, Kojiro, Princhess, TSCP, ZetaDva), **and 14 from
+Stockfish's own suite** — the same file the standard suite draws from. Self-play
+was avoided deliberately: two near-identical engines agree about which lines to
+enter, so their positions are the ones the evaluation already handles. One
+confound to know about when reading the halves against each other: source and
+castling state are nearly collinear, because Stockfish's suite holds only two
+uncastled positions to draw on.
+
+Selection and file order are deterministic: candidates are ordered by the SHA-256
+of their FEN and taken from the front. Filters: at least 14 pieces, material
+within 400 cp, side to move not in check, plies 10–60, and **both artificial
+stress positions excluded**.
+
+The file itself is the asset — the extraction script that replayed the PGNs was
+not kept, so the anchor half cannot be regenerated from scratch, only verified.
+That is what `BenchSuiteTest` is for, and it is why every property the set was
+built for is asserted there rather than left as a claim in this document.
+
+**The piece filter has to be applied to the Stockfish half as well**, which is a
+trap worth naming: it was not, on the first build, and seven of the thirty
+"castled" positions turned out to be 3–10-piece endgames — `8/8/8/8/8/6k1/6p1/6K1`
+among them. They had been classified as castled because a lone endgame king
+happens to stand on g1. For a set whose entire purpose is the castled/uncastled
+distinction, a position where that distinction is meaningless is worse than no
+position at all. `BenchSuiteTest` now asserts the piece floor, which is how it
+was found.
+
+Excluding the stress positions is what makes the set usable: no single position
+exceeds 8 % of the total here, against 87 % in the standard suite — a share that
+does not shrink with depth (87.4 % at depth 6, 86.9 % at depth 8). That also makes
+it fast, about a minute and a half at depth 8 against seventeen minutes.
+
+**Its own series.** It has no history before 4.6.1 and its numbers are not
+comparable to anything in the tables above — different positions, different
+count. What carries over unchanged is the meaning of a signature: identical
+totals prove identical search behavior, and a wall-clock difference proves
+nothing.
+
+| version | date | depth | positions | signature (nodes) | time | NPS |
+|---|---|---:|---:|---:|---:|---:|
+| 4.6.1 | 2026-09-06 | 8 | 60 | **178,238,659** | 100,673 ms | 1,770,471 |
+
+Per-position archive: `test-results/bench/4.6.1-castling-mix-d8.txt`, same column
+layout as the `bench` archives of § 7. The largest position is 6.7 % of the total
+(11,943,436 nodes) and the ratio of the largest to the median is 4.5× — against
+87 % and roughly 20,000× in the standard suite. That is the property that makes a
+per-position diff here worth reading as a whole rather than as one position plus
+noise.
+
 ### Reproducing a row
 
 ```sh
@@ -544,10 +654,15 @@ printf 'bench\nquit\n' | java -cp "target/my-chess-<version>.jar:target/dependen
     org.michaelfl.mychess.MyChessMain     # depth 8 = Bench.DEFAULT_DEPTH
 printf 'bench 9\nquit\n' | java -cp "target/my-chess-<version>.jar:target/dependency/*" \
     org.michaelfl.mychess.MyChessMain     # depth 9
+printf 'benchv2\nquit\n' | java -cp "target/my-chess-<version>.jar:target/dependency/*" \
+    org.michaelfl.mychess.MyChessMain     # the castling-mix suite, separate series
 ```
 
 `bench` prints its numbers with `Locale.ROOT`, so the grouping separator is a
 comma on every machine and the output is diffable regardless of system locale.
+`benchv2` shares that formatting and the same per-position line layout, so its
+output archives and diffs identically — into files of its own, never against a
+`bench` archive.
 
 ---
 
