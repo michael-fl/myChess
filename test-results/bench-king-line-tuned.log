@@ -1,0 +1,61 @@
+   1 done, 727.233 nodes, 1.387 ms elapsed
+   2 done, 6.213.617 nodes, 6.774 ms elapsed
+   3 done, 65.869 nodes, 6.814 ms elapsed
+   4 done, 2.144.400 nodes, 7.882 ms elapsed
+   5 done, 1.789.370 nodes, 9.097 ms elapsed
+   6 done, 4.616.091 nodes, 13.043 ms elapsed
+   7 done, 5.674.909 nodes, 16.794 ms elapsed
+   8 done, 2.143.858 nodes, 17.849 ms elapsed
+   9 done, 9.415.384 nodes, 23.801 ms elapsed
+  10 done, 4.422.734 nodes, 26.159 ms elapsed
+  11 done, 3.579.827 nodes, 27.952 ms elapsed
+  12 done, 4.198.885 nodes, 30.829 ms elapsed
+  13 done, 4.880.747 nodes, 33.873 ms elapsed
+  14 done, 2.831.819 nodes, 35.397 ms elapsed
+  15 done, 1.166.153 nodes, 36.051 ms elapsed
+  16 done, 1.975.277 nodes, 37.037 ms elapsed
+  17 done, 58.708 nodes, 37.071 ms elapsed
+  18 done, 25.553 nodes, 37.087 ms elapsed
+  19 done, 83.925 nodes, 37.116 ms elapsed
+  20 done, 101.539 nodes, 37.164 ms elapsed
+  21 done, 54.587 nodes, 37.193 ms elapsed
+  22 done, 11.255 nodes, 37.200 ms elapsed
+  23 done, 46.431 nodes, 37.222 ms elapsed
+  24 done, 75.168 nodes, 37.263 ms elapsed
+  25 done, 24.358 nodes, 37.277 ms elapsed
+  26 done, 94.385 nodes, 37.316 ms elapsed
+  27 done, 477.483 nodes, 37.517 ms elapsed
+  28 done, 649.608 nodes, 37.827 ms elapsed
+  29 done, 322.215 nodes, 37.951 ms elapsed
+  30 done, 14.127 nodes, 37.960 ms elapsed
+  31 done, 1.240.591 nodes, 38.469 ms elapsed
+  32 done, 8.596.955 nodes, 43.073 ms elapsed
+  33 done, 2.797.872 nodes, 44.789 ms elapsed
+  34 done, 1.412.309 nodes, 45.586 ms elapsed
+  35 done, 3.465.747 nodes, 47.564 ms elapsed
+  36 done, 3.397.076 nodes, 49.410 ms elapsed
+  37 done, 1.360.709.411 nodes, 1.259.202 ms elapsed
+  38 done, 74.146.320 nodes, 1.313.135 ms elapsed
+  39 done, 17.502 nodes, 1.313.149 ms elapsed
+  40 done, 91.183 nodes, 1.313.185 ms elapsed
+  41 done, 487.697 nodes, 1.313.370 ms elapsed
+  42 done, 111.680 nodes, 1.313.417 ms elapsed
+  43 done, 47.296 nodes, 1.313.435 ms elapsed
+  44 done, 17.505 nodes, 1.313.445 ms elapsed
+  45 done, 125.808 nodes, 1.313.500 ms elapsed
+  46 done, 269.255 nodes, 1.313.647 ms elapsed
+  47 done, 1.306.393 nodes, 1.314.244 ms elapsed
+  48 done, 48 nodes, 1.314.247 ms elapsed
+  49 done, 617 nodes, 1.314.250 ms elapsed
+  50 done, 4.337.356 nodes, 1.316.744 ms elapsed
+  51 done, 3.746.331 nodes, 1.318.738 ms elapsed
+  52 done, 2.073.902 nodes, 1.319.570 ms elapsed
+  53 done, 5.126.341 nodes, 1.322.589 ms elapsed
+  54 done, 1.526.745 nodes, 1.323.521 ms elapsed
+  55 done, 3.482.411 nodes, 1.325.395 ms elapsed
+
+=== depth 8 ===
+positions 55
+nodes 1.536.419.866
+time 1.325.098 ms
+nps 1.159.476
