@@ -181,42 +181,64 @@ public final class WeightingFunction {
      * king, indexed {@code 0..12} — three files of at most
      * {@link #KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE}.
      *
-     * <p><b>Fitted, not chosen.</b> Isotonic least squares against Stockfish's <em>static</em>
-     * NNUE evaluation minus this engine's, over the 39,619 positions of the Chess960 self-play
-     * corpus, phase-scaled, with monotonicity as a constraint of the fit rather than a repair
-     * afterwards; intervals from a block bootstrap. Full record in
-     * {@code test-results/king-safety-feature-screen.log}, tooling in
-     * {@code tools/king-safety-screen.py}.
+     * <p><b>Fitted against game results.</b> Texel-style coordinate descent on ~1.34 M labeled
+     * positions of the Zurichess + self-play hybrid, with the evaluation's linearity in the table
+     * entries giving the design matrix in one pass ({@code KingLineTableTuner},
+     * {@code test-results/king-line-table-texel-tune.log}).
      *
-     * <p><b>Equal neighbors are the measurement, not rounding.</b> Where the monotonicity
-     * constraint binds, pool-adjacent-violators merges the indices it cannot separate — so 42/42
-     * means the corpus does not distinguish those two levels.
+     * <p><b>This replaces a table fitted against the wrong objective.</b> The first version came
+     * from isotonic least squares against Stockfish's <em>static</em> NNUE evaluation — agreement
+     * with an evaluator, which is not the same thing as winning games — and it measured
+     * <b>−28.9 ± 28.6 Elo</b> (SPRT H0 at 437 games). Its values were
+     * {@code 0 21 42 42 77 91 95 134 138 223 223 223 223}. The re-fit halves the top of the
+     * table and raises its middle: what predicts Stockfish's judgement of an open file and what
+     * predicts the game's outcome are measurably different things.
      *
-     * <p><b>Indices 10 to 12 deliberately carry index 9's value.</b> Their own fitted values rest
-     * on 0.56 % of samples between them, and index 12's bootstrap interval collapses onto its
-     * point estimate — the signature of a coefficient resting on nothing. Shipping the fitted
-     * 436 cp there would repeat the first pawn-storm encoding's mistake, which read 141.5 cp on
-     * 0.5 % of the data and fell to 28.5 cp once the mass was spread.
+     * <p><b>Not a scaling problem, which was checked first.</b> A one-dimensional sweep of
+     * {@link #kingLinePenaltyFactor} over two corpora put the optimum at −0.008 against the
+     * shipped −0.010, a 0.07 % difference in mean squared error on a flat basin
+     * ({@code test-results/king-line-factor-sweep.log}). The old table was near-optimally scaled
+     * and still lost 29 Elo, so the error was in the shape.
      *
-     * <p><b>What the fit does not license.</b> It says this quantity accounts for 2.238 % of what
-     * separates this evaluation from Stockfish's, against 1.270 % for the shelved attack-unit
-     * term. That is a screen result, not an Elo prediction: attack units screened at 1.270 % and
-     * then lost 42.9 Elo to their own cost. Only an SPRT settles the term.
+     * <p><b>Indices 6, 7 and 8 are pooled at 91.</b> The free re-fit dips at 7 then 8 — 91, 97,
+     * 73.5 — and the same dip appears under both opponent-material scalings, which would mean
+     * more open files scoring as less dangerous. Pool-adjacent-violators over the occupancy
+     * weights merges all three, not just the two that look wrong: pooling 7 and 8 alone lands at
+     * 81 and puts a fresh fall behind index 6's 91. That mistake was made here first and caught by
+     * {@code WeightingFunctionKingLineTest.theTableRisesWithDanger}, which is what that test is
+     * for.
+     *
+     * <p>Whether the dip is real is open — indices 7 and 8 carry 2.9 % of samples between them.
+     * It is recorded rather than smoothed away silently, because the first fit <em>imposed</em>
+     * monotonicity as a constraint of the optimisation and so could never have raised the
+     * question.
+     *
+     * <p><b>Indices 11 and 12 carry index 10's value.</b> They hold 0.02 % and 0.00 % of samples,
+     * so the tuner moved them essentially unconstrained — 231.5 and 231.5 under one scaling,
+     * 222.5 and 247.5 under another. A coefficient without occupancy behind it means nothing; the
+     * first pawn-storm encoding read 141.5 cp on 0.5 % of the data and fell to 28.5 cp once the
+     * mass was spread.
+     *
+     * <p><b>What the fit does not license.</b> The re-fit lowers mean squared error by 0.00053
+     * against having no term at all, where the old table managed 0.00036 — half again as much, on
+     * the objective that matters. It is still a proxy on a labeled corpus. The old table also had
+     * a positive proxy value and lost 29 Elo; what is new here is where the numbers come from,
+     * not a promise about strength. Only a match settles it.
      */
     static final int[] KING_LINE_PENALTY = {
-            0,   // 0
-            21,  // 1
-            42,  // 2
-            42,  // 3
-            77,  // 4
-            91,  // 5
-            95,  // 6
-            134, // 7
-            138, // 8
-            223, // 9
-            223, // 10
-            223, // 11
-            223  // 12
+            0,    // 0
+            26,   // 1
+            32,   // 2
+            66,   // 3
+            68,   // 4
+            73,   // 5
+            91,   // 6   6, 7 and 8 pooled: the free fit dips at 7 (97) then 8 (73.5)
+            91,   // 7
+            91,   // 8
+            125,  // 9
+            153,  // 10
+            153,  // 11  index 10's value; occupancy 0.02 %
+            153   // 12  index 10's value; occupancy 0.00 %
     };
 
     private static final float mobilityFactor = 0.1f;

@@ -167,7 +167,7 @@ class EngineTest extends EngineTestBase {
                 "b3-f7", // MILD REGRESSION (v4.4.0): Bxf7 (SF +0.64) instead of Bd5 (SF +1.26), which is
                          // SF's own best move. Accepted against the measured +32.6 Elo of the PeSTO tables.
                 0.3f,
-                2.25f,  // was 2.0; shifted by the king-line danger term (4.6.0-king-line)
+                2.45f,  // was 2.0; shifted by the king-line danger term, then the re-fitted table (4.6.0-king-line-tuned)
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -403,7 +403,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("Qf2", "h5", "Qg3"),
                 1.7f, // TODO > 4.5
-                2.85f, // was 2.0 (tapered pawn-EG v4.3.0), then 2.7; shifted by the king-line danger term (4.6.0-king-line) — TODO 5.0
+                2.95f, // was 2.0 (tapered pawn-EG v4.3.0), then 2.7; shifted by the king-line danger term, then the re-fitted table (4.6.0-king-line-tuned) — TODO 5.0
                 new GameConfig(ENGINE, engineConfig())
         );
     }
