@@ -838,11 +838,13 @@ public final class WeightingFunction {
         // The king's own file and its two neighbors. Computed here, inside the walk the evaluation
         // performs anyway, rather than as a separate pass: a standalone scan for the shelved
         // attack-unit term cost more than the entire evaluation.
-        final int col = field % Board.LENGTH - 2;
-        final int startField = field + KING_LINE_OFFSETS[col];
-        kingLineDanger[color] = calculateKingLineDanger(color, startField)
-                + calculateKingLineDanger(color, startField + 1)
-                + calculateKingLineDanger(color, startField + 2);
+        if (!game.isCastlingPossible()) {
+            final int col = field % Board.LENGTH - 2;
+            final int startField = field + KING_LINE_OFFSETS[col];
+            kingLineDanger[color] = calculateKingLineDanger(color, startField)
+                    + calculateKingLineDanger(color, startField + 1)
+                    + calculateKingLineDanger(color, startField + 2);
+        }
     }
 
     /**
