@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -83,6 +84,84 @@ public final class Bench {
     private static final String STANDARD_FENS = "/bench/stockfish-standard.fen";
     private static final String MIDDLEGAME_FENS = "/bench/mychess-middlegames.fen";
     private static final String CHESS960_FENS = "/bench/chess960.fen";
+    private static final String CASTLING_MIX_FENS = "/bench/mychess-castling-mix.fen";
+
+    /**
+     * Which position set a run uses. Three sets rather than a {@code chess960} flag, because
+     * {@link #CASTLING_MIX} is a third thing and a boolean cannot name it.
+     *
+     * <p>{@link #STANDARD} is the signature series of
+     * {@code docs/bench-history.md} and must never change — its whole value is that an
+     * unchanged number across versions proves the search is identical, which a changed suite
+     * would destroy retroactively.
+     */
+    public enum Suite {
+
+        /** The 55 positions of the historical series: Stockfish's own suite plus six myChess middlegames. */
+        STANDARD(false, STANDARD_FENS, MIDDLEGAME_FENS),
+
+        /** Chess960 start positions, searched with 960 castling rules. */
+        CHESS960(true, CHESS960_FENS),
+
+        /**
+         * 60 positions, half of them <b>uncastled with real castling rights</b> — the state
+         * {@link #STANDARD} almost entirely lacks, where only 8 of its 110 sides can still
+         * castle and 49 of 55 positions carry no rights at all.
+         *
+         * <p>Built for terms whose behavior depends on castling. Such a term can leave
+         * {@code STANDARD}'s signature bit-identical simply because the suite does not contain
+         * the state in which it acts, and an unchanged signature would then mean nothing.
+         *
+         * <p>The composition is exactly 30 uncastled to 30 castled. Six of the uncastled ones
+         * (10 %, against a 7 % natural frequency in real games) have a central king that has
+         * already lost all rights. Those six are what separates a gate on "has castled" from
+         * one on "rights lost".
+         *
+         * <p>46 positions come from {@code test-results/bracket-4.4.1.pgn}, spread evenly over
+         * its five foreign opponents, and 14 from Stockfish's suite. Self-play was avoided
+         * deliberately: two near-identical engines agree about which lines to enter, so their
+         * positions are the ones the evaluation already handles.
+         *
+         * <p><b>The two artificial stress positions are excluded.</b> One of them alone is 87 %
+         * of {@code STANDARD}'s nodes at depth 6 and 87 % at depth 8 — a share that does not
+         * shrink with depth. Here no single position exceeds 6.7 %, and the whole set runs in
+         * about 100 seconds at depth 8.
+         *
+         * <p><b>Its own series, never comparable to {@code STANDARD}'s numbers.</b> And one
+         * caveat for anyone reading the halves against each other: source and castling state
+         * are nearly confounded, because Stockfish's suite holds only two uncastled positions
+         * to draw on.
+         */
+        CASTLING_MIX(false, CASTLING_MIX_FENS);
+
+        private final boolean chess960;
+        private final String[] resources;
+
+        Suite(boolean chess960, String... resources) {
+            this.chess960 = chess960;
+            this.resources = resources;
+        }
+
+        /** Whether positions are read as Chess960 and searched with 960 castling rules. */
+        public boolean isChess960() {
+            return chess960;
+        }
+
+        List<String> fens() {
+            var all = new ArrayList<String>();
+
+            for (String resource : resources) {
+                all.addAll(loadFens(resource));
+            }
+
+            return all;
+        }
+
+        /** Lower-case name for the {@code bench suite=…} header line. */
+        public String label() {
+            return name().toLowerCase(Locale.ROOT).replace('_', '-');
+        }
+    }
 
     /** Result of searching a single benchmark position. */
     public record PositionResult(String fen, long nodes, long timeMs) {}
@@ -157,11 +236,13 @@ public final class Bench {
         /**
          * Nodes per second over every position except {@link #largestPosition()}.
          *
-         * <p>Worth reading next to {@link #nps()} because the dominant position is not a
-         * typical one — it is figure-dense and pawnless, so its cost per node differs from the
-         * rest of the suite, and while it carries most of the run it also sets most of the
-         * headline NPS. Machine-dependent and informative only, exactly like {@link #nps()}:
-         * never assert on it (policy rule 4 in {@code docs/bench-history.md}).
+         * <p>Worth reading next to {@link #nps()}, because the dominant position is not a
+         * typical one. It is piece-dense and pawnless, so its cost per node differs from the
+         * rest of the suite. And since it carries most of the run, it also sets most of the
+         * headline NPS.
+         *
+         * <p>Machine-dependent and informative only, exactly like {@link #nps()}: never assert
+         * on it (policy rule 4 in {@code docs/bench-history.md}).
          *
          * @return nodes per second excluding the largest position, or 0 when no time remains
          *         outside it
@@ -204,7 +285,12 @@ public final class Bench {
      * @throws BenchException if a suite resource is missing or a search fails
      */
     public static BenchResult run(int depth, boolean chess960) {
-        return run(depth, chess960, position -> {
+        return run(depth, chess960 ? Suite.CHESS960 : Suite.STANDARD);
+    }
+
+    /** As {@link #run(int, boolean)}, for an explicitly named {@link Suite}. */
+    public static BenchResult run(int depth, Suite suite) {
+        return run(depth, suite, _ -> {
             // Nothing to report — the silent overload exists for callers that only want the
             // aggregate, such as EvalBenchmarkTest.
         });
@@ -225,9 +311,12 @@ public final class Bench {
      * @throws BenchException if a suite resource is missing
      */
     public static int suiteSize(boolean chess960) {
-        return chess960
-                ? loadFens(CHESS960_FENS).size()
-                : loadFens(STANDARD_FENS).size() + loadFens(MIDDLEGAME_FENS).size();
+        return suiteSize(chess960 ? Suite.CHESS960 : Suite.STANDARD);
+    }
+
+    /** As {@link #suiteSize(boolean)}, for an explicitly named {@link Suite}. */
+    public static int suiteSize(Suite suite) {
+        return suite.fens().size();
     }
 
     /**
@@ -256,9 +345,13 @@ public final class Bench {
      * @return the per-position and aggregate node/time results
      */
     public static BenchResult run(int depth, boolean chess960, Consumer<PositionResult> onPosition) {
-        List<String> fens = chess960
-                ? loadFens(CHESS960_FENS)
-                : concat(loadFens(STANDARD_FENS), loadFens(MIDDLEGAME_FENS));
+        return run(depth, chess960 ? Suite.CHESS960 : Suite.STANDARD, onPosition);
+    }
+
+    /** As {@link #run(int, boolean, Consumer)}, for an explicitly named {@link Suite}. */
+    public static BenchResult run(int depth, Suite suite, Consumer<PositionResult> onPosition) {
+        final boolean chess960 = suite.isChess960();
+        List<String> fens = suite.fens();
 
         var tt = TranspositionTable.getDefaultInstance();
         var env = new MyChessEnv(); // no opening book -> every position is searched
@@ -312,15 +405,6 @@ public final class Bench {
         }
 
         return new BenchResult(depth, chess960, List.copyOf(results), totalNodes, totalTimeMs);
-    }
-
-    private static List<String> concat(List<String> first, List<String> second) {
-        var all = new ArrayList<String>(first.size() + second.size());
-
-        all.addAll(first);
-        all.addAll(second);
-
-        return all;
     }
 
     private static List<String> loadFens(String resource) {

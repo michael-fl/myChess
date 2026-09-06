@@ -661,7 +661,9 @@ final class CommandHandler {
             if (all) {
                 printAll(depth);
             } else {
-                printResult(Bench.run(depth, chess960, progressPrinter(depth, chess960)));
+                Bench.Suite suite = chess960 ? Bench.Suite.CHESS960 : Bench.Suite.STANDARD;
+
+                printResult(Bench.run(depth, suite, progressPrinter(depth, suite)));
             }
         }
 
@@ -681,11 +683,11 @@ final class CommandHandler {
          * magnitude in size, so extrapolating from the count completed would be badly wrong
          * early on. The position index against the total is what is actually known.
          */
-        private Consumer<Bench.PositionResult> progressPrinter(int depth, boolean chess960) {
-            int total = Bench.suiteSize(chess960);
+        private static Consumer<Bench.PositionResult> progressPrinter(int depth, Bench.Suite suite) {
+            int total = Bench.suiteSize(suite);
 
             System.out.printf(Locale.ROOT, "bench suite=%s depth=%d positions=%d%n",
-                    chess960 ? "chess960" : "standard", depth, total);
+                    suite.label(), depth, total);
 
             var done = new int[1];
 
@@ -697,7 +699,7 @@ final class CommandHandler {
             };
         }
 
-        private void printResult(Bench.BenchResult result) {
+        private static void printResult(Bench.BenchResult result) {
             System.out.println("===========================================================");
             System.out.printf(Locale.ROOT, "Total time     : %,d ms%n", result.totalTimeMs());
             System.out.printf(Locale.ROOT, "Nodes searched : %,d%n", result.totalNodes());
@@ -717,11 +719,11 @@ final class CommandHandler {
                     result.npsWithoutLargestPosition());
         }
 
-        private void printAll(int depth) {
+        private static void printAll(int depth) {
             // Both suites get the progress printer too — this path is the longest of all, since
             // it runs the standard suite and then the Chess960 one.
-            var standard = Bench.run(depth, false, progressPrinter(depth, false));
-            var chess960 = Bench.run(depth, true, progressPrinter(depth, true));
+            var standard = Bench.run(depth, Bench.Suite.STANDARD, progressPrinter(depth, Bench.Suite.STANDARD));
+            var chess960 = Bench.run(depth, Bench.Suite.CHESS960, progressPrinter(depth, Bench.Suite.CHESS960));
 
             printResult(standard);
             System.out.println();
@@ -742,10 +744,60 @@ final class CommandHandler {
             System.out.printf(Locale.ROOT, "NPS            : %,d%n", totalNps);
         }
 
-        private String shortFen(String fen) {
+        private static String shortFen(String fen) {
             int space = fen.indexOf(' ');
 
             return space < 0 ? fen : fen.substring(0, space);
+        }
+    }
+
+    /**
+     * {@code benchv2 [depth]} — the same measurement as {@code bench}, over
+     * {@link Bench.Suite#CASTLING_MIX} instead of the historical suite.
+     *
+     * <p>A separate command rather than a {@code bench mix} token, because the two produce
+     * numbers that must never be compared: {@code bench}'s value is a single series reaching
+     * back to 3.5.2, and a suite selector on the same command invites a row from the wrong
+     * suite into {@code docs/bench-history.md}. The name says "second series", and the header
+     * line names the suite so an archived run cannot be mistaken for the other one.
+     *
+     * <p>What it sees that {@code bench} cannot: 30 of its 60 positions are uncastled with
+     * real castling rights, against 8 of 110 sides in the standard suite. A term gated on
+     * castling state can therefore leave {@code bench}'s signature bit-identical while being
+     * anything but neutral — see {@code docs/bench-history.md}, "What this position set cannot
+     * see: the opening".
+     *
+     * <p>No {@code all} and no {@code 960}: the set is a single standard-chess suite. It holds
+     * none of the two artificial stress positions, so at depth 8 it takes about 90 seconds and
+     * no single position is more than 8 % of the total — where in the standard suite one
+     * position alone is 87 %.
+     */
+    private final class BenchV2Command extends Command {
+
+        private static final String PREFIX = "benchv2";
+
+        @Override
+        boolean canHandle(String commandLine) {
+            return PREFIX.equals(commandLine) || commandLine.startsWith(PREFIX + " ");
+        }
+
+        @Override
+        void handle(String commandLine) {
+            String args = commandLine.substring(PREFIX.length()).trim();
+            int depth = Bench.DEFAULT_DEPTH;
+
+            if (!args.isEmpty()) {
+                try {
+                    depth = Integer.parseInt(args);
+                } catch (NumberFormatException _) {
+                    System.err.println("Usage: benchv2 [depth]");
+                    return;
+                }
+            }
+
+            var suite = Bench.Suite.CASTLING_MIX;
+
+            BenchCommand.printResult(Bench.run(depth, suite, BenchCommand.progressPrinter(depth, suite)));
         }
     }
 
@@ -754,6 +806,7 @@ final class CommandHandler {
             new CommandHandler.AutoGameCommand(),
             new CommandHandler.NewGameCommand(),
             new BenchCommand(),
+            new BenchV2Command(),
             new CommandHandler.MoveCommand(),
             new CommandHandler.ImportCommand(),
             new CommandHandler.PrintCommand(),

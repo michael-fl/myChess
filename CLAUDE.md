@@ -35,7 +35,7 @@ The REPL opens `db/openings.db` (MapDB) on start and creates it on first run if 
 
 `MyChessMain` runs an interactive loop dispatched through `CommandHandler`. Each command is a nested `Command` subclass with `canHandle(line)`/`handle(line)`. To add a command, add a new inner class and register it in the command list inside `CommandHandler`. Existing commands:
 
-`quit`/`exit`/`q`, `new`, `auto` (engine self-play), `import <pgn-or-moves>`/`imp`, `l` (last imported), `print`/`p`, `board`, `export`/`exp`, `pgn` (game as PGN move text), `revert`/`r`, `tip`, `last`, `dw` (deep weight), `weight`/`w`, `go`/`g` (engine plays one move), `moves`, `fen` (print) / `fen <FEN>` (load), `hash`, `bench [depth]` (node signature), `o…` (opening DB lookup). Anything else is parsed as a move in algebraic notation.
+`quit`/`exit`/`q`, `new`, `auto` (engine self-play), `import <pgn-or-moves>`/`imp`, `l` (last imported), `print`/`p`, `board`, `export`/`exp`, `pgn` (game as PGN move text), `revert`/`r`, `tip`, `last`, `dw` (deep weight), `weight`/`w`, `go`/`g` (engine plays one move), `moves`, `fen` (print) / `fen <FEN>` (load), `hash`, `bench [depth]` (node signature), `benchv2 [depth]` (same measurement over the half-uncastled castling-mix suite), `o…` (opening DB lookup). Anything else is parsed as a move in algebraic notation.
 
 ## Architecture
 

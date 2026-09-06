@@ -136,7 +136,7 @@ The project is also a study object for the supporting techniques typical of a cl
 - A [tapered evaluation](docs/tapered-evaluation.md) with separate midgame/endgame piece-square tables (Texel-tuned), tapered material, a bishop-pair bonus, mobility, and several positional terms. See [Evaluation Function](docs/evaluation.md).
 - [Opening book](docs/search.md#77-opening-book-lookup) lookup from a MapDB-backed database keyed by Zobrist position string. The book ships empty; it is built offline by [`OpeningDBImporter`](src/main/java/org/michaelfl/mychess/openingdb/OpeningDBImporter.java) from a directory of PGN files. See [Opening Database](docs/opening-database.md).
 - I/O in standard formats — [FEN](docs/notation.md#101-fen) import/export (including Shredder-FEN for Chess960) and [PGN](docs/notation.md#102-pgn) import (of recorded games for replay or opening-book ingestion) and export (the `pgn` command, via [`PGNConverter`](src/main/java/org/michaelfl/mychess/PGNConverter.java)). See [Notation and I/O](docs/notation.md).
-- Two front-ends — the interactive **REPL** and a **UCI** protocol handler — plus self-play (`auto`), single-move calculation (`go`), tip suggestion (`tip`), a `bench` fixed-workload node count, and full move history with `revert` undo.
+- Two front-ends — the interactive **REPL** and a **UCI** protocol handler — plus self-play (`auto`), single-move calculation (`go`), tip suggestion (`tip`), a `bench` fixed-workload node count (and `benchv2` over a half-uncastled position set), and full move history with `revert` undo.
 
 **What the engine deliberately does not do (yet):**
 
@@ -232,7 +232,7 @@ myChess/
 │   ├── main/resources/
 │   │   ├── version.properties       # Filtered to the pom version at build time
 │   │   ├── chess960_fens.csv        # Precomputed Chess960 start FENs
-│   │   └── bench                    # Fixed position set for the `bench` command
+│   │   └── bench                    # Fixed position sets for `bench` and `benchv2`
 │   └── test/java/org/michaelfl/mychess/  # ~1,170 tests across ~70 test classes
 └── target/                   # Maven output (git-ignored)
 ```
