@@ -142,7 +142,29 @@ public final class WeightingFunction {
     private static final float positionFactor = 0.5f;
     private static final float threadWeightFactor = 0.02f;
     private static final float chessFactor = 0.25f;
-    private static final float castlingFactor = 0.25f;
+    /**
+     * <b>Experiment, branch {@code castling-factor-zero}: disabled (0 instead of 0.25).</b>
+     *
+     * <p>Not an Elo candidate — a diagnostic. The question is whether this term is what makes
+     * myChess castle in 95.6 % of its sides (measured over the 2000-game anchor bracket)
+     * against 7.3–76.8 % for the five foreign anchors, or whether the king midgame
+     * {@link PieceSquareTables} table already does that on its own. Rank 1 of that table pays
+     * {@code (60 - (-46)) * positionFactor = 53} cp for {@code e1 -> g1}, against the 25 cp this
+     * term adds when the state goes from "both rights" to "castled" — so the piece-square table
+     * is the larger of the two incentives, and the term may be redundant.
+     *
+     * <p>What rides on the answer: at 0.25 the term contributes a frozen ±100 cp whenever one
+     * side has castled and the other has lost all rights, which is the only way to reach a
+     * 4-unit difference. A frozen constant cannot reorder moves, but it does shift the whole
+     * evaluation against the one fixed reference in the search — {@code SearchNodeResult.draw()}
+     * returns 0 — so myChess declines repetitions it should take. Priced over the anchor bracket
+     * at 30 of 2000 games and ~1 Elo. If the term turns out redundant it can simply be removed;
+     * if it is load-bearing, only the frozen case should be gated out.
+     *
+     * <p>Do not merge this value. Restore 0.25 (or the value a factor sweep picks) before the
+     * branch goes anywhere near master.
+     */
+    private static final float castlingFactor = 0f;
     /**
      * Per-doubled-pair penalty in pawn units, applied directly in the
      * final-weight formula.
