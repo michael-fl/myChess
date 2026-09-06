@@ -2,6 +2,7 @@ package org.michaelfl.mychess;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -65,6 +66,33 @@ class WeightingFunctionKingLineTest {
     /** White king g1, the g-file empty and a black rook on it. */
     private static final String WHITE_OPEN_ROOK = "4k1r1/8/8/8/8/8/8/6K1 w - - 0 1";
     private static final String BLACK_OPEN_ROOK = "6k1/8/8/8/8/8/8/4K1R1 w - - 0 1";
+
+    /*
+     * The castling gate, pinned from both sides. Each pair is one board with one castling field,
+     * differing only in whose turn it is — the property under test is that the term cannot see
+     * that difference.
+     *
+     * White's king sits on g1 with no white rights left, so white's castling question is settled.
+     * Black keeps both rights on e8 and has no d-pawn, so black's d-file is half-open and black's
+     * danger is 1 while white's is 0.
+     */
+    private static final String WHITE_SETTLED_WHITE_TO_MOVE = "r3k2r/ppp1pppp/8/8/8/8/PPPPPPPP/RNBQ1RK1 w kq - 0 20";
+    private static final String WHITE_SETTLED_BLACK_TO_MOVE = "r3k2r/ppp1pppp/8/8/8/8/PPPPPPPP/RNBQ1RK1 b kq - 0 20";
+
+    /*
+     * The mirror: black is settled on g8 with no black rights, white keeps both rights on e1 and
+     * has no d-pawn, so white's danger is 1 and black's is 0.
+     */
+    private static final String BLACK_SETTLED_WHITE_TO_MOVE = "5rk1/pppppppp/8/8/8/8/PPP1PPPP/R3K2R w KQ - 0 20";
+    private static final String BLACK_SETTLED_BLACK_TO_MOVE = "5rk1/pppppppp/8/8/8/8/PPP1PPPP/R3K2R b KQ - 0 20";
+
+    /*
+     * The pair that pins the gate's other half. White is settled on g1 with no white rights and
+     * its g-pawn gone, so white's g-file is half-open and white's danger is 1. Black keeps both
+     * rights, which is what makes a turn-based gate skip white's real weakness on black's move.
+     */
+    private static final String SETTLED_KING_IN_DANGER_WHITE_TO_MOVE = "r3k2r/pppppppp/8/8/8/8/PPPPPP1P/RNBQ1RK1 w kq - 0 20";
+    private static final String SETTLED_KING_IN_DANGER_BLACK_TO_MOVE = "r3k2r/pppppppp/8/8/8/8/PPPPPP1P/RNBQ1RK1 b kq - 0 20";
 
     private static int danger(String fen, int color, int startField) {
         var evaluator = new WeightingFunction();
@@ -620,5 +648,84 @@ class WeightingFunctionKingLineTest {
                 "the king on f1 reads e, f and g: f2 and g2 shelter their files, and the e-file "
                         + "is open with a black rook on e8 — a window shifted by one file would "
                         + "read d, e, f or f, g, h and miss it or double it");
+    }
+
+    // ------------------------------------------------------------------------------------------
+    // The castling gate — and the invariant it must not break
+    // ------------------------------------------------------------------------------------------
+
+    /**
+     * <b>The term must not depend on whose turn it is.</b> Castling state is a property of a
+     * color; the side to move is not. So the same board with the same castling field has to
+     * produce the same danger for both kings whether it is white's move or black's.
+     *
+     * <p>This is the one assertion in this file that no evaluation design can be allowed to
+     * violate, gate or no gate. A term that changes with the turn changes between plies of one
+     * search: iterative deepening evaluates leaves of alternating color at successive depths, and
+     * negamax compares a node against children of the opposite color, so the score moves for a
+     * reason that has nothing to do with the position.
+     *
+     * <p><b>{@code MirrorEvalTest} cannot find this.</b> Mirroring flips the color <em>and</em>
+     * the turn together, so a defect that reads the side to move instead of the color is
+     * invariant under it and stays invisible. That is why the check lives here, on one board with
+     * two turns, rather than there.
+     *
+     * <p>The concrete defect it was written for: gating on {@code GameStatus.isCastlingPossible()},
+     * which asks only about the side to move and then governs both kings. On the pair below that
+     * makes black's danger 1 with white to move and 0 with black to move — an irrelevant fact
+     * about the clock deciding whether a real weakness is scored at all.
+     */
+    @Test
+    void theKingLineTermIsIndependentOfWhoseTurnItIs() {
+        assertArrayEquals(evaluated(WHITE_SETTLED_WHITE_TO_MOVE).getKingLineDanger(),
+                evaluated(WHITE_SETTLED_BLACK_TO_MOVE).getKingLineDanger(),
+                "same board, same castling field kq, only the side to move differs — the danger of "
+                        + "both kings must be identical; if it is not, the term is reading the "
+                        + "turn where it should read the color");
+
+        assertArrayEquals(evaluated(BLACK_SETTLED_WHITE_TO_MOVE).getKingLineDanger(),
+                evaluated(BLACK_SETTLED_BLACK_TO_MOVE).getKingLineDanger(),
+                "the mirror of the same invariant with castling field KQ: a defect that reads the "
+                        + "side to move shows up for exactly one of the two colors at a time, so "
+                        + "asserting only one of them would leave half of it green");
+    }
+
+    /**
+     * A king that may still castle is not scored — the point of the gate, asserted for the color
+     * whose rights are still open rather than for the side to move.
+     *
+     * <p>Both cases are the awkward direction for a turn-based gate: the side that may still
+     * castle is <em>not</em> the side to move, so a gate reading the clock lets the term through.
+     */
+    @Test
+    void aKingThatMayStillCastleIsNotScored() {
+        assertEquals(0, evaluated(WHITE_SETTLED_WHITE_TO_MOVE).getKingLineDanger()[BLACK],
+                "black keeps both rights on e8, so black's half-open d-file must not be scored — "
+                        + "not even while white, whose own question is settled, is to move");
+
+        assertEquals(0, evaluated(BLACK_SETTLED_BLACK_TO_MOVE).getKingLineDanger()[WHITE],
+                "the mirror: white keeps both rights on e1, so white's half-open d-file must not "
+                        + "be scored while black is to move");
+    }
+
+    /**
+     * And the other half of the gate, which a too-eager fix would break: a king whose castling
+     * question <em>is</em> settled must be scored, on either side's move.
+     *
+     * <p>Without this, gating the term off whenever <em>anyone</em> may still castle would pass
+     * the two tests above while making the term nearly inert for the whole opening — the failure
+     * mode is silent, because a term that is never applied never looks wrong.
+     */
+    @Test
+    void aSettledKingIsScoredOnEitherSidesMove() {
+        assertEquals(WeightingFunction.KING_DANGER_HALF_OPEN,
+                evaluated(SETTLED_KING_IN_DANGER_WHITE_TO_MOVE).getKingLineDanger()[WHITE],
+                "white is settled on g1 and its g-file is half-open, so the danger must be "
+                        + WeightingFunction.KING_DANGER_HALF_OPEN + " with white to move");
+
+        assertEquals(WeightingFunction.KING_DANGER_HALF_OPEN,
+                evaluated(SETTLED_KING_IN_DANGER_BLACK_TO_MOVE).getKingLineDanger()[WHITE],
+                "and the same with black to move: black still holding its rights says nothing "
+                        + "about white's king, so white's half-open g-file must still be scored");
     }
 }

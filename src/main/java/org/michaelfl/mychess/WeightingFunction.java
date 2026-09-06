@@ -326,6 +326,13 @@ public final class WeightingFunction {
      * Per-color summed king-line danger from the current evaluation, {@code 0..12}
      * (index 0 = white). Written once per king by {@code _calculateForKing} during the ordinary
      * piece walk, read by {@link #calculateKingLinePenalty(int)}.
+     *
+     * <p><b>A zero here means one of two different things</b> — either the three files are
+     * sheltered, or the color's castling question is not settled yet and the walk was skipped
+     * entirely. {@code _calculateForKing} only writes the entry in the settled case, so the reset
+     * in {@code calculate} is what supplies the zero in the other one. Both read as "no danger",
+     * which is the intent; a caller that needs to tell them apart has to ask
+     * {@code GameStatus.isWhiteCastlingPossible()} / {@code isBlackCastlingPossible()} itself.
      */
     private final int[] kingLineDanger = new int[2];
     /** Game phase of the most recently evaluated position, {@code 0..}{@link #MAX_PHASE}; see {@link #phaseWeightOfPiece}. */
@@ -838,7 +845,31 @@ public final class WeightingFunction {
         // The king's own file and its two neighbors. Computed here, inside the walk the evaluation
         // performs anyway, rather than as a separate pass: a standalone scan for the shelved
         // attack-unit term cost more than the entire evaluation.
-        if (!game.isCastlingPossible()) {
+        //
+        // Scored only once this color's castling question is settled — it has castled, or it has
+        // lost both rights. Before that the king still sits in the center, so the window reads the
+        // central files and the term charges for a pawn structure the king is about to leave. The
+        // 2989-game run of 4.6.0-king-line-corner priced that opening component at zero (see
+        // docs/king-safety.md 4.14), which is why this gate is a correctness change rather than an
+        // expected gain: it removes a charge that measurably bought nothing.
+        //
+        // Both predicates are color-bound and both already include hasCastled, so
+        // !isXCastlingPossible() is exactly "settled". Deliberately NOT
+        // GameStatus.isCastlingPossible(), which asks only about the side to move: since this
+        // method runs for both colors, that variant gates black's king on white's rights whenever
+        // white is to move. The result is a term that appears and disappears with the clock —
+        // black's half-open file worth 26 cp with white to move and 0 cp with black to move on the
+        // very same board. It affected 4.95 % of positions in real games, and it is worse than a
+        // wrong constant: iterative deepening evaluates leaves of alternating color at successive
+        // depths and negamax compares a node against children of the opposite color, so the score
+        // moved for a reason unrelated to the position. WeightingFunctionKingLineTest's
+        // theKingLineTermIsIndependentOfWhoseTurnItIs guards it; MirrorEvalTest cannot, because
+        // mirroring flips color and turn together and the defect is invariant under it.
+        final boolean settled = color == 0
+                ? !game.isWhiteCastlingPossible()
+                : !game.isBlackCastlingPossible();
+
+        if (settled) {
             final int col = field % Board.LENGTH - 2;
             final int startField = field + KING_LINE_OFFSETS[col];
             kingLineDanger[color] = calculateKingLineDanger(color, startField)
