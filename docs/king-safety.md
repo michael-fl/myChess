@@ -5,6 +5,15 @@
 > Supersedes nothing in [roadmap § 12.21](roadmap.md#1221-king-safety--m--3060-elo), which stays
 > the short entry in the priority list; the reasoning and the steps live here.
 
+> **Priority: this document is the current work, and it stays that way until a king-safety
+> variant measures positive Elo.** No search work — LMR, PVS, history heuristic, aspiration
+> windows, check extensions — starts before that, and none of it belongs in a recommendation
+> arising from this document. The PeSTO ceiling result in
+> [roadmap § 12.7.1](roadmap.md) is sometimes quoted as an argument for the opposite; it is
+> not one. It bounds *static tables and material*, and says nothing about the dynamic terms
+> PeSTO also lacks, of which king safety is one. A closed sub-family below — file danger
+> (§ 4.14), pawn shield (§ 12.21) — closes that sub-family and not the topic.
+
 ## The short version
 
 | | |
