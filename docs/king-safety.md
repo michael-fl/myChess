@@ -32,6 +32,7 @@
 | **What to build instead** | ~~**file danger**~~ — screened at **2.238 %** explained residual variance against attack units' 1.270 %, which is why it was built (§ 4.11). **That ranking is refuted twice over:** file danger measured ≈ 0 Elo across two runs totalling 5244 games while attack units measured +9.1, so on the only two candidates with both a screen and a match the screen's order is inverted. Stop using it to *rank*; a flat screen is still a stop |
 | **Measured 2026-09-03** | file danger with the game-result table: **+0.8 ± 12.3** over 2255 games, stopped for a defect that discounted corner kings. Behaviour confirmed (−34.6 % uncovered king files), cost six times smaller than the bench predicted (−0.041 plies), and the finding that matters: **exposure is a symptom, not a cause** — 70 Elo of association for the baseline, none for the candidate (§ 4.13) |
 | **Measured 2026-09-06 — the family is closed** | the repaired build: **−4.9 ± 10.7** over 2989 games, stopped once a clearly positive result became unreachable. The term also turns out not to know about castling — before castling it reads the *central* files — but that costs nothing: priced over 2431 declined central captures it gives up half a centipawn per game **less** than the baseline, so the opening component is zero and the middlegame component is itself the −5 (§ 4.14). The repair works — the corner excess falls from +4.62 pp to +0.10 pp — the target quantity still moves −30.2 %, the cost is 0.04 plies, and the Elo is zero. **Pawn cover beside the king carries no Elo in myChess**, which also retires the shelved shield (−57.5), the king-dependent pawn PSTs (−18.1) and virtual queen mobility. Attacker-based king safety is untouched by this (§ 4.14) |
+| **Screened 2026-09-06 — two redesigns, three seconds of compute** | the term was suspected of saying too much, and the fit agreed: the "advanced enemy pawn" and "enemy major on the file" refinements are worth **6 cp and 2 cp**, the two smallest increments in the table, while the summed index conflates them anyway. Both proposed redesigns died on the corpus without a match. A **front-loaded binary** variant: the association is monotone in the *state* (85.3 / 74.1 / 52.3 / 48.3 % by unsheltered files) and vanishes in the *time* direction once exposure duration is held fixed. **Opponent-heavy-material scaling**: the association is at least as strong when the opponent has *no* heavy pieces — 43 pp of spread against 29 — so the condition would discard more than it keeps. Reverse causation is visible in a cell: games that ended with heavy pieces on the board score 36.6 %, the table's worst (§ 4.15) |
 
 **Read § 4.1 before using the seven depth-stable cases as a target** — they were the intended
 instrument and they are not usable as one.
@@ -1702,6 +1703,133 @@ All five scripts are kept, including the three that measured the wrong thing, be
 have one shape and it is worth recognising: counting advances instead of captures away, taking
 frequency instead of the opportunity rate as the denominator, and admitting every capture instead
 of the good ones.
+
+### 4.15 Two redesigns screened out of the corpus, at three seconds of compute (2026-09-06)
+
+§ 4.14 closed the file-danger term as measured. Two redesigns were then proposed, both aimed at
+the same suspicion — that the term tries to say too much — and both screened against the existing
+PGNs rather than built. Neither needed a match, because a screen reads games that were already
+played. Total compute: about three seconds.
+
+**The redundancy diagnosis was right, and the fit had already said so.** The per-file scale is
+ordinal — `0` own pawn shelters the file, `1` half-open, `2` half-open with an advanced enemy
+pawn, `3` open, `4` open with an enemy rook or queen on it — and the penalty table is indexed by
+the *sum* over the three files. Read at the bottom of that table, where the other two files are
+sheltered, the increments are:
+
+| transition | index | value | increment |
+|---|---:|---:|---:|
+| sheltered → half-open | 0 → 1 | 0 → 26 | **+26** |
+| half-open → enemy pawn advanced | 1 → 2 | 26 → 32 | **+6** |
+| advanced → fully open | 2 → 3 | 32 → 66 | **+34** |
+| open → **enemy major piece on it** | 3 → 4 | 66 → 68 | **+2** |
+
+The two refinements the redesign wanted to drop are the two smallest increments in the whole
+table, 6 cp and 2 cp. The Texel fit against 1.34 M labeled positions had already put almost
+nothing on them, because other terms carry them: the pawn piece-square tables know an enemy pawn
+is advanced, and mobility, check weight and thread weight know a major piece stands on an open
+file. 60 of the 68 cp sit in "no longer sheltered" and "fully open".
+
+**And the summed encoding discards the distinction anyway.** Index 4 means "one open file with an
+enemy rook on it", "two half-open files with advanced pawns", and "one open plus one half-open"
+— all three score 68 cp. The 0–4 scale suggests a resolution the term does not have.
+
+#### Screen 1 — is the signal in the transition or in the state?
+
+The proposed redesign was binary per file (sheltered or not, counted over the three files, a
+4-entry table instead of 13) and, more importantly, **front-loaded**: fire once when the shelter
+breaks instead of escalating from 26 to 153 as the position decays. The causal story is good —
+a term that grows with the damage is measuring the damage — and it is a structurally different
+hypothesis from the one that measured −4.9.
+
+Over the 2000 anchor-bracket sides, scoring by the worst number of unsheltered king files reached:
+
+| unsheltered files (max) | sides | score |
+|---|---:|---:|
+| 0 | 95 | **85.3 %** |
+| 1 | 270 | 74.1 % |
+| 2 | 484 | 52.3 % |
+| 3 | 1151 | 48.3 % |
+
+Strongly monotone, 37 pp of spread, and the big step is 1 → 2 (−21.8 pp) while 2 → 3 is only
+−4.0. **The association saturates**, which independently reproduces the saturation the Texel fit
+found (indices 6/7/8 pooled at 91; 10/11/12 all at 153).
+
+The timing looked promising at first. Within the worst state 3, breaking the shelter by move 10
+scored 45.2 % against 54.7 % for breaking at move 26 or later. Per opponent that is
+**+18.7 / −3.0 / +11.0 / +14.5 / +3.1** pp, stratified and inverse-variance weighted
+**+9.0 ± 3.4 pp**. But an early break also means a *longer* exposure, so the rows were recomputed
+on the share of plies exposed rather than on the worst level:
+
+| share of plies exposed | break ≤ move 10 | break ≥ move 26 | difference |
+|---|---:|---:|---:|
+| ≤ 25 % | 75.7 % | 58.9 % | **−16.8** |
+| ≤ 50 % | 46.7 % | 56.3 % | +9.6 |
+| ≤ 75 % | 49.0 % | 54.2 % | +5.2 |
+| > 75 % | 50.6 % | 50.0 % | −0.6 |
+
+**At fixed duration the effect changes sign and disappears.** The +9.0 pp was the duration of
+exposure, which is the state again, measured in time instead of in level. **Stop for the
+front-loaded variant.**
+
+One correction to how that screen was sold before it ran: it was announced as separating the
+transition from the state, and it cannot. Every game in which the shelter breaks has both — there
+is no observation with a transition and no subsequent state. The answerable question is whether
+the moment carries information *beyond* the state, and the answer is no. Sufficient for the
+decision, but a weaker claim than the one promised.
+
+#### Screen 2 — should the term scale with the opponent's heavy material?
+
+The last untested variant, and the one on the user's own idea list: an open king file should only
+cost something when the other side owns the queen and rooks. The shipped term scales with the
+phase, which is total material of both sides and says nothing about who holds the heavy pieces.
+Exposure was averaged separately over the plies where the opponent held at least three heavy units
+(`2 × queens + rooks`, so a queen and a rook, or three rooks) and over the plies where it did not.
+
+| mean unsheltered files | opponent **heavy**: sides / score | opponent **light**: sides / score |
+|---|---:|---:|
+| 0.0 | 419 / 70.2 % | 104 / 92.8 % |
+| ≤ 1.0 | 1325 / 52.0 % | 267 / 66.9 % |
+| ≤ 2.0 | 250 / 41.0 % | 612 / 60.0 % |
+| > 2.0 | 6 / 66.7 % | 570 / 49.8 % |
+
+**The association is at least as strong in the light regime — 43 pp of spread against 29.** That
+is the opposite of the prediction. Holding one side of it fixed makes the point sharply:
+
+- heavy-regime exposure fixed at ≤ 1.0 (n = 1325), light-regime exposure varied:
+  91.8 → 66.1 → 56.3 → 49.4 %. Monotone, 42 pp.
+- light-regime exposure fixed at ≤ 2.0 (n = 612), heavy-regime exposure varied:
+  66.7 → 56.3 → 69.8 %. No trend.
+
+Phase-controlled it survives too: restricted to plies where the opponent has traded its heavy
+pieces but the board is still full (phase ≥ 12), exposure still predicts — 67.0 → 62.0 → 60.2 →
+54.3 %. That is precisely where it should vanish if the hypothesis held. Reproduced independently
+on the 4000 sides of `match-pesto-ceiling-vs-4.3.4.pgn`, whose candidate arm has no king safety at
+all: heavy regime 57.6 → 48.7 → 40.5, light regime 73.0 → 58.1 → 53.1 → 45.7. Same order, same
+direction. **Stop.** Conditioning on the opponent's heavy material would not sharpen the term; it
+would discard a part of the association at least as large as the part it keeps.
+
+#### What the second screen incidentally shows about all of them
+
+**Reverse causation, and it is visible in a cell.** Sides whose games never reached a light regime
+— i.e. games that ended with heavy pieces still on the board — score **36.6 %**, the worst figure
+in the table. Those are mostly games decided early. A side that is losing loses pawns, and a side
+that has lost pawns has unsheltered king files. The exposure there is a companion of the loss, not
+its cause.
+
+That is § 4.13's finding — 70 Elo of association for the baseline, none for the candidate that
+avoided the exposure — seen from a second, independent angle, and it explains why every
+association in this family is large and worthless at the same time.
+
+**The family is now worked through in all three forms:** graded and measured (−4.9 ± 10.7 over
+2989 games), front-loaded binary and screened (flat in the time direction), heavy-material
+conditioned and screened (direction inverted). What remains untouched in king safety is the
+**attacker** side — the attack-unit term, whose corner defect is repaired and whose match has not
+run. "Pawn cover beside the king" is exhausted; "attackers on the king zone" is not.
+
+Scanners in the session scratchpad, kept for the same reason as § 4.14's five:
+`ShelterBreakScreen.java` (screen 1), `ShelterDurationScreen.java` (its duration control),
+`HeavyMaterialScreen.java` (screen 2).
 
 ---
 
