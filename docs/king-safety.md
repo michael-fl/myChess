@@ -22,7 +22,7 @@
 | **Measured 2026-09-01** | the same evaluation with the § 4.9 repairs: **+9.1 ± 14.5** over the full 1600 games, LOS 89.1 %, no bound reached. Shelved as "not shown to be worth ≥ 15 Elo", which is not the same claim as "neutral" (§ 4.10) |
 | **What to build instead** | ~~**file danger**~~ — screened at **2.238 %** explained residual variance against attack units' 1.270 %, which is why it was built (§ 4.11). **That ranking is refuted twice over:** file danger measured ≈ 0 Elo across two runs totalling 5244 games while attack units measured +9.1, so on the only two candidates with both a screen and a match the screen's order is inverted. Stop using it to *rank*; a flat screen is still a stop |
 | **Measured 2026-09-03** | file danger with the game-result table: **+0.8 ± 12.3** over 2255 games, stopped for a defect that discounted corner kings. Behaviour confirmed (−34.6 % uncovered king files), cost six times smaller than the bench predicted (−0.041 plies), and the finding that matters: **exposure is a symptom, not a cause** — 70 Elo of association for the baseline, none for the candidate (§ 4.13) |
-| **Measured 2026-09-06 — the family is closed** | the repaired build: **−4.9 ± 10.7** over 2989 games, stopped once a clearly positive result became unreachable. The repair works — the corner excess falls from +4.62 pp to +0.10 pp — the target quantity still moves −30.2 %, the cost is 0.04 plies, and the Elo is zero. **Pawn cover beside the king carries no Elo in myChess**, which also retires the shelved shield (−57.5), the king-dependent pawn PSTs (−18.1) and virtual queen mobility. Attacker-based king safety is untouched by this (§ 4.14) |
+| **Measured 2026-09-06 — the family is closed** | the repaired build: **−4.9 ± 10.7** over 2989 games, stopped once a clearly positive result became unreachable. The term also turns out not to know about castling — before castling it reads the *central* files — but that costs nothing: priced over 2431 declined central captures it gives up half a centipawn per game **less** than the baseline, so the opening component is zero and the middlegame component is itself the −5 (§ 4.14). The repair works — the corner excess falls from +4.62 pp to +0.10 pp — the target quantity still moves −30.2 %, the cost is 0.04 plies, and the Elo is zero. **Pawn cover beside the king carries no Elo in myChess**, which also retires the shelved shield (−57.5), the king-dependent pawn PSTs (−18.1) and virtual queen mobility. Attacker-based king safety is untouched by this (§ 4.14) |
 
 **Read § 4.1 before using the seven depth-stable cases as a target** — they were the intended
 instrument and they are not usable as one.
@@ -1637,16 +1637,62 @@ Three consequences line up with it:
   of games against 93.24 % — 119 games never castled against 202. Consistent with the incentive:
   while the king sits on e1 every open central file costs, so it goes.
 
-**Why this matters beyond the verdict.** The Elo number is unchanged — −4.9 ± 10.7 — but this is
-the fourth independent finding against the family and the first that points at a *repair* rather
-than at a wall: the term would have to know whether the king has castled, and do nothing, or much
-less, before it has. Whether that rescues anything is a different question. Such a change removes
-the opening cost; it does not raise the middlegame gain, so the ceiling stays whatever the
-middlegame contribution is on its own — and this run does not measure that as positive.
+**This looked like the first finding pointing at a repair rather than at a wall** — the term would
+have to know whether the king has castled and do nothing, or much less, before it has. Three
+designs were on the table: gate on castling rights, exclude the d- and e-files outright, or weight
+the files continuously with the centre counting least. The last is the technically cleanest, since
+a boolean gate only moves the artefact: the move that forfeits the second rook's right would
+switch the whole penalty on, and the engine would start avoiding *that*.
 
-Scripts kept with the analysis, including the one that measured the wrong thing, because the
-distinction between "advances less" and "captures away less" is the whole content of the
-correction.
+#### The opening cost was priced, and it is not there
+
+**None of the three designs is worth building, because the thing they remove costs nothing.** Every
+one of the 2431 declined opportunities was priced with Stockfish at depth 16: the position after the
+move actually played against the position after the best available capture, from the mover's side.
+
+**The measurement had to be corrected twice more before it said anything.** Counting every legal
+capture as an "opportunity" makes the mean meaningless — most such captures are simply bad and both
+engines rightly decline them, and mate scores substituted as ±30000 then dominate the average
+(candidate −339 cp, baseline −473 cp, both artefacts). What carries information is the subset where
+the capture really *was* better:
+
+| after the book, uncastled | candidate | baseline |
+|---|---:|---:|
+| declines where the capture was actually better | 336 of 1108 (**30.3 %**) | 334 of 1323 (25.2 %) |
+| median value given up | 29 cp | 38 cp |
+| **centipawns given up per game** | **5.25** | **5.77** |
+| gross misses (> 100 cp) | 0.013 / game | 0.015 / game |
+
+**The candidate declines 16.5 % more often and gives up half a centipawn per game *less*.** The
+captures it turns down are ones that mostly should be turned down; only a third of its declines
+were mistakes at all, against a quarter for the baseline, and its mistakes are individually
+cheaper. Gross misses are equally rare on both sides. Running the difference through the calibrated
+sigmoid yields −1.76 Elo, which should not be quoted: at half a centipawn per game it is
+indistinguishable from zero, and the statement is the magnitude — **under one centipawn per game.**
+
+A second route agrees by failing to disagree. Grouping the 2989 games by who declined and comparing
+the decliner's score — candidate 0.5067 over 300 games against baseline 0.5564 over 408 — gives
+−0.0497 ± 0.0660, t = −1.48, not separable from zero. It also carries its own confound, and one
+worth recording: **the decliner scores above 0.5 in both cases**, because these opportunities arise
+in positions where one has choices, and having choices correlates with standing well. Same shape as
+§ 4.13's exposure finding — the quantity is symptom and cause at once. The control passes: the
+candidate's overall score in that pass is 0.4933, −4.6 Elo against the match's −4.9 ± 10.7.
+
+**So the arithmetic that motivated the repair does not hold.** −4.9 is not "middlegame gain minus
+opening cost" with a recoverable second term; the opening component is zero, which makes the
+middlegame component itself about −5. The user's hypothesis was correctly posed and the check was
+necessary — it closed a plausible rescue route instead of leaving it open — but the answer is that
+the behavioural difference is real, measurable, and harmless. Which is exactly what this document
+warns about elsewhere: **a measured change in behaviour is not a measured cost.**
+
+Two residuals are left unpriced. The term makes the king castle earlier (move 9.00 against 9.36,
+96.02 % of games against 93.24 %), and that is not evaluated here; it could cut either way. And
+depth 16 is the resolution of the pricing.
+
+All five scripts are kept, including the three that measured the wrong thing, because the errors
+have one shape and it is worth recognising: counting advances instead of captures away, taking
+frequency instead of the opportunity rate as the denominator, and admitting every capture instead
+of the good ones.
 
 ---
 
