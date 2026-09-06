@@ -90,6 +90,19 @@ Moves are packed into a single `int` (`fromField | toField<<8 | capturedPiece<<1
 - **The `engines/` package is a one-way dependency** on the root package, not vice-versa. Root-package classes (`Game`, `Board`, …) reference engines only through the abstract `ChessEngine` base class.
 - **US English everywhere — no British spellings.** Identifiers, comments, JavaDoc, log/exception messages, commit subjects, doc files under `docs/`, and chat-facing summaries about code all use US English. `color` not `colour`, `center` not `centre`, `behavior` not `behaviour`, `analyze` not `analyse`, `optimize` not `optimise`, `serialize` not `serialise`, `cancel(l)ed` (single `l`), `favor` not `favour`. The global rule in `~/.claude/CLAUDE.md` covers this; this entry is a local reminder because the convention is easy to slip on when writing prose comments.
 
+## Do not suggest search work — king safety comes first
+
+**The standing priority is a king safety that measures positive Elo. Nothing in the search happens before that.** Stated by the user on 2026-09-05 and restated on 2026-09-06 with the explicit instruction to write it down here, because it kept being ignored.
+
+So: **never raise search optimizations.** Not LMR, not PVS, not the history heuristic, not aspiration windows, not check extensions. Not as "the next lever", not as context for deprioritizing something else, not as a closing aside at the end of an otherwise unrelated report. Answering a direct question about the search is fine — that is not a suggestion.
+
+**Where the habit came from, since the reasoning looked sound.** The PeSTO ceiling result ([roadmap § 12.7.1](docs/roadmap.md)) measured a pure-PeSTO evaluation at −3.1 ± 12.2 Elo against v4.3.4, i.e. indistinguishable from zero, and the conclusion recorded at the time was "the remaining lever is search, not eval". Two things are wrong with using that as advice:
+
+- **It is a statement about expected Elo per hour, not about what the user wants to build.** Expected value does not override a stated priority. The user knows the odds; they said so.
+- **It does not even apply.** The PeSTO check covers static tables and material. It says nothing about the *dynamic* terms PeSTO also lacks — king safety and mobility are explicitly outside what it bounds. So it was never an argument against this work.
+
+**What to do instead when a king-safety branch prices out at zero.** Say so plainly, with the number, and propose the next *king-safety* experiment — or hand the decision back without an alternative. A closed sub-family (file danger, § 4.14; pawn shield, § 12.21) closes that sub-family, not the topic.
+
 ## Working a task list: start the next task in the same turn
 
 Given a list and "arbeite sie selbständig ab", **finish a task and begin the next unblocked one without handing back**. End the turn only when (a) a measurement is running and nothing can proceed until it reports, (b) a decision is needed that cannot be derived from the code and the brief, or (c) the list is empty.
