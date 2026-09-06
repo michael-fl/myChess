@@ -1598,6 +1598,56 @@ safety: that measures a different quantity, and it is the one still holding a po
 The table refit § 4.13 named as "the designated next lever if this run comes back neutral" is
 therefore **not** taken. It would sharpen a table whose input the games have just priced at zero.
 
+#### Where the zero comes from: the term does not know about castling
+
+**The user's hypothesis, and the games confirm it.** The window is the three files at the king, so
+before castling it reads **d, e and f** — and a term that wants those closed has an opinion about
+the opening that nobody intended it to have. The measurement below is the first in this document
+to name a *mechanism* for how a term that moves its target quantity by a third still arrives at
+zero: it pays in the opening what it earns in the middlegame.
+
+**The metric had to be fixed first, and the correction is the same one this file makes about the
+term itself.** The obvious measurement — "does the candidate advance its central pawns less
+often?" — asks the wrong question, because `e4` leaves the pawn on the e-file and the file stays
+covered. Only a move that takes the pawn *off* the file opens it, which for a pawn means a
+capture. The first run of this analysis counted d/e advances from the home square, found +19.4 %
+for the candidate, and measured nothing at all.
+
+**The right measurement is the opportunity rate**, which separates a decision from a
+circumstance. Window: after the eight book plies, before the side's own castling, 2989 games.
+
+| | candidate | baseline |
+|---|---:|---:|
+| a capture taking an own pawn off a king file **was available** | 1710 | 2288 |
+| **and was played** | **35.20 %** | **42.18 %** |
+| own pawn left a king file, per own move | 3.043 % | 3.803 % |
+
+**−16.5 % relative on the opportunity rate.** The denominator is the opportunity and the numerator
+is the choice, so this is not an artefact of the candidate having fewer chances — it declines
+central pawn captures while its king is still on e1, in otherwise equal situations, one time in six
+more often than the baseline.
+
+Three consequences line up with it:
+
+- **The state it buys.** Uncovered king files, restricted to *uncastled* positions in moves 5–15:
+  **10.08 % against 16.07 %**, −6.0 pp. The d-, e- and f-files really do stay shut longer.
+- **The opponent gets through less often.** An enemy capture that takes a pawn off the candidate's
+  king file lands in 32.69 % of games against 41.05 % for the baseline.
+- **The king leaves earlier.** Castling at move **9.00** against 9.36 on average, and in **96.02 %**
+  of games against 93.24 % — 119 games never castled against 202. Consistent with the incentive:
+  while the king sits on e1 every open central file costs, so it goes.
+
+**Why this matters beyond the verdict.** The Elo number is unchanged — −4.9 ± 10.7 — but this is
+the fourth independent finding against the family and the first that points at a *repair* rather
+than at a wall: the term would have to know whether the king has castled, and do nothing, or much
+less, before it has. Whether that rescues anything is a different question. Such a change removes
+the opening cost; it does not raise the middlegame gain, so the ceiling stays whatever the
+middlegame contribution is on its own — and this run does not measure that as positive.
+
+Scripts kept with the analysis, including the one that measured the wrong thing, because the
+distinction between "advances less" and "captures away less" is the whole content of the
+correction.
+
 ---
 
 ## 5. Build plan
