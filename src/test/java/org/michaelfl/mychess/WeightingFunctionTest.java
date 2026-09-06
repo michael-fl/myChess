@@ -91,7 +91,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4
                 """;
-        testPosition(pgn, 0.11f); // was -0.17; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, -0.31f); // was -0.17; shifted by the PeSTO piece-square tables (v4.4.0), then 0.11; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -99,7 +99,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4
                 """;
-        testPosition(pgn, 1.16f); // was 0.71; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 0.95f); // was 0.71; shifted by the PeSTO piece-square tables (v4.4.0), then 1.16; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -107,7 +107,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6
                 """;
-        testPosition(pgn, 0.54f); // was 0.19; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 0.33f); // was 0.19; shifted by the PeSTO piece-square tables (v4.4.0), then 0.54; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -115,7 +115,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3
                 """;
-        testPosition(pgn, 1.06f); // was 0.61; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 0.85f); // was 0.61; shifted by the PeSTO piece-square tables (v4.4.0), then 1.06; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -123,7 +123,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6
                 """;
-        testPosition(pgn, 1.01f); // was 0.66; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 0.8f); // was 0.66; shifted by the PeSTO piece-square tables (v4.4.0), then 1.01; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -131,7 +131,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5
                 """;
-        testPosition(pgn, 1.34f); // was 0.72; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 1.13f); // was 0.72; shifted by the PeSTO piece-square tables (v4.4.0), then 1.34; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -139,7 +139,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6
                 """;
-        testPosition(pgn, 1.3f); // was 0.71; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 1.09f); // was 0.71; shifted by the PeSTO piece-square tables (v4.4.0), then 1.3; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -147,7 +147,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4
                 """;
-        testPosition(pgn, 1.16f); // was 0.53; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 0.95f); // was 0.53; shifted by the PeSTO piece-square tables (v4.4.0), then 1.16; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -155,7 +155,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7
                 """;
-        testPosition(pgn, 0.99f); // was 0.44; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 0.78f); // was 0.44; shifted by the PeSTO piece-square tables (v4.4.0), then 0.99; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -163,7 +163,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3
                 """;
-        testPosition(pgn, 0.98f); // was 0.33; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 0.77f); // was 0.33; shifted by the PeSTO piece-square tables (v4.4.0), then 0.98; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -171,7 +171,7 @@ class WeightingFunctionTest {
         var pgn = """
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7
                 """;
-        testPosition(pgn, 0.72f); // was 0.23; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 0.51f); // was 0.23; shifted by the PeSTO piece-square tables (v4.4.0), then 0.72; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -180,7 +180,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O
                 """;
-        testPosition(pgn, 1.49f); // was 1.34; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 1.28f); // was 1.34; shifted by the PeSTO piece-square tables (v4.4.0), then 1.49; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -189,7 +189,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7
                 """;
-        testPosition(pgn, 1.25f); // was 1.04; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 1.04f); // was 1.04; shifted by the PeSTO piece-square tables (v4.4.0), then 1.25; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -198,7 +198,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4
                 """;
-        testPosition(pgn, 1.13f); // was 0.9; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 0.92f); // was 0.9; shifted by the PeSTO piece-square tables (v4.4.0), then 1.13; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -207,7 +207,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5
                 """;
-        testPosition(pgn, 1.26f); // was 1.04; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 1.05f); // was 1.04; shifted by the PeSTO piece-square tables (v4.4.0), then 1.26; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -225,7 +225,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6
                 """;
-        testPosition(pgn, 0.75f); // was 0.85; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 0.56f); // was 0.85; shifted by the PeSTO piece-square tables (v4.4.0), then 0.75; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -234,7 +234,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5
                 """;
-        testPosition(pgn, 1.05f); // v4.3.3 bishop-pair (black holds the pair)
+        testPosition(pgn, 0.77f); // v4.3.3 bishop-pair (black holds the pair), then 1.05; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -243,7 +243,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7
                 """;
-        testPosition(pgn, 0.94f); // v4.3.3 bishop-pair (black holds the pair)
+        testPosition(pgn, 0.82f); // v4.3.3 bishop-pair (black holds the pair), then 0.94; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -252,7 +252,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5
                 """;
-        testPosition(pgn, 0.97f); // was 0.87; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 0.78f); // was 0.87; shifted by the PeSTO piece-square tables (v4.4.0), then 0.97; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -261,7 +261,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+
                 """;
-        testPosition(pgn, -0.54f); // was -0.44; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, -0.73f); // was -0.44; shifted by the PeSTO piece-square tables (v4.4.0), then -0.54; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -309,7 +309,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6
                 """;
-        testPosition(pgn, 1.83f); // was 2.1; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 2.02f); // was 2.1; shifted by the PeSTO piece-square tables (v4.4.0), then 1.83; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test
@@ -329,7 +329,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6
                 """;
-        testPosition(pgn, 1.01f); // was 1.51; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, 1.36f); // was 1.51; shifted by the PeSTO piece-square tables (v4.4.0), then 1.01; shifted by the king-line danger term (4.6.0-king-line)
     }
 
     @Test

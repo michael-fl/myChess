@@ -327,4 +327,49 @@ class KingSafetyFeaturesTest {
         assertEquals(0, KingSafetyFeatures.placeboFileDanger(board, GameStatus.TURN_WHITE),
                 "no white king, no rank and no offset to read from");
     }
+
+    /**
+     * A pawn the enemy has already walked past is not cover, and the scale must not call it that.
+     *
+     * <p>White king g1, black pawn g2, white pawn g3. Reading the file for "is there an own pawn
+     * on it" answers yes and scores the file as fully sheltered — the safest level on the scale —
+     * for what is close to the most dangerous arrangement the three files can hold. The shelter
+     * test is therefore ordered: an own pawn only counts while nothing hostile stands between it
+     * and the king.
+     *
+     * <p>This occurs on 0.073 % of king files in the 39,619-position corpus, seven times rarer
+     * than the occupancy that already made a fitted coefficient void, so it is far below what any
+     * fit or match could resolve. It is fixed on correctness grounds rather than measured ones,
+     * and deliberately not given a level of its own: a pawn on g2 is a promotion threat one ply
+     * deep, which the search reads better than any static table.
+     */
+    @Test
+    void anEnemyPawnThatHasPassedTheShieldPawnIsNotShelter() {
+        var board = Fen.importFEN("6k1/8/8/8/8/5PP1/5PpP/6K1 w - - 0 1");
+
+        assertEquals(2, KingSafetyFeatures.fileDangerAround(board, GameStatus.TURN_WHITE),
+                "f and h are sheltered, g is half-open with the black pawn on white's half");
+        assertEquals(5, KingSafetyFeatures.fileDangerSplitAround(board, GameStatus.TURN_WHITE),
+                "the six-level scale must agree about what counts as cover: f and h at level 1 "
+                        + "(own pawn, no enemy pawn), g at 3 (its shelter does not count)");
+    }
+
+    @Test
+    void aShieldPawnInFrontOfTheEnemyPawnStillShelters() {
+        // Mirror of the case above: the white pawn on g2 stands between the king and the black
+        // pawn on g4, which is what a shield is.
+        var board = Fen.importFEN("6k1/8/8/8/6p1/8/5PPP/6K1 w - - 0 1");
+
+        assertEquals(0, KingSafetyFeatures.fileDangerAround(board, GameStatus.TURN_WHITE),
+                "the g-pawn is where it belongs, so the file is closed");
+    }
+
+    @Test
+    void theOrderedShelterTestWorksFromBlacksSideToo() {
+        // Black king g8, white pawn g7, black pawn g6 — the same overtaking, mirrored.
+        var board = Fen.importFEN("6k1/5pPp/5pp1/8/8/8/8/6K1 w - - 0 1");
+
+        assertEquals(2, KingSafetyFeatures.fileDangerAround(board, GameStatus.TURN_BLACK),
+                "the scan must run outward from black's own back rank, not from white's");
+    }
 }
