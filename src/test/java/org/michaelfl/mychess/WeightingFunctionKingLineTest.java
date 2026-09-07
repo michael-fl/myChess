@@ -124,21 +124,21 @@ class WeightingFunctionKingLineTest {
 
     @Test
     void anEnemyPawnPastTheMiddleIsWorseThanHalfOpen() {
-        assertEquals(WeightingFunction.KING_DANGER_HALF_OPEN_ADVANCED_OPPONENT_PAWN,
+        assertEquals(WeightingFunction.KING_DANGER_HALF_OPEN,
                 danger(WHITE_STORMED, WHITE, Board.g1),
                 "the black g-pawn stands on g3, on white's half of the board");
     }
 
     @Test
     void anEmptyFileIsOpen() {
-        assertEquals(WeightingFunction.KING_DANGER_OPEN,
+        assertEquals(WeightingFunction.KING_DANGER_HALF_OPEN,
                 danger(WHITE_OPEN, WHITE, Board.g1),
                 "nothing at all on the g-file in front of the king");
     }
 
     @Test
     void anOpenFileWithAnEnemyRookIsTheTopLevel() {
-        assertEquals(WeightingFunction.KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE,
+        assertEquals(WeightingFunction.KING_DANGER_HALF_OPEN,
                 danger(WHITE_OPEN_ROOK, WHITE, Board.g1),
                 "the black rook on g8 bears down the open g-file");
     }
@@ -366,14 +366,14 @@ class WeightingFunctionKingLineTest {
      */
     @Test
     void theTableCoversEveryReachableSum() {
-        assertEquals(13, WeightingFunction.KING_LINE_PENALTY.length,
-                "three files of at most " + WeightingFunction.KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE
+        assertEquals(4, WeightingFunction.KING_LINE_PENALTY.length,
+                "three files of at most " + WeightingFunction.KING_DANGER_HALF_OPEN
                         + " sum to 12, and index 12 must exist");
 
         final String allThreeFilesOpenWithMajors = "k4qrr/8/8/8/8/8/8/6K1 w - - 0 1";
 
         for (int offset = -1; offset <= 1; offset++) {
-            assertEquals(WeightingFunction.KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE,
+            assertEquals(WeightingFunction.KING_DANGER_HALF_OPEN,
                     danger(allThreeFilesOpenWithMajors, WHITE, Board.g1 + offset),
                     "f, g and h are each open with a black major piece on them, offset " + offset);
         }
@@ -558,7 +558,7 @@ class WeightingFunctionKingLineTest {
         final int fromG1 = evaluated(WHITE_KING_G1_F_FILE_OPEN).getKingLineDanger()[WHITE];
         final int fromH1 = evaluated(WHITE_KING_H1_F_FILE_OPEN).getKingLineDanger()[WHITE];
 
-        assertEquals(WeightingFunction.KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE, fromG1,
+        assertEquals(WeightingFunction.KING_DANGER_HALF_OPEN, fromG1,
                 "the premise: for the king on g1 the window is f, g, h — g2 and h2 shelter their "
                         + "files, and the f-file is open with a black rook on f8");
         assertEquals(fromG1, fromH1,
@@ -573,7 +573,7 @@ class WeightingFunctionKingLineTest {
         final int fromB1 = evaluated(WHITE_KING_B1_C_FILE_OPEN).getKingLineDanger()[WHITE];
         final int fromA1 = evaluated(WHITE_KING_A1_C_FILE_OPEN).getKingLineDanger()[WHITE];
 
-        assertEquals(WeightingFunction.KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE, fromB1,
+        assertEquals(WeightingFunction.KING_DANGER_HALF_OPEN, fromB1,
                 "the premise: for the king on b1 the window is a, b, c — a2 and b2 shelter their "
                         + "files, and the c-file is open with a black rook on c8");
         assertEquals(fromB1, fromA1,
@@ -591,7 +591,7 @@ class WeightingFunctionKingLineTest {
         final int fromG8 = evaluated(BLACK_KING_G8_F_FILE_OPEN).getKingLineDanger()[BLACK];
         final int fromH8 = evaluated(BLACK_KING_H8_F_FILE_OPEN).getKingLineDanger()[BLACK];
 
-        assertEquals(WeightingFunction.KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE, fromG8,
+        assertEquals(WeightingFunction.KING_DANGER_HALF_OPEN, fromG8,
                 "the premise, mirrored: g7 and h7 shelter their files and the f-file is open with "
                         + "a white rook on f1");
         assertEquals(fromG8, fromH8,
@@ -620,7 +620,7 @@ class WeightingFunctionKingLineTest {
                 new Case("rrr1k3/8/8/8/8/8/8/1K6 w - - 0 1", "b1", "a, b, c"),
                 new Case("rrr1k3/8/8/8/8/8/8/K7 w - - 0 1", "a1", "a, b, c")
         };
-        final int maximum = 3 * WeightingFunction.KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE;
+        final int maximum = 3 * WeightingFunction.KING_DANGER_HALF_OPEN;
 
         for (Case c : cases) {
             assertEquals(maximum, evaluated(c.fen()).getKingLineDanger()[WHITE],
@@ -644,7 +644,7 @@ class WeightingFunctionKingLineTest {
     void aKingAwayFromTheEdgeKeepsItsOwnWindow() {
         final int[] danger = evaluated("4r1k1/8/8/8/8/8/5PP1/5K2 w - - 0 1").getKingLineDanger();
 
-        assertEquals(WeightingFunction.KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE, danger[WHITE],
+        assertEquals(WeightingFunction.KING_DANGER_HALF_OPEN, danger[WHITE],
                 "the king on f1 reads e, f and g: f2 and g2 shelter their files, and the e-file "
                         + "is open with a black rook on e8 — a window shifted by one file would "
                         + "read d, e, f or f, g, h and miss it or double it");
