@@ -32,7 +32,7 @@
 | **What to build instead** | ~~**file danger**~~ — screened at **2.238 %** explained residual variance against attack units' 1.270 %, which is why it was built (§ 4.11). **That ranking is refuted twice over:** file danger measured ≈ 0 Elo across two runs totalling 5244 games while attack units measured +9.1, so on the only two candidates with both a screen and a match the screen's order is inverted. Stop using it to *rank*; a flat screen is still a stop |
 | **Measured 2026-09-03** | file danger with the game-result table: **+0.8 ± 12.3** over 2255 games, stopped for a defect that discounted corner kings. Behaviour confirmed (−34.6 % uncovered king files), cost six times smaller than the bench predicted (−0.041 plies), and the finding that matters: **exposure is a symptom, not a cause** — 70 Elo of association for the baseline, none for the candidate (§ 4.13) |
 | **Measured 2026-09-06 — the family is closed** | the repaired build: **−4.9 ± 10.7** over 2989 games, stopped once a clearly positive result became unreachable. The term also turns out not to know about castling — before castling it reads the *central* files — but that costs nothing: priced over 2431 declined central captures it gives up half a centipawn per game **less** than the baseline, so the opening component is zero and the middlegame component is itself the −5 (§ 4.14). The repair works — the corner excess falls from +4.62 pp to +0.10 pp — the target quantity still moves −30.2 %, the cost is 0.04 plies, and the Elo is zero. **Pawn cover beside the king carries no Elo in myChess**, which also retires the shelved shield (−57.5), the king-dependent pawn PSTs (−18.1) and virtual queen mobility. Attacker-based king safety is untouched by this (§ 4.14) |
-| **Screened 2026-09-06 — two redesigns, three seconds of compute** | the term was suspected of saying too much, and the fit agreed: the "advanced enemy pawn" and "enemy major on the file" refinements are worth **6 cp and 2 cp**, the two smallest increments in the table, while the summed index conflates them anyway. Both proposed redesigns died on the corpus without a match. A **front-loaded binary** variant: the association is monotone in the *state* (85.3 / 74.1 / 52.3 / 48.3 % by unsheltered files) and vanishes in the *time* direction once exposure duration is held fixed. **Opponent-heavy-material scaling**: the association is at least as strong when the opponent has *no* heavy pieces — 43 pp of spread against 29 — so the condition would discard more than it keeps. Reverse causation is visible in a cell: games that ended with heavy pieces on the board score 36.6 %, the table's worst (§ 4.15) |
+| **Screened 2026-09-06 — two redesigns, three seconds of compute** | the term was suspected of saying too much, and the fit agreed: the "advanced enemy pawn" and "enemy major on the file" refinements are worth **6 cp and 2 cp**, the two smallest increments in the table, while the summed index conflates them anyway. Both proposed redesigns died on the corpus without a match. A **front-loaded binary** variant: the association is monotone in the *state* (85.3 / 74.1 / 52.3 / 48.3 % by unsheltered files) and vanishes in the *time* direction once exposure duration is held fixed. **Opponent-heavy-material scaling**: the association is at least as strong when the opponent has *no* heavy pieces — 43 pp of spread against 29 — so the condition would discard more than it keeps. Reverse causation is visible in a cell: games that ended with heavy pieces on the board score 36.6 %, the table's worst. **A third screen (2026-09-07)** killed the castling-*harbour* variant one step earlier still: while a color may still castle its flank pawns are essentially untouched, so the quantity is exactly 0 for **97 %** of sides and 0.4 % of the settled term's magnitude — nothing to predict from, and no match can overturn a missing variance (§ 4.15) |
 
 **Read § 4.1 before using the seven depth-stable cases as a target** — they were the intended
 instrument and they are not usable as one.
@@ -1808,6 +1808,56 @@ on the 4000 sides of `match-pesto-ceiling-vs-4.3.4.pgn`, whose candidate arm has
 all: heavy regime 57.6 → 48.7 → 40.5, light regime 73.0 → 58.1 → 53.1 → 45.7. Same order, same
 direction. **Stop.** Conditioning on the opponent's heavy material would not sharpen the term; it
 would discard a part of the association at least as large as the part it keeps.
+
+#### Screen 3 — should the gate look at the castling *harbour* instead of switching off?
+
+The gate of `king-line-v2` scores nothing while a color still holds castling rights, which leaves
+the term silent at the moment that actually decides the matter: pushing a flank pawn on move 8,
+two moves before castling behind it. The proposed repair scores the files the color would castle
+*behind* instead of the files its king currently stands on — with both rights the **minimum** of
+queenside and kingside, on the reasoning that one side may be torn open but not both; with one
+right, that side; and once settled, today's king-relative window.
+
+Well posed, and the best-argued variant of this family. It died at one second of compute, and one
+step earlier than an association screen: **the quantity has no variance.**
+
+| | anchor bracket | PeSTO corpus |
+|---|---:|---:|
+| mean harbour danger, proposal's a–c / f–h windows | **0.009** | **0.010** |
+| mean harbour danger, destination b–d / f–h windows | 0.018 | 0.017 |
+| mean danger after the question is settled | 2.692 | 2.404 |
+| sides whose harbour danger is exactly 0 | **1931 of 1989 (97.1 %)** | 3853 of 3984 (96.7 %) |
+
+**While a color can still castle, its flank pawns are essentially untouched.** The walk starts on
+the back rank and meets the own pawn on b2, c2, f2, g2 or h2 immediately — level 0 on every file,
+so `min(queenside, kingside)` is 0. Averaged over every ply that still carries a right the figure
+is one hundredth of a level, against 2.4–2.7 in the settled regime: **0.4 % of the magnitude the
+term measures today**. And `KING_LINE_PENALTY[0]` is exactly `0`, so in roughly 97 % of the
+positions it would newly be computed for the term would contribute *literally nothing* — for twice
+the walk, six files instead of three.
+
+Nothing can be predicted from a constant, so the two-way table needs no reading: there are no rows
+to compare. Both window conventions behave identically, which also settles the small discrepancy
+in the proposal — a king castling queenside lands on c1, whose own window is b–d rather than a–c.
+
+**The premise was not wrong, the opportunity is missing.** The screen does not say that tearing
+open the future castling side is harmless; it says myChess **essentially never does it**. A term
+needs a mistake that occurs.
+
+In hindsight that reads back onto § 4.14 more precisely than it was written there. The opening
+component was priced at "exactly zero", which was taken to mean the term does not act before
+castling. The nearer reading is that it has almost no *occasion* to: the structure it looks at is
+still intact.
+
+**Verdict: not built, and not added to the gauntlet as a fourth arm** — which would have cost the
+three existing arms about an eighth of their resolution (±17 → ±19 Elo, since four seeds make 20
+pairings out of 15). The cheapest refusal of the series: no compute, no build, no tournament slot.
+And the one screen here that could do more than stop: it did not find a weak association, it found
+a missing variance, and no match can turn that around.
+
+Scanner: `HarbourScreen.java` in the session scratchpad. It calls the production classifier
+`WeightingFunction.calculateKingLineDanger` rather than a re-implementation, so the five-level
+scale, the walk direction and the advanced-pawn boundary are the shipped ones.
 
 #### What the second screen incidentally shows about all of them
 
