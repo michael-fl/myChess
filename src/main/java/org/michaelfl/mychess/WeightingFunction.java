@@ -299,8 +299,28 @@ public final class WeightingFunction {
      * which the table means what it was fitted to mean. The ninth entry of
      * {@link #TUNABLE_FACTOR_NAMES}, so the scale can be tuned against game results later rather
      * than guessed one SPRT at a time.
+     *
+     * <p><b>Branch {@code king-line-v2-placebo}: zero, and that is the whole point of the
+     * branch.</b> The walk still runs — the term is computed and then multiplied by nothing — so
+     * this build has the evaluation of a build without the term and the cost of a build with it.
+     * It is the middle arm of the three-way gauntlet against the anchor opponents
+     * ({@code docs/king-line-gauntlet.md}), which decomposes what a two-engine match cannot:
+     *
+     * <ul>
+     *   <li>placebo against 4.6.1 — the <b>cost</b> of computing the term, priced in Elo under
+     *       the clock rather than in NPS;</li>
+     *   <li>king-line-v2 against placebo — the <b>effect</b> of applying the penalty, with the
+     *       cost held constant.</li>
+     * </ul>
+     *
+     * <p>The identity that makes it work: at zero the term contributes nothing to any leaf, so
+     * the search tree is the same one 4.6.1 walks and the bench signature comes back
+     * bit-identical. That equality is the arm's entry ticket and has to be checked before the
+     * gauntlet starts — see {@code bench-history.md} § 6 rule 7.
+     *
+     * <p>Do not merge this branch. It exists to be measured.
      */
-    private static final float kingLinePenaltyFactor = -0.01f;
+    private static final float kingLinePenaltyFactor = 0f;
 
     private GameStatus game;
     private int turn; // 0 = white, 1 = black
