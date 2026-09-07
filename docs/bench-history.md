@@ -255,6 +255,69 @@ absolute reading in this document.
 
 ---
 
+### What the gated king-line term costs — the three gauntlet arms (2026-09-07)
+
+The three arms of the anchor gauntlet ([`king-line-gauntlet.md`](king-line-gauntlet.md))
+measured against each other, `bench 6`, three runs each in a Latin square — `base placebo
+klv2` / `placebo base klv2` / `klv2 placebo base`, so each arm stands once in every slot
+and a load drift over the twenty minutes cannot favour one. Taken while a 6000-game
+match held four cores, which is why only the **differences** are quoted; the NPS spread
+*within* one arm came out at 0.41 % (base), 0.99 % (candidate) and 1.63 % (placebo), so
+the load noise is small against the effects.
+
+| arm | signature @ d6 | NPS (mean of 3) |
+|---|---:|---:|
+| base | 151,248,502 | 1,189,762 |
+| placebo — term computed, factor 0 | **151,248,502** | 1,104,195 |
+| king-line-v2 — factor −0.01 | 142,693,129 | 1,096,145 |
+
+**The signature of base and placebo is identical to the node**, in every one of the three
+runs. That is the placebo arm's entry ticket: its evaluation is base's, so the time
+difference is pure computation with no evaluation effect mixed in.
+
+Paired per run, so both members of each comparison met the same load:
+
+| | run 1 | run 2 | run 3 | mean | plies |
+|---|---:|---:|---:|---:|---:|
+| cost of the walk (placebo − base) | +8.65 % | +7.64 % | +6.97 % | **+7.75 %** | 0.126 |
+| net under the clock (candidate − base) | +3.17 % | +1.80 % | +2.25 % | **+2.40 %** | 0.040 |
+| candidate's tree against base | | | | **−5.66 %** | |
+
+Plies via the d9/d8 ratio of 1.810 from the 4.6.0 row, i.e. one ply costs a factor 1.81.
+
+**Two results, and the second is the interesting one.**
+
+The walk costs **7.75 %** of wall clock at a fixed depth — measurable, and considerably
+more than the −5.55 % on record for `4.6.0-king-line, factor 0` further up this document.
+Those two must not be read against each other: that figure is depth 8 and the *ungated*
+term, this one is depth 6 and the gated one, on a differently loaded machine. Reading them
+as a series would produce the nonsense conclusion that the gate made the term more
+expensive.
+
+But the candidate does not pay 7.75 %. It pays **2.40 %**, because the term steers the
+search into a **5.66 % smaller tree** and recovers about two thirds of the walk's cost.
+And 0.040 plies is almost exactly the **0.041 plies** [`king-safety.md`](king-safety.md)
+§ 4.14 priced the corner variant at — two unrelated measurement routes landing on the same
+number, which is the sort of agreement worth recording.
+
+**A smaller tree at fixed depth is a change, not an improvement, and § 6 rule 6 applies.**
+Fewer nodes means more cut-offs, and no bench figure says whether the *right* moves were
+cut. The suspicion is on the record: the earlier variant shrank the depth-8 tree by 56 %
+and lost 29 Elo, and a term reaching 223 cp statically is louder than a pawn. Nor does
+−5.66 % transfer — the 56 % sat almost entirely in one dominant position, so depth and
+position set carry the number.
+
+**What this settles, and it was a real question.** Whether `kingLinePenaltyFactor = 0f`
+would let the optimizer fold the multiplication away and leave the placebo arm measuring
+nothing. It does not: identical signature *and* 7.75 % more wall clock means the walk runs.
+The insurance considered instead — `0.000001f` — would have cost the signature equality
+that makes the cost measurement clean, in exchange for a hazard that does not exist here.
+Note the usual reason it does not exist is *not* available: the operand is an int
+difference widened to float, hence always finite, so `finite * 0.0f` is foldable and NaN
+gives no protection. The measurement is what carries this, not the reasoning.
+
+---
+
 ## 3. Depth 9 — from 4.3.4 onward
 
 Recorded from 4.3.4 on, because search techniques scale with depth: late move

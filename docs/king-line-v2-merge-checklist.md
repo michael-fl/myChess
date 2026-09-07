@@ -50,13 +50,17 @@ only with its interval.
 NPS** for the king-line term, measured as `4.6.0-king-line, factor 0` against `4.6.0`: identical
 tree node for node, so pure computation. That is the **ungated** term.
 
-The gate skips the walk before castling, but per the running match **108 k settled plies against
-19 k unsettled** — 85 % settled. So it saves about a seventh of the cost, an estimated −4.7 %.
-Estimated, not measured.
+**Measured 2026-09-07, and the estimate was too low.** Nine `bench 6` runs over the three
+gauntlet arms in a Latin square ([`bench-history.md`](bench-history.md), "What the gated king-line
+term costs"): the walk costs **+7.75 %** of wall clock, the candidate pays only **+2.40 %** net
+because its tree is **5.66 %** smaller, and base against placebo comes out **identical to the
+node** — 151,248,502 — which is what makes the cost figure pure. In plies: 0.126 for the walk,
+0.040 net, the latter matching § 4.14's independently derived 0.041.
 
-Method, the established one: a build with `kingLinePenaltyFactor = 0` where the walk still runs →
-bit-identical signature → the NPS difference is the cost and nothing else. Two bench runs, about
-35 minutes at depth 8.
+The estimate this replaces read: "the gate saves about a seventh of the cost, an estimated −4.7 %",
+reasoned from 108 k settled plies against 19 k unsettled in the running match. Wrong in both
+directions at once — the walk is more expensive than the ungated figure suggested, and the
+candidate is much cheaper than the walk, which no ply-share argument could have produced.
 
 **Use `bench` over the standard suite for the cost, not `benchv2` — this note had it backwards
 at first.** 49 of the standard suite's 55 positions carry no castling rights, which means both
