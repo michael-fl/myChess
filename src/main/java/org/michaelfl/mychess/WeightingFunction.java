@@ -134,10 +134,6 @@ public final class WeightingFunction {
 
     private static final int[] oppositeColor = new int[] { GameStatus.TURN_BLACK, GameStatus.TURN_WHITE };
     private static final int[] oppositeKing = new int[] { Board.blackKing, Board.whiteKing };
-    /** Enemy rook by defending color, for the king-line walk. Index 0 = white defends. */
-    private static final int[] oppositeRook = new int[] { Board.blackRook, Board.whiteRook };
-    /** Enemy queen by defending color, same indexing as {@link #oppositeRook}. */
-    private static final int[] oppositeQueen = new int[] { Board.blackQueen, Board.whiteQueen };
     /** Pawn of the given color; {@code ownPawn[color ^ 1]} is the enemy's. */
     private static final int[] ownPawn = new int[] { Board.whitePawn, Board.blackPawn };
 
@@ -154,12 +150,6 @@ public final class WeightingFunction {
      * than three times one.
      */
     final static int KING_DANGER_HALF_OPEN = 1;
-    /** Half-open and the enemy pawn has crossed onto the defending king's half. */
-    final static int KING_DANGER_HALF_OPEN_ADVANCED_OPPONENT_PAWN = 2;
-    /** No pawn of either color on the file. */
-    final static int KING_DANGER_OPEN = 3;
-    /** Open, and an enemy rook or queen stands on it. */
-    final static int KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE = 4;
 
     private final static int[] KING_LINE_OFFSETS = { 0, -1, -1, -1, -1, -1, -1, -2 };
 
@@ -175,13 +165,11 @@ public final class WeightingFunction {
     private static final int[] ROW_OFFSET = { Board.LENGTH, -Board.LENGTH };
     /** The rank the walk ends on: the defender's eighth. */
     private static final int[] LAST_RANK = { 7, 0 };
-    /** Last rank still counted as the defender's own half, for the "advanced pawn" level. */
-    private static final int[] MIDDLE_RANK = { 3, 4 };
 
     /**
      * Penalty in centipawns for the summed king-line danger of the three files at and beside the
      * king, indexed {@code 0..12} — three files of at most
-     * {@link #KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE}.
+     * {@link #KING_DANGER_HALF_OPEN}.
      *
      * <p><b>Fitted against game results.</b> Texel-style coordinate descent on ~1.34 M labeled
      * positions of the Zurichess + self-play hybrid, with the evaluation's linearity in the table
@@ -229,18 +217,9 @@ public final class WeightingFunction {
      */
     static final int[] KING_LINE_PENALTY = {
             0,    // 0
-            26,   // 1
-            32,   // 2
-            66,   // 3
-            68,   // 4
-            73,   // 5
-            91,   // 6   6, 7 and 8 pooled: the free fit dips at 7 (97) then 8 (73.5)
-            91,   // 7
-            91,   // 8
-            125,  // 9
-            153,  // 10
-            153,  // 11  index 10's value; occupancy 0.02 %
-            153   // 12  index 10's value; occupancy 0.00 %
+            43,   // 1
+            71,   // 2
+            110   // 3
     };
 
     private static final float mobilityFactor = 0.1f;
@@ -890,12 +869,6 @@ public final class WeightingFunction {
      * <p>The first pawn met decides the shelter question, which is why the walk is anchored on the
      * king and not on the back rank: an own pawn the enemy has already passed is not cover.
      *
-     * <p>One case diverges from the fitted definition: an enemy rook or queen met <em>before</em>
-     * the own shield pawn scores {@link #KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE}, whereas the fit
-     * stopped at the nearest own pawn and never looked for majors, scoring it as sheltered. The
-     * reading here is the better one, and the divergence is not measurable: it occurs on 0.0697 %
-     * of king files in the calibration corpus (163 of 233,799, in 161 of 39,619 positions).
-     *
      * @param color      the defending side, 0 = white
      * @param startField the king's square, or a neighboring file's square on the king's rank
      * @return the danger level, or 0 if {@code startField} is off the board
@@ -904,36 +877,17 @@ public final class WeightingFunction {
         final int col = startField % Board.LENGTH - 2;
         final int offset = ROW_OFFSET[color];
         final int endField = ChessUtil.getFieldFromColAndRow(col, LAST_RANK[color]) + offset;
-        final int middleField = ChessUtil.getFieldFromColAndRow(col, MIDDLE_RANK[color]);
         final int myPawn = ownPawn[color];
-        final int opponentPawn = ownPawn[color ^ 1];
-        final int opponentRook = oppositeRook[color];
-        final int opponentQueen = oppositeQueen[color];
-        boolean sawOpponentMajorPiece = false;
 
         for (int field = startField + offset; field != endField; field += offset) {
-            final int piece = board[field];
-
-            if (piece == opponentPawn) {
-                // half open line
-                if (color == 0) {
-                    return field <= middleField ? KING_DANGER_HALF_OPEN_ADVANCED_OPPONENT_PAWN : KING_DANGER_HALF_OPEN;
-                } else {
-                    return field >= middleField ? KING_DANGER_HALF_OPEN_ADVANCED_OPPONENT_PAWN : KING_DANGER_HALF_OPEN;
-                }
-            }
-
-            if (piece == myPawn) {
-                return sawOpponentMajorPiece ? KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE : 0;
-            }
-
-            if (piece == opponentRook || piece == opponentQueen) {
-                sawOpponentMajorPiece = true;
+            if (board[field] == myPawn) {
+                // closed line
+                return 0;
             }
         }
 
         // open line
-        return sawOpponentMajorPiece ? KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE : KING_DANGER_OPEN;
+        return KING_DANGER_HALF_OPEN;
     }
 
     private boolean move(final byte movingPiece, final int from, final int to, int color) {
