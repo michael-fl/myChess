@@ -751,6 +751,59 @@ output archives and diffs identically — into files of its own, never against a
    while in play it corrupted nearly every move (see
    [roadmap § 12.25](roadmap.md#1225-tried--repairing-the-roots-move-choice-after-the-pv-re-search-reverted-twice-444-and-166-elo)).
 
+7. **Before any A/B match, prove what is in both arms — this is the standing rule
+   and it is cheap.** Read each arm's `BUILT-FROM.txt` (commit plus the jar's
+   SHA-256), and if there is any doubt that a build is what its directory name
+   says, compare the two signatures. Minutes, and it is a *proof* rather than an
+   estimate.
+
+   **This is the one error this project actually made.** An A/B of the
+   `king-field-tracking` change ran against `versions/4.6.0`, built 27 August,
+   which predates three behavior-relevant master commits. It surfaced only by
+   luck — the archived jar was old enough to lack the extended bench output, so
+   two columns came back as `0` — and the run had to be thrown away and repeated
+   against a baseline rebuilt from `origin/master`. A version directory without a
+   `BUILT-FROM.txt` is a directory whose contents are a guess;
+   `versions/4.6.1-king-line-v2` is currently one of those, and establishing that
+   it carried a particular fix took a jar timestamp plus a behavioral probe
+   instead of reading one line.
+
+8. **A match of a build against an identical copy is worth running once, not
+   before every measurement.** It is the only measurement whose true result is
+   fixed at 50 % by construction, which makes it the only way to separate an
+   asymmetry of the *apparatus* from a real difference in strength: in a normal
+   match a slot effect and a strength effect are the same observation. What it can
+   catch is real here — unequal `option.Hash` between the arms (the anchor script
+   passes per-engine options, and BBC gets a different value from the rest),
+   different JVM flags, a stale jar in one slot, an asymmetric time control,
+   contention between the two wrappers.
+
+   **Size it properly or do not bother.** The apparatus has to be measured against
+   the same noise as anything else:
+
+   | games | 95 % interval |
+   |---:|---:|
+   | 200 | ±43 Elo |
+   | 500 | ±27 Elo |
+   | 1000 | ±19 Elo |
+   | 2000 | **±14 Elo** |
+
+   A 200-game calibration costs an hour and rules out only what would be obvious
+   anyway; a 5-Elo bias of the harness — the order of magnitude this project
+   works in — sails straight through it. So: **2000 games, once, recorded here**,
+   and then repeated only when the apparatus changes — a new wrapper template,
+   different JVM flags, a new cutechess build, changed concurrency or
+   adjudication, or arms that differ in more than the jar.
+
+   **Deliberately not a per-run policy**, and the reason is worth keeping: it
+   would not have caught any of the four errors that did happen. The stale
+   baseline above is invisible to it, since a self-comparison of the same outdated
+   build reports a clean 50 %. Neither is an `-sprt` passed without a band
+   (`llr` frozen at 0, so the test can never terminate — see the king-line-v2 run
+   of 2026-09-07), nor a stale set of expected values in a test, nor a liveness
+   check that pattern-matched its own shell. Rule 7 is the one that pays for
+   itself on every run; this one is a one-time validation of the bench.
+
 The Chess960 suite (10 positions, `bench 960`) is deliberately excluded from this
 table: comparability across the older releases is not established. It can be
 added later as a separate table.
