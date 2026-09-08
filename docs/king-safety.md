@@ -32,7 +32,7 @@
 | **What to build instead** | ~~**file danger**~~ — screened at **2.238 %** explained residual variance against attack units' 1.270 %, which is why it was built (§ 4.11). **That ranking is refuted twice over:** file danger measured ≈ 0 Elo across two runs totalling 5244 games while attack units measured +9.1, so on the only two candidates with both a screen and a match the screen's order is inverted. Stop using it to *rank*; a flat screen is still a stop |
 | **Measured 2026-09-03** | file danger with the game-result table: **+0.8 ± 12.3** over 2255 games, stopped for a defect that discounted corner kings. Behaviour confirmed (−34.6 % uncovered king files), cost six times smaller than the bench predicted (−0.041 plies), and the finding that matters: **exposure is a symptom, not a cause** — 70 Elo of association for the baseline, none for the candidate (§ 4.13) |
 | **Measured 2026-09-06 — the family is closed** | the repaired build: **−4.9 ± 10.7** over 2989 games, stopped once a clearly positive result became unreachable. The term also turns out not to know about castling — before castling it reads the *central* files — but that costs nothing: priced over 2431 declined central captures it gives up half a centipawn per game **less** than the baseline, so the opening component is zero and the middlegame component is itself the −5 (§ 4.14). The repair works — the corner excess falls from +4.62 pp to +0.10 pp — the target quantity still moves −30.2 %, the cost is 0.04 plies, and the Elo is zero. **Pawn cover beside the king carries no Elo in myChess**, which also retires the shelved shield (−57.5), the king-dependent pawn PSTs (−18.1) and virtual queen mobility. Attacker-based king safety is untouched by this (§ 4.14) |
-| **Screened 2026-09-06 — two redesigns, three seconds of compute** | the term was suspected of saying too much, and the fit agreed: the "advanced enemy pawn" and "enemy major on the file" refinements are worth **6 cp and 2 cp**, the two smallest increments in the table, while the summed index conflates them anyway. Both proposed redesigns died on the corpus without a match. A **front-loaded binary** variant: the association is monotone in the *state* (85.3 / 74.1 / 52.3 / 48.3 % by unsheltered files) and vanishes in the *time* direction once exposure duration is held fixed. **Opponent-heavy-material scaling**: the association is at least as strong when the opponent has *no* heavy pieces — 43 pp of spread against 29 — so the condition would discard more than it keeps. Reverse causation is visible in a cell: games that ended with heavy pieces on the board score 36.6 %, the table's worst. **A third screen (2026-09-07)** killed the castling-*harbour* variant one step earlier still: while a color may still castle its flank pawns are essentially untouched, so the quantity is exactly 0 for **97 %** of sides and 0.4 % of the settled term's magnitude — nothing to predict from, and no match can overturn a missing variance (§ 4.15) |
+| **Screened 2026-09-06 — two redesigns, three seconds of compute** | the term was suspected of saying too much, and the fit agreed: the "advanced enemy pawn" and "enemy major on the file" refinements are worth **6 cp and 2 cp**, the two smallest increments in the table, while the summed index conflates them anyway. Both proposed redesigns died on the corpus without a match. A **front-loaded binary** variant: the association is monotone in the *state* (85.3 / 74.1 / 52.3 / 48.3 % by unsheltered files) and vanishes in the *time* direction once exposure duration is held fixed. **Opponent-heavy-material scaling**: the association is at least as strong when the opponent has *no* heavy pieces — 43 pp of spread against 29 — so the condition would discard more than it keeps. Reverse causation is visible in a cell: games that ended with heavy pieces on the board score 36.6 %, the table's worst. **A third screen (2026-09-07)** killed the castling-*harbour* variant one step earlier still: while a color may still castle its flank pawns are essentially untouched, so the quantity is exactly 0 for **97 %** of sides and 0.4 % of the settled term's magnitude — nothing to predict from, and no match can overturn a missing variance. **And the run itself, read as an intervention (2026-09-08):** at 4190 games **+0.5 ± 9.0**, while the term cuts the plies its king spends under attack on an open file by **43 %** (z = −74.7) and — the one surprise — builds high king-zone pressure **46 % more often** (z = +8.4). Neither converts: standardized on pressure the candidate attacks at 49.0 % against 50.8 %. Four significant behavioral changes, cancelling to 50.1 % vs 49.9 % (§ 4.15) |
 
 **Read § 4.1 before using the seven depth-stable cases as a target** — they were the intended
 instrument and they are not usable as one.
@@ -1704,7 +1704,7 @@ have one shape and it is worth recognising: counting advances instead of capture
 frequency instead of the opportunity rate as the denominator, and admitting every capture instead
 of the good ones.
 
-### 4.15 Two redesigns screened out of the corpus, at three seconds of compute (2026-09-06)
+### 4.15 Three redesigns screened out, and the running match read as an intervention (2026-09-06/08)
 
 § 4.14 closed the file-danger term as measured. Two redesigns were then proposed, both aimed at
 the same suspicion — that the term tries to say too much — and both screened against the existing
@@ -1858,6 +1858,102 @@ a missing variance, and no match can turn that around.
 Scanner: `HarbourScreen.java` in the session scratchpad. It calls the production classifier
 `WeightingFunction.calculateKingLineDanger` rather than a re-implementation, so the five-level
 scale, the walk direction and the advanced-pawn boundary are the shipped ones.
+
+#### Not a screen — the running match read as an intervention experiment (2026-09-08)
+
+Everything above is association on corpora the term never touched, which is why it can only
+stop. The `king-line-v2` self-play run supplies something the screens cannot: an **intervention**.
+The term moves its target quantity by a third, so if that quantity mattered, the effect would have
+to show. At 4190 of 6000 games the run stands at **+0.5 ± 9.0** Elo, score 0.501 — which already
+refutes "worth ≥ 15 Elo". What follows is what the games show underneath that zero.
+
+**The term prevents attacks, massively.** Taking the term's own top level as the definition of an
+attack — an enemy rook or queen on an open king file, `KING_DANGER_OPEN_OPPONENT_MAJOR_PIECE`,
+read with the production classifier:
+
+| | king-line-v2 | 4.6.1 | Δ | z |
+|---|---:|---:|---:|---:|
+| sides that ever reach the state | 56.7 % | 68.2 % | −11.5 pp | **−11.0** |
+| plies spent in it | 4.99 % | 8.76 % | −3.77 pp (−43 %) | **−74.7** |
+| sides with **two** such files at once | 2.6 % | 6.3 % | −3.70 pp (−59 %) | **−8.3** |
+| unsheltered king files, settled regime | 1.0553 | 1.5432 | −31.6 % | over 421 k / 426 k plies |
+
+**And the attacks are not thereby less successful.** Conditional on having reached the state the
+candidate scores **45.3 %** against the baseline's **47.2 %** — nominally worse, z = −1.6, so
+nothing. Nor is that figure interpretable: a side that avoids the state only lands in the cases it
+*could not* avoid, so its "attacked" population is enriched with the severe ones while the
+baseline's still contains the mild ones the candidate negotiated away. The same collider trap as
+conditioning on game length, where the candidate scores 60.6 % in games under 60 plies and 47.6 %
+in games over 150 — with draw rates of 16.7 % and 48.4 %, i.e. short games are simply the decided
+ones.
+
+**Measured from the attacker's side instead, with the attack-unit machinery** of branch
+`attack-units` (corner defect repaired), `attackUnit[color]` being the pressure `color` puts on the
+opposing king zone. This design is symmetric — every game contributes one observation per
+direction, both from the same position — and it produces the one genuinely unexpected result of
+the series:
+
+| max pressure built | king-line-v2 | 4.6.1 | z |
+|---|---:|---:|---:|
+| 1–4 | 4.4 % | 5.5 % | −2.2 |
+| 5–8 | 71.7 % | 78.0 % | −6.7 |
+| **9–12** | **22.9 %** | **15.6 %** | **+8.4** |
+| 13–16 | 0.8 % | 0.4 % | +2.5 |
+
+**A defensive term makes myChess measurably more aggressive.** It reaches high king-zone pressure
+46 % more often — 961 observations against 658 — at z = 8.4. The plausible mechanism is that a
+safer king of one's own buys the freedom to commit pieces forward. It is the first behavioral gain
+of this term that is not a restatement of "fewer open files".
+
+It converts none of it. Standardized on the pooled pressure distribution, the candidate as
+attacker scores **49.0 %** against the baseline's **50.8 %** — Δ −1.8 pp, z ≈ −1.9. So attacks
+against the king-line arm are not less often successful; if anything the reverse. The per-bucket
+signs are opposite (−3.2 pp at 5–8, +3.0 pp at 9–12), which is the signature of the distribution
+shift rather than of a conversion difference, and the standardization only repairs that under an
+assumption it cannot check.
+
+**Two further behavioral differences, both significant, both cancelling.** The candidate castles
+**more** often — 95.6 % against 93.9 %, z = 3.5 — and loses its rights without castling less often
+(4.0 % against 5.8 %), while castling 0.46 moves **later** (9.57 against 9.11). Coherent: the gate
+removed the pressure to castle *early*, but the term still punishes the alternative, since a king
+that loses its rights in the center is read on three mostly open files while a castled one is
+sheltered. The search sees that one ply deep.
+
+**The ledger, and it is the point of this subsection:**
+
+| | |
+|---|---|
+| own king attacked far less often | + |
+| those attacks equally successful | 0 |
+| more attacking pressure built | + |
+| that pressure converted no better | − |
+| castles more often, later | ? |
+| **total** | **50.1 % against 49.9 %** |
+
+The term changes the game at four measurable places, each beyond doubt statistically, and the
+effects cancel exactly. That is not "the term does nothing" — it is "the term does several things
+that add to nothing", which is a different and more useful claim. It also settles § 4.13's
+"exposure is a symptom, not a cause" by intervention rather than by association: we moved the
+quantity by 43 % and the result did not follow. Against an intervention there is no collider
+argument.
+
+**One methodological note for whoever reads the run's PGN.** 3429 of 4192 games end by
+adjudication and only 763 normally. Draw adjudication requires *both* engines to report within
+±40 cp for eight moves, and the candidate carries a term reaching beyond 100 cp, so in positions
+with unequally exposed kings its reported score is pushed away from zero and the adjudication does
+not fire. The draw rate of 26.1 % sits close to the corner match's 26.7 %, so the effect looks
+small — but it is a channel through which the term alters the game *population* and not only the
+play.
+
+**Colour symmetry, a null result worth keeping.** The candidate scores 0.520 as White and 0.482 as
+Black against a pooled White advantage of 0.519 in the same run — it hits the pooled figure
+exactly. This document warns that a mirrored computation absorbs a sign or direction error in one
+colour while the other stays correct, showing up only as lost Elo; this is independent evidence
+against such a defect, alongside the unit tests that pin both colours.
+
+Scanners: `AttackSuccessScan.java`, `AttackUnitConversion.java`, `PerArmKingLine.java` in the
+session scratchpad. The second one reads positions through the `attack-units` build, which carries
+no king-line term itself and is used purely as an instrument.
 
 #### What the second screen incidentally shows about all of them
 
