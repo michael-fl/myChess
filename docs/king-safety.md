@@ -32,7 +32,7 @@
 | **What to build instead** | ~~**file danger**~~ — screened at **2.238 %** explained residual variance against attack units' 1.270 %, which is why it was built (§ 4.11). **That ranking is refuted twice over:** file danger measured ≈ 0 Elo across two runs totalling 5244 games while attack units measured +9.1, so on the only two candidates with both a screen and a match the screen's order is inverted. Stop using it to *rank*; a flat screen is still a stop |
 | **Measured 2026-09-03** | file danger with the game-result table: **+0.8 ± 12.3** over 2255 games, stopped for a defect that discounted corner kings. Behaviour confirmed (−34.6 % uncovered king files), cost six times smaller than the bench predicted (−0.041 plies), and the finding that matters: **exposure is a symptom, not a cause** — 70 Elo of association for the baseline, none for the candidate (§ 4.13) |
 | **Measured 2026-09-06 — the family is closed** | the repaired build: **−4.9 ± 10.7** over 2989 games, stopped once a clearly positive result became unreachable. The term also turns out not to know about castling — before castling it reads the *central* files — but that costs nothing: priced over 2431 declined central captures it gives up half a centipawn per game **less** than the baseline, so the opening component is zero and the middlegame component is itself the −5 (§ 4.14). The repair works — the corner excess falls from +4.62 pp to +0.10 pp — the target quantity still moves −30.2 %, the cost is 0.04 plies, and the Elo is zero. **Pawn cover beside the king carries no Elo in myChess**, which also retires the shelved shield (−57.5), the king-dependent pawn PSTs (−18.1) and virtual queen mobility. Attacker-based king safety is untouched by this (§ 4.14) |
-| **Screened 2026-09-06 — two redesigns, three seconds of compute** | the term was suspected of saying too much, and the fit agreed: the "advanced enemy pawn" and "enemy major on the file" refinements are worth **6 cp and 2 cp**, the two smallest increments in the table, while the summed index conflates them anyway. Both proposed redesigns died on the corpus without a match. A **front-loaded binary** variant: the association is monotone in the *state* (85.3 / 74.1 / 52.3 / 48.3 % by unsheltered files) and vanishes in the *time* direction once exposure duration is held fixed. **Opponent-heavy-material scaling**: the association is at least as strong when the opponent has *no* heavy pieces — 43 pp of spread against 29 — so the condition would discard more than it keeps. Reverse causation is visible in a cell: games that ended with heavy pieces on the board score 36.6 %, the table's worst. **A third screen (2026-09-07)** killed the castling-*harbour* variant one step earlier still: while a color may still castle its flank pawns are essentially untouched, so the quantity is exactly 0 for **97 %** of sides and 0.4 % of the settled term's magnitude — nothing to predict from, and no match can overturn a missing variance. **And the run itself, read as an intervention (2026-09-08):** at 4190 games **+0.5 ± 9.0**, while the term cuts the plies its king spends under attack on an open file by **43 %** (z = −74.7) and — the one surprise — builds high king-zone pressure **46 % more often** (z = +8.4). Neither converts: standardized on pressure the candidate attacks at 49.0 % against 50.8 %. Four significant behavioral changes, cancelling to 50.1 % vs 49.9 % (§ 4.15) |
+| **Screened 2026-09-06 — two redesigns, three seconds of compute** | the term was suspected of saying too much, and the fit agreed: the "advanced enemy pawn" and "enemy major on the file" refinements are worth **6 cp and 2 cp**, the two smallest increments in the table, while the summed index conflates them anyway. Both proposed redesigns died on the corpus without a match. A **front-loaded binary** variant: the association is monotone in the *state* (85.3 / 74.1 / 52.3 / 48.3 % by unsheltered files) and vanishes in the *time* direction once exposure duration is held fixed. **Opponent-heavy-material scaling**: the association is at least as strong when the opponent has *no* heavy pieces — 43 pp of spread against 29 — so the condition would discard more than it keeps. Reverse causation is visible in a cell: games that ended with heavy pieces on the board score 36.6 %, the table's worst. **A third screen (2026-09-07)** killed the castling-*harbour* variant one step earlier still: while a color may still castle its flank pawns are essentially untouched, so the quantity is exactly 0 for **97 %** of sides and 0.4 % of the settled term's magnitude — nothing to predict from, and no match can overturn a missing variance. **And the run itself, read as an intervention (2026-09-08):** at 4190 games **+0.5 ± 9.0**, while the term cuts the plies its king spends under attack on an open file by **43 %** (z = −74.7) and — the one surprise — builds high king-zone pressure **46 % more often** (z = +8.4). Neither converts: standardized on pressure the candidate attacks at 49.0 % against 50.8 %. Four significant behavioral changes, cancelling to 50.1 % vs 49.9 %. **And § 4.1's open step 1, finally measured over 58 anchor blunders with a known holding move:** the signal points the right way in **8.6 %** of them, is **flat in 86.2 %** — identical danger after blunder and refutation, to the level — and anti-correlated in 5.2 %. Six of the eight discriminating cases are king moves, which the king PST already prices. That also kills tuning the table against the marked tests: the objective is flat where it matters (§ 4.15) |
 
 **Read § 4.1 before using the seven depth-stable cases as a target** — they were the intended
 instrument and they are not usable as one.
@@ -1704,7 +1704,7 @@ have one shape and it is worth recognising: counting advances instead of capture
 frequency instead of the opportunity rate as the denominator, and admitting every capture instead
 of the good ones.
 
-### 4.15 Three redesigns screened out, and the running match read as an intervention (2026-09-06/08)
+### 4.15 Four screens, the running match as an intervention, and why tuning on the marked tests cannot work (2026-09-06/08)
 
 § 4.14 closed the file-danger term as measured. Two redesigns were then proposed, both aimed at
 the same suspicion — that the term tries to say too much — and both screened against the existing
@@ -1954,6 +1954,103 @@ against such a defect, alongside the unit tests that pin both colours.
 Scanners: `AttackSuccessScan.java`, `AttackUnitConversion.java`, `PerArmKingLine.java` in the
 session scratchpad. The second one reads positions through the `attack-units` build, which carries
 no king-line term itself and is used purely as an instrument.
+
+#### Screen 4 — does the signal point the right way? § 4.1's open step 1, at 58 cases (2026-09-08)
+
+§ 4.1 measured seven cases and closed with an instruction rather than a verdict: **"measure how
+often the signal points the right way, over a sample large enough to answer it"**, with a decision
+rule attached — if the signal is right in most positions the term is worth building and the sample
+of four was unlucky; if it is anti-correlated in a third, a fourth attempt will fail like the first
+three and the theme should be closed. That measurement was never made. It turns out to cost
+nothing: `test-results/anchor-refutations.jsonl` already holds **58 real blunders** myChess played
+against the five foreign anchors, each with the move it played *and* the move that holds, both
+verified against Stockfish at depth 22.
+
+For each case the term is asked the only question a move-choice defect poses: after myChess's
+blunder, is its own king in **more** king-line danger than after the holding move? The shipped gate
+is applied; the summed danger over the three king files is the quantity.
+
+| | cases | share |
+|---|---:|---:|
+| signal points the **right way** — the blunder is the more dangerous move | 5 | **8.6 %** |
+| signal **cannot discriminate** — identical danger after both moves | **50** | **86.2 %** |
+| signal is **anti-correlated** — the blunder looks safer | 3 | 5.2 % |
+| gate closed / unparsable | 0 | — |
+
+**In 86 % of the cases the two moves leave the king in exactly the same danger.** Not similar —
+equal, to the level: `0` against `0`, `6` against `6`, `7` against `7`. The term has literally
+nothing to say about the move that lost the game.
+
+That is a harder statement than seven cases could support. § 4.1's conclusion was "the signal does
+not discriminate, and sometimes points the wrong way". Over 58 it is **"the signal almost never
+discriminates"**, and where it does it is nearly as often wrong as right — 3 against 5.
+
+**The mechanism, visible in the eight cases that do discriminate:**
+
+```
+right way:        Kg3/Kf2 · Rbb8/Ke2 · Qxb2/fxe4 · gxh5/Rb1 · Re7+/Kxe1
+anti-correlated:  Kg3/h6  · h4/Kf2  · Kf4/Ke4
+```
+
+**Six of the eight involve a king move**, the other two a pawn move on a king file. The danger only
+changes when the move touches the king itself or the pawns in front of it — and king moves are
+already priced by the king midgame piece-square table, which pays 53 cp for `e1 → g1`. So on this
+corpus the term has almost no independent contribution: either it is silent, or it speaks about a
+move another component already evaluates.
+
+Which is what one should expect on reflection. A blunder and its refutation differ by one piece on
+one square, twenty or thirty moves in. Tactical errors are piece errors, not pawn-structure errors.
+
+#### And the corollary: tuning the table against the marked tests cannot work
+
+The idea is natural — 24 `king-safety (defect)` cases sit in `BlunderTest`, so why not search
+`KING_LINE_PENALTY` until a majority of them flips, instead of spending days on self-play? Three
+reasons it fails, and the first is fatal:
+
+1. **The objective is flat.** On 86 % of the corpus above the differential is zero, and no table
+   value can flip a zero: `7` against `7` stays `7` against `7` whether the entry reads 26 or
+   2600. An optimizer would chase the five reachable cases, drag the three anti-correlated ones the
+   wrong way, and pay for it with a table that damages the body of the distribution.
+2. **Most of the marked cases are not move-choice cases.** Of the 24, twelve assert an evaluation
+   threshold (`assertTrue(result.weight() < -0.5f, …)`) and ten a move; two are Chess960 cases
+   without a plain FEN. Flipping a threshold means pushing a number across a line somebody wrote
+   down to characterize *today's* behavior. That is a statement about the number, not about play.
+   § 4.1's finding 1 is the same observation from the other side: three of its seven cases were not
+   move-choice cases at all, because myChess already played Stockfish's move and only the score was
+   wrong.
+3. **The 24 positions are the tail by construction** — they are in the corpus *because* myChess
+   erred there. A term tuned on the tail can damage the body, and the body is where the Elo is.
+   This is the same shape as the exposure screens: conditioning on the outcome.
+
+And the idea already exists in its correct form, two orders of magnitude larger: the fitted
+13-entry table **is** the result of letting the term compete against positions whose outcome is
+known — Texel-style coordinate descent on **1.34 M labeled positions** (§ 4.12). That measured ~0.
+Shrinking the sample to 24 cannot improve on it.
+
+#### What the term actually does to those 24 tests, measured
+
+Since the question was asked directly — does `king-line-v2` touch them? Both builds were searched
+on the 22 cases with a resolvable FEN, each at the depth its own test uses, comparing the chosen
+move and the reported evaluation:
+
+| | |
+|---|---:|
+| evaluation changed at all | **20 of 22** |
+| largest change | 0.57 pawns; most under 0.2 |
+| chosen move changed | **5 of 22** |
+| tests that would change status | **3 of 22** |
+
+The three: `fxg2_atMove13` crosses its `< 0.0` threshold — but from −0.17 to exactly 0.00, a
+hairline rather than a change of judgement — and `qa3_atMove21` and `ba4_vsTscp` change their move.
+Eleven of the twelve threshold characterizations stay green with room to spare.
+
+So the term touches them, and barely. **Nothing resembling the "majority flips" that would signal a
+term has landed.** Note `qa3` in particular: § 4.1 measured all four exposure axes as *identical*
+after both moves there and put the required margin at 4 cp, yet the move did change — so the effect
+arrived indirectly, from deeper in the tree, not from the term's opinion about this position.
+
+Scanners: `SignalDirectionScan.java` and `DefectProbe.java` in the session scratchpad. The first
+reads `anchor-refutations.jsonl` and needs no engine search at all.
 
 #### What the second screen incidentally shows about all of them
 
