@@ -1,0 +1,1429 @@
+Indexing opening suite...
+Started game 1 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Started game 2 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Started game 4 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Started game 3 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 4 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 0 - 1 - 0  [0.000] 1
+Started game 5 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 2 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 1 - 1 - 0  [0.500] 2
+Started game 6 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 1 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 2 - 1 - 0  [0.667] 3
+Started game 7 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 3 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 2 - 1 - 1  [0.625] 4
+Started game 8 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 7 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 3 - 1 - 1  [0.700] 5
+Started game 9 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 8 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 3 - 2 - 1  [0.583] 6
+Started game 10 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 5 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 3 - 3 - 1  [0.500] 7
+Started game 11 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 6 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 3 - 4 - 1  [0.438] 8
+Started game 12 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 9 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 3 - 5 - 1  [0.389] 9
+Started game 13 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 11 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 4 - 5 - 1  [0.450] 10
+...      mychess-castling-factor-zero playing White: 3 - 2 - 1  [0.583] 6
+...      mychess-castling-factor-zero playing Black: 1 - 3 - 0  [0.250] 4
+...      White vs Black: 6 - 3 - 1  [0.650] 10
+Elo difference: -34.9 +/- 237.0, LOS: 36.9 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 14 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 10 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 5 - 5 - 1  [0.500] 11
+Started game 15 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 12 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 5 - 6 - 1  [0.458] 12
+Started game 16 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 16 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 5 - 7 - 1  [0.423] 13
+Started game 17 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 13 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 5 - 8 - 1  [0.393] 14
+Started game 18 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 15 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by stalemate}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 5 - 8 - 2  [0.400] 15
+Started game 19 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 14 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 5 - 9 - 2  [0.375] 16
+Started game 20 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 18 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black mates}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 6 - 9 - 2  [0.412] 17
+Started game 21 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 19 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 7 - 9 - 2  [0.444] 18
+Started game 22 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 21 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 7 - 9 - 3  [0.447] 19
+Started game 23 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 17 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 7 - 10 - 3  [0.425] 20
+...      mychess-castling-factor-zero playing White: 4 - 4 - 3  [0.500] 11
+...      mychess-castling-factor-zero playing Black: 3 - 6 - 0  [0.333] 9
+...      White vs Black: 10 - 7 - 3  [0.575] 20
+Elo difference: -52.5 +/- 151.0, LOS: 23.3 %, DrawRatio: 15.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 24 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 23 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 8 - 10 - 3  [0.452] 21
+Started game 25 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 20 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 8 - 10 - 4  [0.455] 22
+Started game 26 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 24 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 8 - 10 - 5  [0.457] 23
+Started game 27 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 25 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 8 - 10 - 6  [0.458] 24
+Started game 28 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 22 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 8 - 10 - 7  [0.460] 25
+Started game 29 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 28 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 9 - 10 - 7  [0.481] 26
+Started game 30 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 26 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 10 - 10 - 7  [0.500] 27
+Started game 31 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 27 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 10 - 10 - 8  [0.500] 28
+Started game 32 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 29 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 10 - 10 - 9  [0.500] 29
+Started game 33 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 31 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 10 - 11 - 9  [0.483] 30
+...      mychess-castling-factor-zero playing White: 5 - 5 - 6  [0.500] 16
+...      mychess-castling-factor-zero playing Black: 5 - 6 - 3  [0.464] 14
+...      White vs Black: 11 - 10 - 9  [0.517] 30
+Elo difference: -11.6 +/- 107.2, LOS: 41.4 %, DrawRatio: 30.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 34 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 33 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 11 - 11 - 9  [0.500] 31
+Started game 35 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 30 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 12 - 11 - 9  [0.516] 32
+Started game 36 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 34 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 12 - 12 - 9  [0.500] 33
+Started game 37 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 36 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 12 - 13 - 9  [0.485] 34
+Started game 38 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 35 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 12 - 14 - 9  [0.471] 35
+Started game 39 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 38 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 12 - 15 - 9  [0.458] 36
+Started game 40 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 39 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 12 - 15 - 10  [0.459] 37
+Started game 41 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 32 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 13 - 15 - 10  [0.474] 38
+Started game 42 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 37 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 13 - 15 - 11  [0.474] 39
+Started game 43 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 41 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 14 - 15 - 11  [0.487] 40
+...      mychess-castling-factor-zero playing White: 7 - 6 - 8  [0.524] 21
+...      mychess-castling-factor-zero playing Black: 7 - 9 - 3  [0.447] 19
+...      White vs Black: 16 - 13 - 11  [0.537] 40
+Elo difference: -8.7 +/- 93.8, LOS: 42.6 %, DrawRatio: 27.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 44 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 40 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 15 - 15 - 11  [0.500] 41
+Started game 45 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 44 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 15 - 15 - 12  [0.500] 42
+Started game 46 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 42 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 15 - 15 - 13  [0.500] 43
+Started game 47 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 43 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 15 - 15 - 14  [0.500] 44
+Started game 48 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 46 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 15 - 16 - 14  [0.489] 45
+Started game 49 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 47 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 16 - 16 - 14  [0.500] 46
+Started game 50 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 48 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 16 - 17 - 14  [0.489] 47
+Started game 51 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 50 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 16 - 18 - 14  [0.479] 48
+Started game 52 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 49 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 17 - 18 - 14  [0.490] 49
+Started game 53 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 45 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 17 - 18 - 15  [0.490] 50
+...      mychess-castling-factor-zero playing White: 9 - 6 - 10  [0.560] 25
+...      mychess-castling-factor-zero playing Black: 8 - 12 - 5  [0.420] 25
+...      White vs Black: 21 - 14 - 15  [0.570] 50
+Elo difference: -6.9 +/- 82.0, LOS: 43.3 %, DrawRatio: 30.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 54 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 51 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 17 - 18 - 16  [0.490] 51
+Started game 55 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 53 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 17 - 18 - 17  [0.490] 52
+Started game 56 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 52 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 18 - 18 - 17  [0.500] 53
+Started game 57 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 55 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 19 - 18 - 17  [0.509] 54
+Started game 58 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 54 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 20 - 18 - 17  [0.518] 55
+Started game 59 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 57 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 21 - 18 - 17  [0.527] 56
+Started game 60 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 56 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 22 - 18 - 17  [0.535] 57
+Started game 61 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 59 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 22 - 19 - 17  [0.526] 58
+Started game 62 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 58 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 22 - 20 - 17  [0.517] 59
+Started game 63 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 60 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 23 - 20 - 17  [0.525] 60
+...      mychess-castling-factor-zero playing White: 11 - 7 - 12  [0.567] 30
+...      mychess-castling-factor-zero playing Black: 12 - 13 - 5  [0.483] 30
+...      White vs Black: 24 - 19 - 17  [0.542] 60
+Elo difference: 17.4 +/- 75.6, LOS: 67.6 %, DrawRatio: 28.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 64 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 62 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 23 - 21 - 17  [0.516] 61
+Started game 65 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 61 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 24 - 21 - 17  [0.524] 62
+Started game 66 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 63 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 24 - 22 - 17  [0.516] 63
+Started game 67 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 64 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 24 - 23 - 17  [0.508] 64
+Started game 68 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 65 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 24 - 23 - 18  [0.508] 65
+Started game 69 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 66 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 25 - 23 - 18  [0.515] 66
+Started game 70 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 68 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 26 - 23 - 18  [0.522] 67
+Started game 71 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 69 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 26 - 24 - 18  [0.515] 68
+Started game 72 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 67 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 26 - 24 - 19  [0.514] 69
+Started game 73 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 70 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 27 - 24 - 19  [0.521] 70
+...      mychess-castling-factor-zero playing White: 12 - 9 - 14  [0.543] 35
+...      mychess-castling-factor-zero playing Black: 15 - 15 - 5  [0.500] 35
+...      White vs Black: 27 - 24 - 19  [0.521] 70
+Elo difference: 14.9 +/- 70.4, LOS: 66.3 %, DrawRatio: 27.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 74 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 71 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 27 - 24 - 20  [0.521] 71
+Started game 75 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 72 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 27 - 25 - 20  [0.514] 72
+Started game 76 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 74 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 28 - 25 - 20  [0.521] 73
+Started game 77 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 75 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 28 - 26 - 20  [0.514] 74
+Started game 78 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 76 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 28 - 27 - 20  [0.507] 75
+Started game 79 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 73 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 28 - 27 - 21  [0.507] 76
+Started game 80 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 78 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 28 - 28 - 21  [0.500] 77
+Started game 81 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 79 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 28 - 28 - 22  [0.500] 78
+Started game 82 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 80 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 28 - 28 - 23  [0.500] 79
+Started game 83 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 77 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 28 - 28 - 24  [0.500] 80
+...      mychess-castling-factor-zero playing White: 12 - 10 - 18  [0.525] 40
+...      mychess-castling-factor-zero playing Black: 16 - 18 - 6  [0.475] 40
+...      White vs Black: 30 - 26 - 24  [0.525] 80
+Elo difference: 0.0 +/- 64.3, LOS: 50.0 %, DrawRatio: 30.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 84 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 82 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 29 - 28 - 24  [0.506] 81
+Started game 85 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 81 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 29 - 28 - 25  [0.506] 82
+Started game 86 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 83 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 29 - 28 - 26  [0.506] 83
+Started game 87 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 85 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 29 - 29 - 26  [0.500] 84
+Started game 88 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 84 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 29 - 29 - 27  [0.500] 85
+Started game 89 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 87 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 29 - 29 - 28  [0.500] 86
+Started game 90 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 88 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 30 - 29 - 28  [0.506] 87
+Started game 91 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 89 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 30 - 30 - 28  [0.500] 88
+Started game 92 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 86 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 30 - 30 - 29  [0.500] 89
+Started game 93 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 90 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 31 - 30 - 29  [0.506] 90
+...      mychess-castling-factor-zero playing White: 12 - 12 - 21  [0.500] 45
+...      mychess-castling-factor-zero playing Black: 19 - 18 - 8  [0.511] 45
+...      White vs Black: 30 - 31 - 29  [0.494] 90
+Elo difference: 3.9 +/- 59.6, LOS: 55.1 %, DrawRatio: 32.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 94 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 91 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 32 - 30 - 29  [0.511] 91
+Started game 95 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 93 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 33 - 30 - 29  [0.516] 92
+Started game 96 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 94 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by stalemate}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 33 - 30 - 30  [0.516] 93
+Started game 97 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 92 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 33 - 31 - 30  [0.511] 94
+Started game 98 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 95 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 33 - 32 - 30  [0.505] 95
+Started game 99 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 96 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 34 - 32 - 30  [0.510] 96
+Started game 100 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 98 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 35 - 32 - 30  [0.515] 97
+Started game 101 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 101 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White mates}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 36 - 32 - 30  [0.520] 98
+Started game 102 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 99 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 36 - 33 - 30  [0.515] 99
+Started game 103 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 100 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 37 - 33 - 30  [0.520] 100
+...      mychess-castling-factor-zero playing White: 15 - 14 - 21  [0.510] 50
+...      mychess-castling-factor-zero playing Black: 22 - 19 - 9  [0.530] 50
+...      White vs Black: 34 - 36 - 30  [0.490] 100
+Elo difference: 13.9 +/- 57.4, LOS: 68.4 %, DrawRatio: 30.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 104 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 102 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 37 - 34 - 30  [0.515] 101
+Started game 105 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 97 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 37 - 34 - 31  [0.515] 102
+Started game 106 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 103 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 37 - 35 - 31  [0.510] 103
+Started game 107 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 106 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 37 - 36 - 31  [0.505] 104
+Started game 108 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 105 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 38 - 36 - 31  [0.510] 105
+Started game 109 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 104 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 39 - 36 - 31  [0.514] 106
+Started game 110 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 107 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 39 - 36 - 32  [0.514] 107
+Started game 111 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 111 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 39 - 37 - 32  [0.509] 108
+Started game 112 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 108 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 39 - 38 - 32  [0.505] 109
+Started game 113 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 110 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 40 - 38 - 32  [0.509] 110
+...      mychess-castling-factor-zero playing White: 16 - 16 - 23  [0.500] 55
+...      mychess-castling-factor-zero playing Black: 24 - 22 - 9  [0.518] 55
+...      White vs Black: 38 - 40 - 32  [0.491] 110
+Elo difference: 6.3 +/- 55.1, LOS: 59.0 %, DrawRatio: 29.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 114 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 112 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 40 - 39 - 32  [0.505] 111
+Started game 115 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 114 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 40 - 40 - 32  [0.500] 112
+Started game 116 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 115 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 40 - 40 - 33  [0.500] 113
+Started game 117 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 116 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 40 - 40 - 34  [0.500] 114
+Started game 118 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 109 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 40 - 40 - 35  [0.500] 115
+Started game 119 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 118 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 41 - 40 - 35  [0.504] 116
+Started game 120 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 113 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 41 - 40 - 36  [0.504] 117
+Started game 121 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 117 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 41 - 41 - 36  [0.500] 118
+Started game 122 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 120 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 42 - 41 - 36  [0.504] 119
+Started game 123 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 119 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 43 - 41 - 36  [0.508] 120
+...      mychess-castling-factor-zero playing White: 17 - 17 - 26  [0.500] 60
+...      mychess-castling-factor-zero playing Black: 26 - 24 - 10  [0.517] 60
+...      White vs Black: 41 - 43 - 36  [0.492] 120
+Elo difference: 5.8 +/- 52.3, LOS: 58.6 %, DrawRatio: 30.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 124 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 121 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 44 - 41 - 36  [0.512] 121
+Started game 125 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 122 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 44 - 42 - 36  [0.508] 122
+Started game 126 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 125 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 45 - 42 - 36  [0.512] 123
+Started game 127 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 126 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 45 - 43 - 36  [0.508] 124
+Started game 128 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 124 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 46 - 43 - 36  [0.512] 125
+Started game 129 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 123 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 46 - 44 - 36  [0.508] 126
+Started game 130 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 127 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 46 - 44 - 37  [0.508] 127
+Started game 131 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 129 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 47 - 44 - 37  [0.512] 128
+Started game 132 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 128 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 47 - 45 - 37  [0.508] 129
+Started game 133 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 130 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 47 - 45 - 38  [0.508] 130
+...      mychess-castling-factor-zero playing White: 20 - 18 - 27  [0.515] 65
+...      mychess-castling-factor-zero playing Black: 27 - 27 - 11  [0.500] 65
+...      White vs Black: 47 - 45 - 38  [0.508] 130
+Elo difference: 5.3 +/- 50.5, LOS: 58.3 %, DrawRatio: 29.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 134 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 133 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 48 - 45 - 38  [0.511] 131
+Started game 135 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 131 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 49 - 45 - 38  [0.515] 132
+Started game 136 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 132 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 49 - 45 - 39  [0.515] 133
+Started game 137 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 136 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 49 - 46 - 39  [0.511] 134
+Started game 138 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 135 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 50 - 46 - 39  [0.515] 135
+Started game 139 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 134 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 50 - 46 - 40  [0.515] 136
+Started game 140 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 137 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 51 - 46 - 40  [0.518] 137
+Started game 141 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 138 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 51 - 47 - 40  [0.514] 138
+Started game 142 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 139 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by stalemate}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 51 - 47 - 41  [0.514] 139
+Started game 143 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 142 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 52 - 47 - 41  [0.518] 140
+...      mychess-castling-factor-zero playing White: 24 - 18 - 28  [0.543] 70
+...      mychess-castling-factor-zero playing Black: 28 - 29 - 13  [0.493] 70
+...      White vs Black: 53 - 46 - 41  [0.525] 140
+Elo difference: 12.4 +/- 48.7, LOS: 69.2 %, DrawRatio: 29.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 144 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 141 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 53 - 47 - 41  [0.521] 141
+Started game 145 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 140 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 54 - 47 - 41  [0.525] 142
+Started game 146 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 144 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 55 - 47 - 41  [0.528] 143
+Started game 147 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 145 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 55 - 47 - 42  [0.528] 144
+Started game 148 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 147 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 56 - 47 - 42  [0.531] 145
+Started game 149 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 143 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 57 - 47 - 42  [0.534] 146
+Started game 150 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 149 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 57 - 47 - 43  [0.534] 147
+Started game 151 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 148 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 57 - 48 - 43  [0.530] 148
+Started game 152 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 151 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 57 - 48 - 44  [0.530] 149
+Started game 153 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 152 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 57 - 49 - 44  [0.527] 150
+...      mychess-castling-factor-zero playing White: 27 - 18 - 31  [0.559] 76
+...      mychess-castling-factor-zero playing Black: 30 - 31 - 13  [0.493] 74
+...      White vs Black: 58 - 48 - 44  [0.533] 150
+Elo difference: 18.5 +/- 47.0, LOS: 78.1 %, DrawRatio: 29.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 154 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 150 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 58 - 49 - 44  [0.530] 151
+Started game 155 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 155 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White mates}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 59 - 49 - 44  [0.533] 152
+Started game 156 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 153 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 59 - 50 - 44  [0.529] 153
+Started game 157 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 146 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 59 - 50 - 45  [0.529] 154
+Started game 158 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 158 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 60 - 50 - 45  [0.532] 155
+Started game 159 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 154 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 61 - 50 - 45  [0.535] 156
+Started game 160 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 157 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 61 - 51 - 45  [0.532] 157
+Started game 161 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 156 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 62 - 51 - 45  [0.535] 158
+Started game 162 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 160 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 62 - 52 - 45  [0.531] 159
+Started game 163 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 159 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 63 - 52 - 45  [0.534] 160
+...      mychess-castling-factor-zero playing White: 29 - 20 - 31  [0.556] 80
+...      mychess-castling-factor-zero playing Black: 34 - 32 - 14  [0.512] 80
+...      White vs Black: 61 - 54 - 45  [0.522] 160
+Elo difference: 23.9 +/- 45.9, LOS: 84.7 %, DrawRatio: 28.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 164 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 161 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 64 - 52 - 45  [0.537] 161
+Started game 165 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 162 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 64 - 53 - 45  [0.534] 162
+Started game 166 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 163 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 64 - 53 - 46  [0.534] 163
+Started game 167 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 167 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 64 - 54 - 46  [0.530] 164
+Started game 168 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 166 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 64 - 55 - 46  [0.527] 165
+Started game 169 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 164 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 64 - 56 - 46  [0.524] 166
+Started game 170 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 169 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White mates}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 65 - 56 - 46  [0.527] 167
+Started game 171 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 168 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 65 - 57 - 46  [0.524] 168
+Started game 172 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 165 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 65 - 58 - 46  [0.521] 169
+Started game 173 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 170 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 65 - 59 - 46  [0.518] 170
+...      mychess-castling-factor-zero playing White: 31 - 22 - 32  [0.553] 85
+...      mychess-castling-factor-zero playing Black: 34 - 37 - 14  [0.482] 85
+...      White vs Black: 68 - 56 - 46  [0.535] 170
+Elo difference: 12.3 +/- 44.8, LOS: 70.5 %, DrawRatio: 27.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 174 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 171 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 65 - 60 - 46  [0.515] 171
+Started game 175 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 173 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 65 - 60 - 47  [0.515] 172
+Started game 176 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 172 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 66 - 60 - 47  [0.517] 173
+Started game 177 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 175 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 66 - 61 - 47  [0.514] 174
+Started game 178 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 176 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 67 - 61 - 47  [0.517] 175
+Started game 179 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 177 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 68 - 61 - 47  [0.520] 176
+Started game 180 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 178 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 68 - 62 - 47  [0.517] 177
+Started game 181 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 180 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 68 - 63 - 47  [0.514] 178
+Started game 182 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 179 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 68 - 64 - 47  [0.511] 179
+Started game 183 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 174 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 68 - 64 - 48  [0.511] 180
+...      mychess-castling-factor-zero playing White: 32 - 25 - 33  [0.539] 90
+...      mychess-castling-factor-zero playing Black: 36 - 39 - 15  [0.483] 90
+...      White vs Black: 71 - 61 - 48  [0.528] 180
+Elo difference: 7.7 +/- 43.6, LOS: 63.6 %, DrawRatio: 26.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 184 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 181 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 68 - 64 - 49  [0.511] 181
+Started game 185 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 183 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 68 - 65 - 49  [0.508] 182
+Started game 186 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 184 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 69 - 65 - 49  [0.511] 183
+Started game 187 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 182 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 70 - 65 - 49  [0.514] 184
+Started game 188 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 185 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 71 - 65 - 49  [0.516] 185
+Started game 189 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 187 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 72 - 65 - 49  [0.519] 186
+Started game 190 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 186 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 73 - 65 - 49  [0.521] 187
+Started game 191 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 188 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 73 - 65 - 50  [0.521] 188
+Started game 192 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 190 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 73 - 65 - 51  [0.521] 189
+Started game 193 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 189 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 74 - 65 - 51  [0.524] 190
+...      mychess-castling-factor-zero playing White: 35 - 26 - 34  [0.547] 95
+...      mychess-castling-factor-zero playing Black: 39 - 39 - 17  [0.500] 95
+...      White vs Black: 74 - 65 - 51  [0.524] 190
+Elo difference: 16.5 +/- 42.4, LOS: 77.7 %, DrawRatio: 26.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 194 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 191 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 75 - 65 - 51  [0.526] 191
+Started game 195 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 192 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 75 - 66 - 51  [0.523] 192
+Started game 196 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 193 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 75 - 67 - 51  [0.521] 193
+Started game 197 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 195 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 75 - 67 - 52  [0.521] 194
+Started game 198 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 196 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 75 - 68 - 52  [0.518] 195
+Started game 199 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 199 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 75 - 69 - 52  [0.515] 196
+Started game 200 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 197 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 75 - 69 - 53  [0.515] 197
+Started game 201 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 201 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 76 - 69 - 53  [0.518] 198
+Started game 202 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 198 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 77 - 69 - 53  [0.520] 199
+Started game 203 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 200 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 78 - 69 - 53  [0.522] 200
+...      mychess-castling-factor-zero playing White: 37 - 28 - 36  [0.545] 101
+...      mychess-castling-factor-zero playing Black: 41 - 41 - 17  [0.500] 99
+...      White vs Black: 78 - 69 - 53  [0.522] 200
+Elo difference: 15.6 +/- 41.4, LOS: 77.1 %, DrawRatio: 26.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 204 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 194 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 78 - 69 - 54  [0.522] 201
+Started game 205 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 202 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 78 - 70 - 54  [0.520] 202
+Started game 206 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 204 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 78 - 70 - 55  [0.520] 203
+Started game 207 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 205 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 79 - 70 - 55  [0.522] 204
+Started game 208 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 207 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 79 - 71 - 55  [0.520] 205
+Started game 209 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 206 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 80 - 71 - 55  [0.522] 206
+Started game 210 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 208 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 80 - 71 - 56  [0.522] 207
+Started game 211 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 210 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 81 - 71 - 56  [0.524] 208
+Started game 212 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 203 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 81 - 71 - 57  [0.524] 209
+Started game 213 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 209 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 81 - 71 - 58  [0.524] 210
+...      mychess-castling-factor-zero playing White: 38 - 29 - 38  [0.543] 105
+...      mychess-castling-factor-zero playing Black: 43 - 42 - 20  [0.505] 105
+...      White vs Black: 80 - 72 - 58  [0.519] 210
+Elo difference: 16.6 +/- 40.1, LOS: 79.1 %, DrawRatio: 27.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 214 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 211 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 82 - 71 - 58  [0.526] 211
+Started game 215 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 212 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 82 - 72 - 58  [0.524] 212
+Started game 216 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 215 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 83 - 72 - 58  [0.526] 213
+Started game 217 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 214 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 83 - 73 - 58  [0.523] 214
+Started game 218 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 213 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by stalemate}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 83 - 73 - 59  [0.523] 215
+Started game 219 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 218 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 83 - 73 - 60  [0.523] 216
+Started game 220 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 216 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 84 - 73 - 60  [0.525] 217
+Started game 221 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 219 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 85 - 73 - 60  [0.528] 218
+Started game 222 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 217 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 85 - 74 - 60  [0.525] 219
+Started game 223 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 220 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 85 - 75 - 60  [0.523] 220
+...      mychess-castling-factor-zero playing White: 41 - 30 - 39  [0.550] 110
+...      mychess-castling-factor-zero playing Black: 44 - 45 - 21  [0.495] 110
+...      White vs Black: 86 - 74 - 60  [0.527] 220
+Elo difference: 15.8 +/- 39.3, LOS: 78.5 %, DrawRatio: 27.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 224 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 222 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 85 - 76 - 60  [0.520] 221
+Started game 225 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 225 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 86 - 76 - 60  [0.523] 222
+Started game 226 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 224 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 86 - 77 - 60  [0.520] 223
+Started game 227 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 227 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 87 - 77 - 60  [0.522] 224
+Started game 228 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 226 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 88 - 77 - 60  [0.524] 225
+Started game 229 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 223 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 88 - 77 - 61  [0.524] 226
+Started game 230 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 221 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 88 - 77 - 62  [0.524] 227
+Started game 231 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 228 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 88 - 77 - 63  [0.524] 228
+Started game 232 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 229 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 88 - 78 - 63  [0.522] 229
+Started game 233 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 231 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 88 - 79 - 63  [0.520] 230
+...      mychess-castling-factor-zero playing White: 43 - 32 - 41  [0.547] 116
+...      mychess-castling-factor-zero playing Black: 45 - 47 - 22  [0.491] 114
+...      White vs Black: 90 - 77 - 63  [0.528] 230
+Elo difference: 13.6 +/- 38.4, LOS: 75.7 %, DrawRatio: 27.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 234 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 232 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 88 - 80 - 63  [0.517] 231
+Started game 235 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 230 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 88 - 81 - 63  [0.515] 232
+Started game 236 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 236 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 88 - 81 - 64  [0.515] 233
+Started game 237 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 234 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 88 - 81 - 65  [0.515] 234
+Started game 238 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 233 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 89 - 81 - 65  [0.517] 235
+Started game 239 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 235 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 89 - 81 - 66  [0.517] 236
+Started game 240 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 239 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 90 - 81 - 66  [0.519] 237
+Started game 241 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 238 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 91 - 81 - 66  [0.521] 238
+Started game 242 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 237 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 92 - 81 - 66  [0.523] 239
+Started game 243 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 241 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 92 - 81 - 67  [0.523] 240
+...      mychess-castling-factor-zero playing White: 46 - 32 - 43  [0.558] 121
+...      mychess-castling-factor-zero playing Black: 46 - 49 - 24  [0.487] 119
+...      White vs Black: 95 - 78 - 67  [0.535] 240
+Elo difference: 15.9 +/- 37.4, LOS: 79.9 %, DrawRatio: 27.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 244 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 244 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 92 - 82 - 67  [0.521] 241
+Started game 245 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 242 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 92 - 82 - 68  [0.521] 242
+Started game 246 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 243 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 93 - 82 - 68  [0.523] 243
+Started game 247 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 240 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 93 - 82 - 69  [0.523] 244
+Started game 248 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 246 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 93 - 83 - 69  [0.520] 245
+Started game 249 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 247 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 94 - 83 - 69  [0.522] 246
+Started game 250 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 248 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 94 - 83 - 70  [0.522] 247
+Started game 251 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 249 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 95 - 83 - 70  [0.524] 248
+Started game 252 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 250 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 96 - 83 - 70  [0.526] 249
+Started game 253 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 245 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 96 - 83 - 71  [0.526] 250
+...      mychess-castling-factor-zero playing White: 49 - 32 - 44  [0.568] 125
+...      mychess-castling-factor-zero playing Black: 47 - 51 - 27  [0.484] 125
+...      White vs Black: 100 - 79 - 71  [0.542] 250
+Elo difference: 18.1 +/- 36.6, LOS: 83.4 %, DrawRatio: 28.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 254 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 252 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 97 - 83 - 71  [0.528] 251
+Started game 255 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 251 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 98 - 83 - 71  [0.530] 252
+Started game 256 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 254 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 98 - 84 - 71  [0.528] 253
+Started game 257 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 253 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 98 - 85 - 71  [0.526] 254
+Started game 258 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 255 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 98 - 86 - 71  [0.524] 255
+Started game 259 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 256 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 99 - 86 - 71  [0.525] 256
+Started game 260 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 258 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 100 - 86 - 71  [0.527] 257
+Started game 261 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 257 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 101 - 86 - 71  [0.529] 258
+Started game 262 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 259 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 101 - 87 - 71  [0.527] 259
+Started game 263 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 260 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 101 - 87 - 72  [0.527] 260
+...      mychess-castling-factor-zero playing White: 51 - 35 - 44  [0.562] 130
+...      mychess-castling-factor-zero playing Black: 50 - 52 - 28  [0.492] 130
+...      White vs Black: 103 - 85 - 72  [0.535] 260
+Elo difference: 18.7 +/- 36.0, LOS: 84.6 %, DrawRatio: 27.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 264 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 261 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 102 - 87 - 72  [0.529] 261
+Started game 265 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 264 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 102 - 88 - 72  [0.527] 262
+Started game 266 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 263 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 103 - 88 - 72  [0.529] 263
+Started game 267 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 262 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 103 - 89 - 72  [0.527] 264
+Started game 268 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 265 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 103 - 90 - 72  [0.525] 265
+Started game 269 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 267 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 104 - 90 - 72  [0.526] 266
+Started game 270 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 266 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 104 - 91 - 72  [0.524] 267
+Started game 271 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 268 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 105 - 91 - 72  [0.526] 268
+Started game 272 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 272 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 105 - 91 - 73  [0.526] 269
+Started game 273 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 271 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 105 - 92 - 73  [0.524] 270
+...      mychess-castling-factor-zero playing White: 54 - 37 - 44  [0.563] 135
+...      mychess-castling-factor-zero playing Black: 51 - 55 - 29  [0.485] 135
+...      White vs Black: 109 - 88 - 73  [0.539] 270
+Elo difference: 16.7 +/- 35.5, LOS: 82.3 %, DrawRatio: 27.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 274 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 270 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 106 - 92 - 73  [0.526] 271
+Started game 275 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 269 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 106 - 92 - 74  [0.526] 272
+Started game 276 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 273 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 107 - 92 - 74  [0.527] 273
+Started game 277 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 275 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 108 - 92 - 74  [0.529] 274
+Started game 278 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 274 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 108 - 92 - 75  [0.529] 275
+Started game 279 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 276 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 109 - 92 - 75  [0.531] 276
+Started game 280 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 277 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 110 - 92 - 75  [0.532] 277
+Started game 281 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 278 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 111 - 92 - 75  [0.534] 278
+Started game 282 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 280 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 112 - 92 - 75  [0.536] 279
+Started game 283 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 279 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 113 - 92 - 75  [0.537] 280
+...      mychess-castling-factor-zero playing White: 58 - 37 - 45  [0.575] 140
+...      mychess-castling-factor-zero playing Black: 55 - 55 - 30  [0.500] 140
+...      White vs Black: 113 - 92 - 75  [0.537] 280
+Elo difference: 26.1 +/- 35.0, LOS: 92.9 %, DrawRatio: 26.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 284 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 283 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 113 - 93 - 75  [0.536] 281
+Started game 285 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 284 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 113 - 94 - 75  [0.534] 282
+Started game 286 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 282 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 113 - 95 - 75  [0.532] 283
+Started game 287 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 281 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 114 - 95 - 75  [0.533] 284
+Started game 288 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 285 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 115 - 95 - 75  [0.535] 285
+Started game 289 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 287 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 116 - 95 - 75  [0.537] 286
+Started game 290 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 288 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 116 - 96 - 75  [0.535] 287
+Started game 291 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 290 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 117 - 96 - 75  [0.536] 288
+Started game 292 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 291 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 117 - 97 - 75  [0.535] 289
+Started game 293 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 286 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 117 - 98 - 75  [0.533] 290
+...      mychess-castling-factor-zero playing White: 61 - 39 - 45  [0.576] 145
+...      mychess-castling-factor-zero playing Black: 56 - 59 - 30  [0.490] 145
+...      White vs Black: 120 - 95 - 75  [0.543] 290
+Elo difference: 22.8 +/- 34.5, LOS: 90.2 %, DrawRatio: 25.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 294 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 289 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 117 - 99 - 75  [0.531] 291
+Started game 295 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 293 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 118 - 99 - 75  [0.533] 292
+Started game 296 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 294 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 118 - 99 - 76  [0.532] 293
+Started game 297 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 295 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 118 - 99 - 77  [0.532] 294
+Started game 298 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 296 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 119 - 99 - 77  [0.534] 295
+Started game 299 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 292 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 119 - 99 - 78  [0.534] 296
+Started game 300 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 299 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 120 - 99 - 78  [0.535] 297
+Started game 301 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 298 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 120 - 100 - 78  [0.534] 298
+Started game 302 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 297 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by stalemate}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 120 - 100 - 79  [0.533] 299
+Started game 303 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 300 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 120 - 100 - 80  [0.533] 300
+...      mychess-castling-factor-zero playing White: 63 - 40 - 47  [0.577] 150
+...      mychess-castling-factor-zero playing Black: 57 - 60 - 33  [0.490] 150
+...      White vs Black: 123 - 97 - 80  [0.543] 300
+Elo difference: 23.2 +/- 33.8, LOS: 91.1 %, DrawRatio: 26.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 304 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 301 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 121 - 100 - 80  [0.535] 301
+Started game 305 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 302 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 121 - 100 - 81  [0.535] 302
+Started game 306 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 305 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 121 - 101 - 81  [0.533] 303
+Started game 307 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 303 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 122 - 101 - 81  [0.535] 304
+Started game 308 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 306 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 123 - 101 - 81  [0.536] 305
+Started game 309 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 304 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 124 - 101 - 81  [0.538] 306
+Started game 310 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 308 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 124 - 102 - 81  [0.536] 307
+Started game 311 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 310 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 125 - 102 - 81  [0.537] 308
+Started game 312 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 309 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 126 - 102 - 81  [0.539] 309
+Started game 313 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 307 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 126 - 102 - 82  [0.539] 310
+...      mychess-castling-factor-zero playing White: 66 - 41 - 48  [0.581] 155
+...      mychess-castling-factor-zero playing Black: 60 - 61 - 34  [0.497] 155
+...      White vs Black: 127 - 101 - 82  [0.542] 310
+Elo difference: 27.0 +/- 33.3, LOS: 94.4 %, DrawRatio: 26.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 314 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 311 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 127 - 102 - 82  [0.540] 311
+Started game 315 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 313 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 127 - 102 - 83  [0.540] 312
+Started game 316 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 314 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 127 - 103 - 83  [0.538] 313
+Started game 317 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 315 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 127 - 104 - 83  [0.537] 314
+Started game 318 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 312 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 127 - 104 - 84  [0.537] 315
+Started game 319 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 316 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 128 - 104 - 84  [0.538] 316
+Started game 320 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 319 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 128 - 105 - 84  [0.536] 317
+Started game 321 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 320 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 129 - 105 - 84  [0.538] 318
+Started game 322 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 317 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 129 - 105 - 85  [0.538] 319
+Started game 323 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 318 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 129 - 105 - 86  [0.537] 320
+...      mychess-castling-factor-zero playing White: 67 - 43 - 50  [0.575] 160
+...      mychess-castling-factor-zero playing Black: 62 - 62 - 36  [0.500] 160
+...      White vs Black: 129 - 105 - 86  [0.537] 320
+Elo difference: 26.1 +/- 32.7, LOS: 94.2 %, DrawRatio: 26.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 324 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 323 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 130 - 105 - 86  [0.539] 321
+Started game 325 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 321 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 131 - 105 - 86  [0.540] 322
+Started game 326 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 324 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 131 - 105 - 87  [0.540] 323
+Started game 327 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 322 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 131 - 106 - 87  [0.539] 324
+Started game 328 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 327 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 131 - 107 - 87  [0.537] 325
+Started game 329 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 325 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 132 - 107 - 87  [0.538] 326
+Started game 330 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 326 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 133 - 107 - 87  [0.540] 327
+Started game 331 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 328 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 134 - 107 - 87  [0.541] 328
+Started game 332 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 331 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 134 - 108 - 87  [0.540] 329
+Started game 333 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 330 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 134 - 109 - 87  [0.538] 330
+...      mychess-castling-factor-zero playing White: 70 - 45 - 50  [0.576] 165
+...      mychess-castling-factor-zero playing Black: 64 - 64 - 37  [0.500] 165
+...      White vs Black: 134 - 109 - 87  [0.538] 330
+Elo difference: 26.4 +/- 32.3, LOS: 94.6 %, DrawRatio: 26.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 334 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 333 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 135 - 109 - 87  [0.539] 331
+Started game 335 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 332 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 136 - 109 - 87  [0.541] 332
+Started game 336 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 329 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 136 - 109 - 88  [0.541] 333
+Started game 337 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 334 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 136 - 109 - 89  [0.540] 334
+Started game 338 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 336 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 137 - 109 - 89  [0.542] 335
+Started game 339 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 338 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 137 - 110 - 89  [0.540] 336
+Started game 340 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 337 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 138 - 110 - 89  [0.542] 337
+Started game 341 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 335 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 138 - 110 - 90  [0.541] 338
+Started game 342 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 341 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 139 - 110 - 90  [0.543] 339
+Started game 343 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 339 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 139 - 110 - 91  [0.543] 340
+...      mychess-castling-factor-zero playing White: 73 - 45 - 53  [0.582] 171
+...      mychess-castling-factor-zero playing Black: 66 - 65 - 38  [0.503] 169
+...      White vs Black: 138 - 111 - 91  [0.540] 340
+Elo difference: 29.7 +/- 31.7, LOS: 96.7 %, DrawRatio: 26.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 344 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 342 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 139 - 111 - 91  [0.541] 341
+Started game 345 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 343 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 139 - 111 - 92  [0.541] 342
+Started game 346 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 344 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 140 - 111 - 92  [0.542] 343
+Started game 347 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 340 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 140 - 111 - 93  [0.542] 344
+Started game 348 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 345 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 141 - 111 - 93  [0.543] 345
+Started game 349 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 346 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 142 - 111 - 93  [0.545] 346
+Started game 350 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 349 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black mates}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 142 - 112 - 93  [0.543] 347
+Started game 351 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 348 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 142 - 113 - 93  [0.542] 348
+Started game 352 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 350 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 142 - 114 - 93  [0.540] 349
+Started game 353 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 347 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 142 - 115 - 93  [0.539] 350
+...      mychess-castling-factor-zero playing White: 74 - 47 - 54  [0.577] 175
+...      mychess-castling-factor-zero playing Black: 68 - 68 - 39  [0.500] 175
+...      White vs Black: 142 - 115 - 93  [0.539] 350
+Elo difference: 26.9 +/- 31.3, LOS: 95.4 %, DrawRatio: 26.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 354 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 351 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 142 - 116 - 93  [0.537] 351
+Started game 355 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 352 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 142 - 117 - 93  [0.536] 352
+Started game 356 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 355 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 142 - 117 - 94  [0.535] 353
+Started game 357 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 353 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 142 - 118 - 94  [0.534] 354
+Started game 358 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 354 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 143 - 118 - 94  [0.535] 355
+Started game 359 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 357 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 144 - 118 - 94  [0.537] 356
+Started game 360 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 359 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 144 - 119 - 94  [0.535] 357
+Started game 361 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 356 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 144 - 119 - 95  [0.535] 358
+Started game 362 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 358 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 144 - 120 - 95  [0.533] 359
+Started game 363 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 361 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 144 - 121 - 95  [0.532] 360
+...      mychess-castling-factor-zero playing White: 75 - 51 - 55  [0.566] 181
+...      mychess-castling-factor-zero playing Black: 69 - 70 - 40  [0.497] 179
+...      White vs Black: 145 - 120 - 95  [0.535] 360
+Elo difference: 22.2 +/- 30.9, LOS: 92.1 %, DrawRatio: 26.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 364 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 363 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 144 - 122 - 95  [0.530] 361
+Started game 365 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 360 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 144 - 122 - 96  [0.530] 362
+Started game 366 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 364 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 144 - 123 - 96  [0.529] 363
+Started game 367 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 367 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 145 - 123 - 96  [0.530] 364
+Started game 368 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 362 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by stalemate}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 145 - 123 - 97  [0.530] 365
+Started game 369 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 365 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 145 - 123 - 98  [0.530] 366
+Started game 370 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 366 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 145 - 123 - 99  [0.530] 367
+Started game 371 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 368 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 145 - 124 - 99  [0.529] 368
+Started game 372 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 372 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black mates}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 146 - 124 - 99  [0.530] 369
+Started game 373 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 370 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 146 - 124 - 100  [0.530] 370
+...      mychess-castling-factor-zero playing White: 76 - 52 - 56  [0.565] 184
+...      mychess-castling-factor-zero playing Black: 70 - 72 - 44  [0.495] 186
+...      White vs Black: 148 - 122 - 100  [0.535] 370
+Elo difference: 20.7 +/- 30.3, LOS: 91.0 %, DrawRatio: 27.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 374 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 369 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 147 - 124 - 100  [0.531] 371
+Started game 375 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 371 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 147 - 125 - 100  [0.530] 372
+Started game 376 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 373 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 147 - 126 - 100  [0.528] 373
+Started game 377 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 375 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 148 - 126 - 100  [0.529] 374
+Started game 378 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 377 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 149 - 126 - 100  [0.531] 375
+Started game 379 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 376 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 149 - 126 - 101  [0.531] 376
+Started game 380 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 374 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 149 - 126 - 102  [0.531] 377
+Started game 381 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 378 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 150 - 126 - 102  [0.532] 378
+Started game 382 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 380 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 150 - 126 - 103  [0.532] 379
+Started game 383 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 379 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 151 - 126 - 103  [0.533] 380
+...      mychess-castling-factor-zero playing White: 80 - 54 - 56  [0.568] 190
+...      mychess-castling-factor-zero playing Black: 71 - 72 - 47  [0.497] 190
+...      White vs Black: 152 - 125 - 103  [0.536] 380
+Elo difference: 22.9 +/- 29.9, LOS: 93.3 %, DrawRatio: 27.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 384 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 384 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 152 - 126 - 103  [0.534] 381
+Started game 385 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 381 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 152 - 126 - 104  [0.534] 382
+Started game 386 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 383 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 153 - 126 - 104  [0.535] 383
+Started game 387 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 382 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 154 - 126 - 104  [0.536] 384
+Started game 388 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 386 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 154 - 126 - 105  [0.536] 385
+Started game 389 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 385 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 154 - 126 - 106  [0.536] 386
+Started game 390 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 388 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 154 - 127 - 106  [0.535] 387
+Started game 391 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 389 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 154 - 128 - 106  [0.534] 388
+Started game 392 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 387 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 154 - 128 - 107  [0.533] 389
+Started game 393 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 391 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 154 - 128 - 108  [0.533] 390
+...      mychess-castling-factor-zero playing White: 81 - 55 - 60  [0.566] 196
+...      mychess-castling-factor-zero playing Black: 73 - 73 - 48  [0.500] 194
+...      White vs Black: 154 - 128 - 108  [0.533] 390
+Elo difference: 23.2 +/- 29.4, LOS: 93.9 %, DrawRatio: 27.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 394 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 390 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by fifty moves rule}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 154 - 128 - 109  [0.533] 391
+Started game 395 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 392 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 154 - 128 - 110  [0.533] 392
+Started game 396 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 393 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 154 - 129 - 110  [0.532] 393
+Started game 397 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 395 (mychess-castling-factor-zero vs mychess-4.6.1): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 154 - 130 - 110  [0.530] 394
+Started game 398 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 396 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 154 - 131 - 110  [0.529] 395
+Started game 399 of 400 (mychess-castling-factor-zero vs mychess-4.6.1)
+Finished game 394 (mychess-4.6.1 vs mychess-castling-factor-zero): 1/2-1/2 {Draw by insufficient mating material}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 154 - 131 - 111  [0.529] 396
+Started game 400 of 400 (mychess-4.6.1 vs mychess-castling-factor-zero)
+Finished game 397 (mychess-castling-factor-zero vs mychess-4.6.1): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 155 - 131 - 111  [0.530] 397
+Finished game 398 (mychess-4.6.1 vs mychess-castling-factor-zero): 1-0 {White wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 155 - 132 - 111  [0.529] 398
+Finished game 400 (mychess-4.6.1 vs mychess-castling-factor-zero): 0-1 {Black wins by adjudication}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 156 - 132 - 111  [0.530] 399
+Finished game 399 (mychess-castling-factor-zero vs mychess-4.6.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of mychess-castling-factor-zero vs mychess-4.6.1: 156 - 132 - 112  [0.530] 400
+...      mychess-castling-factor-zero playing White: 82 - 57 - 61  [0.563] 200
+...      mychess-castling-factor-zero playing Black: 74 - 75 - 51  [0.497] 200
+...      White vs Black: 157 - 131 - 112  [0.532] 400
+Elo difference: 20.9 +/- 28.9, LOS: 92.1 %, DrawRatio: 28.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+
+Player: mychess-castling-factor-zero
+   "Draw by 3-fold repetition": 37
+   "Draw by adjudication": 24
+   "Draw by fifty moves rule": 16
+   "Draw by insufficient mating material": 29
+   "Draw by stalemate": 6
+   "Loss: Black mates": 1
+   "Loss: Black wins by adjudication": 56
+   "Loss: White wins by adjudication": 75
+   "Win: Black mates": 2
+   "Win: Black wins by adjudication": 72
+   "Win: White mates": 3
+   "Win: White wins by adjudication": 79
+Player: mychess-4.6.1
+   "Draw by 3-fold repetition": 37
+   "Draw by adjudication": 24
+   "Draw by fifty moves rule": 16
+   "Draw by insufficient mating material": 29
+   "Draw by stalemate": 6
+   "Loss: Black mates": 2
+   "Loss: Black wins by adjudication": 72
+   "Loss: White mates": 3
+   "Loss: White wins by adjudication": 79
+   "Win: Black mates": 1
+   "Win: Black wins by adjudication": 56
+   "Win: White wins by adjudication": 75
+Finished match

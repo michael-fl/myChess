@@ -2,18 +2,36 @@
 
 [`WeightingFunction.calculate(Board)`](../src/main/java/org/michaelfl/mychess/WeightingFunction.java) is the static evaluation — it scores a position without looking ahead. Its result is the leaf value of the search tree, and it is by far the hottest piece of code in the engine.
 
-The evaluation is a **weighted sum of eight components**, all expressed as a delta between white and black, all measured in centipawns at the end:
+The evaluation is a **weighted sum of nine components**, all expressed as a delta between white and black, all measured in centipawns at the end:
 
 ```
-material        (piecesWeight[w] - piecesWeight[b])
-+ position      (positionWeight[w] - positionWeight[b])  * 0.5
-+ mobility      (mobilityWeight[w] - mobilityWeight[b])  * 0.1
-+ threats       (threadWeight[w]   - threadWeight[b])    * 0.02
-+ castling      (castlingState[w]  - castlingState[b])   * 0.25
-+ opening       (openingState[w]   - openingState[b])    * 0.1 * decay(ply)
-+ checks        (chessCount[w]     - chessCount[b])      * 0.25
-+ doublePawns   (doublePawnCount[w] - doublePawnCount[b]) * (-0.1)
+material            (piecesWeight[w]         - piecesWeight[b])
++ position          (positionWeight[w]       - positionWeight[b])       * 0.5
++ mobility          (mobilityWeight[w]       - mobilityWeight[b])       * 0.1
++ threats           (threadWeight[w]         - threadWeight[b])         * 0.02
++ castling          (castlingState[w]        - castlingState[b])        * 0.25
++ checks            (chessCount[w]           - chessCount[b])           * 0.25
++ doublePawns       (doublePawnCount[w]      - doublePawnCount[b])      * (-0.15)
++ undefendedPieces  (undefendedPiecesCount[w] - undefendedPiecesCount[b]) * (-0.1)
++ bishopPair        (hasPair[w]              - hasPair[b])              * 0.4
 ```
+
+The factors are exactly `WeightingFunction.tunableFactorValues()`; `TUNABLE_FACTOR_NAMES` is the
+canonical list and this block must match it. Note that only `position` and `mobility` are divided
+by 100 inside the sum — the other components are already in pawn units — and the whole sum is
+multiplied by 100 at the end, which is why a factor of `0.25` on a `castlingState` delta of `4`
+reads as one pawn.
+
+> **Corrected 2026-09-09, and the mistake is instructive.** This block listed **eight** components
+> and included an `opening` term with a `decay(ply)` factor. The listing of the final formula
+> further down in this document had already been corrected on 2026-09-02, with a note saying it
+> "still showed an `openingState` term and a `plyCount`-based decay" — but that correction was
+> applied only to the code listing, not to this overview, and not to the descriptive section that
+> explained the term. So the document contradicted itself for a week: a whole section documented
+> `openingState`, and a note a hundred lines below recorded its removal. `openingState` and
+> `calculateOpeningState()` exist neither in the production code nor in the tests. The two
+> components that were missing here, `undefendedPieces` and `bishopPair`, and the wrong
+> `doublePawns` factor (−0.1 for the actual −0.15) came from the same partial fix.
 
 Positive = white is better, negative = black is better. The result is rounded to a centipawn integer.
 
@@ -291,58 +309,83 @@ The score is always non-positive: castled = 0 (best), one or two rights remainin
 
 **Scale factor.** `castlingFactor = 0.25` — losing both castling rights without having castled is worth `(0 − (−4)) × 0.25 = 1.0` pawn against the side that lost the rights. That's a meaningful but not overwhelming penalty: still recoverable through other positional advantages, but enough to push the engine toward castling early.
 
-## 5.6 Opening state
+### 5.5.1 Measured 2026-09-09 — load-bearing, and too strong
 
-`openingState[color]` is another non-positive score that captures *how far this side has progressed past the opening setup*. Computed for each color by `calculateOpeningState()`:
+These were the last hand-written numbers in the evaluation. `castlingFactor = 0.25f` dates from
+`dabec30`, the original implementation, and the `0 / −1 / −2 / −4` progression from `2cd229a`;
+neither had ever been tuned or swept, although `castlingFactor` has been wired into
+`TUNABLE_FACTOR_NAMES` the whole time.
 
-```java
-int state = 0;
-if (!game.hasWhiteCastled())          state--;
-if (board[Board.b1] == whiteKnight)   state--;     // knight still on starting square
-if (board[Board.c1] == whiteBishop)   state--;
-if (board[Board.f1] == whiteBishop)   state--;
-if (board[Board.g1] == whiteKnight)   state--;
+**The term is load-bearing.** A 400-game self-play match of a `castlingFactor = 0` build against
+4.6.1 at `tc=40/20`, read for the castling *rate* rather than for Elo:
 
-int movedPawnCount = 0;
-if (board[Board.b2] != whitePawn) movedPawnCount++;
-if (board[Board.c2] != whitePawn) movedPawnCount++;
-if (board[Board.d2] != whitePawn) movedPawnCount++;
-if (board[Board.e2] != whitePawn) movedPawnCount++;
-if (board[Board.g2] != whitePawn) movedPawnCount++;
-if      (movedPawnCount == 0) state -= 2;
-else if (movedPawnCount == 1) state--;
+| arm | sides | castled | rights lost without castling |
+|---|---:|---:|---:|
+| `castlingFactor = 0` | 400 | **67.0 %** | 32.8 % |
+| 4.6.1 | 400 | **97.3 %** | 2.5 % |
 
-openingState[0] = state;
-```
+**A 30.3 pp drop, twelve standard errors**, against a threshold of 5 pp fixed before the run, and
+stable across it (31.7 → 33.7 → 32.5 → 30.3 as the sample grew). The hypothesis this measurement
+was built to test — that the term is redundant because rank 1 of the king midgame table already
+pays 53 cp for `e1 → g1` — is **refuted**. The reason the arithmetic misled: the piece-square table
+prices the *square* the king stands on and pays the same for a king that walks to g1, while this
+term prices the *state* "rights lost, never castled". Only the latter is an incentive to complete
+the castling rather than to rearrange the king on foot.
 
-Five contributors, each penalizing "still in opening setup":
+**But the magnitude is wrong, and three independent measurements say so.**
 
-| Trigger | Penalty |
-|---|---|
-| King not castled | −1 |
-| Each minor piece still on its starting square (b1, c1, f1, g1) | −1 each (up to −4) |
-| Zero of the five tracked pawns (b, c, d, e, g) has moved | −2 |
-| Exactly one of those five pawns has moved | −1 |
-| Two or more tracked pawns have moved | 0 |
+*The match itself.* The arm without the term scored `+20.9 ± 28.9` Elo, LOS 92.1 %. The null is
+inside the interval so this is not a finding — but the build without the term did not play worse.
 
-The five tracked pawns are b, c, d, e, g — the **non-rook pawns minus the f-pawn**. The f-pawn is omitted because moving it weakens the diagonal toward the king and is rarely a good opening move; not moving it is not a development *failure*. The a- and h-pawns are omitted because they aren't expected to move early.
+*Two Texel fits of the four levels* (`CastlingStateTexelData` / `TexelCastlingStateTuner`, with
+"castled" pinned at 0 since only the difference reaches the score):
 
-Maximum penalty for an undeveloped opening position is `−1 (king) − 4 (minors) − 2 (no pawns moved) = −7`.
+| level | shipped | `hybrid` (1.49 M) | `human-masters` (855 k) |
+|---|---:|---:|---:|
+| castled | 0 | 0 *(pinned)* | 0 *(pinned)* |
+| both rights | −25 | **+9.5** | **+26.0** |
+| one right | −50 | −7.0 | +10.5 |
+| no rights | −100 | −4.0 | −20.0 |
+| **span** | **100 cp** | **16.5 cp** | **46.0 cp** |
 
-**Scale factor with ply decay.** `openingFactor = 0.1`, but with a multiplicative decay based on `plyCount`:
+Both corpora shrink the span drastically, and both put "both rights" *above* "castled" — the
+opposite of the shipped shape's central claim.
 
-```java
-final float openingFactorCorrection =
-    plyCount > 20 ? (plyCount > 40 ? 0f : 0.5f) : 1.0f;
-```
+**The fits are not usable as a template, and that matters more than their values.** They disagree
+on the basic question: on `hybrid` the shipped values make the prediction **worse than no term at
+all** (0.070870 against 0.069934), on `human-masters` better (0.157077 against 0.157318). That is
+§ 4.3 of `king-safety.md` reproduced — the corpora genuinely differ and the Zurichess-derived one
+is the outlier. Both fits are non-monotone, and in both the violation sits on the "one right"
+level, which carries 2.4–2.6 % of king states and is flagged as thin by the tuner itself. And the
+improvement is at the edge of what has ever meant anything: `hybrid` gains 0.000050 over no term,
+`human-masters` 0.000473 — against the king-line re-fit, which gained **0.00053** and then
+measured **0 Elo**.
 
-| Ply count | Multiplier |
-|---|---|
-| ≤ 20 (first 10 moves per side) | 1.0 — full weight |
-| 21 – 40 (move 11–20 per side) | 0.5 — half weight |
-| > 40 (after move 20) | 0.0 — disabled |
+**What the three measurements do agree on is that the term is too strong.** The cheapest test of
+that is one parameter, monotone, shape unchanged: `castlingFactor = 0.125f`, i.e.
+`0 / −12.5 / −25 / −50`. It sits between the shipped 100 cp span and the fitted 16.5–46 cp, needs
+no choice between two disagreeing corpora, and an SPRT against 4.6.1 settles it.
 
-So a fully undeveloped position at ply 0 is worth `−7 × 0.1 × 1.0 = −0.7` pawns. The same position at ply 30 is worth `−0.35` pawns. By move 21 (ply 40) the opening factor stops contributing entirely — the position is judged on its own merits.
+**One open question the match raised and did not answer.** The zero arm — the largest possible
+reduction — was the one that scored `+20.9`. If halving measures positive, the next question is
+not "reduce further" but why a term that lifts the castling rate by 30 points buys no Elo doing
+it, i.e. whether castling is worth as much for myChess as everyone assumes. That is its own
+investigation.
+
+## 5.6 — removed
+
+`5.6` was *Opening state*, deleted on 2026-09-09 together with the term it described: neither
+`openingState` nor `calculateOpeningState()` exists in the production code or the tests, and the
+note under § 5.9's listing had recorded the term's removal for a week while this section still
+explained it. See the correction note under the overview formula at the top.
+
+**The number is deliberately not reused.** Renumbering §§ 5.7–5.9 would break the anchors that
+`data-types.md`, `move-generation.md` and `tapered-evaluation.md` link to, and two internal
+references in this file, for no gain.
+
+**Two components of the formula still have no section of their own** — `undefendedPieces` (−0.1
+per hanging piece) and `bishopPair` (+0.4, the largest single eval gain of the 4.3.x series at
++31.3 Elo). They are the natural candidates for this slot when someone writes them up.
 
 ## 5.7 Double-pawn penalty
 
