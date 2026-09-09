@@ -1,0 +1,71 @@
+############ hybrid ############
+loading tuning-data/hybrid.epd
+1,487,619 samples: 1,190,095 training, 297,524 validation
+
+occupancy of the four states, over both kings:
+  castled           2544012   85.51 %
+  both rights        169569    5.70 %
+  one right           77691    2.61 %   <-- thin, read with care
+  no rights          183966    6.18 %
+
+k = 0.008311
+with the term switched off: training 0.070004   validation 0.069934
+with the shipped 0/−25/−50/−100: training 0.070958   validation 0.070870
+
+step schedule: initial 4.0, min 0.5, max 12 rounds (reachable magnitude ~96)
+
+  step  4.00  error 0.069961
+  step  4.00  error 0.069951
+  step  2.00  error 0.069951
+  step  1.00  error 0.069951
+  step  0.50  error 0.069951
+
+after:  training 0.069951   validation 0.069884
+
+fitted levels, in centipawns:
+                  shipped     fitted      delta
+  castled               0        0.0       +0.0   (pinned)
+  both rights         -25        9.5      +34.5
+  one right           -50       -7.0      +43.0   thin
+  no rights          -100       -4.0      +96.0
+
+monotone (worse state never scores better): NO — check the thin level before believing the shape
+
+############ human-masters ############
+loading tuning-data/human-masters.epd
+855,479 samples: 684,383 training, 171,096 validation
+
+occupancy of the four states, over both kings:
+  castled           1414226   82.66 %
+  both rights        114864    6.71 %
+  one right           40872    2.39 %   <-- thin, read with care
+  no rights          140996    8.24 %
+
+k = 0.005491
+with the term switched off: training 0.157169   validation 0.157318
+with the shipped 0/−25/−50/−100: training 0.156884   validation 0.157077
+
+step schedule: initial 4.0, min 0.5, max 12 rounds (reachable magnitude ~96)
+
+  step  4.00  error 0.157012
+  step  4.00  error 0.156887
+  step  4.00  error 0.156796
+  step  4.00  error 0.156738
+  step  4.00  error 0.156705
+  step  4.00  error 0.156699
+  step  2.00  error 0.156669
+  step  1.00  error 0.156669
+  step  0.50  error 0.156669
+
+after:  training 0.156669   validation 0.156845
+
+fitted levels, in centipawns:
+                  shipped     fitted      delta
+  castled               0        0.0       +0.0   (pinned)
+  both rights         -25       26.0      +51.0
+  one right           -50       10.5      +60.5   thin
+  no rights          -100      -20.0      +80.0
+
+monotone (worse state never scores better): NO — check the thin level before believing the shape
+
+ALL-FITS-DONE
