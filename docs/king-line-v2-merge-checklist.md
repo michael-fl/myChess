@@ -14,18 +14,19 @@ that made the term flicker with the clock and is fixed in `cbaf8e5`, pinned by
 
 | | |
 |---|---|
-| Standing | **+2.3 ± 17.9** Elo at 1075 of 6000 games (own recomputation: +1.0, 95 % [−16.9 … +18.9]) |
-| Comparable | the ungated variant measured **−4.9 ± 10.7** over 2989 games (§ 4.14) — the intervals overlap almost completely |
-| At 6000 games | roughly **±7.5** Elo. Enough to separate "≥ 15" from zero, not "+2" from zero |
-| The run | `tc=40/60`, self-play, `-sprt` passed **without a band** (`lbound -inf, ubound inf`, llr stuck at 0), so it cannot terminate early and is effectively fixed-N. Not wrong — fixed-N is the right form for a precision estimate |
+| **Final result** | **+6.1 ± 7.5** Elo over the full 6000 games, score 0.50883 (2257 − 2151 − 1592), LOS 94.5 %, interval [−1.40 … +13.68] |
+| Unbiased | `-sprt` was passed **without a band**, so no bound could fire and the run went to full length. The estimate is not one taken at an accepted bound |
+| Comparable | the ungated variant measured **−4.9 ± 10.7** over 2989 games (§ 4.14). Those intervals no longer overlap much: this variant is the better of the two |
+| Caveat | by segment the candidate scored 50.1 / 49.2 / 50.6 / **53.2** / 51.9 %, so one 1160-game stretch at +2.6 SE carries about half the figure. Not grounds to correct the estimate — dropping a favourable segment is post-hoc — but at 2296 games the same run read −2.6 |
 
 Behavior, candidate against baseline in the same run, and it confirms the fix did what it should:
 
 | | v2 (fixed) | 4.6.1 | Δ | v2 (buggy gate) |
 |---|---:|---:|---:|---:|
-| unsheltered king files, **settled** | 1.0560 | 1.5356 | **−31.2 %** | −31.8 % |
-| unsheltered king files, **unsettled** | 0.2918 | 0.2650 | **+10.1 %** | −17.8 % |
-| average castling move | 9.30 | 9.08 | 0.22 **later** | 0.36 earlier |
+| unsheltered king files, **settled** | 1.0472 | 1.5358 | **−31.8 %** | −31.8 % |
+| unsheltered king files, **unsettled** | 0.3101 | 0.2552 | **+21.5 %** | −17.8 % |
+| average castling move | 9.60 | 9.11 | 0.49 **later** | 0.36 earlier |
+| castling rate | 95.5 % | 94.1 % | +1.4 pp, z = 3.5 | — |
 
 The sign of the unsettled row flipped and the castling move went from earlier to later: the term
 really is off before castling now. Read the signs, not the magnitudes — the unsettled figure comes
@@ -39,10 +40,12 @@ section says a zero would be progress for this family. Two numbers are missing b
 decided on evidence rather than on inclination, and both are cheap against the 6000 games already
 being spent.
 
-## Step 1 — let the 6000 games finish
+## Step 1 — let the 6000 games finish — **DONE (2026-09-09)**
 
-It is the assurance that the term does not *hurt*, and it is already paid for. Read the standing
-only with its interval.
+Result above: **+6.1 ± 7.5**, unbiased. It was meant as the assurance that the term does not hurt,
+and it delivers more than that — the point estimate is positive and the null sits just inside the
+lower edge of the interval. Separating +6 from 0 would need about **13 700 games**, i.e. another
+6.7 days, for a number that would not change the decision.
 
 ## Step 2 — measure what the gated term costs
 
