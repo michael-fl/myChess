@@ -247,11 +247,46 @@ explicit upper bound; 1.61 % is therefore at most ~3.4 Elo and on the textbook
 fixed-N reads ±12 — which is why this change was measured on the bench and shipped on
 the bench, without a match.
 
-**Open: a control measurement on an idle machine.** The relative result is what the
-merge decision needed and it is in hand, but the absolute pair belongs in the table
-above and cannot be taken under load. Re-run both builds once the machine is free and
-add the row then; until it exists, `4.6.0`'s 1,251,215 / 17:18 remains the last
-absolute reading in this document.
+#### The control measurement on an idle machine — **DONE (2026-09-09)**
+
+The absolute pair this entry owed. Same six runs in the same `A B B A A B` order, `bench
+8`, on a machine rebooted for the purpose: Spotlight disabled on all three volumes
+(`mdutil -a -s`), no match running, 92 % idle at the start. **Signature 1,300,002,835 in
+all six runs**, and the 54-position node count identical to the digit — 170,141,688 — in
+all six, so both builds demonstrably computed the same thing.
+
+| | runs (NPS over 54 positions) | mean | SD |
+|---|---|---:|---:|
+| master `6b3f480` | 1,704,587 / 1,713,755 / 1,747,642 | 1,721,995 | 1.32 % |
+| + tracking `3d09d4c` | 1,772,124 / 1,766,127 / 1,772,918 | **1,770,390** | 0.21 % |
+
+**+2.81 %**, SE of the difference 0.77 pp, t = 3.65 — and the raw values are **disjoint
+again**, master's fastest 1,747,642 below the candidate's slowest 1,766,127. Absolute
+wall clock: 16:38 against 16:18 over the full suite, 1,302,985 against 1,329,380 total
+NPS. These are the figures that replace `4.6.0`'s 1,251,215 / 17:18 as this document's
+last absolute reading.
+
+**The methodological point reproduces exactly, which is the more valuable half.** On
+total NPS the same six runs give +2.03 % at t = 0.93 with overlapping samples —
+indistinguishable from noise, while the 54-position comparator resolves the same effect
+at t = 3.65. Under load the pair read t = 3.62 against t = 1.28. Two independent
+measurements, taken under opposite load conditions, agree that the effect is visible in
+one measure and invisible in the other. That is no longer a plausible reading of one
+data set; it is a property of the instrument, and it is why the comparator is defined as
+the 54-position figure.
+
+**The effect is larger idle than under load: +2.81 % against +1.61 %.** Stated as the
+observation it is, not explained — the two numbers come from different machine
+conditions and only the idle one belongs in a table. The Elo bound from § 4.10 of
+[`king-safety.md`](king-safety.md) moves with it and stays negligible: at most ~5.9 Elo
+on that section's explicit upper bound, about 2.4 on the textbook 60-per-doubling rate,
+still far under what any match resolves.
+
+One asymmetry worth recording rather than smoothing over: master's spread is 1.32 %
+against the candidate's 0.21 %, driven by master's third run at 1,747,642. Under load
+the two arms sat at 0.57 % and 0.51 %. The difference survives it — the disjointness
+holds even so — but a single idle triple is not a variance estimate, and a future reader
+should not treat 0.21 % as this build's reproducibility.
 
 ---
 

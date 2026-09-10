@@ -1706,6 +1706,15 @@ of the good ones.
 
 ### 4.15 Four screens, the running match as an intervention, and why tuning on the marked tests cannot work (2026-09-06/08)
 
+> **The ten scanners this section names are gone.** They were written into the session
+> scratchpad under `/tmp`, and a reboot on 2026-09-09 — taken to free the machine for a
+> measurement — erased all of them. **Nothing measured was lost:** every figure they produced
+> is written out in the prose below, and their inputs, the PGNs under `test-results/`, are all
+> still on disk. What is gone is the ability to re-run the same analysis cheaply on new games,
+> which would have been worth having for the anchor gauntlet. Successors belong in
+> `../myChess-lab/scripts`, outside `/tmp`; the scanner names are kept below because they say
+> what was computed, not because the files can still be opened.
+
 § 4.14 closed the file-danger term as measured. Two redesigns were then proposed, both aimed at
 the same suspicion — that the term tries to say too much — and both screened against the existing
 PGNs rather than built. Neither needed a match, because a screen reads games that were already
@@ -1855,7 +1864,7 @@ pairings out of 15). The cheapest refusal of the series: no compute, no build, n
 And the one screen here that could do more than stop: it did not find a weak association, it found
 a missing variance, and no match can turn that around.
 
-Scanner: `HarbourScreen.java` in the session scratchpad. It calls the production classifier
+Scanner: `HarbourScreen.java`. It called the production classifier
 `WeightingFunction.calculateKingLineDanger` rather than a re-implementation, so the five-level
 scale, the walk direction and the advanced-pawn boundary are the shipped ones.
 
@@ -1968,9 +1977,9 @@ exactly. This document warns that a mirrored computation absorbs a sign or direc
 colour while the other stays correct, showing up only as lost Elo; this is independent evidence
 against such a defect, alongside the unit tests that pin both colours.
 
-Scanners: `AttackSuccessScan.java`, `AttackUnitConversion.java`, `PerArmKingLine.java` in the
-session scratchpad. The second one reads positions through the `attack-units` build, which carries
-no king-line term itself and is used purely as an instrument.
+Scanners: `AttackSuccessScan.java`, `AttackUnitConversion.java`, `PerArmKingLine.java`. The
+second one read positions through the `attack-units` build, which carries no king-line term
+itself and served purely as an instrument.
 
 **How the wins are won, which is the sharpest form of the cancellation.** Counting a win as decided
 by a king-wing attack requires, per the owner's specification, that the *loser's* king had stayed
@@ -2101,8 +2110,8 @@ term has landed.** Note `qa3` in particular: § 4.1 measured all four exposure a
 after both moves there and put the required margin at 4 cp, yet the move did change — so the effect
 arrived indirectly, from deeper in the tree, not from the term's opinion about this position.
 
-Scanners: `SignalDirectionScan.java` and `DefectProbe.java` in the session scratchpad. The first
-reads `anchor-refutations.jsonl` and needs no engine search at all.
+Scanners: `SignalDirectionScan.java` and `DefectProbe.java`. The first read
+`anchor-refutations.jsonl` and needed no engine search at all.
 
 #### What the second screen incidentally shows about all of them
 
@@ -2122,7 +2131,7 @@ conditioned and screened (direction inverted). What remains untouched in king sa
 **attacker** side — the attack-unit term, whose corner defect is repaired and whose match has not
 run. "Pawn cover beside the king" is exhausted; "attackers on the king zone" is not.
 
-Scanners in the session scratchpad, kept for the same reason as § 4.14's five:
+Scanners, named for the same reason as § 4.14's five:
 `ShelterBreakScreen.java` (screen 1), `ShelterDurationScreen.java` (its duration control),
 `HeavyMaterialScreen.java` (screen 2).
 
