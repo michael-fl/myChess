@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/tkwnSkmo"]
+[Date "2026.08.19"]
+[Round "-"]
+[White "myChessJava"]
+[Black "pi0w"]
+[Result "1/2-1/2"]
+[GameId "tkwnSkmo"]
+[UTCDate "2026.08.19"]
+[UTCTime "08:57:05"]
+[WhiteElo "1985"]
+[BlackElo "1958"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+2"]
+[ECO "B23"]
+[Opening "Sicilian Defense: Closed"]
+[Termination "Normal"]
+
+1. e4 c5 2. Nc3 d6 3. Nf3 e6 4. Bb5+ Bd7 5. O-O Bxb5 6. Nxb5 Nf6 7. d4 Nxe4 8. Re1 a6 9. Rxe4 axb5 10. dxc5 dxc5 11. Qxd8+ Kxd8 12. Bf4 Nc6 13. Ne5 Nxe5 14. Bxe5 b4 15. a4 bxa3 16. bxa3 Kc8 17. a4 Rg8 18. Rg4 h5 19. Rh4 g6 20. Rf4 f5 21. Rc4 Be7 22. Rd1 Rd8 23. Re1 h4 24. Bc3 Kd7 25. a5 Ra6 26. g4 Kd6 27. h3 Raa8 28. Rb1 Kc6 29. Rb6+ Kd5 30. Rf4 Bg5 31. Ra4 Rdb8 32. Kg2 Bd8 33. Rb3 b5 34. Ra1 fxg4 35. hxg4 b4 36. Rd1+ Kc6 37. Be5 Bc7 38. Bxc7 Kxc7 39. Re3 Rxa5 40. Rxe6 Ra2 41. Rc1 Rg8 42. g5 Rb2 43. Kh3 Kd7 44. Rf6 c4 45. Kxh4 c3 46. Ra1 Kc7 47. Ra7+ Kb8 48. Ra4 Kb7 49. Kg3 Rb1 50. Rf4 Rg1+ 51. Kf3 Kc6 52. Raxb4 Rxg5 53. Rf6+ Kd7 54. Rc4 Rh5 55. Ke3 Rh3+ 56. f3 g5 57. Rxc3 g4 58. Rf7+ Kd6 59. Rd3+ Ke6 60. Rf4 g3 61. Rg4 Rxg4 62. fxg4 Rh2 63. Rd1 Rxc2 64. Kf3 g2 65. Rg1 Ke5 66. Kg3 Rc3+ 67. Kxg2 Kf4 68. Kh2 Rc6 69. g5 Rg6 70. Rg2 Rxg5 71. Rxg5 Kxg5 1/2-1/2
+

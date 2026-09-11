@@ -1,0 +1,22 @@
+[Event "rated classical game"]
+[Site "https://lichess.org/z55TQzX1"]
+[Date "2026.09.09"]
+[Round "-"]
+[White "uxugin-bot"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "z55TQzX1"]
+[UTCDate "2026.09.09"]
+[UTCTime "09:08:31"]
+[WhiteElo "1836"]
+[BlackElo "2137"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "1800+0"]
+[ECO "D38"]
+[Opening "Queen's Gambit Declined: Ragozin Defense"]
+[Termination "Normal"]
+
+1. d4 Nf6 2. c4 e6 3. Nf3 d5 4. Nc3 Bb4 5. a3 Bxc3+ 6. bxc3 dxc4 7. Qa4+ Bd7 8. Qxc4 O-O 9. a4 Bc6 10. Bf4 Nbd7 11. a5 Ne4 12. h4 Ndf6 13. e3 Nd5 14. Ne5 Nxf4 15. Nxc6 bxc6 16. exf4 Qd6 17. g3 Qd5 18. Qxd5 cxd5 19. Bd3 Nxc3 20. Rc1 Na2 21. Rxc7 Nb4 22. Bb5 Rab8 23. Be2 Rfc8 24. Rxc8+ Rxc8 25. O-O Rc2 26. Bb5 Na2 27. Bd3 Rd2 28. Rb1 g5 29. Rb3 Nc1 30. Rb8+ Kg7 31. Bf1 gxh4 32. gxh4 Rxd4 33. Rb1 Na2 34. h5 Rxf4 35. Rb3 Ra4 36. Rb5 Nc3 37. Rb3 Ne4 38. a6 Ra1 39. Rb2 Nc5 40. h6+ Kxh6 41. Rb8 Nxa6 42. Rb7 Nc5 43. Rxf7 d4 44. Rf4 e5 45. Rf6+ Kg5 46. Rd6 Ne4 47. Ra6 Rxa6 48. Bxa6 Nc5 49. Bc4 d3 50. Kf1 h5 51. f3 Kf4 52. Ba2 h4 53. Bd5 h3 54. Kf2 h2 55. Kg2 d2 56. Kxh2 d1=Q 57. Bc4 Qc2+ 58. Kh1 Qf2 59. Ba2 Kg3 60. Bb1 Qf1# 0-1
+

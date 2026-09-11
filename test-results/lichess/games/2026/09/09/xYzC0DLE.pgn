@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/xYzC0DLE"]
+[Date "2026.09.09"]
+[Round "-"]
+[White "goodpjwhybrid"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "xYzC0DLE"]
+[UTCDate "2026.09.09"]
+[UTCTime "07:57:58"]
+[WhiteElo "1816"]
+[BlackElo "2037"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+3"]
+[ECO "C45"]
+[Opening "Scotch Game: Steinitz Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Nxd4 Qh4 5. Nc3 Bb4 6. Nb5 Ba5 7. Qd5 Nge7 8. Bg5 Nxd5 9. Bxh4 Nxc3 10. Nxc3 Bxc3+ 11. bxc3 O-O 12. Bd3 Ne5 13. O-O-O d6 14. Rhe1 Bg4 15. Be2 Bxe2 16. Rxe2 Rae8 17. a4 Nd7 18. Re3 Nc5 19. Rd4 Re6 20. Bg3 f6 21. f3 Rfe8 22. Rd5 Nxa4 23. Rf5 Nb6 24. Re1 d5 25. Bxc7 g6 26. Rf4 Nc4 27. Rg4 f5 28. Rg3 fxe4 29. fxe4 R6e7 30. Bf4 Rxe4 31. Rxe4 Rxe4 32. Bd2 Re2 33. Rd3 Rxg2 34. Bf4 Rf2 35. Bg3 Rf1+ 36. Rd1 Rxd1+ 37. Kxd1 a5 38. Bf4 a4 39. Kc1 Kf7 40. Kb1 b6 41. Bg5 Ke6 42. Ka1 Kf5 43. Be7 g5 44. Ka2 h5 45. h3 g4 46. hxg4+ hxg4 47. Ka1 g3 48. Bh4 Kf4 49. Bd8 g2 50. Bc7+ Ke3 51. Bh2 Kf2 52. Ka2 Kf1 53. Ka1 Nd2 54. Ka2 Nf3 55. Bg3 g1=Q 56. Bd6 Qg6 57. Kb2 Ne1 58. Bb4 Qxc2+ 59. Ka1 Qb3 60. Ba5 Nc2# 0-1
+

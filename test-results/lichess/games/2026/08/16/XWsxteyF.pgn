@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/XWsxteyF"]
+[Date "2026.08.16"]
+[Round "-"]
+[White "sunfish-engine"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "XWsxteyF"]
+[UTCDate "2026.08.16"]
+[UTCTime "05:14:52"]
+[WhiteElo "1833"]
+[BlackElo "2092"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+2"]
+[ECO "A46"]
+[Opening "Indian Defense: Knights Variation"]
+[Termination "Normal"]
+
+1. Nf3 Nf6 2. d4 e6 3. Nc3 Bb4 4. a3 Bxc3+ 5. bxc3 O-O 6. e3 d5 7. Bd3 Nc6 8. Bb2 Bd7 9. O-O Ne4 10. Nd2 f5 11. f3 Nd6 12. Re1 e5 13. e4 dxe4 14. fxe4 Qf6 15. d5 Ne7 16. exf5 Bxf5 17. Bxf5 Qxf5 18. c4 Ng6 19. Rf1 Qg5 20. Re1 Rae8 21. c5 Nf4 22. Qf3 Nb5 23. Rab1 Nd4 24. Bxd4 exd4 25. Rxe8 Rxe8 26. Ne4 Qe5 27. d6 cxd6 28. Nxd6 Re6 29. Qxb7 Ne2+ 30. Kf1 Rf6+ 31. Qf3 Rxf3+ 32. gxf3 h6 33. Rb8+ Kh7 34. Rh8+ Kg6 35. Re8 Qxc5 36. Re6+ Kh7 37. Kxe2 Qxc2+ 38. Kf1 Qxh2 39. Ke1 Qh3 40. Re4 Qg3+ 41. Ke2 Qxd6 42. Kd3 Qxa3+ 43. Kxd4 Qxf3 44. Re6 a5 45. Rd6 a4 46. Ra6 Qe2 47. Ra8 Qf2+ 48. Kc4 Qf7+ 49. Kc5 Qc7+ 50. Kd4 Qb6+ 51. Kd3 Qg6+ 52. Kd4 Qd6+ 53. Ke3 Qe5+ 54. Kf2 Qf4+ 55. Kg1 Qg3+ 56. Kf1 Qf3+ 57. Ke1 Qxa8 58. Ke2 Qe4+ 59. Kd2 Qf3 60. Kc1 Qg2 61. Kd1 a3 62. Ke1 a2 63. Kd1 a1=Q# 0-1
+

@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/mabKfrVs"]
+[Date "2026.09.10"]
+[Round "-"]
+[White "NICE_BOT"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "mabKfrVs"]
+[UTCDate "2026.09.10"]
+[UTCTime "01:16:39"]
+[WhiteElo "1891"]
+[BlackElo "2232"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "C45"]
+[Opening "Scotch Game: Classical Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Nxd4 Bc5 5. Be3 Qf6 6. Nb5 Bxe3 7. fxe3 Qh4+ 8. Kd2 Qd8 9. Qg4 g6 10. Qf4 d6 11. N1c3 a6 12. Nd4 Nxd4 13. exd4 Nf6 14. Kc1 O-O 15. Bd3 Be6 16. Rf1 Kg7 17. d5 Bd7 18. h3 Qe7 19. Rg1 Bb5 20. Nxb5 axb5 21. a3 Rae8 22. Bxb5 Qxe4 23. Qxe4 Rxe4 24. Rd1 Nh5 25. Bd3 Re5 26. Bf1 Nf4 27. c4 Re3 28. a4 Rfe8 29. Kc2 Rg3 30. Ra3 Rxa3 31. bxa3 Re3 32. Rb1 b6 33. Rb3 Re1 34. Rb1 Nxg2 35. Rxe1 Nxe1+ 36. Kd2 Nf3+ 37. Ke3 Ne5 38. Kf4 Nd7 39. Be2 Nc5 40. Bd1 Nd3+ 41. Ke3 Ne5 42. Be2 g5 43. Kd4 f5 44. Kc3 g4 45. hxg4 fxg4 46. Kd4 h5 47. Ke3 h4 48. Kd4 h3 49. Bf1 Kf6 50. a5 bxa5 51. a4 Kg5 52. Ke3 Kh4 53. Kf2 g3+ 54. Ke3 g2 55. Bxg2 hxg2 56. Kf2 Kh3 57. Ke1 g1=Q+ 58. Kd2 Nxc4+ 59. Kc3 Qe3+ 60. Kxc4 Kh4 61. Kb5 Qc5+ 62. Ka6 Qb6# 0-1
+
