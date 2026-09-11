@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/z9zguDPX"]
+[Date "2026.09.05"]
+[Round "-"]
+[White "TuxedolphinBot"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "z9zguDPX"]
+[UTCDate "2026.09.05"]
+[UTCTime "23:35:12"]
+[WhiteElo "1709"]
+[BlackElo "2017"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+3"]
+[ECO "E10"]
+[Opening "Indian Defense: Anti-Nimzo-Indian"]
+[Termination "Normal"]
+
+1. d4 Nf6 2. c4 e6 3. Nf3 Nc6 4. a3 d5 5. Nc3 Be7 6. Bf4 O-O 7. Nb5 dxc4 8. Nxc7 Nd5 9. Nxd5 exd5 10. Rc1 Qb6 11. Qd2 Re8 12. e3 Na5 13. Qc2 Nb3 14. Rd1 Qa5+ 15. Ke2 Bd7 16. Ng5 g6 17. h3 Bf5 18. Qc3 Qxc3 19. bxc3 Bxa3 20. g4 Bc2 21. Re1 Bb2 22. Bg2 Bd3+ 23. Kd1 Rad8 24. Bc7 Rd7 25. Be5 Bxc3 26. Reg1 f6 27. Bxf6 Rf8 28. Nxh7 Kxh7 29. g5 Rd6 30. Bf1 Ra6 31. Bxd3 cxd3 32. Bd8 Ra1# 0-1
+

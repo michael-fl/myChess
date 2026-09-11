@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/VI1WGwIn"]
+[Date "2026.09.07"]
+[Round "-"]
+[White "Cactus_Bot"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "VI1WGwIn"]
+[UTCDate "2026.09.07"]
+[UTCTime "20:24:19"]
+[WhiteElo "1745"]
+[BlackElo "1991"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+2"]
+[ECO "C65"]
+[Opening "Ruy Lopez: Berlin Defense, Beverwijk Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Bc5 5. Nc3 O-O 6. Bxc6 dxc6 7. h3 Qd6 8. d3 Be6 9. Bg5 Nd7 10. a4 h6 11. Bd2 Rad8 12. a5 a6 13. Re1 Rfe8 14. Ne2 f5 15. Ng3 f4 16. Ne2 Bf7 17. Nh4 Nf6 18. Nf5 Qf8 19. Nc1 g6 20. Nh4 Bd4 21. c3 Ba7 22. Nf3 g5 23. b4 c5 24. Qe2 cxb4 25. cxb4 g4 26. hxg4 Nxg4 27. Rf1 Qd6 28. Be1 c5 29. bxc5 Qxc5 30. Bd2 Qc7 31. Rb1 Be6 32. Nh2 Nf6 33. Re1 Rd6 34. Bb4 Rc6 35. Bd2 Rc8 36. Nb3 Rd8 37. Nf3 Ng4 38. Rf1 Qd7 39. Nc1 Qf7 40. Rb2 Bc5 41. Rb1 Qd7 42. Kh1 Rc7 43. Bc3 Qe8 44. Bb4 Ba7 45. Be1 Qa4 46. Nh4 Rc2 47. Qf3 Rd7 48. Ng6 Rg7 49. Nxf4 exf4 50. Qxf4 Qc6 51. Bd2 Rf7 52. Qg3 Rxd2 53. f3 Qc5 54. e5 Qxe5 55. Qxe5 Nxe5 56. Re1 Rf5 57. Rb6 Bxb6 58. axb6 Bd5 59. Kg1 Rh5 60. Ne2 Rg5 61. Kf2 Nxd3+ 62. Ke3 Nxe1 63. Kxd2 Nxg2 64. Kc3 Bxf3 65. Nd4 Bg4 66. Kd3 Rd5 67. Ke4 Rxd4+ 68. Kxd4 h5 69. Ke4 h4 70. Kd5 h3 71. Kd6 h2 72. Kc7 Bf3 73. Kd6 h1=Q 74. Ke5 Qd1 75. Kf6 Qd8+ 76. Kf5 Kf7 77. Ke5 Qf6# 0-1
+

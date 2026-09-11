@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/eIYNH8m4"]
+[Date "2026.08.13"]
+[Round "-"]
+[White "myChessJava"]
+[Black "GiffiBot"]
+[Result "1-0"]
+[GameId "eIYNH8m4"]
+[UTCDate "2026.08.13"]
+[UTCTime "18:56:41"]
+[WhiteElo "2078"]
+[BlackElo "1816"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+3"]
+[ECO "C67"]
+[Opening "Ruy Lopez: Berlin Defense, Rio Gambit Accepted"]
+[Termination "Normal"]
+
+1. e4 Nc6 2. Nf3 e5 3. Bb5 Nf6 4. O-O Nxe4 5. Re1 d5 6. d3 Nd6 7. Bg5 Be7 8. Bxc6+ bxc6 9. Nxe5 Bb7 10. Bxe7 Qxe7 11. Ng6 hxg6 12. Rxe7+ Kxe7 13. Nc3 d4 14. Qe1+ Kd7 15. Ne4 Rhe8 16. Qb4 Nb5 17. Nc5+ Kc8 18. Re1 Rxe1+ 19. Qxe1 Nd6 20. Qe7 Kb8 21. Qd8+ Bc8 22. Na6+ Kb7 23. Qxc7+ Kxa6 24. Qxc6+ Ka5 25. Qxd6 Bb7 26. Qc5+ Ka6 27. a4 Bc6 28. Qxc6+ Ka5 29. Qb5# 1-0
+

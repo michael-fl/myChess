@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/IdiGQzHe"]
+[Date "2026.08.17"]
+[Round "-"]
+[White "FlounderBot"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "IdiGQzHe"]
+[UTCDate "2026.08.17"]
+[UTCTime "19:26:26"]
+[WhiteElo "2036"]
+[BlackElo "1994"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+2"]
+[ECO "A45"]
+[Opening "Indian Defense"]
+[Termination "Normal"]
+
+1. d4 Nf6 2. Nc3 e6 3. e4 Bb4 4. Bd3 Nc6 5. a3 Bxc3+ 6. bxc3 d5 7. e5 Ne4 8. Qg4 g6 9. Bxe4 dxe4 10. Ne2 O-O 11. Bh6 f5 12. Qg3 Re8 13. Nf4 Ne7 14. O-O Qd7 15. Nh5 Nd5 16. c4 Kh8 17. Bg7+ Kg8 18. cxd5 gxh5 19. Bf6+ Kf8 20. dxe6 Rxe6 21. d5 Rxf6 22. exf6 a5 23. d6 cxd6 24. Rfd1 Ra6 25. Rd5 Rc6 26. Rad1 h4 27. Qxh4 Qc7 28. Qh6+ Ke8 29. Rxd6 Rxd6 30. Rxd6 a4 31. Qh5+ Kf8 32. Qg5 Qxd6 33. Qg7+ Ke8 34. f7+ Kd8 35. f8=R+ Qxf8 36. Qxf8+ Kc7 37. Qc5+ Kd8 38. Qa5+ Ke7 39. Qxa4 h5 40. Qb4+ Kf7 41. Qb6 Ke7 42. Qc5+ Kd8 43. Qa5+ Ke7 44. Qc7+ Bd7 45. Qxb7 Kd6 46. Qb6+ Ke5 47. c4 Be6 48. c5 f4 49. Qd6+ Kf5 50. c6 f3 51. Qf8+ Kg6 52. Qe8+ Kf5 53. Qxh5+ 1-0
+

@@ -1,0 +1,22 @@
+[Event "casual variant:chess960 game"]
+[Site "https://lichess.org/DD46M6NV"]
+[Date "2026.09.04"]
+[Round "-"]
+[White "myChessJava"]
+[Black "ix-bot"]
+[Result "0-1"]
+[GameId "DD46M6NV"]
+[UTCDate "2026.09.04"]
+[UTCTime "09:45:41"]
+[WhiteElo "1669"]
+[BlackElo "1725"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Chess960"]
+[TimeControl "180+2"]
+[Termination "Normal"]
+[FEN "bnrknqrb/pppppppp/8/8/8/8/PPPPPPPP/BNRKNQRB w KQkq - 0 1"]
+[SetUp "1"]
+
+1. g4 g5 2. Qh3 Nc6 3. Nd3 b6 4. O-O h5 5. Qxh5 f5 6. gxf5 g4 7. e3 Bf6 8. Nc3 Rg5 9. Qh4 Nd6 10. b3 Nxf5 11. Qh7 Bxc3 12. Bxc3 O-O-O 0-1
+
