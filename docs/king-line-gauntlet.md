@@ -159,6 +159,99 @@ the engine plays on lichess. A cost that is invisible here is not thereby harmle
 3. **Wait for a free machine** — `--wait-for-cores` in `tools/run-anchor-bracket.sh` is the
    precedent. At `tc=40/60` the result depends on how many cores the engines actually get.
 
+## The result (2026-09-12)
+
+**Stopped at 2886 of 4200 games, 960 per arm**, because the machine had to be taken off the
+network. The stopping time was fixed the evening before, without reference to the standing, so this
+is an unbiased fixed-N result over the games that were played — see the note on optional stopping
+below.
+
+| arm | score | games | Ordo |
+|---|---:|---:|---:|
+| base | 55.9 % | 961 | 1945.9 ± 17.8 |
+| **king-line-v2** | **55.9 %** | 960 | **1945.9 ± 17.6** |
+| placebo | 54.6 % | 960 | 1935.0 ± 18.0 |
+
+Anchors in the same run: Kojiro 2018.5, BBC 2019 and Princhess 1985 fixed, ZetaDva 1801, TSCP 1609.
+
+**The decomposition the middle arm exists for:**
+
+| | in points | in Elo | t |
+|---|---:|---:|---:|
+| **effect** — candidate vs placebo | +1.3 pp | +10.9 | 0.63 |
+| **cost** — placebo vs base | −1.3 pp | −10.9 | −0.63 |
+| **net** — candidate vs base | **+0.0 pp** | **0.0** | 0.00 |
+
+The net is zero to the decimal, and that is the number the merge decision turns on. But it is a
+**different kind of zero than the family has produced before**, and the difference is the whole
+point of having built a cost arm: this is not "the term does nothing". It is "the term is worth
+about as much as it costs, and the two cancel".
+
+Neither half is established on its own — ±2.07 pp on a difference is a t of 0.63 either way, and a
+run of this length cannot separate +11 Elo from zero. What raises the cost figure above a guess is
+that it agrees with an independent measurement made a different way: the nine-run Latin square in
+[`bench-history.md`](bench-history.md) puts the walk at **+7.75 % of wall clock**, 0.126 plies, and
+the candidate at +2.40 % net. An 11-Elo price for that is the right order of magnitude. Two
+instruments, one number.
+
+### The term does what it was built to do — against foreign opponents
+
+Measured from the PGNs as the count of unsheltered files at and beside the arm's own king
+(`myChess-lab/scripts/king-exposure-overall.py`), one observation per game:
+
+| arm | unsheltered king files | vs base | t |
+|---|---:|---:|---:|
+| base | 0.7919 | — | — |
+| placebo | 0.7927 | +0.1 % | **0.03** |
+| king-line-v2 | 0.6719 | **−15.2 %** | **−5.05** |
+
+**The placebo row is what makes this readable.** It carries base's evaluation exactly — pre-flight 3
+proved it by an identical bench signature — so its difference from base estimates zero by
+construction. It comes out at t = 0.03. That is the instrument's own noise floor, measured rather
+than assumed, and the candidate's −15.2 % stands five standard errors clear of it.
+
+Split by the gate, the term's on/off switch:
+
+| | base | king-line-v2 | t |
+|---|---:|---:|---:|
+| castling settled — term **on** | 0.8991 | 0.7483 (−16.8 %) | **−5.40** |
+| castling still open — term **off** | 0.2168 | 0.2358 (+8.8 %) | 1.25 |
+
+An effect where the term acts, none where it is gated off. The gate works. The candidate also
+castles **0.33 moves later** (9.42 against 9.09) at an unchanged castling rate, which is the same
+fingerprint the 6000-game self-play run produced (0.49 moves later, −31.8 % settled). **The
+behavioral effect transfers from self-play to foreign opposition** — which is what this tournament
+was built to find out, and it is the one question the screens of § 4.13 and § 4.15 could not answer.
+
+### What this leaves the decision
+
+The rule stated before the run was: neutral or better against the anchors → merge, the insurance is
+free. This is neutral, so the rule says merge.
+
+What the rule did not anticipate is a zero *composed of* a real benefit and a real cost. That
+composition points somewhere the old reading did not: **the walk is the problem, not the term.** If
+the +7.75 % of wall clock came down, the +10.9 would not have to pay for itself. That is an
+optimization question with a measurable target, and it is a better position than the family has been
+in since it started.
+
+Against that stands what [`king-line-v2-merge-checklist.md`](king-line-v2-merge-checklist.md)
+already says about merging on a zero: every later king-safety experiment then runs on top of the
+term and has to beat it, and a fitted 13-entry table plus a factor join the maintained surface.
+
+### On stopping early
+
+2886 of 4200 is 69 % of the planned length, and the interval is correspondingly wider: ±2.07 pp on a
+difference instead of the ±1.7 the full run would have given. Nothing else changes. The stop was
+scheduled the previous evening for a reason unconnected to the data — the machine had to be
+transported — so it is not optional stopping and the estimate carries no selection bias. Had the
+standing been consulted first and the run ended because it "looked clear", the result would have
+been worth much less than its interval suggests.
+
+The arms stayed balanced to within one game (961 / 960 / 960), because cutechess cycles the 15
+pairings in order and an interrupted cycle can leave at most one game of imbalance per pairing.
+
+---
+
 ## Afterwards
 
 The one pairing the gauntlet deliberately omits is **king-line-v2 against placebo**, and it is the

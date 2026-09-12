@@ -78,7 +78,31 @@ Why this matters even though the +2.3 is already net of the cost: it is net **at
 NPS loss weighs more at faster time controls, so a term that is exactly zero at 40/60 is probably
 slightly negative at 3+2 — which is what the engine plays on lichess.
 
-## Step 3 — run it against the anchors, and decide on that
+## Step 3 — run it against the anchors, and decide on that — **DONE (2026-09-12)**
+
+**Result: net 0.0 Elo, composed of +10.9 effect and −10.9 cost.** 2886 games of the planned 4200,
+960 per arm, stopped on a schedule fixed the evening before for a machine transport, so the estimate
+is unbiased. Full write-up in [`king-line-gauntlet.md`](king-line-gauntlet.md).
+
+| arm | score | Ordo |
+|---|---:|---:|
+| base | 55.9 % | 1945.9 |
+| king-line-v2 | 55.9 % | 1945.9 |
+| placebo | 54.6 % | 1935.0 |
+
+And the term demonstrably does its job against foreign opponents: **−15.2 % unsheltered king files**
+at t = −5.05, against a placebo null line of t = 0.03. Split by the gate, −16.8 % where the term is
+on and nothing where it is off. The behavior transfers; the Elo does not follow, because the walk
+costs what the term is worth.
+
+**All three steps are now done.** What remains is the decision itself, and the three numbers on the
+table are: +6.1 ± 7.5 over 6000 self-play games, 0.0 net against the anchors, and a behavioral effect
+confirmed twice over. The new information the gauntlet added is not the zero — it is that the zero is
+a **cancellation**, which makes the cost the thing to attack rather than the term.
+
+### The original framing of this step
+
+
 
 **All 6000 games are self-play**, and that is the constellation in which a defensive term shows
 least: its opponent is exactly as good at exploiting king exposure as it is, because it *is* the
