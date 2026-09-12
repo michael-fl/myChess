@@ -483,6 +483,54 @@ has for continuing to steer by self-play SPRTs between re-anchors.
 
 ---
 
+### The v4.6.1 cross-check — a free reading off the king-line gauntlet (2026-09-12)
+
+**Not a re-anchor**, and it must not be filed as one: § 2 defines the procedure as N
+independent one-on-one matches combined by Ordo, deliberately *not* a single cutechess
+gauntlet. This number fell out of a tournament run for a different purpose — the
+three-arm king-line gauntlet ([`king-line-gauntlet.md`](king-line-gauntlet.md)) — which
+happens to use this document's five anchors, this document's TC 40/120 and this
+document's anchor file. So Ordo could be pointed at its PGN at no extra cost.
+
+```
+   # PLAYER                  :  RATING  ERROR  POINTS  PLAYED   (%)
+   1 BBC                     :  2019.0   ----   316.0     576    55
+   2 Kojiro                  :  2018.5   23.9   348.5     576    61
+   3 Princhess               :  1985.0   ----   342.5     578    59
+   4 mychess-king-line-v2    :  1945.9   17.6   537.0     960    56
+   5 mychess-base            :  1945.9   17.8   541.0     966    56
+   6 mychess-placebo         :  1935.0   18.0   524.5     960    55
+   7 ZetaDva                 :  1801.0   ----   178.5     578    31
+   8 TSCP                    :  1609.0   ----    98.0     578    17
+```
+
+`mychess-base` is 4.6.1 at master `4e80a21`. **The propagated chain predicted ~1943 and
+the measurement says 1945.9 ± 17.8** — 2.9 Elo apart, well inside either interval. That is
+the second time the chain has been checked against external opposition and held: the
+v4.4.1 re-anchor above predicted ~1915 and measured 1928.
+
+**Kojiro's co-movement is not a second confirmation, and reading it as one would be a
+mistake.** It rose from 2003.9 to 2018.5, +14.6, almost exactly myChess's +15.1. That is
+mechanical rather than evidential: Kojiro is the free slot and is placed *only* by its
+results against myChess, while myChess is placed by the four pinned anchors. If myChess
+rises 15 and the head-to-head is unchanged, Kojiro rises 15 with it. Read strictly, the
+run says myChess improved against the four fixed anchors and not against Kojiro — which
+at ±23.9 on Kojiro is comfortably inside noise, but it is one observation, not two.
+
+**What this does not replace.** § 8's trigger is unchanged: a formal re-anchor is due once
+the deltas accumulated since 4.4.1 exceed that measurement's ±21, and at +16.6 (+1.8 for
+4.5.0, +14.8 for 4.6.0) they do not yet. This cross-check does not reset that counter,
+because its apparatus is not the one § 2 specifies — the anchors here play only myChess
+variants inside a gauntlet, and three correlated arms sit on the myChess side of every
+pairing. It is a confirmation, not a measurement of record.
+
+**Two numbers in the Ordo footer are not results.** It prints `White advantage = 0.00 +/-
+0.00` and `Draw rate (equal opponents) = 50.00 % +/- 0.00`; both are defaults, because the
+flags that estimate them were not passed. The tournament's actual draw rate was about 16 %.
+A value that is exactly round with an error of exactly zero has not been measured.
+
+---
+
 ## 8. When to re-run
 
 An absolute measurement is **not** a per-patch tool (that is self-play SPRT).
