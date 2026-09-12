@@ -2125,6 +2125,14 @@ That is § 4.13's finding — 70 Elo of association for the baseline, none for t
 avoided the exposure — seen from a second, independent angle, and it explains why every
 association in this family is large and worthless at the same time.
 
+**The anchor gauntlet has since answered the one question these screens could not** (2026-09-12,
+[`king-line-gauntlet.md`](king-line-gauntlet.md)): against five foreign engines over 2886 games the
+gated term measures **net 0.0 Elo**, and the three-arm design splits that into **+10.9 of effect and
+−10.9 of cost**. The behavioral effect transfers out of self-play — −15.2 % unsheltered king files at
+t = −5.05, against a placebo arm that reads t = 0.03 because it carries base's evaluation exactly.
+So the dissociation this section documents holds against foreign opposition too, with one correction
+to its reading: the term is not inert, it is priced out.
+
 **The family is now worked through in all three forms:** graded and measured (−4.9 ± 10.7 over
 2989 games), front-loaded binary and screened (flat in the time direction), heavy-material
 conditioned and screened (direction inverted). What remains untouched in king safety is the
