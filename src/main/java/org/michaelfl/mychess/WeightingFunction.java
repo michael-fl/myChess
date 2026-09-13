@@ -30,7 +30,7 @@ import static org.michaelfl.mychess.Assert.__assert;
  * @author Michael Fleischhauer
  */
 @SuppressWarnings({"StatementWithEmptyBody", "Duplicates", "PointlessArithmeticExpression",
-                   "java:S115", "java:S2386", "java:S3358"})
+                   "java:S115", "java:S2386", "java:S3358", "java:S6885"})
 public final class WeightingFunction {
 
     public static final int MIN_ALPHA = -Integer.MAX_VALUE;
@@ -142,7 +142,25 @@ public final class WeightingFunction {
     private static final float positionFactor = 0.5f;
     private static final float threadWeightFactor = 0.02f;
     private static final float chessFactor = 0.25f;
-    private static final float castlingFactor = 0.25f;
+    /**
+     * Weight of one castling-state unit, in pawns at full midgame material.
+     *
+     * <p>Halved from 0.25 on branch {@code castling-halved-tapered}, as a first step toward
+     * a target rate rather than as a fitted value. At 0.25 myChess castles on <b>98.4 %</b>
+     * of its sides and at 0 on <b>72.1 %</b> (5636 sides each, self-play at {@code 40/20}),
+     * against 9 to 70 % for the five foreign anchors. The king midgame piece-square table
+     * already pays 53 cp for {@code e1 -> g1} against the 25 cp this term added, so the
+     * claim is that 0.25 overdoes a preference the evaluation has anyway.
+     *
+     * <p><b>0.125 is unmeasured and probably still too high.</b> The owner's target is 80 %,
+     * which sits 8 points above the zero end of a 26-point span; the curve saturates near
+     * 0.25, so most of the movement happens at small factors and 0.125 may well land above
+     * 90 %. The factor is to be chosen against the measured rate, which a few hundred games
+     * resolve, rather than against Elo: the whole term is worth single digits, so the gap
+     * between two weakened shapes would need tens of thousands of games.
+     */
+    private static final float castlingFactor = 0.125f;
+
     /**
      * Per-doubled-pair penalty in pawn units, applied directly in the
      * final-weight formula.
@@ -378,6 +396,7 @@ public final class WeightingFunction {
      * @param eval     the White-POV evaluation in centipawns
      * @param features the per-factor coefficients for this position
      */
+    @SuppressWarnings("java:S6218")
     public record FactorBreakdown(int eval, double[] features) {}
 
     /** Evaluate {@code board} and return its {@link FactorBreakdown} for tuning. */
@@ -398,6 +417,88 @@ public final class WeightingFunction {
         return new FactorBreakdown(eval, features);
     }
 
+    /**
+     * Phase at and above which the castling term carries its full weight: enough attacking
+     * material left that an uncastled king is genuinely exposed. Roughly both queens plus
+     * four rooks, or both queens with two rooks and the minor pieces.
+     *
+     * <p>Package-private so {@code CastlingTaperTest} can assert its own copy still matches.
+     */
+    static final int CASTLING_FULL_PHASE = 16;
+
+    /**
+     * Phase at and below which the castling term is switched off entirely: about a rook and
+     * a minor piece each, where the king belongs in the centre and its castling history has
+     * stopped being a liability.
+     *
+     * <p>Package-private so {@code CastlingTaperTest} can assert its own copy still matches.
+     */
+    static final int CASTLING_DEAD_PHASE = 6;
+
+    /**
+     * The castling ramp, precomputed for every reachable phase: the effective phase to hand
+     * {@link #blend}, running from 0 at {@link #CASTLING_DEAD_PHASE} to {@link #MAX_PHASE}
+     * at {@link #CASTLING_FULL_PHASE} and flat outside that window.
+     *
+     * <p>A table rather than the arithmetic, because the arithmetic contains an integer
+     * division and this runs once per evaluation, which is millions of times per search. The
+     * phase only takes 25 values, so the whole curve fits in a line of cache. Package-private
+     * so {@code CastlingTaperTest} can check every entry.
+     */
+    static final int[] CASTLING_RAMP = new int[MAX_PHASE + 1];
+
+    static {
+        final int span = CASTLING_FULL_PHASE - CASTLING_DEAD_PHASE;
+
+        for (int phase = 0; phase <= MAX_PHASE; phase++) {
+            final int ramped = (phase - CASTLING_DEAD_PHASE) * MAX_PHASE / span;
+
+            CASTLING_RAMP[phase] = Math.clamp(ramped, 0, MAX_PHASE);
+        }
+    }
+
+    /**
+     * The castling-state contribution in pawns, faded out as the attacking material leaves.
+     *
+     * <p>Flat, this term carried its full value into positions where the rights it prices
+     * cannot be used at all — a side with both gone still paid a whole pawn in a
+     * king-and-pawn endgame. Measured over the 2886-game anchor gauntlet, 16.3 % of all
+     * plies sat at phase 8 or below with the term speaking, and it said 99.8 cp on average.
+     *
+     * <p><b>A ramp rather than a straight taper, and the difference is not cosmetic.</b>
+     * Scaling with the raw phase reaches 0.67 at phase 16 — a third off while both queens
+     * may still be on the board and king safety matters most. That is backwards. A square
+     * of the phase, the obvious "falls faster" alternative, makes it worse still (0.44
+     * there), because it falls faster everywhere rather than later. The ramp holds the full
+     * value down to {@link #CASTLING_FULL_PHASE} and reaches zero at
+     * {@link #CASTLING_DEAD_PHASE}:
+     *
+     * <pre>
+     *   phase &gt;= 16   1.00     midgame, queens possible
+     *   phase 12      0.58
+     *   phase  8      0.17
+     *   phase &lt;= 6    0.00     a rook and a minor each
+     * </pre>
+     *
+     * <p>Interpolated through {@link #blend} against {@link #CASTLING_RAMP}, which holds the
+     * window stretched over the full phase range, so the class keeps one interpolation
+     * function and this method costs an array read. The difference is scaled to
+     * centipawn resolution first, because it only ranges over {@code -4..+4} and blending
+     * that directly would quantize the ramp into nine steps; the factor is applied
+     * afterward in float, so the scale is multiplied in once rather than rounded twice.
+     *
+     * <p>A pure function of its two arguments rather than a reader of the instance state it
+     * could take them from, so a test can drive it across the whole input space without the
+     * evaluator's fields having to become visible for it.
+     *
+     * @param delta the castling-state difference, white minus black, in {@code -4..+4}
+     * @param phase the game phase, {@code 0..}{@link #MAX_PHASE}
+     * @return the contribution in pawns, signed white-minus-black
+     */
+    static float castlingWeight(int delta, int phase) {
+        return blend(delta * 100, 0, CASTLING_RAMP[phase]) / 100f * castlingFactor;
+    }
+
     private int calculatePositionWeight() {
         if (containsIllegalMove)
             return turn == 0 ? ILLEGAL_WEIGHT_POS : ILLEGAL_WEIGHT_NEG;
@@ -407,7 +508,7 @@ public final class WeightingFunction {
                 + (positionWeight[0] - positionWeight[1]) / 100f * positionFactor
                 + (mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor
                 + (threadWeight[0] - threadWeight[1]) / 100f * threadWeightFactor
-                + (castlingState[0] - castlingState[1]) * castlingFactor
+                + castlingWeight(castlingState[0] - castlingState[1], phase)
                 + (chessCount[0] - chessCount[1]) * chessFactor
                 + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
                 + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor
@@ -437,7 +538,7 @@ public final class WeightingFunction {
                "positionWeight:        w=" + positionWeight[0] + ", b=" + positionWeight[1] + DELTA_STR + (positionWeight[0] - positionWeight[1]) + WEIGHT_STR + round((positionWeight[0] - positionWeight[1]) / 100f * positionFactor) + '\n' +
                "mobilityWeight:        w=" + mobilityWeight[0] + ", b=" + mobilityWeight[1] + DELTA_STR + (mobilityWeight[0] - mobilityWeight[1]) + WEIGHT_STR + round((mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor) + '\n' +
                "threadWeight:          w=" + threadWeight[0] + ", b=" + threadWeight[1] + DELTA_STR + (threadWeight[0] - threadWeight[1]) + WEIGHT_STR + round((threadWeight[0] - threadWeight[1])  / 100f * threadWeightFactor) + '\n' +
-               "castlingState:         w=" + castlingState[0] + ", b=" + castlingState[1] + DELTA_STR + (castlingState[0] - castlingState[1]) + WEIGHT_STR + round((castlingState[0] - castlingState[1]) * castlingFactor) + '\n' +
+               "castlingState:         w=" + castlingState[0] + ", b=" + castlingState[1] + DELTA_STR + (castlingState[0] - castlingState[1]) + WEIGHT_STR + round(castlingWeight(castlingState[0] - castlingState[1], phase)) + '\n' +
                "doublePawnCount:       w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + DELTA_STR + (doublePawnCount[0] - doublePawnCount[1]) + WEIGHT_STR + round((doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) + '\n' +
                "chessCount:            w=" + chessCount[0] + ", b=" + chessCount[1] + DELTA_STR + (chessCount[0] - chessCount[1]) + WEIGHT_STR + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
                "undefendedPiecesCount: w=" + undefendedPiecesCount[0] + ", b=" + undefendedPiecesCount[1] + DELTA_STR + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) + WEIGHT_STR + round((undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor) + '\n' +
