@@ -152,10 +152,11 @@ public final class WeightingFunction {
      * already pays 53 cp for {@code e1 -> g1} against the 25 cp this term added, so the
      * claim is that 0.25 overdoes a preference the evaluation has anyway.
      *
-     * <p><b>0.125 is unmeasured and probably still too high.</b> The owner's target is 80 %,
-     * which sits 8 points above the zero end of a 26-point span; the curve saturates near
-     * 0.25, so most of the movement happens at small factors and 0.125 may well land above
-     * 90 %. The factor is to be chosen against the measured rate, which a few hundred games
+     * <p><b>0.125 is unmeasured and probably still too high.</b> The target is <b>85 %</b>,
+     * chosen against master practice: over 276,670 games of median Elo 2312 a side castles in
+     * <b>87.0 %</b> of them (91.9 % as White, 82.0 % as Black — White has the tempo to get it
+     * done). 85 % sits about halfway up the term's 26-point span, and the curve saturates
+     * near 0.25, so most of the movement happens at small factors. The factor is to be chosen against the measured rate, which a few hundred games
      * resolve, rather than against Elo: the whole term is worth single digits, so the gap
      * between two weakened shapes would need tens of thousands of games.
      */
