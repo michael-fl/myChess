@@ -40,6 +40,17 @@ class CastlingTaperTest {
     private static final int FULL_PHASE = 16;
     private static final int DEAD_PHASE = 6;
 
+    /**
+     * The shipped factor, read rather than repeated.
+     *
+     * <p>It differs between the branches that carry this test — 0.25 where only the ramp is
+     * under test, 0.125 where the factor is halved as well — and every expectation here
+     * scales with it. Repeating the number would mean rewriting the whole class on a change
+     * that is not about the ramp at all. {@link #theFactorIsTheOneUnderTest} is what pins the
+     * value itself, in one place with a message that says so.
+     */
+    private static final double FACTOR = WeightingFunction.castlingFactor;
+
     /** Tolerance in pawns: the term is a float sum, compared against an exact expectation. */
     private static final double EPSILON = 1e-4;
 
@@ -143,7 +154,7 @@ class CastlingTaperTest {
         Board board = Fen.importFEN(fen);
         int phase = phaseOf(fen);
         int delta = castlingDeltaOf(board);
-        double expected = asReported(delta * 0.125 * rampAt(phase));
+        double expected = asReported(delta * FACTOR * rampAt(phase));
 
         assertEquals(expected, reportedCastlingWeight(board), 0.006,
                 "castling contribution at phase " + phase + ", delta " + delta + ", fen " + fen);
@@ -159,25 +170,43 @@ class CastlingTaperTest {
         // The values are in pawns and carry blend's round-half-away-from-zero, which is why
         // phase 12 gives -0.29125 rather than a clean -0.29167: 14/24 of -400 centi-units is
         // -233.33, blended to -233.
-        assertWeight(0.0f, 0, MAX_PHASE, "no difference is worth nothing at any phase");
-        assertWeight(-0.125f, -1, MAX_PHASE, "one state unit at full phase is the factor");
-        assertWeight(-0.5f, -4, MAX_PHASE, "four units, the common endgame case");
+        // In ramp units: blend rounds to whole centi-units before the factor is applied, so
+        // these are the exact blended values and the factor scales them.
+        assertRamped(0, 0, MAX_PHASE, "no difference is worth nothing at any phase");
+        assertRamped(-100, -1, MAX_PHASE, "one state unit at full phase is the factor");
+        assertRamped(-400, -4, MAX_PHASE, "four units, the common endgame case");
 
-        assertWeight(-0.5f, -4, FULL_PHASE, "still undiscounted at the upper knee");
-        assertWeight(-0.29125f, -4, 12, "on the slope");
-        assertWeight(-0.09375f, -2, 10, "two units further down the slope");
-        assertWeight(-0.08375f, -4, 8, "near the bottom of the slope");
+        assertRamped(-400, -4, FULL_PHASE, "still undiscounted at the upper knee");
+        assertRamped(-233, -4, 12, "on the slope");
+        assertRamped(-75, -2, 10, "two units further down the slope");
+        assertRamped(-67, -4, 8, "near the bottom of the slope");
 
-        assertWeight(0.0f, -4, DEAD_PHASE, "off at the lower knee, whatever the states say");
-        assertWeight(0.0f, -4, 0, "off with no material left");
+        assertRamped(0, -4, DEAD_PHASE, "off at the lower knee, whatever the states say");
+        assertRamped(0, -4, 0, "off with no material left");
 
         // Antisymmetry at the function level, where it is cheapest to see.
-        assertWeight(0.29125f, 4, 12, "mirroring the difference mirrors the contribution");
+        assertRamped(233, 4, 12, "mirroring the difference mirrors the contribution");
     }
 
-    private static void assertWeight(float expected, int delta, int phase, String what) {
-        assertEquals(expected, WeightingFunction.castlingWeight(delta, phase), 1e-6f,
+    /**
+     * @param blended the blended value in centi-units, before the factor is applied — the
+     *                part of the computation that is the ramp's and does not move when the
+     *                factor does
+     */
+    private static void assertRamped(int blended, int delta, int phase, String what) {
+        assertEquals((float) (blended / 100.0 * FACTOR),
+                WeightingFunction.castlingWeight(delta, phase), 1e-6f,
                 what + " (delta " + delta + ", phase " + phase + ")");
+    }
+
+    @Test
+    void theFactorIsTheOneUnderTest() {
+        // The single place the shipped magnitude is pinned. Every other expectation in this
+        // class scales with FACTOR, so this is what fails — with a message that names the
+        // change — when somebody moves the constant.
+        assertEquals(0.25f, WeightingFunction.castlingFactor, 1e-9f,
+                "this branch tests the ramp at the unchanged factor; "
+                        + "0.125 belongs to castling-halved-tapered");
     }
 
     @Test
@@ -257,7 +286,7 @@ class CastlingTaperTest {
         Board board = Fen.importFEN(fen);
         int delta = castlingDeltaOf(board);
 
-        assertEquals(asReported(delta * 0.125), reportedCastlingWeight(board), 0.006,
+        assertEquals(asReported(delta * FACTOR), reportedCastlingWeight(board), 0.006,
                 "an undiscounted contribution at phase " + phase);
     }
 
@@ -343,7 +372,7 @@ class CastlingTaperTest {
         int delta = castlingDeltaOf(board);
 
         assertEquals(1, delta, "white holds both rights, black lost the queen-side one");
-        assertEquals(asReported(delta * 0.125 * rampAt(phaseOf(fen))),
+        assertEquals(asReported(delta * FACTOR * rampAt(phaseOf(fen))),
                 reportedCastlingWeight(board), 0.006,
                 "one state unit at phase " + phaseOf(fen));
     }

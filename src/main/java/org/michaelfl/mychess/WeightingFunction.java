@@ -145,22 +145,38 @@ public final class WeightingFunction {
     /**
      * Weight of one castling-state unit, in pawns at full midgame material.
      *
-     * <p>Halved from 0.25 on branch {@code castling-halved-tapered}, as a first step toward
-     * a target rate rather than as a fitted value. At 0.25 myChess castles on <b>98.4 %</b>
-     * of its sides and at 0 on <b>72.1 %</b> (5636 sides each, self-play at {@code 40/20}),
-     * against 9 to 70 % for the five foreign anchors. The king midgame piece-square table
-     * already pays 53 cp for {@code e1 -> g1} against the 25 cp this term added, so the
-     * claim is that 0.25 overdoes a preference the evaluation has anyway.
+     * <p><b>Left at 0.25 on branch {@code castling-ramp-only}, deliberately.</b> The sibling
+     * branch {@code castling-halved-tapered} halves it and fades it; this one only fades it,
+     * so the pair says which of the two changes carries the effect.
      *
-     * <p><b>0.125 is unmeasured and probably still too high.</b> The target is <b>85 %</b>,
-     * chosen against master practice: over 276,670 games of median Elo 2312 a side castles in
-     * <b>87.0 %</b> of them (91.9 % as White, 82.0 % as Black — White has the tempo to get it
-     * done). 85 % sits about halfway up the term's 26-point span, and the curve saturates
-     * near 0.25, so most of the movement happens at small factors. The factor is to be chosen against the measured rate, which a few hundred games
-     * resolve, rather than against Elo: the whole term is worth single digits, so the gap
-     * between two weakened shapes would need tens of thousands of games.
+     * <p><b>Why separating them is worth a branch.</b> A sweep over the whole factor range
+     * moved the castling rate against a neutral opponent only from <b>88.2 %</b> at 0 to
+     * <b>92.5 %</b> at 0.25 — four points, not the twenty-six an earlier match suggested.
+     * That earlier span was the opponent, not the term: the term scores a <i>difference</i>
+     * of castling states, so it profits from the opponent losing rights too, and that is
+     * exploitable only against a build that does not answer it. So the factor is not the
+     * lever it looked like, and weakening it gives up midgame behavior for very little.
+     *
+     * <p><b>The hypothesis this branch tests.</b> Flat, the term measures <b>−7.5 ± 6.6</b>
+     * Elo against no term at all over 7940 games. If that net hides a real midgame benefit
+     * against a larger endgame harm — which is what {@link #castlingWeightForPhase}'s
+     * measurements suggest, 16.3 % of plies at phase 8 or below carrying 99.8 cp on average —
+     * then removing only the harm should be worth more than weakening both.
+     *
+     * <p><b>Keeping 0.25 is not a preference for 98 %.</b> The owner's target is about 85 %,
+     * measured against master practice — a side castles in <b>87.0 %</b> of 276,670 games at
+     * median Elo 2312, while myChess manages 95.2 % over the anchor gauntlet. But 85 % is not
+     * reachable through this factor at all: switching it off entirely still leaves 88.2 %,
+     * because the castling preference comes mostly from the king midgame piece-square table,
+     * which pays 53 cp for {@code e1 -> g1} against the 25 cp this term adds. Lowering the
+     * factor therefore buys almost no change in behavior while giving up whatever midgame
+     * benefit the term has. Reaching 85 % would mean touching the king table, which is Texel
+     * tuned and a different undertaking.
+     *
+     * <p>Package-private so {@code CastlingTaperTest} can derive its expectations from the
+     * shipped value instead of repeating it, and assert its own copy still matches.
      */
-    private static final float castlingFactor = 0.125f;
+    static final float castlingFactor = 0.25f;
 
     /**
      * Per-doubled-pair penalty in pawn units, applied directly in the
