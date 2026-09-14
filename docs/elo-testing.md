@@ -147,6 +147,96 @@ H0.
   without early termination and reports a final ELO estimate and
   confidence interval based on the full match.
 
+### The default band is outgrowing this engine, and the practice has already moved
+
+`elo0 = −3, elo1 = +15` was the right band for the era it was written in. The gains it
+had to judge were large and sat far outside it — +22.3 for the pawn endgame tables, +31.3
+for the bishop pair, +12.6 for the queen value — so it decided fast and decided soundly.
+
+**It no longer matches the effects this engine produces.** Every recent measurement lands
+*inside* the indifference region, which is precisely where an SPRT guarantees nothing:
+
+| measurement | Elo |
+|---|---:|
+| complete principal variation (4.5.0) | +1.8 |
+| king-line v2, 6000 games | +6.1 |
+| attack units, repaired | +9.1 |
+| removing the castling term, 7940 games | +7.5 |
+| the three-arm gauntlet, net | 0.0 |
+| king-line ungated | −4.9 |
+
+The 4.5.0 entry in [version-history.md](version-history.md) already says it outright: the
+SPRT "gave no verdict and could not, since a true value on the `elo1 = 0` boundary leaves
+its LLR a random walk." And where a bound *was* accepted the estimate came out inflated
+three times over — +42.4 against a true ≈ +15, +18.4 against +14.8, +39.8 against +32.6 —
+which is why that document carries the standing instruction to read an accepted H1 down.
+
+**The practice has already corrected for this without the convention being revised.** The
+last several decisions were all fixed-N: 6000 games for king-line, 7940 for the castling
+term, 2886 for the anchor gauntlet, 3000 for 4.6.0. The band below is therefore a
+refinement of what is already happening rather than a change of course.
+
+| expected effect | instrument |
+|---|---|
+| large, above ~20 Elo — a new term, a table replacement | SPRT `elo0=-3 elo1=15`, α = β = 0.05 |
+| single digits, and the **number** is what is wanted | fixed-N, length chosen from the target interval |
+| single digits, and only the **merge decision** is wanted | SPRT with **asymmetric** α and β |
+
+**Why asymmetric error rates belong in the third row.** α and β need not be equal, and
+setting them apart is how "only one side of this matters" is expressed — a hypothesis
+cannot simply be dropped, because the LLR is a ratio and needs both.
+
+```
+upper bound A = ln((1 − β) / α)        the "yes" bar
+lower bound B = ln(β / (1 − α))        the "no" bar
+```
+
+Small α with large β raises the "yes" bar and lowers the "no" bar, so the run abandons a
+losing candidate early and demands strong evidence before accepting one. For a band of
+`elo0=0 elo1=10` against a true +15, α = 0.01 with β = 0.4 reaches "no" in roughly a third
+of the games a symmetric setting needs, at the cost of discarding a genuinely good
+candidate 40 % of the time.
+
+That trade fits this project's asymmetry, which
+[king-line-v2-merge-checklist.md](king-line-v2-merge-checklist.md) states in its own
+terms: a wrongly merged term becomes a permanent floor that every later experiment has to
+beat and no later run can isolate, while a wrongly rejected candidate sits on a branch and
+can be measured again whenever the machine is free. Those costs are not symmetric, so the
+error rates should not be either.
+
+**What none of this fixes: the estimate at an accepted bound stays biased.** A tighter α
+makes the verdict more trustworthy, not the number printed beside it. When the number is
+the deliverable, the answer is fixed-N — there is no band that produces an unbiased
+estimate.
+
+### How wide to make the band, and why not zero
+
+The indifference region is not a defect to be minimized. It is what makes termination
+possible at all: with `elo0 = elo1` the two likelihoods are identical, the LLR is exactly
+zero forever, and no amount of play decides anything.
+
+Cost rises with the **square** of the narrowing. Taking the expected length at a true value
+sitting on `elo1`:
+
+| band width | games | at ~100 games/h |
+|---:|---:|---|
+| 30 Elo | 760 | 8 h |
+| 20 Elo | 1,700 | 17 h |
+| 15 Elo | 3,000 | 30 h |
+| 10 Elo | 6,800 | 2.8 days |
+| 5 Elo | 27,000 | 11 days |
+| 0 Elo | never | never |
+
+**Speed and informativeness are separate things, and conflating them is the trap.** A band
+of −200 to +200 decides in about 56 games against a true +17 — correctly, and it says
+"not as bad as −200", which nobody doubted. What governs speed is the band width times the
+distance from the band's *midpoint*; what governs worth is where the bounds sit relative
+to the decision being made. A band can be fast and useless at the same time.
+
+The corollary is that an SPRT is not uniformly cheaper than fixed-N. Against a truth near
+the band's midpoint the drift is zero and the LLR wanders indefinitely, while fixed-N costs
+the same whatever the truth turns out to be.
+
 ### When the effect is too small for the score — count the event instead
 
 Some changes are real but too rare to move a match score detectably. The § 12.23
