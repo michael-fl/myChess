@@ -162,6 +162,59 @@ public final class WeightingFunction {
     private static final float castlingFactor = 0.1875f;
 
     /**
+     * Phase at and above which the castling term carries its full weight.
+     *
+     * <p><b>10, not the 16 first tried.</b> At 16 the fade began in the middlegame with both
+     * queens possibly still on the board, which is backwards for a term about king safety, and
+     * it cost three characterizations - `BlunderTest`'s h3 case, `testPosition26` and the
+     * Chess960 knight retreat - for a measured +1.7 ± 10.6 Elo, i.e. nothing. Stretching the
+     * window to 10/2 restores all three.
+     *
+     * <p><b>The stretched version still costs one</b>, and a different one:
+     * {@code BlunderTest.nxe2_atMove19} no longer finds an exchange-winning sacrifice whose
+     * line trades into the faded range. That was accepted in v4.7.1 on the argument that
+     * fading a castling-rights penalty out of the endgame is correct chess, not because it
+     * paid - the ramp measured <b>+0.5 ± 9.6</b> over 3897 games at {@code tc=10+0.1},
+     * neutral.
+     *
+     * <p>Two thresholds were tried and both cost something. Searching for a third pair would
+     * be fitting a constant to the test collection rather than measuring anything; see
+     * {@code docs/evaluation.md} § 5.5.2 and {@code tools/castling-factor-defect-sweep.sh}.
+     */
+    static final int CASTLING_FULL_PHASE = 10;
+
+    /**
+     * Phase at and below which the castling term is switched off entirely: two minor pieces or
+     * one rook in total, i.e. the edge of a pure pawn endgame, where an uncastled king is an
+     * asset rather than a liability.
+     */
+    static final int CASTLING_DEAD_PHASE = 2;
+
+    /** Effective phase per real phase, precomputed: the arithmetic contains a division and this runs once per evaluation. */
+    static final int[] CASTLING_RAMP = new int[MAX_PHASE + 1];
+
+    static {
+        final int span = CASTLING_FULL_PHASE - CASTLING_DEAD_PHASE;
+
+        for (int phase = 0; phase <= MAX_PHASE; phase++) {
+            final int ramped = (phase - CASTLING_DEAD_PHASE) * MAX_PHASE / span;
+
+            CASTLING_RAMP[phase] = Math.clamp(ramped, 0, MAX_PHASE);
+        }
+    }
+
+    /**
+     * The castling-state contribution in pawns, faded out as the attacking material leaves.
+     *
+     * @param delta the castling-state difference, white minus black, in {@code -4..+4}
+     * @param phase the game phase, {@code 0..}{@link #MAX_PHASE}
+     * @return the contribution in pawns, signed white-minus-black
+     */
+    static float castlingWeight(int delta, int phase) {
+        return blend(delta * 100, 0, CASTLING_RAMP[phase]) / 100f * castlingFactor;
+    }
+
+    /**
      * Per-doubled-pair penalty in pawn units, applied directly in the
      * final-weight formula.
      *
@@ -406,7 +459,7 @@ public final class WeightingFunction {
                 positionWeight[0] - positionWeight[1],
                 mobilityWeight[0] - mobilityWeight[1],
                 threadWeight[0] - threadWeight[1],
-                (castlingState[0] - castlingState[1]) * 100.0,
+                blend((castlingState[0] - castlingState[1]) * 100, 0, CASTLING_RAMP[phase]),
                 (chessCount[0] - chessCount[1]) * 100.0,
                 (doublePawnCount[0] - doublePawnCount[1]) * 100.0,
                 (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * 100.0,
@@ -425,7 +478,7 @@ public final class WeightingFunction {
                 + (positionWeight[0] - positionWeight[1]) / 100f * positionFactor
                 + (mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor
                 + (threadWeight[0] - threadWeight[1]) / 100f * threadWeightFactor
-                + (castlingState[0] - castlingState[1]) * castlingFactor
+                + castlingWeight(castlingState[0] - castlingState[1], phase)
                 + (chessCount[0] - chessCount[1]) * chessFactor
                 + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
                 + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor
@@ -455,7 +508,7 @@ public final class WeightingFunction {
                "positionWeight:        w=" + positionWeight[0] + ", b=" + positionWeight[1] + DELTA_STR + (positionWeight[0] - positionWeight[1]) + WEIGHT_STR + round((positionWeight[0] - positionWeight[1]) / 100f * positionFactor) + '\n' +
                "mobilityWeight:        w=" + mobilityWeight[0] + ", b=" + mobilityWeight[1] + DELTA_STR + (mobilityWeight[0] - mobilityWeight[1]) + WEIGHT_STR + round((mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor) + '\n' +
                "threadWeight:          w=" + threadWeight[0] + ", b=" + threadWeight[1] + DELTA_STR + (threadWeight[0] - threadWeight[1]) + WEIGHT_STR + round((threadWeight[0] - threadWeight[1])  / 100f * threadWeightFactor) + '\n' +
-               "castlingState:         w=" + castlingState[0] + ", b=" + castlingState[1] + DELTA_STR + (castlingState[0] - castlingState[1]) + WEIGHT_STR + round((castlingState[0] - castlingState[1]) * castlingFactor) + '\n' +
+               "castlingState:         w=" + castlingState[0] + ", b=" + castlingState[1] + DELTA_STR + (castlingState[0] - castlingState[1]) + WEIGHT_STR + round(castlingWeight(castlingState[0] - castlingState[1], phase)) + '\n' +
                "doublePawnCount:       w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + DELTA_STR + (doublePawnCount[0] - doublePawnCount[1]) + WEIGHT_STR + round((doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) + '\n' +
                "chessCount:            w=" + chessCount[0] + ", b=" + chessCount[1] + DELTA_STR + (chessCount[0] - chessCount[1]) + WEIGHT_STR + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
                "undefendedPiecesCount: w=" + undefendedPiecesCount[0] + ", b=" + undefendedPiecesCount[1] + DELTA_STR + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) + WEIGHT_STR + round((undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor) + '\n' +

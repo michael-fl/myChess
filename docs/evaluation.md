@@ -307,9 +307,9 @@ The score is always non-positive: castled = 0 (best), one or two rights remainin
 
 **Inputs come straight from `GameStatus`** — the four "castling-still-possible" bits and the two "has-castled" bits set by `Board.calculateNewCastlingState` after every move. No board scanning needed.
 
-**Scale factor.** `castlingFactor = 0.25` — losing both castling rights without having castled is worth `(0 − (−4)) × 0.25 = 1.0` pawn against the side that lost the rights. That's a meaningful but not overwhelming penalty: still recoverable through other positional advantages, but enough to push the engine toward castling early.
+**Scale factor.** `castlingFactor = 0.1875` since 4.7.0 — losing both castling rights without having castled is worth `(0 − (−4)) × 0.1875 = 0.75` pawn against the side that lost the rights, at full midgame material. It was `0.25` from `dabec30` until 4.6.1. The quarter came off against the characterization suite rather than against Elo or a castling rate, and **0.1875 is the lowest value that still holds**: § 5.5.2 has the sweep, and the constant's own JavaDoc repeats the warning, because the margin downward is zero.
 
-**A halving and an endgame fade were measured and did not ship**; § 5.5.2 records the campaign and why.
+**Phase fade.** Since 4.7.1 the term no longer speaks at every phase. `castlingWeight(delta, phase)` interpolates the difference against `CASTLING_RAMP`, a precomputed 25-entry table holding the full value at `CASTLING_FULL_PHASE = 10` and above and falling linearly to zero at `CASTLING_DEAD_PHASE = 2`, the edge of a pure pawn endgame. Flat, the term charged a whole pawn for lost rights in positions where those rights can no longer be used at all. A first attempt at 16/6 was measured and rejected; § 5.5.2 records both.
 
 ### 5.5.1 Measured 2026-09-09 — load-bearing, and too strong
 
@@ -533,6 +533,71 @@ anticipate.
 
 `castlingFactor = 0.1875` with no ramp leaves the whole characterization suite clean apart
 from `testPosition12`'s stale expectation. It has no Elo measurement.
+
+#### 4.7.0 — the factor alone, and why no match measured it
+
+**4.7.0 is `castlingFactor = 0.1875` and nothing else.** The full defect curve over
+`BlunderTest` and `EngineTest`, 97 pinned positions, sweeping only the factor:
+
+| factor | 0.25 | 0.1875 | 0.125 | 0 |
+|---|---:|---:|---:|---:|
+| verdicts flipped | **0** | **1** | 3 | 6 |
+
+The single flip at 0.1875 is `EngineTest.testPosition12`, which plays Ne6 again — Stockfish's
+best move at +4.47 — undoing v4.6.0's most expensive regression, 2.2 pawns. Its expectation was
+the stale one and was updated. At factor 0 the six flips are not all regressions either: one is
+a band violation of three hundredths of a pawn, and one is a characterization whose own text
+says it should become an avoidance test if the new move is better, which was not checked.
+
+**No match was run, and that is a decision rather than an omission.** Both ends of the interval
+were already measured: 0.25 is the baseline by construction, and factor 0 — the largest possible
+weakening — came in at **+6.8 ± 6.8** over 7540 games. A quarter cut therefore lies somewhere in
+0 to +7 Elo, while a 3000-game run resolves ±10. Such a run would have returned "interval covers
+zero" with near-certainty and decided nothing, at a cost of thirty hours. The release carries no
+measured Elo delta of its own, its CCRL estimate is carried forward, and the propagation chain
+has one unmeasured link in it — stated here rather than glossed.
+
+#### 4.7.1 — the ramp, stretched, and shipped on a judgment call
+
+The 16/6 ramp failed on its *extent*, not on its idea. It began fading at phase 16, in a
+middlegame where both queens may still be on, and was already silent at phase 6, a rook endgame
+with minor pieces. Stretching the window to **10 / 2** — full value down to roughly queen, rook
+and a minor, zero only at two minor pieces in total — changes what it does at phase 8 from 0.17
+of the term to 0.75.
+
+Over the same 97 positions:
+
+| variant | flipped verdicts |
+|---|---:|
+| 4.7.0, factor 0.1875, no ramp | 0 |
+| ramp 16/6 (at factor 0.125) | 3 |
+| **ramp 10/2** | **1** |
+
+Everything 16/6 broke is restored — h3, `testPosition26`, the Chess960 retreat — and
+`EngineTest` is green at 30 of 30. The one remaining flip is a position neither earlier variant
+touched: `BlunderTest.nxe2_atMove19` no longer finds an exchange-winning sacrifice. The
+mechanism is the intended one working against us: Black holds both castling rights and White
+none, so the term speaks for Black, the sacrifice line trades down into the faded range, and the
+margin was already thin — myChess rates the resulting position at ~+2 against Stockfish's ~+4.2.
+
+**Measured, isolated, neutral.** `versions/4.7.0-castling-ramp-stretched` against
+`versions/4.7.0`, both at factor 0.1875 so the ramp is the only difference:
+**+0.5 ± 9.6 Elo over 3897 games** at `tc=10+0.1`, stopped by hand rather than at a bound, so
+the estimate is unbiased. No SPRT verdict fired and none was going to — at a true value near
+zero the statistic sits 5 Elo from the midpoint of [−10, 0] and drifts too slowly to matter. The
+fast time control also means this figure does not belong beside the campaign's 40/60 numbers: it
+is evidence against a regression, not a strength measurement.
+
+**So it ships on a judgment call, recorded as one.** Fading a castling-rights penalty out of
+the endgame is correct chess and the cost is a single position. What it is *not* is an
+improvement. Three runs and roughly 14,000 games — factor 0 at +6.8 ± 6.8, the 16/6 ramp at
++1.7 ± 10.6, the stretched ramp at +0.5 ± 9.6 — all say the same thing. **The castling term is a
+weak lever in every shape tried, and this closes the topic.**
+
+A third pair of thresholds would be fitting a constant to 97 positions rather than measuring
+anything — the failure mode `king-safety.md` § 4.1 records for the shelved king-line table,
+where a sweep put the optimum within 0.07 % MSE of the shipped value and the term still lost
+29 Elo because the error was in the shape.
 
 #### What this campaign says for the next one
 
