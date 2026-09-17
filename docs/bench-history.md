@@ -73,6 +73,7 @@ time-truncated.
 | **4.4.1** | 335,946,428 | **+0.008 %** | 101,431,971 (+2.6 %) | Repetition fix (§ 12.23) | ≈ +15 (SPRT H1 at 321 games, +42.4 ± 29.4) | **1928 ± 21** |
 | **4.5.0** | 336,412,842 | **+0.139 %** | 101,553,277 (+0.1 %) | Complete principal variation ([§ 12.25](roadmap.md#1225-tried--repairing-the-roots-move-choice-after-the-pv-re-search-reverted-twice-444-and-166-elo)) | +1.8 ± 11.6 over 2463 games — **neutral** | ~1928 |
 | **4.6.0** (`415a6ac`) | 1,300,002,835 | **+286 %** | 101,626,447 (+0.1 %) | Material-only shortcut only for quiet root moves ([§ 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460)) | **+14.8 ± 10.5** over 3000 games | ~1943 |
+| **4.7.0** | 1,300,911,231 | **+0.070 %** | 102,534,843 (+0.89 %) | castling factor 0.25 -> 0.1875 ([§ 5.5.2](evaluation.md#552-measured-2026-09-09-to-2026-09-17--the-opponent-effect-and-what-the-factor-cannot-do)) | not measured by a match — see the row's note in [version history](version-history.md) | ~1943 |
 
 ### Measured but not a release — `4.6.0-king-line` (2026-09-02, shelved 2026-09-03)
 
@@ -202,6 +203,40 @@ whole rest of the suite costs less than a minute, and 90 % of a seventeen-minute
 benchmark is spent on one position that cannot occur in a game. This row is why
 policy rule 1's cost argument had to be rewritten.
 
+### What a quarter off the castling factor costs — `4.7.0` (2026-09-17)
+
+The release changes one constant, `castlingFactor` 0.25 -> 0.1875, and the three suites
+localize the effect precisely:
+
+| suite | 4.6.0 / 4.6.1 | 4.7.0 | Δ |
+|---|---:|---:|---:|
+| standard total, d8 | 1,300,002,835 | 1,300,911,231 | +0.070 % |
+| positions 37 + 38, d8 | 1,198,376,388 | **1,198,376,388** | **0.000 %** |
+| 53 realistic, d8 | 101,626,447 | 102,534,843 | +0.89 % |
+| castling-mix (`benchv2`) | 178,238,659 | 178,795,253 | +0.31 % |
+
+**The two artificial positions return the identical figure for the second time**, exactly as
+the shelved `castling-halved-tapered` build did. Both are pawnless with no castling rights and
+no castled king, so the term's delta is zero over their whole tree and no value of the factor
+can move it. That is a built-in control: a difference there would mean the measurement, not the
+build, had changed.
+
+**The castling-mix number is the informative one and it is small.** That suite exists for this
+exact question — sixty half-uncastled positions — and taking a quarter off the term moves its
+tree by three parts in a thousand. It is an independent line of evidence for what § 5.5.2
+argues from behavior: this constant is a weak lever. A tree size is not a castling rate, and
+the two agree.
+
+d9/d8 is **1.810** against 4.6.0's 1.810 and **3.66** against 3.67 on the realistic positions.
+Unchanged, as they must be for a change that touches neither the search nor the depth scaling.
+
+Wall clock, recorded and not asserted: 1,037,592 ms at depth 8 (NPS 1,253,779), 1,785,798 ms at
+depth 9 (1,318,528), 98,944 ms for the castling mix (1,807,034).
+
+Per-position archives: `test-results/bench/4.7.0-d8.txt`, `-d9.txt`, `-castling-mix-d8.txt`.
+
+---
+
 ### Measured but not a release — `castling-halved-tapered` (2026-09-17)
 
 The 4.7.0 candidate: `castlingFactor` halved to 0.125 and the castling term faded out
@@ -210,9 +245,9 @@ toward the endgame through `CASTLING_RAMP`. Measured from the sealed
 
 **Not a release row.** The candidate's full suite came back with five failures — one
 broken linearity contract in `analyzeFactors`, three worsened move choices including a
-`BlunderTest` position that loses by force, and one improvement — so the merge is on
-hold and 4.7.0 does not exist. The numbers below are still a valid characterization of
-this build and are recorded for that reason.
+`BlunderTest` position that loses by force, and one improvement — so it was dropped, and
+4.7.0 shipped the factor alone at 0.1875 instead (see the entry above). The numbers below
+remain a valid characterization of this build and are recorded for that reason.
 
 | depth | signature (nodes) | vs 4.6.0/4.6.1 | positions 37 + 38 | 53 realistic | vs 4.6.0 | total time | NPS |
 |---:|---:|---:|---:|---:|---:|---:|---:|
@@ -423,6 +458,7 @@ and are historically closed.
 | **4.4.1** | 918,718,652 | 335,946,428 | **2.73** | 372,117,621 | **3.67** |
 | **4.5.0** | 919,377,788 | 336,412,842 | **2.73** | 372,430,743 | **3.67** |
 | **4.6.0** (`415a6ac`) | 2,352,454,034 | 1,300,002,835 | **1.81** | 372,716,472 | **3.67** |
+| **4.7.0** | 2,354,625,105 | 1,300,911,231 | **1.810** | 374,887,543 | **3.66** |
 
 **The 4.6.0 row breaks the comparability of this column, and must not be read as a search
 improvement.** Its 1.81 is the lowest value in the table by a wide margin, and none of it comes
@@ -791,6 +827,7 @@ nothing.
 | version | date | depth | positions | signature (nodes) | time | NPS |
 |---|---|---:|---:|---:|---:|---:|
 | 4.6.1 | 2026-09-06 | 8 | 60 | **178,238,659** | 100,673 ms | 1,770,471 |
+| 4.7.0 | 2026-09-17 | 8 | 60 | **178,795,253** (+0.31 %) | 98,944 ms | 1,807,034 |
 
 Per-position archive: `test-results/bench/4.6.1-castling-mix-d8.txt`, same column
 layout as the `bench` archives of § 7. The largest position is 6.7 % of the total

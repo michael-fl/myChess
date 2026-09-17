@@ -1,0 +1,84 @@
+Starting MyChess v4.7.0
+2026-09-17 12:40:16.396 [book] db/openings.db not found — running search-only
+8|♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ 
+7|♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟ 
+6|. . . . . . . . 
+5|. . . . . . . . 
+4|. . . . . . . . 
+3|. . . . . . . . 
+2|♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙ 
+1|♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖ 
+  ---------------
+  a b c d e f g h
+Moves: 0, halfMoveClock: 0, castling: KQkq, standard
+Turn: white
+>bench suite=castling-mix depth=8 positions=60
+  1/60  nodes    3,745,346  time   2632 ms   2rqkr2/pp1b1pp1/4pn1p/2np4/3B1P2/1Q6/PPP1PNPP/2KR1B1R
+  2/60  nodes      400,661  time    234 ms   2r2rk1/bb3p1p/p1B2p2/8/3p4/8/PPP1NPPP/3R1RK1
+  3/60  nodes    2,695,215  time   1539 ms   r1q1r3/4kp1p/b1p1p1p1/p2pn3/Pp1NP3/1Q5P/1PPB1PP1/3RR1K1
+  4/60  nodes    1,181,259  time    517 ms   br2r1k1/p1p1qp2/Q3p1pp/2p1P3/4p3/1P2P2P/P1PB1PP1/3RR1K1
+  5/60  nodes      734,133  time    450 ms   r4rk1/1p3ppp/2pp4/4b3/2p1P3/P1NR3P/1PP3P1/5RK1
+  6/60  nodes    2,588,585  time   1610 ms   rnb1kb1r/pppp1ppp/5n2/2q5/8/8/PP2PPPP/RNBQKBNR
+  7/60  nodes    1,975,236  time    868 ms   r5k1/2qb2pp/7r/p1Rp4/N1pPp1p1/4P1P1/P1PQ1P1P/1R4K1
+  8/60  nodes    2,705,215  time   1636 ms   r1b1k2r/qppp1p1p/p1nb1p2/3N4/2P5/PN2P1P1/4BP1P/R2QK2R
+  9/60  nodes    5,509,212  time   3071 ms   r1b2rk1/pp1nbppp/2p1p2n/q2pP3/3P4/PPNB1N2/1BP2PPP/R2Q1RK1
+ 10/60  nodes   11,640,579  time   5798 ms   r2r2k1/1pp2ppp/3b4/3Q4/3N2b1/4P1Pq/PB1P1P1P/R3K2R
+ 11/60  nodes    3,173,756  time   1347 ms   r2qr1k1/pppb1ppp/n7/3pb3/1P1PN3/2P1B3/P1Q1P1PP/R3KB1R
+ 12/60  nodes    3,152,656  time   2114 ms   rnbqk2r/pp2ppb1/2pp1n1p/8/2PPP1pN/2N5/PPQ2PPP/R1B1KB1R
+ 13/60  nodes    6,046,538  time   3038 ms   4qr1k/r1pb2pp/p4n2/3B1p2/1Q6/P5P1/1PP1PP1P/3R1RK1
+ 14/60  nodes    3,082,882  time   1776 ms   rnbqk2r/1p2bppp/p3pn2/3p2B1/3P4/1QN1PN2/PP3PPP/R3KB1R
+ 15/60  nodes    3,438,684  time   2211 ms   3r1rk1/4qp2/P1ppbn1p/4p3/1pNnP1p1/1P1P2P1/4BP1P/RN1Q1RK1
+ 16/60  nodes    3,460,415  time   1562 ms   1r4kr/p1q2ppp/2NRb3/1p6/1Qp5/6P1/PP2PP1P/5RK1
+ 17/60  nodes      944,515  time    505 ms   r2q3r/1ppk2bp/4pp2/3p1P2/1n5Q/1P3N2/1BPP2PP/2KRR3
+ 18/60  nodes    3,346,642  time   1961 ms   r1q1k2r/pb1n1ppp/3bpn2/1B6/2pPp3/P1N2N2/2P2PPP/1RBQ1RK1
+ 19/60  nodes    2,251,414  time   1333 ms   rnbqk1nr/ppp1bppp/8/3p4/5P2/P1N5/2PP2PP/R1BQKBNR
+ 20/60  nodes    2,112,544  time    714 ms   r4rk1/2p3pp/3npp2/3p4/1p1P1PP1/1P1PP3/P3q2P/R1K3QR
+ 21/60  nodes    2,048,698  time    948 ms   r2q1rk1/1Q1bbppp/2p2n2/p7/2P5/2N1P3/PP1PB1PP/R1B1K2R
+ 22/60  nodes    1,816,241  time    867 ms   5rr1/2pkp3/p1ppb3/4b3/RP2P2p/7P/1PP1N1P1/2B1R2K
+ 23/60  nodes    1,596,149  time    706 ms   2b1kr2/R4p1p/1np1p1p1/3p4/8/1P2PN2/2qPnPPP/Q3R2K
+ 24/60  nodes    3,385,089  time   1745 ms   1k1rr3/1pp1q1b1/3ppnpp/1N6/4bP2/8/PPP1QBPP/1K1R1B1R
+ 25/60  nodes    1,508,557  time    706 ms   5rk1/4b1pp/p1q5/3pP3/2p5/6B1/2P1QPPP/1R4K1
+ 26/60  nodes    1,487,973  time    922 ms   r2qkb1r/ppp2ppp/2np1n2/4p3/2P5/2N2P1P/PP1PBPP1/R1BQ1RK1
+ 27/60  nodes    4,211,388  time   2500 ms   r1b2rk1/1p2bp1p/p2p1p2/q1p1p2Q/P1BnP2N/2NP2P1/1PP2P1P/R4RK1
+ 28/60  nodes    1,274,893  time    798 ms   r2qk2r/2pn1p1p/2Qb1np1/p2p1p2/2P2P2/3BP3/PP1P2PP/RNB1K2R
+ 29/60  nodes      472,628  time    268 ms   2bk1b1r/p2n3p/1r4p1/3n4/8/2N1P2P/PPPP1PP1/R1B1K2R
+ 30/60  nodes    3,410,461  time   1740 ms   1rb2rk1/p1qnbppp/5n2/2p5/Q1NP4/P3P2P/1P1P1PP1/RNB1KB1R
+ 31/60  nodes    1,417,903  time    872 ms   2r2rk1/pp2qppp/2n2n2/8/3P4/2PbPN1P/P4PP1/RN1QK2R
+ 32/60  nodes    5,688,743  time   3417 ms   rnb1k2r/ppq1ppb1/2pp1n1p/3P4/4PB1R/2P3P1/PP3PB1/RN1QK1N1
+ 33/60  nodes    1,046,132  time    513 ms   rnb1k2r/1p2ppbp/1qp2np1/3p4/1P1P4/2P1PN2/1B1N1PPP/R2QKB1R
+ 34/60  nodes    3,232,389  time   1811 ms   r4rk1/2pq2pp/b1n1p3/p2pPp2/3Pn3/2PB1N2/1P3PPP/R1Q1R1K1
+ 35/60  nodes    3,890,390  time   2709 ms   r3k2r/1bp3pp/3qp3/p4p2/1p1Pp3/2P1PP1P/1P3QP1/1K1R1B1R
+ 36/60  nodes    4,355,962  time   2557 ms   r2q1rk1/p1p2ppp/2pb1n2/3p4/4p3/1PN1P3/PBPPQPPP/R4RK1
+ 37/60  nodes    2,342,650  time   1054 ms   r3k2r/pbpq1ppp/1pnp1n2/4p1N1/2P5/BQ1P2PB/P3PP1P/R4RK1
+ 38/60  nodes    1,073,461  time    492 ms   rnbk1b1r/1p3ppp/4pn2/4N3/1p2P3/2N5/P1P2PPP/R3KB1R
+ 39/60  nodes    3,992,543  time   2464 ms   rn2kbnr/1ppb1ppp/1q2p3/pP1pP3/3P4/P1N2N2/2P2PPP/R1BQKB1R
+ 40/60  nodes    2,953,067  time   1803 ms   rnb1kb1r/p3n1pp/2p2p2/1P1pq3/8/1QN1B3/PP3PPP/R3KBNR
+ 41/60  nodes    1,573,924  time    947 ms   rn1qkbnr/1bpp1ppp/p7/1p6/4p3/4PNPB/PPPPQP1P/RNB1K2R
+ 42/60  nodes    3,970,439  time   1856 ms   rn2kb1r/1b3ppp/p3pn2/4q3/2BNp3/2N1B3/PPP1QPPP/R4RK1
+ 43/60  nodes      605,194  time    325 ms   2r4r/1p1pkppp/1q2p3/pP6/3P4/P4Q2/5PPP/R3KB1R
+ 44/60  nodes    2,763,227  time   1314 ms   rb3rk1/5ppp/b3p3/1pp5/1P4Q1/q1N2N1P/4K1P1/BR5R
+ 45/60  nodes    1,923,977  time    959 ms   4rrk1/ppp1bppp/2n1b2n/4P3/3pNB2/P2P1N2/1P3PPP/R2K1B1R
+ 46/60  nodes    2,306,107  time   1463 ms   2kr3r/1pp2ppp/p1nb1n2/4p3/1P6/P2PPN1P/1B1NKPP1/R6R
+ 47/60  nodes    5,457,334  time   3271 ms   r3r1k1/2p2ppp/p1p1bn2/8/1q2P3/2NPQN2/PPP3PP/R4RK1
+ 48/60  nodes    5,065,282  time   3061 ms   3r1rk1/p5pp/bpp1pp2/8/q1PP1P2/b3P3/P2NQRPP/1R2B1K1
+ 49/60  nodes    7,607,927  time   5354 ms   r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R
+ 50/60  nodes    1,284,610  time    564 ms   r2r1n2/pp2bk2/2p1p2p/3q4/3PN1QP/2P3R1/P4PP1/5RK1
+ 51/60  nodes    2,040,949  time    968 ms   r1bbk1nr/pp3p1p/2n5/1N4p1/2Np1B2/8/PPP2PPP/2KR1B1R
+ 52/60  nodes    2,149,484  time   1219 ms   rq3rk1/ppp2ppp/1bnpb3/3N2B1/3NP3/7P/PPPQ1PP1/2KR3R
+ 53/60  nodes       64,411  time     31 ms   6k1/6p1/6Pp/ppp5/3pn2P/1P3K2/1PP2P2/3N4
+ 54/60  nodes      343,909  time    129 ms   6k1/4pp1p/3p2p1/P1pPb3/R7/1r2P1PP/3B1P2/6K1
+ 55/60  nodes    7,629,479  time   3608 ms   4rrk1/1p1nq3/p7/2p1P1pp/3P2bp/3Q1Bn1/PPPB4/1K2R1NR
+ 56/60  nodes    6,872,697  time   3504 ms   4r1k1/r1q2ppp/ppp2n2/4P3/5Rb1/1N1BQ3/PPP3PP/R5K1
+ 57/60  nodes    7,584,574  time   4400 ms   r1bq1rk1/ppp1nppp/4n3/3p3Q/3P4/1BP1B3/PP1N2PP/R4RK1
+ 58/60  nodes    1,928,694  time    842 ms   3q2k1/pb3p1p/4pbp1/2r5/PpN2N2/1P2P2P/5PP1/Q2R2K1
+ 59/60  nodes    1,562,632  time    822 ms   3Qb1k1/1r2ppb1/pN1n2q1/Pp1Pp1Pr/4P2p/4BP2/4B1R1/1R5K
+ 60/60  nodes      669,599  time    499 ms   rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR
+===========================================================
+Total time     : 98,944 ms
+Nodes searched : 178,795,253
+NPS            : 1,807,034
+Largest pos.   : 11,640,579 nodes (6.5 % of total, 5,798 ms)   r2r2k1/1pp2ppp/3b4/3Q4/3N2b1/4P1Pq/PB1P1P1P/R3K2R
+Without it     : 167,154,674 nodes, 93,146 ms, NPS 1,794,544
+>Will exit MyChess...
+Closing DB...
+DB closed

@@ -180,19 +180,19 @@ class EngineTest extends EngineTestBase {
                 dxe5 Ng8 10. Ng5+ Ke8 11. Nc3 b4 12. Qd5 Nh6 13. Nb5 a3 14. Rd1 Bb7
                 """;
         testPosition(pgn,
-                // REGRESSION (v4.6.0), and the most expensive one the release cost: b2-a3 (bxa3,
-                // SF +2.29) instead of g5-e6 (Ne6, SF +4.47 at depth 22 and Stockfish's own best
-                // move) — 2.2 pawns given away in a position that stays won. Accepted against the
-                // measured +14.8 Elo of § 12.26, but note the trade is worse than the precedent
-                // in testPosition11: that one cost 0.6 pawns against +32.6 Elo.
+                // RECOVERED (v4.7.0): the engine plays Ne6 again — Stockfish's own best move at
+                // +4.47, depth 22. From v4.6.0 until then it pinned b2-a3 (bxa3, SF +2.29), the
+                // most expensive regression that release cost at 2.2 pawns in a position that
+                // stays won. What recovered it is `castlingFactor` 0.25 -> 0.1875; the swept
+                // curve in docs/evaluation.md § 5.5.2 shows this position flipping back under
+                // every weakening of the term, so it is the factor and not a search change.
                 //
-                // The mechanism is the open point of § 12.26 and this is its first measured
-                // instance: bxa3 is a capture and is therefore scored with the full evaluation,
-                // while Ne6 is quiet and keeps the material-only shortcut. The root compares two
-                // numbers produced under different rules, which biases the choice between
-                // capturing and not capturing. A per-node variant of the flag would remove that
-                // asymmetry and is the designated follow-up.
-                Set.of("b2-a3"),
+                // § 12.26's open point is NOT closed by this. bxa3 is a capture and is scored
+                // with the full evaluation while Ne6 is quiet and keeps the material-only
+                // shortcut, so the root still compares two numbers produced under different
+                // rules. This position no longer exposes the asymmetry; it does not remove it,
+                // and a per-node variant of the flag is still the designated follow-up.
+                Set.of("g5-e6"),
                 // PV-path assertion dropped: the deep PV shifted with the tapered
                 // pawn-EG table (v4.3.0).
                 null,
