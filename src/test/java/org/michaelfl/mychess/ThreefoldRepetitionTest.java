@@ -486,10 +486,23 @@ class ThreefoldRepetitionTest {
      * <p>It shows it without needing 4.4.0 built, because the two blocks below run the same
      * fixture with {@code enableThreefoldRepetition} flipped. Off, the search takes no early
      * return at the repeating node — which is precisely how the old three-occurrence test
-     * behaved there, the position being only twofold — so it stores the node and then plays
-     * {@code Nd4+}. That block is what makes the other one mean something: it demonstrates the
-     * fixture can still produce the blunder, so its absence with the check on is attributable
-     * to the check rather than to evaluation drift.
+     * behaved there, the position being only twofold — so it stores the node.
+     *
+     * <p><b>Narrowed in v4.7.1, and it is worth knowing what was lost.</b> Both blocks used to
+     * assert the move as well: {@code Nd4+} with the check off, anything else with it on. The
+     * first of those was the fixture's own validity proof — if the engine stopped walking into
+     * the repetition for an unrelated reason, the second block would go green while testing
+     * nothing. The castling phase ramp is exactly such a reason: from v4.7.1 the engine prefers
+     * {@code Rd3} at move 23 even with the check off, so that proof can no longer be given and
+     * both move assertions were removed rather than left as decoration.
+     *
+     * <p>What remains is narrower but still tests the fix directly, and does not depend on the
+     * move chosen: the repeating position <b>is</b> in the table with the check off and
+     * <b>is not</b> with it on. That pair is the mechanism — the early return precedes the only
+     * {@code tt.put} — so a regression that reinstated the storing would still be caught. What
+     * is no longer caught is a regression that stores nothing but plays the repetition anyway.
+     * Restoring the full guard needs a fixture that tempts the current evaluation into the
+     * cycle; none was built, and that is an open gap rather than a closed one.
      *
      * <p><b>A detail worth keeping.</b> Ask Stockfish about the position before move 23 from a
      * bare FEN, and it calls {@code Nd4+} the <em>best</em> move at +1.46. Give it the same
@@ -504,20 +517,12 @@ class ThreefoldRepetitionTest {
      */
     @Test
     void repetitionFromLichessGameIsAvoidedWithAWarmTable() throws Exception {
-        final String repetitionMove = "f5-d4";
-
         // Block 1 — the check switched off, which is how 4.4.0 behaved at this node: the
         // position is there for the second time, its three-occurrence test declines, and the
-        // node is searched and stored like any other. This block exists to prove the fixture
-        // can produce the blunder at all. Without it, block 2 could be green for any unrelated
-        // reason — an evaluation change that happens to prefer Rd3 would look like a working fix.
+        // node is searched and stored like any other.
         try (var uncorrectedTable = TestSupport.createTestTT()) {
             var uncorrected = playIntoTheShuffle(false, uncorrectedTable);
 
-            assertEquals(repetitionMove, uncorrected.move(),
-                    "with the repetition check off the warm-up must reproduce the game: 23.Nd4+ ("
-                            + repetitionMove + "). If it does not, this fixture no longer exercises the "
-                            + "defect and the assertion below proves nothing");
             assertNotNull(uncorrected.entry(),
                     "the warm-up must leave a transposition-table entry for the repeating position — that "
                             + "entry, scored as if the position were not a repetition, is the mechanism");
@@ -526,10 +531,6 @@ class ThreefoldRepetitionTest {
         // Block 2 — the same fixture with the check on. Differs in exactly one setting.
         try (var correctedTable = TestSupport.createTestTT()) {
             var corrected = playIntoTheShuffle(true, correctedTable);
-
-            assertNotEquals(repetitionMove, corrected.move(),
-                    "23.Nd4+ (" + repetitionMove + ") lets black claim the threefold repetition and throws "
-                            + "away about +0.9; the second-occurrence check is what stops it");
 
             // Stockfish has the best alternative at +0.92; the bound only has to sit clear of 0.00.
             assertTrue(corrected.weight() > 0.2f,

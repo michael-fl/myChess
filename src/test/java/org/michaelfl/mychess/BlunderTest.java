@@ -355,14 +355,34 @@ class BlunderTest {
      * so the delta is +100 and stays inside the band — the positional evaluation
      * runs here. One hole, not two.
      *
-     * <p>Positive assertion (since v4.3.1): myChess now <em>finds</em>
-     * {@code Nxe2+}. The tapered king endgame table penalizes the exposed,
-     * cornered {@code Kh1} in the low-phase position, which tips the evaluation
-     * enough to prefer the exchange-winning sacrifice over the simplifying
-     * {@code Qxf5}. The blind spot described above is closed; this test now
-     * guards against a regression back to declining the sacrifice.
+     * <p>Found from v4.3.1 to v4.7.0: the tapered king endgame table penalizes the
+     * exposed, cornered {@code Kh1} in the low-phase position, which tipped the
+     * evaluation enough to prefer the exchange-winning sacrifice over the
+     * simplifying {@code Qxf5}.
      *
-     * <p><b>Test family:</b> king-safety (fixed)
+     * <p><b>REGRESSION, accepted in v4.7.1, and the weakest such trade in this
+     * file.</b> The castling phase ramp fades the castling term out toward the
+     * endgame, and the {@code Nxe2+} line trades down into exactly that range.
+     * Black holds both castling rights and White none, so the term speaks for
+     * Black there; fading it shrinks Black's evaluated edge in the sacrifice line,
+     * and the margin was thin to begin with — myChess rates {@code Nxe2+ Kh1} at
+     * only ~{@code +2} against Stockfish's ~{@code +4.2}. It now takes
+     * {@code Qxf5} again.
+     *
+     * <p><b>What makes this trade weak is that nothing was bought with it.</b>
+     * {@code testPosition11} gave up 0.6 pawns against a measured +32.6 Elo and
+     * {@code testPosition12} gave up 2.2 against +14.8. Here the ramp measured
+     * <b>+0.5 ± 9.6</b> over 3897 games at {@code tc=10+0.1} — neutral, not
+     * positive. It was shipped because fading a castling-rights penalty out of the
+     * endgame is correct chess and the position is a single case, not because it
+     * paid for itself. That is a judgment call and is recorded as one.
+     *
+     * <p>The sweep behind it is in {@code docs/evaluation.md} § 5.5.2: over the 97
+     * pinned positions of this class and {@code EngineTest}, the 16/6 ramp cost
+     * three characterizations and the stretched 10/2 ramp costs this one.
+     * {@code tools/castling-factor-defect-sweep.sh} re-runs it.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
@@ -378,10 +398,13 @@ class BlunderTest {
         boolean foundNxe2 = Move.getFromField(result.move()) == Board.f4
                 && Move.getToField(result.move()) == Board.e2;
 
-        assertTrue(foundNxe2,
-                "engine must select the exchange-winning Nxe2+ (f4-e2) — the tapered king-EG table "
-                        + "(v4.3.1) closed this blind spot; a miss is a regression. white-POV eval "
-                        + result.weight());
+        assertFalse(foundNxe2,
+                "characterization since v4.7.1: myChess takes Qxf5 and misses the exchange-winning "
+                        + "Nxe2+ (f4-e2), which it found from v4.3.1 on. The castling phase ramp "
+                        + "fades the term out in the endgame the sacrifice line trades into, and "
+                        + "the margin was ~2 pawns short of Stockfish to begin with. If this starts "
+                        + "finding Nxe2+ again the defect is fixed and this must become an "
+                        + "assertTrue once more. white-POV eval " + result.weight());
     }
 
     // ----------------------------------------------------------------
