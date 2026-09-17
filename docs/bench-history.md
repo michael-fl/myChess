@@ -74,6 +74,7 @@ time-truncated.
 | **4.5.0** | 336,412,842 | **+0.139 %** | 101,553,277 (+0.1 %) | Complete principal variation ([§ 12.25](roadmap.md#1225-tried--repairing-the-roots-move-choice-after-the-pv-re-search-reverted-twice-444-and-166-elo)) | +1.8 ± 11.6 over 2463 games — **neutral** | ~1928 |
 | **4.6.0** (`415a6ac`) | 1,300,002,835 | **+286 %** | 101,626,447 (+0.1 %) | Material-only shortcut only for quiet root moves ([§ 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460)) | **+14.8 ± 10.5** over 3000 games | ~1943 |
 | **4.7.0** | 1,300,911,231 | **+0.070 %** | 102,534,843 (+0.89 %) | castling factor 0.25 -> 0.1875 ([§ 5.5.2](evaluation.md#552-measured-2026-09-09-to-2026-09-17--the-opponent-effect-and-what-the-factor-cannot-do)) | not measured by a match — see the row's note in [version history](version-history.md) | ~1943 |
+| **4.7.1** | 1,300,910,618 | **−0.00005 %** | 102,534,230 (−0.0006 %) | castling term faded toward the endgame ([§ 5.5.2](evaluation.md#552-measured-2026-09-09-to-2026-09-17--the-opponent-effect-and-what-the-factor-cannot-do)) | **+0.5 ± 9.6** over 3897 games vs 4.7.0 at `tc=10+0.1` — neutral | ~1943 |
 
 ### Measured but not a release — `4.6.0-king-line` (2026-09-02, shelved 2026-09-03)
 
@@ -202,6 +203,46 @@ position 38 another 0:47. The 53 realistic positions together take **0:55** — 
 whole rest of the suite costs less than a minute, and 90 % of a seventeen-minute
 benchmark is spent on one position that cannot occur in a game. This row is why
 policy rule 1's cost argument had to be rewritten.
+
+### A change the bench can barely see — `4.7.1` (2026-09-17)
+
+The phase ramp, fading the castling term out below `CASTLING_FULL_PHASE = 10` and to
+zero at `CASTLING_DEAD_PHASE = 2`:
+
+| suite | 4.7.0 | 4.7.1 | Δ |
+|---|---:|---:|---:|
+| standard total, d8 | 1,300,911,231 | 1,300,910,618 | **−613 nodes**, −0.00005 % |
+| standard total, d9 | 2,354,625,105 | 2,354,628,753 | +3,648 nodes, +0.00016 % |
+| positions 37 + 38, d8 | 1,198,376,388 | **1,198,376,388** | **0** |
+| 53 realistic, d8 | 102,534,843 | 102,534,230 | −613 |
+| castling-mix (`benchv2`) | 178,795,253 | 179,059,346 | +0.148 % |
+
+**613 nodes out of 1.3 billion.** This is the smallest movement any evaluation change in
+this document has produced, and the comparison that makes it informative is with the
+*rejected* ramp: at thresholds 16/6 the same castling-mix suite moved **2.06 %**, forty
+times as much. The whole difference between the two is where the fade begins — 16 reaches
+into the middlegame, 10 does not.
+
+**The two artificial positions are identical for the third consecutive release**, at both
+depths. Their castling delta is zero over the entire tree, so no factor and no phase
+function can touch them; a difference there would indict the measurement rather than the
+build.
+
+**This is the bench answering the same question the match answered, from the other side.**
+The match said +0.5 ± 9.6 over 3897 games — nothing measurable. The bench says why: the
+term now acts in so small a part of the search space that 1.3 billion nodes shift by 613.
+Two methods with nothing in common agree, and that agreement is worth more than either
+number alone.
+
+d9/d8 is **1.810** and **3.66** on the realistic positions, both unchanged from 4.7.0.
+
+Wall clock, recorded and not asserted: 1,037,268 ms at depth 8 (NPS 1,254,170),
+1,786,006 ms at depth 9 (1,318,376), 99,758 ms for the castling mix (1,794,937).
+
+Per-position archives: `test-results/bench/4.7.1-d8.txt`, `-d9.txt`,
+`-castling-mix-d8.txt`.
+
+---
 
 ### What a quarter off the castling factor costs — `4.7.0` (2026-09-17)
 
@@ -459,6 +500,7 @@ and are historically closed.
 | **4.5.0** | 919,377,788 | 336,412,842 | **2.73** | 372,430,743 | **3.67** |
 | **4.6.0** (`415a6ac`) | 2,352,454,034 | 1,300,002,835 | **1.81** | 372,716,472 | **3.67** |
 | **4.7.0** | 2,354,625,105 | 1,300,911,231 | **1.810** | 374,887,543 | **3.66** |
+| **4.7.1** | 2,354,628,753 | 1,300,910,618 | **1.810** | 374,891,191 | **3.66** |
 
 **The 4.6.0 row breaks the comparability of this column, and must not be read as a search
 improvement.** Its 1.81 is the lowest value in the table by a wide margin, and none of it comes
@@ -828,6 +870,7 @@ nothing.
 |---|---|---:|---:|---:|---:|---:|
 | 4.6.1 | 2026-09-06 | 8 | 60 | **178,238,659** | 100,673 ms | 1,770,471 |
 | 4.7.0 | 2026-09-17 | 8 | 60 | **178,795,253** (+0.31 %) | 98,944 ms | 1,807,034 |
+| 4.7.1 | 2026-09-17 | 8 | 60 | **179,059,346** (+0.148 %) | 99,758 ms | 1,794,937 |
 
 Per-position archive: `test-results/bench/4.6.1-castling-mix-d8.txt`, same column
 layout as the `bench` archives of § 7. The largest position is 6.7 % of the total
