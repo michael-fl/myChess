@@ -309,6 +309,8 @@ The score is always non-positive: castled = 0 (best), one or two rights remainin
 
 **Scale factor.** `castlingFactor = 0.25` — losing both castling rights without having castled is worth `(0 − (−4)) × 0.25 = 1.0` pawn against the side that lost the rights. That's a meaningful but not overwhelming penalty: still recoverable through other positional advantages, but enough to push the engine toward castling early.
 
+**A halving and an endgame fade were measured and did not ship**; § 5.5.2 records the campaign and why.
+
 ### 5.5.1 Measured 2026-09-09 — load-bearing, and too strong
 
 These were the last hand-written numbers in the evaluation. `castlingFactor = 0.25f` dates from
@@ -371,6 +373,178 @@ reduction — was the one that scored `+20.9`. If halving measures positive, the
 not "reduce further" but why a term that lifts the castling rate by 30 points buys no Elo doing
 it, i.e. whether castling is worth as much for myChess as everyone assumes. That is its own
 investigation.
+
+### 5.5.2 Measured 2026-09-09 to 2026-09-17 — the opponent effect, and what the factor cannot do
+
+§ 5.5.1 ended with one hypothesis (the term is too strong) and one open question (why a term
+that lifts the castling rate by 30 points buys no Elo). Seven runs later the picture is
+different from the one that question assumed, and the most valuable thing the campaign
+produced is not the new factor.
+
+#### The finding: the castling rate is a property of the pairing, not of the build
+
+**The term scores a *difference* of castling states.** `castlingState[0] - castlingState[1]`
+rewards the opponent losing rights exactly as much as it rewards castling. So a build carrying
+the full term does not simply castle more — it also plays for the opponent's rights, and that
+only pays against an opponent which does not answer it. The castling rate a build shows is
+therefore not a number the build has. It is a number the *pairing* has.
+
+Four pairings, same code base, castling rate of the first-named side:
+
+| pairing | rate of the first side | rate of the second |
+|---|---:|---:|
+| 0.25 vs 0 | 98.4 % | 72.1 % |
+| 0.25 vs 0.125 | 98.4 % | 83.5 % |
+| 0.25 vs 0.25 | 92.5 % (level) | 92.5 % |
+| 0 vs 0 | 88.2 % (level) | 88.2 % |
+
+The same build reads 98.4 % against a defenseless opponent and 92.5 % against itself. The
+26-point span § 5.5.1 reported as the term's behavioral range was almost entirely this artifact.
+
+**How it surfaced: the controls did.** The factor sweep (below) was run with both ends of the
+known scale included as control points — factor 0 and factor 0.25, whose rates were supposedly
+72.1 % and 98.4 %. Neither reproduced. Factor 0 came back at 88.2 % and factor 0.25 at 92.5 %,
+and it was the *failure of the controls*, not any of the new points, that exposed the effect.
+Without them a factor would have been picked against a scale that does not exist. This is the
+methodological result to carry forward: **a sweep whose endpoints are known must include them.**
+
+#### The factor is a weak lever, and 85 % is out of its reach
+
+Six self-play points, 200 games each at `tc=40/20`, both arms carrying the same factor, so the
+pairing is neutral by construction:
+
+| factor | castling rate | 95 % CI |
+|---:|---:|---:|
+| 0 | 88.2 % | ± 3.2 |
+| 0.02 | 88.0 % | ± 3.2 |
+| 0.05 | 91.0 % | ± 2.8 |
+| 0.08 | 91.0 % | ± 2.8 |
+| 0.125 | 92.0 % | ± 2.7 |
+| 0.25 | 92.5 % | ± 2.6 |
+
+**4.3 points across the whole range**, most of it spent between 0.02 and 0.05, and the curve is
+flat from 0.05 upward. Switching the term off entirely still leaves 88.2 %.
+
+The reference the target was set against: over **276,670 master games** of median Elo 2312
+(`src/test/resources/large.pgn`, tokenized by `myChess-lab/scripts/master-castling-rate.py`), a
+side castles in **87.0 %** of them — 91.9 % as White, 82.0 % as Black. Both sides castle in
+77.4 % of games, neither in 3.5 %. myChess at 88.2 % with the term *removed* is already at
+master practice; the owner's 85 % target sits *below* what the engine does with no castling term
+at all.
+
+**So the preference is not in this term.** It comes from the king midgame piece-square table,
+which pays 53 cp for `e1 -> g1` against the 25 cp the term added at 0.25. Moving the rate to 85 %
+would mean touching a Texel-tuned table — a different undertaking, with its own Elo risk, and not
+one this campaign justified.
+
+#### The phase fade
+
+The flat term charged its full value into positions where the rights it prices cannot be used.
+Over the 2886-game anchor gauntlet, 16.3 % of all plies sat at phase 8 or below with the term
+speaking, at 99.8 cp on average. The fix is a ramp rather than a straight taper, because scaling
+with the raw phase reaches 0.67 at phase 16 — a third off while both queens may still be on the
+board, which is backwards; squaring the phase makes it worse (0.44 there), since it falls faster
+everywhere rather than later.
+
+```
+phase >= 16   1.00     midgame, queens possible
+phase 12      0.58
+phase  8      0.17
+phase <= 6    0.00     a rook and a minor each
+```
+
+`CASTLING_RAMP` is a precomputed `int[25]` because the arithmetic contains an integer division
+and this runs once per evaluation; it is routed through `blend` so the class keeps a single
+interpolation function. `CastlingTaperTest` pins every entry, both thresholds, and the factor.
+
+#### The two Elo measurements
+
+Both fixed-N with the stopping point declared before the run, so the point estimates are
+unbiased. Both against `versions/4.6.1`, which carries the flat 0.25 term.
+
+| build | games | score | Elo | LOS |
+|---|---:|---:|---:|---:|
+| `castlingFactor = 0`, no ramp | 7540 | 2899–2751–1890 | **+6.8 ± 6.8** | 97.6 % |
+| 0.125 **and** ramp | 3000 | 1090–994–916 | **+11.1 ± 10.4** | 98.2 % |
+| 0.25, **ramp only** | 3000 | 1091–1076–833 | **+1.7 ± 10.6** | 62.6 % |
+
+The middle row was the 4.7.0 candidate. Its interval is the only one that clears zero rather
+than touching it, and a shifted SPRT computed afterwards accepts "not worse than −10" at
+α = β = 0.05 (llr +5.77 of ±2.94).
+
+**The decomposition the third row was supposed to give does not exist at this sample size.**
+The difference between rows two and three is about 9.4 Elo with an interval far wider than that;
+separating a 5.4 Elo effect at this error level needs on the order of **11,800 games**. Worse,
+the ramp-only arm measured under the thinner conditions of the two: replaying its own PGN
+(`myChess-lab/scripts/ramp-window.py`) shows the ramp can change a score — non-zero delta *and*
+phase below 16 — in only **5.4 % of plies and 12.5 % of games**, against 11.4 % and 18.7 % for
+the halved arm, because the halved factor leaves more games with a non-zero delta. Seven eighths
+of that match was played by two builds computing identical numbers.
+
+So the candidate carried both changes as one, and which of them earns the +11.1 was never
+established.
+
+#### Why none of it shipped
+
+The candidate's full suite came back with **five failures out of 1391**, all of them absent on
+master, and none explained by the 12.5 cp shift the halving causes. Controls at each of the
+four factor/ramp combinations separate them:
+
+| test | master | factor 0.125 only | ramp only | both |
+|---|---|---|---|---|
+| `FactorTexelDataTest` breakdown | pass | pass | **fail** | **fail** |
+| `BlunderTest` h3 | pass | **fail** | **fail** | **fail** |
+| `EngineTest.testPosition12` | pass | fail | fail | fail |
+| `EngineTest.testPosition26` | pass | pass | **fail** | **fail** |
+| Chess960 knight retreat | pass | **fail** | pass | **fail** |
+
+**The ramp breaks `analyzeFactors`**, which still emits the castling feature flat as
+`(castlingState[0] − castlingState[1]) * 100.0` while the evaluation goes through
+`castlingWeight(delta, phase)`. The identity `eval = material + sum(feature * factor)` no
+longer holds, so the Texel factor tuner would fit `castlingFactor` against a gradient that
+does not match the evaluation. The feature has to carry the same ramp.
+
+**`testPosition12` is an improvement and reads as one**: it pins `b2-a3`, recorded in its own
+comment as v4.6.0's most expensive regression at 2.2 pawns, and every weakened variant plays
+`g5-e6` instead — Stockfish's best move at +4.47.
+
+**The other three are real, and none of them originates at the root.** In the h3 position
+(phase 19, above `CASTLING_FULL_PHASE`) the ramp-only build's evaluation is identical to
+4.6.1 to the last digit, and in the Chess960 position the castling delta is zero in all
+builds. They are search-order effects of scores that changed deep in the tree, where material
+has been traded down into the ramp's window — which is precisely what the fade was built to
+do.
+
+**How much weakening one of them tolerates.** Sweeping only `castlingFactor` against
+`BlunderTest`'s h3 case, where `12.h3` loses by force:
+
+| factor | 0.25 | 0.21875 | 0.1875 | 0.15625 | 0.125 | 0.0625 | 0 |
+|---|---|---|---|---|---|---|---|
+| verdict | avoids | avoids | **avoids** | **plays it** | plays it | plays it | plays it |
+| its score for the losing move | — | — | — | 0.99 | 1.12 | 1.34 | 1.56 |
+
+The threshold sits between 0.1875 and 0.15625, and below it the engine does not merely flip
+once — the score it assigns the losing move rises monotonically as the term weakens. A
+monotone dose-response over six points is much stronger evidence than a single flip: this is
+a causal effect of the term's strength, not search tie-breaking. One position, so the
+threshold is that position's and not the engine's; what generalizes is that **the term is
+doing measurable king-safety work at 0.25**, which § 5.5.1's "too strong" hypothesis did not
+anticipate.
+
+`castlingFactor = 0.1875` with no ramp leaves the whole characterization suite clean apart
+from `testPosition12`'s stale expectation. It has no Elo measurement.
+
+#### What this campaign says for the next one
+
+- **A behavioral rate measured against a weaker opponent is not the build's rate.** Any future
+  term scoring a difference has the same exposure. Measure level, or state the pairing.
+- **Put the known endpoints in the sweep.** They cost two points and they are the only thing
+  that can tell you the scale moved under you.
+- **Decide what the measurement must separate before splitting a change into arms.** Two arms
+  three thousand games each answered less than one arm of six thousand would have, because the
+  quantity between them was smaller than either interval.
+- § 5.5.1's open question is answered, and its premise was wrong: the term never lifted the rate
+  by 30 points. It lifts it by about 4, which is why it buys single-digit Elo.
 
 ## 5.6 — removed
 
