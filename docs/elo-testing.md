@@ -65,10 +65,13 @@ cutechess updates a running log-likelihood ratio (`llr`) and checks
 whether the data is now strong enough to accept one of two
 hypotheses about the true ELO difference:
 
-- **H0**: true ELO difference ≤ `elo0` = −3, i.e. *the candidate is
-  no better than the baseline* (a hair's breadth of tolerance for noise).
-- **H1**: true ELO difference ≥ `elo1` = +15, i.e. *the candidate is
-  worth at least 15 ELO*.
+- **H0**: the true ELO difference is `elo0` = −3.
+- **H1**: the true ELO difference is `elo1` = +15.
+
+These are the two *points* the test weighs against each other, not ranges
+— which is why neither verdict can be read as "the true value is on that
+side of the band". What each acceptance actually licenses is spelled out
+below, under the Wald bounds.
 
 **Why −3 / +15, and why asymmetric.** This band is for the A/B test this
 project runs constantly: a candidate build against the previous release,
@@ -118,12 +121,27 @@ ubound  =  ln((1 − beta) / alpha)  = ln(0.95 / 0.05) = ln(19) ≈ +2.944
 lbound  = −ln((1 − alpha) / beta)  = −ln(19)                 ≈ −2.944
 ```
 
-When `llr` crosses `ubound`, H1 is accepted and the match
-terminates with verdict *"myChess is at least 50 ELO stronger"*.
-When it crosses `lbound`, H0 is accepted with verdict *"myChess is
-at least 50 ELO weaker"*. If the match runs out of games (max
+When `llr` crosses `ubound`, H1 is accepted; when it crosses
+`lbound`, H0 is accepted. If the match runs out of games (max
 `rounds × games`) before either bound is crossed, no verdict is
 produced; cutechess just reports the score and the running `llr`.
+
+**Both verdicts are negative statements, and getting this wrong is the
+most common way to oversell an SPRT.** The test compares two *point*
+hypotheses and guarantees the error rates only *at those two points*:
+`P(accept H1 | true = elo0) ≤ alpha` and `P(accept H0 | true = elo1) ≤
+beta`. For a true value anywhere between them it guarantees nothing. So
+what a crossed bound licenses is:
+
+- **H1 accepted** → the data are unlikely if the true value were `elo0`
+  → *"not as bad as `elo0`"*. It does **not** say "at least `elo1`".
+- **H0 accepted** → the data are unlikely if the true value were `elo1`
+  → *"not as good as `elo1`"*. It does **not** say "worse than `elo0`".
+
+With the house band that reads: H1 accepted means *"not worse than −3"*,
+H0 accepted means *"not 15 ELO better"*. Neither outcome ever establishes
+a lower bound on the gain — no SPRT can. The practical merge criterion is
+therefore the first one: a regression beyond `elo0` has been excluded.
 
 With symmetric `alpha = beta`, the two bounds are symmetric. An
 asymmetric choice — e.g. `alpha=0.05, beta=0.01` — yields
@@ -277,8 +295,10 @@ Line by line:
   ELO after 19 games is normal).
 - **`LOS`** — "Likelihood of Superiority". Probability that the
   true ELO difference is positive given the data. Distinct from
-  the SPRT verdict: LOS just asks "is myChess stronger at all?",
-  SPRT asks "by at least `elo1`?".
+  the SPRT verdict: LOS asks "is myChess stronger at all?", while the
+  SPRT only ever rules one of its two endpoints out — see the two
+  bullets under *Statistical termination* for what each verdict does
+  and does not license.
 - **`DrawRatio`** — fraction of decided games that ended in a draw.
 - **`SPRT: llr X (Y%), lbound A, ubound B - verdict`** — `llr` is
   the running log-likelihood ratio; the parenthesized percentage
