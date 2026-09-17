@@ -234,7 +234,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5
                 """;
-        testPosition(pgn, 1.05f); // v4.3.3 bishop-pair (black holds the pair)
+        testPosition(pgn, 0.9f); // v4.3.3 bishop-pair (black holds the pair); -0.0625 by castlingFactor 0.25 -> 0.1875 (v4.7.0)
     }
 
     @Test
@@ -261,7 +261,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+
                 """;
-        testPosition(pgn, -0.54f); // was -0.44; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, -0.6f); // was -0.44 (PeSTO v4.4.0); -0.0625 by castlingFactor 0.25 -> 0.1875 (v4.7.0)
     }
 
     @Test
@@ -270,7 +270,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1
                 """;
-        testPosition(pgn, 0.02f); // was 0.19; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, -0.04f); // was 0.19 (PeSTO v4.4.0); -0.0625 by castlingFactor 0.25 -> 0.1875 (v4.7.0)
     }
 
     @Test
@@ -279,7 +279,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5
                 """;
-        testPosition(pgn, -0.48f); // was -0.03; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, -0.54f); // was -0.03 (PeSTO v4.4.0); -0.0625 by castlingFactor 0.25 -> 0.1875 (v4.7.0)
     }
 
     // ** Unguarded bishop attacked by queen
@@ -289,7 +289,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5
                 """;
-        testPosition(pgn, -0.11f); // was 0.5; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, -0.17f); // was 0.5 (PeSTO v4.4.0); -0.0625 by castlingFactor 0.25 -> 0.1875 (v4.7.0)
     }
 
     // ** White wins (back) a pawn with Nxe6
@@ -299,7 +299,7 @@ class WeightingFunctionTest {
                 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Bg5 e6 7. f4 Be7 8. Qf3 Qc7 9.
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8
                 """;
-        testPosition(pgn, 0.04f); // was 0.52; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, -0.03f); // was 0.52 (PeSTO v4.4.0); -0.0625 by castlingFactor 0.25 -> 0.1875 (v4.7.0)
     }
 
     @Test

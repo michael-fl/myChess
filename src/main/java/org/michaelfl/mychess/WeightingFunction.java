@@ -138,11 +138,29 @@ public final class WeightingFunction {
     /** Phase of the full starting material (4·1 knights + 4·1 bishops + 4·2 rooks + 2·4 queens); the phase is clamped to this. */
     private static final int MAX_PHASE = 24;
 
+    /** Mobility: one extra knight move is worth 5 cp. Hand-set in {@code 26f378c} (2019), never tuned or swept. */
     private static final float mobilityFactor = 0.1f;
+
+    /** Piece-square-table scale: halves the tables' centipawns. Hand-set in {@code 492599b} (2020) with the tables, never tuned. */
     private static final float positionFactor = 0.5f;
+
+    /** Threats: a threatened queen is worth 18 cp, deliberately tiny. Hand-set in {@code 2cd229a} (2020), never tuned. */
     private static final float threadWeightFactor = 0.02f;
+
+    /** Checks: 25 cp each. Hand-set in {@code 2cd229a} (2020), never tuned; roadmap 12.17 confirmed the term productive, not this value. */
     private static final float chessFactor = 0.25f;
-    private static final float castlingFactor = 0.25f;
+
+    /**
+     * Weight of one castling-state unit, in pawns. 0.1875 is 0.25 x 3/4, and the three
+     * quarters are a measured edge rather than a round number: swept against the
+     * characterization suite, {@code BlunderTest}'s h3 case - where {@code 12.h3} loses by
+     * force - holds at 0.1875 and fails at 0.15625, with the engine's score for the losing
+     * move rising monotonically below that. This value therefore has <b>no margin
+     * downward</b>. Re-run {@code tools/castling-factor-defect-sweep.sh} after any
+     * evaluation change that could shift it. See {@code docs/evaluation.md} section 5.5.2.
+     */
+    private static final float castlingFactor = 0.1875f;
+
     /**
      * Per-doubled-pair penalty in pawn units, applied directly in the
      * final-weight formula.
