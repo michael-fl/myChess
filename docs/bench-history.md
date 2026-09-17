@@ -202,6 +202,61 @@ whole rest of the suite costs less than a minute, and 90 % of a seventeen-minute
 benchmark is spent on one position that cannot occur in a game. This row is why
 policy rule 1's cost argument had to be rewritten.
 
+### Measured but not a release — `castling-halved-tapered` (2026-09-17)
+
+The 4.7.0 candidate: `castlingFactor` halved to 0.125 and the castling term faded out
+toward the endgame through `CASTLING_RAMP`. Measured from the sealed
+`versions/4.6.1-castling-halved-tapered` jar at commit `2424ef2`, on an idle machine.
+
+**Not a release row.** The candidate's full suite came back with five failures — one
+broken linearity contract in `analyzeFactors`, three worsened move choices including a
+`BlunderTest` position that loses by force, and one improvement — so the merge is on
+hold and 4.7.0 does not exist. The numbers below are still a valid characterization of
+this build and are recorded for that reason.
+
+| depth | signature (nodes) | vs 4.6.0/4.6.1 | positions 37 + 38 | 53 realistic | vs 4.6.0 | total time | NPS |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 8 | 1,301,277,152 | **+0.098 %** | 1,198,376,388 | 102,900,764 | **+1.25 %** | 1,028,064 ms | 1,265,755 |
+| 9 | 2,356,562,356 | **+0.175 %** | 1,979,737,562 | 376,824,794 | **+1.10 %** | 1,779,357 ms | 1,324,389 |
+
+d9 / d8 = **1.811** against 4.6.0's 1.810, and on the 53 realistic positions **3.66**
+against 3.67 — both unchanged, as they must be for a change that touches neither the
+search nor the depth scaling.
+
+**The two artificial positions return 1,198,376,388 at depth 8 — identical to 4.6.0 to
+the digit.** That is not a coincidence and it is the cleanest possible evidence that the
+change is exactly where it claims to be: both stress positions are pawnless with no
+castling rights and no castled king, so the castling delta is zero at every phase and
+the ramp cannot alter a single score. The whole difference lives in the 53 realistic
+positions, at +1.25 %.
+
+That also makes this the one entry in this document where the *realistic* column is the
+signature worth reading and the total is the useless one. The total moves 0.098 % because
+92 % of it is provably untouched.
+
+#### The castling-mix suite — the set built for exactly this question
+
+| version | date | depth | positions | signature (nodes) | time | NPS |
+|---|---|---:|---:|---:|---:|---:|
+| 4.6.1 | 2026-09-06 | 8 | 60 | 178,238,659 | 100,673 ms | 1,770,471 |
+| `castling-halved-tapered` | 2026-09-17 | 8 | 60 | **181,903,152** (+2.06 %) | 100,872 ms | 1,803,306 |
+
+`benchv2` is the half-uncastled set, so it is where a castling change should show most,
+and it does: **+2.06 %** against +1.25 % on the realistic standard positions and +0.098 %
+on the standard total. Three suites, three magnitudes, ordered exactly by how much
+castling structure each contains.
+
+**On the wall clock, one sentence and no more.** The two runs took 100,872 ms and
+100,673 ms — 0.2 % apart — while the candidate searched 2.06 % more nodes. Rule 4 still
+holds: these are single unpaired runs on different days and nothing is asserted from
+them. What they do *not* show is a cost large enough to be visible without the paired
+`A B B A A B` protocol § "A pure speed change" describes.
+
+Per-position archives: `test-results/bench/4.6.1-castling-halved-tapered-d8.txt`,
+`-d9.txt`, and `-castling-mix-d8.txt`.
+
+---
+
 ### A pure speed change, measured relatively — `king-field-tracking` (2026-09-05)
 
 **`Board` now carries both king squares instead of searching for them**, so
