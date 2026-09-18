@@ -27,6 +27,21 @@
 # written to the PGN as real results - a permanent distortion, not a lost game. Games still
 # running when the process dies are simply absent and cost nothing.
 #
+# TOTAL_ROUNDS IS LOCKED ON THE FIRST RUN, and that is the point of the state file next to the
+# segments. Resumability and optional stopping are the same mechanism seen from two sides: a
+# match you can continue is a match you can extend "just another 2000 games" until the interval
+# finally clears the threshold, or end early while it happens to sit on the right side. Either
+# one biases the result in the direction you were hoping for, which is how three SPRT stops in
+# this project's history came in high (+42.4 -> ~+15, +18.4 -> +14.8, +39.8 -> +32.6).
+#
+# Interrupting for an EXTERNAL reason costs nothing: the machine being needed is unrelated to
+# the standing, so the estimate stays unbiased and only the interval is wider. Interrupting or
+# extending BECAUSE of the standing is what must not happen. Seeing the running score is fine
+# and unavoidable; acting on it is not.
+#
+# So a different TOTAL_ROUNDS on a later call is refused. Overriding needs FORCE_ROUNDS=1, which
+# is deliberately awkward and leaves a line in the state file.
+#
 # cutechess writes the PGN in ROUND order, so games finishing out of sequence wait for the
 # older one. Measured on a live match the backlog sat at 4 to 6 games and did not grow; it is
 # bounded by how many finish while the slowest in flight is still going, not by a timer.
@@ -57,17 +72,44 @@ if [ ! -x "$CUTECHESS" ]; then
     exit 1
 fi
 
-if pgrep -x cutechess-cli > /dev/null 2>&1; then
-    echo "a cutechess-cli is already running - refusing to start a second one" >&2
-    exit 1
-fi
-
 for version in "$CANDIDATE" "$BASELINE"; do
     if [ ! -x "versions/$version/mychess-uci.sh" ]; then
         echo "versions/$version/mychess-uci.sh missing or not executable" >&2
         exit 1
     fi
 done
+
+STATE=test-results/match-"$NAME".rounds
+
+# The declared length, locked on the first run. A later call asking for a different number is
+# refused rather than silently honoured.
+if [ -f "$STATE" ]; then
+    DECLARED=$(head -1 "$STATE")
+
+    if [ "$DECLARED" != "$TOTAL_ROUNDS" ]; then
+        if [ "${FORCE_ROUNDS:-0}" = "1" ]; then
+            echo "WARNING: changing the declared length from $DECLARED to $TOTAL_ROUNDS rounds." >&2
+            echo "  The estimate is only unbiased if this was decided WITHOUT reference to the" >&2
+            echo "  running score. Recorded in $STATE." >&2
+            printf '# changed from %s to %s on %s\n' "$DECLARED" "$TOTAL_ROUNDS" "$(date '+%Y-%m-%d %H:%M')" >> "$STATE"
+            sed -i '' "1s/.*/$TOTAL_ROUNDS/" "$STATE"
+        else
+            echo "this match was declared as $DECLARED rounds, not $TOTAL_ROUNDS." >&2
+            echo "Changing the length after seeing results biases the estimate - that is what" >&2
+            echo "the lock is for. Re-run with $DECLARED, or FORCE_ROUNDS=1 if the new length" >&2
+            echo "was decided without reference to the standing." >&2
+            exit 1
+        fi
+    fi
+else
+    printf '%s\n' "$TOTAL_ROUNDS" > "$STATE"
+    echo "declared length: $TOTAL_ROUNDS rounds ($((TOTAL_ROUNDS * 2)) games), locked in $STATE"
+fi
+
+if pgrep -x cutechess-cli > /dev/null 2>&1; then
+    echo "a cutechess-cli is already running - refusing to start a second one" >&2
+    exit 1
+fi
 
 # Games already banked, across every segment written so far.
 DONE=0
