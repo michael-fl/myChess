@@ -20,7 +20,17 @@
 #
 # Sequential rather than random is what makes a resume exact: with random openings a second
 # run would sample independently, which stays statistically valid but can repeat openings and
-# cannot be reproduced. The book holds 12,092 openings, far more than any match needs.
+# cannot be reproduced.
+#
+# THE BOOK MUST BE THE SHUFFLED ONE, and that is not cosmetic. 2moves_v2.pgn is itself ordered:
+# over its 12,092 openings b4 makes up 17.6 % of the first 2100 while not reaching the book's
+# top six, and e4 falls from 11.9 % to 8.1 %. A match reading the front of that file would be
+# played largely on flank and irregular lines. Each side still gets every opening once, so
+# nothing is unfair - but the style of the sample is skewed, and an engine that copes badly
+# with a run of similar openings would be judged on that rather than on chess. The bias is a
+# gradient, not blocks, so starting further in does not help. tools/shuffle-openings.py
+# reorders the book once with a fixed seed: the first 2100 then sit within 0.4 points of the
+# book-wide distribution, against 9.6 points before.
 #
 # STOPPING SAFELY IS THE PART THAT MATTERS. Kill the process FIRST, then close the lid or
 # start the other job. A machine suspended mid-game produces time forfeits, and those are
@@ -64,11 +74,18 @@ TC=${5:-40/60}
 REPO=$(git rev-parse --show-toplevel)
 CUTECHESS=${CUTECHESS:-/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli}
 PYTHON=${PYTHON:-/Users/mf/_PRIVAT_/New-Stuff/lichess-bot/venv/bin/python}
+BOOK=${BOOK:-2moves_v2-shuffled.pgn}
 
 cd "$REPO"
 
 if [ ! -x "$CUTECHESS" ]; then
     echo "cutechess-cli not found at $CUTECHESS - set CUTECHESS=/path/to/cutechess-cli" >&2
+    exit 1
+fi
+
+if [ ! -f "$BOOK" ]; then
+    echo "opening book $BOOK missing - generate it with:" >&2
+    echo "  tools/shuffle-openings.py 2moves_v2.pgn $BOOK" >&2
     exit 1
 fi
 
@@ -147,7 +164,7 @@ exec caffeinate -is "$CUTECHESS" \
     -engine name="$BASELINE"  cmd=./versions/"$BASELINE"/mychess-uci.sh  proto=uci \
     -each tc="$TC" \
     -rounds "$REMAINING" -games 2 -repeat \
-    -openings file=2moves_v2.pgn format=pgn order=sequential plies=8 start="$START" \
+    -openings file="$BOOK" format=pgn order=sequential plies=8 start="$START" \
     -concurrency 4 -ratinginterval 10 \
     -recover \
     -draw movenumber=40 movecount=8 score=40 \
