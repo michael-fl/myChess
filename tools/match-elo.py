@@ -1,0 +1,143 @@
+#!/usr/bin/env python3
+"""Elo, interval and resume point for a match spread over several PGN segments.
+
+WHY THIS EXISTS. cutechess-cli has no --resume, so a match that must be paused - to close
+the lid, to free the machine for something else, to survive a reboot - can only be continued
+as a SECOND run whose games land in a second PGN. The score line cutechess prints then covers
+that segment alone. This adds the segments up and computes the figures itself.
+
+That matters more since the acceptance criteria became bounds on the interval: criterion 0
+needs the lower bound at +3, which at +/-8.9 means a point estimate near +12. A short run
+cannot reach it at any point estimate, because its interval alone is wider than the gate. So
+the ability to accumulate games across interruptions is what makes the criteria reachable.
+
+HOW TO MAKE A MATCH RESUMABLE. Use `order=sequential start=N` instead of `order=random`:
+sequential mode plays openings 1, 2, 3 ... in order, and START says where to begin. On resume
+this script prints the next start. With `-games 2 -repeat` one round is two games on the same
+opening with the colours swapped, so rounds = games / 2 and the resume point is the first
+round not completely played. At most one unpaired game per interruption survives, which is a
+colour imbalance of one game in thousands.
+
+A match already running under `order=random` can still be continued - random openings stay a
+random sample - it just is not reproducible.
+
+FORMULAS, matching what cutechess prints (verified against its own output):
+    p   = (w + d/2) / n
+    elo = -400 log10(1/p - 1)
+    var = (w + d/4) / n - p^2            the score's variance, draws counted at a quarter
+    interval = 400 * 1.96 * sqrt(var/n) / (ln(10) * p * (1-p))
+The interval is the delta-method transfer of the score's error onto the Elo scale, which is
+why it is not symmetric in score space and why it widens as p leaves 0.5.
+
+Usage, from the repository root:
+    tools/match-elo.py <candidate-name> <pgn> [<pgn> ...]
+
+The companion is tools/run-resumable-match.sh, which produces the segments and works the
+resume point out on its own.
+"""
+
+import math
+import pathlib
+import re
+import sys
+
+RESULT = re.compile(r'^\[Result "([^"]+)"\]')
+WHITE = re.compile(r'^\[White "([^"]+)"\]')
+BLACK = re.compile(r'^\[Black "([^"]+)"\]')
+
+#: The pre-registered gates. Criterion 0 merges on its own; criterion 1 is the regression guard.
+STRONGER_BOUND = 3.0
+REGRESSION_BOUND = -10.0
+
+
+def tally(paths, candidate):
+    wins = losses = draws = 0
+    white = black = None
+
+    for path in paths:
+        for line in pathlib.Path(path).read_text(errors="ignore").splitlines():
+            match = WHITE.match(line)
+
+            if match:
+                white = match.group(1)
+                continue
+
+            match = BLACK.match(line)
+
+            if match:
+                black = match.group(1)
+                continue
+
+            match = RESULT.match(line)
+
+            if not match or white is None or black is None:
+                continue
+
+            result = match.group(1)
+
+            if result == "1/2-1/2":
+                draws += 1
+            elif (result == "1-0") == (white == candidate):
+                wins += 1 if candidate in (white, black) else 0
+            elif candidate in (white, black):
+                losses += 1
+
+            white = black = None
+
+    return wins, losses, draws
+
+
+def elo_and_interval(wins, losses, draws):
+    n = wins + losses + draws
+
+    if n == 0:
+        return None
+
+    p = (wins + 0.5 * draws) / n
+
+    if p <= 0 or p >= 1:
+        return None
+
+    elo = -400 * math.log10(1 / p - 1)
+    variance = (wins + 0.25 * draws) / n - p * p
+    error = 400 * 1.96 * math.sqrt(variance / n) / (math.log(10) * p * (1 - p))
+    los = 0.5 * (1 + math.erf((wins - losses) / math.sqrt(2 * (wins + losses)))) \
+        if wins + losses else 0.5
+
+    return elo, error, los, n, p
+
+
+def main():
+    if len(sys.argv) < 3:
+        sys.exit(__doc__)
+
+    candidate, paths = sys.argv[1], sys.argv[2:]
+    wins, losses, draws = tally(paths, candidate)
+    stats = elo_and_interval(wins, losses, draws)
+
+    if stats is None:
+        sys.exit("no decided games found - check the engine name")
+
+    elo, error, los, n, p = stats
+    lower, upper = elo - error, elo + error
+
+    print(f"{candidate} over {len(paths)} segment(s)")
+    print(f"  {wins} - {losses} - {draws}   [{p:.3f}]   {n} games")
+    print(f"  Elo difference: {elo:+.1f} +/- {error:.1f}   LOS {100 * los:.1f} %")
+    print(f"  95 % interval : [{lower:+.1f}, {upper:+.1f}]")
+    print()
+    print("  pre-registered gates")
+    print(f"    0  demonstrably stronger (bound >= {STRONGER_BOUND:+.0f}) : "
+          f"{'PASS' if lower >= STRONGER_BOUND else 'no'}   (bound {lower:+.1f})")
+    print(f"    1  no regression        (bound >  {REGRESSION_BOUND:+.0f}) : "
+          f"{'PASS' if lower > REGRESSION_BOUND else 'FAIL'}   (bound {lower:+.1f})")
+    print()
+    print(f"  to resume: -openings ... order=sequential start={n // 2 + 1}")
+
+    if n % 2:
+        print(f"  note: {n} games is an odd count, so one opening was played once only;"
+              " a colour imbalance of a single game")
+
+
+if __name__ == "__main__":
+    main()
