@@ -371,6 +371,23 @@ public final class WeightingFunction {
      */
     private static final float kingAttackFactor = 0.01f;
 
+    /**
+     * PLACEBO BUILD ONLY. Accumulates the king-attack term instead of applying it, so this
+     * arm carries the term's full computational cost while evaluating exactly like the base.
+     * The gauntlet's middle arm prices that cost in Elo; subtracting it from the candidate
+     * leaves the effect of actually applying the term.
+     *
+     * <p>Why an accumulator and not {@code * 0f}: "compute and discard" invites the JIT to
+     * delete the computation, and then the middle arm measures nothing at all. A store to a
+     * static field cannot be proven dead - the field is readable from anywhere - so the work
+     * survives. It is also cheaper than a {@code volatile} write, which would add a memory
+     * fence per evaluation and bill the term for a cost it does not have. The previous
+     * placebo in this project used a zero factor, which is the hazard this avoids.
+     *
+     * <p>Read it through {@link #getPlaceboSink()} to confirm the arm really computed.
+     */
+    private static long placeboSink;
+
     private GameStatus game;
     private int turn; // 0 = white, 1 = black
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
@@ -621,7 +638,29 @@ public final class WeightingFunction {
                 + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
                 + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor
                 + ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * bishopPairFactor
-                + (calcKingAttackPenalty(0, phase) - calcKingAttackPenalty(1, phase)) * kingAttackFactor) * 100);
+                + placeboKingAttack(phase)) * 100);
+    }
+
+    /**
+     * PLACEBO BUILD ONLY. Computes the king-attack term, banks it where the optimizer cannot
+     * discard it, and contributes nothing to the evaluation.
+     *
+     * @param phase the game phase, as {@link #calculatePositionWeight} sees it
+     * @return always {@code 0f}, so this arm scores identically to the base
+     */
+    private float placeboKingAttack(final int phase) {
+        placeboSink += (long) (calcKingAttackPenalty(0, phase) - calcKingAttackPenalty(1, phase));
+
+        return 0f;
+    }
+
+    /**
+     * PLACEBO BUILD ONLY. The accumulated king-attack term, non-zero if the arm really computed it.
+     *
+     * @return the running sum over every evaluation in this process
+     */
+    public static long getPlaceboSink() {
+        return placeboSink;
     }
 
     /**
@@ -752,7 +791,7 @@ public final class WeightingFunction {
                "doublePawnCount:       w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + DELTA_STR + (doublePawnCount[0] - doublePawnCount[1]) + WEIGHT_STR + round((doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) + '\n' +
                "chessCount:            w=" + chessCount[0] + ", b=" + chessCount[1] + DELTA_STR + (chessCount[0] - chessCount[1]) + WEIGHT_STR + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
                "undefendedPiecesCount: w=" + undefendedPiecesCount[0] + ", b=" + undefendedPiecesCount[1] + DELTA_STR + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) + WEIGHT_STR + round((undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor) + '\n' +
-               "attackUnit:            w=" + attackUnit[0] + ", b=" + attackUnit[1] + DELTA_STR + (attackUnit[0] - attackUnit[1]) + WEIGHT_STR + round((calcKingAttackPenalty(0, phase) - calcKingAttackPenalty(1, phase)) * kingAttackFactor) + '\n' +
+               "attackUnit:            w=" + attackUnit[0] + ", b=" + attackUnit[1] + DELTA_STR + (attackUnit[0] - attackUnit[1]) + WEIGHT_STR + round((calcKingAttackPenalty(0, phase) - calcKingAttackPenalty(1, phase)) * kingAttackFactor) + " (PLACEBO: computed, NOT applied)" + '\n' +
                "weight: " + calculatePositionWeight(phase) / 100f;
     }
 
