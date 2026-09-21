@@ -643,7 +643,7 @@ public final class WeightingFunction {
      * @return always {@code 0f}, so every rung evaluates exactly like the base
      */
     private float ladderKingAttack(final int phase) {
-        ladderSink += (long) (attackUnit[0] - attackUnit[1] + kingAttackerCount[0]);
+        ladderSink += (long) (calcKingAttackPenalty(0, phase) - calcKingAttackPenalty(1, phase));
 
         return 0f;
     }
