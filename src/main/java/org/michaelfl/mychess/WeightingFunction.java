@@ -480,6 +480,10 @@ public final class WeightingFunction {
         this.undefendedPiecesCount[1] = 0;
         this.bishopCount[0] = 0;
         this.bishopCount[1] = 0;
+        this.attackUnit[0] = 0;
+        this.attackUnit[1] = 0;
+        this.kingAttackerCount[0] = 0;
+        this.kingAttackerCount[1] = 0;
         this.pstMidGameWeight[0] = 0;
         this.pstMidGameWeight[1] = 0;
         this.pstEndGameWeight[0] = 0;
@@ -490,6 +494,13 @@ public final class WeightingFunction {
         final int stopField = Board.h8 + 1;
         int phase = 0;
 
+        final int whiteKingFieldCorrected = calcKingFieldCorrected(0);
+        final int blackKingFieldCorrected = calcKingFieldCorrected(1);
+
+        Arrays.fill(kingZoneField, (byte) 0);
+        markKingZone(0, kingZoneField, whiteKingFieldCorrected);
+        markKingZone(1, kingZoneField, blackKingFieldCorrected);
+        ladderSink += kingZoneField[whiteKingFieldCorrected] + kingZoneField[blackKingFieldCorrected];
 
         for (int field = Board.a1; field < stopField; field++) {
             final byte piece = board[field];
