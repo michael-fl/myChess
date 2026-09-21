@@ -2136,12 +2136,115 @@ to its reading: the term is not inert, it is priced out.
 **The family is now worked through in all three forms:** graded and measured (−4.9 ± 10.7 over
 2989 games), front-loaded binary and screened (flat in the time direction), heavy-material
 conditioned and screened (direction inverted). What remains untouched in king safety is the
-**attacker** side — the attack-unit term, whose corner defect is repaired and whose match has not
-run. "Pawn cover beside the king" is exhausted; "attackers on the king zone" is not.
+**attacker** side — the attack-unit term, whose corner defect is repaired and whose match has since
+run (§ 4.16). "Pawn cover beside the king" is exhausted; "attackers on the king zone" is not.
 
 Scanners, named for the same reason as § 4.14's five:
 `ShelterBreakScreen.java` (screen 1), `ShelterDurationScreen.java` (its duration control),
 `HeavyMaterialScreen.java` (screen 2).
+
+### 4.16 Attempt eight measured, and the pre-registered rule says no (2026-09-18/20)
+
+The attack-unit term with the corner fix, rebased onto v4.7.1 and rebuilt on that base, against
+v4.7.1. Fixed-N at 4200 games, `tc=40/60`, 48 hours, no SPRT: the open question was *how much*,
+because attempt five already stood at **+9.1 ± 14.5** over 1600 games and had been shelved as "not
+shown to be worth ≥ 15 Elo", which is expressly not "neutral". 4200 games bring the interval to
+±8.9, i.e. below the point estimate that measurement predicted.
+
+| | |
+|---|---|
+| score | **1544 – 1442 – 1214** `[0.512]` over 4200 games |
+| Elo | **+8.4 ± 8.9**, LOS 96.9 %, interval **[−0.4, +17.3]** |
+| draws | 28.9 % |
+| runner | `myChess-lab/scripts/run-attack-units-corner.sh` |
+| PGN | `test-results/match-attack-units-corner.pgn` |
+
+The point estimate reproduces attempt five almost exactly — +9.1 then, +8.4 now, on a base two
+releases apart. That agreement is the most solid thing in this section, and it is still not
+enough: the lower bound lands at **−0.4**.
+
+#### The verdict against the criteria fixed before the data existed
+
+The decision rule was written down at ~1090 of 4200 games, before any behavioral figure existed,
+and is reproduced here in full. It has one shortcut and one regular path; the regular path needs
+all four conditions.
+
+| # | criterion | threshold | measured | |
+|---|---|---|---|---|
+| **0** | demonstrably stronger — merges alone | Elo lower bound ≥ 0 | **−0.4** | **fails**, by 0.4 Elo |
+| **1** | no regression | lower bound > −10 | −0.4 | passes |
+| **2** | wins decided earlier, at 2 pawns | difference positive and beyond its interval | **+0.7 ± 0.5** phase | passes |
+| **3** | decided on the king's half, at 3 pawns | ≥ 5 pp above baseline and beyond its interval | **+2.6 ± 4.1** pp | **fails**, on both halves of the clause |
+| **4** | and concentrated in the corner, at 3 pawns | ≥ 55 % of those, interval excluding 50 % | **62.4 % ± 4.0** | passes |
+
+**Criterion 3 fails, so the rule says do not merge.** Criterion 0 misses by less than half an Elo,
+which is the kind of margin that invites re-reading the rule; the rule was written for exactly that
+moment and is recorded here unamended.
+
+#### What the behavioral data actually show — the effect is inside the half, not on it
+
+The two shares are nested, which is why criterion 4 was made *conditional* rather than given its
+own magnitude gate against the baseline. The result makes that construction look better than it did
+on paper, because the two quantities separate cleanly:
+
+| at 3 pawns | candidate's wins | baseline's wins | difference |
+|---|---|---|---|
+| decided on the king's half | 48.9 % ± 2.9 | 46.3 % ± 2.9 | +2.6 ± 4.1 — not separable from zero |
+| in the king's quadrant (of all material losses) | 30.6 % ± 2.6 | 26.0 % ± 2.5 | +4.6 ± 3.7 — **differs** |
+| in the quadrant, given the half | 62.4 % ± 4.0 | 55.9 % ± 4.2 | +6.5 ± 5.8 — **differs** |
+
+So the term does not pull more games onto the king's half. It relocates where on that half the
+decision falls: toward the king's own corner. That is a coherent description of what an
+attacker-indexed term with a repaired corner zone should do, and **criterion 3 measures the one
+quantity it does not move.** Stated after the fact, and therefore not an argument for merging —
+but it is the reading that any follow-up should be designed against.
+
+The same picture at 2 pawns: half +3.0 ± 4.5, quadrant given half +5.6 ± 6.5, unconditional
+quadrant +4.4 ± 4.0.
+
+#### Wins do fall earlier, and the size is modest
+
+Mean tipping phase of the candidate's wins against the baseline's, phase 24 being the opening:
+
+| threshold | candidate's wins | baseline's wins | difference |
+|---|---|---|---|
+| 1 pawn | 17.0 ± 0.3 | 16.6 ± 0.4 | +0.4 ± 0.5 |
+| **2 pawns** | 15.5 ± 0.3 | 14.8 ± 0.4 | **+0.7 ± 0.5** |
+| 3 pawns | 13.8 ± 0.3 | 12.5 ± 0.4 | **+1.2 ± 0.5** |
+
+Criterion 2 reads the 2-pawn row and passes. The free PGN proxy taken while the match was running
+had put the same effect at +1.71 ± 0.70 phase; the Stockfish measurement agrees in direction and
+comes in smaller, which is the expected relation between a proxy counting material on the board at
+the end and a measurement locating the moment the game stopped being savable.
+
+#### Method, and the coverage that fixed the thresholds
+
+`myChess-lab/scripts/tipping-phase.py` scans each decisive game backward from its end and finds the
+last ply at which Stockfish 18 (depth 12, one thread) still evaluated the losing side above the
+threshold; the ply after that is where the game tipped for good, and the reported quantity is
+myChess's own game phase at that ply. Both arms were analysed with `--side lost`, 1442 and 1544
+games, ~2.5 hours wall clock. Every game is persisted as it completes and a re-run skips it.
+
+The material threshold each criterion reads was fixed in advance and for a reason on the behavioral
+ones: locating a loss *on the board* requires a capture inside the window, and coverage rises with
+the threshold — over the full run 33 % of tipped games carry a material loss at 1 pawn, 62 % at 2
+and 75 % at 3. Criterion 2 uses 2 pawns as a judgement call: 1 pawn also catches slow positional
+drift that is not really a decision, 3 arrives late.
+
+Two self-checks from the pre-registration held over the whole run: the tipping phase falls
+monotonically as the threshold deepens (17.0 → 15.5 → 13.8 for one arm, 16.6 → 14.8 → 12.5 for the
+other) and material coverage rises with it. Either running the wrong way would have indicated a
+sign or window bug, and one such bug was caught this way during development.
+
+#### One tooling correction, made before the numbers were read
+
+`tipping-compare.py` did not implement two of the four criteria as written. It had no comparison of
+the tipping phase at all, and it computed the quadrant share over *all* material losses — against a
+25 % chance level — rather than conditional on the loss being on the king's half against 50 %. The
+unconditional form is precisely the nested construction that was rejected when the criteria were
+set: quadrant ⊂ half, so an effect landing entirely at the king raises both counts by the same
+games. The script now reports the phase difference and both quadrant forms; the unconditional row
+stays as context, the conditional one is the criterion.
 
 ---
 
