@@ -213,6 +213,12 @@ public final class WeightingFunction {
      */
     final static int[] KING_FIELD_CORRECTION_OFFSET = { 1, 0, 0, 0, 0, 0, 0, -1 };
 
+    final static int[] KING_FIELD_OFFSETS = {
+            Board.LENGTH - 1, Board.LENGTH, Board.LENGTH + 1,
+            -1, 0, 1,
+            -Board.LENGTH - 1, -Board.LENGTH, - Board.LENGTH + 1
+    };
+
     @FunctionalInterface
     private interface CalculateWeight {
         void calculate(WeightingFunction generator, int field, int color);
@@ -377,6 +383,7 @@ public final class WeightingFunction {
     private Board theBoard; // For debugger only
     private byte[] board;
     private final byte[] tempBoard = new byte[Board.LENGTH * Board.LENGTH];
+    private final byte[] kingZoneField = new byte[Board.LENGTH * Board.LENGTH];
     private final int[] chessCount = new int[2];
     private final float[] piecesWeight = new float[2];
     private final int[] mobilityWeight = new int[2];
@@ -395,7 +402,6 @@ public final class WeightingFunction {
     private final int[] pstMidGameWeight = new int[2];
     /** Per-color sum of endgame piece-square values for the current position (index 0 = white, 1 = black). */
     private final int[] pstEndGameWeight = new int[2];
-    private final int[] kingFieldCorrected = new int[2];
     /** Game phase of the most recently evaluated position, {@code 0..}{@link #MAX_PHASE}; see {@link #phaseWeightOfPiece}. */
     private int phase;
     private boolean isCurrentAttackerCounted;
@@ -480,8 +486,12 @@ public final class WeightingFunction {
         final int stopField = Board.h8 + 1;
         int phase = 0;
 
-        kingFieldCorrected[0] = calcKingFieldCorrected(0);
-        kingFieldCorrected[1] = calcKingFieldCorrected(1);
+        final int whiteKingFieldCorrected = calcKingFieldCorrected(0);
+        final int blackKingFieldCorrected = calcKingFieldCorrected(1);
+
+        Arrays.fill(kingZoneField, (byte) 0);
+        markKingZone(0, kingZoneField, whiteKingFieldCorrected);
+        markKingZone(1, kingZoneField, blackKingFieldCorrected);
 
         for (int field = Board.a1; field < stopField; field++) {
             final byte piece = board[field];
@@ -515,6 +525,17 @@ public final class WeightingFunction {
         calculateUndefendedPiecesCount();
 
         return calculatePositionWeight(phase);
+    }
+
+    private void markKingZone(final int color, final byte[] kingZoneField, final int kingField) {
+        final byte bit = (byte) (color + 1); // 1 = while, 2 = black
+
+        for (int offset : KING_FIELD_OFFSETS) {
+            final int field = kingField + offset;
+            if (board[field] != Board.illegal) {
+                kingZoneField[field] |= bit;
+            }
+        }
     }
 
     private int calcKingFieldCorrected(int color) {
@@ -664,15 +685,8 @@ public final class WeightingFunction {
     }
 
     private boolean isKingZoneField(int field, int color) {
-        if (board[field] == Board.illegal) {
-            return false;
-        }
-
-        final int delta = field - kingFieldCorrected[color];
-
-        return (delta >= - 1 && delta <= 1)
-                || (delta >= - Board.LENGTH - 1 && delta <= - Board.LENGTH + 1)
-                || (delta >= Board.LENGTH - 1 && delta <= Board.LENGTH + 1);
+        final byte bit = (byte) (color + 1); // 1 = while, 2 = black
+        return (kingZoneField[field] & bit) == bit;
     }
 
     /**
