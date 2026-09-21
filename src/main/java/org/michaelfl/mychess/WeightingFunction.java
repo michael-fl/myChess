@@ -313,6 +313,36 @@ public final class WeightingFunction {
     }
 
     /**
+     * Phase at and above which the king-attack term carries its full weight, derived from the
+     * signal measurement rather than chosen: {@code king-safety.md} section 4.2 puts the
+     * midgame bucket at 4000 cp of non-pawn material and above, which is phase 15 here.
+     */
+    static final int KING_ATTACK_FULL_PHASE = 15;
+
+    /**
+     * Phase at and below which the term is switched off. The same measurement puts the endgame
+     * bucket below 2000 cp, phase 7.5, and there the signal <b>inverts</b>: ring attackers are
+     * worth {@code +12} cp to the side being attacked, as are ring defenders at {@code +15}.
+     * Both colors scoring well near a king is not an attack signal but king activity, so the
+     * term stops measuring its subject rather than merely weakening, and zero is right. Going
+     * negative would double-count the centralization the king endgame table already pays.
+     */
+    static final int KING_ATTACK_DEAD_PHASE = 7;
+
+    /** Effective phase per real phase, precomputed; the arithmetic holds an integer division. */
+    static final int[] KING_ATTACK_RAMP = new int[MAX_PHASE + 1];
+
+    static {
+        final int span = KING_ATTACK_FULL_PHASE - KING_ATTACK_DEAD_PHASE;
+
+        for (int phase = 0; phase <= MAX_PHASE; phase++) {
+            final int ramped = (phase - KING_ATTACK_DEAD_PHASE) * MAX_PHASE / span;
+
+            KING_ATTACK_RAMP[phase] = Math.clamp(ramped, 0, MAX_PHASE);
+        }
+    }
+
+    /**
      * The castling-state contribution in pawns, faded out as the attacking material leaves.
      *
      * @param delta the castling-state difference, white minus black, in {@code -4..+4}
@@ -701,13 +731,16 @@ public final class WeightingFunction {
      * where it has to discriminate.
      *
      * @param color attacking color (0 = white, 1 = black)
-     * @param phase game phase in {@code [0, }{@link #MAX_PHASE}{@code ]}; 0 switches the term off
+     * @param phase game phase in {@code [0, }{@link #MAX_PHASE}{@code ]}, remapped through
+     *              {@link #KING_ATTACK_RAMP}: full weight from {@link #KING_ATTACK_FULL_PHASE},
+     *              off at and below {@link #KING_ATTACK_DEAD_PHASE}
      * @return the penalty the enemy king incurs, as a positive centipawn value
      */
     int calcKingAttackPenalty(final int color, final int phase) {
         return kingAttackerCount[color] < 2 ?
                 0 :
-                blend(KING_ATTACK_PENALTY[Math.min(attackUnit[color], KING_ATTACK_PENALTY.length - 1)], 0, phase);
+                blend(KING_ATTACK_PENALTY[Math.min(attackUnit[color], KING_ATTACK_PENALTY.length - 1)],
+                        0, KING_ATTACK_RAMP[phase]);
     }
 
     // --- Package-private accessors for attack-unit unit tests. The arrays are
