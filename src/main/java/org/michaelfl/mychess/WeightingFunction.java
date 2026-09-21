@@ -500,7 +500,6 @@ public final class WeightingFunction {
         Arrays.fill(kingZoneField, (byte) 0);
         markKingZone(0, kingZoneField, whiteKingFieldCorrected);
         markKingZone(1, kingZoneField, blackKingFieldCorrected);
-        ladderSink += kingZoneField[whiteKingFieldCorrected] + kingZoneField[blackKingFieldCorrected];
 
         for (int field = Board.a1; field < stopField; field++) {
             final byte piece = board[field];
@@ -644,7 +643,7 @@ public final class WeightingFunction {
      * @return always {@code 0f}, so every rung evaluates exactly like the base
      */
     private float ladderKingAttack(final int phase) {
-        ladderSink += 0L;
+        ladderSink += (long) (attackUnit[0] - attackUnit[1] + kingAttackerCount[0]);
 
         return 0f;
     }
@@ -814,6 +813,7 @@ public final class WeightingFunction {
             }
         }
 
+        isCurrentAttackerCounted = false;
 
         // capture right
         captureOrDefendWithPawn(field, field + Board.LENGTH + 1, GameStatus.TURN_WHITE, GameStatus.TURN_BLACK, Board.whitePawn, color);
@@ -849,6 +849,7 @@ public final class WeightingFunction {
     }
 
     private void captureOrDefendWithPawn(final int from, final int to, final int myTurn, final int oppositeTurn, final byte movingPawn, final int color) {
+        increaseAttackUnit(color, to, movingPawn);
 
         if ((board[to] & oppositeTurn) == oppositeTurn) {
             capture(to, movingPawn, color, board[to]);
@@ -880,6 +881,7 @@ public final class WeightingFunction {
             }
         }
 
+        isCurrentAttackerCounted = false;
 
         // capture right
         to = field - Board.LENGTH + 1;
@@ -923,6 +925,7 @@ public final class WeightingFunction {
     private void calculateForKnight(int field, int color) {
         final byte myPiece = board[field];
 
+        isCurrentAttackerCounted = false;
 
         move(myPiece, field, field + 2 * Board.LENGTH + 1, color);
         move(myPiece, field, field + 1 * Board.LENGTH + 2, color);
@@ -944,6 +947,7 @@ public final class WeightingFunction {
         // count this bishop toward the side's bishop-pair bonus (awarded once in calculatePositionWeight)
         bishopCount[color]++;
 
+        isCurrentAttackerCounted = false;
 
         // move up-right
         for (int to = field + Board.LENGTH + 1; move(myPiece, field, to, color); to += Board.LENGTH + 1);
@@ -963,6 +967,7 @@ public final class WeightingFunction {
         final byte myPiece = board[field];
         final int rankWeight = mobilityWeightOfPiece[myPiece] / 2;
 
+        isCurrentAttackerCounted = false;
 
         // move up — file mobility (full weight)
         for (int to = field + Board.LENGTH; move(myPiece, field, to, color); to += Board.LENGTH);
@@ -981,6 +986,7 @@ public final class WeightingFunction {
     private void calculateForQueen(int field, int color) {
         final byte myPiece = board[field];
 
+        isCurrentAttackerCounted = false;
 
         // move up
         for (int to = field + Board.LENGTH; move(myPiece, field, to, color); to += Board.LENGTH);
@@ -1007,6 +1013,7 @@ public final class WeightingFunction {
     private void calculateForKing(int field, int color) {
         final byte myPiece = board[field];
 
+        isCurrentAttackerCounted = false;
 
         // move up
         move(myPiece, field, field + Board.LENGTH, color);
@@ -1038,6 +1045,7 @@ public final class WeightingFunction {
         if (piece == Board.illegal)
             return false;
 
+        increaseAttackUnit(color, to, movingPiece);
 
         if (piece == Board.empty) {
             mobilityWeight[color] += weight;
