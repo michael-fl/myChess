@@ -288,6 +288,21 @@ public final class Bench {
         return run(depth, chess960 ? Suite.CHESS960 : Suite.STANDARD);
     }
 
+    /**
+     * Depth of the throw-away pass that runs before the measured one, so HotSpot has compiled
+     * the search, the evaluation and the move generator before anything is timed.
+     *
+     * <p>It has to live here rather than in a caller: a warm-up only counts inside the same
+     * JVM, and a shell wrapper starts a new one per run. Measured on the standard suite, three
+     * consecutive runs in one JVM gave 997k, 1019k and 1039k NPS - the first reading understates
+     * steady-state throughput by about 4 %, which is larger than most differences worth measuring.
+     *
+     * <p>It cannot move the signature: the transposition table is cleared per position and the
+     * iteration timings are reset per run, so nothing carries over. Verified with three benches
+     * at depth 3 in one JVM, 7,582,580 nodes each time.
+     */
+    public static final int WARMUP_DEPTH = 4;
+
     /** As {@link #run(int, boolean)}, for an explicitly named {@link Suite}. */
     public static BenchResult run(int depth, Suite suite) {
         return run(depth, suite, _ -> {
@@ -350,6 +365,34 @@ public final class Bench {
 
     /** As {@link #run(int, boolean, Consumer)}, for an explicitly named {@link Suite}. */
     public static BenchResult run(int depth, Suite suite, Consumer<PositionResult> onPosition) {
+        return run(depth, suite, true, onPosition);
+    }
+
+    /**
+     * As {@link #run(int, Suite, Consumer)}, with the warm-up under the caller's control.
+     *
+     * @param depth      search depth for the measured pass
+     * @param suite      which position set to run
+     * @param warmUp     whether to run the throw-away pass first; see {@link #WARMUP_DEPTH}
+     * @param onPosition called once per measured position, never for a warm-up position
+     * @return the results of the MEASURED pass
+     */
+    public static BenchResult run(int depth, Suite suite, boolean warmUp,
+                                  Consumer<PositionResult> onPosition) {
+        if (warmUp) {
+            final int warmUpDepth = Math.min(WARMUP_DEPTH, depth - 1);
+
+            if (warmUpDepth >= 1) {
+                measure(warmUpDepth, suite, _ -> {
+                    // Discarded on purpose: this pass exists to compile code, not to report.
+                });
+            }
+        }
+
+        return measure(depth, suite, onPosition);
+    }
+
+    private static BenchResult measure(int depth, Suite suite, Consumer<PositionResult> onPosition) {
         final boolean chess960 = suite.isChess960();
         List<String> fens = suite.fens();
 
