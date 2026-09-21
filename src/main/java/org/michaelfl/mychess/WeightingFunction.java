@@ -1,6 +1,7 @@
 package org.michaelfl.mychess;
 
 import java.util.Arrays;
+import java.util.BitSet;
 
 import static org.michaelfl.mychess.Assert.__assert;
 
@@ -383,7 +384,7 @@ public final class WeightingFunction {
     private Board theBoard; // For debugger only
     private byte[] board;
     private final byte[] tempBoard = new byte[Board.LENGTH * Board.LENGTH];
-    private final byte[] kingZoneField = new byte[Board.LENGTH * Board.LENGTH];
+    private final long[][] kingZoneBitSet = new long[2][2];
     private final int[] chessCount = new int[2];
     private final float[] piecesWeight = new float[2];
     private final int[] mobilityWeight = new int[2];
@@ -489,9 +490,10 @@ public final class WeightingFunction {
         final int whiteKingFieldCorrected = calcKingFieldCorrected(0);
         final int blackKingFieldCorrected = calcKingFieldCorrected(1);
 
-        Arrays.fill(kingZoneField, (byte) 0);
-        markKingZone(0, kingZoneField, whiteKingFieldCorrected);
-        markKingZone(1, kingZoneField, blackKingFieldCorrected);
+        clearBitSet(kingZoneBitSet[0]);
+        clearBitSet(kingZoneBitSet[1]);
+        markKingZone(kingZoneBitSet[0], whiteKingFieldCorrected);
+        markKingZone(kingZoneBitSet[1], blackKingFieldCorrected);
 
         for (int field = Board.a1; field < stopField; field++) {
             final byte piece = board[field];
@@ -527,13 +529,16 @@ public final class WeightingFunction {
         return calculatePositionWeight(phase);
     }
 
-    private void markKingZone(final int color, final byte[] kingZoneField, final int kingField) {
-        final byte bit = (byte) (color + 1); // 1 = while, 2 = black
+    private static void clearBitSet(final long[] bitSet) {
+        bitSet[0] = 0L;
+        bitSet[1] = 0L;
+    }
 
+    private void markKingZone(final long[] kingZoneBitSet, final int kingField) {
         for (int offset : KING_FIELD_OFFSETS) {
             final int field = kingField + offset;
             if (board[field] != Board.illegal) {
-                kingZoneField[field] |= bit;
+                BitOps.setBit(kingZoneBitSet, field);
             }
         }
     }
@@ -684,9 +689,8 @@ public final class WeightingFunction {
         }
     }
 
-    private boolean isKingZoneField(int field, int color) {
-        final byte bit = (byte) (color + 1); // 1 = while, 2 = black
-        return (kingZoneField[field] & bit) == bit;
+    private boolean isKingZoneField(final int field, final int color) {
+        return BitOps.getBit(kingZoneBitSet[color], field);
     }
 
     /**
