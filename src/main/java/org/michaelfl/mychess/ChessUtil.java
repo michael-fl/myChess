@@ -12,6 +12,9 @@ import java.util.Collection;
 @SuppressWarnings("unused")
 public final class ChessUtil {
 
+    public static final int KING_ZONE_ATTACK_CHEBYSHEV_DISTANCE_PAWN = 2;
+    public static final int KING_ZONE_ATTACK_CHEBYSHEV_DISTANCE_KNIGHT = 3;
+
     private ChessUtil() {
         // class cannot be instantiated
     }
@@ -283,4 +286,384 @@ public final class ChessUtil {
         return piece >= Board.blackPawn && piece <= Board.blackKing;
     }
 
+    /**
+     * Could this piece bear on the 3x3 zone around {@code kingFieldCorrected} at all?
+     *
+     * <p>A cheap pre-filter for the king-attack term, which otherwise asks per attacked square
+     * whether that square lies in the zone. This asks once per piece instead, from its origin.
+     *
+     * <p><b>Blockers are ignored</b>, which is what "pseudo" means here, as in pseudo-legal:
+     * a {@code true} is a "maybe", only a {@code false} is reliable. That is the safe side - a
+     * false positive costs one wasted zone test, a false negative would silently drop an
+     * attacker from the count and no single position would make that obvious.
+     *
+     * @param piece              the attacking piece; anything that is not a piece reaches nothing
+     * @param fromField          the square the piece stands on
+     * @param kingFieldCorrected the zone's center, as {@code calcKingFieldCorrected} yields it
+     * @return {@code false} only when the piece provably cannot reach the zone
+     */
+    public static boolean pseudoAttacksKingZone(byte piece, int fromField, int kingFieldCorrected) {
+        return switch (piece) {
+            case Board.whitePawn, Board.blackPawn,
+                 Board.whiteKing, Board.blackKing -> chebyshevDistance(fromField, kingFieldCorrected) <= KING_ZONE_ATTACK_CHEBYSHEV_DISTANCE_PAWN;
+            case Board.whiteKnight, Board.blackKnight -> chebyshevDistance(fromField, kingFieldCorrected) <= KING_ZONE_ATTACK_CHEBYSHEV_DISTANCE_KNIGHT;
+            case Board.whiteBishop, Board.blackBishop -> canReachKingZoneDiagonal(fromField, kingFieldCorrected);
+            case Board.whiteRook, Board.blackRook -> canReachKingZoneOrthogonal(fromField, kingFieldCorrected);
+            case Board.whiteQueen, Board.blackQueen -> canReachKingZoneOrthogonal(fromField, kingFieldCorrected)
+                    || canReachKingZoneDiagonal(fromField, kingFieldCorrected);
+            default -> false;
+        };
+    }
+
+    /**
+     * King-move distance between two squares: {@code max(|file delta|, |rank delta|)}.
+     *
+     * <p>Also called the chessboard distance. A diagonal step costs the same as a straight one,
+     * which is what a king does and what makes this the right metric for the zone. Manhattan
+     * distance answers a different question and would give 6 where a king needs 3.
+     *
+     * @param field1 one square
+     * @param field2 the other
+     * @return the number of king moves between them, 0 for a square and itself
+     */
+    public static int chebyshevDistance(int field1, int field2) {
+        final int fileDelta = Math.abs(field1 % Board.LENGTH - field2 % Board.LENGTH);
+        final int rankDelta = Math.abs(field1 / Board.LENGTH - field2 / Board.LENGTH);
+
+        return Math.max(fileDelta, rankDelta);
+    }
+
+    /**
+     * Does a diagonal through {@code fromField} cross the 3x3 zone around the king?
+     *
+     * <p>A diagonal is identified by an invariant that every one of its squares shares:
+     * {@code file - rank} in one direction, {@code file + rank} in the other. The zone's squares
+     * differ from its center by at most one file and one rank, so their invariants span the
+     * center's plus or minus two. Sharing an invariant means sharing a diagonal, which settles
+     * square color by itself.
+     *
+     * <p>Blockers are ignored; see {@link #pseudoAttacksKingZone} for what that costs.
+     *
+     * @param fromField          the square the bishop or queen stands on
+     * @param kingFieldCorrected the zone's center
+     * @return {@code false} only when neither diagonal touches the zone
+     */
+    public static boolean canReachKingZoneDiagonal(int fromField, int kingFieldCorrected) {
+        final int r1 = fromField / Board.LENGTH; // offset -2 is equal for all 4 variables and can be omitted
+        final int f1 = fromField % Board.LENGTH;
+        final int r2 = kingFieldCorrected / Board.LENGTH;
+        final int f2 = kingFieldCorrected % Board.LENGTH;
+
+        return Math.abs((f1 - r1) - (f2 - r2)) <= 2 || Math.abs((f1 + r1) - (f2 + r2)) <= 2;
+    }
+
+    /**
+     * Does the file or the rank through {@code fromField} cross the 3x3 zone around the king?
+     *
+     * <p>The zone spans three files and three ranks, so a rook or queen touches it exactly when
+     * its own file or its own rank is within one of the center's.
+     *
+     * <p>Blockers are ignored; see {@link #pseudoAttacksKingZone}.
+     *
+     * @param fromField          the square the rook or queen stands on
+     * @param kingFieldCorrected the zone's center
+     * @return {@code false} only when neither the file nor the rank touches the zone
+     */
+    public static boolean canReachKingZoneOrthogonal(int fromField, int kingFieldCorrected) {
+        final int fileDelta = Math.abs(fromField % Board.LENGTH - kingFieldCorrected % Board.LENGTH);
+        if (fileDelta <= 1) {
+            return true;
+        }
+
+        final int rankDelta = Math.abs(fromField / Board.LENGTH - kingFieldCorrected / Board.LENGTH);
+        return rankDelta <= 1;
+    }
+
+    public static final byte DISTANCE_SENTINEL = Byte.MAX_VALUE;
+    public static final int INDEX_UP = 0;
+    public static final int INDEX_RIGHT = 1;
+    public static final int INDEX_DOWN = 2;
+    public static final int INDEX_LEFT = 3;
+
+    public static final int INDEX_UP_RIGHT = 0;
+    public static final int INDEX_DOWN_RIGHT = 1;
+    public static final int INDEX_DOWN_LEFT = 2;
+    public static final int INDEX_UP_LEFT = 3;
+
+    public static final int ALL_SENTINELS_ENCODED = BitOps.createWord(DISTANCE_SENTINEL, DISTANCE_SENTINEL, DISTANCE_SENTINEL, DISTANCE_SENTINEL);
+
+    /**
+     * How far the 3x3 king zone is from {@code fromField} along each of the four rook rays,
+     * packed into one {@code int} as {@code [up|right|down|left]}.
+     *
+     * <p>Read a byte out with {@link BitOps#getByte0} through {@link BitOps#getByte3}, in that
+     * order. Each byte counts the steps to the first square that lies inside the zone, so 1
+     * means the very next square along that ray.
+     *
+     * <p>Three answers are possible, and they must not be confused:
+     * <ul>
+     *   <li>a step count, for a direction that reaches the zone;
+     *   <li>{@link #DISTANCE_SENTINEL} for a direction that never does - it is
+     *       {@link Byte#MAX_VALUE} rather than 0 precisely so it cannot be mistaken for one;
+     *   <li>a plain {@code 0}, meaning {@code fromField} lies in the zone already, which makes
+     *       every direction zero steps. That is not the same word as
+     *       {@link #ALL_SENTINELS_ENCODED}.
+     * </ul>
+     *
+     * <p>At most one direction ever carries a count. A rook reaches the zone by moving along
+     * its file only when it already shares a file with it, and then the other three rays lead
+     * away or run parallel past it.
+     *
+     * @param fromField          the square the rook or queen stands on
+     * @param kingFieldCorrected the zone's center; corrected, so never on the a or h file
+     * @return the four distances packed as {@code [up|right|down|left]}
+     */
+    public static int getKingZoneDistancesOrthogonalEncoded(final int fromField, final int kingFieldCorrected) {
+        final int fromFile = fromField % Board.LENGTH - 2;
+        final int fromRank = fromField / Board.LENGTH - 2;
+        final int kingFile = kingFieldCorrected % Board.LENGTH - 2;
+        final int kingRank = kingFieldCorrected / Board.LENGTH - 2;
+
+        if (Math.abs(kingFile - fromFile) <= 1) {
+            return horizontalKingZoneDistancesEncoded(kingRank, fromRank);
+        } else if (Math.abs(kingRank - fromRank) <= 1) {
+            return verticalKingZoneDistancesEncoded(kingFile, fromFile);
+        } else { // cannot reach zone
+            return ALL_SENTINELS_ENCODED;
+        }
+    }
+
+    private static int verticalKingZoneDistancesEncoded(int kingFile, int fromFile) {
+        final int zoneFile1 = kingFile - 1;
+        final int zoneFile2 = kingFile + 1;
+
+        if (fromFile > zoneFile2) { // right of zone
+            return BitOps.createWord(
+                    DISTANCE_SENTINEL,    // up
+                    DISTANCE_SENTINEL,    // right
+                    DISTANCE_SENTINEL,    // down
+                    (byte) (fromFile - zoneFile2));
+        } else if (fromFile < zoneFile1) { // left of zone
+            return BitOps.createWord(
+                    DISTANCE_SENTINEL,    // up
+                    (byte) (zoneFile1 - fromFile), // right
+                    DISTANCE_SENTINEL,    // down
+                    DISTANCE_SENTINEL);
+        } else { // within zone
+            return 0;
+        }
+    }
+
+    private static int horizontalKingZoneDistancesEncoded(int kingRank, int fromRank) {
+        final int zoneRank1 = kingRank - 1;
+        final int zoneRank2 = kingRank + 1;
+
+        if (fromRank > zoneRank2) { // above zone
+            return BitOps.createWord(
+                    DISTANCE_SENTINEL,    // up
+                    DISTANCE_SENTINEL,    // right
+                    (byte) (fromRank - zoneRank2), // down
+                    DISTANCE_SENTINEL);
+        } else if (fromRank < zoneRank1) { // below zone
+            return BitOps.createWord(
+                    (byte) (zoneRank1 - fromRank), // up
+                    DISTANCE_SENTINEL,    // right
+                    DISTANCE_SENTINEL,    // down
+                    DISTANCE_SENTINEL);
+        } else { // within zone
+            return 0;
+        }
+    }
+
+    /** Highest file and rank index of a real square, the board being eight by eight. */
+    private static final int LAST_FILE_OR_RANK = 7;
+
+    /**
+     * How far the 3x3 king zone is from {@code fromField} along each of the four bishop rays,
+     * packed into one {@code int} as {@code [up-right|down-right|down-left|up-left]}.
+     *
+     * <p>The diagonal counterpart of {@link #getKingZoneDistancesOrthogonalEncoded}, with the
+     * same three possible answers per byte: a step count, {@link #DISTANCE_SENTINEL} for a ray
+     * that never arrives, or a plain {@code 0} for a piece that stands in the zone already.
+     *
+     * <p>Unlike the orthogonal case, more than one ray can carry a count: a bishop beside the
+     * zone on a diagonal may enter it going one way and leave it going the other.
+     *
+     * @param fromField          the square the bishop or queen stands on
+     * @param kingFieldCorrected the zone's center; corrected, so never on the a or h file
+     * @return the four distances packed as {@code [up-right|down-right|down-left|up-left]}
+     */
+    public static int getKingZoneDistancesDiagonalEncoded(final int fromField, final int kingFieldCorrected) {
+        final int fromFile = fromField % Board.LENGTH - 2;
+        final int fromRank = fromField / Board.LENGTH - 2;
+        final int kingFile = kingFieldCorrected % Board.LENGTH - 2;
+        final int kingRank = kingFieldCorrected / Board.LENGTH - 2;
+
+        return BitOps.createWord(
+                stepsAlongDiagonal(fromFile, fromRank, kingFile, kingRank, 1, 1),    // up-right
+                stepsAlongDiagonal(fromFile, fromRank, kingFile, kingRank, 1, -1),   // down-right
+                stepsAlongDiagonal(fromFile, fromRank, kingFile, kingRank, -1, -1),  // down-left
+                stepsAlongDiagonal(fromFile, fromRank, kingFile, kingRank, -1, 1));  // up-left
+    }
+
+    /**
+     * Steps along one diagonal until the first square inside the zone, or the sentinel.
+     *
+     * <p>After {@code k} steps the piece stands on {@code (file + k * fileStep, rank + k *
+     * rankStep)}, and that square is in the zone when it is within one of the center on both
+     * axes. Solving each axis for {@code k} gives an interval two wide, so the answer is the
+     * smallest non-negative value both intervals contain - and no value at all when they do
+     * not overlap.
+     *
+     * <p><b>The bounds check is not redundant</b>, which is the one way this differs from the
+     * orthogonal sibling. There the two axes are independent and a solution always lands on the
+     * board. Here they are coupled, and the intersection can name a {@code k} whose square is
+     * off the edge: a king on e1 and a bishop on a3 going down-right solves at three steps,
+     * where the rank would be minus one. Walking off the board is never a way into the zone.
+     * One check suffices because a ray moves monotonically, so if the nearest solution is off
+     * the board, every later one is further off.
+     */
+    private static byte stepsAlongDiagonal(final int fromFile, final int fromRank,
+                                           final int kingFile, final int kingRank,
+                                           final int fileStep, final int rankStep) {
+        final int fileOffset = -fileStep * (fromFile - kingFile);
+        final int rankOffset = -rankStep * (fromRank - kingRank);
+
+        final int first = Math.max(Math.max(fileOffset - 1, rankOffset - 1), 0);
+        final int last = Math.min(fileOffset + 1, rankOffset + 1);
+
+        if (first > last) {
+            return DISTANCE_SENTINEL;
+        }
+
+        final int targetFile = fromFile + first * fileStep;
+        final int targetRank = fromRank + first * rankStep;
+
+        if (targetFile < 0 || targetFile > LAST_FILE_OR_RANK
+                || targetRank < 0 || targetRank > LAST_FILE_OR_RANK) {
+            return DISTANCE_SENTINEL;
+        }
+
+        return (byte) first;
+    }
+
+    public static int getKingZoneDistancesDiagonalEncodedNew(final int fromField, final int kingFieldCorrected) {
+        final int fromFile = fromField % Board.LENGTH - 2;
+        final int fromRank = fromField / Board.LENGTH - 2;
+        final int kingFile = kingFieldCorrected % Board.LENGTH - 2;
+        final int kingRank = kingFieldCorrected / Board.LENGTH - 2;
+        final int zoneFile1 = kingFile - 1;
+        final int zoneFile2 = kingFile + 1;
+        final int zoneRank1 = Math.max(kingRank - 1, 0);
+        final int zoneRank2 = Math.min(kingRank + 1, 7);
+
+        // Within zone
+        if (zoneFile1 <= fromFile && fromFile <= zoneFile2
+                && zoneRank1 <= fromRank && fromRank <= zoneRank2) {
+            return 0;
+        }
+
+        return BitOps.createWord(
+                (byte) distanceNorthEast(fromFile, fromRank, zoneFile1, zoneRank1, zoneFile2, zoneRank2), // up-right
+                (byte) distanceSouthEast(fromFile, fromRank, zoneFile1, zoneRank1, zoneFile2, zoneRank2), // down-right
+                (byte) distanceSouthWest(fromFile, fromRank, zoneFile1, zoneRank1, zoneFile2, zoneRank2), // down-left
+                (byte) distanceNorthWest(fromFile, fromRank, zoneFile1, zoneRank1, zoneFile2, zoneRank2)  // up-left
+        );
+    }
+
+    private static int distanceSouthEast(final int fromFile, final int fromRank, final int zoneFile1, final int zoneRank1, final int zoneFile2, final int zoneRank2) {
+        // left edge of zone
+        if (zoneFile1 > fromFile) {
+            final int fileDelta = zoneFile1 - fromFile;
+            final int r1 = zoneRank1 + fileDelta;
+            final int r2 = zoneRank2 + fileDelta;
+            if (r1 <= fromRank && fromRank <= r2) {
+                return fileDelta;
+            }
+        }
+
+        // top edge of zone
+        if (zoneRank2 < fromRank) {
+            final int rankDelta = fromRank - zoneRank2;
+            final int f1 = zoneFile1 - rankDelta;
+            final int f2 = zoneFile2 - rankDelta;
+            if (f1 <= fromFile && fromFile <= f2) {
+                return rankDelta;
+            }
+        }
+
+        return DISTANCE_SENTINEL;
+    }
+
+    private static int distanceSouthWest(final int fromFile, final int fromRank, final int zoneFile1, final int zoneRank1, final int zoneFile2, final int zoneRank2) {
+        // right edge of zone
+        if (zoneFile2 < fromFile) {
+            final int fileDelta = fromFile - zoneFile2;
+            final int r1 = zoneRank1 + fileDelta;
+            final int r2 = zoneRank2 + fileDelta;
+            if (r1 <= fromRank && fromRank <= r2) {
+                return fileDelta;
+            }
+        }
+
+        // top edge of zone
+        if (zoneRank2 < fromRank) {
+            final int rankDelta = fromRank - zoneRank2;
+            final int f1 = zoneFile1 + rankDelta;
+            final int f2 = zoneFile2 + rankDelta;
+            if (f1 <= fromFile && fromFile <= f2) {
+                return rankDelta;
+            }
+        }
+
+        return DISTANCE_SENTINEL;
+    }
+
+    private static int distanceNorthWest(final int fromFile, final int fromRank, final int zoneFile1, final int zoneRank1, final int zoneFile2, final int zoneRank2) {
+        // right edge of zone
+        if (zoneFile2 < fromFile) {
+            final int fileDelta = fromFile - zoneFile2;
+            final int r1 = zoneRank1 - fileDelta;
+            final int r2 = zoneRank2 - fileDelta;
+            if (r1 <= fromRank && fromRank <= r2) {
+                return fileDelta;
+            }
+        }
+
+        // bottom edge of zone
+        if (zoneRank1 > fromRank) {
+            final int rankDelta = zoneRank1 - fromRank;
+            final int f1 = zoneFile1 + rankDelta;
+            final int f2 = zoneFile2 + rankDelta;
+            if (f1 <= fromFile && fromFile <= f2) {
+                return rankDelta;
+            }
+        }
+
+        return DISTANCE_SENTINEL;
+    }
+
+    private static int distanceNorthEast(final int fromFile, final int fromRank, final int zoneFile1, final int zoneRank1, final int zoneFile2, final int zoneRank2) {
+        // left edge of zone
+        if (zoneFile1 > fromFile) {
+            final int fileDelta = zoneFile1 - fromFile;
+            final int r1 = zoneRank1 - fileDelta;
+            final int r2 = zoneRank2 - fileDelta;
+            if (r1 <= fromRank && fromRank <= r2) {
+                return fileDelta;
+            }
+        }
+
+        // bottom edge of zone
+        if (zoneRank1 > fromRank) {
+            final int rankDelta = zoneRank1 - fromRank;
+            final int f1 = zoneFile1 - rankDelta;
+            final int f2 = zoneFile2 - rankDelta;
+            if (f1 <= fromFile && fromFile <= f2) {
+                return rankDelta;
+            }
+        }
+
+        return DISTANCE_SENTINEL;
+    }
 }
