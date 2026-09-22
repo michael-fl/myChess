@@ -49,8 +49,13 @@ HEADER = re.compile(r'^\[(Event|Round|White|Black|Result|GameEndTime) "(.*)"\]')
 
 Game = collections.namedtuple("Game", "round white black result end")
 
+# A round is identified by its SEGMENT and its number, never by the number alone: cutechess
+# restarts round numbering at 1 in every resumed segment, so round "1" of segment 1 and round
+# "1" of segment 4 are different openings against the same anchors. Pooling them destroys the
+# pairing this whole comparison rests on - and it did, until 2026-09-22.
 
-def _finish(current):
+
+def _finish(current, segment):
     """A game record, or None when it is incomplete or was cut off mid-play."""
     if current.get("Result") not in SCORE:
         return None
@@ -58,7 +63,7 @@ def _finish(current):
     if not all(k in current for k in ("Round", "White", "Black")):
         return None
 
-    return Game(current["Round"], current["White"], current["Black"],
+    return Game((segment, current["Round"]), current["White"], current["Black"],
                 current["Result"], _parse_time(current.get("GameEndTime")))
 
 
@@ -88,7 +93,7 @@ def read_games(paths):
             key, value = match.group(1), match.group(2)
 
             if key == "Event":
-                game = _finish(current)
+                game = _finish(current, path)
 
                 if game:
                     yield game
@@ -97,7 +102,7 @@ def read_games(paths):
 
             current[key] = value
 
-        game = _finish(current)
+        game = _finish(current, path)
 
         if game:
             yield game
@@ -188,13 +193,22 @@ def per_round_points(games, arms):
 
 
 def paired_difference(points, counts, arm_a, arm_b):
-    """Mean per-game score difference over rounds both arms completed, with its 95 % half-width."""
+    """Mean per-game score difference over COMPLETE rounds, with its 95 % half-width.
+
+    Only rounds where both arms played their full complement count. A round left half-played
+    by an interruption has a tiny denominator - six games against twenty, in the run this was
+    written for - and an unweighted mean over rounds hands it the same weight as a full one.
+    Two such rounds out of 106 moved the difference from -0.14 points to +0.33 and flipped its
+    sign, which is how this was found. Dropping them makes the paired figure agree with the
+    pooled score difference, as it must.
+    """
+    full = max(counts[arm_a].values(), default=0)
     diffs = []
 
     for rnd in points[arm_a]:
         games_a, games_b = counts[arm_a][rnd], counts[arm_b].get(rnd, 0)
 
-        if games_a == 0 or games_b == 0:
+        if games_a != full or games_b != full:
             continue
 
         diffs.append(points[arm_a][rnd] / games_a - points[arm_b][rnd] / games_b)
