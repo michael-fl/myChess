@@ -1035,7 +1035,15 @@ public final class WeightingFunction {
                 containsIllegalMove = true;
             } else {
                 chessCount[color]++;
-                threadWeight[color] += 4; // ok, give some weight to the attacked king as well (since weightOfPiece(king) is 0)
+                // Should be 0. A check is already priced once by chessFactor at 25 cp, and
+                // paying for it a second time here was a thinking error. It is also mistyped:
+                // the intent in 2cd229a (2020) was 400, a minor piece plus one, but the scale
+                // in this term is centipawns divided by 100, so 4 contributes 0.08 cp where
+                // 400 would have contributed 8. The typo is what keeps the double pricing
+                // harmless, which is why the value stays as it is - zeroing it would move the
+                // bench signature for a change worth eight hundredths of a centipawn.
+                // Do not "repair" it to 400.
+                threadWeight[color] += 4;
             }
         }
 
