@@ -595,6 +595,22 @@ run.
 > a second variant. The 960 tooling and the fitted curve survive as an informational
 > cross-check; neither decides anything.
 
+**Attempt five's open lead is resolved, 2026-09-20 — and the answer is "not by this rule".** The
+term with the corner fix, rebased onto v4.7.1 and rebuilt on that base, over **4200 games fixed-N**
+at `tc=40/60`: **1544 – 1442 – 1214** `[0.512]`, **+8.4 ± 8.9 Elo**, LOS 96.9 %, interval
+**[−0.4, +17.3]**. The point estimate reproduces +9.1 almost exactly across two releases, which is
+the strongest thing about it, and the lower bound still lands 0.4 Elo short of the shortcut that
+would have merged the branch on Elo alone.
+
+Four acceptance criteria had been pinned as numbers before the behavioral data existed. Three pass:
+no regression, wins tipping earlier by **+0.7 ± 0.5** phase at a two-pawn threshold, and **62.4 %
+± 4.0** of king-side decisions falling in the king's own quadrant. **Criterion 3 fails** — the
+share decided on the king's *half* moves only **+2.6 ± 4.1** points where 5 were required — so the
+rule says do not merge, and it is recorded unamended. The behavioral picture underneath is sharper
+than that verdict: the term does not attract more play to the king's half, it moves where *within*
+the half the game is decided, toward the corner. Full numbers, method and the pre-registered table
+in [`king-safety.md`](king-safety.md) § 4.16.
+
 ---
 
 ## 12.23 ~~Repetition draws are invisible to the search~~ — **DONE 2026-08-15, ≈ +15 Elo**
