@@ -194,20 +194,27 @@ class StsDefectTest {
      * it is measurably a horizon effect, not an evaluation hole — one data point against
      * reading every flank-pawn nudge as the same defect.
      *
-     * <p><b>Test family:</b> search-horizon (defect)
+     * <p><b>Inverted in v4.8.0, and it is the only one of five that was.</b> The king-attack
+     * term gives up {@code 1.h3} for {@code 1.Be2}, which Stockfish 18 rates <b>0.00</b> at
+     * depth 22 against {@code h3}'s <b>−2.58</b> — three and a half pawns recovered. The suite's
+     * {@code 1.Be4} is better still at <b>+1.40</b>, so the position is not solved and the case
+     * is not a guard; it pins that the losing nudge is gone.
      *
-     * <p>TODO: invert to {@code assertEngineAvoids} once {@code 1...f3} is seen at depth 8.
+     * <p>The paragraph above turns out to have been right for the wrong reason. It read
+     * {@code h3} as measurably a horizon effect rather than an evaluation hole, on the evidence
+     * that depth 10 abandons it — and an <em>evaluation</em> change closed it at depth 8. Both
+     * can be true at once, and the case no longer discriminates between them.
+     *
+     * <p><b>Test family:</b> search-horizon (fixed)
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void centerControl071_atDepth8_playsH3AndAllowsTheF3Break() throws Exception {
+    void centerControl071_atDepth8_noLongerPlaysTheLosingHPawnNudge() throws Exception {
         var game = gameFromFenAtDepth("b4rk1/8/4pr1p/2q5/P4p2/2PB4/6PP/R3QR1K w - - 0 1",
                 PIN_DEPTH, tt);
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.h2, Board.h3, "h3",
-                "after which 1...f3! breaks through for −2.46, where the suite's Be4 holds "
-                        + "+1.54. Abandoned at depth 10");
+        BlunderTest.assertEngineAvoids(result, Board.h2, Board.h3, "1.h3");
     }
 
     /**
@@ -515,9 +522,14 @@ class StsDefectTest {
                 PIN_DEPTH, tt);
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.e1, Board.g1, "0-0",
-                "which turns +1.58 into 0.00 because black takes the c-file first, where the "
-                        + "suite's Rc7 holds +1.65. Worth 10 of 100 points at every depth from 8 to 11");
+        // MOVED BY v4.8.0, NOT FIXED. It no longer castles; it plays Nf4, which Stockfish 18
+        // rates -0.66 at depth 22 against 0-0's -0.06, so the new move is 0.6 pawns WORSE. The
+        // suite's Rc7 holds +0.97. The seventh rank is still not taken, and the case is pinned
+        // on the move the engine actually plays.
+        assertEngineStillPlays(result, Board.h3, Board.f4, "Nf4",
+                "which leaves the seventh rank to black and reads −0.66 against the suite's "
+                        + "Rc7 at +0.97 (Stockfish 18, depth 22). Until v4.8.0 the move here was "
+                        + "0-0 at −0.06, so the king-attack term moved this one the wrong way");
     }
 
     /**
@@ -544,9 +556,12 @@ class StsDefectTest {
                 PIN_DEPTH, tt);
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.f3, Board.f8, "Rxf8+",
-                "a check that trades the advantage away, +1.05 down to +0.05, where the "
-                        + "suite's Rf7 keeps +1.09. Worth 12 of 100 points at every depth from 8 to 11");
+        // MOVED BY v4.8.0, NOT FIXED, and this one is a straight substitution: Be2 reads +0.02
+        // at depth 22 where Rxf8+ read +0.01. The advantage is given away either way; only the
+        // move changed.
+        assertEngineStillPlays(result, Board.f1, Board.e2, "Be2",
+                "which gives the advantage away just as the old Rxf8+ did — +0.02 against +0.01 "
+                        + "(Stockfish 18, depth 22) — where the suite's Rf7 keeps +1.30");
     }
 
     /**
@@ -574,9 +589,13 @@ class StsDefectTest {
                 PIN_DEPTH, tt);
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.d7, Board.d6, "d6",
-                "which levels a +2.61 position at 0.00, where the suite's Rh8 keeps +2.74. "
-                        + "Point value churns 1/12/0/22 over depths 8 to 11 without ever getting good");
+        // MOVED BY v4.8.0, NOT FIXED. The pawn nudge became a king move, and the reading went
+        // from 0.00 to -0.05 (Stockfish 18, depth 22, black to move). The open h-file is still
+        // not taken; the suite's Rh8 keeps +2.08.
+        assertEngineStillPlays(result, Board.e7, Board.f8, "Kf8",
+                "which leaves the open h-file alone just as the old d6 did, at −0.05 against "
+                        + "0.00, where the suite's Rh8 keeps +2.08 (Stockfish 18, depth 22, "
+                        + "black to move)");
     }
 
     /**
@@ -755,8 +774,11 @@ class StsDefectTest {
                 PIN_DEPTH, tt);
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.d2, Board.g2, "Rg2",
-                "which collapses a balanced position to −4.44, where only the suite's Qf8 and "
-                        + "its checks hold 0.00. Worth 19 points at depth 8 and 0 at depth 9");
+        // MOVED BY v4.8.0, NOT FIXED. Ne3 instead of Rg2, and marginally worse: -3.92 against
+        // -3.73 at depth 22. Only the suite's Qf8 and its perpetual checks hold 0.00.
+        assertEngineStillPlays(result, Board.f1, Board.e3, "Ne3",
+                "which collapses a balanced position just as the old Rg2 did — −3.92 against "
+                        + "−3.73 (Stockfish 18, depth 22) — where only the suite's Qf8 and its "
+                        + "checks hold 0.00");
     }
 }

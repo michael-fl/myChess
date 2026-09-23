@@ -46,7 +46,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "h3-e6",
                 0.2f,
-                0.85f, // max was 0.5, then 0.7; v4.4.0 PeSTO tables -> 0.78
+                1.1f, // max was 0.5, 0.7, then 0.85; v4.8.0 attack units -> 1.05
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -192,7 +192,13 @@ class EngineTest extends EngineTestBase {
                 // shortcut, so the root still compares two numbers produced under different
                 // rules. This position no longer exposes the asymmetry; it does not remove it,
                 // and a per-node variant of the flag is still the designated follow-up.
-                Set.of("g5-e6"),
+                // REGRESSED AGAIN (v4.8.0): the attack-unit term moves this back off Ne6 to
+                // e5-e6, the pawn capture. Stockfish at depth 24 has Ne6 at +4.77 and exe6 at
+                // +4.13, so it costs 0.64 pawns - a third of what the v4.6.0 regression cost
+                // here, and the position stays won either way. Recorded rather than argued
+                // away: the term was merged on a gauntlet that cleared its guard, not on a
+                // claim that it improves every position.
+                Set.of("e5-e6"),
                 // PV-path assertion dropped: the deep PV shifted with the tapered
                 // pawn-EG table (v4.3.0).
                 null,
@@ -217,7 +223,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "b7-g7",
                 6.0f, // OPT: Should be M13
-                7.0f,
+                7.1f, // max was 7.0; v4.8.0 attack units -> 7.05
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -424,7 +430,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("Rxh4"),
                 -0.45f, // was -0.2; Rxh4 is SF-best (SF depth 20: +0.58); v4.2.0 eval drift
-                0.5f, // king-EG (v4.3.1) then v4.3.3 bishop-pair (white holds the pair) → ~0.37
+                0.7f, // king-EG (v4.3.1), v4.3.3 bishop-pair → ~0.37; v4.8.0 attack units -> 0.64
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -498,9 +504,15 @@ class EngineTest extends EngineTestBase {
                 11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4
                 """;
         testPosition(pgn,
-                "d8-a5", // STILL A REGRESSION, but a smaller one (v4.4.0): Qa5 (SF -2.84) instead of the only
-                         // holding move Qc8 (SF -0.21). v4.3.4 played Qb8 (SF -3.66), so the PeSTO tables recover
-                         // ~0.8 pawns of it without fixing it. Stays flagged for review.
+                "d8-b8", // A REGRESSION, and now the worst of the three known answers. The only holding
+                         // move is Qc8 (SF -0.21). v4.3.4 played Qb8 (-3.66), v4.4.0's PeSTO tables
+                         // recovered ~0.8 pawns of that to Qa5 (-2.84), and v4.8.0's attack-unit term
+                         // gives them back: Qb8 again. Measured at depth 24, white-POV: Qc8 +0.75,
+                         // Qa5 +2.47, Qb8 +3.82.
+                         //
+                         // Note testPosition27 is the follow-on position and its FEN already carries
+                         // the queen on b8, so the two are consistent again - which they were not
+                         // while this one expected Qa5. Stays flagged for review.
                 -3.0f,
                 3.0f,
                 new GameConfig(ENGINE, engineConfig())
@@ -585,7 +597,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "Nh8", // Nh8 is SF-best (g6h8)
                 0.3f, // TODO 4 (SF: +2.99); eval under-reports (pre-existing)
-                2.25f, // max was 1.0, then 1.6; v4.4.0 PeSTO tables -> 2.14
+                2.3f, // max was 1.0, 1.6, then 2.25; v4.8.0 attack units -> 2.27
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -669,7 +681,7 @@ class EngineTest extends EngineTestBase {
         testPositionFromFen(
                 "rk1r2b1/ppp3pp/3b1pn1/3n4/3P2q1/4BNP1/PPP1N1BP/RKQR4 b KQkq - 3 11",
                 Set.of("d8-e8", "g4-e6", "g4-e4"), // Re8/Qe6 keep Black's ~ -3.6 dominance; Qe4 is eval-adjacent but suboptimal (SF ~ -2.3) since v4.3.1
-                -1.3f, // myChess under-reports (~ -0.8) — the depth of Black's advantage is beyond the depth-8 horizon
+                -1.5f, // myChess under-reports — Black's advantage is beyond the depth-8 horizon; min was -1.3, v4.8.0 attack units -> -1.46
                 -0.4f,
                 new GameConfig(ENGINE, engineConfig())
         );

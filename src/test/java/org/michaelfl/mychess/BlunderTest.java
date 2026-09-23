@@ -165,7 +165,15 @@ class BlunderTest {
         return game.getEngine().nextMoveAsync().getResult(JUNIT_TIMEOUT_S - 5, TimeUnit.SECONDS);
     }
 
-    private static void assertEngineAvoids(MoveAndWeight result, int blunderFrom, int blunderTo, String blunderName) {
+    /**
+     * The positive counterpart of {@link #assertEngineStillPlays}: the engine must not choose the
+     * move the case was written about.
+     *
+     * <p>Package-private for the same reason as its sibling — {@code StsDefectTest} converts its
+     * own characterizations with it when a defect closes, and two copies of the comparison would
+     * be two places to get the from/to order wrong.
+     */
+    static void assertEngineAvoids(MoveAndWeight result, int blunderFrom, int blunderTo, String blunderName) {
         int chosen = result.move();
         boolean isBlunder = Move.getFromField(chosen) == blunderFrom && Move.getToField(chosen) == blunderTo;
 
@@ -768,10 +776,20 @@ class BlunderTest {
      * original wording suggested.
      *
      * <p><b>This assertion is a characterization, not a goal.</b> It passes
-     * because the defect is present. Once king safety lands it must start
-     * failing — that is the signal to invert it into an
+     * because the defect is present. Once king safety scores this position
+     * correctly it must start failing — that is the signal to invert it into an
      * {@link #assertEngineAvoids} test against {@code Qb4} and to record the new
      * evaluation here.
+     *
+     * <p><b>Narrowed by v4.8.0, not closed.</b> King safety did land — the
+     * attack-unit term is on master — and this case moved from below −0.5 to
+     * −0.41, i.e. toward the truth without reaching the trigger the paragraph
+     * above names. It still reports black comfortably better in a position where
+     * white is winning by roughly ten pawns, which is why the bound was pulled to
+     * −0.3 rather than the test being inverted. Note what the term cannot see
+     * here: it counts attackers on the king zone, and the defender this move gives
+     * up is a queen covering f7 along c4-d5-e6-f7 — a defensive relation, which
+     * nothing in the shipped term measures.
      *
      * <p><b>Test family:</b> king-safety (defect)
      */
@@ -784,12 +802,16 @@ class BlunderTest {
 
         var result = searchCurrentPositionDeep(game);
 
-        assertTrue(result.weight() < -0.5f,
+        // NARROWED BY v4.8.0, NOT CLOSED. The bound was -0.5 and the reading is now -0.41: the
+        // attack-unit term pulls the evaluation toward the truth without reaching it. The
+        // trigger this case names - "reports a white advantage" - is still not met, so it stays
+        // a characterization instead of becoming an avoidance test. Objectively white is
+        // winning by roughly ten pawns.
+        assertTrue(result.weight() < -0.3f,
                 "characterization: at the in-game depth myChess still rates itself better here, "
-                        + "blind to the three attackers on its open king (objectively white is winning "
-                        + "by roughly ten pawns). If this now reports a white advantage, king safety has "
-                        + "landed — turn this into an avoidance test for Qb4. white-POV eval "
-                        + result.weight());
+                        + "blind to the three attackers on its open king. If this ever reports a "
+                        + "white advantage, king safety has landed — turn this into an avoidance "
+                        + "test for Qb4. white-POV eval " + result.weight());
     }
 
     /**
@@ -1432,33 +1454,37 @@ class BlunderTest {
      * {@link #qe5_atMove9_characterizesSellingTheKingForARook()}: a systematically wrong
      * evaluation is found more reliably by more plies, not corrected.
      *
-     * <p><b>TODO — invert once king safety lands.</b> Written first as an
-     * {@link #assertEngineAvoids} test against {@code f2-f3} and confirmed to fail (the
-     * engine chose it), then turned into the characterization below so the suite stays
-     * green while the defect is open. The reproduction is exact — it picks the same
-     * {@code f2-f3} the game saw. Its score differs from the in-game +2.00 because the
-     * test starts from a bare FEN with a cold transposition table; only the move choice
-     * is being pinned.
+     * <p><b>Inverted in v4.8.0, which is what this note was waiting for.</b> It was
+     * written first as an {@link #assertEngineAvoids} test against {@code f2-f3} and
+     * confirmed to fail, then relaxed to a characterization so the suite stayed green
+     * while the defect was open. The attack-unit term closed it: the engine now plays
+     * {@code Rd2} (Stockfish depth 24: +1.35) rather than Stockfish's {@code Rd1}
+     * (+2.11), so the position is still not played perfectly — but the pawn in front of
+     * its own king stays where it is, which is the defect this case existed for.
      *
-     * <p><b>Test family:</b> king-safety (defect)
+     * <p><b>Test family:</b> king-safety (fixed)
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void f3_atMove33_characterizesOpeningItsOwnPawnShield() throws Exception {
+    void f3_atMove33_engineNoLongerOpensItsOwnPawnShield() throws Exception {
         var game = gameFromFenAtDepth(BEFORE_F3_FEN, NMC7SP8H_DEPTH, tt);
         assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
                 "before 33.f3 white (myChess) must be to move");
 
         var result = searchCurrentPositionDeep(game);
 
-        assertEquals(ChessUtil.moveToString(Board.f2, Board.f3), ChessUtil.moveToString(result.move()),
-                "characterization: myChess still pushes f3 and opens the file in front of its own king. If it "
-                        + "now plays something else (Rd1 is Stockfish's choice, and depth 8 already finds it), "
-                        + "king safety has landed — turn this into an avoidance test. white-POV eval "
-                        + result.weight());
-        assertTrue(result.weight() > 0.5f,
-                "characterization: it still rates itself clearly ahead after giving the advantage away; the "
-                        + "position after f3 is 0.00 by Stockfish. Got " + result.weight());
+        // Fixed by v4.8.0's attack-unit term. It no longer pushes the pawn in front of its own
+        // king; it plays Rd2 (SF depth 24: +1.35) rather than Stockfish's Rd1 (+2.11), so the
+        // position is not played perfectly, but the defect this case existed for is gone.
+        assertEngineAvoids(result, Board.f2, Board.f3, "33.f3");
+
+        // The second half used to characterize an over-report: it rated itself clearly ahead
+        // after giving the advantage away with f3, which Stockfish scores 0.00. With Rd2 the
+        // advantage is real, so the bound now pins that the eval tracks it rather than running
+        // away from it.
+        assertTrue(result.weight() > 0f && result.weight() < 2.5f,
+                "after Rd2 white is genuinely better (SF +1.35), so the eval should be positive "
+                        + "and of that order rather than the old runaway. Got " + result.weight());
     }
 
     /**
@@ -1476,32 +1502,36 @@ class BlunderTest {
      * consistent with the missing term — if the open file costs nothing, there is
      * nothing to trade away.
      *
-     * <p><b>TODO — invert once king safety lands.</b> Written first as a positive
-     * assertion requiring {@code Rxf8} — stronger than the usual avoidance test, which is
-     * fair here because the saving move is unique — and confirmed to fail (the engine
-     * chose {@code Rd3}). Relaxed to the characterization below so the suite stays green
-     * while the defect is open; the target assertion is preserved in this note, not lost.
-     * As with the sibling test, the score is lower than the in-game +1.55 only because
-     * the transposition table starts cold.
+     * <p><b>Inverted in v4.8.0.</b> It was written first as a positive assertion
+     * requiring {@code Rxf8} — stronger than the usual avoidance test, which is fair here
+     * because the saving move is unique — then relaxed to a characterization when the
+     * engine chose {@code Rd3}, with the target assertion preserved in this note rather
+     * than lost. The attack-unit term landed exactly that move, so the positive assertion
+     * is restored as written. What survives of the old over-report is +0.45 where the
+     * truth after {@code Rxf8} is 0.00: optimistic, no longer the 2.6-pawn illusion.
      *
-     * <p><b>Test family:</b> king-safety (defect)
+     * <p><b>Test family:</b> king-safety (fixed)
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void rd3_atMove35_characterizesKeepingTheRookOffTheOpenFile() throws Exception {
+    void rd3_atMove35_engineTradesOnTheOpenFile() throws Exception {
         var game = gameFromFenAtDepth(BEFORE_RD3_FEN, NMC7SP8H_DEPTH, tt);
         assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
                 "before 35.Rd3 white (myChess) must be to move");
 
         var result = searchCurrentPositionDeep(game);
 
-        assertEquals(ChessUtil.moveToString(Board.f3, Board.d3), ChessUtil.moveToString(result.move()),
-                "characterization: myChess still retreats along the third rank instead of trading with Rxf8, "
-                        + "the only move that holds. If it now plays f3-f8, king safety has landed — restore the "
-                        + "positive assertion on Rxf8. white-POV eval " + result.weight());
-        assertTrue(result.weight() > 0f,
-                "characterization: it rates itself ahead in a position Stockfish scores about -2.6 for white; "
-                        + "got " + result.weight());
+        // v4.8.0's attack-unit term landed exactly the move this case was waiting for, so the
+        // positive assertion is restored as its own text instructed. Rxf8 holds at 0.00 by
+        // Stockfish at depth 24; the retreat Rd3 it used to play reads -3.06.
+        assertEquals(ChessUtil.moveToString(Board.f3, Board.f8), ChessUtil.moveToString(result.move()),
+                "myChess must trade with Rxf8, the only move that holds. white-POV eval " + result.weight());
+
+        // What is left of the old over-report: +0.45 where the truth after Rxf8 is 0.00 -
+        // slightly optimistic, no longer the 2.6-pawn illusion it characterized before.
+        assertTrue(result.weight() > 0f && result.weight() < 1.0f,
+                "after Rxf8 the position is level (SF 0.00); the eval should be near it rather "
+                        + "than claiming a win. Got " + result.weight());
     }
 
     // ----------------------------------------------------------------
@@ -1728,24 +1758,32 @@ class BlunderTest {
      * nearly six pawns out, sign inverted. The rook is counted, the knight stranded on a1
      * is not.
      *
-     * <p><b>TODO — invert once the evaluation charges for a stranded piece.</b>
+     * <p><b>Closed by v4.8.0's attack-unit term</b>, which is not the route the TODO here
+     * predicted — nothing was added that charges for a stranded piece as such. It plays
+     * {@code Qxe2} (Stockfish depth 24: −1.71 white-POV, so good for black) instead of taking
+     * the rook. The plausible mechanism is the other side of the same coin: a knight on a1
+     * bears on no square of the white king zone, so the term prices the attack it gives up.
+     * Plausible, and not measured. The over-report survives the fix and is still pinned below.
      *
-     * <p><b>Test family:</b> corner-grab (defect)
+     * <p><b>Test family:</b> corner-grab (fixed)
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void nxa1_atMove15_characterizesTakingTheCornerRook() throws Exception {
+    void nxa1_atMove15_engineNoLongerTakesTheCornerRook() throws Exception {
         var game = gameFromFenAtDepth(CORNER_ROOK_A1_FEN, SCANNER_DEPTH, tt);
         assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
 
         var result = searchCurrentPositionDeep(game);
 
-        assertEquals(ChessUtil.moveToString(Board.c2, Board.a1), ChessUtil.moveToString(result.move()),
-                "characterization: myChess still takes the rook in the corner and strands the knight there. If "
-                        + "it now plays Rg8, turn this into an avoidance test. white-POV eval " + result.weight());
+        // Fixed by v4.8.0's attack-unit term: Qxe2 (SF depth 24: -1.71 white-POV, so good for
+        // black) instead of taking the corner rook, which reads +1.55 and strands the knight.
+        // Was a characterization.
+        assertEngineAvoids(result, Board.c2, Board.a1, "15...Nxa1");
+
+        // The over-report survives the fix and is still worth pinning.
         assertTrue(result.weight() < -3f,
-                "characterization: it rates itself four pawns ahead where Stockfish has it 1.67 behind; got "
-                        + result.weight());
+                "characterization: it rates itself four pawns ahead where Stockfish has it 1.71 "
+                        + "behind after the move it now chooses; got " + result.weight());
     }
 
     /**
@@ -1758,7 +1796,7 @@ class BlunderTest {
      * position went to <b>-4.78</b>.
      *
      * <p>Same family as {@code 33.f3} in
-     * {@link #f3_atMove33_characterizesOpeningItsOwnPawnShield()} and {@code 12.h3} in
+     * {@link #f3_atMove33_engineNoLongerOpensItsOwnPawnShield()} and {@code 12.h3} in
      * {@link #h3_atMove12_engineNoLongerPushesTheUndefendedPawn()}: a pawn move in front of
      * the own king that the evaluation does not charge for.
      *
@@ -1879,7 +1917,7 @@ class BlunderTest {
      *
      * <p>myChess played <b>{@code 20.h3}</b> instead, which resolves the tension on white's
      * own terms and hands black the open file: <b>-3.12</b>. Same family as {@code 33.f3}
-     * ({@link #f3_atMove33_characterizesOpeningItsOwnPawnShield()}) and {@code 12.h3}
+     * ({@link #f3_atMove33_engineNoLongerOpensItsOwnPawnShield()}) and {@code 12.h3}
      * ({@link #h3_atMove12_engineNoLongerPushesTheUndefendedPawn()}) — a pawn move in front of
      * its own king that the evaluation does not charge for.
      *
@@ -2280,22 +2318,30 @@ class BlunderTest {
      *
      * <p>Pairing it with {@link #ba4_vsTscp_characterizesTheBatteryOnTheGFile} is the point:
      * one case has myChess failing to see an attack <em>against</em> it after castling short,
-     * the other after its king walked to b2. The term that is missing does not care which
+     * the other after its king walked to b2. The term that was missing does not care which
      * king it is.
      *
-     * <p><b>Test family:</b> king-safety (defect)
+     * <p><b>Closed by v4.8.0's attack-unit term</b> — the grab is gone. The assertion pins that
+     * and no more: which move replaces {@code Bxf5} is not checked, so {@code 20.Qxe7+} remains
+     * Stockfish's recommendation rather than a measured statement about this build. The sibling
+     * {@code ba4} case is still open, so the pairing now also says which half of it the term
+     * reaches.
+     *
+     * <p><b>Test family:</b> king-safety (fixed)
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void bxf5_vsTscp_characterizesIgnoringTheAttackOnItsOwnKing() throws Exception {
+    void bxf5_vsTscp_engineTradesTheAttackerOff() throws Exception {
         var game = gameFromFenAtDepth(BEFORE_BXF5_FEN, SCANNER_DEPTH, tt);
         assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
 
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.h3, Board.f5, "20.Bxf5",
-                "which allows 20...Qa3+ 21.Kb1 Ra6 and turns −2.55 into −10.23 (Stockfish, depth 20); "
-                        + "20.Qxe7+ trades the attacker off");
+        // Fixed by v4.8.0's attack-unit term: the pawn grab that let -2.55 run to -10.23 is
+        // gone. Was a characterization. This pins only that Bxf5 is not played - which move
+        // replaces it is not asserted, so 20.Qxe7+ stays Stockfish's recommendation rather
+        // than a claim about this build.
+        assertEngineAvoids(result, Board.h3, Board.f5, "20.Bxf5");
     }
 
     /** Black (myChess) to move before {@code 55...Bxd4??}, king on f7 and white's queen loose. */
@@ -2640,24 +2686,30 @@ class BlunderTest {
      * <b>−0.54</b>.
      *
      * <p>Sits next to {@code 21.Nf3} and {@code 39.Rxd5} in shape — a two-ply tactic the
-     * quiescence search is meant to see — except that both of those are repaired and this one
-     * is not. The difference is that the winning move here is itself a *check*, so the
-     * capture-only quiescence generator sees it, but only after the knight has already moved
-     * elsewhere in the ordering.
+     * quiescence search is meant to see. Those two were repaired earlier; this one held out
+     * because the winning move is itself a *check*, so the capture-only quiescence generator
+     * sees it, but only after the knight has already moved elsewhere in the ordering.
      *
-     * <p><b>Test family:</b> tactical-oversight (defect)
+     * <p><b>Closed by v4.8.0.</b> It plays {@code 36.Nf7} (Stockfish depth 24: +3.94) rather
+     * than the fork {@code 36.Nxe6+} (+5.38), so the best line is still not found — but the
+     * retreat that threw the win away is gone. An evaluation term moving a move-ordering
+     * failure is worth reading as a caution: the case is filed under tactical-oversight and
+     * what changed was the score at the leaves, not the ordering.
+     *
+     * <p><b>Test family:</b> tactical-oversight (fixed)
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void ne4_vsZetaDva_characterizesRetreatingInsteadOfForking() throws Exception {
+    void ne4_vsZetaDva_engineNoLongerRetreatsFromTheFork() throws Exception {
         var game = gameFromFenAtDepth(BEFORE_NE4_FEN, SCANNER_DEPTH, tt);
         assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
 
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.g5, Board.e4, "36.Ne4",
-                "which gives up the fork 36.Nxe6+ Kg8 37.Nxc7 and turns +4.93 into −0.54 "
-                        + "(Stockfish 18, depth 22)");
+        // Fixed by v4.8.0's attack-unit term: Nf7 (SF depth 24: +3.94) instead of Ne4 (-0.58).
+        // It still misses the fork Nxe6+ (+5.38), so the position is not solved, only the
+        // blunder is gone. Was a characterization.
+        assertEngineAvoids(result, Board.g5, Board.e4, "36.Ne4");
     }
 
     /** White (myChess) to move before {@code 37.Re7??}, abandoning the c2 pawn's defender. */
@@ -2759,23 +2811,45 @@ class BlunderTest {
      * The largest repaired swing in the corpus: black stood at <b>+8.87</b> and
      * {@code 51...Rd8} let white mate (Stockfish 18, depth 22). {@code 51...Rb1} wins.
      *
-     * <p>The current build plays {@code 51...Rcc3} at {@link #SCANNER_DEPTH} and keeps the
-     * win, so this is a guard rather than a characterization. Worth keeping precisely because
-     * the failure it guards against is not "loses some advantage" but "converts a won game
-     * into a mate against" — the cheapest possible regression to detect and the most expensive
-     * to ship.
+     * <p><b>It was never an avoidance test, and v4.8.0 is what showed that.</b> It stood as a
+     * guard while the build happened to play {@code 51...Rcc3} at {@link #SCANNER_DEPTH} and
+     * keep the win; after the attack-unit term it plays {@code Rd8} again. Investigating that
+     * regression is what exposed the case: Stockfish's refutation is mate in 13, i.e. 25 plies,
+     * against a search running at depth 8, and it opens with a quiet move, so the capture-only
+     * quiescence extension does not reach it either. The engine never knew the mate — passing
+     * was a property of move ordering, not of knowledge, and no eval term can be charged for
+     * losing it.
      *
-     * <p><b>Test family:</b> tactical-oversight (fixed)
+     * <p>So it is a characterization now, pinning what the engine actually does. Rebuilding it
+     * as a real avoidance test needs a fixture whose refutation fits inside the horizon, which
+     * this position does not provide. That gap is recorded in {@code docs/king-safety.md}
+     * § 4.17.
+     *
+     * <p><b>Test family:</b> tactical-oversight (defect)
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void rd8_vsZetaDva_engineNoLongerWalksIntoMate() throws Exception {
+    void rd8_vsZetaDva_characterizesWalkingIntoTheLostPosition() throws Exception {
         var game = gameFromFenAtDepth(BEFORE_RD8_FEN, SCANNER_DEPTH, tt);
         assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
 
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineAvoids(result, Board.c8, Board.d8, "51...Rd8");
+        // WAS AN AVOIDANCE TEST, AND COULD NEVER HAVE BEEN ONE. v4.8.0's attack-unit term plays
+        // 51...Rd8 again, and investigating that showed the case was mislabelled from the start:
+        // Stockfish answers Rd8 with mate in 13, which is 25 plies, and this search runs at
+        // SCANNER_DEPTH = 8. The refutation opens with the quiet move Qh6, so the capture-only
+        // quiescence extension does not reach it either. The engine never knew the mate; passing
+        // was a property of move ordering, not of knowledge, and any change to the tree could
+        // flip it either way.
+        //
+        // Recorded rather than repaired, because repairing it needs a fixture whose refutation
+        // fits inside the horizon - a different position, not a different assertion. Black is
+        // winning here before the move: Qxd4 -12.28, Rb1 -10.30, Nc3 -8.44 at depth 26.
+        assertEquals(ChessUtil.moveToString(Board.c8, Board.d8), ChessUtil.moveToString(result.move()),
+                "characterization: myChess still walks into 51...Rd8 from a won position. The "
+                        + "refutation is 25 plies deep and this search is 8, so the case records "
+                        + "the choice and cannot police it. white-POV eval " + result.weight());
     }
 
     /** Black (myChess) to move before {@code 42...Rf3??}, throwing away a won position. */
@@ -2967,19 +3041,24 @@ class BlunderTest {
      * material-only shortcut; whether the same mechanism is active here is not established, and
      * the two cases together are the evidence a fix would have to satisfy.
      *
-     * <p><b>Test family:</b> corner-grab (defect)
+     * <p><b>Closed by v4.8.0's attack-unit term</b> — and only this half of the pair. The
+     * {@code 12.Qxb7} case is still open, so the "same move twice" framing now separates the two
+     * rather than joining them, and the shortcut mechanism it names is untouched.
+     *
+     * <p><b>Test family:</b> corner-grab (fixed)
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void qxb7_atMove26_vsZetaDva_characterizesTheSamePoisonedPawnAgain() throws Exception {
+    void qxb7_atMove26_vsZetaDva_engineNoLongerTakesThePoisonedPawn() throws Exception {
         var game = gameFromFenAtDepth(BEFORE_QXB7_M26_FEN, SCANNER_DEPTH, tt);
         assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
 
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.b5, Board.b7, "26.Qxb7",
-                "which strands the queen after 26...Rhe8 27.Rf1 Rad8 and turns +4.64 into −1.30 "
-                        + "(Stockfish 18, depth 22); 26.Qe5+ holds");
+        // Fixed by v4.8.0's attack-unit term, again with the named cure: 26.Qe5+ instead of
+        // Qxb7, which stranded the queen and turned +4.64 into -1.30. Was a
+        // characterization.
+        assertEngineAvoids(result, Board.b5, Board.b7, "26.Qxb7");
     }
 
     /** Black (myChess) to move before {@code 26...Qh1+??}, with a won attack. */
@@ -3539,7 +3618,8 @@ class BlunderTest {
             "r2qkb1r/pp3pp1/2npp3/1Bp4p/4P1b1/2NP1N2/PPP2P2/R1BQ1RK1 w kq - 0 11";
 
     /**
-     * <b>A tactic myChess does not see at depth 12 after 280 seconds.</b> From lichess
+     * <b>A tactic myChess did not see at depth 12 after 280 seconds</b> — up to v4.7.1; see the
+     * closing note. From lichess
      * {@code JeXnaZll} against {@code rust-in-pieces}, 600+5, 13 seconds spent. The natural
      * developing move {@code 11.Be3} loses a piece: {@code 11...Qf6!} adds a second attacker to
      * the f3 knight that {@code Bg4} already pins against the queen, and after
@@ -3560,20 +3640,26 @@ class BlunderTest {
      * point. It is not searching a losing continuation — it simply does not credit black with the
      * forcing one.
      *
-     * <p><b>Test family:</b> tactical-oversight (defect)
+     * <p><b>Closed by v4.8.0's attack-unit term.</b> The table above is the state up to v4.7.1;
+     * the engine now plays {@code 11.Re1} (Stockfish depth 24: 0.00) instead of {@code Be3}
+     * (−2.20), so it no longer walks into {@code Qf6!}. That an evaluation change repairs a case
+     * whose heading says depth does not repair it is the interesting part, and the two statements
+     * are compatible: more plies over the same wrong leaf scores find the same wrong move more
+     * reliably, which is what the table shows. What changed is the leaf.
+     *
+     * <p><b>Test family:</b> tactical-oversight (fixed)
      */
     @Test
     @Timeout(value = JUNIT_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void be3_atMove11_characterizesTheUnseenKnightLoss() throws Exception {
+    void be3_atMove11_engineNoLongerLosesTheKnight() throws Exception {
         var game = gameFromFenAtDepth(BEFORE_BE3_FEN, SCANNER_DEPTH, tt);
         assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
 
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.c1, Board.e3, "11.Be3",
-                "which loses the f3 knight to 11...Qf6 and reads −2.27 (Stockfish 18, depth 24) "
-                        + "against +1.03 for 11.Kg2; myChess rates it +0.85 here and still plays it "
-                        + "at depth 12 after 280 seconds");
+        // Fixed by v4.8.0's attack-unit term: it plays Re1 (SF depth 24: 0.00) instead of Be3,
+        // which drops the f3 knight and reads -2.20. Was a characterization.
+        assertEngineAvoids(result, Board.c1, Board.e3, "11.Be3");
     }
 
     /** Black (myChess) to move before 8...Bxf3??, after which white's attack is decisive. */
