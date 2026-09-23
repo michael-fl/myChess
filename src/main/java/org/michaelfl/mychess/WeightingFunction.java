@@ -378,8 +378,21 @@ public final class WeightingFunction {
      * {@link #KING_ATTACK_PENALTY}) into the final position weight. With the
      * penalty table already in centipawns and the final-weight sum in pawn
      * units, {@code 0.01} carries the table's centipawn values through
-     * unchanged. Not (yet) a tunable factor — a first fixed value to be
-     * confirmed by self-play before Texel tuning.
+     * unchanged.
+     *
+     * <p><b>The value is a hand-set starting point, not a measurement.</b> The
+     * penalty table under it was fitted, against Stockfish's <em>static</em>
+     * evaluation; this factor was picked to pass that table through at its
+     * fitted scale and nothing has confirmed it since — the anchor gauntlet
+     * that shipped the term measured ±19.8 Elo, which resolves nothing on
+     * this scale.
+     *
+     * <p>It is the ninth entry of {@link #TUNABLE_FACTOR_NAMES}, so the
+     * offline tuner can propose a value for it. That proposal re-scales a
+     * table that is already fitted, which is a second and different question
+     * — the fit asks what Stockfish's static evaluation says, the tune asks
+     * what game results say — and the two overlap. A tuned value is a
+     * candidate for a match, never a result.
      */
     private static final float kingAttackFactor = 0.01f;
 
@@ -596,11 +609,22 @@ public final class WeightingFunction {
         return Arrays.copyOf(pstEndGameWeight, pstEndGameWeight.length);
     }
 
-    /** The evaluation factors the offline tuner can adjust, in a fixed order. */
+    /**
+     * The evaluation factors the offline tuner can adjust, in a fixed order.
+     *
+     * <p><b>The order is the contract</b> between this class, {@link #tunableFactorValues()} and
+     * the feature vector of {@link #analyzeFactors}: entry <i>i</i> of all three describes the
+     * same term. Append rather than insert, and change all three together.
+     *
+     * <p>A factor that is <em>not</em> listed here is not a defect. Its contribution lands in the
+     * tuner's {@code baseEval}, constant while the listed factors move, which is the correct
+     * treatment for a term nobody wants tuned yet. What it does mean is that no tuning run can
+     * ask whether its value is right.
+     */
     public static final String[] TUNABLE_FACTOR_NAMES = {
             "positionFactor", "mobilityFactor", "threadWeightFactor",
             "castlingFactor", "chessFactor", "doublePawnFactor", "undefendedPiecesFactor",
-            "bishopPairFactor"
+            "bishopPairFactor", "kingAttackFactor"
     };
 
     /** Current values of {@link #TUNABLE_FACTOR_NAMES}, in the same order. */
@@ -608,7 +632,7 @@ public final class WeightingFunction {
         return new double[] {
                 positionFactor, mobilityFactor, threadWeightFactor,
                 castlingFactor, chessFactor, doublePawnFactor, undefendedPiecesFactor,
-                bishopPairFactor
+                bishopPairFactor, kingAttackFactor
         };
     }
 
@@ -636,7 +660,8 @@ public final class WeightingFunction {
                 (chessCount[0] - chessCount[1]) * 100.0,
                 (doublePawnCount[0] - doublePawnCount[1]) * 100.0,
                 (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * 100.0,
-                ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * 100.0
+                ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * 100.0,
+                (calcKingAttackPenalty(0, phase) - calcKingAttackPenalty(1, phase)) * 100.0
         };
 
         return new FactorBreakdown(eval, features);
