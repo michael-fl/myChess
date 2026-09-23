@@ -248,9 +248,9 @@ public final class WeightingFunction {
     static final boolean LADDER_PENALTY = true;
 
     /** Variant: the knight's eight moves unrolled with constant offsets, as in 4.7.1. */
-    static final boolean V_KNIGHT_UNROLLED = true;
+    static final boolean V_KNIGHT_UNROLLED = false;
     /** Variant: knight zone test as one bitmap lookup per knight. */
-    static final boolean V_KNIGHT_TABLE = false;
+    static final boolean V_KNIGHT_TABLE = true;
     /** Variant: pawn zone test as one direction-aware bitmap lookup per pawn. */
     static final boolean V_PAWN_TABLE = false;
     /** Variant: slider distance words precomputed, 2 x 64 x 64 ints. */
