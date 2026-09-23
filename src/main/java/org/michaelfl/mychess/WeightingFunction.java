@@ -254,7 +254,7 @@ public final class WeightingFunction {
     /** Variant: pawn zone test as one direction-aware bitmap lookup per pawn. */
     static final boolean V_PAWN_TABLE = false;
     /** Variant: slider distance words precomputed, 2 x 64 x 64 ints. */
-    static final boolean V_SLIDER_TABLE = true;
+    static final boolean V_SLIDER_TABLE = false;
 
     /** Mailbox index to 0..63 (rank * 8 + file), -1 on the border. */
     private static final byte[] SQ64 = new byte[Board.LENGTH * Board.LENGTH];
