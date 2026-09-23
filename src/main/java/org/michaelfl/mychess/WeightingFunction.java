@@ -245,10 +245,10 @@ public final class WeightingFunction {
     /** n3: slider pre-check, distance words and the xray comparison. */
     static final boolean LADDER_SLIDER = true;
     /** n4: the penalty lookup and blend. */
-    static final boolean LADDER_PENALTY = false;
+    static final boolean LADDER_PENALTY = true;
 
     /** Variant: the knight's eight moves unrolled with constant offsets, as in 4.7.1. */
-    static final boolean V_KNIGHT_UNROLLED = false;
+    static final boolean V_KNIGHT_UNROLLED = true;
     /** Variant: knight zone test as one bitmap lookup per knight. */
     static final boolean V_KNIGHT_TABLE = false;
     /** Variant: pawn zone test as one direction-aware bitmap lookup per pawn. */
