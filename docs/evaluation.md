@@ -670,13 +670,45 @@ Multiple checks (double check) are counted multiply, so a discovered check that 
 
 **Scale factor.** `chessFactor = 0.25`. A single check is worth 25 centipawns to the checking side. A double check is worth 50. This is *positional*, not a replacement for actual mate-finding — actual mate is found by the search bottoming out at a position where the opponent has no legal moves and is in check (see [§ 6.6](search.md#66-checkmate-and-stalemate-scoring)).
 
-## 5.9 Composition formula
+## 5.9 King-attack units
 
-All nine components (material plus the eight positional terms) combine in
-`calculatePositionWeight()`:
+Shipped in **v4.8.0** — the first king-safety term in this engine to pass a pre-registered gate. The full campaign, including the four attempts that did not ship, is [`king-safety.md`](king-safety.md); this section is the reference for what the code does.
+
+**The zone.** `isKingZoneField(field, color)` is the 3x3 block around `kingFieldCorrected[color]`, tested as three ranges over the mailbox delta rather than as file/rank arithmetic. The *corrected* king field is the king's square shifted one file inward on the a- and h-file: a king on h1 owns g1's block, an a1 king owns b1's. Without that shift a corner king has four zone squares against nine, and since an attacker qualifies by bearing on *any* zone square, fewer squares mean fewer attackers — so the engine could lower its own measured danger by walking into the corner, which is usually the opposite of safe.
+
+**The units.** Every piece that attacks at least one zone square contributes its weight once, no matter how many zone squares it covers:
+
+| piece | units |
+|---|---:|
+| pawn | 1 |
+| knight | 2 |
+| bishop | 2 |
+| rook | 3 |
+| queen | 5 |
+| king | **0** |
+
+`increaseAttackUnit` is reached from inside the per-piece pseudo-move walk, so no separate scan exists; `isCurrentAttackerCounted` is what makes the contribution per *piece* rather than per square. `kingAttackerCount[color]` counts the distinct attackers alongside the unit sum.
+
+**The curve.** The unit sum indexes `KING_ATTACK_PENALTY`, nine entries in centipawns, clamped at the last:
+
+```
+index  0  1  2   3   4   5   6   7   8
+value  0  0  0  13  16  47  47  47  80
+```
+
+It is **fitted, not shaped by hand** — against Stockfish's *static* evaluation minus this one over a 39,619-position corpus, with monotonicity imposed as a constraint of the fit. The flat run at 5–7 is therefore a measurement: where the unconstrained fit descended, the isotonic projection merged the offending indices, at a cost of 0.077 % of residual. Indices 1 and 2 are zero because one minor piece bearing on the zone is the normal case and not a danger; index 0 is pinned because only the difference between the two sides reaches the score, so a constant on every entry would cancel.
+
+**Two gates.** `calcKingAttackPenalty` returns zero below **two distinct attackers**, which keeps the ordinary single-piece case out of the score entirely, and `blend(value, 0, phase)` fades the penalty to nothing toward a pawn endgame — the same phase machinery the castling term uses ([§ 5.5](#55-castling-state)). `kingAttackFactor = 0.01` then carries the table's centipawns through unchanged into the pawn-unit sum, and is not (yet) a tunable Texel factor.
+
+**It is not cheap, and that is measured.** A four-arm cost ladder over one bench signature puts the term at **8.41 % of throughput**, split 22 / 77 / 1 between building the zone, asking per attacked square, and the penalty lookup. Three quarters of the price is the per-square query reached from the mobility walk, so the lever is the call *frequency*, not the zone test — swapping that test between arithmetic and a lookup table moved the total by 0.58 %, inside the run-to-run spread. In the anchor gauntlet the arm that computes the term and throws it away measured **−18.0 ± 14.5 Elo** against the arm that does not compute it at all.
+
+## 5.10 Composition formula
+
+All ten components (material plus the nine positional terms) combine in
+`calculatePositionWeight(phase)`:
 
 ```java
-private int calculatePositionWeight() {
+private int calculatePositionWeight(final int phase) {
     if (containsIllegalMove)
         return turn == 0 ? ILLEGAL_WEIGHT_POS : ILLEGAL_WEIGHT_NEG;
 
@@ -685,11 +717,12 @@ private int calculatePositionWeight() {
             + (positionWeight[0] - positionWeight[1]) / 100f * positionFactor
             + (mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor
             + (threadWeight[0] - threadWeight[1]) / 100f * threadWeightFactor
-            + (castlingState[0] - castlingState[1]) * castlingFactor
+            + castlingWeight(castlingState[0] - castlingState[1], phase)
             + (chessCount[0] - chessCount[1]) * chessFactor
             + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
             + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor
-            + ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * bishopPairFactor)
+            + ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * bishopPairFactor
+            + (calcKingAttackPenalty(0, phase) - calcKingAttackPenalty(1, phase)) * kingAttackFactor)
             * 100);
 }
 ```
@@ -702,6 +735,11 @@ private int calculatePositionWeight() {
 > line for a king-line danger term stood here while that term was on the mainline, and had to come
 > back out when it was shelved. Its documentation lives in
 > [king-safety.md § 4.11–4.12](king-safety.md), where an unshipped attempt belongs.
+>
+> **Re-pasted 2026-09-23** for v4.8.0: the castling line had gone stale a second time — it still
+> showed the flat `castlingState * castlingFactor` form that v4.7.1 replaced with the phase-faded
+> `castlingWeight(delta, phase)` — and the king-attack line was missing. Two of the three stale
+> listings in this document's history were castling; the term keeps changing shape.
 
 A few features of this formula worth noting:
 
@@ -723,4 +761,4 @@ A few features of this formula worth noting:
 
 `isCheckmateWeight(w)` returns true iff `|w|` is between `LOW` and `HIGH` — i.e. the value encodes a mate in some number of plies, not a static evaluation. `checkmateWeightToPlies(w)` recovers that ply count: `(HIGH − |w|) / 100`. This range encoding lets the search compare mate scores: mate-in-3 (`200_000 − 300 = 199_700`) is preferred over mate-in-5 (`200_000 − 500 = 199_500`), and a regular evaluation of `+5.00` (= 500 centipawns) is correctly recognized as not-a-mate. See [§ 6.6](search.md#66-checkmate-and-stalemate-scoring) for how the search produces these values.
 
-**Where are pawn structure (passed pawns, isolated pawns, pawn chains), king safety beyond castling, and outposts?** Not implemented. (The **bishop pair** no longer belongs on this list — it landed in v4.3.3 as a fixed +0.4-pawn bonus wired as the 8th tunable Texel factor, worth +31.3 ± 24.1 Elo, the largest single evaluation gain of the tapered series.) The evaluation is deliberately compact — about 560 lines including all per-piece pseudo-move generation — and trades depth in the evaluator for breadth in the search. The opening-state component captures the most expensive missing piece (development) for the first 20 moves; everything else is left to the search.
+**Where are pawn structure (passed pawns, isolated pawns, pawn chains) and outposts?** Not implemented. (**King safety** left this list in v4.8.0: weighted attackers on the 3x3 king zone index a fitted, monotone penalty table — see [king-safety.md § 4.17](king-safety.md). Pawn shield and open files toward the king are still missing, so only the attacker half of the theme is covered. The **bishop pair** no longer belongs on this list either — it landed in v4.3.3 as a fixed +0.4-pawn bonus wired as the 8th tunable Texel factor, worth +31.3 ± 24.1 Elo, the largest single evaluation gain of the tapered series.) The evaluation is deliberately compact — about 560 lines including all per-piece pseudo-move generation — and trades depth in the evaluator for breadth in the search. The opening-state component captures the most expensive missing piece (development) for the first 20 moves; everything else is left to the search.
