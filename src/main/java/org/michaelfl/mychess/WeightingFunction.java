@@ -239,13 +239,13 @@ public final class WeightingFunction {
     /** The term never reaches the score; its result goes to {@link #ladderSink}. */
     static final boolean LADDER_PLACEBO = true;
     /** n1: build the zone centers. */
-    static final boolean LADDER_ZONE = true;
+    static final boolean LADDER_ZONE = false;
     /** n2: pawn and knight zone checks. */
-    static final boolean LADDER_SHORT = true;
+    static final boolean LADDER_SHORT = false;
     /** n3: slider pre-check, distance words and the xray comparison. */
-    static final boolean LADDER_SLIDER = true;
+    static final boolean LADDER_SLIDER = false;
     /** n4: the penalty lookup and blend. */
-    static final boolean LADDER_PENALTY = true;
+    static final boolean LADDER_PENALTY = false;
 
     /** Variant: the knight's eight moves unrolled with constant offsets, as in 4.7.1. */
     static final boolean V_KNIGHT_UNROLLED = false;
