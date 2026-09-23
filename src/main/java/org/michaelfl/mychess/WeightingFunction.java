@@ -241,7 +241,7 @@ public final class WeightingFunction {
     /** n1: build the zone centers. */
     static final boolean LADDER_ZONE = true;
     /** n2: pawn and knight zone checks. */
-    static final boolean LADDER_SHORT = false;
+    static final boolean LADDER_SHORT = true;
     /** n3: slider pre-check, distance words and the xray comparison. */
     static final boolean LADDER_SLIDER = false;
     /** n4: the penalty lookup and blend. */
