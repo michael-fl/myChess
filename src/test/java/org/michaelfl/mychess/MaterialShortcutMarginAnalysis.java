@@ -81,9 +81,16 @@ public final class MaterialShortcutMarginAnalysis {
      * piece loop that runs anyway.
      *
      * <p>mobility (1) and threats (2) walk each piece's moves; the check count (4) and the
-     * undefended-pieces count (6) need attack detection. The remaining four — tapered PST (0),
-     * castling state (3), doubled pawns (5) and the bishop pair (7) — fall out of counters the
-     * evaluation already maintains.
+     * undefended-pieces count (6) need attack detection. The remaining five — tapered PST (0),
+     * castling state (3), doubled pawns (5), the bishop pair (7) and king attack (8) — fall out
+     * of counters the evaluation already maintains.
+     *
+     * <p><b>King attack is where that criterion and a measurement disagree</b>, which is worth
+     * naming rather than resolving here. It rides the per-piece walk mobility needs anyway, so by
+     * the rule above it is cheap — and a four-arm cost ladder priced it at 8.41 % of throughput,
+     * three quarters of that in the per-square query reached from inside that very walk
+     * ({@code docs/king-safety.md} § 4.17). Sharing the walk is not the same as being free. Which
+     * of the two readings this list should follow needs its own timing run, not a decision here.
      *
      * <p><b>This is a claim about cost, and it is not measured here.</b> Whether skipping these
      * terms actually saves wall clock depends on how much of their work is shared with the piece
