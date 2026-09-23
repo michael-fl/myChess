@@ -252,9 +252,9 @@ public final class WeightingFunction {
     /** Variant: knight zone test as one bitmap lookup per knight. */
     static final boolean V_KNIGHT_TABLE = false;
     /** Variant: pawn zone test as one direction-aware bitmap lookup per pawn. */
-    static final boolean V_PAWN_TABLE = true;
+    static final boolean V_PAWN_TABLE = false;
     /** Variant: slider distance words precomputed, 2 x 64 x 64 ints. */
-    static final boolean V_SLIDER_TABLE = false;
+    static final boolean V_SLIDER_TABLE = true;
 
     /** Mailbox index to 0..63 (rank * 8 + file), -1 on the border. */
     private static final byte[] SQ64 = new byte[Board.LENGTH * Board.LENGTH];
