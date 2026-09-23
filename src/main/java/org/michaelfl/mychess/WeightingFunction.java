@@ -239,7 +239,7 @@ public final class WeightingFunction {
     /** The term never reaches the score; its result goes to {@link #ladderSink}. */
     static final boolean LADDER_PLACEBO = true;
     /** n1: build the zone centers. */
-    static final boolean LADDER_ZONE = false;
+    static final boolean LADDER_ZONE = true;
     /** n2: pawn and knight zone checks. */
     static final boolean LADDER_SHORT = false;
     /** n3: slider pre-check, distance words and the xray comparison. */
