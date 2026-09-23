@@ -1,9 +1,14 @@
 # King Safety — Build Plan
 
-> **Status: nothing built, everything measured.** Three hand-crafted attempts were shelved
-> net-negative; a fourth is prepared and its numbers now come from data rather than intuition.
-> Supersedes nothing in [roadmap § 12.21](roadmap.md#1221-king-safety--m--3060-elo), which stays
-> the short entry in the priority list; the reasoning and the steps live here.
+> **Status: shipped in v4.8.0, 2026-09-23 — the attack-unit term is on master.** Three
+> hand-crafted attempts were shelved net-negative before it; what merged is the fitted curve of
+> § 4.6 with the corner fix, and it merged on the anchor gauntlet of § 4.17 (net −6.3 ± 19.8
+> against a ≥ −10 guard) rather than on the self-play run of § 4.16, which failed its own
+> pre-registered rule. **What the term is worth remains unmeasured; what it costs does not** —
+> the placebo arm prices computing it at −18.0 ± 14.5. Supersedes nothing in
+> [roadmap § 12.21](roadmap.md#1221-king-safety--m--3060-elo), which stays the short entry in the
+> priority list; the reasoning and the steps live here. Everything below § 4.17 is the record of
+> how it got there, including the claims that were withdrawn on the way.
 
 > **Priority: this document is the current work, and it stays that way until a king-safety
 > variant measures positive Elo.** No search work — LMR, PVS, history heuristic, aspiration
@@ -2245,6 +2250,143 @@ unconditional form is precisely the nested construction that was rejected when t
 set: quadrant ⊂ half, so an effect landing entirely at the king raises both counts by the same
 games. The script now reports the phase difference and both quadrant forms; the unconditional row
 stays as context, the conditional one is the criterion.
+
+### 4.17 The anchor gauntlet, and the term ships (2026-09-21/23)
+
+The self-quoted rule of § 4.16 said do not merge, and it stood. What changed the answer is not
+a re-reading of that measurement but a second one, pre-registered separately, against opponents
+that are not myChess: three arms, five foreign engines, 140 rounds, **4261 games** at `tc=40/60`.
+
+| arm | games | score |
+|---|---|---:|---:|
+| base v4.7.1 | 1435 | 54.8 % |
+| placebo — the term computed and discarded | 1424 | 52.2 % |
+| candidate `e0fdc3f` | 1402 | 53.9 % |
+
+| | Elo | 95 % | |
+|---|---:|---:|---|
+| **net, candidate − base** | **−6.3** | ±19.8 | gated at ≥ −10, **passes** |
+| cost, placebo − base | **−18.0** | ±14.5 | reported, not gated |
+| effect, candidate − placebo | +11.7 | ±18.1 | reported, not gated |
+
+`net = cost + effect` exactly. All three arms met the same anchors equally often, paired per
+round over complete rounds only.
+
+#### What the gate was and was not
+
+**A guard, not a confirmation.** At ±19.8 this run could never have confirmed the self-play
++8.4 ± 8.9, and the pre-registration said so before it started: it can rule out a large loss
+against foreign opposition and nothing more. The guard did not fire, and the pre-commitment —
+written when the outcome was unknown — reads that a result within noise clearing the gate is a
+merge. So the term ships as **v4.8.0**.
+
+**What it is worth remains unmeasured.** Two runs now sit at +9.1 ± 14.5 and +8.4 ± 8.9 in
+self-play, neither reaching its bound, and a foreign-opposition net of −6.3 ± 19.8. The honest
+summary is that the term looks mildly positive and no affordable experiment has shown it.
+
+#### The cost is the finding
+
+**−18.0 ± 14.5, an interval that excludes zero**, and it held from the first few hundred games
+to the last. That is the largest number in the table and it is the price of *computing* the
+term, with its effect held out.
+
+It is also about twice what the throughput penalty predicts. A cost ladder over the same build —
+four arms, each doing one step more, all evaluating like 4.7.1 and therefore sharing one bench
+signature — put the term at **8.41 %** of throughput at a constant tree, split 22 / 77 / 1
+between building the king zone, asking per attacked square, and the final penalty lookup. By the
+usual rule of thumb 8 % buys 8 to 10 Elo, not 18. Either that conversion is wrong for this engine
+at this control — which this project has never measured — or the cost arm is dearer than the
+computation it prices. Unresolved, and worth resolving before the next term is built.
+
+**The 8.41 % itself is confirmed, which narrows where the discrepancy can live.** The v4.8.0 bench
+measures **−9.1 % NPS** on the 53 realistic standard positions and −8.8 % on the castling mix
+([bench-history.md](bench-history.md)). The ladder holds the search tree constant and isolates the
+computation; the bench holds nothing constant and measures whole runs on different positions. They
+agree to 0.7 points. So the throughput figure is not the loose end — the conversion from
+throughput to Elo is.
+
+**The same shape as king-line-v2**, whose gauntlet split net 0.0 into +10.9 of effect and −10.9
+of cost ([`king-line-gauntlet.md`](king-line-gauntlet.md)). Two king-safety terms in a row have
+now bought roughly what they cost. That is the argument for spending the next effort on making
+the term cheaper rather than on making it cleverer, and the ladder says where: three quarters of
+the cost is the per-square call reached from inside the mobility walk, not the zone test itself —
+swapping that test between an arithmetic form and a lookup table moved the total by 0.58 %,
+inside the run-to-run spread.
+
+#### What the merge cost, recorded rather than argued away
+
+Sixteen of the 97 pinned positions in `BlunderTest` and `EngineTest` changed verdict. Seven are
+the term working, six are evaluation bounds that moved without changing a decision, and **three
+are regressions**, kept as characterizations carrying their measured price.
+
+**Those 97 were the cheap pre-filter, and they were not the whole bill.** The full suite — 1411
+tests, which a merge to master now requires as a rule of its own — turned up eight more, in three
+classes the pre-filter never touches. That is the entire argument for the rule, produced by the
+first merge it applied to: the pre-filter is 97 positions chosen *because* an evaluation change is
+expected to move them, which makes it the worst available sample for what else moved.
+
+- **A crash.** `WeightingFunction.calcKingFieldCorrected` threw `ArrayIndexOutOfBoundsException`
+  on any position with no king of one color. `Board.getKingField` returns a tracked square that
+  stays 0 until a king is scanned, square 0 is a border square, and its column works out to −2 —
+  straight out of the eight-entry corner-shift table. No game reaches it; `Fen.importFEN`
+  fixtures and the dataset and EPD tooling do, and the evaluation coped before the king zone
+  existed. Found by `HangingPiecesEvalTest`, which is about hanging pieces and only calls the
+  evaluation on the way. Fixed by returning the unshifted square, which keeps the zone off the
+  board so a missing king scores nothing;
+  `WeightingFunctionAttackUnitTest.MissingKing` now names the cause.
+- **The factor breakdown no longer reconstructed the evaluation**, off by 18.1 cp — exactly the
+  new term. `kingAttackFactor` is deliberately not a tunable factor yet, so it belongs with
+  material on the factor-independent side; `FactorTexelData` already treats it that way and only
+  the test's assumption that *material is the only such part* was stale. Wiring it as the tenth
+  tunable factor is the open follow-up.
+- **One of the four immortal-draw positions stopped being graded by counting pieces** —
+  `14.Bc6`, where the black king has been dragged to d8, which is precisely the component that
+  case was written to say the material-only shortcut discards. Still a defect: the engine misses
+  the forced draw in all four.
+- **Five `StsDefectTest` characterizations changed move**, and the honest reading needed Stockfish
+  rather than the fact that they moved:
+
+| case | old move | new move | suite's move |
+|---|---|---|---|
+| `Center Control.071` | h3, **−2.58** | Be2, **0.00** | Be4, +1.40 |
+| `7th Rank.078` | 0-0, −0.06 | Nf4, **−0.66** | Rc7, +0.97 |
+| `7th Rank.090` | Rxf8+, +0.01 | Be2, +0.02 | Rf7, +1.30 |
+| `Open Files.041` | d6, 0.00 | Kf8, −0.05 | Rh8, +2.08 |
+| `Square Vacancy.019` | Rg2, −3.73 | Ne3, −3.92 | Qf8, 0.00 |
+
+**One of the five is a repair, three are slightly worse, one is a wash** (Stockfish 18, depth 22,
+from the side to move). All five characterize *bad* moves, so "the term gives them up" looked like
+five improvements before the numbers arrived; it is one. `Center Control.071` is now an avoidance
+test, the other four are re-pinned on the move actually played.
+
+`Center Control.071` also costs a claim. It had been recorded as "measurably a horizon effect, not
+an evaluation hole", on the evidence that depth 10 abandons the move — and an evaluation change
+closed it at depth 8. A correction depth does not separate the two causes, which weakens the label
+the whole `search-horizon` family is built on rather than any single case of it.
+
+**Of the seven, exactly one plays the move its own text had named as the cure** — `rd3_atMove35`
+trades with Rxf8, so the positive assertion that case had preserved in a note is restored as
+written. The other six pin only that the blunder is gone: `33.f3` plays Rd2 where Stockfish wants
+Rd1, `36.Ne4` plays Nf7 where the fork Nxe6+ wins more, `11.Be3` plays Re1 for 0.00 where Kg2
+holds +1.03. That distinction is worth keeping, because it is easy to lose: removing a blunder and
+finding the right move are different claims, and only the first is supported here.
+
+The three regressions:
+
+- `EngineTest.testPosition26` falls back to Qb8, the worst of the three known answers: Qc8 holds
+  at +0.75, Qa5 reads +2.47, Qb8 +3.82 (white-POV, depth 24). Its follow-on case
+  `testPosition27` already assumed Qb8, so the two are consistent again.
+- `EngineTest.testPosition12` moves off Ne6 (+4.77) to exe6 (+4.13), costing 0.64 pawns in a
+  position that stays won.
+- `BlunderTest.rd8_vsZetaDva` walks into a lost position again — and investigating it showed the
+  case was mislabelled as an avoidance test from the start. Stockfish answers with mate in 13,
+  which is 25 plies; the search runs at depth 8 and the refutation opens with a quiet move, so
+  the quiescence extension does not reach it either. It never knew the mate. Passing was a
+  property of move ordering. Rebuilding it as a real avoidance test needs a fixture whose
+  refutation fits inside the horizon, which is an open gap.
+
+`qb4_atMove22` is counted with the bounds rather than the fixes: the blind spot narrowed from
+below −0.5 to −0.41 without reaching the trigger the case names, which is a white advantage.
 
 ---
 

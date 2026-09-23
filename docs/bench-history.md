@@ -75,6 +75,7 @@ time-truncated.
 | **4.6.0** (`415a6ac`) | 1,300,002,835 | **+286 %** | 101,626,447 (+0.1 %) | Material-only shortcut only for quiet root moves ([§ 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460)) | **+14.8 ± 10.5** over 3000 games | ~1943 |
 | **4.7.0** | 1,300,911,231 | **+0.070 %** | 102,534,843 (+0.89 %) | castling factor 0.25 -> 0.1875 ([§ 5.5.2](evaluation.md#552-measured-2026-09-09-to-2026-09-17--the-opponent-effect-and-what-the-factor-cannot-do)) | not measured by a match — see the row's note in [version history](version-history.md) | ~1943 |
 | **4.7.1** | 1,300,910,618 | **−0.00005 %** | 102,534,230 (−0.0006 %) | castling term faded toward the endgame ([§ 5.5.2](evaluation.md#552-measured-2026-09-09-to-2026-09-17--the-opponent-effect-and-what-the-factor-cannot-do)) | **+0.5 ± 9.6** over 3897 games vs 4.7.0 at `tc=10+0.1` — neutral | ~1943 |
+| **4.8.0** | 658,771,177 | **−49.4 %** — but see the next column, the whole move is one artificial position | **107,227,388 (+4.6 %)** | **king-attack units**, the first shipped king-safety term ([§ 5.9](evaluation.md#59-king-attack-units), [king-safety.md § 4.17](king-safety.md)) | **−6.3 ± 19.8** net over 4261 anchor-gauntlet games at `tc=40/60`, against a ≥ −10 gate; +8.4 ± 8.9 in 4200 self-play games | ~1943 |
 
 ### Measured but not a release — `4.6.0-king-line` (2026-09-02, shelved 2026-09-03)
 
@@ -203,6 +204,60 @@ position 38 another 0:47. The 53 realistic positions together take **0:55** — 
 whole rest of the suite costs less than a minute, and 90 % of a seventeen-minute
 benchmark is spent on one position that cannot occur in a game. This row is why
 policy rule 1's cost argument had to be rewritten.
+
+### The headline number is one artificial position — `4.8.0` (2026-09-23)
+
+The king-attack term: weighted attackers on the 3x3 king zone indexing a fitted penalty table
+([evaluation.md § 5.9](evaluation.md#59-king-attack-units)). The first shipped king-safety term,
+and the first release in this document whose totals **must not be quoted**.
+
+| suite | 4.7.1 | 4.8.0 | Δ |
+|---|---:|---:|---:|
+| standard total, d8 | 1,300,910,618 | 658,771,177 | **−49.4 %** |
+| position 37 | 1,129,861,147 | 485,767,627 | −57.0 % |
+| position 38 | 68,515,241 | 65,776,162 | −4.0 % |
+| positions 37 + 38 | 1,198,376,388 | 551,543,789 | −54.0 % |
+| **53 realistic, d8** | 102,534,230 | **107,227,388** | **+4.6 %** |
+| time, 53 realistic | 56,961 ms | 65,524 ms | +15.0 % |
+| NPS, 53 realistic | 1,800,077 | 1,636,459 | **−9.1 %** |
+| castling-mix (`benchv2`) | 179,059,346 | 169,439,389 | −5.37 % |
+
+**Minus half the benchmark, and none of it is about chess.** Position 37 alone accounts for
+644 million of the 642 million the total lost; every realistic position together moves the other
+way, by +4.6 %. An evaluation term changes scores, which changes move ordering, which changes
+where the cut-offs fall — a few percent either way is the normal size of that, and here it is a
+few percent *up*. Anyone reading the −49.4 % as "the term halves the search" would have it
+backwards on the only positions that occur in games.
+
+**This is the row that justifies the column.** Every earlier release in the table above moved the
+total and the realistic subset in the same direction, so the 53-position column looked like a
+refinement. Here the two disagree in sign, and the total is the one that is wrong. Position 37 is
+a board packed with knights and queens around two bare kings — exactly the shape that saturates an
+attacker-count term, and exactly the shape no game produces. Its share of the suite falls from
+86.9 % to 73.7 %, so it still dominates; it merely dominates less.
+
+**Why the term does that to position 37 is not established here.** Both sides hold attack units
+far past the table's clamp at index 8, so the penalties are large and nearly symmetric — a
+plausible story for a differently-shaped tree, and a story is what it stays. No measurement in
+this document separates it, and the answer would not change a decision.
+
+**The cost, on the other hand, is confirmed twice over.** The realistic NPS falls **9.1 %**. The
+cost ladder built for the gauntlet — four arms, each doing one step more, all sharing one bench
+signature — priced the term at **8.41 %** of throughput ([king-safety.md § 4.17](king-safety.md)).
+Those two numbers come from different methods on different positions: the ladder holds the tree
+constant and isolates the computation, this one holds nothing constant and measures a whole run.
+They land 0.7 points apart. Two independent routes to the same figure is worth more than either,
+and it means the ~8–9 % is the number to plan against when this term is optimized.
+
+The castling-mix suite is the third view and agrees: −5.37 % nodes, −8.8 % NPS.
+
+Wall clock, recorded and not asserted: 552,248 ms at depth 8 for the standard suite (mean NPS
+1,183,422 over three runs, spread 1.6 %), 102,668 ms for the castling mix (mean 1,637,828,
+spread 1.2 %). No depth-9 run was made.
+
+Per-position archives: `test-results/bench/4.8.0-d8.txt`.
+
+---
 
 ### A change the bench can barely see — `4.7.1` (2026-09-17)
 
@@ -871,6 +926,7 @@ nothing.
 | 4.6.1 | 2026-09-06 | 8 | 60 | **178,238,659** | 100,673 ms | 1,770,471 |
 | 4.7.0 | 2026-09-17 | 8 | 60 | **178,795,253** (+0.31 %) | 98,944 ms | 1,807,034 |
 | 4.7.1 | 2026-09-17 | 8 | 60 | **179,059,346** (+0.148 %) | 99,758 ms | 1,794,937 |
+| 4.8.0 | 2026-09-23 | 8 | 60 | **169,439,389** (−5.37 %) | 102,668 ms | 1,650,362 |
 
 Per-position archive: `test-results/bench/4.6.1-castling-mix-d8.txt`, same column
 layout as the `bench` archives of § 7. The largest position is 6.7 % of the total

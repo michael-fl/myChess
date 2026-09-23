@@ -163,6 +163,18 @@ So, for anything inside the search or the evaluation:
 
 Docs, tests and measurement tooling are exempt — they cannot cost plies.
 
+## A merge to master runs the full test suite — that one is not optional
+
+**The standing rule is "never run the full suite unprompted". A merge to master is its one standing exception, and there the full suite is required rather than merely allowed.** Stated by the user on 2026-09-23, when the v4.8.0 merge was about to be committed on the strength of `BlunderTest` + `EngineTest` alone — 97 positions, green. The full suite then found **eight more**, including an `ArrayIndexOutOfBoundsException` in `WeightingFunction` on any position without a king of one color. The rule paid for itself on the first merge it applied to.
+
+`mvn test`, the whole thing, before the merge commit. Not `-DexcludedGroups=slow`, not the two classes that happen to pin the positions the change was aimed at. Report the result with its numbers, and do not commit a merge whose suite has not been seen green.
+
+**Why the cheap pre-filter is not a substitute.** `BlunderTest` and `EngineTest` are 97 positions chosen because an eval change is *expected* to move them — that is what makes them a fast filter for "did this do anything at all". They are the worst possible sample for the opposite question. `PerftTest`, `ChessUtilTest`, `EvalRegressionTest`, `IllegalPvRegressionTest` and the Texel adapters exist precisely because they cover what nobody was thinking about, and an eval term reaches all of them through the shared evaluation.
+
+**It costs about ten minutes and that is the point.** The suite competes with matches and benches, which is why it stays off by default during iterative work — but a merge to master happens a handful of times per release, and ten minutes against a mainline that nobody re-checks until the next release is not a trade worth making. Sequence it *after* any running measurement rather than skipping it.
+
+**A green pre-filter from earlier in the session does not carry.** Any edit after it — including a rename or a comment, which still have to compile — invalidates the run. Re-run what the change touched, and re-run the full suite if the merge commit is still ahead.
+
 ## Long-running processes: persist as you go, and always watch them
 
 Measurement work here routinely runs for minutes to hours — engine matches, STS runs, Stockfish scans, depth sweeps. Two rules apply to **every** process expected to run longer than a minute. Both exist because each was violated and cost real time.
