@@ -62,12 +62,24 @@ class FactorTexelDataTest {
                     continue;
                 }
 
-                // The eval must equal the factor-independent material part plus
-                // the factor contributions (up to the eval's rounding).
-                double reconstructed = material(board) + dot(breakdown.features(), factors);
+                // The eval must equal the factor-independent parts plus the factor
+                // contributions (up to the eval's rounding).
+                //
+                // Material was the ONLY factor-independent part until v4.8.0. The king-attack
+                // term is the second: it is deliberately not a tunable factor yet - see
+                // WeightingFunction.kingAttackFactor, "a first fixed value to be confirmed by
+                // self-play before Texel tuning" - so it belongs on this side of the equation
+                // rather than in features. This is not a workaround for the check; it is what
+                // FactorTexelData.toSample already does, which folds everything outside the
+                // tunable set into baseEval and holds it constant while the factors move.
+                //
+                // Wiring it as the tenth tunable factor is the open follow-up. When that
+                // happens, this line comes back out and the term appears in features instead.
+                double reconstructed = material(board) + kingAttack(evaluator) + dot(breakdown.features(), factors);
 
                 assertEquals(breakdown.eval(), reconstructed, 1.0,
-                        "eval must equal material + sum(feature * factor) (guards the factor coefficients)");
+                        "eval must equal material + king attack + sum(feature * factor) "
+                                + "(guards the factor coefficients)");
                 checked++;
             }
         }
@@ -96,6 +108,21 @@ class FactorTexelDataTest {
     }
 
     /** Factor-independent material term: sum of piece values, White minus Black. */
+    /**
+     * The king-attack term's contribution in centipawns, which is the penalty difference
+     * itself: {@code kingAttackFactor} is 0.01 against the composition formula's final
+     * {@code * 100}, so the table's centipawn values pass through unchanged.
+     *
+     * <p>That cancellation is relied on here and cannot be read from the outside, since the
+     * factor is private. It does not need its own guard: changing the factor changes the eval,
+     * and the reconstruction above then fails loudly, which is the intended behavior.
+     */
+    private static double kingAttack(WeightingFunction evaluator) {
+        int phase = evaluator.getPhase();
+
+        return evaluator.calcKingAttackPenalty(0, phase) - evaluator.calcKingAttackPenalty(1, phase);
+    }
+
     private static double material(Board board) {
         byte[] raw = board.getRawBoard();
         double sum = 0.0;

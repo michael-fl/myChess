@@ -295,6 +295,15 @@ class MaterialOnlyShortcutEvalTest {
     private static final String[] IMMORTAL_DRAW_LABELS = {"12.Kxc5", "13.Bb5+", "14.Bc6", "15.Kb5"};
 
     /**
+     * The one of the four that stopped being graded by counting pieces in v4.8.0, index into the
+     * arrays above. {@code 14.Bc6} is the position where white's bishop lands next to the black
+     * king that has been dragged to d8, so it is also the one where an attacker-counting term has
+     * most to say - which is the component the class comment names as the one the shortcut
+     * discards.
+     */
+    private static final int IMMORTAL_DRAW_UNROUND_INDEX = 2;
+
+    /**
      * Case 1 of the class comment, which carries the full analysis.
      *
      * <p><b>Fixed in v4.6.0.</b> The recapture {@code Bxd4} is a capture, so the shortcut is now
@@ -446,6 +455,15 @@ class MaterialOnlyShortcutEvalTest {
     /**
      * Case 5 of the class comment, which carries the full analysis.
      *
+     * <p><b>Partly reached by v4.8.0.</b> Three of the four positions are still graded by
+     * counting pieces; {@code 14.Bc6} is not, because the king-attack term runs in that subtree
+     * and the score comes out unround. That is the component the class comment names as the one
+     * the shortcut discards — a bare black king — so the term reaching exactly this position and
+     * not the other three is the expected shape rather than a surprise.
+     *
+     * <p>It remains a defect: the engine still does not see the forced draw Stockfish has from
+     * move 11, in any of the four. The reading moved, the verdict did not.
+     *
      * <p><b>Test family:</b> material-only-shortcut (defect)
      */
     @Test
@@ -453,26 +471,61 @@ class MaterialOnlyShortcutEvalTest {
     void immortalDrawIsGradedByCountingPieces()
             throws InterruptedException, ExecutionException, TimeoutException {
 
+        // All four are evaluated before anything is asserted. The comment below calls the
+        // repetition the evidence, and a loop that asserts as it goes cannot deliver it: it
+        // stops at the first position that moves and says nothing about the other three. That
+        // is exactly what happened when v4.8.0 changed one of them.
+        float[] weights = new float[IMMORTAL_DRAW_FENS.length];
+
         for (int i = 0; i < IMMORTAL_DRAW_FENS.length; i++) {
-            Eval eval = deepEval(IMMORTAL_DRAW_FENS[i]);
+            weights[i] = deepEval(IMMORTAL_DRAW_FENS[i]).weight();
+        }
+
+        for (int i = 0; i < weights.length; i++) {
 
             // Material values are multiples of 100 cp, so a material-only score is necessarily
             // whole. Asserting the property rather than the value survives table changes that
-            // move the principal variation; asserting it four times is what makes it evidence.
-            assertTrue(isWholePawns(eval.weight()),
-                    "after " + IMMORTAL_DRAW_LABELS[i] + " the score must be an exact number of pawns, "
-                            + "which is what a position graded by counting pieces looks like. An unround "
-                            + "value means the shortcut no longer covers this subtree; got "
-                            + ChessUtil.weightToString(eval.weight()));
+            // move the principal variation; asserting it over several positions is what makes
+            // it evidence.
+            //
+            // 14.Bc6 IS THE EXCEPTION SINCE v4.8.0 and is asserted the other way round below.
+            if (i != IMMORTAL_DRAW_UNROUND_INDEX) {
+                assertTrue(isWholePawns(weights[i]),
+                        "after " + IMMORTAL_DRAW_LABELS[i] + " the score must be an exact number of pawns, "
+                                + "which is what a position graded by counting pieces looks like. An unround "
+                                + "value means the shortcut no longer covers this subtree. " + summary(weights));
+            }
 
             // 0.00 is whole too, so without this the check above would pass unnoticed on the
             // day the engine starts seeing the draw. Stockfish has one from move 11 onwards.
-            assertNotEquals(0f, eval.weight(),
+            assertNotEquals(0f, weights[i],
                     "after " + IMMORTAL_DRAW_LABELS[i] + " myChess must still miss the forced draw that "
                             + "Stockfish sees from move 11 onwards. If it now reads 0.00, the evaluation "
                             + "has learned something about the exposed king and this case should become a "
-                            + "positive assertion");
+                            + "positive assertion. " + summary(weights));
         }
+
+        // The one the king-attack term reached. It is a characterization of a partial repair:
+        // the subtree is no longer graded by counting pieces, and the engine still does not see
+        // the draw. Pinned as unround rather than as a value, for the same reason the others are
+        // pinned as whole - the value moves with any table change, the property does not.
+        assertFalse(isWholePawns(weights[IMMORTAL_DRAW_UNROUND_INDEX]),
+                "after " + IMMORTAL_DRAW_LABELS[IMMORTAL_DRAW_UNROUND_INDEX] + " the score must NOT be a "
+                        + "whole number of pawns: since v4.8.0 the king-attack term reaches this subtree, "
+                        + "so the positional evaluation runs here. A whole number means the shortcut is "
+                        + "covering it again. " + summary(weights));
+    }
+
+    /** All four readings, so a failure in one says what the other three did. */
+    private static String summary(float[] weights) {
+        var text = new StringBuilder("readings:");
+
+        for (int i = 0; i < weights.length; i++) {
+            text.append(' ').append(IMMORTAL_DRAW_LABELS[i]).append('=')
+                    .append(ChessUtil.weightToString(weights[i]));
+        }
+
+        return text.toString();
     }
 
     // ---------------------------------------------------------------------------------------
