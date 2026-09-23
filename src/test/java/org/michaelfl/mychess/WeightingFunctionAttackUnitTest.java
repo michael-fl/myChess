@@ -251,6 +251,37 @@ class WeightingFunctionAttackUnitTest {
     }
 
     @Nested
+    class MissingKing {
+
+        /**
+         * A position with no white king at all. Impossible in a game, routine in a fixture: it
+         * arrives through {@link Fen#importFEN} from test sources and from the dataset and EPD
+         * tooling, all of which call {@link WeightingFunction#calculate} directly.
+         *
+         * <p>It threw. {@link Board#getKingField} reads a tracked square that stays {@code 0}
+         * until a king is scanned, square 0 is a border square, and its column works out to
+         * {@code -2} — which indexed {@code KING_FIELD_CORRECTION_OFFSET} out of bounds. The
+         * evaluation coped with such positions before the king zone existed, so this was a
+         * regression rather than a limit anyone had chosen.
+         *
+         * <p>Found by {@code HangingPiecesEvalTest.attackedKing_excludedFromHangingCount}, which
+         * is about something else entirely and only calls the evaluation on the way. This case
+         * names the cause so the next person does not have to derive it from a stack trace in an
+         * unrelated class.
+         */
+        @Test
+        void aColorWithoutAKingIsEvaluatedAndScoresNoAttack() {
+            final var evaluation = evalFor("4k3/n7/8/8/8/8/8/R3Q3 b - - 0 1");
+
+            assertEquals(0, evaluation.getKingAttackerCount()[BLACK],
+                    "there is no white king, so nothing of black's can bear on its zone; counted "
+                            + evaluation.getKingAttackerCount()[BLACK]);
+            assertEquals(0, evaluation.getAttackUnit()[BLACK],
+                    "and no units either; read " + evaluation.getAttackUnit()[BLACK]);
+        }
+    }
+
+    @Nested
     class AttackUnits {
 
         @Test

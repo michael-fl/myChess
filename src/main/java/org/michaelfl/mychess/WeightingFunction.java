@@ -213,6 +213,18 @@ public final class WeightingFunction {
      */
     final static int[] KING_FIELD_CORRECTION_OFFSET = { 1, 0, 0, 0, 0, 0, 0, -1 };
 
+    /**
+     * Zone center for a color that has no king on the board, chosen so that
+     * {@link #isKingZoneField} can never match: it compares a mailbox delta against this value,
+     * and the nearest playable square, {@code a1} at index 26, is 26 away. A missing king
+     * therefore scores nothing rather than something arbitrary.
+     *
+     * <p>Zero is also a valid index into the 12x12 board array — the top-left border square —
+     * so a future reader that indexes the board with a zone center gets {@link Board#illegal}
+     * rather than an exception.
+     */
+    private static final int NO_KING_ZONE_CENTER = 0;
+
     @FunctionalInterface
     private interface CalculateWeight {
         void calculate(WeightingFunction generator, int field, int color);
@@ -517,9 +529,32 @@ public final class WeightingFunction {
         return calculatePositionWeight(phase);
     }
 
+    /**
+     * The king's square shifted off the a- and h-file, which is what the king zone is built
+     * around; see {@link #KING_FIELD_CORRECTION_OFFSET}.
+     *
+     * <p><b>A color without a king on the board is handled rather than assumed away.</b>
+     * {@link Board#getKingField} reads a tracked square that stays {@code 0} until a king is
+     * scanned, and square 0 is a border square whose column works out to {@code -2} — which
+     * indexed the offset table out of bounds and threw. Such a position cannot arise in a game,
+     * but it arrives through {@code Fen.importFEN} from test fixtures and from the dataset and
+     * EPD tooling, all of which call {@link #calculate} directly, and the evaluation used to
+     * cope with it before the king zone existed.
+     *
+     * <p>It returns {@link #NO_KING_ZONE_CENTER} rather than the square it was handed. Those two
+     * happen to coincide today, because the untouched tracked square is 0 — but that is a
+     * property of how {@code Board} initializes its array, not a promise, and the guard covers
+     * every square whose column is outside the board rather than only that one. Passing such a
+     * square through would make the zone center depend on which invalid value arrived.
+     */
     private int calcKingFieldCorrected(int color) {
         final int field = theBoard.getKingField(color);
         final int col = field % Board.LENGTH - 2;
+
+        if (col < 0 || col >= KING_FIELD_CORRECTION_OFFSET.length) {
+            return NO_KING_ZONE_CENTER;
+        }
+
         return field + KING_FIELD_CORRECTION_OFFSET[col];
     }
 
