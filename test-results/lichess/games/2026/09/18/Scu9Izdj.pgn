@@ -1,0 +1,22 @@
+[Event "rated classical game"]
+[Site "https://lichess.org/Scu9Izdj"]
+[Date "2026.09.18"]
+[Round "-"]
+[White "Enjoyably3303"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "Scu9Izdj"]
+[UTCDate "2026.09.18"]
+[UTCTime "17:35:12"]
+[WhiteElo "1734"]
+[BlackElo "2201"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "1800+0"]
+[ECO "C65"]
+[Opening "Ruy Lopez: Berlin Defense, Beverwijk Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Bc5 5. c3 O-O 6. d4 Bb6 7. Bg5 exd4 8. e5 h6 9. Bh4 g5 10. Nxg5 hxg5 11. Bxg5 Nxe5 12. cxd4 Nc6 13. d5 Nd4 14. Bd3 Qe7 15. Nc3 Qe5 16. Bh6 Re8 17. Qd2 Ng4 18. Bf4 Qg7 19. Rae1 Nf3+ 20. gxf3 Nxf2+ 21. Bg3 Nxd3+ 22. Kh1 Nxe1 23. Rxe1 Rxe1+ 24. Qxe1 d6 25. Qe8+ Qf8 26. Qe4 Qh6 27. Bf4 Qh3 28. Qe8+ Kg7 29. Bh6+ Qxh6 30. Qe1 Bh3 31. Ne4 Rg8 32. Qc3+ Kf8 33. Ng3 Rxg3 34. Qh8+ Qxh8 35. hxg3 Bf1# 0-1
+

@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/oGAuqwg6"]
+[Date "2026.09.11"]
+[Round "-"]
+[White "SybBot"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "oGAuqwg6"]
+[UTCDate "2026.09.11"]
+[UTCTime "10:47:19"]
+[WhiteElo "1843"]
+[BlackElo "2228"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "C45"]
+[Opening "Scotch Game: Classical Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Nxd4 Bc5 5. Nxc6 Qf6 6. Qd2 dxc6 7. Nc3 Be6 8. Na4 Bd6 9. Qe3 Qe5 10. Bd2 Nf6 11. Bd3 Ng4 12. f4 Nxe3 13. fxe5 Nxg2+ 14. Kf2 Bxe5 15. Kxg2 O-O 16. Nc5 Bxb2 17. Nxe6 fxe6 18. Rab1 Bd4 19. Be1 b5 20. a3 Rae8 21. Bg3 e5 22. Rbf1 a6 23. Rxf8+ Kxf8 24. Rf1+ Ke7 25. c3 Bxc3 26. Rc1 Ba5 27. Bxe5 Bb6 28. Bg3 c5 29. e5 h6 30. Kf3 Rf8+ 31. Ke2 c4 32. Be4 Bd4 33. Bb7 Bb2 34. Rb1 c3 35. Kd3 Rd8+ 36. Kc2 Rd2+ 37. Kb3 a5 38. Be4 a4+ 39. Ka2 Bc1+ 40. Ka1 Bxa3 41. Rxb5 c2 42. Bxc2 Rxc2 43. Ra5 Rc4 44. Ra6 h5 45. Ka2 Bc1 46. h4 Be3 47. Rg6 Kf7 48. Ra6 Bd4 49. Ra8 Ke6 50. Re8+ Kf5 51. Kb1 Rb4+ 52. Kc2 a3 53. Ra8 Bb2 54. Rf8+ Kg4 55. Be1 Ra4 56. e6 a2 57. e7 a1=Q 58. e8=Q Qc1+ 59. Kb3 Qc4+ 60. Kxb2 Ra2+ 61. Kb1 Qc2# 0-1
+

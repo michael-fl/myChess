@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/TnhfPXGe"]
+[Date "2026.09.10"]
+[Round "-"]
+[White "myChessJava"]
+[Black "ThrorBjorn"]
+[Result "1-0"]
+[GameId "TnhfPXGe"]
+[UTCDate "2026.09.10"]
+[UTCTime "11:39:33"]
+[WhiteElo "2245"]
+[BlackElo "2032"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "900+10"]
+[ECO "C40"]
+[Opening "King's Knight Opening"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Bd6 3. Bc4 Nc6 4. Nc3 Nf6 5. O-O O-O 6. d3 Na5 7. Bb3 Nxb3 8. axb3 c6 9. d4 Qc7 10. h3 Re8 11. Bg5 Qd8 12. Re1 Bc7 13. dxe5 Bxe5 14. Nxe5 Rxe5 15. Bf4 Re6 16. e5 Ne8 17. Ne4 d5 18. exd6 h6 19. Qd4 b6 20. Rad1 Qd7 21. Nc3 g5 22. Bg3 c5 23. Qd3 Qd8 24. d7 Rxe1+ 25. Rxe1 Bxd7 26. Rd1 Nf6 27. Be5 Qc8 28. Bxf6 Bc6 29. Nd5 Bxd5 30. Qxd5 Rb8 31. Be5 Qf8 32. Bxb8 Qxb8 33. Qf5 Qf4 34. Qxf4 gxf4 35. Rd7 f3 36. gxf3 b5 37. Rxa7 c4 38. b4 Kg7 39. Rb7 Kg8 40. Rxb5 c3 41. bxc3 f5 42. Rb7 Kf8 43. b5 Ke8 44. b6 Kd8 45. Rc7 f4 46. h4 h5 47. Kg2 Ke8 48. b7 Kf8 49. b8=Q# 1-0
+
