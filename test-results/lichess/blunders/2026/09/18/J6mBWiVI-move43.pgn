@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/J6mBWiVI"]
+[Date "2026.09.18"]
+[Round "-"]
+[White "myChessJava"]
+[Black "hodgeybot"]
+[Result "1-0"]
+[GameId "J6mBWiVI"]
+[UTCDate "2026.09.18"]
+[UTCTime "22:30:30"]
+[WhiteElo "2259"]
+[BlackElo "1987"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "B50"]
+[Opening "Sicilian Defense: Modern Variations"]
+[Termination "Time forfeit"]
+
+1. e4 c5 2. Nf3 d6 3. Nc3 Nf6 4. Bc4 a6 5. O-O Nc6 6. d4 cxd4 7. Nxd4 Qb6 8. Nxc6 bxc6 9. Qd3 Bb7 10. Be3 Qa5 11. Rad1 e6 12. Bd2 Be7 13. Nd5 Qd8 14. Nxf6+ Bxf6 15. Bf4 d5 16. Qb3 Qe7 17. exd5 cxd5 18. Qa4+ Kf8 19. Rfe1 Bxb2 20. Bxd5 Bxd5 21. Rxd5 Kg8 22. Rd7 Qf6 23. Red1 h6 24. Qc6 Re8 25. Be3 a5 26. Bd2 Qe5 27. Re1 Qf5 28. h3 Kh7 29. g4 Qg6 30. Bxa5 Ra8 31. Qb6 Bf6 32. Qb4 Rhb8 33. Qc5 Rc8 34. Bc7 Rxa2 35. Re2 h5 36. f3 Rb2 37. Kh2 hxg4 38. hxg4 Rb1 39. Kg2 Kg8 40. Red2 Re1 41. Qf2 Rc1 42. Qe2 Qh7 43. Kf2 Qh3 44. Ke3 Rg1 45. Ke4 Qh1 46. Qf2 Bg5 47. Bg3 Bxd2 48. Rxd2 Rc1 49. Qh2 Qxh2 50. Bxh2 R1xc2 51. Rxc2 Rxc2 52. Bg1 Rg2 53. Be3 f6 54. Bc5 Kf7 55. Be3 Kf8 56. Bd4 Ke8 57. Bb6 e5 58. Be3 Kf7 59. g5 fxg5 60. Kxe5 Re2 61. Ke4 Kg8 62. Kd4 Rg2 63. Ke4 Kh7 64. Bd4 Rd2 65. Bc3 Re2+ 66. Kf5 Re3 67. Bd2 Rxf3+ 68. Kxg5 Rd3 69. Bf4 Kg8 70. Kg6 Rd5 71. Bc7 Rd2 72. Bf4 Rf2 73. Be3 Re2 74. Bd4 Rd2 75. Bc5 Rd1 76. Be7 Re1 77. Bg5 Rf1 78. Be3 Rf3 79. Bg5 Kh8 80. Bd2 Rf2 81. Be3 Rf6+ 82. Kg5 Rf3 83. Bf4 Kg8 84. Kf5 Rf1 85. Ke4 Rf2 86. Be3 Re2 87. Kf4 Rg2 88. Ke4 Rc2 89. Kf5 Rc4 90. Kg6 Re4 91. Bc5 Ra4 92. Be3 Ra3 93. Bd2 Rg3+ 94. Bg5 1-0
+

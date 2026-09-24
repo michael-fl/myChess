@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/3btKWlmM"]
+[Date "2026.09.20"]
+[Round "-"]
+[White "pi0w"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "3btKWlmM"]
+[UTCDate "2026.09.20"]
+[UTCTime "09:52:04"]
+[WhiteElo "1942"]
+[BlackElo "1993"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+2"]
+[ECO "D38"]
+[Opening "Queen's Gambit Declined: Ragozin Defense"]
+[Termination "Normal"]
+
+1. Nf3 Nf6 2. d4 d5 3. c4 e6 4. Nc3 Bb4 5. Bg5 O-O 6. e3 Bxc3+ 7. bxc3 Nc6 8. Bd3 h6 9. Bh4 g5 10. Bg3 dxc4 11. Bxc4 Ne4 12. Rc1 Nxg3 13. hxg3 g4 14. Nh2 f5 15. e4 Na5 16. Bd3 Qg5 17. O-O Bd7 18. Re1 Rae8 19. Qe2 Bc6 20. e5 Rd8 21. Red1 Ba4 22. Re1 Bc6 23. Rcd1 Qg7 24. Nf1 f4 25. Qb2 f3 26. Ne3 fxg2 27. Nxg2 Bf3 28. Rc1 Qe7 29. Nh4 Qg5 30. a4 b6 31. Qc2 Bd5 32. Ng6 Bb3 33. Qe2 Rfe8 34. f3 gxf3 35. Qxf3 Bxa4 36. Rf1 Rd7 37. Nf4 Rf7 38. Ra1 Bc6 39. Qf2 Ref8 40. Qe3 h5 41. Kh2 h4 42. Rg1 Rg7 43. Raf1 Bd5 44. Nxd5 Rxf1 45. Bxf1 exd5 46. Qxg5 Rxg5 47. gxh4 Rxg1 48. Kxg1 Kf7 49. h5 Nc4 50. Bxc4 c5 51. Bxd5+ Kf8 52. dxc5 bxc5 53. h6 a6 54. e6 a5 55. h7 Kg7 56. e7 1-0
+

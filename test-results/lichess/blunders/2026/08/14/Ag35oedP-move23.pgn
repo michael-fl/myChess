@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/Ag35oedP"]
+[Date "2026.08.14"]
+[Round "-"]
+[White "myChessJava"]
+[Black "clrsrc_lc0"]
+[Result "0-1"]
+[GameId "Ag35oedP"]
+[UTCDate "2026.08.14"]
+[UTCTime "04:57:28"]
+[WhiteElo "1970"]
+[BlackElo "2716"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "B10"]
+[Opening "Caro-Kann Defense"]
+[Termination "Normal"]
+
+1. e4 c6 2. Nf3 d5 3. exd5 cxd5 4. Nc3 Nc6 5. d4 Bf5 6. Bb5 e6 7. Ne5 Ne7 8. O-O a6 9. Ba4 h5 10. Re1 b5 11. Bb3 Nxe5 12. Rxe5 f6 13. Re1 h4 14. g4 hxg3 15. hxg3 Kf7 16. a3 g5 17. g4 Bg6 18. f4 f5 19. fxg5 Qd6 20. Re2 Bg7 21. Rg2 Rh3 22. Kf1 Rh1+ 23. Rg1 Rxg1+ 24. Kxg1 Qg3+ 25. Kf1 Rh8 26. Be3 Rh1+ 27. Ke2 Rh2+ 28. Kf1 Qh3+ 29. Ke1 Qxe3+ 30. Kf1 Qf2# 0-1
+

@@ -1,0 +1,22 @@
+[Event "rated classical game"]
+[Site "https://lichess.org/asO4xSkZ"]
+[Date "2026.09.06"]
+[Round "-"]
+[White "myChessJava"]
+[Black "Enjoyably3303"]
+[Result "1-0"]
+[GameId "asO4xSkZ"]
+[UTCDate "2026.09.06"]
+[UTCTime "05:57:17"]
+[WhiteElo "2103"]
+[BlackElo "1730"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "1800+0"]
+[ECO "C44"]
+[Opening "Scotch Game: Haxo Gambit"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d4 exd4 5. Ng5 Nh6 6. Nxf7 Nxf7 7. Bxf7+ Kxf7 8. Qh5+ g6 9. Qxc5 d5 10. O-O dxe4 11. Bf4 Re8 12. Na3 Be6 13. Rfe1 Qd5 14. Qxd5 Bxd5 15. Nb5 Rac8 16. Nxc7 Red8 17. Nxd5 Rxd5 18. Rxe4 Nb4 19. c3 dxc3 20. Rxb4 c2 21. Rxb7+ Kg8 22. Rf1 Rd1 23. g3 Rxf1+ 24. Kxf1 c1=Q+ 25. Bxc1 Rxc1+ 26. Ke2 Rc2+ 27. Ke3 a5 28. a4 h5 29. Rb5 Kg7 30. Rxa5 Rxb2 31. Ra8 Ra2 32. a5 Kh6 33. h4 Kg7 34. a6 Ra3+ 35. Kd4 Ra2 36. f3 Ra3 37. a7 Ra4+ 38. Ke5 Ra5+ 39. Ke6 Ra6+ 40. Kd5 Ra5+ 41. Kc6 Ra3 42. Kb6 Rb3+ 43. Kc5 Ra3 44. Kc6 Rc3+ 45. Kd7 Rd3+ 46. Ke6 Re3+ 47. Kd6 Rd3+ 48. Ke5 Ra3 49. Ke4 Ra4+ 50. Kd5 Ra3 51. Kc5 Ra1 52. Kb6 Rb1+ 53. Kc7 Rc1+ 54. Kb7 Rb1+ 55. Kc6 Rc1+ 56. Kd6 Rd1+ 57. Ke5 Re1+ 58. Kf4 Ra1 59. g4 Ra4+ 60. Kg5 Ra5+ 61. Kf4 Ra3 62. gxh5 gxh5 63. Ke4 Ra4+ 64. Kd5 Ra5+ 65. Kc6 Ra1 66. Kb5 Rb1+ 67. Kc4 Rc1+ 68. Kd4 Ra1 69. f4 Ra4+ 70. Kc3 Ra3+ 71. Kb4 Ra1 72. f5 Rb1+ 73. Kc3 Ra1 74. f6+ Kf7 75. Kb2 Ra6 76. Rh8 Rb6+ 77. Kc3 Rc6+ 78. Kb4 Rb6+ 79. Kc5 Ra6 80. a8=Q Rxa8 81. Rxa8 Kxf6 82. Kd6 Kf5 83. Ra4 Kg6 84. Ke6 Kh6 85. Kf7 Kh7 86. Ra8 Kh6 87. Rh8# 1-0
+

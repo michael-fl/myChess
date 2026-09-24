@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/plZwRcB7"]
+[Date "2026.08.14"]
+[Round "-"]
+[White "myChessJava"]
+[Black "IlCorvoChess"]
+[Result "0-1"]
+[GameId "plZwRcB7"]
+[UTCDate "2026.08.14"]
+[UTCTime "00:22:28"]
+[WhiteElo "1973"]
+[BlackElo "2279"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+2"]
+[ECO "C68"]
+[Opening "Ruy Lopez: Exchange Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Bg4 6. h3 h5 7. d3 Qf6 8. hxg4 hxg4 9. Bg5 Qg6 10. Nh4 Qxg5 11. g3 Rxh4 12. gxh4 Qxh4 13. Qd2 Bc5 14. Qc3 Qg3+ 15. Kh1 Qh3+ 16. Kg1 g3 17. Qxe5+ Ne7 18. Qh5 Qxh5 19. Kg2 Qh2+ 20. Kf3 g2 0-1
+
