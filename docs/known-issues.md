@@ -1139,3 +1139,52 @@ Against outside opponents the cost is real, and it comes from opponents that han
 repetitions *correctly* — a losing opponent that deliberately steers into a
 threefold repetition collects half a point myChess had already earned. That is
 exactly what happened in i1QxWK9L.
+
+## En passant is invisible to the evaluation at a FEN root (2026-09-24, open, not scheduled)
+
+### Observation
+
+`WeightingFunction` scores an en-passant capture only when it can reconstruct it from the
+**last move**: `checkWhiteEnPassant` / `checkBlackEnPassant` look for an enemy pawn beside
+the capturing one that has just made its double step, i.e. `Move.getToField(lastMove)` and
+`Move.getFromField(lastMove)`. `GameStatus` also carries the en-passant target square
+(`getEnPassantField()`), but the evaluation does not read it.
+
+In the search the two are equivalent: a double step is a real move, so `lastMove` is set in
+exactly the positions where the target square is. They diverge where `lastMove` is 0:
+
+1. **Every position loaded from a FEN.** `Fen.importFEN` builds the `GameStatus` with
+   `lastMove = 0` and the parsed en-passant square. A FEN such as `… b - e3 …` therefore has
+   a legal en-passant capture that the evaluation of that root position does not see.
+2. After a null move (`Board.makeNullMove`) and before the first move of a game — harmless,
+   because no en-passant capture is legal there anyway.
+
+Only case 1 matters, and only for the root itself: once a move has been made from it,
+`lastMove` is set again and the search sees en passant as usual.
+
+### Who is affected
+
+- **Texel tuning data**, which is read from EPD one position at a time and evaluated
+  statically — exactly the root case. Share of positions carrying an en-passant field, as of
+  2026-09-24: `quiet-labeled.epd` 0.19 %, `hybrid.epd` 0.36 %, the human and myChess corpora
+  3.9 – 5.0 %. These are **upper bounds**: many FEN writers set the field after every double
+  step, whether or not an enemy pawn stands beside it to capture, and only positions where a
+  capture is actually available are mis-scored.
+- **UCI `position fen …` without moves**, for the evaluation of the root only.
+- **Not the bench.** None of the four bench suites has a position with an en-passant field,
+  so the bench signature can neither show the defect nor confirm a fix.
+
+### Status
+
+**Deliberately not fixed for now** (decided 2026-09-24). The fix itself is small: read the
+target square from `GameStatus` instead of reconstructing it from the last move, which is
+simpler and correct in both cases.
+
+**When it is fixed, the natural point is before the next Texel run.** It changes the static
+evaluation of the affected EPD positions, so a tuning run on either side of the change starts
+from different data. The Texel tune of `kingAttackFactor` is on the current plan (roadmap,
+"Current plan", step 3) — fixing it just before that run, or deciding explicitly to tune
+without it, keeps the two from being confounded.
+
+Found on 2026-09-24 while pulling the en-passant code out of the hot pawn methods: removing a
+redundant `lastMove != 0` guard showed that the check depends on `lastMove` at all.
