@@ -1,0 +1,14 @@
+
+   # PLAYER                  :  RATING  ERROR  POINTS  PLAYED   (%)
+   1 BBC                     :  2019.0   ----   529.0     849    62
+   2 Princhess               :  1985.0   ----   555.0     853    65
+   3 Kojiro                  :  1959.4   19.2   482.0     849    57
+   4 mychess-base            :  1921.0   14.4   786.5    1435    55
+   5 mychess-attack-units    :  1913.9   14.6   756.0    1402    54
+   6 mychess-placebo         :  1899.3   14.6   743.0    1424    52
+   7 ZetaDva                 :  1801.0   ----   270.0     855    32
+   8 TSCP                    :  1609.0   ----   139.5     855    16
+
+White advantage = 0.00 +/- 0.00
+Draw rate (equal opponents) = 50.00 % +/- 0.00
+
