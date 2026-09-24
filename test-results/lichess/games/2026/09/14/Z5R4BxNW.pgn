@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/Z5R4BxNW"]
+[Date "2026.09.14"]
+[Round "-"]
+[White "myChessJava"]
+[Black "Glimbus"]
+[Result "1-0"]
+[GameId "Z5R4BxNW"]
+[UTCDate "2026.09.14"]
+[UTCTime "14:26:28"]
+[WhiteElo "2234"]
+[BlackElo "1903"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "B50"]
+[Opening "Sicilian Defense: Modern Variations"]
+[Termination "Normal"]
+
+1. e4 c5 2. Nf3 d6 3. Nc3 Nc6 4. d4 cxd4 5. Nxd4 Nf6 6. Bb5 Bd7 7. O-O e6 8. Bxc6 bxc6 9. Qf3 Be7 10. e5 dxe5 11. Nxc6 Bxc6 12. Qxc6+ Nd7 13. Rd1 Qc8 14. Qa4 Qc7 15. Bg5 Bxg5 16. Nb5 Qb6 17. Nd6+ Ke7 18. Ne4 Nc5 19. Qa3 Rhc8 20. Nxg5 h6 21. Ne4 f5 22. Nd6 Rc6 23. Nc4 Qc7 24. Qg3 Kf6 25. Rd6 Qxd6 26. Nxd6 Rxd6 27. Re1 Ne4 28. Qe3 Rad8 29. f3 Nd2 30. Qxe5+ Kf7 31. Qc5 R8d7 32. a4 Rd5 33. Qc6 R5d6 34. Qc3 Kg8 35. Rxe6 Rd4 36. Re7 Nxf3+ 37. gxf3 Rd1+ 38. Re1 Kh7 39. Rxd1 Rxd1+ 40. Kg2 Rc1 41. Qd3 Kg6 42. Kg3 Rg1+ 43. Kf4 h5 44. a5 Rg2 45. h4 Rh2 46. Qxf5+ Kh6 47. Qg5+ Kh7 48. Qxh5+ Kg8 49. Qe8+ Kh7 50. Kg3 Rh1 51. Qe4+ Kh6 52. Qe3+ Kg6 53. Qxa7 Rg1+ 54. Qxg1 Kf6 55. Qe1 g5 56. hxg5+ Kg6 57. Qe7 Kh5 58. a6 Kg6 59. Kh4 Kf5 60. Qf6# 1-0
+
