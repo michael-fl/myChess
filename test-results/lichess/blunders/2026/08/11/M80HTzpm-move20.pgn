@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/M80HTzpm"]
+[Date "2026.08.11"]
+[Round "-"]
+[White "Sander-salamander"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "M80HTzpm"]
+[UTCDate "2026.08.11"]
+[UTCTime "06:19:56"]
+[WhiteElo "2025"]
+[BlackElo "1953"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C42"]
+[Opening "Petrov's Defense"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nf6 3. Nxe5 Bd6 4. Nc4 Nxe4 5. d3 Ng5 6. Be3 Be7 7. Bxg5 Bxg5 8. h4 Be7 9. Ne3 O-O 10. Nc3 Nc6 11. d4 Re8 12. Bc4 Bf6 13. Qh5 g6 14. Bxf7+ Kg7 15. Qd5 Rf8 16. Bxg6 hxg6 17. O-O-O Bxh4 18. g3 Bf6 19. Qe4 Re8 20. Qf4 Bg5 21. Rh7+ Kxh7 22. Qf7+ Kh6 23. Rh1+ Bh4 24. Rxh4+ Qxh4 25. gxh4 Re7 26. Ng4+ Kh5 27. Qf4 Re1+ 28. Nd1 Rxd1+ 29. Kxd1 Kxh4 30. Nf6+ 1-0
+

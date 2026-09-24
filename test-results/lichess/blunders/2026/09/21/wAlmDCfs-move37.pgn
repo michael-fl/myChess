@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/wAlmDCfs"]
+[Date "2026.09.21"]
+[Round "-"]
+[White "myChessJava"]
+[Black "GeoTsiBot"]
+[Result "0-1"]
+[GameId "wAlmDCfs"]
+[UTCDate "2026.09.21"]
+[UTCTime "06:16:32"]
+[WhiteElo "2044"]
+[BlackElo "2025"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+3"]
+[ECO "B00"]
+[Opening "Nimzowitsch Defense: Declined Variation"]
+[Termination "Normal"]
+
+1. e4 Nc6 2. Nf3 d5 3. exd5 Qxd5 4. Nc3 Qh5 5. Nb5 Kd8 6. d4 a6 7. Nc3 Qg6 8. a3 f6 9. h3 e6 10. Bd3 f5 11. O-O Bd7 12. Re1 Kc8 13. Ne2 Qf6 14. Bc4 Bd6 15. Nf4 Nd8 16. Ne5 Be8 17. Bd2 h5 18. Bc3 g5 19. Nxe6 Nxe6 20. Bxe6+ Qxe6 21. d5 Qh6 22. Ng4 Qg6 23. Bxh8 hxg4 24. hxg4 fxg4 25. Qxg4+ Bd7 26. Qd4 b6 27. Be5 Kb7 28. Bxd6 cxd6 29. Rad1 Rf8 30. Rd2 Rf7 31. Qb4 Rh7 32. Rdd1 Qh6 33. f3 g4 34. fxg4 Qh2+ 35. Kf2 Rf7+ 36. Ke3 Qxg2 37. Qxd6 Rf3+ 38. Kd4 Qf2+ 39. Ke4 Nf6+ 40. Qxf6 Rxf6 41. g5 Qf4+ 42. Kd3 Bb5+ 43. Kc3 Qc4+ 44. Kd2 Rf2+ 45. Re2 Rxe2+ 0-1
+

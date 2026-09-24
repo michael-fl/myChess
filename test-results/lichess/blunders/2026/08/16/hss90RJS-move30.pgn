@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/hss90RJS"]
+[Date "2026.08.16"]
+[Round "-"]
+[White "myChessJava"]
+[Black "Maswabe"]
+[Result "0-1"]
+[GameId "hss90RJS"]
+[UTCDate "2026.08.16"]
+[UTCTime "23:12:55"]
+[WhiteElo "1985"]
+[BlackElo "2040"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+2"]
+[ECO "C00"]
+[Opening "French Defense: Knight Variation"]
+[Termination "Normal"]
+
+1. e4 e6 2. Nf3 d5 3. e5 c5 4. Be2 Nc6 5. O-O f6 6. Bb5 Nh6 7. Nc3 d4 8. Ne2 a6 9. Bxc6+ bxc6 10. d3 Nf7 11. exf6 gxf6 12. c3 e5 13. cxd4 cxd4 14. Bd2 Qd5 15. Re1 Be7 16. Qa4 Bg4 17. Rac1 Rg8 18. Ng3 Bd7 19. a3 c5 20. Qc2 Rb8 21. b4 cxb4 22. Bxb4 Bxb4 23. axb4 Rxb4 24. Ne4 Ke7 25. Qd2 Rb6 26. Rc5 Qb7 27. Qc1 Kd8 28. Qc4 Be6 29. Qa4 Nd6 30. Nxf6 Rxg2+ 31. Kxg2 Bh3+ 32. Kxh3 Qxf3+ 33. Kh4 Nf5+ 34. Kg5 Qf4+ 35. Kh5 Qh4# 0-1
+
