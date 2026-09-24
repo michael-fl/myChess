@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/lthoLtsl"]
+[Date "2026.09.21"]
+[Round "-"]
+[White "melsh_bot"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "lthoLtsl"]
+[UTCDate "2026.09.21"]
+[UTCTime "13:15:22"]
+[WhiteElo "1764"]
+[BlackElo "2270"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "C65"]
+[Opening "Ruy Lopez: Berlin Defense, Anti-Berlin Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. d3 Bc5 5. Bxc6 dxc6 6. h3 O-O 7. Nxe5 Qd4 8. Be3 Qxe5 9. Nc3 Bxe3 10. fxe3 Qg3+ 11. Kf1 Qxe3 12. a4 Qb6 13. b3 Qc5 14. Qe1 Be6 15. b4 Qxb4 16. Rb1 Qa5 17. Rxb7 Rab8 18. Rxb8 Rxb8 19. Qa1 Qe5 20. g4 Nxe4 21. dxe4 Qg3 22. Ke2 Bc4+ 23. Kd2 Qf4+ 24. Ke1 Qe3+ 25. Kd1 Rd8+ 26. Nd5 cxd5 27. e5 Be2+ 28. Ke1 Bf3+ 29. Kf1 Qe2+ 30. Kg1 Qg2# 0-1
+

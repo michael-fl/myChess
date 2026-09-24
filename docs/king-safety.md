@@ -23,11 +23,12 @@
 
 | | |
 |---|---|
+| **Shipped 2026-09-23 as v4.8.0** | the attack-unit term with the curve below and the corner fix. Merged on the anchor gauntlet — net **−6.3 ± 19.8** against a ≥ −10 gate — not on self-play, which read +8.4 ± 8.9 and failed its own criterion. The placebo arm prices computing the term at **−18.0 ± 14.5**; what it is worth remains unmeasured (§ 4.16, § 4.17). Rows below that describe it as unbuilt or unmeasured are kept as the record of how it got there |
 | **Curve to start from** | `0 0 0 13 16 47 47 47 80`, indices 0–8, everything above clamped onto 8 (§ 4.7; supersedes § 4.6's ungated `0 2 2 20 20 20 44 45 85` and § 4.5's `0 0 0 0 0 0 49 40 83`) |
 | **Where it comes from** | fitted against Stockfish's *static* evaluation rather than game results, phase-weighted, monotonicity as a constraint of the fit (§ 4.6). The game-result fits of § 4.5 are what it replaces: on a self-play corpus the label carries myChess's own blindness |
 | **Why only indices 1–2 are zero** | those two are not separable from zero (p5 = 0.0) and a single minor piece bearing on the king zone is the normal case. Indices 3–5 *were* zeroed by § 4.5 and are not: that was an artifact of the label, and they carry 24.2 % of king samples against 6.2 % for 6–8 (§ 4.6) |
-| **Where to build it** | branch `attack-units`, `05f337d` — already ported, never measured, 106 commits behind master with `WeightingFunction.java` byte-identical (§ 1.1) |
-| **The one missing change** | multiply by the game phase. Without it the term runs at full strength in the endgame, where the measured sign is the *opposite* one (§ 4.2) |
+| **Where to build it** | ~~branch `attack-units`, `05f337d` — already ported, never measured, 106 commits behind master with `WeightingFunction.java` byte-identical (§ 1.1)~~ — built, measured and merged: master since v4.8.0 |
+| **The one missing change** | ~~multiply by the game phase. Without it the term runs at full strength in the endgame, where the measured sign is the *opposite* one (§ 4.2)~~ — done: the shipped term blends linearly toward phase 0. A sharper ramp that is off from phase 7, where the sign inverts, is prepared as the next candidate |
 | **How to implement it** | leave it where it is: branch `attack-units` already calls `increaseAttackUnit` from inside `move(...)`, the walk the evaluation performs anyway. Do **not** refactor it into a separate pass, however much tidier that looks — a standalone scan costs more than the entire evaluation (§ 4.5) |
 | **What will kill it** | ~~steering into sacrifices the material-only shortcut then hides (§ 4.4)~~ — measured, and it was not this: the cap held. ~~A diffuse evaluation error plus −21.9 % NPS (§ 4.8, § 4.9)~~ — **also wrong.** Repairing only the speed moved the identical evaluation by ~52 Elo (§ 4.10). What kills this class of term is **cost**, and the evaluation was never the problem |
 | **The exchange rate** | the cap at 100 cp is forced by `EVALUATE_MATERIAL_ONLY_THRESHOLD`, so the term's maximum contribution is bounded there while it costs a fifth of the node rate. Any variant must buy a third of a ply's Elo with ≤ 100 cp (§ 4.9) |
@@ -1445,7 +1446,8 @@ that — not because the odds look good.
 **Stopped at 2255 of 6000 games: 821–815–619, score 0.501, +0.8 ± 12.3 Elo.** Stopped rather than
 finished, because the scan carries a defect (below) that makes the figure the term *minus a
 discount* rather than the term. Artifacts kept at
-[`match-king-line-tuned.pgn`](../test-results/match-king-line-tuned.pgn) and its stdout log: the
+`test-results/match-king-line-tuned.pgn` and its stdout log, on branch `king-line-tuned` — a
+relative link from master cannot reach a file that lives only on a shelved branch: the
 analyses below stand independently of the Elo number, and one of them is how the defect surfaced.
 
 **Two of § 4.12's expectations were wrong, and in opposite directions.**
@@ -1530,7 +1532,8 @@ and is replaced by two tests that assert the window stays on the board for all 6
 
 #### The factor, re-swept on the corrected scan — and the overshoot reading dies
 
-[`king-line-factor-sweep-corrected.log`](../test-results/king-line-factor-sweep-corrected.log),
+`test-results/king-line-factor-sweep-corrected.log` (on branch `king-line-tuned` and the other
+king-line branches),
 same corpus as § 4.12 (1 338 857 training / 148 762 validation from `tuning-data/hybrid.epd`):
 
 | factor | with the defect | corrected |
@@ -2290,20 +2293,24 @@ summary is that the term looks mildly positive and no affordable experiment has 
 to the last. That is the largest number in the table and it is the price of *computing* the
 term, with its effect held out.
 
-It is also about twice what the throughput penalty predicts. A cost ladder over the same build —
-four arms, each doing one step more, all evaluating like 4.7.1 and therefore sharing one bench
-signature — put the term at **8.41 %** of throughput at a constant tree, split 22 / 77 / 1
-between building the king zone, asking per attacked square, and the final penalty lookup. By the
-usual rule of thumb 8 % buys 8 to 10 Elo, not 18. Either that conversion is wrong for this engine
-at this control — which this project has never measured — or the cost arm is dearer than the
-computation it prices. Unresolved, and worth resolving before the next term is built.
+**Its point estimate is about twice what the throughput penalty predicts — its interval is
+not.** A cost ladder over the same build — four arms, each doing one step more, all evaluating
+like 4.7.1 and therefore sharing one bench signature — put the term at **8.41 %** of throughput
+at a constant tree, split 22 / 77 / 1 between building the king zone, asking per attacked square,
+and the final penalty lookup. By the usual rule of thumb of 50–70 Elo per doubling of speed,
+8.4 % buys about 6 to 8 Elo. The measured −18.0 is more than twice that, but its interval
+reaches −3.5, so the two readings do not conflict: a gauntlet of this size cannot tell a cost of
+−7 from one of −18. An earlier version of this paragraph called the gap an unresolved
+discrepancy between the conversion and the cost arm. It is a gap between point estimates, and
+nothing more has been shown.
 
-**The 8.41 % itself is confirmed, which narrows where the discrepancy can live.** The v4.8.0 bench
+**The 8.41 % itself is confirmed.** The v4.8.0 bench
 measures **−9.1 % NPS** on the 53 realistic standard positions and −8.8 % on the castling mix
 ([bench-history.md](bench-history.md)). The ladder holds the search tree constant and isolates the
 computation; the bench holds nothing constant and measures whole runs on different positions. They
-agree to 0.7 points. So the throughput figure is not the loose end — the conversion from
-throughput to Elo is.
+agree to 0.7 points. So the throughput figure stands on two independent measurements. Whether
+it converts into Elo at the rule-of-thumb rate is not tested by anything in this section — that
+would take a far larger run than a gauntlet.
 
 **The same shape as king-line-v2**, whose gauntlet split net 0.0 into +10.9 of effect and −10.9
 of cost ([`king-line-gauntlet.md`](king-line-gauntlet.md)). Two king-safety terms in a row have

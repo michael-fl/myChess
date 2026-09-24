@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/fUI4nEYH"]
+[Date "2026.09.16"]
+[Round "-"]
+[White "myChessJava"]
+[Black "AerialsBot"]
+[Result "1/2-1/2"]
+[GameId "fUI4nEYH"]
+[UTCDate "2026.09.16"]
+[UTCTime "07:37:59"]
+[WhiteElo "2027"]
+[BlackElo "2084"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+2"]
+[ECO "C00"]
+[Opening "French Defense: Knight Variation"]
+[Termination "Normal"]
+
+1. e4 e6 2. Nf3 d5 3. e5 d4 4. Bb5+ Bd7 5. Qe2 a6 6. Bd3 Bc6 7. O-O Bxf3 8. Qxf3 Nc6 9. Be4 Nxe5 10. Qb3 Nf6 11. Bxb7 Ra7 12. f4 Ned7 13. Bc6 Be7 14. Re1 O-O 15. d3 Nb6 16. Nd2 Nfd7 17. Ne4 Nb8 18. Ba4 Qd5 19. Bd2 Nxa4 20. Qxa4 Nc6 21. Rac1 Rb8 22. c4 Qd7 23. b3 a5 24. h3 Rab7 25. c5 h5 26. g4 Qd5 27. gxh5 Rb5 28. h6 gxh6 29. Qc4 Qxc4 30. Rxc4 Rd8 31. Kh2 f5 32. Ng5 hxg5 33. Rxe6 Rxc5 34. Rxc5 Bxc5 35. Rxc6 Bd6 36. Kg2 gxf4 37. Kf3 Kf7 38. Bxf4 Rh8 39. Bxd6 cxd6 40. Rxd6 Rxh3+ 41. Kf4 Rxd3 42. Rd5 a4 43. bxa4 Ke6 44. Re5+ Kd6 45. Rxf5 Re3 46. Rf8 Re2 47. Rd8+ Kc5 48. a5 Rxa2 49. Rc8+ Kd5 50. Rd8+ Kc5 51. Ra8 Kc4 52. Ke4 Re2+ 53. Kf4 d3 54. a6 Rf2+ 55. Ke3 Re2+ 1/2-1/2
+

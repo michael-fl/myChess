@@ -1,0 +1,3280 @@
+Started game 3 of 600 (mychess-base vs ZetaDva)
+Started game 4 of 600 (ZetaDva vs mychess-base)
+Started game 2 of 600 (TSCP vs mychess-base)
+Started game 1 of 600 (mychess-base vs TSCP)
+Finished game 3 (mychess-base vs ZetaDva): 0-1 {Black wins by adjudication}
+Started game 5 of 600 (mychess-base vs Princhess)
+Finished game 4 (ZetaDva vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 6 of 600 (Princhess vs mychess-base)
+Finished game 2 (TSCP vs mychess-base): 1-0 {White wins by adjudication}
+Started game 7 of 600 (mychess-base vs BBC)
+Finished game 1 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Started game 8 of 600 (BBC vs mychess-base)
+Finished game 6 (Princhess vs mychess-base): 1-0 {White wins by adjudication}
+Started game 9 of 600 (mychess-base vs Kojiro)
+Warning: Illegal PV move b6c5 from BBC (14)
+Warning: PV: a4 c5 Qc2 Qb4 Rb1 Qd4 Red1 Qb4 Re1 b6c5
+Finished game 8 (BBC vs mychess-base): 1-0 {White mates}
+Started game 10 of 600 (Kojiro vs mychess-base)
+Warning: Illegal PV move b2b5 from BBC (13)
+Warning: PV: Kg7 Rdg5+ Kf7 Rf5+ Ke7 Rh7+ Ke8 Rh8+ Ke7 Rh7+ b2b5
+Warning: Illegal PV move b2f2 from BBC (13)
+Warning: PV: Kf7 Rh7+ Kf8 Rh8+ Kf7 Rh7+ b2f2
+Warning: Illegal PV move c6c1 from BBC (13)
+Warning: PV: Kf8 Rh8+ Kf7 Rh7+ c6c1
+Warning: Illegal PV move c6e4 from BBC (13)
+Warning: PV: Kf7 Rh7+ c6e4
+Warning: Illegal PV move b6f2 from BBC (13)
+Warning: PV: Kf7 Rh7+ b6f2
+Warning: Illegal PV move e7e6 from BBC (13)
+Warning: PV: Kf7 Rg7+ e7e6
+Warning: Illegal PV move e7e6 from BBC (13)
+Warning: PV: Kf7 Rg7+ e7e6
+Warning: Illegal PV move b6d4 from BBC (13)
+Warning: PV: Kf7 Rg7+ b6d4
+Warning: Illegal PV move b6d4 from BBC (13)
+Warning: PV: Kf7 Rg7+ b6d4
+Warning: Illegal PV move b6d4 from BBC (13)
+Warning: PV: Kf7 Rg7+ b6d4
+Warning: Illegal PV move b6d4 from BBC (13)
+Warning: PV: Kf7 Rg7+ b6d4
+Warning: Illegal PV move b6d4 from BBC (13)
+Warning: PV: Kf7 Rg7+ b6d4
+Finished game 7 (mychess-base vs BBC): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 11 of 600 (mychess-placebo vs TSCP)
+Finished game 10 (Kojiro vs mychess-base): 1-0 {White wins by adjudication}
+Started game 12 of 600 (TSCP vs mychess-placebo)
+Finished game 9 (mychess-base vs Kojiro): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 13 of 600 (mychess-placebo vs ZetaDva)
+Finished game 5 (mychess-base vs Princhess): 1/2-1/2 {Draw by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          nan     nan       0    nan%    nan% 
+   1 mychess-placebo               nan     nan       0    nan%    nan% 
+   2 mychess-base                 -108     215      10   35.0%   30.0% 
+   3 Kojiro                        191     nan       2   75.0%   50.0% 
+   4 BBC                           191     nan       2   75.0%   50.0% 
+   5 Princhess                     191     nan       2   75.0%   50.0% 
+   6 ZetaDva                         0     nan       2   50.0%    0.0% 
+   7 TSCP                            0     nan       2   50.0%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 14 of 600 (ZetaDva vs mychess-placebo)
+Finished game 11 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Started game 15 of 600 (mychess-placebo vs Princhess)
+Finished game 12 (TSCP vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 16 of 600 (Princhess vs mychess-placebo)
+Finished game 13 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 17 of 600 (mychess-placebo vs BBC)
+Finished game 16 (Princhess vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 18 of 600 (BBC vs mychess-placebo)
+Warning: Illegal PV move h6h1 from Princhess (29)
+Warning: PV:  h6h1
+Finished game 15 (mychess-placebo vs Princhess): 0-1 {Black wins by adjudication}
+Started game 19 of 600 (mychess-placebo vs Kojiro)
+Finished game 14 (ZetaDva vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 20 of 600 (Kojiro vs mychess-placebo)
+Warning: Illegal PV move b6c5 from BBC (34)
+Warning: PV: a4 c5 Qc2 Qb4 Rb1 Qd4 Red1 Qb4 Re1 b6c5
+Finished game 17 (mychess-placebo vs BBC): 0-1 {Black wins by adjudication}
+Started game 21 of 600 (mychess-attack-units vs TSCP)
+Finished game 18 (BBC vs mychess-placebo): 1/2-1/2 {Draw by adjudication}
+Finished game 20 (Kojiro vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 23 of 600 (mychess-attack-units vs ZetaDva)
+Started game 22 of 600 (TSCP vs mychess-attack-units)
+Warning: Illegal PV move d1c2 from Kojiro (37)
+Warning: PV: Kb6 d1c2
+Finished game 21 (mychess-attack-units vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          inf     nan       1  100.0%    0.0% 
+   1 mychess-placebo                 0     249       9   50.0%   11.1% 
+   2 mychess-base                 -108     215      10   35.0%   30.0% 
+   3 Princhess                     338     nan       4   87.5%   25.0% 
+   4 Kojiro                        280     nan       3   83.3%   33.3% 
+   5 BBC                           191     452       4   75.0%   50.0% 
+   6 ZetaDva                      -191     nan       4   25.0%    0.0% 
+   7 TSCP                         -241     nan       5   20.0%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 24 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 19 (mychess-placebo vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 25 of 600 (mychess-attack-units vs Princhess)
+Finished game 23 (mychess-attack-units vs ZetaDva): 0-1 {Black wins by adjudication}
+Started game 26 of 600 (Princhess vs mychess-attack-units)
+Finished game 24 (ZetaDva vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 27 of 600 (mychess-attack-units vs BBC)
+Finished game 22 (TSCP vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 28 of 600 (BBC vs mychess-attack-units)
+Finished game 25 (mychess-attack-units vs Princhess): 0-1 {Black wins by adjudication}
+Started game 29 of 600 (mychess-attack-units vs Kojiro)
+Warning: Illegal PV move d5c4 from BBC (53)
+Warning: PV: Rd7 Rb6 Rdd8 Qb3 Rd7 Qa3 d5c4
+Warning: Illegal PV move b7a6 from BBC (53)
+Warning: PV: Rdd8 Qa4 b7a6
+Warning: Illegal PV move d5e6 from BBC (54)
+Warning: PV: Qd1 Rd8 Rde2 d6 Re4 Rde8 Qc2 Qc5 Qd1 Qb4 d5e6
+Finished game 26 (Princhess vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 30 of 600 (Kojiro vs mychess-attack-units)
+Warning: Illegal PV move h1g2 from Kojiro (57)
+Warning: PV: Qg2+ Ke1 Qh1+ Ke2 Qg2+ Ke1 h1g2
+Finished game 29 (mychess-attack-units vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 31 of 600 (mychess-base vs TSCP)
+Warning: Illegal PV move h6f4 from Kojiro (58)
+Warning: PV: Bd1 Bg5 Qh7 Bf6 Qh6 Bg5 h6f4
+Finished game 28 (BBC vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Warning: Illegal PV move f1g1 from BBC (53)
+Warning: PV: Ra1+ f1g1
+Started game 32 of 600 (TSCP vs mychess-base)
+Finished game 27 (mychess-attack-units vs BBC): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 33 of 600 (mychess-base vs ZetaDva)
+Finished game 30 (Kojiro vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units           35     237      10   55.0%   10.0% 
+   1 mychess-placebo               -35     237      10   45.0%   10.0% 
+   2 mychess-base                 -108     215      10   35.0%   30.0% 
+   3 Princhess                     417     nan       6   91.7%   16.7% 
+   4 Kojiro                        191     nan       6   75.0%   16.7% 
+   5 BBC                            58     226       6   58.3%   50.0% 
+   6 ZetaDva                      -120     nan       6   33.3%    0.0% 
+   7 TSCP                         -280     nan       6   16.7%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 34 of 600 (ZetaDva vs mychess-base)
+Finished game 31 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Started game 35 of 600 (mychess-base vs Princhess)
+Finished game 32 (TSCP vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 36 of 600 (Princhess vs mychess-base)
+Finished game 35 (mychess-base vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 37 of 600 (mychess-base vs BBC)
+Finished game 34 (ZetaDva vs mychess-base): 1-0 {White wins by adjudication}
+Started game 38 of 600 (BBC vs mychess-base)
+Finished game 33 (mychess-base vs ZetaDva): 1/2-1/2 {Draw by adjudication}
+Started game 39 of 600 (mychess-base vs Kojiro)
+Finished game 36 (Princhess vs mychess-base): 1-0 {White wins by adjudication}
+Started game 40 of 600 (Kojiro vs mychess-base)
+Finished game 37 (mychess-base vs BBC): 1-0 {White wins by adjudication}
+Warning: Illegal PV move d4b2 from Kojiro (77)
+Warning: PV: b3 d4b2
+Started game 41 of 600 (mychess-placebo vs TSCP)
+Warning: Illegal PV move d4b2 from Kojiro (77)
+Warning: PV: Kg7 d4b2
+Warning: Illegal PV move d4b2 from Kojiro (77)
+Warning: PV: Kf8 d4b2
+Warning: Illegal PV move c5c7 from Kojiro (77)
+Warning: PV: Kd6 c5c7
+Warning: Illegal PV move c2c7 from Kojiro (77)
+Warning: PV: Kb4 c2c7
+Warning: Illegal PV move b1c2 from Kojiro (77)
+Warning: PV: b1=Q b1c2
+Finished game 39 (mychess-base vs Kojiro): 0-1 {Black wins by adjudication}
+Warning: Illegal PV move a3a4 from Kojiro (78)
+Warning: PV: Rb1 a3a4
+Started game 42 of 600 (TSCP vs mychess-placebo)
+Warning: Illegal PV move d2b2 from Kojiro (78)
+Warning: PV: Rxd2 d2b2
+Finished game 38 (BBC vs mychess-base): 1-0 {White wins by adjudication}
+Started game 43 of 600 (mychess-placebo vs ZetaDva)
+Finished game 40 (Kojiro vs mychess-base): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units           35     237      10   55.0%   10.0% 
+   1 mychess-placebo               -35     237      10   45.0%   10.0% 
+   2 mychess-base                  -89     144      20   37.5%   25.0% 
+   3 Princhess                     338     nan       8   87.5%   25.0% 
+   4 Kojiro                        255     nan       8   81.3%   12.5% 
+   5 BBC                            44     216       8   56.3%   37.5% 
+   6 ZetaDva                       -44     275       8   43.8%   12.5% 
+   7 TSCP                         -338     nan       8   12.5%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 44 of 600 (ZetaDva vs mychess-placebo)
+Finished game 41 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Started game 45 of 600 (mychess-placebo vs Princhess)
+Finished game 45 (mychess-placebo vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 46 of 600 (Princhess vs mychess-placebo)
+Finished game 42 (TSCP vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 47 of 600 (mychess-placebo vs BBC)
+Finished game 43 (mychess-placebo vs ZetaDva): 0-1 {Black wins by adjudication}
+Started game 48 of 600 (BBC vs mychess-placebo)
+Finished game 47 (mychess-placebo vs BBC): 1/2-1/2 {Draw by adjudication}
+Started game 49 of 600 (mychess-placebo vs Kojiro)
+Finished game 46 (Princhess vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 50 of 600 (Kojiro vs mychess-placebo)
+Finished game 44 (ZetaDva vs mychess-placebo): 1/2-1/2 {Draw by adjudication}
+Finished game 48 (BBC vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 51 of 600 (mychess-attack-units vs TSCP)
+Started game 52 of 600 (TSCP vs mychess-attack-units)
+Finished game 50 (Kojiro vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 53 of 600 (mychess-attack-units vs ZetaDva)
+Finished game 49 (mychess-placebo vs Kojiro): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units           35     237      10   55.0%   10.0% 
+   1 mychess-placebo               -35     145      20   45.0%   20.0% 
+   2 mychess-base                  -89     144      20   37.5%   25.0% 
+   3 Princhess                     301     340      10   85.0%   30.0% 
+   4 Kojiro                        191     658      10   75.0%   10.0% 
+   5 BBC                            70     186      10   60.0%   40.0% 
+   6 ZetaDva                         0     217      10   50.0%   20.0% 
+   7 TSCP                         -382     nan      10   10.0%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 54 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 51 (mychess-attack-units vs TSCP): 1-0 {White wins by adjudication}
+Started game 55 of 600 (mychess-attack-units vs Princhess)
+Finished game 52 (TSCP vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 56 of 600 (Princhess vs mychess-attack-units)
+Finished game 55 (mychess-attack-units vs Princhess): 1-0 {White mates}
+Started game 57 of 600 (mychess-attack-units vs BBC)
+Finished game 53 (mychess-attack-units vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 58 of 600 (BBC vs mychess-attack-units)
+Finished game 56 (Princhess vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 59 of 600 (mychess-attack-units vs Kojiro)
+Finished game 54 (ZetaDva vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 60 of 600 (Kojiro vs mychess-attack-units)
+Warning: Illegal PV move e8f8 from BBC (112)
+Warning: PV: Bf8 Nd4 Re8 Ne6 Ke2 Re5+ Kd1 Rf5 Ke2 Re5+ e8f8
+Warning: Illegal PV move h2h3 from BBC (112)
+Warning: PV: Bf8 Nd4 Re8 Ne6 Ke2 Re5+ Kd1 Rf5 Ke2 Re5+ h2h3
+Warning: Illegal PV move f8g7 from BBC (112)
+Warning: PV: Bf8 Nd4 Re8 Ne6 Ke2 Re5+ Kd1 Rf5 Ke2 Re5+ f8g7
+Warning: Illegal PV move e8f8 from BBC (112)
+Warning: PV: Ke2 Re5+ Kd1 Rf5 Ke2 Re5+ e8f8
+Warning: Illegal PV move h2h3 from BBC (112)
+Warning: PV: Ke2 Re5+ Kd1 Rf5 Ke2 Re5+ h2h3
+Warning: Illegal PV move e2f2 from BBC (112)
+Warning: PV: g3 Re5+ Kd1 Rf5 Ke2 Re5+ e2f2
+Warning: Illegal PV move f8e7 from BBC (112)
+Warning: PV: g3 Re5+ Kd1 Rf5 Ke2 Re5+ f8e7
+Warning: Illegal PV move c2b3 from Kojiro (116)
+Warning: PV: Kc2 c2b3
+Warning: Illegal PV move e2e3 from BBC (112)
+Warning: PV: h4 Re5+ Kd1 Rf5 Ke2 Re5+ e2e3
+Warning: Illegal PV move f6e5 from Kojiro (116)
+Warning: PV: Na5 b6 Nc6+ Kf6 a4 Ne6 Rd1 Kg5 Ne5 Kf6 Nc6 f6e5
+Warning: Illegal PV move b4d3 from Kojiro (115)
+Warning: PV: Nxb4 b4d3
+Warning: Illegal PV move c7b6 from Kojiro (116)
+Warning: PV: b5+ axb5 axb5+ Kc7 Ne7 Kd6 Nc8+ Kc7 Ne7 c7b6
+Warning: Illegal PV move d2d3 from Kojiro (115)
+Warning: PV: Qd2 d2d3
+Warning: Illegal PV move d2d1q from Kojiro (115)
+Warning: PV: d2 d2d1q
+Finished game 59 (mychess-attack-units vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 61 of 600 (mychess-base vs TSCP)
+Warning: Illegal PV move a8a5 from Kojiro (116)
+Warning: PV: Kb2 Re1 a5 Kb5 Ra8 Re2+ Kb3 Re3+ Ka2 Re2+ Kb1 Re1+ Kc2 Ra1 Rb8+ Kc4 Ra8 Kb5 a8a5
+Warning: Illegal PV move a8a5 from Kojiro (116)
+Warning: PV: a5 Kb5 Rb8+ Kc5 Ra8 Kb5 a8a5
+Warning: Illegal PV move c1d1 from BBC (112)
+Warning: PV: Qc5+ Kd1 Qd4+ Kc2 Qc5+ c1d1
+Warning: Illegal PV move a8a6 from Kojiro (116)
+Warning: PV: a5 Kb4 Kc2 Kb5 a6 f4 Kd2 Ra1 Rb8+ Kc5 Ra8 Kb5 a8a6
+Warning: Illegal PV move c1c2 from BBC (112)
+Warning: PV: Qb4+ Ka2 Qa4+ Kb2 Qb4+ c1c2
+Warning: Illegal PV move c1c2 from BBC (112)
+Warning: PV: Qb4+ Ka2 Qa4+ Kb2 Qb4+ c1c2
+Warning: Illegal PV move a5a6 from Kojiro (116)
+Warning: PV: Kc1 a5a6
+Warning: Illegal PV move a8a6 from Kojiro (116)
+Warning: PV: Ka3 Kb5 Kb3 Re3+ Kb2 Re1 a6 f4 Kc3 Ra1 Rb8+ Kc5 Ra8 Kb5 a8a6
+Warning: Illegal PV move c1c6 from BBC (112)
+Warning: PV: Qb4+ c1c6
+Warning: Illegal PV move g2a8 from BBC (112)
+Warning: PV: Qb4+ g2a8
+Warning: Illegal PV move c1c6 from BBC (112)
+Warning: PV: Qb4+ c1c6
+Warning: Illegal PV move c1c6 from BBC (112)
+Warning: PV: Qb4+ c1c6
+Warning: Illegal PV move a8a6 from Kojiro (116)
+Warning: PV: Kb3 Re3+ Kc2 Kb6 Kd2 Ra3 Rb8+ Kc6 Ra8 Kb6 a8a6
+Warning: Illegal PV move c1c6 from BBC (112)
+Warning: PV: Qb4+ c1c6
+Warning: Illegal PV move c1d1 from BBC (112)
+Warning: PV: Qc5+ c1d1
+Warning: Illegal PV move g2g3 from BBC (112)
+Warning: PV: Qc5+ g2g3
+Warning: Illegal PV move c1d1 from BBC (112)
+Warning: PV: Qc5+ c1d1
+Warning: Illegal PV move c1f1 from BBC (112)
+Warning: PV: Qc5+ c1f1
+Warning: Illegal PV move c1f1 from BBC (112)
+Warning: PV: Qc5+ c1f1
+Warning: Illegal PV move b3b4 from Kojiro (116)
+Warning: PV: Kb2 Kb6 Kb3 Kb5 b3b4
+Warning: Illegal PV move c2c1 from BBC (112)
+Warning: PV: Qe3+ Kc2 Qc5+ c2c1
+Warning: Illegal PV move g2g3 from BBC (112)
+Warning: PV: Qe3+ Kc2 Qc5+ g2g3
+Warning: Illegal PV move c1b1 from BBC (112)
+Warning: PV: Qc5+ c1b1
+Warning: Illegal PV move c1b1 from BBC (112)
+Warning: PV: Qc5+ c1b1
+Warning: Illegal PV move c1b1 from BBC (112)
+Warning: PV: Qc5+ c1b1
+Warning: Illegal PV move c7c6 from Kojiro (116)
+Warning: PV: Rf8 Kxa6 Kb4 Kb6 Rxf4 Rc1 Rf8 Re1 Kc4 Rc1+ Kb4 c7c6
+Finished game 58 (BBC vs mychess-attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Warning: Illegal PV move c6c5 from Kojiro (116)
+Warning: PV: Kb4 Rc1 Rxf4 Kb6 Rf8 Rc2 Ra8 Kb7 Rf8 Kb6 c6c5
+Warning: Illegal PV move e5e4 from Kojiro (116)
+Warning: PV: Rxf4 Kb6 Rc4 Rd2 Rg4 Rc2 Rg6+ Kc7 Kb5 Kd7 Rf6 Ke7 Rb6 Kd7 Rf6 e5e4
+Warning: Illegal PV move b5c5 from Kojiro (116)
+Warning: PV: Rxf4 Kb6 Rc4 Rd2 Rg4 Rc2 Rg6+ Kc7 Kb5 Kd7 Rf6 Ke7 Rg6 Rc1 Kb4 Kd7 Kb5 Rc2 b5c5
+Started game 62 of 600 (TSCP vs mychess-base)
+Warning: Illegal PV move b7c6 from Kojiro (116)
+Warning: PV: Rc4 Rd2 Kc3 Rd1 Kb3 Rd5 Kc3 Rd1 Rf4 b7c6
+Warning: Illegal PV move c3d2 from Kojiro (116)
+Warning: PV: Kc2 Rd8 Kc3 Rd1 c3d2
+Warning: Illegal PV move c3d2 from Kojiro (116)
+Warning: PV: Kc2 Rd8 Kc3 Rd1 c3d2
+Warning: Illegal PV move c3d3 from Kojiro (116)
+Warning: PV: Kc2 Rd8 Kc3 Rd1 c3d3
+Warning: Illegal PV move b6c7 from Kojiro (116)
+Warning: PV: Kc2 Rd8 Kc3 Rd1 b6c7
+Warning: Illegal PV move c1c8 from Kojiro (116)
+Warning: PV: Kc2 Rd8 Kc3 Rd1 c1c8
+Finished game 57 (mychess-attack-units vs BBC): 0-1 {Black wins by adjudication}
+Started game 63 of 600 (mychess-base vs ZetaDva)
+Finished game 60 (Kojiro vs mychess-attack-units): 1/2-1/2 {Draw by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units           53     151      20   57.5%   15.0% 
+   1 mychess-placebo               -35     145      20   45.0%   20.0% 
+   2 mychess-base                  -89     144      20   37.5%   25.0% 
+   3 Princhess                     232     271      12   79.2%   25.0% 
+   4 Kojiro                        191     278      12   75.0%   16.7% 
+   5 BBC                            89     165      12   62.5%   41.7% 
+   6 ZetaDva                       -58     204      12   41.7%   16.7% 
+   7 TSCP                         -417     nan      12    8.3%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 64 of 600 (ZetaDva vs mychess-base)
+Finished game 61 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Started game 65 of 600 (mychess-base vs Princhess)
+Finished game 62 (TSCP vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 66 of 600 (Princhess vs mychess-base)
+Finished game 64 (ZetaDva vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 67 of 600 (mychess-base vs BBC)
+Finished game 63 (mychess-base vs ZetaDva): 0-1 {Black wins by adjudication}
+Started game 68 of 600 (BBC vs mychess-base)
+Warning: Illegal PV move g6h5 from BBC (131)
+Warning: PV: Bd7 Re3 h5 Rfe1 Kc7 Qe5+ Kc8 Qd4 g6h5
+Finished game 66 (Princhess vs mychess-base): 1-0 {White wins by adjudication}
+Started game 69 of 600 (mychess-base vs Kojiro)
+Warning: Illegal PV move g7e5 from Kojiro (135)
+Warning: PV: fxe4 g7e5
+Finished game 68 (BBC vs mychess-base): 1-0 {White wins by adjudication}
+Started game 70 of 600 (Kojiro vs mychess-base)
+Finished game 65 (mychess-base vs Princhess): 0-1 {Black wins by adjudication}
+Finished game 67 (mychess-base vs BBC): 1-0 {White wins by adjudication}
+Started game 71 of 600 (mychess-placebo vs TSCP)
+Started game 72 of 600 (TSCP vs mychess-placebo)
+Warning: Illegal PV move b7f7 from Kojiro (135)
+Warning: PV: Ke8 Qg8+ Rf8 Qg6+ Rf7 Qg8+ Rf8 b7f7
+Warning: Illegal PV move b7f7 from Kojiro (135)
+Warning: PV: Rf8 Qg6+ Rf7 Qg8+ Rf8 b7f7
+Warning: Illegal PV move a3b3 from Kojiro (136)
+Warning: PV: hxg3 a3b3
+Finished game 69 (mychess-base vs Kojiro): 1-0 {White wins by adjudication}
+Started game 73 of 600 (mychess-placebo vs ZetaDva)
+Finished game 72 (TSCP vs mychess-placebo): 0-1 {Black mates}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units           53     151      20   57.5%   15.0% 
+   1 mychess-placebo               -17     141      21   47.6%   19.0% 
+   2 mychess-base                  -48     121      29   43.1%   17.2% 
+   3 Princhess                     265     284      14   82.1%   21.4% 
+   4 Kojiro                        141     223      13   69.2%   15.4% 
+   5 BBC                            76     159      14   60.7%   35.7% 
+   6 ZetaDva                       -50     187      14   42.9%   14.3% 
+   7 TSCP                         -458     nan      15    6.7%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 74 of 600 (ZetaDva vs mychess-placebo)
+Warning: Illegal PV move c4c5 from Kojiro (136)
+Warning: PV: c4 c4c5
+Finished game 71 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Started game 75 of 600 (mychess-placebo vs Princhess)
+Warning: Illegal PV move h7b7 from Kojiro (136)
+Warning: PV: Qxh4 h7b7
+Finished game 70 (Kojiro vs mychess-base): 1-0 {White wins by adjudication}
+Started game 76 of 600 (Princhess vs mychess-placebo)
+Finished game 74 (ZetaDva vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 77 of 600 (mychess-placebo vs BBC)
+Finished game 73 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 78 of 600 (BBC vs mychess-placebo)
+Finished game 76 (Princhess vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 79 of 600 (mychess-placebo vs Kojiro)
+Warning: Illegal PV move g7e5 from Kojiro (155)
+Warning: PV: fxe4 g7e5
+Finished game 78 (BBC vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 80 of 600 (Kojiro vs mychess-placebo)
+Finished game 77 (mychess-placebo vs BBC): 1-0 {White wins by adjudication}
+Started game 81 of 600 (mychess-attack-units vs TSCP)
+Finished game 75 (mychess-placebo vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 82 of 600 (TSCP vs mychess-attack-units)
+Warning: Illegal PV move c6e8 from Kojiro (156)
+Warning: PV: Qc6 c6e8
+Warning: Illegal PV move b2g2 from Kojiro (155)
+Warning: PV: Kg8 b2g2
+Warning: Illegal PV move c1c3 from Kojiro (155)
+Warning: PV: Kg8 Nxg6 Rg2+ Kh1 Rh2+ Kg1 Rhg2+ c1c3
+Warning: Illegal PV move d1e2 from Kojiro (155)
+Warning: PV: Rg2+ Kf1 Rgf2+ Ke1 Rfe2+ Kf1 Rf2+ d1e2
+Warning: Illegal PV move a3c1 from Kojiro (155)
+Warning: PV: Rg2+ Kh1 Rh2+ Kg1 Rhg2+ a3c1
+Warning: Illegal PV move f1e1 from Kojiro (155)
+Warning: PV: Rh2+ Kg1 Rhg2+ Kh1 Raf2 f1e1
+Warning: Illegal PV move c1c8 from Kojiro (155)
+Warning: PV: Rh2+ Kg1 Rhg2+ Kh1 c1c8
+Warning: Illegal PV move h3e3 from Kojiro (155)
+Warning: PV: Rxh3 h3e3
+Warning: Illegal PV move c1e1 from Kojiro (155)
+Warning: PV: Rf2+ Kg1 Rfg2+ Kf1 c1e1
+Warning: Illegal PV move c1c7 from Kojiro (155)
+Warning: PV: Rhg2+ Kh1 Rh2+ Kg1 c1c7
+Warning: Illegal PV move e7g6 from Kojiro (155)
+Warning: PV: Rh2+ Kg1 Rhg2+ Kh1 e7g6
+Finished game 80 (Kojiro vs mychess-placebo): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 83 of 600 (mychess-attack-units vs ZetaDva)
+Warning: Illegal PV move c1c7 from Kojiro (155)
+Warning: PV: Rhg2+ Kh1 Rh2+ Kg1 c1c7
+Warning: Illegal PV move e7g6 from Kojiro (155)
+Warning: PV: Rh2+ Kg1 Rhg2+ Kh1 e7g6
+Finished game 79 (mychess-placebo vs Kojiro): 1/2-1/2 {Draw by 3-fold repetition}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units           53     151      20   57.5%   15.0% 
+   1 mychess-placebo                12     113      30   51.7%   23.3% 
+   2 mychess-base                  -58     119      30   41.7%   16.7% 
+   3 Princhess                     255     214      16   81.3%   25.0% 
+   4 Kojiro                        137     173      16   68.8%   25.0% 
+   5 BBC                            66     152      16   59.4%   31.3% 
+   6 ZetaDva                       -89     181      16   37.5%   12.5% 
+   7 TSCP                         -470     nan      16    6.3%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 84 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 82 (TSCP vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 85 of 600 (mychess-attack-units vs Princhess)
+Finished game 84 (ZetaDva vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 86 of 600 (Princhess vs mychess-attack-units)
+Finished game 81 (mychess-attack-units vs TSCP): 1-0 {White wins by adjudication}
+Started game 87 of 600 (mychess-attack-units vs BBC)
+Finished game 83 (mychess-attack-units vs ZetaDva): 0-1 {Black wins by adjudication}
+Started game 88 of 600 (BBC vs mychess-attack-units)
+Finished game 86 (Princhess vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 89 of 600 (mychess-attack-units vs Kojiro)
+Warning: Illegal PV move d5e4 from BBC (171)
+Warning: PV: Bf6 Nxg4 Be7 Nxh6+ Kh8 Nf7+ Kg8 Nh6+ d5e4
+Finished game 88 (BBC vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 90 of 600 (Kojiro vs mychess-attack-units)
+Warning: Illegal PV move e7d6 from BBC (171)
+Warning: PV: Be7 Nxh6+ Kh8 Nf7+ Kg8 Nh6+ e7d6
+Finished game 89 (mychess-attack-units vs Kojiro): 1-0 {White wins by adjudication}
+Warning: Illegal PV move d5e4 from BBC (171)
+Warning: PV: Kh8 Nf7+ Kg8 Nh6+ d5e4
+Started game 91 of 600 (mychess-base vs TSCP)
+Finished game 87 (mychess-attack-units vs BBC): 1-0 {White wins by adjudication}
+Started game 92 of 600 (TSCP vs mychess-base)
+Finished game 85 (mychess-attack-units vs Princhess): 0-1 {Black wins by adjudication}
+Started game 93 of 600 (mychess-base vs ZetaDva)
+Finished game 91 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units           24     125      29   53.4%   10.3% 
+   1 mychess-placebo                12     113      30   51.7%   23.3% 
+   2 mychess-base                  -45     117      31   43.5%   16.1% 
+   3 Princhess                     280     218      18   83.3%   22.2% 
+   4 Kojiro                        105     163      17   64.7%   23.5% 
+   5 BBC                            58     146      18   58.3%   27.8% 
+   6 ZetaDva                       -39     163      18   44.4%   11.1% 
+   7 TSCP                         -502     nan      19    5.3%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 94 of 600 (ZetaDva vs mychess-base)
+Warning: Illegal PV move c2a4 from Kojiro (176)
+Warning: PV: Kh1 c2a4
+Warning: Illegal PV move f2e3 from Kojiro (176)
+Warning: PV: Kh1 f2e3
+Warning: Illegal PV move c5e7 from Kojiro (176)
+Warning: PV: Bc5 c5e7
+Finished game 92 (TSCP vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 95 of 600 (mychess-base vs Princhess)
+Finished game 90 (Kojiro vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 96 of 600 (Princhess vs mychess-base)
+Finished game 96 (Princhess vs mychess-base): 1-0 {White wins by adjudication}
+Started game 97 of 600 (mychess-base vs BBC)
+Finished game 94 (ZetaDva vs mychess-base): 1/2-1/2 {Draw by adjudication}
+Started game 98 of 600 (BBC vs mychess-base)
+Finished game 95 (mychess-base vs Princhess): 1-0 {White mates}
+Started game 99 of 600 (mychess-base vs Kojiro)
+Finished game 99 (mychess-base vs Kojiro): 1-0 {White wins by adjudication}
+Started game 100 of 600 (Kojiro vs mychess-base)
+Warning: Illegal PV move e4e5 from Kojiro (195)
+Warning: PV: bxc3 e4e5
+Finished game 97 (mychess-base vs BBC): 0-1 {Black wins by adjudication}
+Started game 101 of 600 (mychess-placebo vs TSCP)
+Warning: Illegal PV move e2g3 from Kojiro (195)
+Warning: PV: gxf3 e2g3
+Warning: Illegal PV move e2h5 from Kojiro (195)
+Warning: PV: Bxe2 e2h5
+Finished game 100 (Kojiro vs mychess-base): 1-0 {White wins by adjudication}
+Started game 102 of 600 (TSCP vs mychess-placebo)
+Finished game 93 (mychess-base vs ZetaDva): 0-1 {Black wins by adjudication}
+Started game 103 of 600 (mychess-placebo vs ZetaDva)
+Finished game 98 (BBC vs mychess-base): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units           12     123      30   51.7%   10.0% 
+   1 mychess-placebo                12     113      30   51.7%   23.3% 
+   2 mychess-base                  -35     102      40   45.0%   15.0% 
+   3 Princhess                     241     192      20   80.0%   20.0% 
+   4 Kojiro                        108     152      20   65.0%   20.0% 
+   5 BBC                            53     140      20   57.5%   25.0% 
+   6 ZetaDva                       -17     149      20   47.5%   15.0% 
+   7 TSCP                         -512     nan      20    5.0%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 104 of 600 (ZetaDva vs mychess-placebo)
+Finished game 101 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Started game 105 of 600 (mychess-placebo vs Princhess)
+Finished game 105 (mychess-placebo vs Princhess): 1-0 {White mates}
+Started game 106 of 600 (Princhess vs mychess-placebo)
+Finished game 102 (TSCP vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 107 of 600 (mychess-placebo vs BBC)
+Finished game 104 (ZetaDva vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 108 of 600 (BBC vs mychess-placebo)
+Finished game 103 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 109 of 600 (mychess-placebo vs Kojiro)
+Finished game 106 (Princhess vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 110 of 600 (Kojiro vs mychess-placebo)
+Warning: Illegal PV move e4e5 from Kojiro (212)
+Warning: PV: bxc3 e4e5
+Warning: Illegal PV move e2g3 from Kojiro (212)
+Warning: PV: gxf3 e2g3
+Finished game 109 (mychess-placebo vs Kojiro): 1-0 {White wins by adjudication}
+Warning: Illegal PV move e2h5 from Kojiro (212)
+Warning: PV: Bxe2 e2h5
+Finished game 110 (Kojiro vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 111 of 600 (mychess-attack-units vs TSCP)
+Started game 112 of 600 (TSCP vs mychess-attack-units)
+Warning: Illegal PV move f8f4 from BBC (207)
+Warning: PV: Rg7 Qh2+ Kg4 Rf8 Qd5+ Ka1 Qd4+ Ka2 Qxd3 f8f4
+Warning: Illegal PV move d7e5 from BBC (207)
+Warning: PV: Rg7 Qh2+ Kg4 Rf8 Qd5+ Ka1 Qd4+ Ka2 d7e5
+Warning: Illegal PV move f8f4 from BBC (207)
+Warning: PV: Kg4 Rf8 Qd5+ Ka1 Qd4+ Ka2 Qxd3 f8f4
+Warning: Illegal PV move f6f4 from BBC (207)
+Warning: PV: Kg4 Rf8 Qd5+ Ka1 Qd4+ Ka2 f6f4
+Warning: Illegal PV move f8b8 from BBC (207)
+Warning: PV: Qd5+ f8b8
+Warning: Illegal PV move f8b8 from BBC (207)
+Warning: PV: Qd5+ f8b8
+Warning: Illegal PV move f8b8 from BBC (207)
+Warning: PV: Qd5+ f8b8
+Warning: Illegal PV move f8b8 from BBC (207)
+Warning: PV: Qd5+ f8b8
+Warning: Illegal PV move a3b4 from BBC (207)
+Warning: PV: Qd5+ a3b4
+Warning: Illegal PV move f8b8 from BBC (207)
+Warning: PV: Qd5+ f8b8
+Warning: Illegal PV move d3c4 from BBC (207)
+Warning: PV: Qd4+ d3c4
+Warning: Illegal PV move f4g5 from BBC (207)
+Warning: PV: Qd4+ f4g5
+Warning: Illegal PV move f8d8 from BBC (207)
+Warning: PV: Qd4+ f8d8
+Warning: Illegal PV move f8d8 from BBC (207)
+Warning: PV: Qd4+ f8d8
+Warning: Illegal PV move f8g8 from BBC (207)
+Warning: PV: Qd4+ f8g8
+Warning: Illegal PV move f8b8 from BBC (207)
+Warning: PV: Qd4+ f8b8
+Warning: Illegal PV move f8b8 from BBC (207)
+Warning: PV: Qd4+ f8b8
+Finished game 107 (mychess-placebo vs BBC): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 113 of 600 (mychess-attack-units vs ZetaDva)
+Finished game 111 (mychess-attack-units vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units           22     121      31   53.2%    9.7% 
+   1 mychess-placebo                27     100      39   53.8%   20.5% 
+   2 mychess-base                  -35     102      40   45.0%   15.0% 
+   3 Princhess                     213     173      22   77.3%   18.2% 
+   4 Kojiro                         97     145      22   63.6%   18.2% 
+   5 BBC                            50     133      21   57.1%   28.6% 
+   6 ZetaDva                       -16     142      22   47.7%   13.6% 
+   7 TSCP                         -537     nan      23    4.3%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 114 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 114 (ZetaDva vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 115 of 600 (mychess-attack-units vs Princhess)
+Finished game 112 (TSCP vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 116 of 600 (Princhess vs mychess-attack-units)
+Finished game 108 (BBC vs mychess-placebo): 1/2-1/2 {Draw by insufficient mating material}
+Started game 117 of 600 (mychess-attack-units vs BBC)
+Finished game 115 (mychess-attack-units vs Princhess): 0-1 {Black wins by adjudication}
+Started game 118 of 600 (BBC vs mychess-attack-units)
+Finished game 113 (mychess-attack-units vs ZetaDva): 1/2-1/2 {Draw by insufficient mating material}
+Started game 119 of 600 (mychess-attack-units vs Kojiro)
+Finished game 117 (mychess-attack-units vs BBC): 0-1 {Black wins by adjudication}
+Started game 120 of 600 (Kojiro vs mychess-attack-units)
+Warning: Illegal PV move e4e5 from Kojiro (232)
+Warning: PV: bxc3 e4e5
+Finished game 116 (Princhess vs mychess-attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 121 of 600 (mychess-base vs TSCP)
+Finished game 118 (BBC vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 122 of 600 (TSCP vs mychess-base)
+Warning: Illegal PV move b6c5 from Kojiro (231)
+Warning: PV: Bb6 b6c5
+Warning: Illegal PV move d4c4 from Kojiro (232)
+Warning: PV: h6 d4c4
+Finished game 122 (TSCP vs mychess-base): 1-0 {White wins by adjudication}
+Started game 123 of 600 (mychess-base vs ZetaDva)
+Warning: Illegal PV move g4f5 from Kojiro (232)
+Warning: PV: g4 g4f5
+Finished game 120 (Kojiro vs mychess-attack-units): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units            0     105      39   50.0%   12.8% 
+   1 mychess-placebo                26      97      40   53.8%   22.5% 
+   2 mychess-base                  -43     102      41   43.9%   14.6% 
+   3 Princhess                     211     157      24   77.1%   20.8% 
+   4 Kojiro                        109     144      23   65.2%   17.4% 
+   5 BBC                            73     124      24   60.4%   29.2% 
+   6 ZetaDva                       -29     133      24   45.8%   16.7% 
+   7 TSCP                         -424     nan      25    8.0%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 124 of 600 (ZetaDva vs mychess-base)
+Finished game 121 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Started game 125 of 600 (mychess-base vs Princhess)
+Warning: Illegal PV move c4c3 from Kojiro (231)
+Warning: PV: Nxd5 c4c3
+Warning: Illegal PV move b7c6 from Kojiro (231)
+Warning: PV: c2 b7c6
+Finished game 119 (mychess-attack-units vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 126 of 600 (Princhess vs mychess-base)
+Finished game 123 (mychess-base vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 127 of 600 (mychess-base vs BBC)
+Finished game 125 (mychess-base vs Princhess): 1-0 {White wins by adjudication}
+Started game 128 of 600 (BBC vs mychess-base)
+Finished game 127 (mychess-base vs BBC): 0-1 {Black wins by adjudication}
+Started game 129 of 600 (mychess-base vs Kojiro)
+Finished game 124 (ZetaDva vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 130 of 600 (Kojiro vs mychess-base)
+Warning: Illegal PV move f6d8 from Kojiro (252)
+Warning: PV: Bf6 f6d8
+Warning: Illegal PV move c7c8 from Kojiro (251)
+Warning: PV: Rxc7 c7c8
+Warning: Illegal PV move e5c7 from Kojiro (252)
+Warning: PV: Bxe5 e5c7
+Finished game 130 (Kojiro vs mychess-base): 1-0 {White wins by adjudication}
+Started game 131 of 600 (mychess-placebo vs TSCP)
+Finished game 126 (Princhess vs mychess-base): 1/2-1/2 {Draw by insufficient mating material}
+Started game 132 of 600 (TSCP vs mychess-placebo)
+Warning: Illegal PV move f3c3 from Kojiro (251)
+Warning: PV: Rf3 f3c3
+Finished game 132 (TSCP vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 133 of 600 (mychess-placebo vs ZetaDva)
+Warning: Illegal PV move e1e5 from BBC (248)
+Warning: PV: Rf2 a2 Qf8+ Kh7 Qxe7+ Kh8 Qf8+ Kh7 Qf7+ Kh8 Qf8+ e1e5
+Warning: Illegal PV move e1f2 from BBC (248)
+Warning: PV: Rf2 a2 Qf8+ Kh7 Qxe7+ Kh8 Qf8+ Kh7 Qf7+ Kh8 Qf8+ e1f2
+Warning: Illegal PV move h4h3 from Kojiro (251)
+Warning: PV: Kf5 h4h3
+Finished game 131 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units           -9     104      40   48.8%   12.5% 
+   1 mychess-placebo                25      96      42   53.6%   21.4% 
+   2 mychess-base                  -22      93      48   46.9%   14.6% 
+   3 Princhess                     173     137      26   73.1%   23.1% 
+   4 Kojiro                        131     142      25   68.0%   16.0% 
+   5 BBC                            85     123      25   62.0%   28.0% 
+   6 ZetaDva                       -54     130      26   42.3%   15.4% 
+   7 TSCP                         -368     nan      28   10.7%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 134 of 600 (ZetaDva vs mychess-placebo)
+Finished game 128 (BBC vs mychess-base): 1-0 {White wins by adjudication}
+Started game 135 of 600 (mychess-placebo vs Princhess)
+Warning: Illegal PV move h2h1q from Kojiro (251)
+Warning: PV: Kg2 h2h1q
+Warning: Illegal PV move f2d2 from Kojiro (251)
+Warning: PV: Rf2 f2d2
+Warning: Illegal PV move h2h1q from Kojiro (251)
+Warning: PV: Kg2 h2h1q
+Finished game 133 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 136 of 600 (Princhess vs mychess-placebo)
+Warning: Illegal PV move f2d2 from Kojiro (251)
+Warning: PV: Rf2 f2d2
+Finished game 129 (mychess-base vs Kojiro): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 137 of 600 (mychess-placebo vs BBC)
+Finished game 134 (ZetaDva vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 138 of 600 (BBC vs mychess-placebo)
+Finished game 135 (mychess-placebo vs Princhess): 1-0 {White wins by adjudication}
+Started game 139 of 600 (mychess-placebo vs Kojiro)
+Finished game 137 (mychess-placebo vs BBC): 0-1 {Black wins by adjudication}
+Started game 140 of 600 (Kojiro vs mychess-placebo)
+Warning: Illegal PV move c7c8 from Kojiro (271)
+Warning: PV: Rxc7 c7c8
+Finished game 138 (BBC vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 141 of 600 (mychess-attack-units vs TSCP)
+Warning: Illegal PV move f6d8 from Kojiro (272)
+Warning: PV: Bf6 f6d8
+Warning: Illegal PV move e5c7 from Kojiro (272)
+Warning: PV: Bxe5 e5c7
+Finished game 140 (Kojiro vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 142 of 600 (TSCP vs mychess-attack-units)
+Finished game 142 (TSCP vs mychess-attack-units): 1-0 {White mates}
+Started game 143 of 600 (mychess-attack-units vs ZetaDva)
+Finished game 136 (Princhess vs mychess-placebo): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -17     103      41   47.6%   12.2% 
+   1 mychess-placebo                14      90      49   52.0%   18.4% 
+   2 mychess-base                  -28      90      50   46.0%   16.0% 
+   3 Princhess                     159     131      28   71.4%   21.4% 
+   4 Kojiro                        135     134      27   68.5%   18.5% 
+   5 BBC                           116     121      28   66.1%   25.0% 
+   6 ZetaDva                       -76     128      28   39.3%   14.3% 
+   7 TSCP                         -318     289      29   13.8%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 144 of 600 (ZetaDva vs mychess-attack-units)
+Warning: Illegal PV move d7f7 from Kojiro (271)
+Warning: PV: gxh4 d7f7
+Warning: Illegal PV move c4b2 from Kojiro (271)
+Warning: PV: Rdb7 Rh1 Rb4 Ka7 R4b7+ Ka6 c4b2
+Warning: Illegal PV move d3b2 from Kojiro (271)
+Warning: PV: Kf5 d3b2
+Finished game 139 (mychess-placebo vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 145 of 600 (mychess-attack-units vs Princhess)
+Finished game 141 (mychess-attack-units vs TSCP): 1-0 {White wins by adjudication}
+Started game 146 of 600 (Princhess vs mychess-attack-units)
+Finished game 144 (ZetaDva vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 147 of 600 (mychess-attack-units vs BBC)
+Finished game 145 (mychess-attack-units vs Princhess): 0-1 {Black wins by adjudication}
+Started game 148 of 600 (BBC vs mychess-attack-units)
+Finished game 143 (mychess-attack-units vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 149 of 600 (mychess-attack-units vs Kojiro)
+Finished game 148 (BBC vs mychess-attack-units): 1-0 {White mates}
+Started game 150 of 600 (Kojiro vs mychess-attack-units)
+Finished game 146 (Princhess vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 151 of 600 (mychess-base vs TSCP)
+Warning: Illegal PV move g2g8 from Kojiro (292)
+Warning: PV: Bxh8 g2g8
+Finished game 150 (Kojiro vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 152 of 600 (TSCP vs mychess-base)
+Finished game 147 (mychess-attack-units vs BBC): 1-0 {White wins by adjudication}
+Started game 153 of 600 (mychess-base vs ZetaDva)
+Warning: Illegal PV move d3d2 from Kojiro (291)
+Warning: PV: d3 d3d2
+Finished game 151 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -28      95      49   45.9%   10.2% 
+   1 mychess-placebo                 7      89      50   51.0%   18.0% 
+   2 mychess-base                  -20      90      51   47.1%   15.7% 
+   3 Princhess                     176     131      30   73.3%   20.0% 
+   4 Kojiro                        153     133      29   70.7%   17.2% 
+   5 BBC                           108     118      30   65.0%   23.3% 
+   6 ZetaDva                       -70     123      30   40.0%   13.3% 
+   7 TSCP                         -332     292      31   12.9%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 154 of 600 (ZetaDva vs mychess-base)
+Finished game 149 (mychess-attack-units vs Kojiro): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 155 of 600 (mychess-base vs Princhess)
+Finished game 152 (TSCP vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 156 of 600 (Princhess vs mychess-base)
+Finished game 155 (mychess-base vs Princhess): 0-1 {Black wins by adjudication}
+Started game 157 of 600 (mychess-base vs BBC)
+Finished game 153 (mychess-base vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 158 of 600 (BBC vs mychess-base)
+Finished game 156 (Princhess vs mychess-base): 0-1 {Black mates}
+Started game 159 of 600 (mychess-base vs Kojiro)
+Warning: Illegal PV move g6g2 from Kojiro (311)
+Warning: PV: dxc4 g6g2
+Finished game 154 (ZetaDva vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 160 of 600 (Kojiro vs mychess-base)
+Warning: Illegal PV move g2h3 from BBC (307)
+Warning: PV: Qg2+ Nf3 Rh3 Qc8+ Kh7 Qf5+ Kg8 Qc8+ g2h3
+Warning: Illegal PV move h3g3 from BBC (307)
+Warning: PV: Qg2+ Nf3 Rh3 Qc8+ Kh7 Qf5+ Kg8 Qc8+ h3g3
+Warning: Illegal PV move h3g3 from BBC (307)
+Warning: PV: Qg2+ Nf3 Rh3 Qc8+ Kh7 Qf5+ Kg8 Qc8+ h3g3
+Finished game 159 (mychess-base vs Kojiro): 0-1 {Black wins by adjudication}
+Warning: Illegal PV move g2h3 from BBC (307)
+Warning: PV: Rh3 Qc8+ Kh7 Qf5+ Kg8 Qc8+ g2h3
+Warning: Illegal PV move h3g3 from BBC (307)
+Warning: PV: Rh3 Qc8+ Kh7 Qf5+ Kg8 Qc8+ h3g3
+Warning: Illegal PV move h3g3 from BBC (307)
+Warning: PV: Rh3 Qc8+ Kh7 Qf5+ Kg8 Qc8+ h3g3
+Warning: Illegal PV move g3h4 from BBC (307)
+Warning: PV: Kh7 Qf5+ Kh8 Qc8+ Kh7 g3h4
+Warning: Illegal PV move g3h4 from BBC (307)
+Warning: PV: Kh7 Qf5+ Kh8 Qc8+ Kh7 g3h4
+Warning: Illegal PV move b7f3 from BBC (307)
+Warning: PV: Kh7 Qf5+ Kh8 Qc8+ Kh7 b7f3
+Warning: Illegal PV move f7g6 from BBC (307)
+Warning: PV: Kh8 Qc8+ Kh7 f7g6
+Warning: Illegal PV move f7f8 from BBC (307)
+Warning: PV: Kh8 Qc8+ Kh7 f7f8
+Started game 161 of 600 (mychess-placebo vs TSCP)
+Warning: Illegal PV move a1b1 from BBC (307)
+Warning: PV: Qf1+ Ke4 Qa1 Nd4 Rg3 Qf5+ Kh8 Qc8+ Kh7 Qf5+ a1b1
+Warning: Illegal PV move g3f3 from BBC (307)
+Warning: PV: Qh1 b4 Rg3 Ke5+ g6 Qd7+ Kg8 Qd8+ Kf7 Qf6+ Kg8 Qd8+ g3f3
+Warning: Illegal PV move g3f3 from BBC (307)
+Warning: PV: Qh1 b4 Rg3 Ke5+ g6 Qd7+ Kg8 Qd8+ Kh7 Qd7+ g3f3
+Warning: Illegal PV move g3e3 from BBC (307)
+Warning: PV: Qh1 b4 Rg3 Ke5+ Kg8 Qc4+ Kh7 Qd3+ g3e3
+Warning: Illegal PV move g3f3 from BBC (307)
+Warning: PV: Rg3 Ke5+ Kg8 Qd8+ Kh7 Qd3+ g3f3
+Warning: Illegal PV move e3d4 from BBC (307)
+Warning: PV: Rg3 Ke5+ Rg6 Nd4 Qe1 Nc6 Qa1+ Nd4 Qe1 e3d4
+Warning: Illegal PV move h5f3 from BBC (307)
+Warning: PV: Qc1 Kd4 Qd1+ Kc5 Qc1+ Kd4 h5f3
+Warning: Illegal PV move a1f1 from BBC (307)
+Warning: PV: Qf1+ Kc5 Qc1+ Kd5 a1f1
+Finished game 161 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Started game 162 of 600 (TSCP vs mychess-placebo)
+Finished game 158 (BBC vs mychess-base): 1-0 {White wins by adjudication}
+Started game 163 of 600 (mychess-placebo vs ZetaDva)
+Finished game 160 (Kojiro vs mychess-base): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -28      93      50   46.0%   12.0% 
+   1 mychess-placebo                14      88      51   52.0%   17.6% 
+   2 mychess-base                   -6      84      59   49.2%   13.6% 
+   3 Princhess                     163     125      32   71.9%   18.8% 
+   4 Kojiro                        137     121      32   68.8%   18.8% 
+   5 BBC                           116     117      31   66.1%   22.6% 
+   6 ZetaDva                       -89     121      32   37.5%   12.5% 
+   7 TSCP                         -344     295      33   12.1%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 164 of 600 (ZetaDva vs mychess-placebo)
+Finished game 162 (TSCP vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 165 of 600 (mychess-placebo vs Princhess)
+Finished game 163 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 166 of 600 (Princhess vs mychess-placebo)
+Finished game 165 (mychess-placebo vs Princhess): 0-1 {Black wins by adjudication}
+Started game 167 of 600 (mychess-placebo vs BBC)
+Finished game 157 (mychess-base vs BBC): 1/2-1/2 {Draw by fifty moves rule}
+Started game 168 of 600 (BBC vs mychess-placebo)
+Finished game 164 (ZetaDva vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 169 of 600 (mychess-placebo vs Kojiro)
+Finished game 166 (Princhess vs mychess-placebo): 0-1 {Black mates}
+Started game 170 of 600 (Kojiro vs mychess-placebo)
+Warning: Illegal PV move c3c2 from BBC (325)
+Warning: PV: c4 Ra1 c3 Ra8+ Kg7 Ra7 Kg8 Ra8+ c3c2
+Warning: Illegal PV move d2c4 from BBC (325)
+Warning: PV: c3 Ra8+ Kg7 Ra7 Kg8 Ra8+ d2c4
+Finished game 168 (BBC vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 171 of 600 (mychess-attack-units vs TSCP)
+Warning: Illegal PV move b7b8 from BBC (325)
+Warning: PV: Re1+ Kf6 Rf1+ Ke5 Re1+ Kf4 Rf1+ Ke4 Re1+ Kd4 Rd1+ Ke5 Re1+ b7b8
+Warning: Illegal PV move g6h7 from BBC (325)
+Warning: PV: Kg7 Kf5 Rf1+ Ke4 Rg1 Kf4 Rf1+ Kg4 Rg1+ Kh4 Kg6 Rb7 Rh1+ Kg4 Rg1+ Kf4 Rf1+ Kg4 Rg1+ Kf4 g6h7
+Warning: Illegal PV move f6f5 from Kojiro (329)
+Warning: PV: Kf6 f6f5
+Warning: Illegal PV move b8b7 from Kojiro (329)
+Warning: PV: Kd8 Nf7+ Kc8 Nd6+ Kd8 b8b7
+Finished game 167 (mychess-placebo vs BBC): 1/2-1/2 {Draw by adjudication}
+Started game 172 of 600 (TSCP vs mychess-attack-units)
+Warning: Illegal PV move d2d1q from Kojiro (329)
+Warning: PV: Kd8 Nf7+ Kc8 Nd6+ d2d1q
+Warning: Illegal PV move d2d1q from Kojiro (329)
+Warning: PV: Kd8 Nf7+ Kc8 Nd6+ d2d1q
+Warning: Illegal PV move d2d1q from Kojiro (329)
+Warning: PV: Kd8 Nf7+ Kc8 Nd6+ d2d1q
+Warning: Illegal PV move c8b7 from Kojiro (329)
+Warning: PV: Kd8 Nf7+ Kc8 Nd6+ c8b7
+Warning: Illegal PV move c8b7 from Kojiro (329)
+Warning: PV: Kc8 c8b7
+Warning: Illegal PV move d2d1q from Kojiro (329)
+Warning: PV: Kc8 Nd6+ Kd8 Nf7+ d2d1q
+Warning: Illegal PV move d2d1q from Kojiro (329)
+Warning: PV: Kc8 Nd6+ Kd8 Nf7+ d2d1q
+Warning: Illegal PV move b8b7 from Kojiro (329)
+Warning: PV: Kd8 Nf7+ Kc8 Nd6+ Kd8 b8b7
+Warning: Illegal PV move d2d1q from Kojiro (329)
+Warning: PV: Kd8 Nf7+ Kc8 Nd6+ d2d1q
+Warning: Illegal PV move d2d1q from Kojiro (329)
+Warning: PV: Kd8 Nf7+ Kc8 Nd6+ d2d1q
+Warning: Illegal PV move d2d1q from Kojiro (329)
+Warning: PV: Kd8 Nf7+ Kc8 Nd6+ d2d1q
+Warning: Illegal PV move c8b7 from Kojiro (329)
+Warning: PV: Kd8 Nf7+ Kc8 Nd6+ c8b7
+Warning: Illegal PV move c8b7 from Kojiro (329)
+Warning: PV: Kc8 c8b7
+Warning: Illegal PV move d2d1q from Kojiro (329)
+Warning: PV: Kc8 Nd6+ Kd8 Nf7+ d2d1q
+Warning: Illegal PV move d2d1q from Kojiro (329)
+Warning: PV: Kc8 Nd6+ Kd8 Nf7+ d2d1q
+Finished game 169 (mychess-placebo vs Kojiro): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 173 of 600 (mychess-attack-units vs ZetaDva)
+Warning: Illegal PV move e4f3 from Kojiro (330)
+Warning: PV: Rxg6+ fxg6 Qxg6+ Kf8 Qf6+ Kg8 Qg6+ e4f3
+Warning: Illegal PV move e8e6 from Kojiro (330)
+Warning: PV: Rh6+ Kg8 Rg6+ fxg6 Qxg6+ Kf8 Qf6+ Kg8 Qg6+ e8e6
+Warning: Illegal PV move e4f3 from Kojiro (330)
+Warning: PV: Rg6+ fxg6 Qxg6+ Kf8 Qf6+ Kg8 Qg6+ e4f3
+Warning: Illegal PV move e4f3 from Kojiro (330)
+Warning: PV: Qxg6+ Kf8 Qf6+ Kg8 Qg6+ e4f3
+Finished game 170 (Kojiro vs mychess-placebo): 1/2-1/2 {Draw by 3-fold repetition}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -28      93      50   46.0%   12.0% 
+   1 mychess-placebo                12      80      60   51.7%   20.0% 
+   2 mychess-base                   -6      82      60   49.2%   15.0% 
+   3 Princhess                     152     121      34   70.6%   17.6% 
+   4 Kojiro                        128     112      34   67.6%   23.5% 
+   5 BBC                           117     108      34   66.2%   26.5% 
+   6 ZetaDva                       -83     117      34   38.2%   11.8% 
+   7 TSCP                         -350     297      34   11.8%    0.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 174 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 172 (TSCP vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 175 of 600 (mychess-attack-units vs Princhess)
+Finished game 171 (mychess-attack-units vs TSCP): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 176 of 600 (Princhess vs mychess-attack-units)
+Finished game 173 (mychess-attack-units vs ZetaDva): 0-1 {Black mates}
+Started game 177 of 600 (mychess-attack-units vs BBC)
+Finished game 174 (ZetaDva vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 178 of 600 (BBC vs mychess-attack-units)
+Finished game 175 (mychess-attack-units vs Princhess): 0-1 {Black wins by adjudication}
+Started game 179 of 600 (mychess-attack-units vs Kojiro)
+Finished game 176 (Princhess vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 180 of 600 (Kojiro vs mychess-attack-units)
+Warning: Illegal PV move c3d4 from Kojiro (350)
+Warning: PV: axb5 Na5 Na3 Bxa3 Bxa3 Qxb5 Bb4 Nc6 Ba3 Na5 c3d4
+Warning: Illegal PV move e2f2 from Kojiro (349)
+Warning: PV: Re2 e2f2
+Warning: Illegal PV move f2e3 from BBC (345)
+Warning: PV: Kd6 Rc8 Ke6 Rh8 g6 Rc8 e4 Rc6+ Ke5 Nc4+ Kf5 Ne3+ Ke5 f2e3
+Warning: Illegal PV move g7f6 from BBC (345)
+Warning: PV: Kf7 Nd5 Kg6 Ne7+ Kf7 Nd5 g7f6
+Warning: Illegal PV move f2e3 from BBC (345)
+Warning: PV: Re1 Kf3 Rc1 f2e3
+Warning: Illegal PV move f7e6 from BBC (345)
+Warning: PV: Ra2 Nc4 Re2+ Kf3 Re1 Ne3 Kf7 Ra6 f7e6
+Warning: Illegal PV move c2a2 from BBC (345)
+Warning: PV: Ra4+ Kd5 Ra5+ Ke4 Ra4+ c2a2
+Warning: Illegal PV move c4d6 from BBC (345)
+Warning: PV: Rb4 Kd5 Rb5+ Ke4 Rb4 c4d6
+Warning: Illegal PV move c4d6 from BBC (345)
+Warning: PV: Rb4 Kd5 Rb5+ Ke4 Rb4 c4d6
+Warning: Illegal PV move c4e5 from BBC (345)
+Warning: PV: Rb5+ Ke4 Rb4 c4e5
+Warning: Illegal PV move c4e5 from BBC (345)
+Warning: PV: Rb5+ Ke4 Rb4 c4e5
+Warning: Illegal PV move d7c6 from BBC (345)
+Warning: PV: Rc5 Kd6 Rb5 Ke6 Rb1 Nd6 Rf1 d7c6
+Warning: Illegal PV move e6f7 from Kojiro (350)
+Warning: PV: Rxd1 e6f7
+Warning: Illegal PV move c1c6 from BBC (345)
+Warning: PV: Rc8 Rc1 Rd8+ Ke6 Re8+ Kd5 Rd8+ Ke6 Be7 c1c6
+Warning: Illegal PV move g3h4 from BBC (345)
+Warning: PV: Rd8+ Ke6 Re8+ Kd5 Rd8+ g3h4
+Finished game 180 (Kojiro vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 181 of 600 (mychess-base vs TSCP)
+Warning: Illegal PV move h6h7 from Kojiro (349)
+Warning: PV: b2 h6h7
+Warning: Illegal PV move g3g2 from Kojiro (349)
+Warning: PV: Rg3 g3g2
+Finished game 179 (mychess-attack-units vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 182 of 600 (TSCP vs mychess-base)
+Finished game 177 (mychess-attack-units vs BBC): 0-1 {Black wins by adjudication}
+Started game 183 of 600 (mychess-base vs ZetaDva)
+Finished game 181 (mychess-base vs TSCP): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -59      86      59   41.5%   11.9% 
+   1 mychess-placebo                12      80      60   51.7%   20.0% 
+   2 mychess-base                  -11      82      61   48.4%   14.8% 
+   3 Kojiro                        143     111      36   69.4%   22.2% 
+   4 Princhess                     143     116      36   69.4%   16.7% 
+   5 BBC                           124     107      35   67.1%   25.7% 
+   6 ZetaDva                       -58     112      36   41.7%   11.1% 
+   7 TSCP                         -269     170      37   17.6%    2.7% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 184 of 600 (ZetaDva vs mychess-base)
+Finished game 183 (mychess-base vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 185 of 600 (mychess-base vs Princhess)
+Finished game 182 (TSCP vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 186 of 600 (Princhess vs mychess-base)
+Finished game 178 (BBC vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 187 of 600 (mychess-base vs BBC)
+Finished game 184 (ZetaDva vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 188 of 600 (BBC vs mychess-base)
+Finished game 185 (mychess-base vs Princhess): 0-1 {Black wins by adjudication}
+Started game 189 of 600 (mychess-base vs Kojiro)
+Finished game 186 (Princhess vs mychess-base): 1-0 {White wins by adjudication}
+Started game 190 of 600 (Kojiro vs mychess-base)
+Finished game 188 (BBC vs mychess-base): 1-0 {White wins by adjudication}
+Started game 191 of 600 (mychess-placebo vs TSCP)
+Finished game 187 (mychess-base vs BBC): 1-0 {White wins by adjudication}
+Warning: Illegal PV move g5f4 from Kojiro (369)
+Warning: PV: hxg5 g5f4
+Started game 192 of 600 (TSCP vs mychess-placebo)
+Warning: Illegal PV move f5e6 from Kojiro (370)
+Warning: PV: gxf5 f5e6
+Finished game 189 (mychess-base vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 193 of 600 (mychess-placebo vs ZetaDva)
+Finished game 192 (TSCP vs mychess-placebo): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -64      86      60   40.8%   11.7% 
+   1 mychess-placebo                17      79      61   52.5%   19.7% 
+   2 mychess-base                  -10      78      69   48.6%   13.0% 
+   3 Princhess                     156     116      38   71.1%   15.8% 
+   4 Kojiro                        149     111      37   70.3%   21.6% 
+   5 BBC                           124     105      38   67.1%   23.7% 
+   6 ZetaDva                       -74     111      38   39.5%   10.5% 
+   7 TSCP                         -280     169      39   16.7%    2.6% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 194 of 600 (ZetaDva vs mychess-placebo)
+Finished game 191 (mychess-placebo vs TSCP): 0-1 {Black wins by adjudication}
+Started game 195 of 600 (mychess-placebo vs Princhess)
+Warning: Illegal PV move f6g7 from Kojiro (370)
+Warning: PV: Kg2 f6g7
+Finished game 193 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 196 of 600 (Princhess vs mychess-placebo)
+Finished game 190 (Kojiro vs mychess-base): 1-0 {White wins by adjudication}
+Started game 197 of 600 (mychess-placebo vs BBC)
+Finished game 195 (mychess-placebo vs Princhess): 0-1 {Black wins by adjudication}
+Started game 198 of 600 (BBC vs mychess-placebo)
+Finished game 198 (BBC vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 199 of 600 (mychess-placebo vs Kojiro)
+Finished game 196 (Princhess vs mychess-placebo): 0-1 {Black mates}
+Started game 200 of 600 (Kojiro vs mychess-placebo)
+Finished game 194 (ZetaDva vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 201 of 600 (mychess-attack-units vs TSCP)
+Finished game 197 (mychess-placebo vs BBC): 1-0 {White wins by adjudication}
+Started game 202 of 600 (TSCP vs mychess-attack-units)
+Warning: Illegal PV move g5f4 from Kojiro (389)
+Warning: PV: hxg5 g5f4
+Finished game 199 (mychess-placebo vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 203 of 600 (mychess-attack-units vs ZetaDva)
+Warning: Illegal PV move d5c5 from Kojiro (390)
+Warning: PV: Rxd5 d5c5
+Warning: Illegal PV move d5g5 from Kojiro (390)
+Warning: PV: Rd5 d5g5
+Warning: Illegal PV move b6b8 from Kojiro (390)
+Warning: PV: Kf1 b6b8
+Finished game 200 (Kojiro vs mychess-placebo): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -64      86      60   40.8%   11.7% 
+   1 mychess-placebo                10      75      70   51.4%   17.1% 
+   2 mychess-base                  -15      77      70   47.9%   12.9% 
+   3 Kojiro                        168     110      40   72.5%   20.0% 
+   4 Princhess                     147     112      40   70.0%   15.0% 
+   5 BBC                           117     102      40   66.3%   22.5% 
+   6 ZetaDva                       -89     109      40   37.5%   10.0% 
+   7 TSCP                         -255     155      40   18.8%    2.5% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 204 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 203 (mychess-attack-units vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 205 of 600 (mychess-attack-units vs Princhess)
+Finished game 201 (mychess-attack-units vs TSCP): 0-1 {Black wins by adjudication}
+Started game 206 of 600 (Princhess vs mychess-attack-units)
+Finished game 206 (Princhess vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 207 of 600 (mychess-attack-units vs BBC)
+Finished game 205 (mychess-attack-units vs Princhess): 0-1 {Black wins by adjudication}
+Started game 208 of 600 (BBC vs mychess-attack-units)
+Finished game 204 (ZetaDva vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 209 of 600 (mychess-attack-units vs Kojiro)
+Finished game 207 (mychess-attack-units vs BBC): 1-0 {White wins by adjudication}
+Started game 210 of 600 (Kojiro vs mychess-attack-units)
+Finished game 208 (BBC vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 211 of 600 (mychess-base vs TSCP)
+Warning: Illegal PV move e2d3 from Kojiro (410)
+Warning: PV: Nf2 e2d3
+Finished game 202 (TSCP vs mychess-attack-units): 1/2-1/2 {Draw by stalemate}
+Started game 212 of 600 (TSCP vs mychess-base)
+Finished game 209 (mychess-attack-units vs Kojiro): 0-1 {Black mates}
+Started game 213 of 600 (mychess-base vs ZetaDva)
+Finished game 211 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -66      80      69   40.6%   11.6% 
+   1 mychess-placebo                10      75      70   51.4%   17.1% 
+   2 mychess-base                  -10      77      71   48.6%   12.7% 
+   3 Kojiro                        174     110      41   73.2%   19.5% 
+   4 Princhess                     159     111      42   71.4%   14.3% 
+   5 BBC                           111     100      42   65.5%   21.4% 
+   6 ZetaDva                      -102     108      42   35.7%    9.5% 
+   7 TSCP                         -231     136      43   20.9%    4.7% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 214 of 600 (ZetaDva vs mychess-base)
+Warning: Illegal PV move c2c5 from Kojiro (410)
+Warning: PV: Rc2 c2c5
+Warning: Illegal PV move b7c7 from Kojiro (410)
+Warning: PV: Rb7 b7c7
+Finished game 210 (Kojiro vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 215 of 600 (mychess-base vs Princhess)
+Finished game 212 (TSCP vs mychess-base): 1-0 {White wins by adjudication}
+Started game 216 of 600 (Princhess vs mychess-base)
+Finished game 213 (mychess-base vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 217 of 600 (mychess-base vs BBC)
+Finished game 216 (Princhess vs mychess-base): 1-0 {White wins by adjudication}
+Started game 218 of 600 (BBC vs mychess-base)
+Finished game 215 (mychess-base vs Princhess): 0-1 {Black wins by adjudication}
+Started game 219 of 600 (mychess-base vs Kojiro)
+Finished game 219 (mychess-base vs Kojiro): 1-0 {White wins by adjudication}
+Started game 220 of 600 (Kojiro vs mychess-base)
+Finished game 214 (ZetaDva vs mychess-base): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 221 of 600 (mychess-placebo vs TSCP)
+Warning: Illegal PV move e2e5 from Kojiro (429)
+Warning: PV: Bc3 Nf6 Be5 Nd7 e2e5
+Warning: Illegal PV move f7e6 from Kojiro (429)
+Warning: PV: Re5 Nc4 Re4 Nd6 Re5 f7e6
+Finished game 218 (BBC vs mychess-base): 1-0 {White wins by adjudication}
+Finished game 217 (mychess-base vs BBC): 0-1 {Black wins by adjudication}
+Started game 223 of 600 (mychess-placebo vs ZetaDva)
+Started game 222 of 600 (TSCP vs mychess-placebo)
+Finished game 221 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -70      79      70   40.0%   11.4% 
+   1 mychess-placebo                15      75      71   52.1%   16.9% 
+   2 mychess-base                  -22      73      79   46.8%   12.7% 
+   3 Princhess                     170     111      44   72.7%   13.6% 
+   4 Kojiro                        165     106      43   72.1%   18.6% 
+   5 BBC                           123      99      44   67.0%   20.5% 
+   6 ZetaDva                      -106     104      44   35.2%   11.4% 
+   7 TSCP                         -218     128      45   22.2%    4.4% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 224 of 600 (ZetaDva vs mychess-placebo)
+Finished game 222 (TSCP vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 225 of 600 (mychess-placebo vs Princhess)
+Warning: Illegal PV move c2b3 from Kojiro (429)
+Warning: PV: hxg3 c2b3
+Finished game 220 (Kojiro vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 226 of 600 (Princhess vs mychess-placebo)
+Finished game 223 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 227 of 600 (mychess-placebo vs BBC)
+Finished game 225 (mychess-placebo vs Princhess): 0-1 {Black wins by adjudication}
+Started game 228 of 600 (BBC vs mychess-placebo)
+Finished game 226 (Princhess vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 229 of 600 (mychess-placebo vs Kojiro)
+Finished game 224 (ZetaDva vs mychess-placebo): 1/2-1/2 {Draw by adjudication}
+Started game 230 of 600 (Kojiro vs mychess-placebo)
+Warning: Illegal PV move e4d6 from Kojiro (447)
+Warning: PV: Qh1+ Kg3 Qg1+ Kh3 Qf1+ Kg4 Qxe2+ Kf4 Qf1+ Kg3 Qg1+ Kf3 Qh1+ Ke3 Qe1+ Kf3 Qh1+ e4d6
+Warning: Illegal PV move f4e5 from Kojiro (447)
+Warning: PV: Qxe2+ Kg3 Qe3+ Kg2 Qg1+ Kf3 Qh1+ Ke2 Qf1+ Ke3 Qh3+ Kf4 Qf1+ Kg3 Qg1+ Kf3 Rf1+ Nf2 Rxf2+ f4e5
+Warning: Illegal PV move e4d6 from Kojiro (447)
+Warning: PV: Qg1+ Kh3 Qh1+ Kg4 Qh4+ Kf3 Qh1+ Ke3 Qh3+ Kf4 Qh4+ Ke3 Qh3+ e4d6
+Warning: Illegal PV move e4d6 from Kojiro (447)
+Warning: PV: Qh1+ Ke2 Qe1+ Kf3 Qh1+ e4d6
+Warning: Illegal PV move d6e7 from Kojiro (447)
+Warning: PV: Qh1+ Ke2 Qe1+ Kf3 Qh1+ d6e7
+Finished game 227 (mychess-placebo vs BBC): 0-1 {Black wins by adjudication}
+Started game 231 of 600 (mychess-attack-units vs TSCP)
+Warning: Illegal PV move d6e7 from Kojiro (447)
+Warning: PV: Qf1+ Kg3 Qg1+ Kf3 Qh1+ Kg4 Qh4+ Kf3 Qh1+ d6e7
+Warning: Illegal PV move d7e7 from Kojiro (447)
+Warning: PV: Qg1+ Kf3 Qh1+ Ke2 Qf1+ Ke3 Qh3+ Ng3 Qe6+ Ne4 Qh3+ d7e7
+Warning: Illegal PV move d7e7 from Kojiro (447)
+Warning: PV: Qh5+ Kf4 Qh4+ Kf3 Qh1+ Kf4 Qh4+ d7e7
+Warning: Illegal PV move e4d6 from Kojiro (447)
+Warning: PV: Qh4+ Kf3 Qh1+ Kf4 Qh4+ Ke3 Qe1+ Kf4 Qh4+ e4d6
+Warning: Illegal PV move e4f6 from Kojiro (447)
+Warning: PV: Qg4+ Kf2 Qg1+ Kf3 Qh1+ Kf4 Qh4+ Kf3 Qh1+ e4f6
+Finished game 228 (BBC vs mychess-placebo): 1-0 {White wins by adjudication}
+Warning: Illegal PV move d7e7 from Kojiro (447)
+Warning: PV: Qg1+ Kf3 Qh1+ Ke2 Qe1+ Kf3 Qh1+ d7e7
+Started game 232 of 600 (TSCP vs mychess-attack-units)
+Warning: Illegal PV move a6a7 from Kojiro (448)
+Warning: PV: Bxf4 a6a7
+Warning: Illegal PV move g5g4 from Kojiro (447)
+Warning: PV: Kxe7 g5g4
+Warning: Illegal PV move g4g3 from Kojiro (447)
+Warning: PV: g4 g4g3
+Warning: Illegal PV move b2a1 from Kojiro (448)
+Warning: PV: Kb2 b2a1
+Warning: Illegal PV move c3h3 from Kojiro (448)
+Warning: PV: c6 c3h3
+Finished game 229 (mychess-placebo vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 233 of 600 (mychess-attack-units vs ZetaDva)
+Finished game 231 (mychess-attack-units vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -64      79      71   40.8%   11.3% 
+   1 mychess-placebo                 0      71      79   50.0%   16.5% 
+   2 mychess-base                  -17      72      80   47.5%   12.5% 
+   3 Princhess                     181     110      46   73.9%   13.0% 
+   4 Kojiro                        156     104      45   71.1%   17.8% 
+   5 BBC                           135      99      46   68.5%   19.6% 
+   6 ZetaDva                      -109     101      46   34.8%   13.0% 
+   7 TSCP                         -227     128      47   21.3%    4.3% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 234 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 230 (Kojiro vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 235 of 600 (mychess-attack-units vs Princhess)
+Finished game 232 (TSCP vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 236 of 600 (Princhess vs mychess-attack-units)
+Finished game 233 (mychess-attack-units vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 237 of 600 (mychess-attack-units vs BBC)
+Finished game 234 (ZetaDva vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 238 of 600 (BBC vs mychess-attack-units)
+Finished game 236 (Princhess vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 239 of 600 (mychess-attack-units vs Kojiro)
+Warning: Illegal PV move g7f6 from BBC (464)
+Warning: PV: Qh5 Rh6 Qf5 Rf6 Qg5 g7f6
+Warning: Illegal PV move h5h3 from BBC (464)
+Warning: PV: Qg5 Rg6 Qf5 h5h3
+Warning: Illegal PV move h2g2 from BBC (464)
+Warning: PV: Qg5 Rg6 Qf5 h2g2
+Warning: Illegal PV move g5d8 from BBC (464)
+Warning: PV: Qf4 Bd6 Qg5 Be7 Rc1 Qd8 g5d8
+Warning: Illegal PV move f3g2 from BBC (464)
+Warning: PV: Qg5 Be7 Qf5 f3g2
+Finished game 237 (mychess-attack-units vs BBC): 0-1 {Black wins by adjudication}
+Started game 240 of 600 (Kojiro vs mychess-attack-units)
+Finished game 235 (mychess-attack-units vs Princhess): 0-1 {Black wins by adjudication}
+Started game 241 of 600 (mychess-base vs TSCP)
+Warning: Illegal PV move a4a3 from Kojiro (467)
+Warning: PV: Rf8 a4a3
+Warning: Illegal PV move f8f7 from Kojiro (467)
+Warning: PV: Re7 f8f7
+Warning: Illegal PV move c1b2 from Kojiro (468)
+Warning: PV: Ne3 c1b2
+Warning: Illegal PV move f8f7 from Kojiro (467)
+Warning: PV: Rf8 f8f7
+Finished game 239 (mychess-attack-units vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 242 of 600 (TSCP vs mychess-base)
+Finished game 240 (Kojiro vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 243 of 600 (mychess-base vs ZetaDva)
+Finished game 241 (mychess-base vs TSCP): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -76      75      79   39.2%   10.1% 
+   1 mychess-placebo                -4      71      80   49.4%   16.3% 
+   2 mychess-base                  -21      72      81   46.9%   12.3% 
+   3 Princhess                     191     110      48   75.0%   12.5% 
+   4 Kojiro                        172     103      48   72.9%   16.7% 
+   5 BBC                           140      98      47   69.1%   19.1% 
+   6 ZetaDva                      -104      99      48   35.4%   12.5% 
+   7 TSCP                         -215     122      49   22.4%    4.1% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 244 of 600 (ZetaDva vs mychess-base)
+Finished game 242 (TSCP vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 245 of 600 (mychess-base vs Princhess)
+Finished game 238 (BBC vs mychess-attack-units): 1/2-1/2 {Draw by insufficient mating material}
+Started game 246 of 600 (Princhess vs mychess-base)
+Finished game 244 (ZetaDva vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 247 of 600 (mychess-base vs BBC)
+Finished game 243 (mychess-base vs ZetaDva): 0-1 {Black wins by adjudication}
+Started game 248 of 600 (BBC vs mychess-base)
+Finished game 245 (mychess-base vs Princhess): 1-0 {White mates}
+Started game 249 of 600 (mychess-base vs Kojiro)
+Finished game 246 (Princhess vs mychess-base): 0-1 {Black mates}
+Started game 250 of 600 (Kojiro vs mychess-base)
+Warning: Illegal PV move f5f6 from BBC (483)
+Warning: PV: Qxg3+ Qg2 Qd6 Nc4 Qf4 Nb6 Qd6 Qg3 f5f6
+Warning: Illegal PV move f7f6 from BBC (483)
+Warning: PV: Qd6 Nc4 Qf4 Nb6 Qd6 Qg3 f7f6
+Warning: Illegal PV move e7c5 from Kojiro (487)
+Warning: PV: Re8 Kg3 Reg8 Rfe1 Kh8 Rad1 Kh7 Ra1 e7c5
+Finished game 250 (Kojiro vs mychess-base): 0-1 {Black wins by adjudication}
+Warning: Illegal PV move c1d1 from Kojiro (487)
+Warning: PV: Rg8 Rd1 Rg7 Rb1 Kg8 c1d1
+Started game 251 of 600 (mychess-placebo vs TSCP)
+Finished game 247 (mychess-base vs BBC): 0-1 {Black wins by adjudication}
+Finished game 249 (mychess-base vs Kojiro): 1-0 {White wins by adjudication}
+Started game 253 of 600 (mychess-placebo vs ZetaDva)
+Started game 252 of 600 (TSCP vs mychess-placebo)
+Finished game 248 (BBC vs mychess-base): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -75      74      80   39.4%   11.3% 
+   1 mychess-placebo                -4      71      80   49.4%   16.3% 
+   2 mychess-base                   -8      68      90   48.9%   11.1% 
+   3 Princhess                     164     103      50   72.0%   12.0% 
+   4 Kojiro                        147      98      50   70.0%   16.0% 
+   5 BBC                           147      95      50   70.0%   20.0% 
+   6 ZetaDva                      -100      96      50   36.0%   12.0% 
+   7 TSCP                         -220     122      50   22.0%    4.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 254 of 600 (ZetaDva vs mychess-placebo)
+Finished game 252 (TSCP vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 255 of 600 (mychess-placebo vs Princhess)
+Finished game 253 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 256 of 600 (Princhess vs mychess-placebo)
+Finished game 251 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Started game 257 of 600 (mychess-placebo vs BBC)
+Finished game 255 (mychess-placebo vs Princhess): 1-0 {White mates}
+Started game 258 of 600 (BBC vs mychess-placebo)
+Finished game 254 (ZetaDva vs mychess-placebo): 1/2-1/2 {Draw by adjudication}
+Started game 259 of 600 (mychess-placebo vs Kojiro)
+Finished game 256 (Princhess vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 260 of 600 (Kojiro vs mychess-placebo)
+Finished game 258 (BBC vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 261 of 600 (mychess-attack-units vs TSCP)
+Finished game 259 (mychess-placebo vs Kojiro): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 262 of 600 (TSCP vs mychess-attack-units)
+Finished game 257 (mychess-placebo vs BBC): 0-1 {Black wins by adjudication}
+Started game 263 of 600 (mychess-attack-units vs ZetaDva)
+Finished game 260 (Kojiro vs mychess-placebo): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -75      74      80   39.4%   11.3% 
+   1 mychess-placebo                 4      66      90   50.6%   16.7% 
+   2 mychess-base                   -8      68      90   48.9%   11.1% 
+   3 BBC                           157      95      52   71.2%   19.2% 
+   4 Princhess                     157     101      52   71.2%   11.5% 
+   5 Kojiro                        133      94      52   68.3%   17.3% 
+   6 ZetaDva                      -103      94      52   35.6%   13.5% 
+   7 TSCP                         -229     121      52   21.2%    3.8% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 264 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 262 (TSCP vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 265 of 600 (mychess-attack-units vs Princhess)
+Finished game 263 (mychess-attack-units vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 266 of 600 (Princhess vs mychess-attack-units)
+Finished game 261 (mychess-attack-units vs TSCP): 0-1 {Black wins by adjudication}
+Started game 267 of 600 (mychess-attack-units vs BBC)
+Finished game 265 (mychess-attack-units vs Princhess): 1-0 {White mates}
+Started game 268 of 600 (BBC vs mychess-attack-units)
+Finished game 264 (ZetaDva vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 269 of 600 (mychess-attack-units vs Kojiro)
+Finished game 266 (Princhess vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 270 of 600 (Kojiro vs mychess-attack-units)
+Finished game 269 (mychess-attack-units vs Kojiro): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 271 of 600 (mychess-base vs TSCP)
+Finished game 268 (BBC vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 272 of 600 (TSCP vs mychess-base)
+Finished game 271 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Started game 273 of 600 (mychess-base vs ZetaDva)
+Finished game 267 (mychess-attack-units vs BBC): 1/2-1/2 {Draw by fifty moves rule}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -63      69      89   41.0%   12.4% 
+   1 mychess-placebo                 4      66      90   50.6%   16.7% 
+   2 mychess-base                   -4      68      91   49.5%   11.0% 
+   3 BBC                           158      92      54   71.3%   20.4% 
+   4 Princhess                     150      98      54   70.4%   11.1% 
+   5 Kojiro                        130      91      53   67.9%   18.9% 
+   6 ZetaDva                      -113      93      54   34.3%   13.0% 
+   7 TSCP                         -222     116      55   21.8%    3.6% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 274 of 600 (ZetaDva vs mychess-base)
+Finished game 272 (TSCP vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 275 of 600 (mychess-base vs Princhess)
+Finished game 273 (mychess-base vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 276 of 600 (Princhess vs mychess-base)
+Finished game 270 (Kojiro vs mychess-attack-units): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 277 of 600 (mychess-base vs BBC)
+Finished game 274 (ZetaDva vs mychess-base): 1-0 {White wins by adjudication}
+Started game 278 of 600 (BBC vs mychess-base)
+Finished game 275 (mychess-base vs Princhess): 0-1 {Black wins by adjudication}
+Started game 279 of 600 (mychess-base vs Kojiro)
+Finished game 276 (Princhess vs mychess-base): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 280 of 600 (Kojiro vs mychess-base)
+Warning: Illegal PV move b3a5 from Kojiro (548)
+Warning: PV: Ng5 Rde8 Nf7 Ref8 Ng5 Re8 Qe3 b3a5
+Warning: Illegal PV move g5g6 from Kojiro (548)
+Warning: PV: Rcc2 g5g6
+Warning: Illegal PV move h3d3 from BBC (543)
+Warning: PV: Qc3+ Kg4 Qg7+ Kf4 Qc7+ e5 Qc1+ Ke4 Qe1+ Kf4 Qd2+ Ke4 Qe1+ h3d3
+Warning: Illegal PV move f3c3 from BBC (543)
+Warning: PV: Qc3+ Kg4 Qg7+ Kf4 Qc7+ e5 Qc1+ Ke4 Qe1+ Re3 Qh1+ Rf3 Qe1+ Kf4 Qd2+ Ke4 Qe1+ f3c3
+Warning: Illegal PV move f3c3 from BBC (543)
+Warning: PV: Qg7+ Kf4 Qc7+ e5 Qc1+ Ke4 Qe1+ Re3 Qh1+ Rf3 Qe1+ Kf4 Qd2+ Ke4 Qe1+ f3c3
+Warning: Illegal PV move f5f6 from BBC (543)
+Warning: PV: Qg7+ Kf4 Qc7+ e5 Qc1+ Ke4 Qe1+ Re3 Qh1+ Kd4 Qd1+ Rd3 Qg1+ Re3 Qd1+ f5f6
+Warning: Illegal PV move f5f6 from BBC (543)
+Warning: PV: Qc7+ e5 Qc1+ Ke4 Qc2+ Kf4 Qc1+ f5f6
+Warning: Illegal PV move e4f5 from BBC (543)
+Warning: PV: Qc7+ e5 Qc1+ Ke4 Qc2+ Rd3 Qe2+ Kd4 Qf2+ Ke4 Qe2+ e4f5
+Warning: Illegal PV move h3c3 from BBC (543)
+Warning: PV: Qg7+ Kh5 Qh8+ Kg4 Qg7+ h3c3
+Warning: Illegal PV move g3h3 from BBC (543)
+Warning: PV: Qh8+ Kg3 Qc3+ g3h3
+Warning: Illegal PV move g3h3 from BBC (543)
+Warning: PV: Qh8+ Kg3 Qc3+ g3h3
+Warning: Illegal PV move h3h8 from BBC (543)
+Warning: PV: Qg7+ h3h8
+Warning: Illegal PV move h3h7 from BBC (543)
+Warning: PV: Qg7+ h3h7
+Warning: Illegal PV move h3h8 from BBC (543)
+Warning: PV: Qg7+ h3h8
+Warning: Illegal PV move h3h5 from BBC (543)
+Warning: PV: Qg7+ h3h5
+Warning: Illegal PV move e4f5 from BBC (543)
+Warning: PV: Qh7+ Kg4 Qg7+ e4f5
+Warning: Illegal PV move g4h3 from BBC (543)
+Warning: PV: Qh7+ Kg4 Qg7+ g4h3
+Warning: Illegal PV move h3h7 from BBC (543)
+Warning: PV: Qg7+ h3h7
+Warning: Illegal PV move d5e6 from BBC (543)
+Warning: PV: Qg7+ d5e6
+Warning: Illegal PV move h3h7 from BBC (543)
+Warning: PV: Qg7+ h3h7
+Warning: Illegal PV move f5g6 from BBC (543)
+Warning: PV: Qg7+ f5g6
+Warning: Illegal PV move f5g6 from BBC (543)
+Warning: PV: Qg7+ f5g6
+Warning: Illegal PV move f5g6 from BBC (543)
+Warning: PV: Qg7+ f5g6
+Warning: Illegal PV move d5g8 from BBC (543)
+Warning: PV: Qg7+ d5g8
+Finished game 277 (mychess-base vs BBC): 1/2-1/2 {Draw by 3-fold repetition}
+Finished game 279 (mychess-base vs Kojiro): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 281 of 600 (mychess-placebo vs TSCP)
+Started game 282 of 600 (TSCP vs mychess-placebo)
+Finished game 278 (BBC vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 283 of 600 (mychess-placebo vs ZetaDva)
+Warning: Illegal PV move g6g7 from Kojiro (548)
+Warning: PV: g6 g6g7
+Warning: Illegal PV move e5f5 from Kojiro (548)
+Warning: PV: Re5 e5f5
+Finished game 280 (Kojiro vs mychess-base): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -62      69      90   41.1%   13.3% 
+   1 mychess-placebo                 4      66      90   50.6%   16.7% 
+   2 mychess-base                   -3      64     100   49.5%   13.0% 
+   3 Princhess                     152      95      56   70.5%   12.5% 
+   4 BBC                           144      88      56   69.6%   21.4% 
+   5 Kojiro                        130      87      56   67.9%   21.4% 
+   6 ZetaDva                      -109      91      56   34.8%   12.5% 
+   7 TSCP                         -226     116      56   21.4%    3.6% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 284 of 600 (ZetaDva vs mychess-placebo)
+Finished game 281 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Started game 285 of 600 (mychess-placebo vs Princhess)
+Finished game 282 (TSCP vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 286 of 600 (Princhess vs mychess-placebo)
+Finished game 284 (ZetaDva vs mychess-placebo): 1/2-1/2 {Draw by adjudication}
+Finished game 285 (mychess-placebo vs Princhess): 0-1 {Black wins by adjudication}
+Started game 287 of 600 (mychess-placebo vs BBC)
+Started game 288 of 600 (BBC vs mychess-placebo)
+Finished game 283 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 289 of 600 (mychess-placebo vs Kojiro)
+Finished game 286 (Princhess vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 290 of 600 (Kojiro vs mychess-placebo)
+Finished game 289 (mychess-placebo vs Kojiro): 1-0 {White wins by adjudication}
+Started game 291 of 600 (mychess-attack-units vs TSCP)
+Finished game 288 (BBC vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 292 of 600 (TSCP vs mychess-attack-units)
+Warning: Illegal PV move b3a5 from Kojiro (568)
+Warning: PV: Ng5 Rde8 Nf7 Ref8 Ng5 Re8 Qe3 b3a5
+Warning: Illegal PV move g5g6 from Kojiro (568)
+Warning: PV: Rcc2 g5g6
+Finished game 291 (mychess-attack-units vs TSCP): 0-1 {Black wins by adjudication}
+Started game 293 of 600 (mychess-attack-units vs ZetaDva)
+Finished game 287 (mychess-placebo vs BBC): 1/2-1/2 {Draw by 3-fold repetition}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -66      68      91   40.7%   13.2% 
+   1 mychess-placebo                14      63      99   52.0%   17.2% 
+   2 mychess-base                   -3      64     100   49.5%   13.0% 
+   3 Princhess                     160      95      58   71.6%   12.1% 
+   4 BBC                           132      85      58   68.1%   22.4% 
+   5 Kojiro                        120      86      57   66.7%   21.1% 
+   6 ZetaDva                      -112      89      58   34.5%   13.8% 
+   7 TSCP                         -220     111      59   22.0%    3.4% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 294 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 292 (TSCP vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 295 of 600 (mychess-attack-units vs Princhess)
+Warning: Illegal PV move a6c6 from Kojiro (568)
+Warning: PV: Kg3 a6c6
+Warning: Illegal PV move f5f6 from Kojiro (568)
+Warning: PV: Kf5 f5f6
+Finished game 290 (Kojiro vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 296 of 600 (Princhess vs mychess-attack-units)
+Finished game 293 (mychess-attack-units vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 297 of 600 (mychess-attack-units vs BBC)
+Finished game 294 (ZetaDva vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 298 of 600 (BBC vs mychess-attack-units)
+Finished game 295 (mychess-attack-units vs Princhess): 1-0 {White mates}
+Started game 299 of 600 (mychess-attack-units vs Kojiro)
+Finished game 296 (Princhess vs mychess-attack-units): 0-1 {Black mates}
+Started game 300 of 600 (Kojiro vs mychess-attack-units)
+Warning: Illegal PV move g6h5 from Kojiro (587)
+Warning: PV: Rc3+ Kg2 Rc2 Kf3 g6h5
+Warning: Illegal PV move f7g6 from Kojiro (587)
+Warning: PV: h5 Rd8 Kf6 Ke3 Ke7 Ra8 Rc3+ Kf4 Rc4+ Ke3 Ke6 Ra6+ Ke7 Ra8 f7g6
+Warning: Illegal PV move c6c5 from BBC (583)
+Warning: PV: Re2+ Rf2 Rxf2+ Kxf2 Qh4+ Kg2 Qg4+ Kh1 Qd1+ Kg2 Qg4+ c6c5
+Warning: Illegal PV move e3f3 from Kojiro (587)
+Warning: PV: Rc3+ Kd4 Rc2 Ke3 Rc3+ e3f3
+Warning: Illegal PV move b6b7 from Kojiro (587)
+Warning: PV: Rc3+ Kd4 Rc2 Ke3 Rc3+ b6b7
+Warning: Illegal PV move f2e3 from Kojiro (587)
+Warning: PV: Rc3+ Kd4 Rc2 Ke3 Rc3+ f2e3
+Warning: Illegal PV move b6b8 from Kojiro (587)
+Warning: PV: Rc8 Kf3 Rc3+ Ke2 Rc2+ Kf3 Rc8 Ke2 Rc2+ b6b8
+Warning: Illegal PV move b6b7 from Kojiro (587)
+Warning: PV: Rc8 Kf3 Rc3+ Ke2 Rc2+ Kf3 Rc8 Ke2 Rc2+ b6b7
+Warning: Illegal PV move c6c7 from BBC (583)
+Warning: PV: Rxf2+ Kxf2 Qh4+ Kg2 Qg4+ Kh1 Qd1+ Kg2 Qg4+ c6c7
+Warning: Illegal PV move e5d6 from BBC (583)
+Warning: PV: Qh4+ Kg2 Qg4+ Kh1 Qd1+ Kg2 Qg4+ e5d6
+Warning: Illegal PV move c8e6 from BBC (583)
+Warning: PV: Qh4+ Ke2 Qxh2+ Kd3 Bb8 Qc8 Qg3+ Kc2 Bxd6 exd6 Qg2+ Kc1 Qf1+ Kc2 Qg2+ c8e6
+Warning: Illegal PV move f2g3 from Kojiro (587)
+Warning: PV: Rc2 Ra8 Kf6 Kf3 Kf5 Rd8 Rc3+ Ke2 Kf6 Kd2 Rf3 Ke2 Rc3 f2g3
+Warning: Illegal PV move b2b1 from BBC (583)
+Warning: PV: Qxh2 Kd3 Bb6 Kc4 Qxb2 Qh5+ Kg8 Qe8+ Kh7 Qh5+ b2b1
+Warning: Illegal PV move e3f2 from Kojiro (587)
+Warning: PV: Ke6 Rb6+ Kd5 Rb7 Ke6 e3f2
+Warning: Illegal PV move f7g6 from Kojiro (587)
+Warning: PV: Ke6 Rb6+ Kd5 Rb7 Ke6 f7g6
+Warning: Illegal PV move f3f2 from Kojiro (587)
+Warning: PV: Ke6 Rb6+ Kd7 Kf3 Ke7 Rb8 Ke6 Rb7 Rc1 Kf4 Rf1 Kf3 Rc1 f3f2
+Warning: Illegal PV move b7f7 from Kojiro (587)
+Warning: PV: Rc1 Rb6+ Kf5 Rb7 Kf6 Rb6+ Kf5 b7f7
+Warning: Illegal PV move c6e8 from BBC (583)
+Warning: PV: Bd8 Qc6 Qg3+ Ke2 Qg4+ Kd3 Qg3+ c6e8
+Warning: Illegal PV move a8e8 from BBC (583)
+Warning: PV: Qg3+ Ne3 Qh4 Nc4 Qg3+ a8e8
+Warning: Illegal PV move a8d8 from BBC (583)
+Warning: PV: Qg3+ Ke2 Qg4+ Kd3 Qg3+ a8d8
+Warning: Illegal PV move a8d8 from BBC (583)
+Warning: PV: Qf2+ Kd3 Qf1+ Kc2 Qf2+ a8d8
+Finished game 299 (mychess-attack-units vs Kojiro): 1/2-1/2 {Draw by adjudication}
+Warning: Illegal PV move c8e6 from BBC (583)
+Warning: PV: Qh4 Nc4 Kh7 Qc8 Qf2+ Kb1 Qf1+ Kc2 Qf2+ c8e6
+Warning: Illegal PV move c8d8 from BBC (583)
+Warning: PV: Qh4 Nc4 Kh7 Nd2 Kg8 Nc4 Kf7 Nd6+ Kf8 Qc8 Qf2+ Kd3 Qf1+ Kc2 Qf2+ c8d8
+Finished game 300 (Kojiro vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Warning: Illegal PV move c8d8 from BBC (583)
+Warning: PV: Kf7 Nc4 Qf2+ Kb1 Qe1+ Kc2 Qf2+ c8d8
+Started game 301 of 600 (mychess-base vs TSCP)
+Finished game 298 (BBC vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 303 of 600 (mychess-base vs ZetaDva)
+Started game 302 of 600 (TSCP vs mychess-base)
+Warning: Illegal PV move f7e6 from BBC (583)
+Warning: PV: Qc1+ Kb4 Qf4 Qc7+ Be7+ Ka5 Kf8 Qc8+ Kf7 Qc7 f7e6
+Warning: Illegal PV move e7d6 from BBC (583)
+Warning: PV: Qc1+ Kb4 Qf4 Qc7+ Be7+ Ka5 Kf8 Qc8+ Kf7 Qc7 e7d6
+Warning: Illegal PV move c4d6 from BBC (583)
+Warning: PV: Qa1+ Kb5 Qf1 Qc7+ Be7 Kb6 Qf2+ Kb5 Qf1 c4d6
+Warning: Illegal PV move g6g5 from BBC (583)
+Warning: PV: Qe7 Qf3 Qc7 Qa8 Qe7 Qg2 Qc7 Qa8 g6g5
+Warning: Illegal PV move d6f5 from BBC (583)
+Warning: PV: Kh7 Qf7 Qb6+ Kc4 Qc6+ Kb4 Qb6+ d6f5
+Finished game 302 (TSCP vs mychess-base): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -49      65      99   42.9%   13.1% 
+   1 mychess-placebo                10      63     100   51.5%   17.0% 
+   2 mychess-base                   -7      64     101   49.0%   12.9% 
+   3 Princhess                     140      91      60   69.2%   11.7% 
+   4 BBC                           136      85      59   68.6%   22.0% 
+   5 Kojiro                        114      83      60   65.8%   21.7% 
+   6 ZetaDva                      -108      87      60   35.0%   13.3% 
+   7 TSCP                         -210     107      61   23.0%    3.3% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 304 of 600 (ZetaDva vs mychess-base)
+Finished game 303 (mychess-base vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 305 of 600 (mychess-base vs Princhess)
+Finished game 301 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Started game 306 of 600 (Princhess vs mychess-base)
+Finished game 297 (mychess-attack-units vs BBC): 0-1 {Black wins by adjudication}
+Started game 307 of 600 (mychess-base vs BBC)
+Finished game 304 (ZetaDva vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 308 of 600 (BBC vs mychess-base)
+Finished game 305 (mychess-base vs Princhess): 0-1 {Black wins by adjudication}
+Started game 309 of 600 (mychess-base vs Kojiro)
+Finished game 306 (Princhess vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 310 of 600 (Kojiro vs mychess-base)
+Finished game 307 (mychess-base vs BBC): 0-1 {Black wins by adjudication}
+Started game 311 of 600 (mychess-placebo vs TSCP)
+Warning: Illegal PV move b2b3 from Kojiro (608)
+Warning: PV: Nb1 Rc2 Na3 Rc3 Rab1 b2b3
+Warning: Illegal PV move d5c4 from Kojiro (608)
+Warning: PV: Be2 Nc4 Nb1 Rb3 Nd2 Rc3 Nb1 d5c4
+Warning: Illegal PV move b5c4 from Kojiro (608)
+Warning: PV: Kf2 b5c4
+Finished game 308 (BBC vs mychess-base): 0-1 {Black mates}
+Started game 312 of 600 (TSCP vs mychess-placebo)
+Warning: Illegal PV move b8d8 from Kojiro (608)
+Warning: PV: Kg2 b8d8
+Warning: Illegal PV move a4c6 from Kojiro (607)
+Warning: PV: Rb7 Rcb6 Rc7 Rc6 Rb7 a4c6
+Warning: Illegal PV move b8d8 from Kojiro (608)
+Warning: PV: Kf1 b8d8
+Warning: Illegal PV move b8d8 from Kojiro (608)
+Warning: PV: Kxf2 b8d8
+Warning: Illegal PV move e5f6 from Kojiro (607)
+Warning: PV: Rf5+ Kg3 Rg5+ Kf4 Rf5+ e5f6
+Warning: Illegal PV move h2e2 from Kojiro (607)
+Warning: PV: Rh2 Bd1 Rh1 Be2 Rh2 h2e2
+Warning: Illegal PV move g3h4 from Kojiro (607)
+Warning: PV: Rh2 Bd1 Rh1 Be2 Rh2 g3h4
+Warning: Illegal PV move a8d8 from Kojiro (608)
+Warning: PV: a8=Q a8d8
+Warning: Illegal PV move f3h1 from Kojiro (607)
+Warning: PV: h5 Bd1 Rh1 Be2 Rh2 Bd1 Rf2+ f3h1
+Warning: Illegal PV move e3f4 from Kojiro (607)
+Warning: PV: h5 Bd1 Rh1 Be2 Rh2 Bd1 e3f4
+Finished game 310 (Kojiro vs mychess-base): 1-0 {White wins by adjudication}
+Started game 313 of 600 (mychess-placebo vs ZetaDva)
+Warning: Illegal PV move d2d1 from Kojiro (607)
+Warning: PV: Bg6 b4 Rg2+ Kh4 Rh2+ Kg5 d2d1
+Finished game 311 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -53      65     100   42.5%   13.0% 
+   1 mychess-placebo                14      62     101   52.0%   16.8% 
+   2 mychess-base                    0      62     109   50.0%   11.9% 
+   3 BBC                           135      83      62   68.5%   21.0% 
+   4 Princhess                     135      89      62   68.5%   11.3% 
+   5 Kojiro                        118      82      61   66.4%   21.3% 
+   6 ZetaDva                      -116      87      62   33.9%   12.9% 
+   7 TSCP                         -218     107      63   22.2%    3.2% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 314 of 600 (ZetaDva vs mychess-placebo)
+Finished game 309 (mychess-base vs Kojiro): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 315 of 600 (mychess-placebo vs Princhess)
+Finished game 312 (TSCP vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 316 of 600 (Princhess vs mychess-placebo)
+Finished game 314 (ZetaDva vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 317 of 600 (mychess-placebo vs BBC)
+Finished game 313 (mychess-placebo vs ZetaDva): 0-1 {Black wins by adjudication}
+Started game 318 of 600 (BBC vs mychess-placebo)
+Finished game 315 (mychess-placebo vs Princhess): 0-1 {Black wins by adjudication}
+Finished game 316 (Princhess vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 319 of 600 (mychess-placebo vs Kojiro)
+Started game 320 of 600 (Kojiro vs mychess-placebo)
+Finished game 317 (mychess-placebo vs BBC): 0-1 {Black wins by adjudication}
+Started game 321 of 600 (mychess-attack-units vs TSCP)
+Warning: Illegal PV move h4f3 from Kojiro (627)
+Warning: PV: Kh7 h4f3
+Warning: Illegal PV move f7f5 from Kojiro (627)
+Warning: PV: Kg6 f7f5
+Warning: Illegal PV move c2c1 from Kojiro (627)
+Warning: PV: Kxh6 c2c1
+Finished game 319 (mychess-placebo vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 322 of 600 (TSCP vs mychess-attack-units)
+Finished game 321 (mychess-attack-units vs TSCP): 1-0 {White wins by adjudication}
+Started game 323 of 600 (mychess-attack-units vs ZetaDva)
+Finished game 320 (Kojiro vs mychess-placebo): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -48      64     101   43.1%   12.9% 
+   1 mychess-placebo                 6      60     109   50.9%   15.6% 
+   2 mychess-base                    0      61     110   50.0%   12.7% 
+   3 BBC                           139      83      63   69.0%   20.6% 
+   4 Princhess                     131      88      64   68.0%   10.9% 
+   5 Kojiro                        112      80      64   65.6%   21.9% 
+   6 ZetaDva                      -100      84      64   35.9%   12.5% 
+   7 TSCP                         -225     106      65   21.5%    3.1% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 324 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 318 (BBC vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 325 of 600 (mychess-attack-units vs Princhess)
+Finished game 322 (TSCP vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 326 of 600 (Princhess vs mychess-attack-units)
+Finished game 323 (mychess-attack-units vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 327 of 600 (mychess-attack-units vs BBC)
+Finished game 324 (ZetaDva vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 328 of 600 (BBC vs mychess-attack-units)
+Finished game 326 (Princhess vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 329 of 600 (mychess-attack-units vs Kojiro)
+Finished game 325 (mychess-attack-units vs Princhess): 0-1 {Black wins by adjudication}
+Started game 330 of 600 (Kojiro vs mychess-attack-units)
+Warning: Illegal PV move b2b3 from Kojiro (648)
+Warning: PV: Nb1 Rc2 Na3 Rc3 Rab1 b2b3
+Warning: Illegal PV move g5g4 from BBC (643)
+Warning: PV: e3 Bxb4 Kg5 Kg1 f4 Bc3 Kf5 Bc8+ Kg5 Bb7 g5g4
+Warning: Illegal PV move g5g4 from BBC (643)
+Warning: PV: e3 Bf3 Kg5 Be2 f4 Be7+ Kf5 Bxb4 Kg5 Bc3 Kh4 Be1+ Kg5 Bc3 g5g4
+Warning: Illegal PV move g5g4 from BBC (643)
+Warning: PV: Kg5 Be2 Kf4 Bd6+ Kg5 Bxb4 f4 Bc3 Kh4 Be1+ Kg5 Bc3 g5g4
+Warning: Illegal PV move d6c5 from BBC (643)
+Warning: PV: f4 Kg1 Kf5 Bxb4 Kg5 Be7+ Kf5 Bb4 Ne5 Bh5 Ke4 d6c5
+Warning: Illegal PV move e3e2 from BBC (643)
+Warning: PV: Kg4 Bc8+ Kf4 Kxh3 Nd3 Bd6+ Kg5 Be7+ Kf4 Bd6+ e3e2
+Warning: Illegal PV move e3e2 from BBC (643)
+Warning: PV: Kf4 Kxh3 Nd3 Bd6+ Kg5 Be7+ Kf4 Bd6+ e3e2
+Warning: Illegal PV move e3e2 from BBC (643)
+Warning: PV: Nd3 Bd6+ Kg5 Be7+ Kf4 Bd6+ e3e2
+Warning: Illegal PV move f5e4 from BBC (643)
+Warning: PV: Kg5 Bb7 f2 Be7+ Kf4 Bd6+ Kg5 Bc8 f5e4
+Warning: Illegal PV move e3e2 from BBC (643)
+Warning: PV: Kg5 Be7+ Kf4 Bd6+ e3e2
+Warning: Illegal PV move e3e2 from BBC (643)
+Warning: PV: Kf4 Bd6+ e3e2
+Warning: Illegal PV move f1g1 from Kojiro (647)
+Warning: PV: Qe1+ Kh2 Qf2+ Kh1 Qe1+ Kh2 f1g1
+Finished game 327 (mychess-attack-units vs BBC): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 331 of 600 (mychess-base vs TSCP)
+Finished game 329 (mychess-attack-units vs Kojiro): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 332 of 600 (TSCP vs mychess-base)
+Finished game 332 (TSCP vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 333 of 600 (mychess-base vs ZetaDva)
+Finished game 331 (mychess-base vs TSCP): 1-0 {White mates}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -49      62     108   43.1%   13.9% 
+   1 mychess-placebo                 9      60     110   51.4%   15.5% 
+   2 mychess-base                    6      61     112   50.9%   12.5% 
+   3 BBC                           128      80      65   67.7%   21.5% 
+   4 Princhess                     126      86      66   67.4%   10.6% 
+   5 Kojiro                        110      78      65   65.4%   23.1% 
+   6 ZetaDva                       -97      83      66   36.4%   12.1% 
+   7 TSCP                         -219     103      68   22.1%    2.9% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 334 of 600 (ZetaDva vs mychess-base)
+Warning: Illegal PV move a6a7 from Kojiro (648)
+Warning: PV: Kxh4 a6a7
+Warning: Illegal PV move g6g7 from Kojiro (648)
+Warning: PV: g6 g6g7
+Finished game 330 (Kojiro vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 335 of 600 (mychess-base vs Princhess)
+Finished game 333 (mychess-base vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 336 of 600 (Princhess vs mychess-base)
+Finished game 334 (ZetaDva vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 337 of 600 (mychess-base vs BBC)
+Warning: Illegal PV move g6g5 from BBC (644)
+Warning: PV: Rg4 Rf2 Kg6 Ke5 Rg5+ Ke6 Rb5 Rg2+ Rg5 Rf2 g6g5
+Warning: Illegal PV move e4d5 from BBC (644)
+Warning: PV: Kg6 Ke5 Rg5+ Ke4 Rf5 Rg2+ Kf6 Rc2 Kg6 Rc6+ Kg5 Rc2 Kg6 e4d5
+Warning: Illegal PV move g6g5 from BBC (644)
+Warning: PV: Kg6 Ke5 Rg5+ Ke4 Rf5 Rg2+ Kf6 Rc2 Kg6 Rg2+ g6g5
+Warning: Illegal PV move f6g6 from BBC (644)
+Warning: PV: Kg6 Rc2 Kf6 Rf2+ Kg6 Rc2 f6g6
+Finished game 328 (BBC vs mychess-attack-units): 1/2-1/2 {Draw by adjudication}
+Started game 338 of 600 (BBC vs mychess-base)
+Finished game 335 (mychess-base vs Princhess): 1-0 {White mates}
+Started game 339 of 600 (mychess-base vs Kojiro)
+Warning: Illegal PV move b4b6 from BBC (663)
+Warning: PV: Rxa2+ Kg1 Ra1+ Kg2 Ra2+ b4b6
+Warning: Illegal PV move b4b8 from BBC (663)
+Warning: PV: Ra1+ Kg2 Ra2+ b4b8
+Warning: Illegal PV move b4b8 from BBC (663)
+Warning: PV: Ra1+ Kg2 Ra2+ b4b8
+Warning: Illegal PV move h8h5 from BBC (663)
+Warning: PV: Ra2+ h8h5
+Warning: Illegal PV move d6c8 from BBC (663)
+Warning: PV: Ra2+ d6c8
+Warning: Illegal PV move h8h5 from BBC (663)
+Warning: PV: Ra2+ h8h5
+Finished game 336 (Princhess vs mychess-base): 1-0 {White mates}
+Started game 340 of 600 (Kojiro vs mychess-base)
+Finished game 338 (BBC vs mychess-base): 1-0 {White wins by adjudication}
+Warning: Illegal PV move e5f6 from Kojiro (668)
+Warning: PV: dxe5 e5f6
+Started game 341 of 600 (mychess-placebo vs TSCP)
+Warning: Illegal PV move b8f8 from Kojiro (667)
+Warning: PV: a3 b8f8
+Warning: Illegal PV move a3a2 from Kojiro (667)
+Warning: PV: a3 a3a2
+Finished game 337 (mychess-base vs BBC): 0-1 {Black wins by adjudication}
+Warning: Illegal PV move f8g7 from Kojiro (667)
+Warning: PV: Be8 g7 Qc6 Qf8 Qg6+ Kf1 Qf7+ Kg2 Qg6+ Kf1 Qxc2 f8g7
+Started game 342 of 600 (TSCP vs mychess-placebo)
+Warning: Illegal PV move f4e4 from Kojiro (667)
+Warning: PV: Qd6 Qc3+ Kd7 Qh3+ Kc7 Kh1 Qf4 Qh7+ Kb6 Qd3 a3 Qb3+ Kc7 Qc3+ Kd7 Qh3+ Kc7 Qc3+ f4e4
+Warning: Illegal PV move c3d4 from Kojiro (667)
+Warning: PV: Qe6 Qc3 Qe4 Kf2 Qf4+ Kg2 Qg4+ Kf2 Qf4+ c3d4
+Warning: Illegal PV move e1e4 from Kojiro (667)
+Warning: PV: Qe6 Qc3 Qe4 Kf2 Qf4+ Kg2 Qg4+ Kf2 Qf4+ e1e4
+Warning: Illegal PV move d5c4 from Kojiro (667)
+Warning: PV: Qf4+ Kg2 Qg4+ Kf1 Qf5+ Kg1 Qg4+ Kf1 d5c4
+Warning: Illegal PV move h3g3 from Kojiro (667)
+Warning: PV: Qf4+ Kg2 Qg4+ Kf1 Qf5+ Kg1 Qg4+ Kf1 h3g3
+Warning: Illegal PV move c3c5 from Kojiro (667)
+Warning: PV: Qh4+ Kd1 Qh5+ Ke1 Qh4+ c3c5
+Warning: Illegal PV move c5d5 from Kojiro (667)
+Warning: PV: Qh5+ Ke1 Qh4+ Kd1 c5d5
+Warning: Illegal PV move c5d5 from Kojiro (667)
+Warning: PV: Qh5+ Ke1 Qh4+ Kd1 c5d5
+Warning: Illegal PV move c2b3 from Kojiro (667)
+Warning: PV: Qxh2 Kb2 Qd6 Qa5 Qc6 Ka3 Qxc2 Qxd5+ Kc7 Qe5+ Kd7 Qd5+ c2b3
+Warning: Illegal PV move c2a4 from Kojiro (667)
+Warning: PV: Qd6 Qa5 Qc6 Ka3 Qxc2 Qxd5+ Kc7 Qa5+ Kd6 Qd8+ Ke6 Qe8+ Kd6 Qe5+ Kd7 Qb5+ Kd6 Qe5+ c2a4
+Warning: Illegal PV move c2b3 from Kojiro (667)
+Warning: PV: Qd6 Qa5 Qc6 Ka3 Qxc2 Qxd5+ Kc7 Qa5+ Kd6 Qd8+ Ke6 Qg8+ Kd6 Qb8+ Ke6 Qg8+ c2b3
+Warning: Illegal PV move d1d4 from Kojiro (667)
+Warning: PV: Qc6 Ka3 Qxc2 Qxd5+ Kc7 Kb4 Qd1 Qc5+ Kd7 Qb5+ Kc7 Qc5+ d1d4
+Warning: Illegal PV move d1a1 from Kojiro (667)
+Warning: PV: Qc6 Ka3 Qxc2 Qxd5+ Kc7 Kb4 Qd1 Qc5+ Kd7 Qb5+ Kc7 Qc5+ d1a1
+Warning: Illegal PV move d1a1 from Kojiro (667)
+Warning: PV: Qc6 Ka3 Qxc2 Qxd5+ Kc7 Kb4 Qd1 Qc5+ Kd7 Qb5+ Kc7 Qc5+ d1a1
+Warning: Illegal PV move c2d3 from Kojiro (667)
+Warning: PV: Qc4 Ka3 Kc8 Qd3 Qc6 Kb4 Kd7 Qc3 Qa6 Qd3 Qc6 c2d3
+Warning: Illegal PV move c6d5 from Kojiro (667)
+Warning: PV: Qc4 Ka3 Kc6 Qb4 Qxc2 Qxa4+ Qxa4+ Kxa4 Kb6 Ka3 Kb5 Kb3 Kc6 Ka3 Kb5 c6d5
+Warning: Illegal PV move c2e2 from Kojiro (667)
+Warning: PV: Kd7 Qa5 Qxc2 Qxd5+ Kc7 Qa5+ Kd6 Qe5+ Kd7 Qd5+ c2e2
+Warning: Illegal PV move d4c5 from Kojiro (667)
+Warning: PV: Kd7 Qa5 Qxc2 Qxd5+ Kc7 Qa5+ Kd6 Qe5+ Kd7 Qd5+ d4c5
+Warning: Illegal PV move b5c5 from Kojiro (667)
+Warning: PV: Qxa4+ Kxa4 Ke6 Kb5 Kd6 Kb4 Kd7 Kb5 Kd6 b5c5
+Finished game 341 (mychess-placebo vs TSCP): 0-1 {Black wins by adjudication}
+Started game 343 of 600 (mychess-placebo vs ZetaDva)
+Warning: Illegal PV move b5c5 from Kojiro (667)
+Warning: PV: Kf5 Kc6 Ke6 Kb6 Ke7 Kc5 Ke6 Kb6 b5c5
+Warning: Illegal PV move b5c5 from Kojiro (667)
+Warning: PV: Kf5 Kc6 Ke6 Kb6 Ke7 Kc5 Ke6 Kb6 b5c5
+Finished game 340 (Kojiro vs mychess-base): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -51      61     110   42.7%   14.5% 
+   1 mychess-placebo                 6      60     111   50.9%   15.3% 
+   2 mychess-base                    3      59     119   50.4%   11.8% 
+   3 BBC                           134      78      68   68.4%   22.1% 
+   4 Princhess                     122      85      68   66.9%   10.3% 
+   5 Kojiro                        118      78      67   66.4%   22.4% 
+   6 ZetaDva                      -105      82      68   35.3%   11.8% 
+   7 TSCP                         -208     100      69   23.2%    2.9% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 344 of 600 (ZetaDva vs mychess-placebo)
+Finished game 339 (mychess-base vs Kojiro): 1-0 {White wins by adjudication}
+Started game 345 of 600 (mychess-placebo vs Princhess)
+Finished game 342 (TSCP vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 346 of 600 (Princhess vs mychess-placebo)
+Finished game 344 (ZetaDva vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 347 of 600 (mychess-placebo vs BBC)
+Finished game 345 (mychess-placebo vs Princhess): 1-0 {White mates}
+Started game 348 of 600 (BBC vs mychess-placebo)
+Finished game 343 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 349 of 600 (mychess-placebo vs Kojiro)
+Finished game 346 (Princhess vs mychess-placebo): 1-0 {White mates}
+Started game 350 of 600 (Kojiro vs mychess-placebo)
+Warning: Illegal PV move b4b6 from BBC (683)
+Warning: PV: Rxa2+ Kg1 Ra1+ Kg2 Ra2+ b4b6
+Warning: Illegal PV move b4g4 from BBC (683)
+Warning: PV: Ra1+ Kg2 Ra2+ b4g4
+Warning: Illegal PV move b4b8 from BBC (683)
+Warning: PV: Ra1+ Kg2 Ra2+ b4b8
+Warning: Illegal PV move b4b8 from BBC (683)
+Warning: PV: Ra1+ Kg2 Ra2+ b4b8
+Warning: Illegal PV move h8h5 from BBC (683)
+Warning: PV: Ra2+ h8h5
+Warning: Illegal PV move d6c8 from BBC (683)
+Warning: PV: Ra2+ d6c8
+Warning: Illegal PV move h8h5 from BBC (683)
+Warning: PV: Ra2+ h8h5
+Warning: Illegal PV move f2e3 from Kojiro (688)
+Warning: PV: Rf1 f2e3
+Warning: Illegal PV move d5d6 from BBC (684)
+Warning: PV: h4 Rxb1 Qxb1 Bxd5 exd5 Qc5 Qxb7 Qc1+ Kh2 Qf4+ Kg1 Qc1+ d5d6
+Finished game 350 (Kojiro vs mychess-placebo): 0-1 {Black wins by adjudication}
+Warning: Illegal PV move b8b3 from Kojiro (687)
+Warning: PV: Qa5 b8b3
+Started game 351 of 600 (mychess-attack-units vs TSCP)
+Warning: Illegal PV move e6f6 from BBC (684)
+Warning: PV: d6 Qxh4+ Kg1 Qe1+ Kh2 Qh4+ e6f6
+Warning: Illegal PV move d6d7 from BBC (684)
+Warning: PV: Kg1 Qe1+ Kh2 Qh4+ d6d7
+Warning: Illegal PV move e6e7 from BBC (684)
+Warning: PV: Kg1 Qe1+ Kh2 Qh4+ e6e7
+Warning: Illegal PV move e6f6 from BBC (684)
+Warning: PV: Kg1 Qe1+ Kh2 Qh4+ e6f6
+Warning: Illegal PV move f4e4 from BBC (684)
+Warning: PV: Kh1 Qh4+ Kg1 f4e4
+Warning: Illegal PV move f4e4 from BBC (684)
+Warning: PV: Kh1 Qh4+ Kg1 f4e4
+Warning: Illegal PV move f4e4 from BBC (684)
+Warning: PV: Kh1 Qh4+ Kg1 f4e4
+Warning: Illegal PV move f4e4 from BBC (684)
+Warning: PV: Kh1 Qh4+ Kg1 f4e4
+Warning: Illegal PV move h3h4 from BBC (684)
+Warning: PV: Kg1 Qh3 h3h4
+Warning: Illegal PV move h3h4 from BBC (684)
+Warning: PV: Kg1 Qh3 h3h4
+Warning: Illegal PV move h3h4 from BBC (684)
+Warning: PV: Kg1 Qh3 h3h4
+Warning: Illegal PV move h3h4 from BBC (684)
+Warning: PV: Kg1 Qh3 h3h4
+Warning: Illegal PV move h3h4 from BBC (684)
+Warning: PV: Kg1 Qh3 h3h4
+Warning: Illegal PV move h3h4 from BBC (684)
+Warning: PV: Kg1 Qh3 h3h4
+Warning: Illegal PV move h3h4 from BBC (684)
+Warning: PV: Kg1 Qh3 h3h4
+Warning: Illegal PV move h3h4 from BBC (684)
+Warning: PV: Kg1 Qh3 h3h4
+Warning: Illegal PV move h3h4 from BBC (684)
+Warning: PV: Kg1 Qh3 h3h4
+Warning: Illegal PV move e6g6 from BBC (684)
+Warning: PV: Kh2 Qh4+ e6g6
+Warning: Illegal PV move e6g6 from BBC (684)
+Warning: PV: Kh2 Qh4+ e6g6
+Warning: Illegal PV move e6g6 from BBC (684)
+Warning: PV: Kh2 Qh4+ e6g6
+Finished game 349 (mychess-placebo vs Kojiro): 0-1 {Black wins by adjudication}
+Finished game 348 (BBC vs mychess-placebo): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 353 of 600 (mychess-attack-units vs ZetaDva)
+Started game 352 of 600 (TSCP vs mychess-attack-units)
+Finished game 347 (mychess-placebo vs BBC): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -51      61     110   42.7%   14.5% 
+   1 mychess-placebo                 6      58     120   50.8%   15.0% 
+   2 mychess-base                    6      59     120   50.8%   11.7% 
+   3 BBC                           136      77      70   68.6%   22.9% 
+   4 Princhess                     119      83      70   66.4%   10.0% 
+   5 Kojiro                        108      76      70   65.0%   21.4% 
+   6 ZetaDva                      -113      82      70   34.3%   11.4% 
+   7 TSCP                         -198      97      70   24.3%    2.9% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 354 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 351 (mychess-attack-units vs TSCP): 1-0 {White wins by adjudication}
+Started game 355 of 600 (mychess-attack-units vs Princhess)
+Finished game 354 (ZetaDva vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 356 of 600 (Princhess vs mychess-attack-units)
+Finished game 353 (mychess-attack-units vs ZetaDva): 1/2-1/2 {Draw by adjudication}
+Started game 357 of 600 (mychess-attack-units vs BBC)
+Finished game 355 (mychess-attack-units vs Princhess): 1-0 {White mates}
+Started game 358 of 600 (BBC vs mychess-attack-units)
+Finished game 356 (Princhess vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 359 of 600 (mychess-attack-units vs Kojiro)
+Warning: Illegal PV move f8f3 from Kojiro (707)
+Warning: PV: Qe2 f8f3
+Warning: Illegal PV move d3d2 from Kojiro (707)
+Warning: PV: d3 d3d2
+Warning: Illegal PV move d3d2 from Kojiro (707)
+Warning: PV: d3 d3d2
+Warning: Illegal PV move d4e5 from BBC (704)
+Warning: PV: Nb5 Na3 d4e5
+Finished game 359 (mychess-attack-units vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 360 of 600 (Kojiro vs mychess-attack-units)
+Warning: Illegal PV move f3e3 from BBC (704)
+Warning: PV: Rb7 h5 Rc7 h4+ Kf3 Ra4 Rb7 Rc4 Rd7 Rc3+ Kg4 Rc2 Kf3 Rc3+ f3e3
+Warning: Illegal PV move f5g6 from BBC (704)
+Warning: PV: Rc7 h4+ Kf3 Ra4 Rb7 Ra2 Rc7 Ra4 f5g6
+Warning: Illegal PV move f3f2 from BBC (704)
+Warning: PV: Rc7 h4+ Kf3 Ra4 Rb7 Ra2 Rc7 Ra4 f3f2
+Warning: Illegal PV move d7d8 from BBC (704)
+Warning: PV: Rc7 h4+ Kf3 Ra4 Rb7 Rc4 Rd7 Rc3+ Kg4 Rc2 Kf3 Rc3+ d7d8
+Warning: Illegal PV move f3f2 from BBC (704)
+Warning: PV: Rc7 h4+ Kf3 Ra4 Rb7 Rc4 Rd7 Rc2 Rb7 Kg8 Rd7 Kf8 f3f2
+Warning: Illegal PV move d7c7 from BBC (704)
+Warning: PV: Rd7 h4+ Kf3 Rb3+ Kg4 Rb2 Kf3 Rb3+ d7c7
+Warning: Illegal PV move f3f2 from BBC (704)
+Warning: PV: Kf3 Rc4 Rb7 Ke8 Ke3 Rc2 Kf3 Rc4 f3f2
+Finished game 352 (TSCP vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Warning: Illegal PV move g7f6 from BBC (704)
+Warning: PV: Rb7 Kf8 Rc7 g7f6
+Warning: Illegal PV move f3g4 from BBC (704)
+Warning: PV: Ra7 Kf8 Rb7 Rc2 Ra7 Rc4 f3g4
+Warning: Illegal PV move f3g4 from BBC (704)
+Warning: PV: Ra7 Kf8 Rb7 Ke8 f3g4
+Warning: Illegal PV move f5g6 from BBC (704)
+Warning: PV: Rd7 Ra4 f5g6
+Started game 361 of 600 (mychess-base vs TSCP)
+Warning: Illegal PV move b7b8 from BBC (704)
+Warning: PV: Ke3 Rc4 f3 Rc5 Ke4 Rc1 Kf4 Rc4+ Ke3 Rc3+ b7b8
+Warning: Illegal PV move b7g7 from BBC (704)
+Warning: PV: f3 Rc4 Rd7 Ke8 Rb7 Kf8 b7g7
+Warning: Illegal PV move e3f4 from BBC (704)
+Warning: PV: f3 Rc4 Rd7 Ke8 Rb7 Kf8 e3f4
+Warning: Illegal PV move c4c1 from BBC (704)
+Warning: PV: Rc7 Ra4 Rd7 Rb4 Kd3 c4c1
+Warning: Illegal PV move f8e7 from BBC (704)
+Warning: PV: Ra7 Kf8 Rc7 f8e7
+Warning: Illegal PV move f8e7 from BBC (704)
+Warning: PV: Ra7 Kf8 Rc7 f8e7
+Warning: Illegal PV move e3e4 from BBC (704)
+Warning: PV: Rb7 Kf8 e3e4
+Warning: Illegal PV move e3e4 from BBC (704)
+Warning: PV: Rb7 Kf8 e3e4
+Warning: Illegal PV move a2a7 from BBC (704)
+Warning: PV: Kf4 Rg1 Rb8+ Ke7 Rb7+ Kf8 Rb8+ Ke7 a2a7
+Warning: Illegal PV move d1f1 from BBC (704)
+Warning: PV: Rb8+ Ke7 Ke5 Re1+ Kf4 Rd1 Rb7+ Kf6 Rb6+ Ke7 Rb7+ d1f1
+Warning: Illegal PV move g7g6 from BBC (704)
+Warning: PV: Rb8+ Ke7 Ke5 Re1+ Kf4 Rd1 Rb7+ Kf6 Rb6+ Ke7 Rb7+ g7g6
+Finished game 360 (Kojiro vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Finished game 357 (mychess-attack-units vs BBC): 0-1 {Black wins by adjudication}
+Started game 363 of 600 (mychess-base vs ZetaDva)
+Warning: Illegal PV move g1h1 from BBC (704)
+Warning: PV: Rb6+ Ke7 Rb7+ g1h1
+Warning: Illegal PV move g1c1 from BBC (704)
+Warning: PV: Rb6+ Ke7 Rb7+ g1c1
+Started game 362 of 600 (TSCP vs mychess-base)
+Warning: Illegal PV move f7f6 from BBC (704)
+Warning: PV: Rb7+ f7f6
+Warning: Illegal PV move f7f6 from BBC (704)
+Warning: PV: Rb7+ f7f6
+Warning: Illegal PV move f7f6 from BBC (704)
+Warning: PV: Rb7+ f7f6
+Warning: Illegal PV move g1b1 from BBC (704)
+Warning: PV: Rb7+ g1b1
+Warning: Illegal PV move g1b1 from BBC (704)
+Warning: PV: Rb7+ g1b1
+Warning: Illegal PV move g1b1 from BBC (704)
+Warning: PV: Rb7+ g1b1
+Warning: Illegal PV move g1b1 from BBC (704)
+Warning: PV: Rb7+ g1b1
+Warning: Illegal PV move f5f6 from BBC (704)
+Warning: PV: Ke5 Re1+ Kd6 Rd1+ Ke5 Re1+ f5f6
+Finished game 358 (BBC vs mychess-attack-units): 1/2-1/2 {Draw by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -41      58     120   44.2%   15.0% 
+   1 mychess-placebo                 6      58     120   50.8%   15.0% 
+   2 mychess-base                    6      59     120   50.8%   11.7% 
+   3 BBC                           137      75      72   68.8%   23.6% 
+   4 Princhess                     115      82      72   66.0%    9.7% 
+   5 Kojiro                        104      75      72   64.6%   20.8% 
+   6 ZetaDva                      -115      80      72   34.0%   12.5% 
+   7 TSCP                         -204      97      72   23.6%    2.8% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 364 of 600 (ZetaDva vs mychess-base)
+Finished game 362 (TSCP vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 365 of 600 (mychess-base vs Princhess)
+Finished game 361 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Started game 366 of 600 (Princhess vs mychess-base)
+Finished game 363 (mychess-base vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 367 of 600 (mychess-base vs BBC)
+Finished game 364 (ZetaDva vs mychess-base): 1-0 {White wins by adjudication}
+Started game 368 of 600 (BBC vs mychess-base)
+Warning: Illegal PV move f4c1 from BBC (722)
+Warning: PV: Qh5 Bg6 Qe2 Bf5 f4c1
+Finished game 366 (Princhess vs mychess-base): 1-0 {White wins by adjudication}
+Started game 369 of 600 (mychess-base vs Kojiro)
+Warning: Illegal PV move e7f8q from BBC (722)
+Warning: PV: Qg6 Qe2 e6 Rf6 Qe8+ Kh7 e7 Qg4+ Kf1 Qc4+ Kg1 Qg4+ e7f8q
+Finished game 367 (mychess-base vs BBC): 1/2-1/2 {Draw by adjudication}
+Started game 370 of 600 (Kojiro vs mychess-base)
+Warning: Illegal PV move e7g7 from BBC (722)
+Warning: PV: Rg2 Qd1+ Rg1 Qd5+ Rg2 Qd1+ e7g7
+Warning: Illegal PV move h3g4 from Kojiro (726)
+Warning: PV: h3 h3g4
+Warning: Illegal PV move e7g7 from BBC (722)
+Warning: PV: Rg1 Qd5+ Rg2 Qd1+ e7g7
+Warning: Illegal PV move e7g7 from BBC (722)
+Warning: PV: Rg2 Qd1+ e7g7
+Finished game 369 (mychess-base vs Kojiro): 1-0 {White wins by adjudication}
+Started game 371 of 600 (mychess-placebo vs TSCP)
+Finished game 365 (mychess-base vs Princhess): 0-1 {Black wins by adjudication}
+Started game 372 of 600 (TSCP vs mychess-placebo)
+Finished game 368 (BBC vs mychess-base): 1-0 {White wins by adjudication}
+Started game 373 of 600 (mychess-placebo vs ZetaDva)
+Warning: Illegal PV move e2d4 from Kojiro (726)
+Warning: PV: Kf3 e2d4
+Warning: Illegal PV move e2d4 from Kojiro (726)
+Warning: PV: Ke4 e2d4
+Finished game 370 (Kojiro vs mychess-base): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -41      58     120   44.2%   15.0% 
+   1 mychess-placebo                 6      58     120   50.8%   15.0% 
+   2 mychess-base                    3      57     130   50.4%   11.5% 
+   3 BBC                           138      74      74   68.9%   24.3% 
+   4 Princhess                     122      81      74   66.9%    9.5% 
+   5 Kojiro                        101      74      74   64.2%   20.3% 
+   6 ZetaDva                      -112      79      74   34.5%   12.2% 
+   7 TSCP                         -210      97      74   23.0%    2.7% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 374 of 600 (ZetaDva vs mychess-placebo)
+Finished game 372 (TSCP vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 375 of 600 (mychess-placebo vs Princhess)
+Finished game 373 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 376 of 600 (Princhess vs mychess-placebo)
+Finished game 376 (Princhess vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 377 of 600 (mychess-placebo vs BBC)
+Finished game 371 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Started game 378 of 600 (BBC vs mychess-placebo)
+Finished game 374 (ZetaDva vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 379 of 600 (mychess-placebo vs Kojiro)
+Finished game 375 (mychess-placebo vs Princhess): 0-1 {Black mates}
+Started game 380 of 600 (Kojiro vs mychess-placebo)
+Warning: Illegal PV move h3g4 from Kojiro (746)
+Warning: PV: h3 h3g4
+Warning: Illegal PV move f3d4 from BBC (742)
+Warning: PV: Qb3 Rcd8 Rb1 Bf5 Rbd1 Bg4 f3d4
+Warning: Illegal PV move b3a4 from BBC (742)
+Warning: PV: Qb3 Rcd8 Rb1 Bf5 Rbd1 Bg4 b3a4
+Warning: Illegal PV move g7h6 from BBC (742)
+Warning: PV: Ra1 Rcd8 Nd4 Be7 Qc2 Bc5 Qb3 g7h6
+Warning: Illegal PV move d5c4 from BBC (742)
+Warning: PV: Nd4 Bg4 Rab1 Na3 Rbc1 Nc4 Rb1 d5c4
+Finished game 379 (mychess-placebo vs Kojiro): 1-0 {White wins by adjudication}
+Started game 381 of 600 (mychess-attack-units vs TSCP)
+Warning: Illegal PV move d4e5 from BBC (742)
+Warning: PV: Ra2 Qe7 Ra1 Qa7 d4e5
+Warning: Illegal PV move e2d4 from Kojiro (746)
+Warning: PV: Kf3 e2d4
+Warning: Illegal PV move e2d4 from Kojiro (746)
+Warning: PV: Ke4 e2d4
+Finished game 380 (Kojiro vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 382 of 600 (TSCP vs mychess-attack-units)
+Warning: Illegal PV move e5e4 from BBC (742)
+Warning: PV: d5 Rf6+ Ke7 Kg6 d6 Rf7+ Ke6 Rf6+ Ke7 Rf5 e5e4
+Warning: Illegal PV move e5e6 from BBC (742)
+Warning: PV: Ke7 Kg6 d6 Rf7+ Ke6 Rf6+ Ke7 Rf5 e5e6
+Finished game 377 (mychess-placebo vs BBC): 1-0 {White wins by adjudication}
+Started game 383 of 600 (mychess-attack-units vs ZetaDva)
+Finished game 381 (mychess-attack-units vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -37      58     121   44.6%   14.9% 
+   1 mychess-placebo                 8      56     129   51.2%   14.0% 
+   2 mychess-base                    3      57     130   50.4%   11.5% 
+   3 BBC                           131      73      75   68.0%   24.0% 
+   4 Princhess                     129      81      76   67.8%    9.2% 
+   5 Kojiro                         99      73      76   63.8%   19.7% 
+   6 ZetaDva                      -109      78      76   34.9%   11.8% 
+   7 TSCP                         -219      96      77   22.1%    2.6% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 384 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 382 (TSCP vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 385 of 600 (mychess-attack-units vs Princhess)
+Finished game 385 (mychess-attack-units vs Princhess): 0-1 {Black wins by adjudication}
+Started game 386 of 600 (Princhess vs mychess-attack-units)
+Finished game 378 (BBC vs mychess-placebo): 1/2-1/2 {Draw by insufficient mating material}
+Started game 387 of 600 (mychess-attack-units vs BBC)
+Finished game 383 (mychess-attack-units vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 388 of 600 (BBC vs mychess-attack-units)
+Finished game 386 (Princhess vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 389 of 600 (mychess-attack-units vs Kojiro)
+Finished game 384 (ZetaDva vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 390 of 600 (Kojiro vs mychess-attack-units)
+Warning: Illegal PV move h3g4 from Kojiro (764)
+Warning: PV: h3 h3g4
+Warning: Illegal PV move d6f4 from Kojiro (763)
+Warning: PV: b4 d6f4
+Warning: Illegal PV move f3d4 from BBC (760)
+Warning: PV: Qb3 Rcd8 Rb1 Bf5 Rbd1 Bg4 f3d4
+Warning: Illegal PV move b3a4 from BBC (760)
+Warning: PV: Qb3 Rcd8 Rb1 Bf5 Rbd1 Bg4 b3a4
+Finished game 390 (Kojiro vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 391 of 600 (mychess-base vs TSCP)
+Finished game 387 (mychess-attack-units vs BBC): 0-1 {Black wins by adjudication}
+Started game 392 of 600 (TSCP vs mychess-base)
+Warning: Illegal PV move b2b1q from Kojiro (763)
+Warning: PV: b2 b2b1q
+Warning: Illegal PV move b2b1q from Kojiro (763)
+Warning: PV: Rc1 b2b1q
+Warning: Illegal PV move b1d1 from Kojiro (763)
+Warning: PV: Rxb1 b1d1
+Warning: Illegal PV move e6d5 from Kojiro (763)
+Warning: PV: Ke6 e6d5
+Finished game 389 (mychess-attack-units vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 393 of 600 (mychess-base vs ZetaDva)
+Finished game 392 (TSCP vs mychess-base): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -46      56     129   43.4%   14.0% 
+   1 mychess-placebo                 8      56     130   51.2%   14.6% 
+   2 mychess-base                    5      56     131   50.8%   11.5% 
+   3 Princhess                     136      81      78   68.6%    9.0% 
+   4 BBC                           132      72      77   68.2%   24.7% 
+   5 Kojiro                        106      73      78   64.7%   19.2% 
+   6 ZetaDva                      -106      77      78   35.3%   11.5% 
+   7 TSCP                         -225      96      79   21.5%    2.5% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 394 of 600 (ZetaDva vs mychess-base)
+Warning: Illegal PV move g6f5 from BBC (760)
+Warning: PV: Bxh8 Ng7 Bxg7 Kxg7 Kc5 Kxh7 Kd5 Kg6 Ke6 Kg5 Ke7 Kg6 Ke6 g6f5
+Warning: Illegal PV move g6f5 from BBC (760)
+Warning: PV: Bxh8 Ng7 Bxg7 Kxg7 Kc5 Kxh7 Kd5 Kg6 Ke6 Kg5 Ke7 Kg6 Ke6 g6f5
+Warning: Illegal PV move g6f5 from BBC (760)
+Warning: PV: Bxh8 Ng7 Bxg7 Kxg7 Kc5 Kxh7 Kd5 Kg6 Ke6 Kg5 Ke7 Kg6 Ke6 g6f5
+Warning: Illegal PV move e6f6 from BBC (760)
+Warning: PV: Bxg7 Kxg7 Kc5 Kxh7 Kd5 Kg6 Ke6 Kg5 Ke5 Kg4 Ke6 Kg5 e6f6
+Warning: Illegal PV move g6f6 from BBC (760)
+Warning: PV: Bxg7 Kxg7 Kc5 Kxh7 Kd5 Kg6 Ke6 Kg5 Ke5 Kg6 Ke6 g6f6
+Warning: Illegal PV move e6f6 from BBC (760)
+Warning: PV: Bxg7 Kxg7 Kc5 Kxh7 Kd5 Kg6 Ke6 Kg5 Ke5 Kg4 Ke6 Kg3 Kd5 Kf4 Ke6 Kg5 e6f6
+Finished game 388 (BBC vs mychess-attack-units): 1/2-1/2 {Draw by insufficient mating material}
+Started game 395 of 600 (mychess-base vs Princhess)
+Finished game 391 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Started game 396 of 600 (Princhess vs mychess-base)
+Finished game 396 (Princhess vs mychess-base): 1-0 {White wins by adjudication}
+Started game 397 of 600 (mychess-base vs BBC)
+Finished game 393 (mychess-base vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 398 of 600 (BBC vs mychess-base)
+Finished game 394 (ZetaDva vs mychess-base): 1-0 {White wins by adjudication}
+Started game 399 of 600 (mychess-base vs Kojiro)
+Finished game 397 (mychess-base vs BBC): 0-1 {Black wins by adjudication}
+Started game 400 of 600 (Kojiro vs mychess-base)
+Finished game 395 (mychess-base vs Princhess): 1-0 {White wins by adjudication}
+Started game 401 of 600 (mychess-placebo vs TSCP)
+Finished game 398 (BBC vs mychess-base): 1-0 {White wins by adjudication}
+Started game 402 of 600 (TSCP vs mychess-placebo)
+Warning: Illegal PV move c5c4 from Kojiro (783)
+Warning: PV: Kxg4 c5c4
+Finished game 402 (TSCP vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 403 of 600 (mychess-placebo vs ZetaDva)
+Finished game 400 (Kojiro vs mychess-base): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -46      56     130   43.5%   14.6% 
+   1 mychess-placebo                11      55     131   51.5%   14.5% 
+   2 mychess-base                    5      55     139   50.7%   10.8% 
+   3 BBC                           137      70      80   68.8%   25.0% 
+   4 Princhess                     132      79      80   68.1%    8.8% 
+   5 Kojiro                         99      72      79   63.9%   19.0% 
+   6 ZetaDva                      -103      76      80   35.6%   11.3% 
+   7 TSCP                         -230      96      81   21.0%    2.5% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 404 of 600 (ZetaDva vs mychess-placebo)
+Finished game 401 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Started game 405 of 600 (mychess-placebo vs Princhess)
+Finished game 404 (ZetaDva vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 406 of 600 (Princhess vs mychess-placebo)
+Finished game 403 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 407 of 600 (mychess-placebo vs BBC)
+Finished game 399 (mychess-base vs Kojiro): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 408 of 600 (BBC vs mychess-placebo)
+Finished game 405 (mychess-placebo vs Princhess): 1-0 {White mates}
+Started game 409 of 600 (mychess-placebo vs Kojiro)
+Finished game 406 (Princhess vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 410 of 600 (Kojiro vs mychess-placebo)
+Finished game 407 (mychess-placebo vs BBC): 0-1 {Black wins by adjudication}
+Started game 411 of 600 (mychess-attack-units vs TSCP)
+Finished game 408 (BBC vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 412 of 600 (TSCP vs mychess-attack-units)
+Finished game 409 (mychess-placebo vs Kojiro): 1-0 {White wins by adjudication}
+Started game 413 of 600 (mychess-attack-units vs ZetaDva)
+Warning: Illegal PV move c7b7 from Kojiro (804)
+Warning: PV: Rc7 c7b7
+Finished game 410 (Kojiro vs mychess-placebo): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -46      56     130   43.5%   14.6% 
+   1 mychess-placebo                17      54     140   52.5%   13.6% 
+   2 mychess-base                    5      55     140   50.7%   11.4% 
+   3 BBC                           143      70      82   69.5%   24.4% 
+   4 Princhess                     128      78      82   67.7%    8.5% 
+   5 Kojiro                         86      70      82   62.2%   19.5% 
+   6 ZetaDva                      -109      75      82   34.8%   11.0% 
+   7 TSCP                         -233      96      82   20.7%    2.4% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 414 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 411 (mychess-attack-units vs TSCP): 0-1 {Black wins by adjudication}
+Started game 415 of 600 (mychess-attack-units vs Princhess)
+Finished game 415 (mychess-attack-units vs Princhess): 0-1 {Black wins by adjudication}
+Started game 416 of 600 (Princhess vs mychess-attack-units)
+Finished game 412 (TSCP vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 417 of 600 (mychess-attack-units vs BBC)
+Finished game 416 (Princhess vs mychess-attack-units): 1-0 {White mates}
+Started game 418 of 600 (BBC vs mychess-attack-units)
+Finished game 413 (mychess-attack-units vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 419 of 600 (mychess-attack-units vs Kojiro)
+Finished game 414 (ZetaDva vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 420 of 600 (Kojiro vs mychess-attack-units)
+Finished game 417 (mychess-attack-units vs BBC): 0-1 {Black mates}
+Finished game 418 (BBC vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 421 of 600 (mychess-base vs TSCP)
+Started game 422 of 600 (TSCP vs mychess-base)
+Finished game 420 (Kojiro vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 423 of 600 (mychess-base vs ZetaDva)
+Warning: Illegal PV move c5c4 from Kojiro (821)
+Warning: PV: c4 Kc5 Bf3 Kd4 Bg4 Kd5 Bd1 Kc5 Bf3 c5c4
+Warning: Illegal PV move g6e5 from Kojiro (821)
+Warning: PV: Bd1 Kd4 Bg4 Kc5 Bxh5 g6e5
+Warning: Illegal PV move c5c4 from Kojiro (821)
+Warning: PV: Bd1 Kd4 Bf3 Kc5 Bd1 c5c4
+Warning: Illegal PV move b2b1q from Kojiro (821)
+Warning: PV: Bd1 Kd4 Bf3 Kc5 Bd1 b2b1q
+Warning: Illegal PV move b2b1q from Kojiro (821)
+Warning: PV: Bd1 Kd4 Bf3 Kc5 Bd1 b2b1q
+Warning: Illegal PV move b3b2 from Kojiro (821)
+Warning: PV: Bg4 b3b2
+Finished game 419 (mychess-attack-units vs Kojiro): 1/2-1/2 {Draw by 3-fold repetition}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -45      54     140   43.6%   14.3% 
+   1 mychess-placebo                17      54     140   52.5%   13.6% 
+   2 mychess-base                    5      55     140   50.7%   11.4% 
+   3 BBC                           149      70      84   70.2%   23.8% 
+   4 Princhess                     135      78      84   68.5%    8.3% 
+   5 Kojiro                         80      69      84   61.3%   20.2% 
+   6 ZetaDva                      -116      75      84   33.9%   10.7% 
+   7 TSCP                         -226      93      84   21.4%    2.4% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 424 of 600 (ZetaDva vs mychess-base)
+Finished game 421 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Started game 425 of 600 (mychess-base vs Princhess)
+Finished game 424 (ZetaDva vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 426 of 600 (Princhess vs mychess-base)
+Finished game 422 (TSCP vs mychess-base): 1/2-1/2 {Draw by adjudication}
+Started game 427 of 600 (mychess-base vs BBC)
+Finished game 423 (mychess-base vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 428 of 600 (BBC vs mychess-base)
+Finished game 428 (BBC vs mychess-base): 1-0 {White wins by adjudication}
+Started game 429 of 600 (mychess-base vs Kojiro)
+Warning: Illegal PV move c6b5 from Kojiro (841)
+Warning: PV: c6 c6b5
+Finished game 425 (mychess-base vs Princhess): 0-1 {Black wins by adjudication}
+Started game 430 of 600 (Kojiro vs mychess-base)
+Finished game 427 (mychess-base vs BBC): 0-1 {Black wins by adjudication}
+Finished game 426 (Princhess vs mychess-base): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 431 of 600 (mychess-placebo vs TSCP)
+Started game 432 of 600 (TSCP vs mychess-placebo)
+Warning: Illegal PV move f7f5 from Kojiro (841)
+Warning: PV: h5 f7f5
+Warning: Illegal PV move b3a3 from Kojiro (841)
+Warning: PV: Kg8 b3a3
+Warning: Illegal PV move g5d2 from Kojiro (842)
+Warning: PV: Nh3 g5d2
+Finished game 429 (mychess-base vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 433 of 600 (mychess-placebo vs ZetaDva)
+Finished game 430 (Kojiro vs mychess-base): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -45      54     140   43.6%   14.3% 
+   1 mychess-placebo                17      54     140   52.5%   13.6% 
+   2 mychess-base                    0      52     150   50.0%   12.0% 
+   3 BBC                           155      70      86   70.9%   23.3% 
+   4 Princhess                     136      76      86   68.6%    9.3% 
+   5 Kojiro                         87      68      86   62.2%   19.8% 
+   6 ZetaDva                      -122      75      86   33.1%   10.5% 
+   7 TSCP                         -225      91      86   21.5%    3.5% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 434 of 600 (ZetaDva vs mychess-placebo)
+Finished game 434 (ZetaDva vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 435 of 600 (mychess-placebo vs Princhess)
+Finished game 431 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Started game 436 of 600 (Princhess vs mychess-placebo)
+Finished game 433 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 437 of 600 (mychess-placebo vs BBC)
+Finished game 432 (TSCP vs mychess-placebo): 1/2-1/2 {Draw by adjudication}
+Started game 438 of 600 (BBC vs mychess-placebo)
+Finished game 435 (mychess-placebo vs Princhess): 0-1 {Black wins by adjudication}
+Started game 439 of 600 (mychess-placebo vs Kojiro)
+Warning: Illegal PV move c6b5 from Kojiro (861)
+Warning: PV: c6 c6b5
+Finished game 436 (Princhess vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 440 of 600 (Kojiro vs mychess-placebo)
+Finished game 437 (mychess-placebo vs BBC): 0-1 {Black wins by adjudication}
+Started game 441 of 600 (mychess-attack-units vs TSCP)
+Warning: Illegal PV move c4b3 from Kojiro (862)
+Warning: PV: Rd1 Bd4 Rd2 c5 Ke2 Bg4+ Kd3 Bf5+ Ke2 Ne3 c4b3
+Finished game 438 (BBC vs mychess-placebo): 1-0 {White wins by adjudication}
+Warning: Illegal PV move f7f5 from Kojiro (861)
+Warning: PV: h5 f7f5
+Started game 442 of 600 (TSCP vs mychess-attack-units)
+Warning: Illegal PV move b3a3 from Kojiro (861)
+Warning: PV: Kg8 b3a3
+Finished game 439 (mychess-placebo vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 443 of 600 (mychess-attack-units vs ZetaDva)
+Finished game 440 (Kojiro vs mychess-placebo): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -45      54     140   43.6%   14.3% 
+   1 mychess-placebo                 9      52     150   51.3%   13.3% 
+   2 mychess-base                    0      52     150   50.0%   12.0% 
+   3 BBC                           161      70      88   71.6%   22.7% 
+   4 Princhess                     142      76      88   69.3%    9.1% 
+   5 Kojiro                         93      68      88   63.1%   19.3% 
+   6 ZetaDva                      -128      74      88   32.4%   10.2% 
+   7 TSCP                         -224      89      88   21.6%    4.5% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 444 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 442 (TSCP vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 445 of 600 (mychess-attack-units vs Princhess)
+Finished game 441 (mychess-attack-units vs TSCP): 1/2-1/2 {Draw by insufficient mating material}
+Started game 446 of 600 (Princhess vs mychess-attack-units)
+Finished game 444 (ZetaDva vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 447 of 600 (mychess-attack-units vs BBC)
+Finished game 443 (mychess-attack-units vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 448 of 600 (BBC vs mychess-attack-units)
+Finished game 446 (Princhess vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 449 of 600 (mychess-attack-units vs Kojiro)
+Finished game 445 (mychess-attack-units vs Princhess): 0-1 {Black wins by adjudication}
+Started game 450 of 600 (Kojiro vs mychess-attack-units)
+Warning: Illegal PV move d2d1r from Kojiro (881)
+Warning: PV: d2 d2d1r
+Finished game 447 (mychess-attack-units vs BBC): 0-1 {Black wins by adjudication}
+Started game 451 of 600 (mychess-base vs TSCP)
+Warning: Illegal PV move e5e4 from Kojiro (881)
+Warning: PV: f4 e5e4
+Warning: Illegal PV move c1b2 from Kojiro (881)
+Warning: PV: Kg8 c1b2
+Finished game 449 (mychess-attack-units vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 452 of 600 (TSCP vs mychess-base)
+Warning: Illegal PV move e7e6 from Kojiro (882)
+Warning: PV: Re7 e7e6
+Warning: Illegal PV move a2a4 from Kojiro (882)
+Warning: PV: Kf2 a2a4
+Finished game 450 (Kojiro vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 453 of 600 (mychess-base vs ZetaDva)
+Finished game 448 (BBC vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -40      52     150   44.3%   14.0% 
+   1 mychess-placebo                 9      52     150   51.3%   13.3% 
+   2 mychess-base                    0      52     150   50.0%   12.0% 
+   3 BBC                           156      69      90   71.1%   22.2% 
+   4 Princhess                     138      75      90   68.9%    8.9% 
+   5 Kojiro                         99      68      90   63.9%   18.9% 
+   6 ZetaDva                      -134      74      90   31.7%   10.0% 
+   7 TSCP                         -223      87      90   21.7%    5.6% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 454 of 600 (ZetaDva vs mychess-base)
+Finished game 452 (TSCP vs mychess-base): 0-1 {Black mates}
+Started game 455 of 600 (mychess-base vs Princhess)
+Finished game 451 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Started game 456 of 600 (Princhess vs mychess-base)
+Finished game 453 (mychess-base vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 457 of 600 (mychess-base vs BBC)
+Finished game 456 (Princhess vs mychess-base): 1-0 {White mates}
+Started game 458 of 600 (BBC vs mychess-base)
+Finished game 455 (mychess-base vs Princhess): 1-0 {White wins by adjudication}
+Started game 459 of 600 (mychess-base vs Kojiro)
+Finished game 454 (ZetaDva vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 460 of 600 (Kojiro vs mychess-base)
+Warning: Illegal PV move f5e4 from Kojiro (901)
+Warning: PV: f5 f5e4
+Warning: Illegal PV move g6f8 from Kojiro (902)
+Warning: PV: Nxg6 g6f8
+Warning: Illegal PV move h7g7 from BBC (897)
+Warning: PV: Nc4+ Ke2 Kg8 Ra8+ Kh7 Ra7 h7g7
+Warning: Illegal PV move b5d3 from Kojiro (901)
+Warning: PV: Bxb5 b5d3
+Warning: Illegal PV move h7h5 from Kojiro (902)
+Warning: PV: Ne5 h7h5
+Finished game 460 (Kojiro vs mychess-base): 1-0 {White wins by adjudication}
+Started game 461 of 600 (mychess-placebo vs TSCP)
+Warning: Illegal PV move e4f3 from Kojiro (901)
+Warning: PV: e4 e4f3
+Warning: Illegal PV move e3d2 from Kojiro (901)
+Warning: PV: e3 e3d2
+Finished game 457 (mychess-base vs BBC): 0-1 {Black wins by adjudication}
+Started game 462 of 600 (TSCP vs mychess-placebo)
+Warning: Illegal PV move d4d3 from Kojiro (901)
+Warning: PV: Rxf3 d4d3
+Warning: Illegal PV move h3h2 from Kojiro (901)
+Warning: PV: Rh3 h3h2
+Finished game 458 (BBC vs mychess-base): 1-0 {White wins by adjudication}
+Started game 463 of 600 (mychess-placebo vs ZetaDva)
+Warning: Illegal PV move d3d2 from Kojiro (901)
+Warning: PV: Bxd4 d3d2
+Finished game 459 (mychess-base vs Kojiro): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -40      52     150   44.3%   14.0% 
+   1 mychess-placebo                 9      52     150   51.3%   13.3% 
+   2 mychess-base                    0      51     160   50.0%   11.3% 
+   3 BBC                           162      69      92   71.7%   21.7% 
+   4 Princhess                     135      74      92   68.5%    8.7% 
+   5 Kojiro                        105      67      92   64.7%   18.5% 
+   6 ZetaDva                      -139      74      92   31.0%    9.8% 
+   7 TSCP                         -228      87      92   21.2%    5.4% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 464 of 600 (ZetaDva vs mychess-placebo)
+Finished game 461 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Started game 465 of 600 (mychess-placebo vs Princhess)
+Finished game 462 (TSCP vs mychess-placebo): 0-1 {Black mates}
+Started game 466 of 600 (Princhess vs mychess-placebo)
+Finished game 463 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 467 of 600 (mychess-placebo vs BBC)
+Finished game 466 (Princhess vs mychess-placebo): 1-0 {White mates}
+Started game 468 of 600 (BBC vs mychess-placebo)
+Finished game 464 (ZetaDva vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 469 of 600 (mychess-placebo vs Kojiro)
+Finished game 465 (mychess-placebo vs Princhess): 1-0 {White wins by adjudication}
+Started game 470 of 600 (Kojiro vs mychess-placebo)
+Warning: Illegal PV move c8e7 from BBC (917)
+Warning: PV: Qxh3 Nbxd6 Qg4+ Kh1 Qh4+ Kg1 Qxg5+ Kh1 Qh4+ Kg1 Qg4+ Kh1 Qh4+ c8e7
+Warning: Illegal PV move d6f7 from BBC (917)
+Warning: PV: Qg4+ Kh2 Qf4+ Kg2 Qf3+ Kh2 Qf4+ d6f7
+Warning: Illegal PV move f1f2 from BBC (917)
+Warning: PV: Qf4+ Kh3 Qf3+ Kh2 Qf4+ f1f2
+Warning: Illegal PV move d6f7 from BBC (917)
+Warning: PV: Qf4+ Kh3 Qf3+ Kh2 Qf4+ d6f7
+Warning: Illegal PV move d6f7 from BBC (917)
+Warning: PV: Qf4+ Kh3 Qf3+ Kh2 Qf4+ d6f7
+Warning: Illegal PV move d6f7 from BBC (917)
+Warning: PV: Qf4+ d6f7
+Warning: Illegal PV move a2b3 from BBC (917)
+Warning: PV: Qf4+ a2b3
+Warning: Illegal PV move d6f7 from BBC (917)
+Warning: PV: Qf4+ d6f7
+Finished game 467 (mychess-placebo vs BBC): 0-1 {Black wins by adjudication}
+Started game 471 of 600 (mychess-attack-units vs TSCP)
+Warning: Illegal PV move g6f8 from Kojiro (922)
+Warning: PV: Nxg6 g6f8
+Warning: Illegal PV move f5e4 from Kojiro (921)
+Warning: PV: f5 f5e4
+Warning: Illegal PV move h7h5 from Kojiro (922)
+Warning: PV: Ne5 h7h5
+Finished game 470 (Kojiro vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 472 of 600 (TSCP vs mychess-attack-units)
+Warning: Illegal PV move c2b3 from Kojiro (921)
+Warning: PV: Bxc2 c2b3
+Warning: Illegal PV move f5f4 from Kojiro (921)
+Warning: PV: Bc4 f5f4
+Warning: Illegal PV move d3d4 from Kojiro (921)
+Warning: PV: c4 d3d4
+Warning: Illegal PV move c4c3 from Kojiro (921)
+Warning: PV: Kd2 c4c3
+Warning: Illegal PV move f4g3 from Kojiro (921)
+Warning: PV: f4 f4g3
+Warning: Illegal PV move f3f2 from Kojiro (921)
+Warning: PV: f3 f3f2
+Finished game 469 (mychess-placebo vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 473 of 600 (mychess-attack-units vs ZetaDva)
+Warning: Illegal PV move h2e2 from BBC (918)
+Warning: PV: Kd2 Qxh2 Qf8+ Kc7 Qc5+ Kb8 Qb6+ Bb7 Qd8+ Ka7 Qd4+ Kb8 Qd8+ h2e2
+Warning: Illegal PV move h2e2 from BBC (918)
+Warning: PV: Kd2 Qxh2 Qf8+ Kc7 Qc5+ Kb8 Qb6+ Bb7 Qd8+ Ka7 Qa5+ Kb8 Qd8+ h2e2
+Warning: Illegal PV move h2e2 from BBC (918)
+Warning: PV: Qf8+ Kc7 Qc5+ Kb8 Qb6+ Bb7 Qd8+ Ka7 Qa5+ Kb8 Qd8+ h2e2
+Warning: Illegal PV move h2d6 from BBC (918)
+Warning: PV: Qf8+ Kc7 Qc5+ Kb8 Qb6+ Bb7 Qd8+ Ka7 Qa5+ Kb8 Qd8+ h2d6
+Warning: Illegal PV move h2g3 from BBC (918)
+Warning: PV: Qc5+ Kb8 Qb6+ Bb7 Qd8+ Ka7 Qa5+ Kb8 Qd8+ h2g3
+Warning: Illegal PV move c8b7 from BBC (918)
+Warning: PV: Qb6+ Bb7 Qd8+ Ka7 Qa5+ Kb8 Qd8+ c8b7
+Warning: Illegal PV move h2f4 from BBC (918)
+Warning: PV: Qb6+ Bb7 Qd8+ Ka7 Qa5+ Kb8 Qd8+ h2f4
+Warning: Illegal PV move e2f3 from BBC (918)
+Warning: PV: Qd8+ Ka7 Qa5+ Kb8 Qd8+ e2f3
+Warning: Illegal PV move b7f3 from BBC (918)
+Warning: PV: Qd8+ Ka7 Qa5+ Kb8 Qd8+ b7f3
+Warning: Illegal PV move b7f3 from BBC (918)
+Warning: PV: Qa5+ Kb8 Qd8+ b7f3
+Warning: Illegal PV move b7f3 from BBC (918)
+Warning: PV: Qa5+ Kb8 Qd8+ b7f3
+Finished game 472 (TSCP vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -37      52     151   44.7%   13.9% 
+   1 mychess-placebo                 7      51     159   50.9%   12.6% 
+   2 mychess-base                    0      51     160   50.0%   11.3% 
+   3 BBC                           164      69      93   72.0%   21.5% 
+   4 Princhess                     132      73      94   68.1%    8.5% 
+   5 Kojiro                        111      67      94   65.4%   18.1% 
+   6 ZetaDva                      -136      73      94   31.4%    9.6% 
+   7 TSCP                         -235      86      95   20.5%    5.3% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 474 of 600 (ZetaDva vs mychess-attack-units)
+Warning: Illegal PV move h2c7 from BBC (918)
+Warning: PV: Qd8+ h2c7
+Warning: Illegal PV move h2f4 from BBC (918)
+Warning: PV: Qd8+ h2f4
+Warning: Illegal PV move h2d6 from BBC (918)
+Warning: PV: Qd8+ h2d6
+Warning: Illegal PV move b7a8 from BBC (918)
+Warning: PV: Qd8+ b7a8
+Finished game 471 (mychess-attack-units vs TSCP): 1-0 {White wins by adjudication}
+Started game 475 of 600 (mychess-attack-units vs Princhess)
+Warning: Illegal PV move h2e5 from BBC (918)
+Warning: PV: Qb6+ h2e5
+Warning: Illegal PV move h2f4 from BBC (918)
+Warning: PV: Qb6+ h2f4
+Warning: Illegal PV move h2e5 from BBC (918)
+Warning: PV: Qb6+ h2e5
+Warning: Illegal PV move h2c7 from BBC (918)
+Warning: PV: Qd8+ h2c7
+Warning: Illegal PV move h2f4 from BBC (918)
+Warning: PV: Qd8+ h2f4
+Warning: Illegal PV move h2e5 from BBC (918)
+Warning: PV: Qd8+ h2e5
+Warning: Illegal PV move h2d6 from BBC (918)
+Warning: PV: Qd8+ h2d6
+Finished game 468 (BBC vs mychess-placebo): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 476 of 600 (Princhess vs mychess-attack-units)
+Finished game 473 (mychess-attack-units vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 477 of 600 (mychess-attack-units vs BBC)
+Finished game 475 (mychess-attack-units vs Princhess): 0-1 {Black wins by adjudication}
+Started game 478 of 600 (BBC vs mychess-attack-units)
+Finished game 474 (ZetaDva vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 479 of 600 (mychess-attack-units vs Kojiro)
+Warning: Illegal PV move f7f6 from Kojiro (941)
+Warning: PV: Bg6 f7f6
+Finished game 477 (mychess-attack-units vs BBC): 0-1 {Black wins by adjudication}
+Started game 480 of 600 (Kojiro vs mychess-attack-units)
+Finished game 476 (Princhess vs mychess-attack-units): 0-1 {Black mates}
+Started game 481 of 600 (mychess-base vs TSCP)
+Warning: Illegal PV move g6f8 from Kojiro (942)
+Warning: PV: Nxg6 g6f8
+Warning: Illegal PV move d5c3 from Kojiro (941)
+Warning: PV: Nxd5 d5c3
+Warning: Illegal PV move h7h5 from Kojiro (942)
+Warning: PV: Ne5 h7h5
+Finished game 480 (Kojiro vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 482 of 600 (TSCP vs mychess-base)
+Warning: Illegal PV move d5g2 from BBC (938)
+Warning: PV: Kh6 Kf6 h4 Rg6+ Kh5 Rg3 Bf3 Rg8 Bd5 Rg3 d5g2
+Finished game 479 (mychess-attack-units vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 483 of 600 (mychess-base vs ZetaDva)
+Finished game 481 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -35      51     159   45.0%   13.2% 
+   1 mychess-placebo                 7      50     160   50.9%   13.1% 
+   2 mychess-base                    2      51     161   50.3%   11.2% 
+   3 BBC                           165      68      95   72.1%   22.1% 
+   4 Princhess                     129      72      96   67.7%    8.3% 
+   5 Kojiro                        116      67      96   66.1%   17.7% 
+   6 ZetaDva                      -141      72      96   30.7%    9.4% 
+   7 TSCP                         -240      86      97   20.1%    5.2% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 484 of 600 (ZetaDva vs mychess-base)
+Finished game 478 (BBC vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 485 of 600 (mychess-base vs Princhess)
+Finished game 482 (TSCP vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 486 of 600 (Princhess vs mychess-base)
+Finished game 485 (mychess-base vs Princhess): 0-1 {Black wins by adjudication}
+Started game 487 of 600 (mychess-base vs BBC)
+Finished game 484 (ZetaDva vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 488 of 600 (BBC vs mychess-base)
+Finished game 486 (Princhess vs mychess-base): 1-0 {White wins by adjudication}
+Started game 489 of 600 (mychess-base vs Kojiro)
+Finished game 483 (mychess-base vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 490 of 600 (Kojiro vs mychess-base)
+Finished game 488 (BBC vs mychess-base): 1-0 {White wins by adjudication}
+Warning: Illegal PV move c2g6 from Kojiro (962)
+Warning: PV: O-O c2g6
+Started game 491 of 600 (mychess-placebo vs TSCP)
+Warning: Illegal PV move e5f6 from Kojiro (962)
+Warning: PV: fxe5 e5f6
+Finished game 490 (Kojiro vs mychess-base): 1-0 {White mates}
+Started game 492 of 600 (TSCP vs mychess-placebo)
+Warning: Illegal PV move a4a3 from Kojiro (961)
+Warning: PV: a4 a4a3
+Finished game 487 (mychess-base vs BBC): 1-0 {White wins by adjudication}
+Started game 493 of 600 (mychess-placebo vs ZetaDva)
+Finished game 491 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -33      51     160   45.3%   13.1% 
+   1 mychess-placebo                 9      50     161   51.2%   13.0% 
+   2 mychess-base                    2      50     169   50.3%   10.7% 
+   3 BBC                           155      66      98   70.9%   21.4% 
+   4 Princhess                     134      72      98   68.4%    8.2% 
+   5 Kojiro                        119      67      97   66.5%   17.5% 
+   6 ZetaDva                      -146      72      98   30.1%    9.2% 
+   7 TSCP                         -244      86      99   19.7%    5.1% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 494 of 600 (ZetaDva vs mychess-placebo)
+Finished game 489 (mychess-base vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 495 of 600 (mychess-placebo vs Princhess)
+Finished game 492 (TSCP vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 496 of 600 (Princhess vs mychess-placebo)
+Finished game 495 (mychess-placebo vs Princhess): 0-1 {Black wins by adjudication}
+Started game 497 of 600 (mychess-placebo vs BBC)
+Finished game 494 (ZetaDva vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 498 of 600 (BBC vs mychess-placebo)
+Finished game 493 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 499 of 600 (mychess-placebo vs Kojiro)
+Finished game 496 (Princhess vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 500 of 600 (Kojiro vs mychess-placebo)
+Warning: Illegal PV move c2g6 from Kojiro (982)
+Warning: PV: O-O c2g6
+Warning: Illegal PV move e5f6 from Kojiro (982)
+Warning: PV: fxe5 e5f6
+Warning: Illegal PV move g7e5 from Kojiro (981)
+Warning: PV: bxa3 g7e5
+Finished game 500 (Kojiro vs mychess-placebo): 1-0 {White mates}
+Started game 501 of 600 (mychess-attack-units vs TSCP)
+Finished game 499 (mychess-placebo vs Kojiro): 1-0 {White wins by adjudication}
+Started game 502 of 600 (TSCP vs mychess-attack-units)
+Warning: Illegal PV move a6b5 from BBC (977)
+Warning: PV: Rb6+ Kc5 c2 Ra8+ a6b5
+Finished game 497 (mychess-placebo vs BBC): 0-1 {Black wins by adjudication}
+Started game 503 of 600 (mychess-attack-units vs ZetaDva)
+Finished game 498 (BBC vs mychess-placebo): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -33      51     160   45.3%   13.1% 
+   1 mychess-placebo                 6      49     170   50.9%   12.4% 
+   2 mychess-base                    0      50     170   50.0%   10.6% 
+   3 BBC                           160      66     100   71.5%   21.0% 
+   4 Princhess                     139      71     100   69.0%    8.0% 
+   5 Kojiro                        119      66     100   66.5%   17.0% 
+   6 ZetaDva                      -151      72     100   29.5%    9.0% 
+   7 TSCP                         -246      86     100   19.5%    5.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 504 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 503 (mychess-attack-units vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 505 of 600 (mychess-attack-units vs Princhess)
+Finished game 502 (TSCP vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 506 of 600 (Princhess vs mychess-attack-units)
+Finished game 504 (ZetaDva vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 507 of 600 (mychess-attack-units vs BBC)
+Finished game 501 (mychess-attack-units vs TSCP): 0-1 {Black wins by adjudication}
+Started game 508 of 600 (BBC vs mychess-attack-units)
+Finished game 505 (mychess-attack-units vs Princhess): 0-1 {Black wins by adjudication}
+Started game 509 of 600 (mychess-attack-units vs Kojiro)
+Warning: Illegal PV move c6e5 from Kojiro (1001)
+Warning: PV: Nc5 c6e5
+Warning: Illegal PV move f7e6 from Kojiro (1001)
+Warning: PV: Kg7 Qg3+ Kh7 Qf2 f7e6
+Finished game 506 (Princhess vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 510 of 600 (Kojiro vs mychess-attack-units)
+Finished game 509 (mychess-attack-units vs Kojiro): 1-0 {White wins by adjudication}
+Started game 511 of 600 (mychess-base vs TSCP)
+Warning: Illegal PV move g6f6 from BBC (998)
+Warning: PV: c4 h4 Re7 Rc1 Re5 Kf7 Rf5 Kg6 Re5 g6f6
+Warning: Illegal PV move g1f1 from BBC (998)
+Warning: PV: Re7 Rc1 Re5 Rd1 Re7 Rc1 g1f1
+Finished game 507 (mychess-attack-units vs BBC): 0-1 {Black wins by adjudication}
+Started game 512 of 600 (TSCP vs mychess-base)
+Finished game 511 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Started game 513 of 600 (mychess-base vs ZetaDva)
+Warning: Illegal PV move b5c6 from Kojiro (1002)
+Warning: PV: Bg3 b5c6
+Finished game 510 (Kojiro vs mychess-attack-units): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -37      50     169   44.7%   12.4% 
+   1 mychess-placebo                 6      49     170   50.9%   12.4% 
+   2 mychess-base                    2      50     171   50.3%   10.5% 
+   3 BBC                           162      66     101   71.8%   20.8% 
+   4 Princhess                     144      71     102   69.6%    7.8% 
+   5 Kojiro                        117      65     102   66.2%   16.7% 
+   6 ZetaDva                      -148      71     102   29.9%    8.8% 
+   7 TSCP                         -242      84     103   19.9%    4.9% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 514 of 600 (ZetaDva vs mychess-base)
+Finished game 512 (TSCP vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 515 of 600 (mychess-base vs Princhess)
+Finished game 513 (mychess-base vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 516 of 600 (Princhess vs mychess-base)
+Finished game 508 (BBC vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 517 of 600 (mychess-base vs BBC)
+Finished game 516 (Princhess vs mychess-base): 1-0 {White wins by adjudication}
+Started game 518 of 600 (BBC vs mychess-base)
+Finished game 515 (mychess-base vs Princhess): 0-1 {Black wins by adjudication}
+Started game 519 of 600 (mychess-base vs Kojiro)
+Finished game 517 (mychess-base vs BBC): 0-1 {Black wins by adjudication}
+Started game 520 of 600 (Kojiro vs mychess-base)
+Finished game 518 (BBC vs mychess-base): 1-0 {White wins by adjudication}
+Warning: Illegal PV move e8e3 from Kojiro (1021)
+Warning: PV: Re8 e8e3
+Started game 521 of 600 (mychess-placebo vs TSCP)
+Finished game 514 (ZetaDva vs mychess-base): 1/2-1/2 {Draw by adjudication}
+Finished game 520 (Kojiro vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 523 of 600 (mychess-placebo vs ZetaDva)
+Started game 522 of 600 (TSCP vs mychess-placebo)
+Finished game 521 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -35      49     170   45.0%   12.4% 
+   1 mychess-placebo                 8      49     171   51.2%   12.3% 
+   2 mychess-base                    0      48     179   50.0%   10.6% 
+   3 BBC                           161      65     104   71.6%   20.2% 
+   4 Princhess                     149      71     104   70.2%    7.7% 
+   5 Kojiro                        112      65     103   65.5%   16.5% 
+   6 ZetaDva                      -149      70     104   29.8%    9.6% 
+   7 TSCP                         -246      84     105   19.5%    4.8% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 524 of 600 (ZetaDva vs mychess-placebo)
+Warning: Illegal PV move g3g2 from Kojiro (1021)
+Warning: PV: Kc7 g3g2
+Finished game 519 (mychess-base vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 525 of 600 (mychess-placebo vs Princhess)
+Finished game 523 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 526 of 600 (Princhess vs mychess-placebo)
+Finished game 522 (TSCP vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 527 of 600 (mychess-placebo vs BBC)
+Finished game 524 (ZetaDva vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 528 of 600 (BBC vs mychess-placebo)
+Finished game 526 (Princhess vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 529 of 600 (mychess-placebo vs Kojiro)
+Finished game 525 (mychess-placebo vs Princhess): 0-1 {Black wins by adjudication}
+Started game 530 of 600 (Kojiro vs mychess-placebo)
+Finished game 528 (BBC vs mychess-placebo): 1-0 {White wins by adjudication}
+Warning: Illegal PV move a5a4 from Kojiro (1041)
+Warning: PV: Rxa5 a5a4
+Started game 531 of 600 (mychess-attack-units vs TSCP)
+Finished game 530 (Kojiro vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 532 of 600 (TSCP vs mychess-attack-units)
+Finished game 529 (mychess-placebo vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 533 of 600 (mychess-attack-units vs ZetaDva)
+Finished game 531 (mychess-attack-units vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -33      49     171   45.3%   12.3% 
+   1 mychess-placebo                 4      48     179   50.6%   11.7% 
+   2 mychess-base                   -2      48     180   49.7%   10.6% 
+   3 BBC                           163      65     105   71.9%   20.0% 
+   4 Princhess                     153      71     106   70.8%    7.5% 
+   5 Kojiro                        112      64     106   65.6%   16.0% 
+   6 ZetaDva                      -146      69     106   30.2%    9.4% 
+   7 TSCP                         -250      84     107   19.2%    4.7% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 534 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 527 (mychess-placebo vs BBC): 0-1 {Black wins by adjudication}
+Started game 535 of 600 (mychess-attack-units vs Princhess)
+Finished game 534 (ZetaDva vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 536 of 600 (Princhess vs mychess-attack-units)
+Finished game 533 (mychess-attack-units vs ZetaDva): 0-1 {Black wins by adjudication}
+Started game 537 of 600 (mychess-attack-units vs BBC)
+Finished game 532 (TSCP vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 538 of 600 (BBC vs mychess-attack-units)
+Finished game 535 (mychess-attack-units vs Princhess): 1-0 {White mates}
+Started game 539 of 600 (mychess-attack-units vs Kojiro)
+Finished game 536 (Princhess vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 540 of 600 (Kojiro vs mychess-attack-units)
+Warning: Illegal PV move d5e6 from Kojiro (1062)
+Warning: PV: d5 d5e6
+Finished game 537 (mychess-attack-units vs BBC): 0-1 {Black wins by adjudication}
+Started game 541 of 600 (mychess-base vs TSCP)
+Finished game 539 (mychess-attack-units vs Kojiro): 1-0 {White wins by adjudication}
+Started game 542 of 600 (TSCP vs mychess-base)
+Warning: Illegal PV move a2c4 from Kojiro (1062)
+Warning: PV: a6 a2c4
+Warning: Illegal PV move a6a7 from Kojiro (1062)
+Warning: PV: a6 a6a7
+Warning: Illegal PV move a2c2 from Kojiro (1062)
+Warning: PV: Kxf1 a2c2
+Finished game 540 (Kojiro vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 543 of 600 (mychess-base vs ZetaDva)
+Finished game 541 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -35      48     179   45.0%   11.7% 
+   1 mychess-placebo                 2      48     180   50.3%   11.7% 
+   2 mychess-base                    0      48     181   50.0%   10.5% 
+   3 BBC                           168      65     107   72.4%   19.6% 
+   4 Princhess                     150      70     108   70.4%    7.4% 
+   5 Kojiro                        110      63     108   65.3%   15.7% 
+   6 ZetaDva                      -135      68     108   31.5%    9.3% 
+   7 TSCP                         -254      84     109   18.8%    4.6% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 544 of 600 (ZetaDva vs mychess-base)
+Finished game 538 (BBC vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 545 of 600 (mychess-base vs Princhess)
+Finished game 542 (TSCP vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 546 of 600 (Princhess vs mychess-base)
+Finished game 544 (ZetaDva vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 547 of 600 (mychess-base vs BBC)
+Finished game 543 (mychess-base vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 548 of 600 (BBC vs mychess-base)
+Finished game 545 (mychess-base vs Princhess): 0-1 {Black wins by adjudication}
+Started game 549 of 600 (mychess-base vs Kojiro)
+Finished game 546 (Princhess vs mychess-base): 1-0 {White wins by adjudication}
+Started game 550 of 600 (Kojiro vs mychess-base)
+Warning: Illegal PV move b4b1 from Kojiro (1081)
+Warning: PV: Kh6 b4b1
+Finished game 549 (mychess-base vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 551 of 600 (mychess-placebo vs TSCP)
+Warning: Illegal PV move e1e8 from Kojiro (1082)
+Warning: PV: Qh8+ Kf7 Qh7+ Kf6 e1e8
+Finished game 551 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Started game 552 of 600 (TSCP vs mychess-placebo)
+Finished game 550 (Kojiro vs mychess-base): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 553 of 600 (mychess-placebo vs ZetaDva)
+Finished game 547 (mychess-base vs BBC): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -37      48     180   44.7%   11.7% 
+   1 mychess-placebo                 4      48     181   50.6%   11.6% 
+   2 mychess-base                    2      47     189   50.3%   10.6% 
+   3 BBC                           164      64     109   72.0%   19.3% 
+   4 Princhess                     155      70     110   70.9%    7.3% 
+   5 Kojiro                        111      63     110   65.5%   16.4% 
+   6 ZetaDva                      -140      68     110   30.9%    9.1% 
+   7 TSCP                         -258      83     111   18.5%    4.5% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 554 of 600 (ZetaDva vs mychess-placebo)
+Finished game 552 (TSCP vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 555 of 600 (mychess-placebo vs Princhess)
+Finished game 548 (BBC vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 556 of 600 (Princhess vs mychess-placebo)
+Finished game 553 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 557 of 600 (mychess-placebo vs BBC)
+Finished game 554 (ZetaDva vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 558 of 600 (BBC vs mychess-placebo)
+Warning: Illegal PV move f7e6 from BBC (1095)
+Warning: PV: Nh5 Qg4 Nf6 Qg3 f7e6
+Finished game 555 (mychess-placebo vs Princhess): 0-1 {Black wins by adjudication}
+Started game 559 of 600 (mychess-placebo vs Kojiro)
+Finished game 556 (Princhess vs mychess-placebo): 1-0 {White wins by adjudication}
+Started game 560 of 600 (Kojiro vs mychess-placebo)
+Warning: Illegal PV move e2c4 from BBC (1096)
+Warning: PV: Rb1 Qd4+ Be3 Qc3 Bd2 Qd4+ e2c4
+Warning: Illegal PV move d2c3 from BBC (1096)
+Warning: PV: Rb1 Qd4+ Be3 Qc3 Bd2 Qd4+ d2c3
+Warning: Illegal PV move d2c3 from BBC (1096)
+Warning: PV: Rb1 Qd4+ Be3 Qc3 Bd2 Qd4+ d2c3
+Warning: Illegal PV move d2b4 from BBC (1096)
+Warning: PV: Be3 Qc3 Bd2 Qd4+ d2b4
+Warning: Illegal PV move d2b4 from BBC (1096)
+Warning: PV: Be3 Qc3 Bd2 Qd4+ d2b4
+Warning: Illegal PV move d2c3 from BBC (1096)
+Warning: PV: Be3 Qc3 Bd2 Qd4+ d2c3
+Warning: Illegal PV move d2c3 from BBC (1096)
+Warning: PV: Bd2 Qd4+ d2c3
+Warning: Illegal PV move d2c3 from BBC (1096)
+Warning: PV: Bd2 Qd4+ d2c3
+Warning: Illegal PV move d2c3 from BBC (1096)
+Warning: PV: Bd2 Qd4+ d2c3
+Finished game 558 (BBC vs mychess-placebo): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 561 of 600 (mychess-attack-units vs TSCP)
+Finished game 560 (Kojiro vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 562 of 600 (TSCP vs mychess-attack-units)
+Finished game 557 (mychess-placebo vs BBC): 0-1 {Black wins by adjudication}
+Started game 563 of 600 (mychess-attack-units vs ZetaDva)
+Warning: Illegal PV move b4b1 from Kojiro (1099)
+Warning: PV: Kh6 b4b1
+Finished game 559 (mychess-placebo vs Kojiro): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -37      48     180   44.7%   11.7% 
+   1 mychess-placebo                 0      47     190   50.0%   11.6% 
+   2 mychess-base                    4      47     190   50.5%   10.5% 
+   3 BBC                           159      63     112   71.4%   19.6% 
+   4 Princhess                     159      69     112   71.4%    7.1% 
+   5 Kojiro                        109      62     112   65.2%   16.1% 
+   6 ZetaDva                      -144      67     112   30.4%    8.9% 
+   7 TSCP                         -250      82     112   19.2%    4.5% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 564 of 600 (ZetaDva vs mychess-attack-units)
+Finished game 561 (mychess-attack-units vs TSCP): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 565 of 600 (mychess-attack-units vs Princhess)
+Finished game 564 (ZetaDva vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 566 of 600 (Princhess vs mychess-attack-units)
+Finished game 562 (TSCP vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 567 of 600 (mychess-attack-units vs BBC)
+Finished game 565 (mychess-attack-units vs Princhess): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 568 of 600 (BBC vs mychess-attack-units)
+Finished game 563 (mychess-attack-units vs ZetaDva): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 569 of 600 (mychess-attack-units vs Kojiro)
+Finished game 568 (BBC vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 570 of 600 (Kojiro vs mychess-attack-units)
+Finished game 566 (Princhess vs mychess-attack-units): 1-0 {White wins by adjudication}
+Finished game 567 (mychess-attack-units vs BBC): 0-1 {Black wins by adjudication}
+Started game 571 of 600 (mychess-base vs TSCP)
+Started game 572 of 600 (TSCP vs mychess-base)
+Warning: Illegal PV move f1b5 from Kojiro (1120)
+Warning: PV: Rd2 Qb1+ Rd1 Qb4+ f1b5
+Finished game 569 (mychess-attack-units vs Kojiro): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 573 of 600 (mychess-base vs ZetaDva)
+Finished game 570 (Kojiro vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -35      46     190   45.0%   13.2% 
+   1 mychess-placebo                 0      47     190   50.0%   11.6% 
+   2 mychess-base                    4      47     190   50.5%   10.5% 
+   3 BBC                           163      63     114   71.9%   19.3% 
+   4 Princhess                     160      68     114   71.5%    7.9% 
+   5 Kojiro                        104      61     114   64.5%   16.7% 
+   6 ZetaDva                      -145      66     114   30.3%    9.6% 
+   7 TSCP                         -249      80     114   19.3%    5.3% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 574 of 600 (ZetaDva vs mychess-base)
+Finished game 572 (TSCP vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 575 of 600 (mychess-base vs Princhess)
+Finished game 571 (mychess-base vs TSCP): 1-0 {White wins by adjudication}
+Started game 576 of 600 (Princhess vs mychess-base)
+Finished game 573 (mychess-base vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 577 of 600 (mychess-base vs BBC)
+Finished game 574 (ZetaDva vs mychess-base): 0-1 {Black wins by adjudication}
+Started game 578 of 600 (BBC vs mychess-base)
+Finished game 575 (mychess-base vs Princhess): 0-1 {Black wins by adjudication}
+Started game 579 of 600 (mychess-base vs Kojiro)
+Finished game 576 (Princhess vs mychess-base): 1-0 {White mates}
+Started game 580 of 600 (Kojiro vs mychess-base)
+Finished game 577 (mychess-base vs BBC): 0-1 {Black wins by adjudication}
+Warning: Illegal PV move e3b3 from Kojiro (1139)
+Warning: PV: Bxg3 e3b3
+Started game 581 of 600 (mychess-placebo vs TSCP)
+Warning: Illegal PV move a3a4 from Kojiro (1139)
+Warning: PV: Ra3 a3a4
+Finished game 578 (BBC vs mychess-base): 1-0 {White wins by adjudication}
+Finished game 579 (mychess-base vs Kojiro): 1-0 {White wins by adjudication}
+Started game 583 of 600 (mychess-placebo vs ZetaDva)
+Started game 582 of 600 (TSCP vs mychess-placebo)
+Finished game 581 (mychess-placebo vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -35      46     190   45.0%   13.2% 
+   1 mychess-placebo                 2      47     191   50.3%   11.5% 
+   2 mychess-base                    5      46     199   50.8%   10.1% 
+   3 BBC                           168      63     116   72.4%   19.0% 
+   4 Princhess                     164      68     116   72.0%    7.8% 
+   5 Kojiro                         99      61     115   63.9%   16.5% 
+   6 ZetaDva                      -149      66     116   29.7%    9.5% 
+   7 TSCP                         -254      80     117   18.8%    5.1% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 584 of 600 (ZetaDva vs mychess-placebo)
+Warning: Illegal PV move d3e4 from Kojiro (1140)
+Warning: PV: Bd4 a2 Kd5 Kc2 Be5 Kb1 Kc4 a1=Q Bxa1 Kxa1 Kd5 Kb2 Ke5 Kc2 Kf5 Kd1 Kf4 Kc2 Kf5 d3e4
+Warning: Illegal PV move d7e6 from Kojiro (1140)
+Warning: PV: Ke6 a2 Kd5 Kb1 Kc4 a1=Q Bxa1 Kxa1 Kd5 Kb2 Ke6 Kc2 Kd7 Kd2 Ke6 Kc2 d7e6
+Warning: Illegal PV move d3e4 from Kojiro (1140)
+Warning: PV: Ke6 a2 Kd5 Kb1 Kc4 a1=Q Bxa1 Kxa1 Kd5 Kb2 Ke6 Kc2 Kd7 Kd2 Ke6 Kc2 d3e4
+Warning: Illegal PV move b1c2 from Kojiro (1140)
+Warning: PV: Ke6 a2 Kd5 Kb1 Kc4 a1=Q Bxa1 Kxa1 Kd5 Kb2 Ke6 Kc2 Kd7 Kd2 Ke6 Kc2 b1c2
+Warning: Illegal PV move b1b2 from Kojiro (1140)
+Warning: PV: Ke6 a2 Kd5 Kb1 Kc4 a1=Q Bxa1 Kxa1 Kd5 Kb2 Ke6 Kc2 Kd7 Kd2 Ke6 Kc2 b1b2
+Warning: Illegal PV move a5b4 from Kojiro (1140)
+Warning: PV: Ke6 a2 Kd5 Kb1 Kc4 a1=Q Bxa1 Kxa1 Kd5 Kb2 Ke6 Kc2 Kd7 Kd2 Ke6 Kc2 a5b4
+Warning: Illegal PV move f5e4 from Kojiro (1140)
+Warning: PV: Kd5 a2 Kc4 a1=Q Bxa1 Kxa1 Kd5 Kb2 Kd6 Kb3 Ke5 Kc3 Kf5 Kd4 Kg5 Ke3 Kf5 Kd4 f5e4
+Warning: Illegal PV move e3d4 from Kojiro (1140)
+Warning: PV: Kd5 a2 Kc4 a1=Q Bxa1 Kxa1 Kd5 Kb2 Kd6 Kb3 Ke5 Kc3 Kf5 Kb3 Ke4 Kb4 Kd3 Kc5 Ke4 Kb4 e3d4
+Warning: Illegal PV move g5f6 from Kojiro (1140)
+Warning: PV: Kc4 a2 Bh8 Kb1 Kd5 a1=Q Bxa1 Kxa1 Ke5 Kb2 Kf5 Kc2 Kf6 Kd3 Kf7 Kc2 Kf6 g5f6
+Warning: Illegal PV move b1b2 from Kojiro (1140)
+Warning: PV: Kc4 a2 Bh8 Kb1 Kd5 a1=Q Bxa1 Kxa1 Ke5 Kb2 Kf5 Kc2 Kf6 Kd3 Kf7 Kc2 Kf6 b1b2
+Warning: Illegal PV move d2e3 from Kojiro (1140)
+Warning: PV: Kc4 a2 Bh8 Kb1 Kd5 a1=Q Bxa1 Kxa1 Ke5 Kb2 Kf5 Kc2 Kf6 Kd3 Kf7 Kc2 Kf6 d2e3
+Finished game 583 (mychess-placebo vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 585 of 600 (mychess-placebo vs Princhess)
+Warning: Illegal PV move a2b2 from Kojiro (1140)
+Warning: PV: Kc5 a2 Kc6 a1=Q Bxa1 Kxa1 Kd5 Kb2 Ke5 Ka2 Ke6 Kb2 Kd5 Ka2 Ke6 Kb2 a2b2
+Warning: Illegal PV move d4d5 from Kojiro (1140)
+Warning: PV: Kc5 a2 Kc6 a1=Q Bxa1 Kxa1 Kd5 Kb2 Ke5 Ka2 Ke6 Kb2 Kd5 Ka2 Ke6 d4d5
+Warning: Illegal PV move d5c5 from Kojiro (1140)
+Warning: PV: Kd5 a2 Bg7 Kb1 Kc4 a1=Q Bxa1 Kxa1 Kd4 Kb2 Ke5 Kc3 Ke6 Kd4 Kf5 Kc3 Ke6 d5c5
+Warning: Illegal PV move f6g6 from Kojiro (1140)
+Warning: PV: Kd5 a2 Bg7 Kb1 Kc4 a1=Q Bxa1 Kxa1 Kd4 Kb2 Ke5 Kc3 Ke6 Kd4 Kf5 Kc3 Ke6 f6g6
+Warning: Illegal PV move h6g5 from Kojiro (1140)
+Warning: PV: Kd5 a2 Bg7 Kb1 Kc4 a1=Q Bxa1 Kxa1 Kd4 Kb2 Ke5 Kc3 Ke6 Kd4 Kf5 Kc3 Ke6 h6g5
+Warning: Illegal PV move h6g7 from Kojiro (1140)
+Warning: PV: Kd5 a2 Bg7 Kb1 Kc4 a1=Q Bxa1 Kxa1 Kd4 Kb2 Ke5 Kc3 Ke6 Kd4 Kf5 Kc3 Ke6 h6g7
+Finished game 582 (TSCP vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 586 of 600 (Princhess vs mychess-placebo)
+Warning: Illegal PV move g5f6 from Kojiro (1140)
+Warning: PV: Kc4 a2 Bh8 Kb1 Kd5 a1=Q Bxa1 Kxa1 Ke5 Kb2 Kf5 Kc2 Kf6 Kd3 Kf7 Kc2 Kf6 g5f6
+Warning: Illegal PV move b1b2 from Kojiro (1140)
+Warning: PV: Kc4 a2 Bh8 Kb1 Kd5 a1=Q Bxa1 Kxa1 Ke5 Kb2 Kf5 Kc2 Kf6 Kd3 Kf7 Kc2 Kf6 b1b2
+Warning: Illegal PV move d2e3 from Kojiro (1140)
+Warning: PV: Kc4 a2 Bh8 Kb1 Kd5 a1=Q Bxa1 Kxa1 Ke5 Kb2 Kf5 Kc2 Kf6 Kd3 Kf7 Kc2 Kf6 d2e3
+Finished game 580 (Kojiro vs mychess-base): 1/2-1/2 {Draw by adjudication}
+Started game 587 of 600 (mychess-placebo vs BBC)
+Finished game 585 (mychess-placebo vs Princhess): 0-1 {Black wins by adjudication}
+Started game 588 of 600 (BBC vs mychess-placebo)
+Finished game 584 (ZetaDva vs mychess-placebo): 1/2-1/2 {Draw by adjudication}
+Started game 589 of 600 (mychess-placebo vs Kojiro)
+Finished game 587 (mychess-placebo vs BBC): 0-1 {Black wins by adjudication}
+Started game 590 of 600 (Kojiro vs mychess-placebo)
+Finished game 586 (Princhess vs mychess-placebo): 1-0 {White wins by adjudication}
+Warning: Illegal PV move c7b6 from BBC (1156)
+Warning: PV: Kh2 Rb3 Kh3 h5 Ra1 Rb4 Rc1 Rb3 Ra1 c7b6
+Warning: Illegal PV move g3g4 from BBC (1156)
+Warning: PV: Kh2 Rb3 Kh3 Ra3 Kh2 Ra2 g3g4
+Warning: Illegal PV move d4e3 from BBC (1156)
+Warning: PV: Kh2 Rb3 Kg1 Nd2 Kh2 Ne4 d4e3
+Warning: Illegal PV move c1c4 from BBC (1156)
+Warning: PV: Kh2 Rb3 Kg1 Ke7 Rd1 Rb4 Rc1 Rb3 c1c4
+Warning: Illegal PV move c4b5 from BBC (1156)
+Warning: PV: Kh2 Rb3 Rd1 Rb4 Rc1 Rb3 c4b5
+Started game 591 of 600 (mychess-attack-units vs TSCP)
+Warning: Illegal PV move e3b3 from Kojiro (1159)
+Warning: PV: Bxg3 e3b3
+Warning: Illegal PV move g2g3 from BBC (1156)
+Warning: PV: Ra2 Rc1 Ra8+ Kf7 Rd8 Rc2+ Kh3 Nf2+ Kg2 Ne4+ Kg1 Rc1+ Kg2 Rc2+ g2g3
+Warning: Illegal PV move d8c8 from BBC (1156)
+Warning: PV: Ra2 Rc1 Ra8+ Kf7 Rd8 Rc2+ Kh3 Nf2+ Kg2 Ne4+ Kg1 Rc1+ Kg2 Rc2+ d8c8
+Warning: Illegal PV move c4b5 from BBC (1156)
+Warning: PV: Kg2 Ke7 c4b5
+Warning: Illegal PV move c4b5 from BBC (1156)
+Warning: PV: Kh2 Kf7 c4b5
+Warning: Illegal PV move b5c6 from BBC (1156)
+Warning: PV: Kg2 Kg7 b5c6
+Warning: Illegal PV move c2c4 from BBC (1156)
+Warning: PV: Rc1 Kg7 Rc2 Rb1 c2c4
+Warning: Illegal PV move a3a4 from Kojiro (1159)
+Warning: PV: Ra3 a3a4
+Warning: Illegal PV move c2c4 from BBC (1156)
+Warning: PV: Rc2 Rb3 Kg2 Kf7 Kf3 Rb4 Kg2 Rb3 c2c4
+Warning: Illegal PV move c4c3 from Kojiro (1159)
+Warning: PV: Kf6 c4c3
+Warning: Illegal PV move d5c6 from Kojiro (1160)
+Warning: PV: Rc6+ Kd5 Rb6 Kc5 Re6 Kd5 Rb6 d5c6
+Warning: Illegal PV move c4e3 from Kojiro (1159)
+Warning: PV: Nc4 c4e3
+Warning: Illegal PV move c5b6 from Kojiro (1160)
+Warning: PV: Rb6 Kc5 Rh6 Rg2 Kd3 Kd5 Rb6 Kc5 Rh6 c5b6
+Warning: Illegal PV move c5b5 from Kojiro (1160)
+Warning: PV: Kd3 Kd5 Rb6 Kc5 Rh6 c5b5
+Warning: Illegal PV move c4d5 from Kojiro (1160)
+Warning: PV: Kd3 Kd5 Rb6 Kc5 Rh6 c4d5
+Warning: Illegal PV move d5e5 from Kojiro (1160)
+Warning: PV: Rb6 Kc5 Re6 Kd5 Rb6 d5e5
+Warning: Illegal PV move d5e6 from Kojiro (1160)
+Warning: PV: Rb6 Kc5 Re6 Kd5 Rb6 d5e6
+Warning: Illegal PV move d2e3 from Kojiro (1160)
+Warning: PV: Re6 Kd5 Rb6 Kc5 d2e3
+Warning: Illegal PV move b3b2 from Kojiro (1159)
+Warning: PV: Kxd8 b3b2
+Finished game 590 (Kojiro vs mychess-placebo): 1/2-1/2 {Draw by adjudication}
+Warning: Illegal PV move c1d2 from Kojiro (1159)
+Warning: PV: c1=Q c1d2
+Started game 592 of 600 (TSCP vs mychess-attack-units)
+Finished game 589 (mychess-placebo vs Kojiro): 0-1 {Black wins by adjudication}
+Started game 593 of 600 (mychess-attack-units vs ZetaDva)
+Warning: Illegal PV move e3f4 from BBC (1156)
+Warning: PV: Kg2 Rd1 e3f4
+Warning: Illegal PV move e3f4 from BBC (1156)
+Warning: PV: Kg2 Rd1 e3f4
+Finished game 591 (mychess-attack-units vs TSCP): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -33      46     191   45.3%   13.1% 
+   1 mychess-placebo                -2      45     199   49.7%   12.1% 
+   2 mychess-base                    5      46     200   50.7%   10.5% 
+   3 BBC                           170      63     117   72.6%   18.8% 
+   4 Princhess                     168      68     118   72.5%    7.6% 
+   5 Kojiro                        100      59     118   64.0%   17.8% 
+   6 ZetaDva                      -150      65     118   29.7%   10.2% 
+   7 TSCP                         -258      80     119   18.5%    5.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 594 of 600 (ZetaDva vs mychess-attack-units)
+Warning: Illegal PV move c1e3 from BBC (1156)
+Warning: PV: Kh2 Rd1 c1e3
+Finished game 588 (BBC vs mychess-placebo): 0-1 {Black wins by adjudication}
+Started game 595 of 600 (mychess-attack-units vs Princhess)
+Finished game 593 (mychess-attack-units vs ZetaDva): 1-0 {White wins by adjudication}
+Started game 596 of 600 (Princhess vs mychess-attack-units)
+Finished game 592 (TSCP vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 597 of 600 (mychess-attack-units vs BBC)
+Finished game 594 (ZetaDva vs mychess-attack-units): 0-1 {Black wins by adjudication}
+Started game 598 of 600 (BBC vs mychess-attack-units)
+Finished game 595 (mychess-attack-units vs Princhess): 0-1 {Black wins by adjudication}
+Started game 599 of 600 (mychess-attack-units vs Kojiro)
+Finished game 596 (Princhess vs mychess-attack-units): 1-0 {White wins by adjudication}
+Started game 600 of 600 (Kojiro vs mychess-attack-units)
+Warning: Illegal PV move f3e4 from BBC (1175)
+Warning: PV: Qe3+ Kh2 Qh6+ Kg3 Qg5+ Kh2 Qh6+ f3e4
+Warning: Illegal PV move b3c4 from BBC (1175)
+Warning: PV: Qe3+ Kg3 Qg5+ b3c4
+Warning: Illegal PV move g2f3 from BBC (1175)
+Warning: PV: Qe3+ Kg3 Qg5+ g2f3
+Warning: Illegal PV move a4b5 from BBC (1175)
+Warning: PV: Bc4+ Kd1 Bxb3+ Ke2 Bc4+ Kd1 Bb3+ a4b5
+Warning: Illegal PV move d2d7 from BBC (1175)
+Warning: PV: Bxb3+ Ke2 Bc4+ Kd1 Bb3+ d2d7
+Warning: Illegal PV move d5c6 from Kojiro (1180)
+Warning: PV: cxd5 d5c6
+Warning: Illegal PV move d2b2 from BBC (1175)
+Warning: PV: Bc4+ Kd1 Bb3+ d2b2
+Warning: Illegal PV move d2b2 from BBC (1175)
+Warning: PV: Bb3+ d2b2
+Warning: Illegal PV move d2b2 from BBC (1175)
+Warning: PV: Bb3+ d2b2
+Warning: Illegal PV move d2b2 from BBC (1175)
+Warning: PV: Bb3+ d2b2
+Warning: Illegal PV move d2b2 from BBC (1175)
+Warning: PV: Bb3+ d2b2
+Warning: Illegal PV move d2b2 from BBC (1175)
+Warning: PV: Bc4+ d2b2
+Warning: Illegal PV move d2b2 from BBC (1175)
+Warning: PV: Bc4+ d2b2
+Warning: Illegal PV move d2b2 from BBC (1175)
+Warning: PV: Bc4+ d2b2
+Warning: Illegal PV move d2b2 from BBC (1175)
+Warning: PV: Bc4+ d2b2
+Warning: Illegal PV move d2b2 from BBC (1175)
+Warning: PV: Bb3+ d2b2
+Warning: Illegal PV move d2b2 from BBC (1175)
+Warning: PV: Bb3+ d2b2
+Warning: Illegal PV move d2b2 from BBC (1175)
+Warning: PV: Bb3+ d2b2
+Warning: Illegal PV move d2b2 from BBC (1175)
+Warning: PV: Bb3+ d2b2
+Finished game 597 (mychess-attack-units vs BBC): 1/2-1/2 {Draw by 3-fold repetition}
+Finished game 599 (mychess-attack-units vs Kojiro): 1-0 {White wins by adjudication}
+Warning: Illegal PV move b7e4 from Kojiro (1180)
+Warning: PV: Bb7 b7e4
+Warning: Illegal PV move h1g2 from Kojiro (1180)
+Warning: PV: Rxc7 h1g2
+Finished game 598 (BBC vs mychess-attack-units): 1-0 {White wins by adjudication}
+Warning: Illegal PV move a7a8r from Kojiro (1180)
+Warning: PV: a7 a7a8r
+Warning: Illegal PV move e7d7 from Kojiro (1180)
+Warning: PV: e6 e7d7
+Warning: Illegal PV move f7e7 from Kojiro (1180)
+Warning: PV: Rf7 f7e7
+Finished game 600 (Kojiro vs mychess-attack-units): 1-0 {White wins by adjudication}
+Rank Name                          Elo     +/-   Games   Score    Draw 
+   0 mychess-attack-units          -31      45     200   45.5%   13.0% 
+   1 mychess-placebo                 0      45     200   50.0%   12.0% 
+   2 mychess-base                    5      46     200   50.7%   10.5% 
+   3 Princhess                     172      68     120   72.9%    7.5% 
+   4 BBC                           165      61     120   72.1%   19.2% 
+   5 Kojiro                         98      59     120   63.7%   17.5% 
+   6 ZetaDva                      -154      65     120   29.2%   10.0% 
+   7 TSCP                         -260      80     120   18.3%    5.0% 
+
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+
+Player: mychess-base
+   "Draw by 3-fold repetition": 12
+   "Draw by adjudication": 7
+   "Draw by fifty moves rule": 1
+   "Draw by insufficient mating material": 1
+   "Loss: Black wins by adjudication": 37
+   "Loss: White mates": 5
+   "Loss: White wins by adjudication": 46
+   "Win: Black mates": 4
+   "Win: Black wins by adjudication": 36
+   "Win: White mates": 4
+   "Win: White wins by adjudication": 47
+Player: mychess-placebo
+   "Draw by 3-fold repetition": 12
+   "Draw by adjudication": 10
+   "Draw by insufficient mating material": 2
+   "Loss: Black mates": 1
+   "Loss: Black wins by adjudication": 40
+   "Loss: White mates": 3
+   "Loss: White wins by adjudication": 44
+   "Win: Black mates": 4
+   "Win: Black wins by adjudication": 34
+   "Win: White mates": 4
+   "Win: White wins by adjudication": 46
+Player: mychess-attack-units
+   "Draw by 3-fold repetition": 15
+   "Draw by adjudication": 5
+   "Draw by fifty moves rule": 1
+   "Draw by insufficient mating material": 4
+   "Draw by stalemate": 1
+   "Loss: Black mates": 3
+   "Loss: Black wins by adjudication": 43
+   "Loss: White mates": 3
+   "Loss: White wins by adjudication": 47
+   "Win: Black mates": 2
+   "Win: Black wins by adjudication": 39
+   "Win: White mates": 5
+   "Win: White wins by adjudication": 32
+Player: TSCP
+   "Draw by 3-fold repetition": 2
+   "Draw by adjudication": 2
+   "Draw by insufficient mating material": 1
+   "Draw by stalemate": 1
+   "Loss: Black mates": 3
+   "Loss: Black wins by adjudication": 44
+   "Loss: White mates": 1
+   "Loss: White wins by adjudication": 47
+   "Win: Black wins by adjudication": 9
+   "Win: White mates": 1
+   "Win: White wins by adjudication": 9
+Player: ZetaDva
+   "Draw by 3-fold repetition": 2
+   "Draw by adjudication": 9
+   "Draw by insufficient mating material": 1
+   "Loss: Black wins by adjudication": 33
+   "Loss: White wins by adjudication": 46
+   "Win: Black mates": 1
+   "Win: Black wins by adjudication": 9
+   "Win: White wins by adjudication": 19
+Player: Princhess
+   "Draw by 3-fold repetition": 7
+   "Draw by adjudication": 1
+   "Draw by insufficient mating material": 1
+   "Loss: Black mates": 6
+   "Loss: Black wins by adjudication": 5
+   "Loss: White mates": 12
+   "Loss: White wins by adjudication": 5
+   "Win: Black mates": 1
+   "Win: Black wins by adjudication": 37
+   "Win: White mates": 6
+   "Win: White wins by adjudication": 39
+Player: BBC
+   "Draw by 3-fold repetition": 11
+   "Draw by adjudication": 6
+   "Draw by fifty moves rule": 2
+   "Draw by insufficient mating material": 4
+   "Loss: Black mates": 1
+   "Loss: Black wins by adjudication": 10
+   "Loss: White wins by adjudication": 11
+   "Win: Black mates": 1
+   "Win: Black wins by adjudication": 36
+   "Win: White mates": 2
+   "Win: White wins by adjudication": 36
+Player: Kojiro
+   "Draw by 3-fold repetition": 17
+   "Draw by adjudication": 4
+   "Loss: Black wins by adjudication": 17
+   "Loss: White wins by adjudication": 16
+   "Win: Black mates": 1
+   "Win: Black wins by adjudication": 29
+   "Win: White mates": 2
+   "Win: White wins by adjudication": 34
+Finished match
