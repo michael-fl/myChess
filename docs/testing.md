@@ -26,7 +26,7 @@ JDK 25 must be active for `mvn test` (set `JAVA_HOME` if the system default diff
 
 ### When the full suite has to run
 
-Day to day it does not. `mvn test` takes about ten minutes and competes with whatever match or bench is running, so iterative work uses a single class or `-DexcludedGroups=slow`, and the full run happens on request.
+Day to day it does not. `mvn test` takes about sixteen minutes (15:43 to 16:04 over four runs, 2026-09-23/24) and competes with whatever match or bench is running, so iterative work uses a single class or `-DexcludedGroups=slow`, and the full run happens on request.
 
 **A merge to master is the exception, and there it is mandatory** — stated 2026-09-23, after a merge was about to be committed on the strength of `BlunderTest` + `EngineTest` alone. Before the merge commit: `mvn test`, the whole thing, green, with the numbers reported.
 
