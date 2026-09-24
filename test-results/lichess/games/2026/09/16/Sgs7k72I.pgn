@@ -1,0 +1,22 @@
+[Event "rated classical game"]
+[Site "https://lichess.org/Sgs7k72I"]
+[Date "2026.09.16"]
+[Round "-"]
+[White "HynobiusChess"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "Sgs7k72I"]
+[UTCDate "2026.09.16"]
+[UTCTime "20:51:05"]
+[WhiteElo "2005"]
+[BlackElo "2187"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "1800+0"]
+[ECO "C48"]
+[Opening "Four Knights Game: Spanish Variation, Classical Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nc3 Nf6 3. Nf3 Nc6 4. Bb5 Bc5 5. Nxe5 O-O 6. Nf3 Nxe4 7. Nxe4 Re8 8. Qe2 d5 9. Nxc5 Rxe2+ 10. Bxe2 Qe7 11. Nd3 Bf5 12. Kd1 Re8 13. Re1 g5 14. h3 h5 15. Bf1 Be4 16. Re3 g4 17. hxg4 hxg4 18. Nfe1 Nd4 19. f3 Nf5 20. fxe4 dxe4 21. Nf4 Nxe3+ 22. dxe3 Qd6+ 23. Bd2 Rd8 24. Ned3 Qb6 25. Kc1 exd3 26. Bxd3 Qh6 27. Kb1 Qh1+ 28. Bc1 Re8 29. e4 c6 30. a4 a5 31. Ra3 Re7 32. Rc3 Qg1 33. Rc4 Qf2 34. b4 axb4 35. Rxb4 g3 36. Rb2 Qe1 37. Nh5 Kf8 38. Nf6 Kg7 39. Ng4 Kh8 40. Ne3 f6 41. Nf5 Rh7 42. Nd4 Qg1 43. Ne2 Qxg2 44. e5 fxe5 45. Bxh7 Qxe2 46. Bd3 Qe1 47. c3 Qxc3 48. Be4 Qc4 49. Bf5 Qxa4 50. Bc2 Qh4 51. Bd3 Qg4 52. Kc2 Qf3 53. Rxb7 g2 54. Rb8+ Kg7 55. Bc4 Qe4+ 56. Kb3 Qb1+ 57. Bb2 g1=Q 58. Rg8+ Kf6 59. Rxg1 Qxg1 60. Ka2 Qd1 61. Bb3 Qd3 62. Ba3 c5 63. Bc1 c4 64. Ba4 c3 65. Bb3 e4 66. Bf4 e3 67. Bg3 c2 68. Kb2 Qxb3+ 69. Kxb3 c1=Q 70. Bf4 Qe1 71. Bxe3 Qxe3+ 72. Kc2 Ke5 73. Kb2 Kd4 74. Kc2 Qc3+ 75. Kd1 Qb2 76. Ke1 Ke3 77. Kd1 Qb1# 0-1
+

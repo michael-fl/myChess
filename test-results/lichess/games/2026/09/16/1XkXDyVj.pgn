@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/1XkXDyVj"]
+[Date "2026.09.16"]
+[Round "-"]
+[White "MatrixEngine"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "1XkXDyVj"]
+[UTCDate "2026.09.16"]
+[UTCTime "15:58:16"]
+[WhiteElo "1855"]
+[BlackElo "2032"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+1"]
+[ECO "C42"]
+[Opening "Petrov's Defense"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nf6 3. Nxe5 Qe7 4. d4 d6 5. Nf3 Qxe4+ 6. Be2 Bf5 7. c4 Nc6 8. O-O Qc2 9. Qe1 O-O-O 10. Na3 Qa4 11. d5 Ne5 12. Nd4 Bg6 13. Nab5 c5 14. dxc6 bxc6 15. Nc3 Qb4 16. Bf4 Kb7 17. a3 Qxb2 18. Rd1 Qxa3 19. Ncb5 cxb5 20. Nxb5 Qc5 21. Bxe5 Qxe5 22. Qa5 Qe7 23. Nxa7 d5 24. Bf3 Rd7 25. cxd5 Be4 26. Bxe4 Qxe4 27. Rb1+ Bb4 28. Rxb4+ Qxb4 29. Qxb4+ Ka8 30. Rb1 Nxd5 31. Qb5 Nb4 32. Qxd7 Rc8 33. Qxc8+ 1-0
+

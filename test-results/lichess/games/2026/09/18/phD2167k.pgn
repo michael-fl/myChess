@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/phD2167k"]
+[Date "2026.09.18"]
+[Round "-"]
+[White "myChessJava"]
+[Black "FlounderBot"]
+[Result "0-1"]
+[GameId "phD2167k"]
+[UTCDate "2026.09.18"]
+[UTCTime "19:29:22"]
+[WhiteElo "2008"]
+[BlackElo "2013"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+1"]
+[ECO "B01"]
+[Opening "Scandinavian Defense: Modern Variation"]
+[Termination "Normal"]
+
+1. e4 d5 2. exd5 Nf6 3. Nf3 Nxd5 4. Bb5+ c6 5. Be2 e5 6. Nxe5 Qg5 7. Ng4 Nf4 8. O-O Be6 9. Bf3 h5 10. Ne3 Nd7 11. h4 Qxh4 12. g3 Nh3+ 13. Kg2 Qf6 14. Bxh5 Qh6 15. Bg4 Ne5 16. Bh5 Qxh5 17. Qxh5 Rxh5 18. f4 Ng4 19. Nxg4 Bxg4 20. Re1+ Be7 21. Nc3 b5 22. a3 Be6 23. d3 Rd8 24. Be3 Rd7 25. Kf3 g6 26. Ne4 Bd5 27. g4 Rh8 28. Bd4 Rh7 29. g5 Kf8 30. Rad1 Rh5 31. Kg3 a5 32. Bf6 Be6 33. Bxe7+ Rxe7 34. Nf6 Rh8 35. Re5 a4 36. Rde1 Rc7 37. Rh1 c5 38. Ne4 c4 39. Nc5 Bf5 40. dxc4 bxc4 41. Nxa4 Bxc2 42. Nc5 Bf5 43. Rc1 Rc8 44. Rxc4 Rd8 45. Rb4 Kg7 46. Re7 Rhe8 47. Rxe8 Rxe8 48. Kf3 Re1 49. b3 Rf1+ 50. Kg3 Rg1+ 51. Kf3 Bg4+ 52. Ke4 Re1+ 53. Kd5 Bf3+ 54. Kd6 Rd1+ 55. Ke7 Ng1 56. Nd7 Re1+ 57. Kd6 Re6+ 58. Kc7 Rc6+ 59. Kd8 Ne2 60. a4 Rc2 61. Ke7 Ng3 62. a5 Ra2 63. Ne5 Bd5 64. Rb5 Nf5+ 65. Kd8 Be4 66. Rb4 Bc2 67. Rb7 Rxa5 68. Rxf7+ Kg8 69. Rb7 Nd4 70. Rb6 Ra8+ 71. Kc7 Kg7 72. Rf6 Nxb3 73. Rf7+ Kh8 74. Rf6 Rg8 75. Kb6 Be4 76. Rd6 Rb8+ 77. Kc7 Rb7+ 78. Kc8 Rg7 79. Nd7 Bf5 80. Kd8 Nc1 81. Rd1 Nd3 82. Nf6 Nxf4 83. Rh1+ Bh3 84. Ke8 Ra7 85. Rh2 Kg7 86. Rf2 Ne6 87. Re2 Ra8+ 88. Ke7 Nxg5 89. Ne8+ Kh6 90. Nf6 Ra1 91. Rc2 Re1+ 92. Kf8 Ne6+ 93. Kf7 Nf4 94. Ng8+ Kg5 95. Rc5+ Kg4 96. Nf6+ Kh4 97. Ra5 g5 98. Kg7 Re7+ 99. Kh6 Rf7 100. Ra6 g4 101. Ne4 g3 102. Ng5 g2 103. Nf3+ Kg3 104. Ng1 Bf5 105. Ra8 Ne6 106. Ra3+ Kg4 107. Ra4+ Nf4 108. Rxf4+ Kxf4 109. Nh3+ Bxh3 110. Kg6 Be6 0-1
+

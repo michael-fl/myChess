@@ -84,3 +84,13 @@ matches [§ 2](myChess-ELO-measurement.md) specifies, and the accumulated deltas
 +16.6, still under the ±21. Note also that the free anchor's co-movement (Kojiro 2003.9 → 2018.5) is
 mechanical and not a second confirmation: it is placed only by its results against myChess, so it
 follows myChess up by construction.
+
+**A third reading, 2026-09-21/23 — at a different time control, so not a third confirmation.** The
+attack-unit gauntlet played the same five anchors, but at `tc=40/60`: its runner was moved to the
+shorter control that day to make gauntlets resumable within a night. Ordo over its 4261 games:
+**4.7.1 (base arm) 1921.0 ± 14.4, 4.8.0 1913.9 ± 14.6**, placebo 1899.3 ± 14.6. The base reads
+about 25 below 4.6.1's 1945.9 at 40/120, although nothing in between measured a loss — 4.7.1
+read +0.5 ± 9.6 in self-play, and 4.7.0 was not measured by a match at all. The likely reason is the control itself — against anchors fixed at their CCRL ratings a
+shorter control is not neutral, so the two readings are on different scales — but that is not
+tested. **The carried ~1943 in the table stays the 40/120 figure.** The 40/60 readings compare with
+each other, and the next 40/120 re-anchor is what would move the column.

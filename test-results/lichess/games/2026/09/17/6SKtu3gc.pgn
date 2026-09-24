@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/6SKtu3gc"]
+[Date "2026.09.17"]
+[Round "-"]
+[White "myChessJava"]
+[Black "GeoTsiBot"]
+[Result "0-1"]
+[GameId "6SKtu3gc"]
+[UTCDate "2026.09.17"]
+[UTCTime "12:24:08"]
+[WhiteElo "2035"]
+[BlackElo "1967"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+3"]
+[ECO "B10"]
+[Opening "Caro-Kann Defense"]
+[Termination "Normal"]
+
+1. e4 c6 2. Nf3 d5 3. exd5 cxd5 4. Nc3 a6 5. d4 Nf6 6. Bd3 Nc6 7. O-O Bg4 8. Be3 e6 9. h3 Bh5 10. g4 Bg6 11. Ne5 Nd7 12. Nxc6 bxc6 13. f4 Bxd3 14. Qxd3 Qc7 15. Rae1 Be7 16. Qe2 O-O 17. g5 Rfb8 18. b3 Bb4 19. Qd3 c5 20. dxc5 Nxc5 21. Bxc5 Qxc5+ 22. Re3 Rc8 23. Rf3 g6 24. Kg2 Rc6 25. a3 Bxa3 26. Re2 Rac8 27. Nd1 Qb6 28. Nf2 Bb2 29. Ng4 Bg7 30. Ne5 Bxe5 31. fxe5 Qb4 32. Kg3 Rc3 33. Qxa6 Rxf3+ 34. Kxf3 Rc3+ 35. Kg2 Qf4 36. Qa8+ Kg7 37. Qa4 Qf3+ 38. Kg1 Qxe2 39. Qf4 Qe1+ 40. Qf1 Rg3+ 41. Kh2 Qxf1 0-1
+

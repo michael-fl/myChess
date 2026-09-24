@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/vYK80ePG"]
+[Date "2026.09.17"]
+[Round "-"]
+[White "goodpjwpst"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "vYK80ePG"]
+[UTCDate "2026.09.17"]
+[UTCTime "22:17:13"]
+[WhiteElo "1742"]
+[BlackElo "2032"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+3"]
+[ECO "C47"]
+[Opening "Four Knights Game"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 4. Bd3 Bc5 5. Nd5 O-O 6. c3 d6 7. Nxf6+ Qxf6 8. b4 Bb6 9. b5 Nb8 10. a4 a6 11. Bb2 axb5 12. axb5 Rxa1 13. Qxa1 Qg6 14. O-O Bh3 15. Ne1 Nd7 16. c4 Bg4 17. Qb1 Nc5 18. Kh1 Be6 19. h3 Nxd3 20. Qxd3 f5 21. exf5 Qxf5 22. Qe2 Qf4 23. d3 Bxf2 24. Nf3 Bb6 25. d4 e4 26. Nd2 Qh4 27. Rxf8+ Kxf8 28. c5 dxc5 29. dxc5 Bxc5 30. Nxe4 Bb4 31. Qe3 Qe1+ 32. Qxe1 Bxe1 33. Nc5 Bd5 34. Be5 Bf2 35. Nd3 Bb6 36. Nf4 Bc4 37. Nh5 g6 38. Nf6 Ke7 39. Nxh7 Ke6 40. Bc3 Bc5 41. h4 Bxb5 42. g3 Bc6+ 43. Kh2 b5 44. Kh3 b4 45. Bb2 b3 46. Kg4 Kd5 47. Nf6+ Kc4 48. h5 gxh5+ 49. Nxh5 Bd4 50. Bc1 Kd3 51. Kg5 Kc2 52. Ba3 Bc5 53. Bxc5 b2 54. Nf6 b1=Q 55. Kh4 Qa1 56. Be7 Qe5 57. Bd8 Qd4+ 58. g4 Qxd8 59. Kg5 Bb5 60. Kg6 Qe7 61. g5 Bd3+ 62. Kh5 Bf5 63. Ng4 Qe8+ 64. Kh4 Qe1+ 65. Kh3 Qg1 66. g6 Qxg4+ 67. Kh2 Be4 68. g7 Qg2# 0-1
+

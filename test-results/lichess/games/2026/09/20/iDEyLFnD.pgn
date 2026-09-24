@@ -1,0 +1,22 @@
+[Event "rated classical game"]
+[Site "https://lichess.org/iDEyLFnD"]
+[Date "2026.09.20"]
+[Round "-"]
+[White "Flower-Queen"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "iDEyLFnD"]
+[UTCDate "2026.09.20"]
+[UTCTime "11:09:00"]
+[WhiteElo "1997"]
+[BlackElo "2208"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "1800+0"]
+[ECO "D00"]
+[Opening "Queen's Pawn Game: Hübsch Gambit"]
+[Termination "Normal"]
+
+1. Nc3 d5 2. d4 Nf6 3. e4 Nxe4 4. Nxe4 dxe4 5. Bc4 Nc6 6. Ne2 e5 7. O-O exd4 8. Nf4 Bd6 9. Bd5 Bxf4 10. Bxc6+ bxc6 11. Bxf4 O-O 12. Qd2 Rb8 13. b3 Rb5 14. h3 g5 15. Bh2 Re8 16. Rfe1 Rd5 17. Qe2 e3 18. g4 Qe7 19. Rac1 Bb7 20. a4 Rd7 21. a5 c5 22. a6 Bc6 23. Bg3 Qe4 24. f3 Qxf3 25. Qxf3 Bxf3 26. Rf1 Be4 27. Rfe1 Re6 28. Re2 Rxa6 29. h4 gxh4 30. Bxh4 Rg6 31. g5 h6 32. Ree1 hxg5 33. Bg3 Rh6 34. Bh2 g4 35. Re2 g3 36. Rce1 f5 37. Rg2 Bxg2 38. Kxg2 gxh2 39. Rh1 Rg7+ 40. Kf1 Kh8 41. Ke2 Rg1 42. b4 Rxh1 43. Kd3 Rc1 44. Kc4 h1=Q 45. Kb3 Qf1 46. b5 Qxb5+ 47. Ka3 Ra1# 0-1
+

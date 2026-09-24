@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/W9Q4nitx"]
+[Date "2026.09.20"]
+[Round "-"]
+[White "myChessJava"]
+[Black "jakgro"]
+[Result "0-1"]
+[GameId "W9Q4nitx"]
+[UTCDate "2026.09.20"]
+[UTCTime "17:42:29"]
+[WhiteElo "2010"]
+[BlackElo "2163"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+2"]
+[ECO "C00"]
+[Opening "French Defense: Knight Variation"]
+[Termination "Normal"]
+
+1. e4 e6 2. Nf3 d5 3. e5 c5 4. Be2 Nc6 5. O-O Nge7 6. Nc3 a6 7. d4 cxd4 8. Nxd4 Nxe5 9. f4 Nd7 10. Be3 g6 11. Bg4 Nf6 12. Bf3 Bd7 13. g4 h5 14. h3 hxg4 15. hxg4 Bg7 16. g5 Nh5 17. f5 Qc7 18. Re1 gxf5 19. Bxh5 Qg3+ 20. Kf1 Qh3+ 21. Kf2 f4 22. Bxf4 Qh4+ 23. Bg3 Bxd4+ 24. Kg2 Qxh5 25. Qxd4 Qh3+ 26. Kf3 Qxg3+ 27. Kxg3 Nf5+ 28. Kf2 Nxd4 29. Nxd5 Rh2+ 30. Kg3 Rxc2 31. Nf6+ Ke7 32. Nxd7 Nf5+ 33. Kf3 Kxd7 34. Rad1+ Ke7 35. Re2 Rxe2 36. Kxe2 Rc8 37. Kf3 Rc2 38. Rb1 e5 39. a4 Ke6 40. a5 Nd4+ 41. Ke3 Kd5 42. Rf1 Re2+ 43. Kd3 e4+ 44. Kc3 Kc5 45. Rc1 Rg2 46. g6 fxg6 47. b4+ Kd5 48. b5 Kc5 49. b6 Ra2 50. Re1 Rc2# 0-1
+
