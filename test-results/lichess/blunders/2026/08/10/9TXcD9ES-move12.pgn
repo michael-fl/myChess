@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/9TXcD9ES"]
+[Date "2026.08.10"]
+[Round "-"]
+[White "myChessJava"]
+[Black "vala-bot"]
+[Result "0-1"]
+[GameId "9TXcD9ES"]
+[UTCDate "2026.08.10"]
+[UTCTime "22:26:49"]
+[WhiteElo "2098"]
+[BlackElo "2240"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "C68"]
+[Opening "Ruy Lopez: Exchange Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Bg4 6. h3 Bh5 7. g4 Bg6 8. Nxe5 f6 9. Nxg6 hxg6 10. Qf3 g5 11. Qb3 Qd6 12. Qxb7 Rxh3 13. Qxa8+ Kf7 14. f4 Qe6 15. Qa7 Qxe4 16. Qe3 Bc5 17. Kf2 gxf4 18. Nc3 fxe3+ 19. Ke1 exd2+ 20. Kxd2 Bb4 21. Kd1 Qg2 22. Be3 Qxf1+ 23. Kd2 Rh2+ 0-1
+
