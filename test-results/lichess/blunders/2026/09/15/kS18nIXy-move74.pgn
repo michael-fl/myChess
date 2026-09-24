@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/kS18nIXy"]
+[Date "2026.09.15"]
+[Round "-"]
+[White "GeoTsiBot"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "kS18nIXy"]
+[UTCDate "2026.09.15"]
+[UTCTime "08:19:12"]
+[WhiteElo "1921"]
+[BlackElo "2026"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+3"]
+[ECO "C47"]
+[Opening "Four Knights Game: Scotch Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nc3 Nf6 3. Nf3 Nc6 4. d4 Bb4 5. d5 Bxc3+ 6. bxc3 Ne7 7. Qd3 O-O 8. Nxe5 Nexd5 9. Nxf7 Qe7 10. Ng5 Nb6 11. a4 d5 12. a5 Nc4 13. Be2 c6 14. exd5 cxd5 15. O-O h6 16. Nf3 Bg4 17. h3 Bh5 18. g4 Bf7 19. Re1 Rae8 20. Qd4 Qe4 21. Qxe4 dxe4 22. Nd4 Rc8 23. a6 b6 24. Nb5 Rfd8 25. Nxa7 Rc5 26. Bxc4 Rxc4 27. Be3 Rxc3 28. Bxb6 Rf8 29. Nb5 Rxh3 30. a7 Bd5 31. Nc7 Bb7 32. a8=Q Bxa8 33. Rxa8 Rxa8 34. Nxa8 Rh4 35. Nc7 Kf7 36. c3 Rxg4+ 37. Kf1 h5 38. Ra1 h4 39. Ra8 g5 40. Bd4 h3 41. Ra6 h2 42. Rxf6+ Kg7 43. Ne6+ Kh7 44. Nf8+ Kg8 45. Rh6 Rg1+ 46. Ke2 h1=Q 47. Rxh1 Rxh1 48. Ne6 Rh5 49. Nc5 Kh7 50. Nxe4 Kg6 51. Be3 g4 52. Bd4 Rh7 53. Ke3 Kf5 54. Ng3+ Kg5 55. Bc5 Rc7 56. c4 Rc6 57. Kd3 Kf4 58. Ne2+ Ke5 59. Be3 Rd6+ 60. Bd4+ Kf5 61. c5 Rc6 62. Be3 Ke5 63. Kc4 Rc8 64. Kd3 Rc6 65. Nc3 Rc8 66. Kc4 Kf5 67. Nb5 Ke5 68. Bd4+ Ke6 69. Bg7 Rg8 70. Nd4+ Ke7 71. Be5 Ra8 72. Kd5 Ra2 73. Nf5+ Ke8 74. c6 Kd8 75. Ke6 Rc2 76. c7+ Rxc7 77. Bxc7+ Kxc7 78. Ne3 g3 79. f4 Kc6 80. f5 Kc5 81. f6 Kd4 82. Nf5+ 1-0
+
