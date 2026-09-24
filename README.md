@@ -65,7 +65,7 @@ Passing `uci` as the first CLI argument switches [`MyChessMain`](src/main/java/o
 For use in a GUI or a bot bridge, run the packaged jar standalone — `mvn package` puts the runtime dependencies under `target/dependency/` (adjust the version in the jar name to match `pom.xml`):
 
 ```bash
-java -cp "target/my-chess-4.4.1.jar:target/dependency/*" \
+java -cp "target/my-chess-4.8.0.jar:target/dependency/*" \
      org.michaelfl.mychess.MyChessMain uci
 ```
 
@@ -148,7 +148,7 @@ The project is also a study object for the supporting techniques typical of a cl
 
 The git history shows that earlier branches contained two alternative search engines, "engine V1" and "engine V2", both removed in earlier commits. The codebase now contains exactly one engine, [`MyChessEngine`](src/main/java/org/michaelfl/mychess/engines/MyChessEngine.java), delegating to [`PositionSearch`](src/main/java/org/michaelfl/mychess/engines/PositionSearch.java).
 
-**Playing strength:** **v4.4.1 measures 1928 ± 21 CCRL Blitz**, from a direct [absolute-Elo anchor bracket](docs/myChess-ELO-measurement.md#the-v441-re-anchor--measured-2026-08-17) run on 2026-08-17 — 2000 games against five externally rated engines (TSCP, Zeta Dva, Princhess, BBC, plus a free Kojiro cross-check) at TC 40/120, combined with Ordo. That places it around rank 700 of the 2918 engines on the CCRL Blitz list, i.e. the upper half. Two deviations from CCRL's own conditions are worth knowing: no endgame tablebases (CCRL uses 4-6 piece, which makes our anchors slightly weaker than their rating and the number err high) and TC 40/120 instead of CCRL's 2'+1". Between re-anchors, progress is tracked by self-play SPRT and fixed-N matches under [cutechess-cli](docs/elo-testing.md); the per-release deltas are in the [version history](docs/version-history.md), and the chain of those deltas had predicted ~1915 before this measurement said 1928 — they transfer to external opponents better than expected. Strong club-player level, far from competitive engines, which is by design.
+**Playing strength:** **v4.4.1 measures 1928 ± 21 CCRL Blitz**, from a direct [absolute-Elo anchor bracket](docs/myChess-ELO-measurement.md#the-v441-re-anchor--measured-2026-08-17) run on 2026-08-17 — 2000 games against five externally rated engines (TSCP, Zeta Dva, Princhess, BBC, plus a free Kojiro cross-check) at TC 40/120, combined with Ordo. That places it around rank 700 of the 2918 engines on the CCRL Blitz list, i.e. the upper half. Two deviations from CCRL's own conditions are worth knowing: no endgame tablebases (CCRL uses 4-6 piece, which makes our anchors slightly weaker than their rating and the number err high) and TC 40/120 instead of CCRL's 2'+1". The most recent external reading is 4.8.0 at **1913.9 ± 14.6** from the attack-unit anchor gauntlet of 2026-09-23 — at `tc=40/60`, a shorter control than the headline's, so it is not on the same scale and does not replace it; the [version history](docs/version-history.md#notes-on-the-estimated-ccrl-blitz-column) has both side by side. Between re-anchors, progress is tracked by self-play SPRT and fixed-N matches under [cutechess-cli](docs/elo-testing.md); the per-release deltas are in the [version history](docs/version-history.md), and the chain of those deltas had predicted ~1915 before this measurement said 1928 — they transfer to external opponents better than expected. Strong club-player level, far from competitive engines, which is by design.
 
 **Build & runtime requirements:**
 

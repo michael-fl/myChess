@@ -4,7 +4,13 @@ Open bugs and investigations whose status is not yet a resolved commit. Each
 section captures: what was observed, what was tried, what is still open, and
 the artefacts (tests, log hooks, reproducer positions) created so far.
 
-## Illegal PV emitted by the engine (under cutechess, 2026-05-21)
+## Illegal PV emitted by the engine (under cutechess, 2026-05-21, **fixed 2026-05-22 and 2026-08-02**)
+
+> **Resolved.** Two causes, two fixes, both recorded further down: the structural fix of
+> 2026-05-22 ([Root cause and fix](#root-cause-and-fix-2026-05-22)) and the NMP PV-table stride
+> fix of 2026-08-02 ([Root cause and fix — NMP corrupts the PV-table stride](#root-cause-and-fix--nmp-corrupts-the-pv-table-stride-2026-08-02)),
+> shipped in v4.2.3, which took the "first move must be the best known move" assertion from
+> 6290 occurrences in a 1600-game match to 0. The account below is kept as the record.
 
 ### Observation
 
@@ -183,6 +189,17 @@ assertions.
   observed).
 
 ## Color asymmetry: myChess plays much weaker as Black
+
+> **Resolved — the asymmetry is gone.** The observation below rests on 34 games. The anchor
+> gauntlet of 2026-09-21/23 (five external engines, `tc=40/60`, every opening with colors
+> swapped, PGNs `test-results/gauntlet-attack-units-seg*.pgn`) gives myChess **0.564 ± 0.021 as
+> White over 2132 games and 0.509 ± 0.021 as Black over 2129** (binomial interval, conservative
+> with draws). A gap of 0.055 is no larger than the ordinary first-move advantage at an overall
+> score of 0.537 — against 0.853 and 0.265 here. Whether an engine fix removed it or it was the
+> setup all along is not established. The re-analysis below judged a setup effect — the opening
+> book — much more likely than an engine defect, and the setup has changed since: balanced
+> books, every opening played with colors swapped. **Not reproduced 2026-09.** The account is
+> kept as the record.
 
 ### Observation
 
@@ -402,7 +419,11 @@ setup":
 3. Once the setup is fixed, the SPRT against `SF-1600` will give a
    meaningful engine-strength estimate.
 
-## Planned investigations
+## Planned investigations (2026-05-23, **closed**)
+
+> **Closed.** Every step below is done or overtaken: `MirrorEvalTest` exists and runs green in
+> the full suite, the post-fix matches ran many times over, and both illegal-PV causes are fixed
+> (see the first section). Kept as the record of how the May investigation was sequenced.
 
 Updated 2026-05-23 to reflect the illegal-PV fix in commit `26b33e5`
 and the color-asymmetry re-analysis above. The original plan from

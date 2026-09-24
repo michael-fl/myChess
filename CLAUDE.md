@@ -10,7 +10,7 @@ The build is configured via `maven.compiler.release` in `pom.xml`. Run with `JAV
 
 ```sh
 mvn compile                                  # compile
-mvn test                                     # run all tests (~6 min)
+mvn test                                     # run all tests (~16 min)
 mvn test -DexcludedGroups=slow               # fast tests only (~20 s)
 mvn -Dtest=BoardTest test                    # run one test class
 mvn -Dtest=BoardTest#methodName test         # run one test method
@@ -171,7 +171,7 @@ Docs, tests and measurement tooling are exempt — they cannot cost plies.
 
 **Why the cheap pre-filter is not a substitute.** `BlunderTest` and `EngineTest` are 97 positions chosen because an eval change is *expected* to move them — that is what makes them a fast filter for "did this do anything at all". They are the worst possible sample for the opposite question. `PerftTest`, `ChessUtilTest`, `EvalRegressionTest`, `IllegalPvRegressionTest` and the Texel adapters exist precisely because they cover what nobody was thinking about, and an eval term reaches all of them through the shared evaluation.
 
-**It costs about ten minutes and that is the point.** The suite competes with matches and benches, which is why it stays off by default during iterative work — but a merge to master happens a handful of times per release, and ten minutes against a mainline that nobody re-checks until the next release is not a trade worth making. Sequence it *after* any running measurement rather than skipping it.
+**It costs about sixteen minutes and that is the point.** The suite competes with matches and benches, which is why it stays off by default during iterative work — but a merge to master happens a handful of times per release, and sixteen minutes against a mainline that nobody re-checks until the next release is not a trade worth making. (Measured four times on 2026-09-23/24: 15:43 to 16:04.) Sequence it *after* any running measurement rather than skipping it.
 
 **A green pre-filter from earlier in the session does not carry.** Any edit after it — including a rename or a comment, which still have to compile — invalidates the run. Re-run what the change touched, and re-run the full suite if the merge commit is still ahead.
 
