@@ -743,7 +743,12 @@ public final class WeightingFunction {
      * full strength in the endgame — where the measured effect is not merely smaller but of the
      * <em>opposite</em> sign: roughly −34 cp per attacker in the midgame against +12 in the
      * endgame ({@code docs/king-safety.md} § 4.2). An unscaled term therefore charges a penalty
-     * where the data show a small bonus. {@link #blend} against a zero endgame value applies it.
+     * where the data show a small bonus.
+     *
+     * <p><b>Experiment arm: the phase blend is removed here.</b> The term applies the full table
+     * value in every phase. Every match the term has played carried the blend, so its worth has
+     * never been measured on its own; this arm measures it (pre-registration
+     * {@code myChess-lab/preregistration/no-blend-match.md}).
      *
      * <p><b>Gated on at least two distinct attackers</b> ({@link #kingAttackerCount}), and the
      * gate is load-bearing for the calibration rather than a plausible-sounding filter. It is
@@ -759,13 +764,13 @@ public final class WeightingFunction {
      * where it has to discriminate.
      *
      * @param color attacking color (0 = white, 1 = black)
-     * @param phase game phase in {@code [0, }{@link #MAX_PHASE}{@code ]}; 0 switches the term off
+     * @param phase game phase in {@code [0, }{@link #MAX_PHASE}{@code ]}; ignored in this experiment arm
      * @return the penalty the enemy king incurs, as a positive centipawn value
      */
     int calcKingAttackPenalty(final int color, final int phase) {
         return kingAttackerCount[color] < 2 ?
                 0 :
-                blend(KING_ATTACK_PENALTY[Math.min(attackUnit[color], KING_ATTACK_PENALTY.length - 1)], 0, phase);
+                KING_ATTACK_PENALTY[Math.min(attackUnit[color], KING_ATTACK_PENALTY.length - 1)];
     }
 
     // --- Package-private accessors for attack-unit unit tests. The arrays are
