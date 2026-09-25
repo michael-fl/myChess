@@ -322,11 +322,20 @@ class WeightingFunctionAttackUnitTest {
             assertEquals(WeightingFunction.KING_ATTACK_PENALTY[7],
                     wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE),
                     "two attackers, 7 units -> penalty table entry 7 undiluted, not the clamped maximum");
-            assertEquals(WeightingFunction.blend(WeightingFunction.KING_ATTACK_PENALTY[7], 0, wf.getPhase()),
+            // Scaled through KING_ATTACK_RAMP, not linearly with the phase: at phase 8 the ramp
+            // leaves 3 of 24 (12.5 %) where the linear blend left 8 of 24.
+            assertEquals(WeightingFunction.blend(WeightingFunction.KING_ATTACK_PENALTY[7], 0,
+                            WeightingFunction.KING_ATTACK_RAMP[wf.getPhase()]),
                     wf.calcKingAttackPenalty(WHITE, wf.getPhase()),
-                    "at this position's own phase the same entry is scaled down: it is an endgame "
-                            + "(phase " + wf.getPhase() + " of " + WeightingFunction.MAX_PHASE
+                    "at this position's own phase the same entry is scaled down through the ramp: it is "
+                            + "an endgame (phase " + wf.getPhase() + " of " + WeightingFunction.MAX_PHASE
                             + "), where the measured king-attack effect is weak or reversed");
+
+            // The formula above cannot fail if the ramp table itself is wrong, since both sides
+            // read it. Pin the number: entry 7 is 47 cp, the ramp keeps 3 of 24 at phase 8.
+            assertEquals(8, wf.getPhase(), "the premise: this position is at phase 8");
+            assertEquals(6, wf.calcKingAttackPenalty(WHITE, wf.getPhase()),
+                    "47 cp at 3/24 of full weight, rounded half away from zero");
         }
 
         @Test
