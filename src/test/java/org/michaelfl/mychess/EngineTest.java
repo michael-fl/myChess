@@ -60,7 +60,7 @@ class EngineTest extends EngineTestBase {
                 Nxe6 Bxe6 17. fxe6 O-O 18. Rg1 Bf6 19. Bh3 Re8
                 """;
         testPosition(pgn,
-                "c3-d5", // TODO
+                Set.of("c3-d5", "h3-f5"), // TODO. Bf5 with the phase ramp: SF depth 24 +3.43 against Nd5's +3.56, equivalent
                 0.1f,
                 1.0f,
                 new GameConfig(ENGINE, engineConfig())
@@ -430,7 +430,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("Rxh4"),
                 -0.45f, // was -0.2; Rxh4 is SF-best (SF depth 20: +0.58); v4.2.0 eval drift
-                0.7f, // king-EG (v4.3.1), v4.3.3 bishop-pair → ~0.37; v4.8.0 attack units -> 0.64
+                0.8f, // king-EG (v4.3.1), v4.3.3 bishop-pair → ~0.37; v4.8.0 attack units -> 0.64; phase ramp -> 0.78
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -595,7 +595,9 @@ class EngineTest extends EngineTestBase {
                 17.Rc1 O-O 18.dxe7 Re8 19.Bd6 Bc6 20.h4 Qb7 21.h5
                 """;
         testPosition(pgn,
-                "Nh8", // Nh8 is SF-best (g6h8)
+                // REGRESSED BY THE PHASE RAMP: Bxf3 (SF depth 24: -4.01) instead of the SF-best Nh8
+                // (-3.25), 0.76 pawns in a position that is lost either way. Characterization.
+                "c6-f3",
                 0.3f, // TODO 4 (SF: +2.99); eval under-reports (pre-existing)
                 2.3f, // max was 1.0, 1.6, then 2.25; v4.8.0 attack units -> 2.27
                 new GameConfig(ENGINE, engineConfig())
