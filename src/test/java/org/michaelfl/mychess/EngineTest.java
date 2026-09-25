@@ -599,7 +599,7 @@ class EngineTest extends EngineTestBase {
                 // (-3.25), 0.76 pawns in a position that is lost either way. Characterization.
                 "c6-f3",
                 0.3f, // TODO 4 (SF: +2.99); eval under-reports (pre-existing)
-                2.3f, // max was 1.0, 1.6, then 2.25; v4.8.0 attack units -> 2.27
+                2.4f, // max was 1.0, 1.6, 2.25, then 2.3; v4.8.0 attack units -> 2.27; phase ramp -> 2.31 (SF about +3.25)
                 new GameConfig(ENGINE, engineConfig())
         );
     }
