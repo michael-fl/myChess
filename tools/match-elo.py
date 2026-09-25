@@ -30,13 +30,22 @@ The interval is the delta-method transfer of the score's error onto the Elo scal
 why it is not symmetric in score space and why it widens as p leaves 0.5.
 
 Usage, from the repository root:
-    tools/match-elo.py <candidate-name> <pgn> [<pgn> ...]
+    tools/match-elo.py [--gate SPEC ...] <candidate-name> <pgn> [<pgn> ...]
+
+ACCEPTANCE GATES. Each match has its own pre-registered criteria, so they are passed in rather
+than built in - a hard-coded set outlives the match it was written for and then reports
+verdicts on criteria nobody agreed to. A gate is `LABEL:QUANTITY OP VALUE`, where QUANTITY is
+`lower` or `upper` (the bounds of the 95 % interval) or `elo` (the point estimate) and OP is one
+of >=, >, <=, <. Without --gate no verdicts are printed. Example, the ramp match:
+    tools/match-elo.py --gate 'K1:lower>=-10' --gate 'K2:elo>=0' <candidate> <pgn> ...
 
 The companion is tools/run-resumable-match.sh, which produces the segments and works the
 resume point out on its own.
 """
 
+import argparse
 import math
+import operator
 import pathlib
 import re
 import sys
@@ -45,9 +54,9 @@ RESULT = re.compile(r'^\[Result "([^"]+)"\]')
 WHITE = re.compile(r'^\[White "([^"]+)"\]')
 BLACK = re.compile(r'^\[Black "([^"]+)"\]')
 
-#: The pre-registered gates. Criterion 0 merges on its own; criterion 1 is the regression guard.
-STRONGER_BOUND = 3.0
-REGRESSION_BOUND = -10.0
+GATE = re.compile(r'^([^:]+):\s*(lower|upper|elo)\s*(>=|>|<=|<)\s*([-+]?\d+(?:\.\d+)?)$')
+
+OPERATORS = {">=": operator.ge, ">": operator.gt, "<=": operator.le, "<": operator.lt}
 
 
 def tally(paths, candidate):
@@ -107,11 +116,44 @@ def elo_and_interval(wins, losses, draws):
     return elo, error, los, n, p
 
 
-def main():
-    if len(sys.argv) < 3:
-        sys.exit(__doc__)
+def parse_gate(spec):
+    """Turns `LABEL:QUANTITY OP VALUE` into (label, quantity, op, value), or fails the parse."""
+    match = GATE.match(spec.strip())
 
-    candidate, paths = sys.argv[1], sys.argv[2:]
+    if not match:
+        raise argparse.ArgumentTypeError(
+            f"bad gate {spec!r} - expected LABEL:QUANTITY OP VALUE, e.g. 'K1:lower>=-10'")
+
+    label, quantity, op, value = match.groups()
+
+    return label.strip(), quantity, op, float(value)
+
+
+def print_gates(gates, elo, lower, upper):
+    """Prints one PASS/FAIL line per gate, with the value it was judged on."""
+    if not gates:
+        print("  no gates given (pass them with --gate, see --help)")
+        return
+
+    values = {"elo": elo, "lower": lower, "upper": upper}
+    print("  pre-registered gates")
+
+    for label, quantity, op, threshold in gates:
+        value = values[quantity]
+        verdict = "PASS" if OPERATORS[op](value, threshold) else "FAIL"
+        print(f"    {label:<4} {quantity} {op} {threshold:+.1f} : {verdict}   ({quantity} {value:+.1f})")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--gate", action="append", default=[], type=parse_gate,
+                        help="acceptance gate LABEL:QUANTITY OP VALUE, repeatable")
+    parser.add_argument("candidate")
+    parser.add_argument("paths", nargs="+", metavar="pgn")
+    args = parser.parse_args()
+
+    candidate, paths = args.candidate, args.paths
     wins, losses, draws = tally(paths, candidate)
     stats = elo_and_interval(wins, losses, draws)
 
@@ -126,11 +168,7 @@ def main():
     print(f"  Elo difference: {elo:+.1f} +/- {error:.1f}   LOS {100 * los:.1f} %")
     print(f"  95 % interval : [{lower:+.1f}, {upper:+.1f}]")
     print()
-    print("  pre-registered gates")
-    print(f"    0  demonstrably stronger (bound >= {STRONGER_BOUND:+.0f}) : "
-          f"{'PASS' if lower >= STRONGER_BOUND else 'no'}   (bound {lower:+.1f})")
-    print(f"    1  no regression        (bound >  {REGRESSION_BOUND:+.0f}) : "
-          f"{'PASS' if lower > REGRESSION_BOUND else 'FAIL'}   (bound {lower:+.1f})")
+    print_gates(args.gate, elo, lower, upper)
     print()
     print(f"  to resume: -openings ... order=sequential start={n // 2 + 1}")
 
