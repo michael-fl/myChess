@@ -807,7 +807,9 @@ class BlunderTest {
         // trigger this case names - "reports a white advantage" - is still not met, so it stays
         // a characterization instead of becoming an avoidance test. Objectively white is
         // winning by roughly ten pawns.
-        assertTrue(result.weight() < -0.3f,
+        // Moved again by dropping the phase blend, from -0.41 to -0.21. The bound is now the trigger the
+        // text below names - a white advantage - rather than the next step of a creeping bound.
+        assertTrue(result.weight() < 0f,
                 "characterization: at the in-game depth myChess still rates itself better here, "
                         + "blind to the three attackers on its open king. If this ever reports a "
                         + "white advantage, king safety has landed — turn this into an avoidance "
@@ -1510,28 +1512,34 @@ class BlunderTest {
      * is restored as written. What survives of the old over-report is +0.45 where the
      * truth after {@code Rxf8} is 0.00: optimistic, no longer the 2.6-pawn illusion.
      *
-     * <p><b>Test family:</b> king-safety (fixed)
+     * <p><b>Undone again by the king-attack term without its phase blend</b> (2026-09-27).
+     * v4.8.0 found {@code Rxf8}; without the blend the engine plays {@code 35.Rb3}, which
+     * Stockfish 18 reads at −2.84 at depth 24 against {@code Rxf8}'s 0.00 — a regression of 2.84
+     * pawns. Both sides still have two rooks, a queen and two minor pieces here, phase 20, where
+     * no-blend weights the term at 100 % instead of the linear 83 %: a stronger attack-unit term
+     * tips the same position back. Kept as a characterization carrying that price.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void rd3_atMove35_engineTradesOnTheOpenFile() throws Exception {
+    void rd3_atMove35_characterizesKeepingTheRookOffTheOpenFile() throws Exception {
         var game = gameFromFenAtDepth(BEFORE_RD3_FEN, NMC7SP8H_DEPTH, tt);
         assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
                 "before 35.Rd3 white (myChess) must be to move");
 
         var result = searchCurrentPositionDeep(game);
 
-        // v4.8.0's attack-unit term landed exactly the move this case was waiting for, so the
-        // positive assertion is restored as its own text instructed. Rxf8 holds at 0.00 by
-        // Stockfish at depth 24; the retreat Rd3 it used to play reads -3.06.
-        assertEquals(ChessUtil.moveToString(Board.f3, Board.f8), ChessUtil.moveToString(result.move()),
-                "myChess must trade with Rxf8, the only move that holds. white-POV eval " + result.weight());
+        // REGRESSED WITHOUT THE PHASE BLEND. v4.8.0 traded with Rxf8 (SF depth 24: 0.00); no-blend
+        // plays Rb3 (-2.84). If it trades again, restore the positive assertion on Rxf8.
+        assertEngineStillPlays(result, Board.f3, Board.b3, "35.Rb3",
+                "which keeps the rook off the open file at −2.84 where Rxf8 holds at 0.00 "
+                        + "(Stockfish 18, depth 24)");
 
-        // What is left of the old over-report: +0.45 where the truth after Rxf8 is 0.00 -
-        // slightly optimistic, no longer the 2.6-pawn illusion it characterized before.
-        assertTrue(result.weight() > 0f && result.weight() < 1.0f,
-                "after Rxf8 the position is level (SF 0.00); the eval should be near it rather "
-                        + "than claiming a win. Got " + result.weight());
+        // The over-report is back with it: positive where the truth is -2.84.
+        assertTrue(result.weight() > 0f,
+                "characterization: it rates itself ahead in a position Stockfish scores −2.84 for "
+                        + "white; got " + result.weight());
     }
 
     // ----------------------------------------------------------------
@@ -1885,8 +1893,10 @@ class BlunderTest {
                 "characterization: myChess still saves the attacked knight with Ne8 and lets the attack on its "
                         + "own king through. If it now plays Nd4 or Qxd3, king safety has landed — turn this "
                         + "into an avoidance test. white-POV eval " + result.weight());
-        assertTrue(result.weight() < -3f,
-                "characterization: it rates itself four pawns ahead where Stockfish has it 1.49 behind; got "
+        // Dropping the phase blend pulls the over-report from about -4 to -2.88: toward the truth (+1.49
+        // for white), with the move unchanged. Bound moved to match.
+        assertTrue(result.weight() < -2.5f,
+                "characterization: it rates itself three pawns ahead where Stockfish has it 1.49 behind; got "
                         + result.weight());
     }
 
@@ -2223,19 +2233,24 @@ class BlunderTest {
      * quiescence search should see. It belongs next to {@code 21.Nf3} and {@code 39.Rxd5},
      * both of which had the same shape and are now repaired.
      *
-     * <p><b>Test family:</b> tactical-oversight (defect)
+     * <p><b>Partly repaired by the king-attack term without its phase blend</b> (2026-09-27). It no longer
+     * leaves the rook: it plays {@code 25...Nc6}, which Stockfish 18 reads at −3.45 at depth 24
+     * against {@code Qc3}'s −10.09 — six and a half pawns better. The one holding move,
+     * {@code 25...Nd7} at 0.00, is still not found, so the position is still lost; what this
+     * pins is only that the rook is no longer given away.
+     *
+     * <p><b>Test family:</b> tactical-oversight (fixed)
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void qc3_vsTscp_characterizesAbandoningTheRookOnD8() throws Exception {
+    void qc3_vsTscp_engineNoLongerAbandonsTheRookOnD8() throws Exception {
         var game = gameFromFenAtDepth(BEFORE_QC3_FEN, SCANNER_DEPTH, tt);
         assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
 
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.f3, Board.c3, "25...Qc3",
-                "which drops the rook on d8 to 26.Qxd8 and turns 0.00 into −8.23 (Stockfish, depth 20); "
-                        + "25...Nd7 holds");
+        // Was a characterization of 25...Qc3. Nc6 still loses (SF -3.45), Nd7 would hold.
+        assertEngineAvoids(result, Board.f3, Board.c3, "25...Qc3");
     }
 
     /** Black (myChess) to move before {@code 67...Rf4??}, ignoring the b6 pawn. */

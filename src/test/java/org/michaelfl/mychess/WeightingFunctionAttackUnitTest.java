@@ -322,11 +322,12 @@ class WeightingFunctionAttackUnitTest {
             assertEquals(WeightingFunction.KING_ATTACK_PENALTY[7],
                     wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE),
                     "two attackers, 7 units -> penalty table entry 7 undiluted, not the clamped maximum");
-            assertEquals(WeightingFunction.blend(WeightingFunction.KING_ATTACK_PENALTY[7], 0, wf.getPhase()),
-                    wf.calcKingAttackPenalty(WHITE, wf.getPhase()),
-                    "at this position's own phase the same entry is scaled down: it is an endgame "
-                            + "(phase " + wf.getPhase() + " of " + WeightingFunction.MAX_PHASE
-                            + "), where the measured king-attack effect is weak or reversed");
+            // No-blend experiment arm: the entry is applied undiluted at this position's own
+            // phase too, although it is an endgame where the measured effect is weak or reversed.
+            // Pinned as a number, since the formula would read the same table on both sides.
+            assertEquals(8, wf.getPhase(), "the premise: this position is at phase 8");
+            assertEquals(47, wf.calcKingAttackPenalty(WHITE, wf.getPhase()),
+                    "without the phase blend entry 7 applies at its full 47 cp at phase 8");
         }
 
         @Test
@@ -436,33 +437,23 @@ class WeightingFunctionAttackUnitTest {
          * endgame** (`docs/king-safety.md` § 4.2, finding F1). An unscaled term therefore pays a
          * penalty where the data say there is a small bonus.
          *
-         * <p>Three properties, and none of them was covered before: the term vanishes at
-         * {@code phase == 0}, reaches the table entry undiluted at {@link WeightingFunction#MAX_PHASE},
-         * and never decreases in between. The last one is what a handwritten scaling formula
-         * gets wrong — an off-by-one in the rounding shows up as a dip, not as a wrong endpoint.
+         * <p><b>No-blend experiment arm</b> (branch {@code attack-units-chebyshev-no-blend}): the
+         * blend is removed on purpose, to measure what it is worth
+         * ({@code myChess-lab/preregistration/no-blend-match.md}). The property pinned here is
+         * therefore the opposite one — the table entry applies undiluted at every phase,
+         * {@code phase == 0} included.
          */
         @Test
-        void thePenaltyScalesWithTheGamePhaseAndVanishesInTheEndgame() {
+        void thePenaltyIsTheSameAtEveryPhaseWithoutTheBlend() {
             var wf = new WeightingFunction();
             wf.getKingAttackerCount()[WHITE] = 2;
             wf.getAttackUnit()[WHITE] = 8;
 
             int midgame = WeightingFunction.KING_ATTACK_PENALTY[8];
 
-            assertEquals(0, wf.calcKingAttackPenalty(WHITE, 0),
-                    "at phase 0 — bare kings — the king-attack penalty is switched off entirely");
-            assertEquals(midgame, wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE),
-                    "at full midgame material the table entry is applied undiluted");
-
-            int previous = -1;
-
             for (int phase = 0; phase <= WeightingFunction.MAX_PHASE; phase++) {
-                int penalty = wf.calcKingAttackPenalty(WHITE, phase);
-
-                assertTrue(penalty >= previous,
-                        "the penalty must not fall as material grows: phase " + phase + " gives "
-                                + penalty + " against " + previous + " at phase " + (phase - 1));
-                previous = penalty;
+                assertEquals(midgame, wf.calcKingAttackPenalty(WHITE, phase),
+                        "without the phase blend the table entry applies undiluted at phase " + phase);
             }
         }
 
