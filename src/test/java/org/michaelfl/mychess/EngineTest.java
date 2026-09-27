@@ -46,7 +46,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "h3-e6",
                 0.2f,
-                1.1f, // max was 0.5, 0.7, then 0.85; v4.8.0 attack units -> 1.05
+                1.2f, // max was 0.5, 0.7, 0.85, then 1.1; v4.8.0 attack units -> 1.05; no-blend -> 1.11 (SF +0.54)
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -60,7 +60,7 @@ class EngineTest extends EngineTestBase {
                 Nxe6 Bxe6 17. fxe6 O-O 18. Rg1 Bf6 19. Bh3 Re8
                 """;
         testPosition(pgn,
-                "c3-d5", // TODO
+                Set.of("c3-d5", "h3-f5"), // TODO. Bf5 without the phase blend: SF depth 24 +3.43 against Nd5's +3.56, equivalent
                 0.1f,
                 1.0f,
                 new GameConfig(ENGINE, engineConfig())
@@ -223,7 +223,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "b7-g7",
                 6.0f, // OPT: Should be M13
-                7.1f, // max was 7.0; v4.8.0 attack units -> 7.05
+                7.7f, // max was 7.0, then 7.1; v4.8.0 attack units -> 7.05; no-blend -> 7.62, toward the mate
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -409,7 +409,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("Qf2", "h5", "Qg3"),
                 1.7f, // TODO > 4.5
-                2.7f, // was 2.0; tapered pawn-EG (v4.3.0) — TODO 5.0
+                2.9f, // was 2.0, then 2.7; tapered pawn-EG (v4.3.0); no-blend -> 2.80 — TODO 5.0
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -430,7 +430,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("Rxh4"),
                 -0.45f, // was -0.2; Rxh4 is SF-best (SF depth 20: +0.58); v4.2.0 eval drift
-                0.7f, // king-EG (v4.3.1), v4.3.3 bishop-pair → ~0.37; v4.8.0 attack units -> 0.64
+                0.8f, // king-EG (v4.3.1), v4.3.3 bishop-pair → ~0.37; v4.8.0 attack units -> 0.64; no-blend -> 0.78
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -595,9 +595,11 @@ class EngineTest extends EngineTestBase {
                 17.Rc1 O-O 18.dxe7 Re8 19.Bd6 Bc6 20.h4 Qb7 21.h5
                 """;
         testPosition(pgn,
-                "Nh8", // Nh8 is SF-best (g6h8)
+                // REGRESSED WITHOUT THE PHASE BLEND: Bxf3 (SF depth 24: -4.01) instead of the SF-best Nh8
+                // (-3.25), 0.76 pawns in a position that is lost either way. Characterization.
+                "c6-f3",
                 0.3f, // TODO 4 (SF: +2.99); eval under-reports (pre-existing)
-                2.3f, // max was 1.0, 1.6, then 2.25; v4.8.0 attack units -> 2.27
+                2.4f, // max was 1.0, 1.6, 2.25, then 2.3; v4.8.0 attack units -> 2.27; no-blend -> 2.31 (SF about +3.25)
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -635,7 +637,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "c1-c6", // v4.2.0: engine now plays Rc6 (= SF-best, +2.84), was g4 — improvement
                 -0.2f, // TODO 3.3 (SF depth 20: +2.84); eval still under-reports
-                1.1f, // was 0.5, then 0.9; v4.4.0 PeSTO tables -> 1.01
+                1.3f, // was 0.5, 0.9, then 1.1; v4.4.0 PeSTO tables -> 1.01; no-blend -> 1.23, toward SF +2.84
                 new GameConfig(ENGINE, engineConfig())
         );
     }

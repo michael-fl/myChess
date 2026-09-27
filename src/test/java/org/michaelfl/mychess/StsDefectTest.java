@@ -356,6 +356,12 @@ class StsDefectTest {
      * That case rests on the 19 game-derived cases and the keBKOXd1 guard, untouched by this
      * run. See docs/sts-history.md.
      *
+     * <p><b>Re-pinned for the king-attack term without its phase blend</b> (2026-09-27). The
+     * position is at phase 11, where the base's linear blend weights the term at 11/24 and
+     * no-blend at full strength. The engine then plays {@code 1.Qb6} instead of {@code 1.g4}:
+     * Stockfish 18 at depth 24 reads both at 0.00 against {@code 1.Kf1}'s +2.28, so the move
+     * changes and the defect does not — the king still does not walk in.
+     *
      * <p><b>Test family:</b> king-activity (defect)
      *
      * <p>TODO: invert to {@code assertEngineAvoids} once king activity is priced. Not tracked
@@ -363,14 +369,16 @@ class StsDefectTest {
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void kingActivity085_pushesTheGPawnInsteadOfWalkingTheKingIn() throws Exception {
+    void kingActivity085_characterizesNotWalkingTheKingIn() throws Exception {
         var game = gameFromFenAtDepth("8/4q1k1/5pp1/pp2b3/2p1P3/P1P1Q1Pp/7P/3R2K1 w - - 0 1",
                 PIN_DEPTH, tt);
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.g3, Board.g4, "g4",
-                "which throws away +2.13 for 0.00, where the suite's Kf1 keeps +2.65. Worth "
-                        + "1 of 100 points at every depth from 8 to 11");
+        // Was g4 up to v4.8.0; without the phase blend it is Qb6. Both read 0.00 at Stockfish
+        // depth 24, where Kf1 keeps +2.28.
+        assertEngineStillPlays(result, Board.e3, Board.b6, "Qb6",
+                "which throws away the edge for 0.00 just as g4 did, where the suite's Kf1 keeps "
+                        + "+2.28 (Stockfish 18, depth 24)");
     }
 
     /**
