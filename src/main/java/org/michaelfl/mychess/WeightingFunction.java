@@ -328,6 +328,35 @@ public final class WeightingFunction {
     }
 
     /**
+     * Phase at and above which the king-attack term carries its full weight: only with the full
+     * starting material. Experiment arm {@code attack-units-chebyshev-aggressive-blend}: a curve
+     * that lies well below the base's linear blend everywhere, because the two candidates that
+     * gave the term <em>more</em> weight in the midgame both measured negative (phase ramp
+     * −3.4 ± 8.8 Elo, no-blend running).
+     */
+    static final int KING_ATTACK_FULL_PHASE = MAX_PHASE;
+
+    /**
+     * Phase at and below which the term is switched off: two thirds of {@link #MAX_PHASE}. At
+     * phase 20 the term keeps 50 % of its weight against the linear blend's 83 %, at phase 16
+     * and below none against the linear blend's 67 % and less.
+     */
+    static final int KING_ATTACK_DEAD_PHASE = 16;
+
+    /** Effective phase per real phase, precomputed; the arithmetic holds an integer division. */
+    static final int[] KING_ATTACK_RAMP = new int[MAX_PHASE + 1];
+
+    static {
+        final int span = KING_ATTACK_FULL_PHASE - KING_ATTACK_DEAD_PHASE;
+
+        for (int phase = 0; phase <= MAX_PHASE; phase++) {
+            final int ramped = (phase - KING_ATTACK_DEAD_PHASE) * MAX_PHASE / span;
+
+            KING_ATTACK_RAMP[phase] = Math.clamp(ramped, 0, MAX_PHASE);
+        }
+    }
+
+    /**
      * The castling-state contribution in pawns, faded out as the attacking material leaves.
      *
      * @param delta the castling-state difference, white minus black, in {@code -4..+4}
@@ -759,13 +788,16 @@ public final class WeightingFunction {
      * where it has to discriminate.
      *
      * @param color attacking color (0 = white, 1 = black)
-     * @param phase game phase in {@code [0, }{@link #MAX_PHASE}{@code ]}; 0 switches the term off
+     * @param phase game phase in {@code [0, }{@link #MAX_PHASE}{@code ]}, remapped through
+     *              {@link #KING_ATTACK_RAMP}: full weight from {@link #KING_ATTACK_FULL_PHASE},
+     *              off at and below {@link #KING_ATTACK_DEAD_PHASE}
      * @return the penalty the enemy king incurs, as a positive centipawn value
      */
     int calcKingAttackPenalty(final int color, final int phase) {
         return kingAttackerCount[color] < 2 ?
                 0 :
-                blend(KING_ATTACK_PENALTY[Math.min(attackUnit[color], KING_ATTACK_PENALTY.length - 1)], 0, phase);
+                blend(KING_ATTACK_PENALTY[Math.min(attackUnit[color], KING_ATTACK_PENALTY.length - 1)],
+                        0, KING_ATTACK_RAMP[phase]);
     }
 
     // --- Package-private accessors for attack-unit unit tests. The arrays are
