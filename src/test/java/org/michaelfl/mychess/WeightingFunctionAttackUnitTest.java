@@ -322,11 +322,21 @@ class WeightingFunctionAttackUnitTest {
             assertEquals(WeightingFunction.KING_ATTACK_PENALTY[7],
                     wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE),
                     "two attackers, 7 units -> penalty table entry 7 undiluted, not the clamped maximum");
-            assertEquals(WeightingFunction.blend(WeightingFunction.KING_ATTACK_PENALTY[7], 0, wf.getPhase()),
+            // Scaled through KING_ATTACK_RAMP, not linearly with the phase. The aggressive blend
+            // is off at phase 16 and below, so at this position's phase 8 nothing is left where
+            // the linear blend left 8 of 24.
+            assertEquals(WeightingFunction.blend(WeightingFunction.KING_ATTACK_PENALTY[7], 0,
+                            WeightingFunction.KING_ATTACK_RAMP[wf.getPhase()]),
                     wf.calcKingAttackPenalty(WHITE, wf.getPhase()),
-                    "at this position's own phase the same entry is scaled down: it is an endgame "
-                            + "(phase " + wf.getPhase() + " of " + WeightingFunction.MAX_PHASE
+                    "at this position's own phase the same entry is scaled down through the ramp: it is "
+                            + "an endgame (phase " + wf.getPhase() + " of " + WeightingFunction.MAX_PHASE
                             + "), where the measured king-attack effect is weak or reversed");
+
+            // The formula above cannot fail if the ramp table itself is wrong, since both sides
+            // read it. Pin the number: phase 8 lies below the aggressive blend's dead phase 16.
+            assertEquals(8, wf.getPhase(), "the premise: this position is at phase 8");
+            assertEquals(0, wf.calcKingAttackPenalty(WHITE, wf.getPhase()),
+                    "the aggressive blend switches the term off at phase 16 and below");
         }
 
         @Test

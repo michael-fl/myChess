@@ -198,7 +198,8 @@ class EngineTest extends EngineTestBase {
                 // here, and the position stays won either way. Recorded rather than argued
                 // away: the term was merged on a gauntlet that cleared its guard, not on a
                 // claim that it improves every position.
-                Set.of("e5-e6"),
+                // Nxe6 with the aggressive phase blend: SF depth 24 +4.62 against e6's +4.10, better.
+                Set.of("e5-e6", "g5-e6"),
                 // PV-path assertion dropped: the deep PV shifted with the tapered
                 // pawn-EG table (v4.3.0).
                 null,
@@ -504,7 +505,9 @@ class EngineTest extends EngineTestBase {
                 11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4
                 """;
         testPosition(pgn,
-                "d8-b8", // A REGRESSION, and now the worst of the three known answers. The only holding
+                // AGGRESSIVE PHASE BLEND (full at 24, off at 16): Qa5 again, 1.35 pawns better than Qb8
+                // - the aggressive curve takes back what v4.8.0's term cost here. History below.
+                "d8-a5", // WAS A REGRESSION, and then the worst of the three known answers. The only holding
                          // move is Qc8 (SF -0.21). v4.3.4 played Qb8 (-3.66), v4.4.0's PeSTO tables
                          // recovered ~0.8 pawns of that to Qa5 (-2.84), and v4.8.0's attack-unit term
                          // gives them back: Qb8 again. Measured at depth 24, white-POV: Qc8 +0.75,

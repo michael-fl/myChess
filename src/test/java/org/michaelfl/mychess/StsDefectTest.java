@@ -209,12 +209,18 @@ class StsDefectTest {
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void centerControl071_atDepth8_noLongerPlaysTheLosingHPawnNudge() throws Exception {
+    void centerControl071_atDepth8_playsH3AndAllowsTheF3Break() throws Exception {
         var game = gameFromFenAtDepth("b4rk1/8/4pr1p/2q5/P4p2/2PB4/6PP/R3QR1K w - - 0 1",
                 PIN_DEPTH, tt);
         var result = searchCurrentPositionDeep(game);
 
-        BlunderTest.assertEngineAvoids(result, Board.h2, Board.h3, "1.h3");
+        // UNDONE BY THE AGGRESSIVE PHASE BLEND (full at 24, off at 16). v4.8.0 had replaced 1.h3
+        // with 1.Be2 (Stockfish 18, depth 22: 0.00 against h3's -2.58); with less attack weight
+        // h3 is back. Characterization again, under its pre-v4.8.0 name; if h3 disappears once
+        // more, restore the avoidance assertion.
+        assertEngineStillPlays(result, Board.h2, Board.h3, "1.h3",
+                "which allows the break 1...f3 and reads −2.58 where Be2 holds 0.00 (Stockfish 18, "
+                        + "depth 22)");
     }
 
     /**
@@ -556,12 +562,12 @@ class StsDefectTest {
                 PIN_DEPTH, tt);
         var result = searchCurrentPositionDeep(game);
 
-        // MOVED BY v4.8.0, NOT FIXED, and this one is a straight substitution: Be2 reads +0.02
-        // at depth 22 where Rxf8+ read +0.01. The advantage is given away either way; only the
-        // move changed.
-        assertEngineStillPlays(result, Board.f1, Board.e2, "Be2",
-                "which gives the advantage away just as the old Rxf8+ did — +0.02 against +0.01 "
-                        + "(Stockfish 18, depth 22) — where the suite's Rf7 keeps +1.30");
+        // MOVED BY v4.8.0, NOT FIXED: a straight substitution of Be2 for Rxf8+. With the
+        // aggressive phase blend (full at 24, off at 16) the old Rxf8+ is back. Stockfish 18 at
+        // depth 24 reads both at 0.00 against the suite's Rf7 at +1.13; only the move changed.
+        assertEngineStillPlays(result, Board.f3, Board.f8, "Rxf8+",
+                "which gives the advantage away just as Be2 did, both at 0.00 where the suite's "
+                        + "Rf7 keeps +1.13 (Stockfish 18, depth 24)");
     }
 
     /**
@@ -589,13 +595,13 @@ class StsDefectTest {
                 PIN_DEPTH, tt);
         var result = searchCurrentPositionDeep(game);
 
-        // MOVED BY v4.8.0, NOT FIXED. The pawn nudge became a king move, and the reading went
-        // from 0.00 to -0.05 (Stockfish 18, depth 22, black to move). The open h-file is still
-        // not taken; the suite's Rh8 keeps +2.08.
-        assertEngineStillPlays(result, Board.e7, Board.f8, "Kf8",
-                "which leaves the open h-file alone just as the old d6 did, at −0.05 against "
-                        + "0.00, where the suite's Rh8 keeps +2.08 (Stockfish 18, depth 22, "
-                        + "black to move)");
+        // MOVED BY v4.8.0, NOT FIXED: the pawn nudge became the king move Kf8. With the
+        // aggressive phase blend (full at 24, off at 16) the old d6 is back. Stockfish 18 at
+        // depth 24 reads d6 and Kf8 both at 0.00 against the suite's Rh8 at +2.37, so only the
+        // move changes; the open h-file is still not taken.
+        assertEngineStillPlays(result, Board.d7, Board.d6, "d6",
+                "which leaves the open h-file alone just as Kf8 did, both at 0.00 where the "
+                        + "suite's Rh8 keeps +2.37 (Stockfish 18, depth 24, black to move)");
     }
 
     /**
