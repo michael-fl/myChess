@@ -434,6 +434,90 @@ class WeightingFunctionTest {
                 "Score without en-passant target must be stable around the fixed baseline");
     }
 
+    // ---- En passant at a FEN root (docs/known-issues.md, "En passant is invisible ...") ----
+    //
+    // The tests above reach their positions by moves, so the last move is set and the evaluation
+    // can reconstruct the en-passant capture from it. A position loaded from a FEN has no last
+    // move, only the en-passant target square in its GameStatus - which the evaluation does not
+    // read. These tests load the same positions from FEN and expect the same evaluation. They are
+    // red until the evaluation reads the target square.
+
+    /** Pgn of {@link #WHITE_EP_FEN}: black has just played f7-f5 next to the white pawn on e5. */
+    private static final String WHITE_EP_PGN = "1. e4 a6 2. e5 f5";
+
+    /** The position after {@link #WHITE_EP_PGN}; exf6 en passant is legal. */
+    private static final String WHITE_EP_FEN = "rnbqkbnr/1pppp1pp/p7/4Pp2/8/8/PPPP1PPP/RNBQKBNR w KQkq f6 0 3";
+
+    /** {@link #WHITE_EP_FEN} with the en-passant field removed. */
+    private static final String WHITE_NO_EP_FEN = "rnbqkbnr/1pppp1pp/p7/4Pp2/8/8/PPPP1PPP/RNBQKBNR w KQkq - 0 3";
+
+    /** Pgn of {@link #BLACK_EP_FEN}: white has just played d2-d4 next to the black pawn on e4. */
+    private static final String BLACK_EP_PGN = "1. a3 e5 2. a4 e4 3. d4";
+
+    /** The position after {@link #BLACK_EP_PGN}; exd3 en passant is legal. */
+    private static final String BLACK_EP_FEN = "rnbqkbnr/pppp1ppp/8/8/P2Pp3/8/1PP1PPPP/RNBQKBNR b KQkq d3 0 3";
+
+    /** {@link #BLACK_EP_FEN} with the en-passant field removed. */
+    private static final String BLACK_NO_EP_FEN = "rnbqkbnr/pppp1ppp/8/8/P2Pp3/8/1PP1PPPP/RNBQKBNR b KQkq - 0 3";
+
+    private static int evalOfPgn(String pgn) {
+        return new WeightingFunction().calculate(GameImporter.importerFor(pgn).importGame().getBoard());
+    }
+
+    private static int evalOfFen(String fen) {
+        return new WeightingFunction().calculate(Fen.importFEN(fen));
+    }
+
+    /**
+     * Premise shared by the two equality tests: the pgn reaches exactly the position the FEN
+     * describes, en-passant field included. Without it, an equality failure could be a difference
+     * between the positions rather than the defect.
+     */
+    private static void assertPgnReachesFen(String pgn, String fen) {
+        var board = GameImporter.importerFor(pgn).importGame().getBoard();
+
+        assertEquals(fen, Fen.exportFEN(board), "premise: the moves " + pgn + " must reach the FEN position");
+    }
+
+    @Test
+    void whiteEnPassantAtFenRoot_isEvaluatedLikeTheSamePositionReachedByMoves() {
+        assertPgnReachesFen(WHITE_EP_PGN, WHITE_EP_FEN);
+
+        assertEquals(evalOfPgn(WHITE_EP_PGN), evalOfFen(WHITE_EP_FEN),
+                "the position after " + WHITE_EP_PGN + " must evaluate the same whether it was reached by moves "
+                        + "or loaded from FEN; exf6 en passant is legal in both");
+    }
+
+    @Test
+    void blackEnPassantAtFenRoot_isEvaluatedLikeTheSamePositionReachedByMoves() {
+        assertPgnReachesFen(BLACK_EP_PGN, BLACK_EP_FEN);
+
+        assertEquals(evalOfPgn(BLACK_EP_PGN), evalOfFen(BLACK_EP_FEN),
+                "the position after " + BLACK_EP_PGN + " must evaluate the same whether it was reached by moves "
+                        + "or loaded from FEN; exd3 en passant is legal in both");
+    }
+
+    /**
+     * The en-passant field alone, with both positions loaded from FEN, so the last move plays no
+     * part: the field must be what makes the capture visible.
+     */
+    @Test
+    void whiteEnPassantFieldAtFenRoot_isWorthSomethingForWhite() {
+        assertTrue(evalOfFen(WHITE_EP_FEN) > evalOfFen(WHITE_NO_EP_FEN),
+                "with the en-passant field f6 white has the extra capture exf6, so the white-positive evaluation "
+                        + "must be higher than without it; got " + evalOfFen(WHITE_EP_FEN) + " with and "
+                        + evalOfFen(WHITE_NO_EP_FEN) + " without");
+    }
+
+    /** Mirror of {@link #whiteEnPassantFieldAtFenRoot_isWorthSomethingForWhite()} for black. */
+    @Test
+    void blackEnPassantFieldAtFenRoot_isWorthSomethingForBlack() {
+        assertTrue(evalOfFen(BLACK_EP_FEN) < evalOfFen(BLACK_NO_EP_FEN),
+                "with the en-passant field d3 black has the extra capture exd3, so the white-positive evaluation "
+                        + "must be lower than without it; got " + evalOfFen(BLACK_EP_FEN) + " with and "
+                        + evalOfFen(BLACK_NO_EP_FEN) + " without");
+    }
+
     // ---------- getMaterialWeightOfMove ----------
     // Centipawn material delta of a single packed move, sign-positive
     // (returns |gain|). Covers every branch of the switch: sentinel 0,
