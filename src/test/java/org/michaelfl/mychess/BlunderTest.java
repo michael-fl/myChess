@@ -3709,4 +3709,54 @@ class BlunderTest {
                         + "(Stockfish 18, depth 24) against −2.46 for 8...Be6; myChess's own line "
                         + "expects the recapture 9.gxf3 and still plays it at depth 12");
     }
+
+    /** White (myChess) to move before {@code 12.h3?}, with the queen already deep on h7. */
+    private static final String BEFORE_H3_YP0NYMNZ_FEN = "r1bq1kr1/pp3p1Q/2pp4/2b1p3/4P1n1/2NB4/PPPP1PPP/R1B2RK1 w - - 1 12";
+
+    /**
+     * Opening its own h-file against a pawn-down attack it does not see coming.
+     *
+     * <p>Rated classical game <a href="https://lichess.org/yp0nymnz">yp0nymnz</a> (myChessJava 2214
+     * vs philidor-142M 1885, 1800+0, 0-1), played by v4.7.1. White has taken on g7 and h7 with the
+     * queen and stands level: Stockfish 18 at depth 24 has the only holding move {@code 12.Be2} at
+     * <b>0.00</b>. myChess plays {@code 12.h3}, which Stockfish reads at <b>−1.82</b>: after
+     * {@code 12...Qf6!} the queen on h7 is short of squares, and the game went
+     * {@code 13.hxg4 Rxg4 14.Bc4 Rh4 15.Qxf7+ Qxf7 16.Bxf7 Kxf7} with a black rook on the h-file
+     * that {@code h3} opened.
+     *
+     * <p><b>An evaluation defect, not a horizon.</b> Measured 2026-09-29 against v4.7.1 and v4.8.0:
+     * both play {@code h3} at every depth from 8 to 12 and with the 47 s the game gave them, at
+     * +1.7 to +2.2 for themselves. The refutation is inside the horizon - after {@code 12.h3 Qf6}
+     * their own line {@code 13.hxg4 Bxg4 14.Be2 Rh8 15.Qxh8+ Qxh8} gives the trapped queen for the
+     * rook - and they still score the result <b>+2.3</b> where Stockfish has <b>−1.92</b>. In the
+     * quiet position after {@code 16...Kxf7}, queens off and white two pawns up, Stockfish reads
+     * <b>−0.74</b> and myChess +0.8 to +1.0: it counts the pawns and not the rook on the open
+     * h-file, the black bishop pair aimed at f2, or the undeveloped {@code Bc1} and {@code Ra1}.
+     *
+     * <p>v4.8.0's attack-unit term points the right way and is far too weak here: it lowers the
+     * readings by 0.2 to 0.3 pawns and does not change the move. With only rook and bishop bearing
+     * on the king zone, and the phase ramping the term down once the queens are traded, there is
+     * little for it to count.
+     *
+     * <p><b>TODO - invert once king safety lands:</b> turn this into an avoidance test for
+     * {@code h2-h3}. {@code Be2} is the only holding move, so requiring it outright would also be
+     * honest.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void h3_yp0nymnz_characterizesOpeningTheHFileAgainstItsOwnKing() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_H3_YP0NYMNZ_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.h2, Board.h3, "12.h3",
+                "which Stockfish 18 reads at −1.82 at depth 24 against 0.00 for the only holding move "
+                        + "12.Be2; 12...Qf6 leaves the queen on h7 short of squares");
+        assertTrue(result.weight() > 1f,
+                "characterization: it rates itself well ahead where Stockfish has it 1.82 behind after "
+                        + "h3; got " + result.weight());
+    }
 }
