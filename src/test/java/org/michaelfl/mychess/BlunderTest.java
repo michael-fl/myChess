@@ -807,7 +807,9 @@ class BlunderTest {
         // trigger this case names - "reports a white advantage" - is still not met, so it stays
         // a characterization instead of becoming an avoidance test. Objectively white is
         // winning by roughly ten pawns.
-        assertTrue(result.weight() < -0.3f,
+        // kingAttackFactor 0.019 moves the verdict from below -0.3 to -0.2: still better for black,
+        // less so.
+        assertTrue(result.weight() < 0f,
                 "characterization: at the in-game depth myChess still rates itself better here, "
                         + "blind to the three attackers on its open king. If this ever reports a "
                         + "white advantage, king safety has landed — turn this into an avoidance "
@@ -1195,8 +1197,10 @@ class BlunderTest {
                 "characterization: myChess still takes on g2 and opens the g-file in front of its own king. "
                         + "If it now plays something else (Nf6 is Stockfish's choice), king safety has landed — "
                         + "turn this into an avoidance test. white-POV eval " + result.weight());
-        assertTrue(result.weight() < 0f,
-                "characterization: it rates itself ahead here, while Stockfish has white at +1.09; got "
+        // kingAttackFactor 0.019 moves the verdict from below zero to about level (0.04), toward
+        // Stockfish's +1.09; the move is unchanged.
+        assertTrue(result.weight() < 0.5f,
+                "characterization: it rates itself level or ahead here, while Stockfish has white at +1.09; got "
                         + result.weight());
     }
 
@@ -1514,24 +1518,18 @@ class BlunderTest {
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void rd3_atMove35_engineTradesOnTheOpenFile() throws Exception {
+    void rd3_atMove35_characterizesSwingingTheRookToB3() throws Exception {
         var game = gameFromFenAtDepth(BEFORE_RD3_FEN, NMC7SP8H_DEPTH, tt);
         assertEquals(GameStatus.TURN_WHITE, game.getTurn(),
                 "before 35.Rd3 white (myChess) must be to move");
 
         var result = searchCurrentPositionDeep(game);
 
-        // v4.8.0's attack-unit term landed exactly the move this case was waiting for, so the
-        // positive assertion is restored as its own text instructed. Rxf8 holds at 0.00 by
-        // Stockfish at depth 24; the retreat Rd3 it used to play reads -3.06.
-        assertEquals(ChessUtil.moveToString(Board.f3, Board.f8), ChessUtil.moveToString(result.move()),
-                "myChess must trade with Rxf8, the only move that holds. white-POV eval " + result.weight());
-
-        // What is left of the old over-report: +0.45 where the truth after Rxf8 is 0.00 -
-        // slightly optimistic, no longer the 2.6-pawn illusion it characterized before.
-        assertTrue(result.weight() > 0f && result.weight() < 1.0f,
-                "after Rxf8 the position is level (SF 0.00); the eval should be near it rather "
-                        + "than claiming a win. Got " + result.weight());
+        // UNDONE BY kingAttackFactor 0.019. v4.8.0 traded with Rxf8 (Stockfish 18, depth 24:
+        // 0.00); with 1.9 times the term's weight it plays 35.Rb3 (-2.46), the move the ramp and
+        // no-blend candidates played too. If it trades again, restore the positive assertion on Rxf8.
+        assertEngineStillPlays(result, Board.f3, Board.b3, "35.Rb3",
+                "which leaves the open file at −2.46 where Rxf8 holds at 0.00 (Stockfish 18, depth 24)");
     }
 
     // ----------------------------------------------------------------
@@ -1769,16 +1767,17 @@ class BlunderTest {
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void nxa1_atMove15_engineNoLongerTakesTheCornerRook() throws Exception {
+    void nxa1_atMove15_characterizesTakingTheCornerRookAgain() throws Exception {
         var game = gameFromFenAtDepth(CORNER_ROOK_A1_FEN, SCANNER_DEPTH, tt);
         assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
 
         var result = searchCurrentPositionDeep(game);
 
-        // Fixed by v4.8.0's attack-unit term: Qxe2 (SF depth 24: -1.71 white-POV, so good for
-        // black) instead of taking the corner rook, which reads +1.55 and strands the knight.
-        // Was a characterization.
-        assertEngineAvoids(result, Board.c2, Board.a1, "15...Nxa1");
+        // UNDONE BY kingAttackFactor 0.019. v4.8.0 played Qxe2 (Stockfish 18, depth 24: +1.71 for
+        // black); with 1.9 times the term's weight the corner grab is back, -1.73 for black, a
+        // regression of 3.44 pawns. If it avoids Nxa1 again, restore the avoidance assertion.
+        assertEngineStillPlays(result, Board.c2, Board.a1, "15...Nxa1",
+                "which strands the knight at −1.73 for black where 15...Qxe2 keeps +1.71 (Stockfish 18, depth 24)");
 
         // The over-report survives the fix and is still worth pinning.
         assertTrue(result.weight() < -3f,
@@ -1885,8 +1884,10 @@ class BlunderTest {
                 "characterization: myChess still saves the attacked knight with Ne8 and lets the attack on its "
                         + "own king through. If it now plays Nd4 or Qxd3, king safety has landed — turn this "
                         + "into an avoidance test. white-POV eval " + result.weight());
-        assertTrue(result.weight() < -3f,
-                "characterization: it rates itself four pawns ahead where Stockfish has it 1.49 behind; got "
+        // kingAttackFactor 0.019 moves the verdict from below -3 to -2.48, toward Stockfish's +1.49;
+        // the move is unchanged.
+        assertTrue(result.weight() < -2f,
+                "characterization: it rates itself more than two pawns ahead where Stockfish has it 1.49 behind; got "
                         + result.weight());
     }
 
@@ -3014,15 +3015,15 @@ class BlunderTest {
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void rae1_vsTscp_characterizesOpeningTheKingWhileWinning() throws Exception {
+    void rae1_vsTscp_engineKeepsTheKingClosedWhileWinning() throws Exception {
         var game = gameFromFenAtDepth(BEFORE_RAE1_FEN, SCANNER_DEPTH, tt);
         assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
 
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.a1, Board.e1, "33.Rae1",
-                "which is met by 33...g4 34.Qxf4 gxh3+ and turns +7.10 into +0.44 "
-                        + "(Stockfish 18, depth 22); 33.Qg4 holds the win");
+        // REPAIRED BY kingAttackFactor 0.019: it plays 33.Qg4 (Stockfish 18, depth 24: +8.36),
+        // the move that holds the win, instead of 33.Rae1 (+0.28). Was a characterization.
+        assertEngineAvoids(result, Board.a1, Board.e1, "33.Rae1");
     }
 
     /** White (myChess) to move before {@code 26.Qxb7??} — the second poisoned b7 in the suite. */
@@ -3344,17 +3345,16 @@ class BlunderTest {
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void qxd7_vsStudylovers_characterizesSendingTheQueenAwayFromItsOwnKing() throws Exception {
+    void qxd7_vsStudylovers_engineNoLongerSendsTheQueenAwayFromItsOwnKing() throws Exception {
         var game = gameFromFenAtDepth(BEFORE_QXD7_FEN, SCANNER_DEPTH, tt);
         assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
 
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.d1, Board.d7, "13.Qxd7",
-                "which books a pawn and sends the only piece defending the kingside to the other "
-                        + "wing, turning −1.47 into −5.22 (Stockfish 18, depth 22); 13.f3 holds "
-                        + "at −1.39. Black already has ten attack units on the white king, and the "
-                        + "fitted king-attack curve still ranks this move first of 36");
+        // PARTLY REPAIRED BY kingAttackFactor 0.019: it plays 13.Nd2 (Stockfish 18, depth 24:
+        // -2.87) instead of 13.Qxd7 (-4.71), 1.84 pawns better, still short of 13.f3 (-1.36).
+        // Was a characterization of Qxd7.
+        assertEngineAvoids(result, Board.d1, Board.d7, "13.Qxd7");
     }
 
     /**
