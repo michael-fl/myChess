@@ -848,19 +848,8 @@ public final class WeightingFunction {
         captureOrDefendWithPawn(field, field + Board.LENGTH - 1, GameStatus.TURN_WHITE, GameStatus.TURN_BLACK, Board.whitePawn, color);
 
         // en passant
-        if (fieldToRow(field) == 4) {
-            int lastMove = game.getLastMove();
-            if (lastMove != 0) {
-                if (board[field - 1] == Board.blackPawn
-                        && Move.getToField(lastMove) == field - 1
-                        && Move.getFromField(lastMove) == field - 1 + 2 * Board.LENGTH) {
-                    capture(field - 1, Board.whitePawn, color, Board.blackPawn);
-                } else if (board[field + 1] == Board.blackPawn
-                        && Move.getToField(lastMove) == field + 1
-                        && Move.getFromField(lastMove) == field + 1 + 2 * Board.LENGTH) {
-                    capture(field + 1, Board.whitePawn, color, Board.blackPawn);
-                }
-            }
+        if (game.getEnPassantField() != 0 && fieldToRow(field) == 4) {
+            checkWhiteEnPassant(field);
         }
 
         // Is a doubled pawn? Searching ahead (toward 8th rank for white)
@@ -871,6 +860,16 @@ public final class WeightingFunction {
                 doublePawnCount[color]++;
                 break;
             }
+        }
+    }
+
+    private void checkWhiteEnPassant(final int field) {
+        final byte enPassantField = game.getEnPassantField();
+
+        if (field + Board.LENGTH - 1 == enPassantField) {
+            capture(field - 1, Board.whitePawn, 0, Board.blackPawn);
+        } else if (field + Board.LENGTH + 1 == enPassantField) {
+            capture(field + 1, Board.whitePawn, 0, Board.blackPawn);
         }
     }
 
@@ -918,19 +917,8 @@ public final class WeightingFunction {
         captureOrDefendWithPawn(field, to, GameStatus.TURN_BLACK, GameStatus.TURN_WHITE, Board.blackPawn, color);
 
         // en passant
-        if (fieldToRow(field) == 3) {
-            int lastMove = game.getLastMove();
-            if (lastMove != 0) {
-                if (board[field - 1] == Board.whitePawn
-                        && Move.getToField(lastMove) == field - 1
-                        && Move.getFromField(lastMove) == field - 1 - 2 * Board.LENGTH) {
-                    capture(field - 1, Board.blackPawn, color, Board.whitePawn);
-                } else if (board[field + 1] == Board.whitePawn
-                        && Move.getToField(lastMove) == field + 1
-                        && Move.getFromField(lastMove) == field + 1 - 2 * Board.LENGTH) {
-                    capture(field + 1, Board.blackPawn, color, Board.whitePawn);
-                }
-            }
+        if (game.getEnPassantField() != 0 && fieldToRow(field) == 3) {
+            checkBlackEnPassant(field);
         }
 
         // Is a doubled pawn? Searching ahead (toward 1st rank for black)
@@ -941,6 +929,16 @@ public final class WeightingFunction {
                 doublePawnCount[color]++;
                 break;
             }
+        }
+    }
+
+    private void checkBlackEnPassant(final int field) {
+        final byte enPassantField = game.getEnPassantField();
+
+        if (field - Board.LENGTH - 1 == enPassantField) {
+            capture(field - 1, Board.blackPawn, 1, Board.whitePawn);
+        } else if (field - Board.LENGTH + 1 == enPassantField) {
+            capture(field + 1, Board.blackPawn, 1, Board.whitePawn);
         }
     }
 
