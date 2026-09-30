@@ -939,6 +939,8 @@ noise.
 
 **4.8.1 was measured paired against its parent** (master `4856c10`), three rounds with the two builds alternating on 2026-09-30. All six runs gave 169,439,389, which is the proof that the en-passant fix leaves the search untouched. The times were 103,685 / 104,305 / 103,885 ms for the parent and 104,510 / 105,552 / 105,564 ms for 4.8.1: +1.2 % on the mean, +0.8 % best against best, and every 4.8.1 run slower than every parent run. That is a direction, not a proven cost, and it went through regardless because the change is a correctness fix the owner ordered merged. The row records the first 4.8.1 run.
 
+**The direction did not survive a longer measurement.** Ten rounds later that day, five builds rotating, all 50 runs at 169,439,389. The builds: the parent, 4.8.1, and three reshapes of 4.8.1's en-passant code. The reshapes were an adjacency gate before the helper call, the helpers inlined back by hand, and the gate led by an `!= 0` test. Against the parent, paired per round, 4.8.1 came out at −0.26 ± 1.28 %. With round 8 dropped, where every build ran 2–8 % slow, it came out at +0.28 ± 0.44 %. None of the reshapes differs from the parent by more than its interval. The three-pair +1.2 % was noise, and 4.8.1 has no measurable cost. Raw data and script: `myChess-lab/results/en-passant-perf-benches.tsv`, `myChess-lab/scripts/en-passant-perf-analyze.py`.
+
 ### Reproducing a row
 
 ```sh
