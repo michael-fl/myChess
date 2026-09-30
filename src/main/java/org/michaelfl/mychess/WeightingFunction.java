@@ -394,7 +394,7 @@ public final class WeightingFunction {
      * what game results say — and the two overlap. A tuned value is a
      * candidate for a match, never a result.
      */
-    private static final float kingAttackFactor = 0.01f;
+    private static final float kingAttackFactor = 0.019f;
 
     private GameStatus game;
     private int turn; // 0 = white, 1 = black
