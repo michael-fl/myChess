@@ -309,7 +309,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6
                 """;
-        testPosition(pgn, 2.26f); // was 2.1 (PeSTO tables, v4.4.0), then 1.83; king-attack term (attack-units branch)
+        testPosition(pgn, 2.58f); // was 2.1 (PeSTO tables, v4.4.0), then 1.83; king-attack term (attack-units branch) 2.26; kingAttackFactor 0.019
     }
 
     @Test
@@ -319,7 +319,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6
                 """;
-        testPosition(pgn, -2.85f); // was -2.01; shifted by the PeSTO piece-square tables (v4.4.0)
+        testPosition(pgn, -3.18f); // was -2.01; shifted by the PeSTO piece-square tables (v4.4.0), then -2.85; kingAttackFactor 0.019
     }
 
     @Test
@@ -329,7 +329,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6
                 """;
-        testPosition(pgn, 1.40f); // was 1.51 (PeSTO tables, v4.4.0), then 1.01; king-attack term (attack-units branch)
+        testPosition(pgn, 1.69f); // was 1.51 (PeSTO tables, v4.4.0), then 1.01; king-attack term (attack-units branch) 1.40; kingAttackFactor 0.019
     }
 
     @Test
@@ -339,7 +339,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6 O-O
                 """;
-        testPosition(pgn, 0.50f); // was 0.16 (PeSTO tables, v4.4.0), then 0.11; king-attack term (attack-units branch)
+        testPosition(pgn, 0.85f); // was 0.16 (PeSTO tables, v4.4.0), then 0.11; king-attack term (attack-units branch) 0.50; kingAttackFactor 0.019
     }
 
     @Test
@@ -349,7 +349,7 @@ class WeightingFunctionTest {
                 O-O-O Nbd7 10. g4 b5 11. Bxf6 Nxf6 12. g5 Nd7 13. f5 Bxg5+ 14. Kb1 Ne5 15. Qh5 Qd8 16.
                 Nxe6 Bxe6 17. fxe6 O-O 18. Rg1
                 """;
-        testPosition(pgn, 0.65f); // was 0.46 (PeSTO tables, v4.4.0), then 0.26; king-attack term (attack-units branch)
+        testPosition(pgn, 1.00f); // was 0.46 (PeSTO tables, v4.4.0), then 0.26; king-attack term (attack-units branch) 0.65; kingAttackFactor 0.019
     }
 
     // Terrible position for black (no mobility, pieces on bad, narrow positions)

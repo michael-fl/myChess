@@ -111,7 +111,10 @@ class EvalBenchmarkTest {
      * slower NPS at an identical node count is a pure speed regression.
      */
     @Test
-    @Timeout(value = 300, unit = TimeUnit.SECONDS)
+    // 300 s until kingAttackFactor 0.019: the artificial bench position 37 (a king buried in minor
+    // pieces) grows 2.5-fold with the term's weight, 486 to 1,213 million nodes at depth 8, while the
+    // 53 realistic positions move by 2 %. The limit guards against a hang, not a measured budget.
+    @Timeout(value = 900, unit = TimeUnit.SECONDS)
     void searchNps() {
         Bench.BenchResult result = Bench.run(SEARCH_NPS_DEPTH, false);
 

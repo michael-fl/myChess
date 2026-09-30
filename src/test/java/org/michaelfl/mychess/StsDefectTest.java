@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Timeout;
 import java.util.concurrent.TimeUnit;
 
 import static org.michaelfl.mychess.BlunderTest.DEPTH_BOUND_TIMEOUT_S;
+import static org.michaelfl.mychess.BlunderTest.assertEngineAvoids;
 import static org.michaelfl.mychess.BlunderTest.assertEngineStillPlays;
 import static org.michaelfl.mychess.BlunderTest.gameFromFenAtDepth;
 import static org.michaelfl.mychess.BlunderTest.searchCurrentPositionDeep;
@@ -363,14 +364,16 @@ class StsDefectTest {
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void kingActivity085_pushesTheGPawnInsteadOfWalkingTheKingIn() throws Exception {
+    void kingActivity085_playsQb6InsteadOfWalkingTheKingIn() throws Exception {
         var game = gameFromFenAtDepth("8/4q1k1/5pp1/pp2b3/2p1P3/P1P1Q1Pp/7P/3R2K1 w - - 0 1",
                 PIN_DEPTH, tt);
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.g3, Board.g4, "g4",
-                "which throws away +2.13 for 0.00, where the suite's Kf1 keeps +2.65. Worth "
-                        + "1 of 100 points at every depth from 8 to 11");
+        // MOVED BY kingAttackFactor 0.019, NOT FIXED: Qb6 instead of g4, both 0.00 (Stockfish 18,
+        // depth 24), where Kf1 keeps +2.38. Only the move changed.
+        assertEngineStillPlays(result, Board.e3, Board.b6, "Qb6",
+                "which throws away the advantage for 0.00 just as g4 did, where the suite's Kf1 keeps "
+                        + "+2.38 (Stockfish 18, depth 24)");
     }
 
     /**
@@ -409,9 +412,11 @@ class StsDefectTest {
                 PIN_DEPTH, tt);
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.f2, Board.d2, "Rd2",
-                "which gives up +1.14 for −0.09, where the suite's Qf6 prepares g4-g5 and "
-                        + "holds +1.05. Worth 5 of 100 points at every depth from 8 to 11");
+        // MOVED BY kingAttackFactor 0.019, NOT FIXED: Rd1 (-0.02) instead of Rd2 (0.00), where
+        // Qf6 holds +1.16 (Stockfish 18, depth 24). Only the rook's square changed.
+        assertEngineStillPlays(result, Board.c1, Board.d1, "Rd1",
+                "which gives up the advantage for −0.02, where the suite's Qf6 prepares g4-g5 and "
+                        + "holds +1.16 (Stockfish 18, depth 24)");
     }
 
     /**
@@ -474,14 +479,14 @@ class StsDefectTest {
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void offerOfSimplification090_givesUpTheBishopForTheKnightAtOnce() throws Exception {
+    void offerOfSimplification090_keepsTheBishopAndPlaysNe4() throws Exception {
         var game = gameFromFenAtDepth("r2r4/5kpp/p2q1n2/1p4B1/3b4/2Np1Q2/PP3PPP/3R1RK1 w - - 0 1",
                 PIN_DEPTH, tt);
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.g5, Board.f6, "Bxf6",
-                "which drops +2.12 to +0.22, where the suite's Ne4 keeps +2.26 and takes on "
-                        + "f6 two moves later. Worth 20 of 100 points at every depth from 8 to 11");
+        // REPAIRED BY kingAttackFactor 0.019: it plays the suite's Ne4 (Stockfish 18, depth 24:
+        // +1.99) instead of Bxf6 (+0.14). Was a characterization.
+        assertEngineAvoids(result, Board.g5, Board.f6, "Bxf6");
     }
 
     // -----------------------------------------------------------------------
@@ -551,17 +556,15 @@ class StsDefectTest {
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void seventhRank090_tradesTheRooksInsteadOfPlantingOneOnTheSeventh() throws Exception {
+    void seventhRank090_plantsTheRookOnTheSeventh() throws Exception {
         var game = gameFromFenAtDepth("r4rk1/pp2n2p/4P1p1/2Qp2q1/1P6/5R2/P5PP/4RBK1 w - - 0 1",
                 PIN_DEPTH, tt);
         var result = searchCurrentPositionDeep(game);
 
-        // MOVED BY v4.8.0, NOT FIXED, and this one is a straight substitution: Be2 reads +0.02
-        // at depth 22 where Rxf8+ read +0.01. The advantage is given away either way; only the
-        // move changed.
-        assertEngineStillPlays(result, Board.f1, Board.e2, "Be2",
-                "which gives the advantage away just as the old Rxf8+ did — +0.02 against +0.01 "
-                        + "(Stockfish 18, depth 22) — where the suite's Rf7 keeps +1.30");
+        // REPAIRED BY kingAttackFactor 0.019: it plays the suite's Rf7 (Stockfish 18, depth 24:
+        // +1.03) instead of Be2 (+0.09), v4.8.0's substitute for the older Rxf8+. Was a
+        // characterization.
+        assertEngineAvoids(result, Board.f1, Board.e2, "Be2");
     }
 
     /**

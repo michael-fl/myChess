@@ -46,7 +46,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "h3-e6",
                 0.2f,
-                1.1f, // max was 0.5, 0.7, then 0.85; v4.8.0 attack units -> 1.05
+                1.6f, // max was 0.5, 0.7, then 0.85; v4.8.0 attack units -> 1.05; kingAttackFactor 0.019 -> 1.55
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -128,7 +128,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("g1-g5", "d5-d6", "g1-d1", "h2-h4"),
                 11.0f,
-                14.5f, // max 13.5 -> 14.5; queen 1000 (v4.3.2) raises this material-up eval to ~14.0
+                14.6f, // max 13.5 -> 14.5; queen 1000 (v4.3.2) raises this material-up eval to ~14.0; kingAttackFactor 0.019 -> 14.54
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -223,7 +223,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "b7-g7",
                 6.0f, // OPT: Should be M13
-                7.1f, // max was 7.0; v4.8.0 attack units -> 7.05
+                7.3f, // max was 7.0; v4.8.0 attack units -> 7.05; kingAttackFactor 0.019 -> 7.26, toward the mate
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -409,7 +409,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("Qf2", "h5", "Qg3"),
                 1.7f, // TODO > 4.5
-                2.7f, // was 2.0; tapered pawn-EG (v4.3.0) — TODO 5.0
+                2.85f, // was 2.0; tapered pawn-EG (v4.3.0) — TODO 5.0; kingAttackFactor 0.019 -> 2.8
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -430,7 +430,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("Rxh4"),
                 -0.45f, // was -0.2; Rxh4 is SF-best (SF depth 20: +0.58); v4.2.0 eval drift
-                0.7f, // king-EG (v4.3.1), v4.3.3 bishop-pair → ~0.37; v4.8.0 attack units -> 0.64
+                0.9f, // king-EG (v4.3.1), v4.3.3 bishop-pair → ~0.37; v4.8.0 attack units -> 0.64; kingAttackFactor 0.019 -> 0.86, toward SF +0.58
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -504,7 +504,8 @@ class EngineTest extends EngineTestBase {
                 11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4
                 """;
         testPosition(pgn,
-                "d8-b8", // A REGRESSION, and now the worst of the three known answers. The only holding
+                "d8-a5", // kingAttackFactor 0.019: Qa5 (SF -2.84) instead of Qb8 (-3.66), a partial repair of 0.82.
+                         // A REGRESSION, and now the worst of the three known answers. The only holding
                          // move is Qc8 (SF -0.21). v4.3.4 played Qb8 (-3.66), v4.4.0's PeSTO tables
                          // recovered ~0.8 pawns of that to Qa5 (-2.84), and v4.8.0's attack-unit term
                          // gives them back: Qb8 again. Measured at depth 24, white-POV: Qc8 +0.75,
@@ -595,9 +596,9 @@ class EngineTest extends EngineTestBase {
                 17.Rc1 O-O 18.dxe7 Re8 19.Bd6 Bc6 20.h4 Qb7 21.h5
                 """;
         testPosition(pgn,
-                "Nh8", // Nh8 is SF-best (g6h8)
+                Set.of("Nh8", "Bxf3"), // Nh8 was SF-best (g6h8); kingAttackFactor 0.019 plays Bxf3, equivalent (SF 18 depth 24: -3.98 against -4.03)
                 0.3f, // TODO 4 (SF: +2.99); eval under-reports (pre-existing)
-                2.3f, // max was 1.0, 1.6, then 2.25; v4.8.0 attack units -> 2.27
+                2.4f, // max was 1.0, 1.6, then 2.25; v4.8.0 attack units -> 2.27; kingAttackFactor 0.019 -> 2.31, toward SF +2.99
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -635,7 +636,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "c1-c6", // v4.2.0: engine now plays Rc6 (= SF-best, +2.84), was g4 — improvement
                 -0.2f, // TODO 3.3 (SF depth 20: +2.84); eval still under-reports
-                1.1f, // was 0.5, then 0.9; v4.4.0 PeSTO tables -> 1.01
+                1.2f, // was 0.5, then 0.9; v4.4.0 PeSTO tables -> 1.01; kingAttackFactor 0.019 -> 1.15, toward SF +2.84
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -681,7 +682,7 @@ class EngineTest extends EngineTestBase {
         testPositionFromFen(
                 "rk1r2b1/ppp3pp/3b1pn1/3n4/3P2q1/4BNP1/PPP1N1BP/RKQR4 b KQkq - 3 11",
                 Set.of("d8-e8", "g4-e6", "g4-e4"), // Re8/Qe6 keep Black's ~ -3.6 dominance; Qe4 is eval-adjacent but suboptimal (SF ~ -2.3) since v4.3.1
-                -1.5f, // myChess under-reports — Black's advantage is beyond the depth-8 horizon; min was -1.3, v4.8.0 attack units -> -1.46
+                -2.0f, // myChess under-reports — Black's advantage is beyond the depth-8 horizon; min was -1.3, v4.8.0 attack units -> -1.46; kingAttackFactor 0.019 -> -1.95, toward SF -3.6
                 -0.4f,
                 new GameConfig(ENGINE, engineConfig())
         );
