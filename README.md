@@ -65,7 +65,7 @@ Passing `uci` as the first CLI argument switches [`MyChessMain`](src/main/java/o
 For use in a GUI or a bot bridge, run the packaged jar standalone — `mvn package` puts the runtime dependencies under `target/dependency/` (adjust the version in the jar name to match `pom.xml`):
 
 ```bash
-java -cp "target/my-chess-4.8.0.jar:target/dependency/*" \
+java -cp "target/my-chess-4.8.1.jar:target/dependency/*" \
      org.michaelfl.mychess.MyChessMain uci
 ```
 
