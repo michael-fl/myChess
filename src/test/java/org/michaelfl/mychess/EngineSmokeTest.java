@@ -48,8 +48,10 @@ public class EngineSmokeTest extends EngineTestBase {
                 // in v4.6.0, which moved the score to 13.85 — toward the mate, not away from
                 // it, since the shortcut no longer flattens this capture subtree to a piece
                 // count. Widen again if a later eval change pushes it further up; the band
-                // becomes a real assertion only once the search reports the mate.
-                14.5f,
+                // becomes a real assertion only once the search reports the mate. Raised from
+                // 14.5 for the material-exchange term, which moved the score to 14.92: the side
+                // a rook up is rewarded as the board empties, again toward the mate.
+                15.0f,
                 new GameConfig(ENGINE, engineConfig())
         );
     }

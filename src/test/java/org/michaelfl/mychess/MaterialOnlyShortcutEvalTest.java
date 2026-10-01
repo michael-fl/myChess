@@ -483,16 +483,17 @@ class MaterialOnlyShortcutEvalTest {
 
         for (int i = 0; i < weights.length; i++) {
 
-            // Material values are multiples of 100 cp, so a material-only score is necessarily
-            // whole. Asserting the property rather than the value survives table changes that
-            // move the principal variation; asserting it over several positions is what makes
-            // it evidence.
+            // A shortcut-graded score is material plus the material-exchange term, so it has the
+            // form m * 100 + calcMaterialExchangeTermCp(phase, m * 100). Until the exchange term
+            // reached the shortcut it was simply a whole number of pawns. Asserting the property
+            // rather than the value survives table changes that move the principal variation;
+            // asserting it over several positions is what makes it evidence.
             //
             // 14.Bc6 IS THE EXCEPTION SINCE v4.8.0 and is asserted the other way round below.
             if (i != IMMORTAL_DRAW_UNROUND_INDEX) {
-                assertTrue(isWholePawns(weights[i]),
-                        "after " + IMMORTAL_DRAW_LABELS[i] + " the score must be an exact number of pawns, "
-                                + "which is what a position graded by counting pieces looks like. An unround "
+                assertTrue(isShortcutGraded(weights[i], IMMORTAL_DRAW_FENS[i]),
+                        "after " + IMMORTAL_DRAW_LABELS[i] + " the score must be material plus the exchange "
+                                + "term, which is what a position graded by the shortcut looks like. Any other "
                                 + "value means the shortcut no longer covers this subtree. " + summary(weights));
             }
 
@@ -509,11 +510,11 @@ class MaterialOnlyShortcutEvalTest {
         // the subtree is no longer graded by counting pieces, and the engine still does not see
         // the draw. Pinned as unround rather than as a value, for the same reason the others are
         // pinned as whole - the value moves with any table change, the property does not.
-        assertFalse(isWholePawns(weights[IMMORTAL_DRAW_UNROUND_INDEX]),
-                "after " + IMMORTAL_DRAW_LABELS[IMMORTAL_DRAW_UNROUND_INDEX] + " the score must NOT be a "
-                        + "whole number of pawns: since v4.8.0 the king-attack term reaches this subtree, "
-                        + "so the positional evaluation runs here. A whole number means the shortcut is "
-                        + "covering it again. " + summary(weights));
+        assertFalse(isShortcutGraded(weights[IMMORTAL_DRAW_UNROUND_INDEX], IMMORTAL_DRAW_FENS[IMMORTAL_DRAW_UNROUND_INDEX]),
+                "after " + IMMORTAL_DRAW_LABELS[IMMORTAL_DRAW_UNROUND_INDEX] + " the score must NOT be material "
+                        + "plus the exchange term: since v4.8.0 the king-attack term reaches this subtree, "
+                        + "so the positional evaluation runs here. A shortcut-shaped value means the shortcut "
+                        + "is covering it again. " + summary(weights));
     }
 
     /** All four readings, so a failure in one says what the other three did. */
@@ -657,6 +658,33 @@ class MaterialOnlyShortcutEvalTest {
     /** Whether {@code weight} is an exact number of pawns, the signature of a piece count. */
     private static boolean isWholePawns(float weight) {
         return Math.abs(weight - Math.round(weight)) < PURE_MATERIAL_TOLERANCE;
+    }
+
+    /**
+     * Whether {@code weight} has the shape of a score the material-only shortcut produced: a whole
+     * number of pawns {@code m} plus the material-exchange term for that material at some phase.
+     *
+     * <p>The shortcut grades a leaf of the search, not the root, so neither the leaf's material nor
+     * its phase is known here. Both are bounded instead: the material to within a pawn or two of the
+     * score (the term adds at most a tenth of the excess), and the phase to at most the root's, since
+     * the captures that trigger the shortcut only lower it.
+     *
+     * @param weight the white-POV score in pawns
+     * @param fen    the root position, for the phase bound
+     */
+    private static boolean isShortcutGraded(float weight, String fen) {
+        int maxPhase = Fen.importChess960FEN(fen).getGameStatus().getPhase();
+        int centipawns = Math.round(weight * 100);
+
+        for (int pawns = (int) Math.floor(weight) - 2; pawns <= (int) Math.ceil(weight) + 2; pawns++) {
+            for (int phase = 0; phase <= maxPhase; phase++) {
+                if (pawns * 100 + WeightingFunction.calcMaterialExchangeTermCp(phase, pawns * 100) == centipawns) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
