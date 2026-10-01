@@ -3759,4 +3759,42 @@ class BlunderTest {
                 "characterization: it rates itself well ahead where Stockfish has it 1.82 behind after "
                         + "h3; got " + result.weight());
     }
+
+    /** White (myChess) to move before {@code 22.Kh1!}, the only move that keeps the win. */
+    private static final String BEFORE_KH1_ZBT2JIKY_FEN = "r2qr1k1/pp6/5p2/2ppn2p/3bPN2/P1N1R3/1PPQ2PP/5RK1 w - - 2 22";
+
+    /**
+     * Stepping out of the pin before anything else: the only winning move.
+     *
+     * <p>Rated blitz game <a href="https://lichess.org/ZBT2Jiky">ZBT2Jiky</a> (myChessJava 1991 vs
+     * sseh-c 1960, 180+2, 1-0). Black's {@code 21...Ne5} was a losing move, and white has exactly one
+     * way to punish it: {@code 22.Kh1}, which takes the king off the g1-d4 diagonal so the rook on e3 is
+     * no longer pinned. Stockfish 18 at depth 24 reads <b>+3.42</b> for it. The next-best move,
+     * {@code 22.Nd5}, is <b>−1.68</b>, a gap of 5.1 pawns, and every other move is worse still
+     * ({@code Re1} −2.75, {@code Nh5} −3.02, {@code Ne2} −3.21). myChess found it in the game and won.
+     *
+     * <p>A guard, not a characterization: the engine plays the right move today (v4.8.1 at depth 8
+     * and 9, measured 2026-10-01) and this pins it. It does so for a weaker reason than the truth:
+     * its own verdict is <b>−0.85</b> at depth 8 and −0.67 at depth 9, where Stockfish has +3.42. It
+     * picks {@code Kh1} as the least bad move, not as the winning one. Only the move is asserted,
+     * not the score.
+     *
+     * <p>The same position one move earlier is a defect of its own: as black at move 21, myChess
+     * would play {@code 21...Ne5} itself (+0.67 / +0.85 for black at depth 8 / 9), where
+     * Stockfish prefers {@code 21...Re5} (−1.42) or {@code 21...f5} (−1.52).
+     *
+     * <p><b>Test family:</b> pin (guard)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void kh1_zbt2jiky_engineStepsOutOfThePin() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_KH1_ZBT2JIKY_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.g1, Board.h1), ChessUtil.moveToString(result.move()),
+                "myChess must play 22.Kh1, the only winning move (Stockfish 18, depth 24: +3.42 against "
+                        + "-1.68 for the next-best 22.Nd5); white-POV eval " + result.weight());
+    }
 }
