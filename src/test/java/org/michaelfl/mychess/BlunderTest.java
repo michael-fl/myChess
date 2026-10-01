@@ -3760,11 +3760,56 @@ class BlunderTest {
                         + "h3; got " + result.weight());
     }
 
+    /** Black to move before {@code 21...Ne5?}, the losing move of ZBT2Jiky. */
+    private static final String BEFORE_NE5_ZBT2JIKY_FEN = "r2qr1k1/pp6/2n2p2/2pp3p/3bPN2/P1N1R3/1PPQ2PP/5RK1 b - - 1 21";
+
+    /**
+     * The losing move of ZBT2Jiky, which myChess would play itself.
+     *
+     * <p><b>Consecutive positions, part 1 of 2:</b> this is move 21 of ZBT2Jiky, black to move. The
+     * position after {@code 21...Ne5} is part 2,
+     * {@link #kh1_zbt2jiky_engineStepsOutOfThePin()}.
+     *
+     * <p>Rated blitz game <a href="https://lichess.org/ZBT2Jiky">ZBT2Jiky</a>. Black, the opponent
+     * in the game and not myChess, played {@code 21...Ne5}. It looks natural, since the knight eyes g4 and the rook on e3 is
+     * pinned to the white king by the bishop on d4. But {@code 22.Kh1} breaks the pin, and
+     * Stockfish 18 at depth 24 then reads <b>+3.42</b> for white (lichess +6.1). The holding moves
+     * are {@code 21...Re5} (<b>−1.42</b> for black) and {@code 21...f5} (−1.52).
+     *
+     * <p>myChess as black, v4.8.1 measured 2026-10-01, plays {@code 21...Ne5} at depth 8 and 9 and
+     * rates it +0.67 / +0.85 for black. It counts the pin and misses that a single king move
+     * dissolves it. Consistently, on the white side of the next move it finds {@code Kh1} but
+     * scores it at −0.85: the evaluation does not see what the pin break wins.
+     *
+     * <p><b>TODO - invert once fixed:</b> turn this into an avoidance test for {@code c6-e5}.
+     *
+     * <p><b>Test family:</b> pin (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void ne5_zbt2jiky_characterizesWalkingIntoThePinBreak() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_NE5_ZBT2JIKY_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.c6, Board.e5, "21...Ne5",
+                "which 22.Kh1 refutes: Stockfish 18 reads +3.42 for white at depth 24, against −1.42 "
+                        + "for black after the holding 21...Re5");
+        assertTrue(result.weight() < 0f,
+                "characterization: it rates black ahead after Ne5 where Stockfish has white 3.42 up; got "
+                        + result.weight());
+    }
+
     /** White (myChess) to move before {@code 22.Kh1!}, the only move that keeps the win. */
     private static final String BEFORE_KH1_ZBT2JIKY_FEN = "r2qr1k1/pp6/5p2/2ppn2p/3bPN2/P1N1R3/1PPQ2PP/5RK1 w - - 2 22";
 
     /**
      * Stepping out of the pin before anything else: the only winning move.
+     *
+     * <p><b>Consecutive positions, part 2 of 2:</b> this is move 22 of ZBT2Jiky, white to move,
+     * reached by {@code 21...Ne5} from part 1,
+     * {@link #ne5_zbt2jiky_characterizesWalkingIntoThePinBreak()}.
      *
      * <p>Rated blitz game <a href="https://lichess.org/ZBT2Jiky">ZBT2Jiky</a> (myChessJava 1991 vs
      * sseh-c 1960, 180+2, 1-0). Black's {@code 21...Ne5} was a losing move, and white has exactly one
@@ -3779,9 +3824,8 @@ class BlunderTest {
      * picks {@code Kh1} as the least bad move, not as the winning one. Only the move is asserted,
      * not the score.
      *
-     * <p>The same position one move earlier is a defect of its own: as black at move 21, myChess
-     * would play {@code 21...Ne5} itself (+0.67 / +0.85 for black at depth 8 / 9), where
-     * Stockfish prefers {@code 21...Re5} (−1.42) or {@code 21...f5} (−1.52).
+     * <p>Part 1 is a defect of its own: as black at move 21, myChess would play {@code 21...Ne5}
+     * itself.
      *
      * <p><b>Test family:</b> pin (guard)
      */
