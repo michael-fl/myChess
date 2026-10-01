@@ -98,7 +98,7 @@ public final class WeightingFunction {
      * the phase stays a constant per position and the tapered evaluation remains
      * linear in its tunable parameters.
      */
-    private static final int[] phaseWeightOfPiece = new int[Board.blackKing + 1];
+    static final int[] phaseWeightOfPiece = new int[Board.blackKing + 1];
     static {
         phaseWeightOfPiece[Board.whitePawn]   = 0;
         phaseWeightOfPiece[Board.whiteKnight] = 1;
@@ -228,6 +228,12 @@ public final class WeightingFunction {
      */
     private static final int NO_KING_ZONE_CENTER = 0;
 
+    /** Material lead, in centipawns, below which the material-exchange term stays silent: one pawn. */
+    private static final int MATERIAL_EXCHANGE_DEFICIT_THRESHOLD = weightOfPiece[Board.whitePawn];
+
+    /** Share of the excess beyond the threshold, in percent, that the term reaches when fully exchanged. */
+    private static final int MATERIAL_EXCHANGE_PENALTY_PERCENT = 10;
+
     @FunctionalInterface
     private interface CalculateWeight {
         void calculate(WeightingFunction generator, int field, int color);
@@ -284,6 +290,13 @@ public final class WeightingFunction {
      * evaluation change that could shift it. See {@code docs/evaluation.md} section 5.5.2.
      */
     private static final float castlingFactor = 0.1875f;
+
+    /**
+     * Scale of the material-exchange term, applied inside {@link #calcMaterialExchangeTerm} and
+     * {@link #calcMaterialExchangeTermCp} so that the full evaluation and the material-only shortcut
+     * always use the same value.
+     */
+    static final float materialExchangeFactor = 0.01f;
 
     /**
      * Phase at and above which the castling term carries its full weight.
@@ -406,7 +419,7 @@ public final class WeightingFunction {
     private byte[] board;
     private final byte[] tempBoard = new byte[Board.LENGTH * Board.LENGTH];
     private final int[] chessCount = new int[2];
-    private final float[] piecesWeight = new float[2];
+    private final int[] piecesWeight = new int[2];
     private final int[] mobilityWeight = new int[2];
     private final int[] positionWeight = new int[2];
     private final int[] threadWeight = new int[2];
@@ -424,8 +437,6 @@ public final class WeightingFunction {
     /** Per-color sum of endgame piece-square values for the current position (index 0 = white, 1 = black). */
     private final int[] pstEndGameWeight = new int[2];
     private final int[] kingFieldCorrected = new int[2];
-    /** Game phase of the most recently evaluated position, {@code 0..}{@link #MAX_PHASE}; see {@link #phaseWeightOfPiece}. */
-    private int phase;
     private boolean isCurrentAttackerCounted;
 
     /** Material weight (delta white - black) in centi pawns. */
@@ -506,7 +517,6 @@ public final class WeightingFunction {
         System.arraycopy(board, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
 
         final int stopField = Board.h8 + 1;
-        int phase = 0;
 
         kingFieldCorrected[0] = calcKingFieldCorrected(0);
         kingFieldCorrected[1] = calcKingFieldCorrected(1);
@@ -526,17 +536,13 @@ public final class WeightingFunction {
                 pstMidGameWeight[color] += (short) packed;
                 pstEndGameWeight[color] += (short) ((packed + 0x8000) >> 16);
 
-                phase += phaseWeightOfPiece[piece];
-
                 calculationFunctions[piece].calculate(this, field, color);
             }
         }
 
-        phase = Math.min(phase, MAX_PHASE);
-
+        final int phase = Math.min(game.getUnclampedPhase(), MAX_PHASE);
         positionWeight[0] = blend(pstMidGameWeight[0], pstEndGameWeight[0], phase);
         positionWeight[1] = blend(pstMidGameWeight[1], pstEndGameWeight[1], phase);
-        this.phase = phase; // store in local field to allow tests to read the phase
 
         calculateCastlingState();
 
@@ -599,7 +605,7 @@ public final class WeightingFunction {
 
     /** The game phase of the most recently evaluated position, {@code 0..}{@link #MAX_PHASE}. */
     int getPhase() {
-        return phase;
+        return game.getPhase();
     }
 
     /** A copy of the per-color midgame position-weight sums from the last evaluation (index 0 = white, 1 = black). */
@@ -654,6 +660,7 @@ public final class WeightingFunction {
     /** Evaluate {@code board} and return its {@link FactorBreakdown} for tuning. */
     public FactorBreakdown analyzeFactors(Board board) {
         int eval = calculate(board);
+        int phase = board.getGameStatus().getPhase();
 
         double[] features = {
                 positionWeight[0] - positionWeight[1],
@@ -674,8 +681,11 @@ public final class WeightingFunction {
         if (containsIllegalMove)
             return turn == 0 ? ILLEGAL_WEIGHT_POS : ILLEGAL_WEIGHT_NEG;
 
+        final int whiteMaterialWeight = piecesWeight[0];
+        final int blackMaterialWeight = piecesWeight[1];
+
         return roundSymmetric((
-                  (piecesWeight[0] - piecesWeight[1]) / 100f
+                  (whiteMaterialWeight - blackMaterialWeight) / 100f
                 + (positionWeight[0] - positionWeight[1]) / 100f * positionFactor
                 + (mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor
                 + (threadWeight[0] - threadWeight[1]) / 100f * threadWeightFactor
@@ -684,7 +694,47 @@ public final class WeightingFunction {
                 + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
                 + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor
                 + ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * bishopPairFactor
-                + (calcKingAttackPenalty(0, phase) - calcKingAttackPenalty(1, phase)) * kingAttackFactor) * 100);
+                + (calcKingAttackPenalty(0, phase) - calcKingAttackPenalty(1, phase)) * kingAttackFactor
+                + calcMaterialExchangeTerm(phase, whiteMaterialWeight - blackMaterialWeight)) * 100);
+    }
+
+    /**
+     * The material-exchange term: trading down helps the side ahead in material. A lead of more
+     * than {@link #MATERIAL_EXCHANGE_DEFICIT_THRESHOLD} earns
+     * {@link #MATERIAL_EXCHANGE_PENALTY_PERCENT} of the excess, scaled by how much material has
+     * been exchanged - nothing at {@link #MAX_PHASE}, the full share at phase 0 - and by
+     * {@link #materialExchangeFactor}. The sign follows the lead, so the term is a bonus for the
+     * side ahead and a penalty for the side behind, and it is odd in {@code materialWeightDelta}.
+     *
+     * @param phase               the game phase, {@code 0..}{@link #MAX_PHASE}
+     * @param materialWeightDelta material of white minus black, in centipawns (or of the side to
+     *                            move minus its opponent, since the term is odd)
+     * @return the term in pawns
+     */
+    static float calcMaterialExchangeTerm(final int phase, final int materialWeightDelta) {
+        final int effectiveDeficit = Math.abs(materialWeightDelta) - MATERIAL_EXCHANGE_DEFICIT_THRESHOLD;
+
+        if (effectiveDeficit <= 0) {
+            return 0;
+        }
+
+        final int exchangedPhase = MAX_PHASE - phase;
+        final float penalty = blend(effectiveDeficit * MATERIAL_EXCHANGE_PENALTY_PERCENT, 0, exchangedPhase) / 100.0f * materialExchangeFactor;
+
+        return materialWeightDelta < 0 ? -penalty : penalty;
+    }
+
+    /**
+     * {@link #calcMaterialExchangeTerm} in whole centipawns, rounded symmetrically. This is the
+     * value the material-only shortcut in {@link QuiescenceSearch} adds, so that a position it
+     * grades carries the same term as the full evaluation would give it.
+     *
+     * @param phase               the game phase, {@code 0..}{@link #MAX_PHASE}
+     * @param materialWeightDelta material lead in centipawns, from the side whose score is wanted
+     * @return the term in centipawns
+     */
+    static int calcMaterialExchangeTermCp(final int phase, final int materialWeightDelta) {
+        return roundSymmetric(calcMaterialExchangeTerm(phase, materialWeightDelta) * 100.0f);
     }
 
     /**
@@ -802,6 +852,8 @@ public final class WeightingFunction {
 
     @Override
     public String toString() {
+        int phase = game.getPhase();
+
         return "piecesWeight:          w=" + piecesWeight[0] + ", b=" + piecesWeight[1] + DELTA_STR + (piecesWeight[0] - piecesWeight[1]) + WEIGHT_STR + round((piecesWeight[0] - piecesWeight[1]) / 100f) + '\n' +
                "positionWeight:        w=" + positionWeight[0] + ", b=" + positionWeight[1] + DELTA_STR + (positionWeight[0] - positionWeight[1]) + WEIGHT_STR + round((positionWeight[0] - positionWeight[1]) / 100f * positionFactor) + '\n' +
                "mobilityWeight:        w=" + mobilityWeight[0] + ", b=" + mobilityWeight[1] + DELTA_STR + (mobilityWeight[0] - mobilityWeight[1]) + WEIGHT_STR + round((mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor) + '\n' +
@@ -811,6 +863,8 @@ public final class WeightingFunction {
                "chessCount:            w=" + chessCount[0] + ", b=" + chessCount[1] + DELTA_STR + (chessCount[0] - chessCount[1]) + WEIGHT_STR + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
                "undefendedPiecesCount: w=" + undefendedPiecesCount[0] + ", b=" + undefendedPiecesCount[1] + DELTA_STR + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) + WEIGHT_STR + round((undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor) + '\n' +
                "attackUnit:            w=" + attackUnit[0] + ", b=" + attackUnit[1] + DELTA_STR + (attackUnit[0] - attackUnit[1]) + WEIGHT_STR + round((calcKingAttackPenalty(0, phase) - calcKingAttackPenalty(1, phase)) * kingAttackFactor) + '\n' +
+               "bishopCount:           w=" + bishopCount[0] + ", b=" + bishopCount[1] + DELTA_STR + ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) + WEIGHT_STR + round(((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * bishopPairFactor) + '\n' +
+               "materialExchange:      phase=" + phase + DELTA_STR + (piecesWeight[0] - piecesWeight[1]) + WEIGHT_STR + round(calcMaterialExchangeTerm(phase, piecesWeight[0] - piecesWeight[1])) + '\n' +
                "weight: " + calculatePositionWeight(phase) / 100f;
     }
 

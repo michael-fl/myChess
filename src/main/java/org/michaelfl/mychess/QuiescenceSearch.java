@@ -136,7 +136,8 @@ public final class QuiescenceSearch {
                 && (materialDelta > PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD || materialDelta < -PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD)) {
             statistics.incrMaterialOnlyLeafCount();
 
-            return materialWeight;
+            final int phase = workingBoard.getGameStatus().getPhase();
+            return materialWeight + WeightingFunction.calcMaterialExchangeTermCp(phase, materialWeight);
         }
 
         return weightingFunction.calculate(workingBoard) * weightFactor;

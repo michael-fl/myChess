@@ -130,13 +130,37 @@ final class Fen {
 
         // Build a draft status (hash=0) just to feed into Board.calculatePositionHash,
         // which only reads castling/turn/enPassant from the GameStatus, not the hash itself.
+        int phase = calculateUnclampedPhase(rawBoard);
         var draftStatus = new GameStatus(plyCount, turn, 0, halfMoveClock, castling.bits(), enPassantField,
-                0L, GameStatus.EMPTY_NON_PAWN_MATERIAL_WEIGHT);
+                0L, GameStatus.EMPTY_NON_PAWN_MATERIAL_WEIGHT, phase);
         long positionHash = Board.calculatePositionHash(rawBoard, draftStatus);
         var gameStatus = new GameStatus(plyCount, turn, 0, halfMoveClock, castling.bits(), enPassantField,
-                positionHash, Board.calculateNonPawnMaterialWeights(rawBoard));
+                positionHash, Board.calculateNonPawnMaterialWeights(rawBoard), phase);
 
         return new Board(rawBoard, gameStatus, castling.rookFiles(), is960);
+    }
+
+    /**
+     * Sums {@link WeightingFunction#phaseWeightOfPiece} over every piece on the board.
+     *
+     * <p>The sum is <b>not</b> clamped to {@link WeightingFunction#MAX_PHASE}: promoted material
+     * can push it above, and {@link GameStatus} keeps the raw value so that later captures subtract
+     * from the true sum. Read the clamped phase through {@link GameStatus#getPhase()}.
+     *
+     * @param rawBoard the 12x12 board array, border squares included
+     * @return the raw phase sum, {@code 0} for kings and pawns only
+     */
+    static int calculateUnclampedPhase(byte[] rawBoard) {
+        int phase = 0;
+
+        for (int field = Board.a1; field <= Board.h8; field++) {
+            final byte piece = rawBoard[field];
+            if (piece != Board.empty && piece != Board.illegal) {
+                phase += WeightingFunction.phaseWeightOfPiece[piece];
+            }
+        }
+
+        return phase;
     }
 
     /**

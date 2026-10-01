@@ -212,12 +212,14 @@ final class PositionEncoding {
         // Leaving both bits clear matches Fen, which cannot set them either, and makes a decoded
         // position report "has not castled" for both sides. That is the honest answer.
 
+        int phase = Fen.calculateUnclampedPhase(rawBoard);
         var gameStatusTmp = new GameStatus(plyCount, turn, lastMove, halfMoveClock, castlingBitSet, enPassantField,
-                0, GameStatus.EMPTY_NON_PAWN_MATERIAL_WEIGHT);
+                0, GameStatus.EMPTY_NON_PAWN_MATERIAL_WEIGHT, phase);
         long positionHash = Board.calculatePositionHash(rawBoard, gameStatusTmp);
 
         var gameStatus = new GameStatus(plyCount, turn, lastMove, halfMoveClock, castlingBitSet, enPassantField,
-                positionHash, Board.calculateNonPawnMaterialWeights(rawBoard));
+                positionHash, Board.calculateNonPawnMaterialWeights(rawBoard), phase);
+
         return new Board(rawBoard, gameStatus);
     }
 

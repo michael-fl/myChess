@@ -427,7 +427,8 @@ class FenTest {
                 reducedState,
                 original.getEnPassantField(),
                 original.getPositionHash(),
-                new int[2]);
+                new int[2],
+                0);
 
         assertEquals("Hhf", Fen.castlingStateShredder(reducedStatus, board),
                 "missing white-queenside slot must drop 'F' from 'HFhf'");

@@ -55,6 +55,16 @@ public final class GameStatus {
     @SuppressWarnings("WeakerAccess")
     public static final int TURN_BLACK = 16;
 
+    private static final int WEIGHT_KNIGHT = WeightingFunction.weightOfPiece[Board.whiteKnight];
+    private static final int WEIGHT_BISHOP = WeightingFunction.weightOfPiece[Board.whiteBishop];
+    private static final int WEIGHT_ROOK = WeightingFunction.weightOfPiece[Board.whiteRook];
+    private static final int WEIGHT_QUEEN = WeightingFunction.weightOfPiece[Board.whiteQueen];
+
+    private static final int PHASE_WEIGHT_KNIGHT = WeightingFunction.phaseWeightOfPiece[Board.whiteKnight];
+    private static final int PHASE_WEIGHT_BISHOP = WeightingFunction.phaseWeightOfPiece[Board.whiteBishop];
+    private static final int PHASE_WEIGHT_ROOK = WeightingFunction.phaseWeightOfPiece[Board.whiteRook];
+    private static final int PHASE_WEIGHT_QUEEN = WeightingFunction.phaseWeightOfPiece[Board.whiteQueen];
+
     private final int plyCount;
     private final int turn;
     private final int lastMove;
@@ -181,13 +191,22 @@ public final class GameStatus {
      */
     private final int[] nonPawnMaterialWeight = new int[2];
 
+    /**
+     * The game phase of this position as a raw sum of {@link WeightingFunction#phaseWeightOfPiece},
+     * kept unclamped so that a promotion above {@link WeightingFunction#MAX_PHASE} is not lost when
+     * material later comes off. Updated incrementally by {@link #switchTurn}; see
+     * {@link #getPhase()} for the value the evaluation uses.
+     */
+    private final int unclampedPhase;
+
     private GameStatus() {
         this(0, TURN_WHITE, 0, 0, INITIAL_CASTLING_STATE, (byte) 0,
-                INITIAL_POSITION_HASH, new int[] { INITIAL_NON_PAWN_MATERIAL_WEIGHT, INITIAL_NON_PAWN_MATERIAL_WEIGHT });
+                INITIAL_POSITION_HASH, new int[] { INITIAL_NON_PAWN_MATERIAL_WEIGHT, INITIAL_NON_PAWN_MATERIAL_WEIGHT },
+                WeightingFunction.MAX_PHASE);
     }
 
     GameStatus(int plyCount, int turn, int lastMove, int halfMoveClock, int castlingState, byte enPassantField,
-               long positionHash, int[] nonPawnMaterialWeight) {
+               long positionHash, int[] nonPawnMaterialWeight, int unclampedPhase) {
         this.plyCount = plyCount;
         this.turn = turn;
         this.lastMove = lastMove;
@@ -197,6 +216,7 @@ public final class GameStatus {
         this.enPassantField = enPassantField;
         this.nonPawnMaterialWeight[0] = nonPawnMaterialWeight[0];
         this.nonPawnMaterialWeight[1] = nonPawnMaterialWeight[1];
+        this.unclampedPhase = unclampedPhase;
     }
 
     static GameStatus newGame() {
@@ -243,11 +263,14 @@ public final class GameStatus {
      */
     GameStatus switchTurn(int lastMove, int halfMoveClock, int castlingState, byte enPassantField, long positionHash) {
         int[] newNonPawnMaterialWeight = this.nonPawnMaterialWeight;
+        int newPhase = unclampedPhase;
+
         if (lastMove != 0) {
             final byte capturedPiece = Move.getCapturedPiece(lastMove);
             final boolean pawnCaptured = Board.isPawn(capturedPiece);
             final int nonPawnCaptureWeight = capturedPiece == 0 || pawnCaptured ? 0 : WeightingFunction.weightOfPiece[capturedPiece];
             final int myNonPawnMaterialGain = getNonPawnMaterialGain(lastMove);
+            newPhase = calcNewPhaseForMove(lastMove, unclampedPhase);
 
             if (nonPawnCaptureWeight > 0 || myNonPawnMaterialGain > 0) {
                 if (turn == GameStatus.TURN_WHITE) {
@@ -259,7 +282,7 @@ public final class GameStatus {
         }
 
         return new GameStatus(getPlyCount() + 1, getOppositeColor(), lastMove,
-                halfMoveClock, castlingState, enPassantField, positionHash, newNonPawnMaterialWeight);
+                halfMoveClock, castlingState, enPassantField, positionHash, newNonPawnMaterialWeight, newPhase);
     }
 
     /**
@@ -280,12 +303,38 @@ public final class GameStatus {
         return switch (moveType) {
             case Move.typeNormal -> //noinspection DuplicateBranchesInSwitch
                     0; // opt for most likely case
-            case Move.typePawnPromotionQueen -> WeightingFunction.weightOfPiece[Board.whiteQueen];
-            case Move.typePawnPromotionKnight -> WeightingFunction.weightOfPiece[Board.whiteKnight];
-            case Move.typePawnPromotionRook -> WeightingFunction.weightOfPiece[Board.whiteRook];
-            case Move.typePawnPromotionBishop -> WeightingFunction.weightOfPiece[Board.whiteBishop];
+            case Move.typePawnPromotionQueen -> WEIGHT_QUEEN;
+            case Move.typePawnPromotionKnight -> WEIGHT_KNIGHT;
+            case Move.typePawnPromotionRook -> WEIGHT_ROOK;
+            case Move.typePawnPromotionBishop -> WEIGHT_BISHOP;
             default -> 0;
         };
+    }
+
+    /**
+     * The raw phase after {@code move}: the captured piece's phase weight comes off, and a promotion
+     * adds the weight of the piece it creates. The result is not clamped, for the reason given at
+     * {@link #unclampedPhase}.
+     *
+     * @param move  the move just made, as packed by {@link Move#create}
+     * @param phase the raw phase before the move
+     * @return the raw phase after the move
+     */
+    static int calcNewPhaseForMove(int move, int phase) {
+        final int phaseCaptureWeight = WeightingFunction.phaseWeightOfPiece[Move.getCapturedPiece(move)];
+        final byte moveType = Move.getMoveType(move);
+
+        final int phasePromotionDelta = switch (moveType) {
+            case Move.typeNormal -> //noinspection DuplicateBranchesInSwitch
+                    0; // opt for most likely case
+            case Move.typePawnPromotionQueen -> PHASE_WEIGHT_QUEEN;
+            case Move.typePawnPromotionKnight -> PHASE_WEIGHT_KNIGHT;
+            case Move.typePawnPromotionRook -> PHASE_WEIGHT_ROOK;
+            case Move.typePawnPromotionBishop -> PHASE_WEIGHT_BISHOP;
+            default -> 0;
+        };
+
+        return phase - phaseCaptureWeight + phasePromotionDelta;
     }
 
     public int getPlyCount() {
@@ -359,6 +408,27 @@ public final class GameStatus {
     public boolean hasNonPawnMaterial() {
         final int index = getTurn() == TURN_WHITE ? 0 : 1;
         return nonPawnMaterialWeight[index] > 0;
+    }
+
+    /**
+     * The raw phase sum of this position, which may exceed {@link WeightingFunction#MAX_PHASE}
+     * after promotions. For anything indexed by the phase use {@link #getPhase()}.
+     *
+     * @return the unclamped phase
+     */
+    public int getUnclampedPhase() {
+        return unclampedPhase;
+    }
+
+    /**
+     * The game phase of this position, {@code 0..}{@link WeightingFunction#MAX_PHASE}: the raw sum
+     * clamped to the maximum, safe to use as an index into the phase tables.
+     *
+     * @return the clamped phase, {@code MAX_PHASE} for full starting material, {@code 0} for kings
+     *         and pawns only
+     */
+    public int getPhase() {
+        return Math.min(unclampedPhase, WeightingFunction.MAX_PHASE);
     }
 
     /**
