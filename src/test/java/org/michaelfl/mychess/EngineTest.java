@@ -128,7 +128,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("g1-g5", "d5-d6", "g1-d1", "h2-h4"),
                 11.0f,
-                14.5f, // max 13.5 -> 14.5; queen 1000 (v4.3.2) raises this material-up eval to ~14.0
+                14.7f, // max 13.5 -> 14.5; queen 1000 (v4.3.2) raises this material-up eval to ~14.0; material-exchange term -> 14.62
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -223,7 +223,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "b7-g7",
                 6.0f, // OPT: Should be M13
-                7.1f, // max was 7.0; v4.8.0 attack units -> 7.05
+                7.5f, // max was 7.0; v4.8.0 attack units -> 7.05; material-exchange term -> 7.4, toward the mate
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -244,7 +244,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "d5-e6",
                 6.0f, // Stockfish: mate in 13; v4.2.0 QSearch reports higher toward the mate
-                10.0f,
+                10.8f, // was 10.0; material-exchange term -> 10.68, toward the mate
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -301,7 +301,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("c6-b7"),
                 6.0f, // Stockfish: mate in 5; v4.2.0 QSearch reports higher toward the mate
-                12.0f,
+                12.7f, // was 12.0; material-exchange term -> 12.6, toward the mate
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -409,7 +409,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("Qf2", "h5", "Qg3"),
                 1.7f, // TODO > 4.5
-                2.7f, // was 2.0; tapered pawn-EG (v4.3.0) — TODO 5.0
+                2.8f, // was 2.0; tapered pawn-EG (v4.3.0) — TODO 5.0; material-exchange term -> 2.75
                 new GameConfig(ENGINE, engineConfig())
         );
     }

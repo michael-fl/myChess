@@ -70,7 +70,14 @@ class FactorTexelDataTest {
                 // baseEval and this reconstruction came up 18.1 cp short. Wiring it as the ninth
                 // factor is what put the equation back to this shape - the term is in features
                 // now, and nothing here has to know about it.
-                double reconstructed = material(board) + dot(breakdown.features(), factors);
+                //
+                // The material-exchange term is the second non-factor part: it is not a tunable
+                // factor (yet), so the reconstruction adds it explicitly. Wiring it as a tenth factor,
+                // as the king-attack term was, would put the equation back to the shape above.
+                double materialDelta = material(board);
+                double exchangeTerm = WeightingFunction.calcMaterialExchangeTerm(
+                        board.getGameStatus().getPhase(), (int) Math.round(materialDelta)) * 100.0;
+                double reconstructed = materialDelta + dot(breakdown.features(), factors) + exchangeTerm;
 
                 assertEquals(breakdown.eval(), reconstructed, 1.0,
                         "eval must equal material + sum(feature * factor) (guards the factor coefficients)");
