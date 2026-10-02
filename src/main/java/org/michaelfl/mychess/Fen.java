@@ -112,7 +112,14 @@ final class Fen {
 
         int turn = parseTurn(fields[1]);
         CastlingState castling = parseCastlingState(fields[2], rawBoard);
-        byte enPassantField = parseEnPassantField(fields[3]);
+
+        byte parsedEnPassantField = parseEnPassantField(fields[3]);
+        byte enPassantField = validateEnPassantField(parsedEnPassantField, turn, rawBoard);
+        if (enPassantField != parsedEnPassantField) {
+            System.err.println("FEN: dropping en-passant field " + fields[3]
+                    + ", which no double step can have produced in this position: " + fen);
+        }
+
         int halfMoveClock = parseNonNegativeInt(fields[4], "half-move clock");
         int fullMoveNumber = parseNonNegativeInt(fields[5], "full-move number");
         if (fullMoveNumber < 1) {
@@ -130,6 +137,53 @@ final class Fen {
                 positionHash, Board.calculateNonPawnMaterialWeights(rawBoard));
 
         return new Board(rawBoard, gameStatus, castling.rookFiles(), is960);
+    }
+
+    /**
+     * Drops an en-passant target square that no double step can have produced.
+     *
+     * <p>{@link #parseEnPassantField} checks only the syntax. A square that parses but contradicts
+     * the position would otherwise reach the move generator, the evaluation and the Zobrist hash,
+     * all of which rely on it without checking. The field is consistent when all of these hold for
+     * the side to move:
+     * <ul>
+     *   <li>it lies on the sixth rank with white to move, or on the third rank with black to move;</li>
+     *   <li>it is empty;</li>
+     *   <li>the enemy pawn that double-stepped stands in front of it;</li>
+     *   <li>that pawn's start square, behind it, is empty.</li>
+     * </ul>
+     *
+     * <p>A consistent field is kept even when no pawn can capture on it. {@code Board.makeMove}
+     * sets it after every double step the same way, so the hash of a FEN matches the hash of the
+     * same position reached by moves only if the import does not normalize it away.
+     *
+     * @param enPassantField the parsed target square, or {@code 0} for {@code -}
+     * @param turn           the side to move, {@link GameStatus#TURN_WHITE} or {@link GameStatus#TURN_BLACK}
+     * @param rawBoard       the already parsed piece placement
+     * @return {@code enPassantField} if it is consistent with the position, {@code 0} otherwise
+     */
+    private static byte validateEnPassantField(byte enPassantField, int turn, byte[] rawBoard) {
+        if (enPassantField != 0) {
+            int rank = ChessUtil.getRowOfField(enPassantField);
+
+            if (turn == GameStatus.TURN_WHITE) {
+                if (rank == 5
+                        && rawBoard[enPassantField - Board.LENGTH] == Board.blackPawn
+                        && rawBoard[enPassantField] == Board.empty
+                        && rawBoard[enPassantField + Board.LENGTH] == Board.empty) {
+                    return enPassantField;
+                }
+            } else { // TURN_BLACK
+                if (rank == 2
+                        && rawBoard[enPassantField + Board.LENGTH] == Board.whitePawn
+                        && rawBoard[enPassantField] == Board.empty
+                        && rawBoard[enPassantField - Board.LENGTH] == Board.empty) {
+                    return enPassantField;
+                }
+            }
+        }
+
+        return 0;
     }
 
     /** Decoded castling field: the {@code GameStatus} bit mask plus the

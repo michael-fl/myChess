@@ -88,6 +88,91 @@ class FenTest {
                 "en-passant field must be 0 when FEN has '-'");
     }
 
+    // ---- importFEN: an en-passant field that contradicts the position is dropped ----
+    //
+    // Syntax errors throw (testImportRejectsBadEnPassantField). A syntactically valid target square
+    // that no double step can have produced is a different case: the import keeps the position and
+    // drops the field, so the move generator, the evaluation and the Zobrist hash can all rely on it.
+    // A field is consistent when it lies on the side-to-move's third-from-last rank, is empty, and
+    // an enemy pawn stands in front of it with its start square behind it empty. A consistent field
+    // is kept even when no pawn can capture, because Board.makeMove sets it after every double step
+    // the same way, and the hash of a FEN must match the hash of the same position reached by moves.
+
+    /** After 1.e4: black to move, target e3, pawn on e4, e2 empty - consistent. */
+    private static final String AFTER_E4_FEN = "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1";
+
+    @Test
+    void testImportDropsEnPassantFieldOnTheWrongRankForTheSideToMove() {
+        // e3 is only possible with black to move, right after a white double step.
+        var board = Fen.importFEN("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e3 0 1");
+
+        assertEquals(0, board.getGameStatus().getEnPassantField(),
+                "an en-passant target on the third rank with white to move cannot come from a double step");
+    }
+
+    @Test
+    void testImportDropsEnPassantFieldWhenTheTargetSquareIsOccupied() {
+        var board = Fen.importFEN("rnbqkbnr/pppppppp/8/8/4P3/4N3/PPPP1PPP/RNBQKB1R b KQkq e3 0 1");
+
+        assertEquals(0, board.getGameStatus().getEnPassantField(),
+                "the target square e3 is occupied by a knight, so no pawn can just have passed over it");
+    }
+
+    @Test
+    void testImportDropsEnPassantFieldWithoutThePawnThatDoubleStepped() {
+        var board = Fen.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
+
+        assertEquals(0, board.getGameStatus().getEnPassantField(),
+                "a target square e3 needs the white pawn that double-stepped on e4, and there is none");
+    }
+
+    @Test
+    void testImportDropsEnPassantFieldWhenTheStartSquareIsOccupied() {
+        // A pawn on e4 and another on e2: the e4 pawn cannot just have come from e2.
+        var board = Fen.importFEN("rnbqkbnr/pppppppp/8/8/4P3/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
+
+        assertEquals(0, board.getGameStatus().getEnPassantField(),
+                "the start square e2 is occupied, so the pawn on e4 did not just double-step");
+    }
+
+    @Test
+    void testImportKeepsAConsistentEnPassantFieldEvenWithoutACapturer() {
+        // No black pawn on d4 or f4 can capture, and the field stays anyway - see the section comment.
+        var board = Fen.importFEN(AFTER_E4_FEN);
+
+        assertEquals(Board.e3, board.getGameStatus().getEnPassantField(),
+                "a consistent target square is kept whether or not a pawn can capture on it");
+    }
+
+    @Test
+    void testImportKeepsAConsistentEnPassantFieldForWhiteToMove() {
+        // After 1.e4 a6 2.e5 f5: white to move, target f6, pawn on f5, f7 empty.
+        var board = Fen.importFEN("rnbqkbnr/1pppp1pp/p7/4Pp2/8/8/PPPP1PPP/RNBQKBNR w KQkq f6 0 3");
+
+        assertEquals(Board.f6, board.getGameStatus().getEnPassantField(),
+                "f6 after a black double step with white to move is consistent and must be kept");
+    }
+
+    @Test
+    void testImportedHashOfADroppedEnPassantFieldMatchesTheFenWithoutIt() {
+        var dropped = Fen.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
+        var without = Fen.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1");
+
+        assertEquals(without.getGameStatus().getPositionHash(), dropped.getGameStatus().getPositionHash(),
+                "the field must be dropped before the Zobrist hash is computed, or the hash still carries "
+                        + "the en-passant file of a field the position does not have");
+    }
+
+    @Test
+    void testImportedHashOfAConsistentEnPassantFieldMatchesTheSamePositionReachedByMoves() {
+        var imported = Fen.importFEN(AFTER_E4_FEN);
+        var game = new Game();
+        game.makeMove(MoveDescription.fromString("e2-e4", game.getTurn()));
+
+        assertEquals(game.getBoard().getGameStatus().getPositionHash(), imported.getGameStatus().getPositionHash(),
+                "after 1.e4 the FEN import must hash like the position reached by the move, which also sets e3");
+    }
+
     @Test
     void testImportCastlingRightsFull() {
         var status = Fen.importFEN(START_POSITION_FEN).getGameStatus();

@@ -1140,7 +1140,18 @@ repetitions *correctly* — a losing opponent that deliberately steers into a
 threefold repetition collects half a point myChess had already earned. That is
 exactly what happened in i1QxWK9L.
 
-## En passant is invisible to the evaluation at a FEN root (2026-09-24, open, not scheduled)
+## En passant is invisible to the evaluation at a FEN root (2026-09-24, **fixed 2026-09-30 in v4.8.1**)
+
+> **Resolved.** `WeightingFunction` now reads the en-passant target square from the
+> `GameStatus` - the source the move generator already used - instead of reconstructing it from
+> the last move, so a FEN root sees the capture like any other position. `Fen.importFEN` drops a
+> target square that no double step can have produced (wrong rank for the side to move, occupied
+> target, no enemy pawn in front of it, occupied start square), before the Zobrist hash is
+> computed, and reports it on stderr; a consistent square is kept even without a capturer,
+> because `Board.makeMove` sets it the same way. The fix is search-neutral as predicted below:
+> the bench v2 signature at depth 8 is 169,439,389 before and after. Pinned by nine tests in
+> `WeightingFunctionTest` and `FenTest` that were red before the fix. The analysis below is kept
+> as it was written.
 
 ### Observation
 
