@@ -69,16 +69,19 @@ public final class WeightingFunction {
         weightOfPiece[Board.blackKing]   = 0;
     }
 
+    private static final int PAWN_MOBILITY_WEIGHT   = 5;
+    private static final int KNIGHT_MOBILITY_WEIGHT = 40;
+
     private static final int[] mobilityWeightOfPiece = new int[Board.blackKing + 1];
     static {
-        mobilityWeightOfPiece[Board.whitePawn]   = 5;
-        mobilityWeightOfPiece[Board.whiteKnight] = 40;
+        mobilityWeightOfPiece[Board.whitePawn]   = PAWN_MOBILITY_WEIGHT;
+        mobilityWeightOfPiece[Board.whiteKnight] = KNIGHT_MOBILITY_WEIGHT;
         mobilityWeightOfPiece[Board.whiteBishop] = 30;
         mobilityWeightOfPiece[Board.whiteRook]   = 20;
         mobilityWeightOfPiece[Board.whiteQueen]  = 3;
         mobilityWeightOfPiece[Board.whiteKing]   = 0;
-        mobilityWeightOfPiece[Board.blackPawn]   = 5;
-        mobilityWeightOfPiece[Board.blackKnight] = 40;
+        mobilityWeightOfPiece[Board.blackPawn]   = PAWN_MOBILITY_WEIGHT;
+        mobilityWeightOfPiece[Board.blackKnight] = KNIGHT_MOBILITY_WEIGHT;
         mobilityWeightOfPiece[Board.blackBishop] = 30;
         mobilityWeightOfPiece[Board.blackRook]   = 20;
         mobilityWeightOfPiece[Board.blackQueen]  = 3;
@@ -211,7 +214,7 @@ public final class WeightingFunction {
      * fail loudly. {@code KingAttackCurveTest.theProductionScanCountsWhatTheCurveWasFittedOn}
      * is the guard.
      */
-    final static int[] KING_FIELD_CORRECTION_OFFSET = { 1, 0, 0, 0, 0, 0, 0, -1 };
+    static final int[] KING_FIELD_CORRECTION_OFFSET = { 1, 0, 0, 0, 0, 0, 0, -1 };
 
     /**
      * Zone center for a color that has no king on the board, chosen so that
@@ -708,18 +711,13 @@ public final class WeightingFunction {
      * piece from the count whenever its predecessor scored.
      *
      * @param color     attacking color (0 = white, 1 = black)
-     * @param toField   attacked square
      * @param piece     the attacking piece
      */
-    private void increaseAttackUnit(final int color, final int toField, final byte piece) {
-        if (!isCurrentAttackerCounted && isKingZoneField(toField, color ^ 1)) {
-            final int score = ATTACK_UNIT_OF_PIECE[piece];
-
-            if (score > 0) {
-                isCurrentAttackerCounted = true;
-                kingAttackerCount[color]++;
-                attackUnit[color] += score;
-            }
+    private void increaseAttackUnit(final int color, final byte piece) {
+        if (!isCurrentAttackerCounted) {
+            isCurrentAttackerCounted = true;
+            kingAttackerCount[color]++;
+            attackUnit[color] += ATTACK_UNIT_OF_PIECE[piece];
         }
     }
 
@@ -821,46 +819,41 @@ public final class WeightingFunction {
     }
 
     private static void _calculateForWhitePawn(WeightingFunction generator, int field, int color) {
-        generator.calculateForWhitePawn(field, color);
+        generator.calculateForWhitePawn(field);
     }
 
-    private void calculateForWhitePawn(int field, int color) {
+    private void calculateForWhitePawn(final int field) {
         // single step
         int to = field + Board.LENGTH;
         if (board[to] == Board.empty) {
-            mobilityWeight[color] += mobilityWeightOfPiece[Board.whitePawn];
+            mobilityWeight[0] += PAWN_MOBILITY_WEIGHT;
         }
 
         // double step
         if (fieldToRow(field) == 1) {
             to = field + 2 * Board.LENGTH;
             if (board[to] == Board.empty && board[field + Board.LENGTH] == Board.empty) {
-                mobilityWeight[color] += mobilityWeightOfPiece[Board.whitePawn];
+                mobilityWeight[0] += PAWN_MOBILITY_WEIGHT;
             }
         }
 
         isCurrentAttackerCounted = false;
 
+        // Cheap pre-check if we need to calculate the attack units
+        final boolean mayAttackKingZone = ChessUtil.chebyshevDistance(field, kingFieldCorrected[1]) <= ChessUtil.KING_ZONE_ATTACK_CHEBYSHEV_DISTANCE_PAWN;
+
         // capture right
-        captureOrDefendWithPawn(field, field + Board.LENGTH + 1, GameStatus.TURN_WHITE, GameStatus.TURN_BLACK, Board.whitePawn, color);
+        captureOrDefendWithPawn(field, field + Board.LENGTH + 1, GameStatus.TURN_WHITE, GameStatus.TURN_BLACK, Board.whitePawn, 0, mayAttackKingZone);
 
         // capture left
-        captureOrDefendWithPawn(field, field + Board.LENGTH - 1, GameStatus.TURN_WHITE, GameStatus.TURN_BLACK, Board.whitePawn, color);
+        captureOrDefendWithPawn(field, field + Board.LENGTH - 1, GameStatus.TURN_WHITE, GameStatus.TURN_BLACK, Board.whitePawn, 0, mayAttackKingZone);
 
         // en passant
         if (game.getEnPassantField() != 0 && fieldToRow(field) == 4) {
             checkWhiteEnPassant(field);
         }
 
-        // Is a doubled pawn? Searching ahead (toward 8th rank for white)
-        // means only the LOWER pawn in a pair finds its partner, so each
-        // pair is counted exactly once.
-        for (var f = field + Board.LENGTH; board[f] != Board.illegal; f += Board.LENGTH) {
-            if (board[f] == Board.whitePawn) {
-                doublePawnCount[color]++;
-                break;
-            }
-        }
+        checkWhiteDoublePawn(field);
     }
 
     private void checkWhiteEnPassant(final int field) {
@@ -873,8 +866,23 @@ public final class WeightingFunction {
         }
     }
 
-    private void captureOrDefendWithPawn(final int from, final int to, final int myTurn, final int oppositeTurn, final byte movingPawn, final int color) {
-        increaseAttackUnit(color, to, movingPawn);
+    private void checkWhiteDoublePawn(final int field) {
+        // Is a doubled pawn? Searching ahead (toward 8th rank for white)
+        // means only the LOWER pawn in a pair finds its partner, so each
+        // pair is counted exactly once.
+        for (var f = field + Board.LENGTH; board[f] != Board.illegal; f += Board.LENGTH) {
+            if (board[f] == Board.whitePawn) {
+                doublePawnCount[0]++;
+                break;
+            }
+        }
+    }
+
+    private void captureOrDefendWithPawn(final int from, final int to, final int myTurn, final int oppositeTurn,
+                                         final byte movingPawn, final int color, final boolean checkKingZone) {
+        if (checkKingZone && isKingZoneField(to, color^1)) {
+            increaseAttackUnit(color, movingPawn);
+        }
 
         if ((board[to] & oppositeTurn) == oppositeTurn) {
             capture(to, movingPawn, color, board[to]);
@@ -888,45 +896,49 @@ public final class WeightingFunction {
     }
 
     private static void _calculateForBlackPawn(WeightingFunction generator, int field, int color) {
-        generator.calculateForBlackPawn(field, color);
+        generator.calculateForBlackPawn(field);
     }
 
-    private void calculateForBlackPawn(int field, int color) {
+    private void calculateForBlackPawn(final int field) {
         // single step
         int to = field - Board.LENGTH;
         if (board[to] == Board.empty) {
-            mobilityWeight[color] += mobilityWeightOfPiece[Board.blackPawn];
+            mobilityWeight[1] += PAWN_MOBILITY_WEIGHT;
         }
 
         // double step
         if (fieldToRow(field) == 6) {
             to = field - 2 * Board.LENGTH;
             if (board[to] == Board.empty && board[field - Board.LENGTH] == Board.empty) {
-                mobilityWeight[color] += mobilityWeightOfPiece[Board.blackPawn];
+                mobilityWeight[1] += PAWN_MOBILITY_WEIGHT;
             }
         }
 
         isCurrentAttackerCounted = false;
 
+        // Cheap pre-check if we need to calculate the attack units
+        final boolean mayAttackKingZone = ChessUtil.chebyshevDistance(field, kingFieldCorrected[0]) <= ChessUtil.KING_ZONE_ATTACK_CHEBYSHEV_DISTANCE_PAWN;
+
         // capture right
         to = field - Board.LENGTH + 1;
-        captureOrDefendWithPawn(field, to, GameStatus.TURN_BLACK, GameStatus.TURN_WHITE, Board.blackPawn, color);
+        captureOrDefendWithPawn(field, to, GameStatus.TURN_BLACK, GameStatus.TURN_WHITE, Board.blackPawn, 1, mayAttackKingZone);
 
         // capture left
         to = field - Board.LENGTH - 1;
-        captureOrDefendWithPawn(field, to, GameStatus.TURN_BLACK, GameStatus.TURN_WHITE, Board.blackPawn, color);
+        captureOrDefendWithPawn(field, to, GameStatus.TURN_BLACK, GameStatus.TURN_WHITE, Board.blackPawn, 1, mayAttackKingZone);
 
         // en passant
         if (game.getEnPassantField() != 0 && fieldToRow(field) == 3) {
             checkBlackEnPassant(field);
         }
 
-        // Is a doubled pawn? Searching ahead (toward 1st rank for black)
-        // means only the UPPER pawn in a pair finds its partner, so each
-        // pair is counted exactly once.
+        checkBlackDoublePawn(field);
+    }
+
+    private void checkBlackDoublePawn(final int field) {
         for (var f = field - Board.LENGTH; board[f] != Board.illegal; f -= Board.LENGTH) {
             if (board[f] == Board.blackPawn) {
-                doublePawnCount[color]++;
+                doublePawnCount[1]++;
                 break;
             }
         }
@@ -949,16 +961,30 @@ public final class WeightingFunction {
     private void calculateForKnight(int field, int color) {
         final byte myPiece = board[field];
 
+        // Cheap pre-check if we need to calculate the attack units
+        boolean mayAttackKingZone = ChessUtil.chebyshevDistance(field, kingFieldCorrected[color^1]) <= ChessUtil.KING_ZONE_ATTACK_CHEBYSHEV_DISTANCE_KNIGHT;
+
         isCurrentAttackerCounted = false;
 
-        move(myPiece, field, field + 2 * Board.LENGTH + 1, color);
-        move(myPiece, field, field + 1 * Board.LENGTH + 2, color);
-        move(myPiece, field, field - 1 * Board.LENGTH + 2, color);
-        move(myPiece, field, field - 2 * Board.LENGTH + 1, color);
-        move(myPiece, field, field - 2 * Board.LENGTH - 1, color);
-        move(myPiece, field, field - 1 * Board.LENGTH - 2, color);
-        move(myPiece, field, field + 1 * Board.LENGTH - 2, color);
-        move(myPiece, field, field + 2 * Board.LENGTH - 1, color);
+        mayAttackKingZone = knightMove(myPiece, field, field + 2 * Board.LENGTH + 1, color, mayAttackKingZone);
+        mayAttackKingZone = knightMove(myPiece, field, field + 1 * Board.LENGTH + 2, color, mayAttackKingZone);
+        mayAttackKingZone = knightMove(myPiece, field, field - 1 * Board.LENGTH + 2, color, mayAttackKingZone);
+        mayAttackKingZone = knightMove(myPiece, field, field - 2 * Board.LENGTH + 1, color, mayAttackKingZone);
+        mayAttackKingZone = knightMove(myPiece, field, field - 2 * Board.LENGTH - 1, color, mayAttackKingZone);
+        mayAttackKingZone = knightMove(myPiece, field, field - 1 * Board.LENGTH - 2, color, mayAttackKingZone);
+        mayAttackKingZone = knightMove(myPiece, field, field + 1 * Board.LENGTH - 2, color, mayAttackKingZone);
+        knightMove(myPiece, field, field + 2 * Board.LENGTH - 1, color, mayAttackKingZone);
+    }
+
+    private boolean knightMove(final byte movingPiece, final int from, final int to, final int color, final boolean mayAttackKingZone) {
+        move(from, to, color, KNIGHT_MOBILITY_WEIGHT);
+
+        if (mayAttackKingZone && isKingZoneField(to, color^1)) {
+            increaseAttackUnit(color, movingPiece);
+            return false;
+        }
+
+        return mayAttackKingZone;
     }
 
     private static void _calculateForBishop(WeightingFunction generator, int field, int color) {
@@ -971,16 +997,35 @@ public final class WeightingFunction {
         // count this bishop toward the side's bishop-pair bonus (awarded once in calculatePositionWeight)
         bishopCount[color]++;
 
+        // Cheap pre-check if we need to calculate the attack units
+        final int kingField = kingFieldCorrected[color^1];
+        final boolean mayAttackKingZone = ChessUtil.canReachKingZoneDiagonal(field, kingField);
+        final int zoneDistances = mayAttackKingZone ? ChessUtil.getKingZoneDistancesDiagonalEncoded(field, kingField) : ChessUtil.ALL_SENTINELS_ENCODED;
+
         isCurrentAttackerCounted = false;
 
         // move up-right
-        for (int to = field + Board.LENGTH + 1; move(myPiece, field, to, color); to += Board.LENGTH + 1);
+        xray(myPiece, field, color, Board.LENGTH + 1, BitOps.getByte0(zoneDistances));
         // move down-right
-        for (int to = field - Board.LENGTH + 1; move(myPiece, field, to, color); to = to - Board.LENGTH + 1);
+        xray(myPiece, field, color, -Board.LENGTH + 1, BitOps.getByte1(zoneDistances));
         // move down-left
-        for (int to = field - Board.LENGTH - 1; move(myPiece, field, to, color); to = to - Board.LENGTH - 1);
+        xray(myPiece, field, color, -Board.LENGTH - 1, BitOps.getByte2(zoneDistances));
         // move up-left
-        for (int to = field + Board.LENGTH - 1; move(myPiece, field, to, color); to += Board.LENGTH - 1);
+        xray(myPiece, field, color, Board.LENGTH - 1, BitOps.getByte3(zoneDistances));
+    }
+
+    private void xray(final byte piece, final int startField, final int color, final int increment, final int kingZoneDistance) {
+        xray(piece, startField, color, increment, mobilityWeightOfPiece[piece], kingZoneDistance);
+    }
+
+    private void xray(final byte piece, final int startField, final int color, final int increment, final int weight, final int kingZoneDistance) {
+        int dist = kingZoneDistance - 1;
+
+        for (int to = startField + increment; move(startField, to, color, weight); to += increment, dist--);
+
+        if (dist <= 0) { // piece reached or crossed the king zone
+            increaseAttackUnit(color, piece);
+        }
     }
 
     private static void _calculateForRook(WeightingFunction generator, int field, int color) {
@@ -991,16 +1036,21 @@ public final class WeightingFunction {
         final byte myPiece = board[field];
         final int rankWeight = mobilityWeightOfPiece[myPiece] / 2;
 
+        // Cheap pre-check if we need to calculate the attack units
+        final int kingField = kingFieldCorrected[color^1];
+        final boolean mayAttackKingZone = ChessUtil.canReachKingZoneOrthogonal(field, kingField);
+        final int zoneDistances = mayAttackKingZone ? ChessUtil.getKingZoneDistancesOrthogonalEncoded(field, kingField) : ChessUtil.ALL_SENTINELS_ENCODED;
+
         isCurrentAttackerCounted = false;
 
         // move up — file mobility (full weight)
-        for (int to = field + Board.LENGTH; move(myPiece, field, to, color); to += Board.LENGTH);
-        // move down — file mobility (full weight)
-        for (int to = field - Board.LENGTH; move(myPiece, field, to, color); to -= Board.LENGTH);
-        // move left — rank mobility (half weight)
-        for (int to = field - 1; move(myPiece, field, to, color, rankWeight); to--);
+        xray(myPiece, field, color, Board.LENGTH, BitOps.getByte0(zoneDistances));
         // move right — rank mobility (half weight)
-        for (int to = field + 1; move(myPiece, field, to, color, rankWeight); to++);
+        xray(myPiece, field, color, 1, rankWeight, BitOps.getByte1(zoneDistances));
+        // move down — file mobility (full weight)
+        xray(myPiece, field, color, -Board.LENGTH, BitOps.getByte2(zoneDistances));
+        // move left — rank mobility (half weight)
+        xray(myPiece, field, color, -1, rankWeight, BitOps.getByte3(zoneDistances));
     }
 
     private static void _calculateForQueen(WeightingFunction generator, int field, int color) {
@@ -1012,22 +1062,29 @@ public final class WeightingFunction {
 
         isCurrentAttackerCounted = false;
 
+        // Cheap pre-check if we need to calculate the attack units
+        final int kingField = kingFieldCorrected[color^1];
+        final boolean canReachKingZoneOrthogonal = ChessUtil.canReachKingZoneOrthogonal(field, kingField);
+        final boolean canReachKingZoneDiagonal = ChessUtil.canReachKingZoneDiagonal(field, kingField);
+        final int zoneOrthoDistances = canReachKingZoneOrthogonal ? ChessUtil.getKingZoneDistancesOrthogonalEncoded(field, kingField) : ChessUtil.ALL_SENTINELS_ENCODED;
+        final int zoneDiagDistances = canReachKingZoneDiagonal ? ChessUtil.getKingZoneDistancesDiagonalEncoded(field, kingField) : ChessUtil.ALL_SENTINELS_ENCODED;
+
         // move up
-        for (int to = field + Board.LENGTH; move(myPiece, field, to, color); to += Board.LENGTH);
+        xray(myPiece, field, color, Board.LENGTH, BitOps.getByte0(zoneOrthoDistances));
         // move up-right
-        for (int to = field + Board.LENGTH + 1; move(myPiece, field, to, color); to += Board.LENGTH + 1);
+        xray(myPiece, field, color, Board.LENGTH + 1, BitOps.getByte0(zoneDiagDistances));
         // move right
-        for (int to = field + 1; move(myPiece, field, to, color); to++);
+        xray(myPiece, field, color, 1, BitOps.getByte1(zoneOrthoDistances));
         // move down-right
-        for (int to = field - Board.LENGTH + 1; move(myPiece, field, to, color); to = to - Board.LENGTH + 1);
+        xray(myPiece, field, color, -Board.LENGTH + 1, BitOps.getByte1(zoneDiagDistances));
         // move down
-        for (int to = field - Board.LENGTH; move(myPiece, field, to, color); to -= Board.LENGTH);
+        xray(myPiece, field, color, -Board.LENGTH, BitOps.getByte2(zoneOrthoDistances));
         // move down-left
-        for (int to = field - Board.LENGTH - 1; move(myPiece, field, to, color); to = to - Board.LENGTH - 1);
+        xray(myPiece, field, color, -Board.LENGTH - 1, BitOps.getByte2(zoneDiagDistances));
         // move left
-        for (int to = field - 1; move(myPiece, field, to, color); to--);
+        xray(myPiece, field, color, -1, BitOps.getByte3(zoneOrthoDistances));
         // move up-left
-        for (int to = field + Board.LENGTH - 1; move(myPiece, field, to, color); to += Board.LENGTH - 1);
+        xray(myPiece, field, color, Board.LENGTH - 1, BitOps.getByte3(zoneDiagDistances));
     }
 
     private static void _calculateForKing(WeightingFunction generator, int field, int color) {
@@ -1057,19 +1114,17 @@ public final class WeightingFunction {
         move(myPiece, field, field + Board.LENGTH - 1, color);
     }
 
-    private boolean move(final byte movingPiece, final int from, final int to, int color) {
-        return move(movingPiece, from, to, color, mobilityWeightOfPiece[movingPiece]);
+    private void move(final byte movingPiece, final int from, final int to, final int color) {
+        move(from, to, color, mobilityWeightOfPiece[movingPiece]);
     }
 
     @SuppressWarnings({"unused", "java:S1117"})
-    private boolean move(final byte movingPiece, final int from, final int to, final int color, final int weight) {
+    private boolean move(final int from, final int to, final int color, final int weight) {
         final byte piece = board[to];
         final int oppositeColor = WeightingFunction.oppositeColor[color];
 
         if (piece == Board.illegal)
             return false;
-
-        increaseAttackUnit(color, to, movingPiece);
 
         if (piece == Board.empty) {
             mobilityWeight[color] += weight;
