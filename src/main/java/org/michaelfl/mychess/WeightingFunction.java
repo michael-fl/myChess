@@ -849,7 +849,7 @@ public final class WeightingFunction {
         captureOrDefendWithPawn(field, field + Board.LENGTH - 1, GameStatus.TURN_WHITE, GameStatus.TURN_BLACK, Board.whitePawn, 0, mayAttackKingZone);
 
         // en passant
-        if (fieldToRow(field) == 4) {
+        if (game.getEnPassantField() != 0 && fieldToRow(field) == 4) {
             checkWhiteEnPassant(field);
         }
 
@@ -857,14 +857,11 @@ public final class WeightingFunction {
     }
 
     private void checkWhiteEnPassant(final int field) {
-        final int lastMove = game.getLastMove();
-        if (board[field - 1] == Board.blackPawn
-                && Move.getToField(lastMove) == field - 1
-                && Move.getFromField(lastMove) == field - 1 + 2 * Board.LENGTH) {
+        final byte enPassantField = game.getEnPassantField();
+
+        if (field + Board.LENGTH - 1 == enPassantField) {
             capture(field - 1, Board.whitePawn, 0, Board.blackPawn);
-        } else if (board[field + 1] == Board.blackPawn
-                && Move.getToField(lastMove) == field + 1
-                && Move.getFromField(lastMove) == field + 1 + 2 * Board.LENGTH) {
+        } else if (field + Board.LENGTH + 1 == enPassantField) {
             capture(field + 1, Board.whitePawn, 0, Board.blackPawn);
         }
     }
@@ -931,24 +928,11 @@ public final class WeightingFunction {
         captureOrDefendWithPawn(field, to, GameStatus.TURN_BLACK, GameStatus.TURN_WHITE, Board.blackPawn, 1, mayAttackKingZone);
 
         // en passant
-        if (fieldToRow(field) == 3) {
+        if (game.getEnPassantField() != 0 && fieldToRow(field) == 3) {
             checkBlackEnPassant(field);
         }
 
         checkBlackDoublePawn(field);
-    }
-
-    private void checkBlackEnPassant(final int field) {
-        int lastMove = game.getLastMove();
-        if (board[field - 1] == Board.whitePawn
-                && Move.getToField(lastMove) == field - 1
-                && Move.getFromField(lastMove) == field - 1 - 2 * Board.LENGTH) {
-            capture(field - 1, Board.blackPawn, 1, Board.whitePawn);
-        } else if (board[field + 1] == Board.whitePawn
-                && Move.getToField(lastMove) == field + 1
-                && Move.getFromField(lastMove) == field + 1 - 2 * Board.LENGTH) {
-            capture(field + 1, Board.blackPawn, 1, Board.whitePawn);
-        }
     }
 
     private void checkBlackDoublePawn(final int field) {
@@ -957,6 +941,16 @@ public final class WeightingFunction {
                 doublePawnCount[1]++;
                 break;
             }
+        }
+    }
+
+    private void checkBlackEnPassant(final int field) {
+        final byte enPassantField = game.getEnPassantField();
+
+        if (field - Board.LENGTH - 1 == enPassantField) {
+            capture(field - 1, Board.blackPawn, 1, Board.whitePawn);
+        } else if (field - Board.LENGTH + 1 == enPassantField) {
+            capture(field + 1, Board.blackPawn, 1, Board.whitePawn);
         }
     }
 

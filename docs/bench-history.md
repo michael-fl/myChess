@@ -76,6 +76,7 @@ time-truncated.
 | **4.7.0** | 1,300,911,231 | **+0.070 %** | 102,534,843 (+0.89 %) | castling factor 0.25 -> 0.1875 ([§ 5.5.2](evaluation.md#552-measured-2026-09-09-to-2026-09-17--the-opponent-effect-and-what-the-factor-cannot-do)) | not measured by a match — see the row's note in [version history](version-history.md) | ~1943 |
 | **4.7.1** | 1,300,910,618 | **−0.00005 %** | 102,534,230 (−0.0006 %) | castling term faded toward the endgame ([§ 5.5.2](evaluation.md#552-measured-2026-09-09-to-2026-09-17--the-opponent-effect-and-what-the-factor-cannot-do)) | **+0.5 ± 9.6** over 3897 games vs 4.7.0 at `tc=10+0.1` — neutral | ~1943 |
 | **4.8.0** | 658,771,177 | **−49.4 %** — but see the next column, the whole move is one artificial position | **107,227,388 (+4.6 %)** | **king-attack units**, the first shipped king-safety term ([§ 5.9](evaluation.md#59-king-attack-units), [king-safety.md § 4.17](king-safety.md)) | **−6.3 ± 19.8** net over 4261 anchor-gauntlet games at `tc=40/60`, against a ≥ −10 gate; +8.4 ± 8.9 in 4200 self-play games | ~1943 |
+| **4.8.1** | 658,771,177 | **±0** | 107,227,388 (±0) | en passant at a FEN root ([known-issues](known-issues.md#en-passant-is-invisible-to-the-evaluation-at-a-fen-root-2026-09-24-fixed-2026-09-30-in-v481)) — a correctness fix that no bench position reaches | — (search-neutral; no match) | ~1943 |
 
 ### Measured but not a release — `4.6.0-king-line` (2026-09-02, shelved 2026-09-03)
 
@@ -927,6 +928,7 @@ nothing.
 | 4.7.0 | 2026-09-17 | 8 | 60 | **178,795,253** (+0.31 %) | 98,944 ms | 1,807,034 |
 | 4.7.1 | 2026-09-17 | 8 | 60 | **179,059,346** (+0.148 %) | 99,758 ms | 1,794,937 |
 | 4.8.0 | 2026-09-23 | 8 | 60 | **169,439,389** (−5.37 %) | 102,668 ms | 1,650,362 |
+| 4.8.1 | 2026-09-30 | 8 | 60 | **169,439,389** (±0) | 104,510 ms | 1,621,274 |
 
 Per-position archive: `test-results/bench/4.6.1-castling-mix-d8.txt`, same column
 layout as the `bench` archives of § 7. The largest position is 6.7 % of the total
@@ -934,6 +936,10 @@ layout as the `bench` archives of § 7. The largest position is 6.7 % of the tot
 87 % and roughly 20,000× in the standard suite. That is the property that makes a
 per-position diff here worth reading as a whole rather than as one position plus
 noise.
+
+**4.8.1 was measured paired against its parent** (master `4856c10`), three rounds with the two builds alternating on 2026-09-30. All six runs gave 169,439,389, which is the proof that the en-passant fix leaves the search untouched. The times were 103,685 / 104,305 / 103,885 ms for the parent and 104,510 / 105,552 / 105,564 ms for 4.8.1: +1.2 % on the mean, +0.8 % best against best, and every 4.8.1 run slower than every parent run. That is a direction, not a proven cost, and it went through regardless because the change is a correctness fix the owner ordered merged. The row records the first 4.8.1 run.
+
+**The direction did not survive a longer measurement.** Ten rounds later that day, five builds rotating, all 50 runs at 169,439,389. The builds: the parent, 4.8.1, and three reshapes of 4.8.1's en-passant code. The reshapes were an adjacency gate before the helper call, the helpers inlined back by hand, and the gate led by an `!= 0` test. Against the parent, paired per round, 4.8.1 came out at −0.26 ± 1.28 %. With round 8 dropped, where every build ran 2–8 % slow, it came out at +0.28 ± 0.44 %. None of the reshapes differs from the parent by more than its interval. The three-pair +1.2 % was noise, and 4.8.1 has no measurable cost. Raw data and script: `myChess-lab/results/en-passant-perf-benches.tsv`, `myChess-lab/scripts/en-passant-perf-analyze.py`.
 
 ### Reproducing a row
 

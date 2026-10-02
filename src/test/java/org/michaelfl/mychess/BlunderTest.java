@@ -3709,4 +3709,136 @@ class BlunderTest {
                         + "(Stockfish 18, depth 24) against −2.46 for 8...Be6; myChess's own line "
                         + "expects the recapture 9.gxf3 and still plays it at depth 12");
     }
+
+    /** White (myChess) to move before {@code 12.h3?}, with the queen already deep on h7. */
+    private static final String BEFORE_H3_YP0NYMNZ_FEN = "r1bq1kr1/pp3p1Q/2pp4/2b1p3/4P1n1/2NB4/PPPP1PPP/R1B2RK1 w - - 1 12";
+
+    /**
+     * Opening its own h-file against a pawn-down attack it does not see coming.
+     *
+     * <p>Rated classical game <a href="https://lichess.org/yp0nymnz">yp0nymnz</a> (myChessJava 2214
+     * vs philidor-142M 1885, 1800+0, 0-1), played by v4.7.1. White has taken on g7 and h7 with the
+     * queen and stands level: Stockfish 18 at depth 24 has the only holding move {@code 12.Be2} at
+     * <b>0.00</b>. myChess plays {@code 12.h3}, which Stockfish reads at <b>−1.82</b>: after
+     * {@code 12...Qf6!} the queen on h7 is short of squares, and the game went
+     * {@code 13.hxg4 Rxg4 14.Bc4 Rh4 15.Qxf7+ Qxf7 16.Bxf7 Kxf7} with a black rook on the h-file
+     * that {@code h3} opened.
+     *
+     * <p><b>An evaluation defect, not a horizon.</b> Measured 2026-09-29 against v4.7.1 and v4.8.0:
+     * both play {@code h3} at every depth from 8 to 12 and with the 47 s the game gave them, at
+     * +1.7 to +2.2 for themselves. The refutation is inside the horizon - after {@code 12.h3 Qf6}
+     * their own line {@code 13.hxg4 Bxg4 14.Be2 Rh8 15.Qxh8+ Qxh8} gives the trapped queen for the
+     * rook - and they still score the result <b>+2.3</b> where Stockfish has <b>−1.92</b>. In the
+     * quiet position after {@code 16...Kxf7}, queens off and white two pawns up, Stockfish reads
+     * <b>−0.74</b> and myChess +0.8 to +1.0: it counts the pawns and not the rook on the open
+     * h-file, the black bishop pair aimed at f2, or the undeveloped {@code Bc1} and {@code Ra1}.
+     *
+     * <p>v4.8.0's attack-unit term points the right way and is far too weak here: it lowers the
+     * readings by 0.2 to 0.3 pawns and does not change the move. With only rook and bishop bearing
+     * on the king zone, and the phase ramping the term down once the queens are traded, there is
+     * little for it to count.
+     *
+     * <p><b>TODO - invert once king safety lands:</b> turn this into an avoidance test for
+     * {@code h2-h3}. {@code Be2} is the only holding move, so requiring it outright would also be
+     * honest.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void h3_yp0nymnz_characterizesOpeningTheHFileAgainstItsOwnKing() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_H3_YP0NYMNZ_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.h2, Board.h3, "12.h3",
+                "which Stockfish 18 reads at −1.82 at depth 24 against 0.00 for the only holding move "
+                        + "12.Be2; 12...Qf6 leaves the queen on h7 short of squares");
+        assertTrue(result.weight() > 1f,
+                "characterization: it rates itself well ahead where Stockfish has it 1.82 behind after "
+                        + "h3; got " + result.weight());
+    }
+
+    /** Black to move before {@code 21...Ne5?}, the losing move of ZBT2Jiky. */
+    private static final String BEFORE_NE5_ZBT2JIKY_FEN = "r2qr1k1/pp6/2n2p2/2pp3p/3bPN2/P1N1R3/1PPQ2PP/5RK1 b - - 1 21";
+
+    /**
+     * The losing move of ZBT2Jiky, which myChess would play itself.
+     *
+     * <p><b>Consecutive positions, part 1 of 2:</b> this is move 21 of ZBT2Jiky, black to move. The
+     * position after {@code 21...Ne5} is part 2,
+     * {@link #kh1_zbt2jiky_engineStepsOutOfThePin()}.
+     *
+     * <p>Rated blitz game <a href="https://lichess.org/ZBT2Jiky">ZBT2Jiky</a>. Black, the opponent
+     * in the game and not myChess, played {@code 21...Ne5}. It looks natural, since the knight eyes g4 and the rook on e3 is
+     * pinned to the white king by the bishop on d4. But {@code 22.Kh1} breaks the pin, and
+     * Stockfish 18 at depth 24 then reads <b>+3.42</b> for white (lichess +6.1). The holding moves
+     * are {@code 21...Re5} (<b>−1.42</b> for black) and {@code 21...f5} (−1.52).
+     *
+     * <p>myChess as black, v4.8.1 measured 2026-10-01, plays {@code 21...Ne5} at depth 8 and 9 and
+     * rates it +0.67 / +0.85 for black. It counts the pin and misses that a single king move
+     * dissolves it. Consistently, on the white side of the next move it finds {@code Kh1} but
+     * scores it at −0.85: the evaluation does not see what the pin break wins.
+     *
+     * <p><b>TODO - invert once fixed:</b> turn this into an avoidance test for {@code c6-e5}.
+     *
+     * <p><b>Test family:</b> pin (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void ne5_zbt2jiky_characterizesWalkingIntoThePinBreak() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_NE5_ZBT2JIKY_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.c6, Board.e5, "21...Ne5",
+                "which 22.Kh1 refutes: Stockfish 18 reads +3.42 for white at depth 24, against −1.42 "
+                        + "for black after the holding 21...Re5");
+        assertTrue(result.weight() < 0f,
+                "characterization: it rates black ahead after Ne5 where Stockfish has white 3.42 up; got "
+                        + result.weight());
+    }
+
+    /** White (myChess) to move before {@code 22.Kh1!}, the only move that keeps the win. */
+    private static final String BEFORE_KH1_ZBT2JIKY_FEN = "r2qr1k1/pp6/5p2/2ppn2p/3bPN2/P1N1R3/1PPQ2PP/5RK1 w - - 2 22";
+
+    /**
+     * Stepping out of the pin before anything else: the only winning move.
+     *
+     * <p><b>Consecutive positions, part 2 of 2:</b> this is move 22 of ZBT2Jiky, white to move,
+     * reached by {@code 21...Ne5} from part 1,
+     * {@link #ne5_zbt2jiky_characterizesWalkingIntoThePinBreak()}.
+     *
+     * <p>Rated blitz game <a href="https://lichess.org/ZBT2Jiky">ZBT2Jiky</a> (myChessJava 1991 vs
+     * sseh-c 1960, 180+2, 1-0). Black's {@code 21...Ne5} was a losing move, and white has exactly one
+     * way to punish it: {@code 22.Kh1}, which takes the king off the g1-d4 diagonal so the rook on e3 is
+     * no longer pinned. Stockfish 18 at depth 24 reads <b>+3.42</b> for it. The next-best move,
+     * {@code 22.Nd5}, is <b>−1.68</b>, a gap of 5.1 pawns, and every other move is worse still
+     * ({@code Re1} −2.75, {@code Nh5} −3.02, {@code Ne2} −3.21). myChess found it in the game and won.
+     *
+     * <p>A guard, not a characterization: the engine plays the right move today (v4.8.1 at depth 8
+     * and 9, measured 2026-10-01) and this pins it. It does so for a weaker reason than the truth:
+     * its own verdict is <b>−0.85</b> at depth 8 and −0.67 at depth 9, where Stockfish has +3.42. It
+     * picks {@code Kh1} as the least bad move, not as the winning one. Only the move is asserted,
+     * not the score.
+     *
+     * <p>Part 1 is a defect of its own: as black at move 21, myChess would play {@code 21...Ne5}
+     * itself.
+     *
+     * <p><b>Test family:</b> pin (guard)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void kh1_zbt2jiky_engineStepsOutOfThePin() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_KH1_ZBT2JIKY_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEquals(ChessUtil.moveToString(Board.g1, Board.h1), ChessUtil.moveToString(result.move()),
+                "myChess must play 22.Kh1, the only winning move (Stockfish 18, depth 24: +3.42 against "
+                        + "-1.68 for the next-best 22.Nd5); white-POV eval " + result.weight());
+    }
 }
