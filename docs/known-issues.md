@@ -1197,5 +1197,7 @@ from different data. The Texel tune of `kingAttackFactor` is on the current plan
 "Current plan", step 3) — fixing it just before that run, or deciding explicitly to tune
 without it, keeps the two from being confounded.
 
+The fix landed in 4.8.1 before the tune, which ran on it (2026-09-30, [king-safety.md § 4.18](king-safety.md#418-the-factor-tuned-and-matched-and-the-topic-closed-2026-09-30-to-2026-10-02)).
+
 Found on 2026-09-24 while pulling the en-passant code out of the hot pawn methods: removing a
 redundant `lastMove != 0` guard showed that the check depends on `lastMove` at all.
