@@ -2395,6 +2395,35 @@ The three regressions:
 `qb4_atMove22` is counted with the bounds rather than the fixes: the blind spot narrowed from
 below −0.5 to −0.41 without reaching the trigger the case names, which is a white advantage.
 
+
+### 4.18 The factor tuned and matched, and the topic closed (2026-09-30 to 2026-10-02)
+
+The last open question about the attack-unit term after § 4.17 was its height, `kingAttackFactor`. Its shape had been settled by three self-play matches against the linear blend on `attack-units-chebyshev`, each 4200 games at 40/60:
+
+| candidate | result |
+|---|---|
+| phase ramp | −3.4 ± 8.8 |
+| no blend | −29.7 ± 13.7 (stopped at 1784 games) |
+| aggressive blend | −13.5 ± 8.9 |
+
+Both directions away from the linear blend lose.
+
+**The Texel tune fit the one factor with the other eight held** (`TexelSingleFactorScan`, a block bootstrap of 200 replicates; on 4.8.1, so including the en-passant fix). The three independent corpora disagree, and their intervals do not overlap:
+
+| corpus | optimum | 95 % |
+|---|---:|---|
+| Zurichess `quiet-labeled` | 0.61× | [0.55, 0.66] |
+| human masters (`human-dense`) | 0.94× | [0.88, 0.98] |
+| myChess against rated engines (`mychess-anchor-dense`) | 1.88× | [1.37, 2.34] |
+
+This is § 4.3's pattern again, with Zurichess the outlier and the term carrying almost no information there. The owner chose the anchor corpus's value, 0.019. That corpus is myChess's own play, and the term explains the most there.
+
+**The match said no.** 0.019 against 0.01 on 4.8.1, 4200 games at 40/60: **−4.1 ± 8.9**, [−13.0, +4.8]. It failed both pre-registered criteria (lower bound ≥ −10, point estimate ≥ +3). The full suite had shown four repairs and two partial repairs against two v4.8.0 guards undone. None of that turned into games. The direction agrees with the human-master corpus, which already had 0.01 at its optimum.
+
+**What is closed.** The attack-unit term as built (zone, units, fitted table, linear phase blend) is at or near its local optimum in shape and in height. A midpoint test (0.0145) was ruled out: around a flat optimum it could gain a couple of Elo at most, which 4200 games cannot resolve. **What is not closed:** king safety itself. The next lever is a different mechanism, for example one that also counts the defenders of the zone, rather than another retune of this term.
+
+Records: `myChess-lab/preregistration/king-attack-factor-match.md` and `myChess-lab/results/texel-king-attack-factor/SUMMARY.md`. The games are in `test-results/match-king-attack-factor-0.019-seg01.pgn`.
+
 ---
 
 ## 5. Build plan
