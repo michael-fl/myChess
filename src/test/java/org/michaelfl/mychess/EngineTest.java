@@ -82,7 +82,7 @@ class EngineTest extends EngineTestBase {
                 // 11.0 -> 12.0 in v4.6.0, which moved the score from <=11.0 to 11.35. Toward the
                 // truth: Stockfish depth 20 has this at +12.80 and picks d5-f6 as well, so the
                 // engine still under-reports by ~1.4 pawns and the old ceiling was simply too low.
-                12.0f,
+                12.5f, // was 12.0; materialExchangeFactor 0.02 -> 12.31, toward Stockfish's +12.80
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -128,7 +128,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("g1-g5", "d5-d6", "g1-d1", "h2-h4"),
                 11.0f,
-                14.7f, // max 13.5 -> 14.5; queen 1000 (v4.3.2) raises this material-up eval to ~14.0; material-exchange term -> 14.62
+                15.3f, // max 13.5 -> 14.5; queen 1000 (v4.3.2) raises this material-up eval to ~14.0; material-exchange term -> 14.62; factor 0.02 -> 15.19
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -223,7 +223,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "b7-g7",
                 6.0f, // OPT: Should be M13
-                7.5f, // max was 7.0; v4.8.0 attack units -> 7.05; material-exchange term -> 7.4, toward the mate
+                8.0f, // max was 7.0; v4.8.0 attack units -> 7.05; material-exchange term -> 7.4, factor 0.02 -> 7.76, toward the mate
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -244,7 +244,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "d5-e6",
                 6.0f, // Stockfish: mate in 13; v4.2.0 QSearch reports higher toward the mate
-                10.8f, // was 10.0; material-exchange term -> 10.68, toward the mate
+                11.5f, // was 10.0; material-exchange term -> 10.68, factor 0.02 -> 11.35, toward the mate
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -301,7 +301,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("c6-b7"),
                 6.0f, // Stockfish: mate in 5; v4.2.0 QSearch reports higher toward the mate
-                12.7f, // was 12.0; material-exchange term -> 12.6, toward the mate
+                13.3f, // was 12.0; material-exchange term -> 12.6, factor 0.02 -> 13.19, toward the mate
                 new GameConfig(ENGINE, engineConfig())
         );
     }

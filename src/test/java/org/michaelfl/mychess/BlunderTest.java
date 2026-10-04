@@ -3764,7 +3764,8 @@ class BlunderTest {
     private static final String BEFORE_NE5_ZBT2JIKY_FEN = "r2qr1k1/pp6/2n2p2/2pp3p/3bPN2/P1N1R3/1PPQ2PP/5RK1 b - - 1 21";
 
     /**
-     * The losing move of ZBT2Jiky, which myChess would play itself.
+     * The losing move of ZBT2Jiky, which myChess played itself until the material-exchange term
+     * reached {@code materialExchangeFactor} 0.02.
      *
      * <p><b>Consecutive positions, part 1 of 2:</b> this is move 21 of ZBT2Jiky, black to move. The
      * position after {@code 21...Ne5} is part 2,
@@ -3781,24 +3782,22 @@ class BlunderTest {
      * dissolves it. Consistently, on the white side of the next move it finds {@code Kh1} but
      * scores it at −0.85: the evaluation does not see what the pin break wins.
      *
-     * <p><b>TODO - invert once fixed:</b> turn this into an avoidance test for {@code c6-e5}.
+     * <p><b>Inverted with {@code materialExchangeFactor} 0.02</b> (branch
+     * {@code exchange-avoidance-0.02}, 2026-10-04): myChess now plays the holding {@code 21...f5}
+     * and rates it +0.68 for black, so the characterization became this avoidance test. At 0.01
+     * it still played {@code 21...Ne5}.
      *
-     * <p><b>Test family:</b> pin (defect)
+     * <p><b>Test family:</b> pin (repaired)
      */
     @Test
     @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
-    void ne5_zbt2jiky_characterizesWalkingIntoThePinBreak() throws Exception {
+    void ne5_zbt2jiky_engineAvoidsWalkingIntoThePinBreak() throws Exception {
         var game = gameFromFenAtDepth(BEFORE_NE5_ZBT2JIKY_FEN, SCANNER_DEPTH, tt);
         assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black must be to move");
 
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.c6, Board.e5, "21...Ne5",
-                "which 22.Kh1 refutes: Stockfish 18 reads +3.42 for white at depth 24, against −1.42 "
-                        + "for black after the holding 21...Re5");
-        assertTrue(result.weight() < 0f,
-                "characterization: it rates black ahead after Ne5 where Stockfish has white 3.42 up; got "
-                        + result.weight());
+        assertEngineAvoids(result, Board.c6, Board.e5, "21...Ne5");
     }
 
     /** White (myChess) to move before {@code 22.Kh1!}, the only move that keeps the win. */
@@ -3809,7 +3808,7 @@ class BlunderTest {
      *
      * <p><b>Consecutive positions, part 2 of 2:</b> this is move 22 of ZBT2Jiky, white to move,
      * reached by {@code 21...Ne5} from part 1,
-     * {@link #ne5_zbt2jiky_characterizesWalkingIntoThePinBreak()}.
+     * {@link #ne5_zbt2jiky_engineAvoidsWalkingIntoThePinBreak()}.
      *
      * <p>Rated blitz game <a href="https://lichess.org/ZBT2Jiky">ZBT2Jiky</a> (myChessJava 1991 vs
      * sseh-c 1960, 180+2, 1-0). Black's {@code 21...Ne5} was a losing move, and white has exactly one
