@@ -26,7 +26,7 @@ public class EngineSmokeTest extends EngineTestBase {
                 // table (v4.3.0), as it did once before at v4.2.0 (see testPosition14).
                 null,
                 4.5f,
-                6.5f, // max 5.5 -> 6.5; queen 1000 (v4.3.2) raises this material-up eval to ~6.17
+                7.0f, // max 5.5 -> 6.5; queen 1000 (v4.3.2) raises this material-up eval to ~6.17; materialExchangeFactor 0.02 -> 6.86
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -50,8 +50,9 @@ public class EngineSmokeTest extends EngineTestBase {
                 // count. Widen again if a later eval change pushes it further up; the band
                 // becomes a real assertion only once the search reports the mate. Raised from
                 // 14.5 for the material-exchange term, which moved the score to 14.92: the side
-                // a rook up is rewarded as the board empties, again toward the mate.
-                15.0f,
+                // a rook up is rewarded as the board empties, again toward the mate. Raised from 15.0
+                // for materialExchangeFactor 0.02, which moved it to 15.72.
+                16.0f,
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -94,7 +95,7 @@ public class EngineSmokeTest extends EngineTestBase {
                 // PV-path assertion dropped: root move d2-d3 is Stockfish-best and the
                 // weight is still checked; the deep PV shifted since v4.2.0 (was over-specified).
                 8.0f, // TODO: Should be M8 (SF depth 20: mate in 4 for White)
-                9.0f,
+                9.5f, // was 9.0; materialExchangeFactor 0.02 -> 9.17, toward the mate
                 new GameConfig(ENGINE, engineConfig())
         );
     }
