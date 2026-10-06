@@ -39,6 +39,11 @@ verdicts on criteria nobody agreed to. A gate is `LABEL:QUANTITY OP VALUE`, wher
 of >=, >, <=, <. Without --gate no verdicts are printed. Example, the ramp match:
     tools/match-elo.py --gate 'K1:lower>=-10' --gate 'K2:elo>=0' <candidate> <pgn> ...
 
+GATES JUDGE THE PRINTED VALUE (owner, 2026-10-06). A gate compares the value rounded to one
+decimal, exactly as it appears on screen, so a printed "elo +3.0" can never read FAIL against
+">= +3.0". This rule applies from the exchange-avoidance-0.015 match on. Matches pre-registered before it judged
+the unrounded value; reproduce their verdicts with --exact-gates.
+
 The companion is tools/run-resumable-match.sh, which produces the segments and works the
 resume point out on its own.
 """
@@ -129,19 +134,28 @@ def parse_gate(spec):
     return label.strip(), quantity, op, float(value)
 
 
-def print_gates(gates, elo, lower, upper):
+def judged_value(value, exact):
+    """The value a gate compares: as printed (one decimal) by default, unrounded with --exact-gates."""
+    if exact:
+        return value
+
+    return float(f"{value:+.1f}")
+
+
+def print_gates(gates, elo, lower, upper, exact=False):
     """Prints one PASS/FAIL line per gate, with the value it was judged on."""
     if not gates:
         print("  no gates given (pass them with --gate, see --help)")
         return
 
     values = {"elo": elo, "lower": lower, "upper": upper}
-    print("  pre-registered gates")
+    print("  pre-registered gates" + ("  (exact, unrounded values)" if exact else ""))
 
     for label, quantity, op, threshold in gates:
-        value = values[quantity]
+        value = judged_value(values[quantity], exact)
         verdict = "PASS" if OPERATORS[op](value, threshold) else "FAIL"
-        print(f"    {label:<4} {quantity} {op} {threshold:+.1f} : {verdict}   ({quantity} {value:+.1f})")
+        shown = f"{value:+.3f}" if exact else f"{value:+.1f}"
+        print(f"    {label:<4} {quantity} {op} {threshold:+.1f} : {verdict}   ({quantity} {shown})")
 
 
 def main():
@@ -149,6 +163,8 @@ def main():
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--gate", action="append", default=[], type=parse_gate,
                         help="acceptance gate LABEL:QUANTITY OP VALUE, repeatable")
+    parser.add_argument("--exact-gates", action="store_true",
+                        help="judge gates on unrounded values (matches pre-registered before 2026-10-06)")
     parser.add_argument("candidate")
     parser.add_argument("paths", nargs="+", metavar="pgn")
     args = parser.parse_args()
@@ -168,7 +184,7 @@ def main():
     print(f"  Elo difference: {elo:+.1f} +/- {error:.1f}   LOS {100 * los:.1f} %")
     print(f"  95 % interval : [{lower:+.1f}, {upper:+.1f}]")
     print()
-    print_gates(args.gate, elo, lower, upper)
+    print_gates(args.gate, elo, lower, upper, args.exact_gates)
     print()
     print(f"  to resume: -openings ... order=sequential start={n // 2 + 1}")
 
