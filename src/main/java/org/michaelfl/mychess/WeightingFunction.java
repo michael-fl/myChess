@@ -296,7 +296,7 @@ public final class WeightingFunction {
      * {@link #calcMaterialExchangeTermCp} so that the full evaluation and the material-only shortcut
      * always use the same value.
      */
-    static final float materialExchangeFactor = 0.02f;
+    static final float materialExchangeFactor = 0.015f;
 
     /**
      * Phase at and above which the castling term carries its full weight.
