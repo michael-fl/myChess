@@ -1201,3 +1201,32 @@ The fix landed in 4.8.1 before the tune, which ran on it (2026-09-30, [king-safe
 
 Found on 2026-09-24 while pulling the en-passant code out of the hot pawn methods: removing a
 redundant `lastMove != 0` guard showed that the check depends on `lastMove` at all.
+
+## Quiescence takes the stand-pat while in check (2026-10-06, **not pursued for now**)
+
+### Observation
+
+`QuiescenceSearch` computes the stand-pat and may return it whether or not the side to move is in check. The stand-pat rests on the assumption that the side to move can always find some quiet move that keeps the static value. In check that assumption fails: the check must be answered, and there may be no legal move at all. The textbook quiescence search therefore drops the stand-pat in check and searches all evasions instead. myChess does not, so a mate exactly at the horizon can be scored with the ordinary static evaluation.
+
+This is distinct from the general blind spot of a pass-less, captures-only quiescence search, where a piece of the side to move hangs and the search cannot see it. That one is accepted by design and covered by the static undefended-pieces term ([roadmap-done § 12.19.1](roadmap-done.md#12191-re-validated--removal-after-the-all-captures-qsearch-term-confirmed-still-productive--13-elo)).
+
+### How often it happens (measured 2026-10-07)
+
+The measurement used bench v2 at depth 8, on master `e6fa6e5` plus counters (branch `measure/qs-in-check-count`, not for merge). The node signature was 169,439,389, identical to 4.8.2, so the counters did not disturb the search.
+
+| quantity | count | share |
+|---|---|---|
+| quiescence nodes | 138,901,763 | |
+| side to move in check | 4,813,231 | 3.47 % of quiescence nodes |
+| in check, stand-pat returned anyway | 3,346,170 | 69.5 % of in-check nodes |
+| in check and actually checkmated | 1,860,249 | 38.6 % of in-check nodes |
+
+No capture escapes a mated node. So all 1.86 M mated nodes returned their static evaluation instead of a mate score. Raw output and a summary are in `myChess-lab/results/qs-in-check-count*`.
+
+### What is not known
+
+The count does not say how many of these nodes influence a root move. Many lie deep in capture lines that alpha-beta discards anyway. Only a match against a variant that searches evasions in check could say whether a fix is worth Elo.
+
+### Status
+
+**Not pursued for now** (owner, 2026-10-07). This entry records the finding; it is not a plan.
