@@ -243,6 +243,7 @@ The all-captures search also changes the premise of an earlier eval-side closure
 
 - **Delta pruning** — skip captures where stand-pat + captured material + safety margin still falls below α; [§ 12.6.4](roadmap.md#1264-delta-pruning-in-qsearch--s--515-elo). The only remaining QSearch sub-item still open.
 - **Check extensions** — pursue forcing check sequences past the QSearch border; [§ 12.4 check extensions](roadmap.md#124-check-extensions--s--1530-elo).
+- **No in-check handling** — in check the stand-pat is still taken, instead of searching all evasions; measured and recorded in [known-issues](known-issues.md#quiescence-takes-the-stand-pat-while-in-check-2026-10-06-not-pursued-for-now), not pursued for now.
 - **TT lookup / store inside QSearch** — score and best-move reuse for transposed leaves; **tried and shelved** ([§ 12.6.5](roadmap.md#1265-tt-integration-in-qsearch--tried-shelved-11-elo-los-4-), a separate full table cost −11 Elo — only a shared-TT retry would be worth revisiting).
 
 (SEE-based capture ordering and SEE < 0 pruning — formerly the top items on this list — shipped in v4.2.1; see the *Following all captures* paragraph above.)
