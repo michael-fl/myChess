@@ -3841,4 +3841,92 @@ class BlunderTest {
                 "myChess must play 22.Kh1, the only winning move (Stockfish 18, depth 24: +3.42 against "
                         + "-1.68 for the next-best 22.Nd5); white-POV eval " + result.weight());
     }
+
+    /** White (myChess) to move before {@code 24.Qc3?}, the losing move of PoWNxIuk. */
+    private static final String BEFORE_QC3_POWNXIUK_FEN = "1rb1kb1r/3p3p/1Np2qp1/p1B1p2n/2Q1P3/1B6/PPP2P1P/3RR2K w k - 8 24";
+
+    /**
+     * The losing move of PoWNxIuk: myChess walks into a mating attack against its own king that it
+     * cannot see.
+     *
+     * <p><b>Consecutive positions, part 1 of 2:</b> this is move 24. The position after
+     * {@code 24...Bxc5 25.Qxc5 Rxb6} is part 2,
+     * {@link #qxb6_pownxiuk_characterizesMissingThatItIsLost()}.
+     *
+     * <p>Rated blitz game <a href="https://lichess.org/PoWNxIuk">PoWNxIuk</a>, myChessJava (white) vs
+     * littlePatricia, 2026-10-07. White's king stands on h1 without its g-pawn, black has queen f6
+     * and knight h5 aimed at the light squares around it. {@code 24.Qc3?} allows
+     * {@code 24...Bxc5 25.Qxc5 Rxb6!}: the knight on b6 cannot be recaptured, because
+     * {@code 26.Qxb6 Qf3+ 27.Kg1 Nf4} leaves white mated in 7 (Stockfish 18). Without the
+     * recapture white is a piece down. Stockfish 18 at depth 22 reads {@code 24.Qc3} at −3.94 for
+     * white, against +0.91 for the best move {@code 24.Re3}.
+     *
+     * <p>myChess 4.8.2, measured 2026-10-07, plays {@code 24.Qc3} at depth 8 and 9 and rates it
+     * +1.48 / +1.59. The mate lies about 20 plies beyond the root. The evaluation does not
+     * close the gap either: in the finished mating net (after {@code 27...Nf4}) it still reads only
+     * −1.00 for white, and expects {@code 28.Bf7+ Kxf7 29.Qb3+} to trade queens. Black has
+     * {@code 28...Ke7} instead.
+     *
+     * <p><b>TODO - invert once fixed:</b> turn this into an avoidance test for {@code c4-c3}.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void qc3_pownxiuk_characterizesWalkingIntoTheMatingAttack() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_QC3_POWNXIUK_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.c4, Board.c3, "24.Qc3",
+                "which 24...Bxc5 25.Qxc5 Rxb6 refutes: Stockfish 18 reads -3.94 for white at depth 22, "
+                        + "against +0.91 after the best move 24.Re3");
+        assertTrue(result.weight() > 0f,
+                "characterization: it rates white ahead after Qc3 where Stockfish has black 3.94 up; got "
+                        + result.weight());
+    }
+
+    /** White (myChess) to move after {@code 24.Qc3 Bxc5 25.Qxc5 Rxb6}, before {@code 26.Qxb6?}. */
+    private static final String BEFORE_QXB6_POWNXIUK_FEN = "2b1k2r/3p3p/1rp2qp1/p1Q1p2n/4P3/1B6/PPP2P1P/3RR2K w k - 0 26";
+
+    /**
+     * The follow-up of PoWNxIuk: two moves after {@code 24.Qc3}, myChess still does not see that it
+     * is lost.
+     *
+     * <p><b>Consecutive positions, part 2 of 2:</b> this is move 26, after the refutation of
+     * {@code 24.Qc3} in part 1, {@link #qc3_pownxiuk_characterizesWalkingIntoTheMatingAttack()}.
+     *
+     * <p>White is lost here. Every move short of the recapture leaves it a piece down, at about −4
+     * (Stockfish 18, depth 22: {@code 26.Re3} −4.05, {@code 26.f4} −4.07, {@code 26.Bf7+} −4.22).
+     * The greedy recapture {@code 26.Qxb6?}, which the game saw, pulls the queen away from its king, and
+     * black mates in 9 with {@code 26...Qf3+ 27.Kg1 Nf4}. The least damaging move is {@code 26.Re3}.
+     *
+     * <p>This pins the evaluation, not the move. The move choice is not stable enough:
+     * <ul>
+     *   <li>over plain UCI at depth 7 to 9, myChess plays {@code 26.Qxb6} (−0.40 to −1.00);</li>
+     *   <li>in this test's setup at depth 8, it plays {@code 26.Bf7+} at −0.7.</li>
+     * </ul>
+     * Both read the position as a small disadvantage where it is lost by four pawns or by mate. This
+     * is the same split as the 55...Bxd4 case above, which also does not reproduce its move.
+     *
+     * <p><b>TODO - tighten once fixed:</b> when the score falls below −3, replace this with an
+     * avoidance test for {@code c5-b6}.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void qxb6_pownxiuk_characterizesMissingThatItIsLost() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_QXB6_POWNXIUK_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertTrue(result.weight() > -2f,
+                "characterization: it rates the position a small disadvantage where Stockfish 18 has white "
+                        + "lost by about -4 (or mated in 9 after 26.Qxb6); got " + result.weight()
+                        + " with " + ChessUtil.moveToString(result.move())
+                        + " - a score below -3 means the defect is fixed");
+    }
 }
