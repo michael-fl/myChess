@@ -295,15 +295,6 @@ class MaterialOnlyShortcutEvalTest {
     private static final String[] IMMORTAL_DRAW_LABELS = {"12.Kxc5", "13.Bb5+", "14.Bc6", "15.Kb5"};
 
     /**
-     * The one of the four that stopped being graded by counting pieces in v4.8.0, index into the
-     * arrays above. {@code 14.Bc6} is the position where white's bishop lands next to the black
-     * king that has been dragged to d8, so it is also the one where an attacker-counting term has
-     * most to say - which is the component the class comment names as the one the shortcut
-     * discards.
-     */
-    private static final int IMMORTAL_DRAW_UNROUND_INDEX = 2;
-
-    /**
      * Case 1 of the class comment, which carries the full analysis.
      *
      * <p><b>Fixed in v4.6.0.</b> The recapture {@code Bxd4} is a capture, so the shortcut is now
@@ -455,11 +446,14 @@ class MaterialOnlyShortcutEvalTest {
     /**
      * Case 5 of the class comment, which carries the full analysis.
      *
-     * <p><b>Partly reached by v4.8.0.</b> Three of the four positions are still graded by
-     * counting pieces; {@code 14.Bc6} is not, because the king-attack term runs in that subtree
-     * and the score comes out unround. That is the component the class comment names as the one
-     * the shortcut discards — a bare black king — so the term reaching exactly this position and
-     * not the other three is the expected shape rather than a surprise.
+     * <p><b>Partly reached by v4.8.0.</b> Three of the four positions were still graded by
+     * counting pieces; {@code 14.Bc6} was not, because the king-attack term runs in that subtree
+     * and the score comes out unround.
+     *
+     * <p><b>Fully reached at material-only threshold 300</b> (branch material-threshold-300-v2).
+     * The sacrifices here are piece-sized swings that no longer open the gate, so the positional
+     * evaluation runs in all four subtrees and every score comes out unround (6.25, 6.81, 7.23,
+     * 7.07 when re-pinned).
      *
      * <p>It remains a defect: the engine still does not see the forced draw Stockfish has from
      * move 11, in any of the four. The reading moved, the verdict did not.
@@ -484,17 +478,14 @@ class MaterialOnlyShortcutEvalTest {
         for (int i = 0; i < weights.length; i++) {
 
             // Material values are multiples of 100 cp, so a material-only score is necessarily
-            // whole. Asserting the property rather than the value survives table changes that
-            // move the principal variation; asserting it over several positions is what makes
-            // it evidence.
-            //
-            // 14.Bc6 IS THE EXCEPTION SINCE v4.8.0 and is asserted the other way round below.
-            if (i != IMMORTAL_DRAW_UNROUND_INDEX) {
-                assertTrue(isWholePawns(weights[i]),
-                        "after " + IMMORTAL_DRAW_LABELS[i] + " the score must be an exact number of pawns, "
-                                + "which is what a position graded by counting pieces looks like. An unround "
-                                + "value means the shortcut no longer covers this subtree. " + summary(weights));
-            }
+            // whole. At threshold 300 the shortcut no longer covers any of the four subtrees, so
+            // every score must be unround. Asserting the property rather than the value survives
+            // table changes that move the principal variation.
+            assertFalse(isWholePawns(weights[i]),
+                    "after " + IMMORTAL_DRAW_LABELS[i] + " the score must NOT be a whole number of pawns: "
+                            + "at material-only threshold 300 the positional evaluation runs in this "
+                            + "subtree. A whole number means the shortcut is covering it again. "
+                            + summary(weights));
 
             // 0.00 is whole too, so without this the check above would pass unnoticed on the
             // day the engine starts seeing the draw. Stockfish has one from move 11 onwards.
@@ -504,16 +495,6 @@ class MaterialOnlyShortcutEvalTest {
                             + "has learned something about the exposed king and this case should become a "
                             + "positive assertion. " + summary(weights));
         }
-
-        // The one the king-attack term reached. It is a characterization of a partial repair:
-        // the subtree is no longer graded by counting pieces, and the engine still does not see
-        // the draw. Pinned as unround rather than as a value, for the same reason the others are
-        // pinned as whole - the value moves with any table change, the property does not.
-        assertFalse(isWholePawns(weights[IMMORTAL_DRAW_UNROUND_INDEX]),
-                "after " + IMMORTAL_DRAW_LABELS[IMMORTAL_DRAW_UNROUND_INDEX] + " the score must NOT be a "
-                        + "whole number of pawns: since v4.8.0 the king-attack term reaches this subtree, "
-                        + "so the positional evaluation runs here. A whole number means the shortcut is "
-                        + "covering it again. " + summary(weights));
     }
 
     /** All four readings, so a failure in one says what the other three did. */
@@ -547,7 +528,7 @@ class MaterialOnlyShortcutEvalTest {
     private static final int BOUNDARY_BUDGET_MS = 60_000;
 
     /**
-     * The full evaluation must still run at a running swing of <b>200 cp</b>.
+     * The full evaluation must still run at a running swing of <b>300 cp</b>.
      *
      * <p>This is the guard that was missing, and its absence was measured rather than suspected:
      * lowering {@code EVALUATE_MATERIAL_ONLY_THRESHOLD} from 200 to 100 left the entire fast
@@ -555,6 +536,10 @@ class MaterialOnlyShortcutEvalTest {
      * 1000 cp and therefore behave identically at either value. The existing characterizations are
      * one-sided — they detect the shortcut <em>ceasing</em> to fire, never it <em>starting</em> to
      * fire somewhere new.
+     *
+     * <p><b>Moved from 200 to 300 cp with the threshold</b> (branch material-threshold-300-v2).
+     * The paragraph below describes the original 100-versus-200 edge; the same reasoning puts
+     * the edge between 300 and 400 now.
      *
      * <p>200 cp is the only delta that separates a threshold of 100 from one of 200. Every piece
      * value in {@link WeightingFunction#weightOfPiece} is a multiple of 100 — pawn 100, knight and
@@ -571,7 +556,7 @@ class MaterialOnlyShortcutEvalTest {
      * so an evaluation retune cannot break it. What it pins is the <b>gate</b>, and only the gate.
      */
     @Test
-    void theFullEvaluationStillRunsAtASwingOf200Centipawns() {
+    void theFullEvaluationStillRunsAtASwingOf300Centipawns() {
         var board = Fen.importFEN(QUIET_BOUNDARY_FEN);
         int weightFactor = board.getGameStatus().getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
         int material = weightFactor * WeightingFunction.calculateMaterialWeight(board);
@@ -584,12 +569,15 @@ class MaterialOnlyShortcutEvalTest {
         for (int delta : new int[]{SWING_BELOW_GATE, -SWING_BELOW_GATE}) {
             assertEquals(fullEvaluation, gateOutput(board, weightFactor, material, delta),
                     "at a swing of " + delta + " cp the gate must not fire, so the full evaluation "
-                            + "runs — this fails if EVALUATE_MATERIAL_ONLY_THRESHOLD drops to 100");
+                            + "runs — this fails if EVALUATE_MATERIAL_ONLY_THRESHOLD drops to 200");
         }
     }
 
     /**
-     * The shortcut must take over at a running swing of <b>300 cp</b>.
+     * The shortcut must take over at a running swing of <b>400 cp</b>.
+     *
+     * <p><b>Moved from 300 to 400 cp with the threshold</b> (branch material-threshold-300-v2);
+     * the paragraphs below describe the original 200-versus-300 edge.
      *
      * <p>The upper edge of the same gate, and the counterpart to the test above: 300 cp is the
      * delta that separates a threshold of 200 from one of 300. The suite already had an unlabelled case here —
@@ -597,11 +585,11 @@ class MaterialOnlyShortcutEvalTest {
      * swing is exactly 300 cp and it failed when the threshold was raised to 300. This states the
      * same edge directly instead of as a side effect.
      *
-     * <p>Together the two tests pin the threshold to <b>exactly 200</b>. That is deliberate: moving
+     * <p>Together the two tests pin the threshold to <b>exactly 300</b>. That is deliberate: moving
      * the constant should be a decision that updates a test, not a change the suite sleeps through.
      */
     @Test
-    void theShortcutTakesOverAtASwingOf300Centipawns() {
+    void theShortcutTakesOverAtASwingOf400Centipawns() {
         var board = Fen.importFEN(QUIET_BOUNDARY_FEN);
         int weightFactor = board.getGameStatus().getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
         int material = weightFactor * WeightingFunction.calculateMaterialWeight(board);
@@ -609,13 +597,13 @@ class MaterialOnlyShortcutEvalTest {
         for (int delta : new int[]{SWING_ABOVE_GATE, -SWING_ABOVE_GATE}) {
             assertEquals(material, gateOutput(board, weightFactor, material, delta),
                     "at a swing of " + delta + " cp the gate must fire, so only material is "
-                            + "returned — this fails if EVALUATE_MATERIAL_ONLY_THRESHOLD rises to 300");
+                            + "returned — this fails if EVALUATE_MATERIAL_ONLY_THRESHOLD rises to 400");
         }
     }
 
     /**
-     * A running swing of 200 cp — the largest value that does <em>not</em> open the gate at the
-     * shipped threshold, and the value that separates a threshold of 100 from one of 200.
+     * A running swing of 300 cp — the largest value that does <em>not</em> open the gate at the
+     * shipped threshold, and the value that separates a threshold of 200 from one of 300.
      *
      * <p><b>Injected, not enacted.</b> This is handed to {@code QuiescenceSearch} as its
      * {@code materialDelta} argument; the fixture does not play two pawns' worth of captures to
@@ -628,10 +616,10 @@ class MaterialOnlyShortcutEvalTest {
      * is measured from the root while the material balance is absolute, so "+100 on the board after
      * a +200 swing" is simply a root position where the side to move was a pawn down.
      */
-    private static final int SWING_BELOW_GATE = 200;
+    private static final int SWING_BELOW_GATE = 300;
 
-    /** A running swing of 300 cp: the smallest value that opens the gate at the shipped threshold. */
-    private static final int SWING_ABOVE_GATE = 300;
+    /** A running swing of 400 cp: the smallest value that opens the gate at the shipped threshold. */
+    private static final int SWING_ABOVE_GATE = 400;
 
     /**
      * The gate's output for one {@code materialDelta}, taken from a fresh quiescence search over a

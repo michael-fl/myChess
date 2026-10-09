@@ -128,7 +128,9 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("g1-g5", "d5-d6", "g1-d1", "h2-h4"),
                 11.0f,
-                14.5f, // max 13.5 -> 14.5; queen 1000 (v4.3.2) raises this material-up eval to ~14.0
+                15.5f, // max 13.5 -> 14.5; queen 1000 (v4.3.2) raises this material-up eval to ~14.0
+                       // 14.5 -> 15.5 at material-only threshold 300: reads 15.0, the positional
+                       // terms now reach more of this material-up tree
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -198,7 +200,9 @@ class EngineTest extends EngineTestBase {
                 // here, and the position stays won either way. Recorded rather than argued
                 // away: the term was merged on a gauntlet that cleared its guard, not on a
                 // claim that it improves every position.
-                Set.of("e5-e6"),
+                // RECOVERED AGAIN at material-only threshold 300 (branch material-threshold-300-v2):
+                // Ne6 again, Stockfish's best move (+4.77 against exe6 +4.13, depth 24).
+                Set.of("g5-e6"),
                 // PV-path assertion dropped: the deep PV shifted with the tapered
                 // pawn-EG table (v4.3.0).
                 null,
@@ -504,7 +508,10 @@ class EngineTest extends EngineTestBase {
                 11.Nd5 exd5 12.exd5 Nce5 13.d6 Bb7 14.Nxe5 fxe5 15.f4 exf4 16.Re1 fxe3 17.Rxe3+ Be7 18.Qd4
                 """;
         testPosition(pgn,
-                "d8-b8", // A REGRESSION, and now the worst of the three known answers. The only holding
+                "d8-c8", // RECOVERED at material-only threshold 300 (branch material-threshold-300-v2):
+                         // Qc8, the only holding move. The history below is 4.8.2's.
+                         //
+                         // A REGRESSION, and now the worst of the three known answers. The only holding
                          // move is Qc8 (SF -0.21). v4.3.4 played Qb8 (-3.66), v4.4.0's PeSTO tables
                          // recovered ~0.8 pawns of that to Qa5 (-2.84), and v4.8.0's attack-unit term
                          // gives them back: Qb8 again. Measured at depth 24, white-POV: Qc8 +0.75,
@@ -579,7 +586,8 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "Re1",
                 -1.5f, // TODO 3.7 (SF depth 20: +2.61); Re1 is SF-best
-                0.0f, // was -1.0; v4.2.0 eval less pessimistic, closer to the true advantage
+                0.5f, // was -1.0; v4.2.0 eval less pessimistic, closer to the true advantage
+                      // 0.0 -> 0.5 at material-only threshold 300: reads 0.28, closer still to SF +2.61
 
                 new GameConfig(ENGINE, engineConfig())
         );

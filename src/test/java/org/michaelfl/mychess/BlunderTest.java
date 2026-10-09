@@ -2846,9 +2846,13 @@ class BlunderTest {
         // Recorded rather than repaired, because repairing it needs a fixture whose refutation
         // fits inside the horizon - a different position, not a different assertion. Black is
         // winning here before the move: Qxd4 -12.28, Rb1 -10.30, Nc3 -8.44 at depth 26.
-        assertEquals(ChessUtil.moveToString(Board.c8, Board.d8), ChessUtil.moveToString(result.move()),
-                "characterization: myChess still walks into 51...Rd8 from a won position. The "
-                        + "refutation is 25 plies deep and this search is 8, so the case records "
+        // RE-PINNED at material-only threshold 300 (branch material-threshold-300-v2): the engine
+        // plays 51...Rc3 instead, +5.72 for black (Stockfish 18, depth 22), and Rd8 is mate in 14.
+        // For the reason above this is still a record of the choice, not of knowledge: the mate
+        // stays out of reach, and a change to the tree can flip it back.
+        assertEquals(ChessUtil.moveToString(Board.c8, Board.c3), ChessUtil.moveToString(result.move()),
+                "characterization: myChess now plays 51...Rc3 and no longer walks into 51...Rd8. The "
+                        + "refutation of Rd8 is 25 plies deep and this search is 8, so the case records "
                         + "the choice and cannot police it. white-POV eval " + result.weight());
     }
 
@@ -3208,9 +3212,15 @@ class BlunderTest {
 
         var result = searchCurrentPositionDeep(game);
 
-        assertEngineStillPlays(result, Board.f7, Board.e7, "52.Re7+",
-                "instead of taking the rook with 52.Kxe1; the check turns −0.13 into −4.48 "
-                        + "(Stockfish 18, depth 22)");
+        // RE-PINNED at material-only threshold 300 (branch material-threshold-300-v2): the engine
+        // no longer plays 52.Re7+ but 52.Rd7, which Stockfish 18 scores the same (−4.49 against
+        // −4.61, depth 22, side to move). The defect is unchanged - it still passes over the rook -
+        // so the case now pins that, whichever losing move carries it.
+        assertNotEquals(ChessUtil.moveToString(Board.f2, Board.e1), ChessUtil.moveToString(result.move()),
+                "characterization: myChess must still pass over 52.Kxe1 (−0.13, Stockfish 18 depth 22); "
+                        + "52.Re7+ and 52.Rd7 both lose about 4.5 pawns. If it now takes the rook, the "
+                        + "defect is fixed and this test should become a positive assertion. white-POV eval "
+                        + result.weight());
     }
 
     /** Black (myChess) to move before {@code 13...Nxd4??}, the earliest case in the corpus. */
