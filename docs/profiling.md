@@ -62,6 +62,23 @@ None of them sits just over the limit. The 4.8.1 trap was a method two bytes ove
 
 The log interleaves several compiler threads, so these counts are indicative, not exact. Whether the `addMove` calls cost anything measurable could only be shown by a paired bench of a variant, not by this log.
 
+## Allocation and GC (same recording, evaluated 2026-10-09)
+
+The search allocates despite the project's no-allocation rule. It allocates about **450 MB/s**: 45 GB sampled over the 101 s run, which matches 663 young collections × ~68 MB. By allocating site:
+
+| share | object | allocated in |
+|---|---|---|
+| 17.3 % | `GameStatus` | `GameStatus.switchTurn`, one per `makeMove` |
+| 16.0 % | `int[]` | `IntArray.<init>`, move lists |
+| 15.4 % | `SearchNodeContext` | `PositionSearch.alphaBetaSearchMain` |
+| 11.6 % | `SearchNodeContext` | `QuiescenceSearch.quiescenceSearch` |
+| 9.1 % + 6.0 % | `SearchNodeResult` | `negate`, `create` |
+| 8.1 % + 7.9 % | `int[]` | `GameStatus.<init>`, `Arrays.copyOf` |
+
+**What it costs, as far as this recording can say.** The garbage collector is cheap. Each young collection pauses for about 0.13 ms, so 663 of them add up to roughly 0.09 s, about **0.1 %** of the run. What a profile cannot show is the indirect cost: zeroing new objects, and the cache lines each new object pulls in. That cost lands in the allocating methods' own samples and cannot be separated from their real work. Only a variant that reuses the objects, measured with paired benches, can put a number on it.
+
+**Candidate 5:** reuse `SearchNodeContext` / `SearchNodeResult` per ply, and avoid the per-move `GameStatus` and `int[]` copies. This is a structural change across the search and the board. The gain is unknown and may be small, given the 0.1 % GC share. The signature would stay unchanged if the change is exact.
+
 ## Ranking of the candidates for the owner
 
 | | candidate | expected gain | behavior |
@@ -70,5 +87,6 @@ The log interleaves several compiler threads, so these counts are indicative, no
 | 2 | skip SEE for quiescence captures with MVV-LVA delta ≥ 0 | part of 16 % | ordering changes; needs a match |
 | 3 | split `isFieldAttackedBy` under 325 bytes | small part of 5.5 % | signature unchanged |
 | 4 | keep `MoveGenerator.addMove` inlinable, e.g. by moving the sorter call out of its compiled body | unknown, needs a paired bench | signature unchanged |
+| 5 | reuse per-ply search objects instead of allocating them (≈ 450 MB/s today) | unknown; GC itself is only ≈ 0.1 % | signature unchanged |
 
 At the roadmap's rule of thumb, 50–70 Elo per doubling, 7 % is worth roughly 5 Elo. These are suggestions only: production changes are the owner's.
