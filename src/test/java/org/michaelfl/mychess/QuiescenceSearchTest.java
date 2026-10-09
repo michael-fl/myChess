@@ -25,11 +25,15 @@ class QuiescenceSearchTest {
         // b4 pawn — so SEE pruning drops it and quiescence resolves at depth 1 with an
         // even score (the bishop-for-knight trade nets out). The old depth bound of 5
         // reflected a search that also followed that losing recapture (and beyond).
+        //
+        // Max 0.5 -> 1.0 at material-only threshold 300: the trade is a swing of exactly 300 cp,
+        // which no longer opens the gate, so the positional evaluation reaches this leaf and
+        // reads 0.95 instead of the bare material.
         var gameNotation = """
                 1. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 4. d3 Bb4 5. Bd2 d6 6. Nd5 a5 7. Be2 Ra6 8. O-O Rb6 9. Qe1
                 h6 10. Nxb4
                 """;
-        quiescenceTest(gameNotation, Board.blackBishop, 3.0f, 0, 0.5f, 1);
+        quiescenceTest(gameNotation, Board.blackBishop, 3.0f, 0, 1.0f, 1);
     }
 
     // A good quiescence search should detect that the white knight is not protected
