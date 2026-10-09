@@ -110,6 +110,7 @@ In separate files under [`docs/`](docs/):
 16. [Bench history](docs/bench-history.md) — the `bench` node signature per release (depth 8 for the whole series, depth 9 from 4.3.4 on), what each jump attributes to, and why the node count is an equivalence oracle rather than a strength metric.
 17. [STS history](docs/sts-history.md) — the Strategic Test Suite score per theme and release, what the number does and does not say, and why a run is only worth doing when the `bench` signature moved.
 18. [Running myChess on lichess](docs/myChess-on-lichess.md) — setting the engine up as a UCI bot behind the lichess-bot bridge.
+19. [Profiling](docs/profiling.md) — where bench v2 spends its time (JFR, 4.8.2) and which hot methods the JIT does not inline, with the resulting speedup candidates.
 
 ---
 
