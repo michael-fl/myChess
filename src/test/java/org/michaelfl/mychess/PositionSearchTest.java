@@ -41,6 +41,23 @@ class PositionSearchTest {
     /** The tempting illegal move in {@link #SINGLE_LEGAL_REPLY_FEN}: it wins a queen but ignores the check. */
     private static final String TEMPTING_ILLEGAL_MOVE = ChessUtil.moveToString(Board.d2, Board.a5);
 
+    /**
+     * White to move and in check from the rook on h1 along the first rank, with exactly one
+     * legal reply: the king move {@code Ka2}. Nothing can block on c1 to g1 or capture the rook.
+     *
+     * <p>The counterpart to {@link #SINGLE_LEGAL_REPLY_FEN}, where the only reply is a capture
+     * by a piece: here it is a quiet king move. The pseudo-legal generator again offers captures
+     * that ignore the check, among them {@code Qxa7+}, which takes a pawn next to the black king
+     * with check.
+     */
+    private static final String SINGLE_LEGAL_KING_MOVE_FEN = "1kq5/pp4b1/2p5/Q7/1NR1p3/8/2PP1PP1/1K5r w - - 0 1";
+
+    /** The only legal move in {@link #SINGLE_LEGAL_KING_MOVE_FEN}. */
+    private static final String ONLY_LEGAL_KING_MOVE = ChessUtil.moveToString(Board.b1, Board.a2);
+
+    /** A tempting illegal move in {@link #SINGLE_LEGAL_KING_MOVE_FEN}: a capture with check that ignores the own check. */
+    private static final String TEMPTING_ILLEGAL_CAPTURE = ChessUtil.moveToString(Board.a5, Board.a7);
+
     private TranspositionTable tt;
 
     @BeforeEach
@@ -176,7 +193,34 @@ class PositionSearchTest {
     @Test
     @Timeout(value = 30, unit = TimeUnit.SECONDS)
     void moveGeneratorOffersIllegalRepliesWhenInCheck() {
-        var game = new Game(new GameConfig(MyChessEngine.class, deepConfig(1, tt)), Fen.importFEN(SINGLE_LEGAL_REPLY_FEN));
+        assertGeneratorOffersIllegalReply(SINGLE_LEGAL_REPLY_FEN, ONLY_LEGAL_MOVE, TEMPTING_ILLEGAL_MOVE);
+    }
+
+    @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
+    void depthOneSearchAlreadyDiscardsIllegalRootMoves() throws Exception {
+        assertDepthOneSearchReturnsOnlyLegalMove(SINGLE_LEGAL_REPLY_FEN, ONLY_LEGAL_MOVE, TEMPTING_ILLEGAL_MOVE);
+    }
+
+    @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
+    void moveGeneratorOffersIllegalRepliesWhenOnlyTheKingCanMove() {
+        assertGeneratorOffersIllegalReply(SINGLE_LEGAL_KING_MOVE_FEN, ONLY_LEGAL_KING_MOVE, TEMPTING_ILLEGAL_CAPTURE);
+    }
+
+    @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
+    void depthOneSearchFindsTheOnlyLegalKingMove() throws Exception {
+        assertDepthOneSearchReturnsOnlyLegalMove(SINGLE_LEGAL_KING_MOVE_FEN, ONLY_LEGAL_KING_MOVE, TEMPTING_ILLEGAL_CAPTURE);
+    }
+
+    /**
+     * Premise of {@link #assertDepthOneSearchReturnsOnlyLegalMove}: the pseudo-legal generator must
+     * offer the illegal move as well as the legal one. Without that, a depth-1 result could not
+     * show that the search filters illegal root moves.
+     */
+    private void assertGeneratorOffersIllegalReply(String fen, String onlyLegalMove, String illegalMove) {
+        var game = new Game(new GameConfig(MyChessEngine.class, deepConfig(1, tt)), Fen.importFEN(fen));
         Moves moves = PositionSearch.getPossibleMoves(game.getEngine(), game);
         var offered = new HashSet<String>();
 
@@ -184,30 +228,31 @@ class PositionSearchTest {
             offered.add(ChessUtil.moveToString(move));
         }
 
-        // Premise of the depth-1 test below: without the generator offering illegal moves,
-        // that test could not show that the search filters them.
         assertTrue(moves.count() > 1,
                 "the generator is pseudo-legal and must offer more than the single legal reply, got " + offered);
-        assertTrue(offered.contains(TEMPTING_ILLEGAL_MOVE),
-                "the generator must offer the illegal queen capture " + TEMPTING_ILLEGAL_MOVE + ", got " + offered);
-        assertTrue(offered.contains(ONLY_LEGAL_MOVE),
-                "the generator must offer the legal reply " + ONLY_LEGAL_MOVE + ", got " + offered);
+        assertTrue(offered.contains(illegalMove),
+                "the generator must offer the illegal move " + illegalMove + ", got " + offered);
+        assertTrue(offered.contains(onlyLegalMove),
+                "the generator must offer the legal reply " + onlyLegalMove + ", got " + offered);
     }
 
-    @Test
-    @Timeout(value = 30, unit = TimeUnit.SECONDS)
-    void depthOneSearchAlreadyDiscardsIllegalRootMoves() throws Exception {
-        var game = new Game(new GameConfig(MyChessEngine.class, deepConfig(1, tt)), Fen.importFEN(SINGLE_LEGAL_REPLY_FEN));
+    /**
+     * Runs a depth-1 search and asserts it returns the only legal move.
+     *
+     * <p>The first iteration plays each root move and searches the reply. A move that leaves the
+     * king attackable is answered by the king capture and scored as illegal. So after depth 1 only
+     * the legal reply carries a valid result, which is what a "single legal move, play it at once"
+     * shortcut could read off the first iteration.
+     */
+    private void assertDepthOneSearchReturnsOnlyLegalMove(String fen, String onlyLegalMove, String illegalMove)
+            throws Exception {
+        var game = new Game(new GameConfig(MyChessEngine.class, deepConfig(1, tt)), Fen.importFEN(fen));
 
         var move = game.getEngine().nextMoveAsync().getResult(20, TimeUnit.SECONDS);
 
-        // The first iteration plays each root move and searches the reply. A move that leaves
-        // the king attackable is answered by the king capture and scored as illegal. So after
-        // depth 1 only the legal reply carries a valid result, which is what a "single legal
-        // move, play it at once" shortcut could read off the first iteration.
-        assertEquals(ONLY_LEGAL_MOVE, ChessUtil.moveToString(move.move()),
+        assertEquals(onlyLegalMove, ChessUtil.moveToString(move.move()),
                 "a depth-1 search must already discard the illegal root moves and return the only legal reply "
-                        + ONLY_LEGAL_MOVE + ", not the queen capture " + TEMPTING_ILLEGAL_MOVE);
+                        + onlyLegalMove + ", not " + illegalMove);
         assertEquals(Game.GameResult.ONGOING, move.result(),
                 "the position is a check with one escape, not a mate, so the result must be ONGOING");
         assertFalse(WeightingFunction.isCheckmateWeight(move.weight()),
