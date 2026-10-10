@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/rSMdz9Ar"]
+[Date "2026.10.07"]
+[Round "-"]
+[White "myChessJava"]
+[Black "Angela_eng"]
+[Result "1-0"]
+[GameId "rSMdz9Ar"]
+[UTCDate "2026.10.07"]
+[UTCTime "14:18:50"]
+[WhiteElo "1973"]
+[BlackElo "1818"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+3"]
+[ECO "B23"]
+[Opening "Sicilian Defense: Closed"]
+[Termination "Normal"]
+
+1. e4 c5 2. Nc3 e6 3. Nf3 Nc6 4. Bb5 Nd4 5. O-O a6 6. Bd3 d5 7. exd5 exd5 8. Nxd4 cxd4 9. Re1+ Ne7 10. Ne2 Qb6 11. Nf4 Qd6 12. Qf3 Kd8 13. Ne2 Nc6 14. Qxf7 Bd7 15. b3 Ne5 16. Qf4 Nxd3 17. cxd3 Qxf4 18. Nxf4 Bd6 19. Nxd5 Bc6 20. Nb6 Rb8 21. Nc4 Bc5 22. Ba3 Bxa3 23. Nxa3 Rf8 24. Nc2 Rf4 25. g3 Rf3 26. Nxd4 Rxd3 27. Ne6+ Kc8 28. Rad1 Bf3 29. Rc1+ Bc6 30. Rc2 g6 31. Nc5 Rd6 32. Re7 Kd8 33. Rxh7 Kc8 34. d3 a5 35. Rf7 g5 36. Rg7 Ra8 37. Nxb7 Re6 38. Rc1 Rf6 39. Rc5 Re6 40. Kf1 a4 41. b4 Rb8 42. Na5 Rb6 43. d4 Kb8 44. d5 Bxd5 45. Rxd5 Re8 46. b5 Rbe6 47. Nc6+ Kc8 48. Rdd7 Rxc6 49. bxc6 Rd8 50. Ra7 Rd1+ 51. Ke2 Re1+ 52. Kxe1 Kb8 53. Rad7 a3 54. Rg8# 1-0
+

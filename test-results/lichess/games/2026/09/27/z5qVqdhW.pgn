@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/z5qVqdhW"]
+[Date "2026.09.27"]
+[Round "-"]
+[White "GroshBoss"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "z5qVqdhW"]
+[UTCDate "2026.09.27"]
+[UTCTime "02:23:09"]
+[WhiteElo "2104"]
+[BlackElo "2047"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+2"]
+[ECO "C46"]
+[Opening "Three Knights Opening"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Nc3 Bb4 4. a3 Bxc3 5. dxc3 Nf6 6. Bd3 d5 7. exd5 Qxd5 8. O-O O-O 9. Ng5 Be6 10. Re1 Rad8 11. Nxe6 Qxe6 12. Bg5 h6 13. Bh4 g5 14. Bg3 Nd5 15. Qh5 f5 16. f3 Nf4 17. Bxf4 gxf4 18. Rad1 Kg7 19. b4 Qf6 20. c4 a5 21. b5 Nd4 22. a4 Kg8 23. c5 Kg7 24. c3 Nb3 25. c6 Nc5 26. Bc2 Rxd1 27. Rxd1 bxc6 28. bxc6 Qxc6 29. Bxf5 Qb6 30. Kh1 Qc6 31. Bc2 Re8 32. Qg4+ Kh8 33. Qf5 e4 34. Rd4 Qa6 35. c4 Qc6 36. fxe4 Kg8 37. Rd5 Ne6 38. Qg6+ Kf8 39. Qxh6+ Kf7 40. Qh7+ Ng7 41. Rf5+ Ke7 42. Qxg7+ Kd8 43. Rxa5 Kc8 44. Qf7 Rd8 45. Qxf4 Rg8 46. c5 Re8 47. e5 Qd5 48. Bf5+ Re6 49. Bxe6+ Qxe6 50. Ra8+ Kd7 51. Qd4+ 1-0
+

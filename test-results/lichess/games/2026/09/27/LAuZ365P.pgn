@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/LAuZ365P"]
+[Date "2026.09.27"]
+[Round "-"]
+[White "myChessJava"]
+[Black "StockFail"]
+[Result "1-0"]
+[GameId "LAuZ365P"]
+[UTCDate "2026.09.27"]
+[UTCTime "15:19:23"]
+[WhiteElo "2205"]
+[BlackElo "1851"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "B01"]
+[Opening "Scandinavian Defense: Modern Variation"]
+[Termination "Normal"]
+
+1. e4 d5 2. exd5 Nf6 3. Bb5+ Bd7 4. Bc4 b5 5. Bb3 h6 6. Nf3 Na6 7. d4 g5 8. O-O g4 9. Ne5 h5 10. a4 Bh6 11. Bxh6 Rxh6 12. axb5 Bxb5 13. c4 Nxd5 14. cxb5 Nab4 15. Qd2 Rb6 16. Qg5 Rg6 17. Nxg6 Nf6 18. Ne5 Qxd4 19. Bxf7+ Kd8 20. Nc3 Kc8 21. Rad1 Qc5 22. Bc4 Kb7 23. Na4 Qd6 24. Rxd6 cxd6 25. Nd7 Rc8 26. Be6 Nbd5 27. Bxd5+ Nxd5 28. Qxd5+ Kc7 29. b6+ Kxd7 30. bxa7 g3 31. fxg3 Rd8 32. Nc5+ Kc7 33. Qb7# 1-0
+

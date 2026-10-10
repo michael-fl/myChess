@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/PtiGK9g7"]
+[Date "2026.09.27"]
+[Round "-"]
+[White "melsh_bot"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "PtiGK9g7"]
+[UTCDate "2026.09.27"]
+[UTCTime "10:11:59"]
+[WhiteElo "1769"]
+[BlackElo "2232"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "C65"]
+[Opening "Ruy Lopez: Berlin Defense, Anti-Berlin Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. d3 Bc5 5. Bxc6 dxc6 6. h3 O-O 7. Nxe5 Qd4 8. Be3 Qxe5 9. Nc3 Bxe3 10. fxe3 Qg3+ 11. Kf1 Qxe3 12. a4 a5 13. Ra3 Be6 14. Rh2 Nd7 15. g4 h5 16. d4 Rad8 17. d5 cxd5 18. exd5 Ne5 19. Rg2 Qxh3 20. Qe2 Bxg4 21. Qxe5 Qh1+ 22. Rg1 Qf3+ 23. Ke1 Rfe8 24. Ne2 Rxe5 25. Rxf3 Bxf3 26. Kf2 Bxe2 27. Re1 Rde8 28. c3 Bc4 29. Rxe5 Rxe5 30. b4 Bxd5 31. Kg3 axb4 32. cxb4 Re4 33. a5 Rxb4 34. Kh2 h4 35. a6 bxa6 36. Kg1 Rb2 37. Kf1 h3 38. Kg1 h2+ 39. Kf1 h1=Q# 0-1
+

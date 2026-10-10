@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/o5IJfi78"]
+[Date "2026.10.02"]
+[Round "-"]
+[White "NICE_BOT"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "o5IJfi78"]
+[UTCDate "2026.10.02"]
+[UTCTime "10:21:16"]
+[WhiteElo "1902"]
+[BlackElo "2278"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "900+10"]
+[ECO "C47"]
+[Opening "Four Knights Game: Scotch Variation Accepted"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nf6 3. Nc3 Nc6 4. d4 exd4 5. Nxd4 Bb4 6. Nxc6 bxc6 7. e5 Qe7 8. Qe2 Nd5 9. Bd2 Nxc3 10. bxc3 Bc5 11. Rd1 O-O 12. c4 f6 13. f4 fxe5 14. Qxe5 Qxe5+ 15. fxe5 Bf2+ 16. Ke2 d6 17. h3 Be6 18. Ba5 dxe5 19. Bxc7 Bd4 20. Kd3 Rf2 21. g4 Re8 22. Re1 c5 23. c3 Rf3+ 24. Ke4 Rxc3 25. Rh2 Rf8 26. Bxe5 Rxf1 27. Rxf1 Re3+ 28. Kf4 Rxe5 29. Rc2 h5 30. Rf3 g5+ 31. Kg3 hxg4 32. hxg4 Re4 33. Ra3 Be5+ 34. Kf3 Rf4+ 35. Ke3 Bd4+ 36. Kd2 Rf2+ 37. Kc1 Rf1+ 38. Kd2 Bxg4 39. Rcc3 Bxc3+ 40. Kxc3 Rf3+ 41. Kb2 Rxa3 42. Kxa3 Bd7 43. Kb2 g4 44. Ka1 g3 45. Kb1 g2 46. Ka1 g1=Q+ 47. Kb2 Bf5 48. Kc3 Qd1 49. Kb2 Qb1+ 50. Ka3 Qb4# 0-1
+

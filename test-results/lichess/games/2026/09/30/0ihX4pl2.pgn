@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/0ihX4pl2"]
+[Date "2026.09.30"]
+[Round "-"]
+[White "Iskelt-Corax"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "0ihX4pl2"]
+[UTCDate "2026.09.30"]
+[UTCTime "20:16:51"]
+[WhiteElo "1882"]
+[BlackElo "2004"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+3"]
+[ECO "C65"]
+[Opening "Ruy Lopez: Berlin Defense, Beverwijk Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Bc5 5. Bxc6 dxc6 6. Nxe5 Nxe4 7. Nd3 Be7 8. Re1 Nd6 9. Qe2 Nf5 10. Ne5 O-O 11. Nc3 Nd4 12. Qd3 Bf5 13. Ne4 Qd5 14. Nf3 Bc5 15. c4 Qd8 16. Nxd4 Qxd4 17. Qxd4 Bxd4 18. d3 Rfe8 19. Rb1 Be5 20. Be3 Rad8 21. f4 Bd4 22. Bf2 Kf8 23. Bxd4 Rxd4 24. Nc5 b6 25. Rxe8+ Kxe8 26. Re1+ Kd8 27. Ne4 Rxd3 28. Ng3 Bd7 29. Nh5 Rd2 30. b3 c5 31. Nxg7 Rxa2 32. Rd1 Kc8 33. Rd3 a5 34. Rg3 a4 35. bxa4 Ra1+ 36. Kf2 Rxa4 37. Rc3 Ra2+ 38. Kf1 Bc6 39. g3 Rxh2 40. Ke1 Kd8 41. Rd3+ Ke7 42. Nf5+ Ke6 43. g4 Kf6 44. Re3 Bd7 45. Re5 Bxf5 46. Rxf5+ Kg7 47. Kd1 h6 48. g5 h5 49. Rf6 Rg2 50. Rh6 Rf2 51. Rf6 h4 52. Ke1 Rg2 53. Kf1 Rc2 54. Rh6 Rxc4 55. Rxh4 b5 56. Ke2 b4 57. Kd3 Rd4+ 58. Ke3 b3 59. Rh1 Rb4 60. f5 Rg4 61. Kd3 Rxg5 62. Kc4 Rxf5 63. Kxb3 Kf6 64. Kc4 Ke6 65. Rh6+ f6 66. Rh3 Rd5 67. Rh6 c6 68. Rg6 Rf5 69. Rg8 Re5 70. Rc8 Kd7 71. Rf8 f5 72. Rf6 Rd5 73. Kc3 Kc7 74. Rf7+ Kd6 75. Rf6+ Ke5 76. Rf7 f4 77. Re7+ Kf5 78. Rf7+ Ke4 79. Re7+ Re5 80. Rf7 Ke3 81. Kc2 f3 82. Kd1 f2 83. Rf6 Re4 84. Rxf2 Kxf2 85. Kc2 Ke3 86. Kc3 Rb4 87. Kc2 c4 88. Kc3 c5 89. Kc2 Rb3 90. Kd1 Rc3 91. Ke1 Rc1# 0-1
+

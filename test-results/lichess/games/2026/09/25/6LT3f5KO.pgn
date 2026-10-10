@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/6LT3f5KO"]
+[Date "2026.09.25"]
+[Round "-"]
+[White "myChessJava"]
+[Black "uzenatch"]
+[Result "1-0"]
+[GameId "6LT3f5KO"]
+[UTCDate "2026.09.25"]
+[UTCTime "04:17:21"]
+[WhiteElo "2111"]
+[BlackElo "1825"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+3"]
+[ECO "C47"]
+[Opening "Four Knights Game: Italian Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nc3 Nc6 3. Nf3 Nf6 4. Bc4 Nxe4 5. Nxe4 d5 6. Bd3 dxe4 7. Bxe4 Ne7 8. c3 f5 9. Bc2 e4 10. Nd4 c5 11. Ba4+ Kf7 12. Ne2 Be6 13. Nf4 c4 14. Nxe6 Kxe6 15. O-O Qa5 16. Re1 Nd5 17. Bc2 Qb6 18. Qe2 Qc5 19. b4 cxb3 20. axb3 Bd6 21. g3 Be5 22. Bb2 Bf6 23. b4 Qc6 24. b5 Qc5 25. d4 Qd6 26. f3 e3 27. c4 Ne7 28. Qxe3+ Kf7 29. c5 Qd7 30. Qb3+ Nd5 31. c6 bxc6 32. bxc6 Qxc6 33. Bxf5 Rhb8 34. Rxa7+ Rxa7 35. Qxb8 Rb7 36. Qa8 Nc7 37. Qa2+ Qd5 38. Be6+ Qxe6 39. Rxe6 Nxe6 40. d5 Rxb2 41. dxe6+ Kg6 42. Qd5 Kh6 43. g4 Rb1+ 44. Kg2 Rb2+ 45. Kh3 g6 46. f4 g5 47. e7 Re2 48. fxg5+ Bxg5 49. Qc6+ Kg7 50. e8=Q Rxe8 51. Qxe8 h6 52. Kg3 Bf6 53. Kf4 Kh7 54. Kf5 Bb2 55. Qg6+ Kh8 56. Qf7 Bd4 57. Kg6 Be3 58. Qe8# 1-0
+

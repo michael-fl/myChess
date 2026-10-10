@@ -1,0 +1,22 @@
+[Event "casual rapid game"]
+[Site "https://lichess.org/dJIzQLz8"]
+[Date "2026.10.02"]
+[Round "-"]
+[White "myChessJava"]
+[Black "Angela_eng"]
+[Result "1-0"]
+[GameId "dJIzQLz8"]
+[UTCDate "2026.10.02"]
+[UTCTime "18:23:19"]
+[WhiteElo "2258"]
+[BlackElo "1978"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+2"]
+[ECO "B10"]
+[Opening "Caro-Kann Defense"]
+[Termination "Normal"]
+
+1. e4 c6 2. Nf3 d5 3. exd5 cxd5 4. Nc3 Nc6 5. d4 Nf6 6. Bb5 e6 7. Ne5 Qb6 8. O-O a6 9. Bxc6+ bxc6 10. Na4 Qa5 11. c4 Bd6 12. Bf4 Bxe5 13. Bxe5 dxc4 14. Qc2 Nd7 15. Bxg7 Rg8 16. Be5 Nxe5 17. dxe5 Rg4 18. Rad1 Bb7 19. h3 Rg6 20. Qxc4 c5 21. g3 Bd5 22. Qh4 Bc6 23. Nc3 Qb4 24. Qxh7 Qxb2 25. Rd3 Qb4 26. Rfd1 Ke7 27. a3 Qc4 28. Qh5 Rc8 29. Qe2 Qf4 30. Re3 c4 31. Kh2 Qf5 32. Rd4 Bb7 33. Qb2 Bc6 34. g4 Qg5 35. Rxc4 Bd7 36. Rd4 Rd8 37. Qb7 Qh4 38. Ne4 f5 39. gxf5 Qh5 40. Red3 Kf8 41. Rxd7 Re8 42. fxg6 Qxg6 43. Nf6 a5 44. Rg3 Qxg3+ 45. Kxg3 Re7 46. Rxe7 a4 47. Rf7# 1-0
+
