@@ -1,5 +1,6 @@
 package org.michaelfl.mychess;
 
+import org.michaelfl.mychess.TimeManagement.TimeControlInput;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.IterationInfo;
@@ -33,8 +34,8 @@ import java.util.concurrent.atomic.AtomicReference;
  * {@code btime} is required. {@code winc} / {@code binc} and {@code movestogo}
  * are optional and are read independently of one another, because the protocol
  * guarantees no grouping — a GUI may send an increment for one color only.
- * A missing {@code movestogo} falls back to {@link #DEFAULT_MOVES_TO_GO}, a
- * missing increment to zero; see {@link #computeClockBudgetMillis}.
+ * A missing {@code movestogo} falls back to {@code TimeManagement#DEFAULT_MOVES_TO_GO}, a
+ * missing increment to zero; see {@code TimeManagement#computeClockBudgetMillis}.
  *
  * @author Michael Fleischhauer
  */
@@ -50,20 +51,14 @@ final class UciHandler {
     private static final String ENGINE_NAME = "myChess " + Version.get();
     private static final String ENGINE_AUTHOR = "Michael Fleischhauer";
 
-    /** Default fallback when wtime/btime is given without movestogo. */
-    private static final int DEFAULT_MOVES_TO_GO = 30;
-
-    /** Safety margin per move when computing time budget from clock. */
-    private static final int TIME_SAFETY_MARGIN_MS = 50;
-
-    /** Floor on per-move time so search has at least a fraction of a second. */
-    private static final int MIN_BUDGET_MS = 50;
-
-    /** Ceiling on go infinite / go depth N (effectively unbounded). 24 h in ms. */
-    private static final int INFINITE_MILLIS = 24 * 60 * 60 * 1_000;
-
-    /** Percentage of the increment to be used per move. */
-    private static final int INCREMENT_USE_PERCENTAGE = 80;
+    /**
+     * The result of our last search in the current game: the ply it started at and the score it
+     * reported, from the side to move's point of view.
+     *
+     * @param ply         ply count of the searched position
+     * @param weightCenti score in centipawns, or {@code null} if the search produced no move
+     */
+    record PlyAndWeight(int ply, Integer weightCenti) { }
 
     private final MyChessEnv env;
     private final BufferedReader in;
@@ -74,6 +69,10 @@ final class UciHandler {
     private final AtomicReference<NextMoveTask> currentTask = new AtomicReference<>();
     private final AtomicReference<Game> currentGame = new AtomicReference<>();
     private final AtomicReference<Thread> currentWatcher = new AtomicReference<>();
+    private PlyAndWeight previousPlyAndWeight;
+
+    /** Engine configuration of the most recent {@code go}; see {@link #getLastEngineConfig()}. */
+    private volatile EngineConfig lastEngineConfig;
 
     /**
      * Per-game identifier emitted on every {@code [move]} status line so that
@@ -117,6 +116,35 @@ final class UciHandler {
 
     Board getBoard() {
         return board;
+    }
+
+    /**
+     * Engine configuration built for the most recent {@code go}, i.e. exactly what that search
+     * received. Package-private so tests can check the values the handler passes to the engine,
+     * such as {@link EngineConfig#getPreviousOwnScoreCenti()}.
+     *
+     * @return the configuration of the last {@code go}, or {@code null} before the first one
+     */
+    EngineConfig getLastEngineConfig() {
+        return lastEngineConfig;
+    }
+
+    /**
+     * Ply at which our last search in this game started.
+     *
+     * @return the stored ply, or {@code null} if nothing is stored (new game, or no search yet)
+     */
+    synchronized Integer getPreviousPly() {
+        return previousPlyAndWeight != null ? previousPlyAndWeight.ply : null;
+    }
+
+    /**
+     * Score of our last search in this game, in centipawns from our point of view.
+     *
+     * @return the stored score, or {@code null} if nothing is stored or that search produced no move
+     */
+    synchronized Integer getPreviousWeightCenti() {
+        return previousPlyAndWeight != null ? previousPlyAndWeight.weightCenti : null;
     }
 
     /**
@@ -189,12 +217,13 @@ final class UciHandler {
         }
     }
 
-    private void handleNewGame() {
+    private synchronized void handleNewGame() {
         cancelCurrentTask();
         shutdownCurrentGame();
         this.board = Board.createNewGame();
         this.gameId = UUID.randomUUID().toString();
         this.gameStartMs = System.currentTimeMillis();
+        this.previousPlyAndWeight = null;
 
         ChessEngine.resetIterationTimings();
         tt.clear();
@@ -247,7 +276,8 @@ final class UciHandler {
     }
 
     private void handleGo(String line) {
-        var args = parseGoArgs(line, board.getGameStatus().getTurn());
+        final int turnAtStart = board.getGameStatus().getTurn();
+        var args = parseGoArgs(line, turnAtStart);
 
         cancelCurrentTask();
         shutdownCurrentGame();
@@ -255,17 +285,21 @@ final class UciHandler {
         // Snapshot for the per-move [move] / [go] status logs: color and
         // full-move number are derived from the position at search start,
         // not from any intermediate state inside the search.
-        final int turnAtStart = board.getGameStatus().getTurn();
         final int plyCountAtStart = board.getGameStatus().getPlyCount();
+
+        Integer previousOwnScoreCenti = getPreviousOwnScoreCenti(plyCountAtStart);
 
         logGoStatus(args, turnAtStart, plyCountAtStart);
 
         var engineConfig = new EngineConfig.Builder()
                 .maxDepth(args.maxDepth)
                 .millisPerMove(args.timeBudgetMillis)
+                .remainingClockMillis(remainingClockMillis(args, turnAtStart))
                 .silent(true)
                 .setTranspositionTable(tt)
+                .setPreviousOwnScoreCenti(previousOwnScoreCenti)
                 .build();
+        lastEngineConfig = engineConfig;
         var gameConfig = new GameConfig(MyChessEngine.class, engineConfig);
 
         var game = new Game(gameConfig, board);
@@ -281,9 +315,42 @@ final class UciHandler {
         // Virtual threads are always daemons, so no explicit daemon flag.
         Thread watcher = Thread.ofVirtual()
                 .name("uci-search-watcher")
-                .start(() -> awaitAndEmitBestmove(game, task, args.timeBudgetMillis,
+                .start(() -> awaitAndEmitBestmove(gameId, game, task, args.timeBudgetMillis,
                         turnAtStart, plyCountAtStart, goStartMs));
         currentWatcher.set(watcher);
+    }
+
+    /**
+     * The stored score of our previous move, if it belongs to the position about to be searched.
+     * See {@link #previousOwnScoreCentiFor}.
+     */
+    private synchronized Integer getPreviousOwnScoreCenti(int plyCountAtStart) {
+        return previousOwnScoreCentiFor(previousPlyAndWeight, plyCountAtStart);
+    }
+
+    /**
+     * Score of our previous move, if it is comparable with the search about to start.
+     *
+     * <p>It is comparable only when exactly two plies lie between the two searches: our previous
+     * move and the opponent's reply. Any other distance means the GUI jumped to another position,
+     * resent the same one, or skipped a move, and the stored score says nothing about this one.
+     *
+     * @param prevPlyAndWeight the stored result of our last search, or {@code null} if none
+     * @param plyCountAtStart  ply count of the position about to be searched
+     * @return the stored score in centipawns, or {@code null} if there is none or it is not comparable
+     */
+    static Integer previousOwnScoreCentiFor(PlyAndWeight prevPlyAndWeight, int plyCountAtStart) {
+        if (prevPlyAndWeight != null && prevPlyAndWeight.ply + 2 != plyCountAtStart) {
+            prevPlyAndWeight = null;
+        }
+
+        return prevPlyAndWeight != null ? prevPlyAndWeight.weightCenti : null;
+    }
+
+    private int remainingClockMillis(GoArgs args, int turn) {
+        Integer millisOpt = turn == GameStatus.TURN_WHITE ? args.wtime : args.btime;
+
+        return millisOpt != null ? millisOpt : Integer.MAX_VALUE;
     }
 
     private void handleStop() {
@@ -292,7 +359,7 @@ final class UciHandler {
 
     // ---- Search lifecycle ----
 
-    private void awaitAndEmitBestmove(Game game, NextMoveTask task, int budgetMillis,
+    private void awaitAndEmitBestmove(String gameId, Game game, NextMoveTask task, int budgetMillis,
                                       int turnAtStart, int plyCountAtStart, long goStartMs) {
         MoveAndWeight result = null;
         try {
@@ -330,6 +397,9 @@ final class UciHandler {
                 bestWeightStm = lastIterationWeight.get();
             }
 
+            Integer prevWeightCenti = bestmove != 0 ? Math.round(bestWeightStm * 100) : null;
+            setPreviousPlyAndWeight(gameId, plyCountAtStart, prevWeightCenti);
+
             if (bestmove != 0 && !isLegalInCurrentBoard(bestmove)) {
                 int fallback = firstLegalInCurrentBoard();
                 Log.error("[bestmove-validate] selected " + UciMoveParser.toUci(bestmove, board)
@@ -348,6 +418,22 @@ final class UciHandler {
             currentWatcher.compareAndSet(Thread.currentThread(), null);
             lastIterationFirstMove.set(0);
             lastIterationWeight.set(0f);
+        }
+    }
+
+    /**
+     * Stores the result of a finished search, unless a new game has started meanwhile.
+     *
+     * <p>Called on the watcher thread. The {@code gameId} check prevents a search that was still
+     * running during {@code ucinewgame} from writing its old score into the new game.
+     *
+     * @param gameId      game the search belonged to
+     * @param ply         ply count the search started at
+     * @param weightCenti score in centipawns, or {@code null} if the search produced no move
+     */
+    private synchronized void setPreviousPlyAndWeight(String gameId, int ply, Integer weightCenti) {
+        if (gameId.equals(this.gameId)) {
+            previousPlyAndWeight = new PlyAndWeight(ply, weightCenti);
         }
     }
 
@@ -765,7 +851,7 @@ final class UciHandler {
 
     private static GoArgs parseGoArgs(String line, int turn) {
         RawGoTokens raw = readGoTokens(line);
-        int budgetMillis = computeBudgetMillis(raw, turn);
+        int budgetMillis = TimeManagement.computeMoveBudgetMillis(toTimeControlInput(raw), turn);
 
         return new GoArgs(raw.maxDepth, budgetMillis,
                 raw.wtime, raw.btime, raw.movestogo, raw.movetimeMs, raw.winc, raw.binc);
@@ -793,51 +879,8 @@ final class UciHandler {
         return raw;
     }
 
-    private static int computeBudgetMillis(RawGoTokens raw, int turn) {
-        if (raw.infinite) {
-            return INFINITE_MILLIS;
-        }
-        if (raw.movetimeMs != null) {
-            // Subtract a safety margin: the search checks isTimeout() only
-            // every 10 000 nodes, so a hard limit can overshoot by a few ms.
-            // Strict GUIs treat that as a time forfeit.
-            return Math.max(MIN_BUDGET_MS, raw.movetimeMs - TIME_SAFETY_MARGIN_MS);
-        }
-
-        Integer ourMs = (turn == GameStatus.TURN_WHITE) ? raw.wtime : raw.btime;
-        if (ourMs != null) {
-            Integer ourIncMs = (turn == GameStatus.TURN_WHITE) ? raw.winc : raw.binc;
-            int movesToGo = raw.movestogo != null ? raw.movestogo : DEFAULT_MOVES_TO_GO;
-            return computeClockBudgetMillis(ourMs, ourIncMs != null ? ourIncMs : 0, movesToGo);
-        }
-
-        return INFINITE_MILLIS;   // depth-only or no args
-    }
-
-    /**
-     * Per-move budget from the side-to-move's own clock: a share of the remaining
-     * time plus {@link #INCREMENT_USE_PERCENTAGE} of the increment it is about to
-     * earn back, never more than the clock itself minus
-     * {@link #TIME_SAFETY_MARGIN_MS} and never less than {@link #MIN_BUDGET_MS}.
-     *
-     * <p>{@code movesToGo} is a spending <em>rate</em>, not a prediction of the
-     * game's length: it is re-applied to the shrinking remainder on every move, so
-     * the budget decays geometrically rather than running out at move
-     * {@code movesToGo}. Spending less than the full increment keeps that decay
-     * from being cancelled out on increment controls.
-     *
-     * @param ourMs     remaining clock of the side to move, in milliseconds; may
-     *                  be zero or negative when the GUI reports an overstepped clock
-     * @param ourIncMs  per-move increment of the side to move, zero if none was sent
-     * @param movesToGo moves the budget is spread over — {@code movestogo} if the
-     *                  GUI sent one, otherwise {@link #DEFAULT_MOVES_TO_GO}
-     * @return the search budget in milliseconds, at least {@link #MIN_BUDGET_MS}
-     */
-    private static int computeClockBudgetMillis(int ourMs, int ourIncMs, int movesToGo) {
-        int clockBudgetMs = ourMs / (movesToGo + 1) + (INCREMENT_USE_PERCENTAGE * ourIncMs) / 100;
-
-        //noinspection MathClampMigration
-        return Math.max(Math.min(clockBudgetMs, ourMs - TIME_SAFETY_MARGIN_MS), MIN_BUDGET_MS);
+    private static TimeControlInput toTimeControlInput(RawGoTokens raw) {
+        return new TimeControlInput(raw.movetimeMs, raw.wtime, raw.btime, raw.movestogo, raw.infinite, raw.winc, raw.binc);
     }
 
     /**
