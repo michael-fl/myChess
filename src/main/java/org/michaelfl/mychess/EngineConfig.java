@@ -17,17 +17,21 @@ public final class EngineConfig {
     private final TranspositionTable tt;
     private final int maxDepth;
     private final int millisPerMove;
+    private final int remainingClockMillis;
     private final boolean silent;
     private final boolean enableThreefoldRepetition;
     private final boolean enableFiftyMovesRule;
+    private final Integer previousOwnScoreCenti;
 
-    private EngineConfig(TranspositionTable tt, int maxDepth, int millisPerMove, boolean silent, boolean enableThreefoldRepetition, boolean enableFiftyMovesRule) {
-        this.tt = tt;
-        this.maxDepth = maxDepth;
-        this.millisPerMove = millisPerMove;
-        this.silent = silent;
-        this.enableThreefoldRepetition = enableThreefoldRepetition;
-        this.enableFiftyMovesRule = enableFiftyMovesRule;
+    private EngineConfig(Builder builder) {
+        this.tt = builder.tt;
+        this.maxDepth = builder.maxDepth;
+        this.millisPerMove = builder.millisPerMove;
+        this.remainingClockMillis = builder.remainingClockMillis;
+        this.silent = builder.silent;
+        this.enableThreefoldRepetition = builder.enableThreefoldRepetition;
+        this.enableFiftyMovesRule = builder.enableFiftyMovesRule;
+        this.previousOwnScoreCenti = builder.previousOwnScoreCenti;
     }
 
     /**
@@ -49,6 +53,18 @@ public final class EngineConfig {
         return millisPerMove;
     }
 
+    /**
+     * Remaining clock of the side to move at the start of this search, in milliseconds.
+     *
+     * @return the clock the GUI sent ({@code wtime} or {@code btime}), possibly zero or negative
+     *         for an overstepped clock; {@link Integer#MAX_VALUE} if no clock was sent
+     *         ({@code go movetime}, {@code go depth}, {@code go infinite}, or a config built
+     *         without one) — that value means "no clock", not a real remaining time
+     */
+    public final int getRemainingClockMillis() {
+        return remainingClockMillis;
+    }
+
     public final int getMaxQuiescenceDepth() {
         return DEFAULT_MAX_QUIESCENCE_SEARCH_DEPTH;
     }
@@ -65,13 +81,26 @@ public final class EngineConfig {
         return enableFiftyMovesRule;
     }
 
+    /**
+     * Score of our previous move, for comparison with the scores of this search.
+     *
+     * @return the score in centipawns from the side to move's point of view, or {@code null} if
+     *         there is no comparable previous score (first move, new game, or a position that does
+     *         not follow our previous move)
+     */
+    public Integer getPreviousOwnScoreCenti() {
+        return previousOwnScoreCenti;
+    }
+
     public static final class Builder {
         private TranspositionTable tt;
         private int maxDepth = Integer.MAX_VALUE;
         private int millisPerMove = DEFAULT_MILLIS_PER_MOVE;
+        private int remainingClockMillis = Integer.MAX_VALUE;
         private boolean silent = false;
         private boolean enableThreefoldRepetition = true;
         private boolean enableFiftyMovesRule = true;
+        private Integer previousOwnScoreCenti;
 
         /**
          * Provide an explicit {@link TranspositionTable} instance for the
@@ -86,6 +115,17 @@ public final class EngineConfig {
             return this;
         }
 
+        /**
+         * Sets the score of our previous move; see {@link EngineConfig#getPreviousOwnScoreCenti()}.
+         *
+         * @param previousOwnScoreCenti score in centipawns, or {@code null} if none is comparable
+         * @return this builder
+         */
+        public Builder setPreviousOwnScoreCenti(Integer previousOwnScoreCenti) {
+            this.previousOwnScoreCenti = previousOwnScoreCenti;
+            return this;
+        }
+
         public Builder maxDepth(int maxDepth) {
             this.maxDepth = maxDepth;
             return this;
@@ -93,6 +133,11 @@ public final class EngineConfig {
 
         public Builder millisPerMove(int millisPerMove) {
             this.millisPerMove = millisPerMove;
+            return this;
+        }
+
+        public Builder remainingClockMillis(int remainingClockMillis) {
+            this.remainingClockMillis = remainingClockMillis;
             return this;
         }
 
@@ -116,7 +161,7 @@ public final class EngineConfig {
                 tt = TranspositionTable.getDefaultInstance();
             }
 
-            return new EngineConfig(tt, maxDepth, millisPerMove, silent, enableThreefoldRepetition, enableFiftyMovesRule);
+            return new EngineConfig(this);
         }
     }
 }

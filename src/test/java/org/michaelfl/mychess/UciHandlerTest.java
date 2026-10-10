@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author Michael Fleischhauer
  */
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({"SameParameterValue", "BusyWait", "java:S2925"})
 class UciHandlerTest {
 
     private static final String START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -45,6 +45,40 @@ class UciHandlerTest {
 
     private static final String BESTMOVE_LINE_REGEX = "^bestmove [a-h][1-8][a-h][1-8][qrbn]?$";
     private static final String BESTMOVE_OR_NULL_REGEX = "^bestmove (0000|[a-h][1-8][a-h][1-8][qrbn]?)$";
+
+    /** A well-formed UCI {@code info} line with depth, nodes, time, score and PV. */
+    private static final Pattern INFO_LINE_PATTERN = Pattern.compile(
+            "^info depth \\d+ nodes \\d+ time \\d+ score (cp|mate) -?\\d+ "
+                    + "pv [a-h][1-8][a-h][1-8][qrbn]?( [a-h][1-8][a-h][1-8][qrbn]?)*$");
+
+    /** A move in UCI long algebraic notation, e.g. {@code e2e4} or {@code e7e8q}. */
+    private static final Pattern UCI_MOVE_PATTERN = Pattern.compile("[a-h][1-8][a-h][1-8][qrbn]?");
+
+    /** The game id in a {@code [move]} log line. */
+    private static final Pattern MOVE_LOG_GAME_ID_PATTERN = Pattern.compile("\\[move] game=(\\S+) ");
+
+    /** The {@code elapsed=<ms>} field of a {@code [move]} log line. */
+    private static final Pattern ELAPSED_FIELD_PATTERN = Pattern.compile("\\belapsed=\\d+");
+
+    /** The fixed head of a {@code [go]} log line. */
+    private static final Pattern GO_LOG_HEAD_PATTERN = Pattern.compile("\\[go] game=\\S+ color=[WB] move=\\d+ ");
+
+    /** The {@code budget=<ms>} field of a {@code [go]} log line. */
+    private static final Pattern BUDGET_FIELD_PATTERN = Pattern.compile("\\bbudget=(\\d+)");
+
+    /** How long a test waits for a {@code go depth 2} watcher to store its score. */
+    private static final long SEARCH_STORE_WAIT_MS = 10_000;
+
+    /** Ply of the stored search result in the {@code previousOwnScoreCentiFor} tests. */
+    private static final int STORED_PLY = 10;
+
+    /** Score of the stored search result in the {@code previousOwnScoreCentiFor} tests, in centipawns. */
+    private static final int STORED_SCORE = 35;
+
+    private static final String GO_DEPTH_2 = "go depth 2";
+    private static final String POSITION_START = "position startpos";
+    private static final String POSITION_AFTER_TWO_PLIES = "position startpos moves e2e4 e7e5";
+    private static final String POSITION_AFTER_FOUR_PLIES = "position startpos moves e2e4 e7e5 g1f3 b8c6";
 
     private final PrintStream originalOut = System.out;
     private final PrintStream originalErr = System.err;
@@ -328,13 +362,11 @@ class UciHandlerTest {
         var response = runHandler("position startpos\ngo depth 3\nquit\n");
 
         // Each info line must be well-formed per UCI.
-        String infoRegex = "^info depth \\d+ nodes \\d+ time \\d+ score (cp -?\\d+|mate -?\\d+) "
-                + "pv [a-h][1-8][a-h][1-8][qrbn]?( [a-h][1-8][a-h][1-8][qrbn]?)*$";
         var infoLines = response.lines().stream().filter(l -> l.startsWith("info ")).toList();
         assertFalse(infoLines.isEmpty(),
                 "no info lines emitted; got:\n" + String.join("\n", response.lines()));
         for (String info : infoLines) {
-            assertTrue(info.matches(infoRegex), "info line malformed: '" + info + "'");
+            assertTrue(INFO_LINE_PATTERN.matcher(info).matches(), "info line malformed: '" + info + "'");
         }
 
         // Ordering: at least one info line precedes bestmove.
@@ -392,7 +424,7 @@ class UciHandlerTest {
                                         + "; full output:\n" + String.join("\n", response.lines())));
 
                 String uci = bestmoveLine.substring("bestmove ".length());
-                assertTrue(uci.matches("[a-h][1-8][a-h][1-8][qrbn]?"),
+                assertTrue(UCI_MOVE_PATTERN.matcher(uci).matches(),
                         "ill-formed bestmove at ply " + ply + ": '" + bestmoveLine + "'");
 
                 MoveDescription md = UciMoveParser.parse(uci, shadow.getBoard());
@@ -468,7 +500,7 @@ class UciHandlerTest {
                 assertNotNull(bestmoveLine, "no bestmove emitted at ply " + ply);
 
                 String uci = bestmoveLine.substring("bestmove ".length());
-                assertTrue(uci.matches("[a-h][1-8][a-h][1-8][qrbn]?"),
+                assertTrue(UCI_MOVE_PATTERN.matcher(uci).matches(),
                         "ill-formed bestmove at ply " + ply + ": '" + bestmoveLine + "'");
 
                 MoveDescription md = UciMoveParser.parse(uci, shadow.getBoard());
@@ -488,10 +520,9 @@ class UciHandlerTest {
             // between this single-session test and the multi-handler variant.
             // `.*` prefix tolerates the leading timestamp that Log prepends.
             String stderr = capturedErr.toString(StandardCharsets.UTF_8);
-            Pattern moveLogPattern = Pattern.compile(".*\\[move] game=(\\S+) .*");
             List<String> idsPerPly = stderr.lines()
-                    .map(moveLogPattern::matcher)
-                    .filter(Matcher::matches)
+                    .map(MOVE_LOG_GAME_ID_PATTERN::matcher)
+                    .filter(Matcher::find)
                     .map(m -> m.group(1))
                     .toList();
             assertEquals(plies, idsPerPly.size(),
@@ -505,13 +536,13 @@ class UciHandlerTest {
             // log line per ply (same count). Both lines tolerate the
             // timestamp prefix that Log now prepends.
             long elapsedFieldCount = stderr.lines()
-                    .filter(l -> l.matches(".*\\[move] .*\\belapsed=\\d+.*"))
+                    .filter(l -> l.contains("[move] ") && ELAPSED_FIELD_PATTERN.matcher(l).find())
                     .count();
             assertEquals(plies, elapsedFieldCount,
                     "every [move] log line must carry an elapsed=<ms> field");
 
             long goLineCount = stderr.lines()
-                    .filter(l -> l.matches(".*\\[go] game=\\S+ color=[WB] move=\\d+ .*budget=\\d+.*"))
+                    .filter(l -> GO_LOG_HEAD_PATTERN.matcher(l).find() && BUDGET_FIELD_PATTERN.matcher(l).find())
                     .count();
             assertEquals(plies, goLineCount,
                     "expected one [go] log line per ply, got " + goLineCount);
@@ -617,26 +648,42 @@ class UciHandlerTest {
      * Budget the handler computed for the last {@code go}, read back from the
      * {@code [go] … budget=<ms>} line it writes to stderr.
      *
-     * <p>{@code computeBudgetMillis} is private and the budget never reaches stdout, so this
+     * <p>{@code UciHandler} keeps the budget internal, and it never reaches stdout, so this
      * log line is the only seam. That is not a workaround: the line exists precisely so a
      * time-forfeit episode can be reconstructed afterward, and pinning it here also protects
      * its format.
      */
     private int budgetOf(String goLine) {
         runHandler("uci\nposition startpos\n" + goLine + "\nquit\n");
-        var matcher = java.util.regex.Pattern.compile("\\[go][^\\n]*budget=(\\d+)")
-                .matcher(capturedErr.toString(StandardCharsets.UTF_8));
+        Integer budget = lastGoBudget("");
 
-        // capturedErr accumulates across runs within one test method, so take the LAST
-        // match rather than the first — otherwise a second call silently reads the first
-        // run's budget, which is exactly the way this helper failed when it was written.
-        String budget = null;
-        while (matcher.find()) {
-            budget = matcher.group(1);
-        }
         assertNotNull(budget, "the handler must log a [go] line with a budget for: " + goLine);
 
-        return Integer.parseInt(budget);
+        return budget;
+    }
+
+    /**
+     * Budget from the last {@code [go]} log line that contains {@code requiredToken}, or {@code null}.
+     *
+     * <p>capturedErr accumulates across runs within one test method, so the LAST matching line counts
+     * rather than the first — otherwise a second call silently reads the first run's budget, which is
+     * exactly the way the budget helper failed when it was written. Works line by line, so no regex has
+     * to scan across the whole log.
+     */
+    private Integer lastGoBudget(String requiredToken) {
+        Integer budget = null;
+
+        for (String line : capturedErr.toString(StandardCharsets.UTF_8).split("\\R")) {
+            if (line.contains("[go]") && line.contains(requiredToken)) {
+                var matcher = BUDGET_FIELD_PATTERN.matcher(line);
+
+                if (matcher.find()) {
+                    budget = Integer.parseInt(matcher.group(1));
+                }
+            }
+        }
+
+        return budget;
     }
 
     /**
@@ -647,8 +694,8 @@ class UciHandlerTest {
      * otherwise drift the clock slowly downwards.
      *
      * <p>{@code go depth 1} bounds the search so the test costs milliseconds; the budget is
-     * still computed from the clock, since {@code computeBudgetMillis} only short-circuits on
-     * {@code infinite} and {@code movetime}.
+     * still computed from the clock, since {@code TimeManagement.computeMoveBudgetMillis}
+     * only short-circuits on {@code infinite} and {@code movetime}.
      */
     @Test
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
@@ -667,11 +714,10 @@ class UciHandlerTest {
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
     void goWithBinc_blackToMove_usesBlacksClockAndIncrement() {
         runHandler("uci\nposition startpos moves e2e4\ngo depth 1 wtime 600000 btime 60000 winc 9000 binc 1000\nquit\n");
-        var matcher = java.util.regex.Pattern.compile("\\[go][^\\n]*color=B[^\\n]*budget=(\\d+)")
-                .matcher(capturedErr.toString(StandardCharsets.UTF_8));
-        assertTrue(matcher.find(), "the handler must log a [go] line for black");
+        Integer budget = lastGoBudget("color=B");
 
-        assertEquals(60_000 / 31 + 800, Integer.parseInt(matcher.group(1)),
+        assertNotNull(budget, "the handler must log a [go] line for black");
+        assertEquals(60_000 / 31 + 800, budget,
                 "black must be budgeted from btime=60000 and binc=1000, not from white's 600000/9000");
     }
 
@@ -789,6 +835,237 @@ class UciHandlerTest {
                 "movestogo must set the divisor and the increment must be added on top of that share");
     }
 
+    // ---- previous own score (input for the time management) ----
+
+    /**
+     * After a completed search the handler remembers the ply the search started at and the
+     * score it reported, so the next {@code go} can compare against it.
+     */
+    @Test
+    @Timeout(value = 15, unit = TimeUnit.SECONDS)
+    void go_afterSearchCompletes_storesStartPlyAndScore() throws InterruptedException {
+        var handler = new UciHandler(new MyChessEnv(), new BufferedReader(new StringReader("")));
+
+        handler.handleLine("position startpos");
+        handler.handleLine("go depth 2");
+        awaitStoredScore(handler);
+
+        assertEquals(0, handler.getPreviousPly(),
+                "a search from the start position must be stored with start ply 0");
+        assertNotNull(handler.getPreviousWeightCenti(),
+                "a completed search must leave a score for the next go to compare against");
+    }
+
+    /** The stored ply is the ply of the searched position, i.e. the number of moves played. */
+    @Test
+    @Timeout(value = 15, unit = TimeUnit.SECONDS)
+    void go_afterMoves_storesTheSearchedPly() throws InterruptedException {
+        var handler = new UciHandler(new MyChessEnv(), new BufferedReader(new StringReader("")));
+
+        handler.handleLine("position startpos moves e2e4 e7e5");
+        handler.handleLine("go depth 2");
+        awaitStoredScore(handler);
+
+        assertEquals(2, handler.getPreviousPly(),
+                "after 1.e4 e5 the searched position is at ply 2, and that ply must be stored");
+    }
+
+    /** A new game must not inherit the previous game's score. */
+    @Test
+    @Timeout(value = 15, unit = TimeUnit.SECONDS)
+    void ucinewgame_afterCompletedSearch_clearsTheStoredScore() throws InterruptedException {
+        var handler = new UciHandler(new MyChessEnv(), new BufferedReader(new StringReader("")));
+
+        handler.handleLine("position startpos moves e2e4 e7e5");
+        handler.handleLine("go depth 2");
+        awaitStoredScore(handler);
+        handler.handleLine("ucinewgame");
+
+        assertNull(handler.getPreviousWeightCenti(), "ucinewgame must clear the stored score");
+        assertNull(handler.getPreviousPly(), "ucinewgame must clear the stored ply");
+    }
+
+    // ---- EngineConfig.getPreviousOwnScoreCenti during a game ----
+
+    /** The very first search of a session has nothing to compare against. */
+    @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
+    void engineConfig_firstGo_hasNoPreviousScore() throws InterruptedException {
+        var handler = new UciHandler(new MyChessEnv(), new BufferedReader(new StringReader("")));
+
+        var config = goAndAwait(handler, POSITION_START, 0);
+
+        assertNull(config.getPreviousOwnScoreCenti(), "the first go must reach the engine without a previous score");
+    }
+
+    /**
+     * A regular game: our move, the opponent's reply, our next move. Each search must receive exactly
+     * the score the previous own search reported.
+     */
+    @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
+    void engineConfig_duringAGame_carriesTheScoreOfOurPreviousMove() throws InterruptedException {
+        var handler = new UciHandler(new MyChessEnv(), new BufferedReader(new StringReader("")));
+
+        goAndAwait(handler, POSITION_START, 0);
+        Integer scoreAtPly0 = handler.getPreviousWeightCenti();
+
+        var configAtPly2 = goAndAwait(handler, POSITION_AFTER_TWO_PLIES, 2);
+        Integer scoreAtPly2 = handler.getPreviousWeightCenti();
+
+        var configAtPly4 = goAndAwait(handler, POSITION_AFTER_FOUR_PLIES, 4);
+
+        assertEquals(scoreAtPly0, configAtPly2.getPreviousOwnScoreCenti(),
+                "the search at ply 2 must receive the score of our search at ply 0");
+        assertEquals(scoreAtPly2, configAtPly4.getPreviousOwnScoreCenti(),
+                "the search at ply 4 must receive the score of our search at ply 2");
+    }
+
+    /** The GUI jumps to a position that does not follow our previous move. */
+    @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
+    void engineConfig_afterAJumpToAnotherPosition_hasNoPreviousScore() throws InterruptedException {
+        var handler = new UciHandler(new MyChessEnv(), new BufferedReader(new StringReader("")));
+
+        goAndAwait(handler, POSITION_START, 0);
+        var config = goAndAwait(handler, POSITION_AFTER_FOUR_PLIES, 4);
+
+        assertNull(config.getPreviousOwnScoreCenti(),
+                "four plies after our last search a move of ours is missing, so no previous score may be passed");
+    }
+
+    /** The same position searched again, e.g. a repeated go. */
+    @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
+    void engineConfig_samePositionAgain_hasNoPreviousScore() throws InterruptedException {
+        var handler = new UciHandler(new MyChessEnv(), new BufferedReader(new StringReader("")));
+
+        goAndAwait(handler, POSITION_START, 0);
+        handler.handleLine(POSITION_START);
+        handler.handleLine(GO_DEPTH_2);
+        var config = handler.getLastEngineConfig();
+
+        assertNull(config.getPreviousOwnScoreCenti(),
+                "searching the same position again has no previous own move to compare against");
+    }
+
+    /** A new game must not receive the last score of the previous game, even at a matching ply distance. */
+    @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
+    void engineConfig_afterUcinewgame_hasNoPreviousScore() throws InterruptedException {
+        var handler = new UciHandler(new MyChessEnv(), new BufferedReader(new StringReader("")));
+
+        goAndAwait(handler, POSITION_START, 0);
+        handler.handleLine("ucinewgame");
+        handler.handleLine(POSITION_AFTER_TWO_PLIES);
+        handler.handleLine(GO_DEPTH_2);
+        var config = handler.getLastEngineConfig();
+
+        assertNull(config.getPreviousOwnScoreCenti(),
+                "after ucinewgame the first search must not get the old game's score, although it is two plies later");
+    }
+
+    /**
+     * Sends the position and {@code go depth 2}, captures the engine configuration of that search and
+     * waits until the search has stored its result for the given ply.
+     */
+    private static EngineConfig goAndAwait(UciHandler handler, String positionLine, int ply)
+            throws InterruptedException {
+        handler.handleLine(positionLine);
+        handler.handleLine(GO_DEPTH_2);
+        var config = handler.getLastEngineConfig();
+        long deadline = System.currentTimeMillis() + SEARCH_STORE_WAIT_MS;
+
+        while (!isStoredFor(handler, ply) && System.currentTimeMillis() < deadline) {
+            Thread.sleep(10);
+        }
+
+        assertTrue(isStoredFor(handler, ply),
+                "the search at ply " + ply + " must store its score within " + SEARCH_STORE_WAIT_MS + " ms");
+
+        return config;
+    }
+
+    private static boolean isStoredFor(UciHandler handler, int ply) {
+        Integer storedPly = handler.getPreviousPly();
+
+        return storedPly != null && storedPly == ply && handler.getPreviousWeightCenti() != null;
+    }
+
+    // ---- previousOwnScoreCentiFor: when the stored score is comparable ----
+
+    /** Our previous move plus the opponent's reply: exactly two plies, so the score is used. */
+    @Test
+    void previousOwnScore_twoPliesLater_isTheStoredScore() {
+        var stored = new UciHandler.PlyAndWeight(STORED_PLY, STORED_SCORE);
+
+        assertEquals(STORED_SCORE, UciHandler.previousOwnScoreCentiFor(stored, STORED_PLY + 2),
+                "a search two plies after the stored one follows our previous move and must get its score");
+    }
+
+    @Test
+    void previousOwnScore_samePly_isNull() {
+        var stored = new UciHandler.PlyAndWeight(STORED_PLY, STORED_SCORE);
+
+        assertNull(UciHandler.previousOwnScoreCentiFor(stored, STORED_PLY),
+                "the same position searched again (e.g. a repeated go) has no previous own move");
+    }
+
+    @Test
+    void previousOwnScore_onePlyLater_isNull() {
+        var stored = new UciHandler.PlyAndWeight(STORED_PLY, STORED_SCORE);
+
+        assertNull(UciHandler.previousOwnScoreCentiFor(stored, STORED_PLY + 1),
+                "one ply later is the opponent's turn, so the stored score is not ours to compare");
+    }
+
+    @Test
+    void previousOwnScore_fourPliesLater_isNull() {
+        var stored = new UciHandler.PlyAndWeight(STORED_PLY, STORED_SCORE);
+
+        assertNull(UciHandler.previousOwnScoreCentiFor(stored, STORED_PLY + 4),
+                "a gap of four plies means a move of ours was skipped, so the score is stale");
+    }
+
+    @Test
+    void previousOwnScore_earlierPly_isNull() {
+        var stored = new UciHandler.PlyAndWeight(STORED_PLY, STORED_SCORE);
+
+        assertNull(UciHandler.previousOwnScoreCentiFor(stored, STORED_PLY - 2),
+                "a jump back to an earlier position must not reuse a score from a later one");
+    }
+
+    @Test
+    void previousOwnScore_storedWithoutMove_isNull() {
+        var stored = new UciHandler.PlyAndWeight(STORED_PLY, null);
+
+        assertNull(UciHandler.previousOwnScoreCentiFor(stored, STORED_PLY + 2),
+                "a search that produced no move stored no score, and none must come back");
+    }
+
+    @Test
+    void previousOwnScore_negativeScore_isPassedThroughUnchanged() {
+        var stored = new UciHandler.PlyAndWeight(STORED_PLY, -120);
+
+        assertEquals(-120, UciHandler.previousOwnScoreCentiFor(stored, STORED_PLY + 2),
+                "a losing score must come back with its sign, both scores are from our point of view");
+    }
+
+    /**
+     * Waits until the search watcher has stored its score. The watcher stores it just before
+     * it writes {@code bestmove}, on its own thread, so the test has to poll.
+     */
+    private static void awaitStoredScore(UciHandler handler) throws InterruptedException {
+        long deadline = System.currentTimeMillis() + SEARCH_STORE_WAIT_MS;
+
+        while (handler.getPreviousWeightCenti() == null && System.currentTimeMillis() < deadline) {
+            Thread.sleep(10);
+        }
+
+        assertNotNull(handler.getPreviousWeightCenti(),
+                "the search must store a score within " + SEARCH_STORE_WAIT_MS + " ms");
+    }
+
     /**
      * Run the UCI handler with the given synthetic stdin input. Blocks until the
      * input is fully consumed and any in-flight search watcher has emitted its
@@ -833,13 +1110,19 @@ class UciHandlerTest {
          * advances past the latest matched line.
          */
         UciResponse expectEachOf(String... patterns) {
+            Pattern[] compiled = new Pattern[patterns.length];
+
+            for (int p = 0; p < patterns.length; p++) {
+                compiled[p] = patterns[p].startsWith("^") ? Pattern.compile(patterns[p]) : null;
+            }
+
             boolean[] matched = new boolean[patterns.length];
             int newCursor = cursor;
 
             for (int i = cursor; i < lines.size(); i++) {
                 String line = lines.get(i);
                 for (int p = 0; p < patterns.length; p++) {
-                    if (!matched[p] && lineMatches(line, patterns[p])) {
+                    if (!matched[p] && lineMatches(line, patterns[p], compiled[p])) {
                         matched[p] = true;
                         newCursor = Math.max(newCursor, i + 1);
                         break;
@@ -883,10 +1166,12 @@ class UciHandlerTest {
             return lines;
         }
 
-        private static boolean lineMatches(String line, String pattern) {
-            if (pattern.startsWith("^")) {
-                return line.matches(pattern);
+        /** Regex match if {@code compiled} is set (pattern starting with {@code ^}), exact match otherwise. */
+        private static boolean lineMatches(String line, String pattern, Pattern compiled) {
+            if (compiled != null) {
+                return compiled.matcher(line).matches();
             }
+
             return line.equals(pattern);
         }
     }
