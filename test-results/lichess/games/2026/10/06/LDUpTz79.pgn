@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/LDUpTz79"]
+[Date "2026.10.06"]
+[Round "-"]
+[White "shrevenBOT"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "LDUpTz79"]
+[UTCDate "2026.10.06"]
+[UTCTime "19:14:59"]
+[WhiteElo "1722"]
+[BlackElo "2244"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "900+10"]
+[ECO "A45"]
+[Opening "Indian Defense"]
+[Termination "Normal"]
+
+1. d4 Nf6 2. Qd3 e6 3. c3 d5 4. g3 Nc6 5. h4 e5 6. dxe5 Nxe5 7. Qd4 Nc6 8. Qe3+ Ne4 9. b4 Nxb4 10. cxb4 Bxb4+ 11. Nd2 Bc5 12. Qf3 Bxf2+ 13. Kd1 Bxg3 14. Kc2 Be5 15. Nxe4 Bxa1 16. Nc3 Be6 17. Bh3 O-O 18. Ba3 Re8 19. Kb1 Bxc3 20. Bxe6 Rxe6 21. Qxc3 d4 22. Qc4 Rc6 23. Bc5 Qf6 24. Qxd4 Qf5+ 25. Ka1 Rxc5 26. Nf3 Re8 27. Rg1 g6 28. e3 Rc6 29. Nd2 Rd6 30. Qc3 Qf2 31. Rf1 Qxd2 32. Qxc7 Rd7 33. Qc1 Qh2 34. Qc5 Rd2 35. Qa5 Re5 36. Qxa7 Rb5 37. Rxf7 Rd1# 0-1
+

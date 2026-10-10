@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/tiowreo4"]
+[Date "2026.10.10"]
+[Round "-"]
+[White "StockFail"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "tiowreo4"]
+[UTCDate "2026.10.10"]
+[UTCTime "04:30:10"]
+[WhiteElo "1805"]
+[BlackElo "2290"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "A46"]
+[Opening "Indian Defense: Knights Variation"]
+[Termination "Normal"]
+
+1. d4 Nf6 2. Nf3 e6 3. Nc3 Bb4 4. Bd2 Nc6 5. e3 d5 6. Ne5 Nxe5 7. dxe5 Bxc3 8. Bxc3 Ne4 9. Bb5+ c6 10. Bd3 Nxc3 11. Qg4 Ne4 12. Qxg7 Rf8 13. Bxe4 Qa5+ 14. c3 dxe4 15. O-O-O Bd7 16. Kb1 O-O-O 17. Rd2 c5 18. Rhd1 Bb5 19. Ka1 Bd3 20. f4 Qc7 21. Qh6 Qe7 22. b3 f6 23. Qh4 Qg7 24. Qh3 Kd7 25. exf6 Rxf6 26. Rxd3+ exd3 27. Rxd3+ Kc7 28. Rxd8 Rh6 29. Qxh6 Qxh6 30. Rg8 Qxh2 31. Kb2 Qg1 32. Rg7+ Kc6 33. Kc2 Qxe3 34. g3 Qe2+ 35. Kb1 Qd1+ 36. Kb2 Qd2+ 37. Kb1 Qxc3 38. Rg8 Kb5 39. Rb8 Qd3+ 40. Kb2 Qd2+ 41. Kb1 Kb4 42. Rd8 Qc3 43. Rd2 Qxd2 44. a3+ Kxa3 45. Ka1 Qc1# 0-1
+

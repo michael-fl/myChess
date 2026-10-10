@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/BG2G3tYd"]
+[Date "2026.09.26"]
+[Round "-"]
+[White "myChessJava"]
+[Black "StockFail"]
+[Result "1-0"]
+[GameId "BG2G3tYd"]
+[UTCDate "2026.09.26"]
+[UTCTime "16:39:10"]
+[WhiteElo "2261"]
+[BlackElo "1855"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "B01"]
+[Opening "Scandinavian Defense: Modern Variation"]
+[Termination "Normal"]
+
+1. e4 d5 2. exd5 Nf6 3. Bb5+ Bd7 4. Bc4 b5 5. Bb3 h6 6. Nf3 Na6 7. d4 g5 8. O-O g4 9. Ne5 h5 10. a4 Bh6 11. Bxh6 Rxh6 12. axb5 Bxb5 13. c4 Nxd5 14. cxb5 Nab4 15. Qd2 Rb6 16. Qg5 Rg6 17. Nxg6 Nf6 18. Ne5 Qxd4 19. Bxf7+ Kd8 20. Ra4 Kc8 21. Nc6 Nxc6 22. Rxd4 Nxd4 23. Qe5 Rb8 24. Qxd4 Rxb5 25. Qxa7 Rb6 26. Rc1 Rb7 27. Be6+ Nd7 28. Bxd7+ Kxd7 29. Qxb7 Ke6 30. Rxc7 Kf6 31. Rxe7 h4 32. Qc7 Kg5 33. Qd6 h3 34. g3 Kh5 35. Re5# 1-0
+

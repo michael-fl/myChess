@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/P0bmXyEy"]
+[Date "2026.09.26"]
+[Round "-"]
+[White "GeoTsiBot"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "P0bmXyEy"]
+[UTCDate "2026.09.26"]
+[UTCTime "05:54:30"]
+[WhiteElo "1994"]
+[BlackElo "2096"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+3"]
+[ECO "A45"]
+[Opening "Indian Defense"]
+[Termination "Normal"]
+
+1. d4 Nf6 2. Nc3 e6 3. e4 Bb4 4. e5 Nd5 5. Bd2 Bxc3 6. bxc3 O-O 7. c4 Ne7 8. Bd3 d5 9. Qg4 dxc4 10. Bxc4 h5 11. Qf4 Ng6 12. Qe3 Nh4 13. O-O-O Nxg2 14. Qe4 Nh4 15. Bb4 Re8 16. Nh3 Nc6 17. d5 exd5 18. Bxd5 Rxe5 19. Bxc6 Qf6 20. Bc3 Rxe4 21. Bxf6 Bxh3 22. Bxb7 Rae8 23. Bxe4 Rxe4 24. Rhg1 Ng6 25. Rd4 Re2 26. Rd8+ Kh7 27. Bd4 Bg4 28. Rg3 Re1+ 29. Kb2 Nf4 30. f3 Ne6 31. Re8 Rf1 32. fxg4 Nxd4 33. Rh3 Rf2 34. Rxh5+ Kg6 35. Rc5 Ne6 36. Rc4 Rxh2 37. Ra8 Rf2 38. Rxa7 Kg5 39. Ra5+ Kf6 40. a4 c5 41. Ra7 g5 42. Rd7 Rf4 43. Rxf4+ gxf4 44. Rd5 Nd4 45. c3 Ke6 46. Rxc5 Nf3 47. Rf5 Nh4 48. Rxf4 Ng6 49. Rd4 Ne7 50. a5 Nc6 51. a6 f6 52. Rb4 Kd6 53. Rb7 Kd5 54. a7 Nxa7 55. Rxa7 Ke5 56. Ra4 Ke6 57. Ra5 Kd6 58. Kc2 Ke6 59. Kd3 Kd6 60. Kd4 Kd7 61. Ra7+ Ke6 62. Ra6+ Kf7 63. Ke4 Kg6 64. Kf4 1-0
+

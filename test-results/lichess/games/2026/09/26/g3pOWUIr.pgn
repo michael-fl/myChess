@@ -1,0 +1,22 @@
+[Event "casual variant:chess960 game"]
+[Site "https://lichess.org/g3pOWUIr"]
+[Date "2026.09.26"]
+[Round "-"]
+[White "ix-bot"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "g3pOWUIr"]
+[UTCDate "2026.09.26"]
+[UTCTime "10:43:27"]
+[WhiteElo "1706"]
+[BlackElo "1526"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Chess960"]
+[TimeControl "180+1"]
+[Termination "Normal"]
+[FEN "rkrnbbqn/pppppppp/8/8/8/8/PPPPPPPP/RKRNBBQN w KQkq - 0 1"]
+[SetUp "1"]
+
+1. e4 Nc6 2. f4 e6 3. Nc3 Ng6 4. f5 exf5 5. exf5 Nge7 6. g4 h5 7. h3 hxg4 8. hxg4 f6 9. Ng3 Nd5 10. Nxd5 Qxd5 11. Bg2 Qc4 12. Ne4 Qe2 13. Bh1 Ne5 14. g5 fxg5 15. Nxg5 Bh5 16. a4 Be7 17. a5 a6 18. Ne4 Nf3 19. Bxf3 Qxf3 20. d3 d5 21. Nc5 Qxf5 22. Bb4 Bf6 23. Bc3 Bxc3 24. bxc3 O-O 25. Kb2 Bf3 26. Rf1 Rab8 27. Rae1 Qg4 28. Qh2 Rf7 29. Ne6 b6 30. Rg1 Qa4 31. Ng5 bxa5+ 32. Kc1 Qf4+ 33. Qxf4 Rxf4 34. Ref1 Rbf8 35. Ne6 R4f6 36. Nxf8 Rxf8 37. Rg3 Bh5 38. Rfg1 Rf7 39. Rg5 Bf3 40. Rg6 d4 41. cxd4 Bb7 42. R6g5 a4 43. Kb2 Bc6 44. d5 Be8 45. c4 Bd7 46. Kc3 Be8 47. Rg6 c6 48. dxc6 Re7 49. Rd6 Rc7 50. Rd8 Kf7 51. Rf1+ Ke7 52. Ra8 Bxc6 53. Rxa6 Ke8 54. d4 Bb5 55. Ra8+ Ke7 56. Re1+ Kf7 57. c5 Bc6 58. Ra6 Bb5 59. Rb6 Be8 60. Kc4 Re7 61. Rxe7+ Kxe7 62. d5 Bh5 63. Rb7+ Kf6 64. c6 Bg4 65. Kc5 g5 66. d6 Be6 67. d7 Ke7 68. Rb8 Bxd7 69. Rb7 a3 70. Rxd7+ 1-0
+

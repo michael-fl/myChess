@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/YQbNE5vH"]
+[Date "2026.10.08"]
+[Round "-"]
+[White "myChessJava"]
+[Black "AetherBot"]
+[Result "1/2-1/2"]
+[GameId "YQbNE5vH"]
+[UTCDate "2026.10.08"]
+[UTCTime "03:56:40"]
+[WhiteElo "2278"]
+[BlackElo "2182"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "C67"]
+[Opening "Ruy Lopez: Berlin Defense, Rio Gambit Accepted"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. Re1 Nd6 6. Bxc6 dxc6 7. Nxe5 Be7 8. Nc3 O-O 9. d3 Re8 10. Bf4 f6 11. Nf3 g5 12. Bg3 Nf5 13. Nd2 Nxg3 14. hxg3 f5 15. Qh5 Bd7 16. Nf3 Bf6 17. d4 Rxe1+ 18. Rxe1 Be8 19. Qh6 Bg6 20. Re6 Bg7 21. Qxg5 Qxg5 22. Nxg5 Bxd4 23. Nf3 Bc5 24. Ne5 Kg7 25. Ne2 Rd8 26. Nd3 Bb6 27. Nef4 Bf7 28. b3 a5 29. Re5 Kf6 30. a4 Ra8 31. Re1 Bd4 32. Ne2 Ba7 33. Nef4 Rd8 34. Re5 b5 35. Re2 bxa4 36. bxa4 Rd4 37. Ne5 Rxa4 38. Nd7+ Kg7 39. Re7 Bd4 40. Ne6+ Kg8 41. Nxd4 Rxd4 42. Ne5 Bd5 43. Rxc7 a4 44. Nxc6 Rd1+ 45. Kh2 Be4 46. Ne5 Rd2 47. f3 Bxc2 48. Ra7 h5 49. Ng6 Rd1 50. Nf4 Ra1 51. Ra8+ Kf7 52. Rc8 Ra2 53. Rc7+ Ke8 54. Nxh5 Kd8 55. Ra7 Bd1 56. Kh3 a3 57. Ng7 Bc2 58. Kh4 Bd3 59. Kg5 Kc8 60. Nxf5 Kb8 61. Ra4 Kc7 62. Ne3 Bb5 63. Ra7+ Kb6 64. Ra8 Kb7 65. Rd8 Re2 66. Kf4 a2 67. Rd1 Rd2 68. Ra1 Kc6 69. g4 Bd3 70. g5 Kc5 71. g4 Bg6 72. Nf5 Be8 73. Nh4 Rh2 74. Kg3 Rb2 75. Ng2 Bf7 76. Ne1 Kd4 77. Rd1+ Kc3 78. Rd3+ Kb4 79. Rd7 a1=Q 80. Nd3+ Kc3 81. Nxb2 Qg1+ 82. Kf4 Qh2+ 83. Ke3 Qxb2 84. Rxf7 Qd2+ 85. Ke4 Qe2+ 86. Kf5 Qxf3+ 87. Kg6 Qxg4 88. Rc7+ Kd4 89. Rf7 Qe4+ 90. Kg7 Qe5+ 91. Kg6 Ke4 92. Rf6 Qe8+ 93. Kg7 Qe7+ 94. Kh6 Qd8 95. Kg6 Qg8+ 96. Kh6 Qh8+ 97. Kg6 Qh2 98. Rf8 Qd2 99. Rf6 Qd5 100. Rf8 Qe6+ 101. Rf6 Qd7 102. Kh6 Ke5 103. Rf8 Qd6+ 104. Rf6 Qd5 105. Kg7 Qd8 106. Kh7 Kd5 107. Kg7 Qe7+ 108. Kh6 Kd4 109. Rf4+ Ke3 110. Rf5 Qd7 111. Rf6 Qd8 112. Kg7 Qe7+ 113. Kh6 Ke4 114. Rf1 Qe6+ 115. Rf6 Qc8 116. Kg6 Qc5 117. Kh6 Qc1 118. Rf7 Qd2 119. Kg6 Qd6+ 120. Kh7 Qh2+ 121. Kg7 Qe5+ 122. Kh6 Qh8+ 123. Kg6 Qg8+ 124. Rg7 Qe6+ 125. Kh7 Kf5 126. Kh8 Qe8+ 127. Kh7 Qb8 128. Rg6 Qh2+ 129. Kg7 Qc7+ 130. Kh6 Qe5 131. Kh7 Qe4 132. Rg7 Qd5 133. Kh8 Qa8+ 134. Kh7 Qa2 135. Kh8 Qd5 136. Kh7 Qc4 137. Rg8 Ke4 1/2-1/2
+

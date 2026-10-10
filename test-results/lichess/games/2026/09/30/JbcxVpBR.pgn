@@ -1,0 +1,22 @@
+[Event "casual variant:chess960 game"]
+[Site "https://lichess.org/JbcxVpBR"]
+[Date "2026.09.30"]
+[Round "-"]
+[White "myChessJava"]
+[Black "ix-bot"]
+[Result "0-1"]
+[GameId "JbcxVpBR"]
+[UTCDate "2026.09.30"]
+[UTCTime "07:17:26"]
+[WhiteElo "1526"]
+[BlackElo "1716"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Chess960"]
+[TimeControl "180+2"]
+[Termination "Normal"]
+[FEN "nrbbkqnr/pppppppp/8/8/8/8/PPPPPPPP/NRBBKQNR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. e4 e5 2. Qb5 Qe7 3. Nf3 c5 4. Nb3 b6 5. d3 Nc7 6. Qa4 Nf6 7. Qxa7 Na6 8. Be3 Bb7 9. Nh4 g6 10. Bg5 Qd6 11. Nd2 Qc7 12. Nc4 b5 13. Nb6 Qd6 14. Nd5 Nxd5 15. Bxd8 Kxd8 16. exd5 Kc7 17. Be2 Ra8 18. Qxa8 Rxa8 19. a3 Bxd5 20. O-O Bc6 21. Nf3 f5 22. Rfe1 Qf6 23. c3 e4 24. dxe4 fxe4 25. Nd2 Rf8 26. f3 c4 27. Nxe4 Bxe4 28. fxe4 Qf2+ 29. Kh1 Nc5 30. Rf1 Qxe2 31. Rxf8 Nd3 32. Rbf1 Qxb2 33. Ra8 Nf4 34. Rg1 Qxc3 35. Ra7+ Kc6 36. a4 b4 37. Ra6+ Kb7 38. Ra5 b3 39. Rb5+ Ka6 40. Rd1 Nd3 41. Rf1 b2 42. h3 Qc1 43. Rg1 c3 44. Rd5 Qxg1+ 45. Kxg1 b1=Q+ 46. Kh2 c2 47. Rd6+ Ka5 0-1
+

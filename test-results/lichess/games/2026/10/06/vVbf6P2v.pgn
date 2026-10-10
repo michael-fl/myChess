@@ -1,0 +1,22 @@
+[Event "rated classical game"]
+[Site "https://lichess.org/vVbf6P2v"]
+[Date "2026.10.06"]
+[Round "-"]
+[White "myChessJava"]
+[Black "AetherBot"]
+[Result "1-0"]
+[GameId "vVbf6P2v"]
+[UTCDate "2026.10.06"]
+[UTCTime "09:10:45"]
+[WhiteElo "2232"]
+[BlackElo "1998"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "1800+0"]
+[ECO "C48"]
+[Opening "Four Knights Game: Spanish Variation, Rubinstein Variation"]
+[Termination "Time forfeit"]
+
+1. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 4. Bb5 Nd4 5. O-O c6 6. Bd3 Nxf3+ 7. Qxf3 d6 8. Bc4 b5 9. Bb3 Be7 10. a3 O-O 11. d3 Be6 12. Bxe6 fxe6 13. Qh3 Qd7 14. f4 a5 15. fxe5 1-0
+

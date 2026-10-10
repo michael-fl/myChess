@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/wphPNLEV"]
+[Date "2026.09.28"]
+[Round "-"]
+[White "mochi_bot"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "wphPNLEV"]
+[UTCDate "2026.09.28"]
+[UTCTime "01:02:28"]
+[WhiteElo "1917"]
+[BlackElo "2213"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "A45"]
+[Opening "Indian Defense"]
+[Termination "Normal"]
+
+1. d4 Nf6 2. Nc3 e6 3. Bg5 Bb4 4. e4 h6 5. Bxf6 Qxf6 6. Nf3 O-O 7. Bd3 Nc6 8. e5 Bxc3+ 9. bxc3 Qe7 10. O-O Qa3 11. Qd2 b6 12. Be4 Ba6 13. Bxc6 dxc6 14. Rfb1 Rad8 15. Rb3 Qe7 16. Qf4 Bc4 17. Rbb1 Qa3 18. Qe3 Bd5 19. Nd2 Qa4 20. a3 c5 21. dxc5 Qxc2 22. cxb6 axb6 23. Rc1 Qg6 24. g3 Bc6 25. h3 Qf5 26. Kh2 f6 27. Nc4 Rd3 28. Qf4 Qxf4 29. gxf4 Rf3 30. exf6 Rxf2+ 31. Kg1 Rg2+ 32. Kh1 Rd8 33. f7+ Kf8 34. Ne5 Bb7 35. Rf1 Rdd2 36. Rf3 Rgf2 37. Kg1 Bxf3 38. c4 Be4 39. Nd7+ Kxf7 40. Ne5+ Kg8 41. Ng4 Rg2+ 42. Kf1 Bd3+ 43. Ke1 Rde2+ 44. Kf1 Ra2+ 45. Ke1 Rxa1# 0-1
+

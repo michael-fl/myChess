@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/k8TZTHBO"]
+[Date "2026.10.07"]
+[Round "-"]
+[White "myChessJava"]
+[Black "StockFail"]
+[Result "1-0"]
+[GameId "k8TZTHBO"]
+[UTCDate "2026.10.07"]
+[UTCTime "03:16:43"]
+[WhiteElo "2245"]
+[BlackElo "1825"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "B01"]
+[Opening "Scandinavian Defense: Modern Variation"]
+[Termination "Normal"]
+
+1. e4 d5 2. exd5 Nf6 3. Bb5+ Bd7 4. Bc4 b5 5. Bb3 h6 6. Nf3 Na6 7. d4 g5 8. O-O g4 9. Ne5 h5 10. a4 Bh6 11. Bxh6 Rxh6 12. axb5 Bxb5 13. Re1 Qd6 14. Nc3 Rb8 15. Nxb5 Rxb5 16. Ba4 Qxd5 17. c4 Kf8 18. cxd5 Rb6 19. Bc6 Nb4 20. Qc1 Rh8 21. Rxa7 Rb8 22. Rxc7 g3 23. hxg3 Na6 24. Rxe7 Kxe7 25. Qf4 Kf8 26. Qxf6 Rh7 27. Nxf7 Kg8 28. Re7 Rf8 29. Nh6+ Rxh6 30. Qg7# 1-0
+

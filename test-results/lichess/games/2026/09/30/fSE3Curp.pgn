@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/fSE3Curp"]
+[Date "2026.09.30"]
+[Round "-"]
+[White "myChessJava"]
+[Black "DeMen100ns-bot"]
+[Result "0-1"]
+[GameId "fSE3Curp"]
+[UTCDate "2026.09.30"]
+[UTCTime "21:24:01"]
+[WhiteElo "2001"]
+[BlackElo "2060"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+3"]
+[ECO "C65"]
+[Opening "Ruy Lopez: Berlin Defense, Beverwijk Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Bc5 5. Nxe5 Nxe5 6. d4 Bd6 7. f4 Nc6 8. e5 O-O 9. exd6 cxd6 10. c3 d5 11. f5 Re8 12. Na3 d6 13. Bg5 a6 14. Bd3 b5 15. Qf3 Bb7 16. Nc2 Nb8 17. Qg3 Nbd7 18. Qxd6 h6 19. Bf4 Ne4 20. Bxe4 dxe4 21. a4 Nf6 22. Qxd8 Rexd8 23. Ne3 b4 24. Be5 bxc3 25. bxc3 Nd5 26. Nxd5 Bxd5 27. f6 g6 28. a5 Rac8 29. Ra3 Kh7 30. Rb1 Rc4 31. Re1 Rd7 32. Rb3 Rc8 33. Rb6 Rxc3 34. Rxa6 e3 35. h3 Rd8 36. Ra7 Rdc8 37. Bg3 Rc1 38. Re7 R1c2 39. R1xe3 Rxg2+ 40. Kf1 Rcc2 41. Rc7 Rxg3 42. Rxf7+ Bxf7 43. Rxg3 Ra2 44. h4 Rxa5 45. Ke2 Rf5 46. Rf3 Bd5 47. Ra3 g5 48. Ra7+ Kg6 49. hxg5 hxg5 50. Kd3 Rxf6 51. Rd7 g4 52. Rxd5 g3 53. Rd8 Kg7 54. Rd7+ Kh6 55. Rc7 g2 56. Rc1 Rf1 57. Rc6+ Kg7 58. Rc7+ Kf6 59. Rc6+ Kf5 60. Rc5+ Kf4 61. Rc7 Rd1+ 62. Kc2 g1=Q 63. Rf7+ Ke4 64. Re7+ Kd5 65. Rd7+ Kc6 66. Re7 Qxd4 67. Re6+ Kb5 68. Re5+ Kb4 69. Rb5+ Kxb5 0-1
+
