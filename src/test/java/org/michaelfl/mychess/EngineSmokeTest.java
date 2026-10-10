@@ -26,7 +26,7 @@ public class EngineSmokeTest extends EngineTestBase {
                 // table (v4.3.0), as it did once before at v4.2.0 (see testPosition14).
                 null,
                 4.5f,
-                6.5f, // max 5.5 -> 6.5; queen 1000 (v4.3.2) raises this material-up eval to ~6.17
+                6.8f, // max 5.5 -> 6.5; queen 1000 (v4.3.2) raises this material-up eval to ~6.17; materialExchangeFactor 0.0125 -> 6.57
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -50,8 +50,9 @@ public class EngineSmokeTest extends EngineTestBase {
                 // count. Widen again if a later eval change pushes it further up; the band
                 // becomes a real assertion only once the search reports the mate. Raised from
                 // 14.5 for the material-exchange term, which moved the score to 14.92: the side
-                // a rook up is rewarded as the board empties, again toward the mate.
-                15.0f,
+                // a rook up is rewarded as the board empties, again toward the mate. Raised from 15.0
+                // for materialExchangeFactor 0.0125, which moved it to 15.12.
+                15.4f,
                 new GameConfig(ENGINE, engineConfig())
         );
     }

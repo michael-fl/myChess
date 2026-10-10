@@ -128,7 +128,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("g1-g5", "d5-d6", "g1-d1", "h2-h4"),
                 11.0f,
-                14.7f, // max 13.5 -> 14.5; queen 1000 (v4.3.2) raises this material-up eval to ~14.0; material-exchange term -> 14.62
+                15.0f, // max 13.5 -> 14.5; queen 1000 (v4.3.2) raises this material-up eval to ~14.0; material-exchange term -> 14.62; factor 0.0125 -> 14.75
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -244,7 +244,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "d5-e6",
                 6.0f, // Stockfish: mate in 13; v4.2.0 QSearch reports higher toward the mate
-                10.8f, // was 10.0; material-exchange term -> 10.68, toward the mate
+                11.1f, // was 10.0; material-exchange term -> 10.68, factor 0.0125 -> 10.84, toward the mate
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -301,7 +301,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("c6-b7"),
                 6.0f, // Stockfish: mate in 5; v4.2.0 QSearch reports higher toward the mate
-                12.7f, // was 12.0; material-exchange term -> 12.6, toward the mate
+                13.0f, // was 12.0; material-exchange term -> 12.6, factor 0.0125 -> 12.74, toward the mate
                 new GameConfig(ENGINE, engineConfig())
         );
     }
