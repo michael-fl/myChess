@@ -1,0 +1,2046 @@
+Started game 1 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Started game 3 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Started game 4 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Started game 2 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 2 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 0 - 1 - 0  [0.000] 1
+Started game 5 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 1 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 1 - 1 - 0  [0.500] 2
+Started game 6 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 4 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 1 - 2 - 0  [0.333] 3
+Started game 7 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 3 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 1 - 3 - 0  [0.250] 4
+Started game 8 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 5 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 1 - 4 - 0  [0.200] 5
+Started game 9 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 6 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 1 - 5 - 0  [0.167] 6
+Started game 10 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 8 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 1 - 6 - 0  [0.143] 7
+Started game 11 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 7 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 2 - 6 - 0  [0.250] 8
+Started game 12 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 10 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 2 - 6 - 1  [0.278] 9
+Started game 13 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 11 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 3 - 6 - 1  [0.350] 10
+...      4.8.2-exchange-avoidance-0.008 playing White: 3 - 2 - 0  [0.600] 5
+...      4.8.2-exchange-avoidance-0.008 playing Black: 0 - 4 - 1  [0.100] 5
+...      White vs Black: 7 - 2 - 1  [0.750] 10
+Elo difference: -107.5 +/- 268.4, LOS: 15.9 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 14 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 9 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 3 - 6 - 2  [0.364] 11
+Started game 15 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 12 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 3 - 7 - 2  [0.333] 12
+Started game 16 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 14 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 4 - 7 - 2  [0.385] 13
+Started game 17 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 13 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 4 - 8 - 2  [0.357] 14
+Started game 18 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 15 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 4 - 9 - 2  [0.333] 15
+Started game 19 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 19 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 5 - 9 - 2  [0.375] 16
+Started game 20 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 17 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 6 - 9 - 2  [0.412] 17
+Started game 21 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 16 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 6 - 10 - 2  [0.389] 18
+Started game 22 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 20 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 6 - 11 - 2  [0.368] 19
+Started game 23 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 18 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 6 - 11 - 3  [0.375] 20
+...      4.8.2-exchange-avoidance-0.008 playing White: 5 - 4 - 1  [0.550] 10
+...      4.8.2-exchange-avoidance-0.008 playing Black: 1 - 7 - 2  [0.200] 10
+...      White vs Black: 12 - 5 - 3  [0.675] 20
+Elo difference: -88.7 +/- 155.4, LOS: 11.3 %, DrawRatio: 15.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 24 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 21 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 6 - 12 - 3  [0.357] 21
+Started game 25 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 22 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 7 - 12 - 3  [0.386] 22
+Started game 26 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 23 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 8 - 12 - 3  [0.413] 23
+Started game 27 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 24 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 8 - 13 - 3  [0.396] 24
+Started game 28 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 27 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 9 - 13 - 3  [0.420] 25
+Started game 29 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 25 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 9 - 14 - 3  [0.404] 26
+Started game 30 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 26 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 9 - 14 - 4  [0.407] 27
+Started game 31 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 28 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 9 - 15 - 4  [0.393] 28
+Started game 32 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 29 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 9 - 15 - 5  [0.397] 29
+Started game 33 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 30 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 9 - 15 - 6  [0.400] 30
+...      4.8.2-exchange-avoidance-0.008 playing White: 7 - 6 - 2  [0.533] 15
+...      4.8.2-exchange-avoidance-0.008 playing Black: 2 - 9 - 4  [0.267] 15
+...      White vs Black: 16 - 8 - 6  [0.633] 30
+Elo difference: -70.4 +/- 117.6, LOS: 11.0 %, DrawRatio: 20.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 34 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 31 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 9 - 16 - 6  [0.387] 31
+Started game 35 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 35 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 9 - 17 - 6  [0.375] 32
+Started game 36 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 32 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 9 - 17 - 7  [0.379] 33
+Started game 37 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 36 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 10 - 17 - 7  [0.397] 34
+Started game 38 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 34 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 11 - 17 - 7  [0.414] 35
+Started game 39 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 33 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 11 - 18 - 7  [0.403] 36
+Started game 40 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 38 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 11 - 18 - 8  [0.405] 37
+Started game 41 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 39 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 12 - 18 - 8  [0.421] 38
+Started game 42 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 37 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 13 - 18 - 8  [0.436] 39
+Started game 43 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 40 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 14 - 18 - 8  [0.450] 40
+...      4.8.2-exchange-avoidance-0.008 playing White: 9 - 9 - 2  [0.500] 20
+...      4.8.2-exchange-avoidance-0.008 playing Black: 5 - 9 - 6  [0.400] 20
+...      White vs Black: 18 - 14 - 8  [0.550] 40
+Elo difference: -34.9 +/- 99.2, LOS: 24.0 %, DrawRatio: 20.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 44 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 41 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 14 - 18 - 9  [0.451] 41
+Started game 45 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 44 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 14 - 18 - 10  [0.452] 42
+Started game 46 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 42 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 14 - 18 - 11  [0.453] 43
+Started game 47 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 43 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 14 - 19 - 11  [0.443] 44
+Started game 48 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 45 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 15 - 19 - 11  [0.456] 45
+Started game 49 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 48 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White mates}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 15 - 20 - 11  [0.446] 46
+Started game 50 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 46 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 15 - 20 - 12  [0.447] 47
+Started game 51 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 47 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 15 - 20 - 13  [0.448] 48
+Started game 52 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 49 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 15 - 21 - 13  [0.439] 49
+Started game 53 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 52 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 15 - 22 - 13  [0.430] 50
+...      4.8.2-exchange-avoidance-0.008 playing White: 10 - 11 - 4  [0.480] 25
+...      4.8.2-exchange-avoidance-0.008 playing Black: 5 - 11 - 9  [0.380] 25
+...      White vs Black: 21 - 16 - 13  [0.550] 50
+Elo difference: -49.0 +/- 85.0, LOS: 12.5 %, DrawRatio: 26.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 54 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 51 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 16 - 22 - 13  [0.441] 51
+Started game 55 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 50 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 17 - 22 - 13  [0.452] 52
+Started game 56 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 53 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 17 - 22 - 14  [0.453] 53
+Started game 57 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 55 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 17 - 22 - 15  [0.454] 54
+Started game 58 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 56 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 17 - 23 - 15  [0.445] 55
+Started game 59 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 54 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 18 - 23 - 15  [0.455] 56
+Started game 60 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 58 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 18 - 24 - 15  [0.447] 57
+Started game 61 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 57 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 18 - 24 - 16  [0.448] 58
+Started game 62 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 59 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 18 - 25 - 16  [0.441] 59
+Started game 63 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 60 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 19 - 25 - 16  [0.450] 60
+...      4.8.2-exchange-avoidance-0.008 playing White: 11 - 12 - 7  [0.483] 30
+...      4.8.2-exchange-avoidance-0.008 playing Black: 8 - 13 - 9  [0.417] 30
+...      White vs Black: 24 - 20 - 16  [0.533] 60
+Elo difference: -34.9 +/- 76.7, LOS: 18.3 %, DrawRatio: 26.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 64 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 61 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 20 - 25 - 16  [0.459] 61
+Started game 65 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 62 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 21 - 25 - 16  [0.468] 62
+Started game 66 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 63 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 22 - 25 - 16  [0.476] 63
+Started game 67 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 64 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 22 - 26 - 16  [0.469] 64
+Started game 68 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 65 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 22 - 27 - 16  [0.462] 65
+Started game 69 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 66 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 22 - 28 - 16  [0.455] 66
+Started game 70 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 67 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 23 - 28 - 16  [0.463] 67
+Started game 71 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 69 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 24 - 28 - 16  [0.471] 68
+Started game 72 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 68 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 24 - 29 - 16  [0.464] 69
+Started game 73 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 70 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 25 - 29 - 16  [0.471] 70
+...      4.8.2-exchange-avoidance-0.008 playing White: 15 - 13 - 7  [0.529] 35
+...      4.8.2-exchange-avoidance-0.008 playing Black: 10 - 16 - 9  [0.414] 35
+...      White vs Black: 31 - 23 - 16  [0.557] 70
+Elo difference: -19.9 +/- 72.5, LOS: 29.3 %, DrawRatio: 22.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 74 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 71 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 25 - 29 - 17  [0.472] 71
+Started game 75 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 72 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 25 - 29 - 18  [0.472] 72
+Started game 76 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 76 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 25 - 29 - 19  [0.473] 73
+Started game 77 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 74 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 25 - 30 - 19  [0.466] 74
+Started game 78 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 73 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 26 - 30 - 19  [0.473] 75
+Started game 79 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 77 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 26 - 31 - 19  [0.467] 76
+Started game 80 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 75 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 26 - 32 - 19  [0.461] 77
+Started game 81 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 78 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 26 - 33 - 19  [0.455] 78
+Started game 82 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 79 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 27 - 33 - 19  [0.462] 79
+Started game 83 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 83 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 27 - 34 - 19  [0.456] 80
+...      4.8.2-exchange-avoidance-0.008 playing White: 17 - 16 - 8  [0.512] 41
+...      4.8.2-exchange-avoidance-0.008 playing Black: 10 - 18 - 11  [0.397] 39
+...      White vs Black: 35 - 26 - 19  [0.556] 80
+Elo difference: -30.5 +/- 67.4, LOS: 18.5 %, DrawRatio: 23.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 84 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 81 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 27 - 35 - 19  [0.451] 81
+Started game 85 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 80 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 27 - 35 - 20  [0.451] 82
+Started game 86 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 82 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 28 - 35 - 20  [0.458] 83
+Started game 87 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 84 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 29 - 35 - 20  [0.464] 84
+Started game 88 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 85 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 30 - 35 - 20  [0.471] 85
+Started game 89 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 86 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 30 - 36 - 20  [0.465] 86
+Started game 90 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 87 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 31 - 36 - 20  [0.471] 87
+Started game 91 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 88 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 31 - 37 - 20  [0.466] 88
+Started game 92 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 89 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 31 - 37 - 21  [0.466] 89
+Started game 93 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 91 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 31 - 37 - 22  [0.467] 90
+...      4.8.2-exchange-avoidance-0.008 playing White: 19 - 17 - 10  [0.522] 46
+...      4.8.2-exchange-avoidance-0.008 playing Black: 12 - 20 - 12  [0.409] 44
+...      White vs Black: 39 - 29 - 22  [0.556] 90
+Elo difference: -23.2 +/- 63.1, LOS: 23.3 %, DrawRatio: 24.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 94 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 90 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 31 - 37 - 23  [0.467] 91
+Started game 95 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 92 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 32 - 37 - 23  [0.473] 92
+Started game 96 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 93 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 33 - 37 - 23  [0.478] 93
+Started game 97 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 94 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 33 - 38 - 23  [0.473] 94
+Started game 98 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 95 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 33 - 39 - 23  [0.468] 95
+Started game 99 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 97 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 34 - 39 - 23  [0.474] 96
+Started game 100 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 96 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 35 - 39 - 23  [0.479] 97
+Started game 101 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 101 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 36 - 39 - 23  [0.485] 98
+Started game 102 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 98 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 36 - 40 - 23  [0.480] 99
+Started game 103 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 99 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 36 - 40 - 24  [0.480] 100
+...      4.8.2-exchange-avoidance-0.008 playing White: 22 - 18 - 11  [0.539] 51
+...      4.8.2-exchange-avoidance-0.008 playing Black: 14 - 22 - 13  [0.418] 49
+...      White vs Black: 44 - 32 - 24  [0.560] 100
+Elo difference: -13.9 +/- 59.9, LOS: 32.3 %, DrawRatio: 24.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 104 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 100 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 36 - 40 - 25  [0.480] 101
+Started game 105 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 102 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 36 - 41 - 25  [0.475] 102
+Started game 106 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 103 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White mates}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 37 - 41 - 25  [0.481] 103
+Started game 107 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 105 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 37 - 41 - 26  [0.481] 104
+Started game 108 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 104 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 38 - 41 - 26  [0.486] 105
+Started game 109 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 107 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 38 - 42 - 26  [0.481] 106
+Started game 110 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 106 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 38 - 42 - 27  [0.481] 107
+Started game 111 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 109 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 39 - 42 - 27  [0.486] 108
+Started game 112 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 108 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 40 - 42 - 27  [0.491] 109
+Started game 113 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 110 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 40 - 43 - 27  [0.486] 110
+...      4.8.2-exchange-avoidance-0.008 playing White: 24 - 19 - 12  [0.545] 55
+...      4.8.2-exchange-avoidance-0.008 playing Black: 16 - 24 - 15  [0.427] 55
+...      White vs Black: 48 - 35 - 27  [0.559] 110
+Elo difference: -9.5 +/- 56.8, LOS: 37.1 %, DrawRatio: 24.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 114 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 112 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 40 - 44 - 27  [0.482] 111
+Started game 115 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 113 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 40 - 45 - 27  [0.478] 112
+Started game 116 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 116 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 41 - 45 - 27  [0.482] 113
+Started game 117 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 114 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 41 - 46 - 27  [0.478] 114
+Started game 118 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 111 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 42 - 46 - 27  [0.483] 115
+Started game 119 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 115 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 42 - 47 - 27  [0.478] 116
+Started game 120 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 119 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 42 - 48 - 27  [0.474] 117
+Started game 121 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 118 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 42 - 49 - 27  [0.470] 118
+Started game 122 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 120 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 42 - 50 - 27  [0.466] 119
+Started game 123 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 122 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 43 - 50 - 27  [0.471] 120
+...      4.8.2-exchange-avoidance-0.008 playing White: 25 - 22 - 12  [0.525] 59
+...      4.8.2-exchange-avoidance-0.008 playing Black: 18 - 28 - 15  [0.418] 61
+...      White vs Black: 53 - 40 - 27  [0.554] 120
+Elo difference: -20.3 +/- 55.2, LOS: 23.4 %, DrawRatio: 22.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 124 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 117 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 43 - 50 - 28  [0.471] 121
+Started game 125 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 121 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 43 - 51 - 28  [0.467] 122
+Started game 126 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 123 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 43 - 52 - 28  [0.463] 123
+Started game 127 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 124 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 44 - 52 - 28  [0.468] 124
+Started game 128 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 125 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 45 - 52 - 28  [0.472] 125
+Started game 129 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 126 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 45 - 53 - 28  [0.468] 126
+Started game 130 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 127 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 46 - 53 - 28  [0.472] 127
+Started game 131 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 128 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 46 - 54 - 28  [0.469] 128
+Started game 132 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 132 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 46 - 54 - 29  [0.469] 129
+Started game 133 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 131 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 47 - 54 - 29  [0.473] 130
+...      4.8.2-exchange-avoidance-0.008 playing White: 28 - 24 - 13  [0.531] 65
+...      4.8.2-exchange-avoidance-0.008 playing Black: 19 - 30 - 16  [0.415] 65
+...      White vs Black: 58 - 43 - 29  [0.558] 130
+Elo difference: -18.7 +/- 53.0, LOS: 24.3 %, DrawRatio: 22.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 134 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 129 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 47 - 55 - 29  [0.469] 131
+Started game 135 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 130 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 47 - 56 - 29  [0.466] 132
+Started game 136 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 134 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 47 - 57 - 29  [0.462] 133
+Started game 137 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 133 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 48 - 57 - 29  [0.466] 134
+Started game 138 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 135 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 48 - 58 - 29  [0.463] 135
+Started game 139 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 137 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 48 - 58 - 30  [0.463] 136
+Started game 140 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 138 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 48 - 58 - 31  [0.464] 137
+Started game 141 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 136 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 48 - 58 - 32  [0.464] 138
+Started game 142 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 140 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 49 - 58 - 32  [0.468] 139
+Started game 143 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 141 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 50 - 58 - 32  [0.471] 140
+...      4.8.2-exchange-avoidance-0.008 playing White: 30 - 26 - 14  [0.529] 70
+...      4.8.2-exchange-avoidance-0.008 playing Black: 20 - 32 - 18  [0.414] 70
+...      White vs Black: 62 - 46 - 32  [0.557] 140
+Elo difference: -19.9 +/- 50.9, LOS: 22.1 %, DrawRatio: 22.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 144 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 142 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 51 - 58 - 32  [0.475] 141
+Started game 145 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 139 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 52 - 58 - 32  [0.479] 142
+Started game 146 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 143 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 52 - 59 - 32  [0.476] 143
+Started game 147 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 144 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 52 - 60 - 32  [0.472] 144
+Started game 148 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 146 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 52 - 61 - 32  [0.469] 145
+Started game 149 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 145 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 52 - 61 - 33  [0.469] 146
+Started game 150 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 148 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 52 - 61 - 34  [0.469] 147
+Started game 151 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 149 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 52 - 62 - 34  [0.466] 148
+Started game 152 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 147 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 53 - 62 - 34  [0.470] 149
+Started game 153 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 151 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 54 - 62 - 34  [0.473] 150
+...      4.8.2-exchange-avoidance-0.008 playing White: 33 - 28 - 15  [0.533] 76
+...      4.8.2-exchange-avoidance-0.008 playing Black: 21 - 34 - 19  [0.412] 74
+...      White vs Black: 67 - 49 - 34  [0.560] 150
+Elo difference: -18.5 +/- 49.2, LOS: 22.9 %, DrawRatio: 22.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 154 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 150 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 55 - 62 - 34  [0.477] 151
+Started game 155 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 152 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 55 - 63 - 34  [0.474] 152
+Started game 156 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 156 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 56 - 63 - 34  [0.477] 153
+Started game 157 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 154 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 57 - 63 - 34  [0.481] 154
+Started game 158 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 155 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 57 - 64 - 34  [0.477] 155
+Started game 159 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 153 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 57 - 65 - 34  [0.474] 156
+Started game 160 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 159 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 57 - 66 - 34  [0.471] 157
+Started game 161 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 158 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 57 - 67 - 34  [0.468] 158
+Started game 162 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 157 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 58 - 67 - 34  [0.472] 159
+Started game 163 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 160 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 58 - 68 - 34  [0.469] 160
+...      4.8.2-exchange-avoidance-0.008 playing White: 34 - 31 - 15  [0.519] 80
+...      4.8.2-exchange-avoidance-0.008 playing Black: 24 - 37 - 19  [0.419] 80
+...      White vs Black: 71 - 55 - 34  [0.550] 160
+Elo difference: -21.7 +/- 48.1, LOS: 18.6 %, DrawRatio: 21.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 164 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 162 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 59 - 68 - 34  [0.472] 161
+Started game 165 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 161 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 59 - 68 - 35  [0.472] 162
+Started game 166 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 163 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 59 - 69 - 35  [0.469] 163
+Started game 167 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 164 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 60 - 69 - 35  [0.473] 164
+Started game 168 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 166 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 60 - 70 - 35  [0.470] 165
+Started game 169 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 167 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 60 - 70 - 36  [0.470] 166
+Started game 170 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 165 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 61 - 70 - 36  [0.473] 167
+Started game 171 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 169 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 61 - 71 - 36  [0.470] 168
+Started game 172 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 168 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 62 - 71 - 36  [0.473] 169
+Started game 173 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 172 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 62 - 72 - 36  [0.471] 170
+...      4.8.2-exchange-avoidance-0.008 playing White: 35 - 33 - 17  [0.512] 85
+...      4.8.2-exchange-avoidance-0.008 playing Black: 27 - 39 - 19  [0.429] 85
+...      White vs Black: 74 - 60 - 36  [0.541] 170
+Elo difference: -20.5 +/- 46.6, LOS: 19.4 %, DrawRatio: 21.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 174 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 171 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 62 - 72 - 37  [0.471] 171
+Started game 175 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 174 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 62 - 73 - 37  [0.468] 172
+Started game 176 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 170 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 62 - 73 - 38  [0.468] 173
+Started game 177 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 173 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 62 - 73 - 39  [0.468] 174
+Started game 178 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 175 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 62 - 73 - 40  [0.469] 175
+Started game 179 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 178 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 62 - 74 - 40  [0.466] 176
+Started game 180 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 176 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 62 - 75 - 40  [0.463] 177
+Started game 181 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 179 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 62 - 76 - 40  [0.461] 178
+Started game 182 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 177 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 62 - 76 - 41  [0.461] 179
+Started game 183 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 180 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 63 - 76 - 41  [0.464] 180
+...      4.8.2-exchange-avoidance-0.008 playing White: 35 - 34 - 21  [0.506] 90
+...      4.8.2-exchange-avoidance-0.008 playing Black: 28 - 42 - 20  [0.422] 90
+...      White vs Black: 77 - 62 - 41  [0.542] 180
+Elo difference: -25.1 +/- 44.9, LOS: 13.5 %, DrawRatio: 22.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 184 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 182 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 64 - 76 - 41  [0.467] 181
+Started game 185 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 181 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 64 - 77 - 41  [0.464] 182
+Started game 186 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 183 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 64 - 78 - 41  [0.462] 183
+Started game 187 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 184 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 64 - 78 - 42  [0.462] 184
+Started game 188 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 187 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 64 - 79 - 42  [0.459] 185
+Started game 189 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 185 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 64 - 79 - 43  [0.460] 186
+Started game 190 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 186 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 64 - 80 - 43  [0.457] 187
+Started game 191 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 189 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 65 - 80 - 43  [0.460] 188
+Started game 192 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 188 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 66 - 80 - 43  [0.463] 189
+Started game 193 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 190 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 66 - 80 - 44  [0.463] 190
+...      4.8.2-exchange-avoidance-0.008 playing White: 36 - 37 - 22  [0.495] 95
+...      4.8.2-exchange-avoidance-0.008 playing Black: 30 - 43 - 22  [0.432] 95
+...      White vs Black: 79 - 67 - 44  [0.532] 190
+Elo difference: -25.6 +/- 43.6, LOS: 12.3 %, DrawRatio: 23.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 194 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 193 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 66 - 81 - 44  [0.461] 191
+Started game 195 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 191 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 67 - 81 - 44  [0.464] 192
+Started game 196 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 192 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 67 - 81 - 45  [0.464] 193
+Started game 197 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 194 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 67 - 82 - 45  [0.461] 194
+Started game 198 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 195 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 68 - 82 - 45  [0.464] 195
+Started game 199 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 197 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 68 - 83 - 45  [0.462] 196
+Started game 200 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 196 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 68 - 84 - 45  [0.459] 197
+Started game 201 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 198 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 69 - 84 - 45  [0.462] 198
+Started game 202 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 69 - 84 - 46  [0.462] 199
+Started game 203 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 199 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 70 - 84 - 46  [0.465] 200
+...      4.8.2-exchange-avoidance-0.008 playing White: 39 - 39 - 22  [0.500] 100
+...      4.8.2-exchange-avoidance-0.008 playing Black: 31 - 45 - 24  [0.430] 100
+...      White vs Black: 84 - 70 - 46  [0.535] 200
+Elo difference: -24.4 +/- 42.5, LOS: 13.0 %, DrawRatio: 23.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 204 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 201 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 70 - 84 - 47  [0.465] 201
+Started game 205 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 202 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 70 - 84 - 48  [0.465] 202
+Started game 206 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 204 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 71 - 84 - 48  [0.468] 203
+Started game 207 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 203 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 71 - 85 - 48  [0.466] 204
+Started game 208 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 206 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 71 - 85 - 49  [0.466] 205
+Started game 209 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 205 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 71 - 86 - 49  [0.464] 206
+Started game 210 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 207 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 71 - 87 - 49  [0.461] 207
+Started game 211 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 208 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 72 - 87 - 49  [0.464] 208
+Started game 212 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 210 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 72 - 88 - 49  [0.462] 209
+Started game 213 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 213 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 72 - 89 - 49  [0.460] 210
+...      4.8.2-exchange-avoidance-0.008 playing White: 39 - 43 - 23  [0.481] 105
+...      4.8.2-exchange-avoidance-0.008 playing Black: 33 - 46 - 26  [0.438] 105
+...      White vs Black: 85 - 76 - 49  [0.521] 210
+Elo difference: -28.2 +/- 41.4, LOS: 9.0 %, DrawRatio: 23.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 214 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 209 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 72 - 89 - 50  [0.460] 211
+Started game 215 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 211 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 72 - 90 - 50  [0.458] 212
+Started game 216 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 212 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 72 - 90 - 51  [0.458] 213
+Started game 217 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 214 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 73 - 90 - 51  [0.460] 214
+Started game 218 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 217 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 73 - 91 - 51  [0.458] 215
+Started game 219 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 218 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 74 - 91 - 51  [0.461] 216
+Started game 220 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 215 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 74 - 91 - 52  [0.461] 217
+Started game 221 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 216 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 75 - 91 - 52  [0.463] 218
+Started game 222 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 221 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 75 - 92 - 52  [0.461] 219
+Started game 223 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 219 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 75 - 92 - 53  [0.461] 220
+...      4.8.2-exchange-avoidance-0.008 playing White: 39 - 46 - 26  [0.468] 111
+...      4.8.2-exchange-avoidance-0.008 playing Black: 36 - 46 - 27  [0.454] 109
+...      White vs Black: 85 - 82 - 53  [0.507] 220
+Elo difference: -26.9 +/- 40.2, LOS: 9.4 %, DrawRatio: 24.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 224 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 220 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 75 - 92 - 54  [0.462] 221
+Started game 225 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 222 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 76 - 92 - 54  [0.464] 222
+Started game 226 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 224 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 76 - 93 - 54  [0.462] 223
+Started game 227 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 223 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 77 - 93 - 54  [0.464] 224
+Started game 228 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 226 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 77 - 94 - 54  [0.462] 225
+Started game 229 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 225 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 77 - 95 - 54  [0.460] 226
+Started game 230 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 227 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 77 - 96 - 54  [0.458] 227
+Started game 231 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 228 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 78 - 96 - 54  [0.461] 228
+Started game 232 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 230 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White mates}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 78 - 97 - 54  [0.459] 229
+Started game 233 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 229 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 79 - 97 - 54  [0.461] 230
+...      4.8.2-exchange-avoidance-0.008 playing White: 41 - 48 - 26  [0.470] 115
+...      4.8.2-exchange-avoidance-0.008 playing Black: 38 - 49 - 28  [0.452] 115
+...      White vs Black: 90 - 86 - 54  [0.509] 230
+Elo difference: -27.2 +/- 39.5, LOS: 8.7 %, DrawRatio: 23.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 234 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 231 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 79 - 97 - 55  [0.461] 231
+Started game 235 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 232 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 80 - 97 - 55  [0.463] 232
+Started game 236 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 234 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 80 - 98 - 55  [0.461] 233
+Started game 237 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 233 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 81 - 98 - 55  [0.464] 234
+Started game 238 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 235 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 81 - 99 - 55  [0.462] 235
+Started game 239 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 236 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 82 - 99 - 55  [0.464] 236
+Started game 240 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 237 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 83 - 99 - 55  [0.466] 237
+Started game 241 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 239 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 83 - 99 - 56  [0.466] 238
+Started game 242 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 238 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 83 - 100 - 56  [0.464] 239
+Started game 243 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 241 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 84 - 100 - 56  [0.467] 240
+...      4.8.2-exchange-avoidance-0.008 playing White: 44 - 49 - 28  [0.479] 121
+...      4.8.2-exchange-avoidance-0.008 playing Black: 40 - 51 - 28  [0.454] 119
+...      White vs Black: 95 - 89 - 56  [0.512] 240
+Elo difference: -23.2 +/- 38.7, LOS: 11.9 %, DrawRatio: 23.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 244 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 242 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 84 - 101 - 56  [0.465] 241
+Started game 245 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 240 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 84 - 101 - 57  [0.465] 242
+Started game 246 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 243 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 85 - 101 - 57  [0.467] 243
+Started game 247 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 244 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 85 - 102 - 57  [0.465] 244
+Started game 248 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 245 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 85 - 103 - 57  [0.463] 245
+Started game 249 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 246 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 86 - 103 - 57  [0.465] 246
+Started game 250 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 250 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 86 - 104 - 57  [0.464] 247
+Started game 251 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 247 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 86 - 105 - 57  [0.462] 248
+Started game 252 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 248 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 86 - 105 - 58  [0.462] 249
+Started game 253 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 251 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 87 - 105 - 58  [0.464] 250
+...      4.8.2-exchange-avoidance-0.008 playing White: 46 - 51 - 28  [0.480] 125
+...      4.8.2-exchange-avoidance-0.008 playing Black: 41 - 54 - 30  [0.448] 125
+...      White vs Black: 100 - 92 - 58  [0.516] 250
+Elo difference: -25.1 +/- 37.9, LOS: 9.7 %, DrawRatio: 23.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 254 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 249 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 87 - 106 - 58  [0.462] 251
+Started game 255 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 252 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 87 - 107 - 58  [0.460] 252
+Started game 256 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 253 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 88 - 107 - 58  [0.462] 253
+Started game 257 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 255 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 88 - 107 - 59  [0.463] 254
+Started game 258 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 254 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 88 - 108 - 59  [0.461] 255
+Started game 259 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 257 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 88 - 108 - 60  [0.461] 256
+Started game 260 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 256 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 89 - 108 - 60  [0.463] 257
+Started game 261 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 259 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 90 - 108 - 60  [0.465] 258
+Started game 262 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 261 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 90 - 109 - 60  [0.463] 259
+Started game 263 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 262 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 91 - 109 - 60  [0.465] 260
+...      4.8.2-exchange-avoidance-0.008 playing White: 48 - 53 - 30  [0.481] 131
+...      4.8.2-exchange-avoidance-0.008 playing Black: 43 - 56 - 30  [0.450] 129
+...      White vs Black: 104 - 96 - 60  [0.515] 260
+Elo difference: -24.1 +/- 37.2, LOS: 10.2 %, DrawRatio: 23.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 264 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 258 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 92 - 109 - 60  [0.467] 261
+Started game 265 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 260 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 93 - 109 - 60  [0.469] 262
+Started game 266 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 263 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 94 - 109 - 60  [0.471] 263
+Started game 267 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 264 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 94 - 110 - 60  [0.470] 264
+Started game 268 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 265 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 95 - 110 - 60  [0.472] 265
+Started game 269 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 266 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 96 - 110 - 60  [0.474] 266
+Started game 270 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 267 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 97 - 110 - 60  [0.476] 267
+Started game 271 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 270 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 97 - 110 - 61  [0.476] 268
+Started game 272 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 268 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 98 - 110 - 61  [0.478] 269
+Started game 273 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 269 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 98 - 111 - 61  [0.476] 270
+...      4.8.2-exchange-avoidance-0.008 playing White: 51 - 54 - 30  [0.489] 135
+...      4.8.2-exchange-avoidance-0.008 playing Black: 47 - 57 - 31  [0.463] 135
+...      White vs Black: 108 - 101 - 61  [0.513] 270
+Elo difference: -16.7 +/- 36.6, LOS: 18.4 %, DrawRatio: 22.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 274 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 272 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 98 - 112 - 61  [0.474] 271
+Started game 275 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 271 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 99 - 112 - 61  [0.476] 272
+Started game 276 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 275 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 99 - 113 - 61  [0.474] 273
+Started game 277 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 273 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 99 - 114 - 61  [0.473] 274
+Started game 278 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 276 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 100 - 114 - 61  [0.475] 275
+Started game 279 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 277 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 100 - 114 - 62  [0.475] 276
+Started game 280 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 278 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 100 - 114 - 63  [0.475] 277
+Started game 281 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 279 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 101 - 114 - 63  [0.477] 278
+Started game 282 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 274 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 102 - 114 - 63  [0.478] 279
+Started game 283 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 283 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 102 - 115 - 63  [0.477] 280
+...      4.8.2-exchange-avoidance-0.008 playing White: 53 - 57 - 31  [0.486] 141
+...      4.8.2-exchange-avoidance-0.008 playing Black: 49 - 58 - 32  [0.468] 139
+...      White vs Black: 111 - 106 - 63  [0.509] 280
+Elo difference: -16.1 +/- 35.9, LOS: 18.9 %, DrawRatio: 22.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 284 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 280 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 103 - 115 - 63  [0.479] 281
+Started game 285 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 281 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 103 - 115 - 64  [0.479] 282
+Started game 286 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 282 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 104 - 115 - 64  [0.481] 283
+Started game 287 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 284 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 105 - 115 - 64  [0.482] 284
+Started game 288 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 287 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 105 - 116 - 64  [0.481] 285
+Started game 289 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 288 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 105 - 116 - 65  [0.481] 286
+Started game 290 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 285 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 105 - 117 - 65  [0.479] 287
+Started game 291 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 289 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 106 - 117 - 65  [0.481] 288
+Started game 292 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 290 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 106 - 118 - 65  [0.479] 289
+Started game 293 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 292 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White mates}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 106 - 119 - 65  [0.478] 290
+...      4.8.2-exchange-avoidance-0.008 playing White: 54 - 59 - 32  [0.483] 145
+...      4.8.2-exchange-avoidance-0.008 playing Black: 52 - 60 - 33  [0.472] 145
+...      White vs Black: 114 - 111 - 65  [0.505] 290
+Elo difference: -15.6 +/- 35.3, LOS: 19.3 %, DrawRatio: 22.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 294 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 291 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 106 - 120 - 65  [0.476] 291
+Started game 295 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 286 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 106 - 120 - 66  [0.476] 292
+Started game 296 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 295 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 106 - 120 - 67  [0.476] 293
+Started game 297 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 293 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 107 - 120 - 67  [0.478] 294
+Started game 298 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 294 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 107 - 121 - 67  [0.476] 295
+Started game 299 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 296 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 107 - 122 - 67  [0.475] 296
+Started game 300 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 298 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 107 - 122 - 68  [0.475] 297
+Started game 301 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 297 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 107 - 122 - 69  [0.475] 298
+Started game 302 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 300 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 107 - 123 - 69  [0.473] 299
+Started game 303 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 299 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 107 - 123 - 70  [0.473] 300
+...      4.8.2-exchange-avoidance-0.008 playing White: 55 - 60 - 35  [0.483] 150
+...      4.8.2-exchange-avoidance-0.008 playing Black: 52 - 63 - 35  [0.463] 150
+...      White vs Black: 118 - 112 - 70  [0.510] 300
+Elo difference: -18.5 +/- 34.5, LOS: 14.6 %, DrawRatio: 23.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 304 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 301 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 108 - 123 - 70  [0.475] 301
+Started game 305 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 302 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 108 - 123 - 71  [0.475] 302
+Started game 306 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 303 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 108 - 124 - 71  [0.474] 303
+Started game 307 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 304 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 109 - 124 - 71  [0.475] 304
+Started game 308 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 306 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 109 - 125 - 71  [0.474] 305
+Started game 309 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 307 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 109 - 125 - 72  [0.474] 306
+Started game 310 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 305 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 110 - 125 - 72  [0.476] 307
+Started game 311 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 308 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 111 - 125 - 72  [0.477] 308
+Started game 312 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 309 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 111 - 125 - 73  [0.477] 309
+Started game 313 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 311 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 111 - 126 - 73  [0.476] 310
+...      4.8.2-exchange-avoidance-0.008 playing White: 57 - 62 - 37  [0.484] 156
+...      4.8.2-exchange-avoidance-0.008 playing Black: 54 - 64 - 36  [0.468] 154
+...      White vs Black: 121 - 116 - 73  [0.508] 310
+Elo difference: -16.8 +/- 33.9, LOS: 16.5 %, DrawRatio: 23.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 314 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 312 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 112 - 126 - 73  [0.477] 311
+Started game 315 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 310 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 112 - 127 - 73  [0.476] 312
+Started game 316 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 316 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by stalemate}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 112 - 127 - 74  [0.476] 313
+Started game 317 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 314 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 112 - 128 - 74  [0.475] 314
+Started game 318 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 315 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 112 - 129 - 74  [0.473] 315
+Started game 319 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 313 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 113 - 129 - 74  [0.475] 316
+Started game 320 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 317 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 113 - 130 - 74  [0.473] 317
+Started game 321 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 318 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 114 - 130 - 74  [0.475] 318
+Started game 322 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 322 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 114 - 131 - 74  [0.473] 319
+Started game 323 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 321 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 114 - 132 - 74  [0.472] 320
+...      4.8.2-exchange-avoidance-0.008 playing White: 58 - 65 - 37  [0.478] 160
+...      4.8.2-exchange-avoidance-0.008 playing Black: 56 - 67 - 37  [0.466] 160
+...      White vs Black: 125 - 121 - 74  [0.506] 320
+Elo difference: -19.6 +/- 33.5, LOS: 12.6 %, DrawRatio: 23.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 324 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 320 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 115 - 132 - 74  [0.474] 321
+Started game 325 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 319 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 115 - 133 - 74  [0.472] 322
+Started game 326 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 325 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 116 - 133 - 74  [0.474] 323
+Started game 327 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 326 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 116 - 134 - 74  [0.472] 324
+Started game 328 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 323 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 117 - 134 - 74  [0.474] 325
+Started game 329 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 324 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 117 - 134 - 75  [0.474] 326
+Started game 330 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 328 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 118 - 134 - 75  [0.476] 327
+Started game 331 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 327 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 118 - 134 - 76  [0.476] 328
+Started game 332 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 330 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 118 - 134 - 77  [0.476] 329
+Started game 333 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 331 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 118 - 135 - 77  [0.474] 330
+...      4.8.2-exchange-avoidance-0.008 playing White: 60 - 67 - 38  [0.479] 165
+...      4.8.2-exchange-avoidance-0.008 playing Black: 58 - 68 - 39  [0.470] 165
+...      White vs Black: 128 - 125 - 77  [0.505] 330
+Elo difference: -17.9 +/- 32.9, LOS: 14.3 %, DrawRatio: 23.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 334 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 329 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 118 - 135 - 78  [0.474] 331
+Started game 335 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 333 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 118 - 135 - 79  [0.474] 332
+Started game 336 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 334 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 119 - 135 - 79  [0.476] 333
+Started game 337 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 332 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 119 - 135 - 80  [0.476] 334
+Started game 338 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 336 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 119 - 136 - 80  [0.475] 335
+Started game 339 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 337 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 119 - 137 - 80  [0.473] 336
+Started game 340 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 339 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White mates}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 120 - 137 - 80  [0.475] 337
+Started game 341 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 340 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White mates}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 120 - 138 - 80  [0.473] 338
+Started game 342 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 335 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 120 - 138 - 81  [0.473] 339
+Started game 343 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 342 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 120 - 139 - 81  [0.472] 340
+...      4.8.2-exchange-avoidance-0.008 playing White: 61 - 68 - 41  [0.479] 170
+...      4.8.2-exchange-avoidance-0.008 playing Black: 59 - 71 - 40  [0.465] 170
+...      White vs Black: 132 - 127 - 81  [0.507] 340
+Elo difference: -19.4 +/- 32.3, LOS: 11.9 %, DrawRatio: 23.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 344 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 338 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 120 - 139 - 82  [0.472] 341
+Started game 345 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 341 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 120 - 139 - 83  [0.472] 342
+Started game 346 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 345 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 120 - 140 - 83  [0.471] 343
+Started game 347 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 346 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 121 - 140 - 83  [0.472] 344
+Started game 348 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 343 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 121 - 140 - 84  [0.472] 345
+Started game 349 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 344 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 121 - 141 - 84  [0.471] 346
+Started game 350 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 347 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 121 - 141 - 85  [0.471] 347
+Started game 351 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 348 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 121 - 141 - 86  [0.471] 348
+Started game 352 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 350 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 121 - 142 - 86  [0.470] 349
+Started game 353 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 349 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 121 - 143 - 86  [0.469] 350
+...      4.8.2-exchange-avoidance-0.008 playing White: 61 - 70 - 44  [0.474] 175
+...      4.8.2-exchange-avoidance-0.008 playing Black: 60 - 73 - 42  [0.463] 175
+...      White vs Black: 134 - 130 - 86  [0.506] 350
+Elo difference: -21.9 +/- 31.7, LOS: 8.8 %, DrawRatio: 24.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 354 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 352 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 121 - 143 - 87  [0.469] 351
+Started game 355 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 353 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by stalemate}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 121 - 143 - 88  [0.469] 352
+Started game 356 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 351 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 121 - 143 - 89  [0.469] 353
+Started game 357 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 355 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 121 - 144 - 89  [0.468] 354
+Started game 358 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 354 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 122 - 144 - 89  [0.469] 355
+Started game 359 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 356 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 123 - 144 - 89  [0.471] 356
+Started game 360 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 359 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 123 - 144 - 90  [0.471] 357
+Started game 361 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 358 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 124 - 144 - 90  [0.472] 358
+Started game 362 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 357 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 124 - 145 - 90  [0.471] 359
+Started game 363 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 362 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 124 - 146 - 90  [0.469] 360
+...      4.8.2-exchange-avoidance-0.008 playing White: 61 - 72 - 47  [0.469] 180
+...      4.8.2-exchange-avoidance-0.008 playing Black: 63 - 74 - 43  [0.469] 180
+...      White vs Black: 135 - 135 - 90  [0.500] 360
+Elo difference: -21.3 +/- 31.2, LOS: 9.0 %, DrawRatio: 25.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 364 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 363 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 124 - 147 - 90  [0.468] 361
+Started game 365 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 361 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 125 - 147 - 90  [0.470] 362
+Started game 366 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 364 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 126 - 147 - 90  [0.471] 363
+Started game 367 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 366 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 126 - 148 - 90  [0.470] 364
+Started game 368 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 360 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 126 - 148 - 91  [0.470] 365
+Started game 369 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 365 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 127 - 148 - 91  [0.471] 366
+Started game 370 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 367 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 127 - 148 - 92  [0.471] 367
+Started game 371 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 368 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 127 - 149 - 92  [0.470] 368
+Started game 372 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 369 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 127 - 150 - 92  [0.469] 369
+Started game 373 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 371 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 127 - 151 - 92  [0.468] 370
+...      4.8.2-exchange-avoidance-0.008 playing White: 63 - 75 - 48  [0.468] 186
+...      4.8.2-exchange-avoidance-0.008 playing Black: 64 - 76 - 44  [0.467] 184
+...      White vs Black: 139 - 139 - 92  [0.500] 370
+Elo difference: -22.6 +/- 30.8, LOS: 7.5 %, DrawRatio: 24.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 374 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 372 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 128 - 151 - 92  [0.469] 371
+Started game 375 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 370 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 128 - 151 - 93  [0.469] 372
+Started game 376 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 373 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 128 - 152 - 93  [0.468] 373
+Started game 377 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 374 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 129 - 152 - 93  [0.469] 374
+Started game 378 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 376 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 130 - 152 - 93  [0.471] 375
+Started game 379 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 377 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 130 - 152 - 94  [0.471] 376
+Started game 380 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 375 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 130 - 153 - 94  [0.469] 377
+Started game 381 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 378 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 130 - 153 - 95  [0.470] 378
+Started game 382 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 381 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 131 - 153 - 95  [0.471] 379
+Started game 383 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 380 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 132 - 153 - 95  [0.472] 380
+...      4.8.2-exchange-avoidance-0.008 playing White: 64 - 77 - 49  [0.466] 190
+...      4.8.2-exchange-avoidance-0.008 playing Black: 68 - 76 - 46  [0.479] 190
+...      White vs Black: 140 - 145 - 95  [0.493] 380
+Elo difference: -19.2 +/- 30.3, LOS: 10.7 %, DrawRatio: 25.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 384 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 379 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 132 - 154 - 95  [0.471] 381
+Started game 385 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 382 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 133 - 154 - 95  [0.473] 382
+Started game 386 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 383 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 133 - 155 - 95  [0.471] 383
+Started game 387 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 385 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 133 - 155 - 96  [0.471] 384
+Started game 388 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 387 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 133 - 156 - 96  [0.470] 385
+Started game 389 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 386 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 134 - 156 - 96  [0.472] 386
+Started game 390 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 384 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 135 - 156 - 96  [0.473] 387
+Started game 391 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 391 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 136 - 156 - 96  [0.474] 388
+Started game 392 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 388 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 137 - 156 - 96  [0.476] 389
+Started game 393 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 390 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 138 - 156 - 96  [0.477] 390
+...      4.8.2-exchange-avoidance-0.008 playing White: 65 - 80 - 50  [0.462] 195
+...      4.8.2-exchange-avoidance-0.008 playing Black: 73 - 76 - 46  [0.492] 195
+...      White vs Black: 141 - 153 - 96  [0.485] 390
+Elo difference: -16.0 +/- 30.0, LOS: 14.7 %, DrawRatio: 24.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 394 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 389 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 138 - 157 - 96  [0.476] 391
+Started game 395 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 394 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 139 - 157 - 96  [0.477] 392
+Started game 396 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 395 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 139 - 157 - 97  [0.477] 393
+Started game 397 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 392 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 140 - 157 - 97  [0.478] 394
+Started game 398 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 393 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 141 - 157 - 97  [0.480] 395
+Started game 399 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 399 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black mates}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 141 - 158 - 97  [0.479] 396
+Started game 400 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 396 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 141 - 158 - 98  [0.479] 397
+Started game 401 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 400 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 142 - 158 - 98  [0.480] 398
+Started game 402 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 397 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 142 - 158 - 99  [0.480] 399
+Started game 403 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 398 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 142 - 159 - 99  [0.479] 400
+...      4.8.2-exchange-avoidance-0.008 playing White: 66 - 82 - 52  [0.460] 200
+...      4.8.2-exchange-avoidance-0.008 playing Black: 76 - 77 - 47  [0.497] 200
+...      White vs Black: 143 - 158 - 99  [0.481] 400
+Elo difference: -14.8 +/- 29.6, LOS: 16.4 %, DrawRatio: 24.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 404 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 401 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 143 - 159 - 99  [0.480] 401
+Started game 405 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 402 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 143 - 160 - 99  [0.479] 402
+Started game 406 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 403 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 144 - 160 - 99  [0.480] 403
+Started game 407 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 404 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 144 - 161 - 99  [0.479] 404
+Started game 408 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 405 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 144 - 161 - 100  [0.479] 405
+Started game 409 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 406 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 145 - 161 - 100  [0.480] 406
+Started game 410 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 408 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 145 - 161 - 101  [0.480] 407
+Started game 411 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 409 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 145 - 162 - 101  [0.479] 408
+Started game 412 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 410 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 146 - 162 - 101  [0.480] 409
+Started game 413 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 411 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 147 - 162 - 101  [0.482] 410
+...      4.8.2-exchange-avoidance-0.008 playing White: 69 - 83 - 53  [0.466] 205
+...      4.8.2-exchange-avoidance-0.008 playing Black: 78 - 79 - 48  [0.498] 205
+...      White vs Black: 148 - 161 - 101  [0.484] 410
+Elo difference: -12.7 +/- 29.2, LOS: 19.7 %, DrawRatio: 24.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 414 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 412 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 147 - 163 - 101  [0.481] 411
+Started game 415 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 413 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 148 - 163 - 101  [0.482] 412
+Started game 416 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 407 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 148 - 163 - 102  [0.482] 413
+Started game 417 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 414 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 148 - 164 - 102  [0.481] 414
+Started game 418 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 416 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 149 - 164 - 102  [0.482] 415
+Started game 419 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 415 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 149 - 164 - 103  [0.482] 416
+Started game 420 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 418 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 149 - 165 - 103  [0.481] 417
+Started game 421 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 417 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 149 - 166 - 103  [0.480] 418
+Started game 422 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 419 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 149 - 166 - 104  [0.480] 419
+Started game 423 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 421 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 150 - 166 - 104  [0.481] 420
+...      4.8.2-exchange-avoidance-0.008 playing White: 71 - 84 - 56  [0.469] 211
+...      4.8.2-exchange-avoidance-0.008 playing Black: 79 - 82 - 48  [0.493] 209
+...      White vs Black: 153 - 163 - 104  [0.488] 420
+Elo difference: -13.2 +/- 28.9, LOS: 18.4 %, DrawRatio: 24.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 424 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 420 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 150 - 166 - 105  [0.481] 421
+Started game 425 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 422 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 150 - 167 - 105  [0.480] 422
+Started game 426 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 425 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 151 - 167 - 105  [0.481] 423
+Started game 427 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 424 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 151 - 168 - 105  [0.480] 424
+Started game 428 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 423 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 152 - 168 - 105  [0.481] 425
+Started game 429 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 426 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 152 - 169 - 105  [0.480] 426
+Started game 430 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 428 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 152 - 170 - 105  [0.479] 427
+Started game 431 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 429 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 152 - 171 - 105  [0.478] 428
+Started game 432 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 427 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 153 - 171 - 105  [0.479] 429
+Started game 433 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 430 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 154 - 171 - 105  [0.480] 430
+...      4.8.2-exchange-avoidance-0.008 playing White: 74 - 85 - 56  [0.474] 215
+...      4.8.2-exchange-avoidance-0.008 playing Black: 80 - 86 - 49  [0.486] 215
+...      White vs Black: 160 - 165 - 105  [0.494] 430
+Elo difference: -13.7 +/- 28.6, LOS: 17.3 %, DrawRatio: 24.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 434 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 431 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 154 - 171 - 106  [0.480] 431
+Started game 435 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 432 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 154 - 172 - 106  [0.479] 432
+Started game 436 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 434 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 154 - 173 - 106  [0.478] 433
+Started game 437 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 433 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 154 - 173 - 107  [0.478] 434
+Started game 438 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 435 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 155 - 173 - 107  [0.479] 435
+Started game 439 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 436 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 155 - 174 - 107  [0.478] 436
+Started game 440 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 437 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 156 - 174 - 107  [0.479] 437
+Started game 441 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 438 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 157 - 174 - 107  [0.481] 438
+Started game 442 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 439 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 157 - 174 - 108  [0.481] 439
+Started game 443 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 441 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 157 - 175 - 108  [0.480] 440
+...      4.8.2-exchange-avoidance-0.008 playing White: 76 - 86 - 59  [0.477] 221
+...      4.8.2-exchange-avoidance-0.008 playing Black: 81 - 89 - 49  [0.482] 219
+...      White vs Black: 165 - 167 - 108  [0.498] 440
+Elo difference: -14.2 +/- 28.2, LOS: 16.2 %, DrawRatio: 24.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 444 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 440 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 157 - 175 - 109  [0.480] 441
+Started game 445 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 445 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 157 - 176 - 109  [0.479] 442
+Started game 446 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 442 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 158 - 176 - 109  [0.480] 443
+Started game 447 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 447 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 159 - 176 - 109  [0.481] 444
+Started game 448 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 443 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 159 - 177 - 109  [0.480] 445
+Started game 449 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 448 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 159 - 178 - 109  [0.479] 446
+Started game 450 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 444 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 159 - 179 - 109  [0.478] 447
+Started game 451 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 449 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 160 - 179 - 109  [0.479] 448
+Started game 452 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 446 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 161 - 179 - 109  [0.480] 449
+Started game 453 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 452 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 161 - 180 - 109  [0.479] 450
+...      4.8.2-exchange-avoidance-0.008 playing White: 78 - 88 - 59  [0.478] 225
+...      4.8.2-exchange-avoidance-0.008 playing Black: 83 - 92 - 50  [0.480] 225
+...      White vs Black: 170 - 171 - 109  [0.499] 450
+Elo difference: -14.7 +/- 28.0, LOS: 15.2 %, DrawRatio: 24.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 454 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 450 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 161 - 180 - 110  [0.479] 451
+Started game 455 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 453 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 162 - 180 - 110  [0.480] 452
+Started game 456 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 451 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 162 - 180 - 111  [0.480] 453
+Started game 457 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 455 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 162 - 181 - 111  [0.479] 454
+Started game 458 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 454 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 162 - 181 - 112  [0.479] 455
+Started game 459 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 456 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 163 - 181 - 112  [0.480] 456
+Started game 460 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 457 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 163 - 181 - 113  [0.480] 457
+Started game 461 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 458 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 163 - 181 - 114  [0.480] 458
+Started game 462 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 460 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 163 - 181 - 115  [0.480] 459
+Started game 463 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 459 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 164 - 181 - 115  [0.482] 460
+...      4.8.2-exchange-avoidance-0.008 playing White: 80 - 89 - 61  [0.480] 230
+...      4.8.2-exchange-avoidance-0.008 playing Black: 84 - 92 - 54  [0.483] 230
+...      White vs Black: 172 - 173 - 115  [0.499] 460
+Elo difference: -12.8 +/- 27.5, LOS: 18.0 %, DrawRatio: 25.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 464 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 462 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 164 - 182 - 115  [0.480] 461
+Started game 465 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 461 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 165 - 182 - 115  [0.482] 462
+Started game 466 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 463 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 165 - 182 - 116  [0.482] 463
+Started game 467 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 464 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 166 - 182 - 116  [0.483] 464
+Started game 468 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 466 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 166 - 182 - 117  [0.483] 465
+Started game 469 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 469 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 167 - 182 - 117  [0.484] 466
+Started game 470 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 467 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 168 - 182 - 117  [0.485] 467
+Started game 471 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 465 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 168 - 182 - 118  [0.485] 468
+Started game 472 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 472 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 168 - 182 - 119  [0.485] 469
+Started game 473 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 470 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 168 - 183 - 119  [0.484] 470
+...      4.8.2-exchange-avoidance-0.008 playing White: 83 - 89 - 63  [0.487] 235
+...      4.8.2-exchange-avoidance-0.008 playing Black: 85 - 94 - 56  [0.481] 235
+...      White vs Black: 177 - 174 - 119  [0.503] 470
+Elo difference: -11.1 +/- 27.2, LOS: 21.2 %, DrawRatio: 25.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 474 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 468 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 168 - 183 - 120  [0.484] 471
+Started game 475 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 471 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 168 - 183 - 121  [0.484] 472
+Started game 476 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 475 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White mates}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 169 - 183 - 121  [0.485] 473
+Started game 477 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 473 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 170 - 183 - 121  [0.486] 474
+Started game 478 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 476 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White mates}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 170 - 184 - 121  [0.485] 475
+Started game 479 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 477 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 170 - 184 - 122  [0.485] 476
+Started game 480 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 479 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 171 - 184 - 122  [0.486] 477
+Started game 481 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 478 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 171 - 185 - 122  [0.485] 478
+Started game 482 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 480 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 171 - 186 - 122  [0.484] 479
+Started game 483 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 474 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 171 - 186 - 123  [0.484] 480
+...      4.8.2-exchange-avoidance-0.008 playing White: 86 - 89 - 65  [0.494] 240
+...      4.8.2-exchange-avoidance-0.008 playing Black: 85 - 97 - 58  [0.475] 240
+...      White vs Black: 183 - 174 - 123  [0.509] 480
+Elo difference: -10.9 +/- 26.8, LOS: 21.4 %, DrawRatio: 25.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 484 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 482 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 171 - 186 - 124  [0.484] 481
+Started game 485 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 484 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 172 - 186 - 124  [0.485] 482
+Started game 486 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 481 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 173 - 186 - 124  [0.487] 483
+Started game 487 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 483 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 173 - 187 - 124  [0.486] 484
+Started game 488 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 486 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 173 - 187 - 125  [0.486] 485
+Started game 489 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 485 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 173 - 187 - 126  [0.486] 486
+Started game 490 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 488 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 174 - 187 - 126  [0.487] 487
+Started game 491 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 489 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 174 - 188 - 126  [0.486] 488
+Started game 492 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 491 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 174 - 189 - 126  [0.485] 489
+Started game 493 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 490 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 175 - 189 - 126  [0.486] 490
+...      4.8.2-exchange-avoidance-0.008 playing White: 87 - 92 - 66  [0.490] 245
+...      4.8.2-exchange-avoidance-0.008 playing Black: 88 - 97 - 60  [0.482] 245
+...      White vs Black: 184 - 180 - 126  [0.504] 490
+Elo difference: -9.9 +/- 26.5, LOS: 23.2 %, DrawRatio: 25.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 494 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 487 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 175 - 189 - 127  [0.486] 491
+Started game 495 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 494 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 175 - 189 - 128  [0.486] 492
+Started game 496 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 492 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 175 - 189 - 129  [0.486] 493
+Started game 497 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 493 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 175 - 189 - 130  [0.486] 494
+Started game 498 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 497 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 175 - 189 - 131  [0.486] 495
+Started game 499 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 496 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 176 - 189 - 131  [0.487] 496
+Started game 500 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 498 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 176 - 189 - 132  [0.487] 497
+Started game 501 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 495 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 176 - 190 - 132  [0.486] 498
+Started game 502 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 501 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 177 - 190 - 132  [0.487] 499
+Started game 503 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 500 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 178 - 190 - 132  [0.488] 500
+...      4.8.2-exchange-avoidance-0.008 playing White: 88 - 93 - 69  [0.490] 250
+...      4.8.2-exchange-avoidance-0.008 playing Black: 90 - 97 - 63  [0.486] 250
+...      White vs Black: 185 - 183 - 132  [0.502] 500
+Elo difference: -8.3 +/- 26.1, LOS: 26.6 %, DrawRatio: 26.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 504 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 499 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 178 - 191 - 132  [0.487] 501
+Started game 505 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 502 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 178 - 192 - 132  [0.486] 502
+Started game 506 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 503 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 178 - 193 - 132  [0.485] 503
+Started game 507 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 504 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 179 - 193 - 132  [0.486] 504
+Started game 508 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 507 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 179 - 193 - 133  [0.486] 505
+Started game 509 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 505 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 179 - 193 - 134  [0.486] 506
+Started game 510 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 506 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 179 - 193 - 135  [0.486] 507
+Started game 511 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 508 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 179 - 193 - 136  [0.486] 508
+Started game 512 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 511 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 179 - 194 - 136  [0.485] 509
+Started game 513 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 510 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 180 - 194 - 136  [0.486] 510
+...      4.8.2-exchange-avoidance-0.008 playing White: 88 - 96 - 71  [0.484] 255
+...      4.8.2-exchange-avoidance-0.008 playing Black: 92 - 98 - 65  [0.488] 255
+...      White vs Black: 186 - 188 - 136  [0.498] 510
+Elo difference: -9.5 +/- 25.8, LOS: 23.5 %, DrawRatio: 26.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 514 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 509 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 180 - 195 - 136  [0.485] 511
+Started game 515 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 513 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 181 - 195 - 136  [0.486] 512
+Started game 516 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 512 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 181 - 195 - 137  [0.486] 513
+Started game 517 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 514 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 181 - 196 - 137  [0.485] 514
+Started game 518 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 515 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 181 - 197 - 137  [0.484] 515
+Started game 519 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 516 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 182 - 197 - 137  [0.485] 516
+Started game 520 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 518 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 182 - 197 - 138  [0.485] 517
+Started game 521 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 517 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 183 - 197 - 138  [0.486] 518
+Started game 522 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 520 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 183 - 197 - 139  [0.487] 519
+Started game 523 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 522 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 184 - 197 - 139  [0.487] 520
+...      4.8.2-exchange-avoidance-0.008 playing White: 90 - 98 - 71  [0.485] 259
+...      4.8.2-exchange-avoidance-0.008 playing Black: 94 - 99 - 68  [0.490] 261
+...      White vs Black: 189 - 192 - 139  [0.497] 520
+Elo difference: -8.7 +/- 25.6, LOS: 25.3 %, DrawRatio: 26.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 524 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 521 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 185 - 197 - 139  [0.488] 521
+Started game 525 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 519 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 185 - 197 - 140  [0.489] 522
+Started game 526 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 523 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 186 - 197 - 140  [0.489] 523
+Started game 527 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 524 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 186 - 197 - 141  [0.490] 524
+Started game 528 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 527 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black mates}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 186 - 198 - 141  [0.489] 525
+Started game 529 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 525 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 187 - 198 - 141  [0.490] 526
+Started game 530 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 526 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by stalemate}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 187 - 198 - 142  [0.490] 527
+Started game 531 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 529 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 188 - 198 - 142  [0.491] 528
+Started game 532 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 531 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 189 - 198 - 142  [0.491] 529
+Started game 533 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 528 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 189 - 198 - 143  [0.492] 530
+...      4.8.2-exchange-avoidance-0.008 playing White: 95 - 99 - 72  [0.492] 266
+...      4.8.2-exchange-avoidance-0.008 playing Black: 94 - 99 - 71  [0.491] 264
+...      White vs Black: 194 - 193 - 143  [0.501] 530
+Elo difference: -5.9 +/- 25.3, LOS: 32.4 %, DrawRatio: 27.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 534 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 530 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 189 - 199 - 143  [0.491] 531
+Started game 535 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 532 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 189 - 200 - 143  [0.490] 532
+Started game 536 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 533 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 190 - 200 - 143  [0.491] 533
+Started game 537 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 534 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 190 - 200 - 144  [0.491] 534
+Started game 538 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 536 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 190 - 201 - 144  [0.490] 535
+Started game 539 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 535 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 190 - 201 - 145  [0.490] 536
+Started game 540 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 538 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 191 - 201 - 145  [0.491] 537
+Started game 541 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 537 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 191 - 202 - 145  [0.490] 538
+Started game 542 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 539 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 191 - 203 - 145  [0.489] 539
+Started game 543 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 540 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 191 - 203 - 146  [0.489] 540
+...      4.8.2-exchange-avoidance-0.008 playing White: 96 - 101 - 73  [0.491] 270
+...      4.8.2-exchange-avoidance-0.008 playing Black: 95 - 102 - 73  [0.487] 270
+...      White vs Black: 198 - 196 - 146  [0.502] 540
+Elo difference: -7.7 +/- 25.0, LOS: 27.3 %, DrawRatio: 27.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 544 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 541 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 191 - 204 - 146  [0.488] 541
+Started game 545 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 542 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 191 - 205 - 146  [0.487] 542
+Started game 546 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 543 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 192 - 205 - 146  [0.488] 543
+Started game 547 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 544 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 192 - 206 - 146  [0.487] 544
+Started game 548 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 545 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 192 - 206 - 147  [0.487] 545
+Started game 549 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 546 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 192 - 207 - 147  [0.486] 546
+Started game 550 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 548 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 192 - 207 - 148  [0.486] 547
+Started game 551 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 547 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 192 - 207 - 149  [0.486] 548
+Started game 552 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 551 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 192 - 207 - 150  [0.486] 549
+Started game 553 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 549 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 193 - 207 - 150  [0.487] 550
+...      4.8.2-exchange-avoidance-0.008 playing White: 98 - 102 - 76  [0.493] 276
+...      4.8.2-exchange-avoidance-0.008 playing Black: 95 - 105 - 74  [0.482] 274
+...      White vs Black: 203 - 197 - 150  [0.505] 550
+Elo difference: -8.8 +/- 24.8, LOS: 24.2 %, DrawRatio: 27.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 554 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 550 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 193 - 207 - 151  [0.487] 551
+Started game 555 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 552 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 193 - 207 - 152  [0.487] 552
+Started game 556 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 555 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 193 - 208 - 152  [0.486] 553
+Started game 557 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 556 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 194 - 208 - 152  [0.487] 554
+Started game 558 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 553 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 195 - 208 - 152  [0.488] 555
+Started game 559 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 554 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 195 - 209 - 152  [0.487] 556
+Started game 560 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 557 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 196 - 209 - 152  [0.488] 557
+Started game 561 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 558 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 196 - 210 - 152  [0.487] 558
+Started game 562 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 560 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 197 - 210 - 152  [0.488] 559
+Started game 563 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 559 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 197 - 211 - 152  [0.487] 560
+...      4.8.2-exchange-avoidance-0.008 playing White: 100 - 104 - 76  [0.493] 280
+...      4.8.2-exchange-avoidance-0.008 playing Black: 97 - 107 - 76  [0.482] 280
+...      White vs Black: 207 - 201 - 152  [0.505] 560
+Elo difference: -8.7 +/- 24.6, LOS: 24.4 %, DrawRatio: 27.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 564 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 562 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 198 - 211 - 152  [0.488] 561
+Started game 565 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 563 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 198 - 212 - 152  [0.488] 562
+Started game 566 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 561 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 198 - 213 - 152  [0.487] 563
+Started game 567 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 564 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 199 - 213 - 152  [0.488] 564
+Started game 568 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 565 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 199 - 214 - 152  [0.487] 565
+Started game 569 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 567 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 200 - 214 - 152  [0.488] 566
+Started game 570 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 569 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 200 - 215 - 152  [0.487] 567
+Started game 571 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 566 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by stalemate}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 200 - 215 - 153  [0.487] 568
+Started game 572 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 570 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 201 - 215 - 153  [0.488] 569
+Started game 573 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 568 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 201 - 216 - 153  [0.487] 570
+...      4.8.2-exchange-avoidance-0.008 playing White: 101 - 108 - 76  [0.488] 285
+...      4.8.2-exchange-avoidance-0.008 playing Black: 100 - 108 - 77  [0.486] 285
+...      White vs Black: 209 - 208 - 153  [0.501] 570
+Elo difference: -9.1 +/- 24.4, LOS: 23.1 %, DrawRatio: 26.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 574 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 571 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 201 - 216 - 154  [0.487] 571
+Started game 575 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 573 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 202 - 216 - 154  [0.488] 572
+Started game 576 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 574 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 202 - 217 - 154  [0.487] 573
+Started game 577 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 575 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 202 - 218 - 154  [0.486] 574
+Started game 578 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 577 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 203 - 218 - 154  [0.487] 575
+Started game 579 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 572 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 203 - 218 - 155  [0.487] 576
+Started game 580 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 576 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 204 - 218 - 155  [0.488] 577
+Started game 581 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 578 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 204 - 219 - 155  [0.487] 578
+Started game 582 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 581 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 204 - 220 - 155  [0.486] 579
+Started game 583 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 580 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 204 - 220 - 156  [0.486] 580
+...      4.8.2-exchange-avoidance-0.008 playing White: 103 - 110 - 77  [0.488] 290
+...      4.8.2-exchange-avoidance-0.008 playing Black: 101 - 110 - 79  [0.484] 290
+...      White vs Black: 213 - 211 - 156  [0.502] 580
+Elo difference: -9.6 +/- 24.2, LOS: 21.9 %, DrawRatio: 26.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 584 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 579 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 205 - 220 - 156  [0.487] 581
+Started game 585 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 582 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 206 - 220 - 156  [0.488] 582
+Started game 586 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
+Finished game 583 (4.8.2-exchange-avoidance-0.008 vs 4.8.2): 1-0 {White wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 207 - 220 - 156  [0.489] 583
+Started game 587 of 4200 (4.8.2-exchange-avoidance-0.008 vs 4.8.2)
+Finished game 584 (4.8.2 vs 4.8.2-exchange-avoidance-0.008): 0-1 {Black wins by adjudication}
+Score of 4.8.2-exchange-avoidance-0.008 vs 4.8.2: 208 - 220 - 156  [0.490] 584
+Started game 588 of 4200 (4.8.2 vs 4.8.2-exchange-avoidance-0.008)
