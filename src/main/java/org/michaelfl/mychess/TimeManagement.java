@@ -270,6 +270,17 @@ public final class TimeManagement {
         }
 
         private void calculateSignals(int move, int weightCenti) {
+            if (WeightingFunction.isCheckmateWeight(weightCenti)) {
+                // A forced mate, for or against us, is settled: more time does not change it. Both
+                // signals would only report noise here. A mate score moves by 100 cp per ply of mate
+                // distance, so a mate that merely gets one ply longer or shorter already crosses the
+                // drop threshold. And when several moves mate, the best move may switch between
+                // equivalent mating moves without any uncertainty. Hence, the early return skips the
+                // move-change signal as well. The move and score of this iteration are still stored
+                // by the caller, so a mate that vanishes in a later iteration fires as a regular drop.
+                return;
+            }
+
             if (previousIterationBestMove != move) {
                 moveChangedCounter++;
                 Log.info(SIGNAL_LOG_PREFIX + depth + ": best move changed, change counter " + moveChangedCounter);

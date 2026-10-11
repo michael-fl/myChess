@@ -381,6 +381,74 @@ class TimeManagementTest {
         assertFalse(instance.isWeightDropped(), "a stable score without a previous move's score must not flag");
     }
 
+    // ---- TimeManagementInstance: mate scores ----
+
+    @Test
+    void mateGettingLonger_isNoDrop() {
+        var instance = newInstance();
+
+        runStableIterationsCenti(instance, MOVE_A, WeightingFunction.checkmateInCenti(3));
+        runIterationCenti(instance, FIRST_SIGNAL_DEPTH, MOVE_A, WeightingFunction.checkmateInCenti(5));
+
+        assertFalse(instance.isWeightDropped(),
+                "a mate for us that gets two plies longer is still a forced win, not a reason to think longer");
+    }
+
+    @Test
+    void mateAgainstUsAppearing_isNoDrop() {
+        var instance = newInstance();
+
+        runStableIterations(instance, MOVE_A, 0.5f);
+        runIterationCenti(instance, FIRST_SIGNAL_DEPTH, MOVE_A, -WeightingFunction.checkmateInCenti(4));
+
+        assertFalse(instance.isWeightDropped(), "a forced mate against us is settled; more time does not change it");
+    }
+
+    @Test
+    void mateAgainstUsAppearing_isNoDropBelowThePreviousOwnScore() {
+        var instance = newInstance(PREVIOUS_OWN_SCORE_CENTI);
+
+        runStableIterations(instance, MOVE_A, 3);
+        runIterationCenti(instance, FIRST_SIGNAL_DEPTH, MOVE_A, -WeightingFunction.checkmateInCenti(4));
+
+        assertFalse(instance.isDroppedBelowPreviousOwnScore(),
+                "a mate against us must not use up the drop against the previous own move");
+    }
+
+    @Test
+    void bestMoveChangeBetweenMatingMoves_isNotCounted() {
+        var instance = newInstance();
+
+        runStableIterationsCenti(instance, MOVE_A, WeightingFunction.checkmateInCenti(3));
+        runIterationCenti(instance, FIRST_SIGNAL_DEPTH, MOVE_B, WeightingFunction.checkmateInCenti(3));
+
+        assertEquals(0, instance.getMoveChangedCounter(),
+                "switching between equivalent mating moves is no sign of uncertainty");
+    }
+
+    @Test
+    void mateVanishing_isADrop() {
+        var instance = newInstance();
+
+        runStableIterations(instance, MOVE_A, 0);
+        runIterationCenti(instance, FIRST_SIGNAL_DEPTH, MOVE_A, WeightingFunction.checkmateInCenti(5));
+        runIterationCenti(instance, FIRST_SIGNAL_DEPTH + 1, MOVE_A, 800);
+
+        assertTrue(instance.isWeightDropped(),
+                "a mate for us that a deeper iteration refutes is a real drop and must flag the next decision");
+    }
+
+    @Test
+    void mateOfThePreviousOwnMoveVanishing_isADropBelowIt() {
+        var instance = newInstance(WeightingFunction.checkmateInCenti(5));
+
+        runStableIterations(instance, MOVE_A, 8);
+        runIteration(instance, FIRST_SIGNAL_DEPTH, MOVE_A, 8f);
+
+        assertTrue(instance.isDroppedBelowPreviousOwnScore(),
+                "a mate announced at the previous move that is gone now must fire the drop against it");
+    }
+
     @Test
     void iterationDone_withoutSkipDecision_usesNoExtension() {
         var instance = newInstance();
@@ -406,15 +474,25 @@ class TimeManagementTest {
 
     /** Runs depths 1 up to the one before {@link #FIRST_SIGNAL_DEPTH}, all with the same move and score. */
     private static void runStableIterations(TimeManagement.TimeManagementInstance instance, int move, float weight) {
+        runStableIterationsCenti(instance, move, Math.round(weight * 100));
+    }
+
+    /** As {@link #runStableIterations}, with the score in centipawns, e.g. a mate score. */
+    private static void runStableIterationsCenti(TimeManagement.TimeManagementInstance instance, int move, int weightCenti) {
         for (int depth = 1; depth < FIRST_SIGNAL_DEPTH; depth++) {
-            runIteration(instance, depth, move, weight);
+            runIterationCenti(instance, depth, move, weightCenti);
         }
     }
 
     /** Asks for the decision at {@code depth} and then reports the iteration as completed. */
     private static void runIteration(TimeManagement.TimeManagementInstance instance, int depth, int move, float weight) {
+        runIterationCenti(instance, depth, move, Math.round(weight * 100));
+    }
+
+    /** As {@link #runIteration}, with the score in centipawns, e.g. a mate score. */
+    private static void runIterationCenti(TimeManagement.TimeManagementInstance instance, int depth, int move, int weightCenti) {
         instance.shouldSkipIteration(depth);
-        instance.iterationDone(depth, move, Math.round(weight * 100), System.currentTimeMillis());
+        instance.iterationDone(depth, move, weightCenti, System.currentTimeMillis());
     }
 
     /** Only {@code movetime} sent. */
