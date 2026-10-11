@@ -71,6 +71,9 @@ public final class TimeManagement {
 
     private static final int WEIGHT_DROP_THRESHOLD = 50;
 
+    /** Log prefix of the lines reporting which difficulty signal fired, followed by the depth. */
+    private static final String SIGNAL_LOG_PREFIX = "[time] signal depth ";
+
     /**
      * The time-related arguments of one UCI {@code go} command, as sent by the GUI.
      *
@@ -269,6 +272,7 @@ public final class TimeManagement {
         private void calculateSignals(int move, int weightCenti) {
             if (previousIterationBestMove != move) {
                 moveChangedCounter++;
+                Log.info(SIGNAL_LOG_PREFIX + depth + ": best move changed, change counter " + moveChangedCounter);
             } else {
                 moveChangedCounter = moveChangedCounter / 2;
             }
@@ -278,8 +282,12 @@ public final class TimeManagement {
                     && weightCenti + WEIGHT_DROP_THRESHOLD <= previousOwnScoreCenti) {
                 droppedBelowPreviousOwnScore = true;
                 weightDropped = true;
+                Log.info(SIGNAL_LOG_PREFIX + depth + ": score dropped below the previous own move, "
+                        + previousOwnScoreCenti + " -> " + weightCenti + " cp");
             } else if (weightCenti + WEIGHT_DROP_THRESHOLD <= previousIterationWeightCenti) {
                 weightDropped = true;
+                Log.info(SIGNAL_LOG_PREFIX + depth + ": score dropped against the previous iteration, "
+                        + previousIterationWeightCenti + " -> " + weightCenti + " cp");
             }
         }
 
