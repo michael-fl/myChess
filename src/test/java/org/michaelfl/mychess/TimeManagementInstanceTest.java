@@ -30,6 +30,9 @@ class TimeManagementInstanceTest {
     private static final long SOFT_LIMIT_MS = 1_000;
     private static final long HARD_LIMIT_MS = 10_000;
 
+    /** First depth that may be extended to the hard limit: one above the minimum depth 4. */
+    private static final int FIRST_EXTENDABLE_DEPTH = 5;
+
     /** Duration reported for a single iteration; large against the few milliseconds the test itself takes. */
     private static final long ITERATION_MS = 500;
 
@@ -84,17 +87,17 @@ class TimeManagementInstanceTest {
 
     @Test
     void estimateBeyondSoftLimit_isSkippedFromTheDepthTheExtensionIsAllowedAt() {
-        recordSamples(4, 2_000);
+        recordSamples(FIRST_EXTENDABLE_DEPTH, 2_000);
         var instance = instanceWithLimits(SOFT_LIMIT_MS, HARD_LIMIT_MS);
         completeDepthOne(instance);
 
-        for (int depth = 2; depth <= 3; depth++) {
+        for (int depth = 2; depth < FIRST_EXTENDABLE_DEPTH; depth++) {
             instance.shouldSkipIteration(depth);
             completeIteration(instance, depth, MOVE_A);
         }
 
-        assertTrue(instance.shouldSkipIteration(4),
-                "at depth 4 extensions are allowed, but a position that is not difficult must still be held "
+        assertTrue(instance.shouldSkipIteration(FIRST_EXTENDABLE_DEPTH),
+                "at depth 5 extensions are allowed, but a position that is not difficult must still be held "
                         + "to the soft limit: a 2 s estimate against 1 s left must skip");
     }
 
