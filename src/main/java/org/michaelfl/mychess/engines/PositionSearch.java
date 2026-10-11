@@ -14,8 +14,18 @@ import static org.michaelfl.mychess.Assert.*;
 /**
  * Iterative-deepening negamax alpha-beta search with PV reuse, killer-move
  * heuristic and {@link QuiescenceSearch} extension. Cooperatively cancellable
- * via {@link NextMoveTask} and time-bounded by
- * {@link EngineConfig#getMillisPerMove()}.
+ * via {@link NextMoveTask}.
+ *
+ * <p>Time is bounded by two limits, both measured from the start of the search
+ * (see {@link TimeManagement}):
+ * <ul>
+ *   <li>the <em>soft limit</em> {@link EngineConfig#getMillisPerMove()} decides
+ *       whether the next iteration is started;</li>
+ *   <li>the <em>hard limit</em> from {@link TimeManagement#calculateHardLimit}
+ *       aborts a running iteration, whose result is then discarded. Without a
+ *       clock ({@code go movetime}, {@code go depth}, {@code go infinite}) it
+ *       equals the soft limit.</li>
+ * </ul>
  *
  * @author Michael Fleischhauer
  */
@@ -63,6 +73,8 @@ public final class PositionSearch {
     private final int weightFactor;
     private final Statistics statistics = new Statistics();
     private final boolean silent;
+    private final int softLimitMillis;
+    private final long startTimestamp;
     private final long timeout;
     private boolean isTimeout;
 
@@ -71,7 +83,10 @@ public final class PositionSearch {
         this.game = game;
         this.moveGenerator = new MoveGenerator(new MoveSorterImpl(killerMoves));
         this.engineConfig = engine.getConfig();
-        this.timeout = System.currentTimeMillis() + engineConfig.getMillisPerMove();
+        this.softLimitMillis = engineConfig.getMillisPerMove();
+        int hardLimitMillis = TimeManagement.calculateHardLimit(softLimitMillis, engineConfig.getRemainingClockMillis());
+        this.startTimestamp = System.currentTimeMillis();
+        this.timeout = startTimestamp + hardLimitMillis;
         this.quiescenceSearch = new QuiescenceSearch(
                 MoveGenerator.forQuiescenceSearch(),
                 new WeightingFunction(), statistics, engineConfig.getMaxQuiescenceDepth(), timeout);
@@ -105,43 +120,44 @@ public final class PositionSearch {
         // Integer.MAX_VALUE for depth-unlimited go commands) cannot drive the
         // iteration loop into a runaway — see MAX_SEARCH_DEPTH Javadoc.
         final int maxDepth = Math.min(engineConfig.getMaxDepth(), MAX_SEARCH_DEPTH);
-        final long startMs = System.currentTimeMillis();
-        long previousIterationEndMs = startMs;
+        final long softTimeout = startTimestamp + softLimitMillis;
+        final var timeManagement = TimeManagement.newInstance(softTimeout, timeout, engineConfig.getPreviousOwnScoreCenti());
 
         for (int depth = 1; depth <= maxDepth && !isTimeout(); depth++) {
-            if (depth > 1 && shouldSkipIteration(depth)) {
+            if (timeManagement.shouldSkipIteration(depth)) {
                 break;
             }
 
             log("Current depth: " + depth);
             bestPath = calculateNextMove(depth, bestPath);
-            long iterationEndMs = System.currentTimeMillis();
-            long iterationMs = iterationEndMs - previousIterationEndMs;
-            previousIterationEndMs = iterationEndMs;
+            long iterationEndTimestamp = System.currentTimeMillis();
 
             if (isTimeout) {
-                IterationTimings.recordAbort(depth, iterationMs);
+                timeManagement.iterationAborted(depth, iterationEndTimestamp);
                 break;
             }
 
-            IterationTimings.recordCompletion(depth, iterationMs);
+            final MoveAndWeight iterationResult = bestPath;
 
-            MoveAndWeight m = bestPath.weightFactor(weightFactor);
+            __assert(() -> !(iterationResult.move() == 0 && iterationResult.result() == GameResult.ONGOING), "no move");
+            timeManagement.iterationDone(depth, iterationResult.move(), iterationResult.weightCenti(), iterationEndTimestamp);
 
-            log("Depth: " + depth + ", move: " + ChessUtil.moveToString(m.move()) + ", weight: " + ChessUtil.weightToString(m.weight()) + " [" + ChessUtil.pathToString(m.path()) + "]");
+            MoveAndWeight mw = bestPath.weightFactor(weightFactor);
+
+            log("Depth: " + depth + ", move: " + ChessUtil.moveToString(mw.move()) + ", weight: " + ChessUtil.weightToString(mw.weight()) + " [" + ChessUtil.pathToString(mw.path()) + "]");
             log("#positions: " + statistics.getPositionsCount() + ", #pruned: " + statistics.getPrunedMovesCount());
 
             // IterationInfo is documented to carry the raw negamax score
             // (positive = side-to-move advantage), which is what UCI's
             // `score cp` expects. Use bestPath.weight() directly — the
-            // White-POV value `m.weight()` would be wrong here when
+            // White-POV value `mw.weight()` would be wrong here when
             // playing Black and made cutechess's resign-threshold fire
             // on winning positions.
             task.fireIteration(new IterationInfo(
                     game.getGeneration(),
                     depth,
                     statistics.getPositionsCount(),
-                    iterationEndMs - startMs,
+                    iterationEndTimestamp - startTimestamp,
                     bestPath.weight(),
                     Arrays.copyOf(bestPath.path(), bestPath.path().length)));
         }
@@ -205,36 +221,6 @@ public final class PositionSearch {
         }
 
         return bestResult;
-    }
-
-    /**
-     * Skip-decision for the iterative-deepening loop: returns {@code true}
-     * if the estimated cost for {@code depth} exceeds the remaining time
-     * budget and the heuristic is allowed to act on it (enough samples,
-     * not currently due for a probing run). Records the skip as a side
-     * effect when it returns {@code true}.
-     */
-    private boolean shouldSkipIteration(int depth) {
-        final long remainingMs = timeout - System.currentTimeMillis();
-        final var decision = IterationTimings.decideIteration(depth, remainingMs);
-
-        if (decision == IterationTimings.IterationDecision.RUN) {
-            return false;
-        }
-
-        final long estimateMs = IterationTimings.getEstimatedMs(depth);
-
-        if (decision == IterationTimings.IterationDecision.PROBE) {
-            Log.info("[time] probe depth " + depth + ": est " + estimateMs
-                    + " ms > remaining " + remainingMs + " ms");
-            return false;
-        }
-
-        IterationTimings.recordSkip(depth);
-        Log.info("[time] skip depth " + depth + ": est " + estimateMs
-                + " ms > remaining " + remainingMs + " ms");
-
-        return true;
     }
 
     @SuppressWarnings("Duplicates")

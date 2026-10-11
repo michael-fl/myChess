@@ -1,7 +1,8 @@
-package org.michaelfl.mychess.engines;
+package org.michaelfl.mychess;
 
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.michaelfl.mychess.engines.PositionSearch;
 
 /**
  * Switches the skip-hopeless-iteration heuristic off for the entire test run.

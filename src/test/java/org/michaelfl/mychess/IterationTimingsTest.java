@@ -1,9 +1,10 @@
-package org.michaelfl.mychess.engines;
+package org.michaelfl.mychess;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import org.michaelfl.mychess.engines.IterationTimings.IterationDecision;
+import org.michaelfl.mychess.IterationTimings.IterationDecision;
+import org.michaelfl.mychess.engines.EngineTuning;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -249,9 +250,25 @@ class IterationTimingsTest {
         withSkipHeuristicEnabled(() -> {
             IterationTimings.recordCompletion(DEPTH, SAMPLE_MS);
 
-            assertEquals(IterationDecision.RUN, IterationTimings.decideIteration(DEPTH, 1),
+            // Remaining time above MIN_REMAINING_MILLIS, otherwise the "time is up" rule decides first.
+            assertEquals(IterationDecision.RUN,
+                    IterationTimings.decideIteration(DEPTH, IterationTimings.MIN_REMAINING_MILLIS + 1),
                     "a single sample is below MIN_SAMPLES_FOR_SKIP, so there is nothing to decide on");
         });
+    }
+
+    @Test
+    void decideIteration_timeAlmostUp_skipsFromDepthThreeWithoutSamples() {
+        withSkipHeuristicEnabled(() -> assertEquals(IterationDecision.SKIP,
+                IterationTimings.decideIteration(3, IterationTimings.MIN_REMAINING_MILLIS),
+                "with MIN_REMAINING_MILLIS or less left, depth 3 and deeper must be skipped even without samples"));
+    }
+
+    @Test
+    void decideIteration_timeAlmostUp_stillRunsDepthTwo() {
+        withSkipHeuristicEnabled(() -> assertEquals(IterationDecision.RUN,
+                IterationTimings.decideIteration(2, 0),
+                "depth 2 is cheap and must still run when the time is up, so there is always a searched move"));
     }
 
     @Test

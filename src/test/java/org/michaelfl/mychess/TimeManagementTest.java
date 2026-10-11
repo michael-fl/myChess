@@ -39,6 +39,10 @@ class TimeManagementTest {
 
     private static final int DEFAULT_MOVES_TO_GO = 30;
 
+    /** Two distinct non-zero move codes; the bookkeeping only compares them. */
+    private static final int MOVE_A = 1;
+    private static final int MOVE_B = 2;
+
     // ---- computeMoveBudgetMillis: which go argument decides ----
 
     @Test
@@ -154,6 +158,123 @@ class TimeManagementTest {
         // movestogo 0 would mean "this is the last move before the control": clock / 1, capped by the margin
         assertEquals(ONE_MINUTE - FLOOR_MILLIS, TimeManagement.computeClockBudgetMillis(ONE_MINUTE, 0, 0),
                 "movesToGo 0 divides by 1 and must be capped at clock - 50 ms");
+    }
+
+    // ---- calculateHardLimit ----
+
+    @Test
+    void hardLimit_withAmpleClock_isFourTimesTheSoftLimit() {
+        assertEquals(4_000, TimeManagement.calculateHardLimit(ONE_SECOND, ONE_MINUTE),
+                "1 s soft limit and 60 s on the clock: 4 x soft (4 s) is below 20 % of the clock (12 s)");
+    }
+
+    @Test
+    void hardLimit_withShortClock_isCappedAtAFifthOfTheClock() {
+        assertEquals(2_000, TimeManagement.calculateHardLimit(ONE_SECOND, 10_000),
+                "with 10 s left, 20 % of the clock (2 s) must cap the hard limit below 4 x soft (4 s)");
+    }
+
+    @Test
+    void hardLimit_withoutClock_equalsTheSoftLimit() {
+        assertEquals(ONE_SECOND, TimeManagement.calculateHardLimit(ONE_SECOND, Integer.MAX_VALUE),
+                "without a clock (Integer.MAX_VALUE) there is no reserve to draw on, so hard must equal soft");
+    }
+
+    @Test
+    void hardLimit_forMovetime_staysWithinTheGrantedTime() {
+        int softLimit = TimeManagement.computeMoveBudgetMillis(movetime(ONE_SECOND), GameStatus.TURN_WHITE);
+
+        assertEquals(softLimit, TimeManagement.calculateHardLimit(softLimit, Integer.MAX_VALUE),
+                "go movetime 1000 sends no clock: the hard limit must not let the search run past the granted second");
+    }
+
+    @Test
+    void hardLimit_withoutClockAndInfiniteBudget_doesNotOverflow() {
+        assertEquals(INFINITE_MILLIS, TimeManagement.calculateHardLimit(INFINITE_MILLIS, Integer.MAX_VALUE),
+                "go infinite / go depth must keep the infinite budget unchanged, not multiply it");
+    }
+
+    @Test
+    void hardLimit_withNearlyEmptyClock_isFlooredAtTheMinimum() {
+        assertEquals(FLOOR_MILLIS, TimeManagement.calculateHardLimit(ONE_SECOND, 100),
+                "20 ms (20 % of 100 ms) is below the 50 ms floor, so the floor must win");
+    }
+
+    @Test
+    void hardLimit_softLimitAsLargeAsTheClock_isCappedAtAFifthOfIt() {
+        int hardLimit = TimeManagement.calculateHardLimit(ONE_MINUTE, ONE_MINUTE);
+
+        assertEquals(12_000, hardLimit, "a soft limit as large as the clock must be capped at 20 % of it");
+    }
+
+    // ---- TimeManagementInstance: bookkeeping per completed iteration ----
+
+    @Test
+    void iterationDone_advancesTheDepthAndStoresMoveAndScore() {
+        var instance = newInstance();
+
+        runIteration(instance, 1, MOVE_A, 0.35f);
+
+        assertEquals(2, instance.getDepth(), "after depth 1 the next expected depth must be 2");
+        assertEquals(MOVE_A, instance.getPreviousIterationBestMove(), "the best move of depth 1 must be stored");
+        assertEquals(35, instance.getPreviousIterationWeightCenti(), "the score of depth 1 must be stored in centipawns");
+    }
+
+    @Test
+    void iterationDone_atDepthOne_neverCountsAMoveChange() {
+        var instance = newInstance();
+
+        runIteration(instance, 1, MOVE_A, 0f);
+
+        assertEquals(0, instance.getMoveChangedCounter(),
+                "depth 1 has no previous best move, so it cannot count as a change");
+    }
+
+    @Test
+    void iterationDone_newBestMove_countsAChange() {
+        var instance = newInstance();
+
+        runIteration(instance, 1, MOVE_A, 0f);
+        runIteration(instance, 2, MOVE_B, 0f);
+
+        assertEquals(1, instance.getMoveChangedCounter(), "a different best move at depth 2 must count as one change");
+    }
+
+    @Test
+    void iterationDone_sameBestMove_halvesTheChangeCounter() {
+        var instance = newInstance();
+
+        runIteration(instance, 1, MOVE_A, 0f);
+        runIteration(instance, 2, MOVE_B, 0f);
+        runIteration(instance, 3, MOVE_A, 0f);
+        runIteration(instance, 4, MOVE_A, 0f);
+
+        assertEquals(1, instance.getMoveChangedCounter(),
+                "two changes then one stable iteration must decay the counter from 2 to 1");
+    }
+
+    @Test
+    void iterationDone_withoutSkipDecision_usesNoExtension() {
+        var instance = newInstance();
+
+        runIteration(instance, 1, MOVE_A, 0f);
+        runIteration(instance, 2, MOVE_B, 0f);
+
+        assertEquals(0, instance.getExtraIterationsUsedCounter(),
+                "iterations the soft limit allowed anyway must not be counted as extensions");
+    }
+
+    /** Soft limit 1 s, hard limit 4 s from now, no previous score. */
+    private static TimeManagement.TimeManagementInstance newInstance() {
+        long now = System.currentTimeMillis();
+
+        return TimeManagement.newInstance(now + ONE_SECOND, now + 4 * ONE_SECOND, null);
+    }
+
+    /** Asks for the decision at {@code depth} and then reports the iteration as completed. */
+    private static void runIteration(TimeManagement.TimeManagementInstance instance, int depth, int move, float weight) {
+        instance.shouldSkipIteration(depth);
+        instance.iterationDone(depth, move, Math.round(weight * 100), System.currentTimeMillis());
     }
 
     /** Only {@code movetime} sent. */
