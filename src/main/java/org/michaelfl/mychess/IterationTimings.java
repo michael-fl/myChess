@@ -1,4 +1,8 @@
-package org.michaelfl.mychess.engines;
+package org.michaelfl.mychess;
+
+import org.michaelfl.mychess.engines.ChessEngine;
+import org.michaelfl.mychess.engines.EngineTuning;
+import org.michaelfl.mychess.engines.PositionSearch;
 
 import java.util.Arrays;
 
@@ -36,7 +40,7 @@ import java.util.Arrays;
  *
  * @author Michael Fleischhauer
  */
-final class IterationTimings {
+public final class IterationTimings {
 
     /**
      * Maximum depth for which timing statistics are tracked. Far beyond
@@ -45,6 +49,8 @@ final class IterationTimings {
      * would just waste a few KiB on unused array slots.
      */
     static final int MAX_TRACKED_DEPTH = 64;
+
+    public static final int MIN_REMAINING_MILLIS = 30;
 
     /**
      * Whether {@link PositionSearch} may act on these statistics; on in
@@ -91,7 +97,7 @@ final class IterationTimings {
     }
 
     /** What {@link PositionSearch} should do with the next deepening iteration. */
-    enum IterationDecision {
+    public enum IterationDecision {
         /** Run it. */
         RUN,
         /** Run it even though the estimate exceeds the budget, to refresh the statistics. */
@@ -118,7 +124,13 @@ final class IterationTimings {
      *         remaining time
      */
     static synchronized IterationDecision decideIteration(int depth, long remainingMs) {
-        if (!skipHeuristicEnabled || !hasEnoughSamplesForSkipDecision(depth)) {
+        if (!skipHeuristicEnabled) {
+            return IterationDecision.RUN;
+        }
+        if (remainingMs <= MIN_REMAINING_MILLIS) {
+            return depth > 2 ? IterationDecision.SKIP : IterationDecision.RUN;
+        }
+        if (!hasEnoughSamplesForSkipDecision(depth)) {
             return IterationDecision.RUN;
         }
 
@@ -206,7 +218,7 @@ final class IterationTimings {
     }
 
     /** Record a completed iteration that took {@code iterationMs}. */
-    static synchronized void recordCompletion(int depth, long iterationMs) {
+    public static synchronized void recordCompletion(int depth, long iterationMs) {
         if (depth < 0 || depth > MAX_TRACKED_DEPTH) {
             return;
         }
@@ -229,7 +241,7 @@ final class IterationTimings {
      * <p>Only {@link #recordCompletion} can lower the SMA — that's the
      * only event that delivers a real, ground-truth measurement.
      */
-    static synchronized void recordAbort(int depth, long elapsedMs) {
+    public static synchronized void recordAbort(int depth, long elapsedMs) {
         if (depth < 0 || depth > MAX_TRACKED_DEPTH) {
             return;
         }
@@ -240,7 +252,7 @@ final class IterationTimings {
     }
 
     /** Drop all timing history and skip counters. Call on {@code ucinewgame}. */
-    static synchronized void reset() {
+    public static synchronized void reset() {
         for (long[] row : window) {
             Arrays.fill(row, 0L);
         }
