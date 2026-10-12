@@ -24,19 +24,19 @@ public abstract class ChessEngine {
 
     @SuppressWarnings("java:S6218")
     public record MoveAndWeight(int move, float weight, GameResult result,
-                                @SuppressWarnings("WeakerAccess") int[] path) {
+                                @SuppressWarnings("WeakerAccess") int[] path, int legalMoveCount) {
 
-            public static final MoveAndWeight NO_MOVE = new MoveAndWeight(0, 0, GameResult.ONGOING, new int[0]);
+            public static final MoveAndWeight NO_MOVE = new MoveAndWeight(0, 0, GameResult.ONGOING, new int[0], 0);
 
-            public MoveAndWeight(int move, int weightCenti, GameResult result, int[] path) {
-                this(move, weightCenti / 100.0f, result, path);
+            public MoveAndWeight(int move, int weightCenti, GameResult result, int[] path, int moveCount) {
+                this(move, weightCenti / 100.0f, result, path, moveCount);
             }
 
             public MoveAndWeight weightFactor(int factor) {
                 if (weight == 0f) {
                     return this;
                 }
-                return new MoveAndWeight(move, weight * factor, result, path);
+                return new MoveAndWeight(move, weight * factor, result, path, legalMoveCount);
             }
         }
 
@@ -122,16 +122,16 @@ public abstract class ChessEngine {
         // First check if this game is already finished
         if (game.getResult() != GameResult.ONGOING) {
             if (game.getResult() == GameResult.CHECKMATE) {
-                move = new MoveAndWeight(0, -WeightingFunction.checkmateInCenti(), GameResult.CHECKMATE, new int[0]);
+                move = new MoveAndWeight(0, -WeightingFunction.checkmateInCenti(), GameResult.CHECKMATE, new int[0], 0);
             } else {
-                move = new MoveAndWeight(0, 0, game.getResult(), new int[0]);
+                move = new MoveAndWeight(0, 0, game.getResult(), new int[0], 0);
             }
         } else if ((getConfig().isEnableFiftyMovesRule() && game.getGameStatus().getHalfMoveClock() >= 100) || isThreefoldRepetition()) {
-            move = new MoveAndWeight(0, 0, GameResult.DRAW, new int[0]);
+            move = new MoveAndWeight(0, 0, GameResult.DRAW, new int[0], 0);
         } else if (openingDB != null) {
             var m = getMoveFromOpeningDB(openingDB);
             if (m != null) {
-                move = new MoveAndWeight(m.move(), 0, GameResult.ONGOING, new int[] { move.move });
+                move = new MoveAndWeight(m.move(), 0, GameResult.ONGOING, new int[] { move.move }, 0);
             }
         }
         // Note: when openingDB is null we silently fall through. The startup log
