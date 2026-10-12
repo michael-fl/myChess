@@ -90,3 +90,38 @@ The search allocates despite the project's no-allocation rule. It allocates abou
 | 5 | reuse per-ply search objects instead of allocating them (≈ 450 MB/s today) | unknown; GC itself is only ≈ 0.1 % | signature unchanged |
 
 At the roadmap's rule of thumb, 50–70 Elo per doubling, 7 % is worth roughly 5 Elo. These are suggestions only: production changes are the owner's.
+
+## Inside the evaluation: hotspots by term (4.8.3, 2026-10-12)
+
+Requested by the owner on 2026-10-09: the hot spots inside `WeightingFunction.calculate`, down to single terms where measurable. Runner and raw files are in the lab: `myChess-lab/scripts/eval-hotspots-4.8.3.sh`, `eval-hotspots-analyze.py`, `eval-hotspots-terms.py` and `myChess-lab/results/eval-hotspots-4.8.3/`.
+
+**Setup.** Build `versions/4.8.3`, whose evaluation is byte-for-byte the one of 4.8.2: `WeightingFunction` and `PieceSquareTables` are unchanged. Bench v2 d8 ran three times in one JVM, and all three runs reproduce **169,439,389**. JFR `settings=profile` with `jdk.ExecutionSample#period=2ms` gave 126,173 samples on the search thread, 16 times the 2026-10-09 recording. The evaluation is **43.9 % ± 0.1** of them, which matches the 43.3 % measured above.
+
+**Method.** Every sample whose stack contains `calculate` is assigned to exactly one group, by the frames below `calculate` (`eval-hotspots-terms.py` documents the order). So the shares add up to 100 % of the evaluation. ± is one binomial standard error.
+
+| group | % of evaluation | % of run | what it is |
+|---|---:|---:|---|
+| driver loop | **33.4 ± 0.2** | **14.7** | `calculate`'s own code: the scan over the board, material, PST, phase, and the per-piece dispatch |
+| slider rays (`xray`) | **25.4 ± 0.2** | **11.2** | bishop, rook and queen rays: mobility plus the attack units counted along them |
+| doubled pawns | **17.8 ± 0.2** | **7.8** | `checkWhite/BlackDoublePawn`, a file walk per pawn |
+| undefended pieces | **8.6 ± 0.1** | **3.8** | `calculateUndefendedPiecesCount`, a second pass over the board |
+| knight | 5.9 ± 0.1 | 2.6 | `knightMove`, mobility and attack units of knights |
+| king | 3.5 ± 0.1 | 1.5 | the king's own moves |
+| pawn, other | 2.9 ± 0.1 | 1.3 | en passant, pawn captures and defense |
+| slider wrappers | 1.5 ± 0.1 | 0.7 | the per-piece methods around `xray` |
+| king-zone extra | 1.0 ± 0.0 | 0.4 | `isKingZoneField`, `increaseAttackUnit` and the attack-unit line in `xray`, where they show up as their own frames |
+
+Castling (`calculateCastlingState`) and the final sum (`calculatePositionWeight`) get no measurable share. The 2026-10-09 recording, regrouped the same way, agrees within its larger noise on every group: doubled pawns 16.5 ± 0.6, slider rays 24.8 ± 0.7, driver loop 34.3 ± 0.8.
+
+**What the numbers can and cannot separate.**
+- **Mobility and attack units share one loop.** The attack units are counted inside the same ray walk that computes mobility. Only where the attack-unit code shows up as its own frame (`isKingZoneField`, `increaseAttackUnit`) can it be separated, and that is 1 % of the evaluation. The rest of the 8.41 % cost the second cost ladder measured for the term lives inside the slider-ray and knight groups. Sampling cannot pull it out; only a cost ladder like that one can.
+- **Within the driver loop, the line split is unreliable.** JFR attributes 19.7 % of the evaluation to line 527 alone (`pstEndGameWeight[color] += …`), 11.6 % to the dispatch line 531, and 2.1 % to line 515. A single add getting a fifth of the evaluation is the usual skid of samples in compiled code onto a neighboring line. The group total is sound; how it splits between the board scan, the PST lookups and the dispatch is not.
+
+**Findings, ranked by share of the run:**
+1. **The driver loop, 14.7 % of the run.** It visits every square from a1 to h8 of the 12×12 array, border columns included, about 92 squares for at most 32 pieces. It also calls each piece through `calculationFunctions[piece].calculate(...)`. That call site has seven implementations, so the JIT cannot inline it. Both are structural costs that do not depend on what the evaluation computes. A piece list instead of the scan, or a `switch` on the piece kind instead of the interface call, attacks them. Which of the two pays more is not something this profile can decide, given the skid; a paired bench of each variant can, and both keep the signature unchanged.
+2. **The slider rays, 11.2 %.** This is the core of mobility and of the attack units. It was already made cheaper in 4.8.2, and it is the work the terms exist for.
+3. **Doubled pawns, 7.8 %.** This is finding 1 above, confirmed with 16 times the samples: a file walk per pawn for a minor term. A per-file pawn count filled by the driver loop removes it and keeps the signature unchanged.
+4. **Undefended pieces, 3.8 %.** A second full pass over the board, only to count marked squares. The marks are complete only after the main loop, so the count cannot move into it as it stands, but the pass could visit the pieces instead of all squares.
+5. **Knights, 2.6 %.** The unrolled knight moves of 4.8.2; nothing obvious left.
+
+All candidates are for the owner, who writes production code. Each one should keep bench v2 at 169,439,389, and a paired bench decides whether it pays.
