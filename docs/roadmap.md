@@ -309,7 +309,7 @@ That's protocol-compliant and good enough for tests and casual play, but in long
 - **No panic mode.** Below a low-clock threshold (say <10 s for 30 moves) the engine should drop quiescence-extension depth, skip non-PV info-line emission, and return *anything* legal rather than search out an iterative-deepening level. Currently it just gets a tiny budget and possibly times out on the active iteration.
 - **No complexity scaling.** Tactical positions (in check, lots of captures, hanging pieces) deserve more time; quiet positions less. A simple "spend 1.5× budget if the previous iteration's score swung > 50 cp" heuristic alone is worth ~20 Elo on faster time controls.
 - **No multi-phase awareness.** With a "40/90 + rest" classical control, the move just after the time-control switch suddenly has a much bigger clock — the engine doesn't know to use it for the typically-tactical move 41.
-- **No instant-move shortcut.** When only one legal move exists (recapture, only-move-out-of-check) the engine still spends its full budget searching. Detecting `legalMoves.size() == 1` and returning instantly is one Sonar-pass-worth of trivial code.
+- ~~**No instant-move shortcut.**~~ **Done in v4.8.3.** With exactly one legal root move the iterative deepening stops at depth 4 (`EngineTuning.ONLY_MOVE_STOP_DEPTH`). The legal-move count is known after iteration 1, because illegal root moves are already filtered at depth 1. The search stops at depth 4 rather than 1 so the reported score stays usable: a forced move into a mate is still reported as a mate.
 
 ### What it takes to implement
 
