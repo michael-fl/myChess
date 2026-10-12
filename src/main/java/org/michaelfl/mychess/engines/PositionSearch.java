@@ -144,6 +144,10 @@ public final class PositionSearch {
                     iterationEndMs - startMs,
                     bestPath.weight(),
                     Arrays.copyOf(bestPath.path(), bestPath.path().length)));
+
+            if (depth >= EngineTuning.ONLY_MOVE_STOP_DEPTH && bestPath.legalMoveCount() == 1) {
+                break; // one legal move: deeper iterations cannot change it, a few plies keep the score meaningful
+            }
         }
 
         // The last path component may be an illegal move (because this is not checked on the leaf nodes).
@@ -321,8 +325,12 @@ public final class PositionSearch {
 
         int bestWeight = WeightingFunction.ILLEGAL_WEIGHT_NEG;
         int bestMoveIndex = -1;
+        int moveCount = 0;
 
         for (int i = 0; i < countMoves; i++) {
+            if (results[i].weight() > WeightingFunction.ILLEGAL_WEIGHT_NEG) {
+                moveCount++;
+            }
             if (results[i].weight() > bestWeight) {
                 bestWeight = results[i].weight();
                 bestMoveIndex = i;
@@ -338,14 +346,14 @@ public final class PositionSearch {
                 return previousBestKnownPath;
             }
 
-            return new MoveAndWeight(plainMoves[bestMoveIndex], results[bestMoveIndex].weight(), results[bestMoveIndex].result(), allPaths[bestMoveIndex]);
+            return new MoveAndWeight(plainMoves[bestMoveIndex], results[bestMoveIndex].weight(), results[bestMoveIndex].result(), allPaths[bestMoveIndex], moveCount);
         }
 
         // No legal move possible ==> checkmate or stalemate
         if (workingBoard.isKingChecked()) {
-            return new MoveAndWeight(0, -WeightingFunction.checkmateInCenti(), GameResult.CHECKMATE, new int[0]);
+            return new MoveAndWeight(0, -WeightingFunction.checkmateInCenti(), GameResult.CHECKMATE, new int[0], 0);
         } else {
-            return new MoveAndWeight(0, 0, GameResult.STALEMATE, new int[0]);
+            return new MoveAndWeight(0, 0, GameResult.STALEMATE, new int[0], 0);
         }
     }
 

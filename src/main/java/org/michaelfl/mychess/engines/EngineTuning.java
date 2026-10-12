@@ -53,6 +53,9 @@ final class EngineTuning {
      */
     static final double MIN_PROBE_REMAINING_RATIO = 0.7;
 
+    /** Depth at which the search stops when the root has exactly one legal move. */
+    static final int ONLY_MOVE_STOP_DEPTH = 4;
+
     private EngineTuning() {
         throw new IllegalStateException();
     }
