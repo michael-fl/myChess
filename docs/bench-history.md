@@ -78,6 +78,7 @@ time-truncated.
 | **4.8.0** | 658,771,177 | **−49.4 %** — but see the next column, the whole move is one artificial position | **107,227,388 (+4.6 %)** | **king-attack units**, the first shipped king-safety term ([§ 5.9](evaluation.md#59-king-attack-units), [king-safety.md § 4.17](king-safety.md)) | **−6.3 ± 19.8** net over 4261 anchor-gauntlet games at `tc=40/60`, against a ≥ −10 gate; +8.4 ± 8.9 in 4200 self-play games | ~1943 |
 | **4.8.1** | 658,771,177 | **±0** | 107,227,388 (±0) | en passant at a FEN root ([known-issues](known-issues.md#en-passant-is-invisible-to-the-evaluation-at-a-fen-root-2026-09-24-fixed-2026-09-30-in-v481)) — a correctness fix that no bench position reaches | — (search-neutral; no match) | ~1943 |
 | **4.8.2** | 658,771,177 | **±0** | 107,227,388 (±0) | the attack-unit term made cheaper: Chebyshev pre-check, direct ray distances to the king zone, unrolled knight moves - all 55 positions identical to 4.8.1 | — (search-identical; no match) | ~1943 |
+| **4.8.3** | 658,771,177 | **±0** | 107,227,388 (±0) | stop at depth 4 when the root has exactly one legal move - no bench position has, so all 55 positions are identical to 4.8.2 | — (search-identical on the benches; no match) | ~1943 |
 
 ### Measured but not a release — `4.6.0-king-line` (2026-09-02, shelved 2026-09-03)
 
@@ -558,6 +559,9 @@ and are historically closed.
 | **4.6.0** (`415a6ac`) | 2,352,454,034 | 1,300,002,835 | **1.81** | 372,716,472 | **3.67** |
 | **4.7.0** | 2,354,625,105 | 1,300,911,231 | **1.810** | 374,887,543 | **3.66** |
 | **4.7.1** | 2,354,628,753 | 1,300,910,618 | **1.810** | 374,891,191 | **3.66** |
+| **4.8.3** | 1,375,937,208 | 658,771,177 | **2.09** | — | — |
+
+**The 4.8.3 row is the first depth-9 reading since 4.7.1**, taken on 2026-10-12 for the `skip-iteration-for-only-move` merge. Master (4.8.2 code) gave the same 1,375,937,208, so the value holds for 4.8.0 through 4.8.3. Its ratio of 2.09 is not comparable to the rows above: 4.8.0 shrank the artificial position 37 by itself, and that alone moves both totals. The realistic columns are empty because `tools/bench.sh` reports only the total; a per-position depth-9 archive would fill them.
 
 **The 4.6.0 row breaks the comparability of this column, and must not be read as a search
 improvement.** Its 1.81 is the lowest value in the table by a wide margin, and none of it comes
@@ -931,6 +935,7 @@ nothing.
 | 4.8.0 | 2026-09-23 | 8 | 60 | **169,439,389** (−5.37 %) | 102,668 ms | 1,650,362 |
 | 4.8.1 | 2026-09-30 | 8 | 60 | **169,439,389** (±0) | 104,510 ms | 1,621,274 |
 | 4.8.2 | 2026-10-02 | 8 | 60 | **169,439,389** (±0) | 98,650 ms | 1,717,581 |
+| 4.8.3 | 2026-10-12 | 8 | 60 | **169,439,389** (±0) | 100,275 ms | 1,689,747 |
 
 Per-position archive: `test-results/bench/4.6.1-castling-mix-d8.txt`, same column
 layout as the `bench` archives of § 7. The largest position is 6.7 % of the total
