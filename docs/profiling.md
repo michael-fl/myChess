@@ -125,3 +125,25 @@ Castling (`calculateCastlingState`) and the final sum (`calculatePositionWeight`
 5. **Knights, 2.6 %.** The unrolled knight moves of 4.8.2; nothing obvious left.
 
 All candidates are for the owner, who writes production code. Each one should keep bench v2 at 169,439,389, and a paired bench decides whether it pays.
+
+## JIT cold start: what a fresh JVM loses in the first moves (4.8.3, 2026-10-12)
+
+Requested by the owner on 2026-10-10. lichess-bot starts a new engine process for every game, so every game begins on a JVM whose JIT has compiled nothing yet. Runner and data are in the lab: `myChess-lab/scripts/jit-cold-start.py`, `jit-cold-start-analyze.py` and `myChess-lab/results/jit-cold-start/`.
+
+**Setup.** Build `versions/4.8.3` through its UCI wrapper, so the JVM flags are the production ones. Five of the bot's Lichess games, and in each the first ten positions with myChess to move. A fresh JVM plays them in order with `go movetime T`. Then the same JVM receives `ucinewgame`, which clears the TT and the iteration timings, and plays them again, so the second pass differs from the first only in the JIT state. Each game is repeated five times with a fresh JVM, at T = 1000 ms and T = 250 ms, for 50 JVM runs in total. The measure is the node count and depth of the last completed iteration, cold against warm. The interval is 95 % over the 25 runs per cell.
+
+| move | 1000 ms: cold/warm nodes | depth cold / warm | 250 ms: cold/warm nodes | depth cold / warm |
+|---:|---:|---:|---:|---:|
+| 1 | 1.00 [1.00, 1.00] | 7.80 / 7.80 | **0.38 [0.22, 0.53]** | **5.44 / 6.48** |
+| 2 | 0.94 [0.84, 1.05] | 7.60 / 7.72 | **0.59 [0.42, 0.77]** | **5.32 / 6.00** |
+| 3 | 0.99 [0.98, 1.00] | 7.00 / 7.00 | 0.91 [0.75, 1.07] | 5.72 / 6.00 |
+| 4 | 0.93 [0.86, 1.00] | 7.20 / 7.32 | 1.01 [0.74, 1.28] | 5.68 / 5.88 |
+| 5 | 0.98 [0.93, 1.03] | 7.40 / 7.40 | 0.79 [0.49, 1.09] | 5.56 / 5.84 |
+| 6–10 | 0.89 to 1.82, intervals cover 1 | ±0.2 | 0.88 to 1.44, intervals mostly cover 1 | ±0.2 |
+
+**Reading.**
+- **At one second per move, there is no cold-start loss.** The first move reaches the same depth with the same node count cold and warm. No later move differs by more than 0.12 ply on average.
+- **At 250 ms, the first two moves lose about a ply.** Move 1 searches 38 % of the warm node count and reaches 5.4 instead of 6.5 plies; move 2 is at 59 % and 0.7 ply less. From move 3 on, the differences are within the noise.
+- The ratios above 1 in later moves (up to 1.82 at move 9 at 1000 ms) are boundary effects of the time control. Whether one more iteration starts depends on an estimate that differs slightly between the two passes. They do not mean a cold JVM searches more.
+
+**Consequence.** The bot's games give one to two seconds per move in the opening even in bullet: 1+0 gives about 1.9 s at move 1 under the default 30 moves to go. That is the 1000 ms case, where nothing is lost. The loss appears only at a quarter second per move, and then only for two moves. **Not material**, so the warm-up options are not pursued: a warm-up search before `uciok`, a Java 25 AOT cache, or keeping the engine process alive.
