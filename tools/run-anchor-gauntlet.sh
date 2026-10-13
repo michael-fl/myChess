@@ -45,7 +45,11 @@
 # Usage:
 #   tools/run-anchor-gauntlet.sh --label <slug> \
 #       --base <dir> --placebo <dir> --candidate <dir> \
-#       [--rounds N] [--probe-fen FEN] [--preflight-only] [--wait-for-cores]
+#       [--rounds N] [--tc TC] [--probe-fen FEN] [--preflight-only] [--wait-for-cores]
+#
+# --tc sets the time control in cutechess syntax, default 40/60 (see TC below). Use a
+# Fischer control such as 60+1 to test the engine as it plays on Lichess: increment, no
+# movestogo, so the clock formula and the hard limit work differently than under 40/60.
 #
 #   tools/run-anchor-gauntlet.sh --label <slug> \
 #       --base <dir> --candidate <dir> --no-placebo "<why none is possible>"
@@ -105,6 +109,10 @@ JAVA_HOME_DIR="/Library/Java/JavaVirtualMachines/amazon-corretto-25.jdk/Contents
 #
 # What is given up: Ordo's absolute rating line at the end is no longer anchored by a bracket
 # run at the same control. It stays informative and decides nothing.
+#
+# --tc overrides it (added 2026-10-13 for the 4.9.0 time-management gauntlet at 60+1). Like
+# the length, the control is locked in the state file on the first run, so a resumed
+# gauntlet cannot mix two controls in one PGN.
 TC="40/60"
 CONCURRENCY=4
 RATING_INTERVAL=10
@@ -126,7 +134,7 @@ PREFLIGHT_ONLY=0
 FORCE_PREFLIGHT=0
 
 usage() {
-    sed -n '2,60p' "$0" | sed 's/^# \{0,1\}//'
+    sed -n '2,64p' "$0" | sed 's/^# \{0,1\}//'
     exit "${1:-2}"
 }
 
@@ -138,6 +146,7 @@ while [ $# -gt 0 ]; do
         --no-placebo)     shift; NO_PLACEBO_REASON="${1:-}" ;;
         --candidate)      shift; CANDIDATE_DIR="${1:-}" ;;
         --rounds)         shift; ROUNDS="${1:-}" ;;
+        --tc)             shift; TC="${1:-}" ;;
         --probe-fen)      shift; PROBE_FEN="${1:-}" ;;
         --wait-for-cores) WAIT_FOR_CORES=1 ;;
         --preflight-only) PREFLIGHT_ONLY=1 ;;
@@ -270,7 +279,19 @@ if [ -f "$STATE" ]; then
         fi
     fi
 else
-    printf '%s\n' "$ROUNDS" > "$STATE"
+    printf '%s\n# tc=%s\n' "$ROUNDS" "$TC" > "$STATE"
+fi
+
+# The control is locked the same way, without an override: a different control is a
+# different gauntlet and gets its own label. State files from before --tc carry no tc line;
+# they were all played at 40/60.
+DECLARED_TC=$(sed -n 's/^# tc=//p' "$STATE" | head -1)
+DECLARED_TC=${DECLARED_TC:-40/60}
+
+if [ "$DECLARED_TC" != "$TC" ]; then
+    echo "ERROR: this gauntlet was declared at tc=$DECLARED_TC, not tc=$TC." >&2
+    echo "       Re-run with --tc $DECLARED_TC, or use a new --label for a different control." >&2
+    exit 2
 fi
 
 # SIGINT ABANDONS the games in flight rather than finishing them - measured, not assumed:
