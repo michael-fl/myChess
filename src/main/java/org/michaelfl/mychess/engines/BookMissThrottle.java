@@ -10,7 +10,7 @@ package org.michaelfl.mychess.engines;
  * <p>State is process-static on purpose: in UCI mode every {@code go}
  * command creates a fresh {@code ChessEngine} instance, so instance state
  * would reset the throttle every move and defeat the whole point. The
- * static design mirrors {@link IterationTimings}.
+ * static design mirrors {@code IterationTimings}.
  *
  * <p>All public methods are {@code synchronized}. Contention is
  * irrelevant — book lookups happen at most once per {@code go}.

@@ -17,17 +17,21 @@ public final class EngineConfig {
     private final TranspositionTable tt;
     private final int maxDepth;
     private final int millisPerMove;
+    private final int remainingClockMillis;
     private final boolean silent;
     private final boolean enableThreefoldRepetition;
     private final boolean enableFiftyMovesRule;
+    private final String logTag;
 
-    private EngineConfig(TranspositionTable tt, int maxDepth, int millisPerMove, boolean silent, boolean enableThreefoldRepetition, boolean enableFiftyMovesRule) {
-        this.tt = tt;
-        this.maxDepth = maxDepth;
-        this.millisPerMove = millisPerMove;
-        this.silent = silent;
-        this.enableThreefoldRepetition = enableThreefoldRepetition;
-        this.enableFiftyMovesRule = enableFiftyMovesRule;
+    private EngineConfig(Builder builder) {
+        this.tt = builder.tt;
+        this.maxDepth = builder.maxDepth;
+        this.millisPerMove = builder.millisPerMove;
+        this.remainingClockMillis = builder.remainingClockMillis;
+        this.silent = builder.silent;
+        this.enableThreefoldRepetition = builder.enableThreefoldRepetition;
+        this.enableFiftyMovesRule = builder.enableFiftyMovesRule;
+        this.logTag = builder.logTag;
     }
 
     /**
@@ -49,6 +53,18 @@ public final class EngineConfig {
         return millisPerMove;
     }
 
+    /**
+     * Remaining clock of the side to move at the start of this search, in milliseconds.
+     *
+     * @return the clock the GUI sent ({@code wtime} or {@code btime}), possibly zero or negative
+     *         for an overstepped clock; {@link Integer#MAX_VALUE} if no clock was sent
+     *         ({@code go movetime}, {@code go depth}, {@code go infinite}, or a config built
+     *         without one) — that value means "no clock", not a real remaining time
+     */
+    public final int getRemainingClockMillis() {
+        return remainingClockMillis;
+    }
+
     public final int getMaxQuiescenceDepth() {
         return DEFAULT_MAX_QUIESCENCE_SEARCH_DEPTH;
     }
@@ -65,13 +81,25 @@ public final class EngineConfig {
         return enableFiftyMovesRule;
     }
 
+    /**
+     * Short tag that the search puts into its {@code [time]} log lines, so lines of engines writing
+     * into one log at once can be told apart, e.g. {@code game=4174bf06}.
+     *
+     * @return the tag, or an empty string if none was set
+     */
+    public String getLogTag() {
+        return logTag;
+    }
+
     public static final class Builder {
         private TranspositionTable tt;
         private int maxDepth = Integer.MAX_VALUE;
         private int millisPerMove = DEFAULT_MILLIS_PER_MOVE;
+        private int remainingClockMillis = Integer.MAX_VALUE;
         private boolean silent = false;
         private boolean enableThreefoldRepetition = true;
         private boolean enableFiftyMovesRule = true;
+        private String logTag = "";
 
         /**
          * Provide an explicit {@link TranspositionTable} instance for the
@@ -86,6 +114,17 @@ public final class EngineConfig {
             return this;
         }
 
+        /**
+         * Sets the tag for the search's {@code [time]} log lines; see {@link EngineConfig#getLogTag()}.
+         *
+         * @param logTag the tag, e.g. {@code game=4174bf06}; {@code null} is treated as no tag
+         * @return this builder
+         */
+        public Builder logTag(String logTag) {
+            this.logTag = logTag == null ? "" : logTag;
+            return this;
+        }
+
         public Builder maxDepth(int maxDepth) {
             this.maxDepth = maxDepth;
             return this;
@@ -93,6 +132,11 @@ public final class EngineConfig {
 
         public Builder millisPerMove(int millisPerMove) {
             this.millisPerMove = millisPerMove;
+            return this;
+        }
+
+        public Builder remainingClockMillis(int remainingClockMillis) {
+            this.remainingClockMillis = remainingClockMillis;
             return this;
         }
 
@@ -116,7 +160,7 @@ public final class EngineConfig {
                 tt = TranspositionTable.getDefaultInstance();
             }
 
-            return new EngineConfig(tt, maxDepth, millisPerMove, silent, enableThreefoldRepetition, enableFiftyMovesRule);
+            return new EngineConfig(this);
         }
     }
 }

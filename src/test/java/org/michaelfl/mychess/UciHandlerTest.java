@@ -46,6 +46,28 @@ class UciHandlerTest {
     private static final String BESTMOVE_LINE_REGEX = "^bestmove [a-h][1-8][a-h][1-8][qrbn]?$";
     private static final String BESTMOVE_OR_NULL_REGEX = "^bestmove (0000|[a-h][1-8][a-h][1-8][qrbn]?)$";
 
+    /** A well-formed UCI {@code info} line with depth, nodes, time, score and PV. */
+    private static final Pattern INFO_LINE_PATTERN = Pattern.compile(
+            "^info depth \\d+ nodes \\d+ time \\d+ score (cp|mate) -?\\d+ "
+                    + "pv [a-h][1-8][a-h][1-8][qrbn]?( [a-h][1-8][a-h][1-8][qrbn]?)*$");
+
+    /** A move in UCI long algebraic notation, e.g. {@code e2e4} or {@code e7e8q}. */
+    private static final Pattern UCI_MOVE_PATTERN = Pattern.compile("[a-h][1-8][a-h][1-8][qrbn]?");
+
+    /** The game id in a {@code [move]} log line. */
+    private static final Pattern MOVE_LOG_GAME_ID_PATTERN = Pattern.compile("\\[move] game=(\\S+) ");
+
+    /** The {@code elapsed=<ms>} field of a {@code [move]} log line. */
+    private static final Pattern ELAPSED_FIELD_PATTERN = Pattern.compile("\\belapsed=\\d+");
+
+    /** The fixed head of a {@code [go]} log line. */
+    private static final Pattern GO_LOG_HEAD_PATTERN = Pattern.compile("\\[go] game=\\S+ color=[WB] move=\\d+ ");
+
+    /** The {@code budget=<ms>} field of a {@code [go]} log line. */
+    private static final Pattern BUDGET_FIELD_PATTERN = Pattern.compile("\\bbudget=(\\d+)");
+
+    private static final String POSITION_AFTER_FOUR_PLIES = "position startpos moves e2e4 e7e5 g1f3 b8c6";
+
     private final PrintStream originalOut = System.out;
     private final PrintStream originalErr = System.err;
     private final ByteArrayOutputStream capturedOut = new ByteArrayOutputStream();
@@ -328,13 +350,11 @@ class UciHandlerTest {
         var response = runHandler("position startpos\ngo depth 3\nquit\n");
 
         // Each info line must be well-formed per UCI.
-        String infoRegex = "^info depth \\d+ nodes \\d+ time \\d+ score (cp -?\\d+|mate -?\\d+) "
-                + "pv [a-h][1-8][a-h][1-8][qrbn]?( [a-h][1-8][a-h][1-8][qrbn]?)*$";
         var infoLines = response.lines().stream().filter(l -> l.startsWith("info ")).toList();
         assertFalse(infoLines.isEmpty(),
                 "no info lines emitted; got:\n" + String.join("\n", response.lines()));
         for (String info : infoLines) {
-            assertTrue(info.matches(infoRegex), "info line malformed: '" + info + "'");
+            assertTrue(INFO_LINE_PATTERN.matcher(info).matches(), "info line malformed: '" + info + "'");
         }
 
         // Ordering: at least one info line precedes bestmove.
@@ -392,7 +412,7 @@ class UciHandlerTest {
                                         + "; full output:\n" + String.join("\n", response.lines())));
 
                 String uci = bestmoveLine.substring("bestmove ".length());
-                assertTrue(uci.matches("[a-h][1-8][a-h][1-8][qrbn]?"),
+                assertTrue(UCI_MOVE_PATTERN.matcher(uci).matches(),
                         "ill-formed bestmove at ply " + ply + ": '" + bestmoveLine + "'");
 
                 MoveDescription md = UciMoveParser.parse(uci, shadow.getBoard());
@@ -468,7 +488,7 @@ class UciHandlerTest {
                 assertNotNull(bestmoveLine, "no bestmove emitted at ply " + ply);
 
                 String uci = bestmoveLine.substring("bestmove ".length());
-                assertTrue(uci.matches("[a-h][1-8][a-h][1-8][qrbn]?"),
+                assertTrue(UCI_MOVE_PATTERN.matcher(uci).matches(),
                         "ill-formed bestmove at ply " + ply + ": '" + bestmoveLine + "'");
 
                 MoveDescription md = UciMoveParser.parse(uci, shadow.getBoard());
@@ -488,10 +508,9 @@ class UciHandlerTest {
             // between this single-session test and the multi-handler variant.
             // `.*` prefix tolerates the leading timestamp that Log prepends.
             String stderr = capturedErr.toString(StandardCharsets.UTF_8);
-            Pattern moveLogPattern = Pattern.compile(".*\\[move] game=(\\S+) .*");
             List<String> idsPerPly = stderr.lines()
-                    .map(moveLogPattern::matcher)
-                    .filter(Matcher::matches)
+                    .map(MOVE_LOG_GAME_ID_PATTERN::matcher)
+                    .filter(Matcher::find)
                     .map(m -> m.group(1))
                     .toList();
             assertEquals(plies, idsPerPly.size(),
@@ -505,13 +524,13 @@ class UciHandlerTest {
             // log line per ply (same count). Both lines tolerate the
             // timestamp prefix that Log now prepends.
             long elapsedFieldCount = stderr.lines()
-                    .filter(l -> l.matches(".*\\[move] .*\\belapsed=\\d+.*"))
+                    .filter(l -> l.contains("[move] ") && ELAPSED_FIELD_PATTERN.matcher(l).find())
                     .count();
             assertEquals(plies, elapsedFieldCount,
                     "every [move] log line must carry an elapsed=<ms> field");
 
             long goLineCount = stderr.lines()
-                    .filter(l -> l.matches(".*\\[go] game=\\S+ color=[WB] move=\\d+ .*budget=\\d+.*"))
+                    .filter(l -> GO_LOG_HEAD_PATTERN.matcher(l).find() && BUDGET_FIELD_PATTERN.matcher(l).find())
                     .count();
             assertEquals(plies, goLineCount,
                     "expected one [go] log line per ply, got " + goLineCount);
@@ -617,26 +636,42 @@ class UciHandlerTest {
      * Budget the handler computed for the last {@code go}, read back from the
      * {@code [go] … budget=<ms>} line it writes to stderr.
      *
-     * <p>{@code computeBudgetMillis} is private and the budget never reaches stdout, so this
+     * <p>{@code UciHandler} keeps the budget internal, and it never reaches stdout, so this
      * log line is the only seam. That is not a workaround: the line exists precisely so a
      * time-forfeit episode can be reconstructed afterward, and pinning it here also protects
      * its format.
      */
     private int budgetOf(String goLine) {
         runHandler("uci\nposition startpos\n" + goLine + "\nquit\n");
-        var matcher = java.util.regex.Pattern.compile("\\[go][^\\n]*budget=(\\d+)")
-                .matcher(capturedErr.toString(StandardCharsets.UTF_8));
+        Integer budget = lastGoBudget("");
 
-        // capturedErr accumulates across runs within one test method, so take the LAST
-        // match rather than the first — otherwise a second call silently reads the first
-        // run's budget, which is exactly the way this helper failed when it was written.
-        String budget = null;
-        while (matcher.find()) {
-            budget = matcher.group(1);
-        }
         assertNotNull(budget, "the handler must log a [go] line with a budget for: " + goLine);
 
-        return Integer.parseInt(budget);
+        return budget;
+    }
+
+    /**
+     * Budget from the last {@code [go]} log line that contains {@code requiredToken}, or {@code null}.
+     *
+     * <p>capturedErr accumulates across runs within one test method, so the LAST matching line counts
+     * rather than the first — otherwise a second call silently reads the first run's budget, which is
+     * exactly the way the budget helper failed when it was written. Works line by line, so no regex has
+     * to scan across the whole log.
+     */
+    private Integer lastGoBudget(String requiredToken) {
+        Integer budget = null;
+
+        for (String line : capturedErr.toString(StandardCharsets.UTF_8).split("\\R")) {
+            if (line.contains("[go]") && line.contains(requiredToken)) {
+                var matcher = BUDGET_FIELD_PATTERN.matcher(line);
+
+                if (matcher.find()) {
+                    budget = Integer.parseInt(matcher.group(1));
+                }
+            }
+        }
+
+        return budget;
     }
 
     /**
@@ -647,8 +682,8 @@ class UciHandlerTest {
      * otherwise drift the clock slowly downwards.
      *
      * <p>{@code go depth 1} bounds the search so the test costs milliseconds; the budget is
-     * still computed from the clock, since {@code computeBudgetMillis} only short-circuits on
-     * {@code infinite} and {@code movetime}.
+     * still computed from the clock, since {@code TimeManagement.computeMoveBudgetMillis}
+     * only short-circuits on {@code infinite} and {@code movetime}.
      */
     @Test
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
@@ -667,11 +702,10 @@ class UciHandlerTest {
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
     void goWithBinc_blackToMove_usesBlacksClockAndIncrement() {
         runHandler("uci\nposition startpos moves e2e4\ngo depth 1 wtime 600000 btime 60000 winc 9000 binc 1000\nquit\n");
-        var matcher = java.util.regex.Pattern.compile("\\[go][^\\n]*color=B[^\\n]*budget=(\\d+)")
-                .matcher(capturedErr.toString(StandardCharsets.UTF_8));
-        assertTrue(matcher.find(), "the handler must log a [go] line for black");
+        Integer budget = lastGoBudget("color=B");
 
-        assertEquals(60_000 / 31 + 800, Integer.parseInt(matcher.group(1)),
+        assertNotNull(budget, "the handler must log a [go] line for black");
+        assertEquals(60_000 / 31 + 800, budget,
                 "black must be budgeted from btime=60000 and binc=1000, not from white's 600000/9000");
     }
 
@@ -833,13 +867,19 @@ class UciHandlerTest {
          * advances past the latest matched line.
          */
         UciResponse expectEachOf(String... patterns) {
+            Pattern[] compiled = new Pattern[patterns.length];
+
+            for (int p = 0; p < patterns.length; p++) {
+                compiled[p] = patterns[p].startsWith("^") ? Pattern.compile(patterns[p]) : null;
+            }
+
             boolean[] matched = new boolean[patterns.length];
             int newCursor = cursor;
 
             for (int i = cursor; i < lines.size(); i++) {
                 String line = lines.get(i);
                 for (int p = 0; p < patterns.length; p++) {
-                    if (!matched[p] && lineMatches(line, patterns[p])) {
+                    if (!matched[p] && lineMatches(line, patterns[p], compiled[p])) {
                         matched[p] = true;
                         newCursor = Math.max(newCursor, i + 1);
                         break;
@@ -883,10 +923,12 @@ class UciHandlerTest {
             return lines;
         }
 
-        private static boolean lineMatches(String line, String pattern) {
-            if (pattern.startsWith("^")) {
-                return line.matches(pattern);
+        /** Regex match if {@code compiled} is set (pattern starting with {@code ^}), exact match otherwise. */
+        private static boolean lineMatches(String line, String pattern, Pattern compiled) {
+            if (compiled != null) {
+                return compiled.matcher(line).matches();
             }
+
             return line.equals(pattern);
         }
     }
