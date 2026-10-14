@@ -1,5 +1,6 @@
 package org.michaelfl.mychess;
 
+import org.michaelfl.mychess.TimeManagement.TimeControlInput;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.IterationInfo;
@@ -33,8 +34,8 @@ import java.util.concurrent.atomic.AtomicReference;
  * {@code btime} is required. {@code winc} / {@code binc} and {@code movestogo}
  * are optional and are read independently of one another, because the protocol
  * guarantees no grouping — a GUI may send an increment for one color only.
- * A missing {@code movestogo} falls back to {@link #DEFAULT_MOVES_TO_GO}, a
- * missing increment to zero; see {@link #computeClockBudgetMillis}.
+ * A missing {@code movestogo} falls back to {@code TimeManagement#DEFAULT_MOVES_TO_GO}, a
+ * missing increment to zero; see {@code TimeManagement#computeClockBudgetMillis}.
  *
  * @author Michael Fleischhauer
  */
@@ -49,21 +50,6 @@ final class UciHandler {
      */
     private static final String ENGINE_NAME = "myChess " + Version.get();
     private static final String ENGINE_AUTHOR = "Michael Fleischhauer";
-
-    /** Default fallback when wtime/btime is given without movestogo. */
-    private static final int DEFAULT_MOVES_TO_GO = 30;
-
-    /** Safety margin per move when computing time budget from clock. */
-    private static final int TIME_SAFETY_MARGIN_MS = 50;
-
-    /** Floor on per-move time so search has at least a fraction of a second. */
-    private static final int MIN_BUDGET_MS = 50;
-
-    /** Ceiling on go infinite / go depth N (effectively unbounded). 24 h in ms. */
-    private static final int INFINITE_MILLIS = 24 * 60 * 60 * 1_000;
-
-    /** Percentage of the increment to be used per move. */
-    private static final int INCREMENT_USE_PERCENTAGE = 80;
 
     private final MyChessEnv env;
     private final BufferedReader in;
@@ -247,7 +233,8 @@ final class UciHandler {
     }
 
     private void handleGo(String line) {
-        var args = parseGoArgs(line, board.getGameStatus().getTurn());
+        final int turnAtStart = board.getGameStatus().getTurn();
+        var args = parseGoArgs(line, turnAtStart);
 
         cancelCurrentTask();
         shutdownCurrentGame();
@@ -255,7 +242,6 @@ final class UciHandler {
         // Snapshot for the per-move [move] / [go] status logs: color and
         // full-move number are derived from the position at search start,
         // not from any intermediate state inside the search.
-        final int turnAtStart = board.getGameStatus().getTurn();
         final int plyCountAtStart = board.getGameStatus().getPlyCount();
 
         logGoStatus(args, turnAtStart, plyCountAtStart);
@@ -263,8 +249,10 @@ final class UciHandler {
         var engineConfig = new EngineConfig.Builder()
                 .maxDepth(args.maxDepth)
                 .millisPerMove(args.timeBudgetMillis)
+                .remainingClockMillis(remainingClockMillis(args, turnAtStart))
                 .silent(true)
                 .setTranspositionTable(tt)
+                .logTag("game=" + shortGameId())
                 .build();
         var gameConfig = new GameConfig(MyChessEngine.class, engineConfig);
 
@@ -284,6 +272,12 @@ final class UciHandler {
                 .start(() -> awaitAndEmitBestmove(game, task, args.timeBudgetMillis,
                         turnAtStart, plyCountAtStart, goStartMs));
         currentWatcher.set(watcher);
+    }
+
+    private int remainingClockMillis(GoArgs args, int turn) {
+        Integer millisOpt = turn == GameStatus.TURN_WHITE ? args.wtime : args.btime;
+
+        return millisOpt != null ? millisOpt : Integer.MAX_VALUE;
     }
 
     private void handleStop() {
@@ -765,7 +759,7 @@ final class UciHandler {
 
     private static GoArgs parseGoArgs(String line, int turn) {
         RawGoTokens raw = readGoTokens(line);
-        int budgetMillis = computeBudgetMillis(raw, turn);
+        int budgetMillis = TimeManagement.computeMoveBudgetMillis(toTimeControlInput(raw), turn);
 
         return new GoArgs(raw.maxDepth, budgetMillis,
                 raw.wtime, raw.btime, raw.movestogo, raw.movetimeMs, raw.winc, raw.binc);
@@ -793,51 +787,8 @@ final class UciHandler {
         return raw;
     }
 
-    private static int computeBudgetMillis(RawGoTokens raw, int turn) {
-        if (raw.infinite) {
-            return INFINITE_MILLIS;
-        }
-        if (raw.movetimeMs != null) {
-            // Subtract a safety margin: the search checks isTimeout() only
-            // every 10 000 nodes, so a hard limit can overshoot by a few ms.
-            // Strict GUIs treat that as a time forfeit.
-            return Math.max(MIN_BUDGET_MS, raw.movetimeMs - TIME_SAFETY_MARGIN_MS);
-        }
-
-        Integer ourMs = (turn == GameStatus.TURN_WHITE) ? raw.wtime : raw.btime;
-        if (ourMs != null) {
-            Integer ourIncMs = (turn == GameStatus.TURN_WHITE) ? raw.winc : raw.binc;
-            int movesToGo = raw.movestogo != null ? raw.movestogo : DEFAULT_MOVES_TO_GO;
-            return computeClockBudgetMillis(ourMs, ourIncMs != null ? ourIncMs : 0, movesToGo);
-        }
-
-        return INFINITE_MILLIS;   // depth-only or no args
-    }
-
-    /**
-     * Per-move budget from the side-to-move's own clock: a share of the remaining
-     * time plus {@link #INCREMENT_USE_PERCENTAGE} of the increment it is about to
-     * earn back, never more than the clock itself minus
-     * {@link #TIME_SAFETY_MARGIN_MS} and never less than {@link #MIN_BUDGET_MS}.
-     *
-     * <p>{@code movesToGo} is a spending <em>rate</em>, not a prediction of the
-     * game's length: it is re-applied to the shrinking remainder on every move, so
-     * the budget decays geometrically rather than running out at move
-     * {@code movesToGo}. Spending less than the full increment keeps that decay
-     * from being cancelled out on increment controls.
-     *
-     * @param ourMs     remaining clock of the side to move, in milliseconds; may
-     *                  be zero or negative when the GUI reports an overstepped clock
-     * @param ourIncMs  per-move increment of the side to move, zero if none was sent
-     * @param movesToGo moves the budget is spread over — {@code movestogo} if the
-     *                  GUI sent one, otherwise {@link #DEFAULT_MOVES_TO_GO}
-     * @return the search budget in milliseconds, at least {@link #MIN_BUDGET_MS}
-     */
-    private static int computeClockBudgetMillis(int ourMs, int ourIncMs, int movesToGo) {
-        int clockBudgetMs = ourMs / (movesToGo + 1) + (INCREMENT_USE_PERCENTAGE * ourIncMs) / 100;
-
-        //noinspection MathClampMigration
-        return Math.max(Math.min(clockBudgetMs, ourMs - TIME_SAFETY_MARGIN_MS), MIN_BUDGET_MS);
+    private static TimeControlInput toTimeControlInput(RawGoTokens raw) {
+        return new TimeControlInput(raw.movetimeMs, raw.wtime, raw.btime, raw.movestogo, raw.infinite, raw.winc, raw.binc);
     }
 
     /**

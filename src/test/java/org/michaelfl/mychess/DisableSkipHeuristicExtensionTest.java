@@ -1,4 +1,4 @@
-package org.michaelfl.mychess.engines;
+package org.michaelfl.mychess;
 
 import org.junit.jupiter.api.Test;
 

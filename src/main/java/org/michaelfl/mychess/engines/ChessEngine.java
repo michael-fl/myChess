@@ -38,6 +38,10 @@ public abstract class ChessEngine {
                 }
                 return new MoveAndWeight(move, weight * factor, result, path, legalMoveCount);
             }
+
+            public int weightCenti() {
+                return Math.round(weight * 100);
+            }
         }
 
     private final Random rand = new Random();

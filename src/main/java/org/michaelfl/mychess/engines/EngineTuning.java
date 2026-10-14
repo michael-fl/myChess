@@ -12,10 +12,10 @@ package org.michaelfl.mychess.engines;
  *
  * @author Michael Fleischhauer
  */
-final class EngineTuning {
+public final class EngineTuning {
 
     /** Number of recent iteration-time samples kept per depth (SMA window). */
-    static final int SMA_WINDOW_SIZE = 5;
+    public static final int SMA_WINDOW_SIZE = 5;
 
     /**
      * Factor applied to the elapsed-at-abort time to estimate how long an
@@ -23,7 +23,7 @@ final class EngineTuning {
      * abort happens somewhere mid-flight, so the elapsed time alone would
      * understate the true cost.
      */
-    static final double ABORT_EXTRAPOLATION_FACTOR = 1.2;
+    public static final double ABORT_EXTRAPOLATION_FACTOR = 1.2;
 
     /**
      * Maximum number of consecutive skips of the same depth before the
@@ -31,7 +31,7 @@ final class EngineTuning {
      * depth flagged "too expensive" once would never be re-measured, even
      * if the position later simplifies and the depth would be cheap.
      */
-    static final int SKIPS_BETWEEN_PROBES = 5;
+    public static final int SKIPS_BETWEEN_PROBES = 5;
 
     /**
      * Minimum samples required in the window before the skip heuristic is
@@ -39,7 +39,7 @@ final class EngineTuning {
      * an abort estimate inflated by {@link #ABORT_EXTRAPOLATION_FACTOR})
      * from triggering skips on its own.
      */
-    static final int MIN_SAMPLES_FOR_SKIP = 2;
+    public static final int MIN_SAMPLES_FOR_SKIP = 2;
 
     /**
      * Minimum ratio of {@code remainingMs / estimateMs} required for a
@@ -51,7 +51,7 @@ final class EngineTuning {
      * normally; the skip counter keeps growing and the probe fires later
      * when enough time is actually available.
      */
-    static final double MIN_PROBE_REMAINING_RATIO = 0.7;
+    public static final double MIN_PROBE_REMAINING_RATIO = 0.7;
 
     /** Depth at which the search stops when the root has exactly one legal move. */
     static final int ONLY_MOVE_STOP_DEPTH = 4;
