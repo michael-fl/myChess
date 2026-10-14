@@ -31,11 +31,12 @@ import static org.michaelfl.mychess.Assert.__assert;
  * int hardLimitMs = TimeManagement.calculateHardLimit(softLimitMs, 60_000);
  *
  * long start = System.currentTimeMillis();
- * var timeManagement = TimeManagement.newInstance(start + softLimitMs, start + hardLimitMs, null);
+ * long hardTimeout = start + hardLimitMs;   // the search aborts a running iteration here
+ * var timeManagement = TimeManagement.newInstance(start + softLimitMs, "");
  *
  * for (int depth = 1; !timeManagement.shouldSkipIteration(depth); depth++) {
- *     // search depth, then:
- *     timeManagement.iterationDone(depth, bestMove, weightCenti, System.currentTimeMillis());
+ *     // search depth, aborting at hardTimeout, then:
+ *     timeManagement.iterationDone(depth, System.currentTimeMillis());
  * }
  * }</pre>
  *
@@ -61,18 +62,9 @@ public final class TimeManagement {
     /** Percentage of the increment to be used per move. */
     private static final int INCREMENT_USE_PERCENTAGE = 80;
 
-    private static final int MIN_DEPTH_ENABLE_TIME_OPTIMIZATION = 4;
-
-    private static final int MAX_EXTENSIONS = 2;
-
     private static final float HARD_LIMIT_SOFT_LIMIT_FACTOR = 4f;
 
     private static final float HARD_LIMIT_REMAINING_TIME_FACTOR = 0.2f;
-
-    private static final int WEIGHT_DROP_THRESHOLD = 50;
-
-    /** Log prefix of the lines reporting which difficulty signal fired, followed by the depth. */
-    private static final String SIGNAL_LOG_PREFIX = "signal depth ";
 
     /**
      * The time-related arguments of one UCI {@code go} command, as sent by the GUI.
@@ -99,30 +91,20 @@ public final class TimeManagement {
 
     /**
      * Time management state of one search: decides before each iteration whether to start it, and
-     * keeps track of the completed iterations (best-move changes, extensions used).
+     * records the duration of every iteration in {@link IterationTimings}.
      *
      * <p>Not thread-safe and not reusable: create one per search via {@link #newInstance}, then call
      * {@link #shouldSkipIteration} and {@link #iterationDone} alternately for depth 1, 2, 3, …
      */
     public static final class TimeManagementInstance {
         private final long softTimeout;
-        private final long hardTimeout;
-        private final Integer previousOwnScoreCenti;
         private final String logPrefix;
         private int depth = 1;
-        private int previousIterationBestMove = 0;
-        private int previousIterationWeightCenti;
-        private int moveChangedCounter = 0;
-        private int extraIterationsUsedCounter;
         private IterationDecision decisionOnSoftTimeout;
         private long iterationStartTimestamp;
-        private boolean droppedBelowPreviousOwnScore;
-        private boolean weightDropped;
 
-        private TimeManagementInstance(long softTimeout, long hardTimeout, Integer previousOwnScoreCenti, String logTag) {
+        private TimeManagementInstance(long softTimeout, String logTag) {
             this.softTimeout = softTimeout;
-            this.hardTimeout = hardTimeout;
-            this.previousOwnScoreCenti = previousOwnScoreCenti;
             this.logPrefix = logTag == null || logTag.isEmpty() ? "[time] " : "[time] " + logTag + " ";
         }
 
@@ -130,10 +112,7 @@ public final class TimeManagement {
          * Decides whether the iterative deepening should stop before {@code currentDepth}.
          *
          * <p>Depth 1 always runs. For deeper iterations {@link IterationTimings#decideIteration}
-         * compares the estimated cost of the depth with the time left until the soft limit; in a
-         * position judged difficult, the time left until the hard limit is used instead (at most
-         * {@link #MAX_EXTENSIONS} times per search, and only for depths above
-         * {@link #MIN_DEPTH_ENABLE_TIME_OPTIMIZATION}).
+         * compares the estimated cost of the depth with the time left until the soft limit.
          *
          * <p>Side effects: a skip because of the estimate is recorded with
          * {@link IterationTimings#recordSkip}, so a probing run becomes due eventually; a stop
@@ -145,7 +124,6 @@ public final class TimeManagement {
          * @return {@code true} if the iteration must not be started and the search should return
          *         the result of the previous depth
          */
-        @SuppressWarnings({"java:S1192"})
         public boolean shouldSkipIteration(int currentDepth) {
             __assert(() -> currentDepth == depth, () -> "unexpected depth: expected " + depth + ", but is " + currentDepth);
 
@@ -156,17 +134,11 @@ public final class TimeManagement {
                 return false;
             }
 
-            final long now = System.currentTimeMillis();
-            decisionOnSoftTimeout = IterationTimings.decideIteration(currentDepth, softTimeout - now);
-            var decisionOnHardTimeout = IterationTimings.decideIteration(currentDepth, hardTimeout - now);
-
-            final boolean useSoftTimeout = checkUseSoftTimeout();
-            final long effectiveTimeout = useSoftTimeout ? softTimeout : hardTimeout;
-            final var decision = useSoftTimeout ? decisionOnSoftTimeout : decisionOnHardTimeout;
-            final long remainingMs = effectiveTimeout - now;
+            final long remainingMs = softTimeout - System.currentTimeMillis();
+            decisionOnSoftTimeout = IterationTimings.decideIteration(currentDepth, remainingMs);
             final long estimateMs = IterationTimings.getEstimatedMs(depth);
 
-            return recordAndLogSkip(decision, estimateMs, remainingMs);
+            return recordAndLogSkip(decisionOnSoftTimeout, estimateMs, remainingMs);
         }
 
         @SuppressWarnings({"java:S6205", "java:S1192"})
@@ -190,118 +162,30 @@ public final class TimeManagement {
         }
 
         /**
-         * Whether the start decision for the current depth is made against the soft limit.
-         *
-         * <p>{@code false} only for a difficult position, only for depths above
-         * {@link #MIN_DEPTH_ENABLE_TIME_OPTIMIZATION} (the signals of that depth decide the next
-         * one), and only while fewer than {@link #MAX_EXTENSIONS} extensions have been used; then
-         * the hard limit decides.
-         *
-         * @return {@code true} to decide against the soft limit, {@code false} for the hard limit
-         */
-        boolean checkUseSoftTimeout() {
-            if (depth <= MIN_DEPTH_ENABLE_TIME_OPTIMIZATION || extraIterationsUsedCounter >= MAX_EXTENSIONS) {
-                return true;
-            }
-
-            return !isDifficultPosition();
-        }
-
-        boolean isDifficultPosition() {
-            // A position looks difficult if the best move is unstable or the weight dropped significantly
-            // TODO
-            //return weightDropped || moveChangedCounter > 0;
-            return false;
-        }
-
-        /**
-         * Reports a completed iteration, so the next decision can take its result into account.
+         * Reports a completed iteration.
          *
          * <p>Records the iteration's duration, measured from the {@link #shouldSkipIteration} call
-         * that started it, as a completed sample in {@link IterationTimings}. From depth
-         * {@link #MIN_DEPTH_ENABLE_TIME_OPTIMIZATION} on, it updates the signals for the next
-         * decision:
-         * <ul>
-         *   <li>best-move changes against the previous iteration (counted up, halved when the move
-         *       stays the same);</li>
-         *   <li>a score drop of at least {@link #WEIGHT_DROP_THRESHOLD} against the previous
-         *       iteration, or against the previous own move's score. The latter fires at most once
-         *       per search, at whichever depth the drop first appears.</li>
-         * </ul>
-         * It stores move and score, and counts an extension if the iteration ran only because the
-         * position was judged difficult. An iteration ending past the soft limit is logged as
-         * {@code [time] overrun}. Must not be called for an aborted iteration; use
-         * {@link #iterationAborted} instead.
+         * that started it, as a completed sample in {@link IterationTimings}. An iteration ending
+         * past the soft limit is logged as {@code [time] overrun}. Must not be called for an aborted
+         * iteration; use {@link #iterationAborted} instead.
          *
          * @param currentDepth          the depth just completed, as passed to {@link #shouldSkipIteration}
-         * @param move                  the best move of this iteration
-         * @param weightCenti           its score in centipawns, from the side to move's point of view
          * @param iterationEndTimestamp the time the iteration ended, in epoch milliseconds
          */
-        public void iterationDone(final int currentDepth, final int move, final int weightCenti, final long iterationEndTimestamp) {
+        public void iterationDone(final int currentDepth, final long iterationEndTimestamp) {
             __assert(() -> decisionOnSoftTimeout != null, "iterationDone must be called after shouldSkipIteration");
             __assert(() -> currentDepth == depth, () -> "unexpected depth: expected " + depth + ", but is " + currentDepth);
-            __assert(() -> !WeightingFunction.isIllegalWeight(weightCenti), "illegal weight");
-
-            weightDropped = false;
 
             long iterationDurationMs = iterationEndTimestamp - iterationStartTimestamp;
             IterationTimings.recordCompletion(depth, iterationDurationMs);
 
-            if (depth >= MIN_DEPTH_ENABLE_TIME_OPTIMIZATION) {
-                calculateSignals(move, weightCenti);
-            }
-
-            previousIterationBestMove = move;
-            previousIterationWeightCenti = weightCenti;
-
-            boolean extended = decisionOnSoftTimeout == IterationDecision.SKIP;
-            if (extended) {
-                // Made an extra iteration
-                extraIterationsUsedCounter++;
-            }
-
             if (iterationEndTimestamp > softTimeout) {
                 // Exceeded the soft timeout
-                Log.info(logPrefix + "overrun depth " + depth + ": " + (iterationEndTimestamp - softTimeout)
-                        + " ms past soft limit, extended=" + extended + ", extra iterations=" + extraIterationsUsedCounter);
+                Log.info(logPrefix + "overrun depth " + depth + ": " + (iterationEndTimestamp - softTimeout) + " ms past soft limit");
             }
 
             depth++;
             decisionOnSoftTimeout = null;
-        }
-
-        private void calculateSignals(int move, int weightCenti) {
-            if (WeightingFunction.isCheckmateWeight(weightCenti)) {
-                // A forced mate, for or against us, is settled: more time does not change it. Both
-                // signals would only report noise here. A mate score moves by 100 cp per ply of mate
-                // distance, so a mate that merely gets one ply longer or shorter already crosses the
-                // drop threshold. And when several moves mate, the best move may switch between
-                // equivalent mating moves without any uncertainty. Hence, the early return skips the
-                // move-change signal as well. The move and score of this iteration are still stored
-                // by the caller, so a mate that vanishes in a later iteration fires as a regular drop.
-                return;
-            }
-
-            if (previousIterationBestMove != move) {
-                moveChangedCounter++;
-                Log.info(logPrefix + SIGNAL_LOG_PREFIX + depth + ": best move changed, change counter " + moveChangedCounter);
-            } else {
-                moveChangedCounter = moveChangedCounter / 2;
-            }
-
-            if (!droppedBelowPreviousOwnScore
-                    && previousOwnScoreCenti != null
-                    && weightCenti + WEIGHT_DROP_THRESHOLD <= previousOwnScoreCenti) {
-                droppedBelowPreviousOwnScore = true;
-                weightDropped = true;
-                Log.info(logPrefix + SIGNAL_LOG_PREFIX + depth + ": score dropped below the previous own move, "
-                        + previousOwnScoreCenti + " -> " + weightCenti + " cp");
-            } else if (weightCenti + WEIGHT_DROP_THRESHOLD <= previousIterationWeightCenti) {
-                weightDropped = true;
-                Log.info(logPrefix + SIGNAL_LOG_PREFIX + depth + ": score dropped against the previous iteration, "
-                        + previousIterationWeightCenti + " -> " + weightCenti + " cp");
-            }
         }
 
         /**
@@ -309,9 +193,8 @@ public final class TimeManagement {
          *
          * <p>Records the elapsed time, measured from the {@link #shouldSkipIteration} call that
          * started the iteration, with {@link IterationTimings#recordAbort}, which extrapolates it
-         * to a lower bound of the full duration. Depth, best move and counters stay as they were
-         * after the last completed iteration, so the search is expected to stop and return that
-         * iteration's result.
+         * to a lower bound of the full duration. The depth stays as it was after the last completed
+         * iteration, so the search is expected to stop and return that iteration's result.
          *
          * @param currentDepth          the depth that was aborted, as passed to {@link #shouldSkipIteration}
          * @param iterationEndTimestamp the time the iteration was aborted, in epoch milliseconds
@@ -324,7 +207,6 @@ public final class TimeManagement {
             IterationTimings.recordAbort(depth, iterationDurationMs);
 
             decisionOnSoftTimeout = null;
-            weightDropped = false;
         }
 
         // for tests only
@@ -333,38 +215,8 @@ public final class TimeManagement {
         }
 
         // for tests only
-        int getPreviousIterationBestMove() {
-            return previousIterationBestMove;
-        }
-
-        // for tests only
-        int getPreviousIterationWeightCenti() {
-            return previousIterationWeightCenti;
-        }
-
-        // for tests only
-        int getMoveChangedCounter() {
-            return moveChangedCounter;
-        }
-
-        // for tests only
-        int getExtraIterationsUsedCounter() {
-            return extraIterationsUsedCounter;
-        }
-
-        // for tests only
         IterationDecision getDecisionOnSoftTimeout() {
             return decisionOnSoftTimeout;
-        }
-
-        // for tests only
-        boolean isWeightDropped() {
-            return weightDropped;
-        }
-
-        // for tests only
-        boolean isDroppedBelowPreviousOwnScore() {
-            return droppedBelowPreviousOwnScore;
         }
     }
 
@@ -375,19 +227,17 @@ public final class TimeManagement {
     /**
      * Creates the time management for one search.
      *
-     * @param softTimeout           epoch milliseconds of the soft limit: no new iteration is started
-     *                              after it unless the position is judged difficult
-     * @param hardTimeout           epoch milliseconds of the hard limit: no iteration is started that
-     *                              is expected to end after it; the search aborts at this time anyway
-     * @param previousOwnScoreCenti score of this side's previous search in centipawns, from its own
-     *                              point of view, or {@code null} if none is comparable
-     * @param logTag                tag put after {@code [time]} in every log line, e.g. {@code game=4174bf06}, so
-     *                              lines of engines sharing one log can be told apart; empty or {@code null} for none
+     * <p>Only the soft limit is needed here: the hard limit is enforced by the search itself,
+     * which aborts a running iteration when it is reached.
+     *
+     * @param softTimeout epoch milliseconds of the soft limit: no iteration is started that is
+     *                    expected to end after it
+     * @param logTag      tag put after {@code [time]} in every log line, e.g. {@code game=4174bf06}, so
+     *                    lines of engines sharing one log can be told apart; empty or {@code null} for none
      * @return a new instance, positioned before depth 1
      */
-    public static TimeManagement.TimeManagementInstance newInstance(long softTimeout, long hardTimeout, Integer previousOwnScoreCenti,
-                                                                  String logTag) {
-        return new TimeManagement.TimeManagementInstance(softTimeout, hardTimeout, previousOwnScoreCenti, logTag);
+    public static TimeManagement.TimeManagementInstance newInstance(long softTimeout, String logTag) {
+        return new TimeManagement.TimeManagementInstance(softTimeout, logTag);
     }
 
     /**
@@ -419,7 +269,7 @@ public final class TimeManagement {
 
     /**
      * Soft limit for one move, derived from the arguments of a UCI {@code go} command: the regular
-     * search budget, after which no new iteration is started unless the position is judged difficult.
+     * search budget, after which no new iteration is started.
      *
      * <p>The first applicable rule decides:
      * <ol>

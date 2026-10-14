@@ -21,7 +21,6 @@ public final class EngineConfig {
     private final boolean silent;
     private final boolean enableThreefoldRepetition;
     private final boolean enableFiftyMovesRule;
-    private final Integer previousOwnScoreCenti;
     private final String logTag;
 
     private EngineConfig(Builder builder) {
@@ -32,7 +31,6 @@ public final class EngineConfig {
         this.silent = builder.silent;
         this.enableThreefoldRepetition = builder.enableThreefoldRepetition;
         this.enableFiftyMovesRule = builder.enableFiftyMovesRule;
-        this.previousOwnScoreCenti = builder.previousOwnScoreCenti;
         this.logTag = builder.logTag;
     }
 
@@ -84,17 +82,6 @@ public final class EngineConfig {
     }
 
     /**
-     * Score of our previous move, for comparison with the scores of this search.
-     *
-     * @return the score in centipawns from the side to move's point of view, or {@code null} if
-     *         there is no comparable previous score (first move, new game, or a position that does
-     *         not follow our previous move)
-     */
-    public Integer getPreviousOwnScoreCenti() {
-        return previousOwnScoreCenti;
-    }
-
-    /**
      * Short tag that the search puts into its {@code [time]} log lines, so lines of engines writing
      * into one log at once can be told apart, e.g. {@code game=4174bf06}.
      *
@@ -112,7 +99,6 @@ public final class EngineConfig {
         private boolean silent = false;
         private boolean enableThreefoldRepetition = true;
         private boolean enableFiftyMovesRule = true;
-        private Integer previousOwnScoreCenti;
         private String logTag = "";
 
         /**
@@ -125,17 +111,6 @@ public final class EngineConfig {
          */
         public Builder setTranspositionTable(TranspositionTable tt) {
             this.tt = tt;
-            return this;
-        }
-
-        /**
-         * Sets the score of our previous move; see {@link EngineConfig#getPreviousOwnScoreCenti()}.
-         *
-         * @param previousOwnScoreCenti score in centipawns, or {@code null} if none is comparable
-         * @return this builder
-         */
-        public Builder setPreviousOwnScoreCenti(Integer previousOwnScoreCenti) {
-            this.previousOwnScoreCenti = previousOwnScoreCenti;
             return this;
         }
 
