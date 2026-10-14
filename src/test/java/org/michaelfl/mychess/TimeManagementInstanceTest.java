@@ -230,7 +230,7 @@ class TimeManagementInstanceTest {
     private static TimeManagement.TimeManagementInstance instanceWithLimits(long softMs, long hardMs) {
         long now = System.currentTimeMillis();
 
-        return TimeManagement.newInstance(now + softMs, now + hardMs, null);
+        return TimeManagement.newInstance(now + softMs, now + hardMs, null, "");
     }
 
     /** Runs the decision for depth 1 and reports it as completed, so the instance expects depth 2 next. */

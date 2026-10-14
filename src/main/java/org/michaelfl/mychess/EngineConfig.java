@@ -22,6 +22,7 @@ public final class EngineConfig {
     private final boolean enableThreefoldRepetition;
     private final boolean enableFiftyMovesRule;
     private final Integer previousOwnScoreCenti;
+    private final String logTag;
 
     private EngineConfig(Builder builder) {
         this.tt = builder.tt;
@@ -32,6 +33,7 @@ public final class EngineConfig {
         this.enableThreefoldRepetition = builder.enableThreefoldRepetition;
         this.enableFiftyMovesRule = builder.enableFiftyMovesRule;
         this.previousOwnScoreCenti = builder.previousOwnScoreCenti;
+        this.logTag = builder.logTag;
     }
 
     /**
@@ -92,6 +94,16 @@ public final class EngineConfig {
         return previousOwnScoreCenti;
     }
 
+    /**
+     * Short tag that the search puts into its {@code [time]} log lines, so lines of engines writing
+     * into one log at once can be told apart, e.g. {@code game=4174bf06}.
+     *
+     * @return the tag, or an empty string if none was set
+     */
+    public String getLogTag() {
+        return logTag;
+    }
+
     public static final class Builder {
         private TranspositionTable tt;
         private int maxDepth = Integer.MAX_VALUE;
@@ -101,6 +113,7 @@ public final class EngineConfig {
         private boolean enableThreefoldRepetition = true;
         private boolean enableFiftyMovesRule = true;
         private Integer previousOwnScoreCenti;
+        private String logTag = "";
 
         /**
          * Provide an explicit {@link TranspositionTable} instance for the
@@ -123,6 +136,17 @@ public final class EngineConfig {
          */
         public Builder setPreviousOwnScoreCenti(Integer previousOwnScoreCenti) {
             this.previousOwnScoreCenti = previousOwnScoreCenti;
+            return this;
+        }
+
+        /**
+         * Sets the tag for the search's {@code [time]} log lines; see {@link EngineConfig#getLogTag()}.
+         *
+         * @param logTag the tag, e.g. {@code game=4174bf06}; {@code null} is treated as no tag
+         * @return this builder
+         */
+        public Builder logTag(String logTag) {
+            this.logTag = logTag == null ? "" : logTag;
             return this;
         }
 

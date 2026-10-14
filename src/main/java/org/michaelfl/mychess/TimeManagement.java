@@ -72,7 +72,7 @@ public final class TimeManagement {
     private static final int WEIGHT_DROP_THRESHOLD = 50;
 
     /** Log prefix of the lines reporting which difficulty signal fired, followed by the depth. */
-    private static final String SIGNAL_LOG_PREFIX = "[time] signal depth ";
+    private static final String SIGNAL_LOG_PREFIX = "signal depth ";
 
     /**
      * The time-related arguments of one UCI {@code go} command, as sent by the GUI.
@@ -108,6 +108,7 @@ public final class TimeManagement {
         private final long softTimeout;
         private final long hardTimeout;
         private final Integer previousOwnScoreCenti;
+        private final String logPrefix;
         private int depth = 1;
         private int previousIterationBestMove = 0;
         private int previousIterationWeightCenti;
@@ -118,10 +119,11 @@ public final class TimeManagement {
         private boolean droppedBelowPreviousOwnScore;
         private boolean weightDropped;
 
-        private TimeManagementInstance(long softTimeout, long hardTimeout, Integer previousOwnScoreCenti) {
+        private TimeManagementInstance(long softTimeout, long hardTimeout, Integer previousOwnScoreCenti, String logTag) {
             this.softTimeout = softTimeout;
             this.hardTimeout = hardTimeout;
             this.previousOwnScoreCenti = previousOwnScoreCenti;
+            this.logPrefix = logTag == null || logTag.isEmpty() ? "[time] " : "[time] " + logTag + " ";
         }
 
         /**
@@ -172,15 +174,15 @@ public final class TimeManagement {
             return switch (decision) {
                 case RUN -> false;
                 case PROBE -> {
-                    Log.info("[time] probe depth " + depth + ": est " + estimateMs + " ms > remaining " + remainingMs + " ms");
+                    Log.info(logPrefix + "probe depth " + depth + ": est " + estimateMs + " ms > remaining " + remainingMs + " ms");
                     yield false;
                 }
                 case SKIP -> {
                     if (remainingMs > IterationTimings.MIN_REMAINING_MILLIS) {
                         IterationTimings.recordSkip(depth);
-                        Log.info("[time] skip depth " + depth + ": est " + estimateMs + " ms > remaining " + remainingMs + " ms");
+                        Log.info(logPrefix + "skip depth " + depth + ": est " + estimateMs + " ms > remaining " + remainingMs + " ms");
                     } else {
-                        Log.info("[time] stop depth " + depth + ": limit reached");
+                        Log.info(logPrefix + "stop depth " + depth + ": limit reached");
                     }
                     yield true;
                 }
@@ -261,7 +263,7 @@ public final class TimeManagement {
 
             if (iterationEndTimestamp > softTimeout) {
                 // Exceeded the soft timeout
-                Log.info("[time] overrun depth " + depth + ": " + (iterationEndTimestamp - softTimeout)
+                Log.info(logPrefix + "overrun depth " + depth + ": " + (iterationEndTimestamp - softTimeout)
                         + " ms past soft limit, extended=" + extended + ", extra iterations=" + extraIterationsUsedCounter);
             }
 
@@ -283,7 +285,7 @@ public final class TimeManagement {
 
             if (previousIterationBestMove != move) {
                 moveChangedCounter++;
-                Log.info(SIGNAL_LOG_PREFIX + depth + ": best move changed, change counter " + moveChangedCounter);
+                Log.info(logPrefix + SIGNAL_LOG_PREFIX + depth + ": best move changed, change counter " + moveChangedCounter);
             } else {
                 moveChangedCounter = moveChangedCounter / 2;
             }
@@ -293,11 +295,11 @@ public final class TimeManagement {
                     && weightCenti + WEIGHT_DROP_THRESHOLD <= previousOwnScoreCenti) {
                 droppedBelowPreviousOwnScore = true;
                 weightDropped = true;
-                Log.info(SIGNAL_LOG_PREFIX + depth + ": score dropped below the previous own move, "
+                Log.info(logPrefix + SIGNAL_LOG_PREFIX + depth + ": score dropped below the previous own move, "
                         + previousOwnScoreCenti + " -> " + weightCenti + " cp");
             } else if (weightCenti + WEIGHT_DROP_THRESHOLD <= previousIterationWeightCenti) {
                 weightDropped = true;
-                Log.info(SIGNAL_LOG_PREFIX + depth + ": score dropped against the previous iteration, "
+                Log.info(logPrefix + SIGNAL_LOG_PREFIX + depth + ": score dropped against the previous iteration, "
                         + previousIterationWeightCenti + " -> " + weightCenti + " cp");
             }
         }
@@ -379,10 +381,13 @@ public final class TimeManagement {
      *                              is expected to end after it; the search aborts at this time anyway
      * @param previousOwnScoreCenti score of this side's previous search in centipawns, from its own
      *                              point of view, or {@code null} if none is comparable
+     * @param logTag                tag put after {@code [time]} in every log line, e.g. {@code game=4174bf06}, so
+     *                              lines of engines sharing one log can be told apart; empty or {@code null} for none
      * @return a new instance, positioned before depth 1
      */
-    public static TimeManagement.TimeManagementInstance newInstance(long softTimeout, long hardTimeout, Integer previousOwnScoreCenti) {
-        return new TimeManagement.TimeManagementInstance(softTimeout, hardTimeout, previousOwnScoreCenti);
+    public static TimeManagement.TimeManagementInstance newInstance(long softTimeout, long hardTimeout, Integer previousOwnScoreCenti,
+                                                                  String logTag) {
+        return new TimeManagement.TimeManagementInstance(softTimeout, hardTimeout, previousOwnScoreCenti, logTag);
     }
 
     /**
