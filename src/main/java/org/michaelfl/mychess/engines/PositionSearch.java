@@ -121,7 +121,8 @@ public final class PositionSearch {
         // iteration loop into a runaway — see MAX_SEARCH_DEPTH Javadoc.
         final int maxDepth = Math.min(engineConfig.getMaxDepth(), MAX_SEARCH_DEPTH);
         final long softTimeout = startTimestamp + softLimitMillis;
-        final var timeManagement = TimeManagement.newInstance(softTimeout, timeout, engineConfig.getPreviousOwnScoreCenti());
+        final var timeManagement = TimeManagement.newInstance(softTimeout, timeout, engineConfig.getPreviousOwnScoreCenti(),
+                engineConfig.getLogTag());
 
         for (int depth = 1; depth <= maxDepth && !isTimeout(); depth++) {
             if (timeManagement.shouldSkipIteration(depth)) {

@@ -469,7 +469,7 @@ class TimeManagementTest {
     private static TimeManagement.TimeManagementInstance newInstance(Integer previousOwnScoreCenti) {
         long now = System.currentTimeMillis();
 
-        return TimeManagement.newInstance(now + ONE_SECOND, now + 4 * ONE_SECOND, previousOwnScoreCenti);
+        return TimeManagement.newInstance(now + ONE_SECOND, now + 4 * ONE_SECOND, previousOwnScoreCenti, "");
     }
 
     /** Runs depths 1 up to the one before {@link #FIRST_SIGNAL_DEPTH}, all with the same move and score. */

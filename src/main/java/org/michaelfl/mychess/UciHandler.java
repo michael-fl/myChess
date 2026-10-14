@@ -298,6 +298,7 @@ final class UciHandler {
                 .silent(true)
                 .setTranspositionTable(tt)
                 .setPreviousOwnScoreCenti(previousOwnScoreCenti)
+                .logTag("game=" + shortGameId())
                 .build();
         lastEngineConfig = engineConfig;
         var gameConfig = new GameConfig(MyChessEngine.class, engineConfig);
