@@ -32,6 +32,14 @@
 # says so on its face. Never reach for it to save a build: a two-arm run reports the sum
 # of gain and cost, and a zero there has two opposite readings.
 #
+# TIMING-ONLY CHANGES. A change to the time management (when an iteration starts or is
+# aborted) never reaches a time limit in a fixed-depth bench, so all arms search the same
+# tree and the placebo costs nothing measurable. Pre-flight 3 would then abort on both of
+# its assertions. --timing-only "<reason>" inverts the signature check instead: every arm
+# MUST read the same signature, because a difference means the build changes more than
+# the timing. The cost check is dropped. The reason is mandatory, printed at the start
+# and echoed at the end, like the --no-placebo reason.
+#
 # Shape: `-tournament gauntlet -seeds 3` plays the three seeds against the anchors and
 # nothing else - no anchor-vs-anchor games, whose ranking is already known, and no
 # variant-vs-variant games, which would be self-play again. `-openings policy=round`
@@ -46,6 +54,7 @@
 #   tools/run-anchor-gauntlet.sh --label <slug> \
 #       --base <dir> --placebo <dir> --candidate <dir> \
 #       [--rounds N] [--tc TC] [--probe-fen FEN] [--preflight-only] [--wait-for-cores]
+#       [--timing-only "<why the trees are identical>"]
 #
 # --tc sets the time control in cutechess syntax, default 40/60 (see TC below). Use a
 # Fischer control such as 60+1 to test the engine as it plays on Lichess: increment, no
@@ -129,12 +138,14 @@ PLACEBO_DIR=""
 CANDIDATE_DIR=""
 PROBE_FEN=""
 NO_PLACEBO_REASON=""
+TIMING_ONLY_REASON=""
 WAIT_FOR_CORES=0
 PREFLIGHT_ONLY=0
 FORCE_PREFLIGHT=0
 
 usage() {
-    sed -n '2,64p' "$0" | sed 's/^# \{0,1\}//'
+    # The header comment, up to the first line that is not a comment.
+    awk 'NR > 1 && !/^#/ { exit } NR > 1' "$0" | sed 's/^# \{0,1\}//'
     exit "${1:-2}"
 }
 
@@ -144,6 +155,8 @@ while [ $# -gt 0 ]; do
         --base)           shift; BASE_DIR="${1:-}" ;;
         --placebo)        shift; PLACEBO_DIR="${1:-}" ;;
         --no-placebo)     shift; NO_PLACEBO_REASON="${1:-}" ;;
+        --timing-only)    shift; TIMING_ONLY_REASON="${1:-}"
+                          [ -n "$TIMING_ONLY_REASON" ] || { echo "ERROR: --timing-only needs a reason" >&2; exit 2; } ;;
         --candidate)      shift; CANDIDATE_DIR="${1:-}" ;;
         --rounds)         shift; ROUNDS="${1:-}" ;;
         --tc)             shift; TC="${1:-}" ;;
@@ -346,6 +359,12 @@ if [ -z "$PLACEBO_DIR" ]; then
     echo "  NO COST ARM — gain and cost will be reported summed."
     echo "  reason given: $NO_PLACEBO_REASON"
 fi
+
+if [ -n "$TIMING_ONLY_REASON" ]; then
+    echo
+    echo "  TIMING-ONLY — pre-flight 3 requires identical signatures and checks no cost."
+    echo "  reason given: $TIMING_ONLY_REASON"
+fi
 echo "=========================================================================="
 
 # --- prerequisite checks ----------------------------------------------------
@@ -450,7 +469,23 @@ fi
 
 echo "    candidate nodes=$cand_nodes  nps=$cand_nps"
 
-if [ -n "$PLACEBO_DIR" ]; then
+if [ -n "$TIMING_ONLY_REASON" ]; then
+
+    # Every arm must search the identical tree: the change may only act through the clock.
+    for arm_nodes in "$cand_nodes" ${PLACEBO_DIR:+"$plac_nodes"}; do
+
+        if [ "$arm_nodes" != "$base_nodes" ]; then
+            echo "ABORT: --timing-only, but an arm's signature differs from base's ($arm_nodes vs" >&2
+            echo "       $base_nodes), so the build changes more than the timing." >&2
+            exit 1
+        fi
+
+    done
+
+    echo "    OK (timing-only): all arms search the identical tree at depth $PREFLIGHT_DEPTH;"
+    echo "        no cost check."
+
+elif [ -n "$PLACEBO_DIR" ]; then
 
     if [ "$base_nodes" != "$plac_nodes" ]; then
         echo "ABORT: base and placebo have different signatures, so the placebo's evaluation is" >&2
@@ -472,13 +507,15 @@ fi
 # The mirror image of the check above, and the one a two-arm run never makes: if the
 # candidate searches the same tree as base, the feature changed no decision anywhere in
 # 151 million nodes and the two days would measure noise against noise.
-if [ "$cand_nodes" = "$base_nodes" ]; then
+if [ -z "$TIMING_ONLY_REASON" ] && [ "$cand_nodes" = "$base_nodes" ]; then
     echo "ABORT: the candidate's signature equals base's, so the feature changed no search" >&2
     echo "       decision at depth $PREFLIGHT_DEPTH. Either it is inert, or it is not wired in." >&2
     exit 1
 fi
 
-if [ -n "$PLACEBO_DIR" ]; then
+if [ -n "$TIMING_ONLY_REASON" ]; then
+    : # reported above
+elif [ -n "$PLACEBO_DIR" ]; then
     echo "    OK: base == placebo, placebo slower by $(( (base_nps - plac_nps) * 1000 / base_nps ))/1000,"
     echo "        candidate's tree differs from base's."
 else
@@ -580,6 +617,12 @@ if [ -z "$PLACEBO_DIR" ]; then
     echo
     echo "REMINDER: two arms, so candidate - base is gain AND cost together."
     echo "          No cost arm because: $NO_PLACEBO_REASON"
+fi
+
+if [ -n "$TIMING_ONLY_REASON" ]; then
+    echo
+    echo "REMINDER: timing-only run, pre-flight 3 checked identical trees and no cost."
+    echo "          Reason: $TIMING_ONLY_REASON"
 fi
 
 # --- Ordo ------------------------------------------------------------------
