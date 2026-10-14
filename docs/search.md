@@ -263,13 +263,18 @@ this.quiescenceSearch = new QuiescenceSearch(game, moveGenerator, weightingFunct
 
 Two distinct mechanisms control when the search stops: **timeout** (soft — return the best result so far) and **cancellation** (hard — abort entirely).
 
-**Timeout.** `PositionSearch` records its deadline at construction time:
+**Two time limits (since v4.9.0).** The *soft limit* `EngineConfig.millisPerMove` (default 30 000 ms) decides whether the next iteration is started; see § 6.5.1. The *hard limit* from `TimeManagement.calculateHardLimit` is the deadline at which a running iteration is aborted. With a clock it is min(4 × soft, 20 % of the remaining clock), without one it equals the soft limit.
+
+**Timeout.** `PositionSearch` records the hard deadline at construction time:
 
 ```java
-this.timeout = System.currentTimeMillis() + engineConfig.getMillisPerMove();
+this.softLimitMillis = engineConfig.getMillisPerMove();
+int hardLimitMillis = TimeManagement.calculateHardLimit(softLimitMillis, engineConfig.getRemainingClockMillis());
+this.startTimestamp = System.currentTimeMillis();
+this.timeout = startTimestamp + hardLimitMillis;
 ```
 
-`EngineConfig.millisPerMove` defaults to 30 000 ms. The deadline is then polled by `isTimeout()`:
+The deadline is then polled by `isTimeout()`:
 
 ```java
 private boolean isTimeout() {
@@ -328,15 +333,15 @@ Both mechanisms operate at node granularity. There is no thread interruption che
 
 The vanilla deadline above tells the search *when* to abort mid-iteration, but it does not address a related waste: a deepening iteration that is almost certainly too expensive to complete in the remaining time still gets started, runs for the rest of the budget, and is then discarded mid-flight. Across a typical 30-second move that often costs 10–20 seconds of compute with no usable result — the bestmove handed back to the GUI is the one from the previous, completed iteration.
 
-`PositionSearch` therefore tracks rolling per-depth iteration times in [`IterationTimings`](../src/main/java/org/michaelfl/mychess/engines/IterationTimings.java) (a process-static simple moving average over the last `SMA_WINDOW_SIZE` samples per depth) and short-circuits the iterative-deepening loop in `calculateNextMove()` before starting the next iteration:
+The search therefore tracks rolling per-depth iteration times in [`IterationTimings`](../src/main/java/org/michaelfl/mychess/IterationTimings.java) (a process-static simple moving average over the last `SMA_WINDOW_SIZE` samples per depth). A `TimeManagement.TimeManagementInstance`, one per search, short-circuits the iterative-deepening loop before starting the next iteration, comparing the estimate with the time left until the **soft** limit:
 
 ```java
-if (depth > 1 && shouldSkipIteration(depth)) {
+if (timeManagement.shouldSkipIteration(depth)) {
     break;
 }
 ```
 
-The decision is "skip" when all of the following hold:
+Depth 1 always runs. With 30 ms or less left until the soft limit, every depth from 3 on stops without consulting the estimate; that stop is not counted as a skip. Otherwise the decision is "skip" when all of the following hold:
 
 - the depth has at least `MIN_SAMPLES_FOR_SKIP` samples in the window (avoids reacting to a single early outlier),
 - `getEstimatedMs(depth) > remainingMs`,
@@ -360,7 +365,7 @@ When the heuristic fires, the previous-iteration `bestmove` is returned immediat
 
 **Lifetime.** State is process-static so it survives the per-`go` engine instances, and reset on `ucinewgame` via `ChessEngine.resetIterationTimings()` — a new game shouldn't inherit timing stats from a different position-complexity profile.
 
-This is a deliberately small subset of the broader work outlined in [roadmap § 12.12](roadmap.md#1212-real-time-management-heuristics--s--m--3060-elo): it addresses the single most visible waste (the always-aborted top iteration) without yet introducing soft/hard split budgets, panic mode, complexity scaling, or multi-phase awareness.
+This is a deliberately small subset of the broader work outlined in [roadmap § 12.12](roadmap.md#1212-real-time-management-heuristics--s--m--3060-elo): it addresses the single most visible waste (the always-aborted top iteration). v4.9.0 added the soft/hard split above; panic mode, complexity scaling and multi-phase awareness are still open.
 
 ## 6.6 Checkmate and stalemate scoring
 

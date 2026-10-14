@@ -418,7 +418,7 @@ time-management defect, and 60 seconds leave no room to notice one.
 
 Most Lichess time controls carry an increment (3+2, 5+3, …). myChess reads
 `winc` / `binc` and folds the increment of the side to move into the per-move
-budget ([`UciHandler.computeClockBudgetMillis`](../src/main/java/org/michaelfl/mychess/UciHandler.java)):
+budget ([`TimeManagement.computeClockBudgetMillis`](../src/main/java/org/michaelfl/mychess/TimeManagement.java)):
 
     budget = ourClock / (movestogo + 1) + 80 % × ourIncrement
 
