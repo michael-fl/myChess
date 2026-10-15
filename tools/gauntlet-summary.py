@@ -294,7 +294,7 @@ def main():
             ("NET      candidate - base", candidate, base),
         ]
 
-    print(f"\n{'':<30}{'score pts':>11}{'Elo':>9}{'95 %':>8}{'rounds':>8}")
+    print(f"\n{'':<30}{'score pts':>11}{'Elo':>9}{'± 95 %':>8}{'95 % interval (Elo)':>22}{'rounds':>8}")
 
     for label, arm_a, arm_b in comparisons:
         result = paired_difference(points, counts, arm_a, arm_b)
@@ -307,7 +307,9 @@ def main():
         rate = (rates[arm_a] + rates[arm_b]) / 2
         elo, elo_half = to_elo(mean, rate), to_elo(half, rate)
 
-        print(f"  {label:<28}{100 * mean:>+10.2f}{elo:>+9.1f}{elo_half:>8.1f}{rounds:>8}")
+        interval = f"[{elo - elo_half:+.1f}, {elo + elo_half:+.1f}]"
+
+        print(f"  {label:<28}{100 * mean:>+10.2f}{elo:>+9.1f}{elo_half:>8.1f}{interval:>22}{rounds:>8}")
 
     print("\n  NET = COST + EFFECT, exactly - all three arms meet the same anchors.")
     print("  Paired per round, so the openings cancel and the interval is the tighter one.\n")
