@@ -1,0 +1,14 @@
+
+   # PLAYER                           :  RATING  ERROR  POINTS  PLAYED   (%)
+   1 Kojiro                           :  2029.3   19.9   502.0     840    60
+   2 BBC                              :  2019.0   ----   473.5     840    56
+   3 Princhess                        :  1985.0   ----   478.0     840    57
+   4 mychess-time-management-4.9.0    :  1961.5   14.8   807.0    1400    58
+   5 mychess-placebo                  :  1959.9   15.2   804.5    1400    57
+   6 mychess-base                     :  1956.9   14.7   799.5    1400    57
+   7 ZetaDva                          :  1801.0   ----   218.0     840    26
+   8 TSCP                             :  1609.0   ----   117.5     840    14
+
+White advantage = 0.00 +/- 0.00
+Draw rate (equal opponents) = 50.00 % +/- 0.00
+
