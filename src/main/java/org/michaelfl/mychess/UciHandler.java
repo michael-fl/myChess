@@ -325,6 +325,9 @@ final class UciHandler {
                 // Expected on `stop` / shutdown — fall through to the fallback.
             } catch (TimeoutException _) {
                 task.cancel();
+                // The search missed its own hard limit; count these to see how often the net catches it.
+                Log.info("[time] game=" + shortGameId() + " watcher cancel after "
+                        + (System.currentTimeMillis() - goStartMs) + " ms, timeout " + timeoutMillis + " ms");
             } catch (InterruptedException _) {
                 Thread.currentThread().interrupt();
             }
