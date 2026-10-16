@@ -823,6 +823,30 @@ class UciHandlerTest {
                 "movestogo must set the divisor and the increment must be added on top of that share");
     }
 
+    // ---- watcher timeout: the safety net behind the search's hard limit ----
+
+    @Test
+    void watcherTimeout_withAmpleClock_isTheHardLimitPlusGrace() {
+        // 1 s soft limit, 60 s clock: hard limit = 4 x soft = 4 s, below 20 % of the clock (12 s)
+        assertEquals(4_000 + UciHandler.WATCHER_GRACE_MILLIS, UciHandler.watcherTimeoutMillis(1_000, 60_000),
+                "with a clock the watcher must wait until the hard limit, not just the budget, plus the grace");
+    }
+
+    @Test
+    void watcherTimeout_withShortClock_followsTheCappedHardLimit() {
+        // 1 s soft limit, 10 s clock: 20 % of the clock (2 s) caps the hard limit below 4 x soft
+        assertEquals(2_000 + UciHandler.WATCHER_GRACE_MILLIS, UciHandler.watcherTimeoutMillis(1_000, 10_000),
+                "the watcher must follow the hard limit's clock cap, so a short clock is not overspent");
+    }
+
+    @Test
+    void watcherTimeout_withoutClock_isTheBudgetPlusGrace() {
+        // go movetime / go depth: no clock, so hard limit == soft limit
+        assertEquals(1_000 + UciHandler.WATCHER_GRACE_MILLIS,
+                UciHandler.watcherTimeoutMillis(1_000, Integer.MAX_VALUE),
+                "without a clock the watcher must keep the old bound of budget plus grace");
+    }
+
     /**
      * Run the UCI handler with the given synthetic stdin input. Blocks until the
      * input is fully consumed and any in-flight search watcher has emitted its
