@@ -531,6 +531,26 @@ A value that is exactly round with an error of exactly zero has not been measure
 
 ---
 
+### The v4.9.0 cross-check — the time-management gauntlet at 60+1 (2026-10-16)
+
+The 4.9.0 anchor gauntlet (`test-results/gauntlet-time-management-4.9.0*`, 4200 games, three myChess arms against the five anchors, `tc=60+1`) gives the next free reading:
+
+```
+   # PLAYER                           :  RATING  ERROR  POINTS  PLAYED   (%)
+   1 Kojiro                           :  2029.3   19.9   502.0     840    60
+   2 BBC                              :  2019.0   ----   473.5     840    56
+   3 Princhess                        :  1985.0   ----   478.0     840    57
+   4 mychess-time-management-4.9.0    :  1961.5   14.8   807.0    1400    58
+   5 mychess-placebo                  :  1959.9   15.2   804.5    1400    57
+   6 mychess-base                     :  1956.9   14.7   799.5    1400    57
+   7 ZetaDva                          :  1801.0   ----   218.0     840    26
+   8 TSCP                             :  1609.0   ----   117.5     840    14
+```
+
+`mychess-base` is 4.8.3. **The propagated chain carries ~1943 and the measurement says 1956.9 ± 14.7**, 14 Elo apart and inside the interval. 4.9.0 reads 1961.5 ± 14.8; the paired difference to 4.8.3 is +3.8 [−14.7, +22.3] (`tools/gauntlet-summary.py`), so the two ratings are not distinguishable.
+
+The same caveats as for the v4.6.1 reading apply. Kojiro is the free slot and moves with myChess (2029.3 here). The footer's white advantage and draw rate are defaults, not results. And the apparatus differs from § 2: three correlated myChess arms in a gauntlet, and a Fischer control (`60+1`) instead of the bracket's `40/120`. It is a confirmation, not a measurement of record, and it does not reset the § 8 counter.
+
 ## 8. When to re-run
 
 An absolute measurement is **not** a per-patch tool (that is self-play SPRT).
