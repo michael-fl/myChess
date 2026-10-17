@@ -79,5 +79,38 @@ class HistoryTest(unittest.TestCase):
         self.assertEqual(played[0][0], at("05:40"), "end time parsed from GameEndTime")
 
 
+class TimeLeftTest(unittest.TestCase):
+
+    def test_declared_total_is_read_from_the_runners_state_file(self):
+        with tempfile.TemporaryDirectory() as folder:
+            pathlib.Path(folder, "match-x.rounds").write_text("2100\n# tc=60+1\n")
+            segment = pathlib.Path(folder, "match-x-seg01.pgn")
+
+            self.assertEqual(history_tool.declared_total([segment]), 4200,
+                             "2100 declared rounds of two games are 4200 games")
+
+    def test_declared_total_without_state_file_is_unknown(self):
+        with tempfile.TemporaryDirectory() as folder:
+            self.assertIsNone(history_tool.declared_total([pathlib.Path(folder, "match-x-seg01.pgn")]),
+                              "without the .rounds file the length is unknown")
+
+    def test_pace_is_the_median_gap_so_a_pause_does_not_count(self):
+        # gaps of 10 min, 10 min and one 3 h pause: the median is 10 min, so 6 games per hour
+        ends = [at("05:00"), at("05:10"), at("05:20"), at("08:20")]
+        played, to_go, rate, left, finish = history_tool.time_left(ends, total=10)
+
+        self.assertEqual((played, to_go), (4, 6), "four of ten games played")
+        self.assertAlmostEqual(rate, 6.0, msg="the 3 h pause must not slow the pace down")
+        self.assertEqual(left, datetime.timedelta(minutes=60), "six games at ten minutes each")
+        self.assertEqual(finish, at("09:20"), "counted from the last game's end")
+
+    def test_no_estimate_without_a_total_or_with_a_finished_match(self):
+        ends = [at("05:00"), at("05:10")]
+
+        self.assertIsNone(history_tool.time_left(ends, total=None), "unknown length gives no estimate")
+        self.assertIsNone(history_tool.time_left(ends, total=2), "a finished match has nothing left")
+        self.assertIsNone(history_tool.time_left(ends[:1], total=10), "one game gives no pace")
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -7,6 +7,11 @@ moment, so the last line equals what match-elo.py prints today. It reads the gam
 `GameEndTime` tags, so it works across segments and pauses. A step without new games is
 skipped rather than repeated, so a pause shows as a jump in the clock.
 
+Below the table it estimates the time left: the declared length comes from the
+`match-<name>.rounds` file that tools/run-resumable-match.sh keeps next to the segments
+(or from --total), the pace from the median gap between the last game ends. The median
+ignores pauses and the interleaving of parallel games.
+
 Usage, from the repository root:
     tools/match-elo-history.py [--every MINUTES] <candidate-name> <pgn> [<pgn> ...]
 
@@ -28,6 +33,10 @@ match_elo = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(match_elo)
 
 TAG = re.compile(r'^\[(\w+) "([^"]*)"\]')
+SEGMENT = re.compile(r'^(.*)-seg\d+\.pgn$')
+
+# Number of most recent games whose end times set the pace of the time-left estimate.
+PACE_WINDOW = 200
 END_TIME = re.compile(r'^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})')
 
 
@@ -99,16 +108,63 @@ def history(played, step):
     return rows
 
 
+def declared_total(paths):
+    """Games the whole match is declared to have, from the runner's state file, or None if absent."""
+    for path in paths:
+        match = SEGMENT.match(str(path))
+
+        if not match:
+            continue
+
+        state = pathlib.Path(match.group(1) + ".rounds")
+
+        if state.exists():
+            first = state.read_text().splitlines()[0].strip()
+
+            return 2 * int(first) if first.isdigit() else None
+
+    return None
+
+
+def time_left(end_times, total, window=PACE_WINDOW):
+    """(played, to go, games per hour, time left, expected end) from the game end times, or None.
+
+    The pace is the median gap between the last `window` game ends, so a pause or a burst of
+    parallel games finishing together does not distort it. The expected end counts from the
+    last game's end, not from now, which keeps the estimate reproducible.
+    """
+    times = sorted(end_times)
+    played = len(times)
+
+    if total is None or played < 2 or played >= total:
+        return None
+
+    recent = times[-(window + 1):]
+    gaps = sorted((later - earlier).total_seconds() for earlier, later in zip(recent, recent[1:]))
+    middle = len(gaps) // 2
+    gap = gaps[middle] if len(gaps) % 2 else (gaps[middle - 1] + gaps[middle]) / 2
+
+    if gap <= 0:
+        return None
+
+    left = datetime.timedelta(seconds=gap * (total - played))
+
+    return played, total - played, 3600 / gap, left, times[-1] + left
+
+
 def main():
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--every", type=int, default=30, metavar="MINUTES",
                         help="time step between lines, default 30")
+    parser.add_argument("--total", type=int, metavar="GAMES",
+                        help="declared match length; default: read from match-<name>.rounds")
     parser.add_argument("candidate")
     parser.add_argument("paths", nargs="+", metavar="pgn")
     args = parser.parse_args()
 
-    rows = history(games(args.paths, args.candidate), datetime.timedelta(minutes=args.every))
+    played = list(games(args.paths, args.candidate))
+    rows = history(played, datetime.timedelta(minutes=args.every))
 
     if not rows:
         sys.exit("no finished games found - check the engine name")
@@ -126,6 +182,15 @@ def main():
         score = f"{wins} - {losses} - {draws}"
         print(f"  {moment:%Y-%m-%d %H:%M} {n:>5}  {score:<17} {elo:>+6.1f}  {error:>5.1f}  "
               f"[{elo - error:+.1f}, {elo + error:+.1f}]")
+
+    total = args.total if args.total is not None else declared_total(args.paths)
+    estimate = time_left([end for end, _ in played], total)
+
+    if estimate is not None:
+        done, to_go, rate, left, finish = estimate
+        print(f"\n  {done} of {total} played, {to_go} to go - {rate:.0f} games/hour "
+              f"(median gap, last {min(PACE_WINDOW, done - 1)}) -> about {left.total_seconds() / 3600:.1f} h left, "
+              f"done about {finish:%a %d %b %H:%M}")
 
 
 if __name__ == "__main__":
