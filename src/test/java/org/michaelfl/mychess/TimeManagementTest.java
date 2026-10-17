@@ -159,15 +159,23 @@ class TimeManagementTest {
     // ---- calculateHardLimit ----
 
     @Test
-    void hardLimit_withAmpleClock_isFourTimesTheSoftLimit() {
-        assertEquals(4_000, TimeManagement.calculateHardLimit(ONE_SECOND, ONE_MINUTE),
-                "1 s soft limit and 60 s on the clock: 4 x soft (4 s) is below 20 % of the clock (12 s)");
+    void hardLimit_withAmpleClock_isTheSoftLimitPlusTheMaxOverrun() {
+        assertEquals(ONE_SECOND + TimeManagement.SOFT_LIMIT_MAX_OVERRUN_MS,
+                TimeManagement.calculateHardLimit(ONE_SECOND, ONE_MINUTE),
+                "1 s soft limit and 60 s on the clock: soft + 1 s (2 s) is below 4 x soft (4 s) and 20 % of the clock (12 s)");
+    }
+
+    @Test
+    void hardLimit_withTinySoftLimit_isCappedAtFourTimesIt() {
+        // 200 ms soft limit: soft + 1 s = 1.2 s, but 4 x soft = 0.8 s is smaller
+        assertEquals(800, TimeManagement.calculateHardLimit(200, ONE_MINUTE),
+                "for a soft limit below a third of a second, 4 x soft must cap the hard limit below soft + 1 s");
     }
 
     @Test
     void hardLimit_withShortClock_isCappedAtAFifthOfTheClock() {
-        assertEquals(2_000, TimeManagement.calculateHardLimit(ONE_SECOND, 10_000),
-                "with 10 s left, 20 % of the clock (2 s) must cap the hard limit below 4 x soft (4 s)");
+        assertEquals(1_000, TimeManagement.calculateHardLimit(ONE_SECOND, 5_000),
+                "with 5 s left, 20 % of the clock (1 s) must cap the hard limit below soft + 1 s (2 s)");
     }
 
     @Test
@@ -208,7 +216,7 @@ class TimeManagementTest {
     @Test
     void iterationDone_advancesTheDepth() {
         long now = System.currentTimeMillis();
-        var instance = TimeManagement.newInstance(now + ONE_SECOND, "");
+        var instance = TimeManagement.newInstance(now + ONE_SECOND, now + ONE_SECOND, "");
 
         instance.shouldSkipIteration(1);
         instance.iterationDone(1, System.currentTimeMillis());

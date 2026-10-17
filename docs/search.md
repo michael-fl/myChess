@@ -263,7 +263,7 @@ this.quiescenceSearch = new QuiescenceSearch(game, moveGenerator, weightingFunct
 
 Two distinct mechanisms control when the search stops: **timeout** (soft — return the best result so far) and **cancellation** (hard — abort entirely).
 
-**Two time limits (since v4.9.0).** The *soft limit* `EngineConfig.millisPerMove` (default 30 000 ms) decides whether the next iteration is started; see § 6.5.1. The *hard limit* from `TimeManagement.calculateHardLimit` is the deadline at which a running iteration is aborted. With a clock it is min(4 × soft, 20 % of the remaining clock), without one it equals the soft limit.
+**Two time limits (since v4.9.0).** The *soft limit* `EngineConfig.millisPerMove` (default 30 000 ms) decides whether the next iteration is started; see § 6.5.1. The *hard limit* from `TimeManagement.calculateHardLimit` is the deadline at which a running iteration is aborted. With a clock it is min(soft + 1 s, 4 × soft, 20 % of the remaining clock), without one it equals the soft limit. The one-second overrun cap (`TimeManagement.SOFT_LIMIT_MAX_OVERRUN_MS`) reproduces what 4.9.0 actually did through its UCI watcher; the watcher now waits until the hard limit + 1 s and is only a safety net. An iteration aborted at the overrun cap is deliberately not recorded in `IterationTimings` (it would make the start decision too cautious); aborts at any other cap are recorded, extrapolated — exactly as in 4.9.0.
 
 **Timeout.** `PositionSearch` records the hard deadline at construction time:
 
