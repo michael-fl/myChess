@@ -73,6 +73,11 @@ public final class TimeManagement {
      * limit plus one second, so the computed hard limit (up to {@value #HARD_LIMIT_SOFT_LIMIT_FACTOR}
      * times the soft limit) was never reached, and the +21 Elo of 4.9.0 was measured with this cap.
      * Letting iterations run to the full factor cost about 48 Elo (match {@code watcher-hard-limit}).
+     *
+     * <p>TODO: tune this value. As an absolute time it only fits short controls: at 60+1, with a
+     * soft limit of about 1-3 s, one second is a substantial overrun, while at long controls it is
+     * negligible and the cap effectively disappears. It probably belongs as a factor of the soft
+     * limit instead, measured against this fixed value.
      */
     static final int SOFT_LIMIT_MAX_OVERRUN_MS = 1_000;
 
