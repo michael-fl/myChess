@@ -123,7 +123,25 @@ public final class IterationTimings {
      *         depth has too little history, or the estimate fits in the
      *         remaining time
      */
-    static synchronized IterationDecision decideIteration(int depth, long remainingMs) {
+    static IterationDecision decideIteration(int depth, long remainingMs) {
+        return decideIteration(depth, remainingMs, 1.0);
+    }
+
+    /**
+     * The skip decision with an explicit risk factor: the iteration runs when its
+     * estimate is at most {@code riskFactor} times the remaining time. A factor of
+     * {@code 1.0} is the plain rule above; a larger one starts deeper iterations more
+     * boldly, which is how honest estimates (aborts recorded) can be made to behave
+     * like the low-biased estimates of 4.9.0. The floor {@link #MIN_REMAINING_MILLIS}
+     * still applies to the real remaining time.
+     *
+     * @param depth       the deepening depth about to be started
+     * @param remainingMs milliseconds left in the move's time budget
+     * @param riskFactor  multiplier on {@code remainingMs} for the estimate comparison
+     *                    and the probing gate
+     * @return the decision, as for {@link #decideIteration(int, long)}
+     */
+    static synchronized IterationDecision decideIteration(int depth, long remainingMs, double riskFactor) {
         if (!skipHeuristicEnabled) {
             return IterationDecision.RUN;
         }
@@ -135,11 +153,13 @@ public final class IterationTimings {
         }
 
         long estimateMs = getEstimatedMs(depth);
-        if (estimateMs <= remainingMs) {
+        long allowanceMs = Math.round(remainingMs * riskFactor);
+
+        if (estimateMs <= allowanceMs) {
             return IterationDecision.RUN;
         }
 
-        return isProbingDue(depth, estimateMs, remainingMs) ? IterationDecision.PROBE : IterationDecision.SKIP;
+        return isProbingDue(depth, estimateMs, allowanceMs) ? IterationDecision.PROBE : IterationDecision.SKIP;
     }
 
     /**

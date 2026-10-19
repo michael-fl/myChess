@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.IterationTimings.IterationDecision;
 import org.michaelfl.mychess.engines.EngineTuning;
 
+import java.util.function.Supplier;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -45,6 +47,8 @@ class TimeManagementInstanceTest {
     void restoreSuiteDefault() {
         IterationTimings.setSkipHeuristicEnabled(false);
         IterationTimings.reset();
+        TimeManagement.setHonestEstimates(false);
+        TimeManagement.setRiskFactor(TimeManagement.DEFAULT_RISK_FACTOR);
     }
 
     @Test
@@ -188,6 +192,35 @@ class TimeManagementInstanceTest {
     }
 
     @Test
+    void shouldSkipIteration_withRiskFactorTwo_startsADepthWhoseEstimateIsTwiceTheRemainingTime() {
+        for (int i = 0; i < EngineTuning.MIN_SAMPLES_FOR_SKIP; i++) {
+            IterationTimings.recordCompletion(2, 2 * SOFT_LIMIT_MS);
+        }
+
+        var plain = instanceWithSoftLimit(SOFT_LIMIT_MS);
+        completeDepthOne(plain);
+        boolean plainSkips = plain.shouldSkipIteration(2);
+
+        TimeManagement.setRiskFactor(2.5);
+        var bold = instanceWithSoftLimit(SOFT_LIMIT_MS);
+        completeDepthOne(bold);
+
+        assertTrue(plainSkips, "with the default factor an estimate of twice the soft limit must be skipped");
+        assertFalse(bold.shouldSkipIteration(2), "with factor 2.5 the same estimate fits and the depth must start");
+    }
+
+    @Test
+    void iterationAborted_atTheOverrunCapWithHonestEstimates_isRecorded() {
+        var instance = withHonestEstimates(() -> instanceWithLimits(SOFT_LIMIT_MS, HARD_LIMIT_MS));
+
+        instance.shouldSkipIteration(1);
+        instance.iterationAborted(1, System.currentTimeMillis() + HARD_LIMIT_MS);
+
+        assertDurationRecorded(1, extrapolated(HARD_LIMIT_MS),
+                "with honest estimates an abort at the overrun cap must be recorded like every other abort");
+    }
+
+    @Test
     void iterationAborted_whenAnotherCapBindsAboveTheSoftLimit_isRecorded() {
         // 20 % of a short clock caps the hard limit between soft and soft + max overrun;
         // 4.9.0's search reached that limit before its watcher, so the abort was recorded
@@ -221,6 +254,18 @@ class TimeManagementInstanceTest {
     }
 
     /** Instance whose soft and hard timeouts lie the given milliseconds from now. */
+    /** Creates an instance while honest estimates are on; the setting is read when the instance is created. */
+    private static TimeManagement.TimeManagementInstance withHonestEstimates(
+            Supplier<TimeManagement.TimeManagementInstance> factory) {
+        TimeManagement.setHonestEstimates(true);
+
+        try {
+            return factory.get();
+        } finally {
+            TimeManagement.setHonestEstimates(false);
+        }
+    }
+
     private static TimeManagement.TimeManagementInstance instanceWithLimits(long softMs, long hardMs) {
         long now = System.currentTimeMillis();
 

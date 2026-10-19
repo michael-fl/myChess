@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.TimeManagement.TimeControlInput;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Unit tests for {@link TimeManagement}: the per-move budget derived from the {@code go} arguments
@@ -232,5 +233,15 @@ class TimeManagementTest {
     /** White 60 s + 1 s, black 3 s + 0.5 s, no movestogo. */
     private static TimeControlInput clockInput() {
         return new TimeControlInput(null, ONE_MINUTE, 3_000, null, false, ONE_SECOND, 500);
+    }
+
+    @Test
+    void setRiskFactor_zeroOrNegative_isRejected() {
+        assertThrows(IllegalArgumentException.class, () -> TimeManagement.setRiskFactor(0),
+                "a risk factor of zero would never start an iteration and must be rejected");
+        assertThrows(IllegalArgumentException.class, () -> TimeManagement.setRiskFactor(-1),
+                "a negative risk factor must be rejected");
+        assertEquals(TimeManagement.DEFAULT_RISK_FACTOR, TimeManagement.getRiskFactor(), 1e-9,
+                "a rejected value must leave the factor unchanged");
     }
 }
