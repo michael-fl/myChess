@@ -51,6 +51,18 @@ final class UciHandler {
     private static final String ENGINE_NAME = "myChess " + Version.get();
     private static final String ENGINE_AUTHOR = "Michael Fleischhauer";
 
+    private static final String SETOPTION_PREFIX = "setoption name ";
+
+    /** Experimental UCI option: the start-decision risk factor in percent (100 = plain rule). */
+    static final String OPTION_TIME_RISK_PERCENT = "TimeRiskPercent";
+
+    static final int DEFAULT_TIME_RISK_PERCENT = 100;
+    static final int MIN_TIME_RISK_PERCENT = 25;
+    static final int MAX_TIME_RISK_PERCENT = 400;
+
+    /** Experimental UCI option: record aborts at the overrun cap in the iteration estimates. */
+    static final String OPTION_HONEST_ESTIMATES = "HonestEstimates";
+
     private final MyChessEnv env;
     private final BufferedReader in;
 
@@ -162,6 +174,9 @@ final class UciHandler {
         writeLine("id name " + ENGINE_NAME);
         writeLine("id author " + ENGINE_AUTHOR);
         writeLine("option name UCI_Chess960 type check default false");
+        writeLine("option name " + OPTION_TIME_RISK_PERCENT + " type spin default " + DEFAULT_TIME_RISK_PERCENT
+                + " min " + MIN_TIME_RISK_PERCENT + " max " + MAX_TIME_RISK_PERCENT);
+        writeLine("option name " + OPTION_HONEST_ESTIMATES + " type check default false");
         writeLine("uciok");
     }
 
@@ -175,6 +190,27 @@ final class UciHandler {
             this.is960 = true;
         } else if (line.equals("setoption name UCI_Chess960 value false")) {
             this.is960 = false;
+        } else if (line.startsWith(SETOPTION_PREFIX + OPTION_TIME_RISK_PERCENT + " value ")) {
+            applyTimeRiskPercent(line.substring((SETOPTION_PREFIX + OPTION_TIME_RISK_PERCENT + " value ").length()).trim());
+        } else if (line.startsWith(SETOPTION_PREFIX + OPTION_HONEST_ESTIMATES + " value ")) {
+            String value = line.substring((SETOPTION_PREFIX + OPTION_HONEST_ESTIMATES + " value ").length()).trim();
+            TimeManagement.setHonestEstimates(Boolean.parseBoolean(value));
+            Log.info("[option] " + OPTION_HONEST_ESTIMATES + " = " + TimeManagement.isHonestEstimates());
+        }
+    }
+
+    /**
+     * Sets the start-decision risk factor from a {@code TimeRiskPercent} value. Values outside
+     * [{@value #MIN_TIME_RISK_PERCENT}, {@value #MAX_TIME_RISK_PERCENT}] are clamped; a value that is
+     * not a number is ignored and logged.
+     */
+    private static void applyTimeRiskPercent(String value) {
+        try {
+            int percent = Math.clamp(Integer.parseInt(value), MIN_TIME_RISK_PERCENT, MAX_TIME_RISK_PERCENT);
+            TimeManagement.setRiskFactor(percent / 100.0);
+            Log.info("[option] " + OPTION_TIME_RISK_PERCENT + " = " + percent);
+        } catch (NumberFormatException _) {
+            Log.info("[option] ignored non-numeric " + OPTION_TIME_RISK_PERCENT + ": " + value);
         }
     }
 

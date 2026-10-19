@@ -103,6 +103,59 @@ class UciHandlerTest {
 
     @Test
     @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void uci_onHandshake_announcesTheTimeOptions() {
+        runHandler("uci\nquit\n")
+                .expectEachOf(
+                        "^option name TimeRiskPercent type spin default 100 min 25 max 400$",
+                        "^option name HonestEstimates type check default false$"
+                );
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void setoption_timeOptions_setTheRiskFactorAndHonestEstimates() {
+        try {
+            runHandler("setoption name TimeRiskPercent value 220\nsetoption name HonestEstimates value true\nquit\n");
+
+            assertEquals(2.2, TimeManagement.getRiskFactor(), 1e-9, "TimeRiskPercent 220 must set the factor 2.2");
+            assertTrue(TimeManagement.isHonestEstimates(), "HonestEstimates true must switch honest estimates on");
+        } finally {
+            resetTimeOptions();
+        }
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void setoption_timeRiskPercentOutOfRange_isClamped() {
+        try {
+            runHandler("setoption name TimeRiskPercent value 1000\nquit\n");
+
+            assertEquals(4.0, TimeManagement.getRiskFactor(), 1e-9, "a percent above the maximum must be clamped to 400");
+        } finally {
+            resetTimeOptions();
+        }
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void setoption_timeRiskPercentNotANumber_isIgnored() {
+        try {
+            runHandler("setoption name TimeRiskPercent value bold\nquit\n");
+
+            assertEquals(TimeManagement.DEFAULT_RISK_FACTOR, TimeManagement.getRiskFactor(), 1e-9,
+                    "a non-numeric value must leave the factor unchanged");
+        } finally {
+            resetTimeOptions();
+        }
+    }
+
+    private static void resetTimeOptions() {
+        TimeManagement.setRiskFactor(TimeManagement.DEFAULT_RISK_FACTOR);
+        TimeManagement.setHonestEstimates(false);
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
     void isready_always_repliesWithReadyok() {
         runHandler("isready\nquit\n").expect("readyok");
     }

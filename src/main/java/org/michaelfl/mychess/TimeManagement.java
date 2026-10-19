@@ -83,6 +83,25 @@ public final class TimeManagement {
 
     private static final float HARD_LIMIT_REMAINING_TIME_FACTOR = 0.2f;
 
+    /** Default of {@link #riskFactor}: the plain comparison of estimate and remaining time. */
+    static final double DEFAULT_RISK_FACTOR = 1.0;
+
+    /**
+     * Multiplier on the remaining time in the start decision: an iteration starts when its
+     * estimated duration is at most this factor times the time left before the soft limit.
+     * Experimental, set through the UCI option {@code TimeRiskPercent}; the default keeps 4.9.1's
+     * behavior. Process-wide like {@link IterationTimings}, which it qualifies.
+     */
+    private static volatile double riskFactor = DEFAULT_RISK_FACTOR;
+
+    /**
+     * Whether aborts at the soft + {@link #SOFT_LIMIT_MAX_OVERRUN_MS} cap are recorded in
+     * {@link IterationTimings} like every other abort ("honest estimates"). Experimental, set
+     * through the UCI option {@code HonestEstimates}; off by default, which keeps 4.9.1's rule of
+     * not recording them.
+     */
+    private static volatile boolean honestEstimates = false;
+
     /**
      * The time-related arguments of one UCI {@code go} command, as sent by the GUI.
      *
@@ -123,7 +142,7 @@ public final class TimeManagement {
 
         private TimeManagementInstance(long softTimeout, long hardTimeout, String logTag) {
             this.softTimeout = softTimeout;
-            this.recordAborts = hardTimeout < softTimeout + SOFT_LIMIT_MAX_OVERRUN_MS;
+            this.recordAborts = honestEstimates || hardTimeout < softTimeout + SOFT_LIMIT_MAX_OVERRUN_MS;
             this.logPrefix = logTag == null || logTag.isEmpty() ? "[time] " : "[time] " + logTag + " ";
         }
 
@@ -154,7 +173,7 @@ public final class TimeManagement {
             }
 
             final long remainingMs = softTimeout - System.currentTimeMillis();
-            decisionOnSoftTimeout = IterationTimings.decideIteration(currentDepth, remainingMs);
+            decisionOnSoftTimeout = IterationTimings.decideIteration(currentDepth, remainingMs, riskFactor);
             final long estimateMs = IterationTimings.getEstimatedMs(depth);
 
             return recordAndLogSkip(decisionOnSoftTimeout, estimateMs, remainingMs);
@@ -284,6 +303,42 @@ public final class TimeManagement {
      */
     public static TimeManagement.TimeManagementInstance newInstance(long softTimeout, long hardTimeout, String logTag) {
         return new TimeManagement.TimeManagementInstance(softTimeout, hardTimeout, logTag);
+    }
+
+    /**
+     * Sets the risk factor of the start decision: an iteration starts when its estimate is at most
+     * {@code factor} times the remaining time. Used by the UCI option {@code TimeRiskPercent}.
+     *
+     * @param factor the multiplier, greater than zero; {@link #DEFAULT_RISK_FACTOR} keeps the plain rule
+     * @throws IllegalArgumentException if {@code factor} is not greater than zero
+     */
+    public static void setRiskFactor(double factor) {
+        if (!(factor > 0)) {
+            throw new IllegalArgumentException("risk factor must be greater than zero: " + factor);
+        }
+
+        riskFactor = factor;
+    }
+
+    /** @return the current risk factor of the start decision */
+    public static double getRiskFactor() {
+        return riskFactor;
+    }
+
+    /**
+     * Switches honest estimates on or off: when on, aborts at the soft limit + one second cap are
+     * recorded in {@link IterationTimings} like every other abort. Used by the UCI option
+     * {@code HonestEstimates}.
+     *
+     * @param enabled {@code true} to record those aborts
+     */
+    public static void setHonestEstimates(boolean enabled) {
+        honestEstimates = enabled;
+    }
+
+    /** @return whether aborts at the overrun cap are recorded */
+    public static boolean isHonestEstimates() {
+        return honestEstimates;
     }
 
     /**
