@@ -26,6 +26,9 @@ class TimeManagementInstanceTest {
 
     private static final long SOFT_LIMIT_MS = 1_000;
 
+    /** Hard limit with a clock: soft limit plus the maximum overrun. */
+    private static final long HARD_LIMIT_MS = SOFT_LIMIT_MS + TimeManagement.SOFT_LIMIT_MAX_OVERRUN_MS;
+
     /** Duration reported for a single iteration; large against the few milliseconds the test itself takes. */
     private static final long ITERATION_MS = 500;
 
@@ -161,16 +164,41 @@ class TimeManagementInstanceTest {
     }
 
     @Test
-    void iterationAborted_recordsTheExtrapolatedDuration() {
-        var instance = instanceWithSoftLimit(SOFT_LIMIT_MS);
+    void iterationAborted_whenHardEqualsSoft_recordsTheExtrapolatedDuration() {
+        // no clock (go movetime / go depth): hard limit == soft limit, the abort lands there
+        var instance = instanceWithSoftLimit(ITERATION_MS);
 
         instance.shouldSkipIteration(1);
         instance.iterationAborted(1, System.currentTimeMillis() + ITERATION_MS);
 
-        long extrapolatedMs = (long) (ITERATION_MS * EngineTuning.ABORT_EXTRAPOLATION_FACTOR);
+        assertDurationRecorded(1, extrapolated(ITERATION_MS),
+                "an abort at a hard limit equal to the soft limit must be recorded, extrapolated");
+    }
 
-        assertDurationRecorded(1, extrapolatedMs,
-                "an aborted iteration must be recorded as its elapsed time times the extrapolation factor");
+    @Test
+    void iterationAborted_whenTheOverrunCapBinds_isNotRecorded() {
+        // with a clock the hard limit is soft + the max overrun; the abort lands there
+        var instance = instanceWithLimits(SOFT_LIMIT_MS, HARD_LIMIT_MS);
+
+        instance.shouldSkipIteration(1);
+        instance.iterationAborted(1, System.currentTimeMillis() + HARD_LIMIT_MS);
+
+        assertEquals(0, IterationTimings.getEstimatedMs(1),
+                "an abort at the overrun cap must not reach the per-depth estimate, by design (as in 4.9.0)");
+    }
+
+    @Test
+    void iterationAborted_whenAnotherCapBindsAboveTheSoftLimit_isRecorded() {
+        // 20 % of a short clock caps the hard limit between soft and soft + max overrun;
+        // 4.9.0's search reached that limit before its watcher, so the abort was recorded
+        long cappedHardMs = SOFT_LIMIT_MS + TimeManagement.SOFT_LIMIT_MAX_OVERRUN_MS / 2;
+        var instance = instanceWithLimits(SOFT_LIMIT_MS, cappedHardMs);
+
+        instance.shouldSkipIteration(1);
+        instance.iterationAborted(1, System.currentTimeMillis() + cappedHardMs);
+
+        assertDurationRecorded(1, extrapolated(cappedHardMs),
+                "an abort at a hard limit set by a cap other than the overrun cap must be recorded, extrapolated");
     }
 
     @Test
@@ -184,9 +212,19 @@ class TimeManagementInstanceTest {
         assertEquals(2, instance.getDepth(), "an aborted iteration must not count as completed");
     }
 
-    /** Instance whose soft timeout lies the given milliseconds from now (negative: already passed). */
+    /**
+     * Instance whose soft timeout lies the given milliseconds from now (negative: already passed),
+     * with the hard timeout equal to it, as without a clock.
+     */
     private static TimeManagement.TimeManagementInstance instanceWithSoftLimit(long softMs) {
-        return TimeManagement.newInstance(System.currentTimeMillis() + softMs, "");
+        return instanceWithLimits(softMs, softMs);
+    }
+
+    /** Instance whose soft and hard timeouts lie the given milliseconds from now. */
+    private static TimeManagement.TimeManagementInstance instanceWithLimits(long softMs, long hardMs) {
+        long now = System.currentTimeMillis();
+
+        return TimeManagement.newInstance(now + softMs, now + hardMs, "");
     }
 
     /** Runs the decision for depth 1 and reports it as completed, so the instance expects depth 2 next. */
@@ -198,6 +236,11 @@ class TimeManagementInstanceTest {
     /** Reports {@code depth} as completed now. */
     private static void completeIteration(TimeManagement.TimeManagementInstance instance, int depth) {
         instance.iterationDone(depth, System.currentTimeMillis());
+    }
+
+    /** The duration {@link IterationTimings#recordAbort} records for an abort after {@code elapsedMs}. */
+    private static long extrapolated(long elapsedMs) {
+        return (long) (elapsedMs * EngineTuning.ABORT_EXTRAPOLATION_FACTOR);
     }
 
     /** Asserts that the estimate for {@code depth} lies within {@link #CLOCK_TOLERANCE_MS} above {@code expectedMs}. */

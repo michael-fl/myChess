@@ -78,6 +78,9 @@ final class UciHandler {
      */
     private long gameStartMs = System.currentTimeMillis();
 
+    /** Time the watcher waits beyond the search's hard limit before it cancels the search. */
+    static final long WATCHER_GRACE_MILLIS = 1_000L;
+
     /** Time the run-loop's finally block waits for an in-flight watcher to emit bestmove. */
     private static final long QUIT_GRACE_MS = 5_000L;
 
@@ -246,10 +249,11 @@ final class UciHandler {
 
         logGoStatus(args, turnAtStart, plyCountAtStart);
 
+        final int remainingClockMillis = remainingClockMillis(args, turnAtStart);
         var engineConfig = new EngineConfig.Builder()
                 .maxDepth(args.maxDepth)
                 .millisPerMove(args.timeBudgetMillis)
-                .remainingClockMillis(remainingClockMillis(args, turnAtStart))
+                .remainingClockMillis(remainingClockMillis)
                 .silent(true)
                 .setTranspositionTable(tt)
                 .logTag("game=" + shortGameId())
@@ -269,9 +273,29 @@ final class UciHandler {
         // Virtual threads are always daemons, so no explicit daemon flag.
         Thread watcher = Thread.ofVirtual()
                 .name("uci-search-watcher")
-                .start(() -> awaitAndEmitBestmove(game, task, args.timeBudgetMillis,
+                .start(() -> awaitAndEmitBestmove(game, task,
+                        watcherTimeoutMillis(args.timeBudgetMillis, remainingClockMillis),
                         turnAtStart, plyCountAtStart, goStartMs));
         currentWatcher.set(watcher);
+    }
+
+    /**
+     * How long the watcher waits for the search before it cancels it and plays the move of the
+     * last completed iteration.
+     *
+     * <p>The search aborts a running iteration itself at the hard limit
+     * ({@link TimeManagement#calculateHardLimit}), but it checks the clock only every 10 000
+     * nodes. The watcher is the safety net behind that check, so it waits until the hard limit
+     * plus {@link #WATCHER_GRACE_MILLIS}. Without a clock the hard limit equals the soft limit,
+     * so {@code go movetime} keeps its old bound of budget plus grace.
+     *
+     * @param softLimitMillis      the per-move budget (soft limit) in milliseconds
+     * @param remainingClockMillis remaining clock of the side to move, or
+     *                             {@link Integer#MAX_VALUE} if no clock was sent
+     * @return the watcher's timeout in milliseconds
+     */
+    static long watcherTimeoutMillis(int softLimitMillis, int remainingClockMillis) {
+        return TimeManagement.calculateHardLimit(softLimitMillis, remainingClockMillis) + WATCHER_GRACE_MILLIS;
     }
 
     private int remainingClockMillis(GoArgs args, int turn) {
@@ -286,13 +310,13 @@ final class UciHandler {
 
     // ---- Search lifecycle ----
 
-    private void awaitAndEmitBestmove(Game game, NextMoveTask task, int budgetMillis,
+    private void awaitAndEmitBestmove(Game game, NextMoveTask task, long timeoutMillis,
                                       int turnAtStart, int plyCountAtStart, long goStartMs) {
         MoveAndWeight result = null;
         try {
             try {
-                // Give the watcher a 1-second grace period over the search budget.
-                result = task.getResult(budgetMillis + 1_000L, TimeUnit.MILLISECONDS);
+                // Safety net behind the search's own hard limit; see watcherTimeoutMillis.
+                result = task.getResult(timeoutMillis, TimeUnit.MILLISECONDS);
             } catch (ExecutionException e) {
                 if (!(e.getCause() instanceof CancellationException)) {
                     Log.error("Search failed", e);
@@ -301,6 +325,9 @@ final class UciHandler {
                 // Expected on `stop` / shutdown — fall through to the fallback.
             } catch (TimeoutException _) {
                 task.cancel();
+                // The search missed its own hard limit; count these to see how often the net catches it.
+                Log.info("[time] game=" + shortGameId() + " watcher cancel after "
+                        + (System.currentTimeMillis() - goStartMs) + " ms, timeout " + timeoutMillis + " ms");
             } catch (InterruptedException _) {
                 Thread.currentThread().interrupt();
             }
