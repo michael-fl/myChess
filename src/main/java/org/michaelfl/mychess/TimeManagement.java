@@ -15,13 +15,15 @@ import static org.michaelfl.mychess.Assert.__assert;
  *       or none); {@link #computeClockBudgetMillis} holds the clock formula, a share of the
  *       remaining time plus most of the increment, capped by the clock and floored at a minimum;</li>
  *   <li>the <em>hard limit</em>, {@link #calculateHardLimit}: the absolute bound at which the search
- *       aborts a running iteration. With a clock it leaves room above the soft limit, without a
- *       clock it equals the soft limit.</li>
+ *       aborts a running iteration. With a clock it lets a started iteration run at most
+ *       {@link #SOFT_LIMIT_MAX_OVERRUN_MS} past the soft limit, without a clock it equals the soft
+ *       limit.</li>
  * </ul>
  *
  * <p>Within one search, a {@link TimeManagementInstance} (from {@link #newInstance}) decides before
  * every iteration whether to start it. An iteration that was started may run past the soft limit up
- * to the hard limit; an aborted iteration is discarded.
+ * to the hard limit; an aborted iteration is discarded. The UCI watcher in {@link UciHandler} waits
+ * one second beyond the hard limit and is only a safety net behind it.
  *
  * <p>Usage: {@link UciHandler} computes the soft limit, the search derives the hard limit and drives
  * the instance:
@@ -32,7 +34,7 @@ import static org.michaelfl.mychess.Assert.__assert;
  *
  * long start = System.currentTimeMillis();
  * long hardTimeout = start + hardLimitMs;   // the search aborts a running iteration here
- * var timeManagement = TimeManagement.newInstance(start + softLimitMs, "");
+ * var timeManagement = TimeManagement.newInstance(start + softLimitMs, hardTimeout, "");
  *
  * for (int depth = 1; !timeManagement.shouldSkipIteration(depth); depth++) {
  *     // search depth, aborting at hardTimeout, then:
@@ -63,6 +65,21 @@ public final class TimeManagement {
     private static final int INCREMENT_USE_PERCENTAGE = 80;
 
     private static final float HARD_LIMIT_SOFT_LIMIT_FACTOR = 4f;
+
+    /**
+     * The most a started iteration may run past the soft limit before the search aborts it.
+     *
+     * <p>This reproduces what 4.9.0 actually did: its UCI watcher canceled the search at the soft
+     * limit plus one second, so the computed hard limit (up to {@value #HARD_LIMIT_SOFT_LIMIT_FACTOR}
+     * times the soft limit) was never reached, and the +21 Elo of 4.9.0 was measured with this cap.
+     * Letting iterations run to the full factor cost about 48 Elo (match {@code watcher-hard-limit}).
+     *
+     * <p>TODO: tune this value. As an absolute time it only fits short controls: at 60+1, with a
+     * soft limit of about 1-3 s, one second is a substantial overrun, while at long controls it is
+     * negligible and the cap effectively disappears. It probably belongs as a factor of the soft
+     * limit instead, measured against this fixed value.
+     */
+    static final int SOFT_LIMIT_MAX_OVERRUN_MS = 1_000;
 
     private static final float HARD_LIMIT_REMAINING_TIME_FACTOR = 0.2f;
 
@@ -98,13 +115,15 @@ public final class TimeManagement {
      */
     public static final class TimeManagementInstance {
         private final long softTimeout;
+        private final boolean recordAborts;
         private final String logPrefix;
         private int depth = 1;
         private IterationDecision decisionOnSoftTimeout;
         private long iterationStartTimestamp;
 
-        private TimeManagementInstance(long softTimeout, String logTag) {
+        private TimeManagementInstance(long softTimeout, long hardTimeout, String logTag) {
             this.softTimeout = softTimeout;
+            this.recordAborts = hardTimeout < softTimeout + SOFT_LIMIT_MAX_OVERRUN_MS;
             this.logPrefix = logTag == null || logTag.isEmpty() ? "[time] " : "[time] " + logTag + " ";
         }
 
@@ -191,10 +210,28 @@ public final class TimeManagement {
         /**
          * Reports an iteration that was aborted at the hard limit; its result is discarded.
          *
-         * <p>Records the elapsed time, measured from the {@link #shouldSkipIteration} call that
-         * started the iteration, with {@link IterationTimings#recordAbort}, which extrapolates it
-         * to a lower bound of the full duration. The depth stays as it was after the last completed
-         * iteration, so the search is expected to stop and return that iteration's result.
+         * <p>Whether the abort is recorded depends on which cap set the hard limit
+         * ({@link #calculateHardLimit}):
+         * <ul>
+         *   <li><b>the overrun cap</b>, soft limit + {@link #SOFT_LIMIT_MAX_OVERRUN_MS}: the abort is
+         *       <em>not</em> recorded, by design. These are the most expensive iterations of all;
+         *       feeding them into the per-depth estimate makes the start decision against the soft
+         *       limit so cautious that the engine leaves its clock unused and searches shallower.
+         *       4.9.0 discarded them too, because its watcher canceled them before they reached
+         *       {@code IterationTimings}, and was measured at +21 Elo that way. The abort is logged
+         *       as {@code [time] abort}.</li>
+         *   <li><b>any other cap</b> (no clock, so hard equals soft; 4 x soft for a tiny soft limit;
+         *       20 % of a short clock): the elapsed time, measured from the
+         *       {@link #shouldSkipIteration} call that started the iteration, is recorded with
+         *       {@link IterationTimings#recordAbort}, which extrapolates it to a lower bound of the
+         *       full duration. 4.9.0 recorded these as well, because its search reached its own
+         *       hard limit before the watcher fired.</li>
+         * </ul>
+         * So the rule reproduces 4.9.0 exactly; it is a stopgap until the estimate itself is made
+         * honest.
+         *
+         * <p>The depth stays as it was after the last completed iteration, so the search is expected
+         * to stop and return that iteration's result.
          *
          * @param currentDepth          the depth that was aborted, as passed to {@link #shouldSkipIteration}
          * @param iterationEndTimestamp the time the iteration was aborted, in epoch milliseconds
@@ -204,7 +241,13 @@ public final class TimeManagement {
             __assert(() -> currentDepth == depth, () -> "unexpected depth: expected " + depth + ", but is " + currentDepth);
 
             long iterationDurationMs = iterationEndTimestamp - iterationStartTimestamp;
-            IterationTimings.recordAbort(depth, iterationDurationMs);
+
+            if (recordAborts) {
+                IterationTimings.recordAbort(depth, iterationDurationMs);
+            } else {
+                Log.info(logPrefix + "abort depth " + depth + ": " + (iterationEndTimestamp - softTimeout)
+                        + " ms past soft limit, not recorded");
+            }
 
             decisionOnSoftTimeout = null;
         }
@@ -227,17 +270,20 @@ public final class TimeManagement {
     /**
      * Creates the time management for one search.
      *
-     * <p>Only the soft limit is needed here: the hard limit is enforced by the search itself,
-     * which aborts a running iteration when it is reached.
+     * <p>The hard limit itself is enforced by the search, which aborts a running iteration when it
+     * is reached; the instance only needs it to tell which cap set the hard limit, and with it
+     * whether an abort is recorded (see {@link TimeManagementInstance#iterationAborted}).
      *
      * @param softTimeout epoch milliseconds of the soft limit: no iteration is started that is
      *                    expected to end after it
+     * @param hardTimeout epoch milliseconds of the hard limit; usually {@code softTimeout} +
+     *                    {@link #SOFT_LIMIT_MAX_OVERRUN_MS}, lower when another cap binds
      * @param logTag      tag put after {@code [time]} in every log line, e.g. {@code game=4174bf06}, so
      *                    lines of engines sharing one log can be told apart; empty or {@code null} for none
      * @return a new instance, positioned before depth 1
      */
-    public static TimeManagement.TimeManagementInstance newInstance(long softTimeout, String logTag) {
-        return new TimeManagement.TimeManagementInstance(softTimeout, logTag);
+    public static TimeManagement.TimeManagementInstance newInstance(long softTimeout, long hardTimeout, String logTag) {
+        return new TimeManagement.TimeManagementInstance(softTimeout, hardTimeout, logTag);
     }
 
     /**
@@ -245,9 +291,10 @@ public final class TimeManagement {
      *
      * <p>Without a clock ({@code go movetime}, {@code go depth}, {@code go infinite}) it equals the
      * soft limit, because there is no reserve to draw on and a GUI expects the answer within the
-     * granted time. With a clock it is {@value #HARD_LIMIT_SOFT_LIMIT_FACTOR} times the soft limit,
-     * but at most 20 % of the remaining clock and never more than the clock minus
-     * {@link #TIME_SAFETY_MARGIN_MS}; never less than {@link #MIN_BUDGET_MS}.
+     * granted time. With a clock it is the soft limit plus {@link #SOFT_LIMIT_MAX_OVERRUN_MS}, but at
+     * most {@value #HARD_LIMIT_SOFT_LIMIT_FACTOR} times the soft limit, at most 20 % of the remaining
+     * clock and never more than the clock minus {@link #TIME_SAFETY_MARGIN_MS}; never less than
+     * {@link #MIN_BUDGET_MS}.
      *
      * @param softLimitMs      the soft limit from {@link #computeMoveBudgetMillis}, in milliseconds
      * @param remainingClockMs remaining clock of the side to move in milliseconds, or
@@ -260,9 +307,9 @@ public final class TimeManagement {
             return softLimitMs;
         }
 
-        int timeLimit = Math.min(
+        int timeLimit = Math.min(softLimitMs + SOFT_LIMIT_MAX_OVERRUN_MS, Math.min(
                 Math.round(softLimitMs * HARD_LIMIT_SOFT_LIMIT_FACTOR),
-                Math.round(remainingClockMs * HARD_LIMIT_REMAINING_TIME_FACTOR));
+                Math.round(remainingClockMs * HARD_LIMIT_REMAINING_TIME_FACTOR)));
 
         return Math.max(Math.min(timeLimit, remainingClockMs - TIME_SAFETY_MARGIN_MS), MIN_BUDGET_MS);
     }
