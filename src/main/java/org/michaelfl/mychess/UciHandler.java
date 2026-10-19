@@ -57,8 +57,8 @@ final class UciHandler {
     static final String OPTION_TIME_RISK_PERCENT = "TimeRiskPercent";
 
     static final int DEFAULT_TIME_RISK_PERCENT = 100;
-    static final int MIN_TIME_RISK_PERCENT = 25;
-    static final int MAX_TIME_RISK_PERCENT = 400;
+    static final int MIN_TIME_RISK_PERCENT = 10;
+    static final int MAX_TIME_RISK_PERCENT = 1000;
 
     /** Experimental UCI option: record aborts at the overrun cap in the iteration estimates. */
     static final String OPTION_HONEST_ESTIMATES = "HonestEstimates";

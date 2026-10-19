@@ -106,7 +106,7 @@ class UciHandlerTest {
     void uci_onHandshake_announcesTheTimeOptions() {
         runHandler("uci\nquit\n")
                 .expectEachOf(
-                        "^option name TimeRiskPercent type spin default 100 min 25 max 400$",
+                        "^option name TimeRiskPercent type spin default 100 min 10 max 1000$",
                         "^option name HonestEstimates type check default false$"
                 );
     }
@@ -128,9 +128,9 @@ class UciHandlerTest {
     @Timeout(value = 5, unit = TimeUnit.SECONDS)
     void setoption_timeRiskPercentOutOfRange_isClamped() {
         try {
-            runHandler("setoption name TimeRiskPercent value 1000\nquit\n");
+            runHandler("setoption name TimeRiskPercent value 5000\nquit\n");
 
-            assertEquals(4.0, TimeManagement.getRiskFactor(), 1e-9, "a percent above the maximum must be clamped to 400");
+            assertEquals(10.0, TimeManagement.getRiskFactor(), 1e-9, "a percent above the maximum must be clamped to 1000");
         } finally {
             resetTimeOptions();
         }
