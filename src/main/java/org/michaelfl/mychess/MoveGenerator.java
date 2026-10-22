@@ -554,7 +554,7 @@ public final class MoveGenerator {
         int rookField = ChessUtil.getFieldFromColAndRow(theBoard.getCastlingRookFile(CastlingSlot.BLACK_QUEENSIDE), 7);
 
         // The fields between king start field and target field must be empty (except own rook)
-        if (!isCastlingPathEmpty(kingField, Board.c8, kingField)) {
+        if (!isCastlingPathEmpty(kingField, Board.c8, rookField)) {
             return false;
         }
 
