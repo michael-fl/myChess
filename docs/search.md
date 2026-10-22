@@ -263,7 +263,7 @@ this.quiescenceSearch = new QuiescenceSearch(game, moveGenerator, weightingFunct
 
 Two distinct mechanisms control when the search stops: **timeout** (soft — return the best result so far) and **cancellation** (hard — abort entirely).
 
-**Two time limits (since v4.9.0).** The *soft limit* `EngineConfig.millisPerMove` (default 30 000 ms) decides whether the next iteration is started; see § 6.5.1. The *hard limit* from `TimeManagement.calculateHardLimit` is the deadline at which a running iteration is aborted. With a clock it is min(soft + 1 s, 4 × soft, 20 % of the remaining clock), without one it equals the soft limit. The one-second overrun cap (`TimeManagement.SOFT_LIMIT_MAX_OVERRUN_MS`) reproduces what 4.9.0 actually did through its UCI watcher; the watcher now waits until the hard limit + 1 s and is only a safety net. An iteration aborted at the overrun cap is deliberately not recorded in `IterationTimings` (it would make the start decision too cautious); aborts at any other cap are recorded, extrapolated — exactly as in 4.9.0.
+**Two time limits (since v4.9.0).** The *soft limit* `EngineConfig.millisPerMove` (default 30 000 ms) decides whether the next iteration is started; see § 6.5.1. The *hard limit* from `TimeManagement.calculateHardLimit` is the deadline at which a running iteration is aborted. With a clock it is min(soft + 1 s, 4 × soft, 20 % of the remaining clock), without one it equals the soft limit. The one-second overrun cap (`TimeManagement.SOFT_LIMIT_MAX_OVERRUN_MS`) reproduces what 4.9.0 actually did through its UCI watcher; the watcher now waits until the hard limit + 1 s and is only a safety net. Since v4.9.2 every aborted iteration is recorded in `IterationTimings`, extrapolated, whichever cap set the hard limit (honest estimates); the start decision compensates with a risk factor, see § 6.5.1. In 4.9.0 and 4.9.1 an abort at the overrun cap was not recorded, which biased the estimates low.
 
 **Timeout.** `PositionSearch` records the hard deadline at construction time:
 
@@ -344,7 +344,7 @@ if (timeManagement.shouldSkipIteration(depth)) {
 Depth 1 always runs. With 30 ms or less left until the soft limit, every depth from 3 on stops without consulting the estimate; that stop is not counted as a skip. Otherwise the decision is "skip" when all of the following hold:
 
 - the depth has at least `MIN_SAMPLES_FOR_SKIP` samples in the window (avoids reacting to a single early outlier),
-- `getEstimatedMs(depth) > remainingMs`,
+- `getEstimatedMs(depth) > k × remainingMs`, with the risk factor k = `TimeManagement.DEFAULT_RISK_FACTOR` = 1.5 (UCI option `TimeRiskPercent`, default 150),
 - `isProbingDue(depth, …)` returns false (see below).
 
 When the heuristic fires, the previous-iteration `bestmove` is returned immediately and the recovered time stays on the clock — feeding the next move's budget in clock-based time controls.
@@ -352,6 +352,8 @@ When the heuristic fires, the previous-iteration `bestmove` is returned immediat
 **Probing.** To keep the SMA from freezing after one expensive sample (e.g. a depth-10 abort recorded as "expensive forever"), a probing override fires after `SKIPS_BETWEEN_PROBES` consecutive skips of the same depth: the iteration runs anyway, refreshing the window with current data. The probe is gated by `MIN_PROBE_REMAINING_RATIO` so it never starts with so little time left that it would just abort and pollute the SMA with a meaningless under-sampled result — instead the skip counter keeps growing and the probe fires the next time enough time is actually available.
 
 **Aborted iterations** are recorded as `max(currentEstimate, elapsedMs × ABORT_EXTRAPOLATION_FACTOR)`. An abort proves only that the iteration would have cost *at least* `elapsedMs`, never that it would have been cheaper than the prior average, so the floor prevents the SMA from being pulled down by a probe that aborted too early. Only `recordCompletion` — a real, ground-truth measurement — can lower the SMA.
+
+**The risk factor (since v4.9.2).** Because every abort is recorded, the estimates are honest but high: an aborted iteration enters as at least 1.2 times its elapsed time. With the plain rule (k = 1) the search became far more cautious, used less of its clock and lost −48.5 ± 21.0 at 60+1 (roadmap § 12.12). The factor k says how boldly a deeper iteration is started against these estimates. k = 1.5 was chosen in a behavior calibration so that the engine uses its clock like 4.9.1, and measured at +23.7 ± 8.9 against 4.9.0 at 60+1. The probe gate also uses k times the remaining time; with the real remaining time no probe could start for k above about 1.43.
 
 **Tuning knobs** live in [`EngineTuning`](../src/main/java/org/michaelfl/mychess/engines/EngineTuning.java) so they can be swept independently:
 
