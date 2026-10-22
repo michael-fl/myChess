@@ -1,0 +1,378 @@
+Started game 1 of 100 (4.9.1-hk220 vs 4.9.1)
+Started game 2 of 100 (4.9.1 vs 4.9.1-hk220)
+Started game 4 of 100 (4.9.1 vs 4.9.1-hk220)
+Started game 3 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 3 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 0 - 1 - 0  [0.000] 1
+Started game 5 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 1 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 1 - 1 - 0  [0.500] 2
+Started game 6 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 2 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 1 - 2 - 0  [0.333] 3
+Started game 7 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 4 (4.9.1 vs 4.9.1-hk220): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 1 - 2 - 1  [0.375] 4
+Started game 8 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 6 (4.9.1 vs 4.9.1-hk220): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 2 - 2 - 1  [0.500] 5
+Started game 9 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 7 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 2 - 3 - 1  [0.417] 6
+Started game 10 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 5 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 3 - 3 - 1  [0.500] 7
+Started game 11 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 8 (4.9.1 vs 4.9.1-hk220): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 4 - 3 - 1  [0.563] 8
+Started game 12 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 10 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 4 - 4 - 1  [0.500] 9
+Started game 13 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 9 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 5 - 4 - 1  [0.550] 10
+...      4.9.1-hk220 playing White: 3 - 2 - 0  [0.600] 5
+...      4.9.1-hk220 playing Black: 2 - 2 - 1  [0.500] 5
+...      White vs Black: 5 - 4 - 1  [0.550] 10
+Elo difference: 34.9 +/- 237.0, LOS: 63.1 %, DrawRatio: 10.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 14 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 11 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 6 - 4 - 1  [0.591] 11
+Started game 15 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 12 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 6 - 5 - 1  [0.542] 12
+Started game 16 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 14 (4.9.1 vs 4.9.1-hk220): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk220 vs 4.9.1: 6 - 5 - 2  [0.538] 13
+Started game 17 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 13 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 6 - 6 - 2  [0.500] 14
+Started game 18 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 15 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 6 - 7 - 2  [0.467] 15
+Started game 19 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 17 (4.9.1-hk220 vs 4.9.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.1-hk220 vs 4.9.1: 6 - 7 - 3  [0.469] 16
+Started game 20 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 18 (4.9.1 vs 4.9.1-hk220): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 7 - 7 - 3  [0.500] 17
+Started game 21 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 16 (4.9.1 vs 4.9.1-hk220): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk220 vs 4.9.1: 7 - 7 - 4  [0.500] 18
+Started game 22 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 19 (4.9.1-hk220 vs 4.9.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk220 vs 4.9.1: 7 - 7 - 5  [0.500] 19
+Started game 23 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 20 (4.9.1 vs 4.9.1-hk220): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 7 - 7 - 6  [0.500] 20
+...      4.9.1-hk220 playing White: 4 - 4 - 2  [0.500] 10
+...      4.9.1-hk220 playing Black: 3 - 3 - 4  [0.500] 10
+...      White vs Black: 7 - 7 - 6  [0.500] 20
+Elo difference: 0.0 +/- 133.4, LOS: 50.0 %, DrawRatio: 30.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 24 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 21 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 7 - 8 - 6  [0.476] 21
+Started game 25 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 22 (4.9.1 vs 4.9.1-hk220): 0-1 {Black mates}
+Score of 4.9.1-hk220 vs 4.9.1: 8 - 8 - 6  [0.500] 22
+Started game 26 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 23 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 9 - 8 - 6  [0.522] 23
+Started game 27 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 25 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 10 - 8 - 6  [0.542] 24
+Started game 28 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 28 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 10 - 9 - 6  [0.520] 25
+Started game 29 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 24 (4.9.1 vs 4.9.1-hk220): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.9.1-hk220 vs 4.9.1: 10 - 9 - 7  [0.519] 26
+Started game 30 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 26 (4.9.1 vs 4.9.1-hk220): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 10 - 9 - 8  [0.519] 27
+Started game 31 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 29 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 10 - 10 - 8  [0.500] 28
+Started game 32 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 31 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 11 - 10 - 8  [0.517] 29
+Started game 33 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 30 (4.9.1 vs 4.9.1-hk220): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 12 - 10 - 8  [0.533] 30
+...      4.9.1-hk220 playing White: 7 - 6 - 2  [0.533] 15
+...      4.9.1-hk220 playing Black: 5 - 4 - 6  [0.533] 15
+...      White vs Black: 11 - 11 - 8  [0.500] 30
+Elo difference: 23.2 +/- 110.1, LOS: 66.5 %, DrawRatio: 26.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 34 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 27 (4.9.1-hk220 vs 4.9.1): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.9.1-hk220 vs 4.9.1: 12 - 10 - 9  [0.532] 31
+Started game 35 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 32 (4.9.1 vs 4.9.1-hk220): 1-0 {White mates}
+Score of 4.9.1-hk220 vs 4.9.1: 12 - 11 - 9  [0.516] 32
+Started game 36 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 33 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 13 - 11 - 9  [0.530] 33
+Started game 37 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 34 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 13 - 12 - 9  [0.515] 34
+Started game 38 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 35 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 13 - 13 - 9  [0.500] 35
+Started game 39 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 36 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 13 - 14 - 9  [0.486] 36
+Started game 40 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 37 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 14 - 14 - 9  [0.500] 37
+Started game 41 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 39 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 15 - 14 - 9  [0.513] 38
+Started game 42 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 38 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 15 - 15 - 9  [0.500] 39
+Started game 43 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 43 (4.9.1-hk220 vs 4.9.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk220 vs 4.9.1: 15 - 15 - 10  [0.500] 40
+...      4.9.1-hk220 playing White: 10 - 7 - 4  [0.571] 21
+...      4.9.1-hk220 playing Black: 5 - 8 - 6  [0.421] 19
+...      White vs Black: 18 - 12 - 10  [0.575] 40
+Elo difference: 0.0 +/- 95.4, LOS: 50.0 %, DrawRatio: 25.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 44 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 40 (4.9.1 vs 4.9.1-hk220): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk220 vs 4.9.1: 15 - 15 - 11  [0.500] 41
+Started game 45 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 44 (4.9.1 vs 4.9.1-hk220): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk220 vs 4.9.1: 15 - 15 - 12  [0.500] 42
+Started game 46 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 45 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 16 - 15 - 12  [0.512] 43
+Started game 47 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 46 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 16 - 16 - 12  [0.500] 44
+Started game 48 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 42 (4.9.1 vs 4.9.1-hk220): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 17 - 16 - 12  [0.511] 45
+Started game 49 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 41 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 17 - 17 - 12  [0.500] 46
+Started game 50 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 47 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 18 - 17 - 12  [0.511] 47
+Started game 51 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 48 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 18 - 18 - 12  [0.500] 48
+Started game 52 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 50 (4.9.1 vs 4.9.1-hk220): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 19 - 18 - 12  [0.510] 49
+Started game 53 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 49 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 19 - 19 - 12  [0.500] 50
+...      4.9.1-hk220 playing White: 12 - 9 - 4  [0.560] 25
+...      4.9.1-hk220 playing Black: 7 - 10 - 8  [0.440] 25
+...      White vs Black: 22 - 16 - 12  [0.560] 50
+Elo difference: 0.0 +/- 85.5, LOS: 50.0 %, DrawRatio: 24.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 54 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 51 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 20 - 19 - 12  [0.510] 51
+Started game 55 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 54 (4.9.1 vs 4.9.1-hk220): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk220 vs 4.9.1: 20 - 19 - 13  [0.510] 52
+Started game 56 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 53 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 21 - 19 - 13  [0.519] 53
+Started game 57 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 52 (4.9.1 vs 4.9.1-hk220): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 22 - 19 - 13  [0.528] 54
+Started game 58 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 55 (4.9.1-hk220 vs 4.9.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.1-hk220 vs 4.9.1: 22 - 19 - 14  [0.527] 55
+Started game 59 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 56 (4.9.1 vs 4.9.1-hk220): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 23 - 19 - 14  [0.536] 56
+Started game 60 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 57 (4.9.1-hk220 vs 4.9.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk220 vs 4.9.1: 23 - 19 - 15  [0.535] 57
+Started game 61 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 58 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 23 - 20 - 15  [0.526] 58
+Started game 62 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 59 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 23 - 21 - 15  [0.517] 59
+Started game 63 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 60 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 23 - 22 - 15  [0.508] 60
+...      4.9.1-hk220 playing White: 14 - 10 - 6  [0.567] 30
+...      4.9.1-hk220 playing Black: 9 - 12 - 9  [0.450] 30
+...      White vs Black: 26 - 19 - 15  [0.558] 60
+Elo difference: 5.8 +/- 77.3, LOS: 55.9 %, DrawRatio: 25.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 64 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 62 (4.9.1 vs 4.9.1-hk220): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 24 - 22 - 15  [0.516] 61
+Started game 65 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 61 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 24 - 23 - 15  [0.508] 62
+Started game 66 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 65 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 24 - 24 - 15  [0.500] 63
+Started game 67 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 64 (4.9.1 vs 4.9.1-hk220): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 25 - 24 - 15  [0.508] 64
+Started game 68 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 63 (4.9.1-hk220 vs 4.9.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.1-hk220 vs 4.9.1: 25 - 24 - 16  [0.508] 65
+Started game 69 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 66 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 25 - 25 - 16  [0.500] 66
+Started game 70 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 69 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 25 - 26 - 16  [0.493] 67
+Started game 71 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 67 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 25 - 27 - 16  [0.485] 68
+Started game 72 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 68 (4.9.1 vs 4.9.1-hk220): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 26 - 27 - 16  [0.493] 69
+Started game 73 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 71 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 27 - 27 - 16  [0.500] 70
+...      4.9.1-hk220 playing White: 15 - 14 - 7  [0.514] 36
+...      4.9.1-hk220 playing Black: 12 - 13 - 9  [0.485] 34
+...      White vs Black: 28 - 26 - 16  [0.514] 70
+Elo difference: 0.0 +/- 72.4, LOS: 50.0 %, DrawRatio: 22.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 74 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 73 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 27 - 28 - 16  [0.493] 71
+Started game 75 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 74 (4.9.1 vs 4.9.1-hk220): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 28 - 28 - 16  [0.500] 72
+Started game 76 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 70 (4.9.1 vs 4.9.1-hk220): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.1-hk220 vs 4.9.1: 28 - 28 - 17  [0.500] 73
+Started game 77 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 72 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 28 - 29 - 17  [0.493] 74
+Started game 78 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 75 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 29 - 29 - 17  [0.500] 75
+Started game 79 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 76 (4.9.1 vs 4.9.1-hk220): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 29 - 29 - 18  [0.500] 76
+Started game 80 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 77 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 30 - 29 - 18  [0.506] 77
+Started game 81 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 78 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 30 - 30 - 18  [0.500] 78
+Started game 82 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 80 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 30 - 31 - 18  [0.494] 79
+Started game 83 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 79 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 31 - 31 - 18  [0.500] 80
+...      4.9.1-hk220 playing White: 18 - 15 - 7  [0.537] 40
+...      4.9.1-hk220 playing Black: 13 - 16 - 11  [0.463] 40
+...      White vs Black: 34 - 28 - 18  [0.537] 80
+Elo difference: 0.0 +/- 67.8, LOS: 50.0 %, DrawRatio: 22.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 84 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 81 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 31 - 32 - 18  [0.494] 81
+Started game 85 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 82 (4.9.1 vs 4.9.1-hk220): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 32 - 32 - 18  [0.500] 82
+Started game 86 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 84 (4.9.1 vs 4.9.1-hk220): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 33 - 32 - 18  [0.506] 83
+Started game 87 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 85 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 34 - 32 - 18  [0.512] 84
+Started game 88 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 83 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 35 - 32 - 18  [0.518] 85
+Started game 89 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 86 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 35 - 33 - 18  [0.512] 86
+Started game 90 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 87 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 35 - 34 - 18  [0.506] 87
+Started game 91 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 89 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 36 - 34 - 18  [0.511] 88
+Started game 92 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 88 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 36 - 35 - 18  [0.506] 89
+Started game 93 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 90 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 36 - 36 - 18  [0.500] 90
+...      4.9.1-hk220 playing White: 21 - 17 - 7  [0.544] 45
+...      4.9.1-hk220 playing Black: 15 - 19 - 11  [0.456] 45
+...      White vs Black: 40 - 32 - 18  [0.544] 90
+Elo difference: 0.0 +/- 64.9, LOS: 50.0 %, DrawRatio: 20.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 94 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 93 (4.9.1-hk220 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 36 - 37 - 18  [0.495] 91
+Started game 95 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 92 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 36 - 38 - 18  [0.489] 92
+Started game 96 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 91 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 37 - 38 - 18  [0.495] 93
+Started game 97 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 95 (4.9.1-hk220 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 38 - 38 - 18  [0.500] 94
+Started game 98 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 94 (4.9.1 vs 4.9.1-hk220): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 39 - 38 - 18  [0.505] 95
+Started game 99 of 100 (4.9.1-hk220 vs 4.9.1)
+Finished game 96 (4.9.1 vs 4.9.1-hk220): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 39 - 39 - 18  [0.500] 96
+Started game 100 of 100 (4.9.1 vs 4.9.1-hk220)
+Finished game 97 (4.9.1-hk220 vs 4.9.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.1-hk220 vs 4.9.1: 39 - 39 - 19  [0.500] 97
+Finished game 98 (4.9.1 vs 4.9.1-hk220): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 40 - 39 - 19  [0.505] 98
+Finished game 100 (4.9.1 vs 4.9.1-hk220): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 40 - 39 - 20  [0.505] 99
+Finished game 99 (4.9.1-hk220 vs 4.9.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk220 vs 4.9.1: 40 - 39 - 21  [0.505] 100
+...      4.9.1-hk220 playing White: 23 - 18 - 9  [0.550] 50
+...      4.9.1-hk220 playing Black: 17 - 21 - 12  [0.460] 50
+...      White vs Black: 44 - 35 - 21  [0.545] 100
+Elo difference: 3.5 +/- 61.1, LOS: 54.5 %, DrawRatio: 21.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+
+Player: 4.9.1-hk220
+   "Draw by 3-fold repetition": 8
+   "Draw by adjudication": 6
+   "Draw by fifty moves rule": 2
+   "Draw by insufficient mating material": 5
+   "Loss: Black wins by adjudication": 18
+   "Loss: White mates": 1
+   "Loss: White wins by adjudication": 20
+   "Win: Black mates": 1
+   "Win: Black wins by adjudication": 16
+   "Win: White wins by adjudication": 23
+Player: 4.9.1
+   "Draw by 3-fold repetition": 8
+   "Draw by adjudication": 6
+   "Draw by fifty moves rule": 2
+   "Draw by insufficient mating material": 5
+   "Loss: Black mates": 1
+   "Loss: Black wins by adjudication": 16
+   "Loss: White wins by adjudication": 23
+   "Win: Black wins by adjudication": 18
+   "Win: White mates": 1
+   "Win: White wins by adjudication": 20
+Finished match
+Terminating process of engine 4.9.1-hk220(4)
+Terminating process of engine 4.9.1-hk220(7)
+Terminating process of engine 4.9.1-hk220(3)
+Terminating process of engine 4.9.1-hk220(0)

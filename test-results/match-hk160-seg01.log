@@ -1,0 +1,380 @@
+Started game 4 of 100 (4.9.1 vs 4.9.1-hk160)
+Started game 2 of 100 (4.9.1 vs 4.9.1-hk160)
+Started game 1 of 100 (4.9.1-hk160 vs 4.9.1)
+Started game 3 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 2 (4.9.1 vs 4.9.1-hk160): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 0 - 0 - 1  [0.500] 1
+Started game 5 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 3 (4.9.1-hk160 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 0 - 1 - 1  [0.250] 2
+Started game 6 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 1 (4.9.1-hk160 vs 4.9.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 0 - 1 - 2  [0.333] 3
+Started game 7 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 6 (4.9.1 vs 4.9.1-hk160): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 1 - 1 - 2  [0.500] 4
+Started game 8 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 4 (4.9.1 vs 4.9.1-hk160): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 2 - 1 - 2  [0.600] 5
+Started game 9 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 5 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 3 - 1 - 2  [0.667] 6
+Started game 10 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 7 (4.9.1-hk160 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 3 - 2 - 2  [0.571] 7
+Started game 11 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 8 (4.9.1 vs 4.9.1-hk160): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 4 - 2 - 2  [0.625] 8
+Started game 12 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 9 (4.9.1-hk160 vs 4.9.1): 1/2-1/2 {Draw by stalemate}
+Score of 4.9.1-hk160 vs 4.9.1: 4 - 2 - 3  [0.611] 9
+Started game 13 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 12 (4.9.1 vs 4.9.1-hk160): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk160 vs 4.9.1: 4 - 2 - 4  [0.600] 10
+...      4.9.1-hk160 playing White: 1 - 2 - 2  [0.400] 5
+...      4.9.1-hk160 playing Black: 3 - 0 - 2  [0.800] 5
+...      White vs Black: 1 - 5 - 4  [0.300] 10
+Elo difference: 70.4 +/- 185.5, LOS: 79.3 %, DrawRatio: 40.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 14 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 11 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 5 - 2 - 4  [0.636] 11
+Started game 15 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 10 (4.9.1 vs 4.9.1-hk160): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.9.1-hk160 vs 4.9.1: 5 - 2 - 5  [0.625] 12
+Started game 16 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 13 (4.9.1-hk160 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 5 - 3 - 5  [0.577] 13
+Started game 17 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 15 (4.9.1-hk160 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 5 - 4 - 5  [0.536] 14
+Started game 18 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 16 (4.9.1 vs 4.9.1-hk160): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 5 - 4 - 6  [0.533] 15
+Started game 19 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 19 (4.9.1-hk160 vs 4.9.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk160 vs 4.9.1: 5 - 4 - 7  [0.531] 16
+Started game 20 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 18 (4.9.1 vs 4.9.1-hk160): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 6 - 4 - 7  [0.559] 17
+Started game 21 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 17 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 7 - 4 - 7  [0.583] 18
+Started game 22 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 14 (4.9.1 vs 4.9.1-hk160): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 8 - 4 - 7  [0.605] 19
+Started game 23 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 22 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 8 - 5 - 7  [0.575] 20
+...      4.9.1-hk160 playing White: 3 - 4 - 3  [0.450] 10
+...      4.9.1-hk160 playing Black: 5 - 1 - 4  [0.700] 10
+...      White vs Black: 4 - 9 - 7  [0.375] 20
+Elo difference: 52.5 +/- 129.3, LOS: 79.7 %, DrawRatio: 35.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 24 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 20 (4.9.1 vs 4.9.1-hk160): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 8 - 5 - 8  [0.571] 21
+Started game 25 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 21 (4.9.1-hk160 vs 4.9.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk160 vs 4.9.1: 8 - 5 - 9  [0.568] 22
+Started game 26 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 23 (4.9.1-hk160 vs 4.9.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.1-hk160 vs 4.9.1: 8 - 5 - 10  [0.565] 23
+Started game 27 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 25 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 9 - 5 - 10  [0.583] 24
+Started game 28 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 24 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 9 - 6 - 10  [0.560] 25
+Started game 29 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 26 (4.9.1 vs 4.9.1-hk160): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 9 - 6 - 11  [0.558] 26
+Started game 30 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 28 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 9 - 7 - 11  [0.537] 27
+Started game 31 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 27 (4.9.1-hk160 vs 4.9.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 9 - 7 - 12  [0.536] 28
+Started game 32 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 31 (4.9.1-hk160 vs 4.9.1): 1-0 {White mates}
+Score of 4.9.1-hk160 vs 4.9.1: 10 - 7 - 12  [0.552] 29
+Started game 33 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 30 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 10 - 8 - 12  [0.533] 30
+...      4.9.1-hk160 playing White: 5 - 4 - 6  [0.533] 15
+...      4.9.1-hk160 playing Black: 5 - 4 - 6  [0.533] 15
+...      White vs Black: 9 - 9 - 12  [0.500] 30
+Elo difference: 23.2 +/- 98.9, LOS: 68.1 %, DrawRatio: 40.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 34 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 32 (4.9.1 vs 4.9.1-hk160): 1-0 {White mates}
+Score of 4.9.1-hk160 vs 4.9.1: 10 - 9 - 12  [0.516] 31
+Started game 35 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 29 (4.9.1-hk160 vs 4.9.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.1-hk160 vs 4.9.1: 10 - 9 - 13  [0.516] 32
+Started game 36 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 34 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 10 - 10 - 13  [0.500] 33
+Started game 37 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 33 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 11 - 10 - 13  [0.515] 34
+Started game 38 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 36 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 11 - 11 - 13  [0.500] 35
+Started game 39 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 35 (4.9.1-hk160 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 11 - 12 - 13  [0.486] 36
+Started game 40 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 38 (4.9.1 vs 4.9.1-hk160): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 11 - 12 - 14  [0.486] 37
+Started game 41 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 37 (4.9.1-hk160 vs 4.9.1): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.1-hk160 vs 4.9.1: 11 - 12 - 15  [0.487] 38
+Started game 42 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 39 (4.9.1-hk160 vs 4.9.1): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 11 - 12 - 16  [0.487] 39
+Started game 43 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 43 (4.9.1-hk160 vs 4.9.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk160 vs 4.9.1: 11 - 12 - 17  [0.487] 40
+...      4.9.1-hk160 playing White: 6 - 5 - 10  [0.524] 21
+...      4.9.1-hk160 playing Black: 5 - 7 - 7  [0.447] 19
+...      White vs Black: 13 - 10 - 17  [0.537] 40
+Elo difference: -8.7 +/- 83.1, LOS: 41.7 %, DrawRatio: 42.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 44 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 40 (4.9.1 vs 4.9.1-hk160): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 12 - 12 - 17  [0.500] 41
+Started game 45 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 41 (4.9.1-hk160 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 12 - 13 - 17  [0.488] 42
+Started game 46 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 42 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 12 - 14 - 17  [0.477] 43
+Started game 47 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 46 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 12 - 15 - 17  [0.466] 44
+Started game 48 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 45 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 13 - 15 - 17  [0.478] 45
+Started game 49 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 44 (4.9.1 vs 4.9.1-hk160): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.1-hk160 vs 4.9.1: 13 - 15 - 18  [0.478] 46
+Started game 50 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 47 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 14 - 15 - 18  [0.489] 47
+Started game 51 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 49 (4.9.1-hk160 vs 4.9.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk160 vs 4.9.1: 14 - 15 - 19  [0.490] 48
+Started game 52 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 48 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 14 - 16 - 19  [0.480] 49
+Started game 53 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 50 (4.9.1 vs 4.9.1-hk160): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 15 - 16 - 19  [0.490] 50
+...      4.9.1-hk160 playing White: 8 - 6 - 11  [0.540] 25
+...      4.9.1-hk160 playing Black: 7 - 10 - 8  [0.440] 25
+...      White vs Black: 18 - 13 - 19  [0.550] 50
+Elo difference: -6.9 +/- 77.0, LOS: 42.9 %, DrawRatio: 38.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 54 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 51 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 16 - 16 - 19  [0.500] 51
+Started game 55 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 52 (4.9.1 vs 4.9.1-hk160): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 16 - 16 - 20  [0.500] 52
+Started game 56 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 53 (4.9.1-hk160 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 16 - 17 - 20  [0.491] 53
+Started game 57 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 54 (4.9.1 vs 4.9.1-hk160): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 16 - 17 - 21  [0.491] 54
+Started game 58 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 55 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 17 - 17 - 21  [0.500] 55
+Started game 59 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 56 (4.9.1 vs 4.9.1-hk160): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 18 - 17 - 21  [0.509] 56
+Started game 60 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 58 (4.9.1 vs 4.9.1-hk160): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 19 - 17 - 21  [0.518] 57
+Started game 61 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 59 (4.9.1-hk160 vs 4.9.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk160 vs 4.9.1: 19 - 17 - 22  [0.517] 58
+Started game 62 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 60 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 19 - 18 - 22  [0.508] 59
+Started game 63 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 57 (4.9.1-hk160 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 19 - 19 - 22  [0.500] 60
+...      4.9.1-hk160 playing White: 10 - 8 - 12  [0.533] 30
+...      4.9.1-hk160 playing Black: 9 - 11 - 10  [0.467] 30
+...      White vs Black: 21 - 17 - 22  [0.533] 60
+Elo difference: 0.0 +/- 70.8, LOS: 50.0 %, DrawRatio: 36.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 64 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 63 (4.9.1-hk160 vs 4.9.1): 1-0 {White mates}
+Score of 4.9.1-hk160 vs 4.9.1: 20 - 19 - 22  [0.508] 61
+Started game 65 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 61 (4.9.1-hk160 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 20 - 20 - 22  [0.500] 62
+Started game 66 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 62 (4.9.1 vs 4.9.1-hk160): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 21 - 20 - 22  [0.508] 63
+Started game 67 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 64 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 21 - 21 - 22  [0.500] 64
+Started game 68 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 66 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 21 - 22 - 22  [0.492] 65
+Started game 69 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 65 (4.9.1-hk160 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 21 - 23 - 22  [0.485] 66
+Started game 70 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 67 (4.9.1-hk160 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 21 - 24 - 22  [0.478] 67
+Started game 71 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 68 (4.9.1 vs 4.9.1-hk160): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 22 - 24 - 22  [0.485] 68
+Started game 72 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 69 (4.9.1-hk160 vs 4.9.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk160 vs 4.9.1: 22 - 24 - 23  [0.486] 69
+Started game 73 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 71 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 23 - 24 - 23  [0.493] 70
+...      4.9.1-hk160 playing White: 12 - 11 - 13  [0.514] 36
+...      4.9.1-hk160 playing Black: 11 - 13 - 10  [0.471] 34
+...      White vs Black: 25 - 22 - 23  [0.521] 70
+Elo difference: -5.0 +/- 67.4, LOS: 44.2 %, DrawRatio: 32.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 74 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 73 (4.9.1-hk160 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 23 - 25 - 23  [0.486] 71
+Started game 75 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 70 (4.9.1 vs 4.9.1-hk160): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk160 vs 4.9.1: 23 - 25 - 24  [0.486] 72
+Started game 76 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 72 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 23 - 26 - 24  [0.479] 73
+Started game 77 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 74 (4.9.1 vs 4.9.1-hk160): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 24 - 26 - 24  [0.486] 74
+Started game 78 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 75 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 25 - 26 - 24  [0.493] 75
+Started game 79 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 77 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 26 - 26 - 24  [0.500] 76
+Started game 80 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 76 (4.9.1 vs 4.9.1-hk160): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.1-hk160 vs 4.9.1: 26 - 26 - 25  [0.500] 77
+Started game 81 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 78 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 26 - 27 - 25  [0.494] 78
+Started game 82 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 79 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 27 - 27 - 25  [0.500] 79
+Started game 83 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 81 (4.9.1-hk160 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 27 - 28 - 25  [0.494] 80
+...      4.9.1-hk160 playing White: 15 - 13 - 13  [0.524] 41
+...      4.9.1-hk160 playing Black: 12 - 15 - 12  [0.462] 39
+...      White vs Black: 30 - 25 - 25  [0.531] 80
+Elo difference: -4.3 +/- 63.7, LOS: 44.6 %, DrawRatio: 31.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 84 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 80 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 27 - 29 - 25  [0.488] 81
+Started game 85 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 82 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 27 - 30 - 25  [0.482] 82
+Started game 86 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 84 (4.9.1 vs 4.9.1-hk160): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk160 vs 4.9.1: 27 - 30 - 26  [0.482] 83
+Started game 87 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 85 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 28 - 30 - 26  [0.488] 84
+Started game 88 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 83 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 29 - 30 - 26  [0.494] 85
+Started game 89 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 86 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 29 - 31 - 26  [0.488] 86
+Started game 90 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 89 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 30 - 31 - 26  [0.494] 87
+Started game 91 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 87 (4.9.1-hk160 vs 4.9.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk160 vs 4.9.1: 30 - 31 - 27  [0.494] 88
+Started game 92 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 88 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 30 - 32 - 27  [0.489] 89
+Started game 93 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 90 (4.9.1 vs 4.9.1-hk160): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 30 - 32 - 28  [0.489] 90
+...      4.9.1-hk160 playing White: 18 - 13 - 14  [0.556] 45
+...      4.9.1-hk160 playing Black: 12 - 19 - 14  [0.422] 45
+...      White vs Black: 37 - 25 - 28  [0.567] 90
+Elo difference: -7.7 +/- 60.1, LOS: 40.0 %, DrawRatio: 31.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 94 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 93 (4.9.1-hk160 vs 4.9.1): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 30 - 33 - 28  [0.484] 91
+Started game 95 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 92 (4.9.1 vs 4.9.1-hk160): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 31 - 33 - 28  [0.489] 92
+Started game 96 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 91 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 32 - 33 - 28  [0.495] 93
+Started game 97 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 95 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 33 - 33 - 28  [0.500] 94
+Started game 98 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 94 (4.9.1 vs 4.9.1-hk160): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 34 - 33 - 28  [0.505] 95
+Started game 99 of 100 (4.9.1-hk160 vs 4.9.1)
+Finished game 97 (4.9.1-hk160 vs 4.9.1): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 35 - 33 - 28  [0.510] 96
+Started game 100 of 100 (4.9.1 vs 4.9.1-hk160)
+Finished game 96 (4.9.1 vs 4.9.1-hk160): 1-0 {White wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 35 - 34 - 28  [0.505] 97
+Finished game 99 (4.9.1-hk160 vs 4.9.1): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.1-hk160 vs 4.9.1: 35 - 34 - 29  [0.505] 98
+Finished game 98 (4.9.1 vs 4.9.1-hk160): 0-1 {Black wins by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 36 - 34 - 29  [0.510] 99
+Finished game 100 (4.9.1 vs 4.9.1-hk160): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.1-hk160 vs 4.9.1: 36 - 34 - 30  [0.510] 100
+...      4.9.1-hk160 playing White: 21 - 14 - 15  [0.570] 50
+...      4.9.1-hk160 playing Black: 15 - 20 - 15  [0.450] 50
+...      White vs Black: 41 - 29 - 30  [0.560] 100
+Elo difference: 6.9 +/- 57.4, LOS: 59.4 %, DrawRatio: 30.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+
+Player: 4.9.1-hk160
+   "Draw by 3-fold repetition": 11
+   "Draw by adjudication": 12
+   "Draw by fifty moves rule": 1
+   "Draw by insufficient mating material": 5
+   "Draw by stalemate": 1
+   "Loss: Black wins by adjudication": 14
+   "Loss: White mates": 1
+   "Loss: White wins by adjudication": 19
+   "Win: Black wins by adjudication": 15
+   "Win: White mates": 2
+   "Win: White wins by adjudication": 19
+Player: 4.9.1
+   "Draw by 3-fold repetition": 11
+   "Draw by adjudication": 12
+   "Draw by fifty moves rule": 1
+   "Draw by insufficient mating material": 5
+   "Draw by stalemate": 1
+   "Loss: Black wins by adjudication": 15
+   "Loss: White mates": 2
+   "Loss: White wins by adjudication": 19
+   "Win: Black wins by adjudication": 14
+   "Win: White mates": 1
+   "Win: White wins by adjudication": 19
+Finished match
+Terminating process of engine 4.9.1-hk160(0)
+Terminating process of engine 4.9.1-hk160(3)
+Terminating process of engine 4.9.1-hk160(4)
+Terminating process of engine 4.9.1-hk160(7)
