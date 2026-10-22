@@ -7,9 +7,10 @@ import org.michaelfl.mychess.engines.PositionSearch;
 import java.util.Arrays;
 
 /**
- * Process-wide moving average (SMA over the last
+ * Process-wide moving median (over the last
  * {@link EngineTuning#SMA_WINDOW_SIZE} samples) of iteration durations per
- * search depth. Used by {@link PositionSearch} to skip a deepening
+ * search depth. The median rather than the mean, so that a single very
+ * long sample, such as a recorded abort, does not drag the estimate up. Used by {@link PositionSearch} to skip a deepening
  * iteration whose estimated cost exceeds the remaining time budget, with
  * periodic probing to avoid permanently freezing a depth out of the
  * search after one bad sample.
@@ -60,6 +61,9 @@ public final class IterationTimings {
     private static volatile boolean skipHeuristicEnabled = true;
 
     private static final long[][] window = new long[MAX_TRACKED_DEPTH + 1][EngineTuning.SMA_WINDOW_SIZE];
+
+    /** Scratch buffer for the median; guarded by the class lock like the window. */
+    private static final long[] sortBuffer = new long[EngineTuning.SMA_WINDOW_SIZE];
     private static final int[] nextWriteIdx = new int[MAX_TRACKED_DEPTH + 1];
     private static final int[] consecutiveSkips = new int[MAX_TRACKED_DEPTH + 1];
 
@@ -163,6 +167,10 @@ public final class IterationTimings {
     }
 
     /**
+     * The median of the samples in the window of {@code depth}. For an even
+     * count it is the mean of the two middle samples, so with two samples it
+     * equals their mean.
+     *
      * @return estimated milliseconds for {@code depth}, or {@code 0} if no
      *         history has been recorded yet (or the depth is out of range).
      */
@@ -171,16 +179,21 @@ public final class IterationTimings {
             return 0;
         }
 
-        long sum = 0;
         int n = 0;
+
         for (long sample : window[depth]) {
             if (sample > 0) {
-                sum += sample;
-                n++;
+                sortBuffer[n++] = sample;
             }
         }
 
-        return n == 0 ? 0 : sum / n;
+        if (n == 0) {
+            return 0;
+        }
+
+        Arrays.sort(sortBuffer, 0, n);
+
+        return n % 2 == 1 ? sortBuffer[n / 2] : (sortBuffer[n / 2 - 1] + sortBuffer[n / 2]) / 2;
     }
 
     /**
@@ -212,7 +225,7 @@ public final class IterationTimings {
      *
      *         <p>The ratio gate prevents a probe with very little time
      *         left from contributing a misleadingly low aborted sample to
-     *         the SMA.
+     *         the estimate.
      */
     static synchronized boolean isProbingDue(int depth, long estimateMs, long remainingMs) {
         if (depth < 0 || depth > MAX_TRACKED_DEPTH) {
@@ -251,14 +264,14 @@ public final class IterationTimings {
      * Record an aborted iteration: it ran for {@code elapsedMs} before
      * timeout. The recorded sample is
      * {@code max(currentEstimate, elapsedMs × ABORT_EXTRAPOLATION_FACTOR)}
-     * — i.e. an abort can only pull the SMA <em>up</em> or hold it steady,
+     * — i.e. an abort can only pull the estimate <em>up</em> or hold it steady,
      * never push it down. Rationale: an aborted iteration proves only that
      * the iteration would have cost at least {@code elapsedMs}, never that
-     * it would have been <em>cheaper</em> than the prior average. Using
-     * the raw extrapolation as a sample would falsely lower the SMA after
+     * it would have been <em>cheaper</em> than the prior estimate. Using
+     * the raw extrapolation as a sample would falsely lower the estimate after
      * a probe that aborted early.
      *
-     * <p>Only {@link #recordCompletion} can lower the SMA — that's the
+     * <p>Only {@link #recordCompletion} can lower the estimate — that's the
      * only event that delivers a real, ground-truth measurement.
      */
     public static synchronized void recordAbort(int depth, long elapsedMs) {
