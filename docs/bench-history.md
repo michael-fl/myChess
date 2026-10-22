@@ -81,6 +81,7 @@ time-truncated.
 | **4.8.3** | 658,771,177 | **±0** | 107,227,388 (±0) | stop at depth 4 when the root has exactly one legal move - no bench position has, so all 55 positions are identical to 4.8.2 | — (search-identical on the benches; no match) | ~1943 |
 | **4.9.0** | 658,771,177 | **±0** | 107,227,388 (±0) | soft and hard time limit per move (`TimeManagement`): a started iteration may run past the per-move budget up to the hard limit. A fixed-depth bench never reaches a time limit, so all 55 positions are identical to 4.8.3 | +21.0 ± 8.9 (4200 games at 40/60 against the same build without the split) | ~1943 |
 | **4.9.1** | 658,771,177 | **±0** | 107,227,388 (±0) | 4.9.0's time limits made explicit in `TimeManagement` (hard limit min(soft + 1 s, 4 × soft, 20 % of the clock), aborts at the soft + 1 s cap not recorded, watcher only a safety net). A fixed-depth bench never reaches a time limit, so all 55 positions are identical to 4.9.0 | −5.6 ± 8.9 (4190 games at 60+1 against 4.9.0; merged as a documented exception) | ~1943 |
+| **4.9.2** | 658,771,177 | **±0** | 107,227,388 (±0) | honest time estimates (every abort recorded) with the start-decision risk factor k = 1.5. A fixed-depth bench never reaches a time limit, so all 55 positions are identical to 4.9.1 (the per-position archive was run from the identical build while it still carried the version 4.10.0) | +23.7 ± 8.9 (4200 games at 60+1 against 4.9.0) | ~1943 |
 
 ### Measured but not a release — `4.6.0-king-line` (2026-09-02, shelved 2026-09-03)
 
@@ -564,6 +565,7 @@ and are historically closed.
 | **4.8.3** | 1,375,937,208 | 658,771,177 | **2.09** | — | — |
 | **4.9.0** | 1,375,937,208 | 658,771,177 | **2.09** | — | — |
 | **4.9.1** | 1,375,937,208 | 658,771,177 | **2.09** | — | — |
+| **4.9.2** | 1,375,937,208 | 658,771,177 | **2.09** | — | — |
 
 **The 4.8.3 row is the first depth-9 reading since 4.7.1**, taken on 2026-10-12 for the `skip-iteration-for-only-move` merge. Master (4.8.2 code) gave the same 1,375,937,208, so the value holds for 4.8.0 through 4.8.3. Its ratio of 2.09 is not comparable to the rows above: 4.8.0 shrank the artificial position 37 by itself, and that alone moves both totals. The realistic columns are empty because `tools/bench.sh` reports only the total; a per-position depth-9 archive would fill them.
 
@@ -942,6 +944,7 @@ nothing.
 | 4.8.3 | 2026-10-12 | 8 | 60 | **169,439,389** (±0) | 100,275 ms | 1,689,747 |
 | 4.9.0 | 2026-10-14 | 8 | 60 | **169,439,389** (±0) | 101,122 ms | 1,675,593 |
 | 4.9.1 | 2026-10-19 | 8 | 60 | **169,439,389** (±0) | 98,179 ms | 1,725,821 |
+| 4.9.2 | 2026-10-22 | 8 | 60 | **169,439,389** (±0) | 98,955 ms | 1,712,287 |
 
 Per-position archive: `test-results/bench/4.6.1-castling-mix-d8.txt`, same column
 layout as the `bench` archives of § 7. The largest position is 6.7 % of the total
