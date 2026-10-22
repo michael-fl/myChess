@@ -39,12 +39,16 @@ class TimeManagementInstanceTest {
     void enableHeuristic() {
         IterationTimings.reset();
         IterationTimings.setSkipHeuristicEnabled(true);
+
+        // plain comparison of estimate and remaining time, so the sample values below read directly
+        TimeManagement.setRiskFactor(1.0);
     }
 
     @AfterEach
     void restoreSuiteDefault() {
         IterationTimings.setSkipHeuristicEnabled(false);
         IterationTimings.reset();
+        TimeManagement.setRiskFactor(TimeManagement.DEFAULT_RISK_FACTOR);
     }
 
     @Test
@@ -176,29 +180,33 @@ class TimeManagementInstanceTest {
     }
 
     @Test
-    void iterationAborted_whenTheOverrunCapBinds_isNotRecorded() {
+    void iterationAborted_atTheOverrunCap_isRecorded() {
         // with a clock the hard limit is soft + the max overrun; the abort lands there
-        var instance = instanceWithLimits(SOFT_LIMIT_MS, HARD_LIMIT_MS);
+        var instance = instanceWithSoftLimit(SOFT_LIMIT_MS);
 
         instance.shouldSkipIteration(1);
         instance.iterationAborted(1, System.currentTimeMillis() + HARD_LIMIT_MS);
 
-        assertEquals(0, IterationTimings.getEstimatedMs(1),
-                "an abort at the overrun cap must not reach the per-depth estimate, by design (as in 4.9.0)");
+        assertDurationRecorded(1, extrapolated(HARD_LIMIT_MS),
+                "an abort at the overrun cap must be recorded like every other abort (honest estimates)");
     }
 
     @Test
-    void iterationAborted_whenAnotherCapBindsAboveTheSoftLimit_isRecorded() {
-        // 20 % of a short clock caps the hard limit between soft and soft + max overrun;
-        // 4.9.0's search reached that limit before its watcher, so the abort was recorded
-        long cappedHardMs = SOFT_LIMIT_MS + TimeManagement.SOFT_LIMIT_MAX_OVERRUN_MS / 2;
-        var instance = instanceWithLimits(SOFT_LIMIT_MS, cappedHardMs);
+    void shouldSkipIteration_withRiskFactorTwo_startsADepthWhoseEstimateIsTwiceTheRemainingTime() {
+        for (int i = 0; i < EngineTuning.MIN_SAMPLES_FOR_SKIP; i++) {
+            IterationTimings.recordCompletion(2, 2 * SOFT_LIMIT_MS);
+        }
 
-        instance.shouldSkipIteration(1);
-        instance.iterationAborted(1, System.currentTimeMillis() + cappedHardMs);
+        var plain = instanceWithSoftLimit(SOFT_LIMIT_MS);
+        completeDepthOne(plain);
+        boolean plainSkips = plain.shouldSkipIteration(2);
 
-        assertDurationRecorded(1, extrapolated(cappedHardMs),
-                "an abort at a hard limit set by a cap other than the overrun cap must be recorded, extrapolated");
+        TimeManagement.setRiskFactor(2.5);
+        var bold = instanceWithSoftLimit(SOFT_LIMIT_MS);
+        completeDepthOne(bold);
+
+        assertTrue(plainSkips, "with factor 1.0 an estimate of twice the soft limit must be skipped");
+        assertFalse(bold.shouldSkipIteration(2), "with factor 2.5 the same estimate fits and the depth must start");
     }
 
     @Test
@@ -212,19 +220,9 @@ class TimeManagementInstanceTest {
         assertEquals(2, instance.getDepth(), "an aborted iteration must not count as completed");
     }
 
-    /**
-     * Instance whose soft timeout lies the given milliseconds from now (negative: already passed),
-     * with the hard timeout equal to it, as without a clock.
-     */
+    /** Instance whose soft timeout lies the given milliseconds from now (negative: already passed). */
     private static TimeManagement.TimeManagementInstance instanceWithSoftLimit(long softMs) {
-        return instanceWithLimits(softMs, softMs);
-    }
-
-    /** Instance whose soft and hard timeouts lie the given milliseconds from now. */
-    private static TimeManagement.TimeManagementInstance instanceWithLimits(long softMs, long hardMs) {
-        long now = System.currentTimeMillis();
-
-        return TimeManagement.newInstance(now + softMs, now + hardMs, "");
+        return TimeManagement.newInstance(System.currentTimeMillis() + softMs, "");
     }
 
     /** Runs the decision for depth 1 and reports it as completed, so the instance expects depth 2 next. */
