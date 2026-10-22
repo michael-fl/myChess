@@ -217,7 +217,7 @@ class TimeManagementTest {
     @Test
     void iterationDone_advancesTheDepth() {
         long now = System.currentTimeMillis();
-        var instance = TimeManagement.newInstance(now + ONE_SECOND, now + ONE_SECOND, "");
+        var instance = TimeManagement.newInstance(now + ONE_SECOND, "");
 
         instance.shouldSkipIteration(1);
         instance.iterationDone(1, System.currentTimeMillis());
@@ -243,5 +243,11 @@ class TimeManagementTest {
                 "a negative risk factor must be rejected");
         assertEquals(TimeManagement.DEFAULT_RISK_FACTOR, TimeManagement.getRiskFactor(), 1e-9,
                 "a rejected value must leave the factor unchanged");
+    }
+
+    @Test
+    void riskFactor_default_isTheMeasuredOneAndAHalf() {
+        assertEquals(1.5, TimeManagement.DEFAULT_RISK_FACTOR, 1e-9,
+                "the default risk factor must be 1.5, the value measured in the honest-k150 match");
     }
 }

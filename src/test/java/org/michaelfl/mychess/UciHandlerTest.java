@@ -103,22 +103,18 @@ class UciHandlerTest {
 
     @Test
     @Timeout(value = 5, unit = TimeUnit.SECONDS)
-    void uci_onHandshake_announcesTheTimeOptions() {
+    void uci_onHandshake_announcesTheTimeRiskOption() {
         runHandler("uci\nquit\n")
-                .expectEachOf(
-                        "^option name TimeRiskPercent type spin default 100 min 10 max 1000$",
-                        "^option name HonestEstimates type check default false$"
-                );
+                .expect("^option name TimeRiskPercent type spin default 150 min 10 max 1000$");
     }
 
     @Test
     @Timeout(value = 5, unit = TimeUnit.SECONDS)
-    void setoption_timeOptions_setTheRiskFactorAndHonestEstimates() {
+    void setoption_timeRiskPercent_setsTheRiskFactor() {
         try {
-            runHandler("setoption name TimeRiskPercent value 220\nsetoption name HonestEstimates value true\nquit\n");
+            runHandler("setoption name TimeRiskPercent value 220\nquit\n");
 
             assertEquals(2.2, TimeManagement.getRiskFactor(), 1e-9, "TimeRiskPercent 220 must set the factor 2.2");
-            assertTrue(TimeManagement.isHonestEstimates(), "HonestEstimates true must switch honest estimates on");
         } finally {
             resetTimeOptions();
         }
@@ -151,7 +147,6 @@ class UciHandlerTest {
 
     private static void resetTimeOptions() {
         TimeManagement.setRiskFactor(TimeManagement.DEFAULT_RISK_FACTOR);
-        TimeManagement.setHonestEstimates(false);
     }
 
     @Test
