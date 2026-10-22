@@ -173,6 +173,37 @@ class MoveGeneratorTest {
     }
 
     @Test
+    void testBlackCanCastleQueenSide_chess960() {
+        // Mirror of the white queenside test: black king on g8, rooks on a8
+        // and h8, white king on e1 off both open black-rook files.
+        // Queenside castle moves the king g8 → c8 (rook a8 → d8).
+        var game = chess960Game("r5kr/8/8/8/8/8/8/4K3 b ha - 0 1");
+
+        assertCastlingMoveGenerated(game, Move.typeCastlingQueenSide, Board.g8, Board.c8);
+    }
+
+    @Test
+    void testWhiteCanCastleQueenSide_rookOnTheKingsPath_chess960() {
+        // King d1, queenside rook c1 standing on the king's target square:
+        // castling swaps the two (king d1 → c1, rook c1 → d1). The rook on
+        // the king's path is the castling rook itself and must not block.
+        var game = chess960Game("4k3/8/8/8/8/8/8/2RK3R w HC - 0 1");
+
+        assertCastlingMoveGenerated(game, Move.typeCastlingQueenSide, Board.d1, Board.c1);
+    }
+
+    @Test
+    void testBlackCanCastleQueenSide_rookOnTheKingsPath_chess960() {
+        // Mirror for black: king d8, queenside rook c8. Found on lichess
+        // (start position qnrknbbr): the move generator dropped this castle
+        // for black while generating the white mirror, because the king-path
+        // check exempted the king's own square instead of the castling rook.
+        var game = chess960Game("2rk3r/8/8/8/8/8/8/4K3 b hc - 0 1");
+
+        assertCastlingMoveGenerated(game, Move.typeCastlingQueenSide, Board.d8, Board.c8);
+    }
+
+    @Test
     void testCannotCastleWhenKingInCheck_chess960() {
         // White king on b1, queenside rook on a1, kingside rook on h1.
         // Black rook on b8 attacks the white king via the open b-file
