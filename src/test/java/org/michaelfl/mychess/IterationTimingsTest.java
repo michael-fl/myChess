@@ -47,20 +47,37 @@ class IterationTimingsTest {
 
     @Test
     void recordCompletion_overflowingWindow_dropsOldestSample() {
-        // Push window-size + 1 samples; the oldest (100) falls off, average is over the rest.
-        long[] samples = new long[EngineTuning.SMA_WINDOW_SIZE + 1];
-        long sumOfKept = 0;
-        for (int i = 0; i < samples.length; i++) {
-            samples[i] = 100L * (i + 1);   // 100, 200, 300, ...
-            IterationTimings.recordCompletion(DEPTH, samples[i]);
-            if (i >= 1) {
-                sumOfKept += samples[i];
-            }
+        // Push window-size + 1 descending samples; the oldest and largest falls off.
+        for (int i = EngineTuning.SMA_WINDOW_SIZE + 1; i >= 1; i--) {
+            IterationTimings.recordCompletion(DEPTH, 100L * i);
         }
 
-        long expectedAverage = sumOfKept / EngineTuning.SMA_WINDOW_SIZE;
-        assertEquals(expectedAverage, IterationTimings.getEstimatedMs(DEPTH),
-                "SMA must drop the oldest sample once the window overflows");
+        // the window keeps 100 * WINDOW, ..., 100 * 1, whose median is 100 * (WINDOW + 1) / 2
+        long expectedMedian = 100L * (EngineTuning.SMA_WINDOW_SIZE + 1) / 2;
+
+        assertEquals(expectedMedian, IterationTimings.getEstimatedMs(DEPTH),
+                "the estimate must drop the oldest sample once the window overflows");
+    }
+
+    @Test
+    void getEstimatedMs_oddCount_isTheMiddleSampleUnaffectedByAnOutlier() {
+        IterationTimings.recordCompletion(DEPTH, 300);
+        IterationTimings.recordCompletion(DEPTH, 100);
+        IterationTimings.recordCompletion(DEPTH, 10_000);
+
+        assertEquals(300, IterationTimings.getEstimatedMs(DEPTH),
+                "with three samples the estimate must be the middle one, unaffected by the 10 s outlier");
+    }
+
+    @Test
+    void getEstimatedMs_evenCount_isTheMeanOfTheTwoMiddleSamples() {
+        IterationTimings.recordCompletion(DEPTH, 100);
+        IterationTimings.recordCompletion(DEPTH, 400);
+        IterationTimings.recordCompletion(DEPTH, 200);
+        IterationTimings.recordCompletion(DEPTH, 9_000);
+
+        assertEquals(300, IterationTimings.getEstimatedMs(DEPTH),
+                "with four samples the estimate must be the mean of the middle two, 200 and 400");
     }
 
     @Test
@@ -77,43 +94,50 @@ class IterationTimingsTest {
 
     @Test
     void recordAbort_extrapolationBelowCurrentEstimate_preservesEstimate() {
-        // Establish a higher SMA with completion samples first.
+        // Establish a higher estimate with completion samples first.
         long completionMs = 25_000;
         IterationTimings.recordCompletion(DEPTH, completionMs);
         IterationTimings.recordCompletion(DEPTH, completionMs);
         assertEquals(completionMs, IterationTimings.getEstimatedMs(DEPTH),
-                "Precondition: SMA must reflect the completion samples");
+                "Precondition: the estimate must reflect the completion samples");
 
         // An abort whose extrapolation (5200 × 1.5 = 7800) is well below the
-        // current estimate (25000) must NOT pull the SMA down. The sample
+        // current estimate (25000) must NOT pull the estimate down. The sample
         // actually recorded must be the current estimate.
         long shortAbortElapsed = 5_200;
 
         IterationTimings.recordAbort(DEPTH, shortAbortElapsed);
 
-        // After the abort: window holds {25000, 25000, 25000}. Average = 25000.
+        // After the abort: window holds {25000, 25000, 25000}; median = 25000.
         assertEquals(completionMs, IterationTimings.getEstimatedMs(DEPTH),
-                "Abort below the prior estimate must not pull the SMA down");
+                "Abort below the prior estimate must not pull the estimate down");
     }
 
     @Test
     void recordAbort_extrapolationAboveCurrentEstimate_raisesEstimate() {
-        // Establish a low SMA, then record an abort that suggests the depth
-        // is more expensive than we thought — the SMA must move upward.
+        // One low sample, then an abort that suggests the depth is more
+        // expensive than we thought — with two samples the estimate is their
+        // mean, so it must move upward.
         IterationTimings.recordCompletion(DEPTH, 5_000);
-        IterationTimings.recordCompletion(DEPTH, 5_000);
-        assertEquals(5_000, IterationTimings.getEstimatedMs(DEPTH),
-                "Precondition: SMA reflects the low completion samples");
 
         long longAbortElapsed = 12_000;
         long extrapolation = (long) (longAbortElapsed * EngineTuning.ABORT_EXTRAPOLATION_FACTOR);
 
         IterationTimings.recordAbort(DEPTH, longAbortElapsed);
 
-        // Window holds {5000, 5000, 18000}; average = (5000+5000+18000)/3.
-        long expected = (5_000 + 5_000 + extrapolation) / 3;
-        assertEquals(expected, IterationTimings.getEstimatedMs(DEPTH),
-                "Abort with extrapolation above the prior estimate must raise the SMA");
+        assertEquals((5_000 + extrapolation) / 2, IterationTimings.getEstimatedMs(DEPTH),
+                "Abort with extrapolation above the prior estimate must raise the estimate");
+    }
+
+    @Test
+    void recordAbort_singleExpensiveAbort_isOutvotedByTwoCompletions() {
+        IterationTimings.recordCompletion(DEPTH, 5_000);
+        IterationTimings.recordCompletion(DEPTH, 5_000);
+
+        IterationTimings.recordAbort(DEPTH, 12_000);
+
+        assertEquals(5_000, IterationTimings.getEstimatedMs(DEPTH),
+                "one expensive abort among three samples must not move the median, unlike the old mean");
     }
 
     @Test
@@ -155,7 +179,7 @@ class IterationTimingsTest {
     void isProbingDue_skipCounterHighButRemainingTooLow_returnsFalse() {
         // Skip counter has reached the probing threshold, but only a tiny
         // fraction of the estimated cost is left — the probe would just
-        // pollute the SMA with an under-sampled abort. Must return false.
+        // pollute the estimate with an under-sampled abort. Must return false.
         for (int i = 0; i < EngineTuning.SKIPS_BETWEEN_PROBES; i++) {
             IterationTimings.recordSkip(DEPTH);
         }
