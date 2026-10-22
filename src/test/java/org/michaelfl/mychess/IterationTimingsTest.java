@@ -294,6 +294,35 @@ class IterationTimingsTest {
     }
 
     @Test
+    void decideIteration_riskFactorAboveOne_runsAnEstimateThatExceedsTheRemainingTime() {
+        withSkipHeuristicEnabled(() -> {
+            primeSamples();
+
+            assertEquals(IterationDecision.SKIP, IterationTimings.decideIteration(DEPTH, SAMPLE_MS / 2, 1.0),
+                    "with factor 1 an estimate of twice the remaining time must skip");
+            assertEquals(IterationDecision.RUN, IterationTimings.decideIteration(DEPTH, SAMPLE_MS / 2, 2.0),
+                    "with factor 2 the same estimate fits into twice the remaining time and must run");
+        });
+    }
+
+    @Test
+    void decideIteration_riskFactorBelowOne_skipsAnEstimateThatFits() {
+        withSkipHeuristicEnabled(() -> {
+            primeSamples();
+
+            assertEquals(IterationDecision.SKIP, IterationTimings.decideIteration(DEPTH, SAMPLE_MS, 0.5),
+                    "with factor 0.5 an estimate equal to the remaining time no longer fits");
+        });
+    }
+
+    @Test
+    void decideIteration_riskFactor_doesNotLiftTheTimeIsUpFloor() {
+        withSkipHeuristicEnabled(() -> assertEquals(IterationDecision.SKIP,
+                IterationTimings.decideIteration(3, IterationTimings.MIN_REMAINING_MILLIS, 4.0),
+                "the MIN_REMAINING_MILLIS floor applies to the real remaining time, whatever the factor"));
+    }
+
+    @Test
     void decideIteration_afterEnoughSkips_probesInsteadOfSkipping() {
         withSkipHeuristicEnabled(() -> {
             primeSamples();

@@ -103,6 +103,54 @@ class UciHandlerTest {
 
     @Test
     @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void uci_onHandshake_announcesTheTimeRiskOption() {
+        runHandler("uci\nquit\n")
+                .expect("^option name TimeRiskPercent type spin default 150 min 10 max 1000$");
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void setoption_timeRiskPercent_setsTheRiskFactor() {
+        try {
+            runHandler("setoption name TimeRiskPercent value 220\nquit\n");
+
+            assertEquals(2.2, TimeManagement.getRiskFactor(), 1e-9, "TimeRiskPercent 220 must set the factor 2.2");
+        } finally {
+            resetTimeOptions();
+        }
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void setoption_timeRiskPercentOutOfRange_isClamped() {
+        try {
+            runHandler("setoption name TimeRiskPercent value 5000\nquit\n");
+
+            assertEquals(10.0, TimeManagement.getRiskFactor(), 1e-9, "a percent above the maximum must be clamped to 1000");
+        } finally {
+            resetTimeOptions();
+        }
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void setoption_timeRiskPercentNotANumber_isIgnored() {
+        try {
+            runHandler("setoption name TimeRiskPercent value bold\nquit\n");
+
+            assertEquals(TimeManagement.DEFAULT_RISK_FACTOR, TimeManagement.getRiskFactor(), 1e-9,
+                    "a non-numeric value must leave the factor unchanged");
+        } finally {
+            resetTimeOptions();
+        }
+    }
+
+    private static void resetTimeOptions() {
+        TimeManagement.setRiskFactor(TimeManagement.DEFAULT_RISK_FACTOR);
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
     void isready_always_repliesWithReadyok() {
         runHandler("isready\nquit\n").expect("readyok");
     }
