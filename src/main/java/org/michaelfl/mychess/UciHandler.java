@@ -53,15 +53,12 @@ final class UciHandler {
 
     private static final String SETOPTION_PREFIX = "setoption name ";
 
-    /** Experimental UCI option: the start-decision risk factor in percent (100 = plain rule). */
+    /** UCI option: the start-decision risk factor in percent (100 = plain comparison). */
     static final String OPTION_TIME_RISK_PERCENT = "TimeRiskPercent";
 
-    static final int DEFAULT_TIME_RISK_PERCENT = 100;
+    static final int DEFAULT_TIME_RISK_PERCENT = 150;
     static final int MIN_TIME_RISK_PERCENT = 10;
     static final int MAX_TIME_RISK_PERCENT = 1000;
-
-    /** Experimental UCI option: record aborts at the overrun cap in the iteration estimates. */
-    static final String OPTION_HONEST_ESTIMATES = "HonestEstimates";
 
     private final MyChessEnv env;
     private final BufferedReader in;
@@ -176,7 +173,6 @@ final class UciHandler {
         writeLine("option name UCI_Chess960 type check default false");
         writeLine("option name " + OPTION_TIME_RISK_PERCENT + " type spin default " + DEFAULT_TIME_RISK_PERCENT
                 + " min " + MIN_TIME_RISK_PERCENT + " max " + MAX_TIME_RISK_PERCENT);
-        writeLine("option name " + OPTION_HONEST_ESTIMATES + " type check default false");
         writeLine("uciok");
     }
 
@@ -192,10 +188,6 @@ final class UciHandler {
             this.is960 = false;
         } else if (line.startsWith(SETOPTION_PREFIX + OPTION_TIME_RISK_PERCENT + " value ")) {
             applyTimeRiskPercent(line.substring((SETOPTION_PREFIX + OPTION_TIME_RISK_PERCENT + " value ").length()).trim());
-        } else if (line.startsWith(SETOPTION_PREFIX + OPTION_HONEST_ESTIMATES + " value ")) {
-            String value = line.substring((SETOPTION_PREFIX + OPTION_HONEST_ESTIMATES + " value ").length()).trim();
-            TimeManagement.setHonestEstimates(Boolean.parseBoolean(value));
-            Log.info("[option] " + OPTION_HONEST_ESTIMATES + " = " + TimeManagement.isHonestEstimates());
         }
     }
 

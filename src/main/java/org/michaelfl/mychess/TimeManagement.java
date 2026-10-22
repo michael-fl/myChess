@@ -34,7 +34,7 @@ import static org.michaelfl.mychess.Assert.__assert;
  *
  * long start = System.currentTimeMillis();
  * long hardTimeout = start + hardLimitMs;   // the search aborts a running iteration here
- * var timeManagement = TimeManagement.newInstance(start + softLimitMs, hardTimeout, "");
+ * var timeManagement = TimeManagement.newInstance(start + softLimitMs, "");
  *
  * for (int depth = 1; !timeManagement.shouldSkipIteration(depth); depth++) {
  *     // search depth, aborting at hardTimeout, then:
@@ -83,24 +83,21 @@ public final class TimeManagement {
 
     private static final float HARD_LIMIT_REMAINING_TIME_FACTOR = 0.2f;
 
-    /** Default of {@link #riskFactor}: the plain comparison of estimate and remaining time. */
-    static final double DEFAULT_RISK_FACTOR = 1.0;
+    /**
+     * Default of {@link #riskFactor}. Chosen in a calibration so that the honest estimates (every
+     * abort recorded) use the clock like 4.9.1 did, then measured at +23.7 +- 8.9 Elo against 4.9.0
+     * at 60+1 (match {@code honest-k150}).
+     */
+    static final double DEFAULT_RISK_FACTOR = 1.5;
 
     /**
      * Multiplier on the remaining time in the start decision: an iteration starts when its
      * estimated duration is at most this factor times the time left before the soft limit.
-     * Experimental, set through the UCI option {@code TimeRiskPercent}; the default keeps 4.9.1's
-     * behavior. Process-wide like {@link IterationTimings}, which it qualifies.
+     * The estimates count every aborted iteration, so they are honest but high; the factor sets
+     * how boldly the search starts a deeper iteration against them. Set through the UCI option
+     * {@code TimeRiskPercent}. Process-wide like {@link IterationTimings}, which it qualifies.
      */
     private static volatile double riskFactor = DEFAULT_RISK_FACTOR;
-
-    /**
-     * Whether aborts at the soft + {@link #SOFT_LIMIT_MAX_OVERRUN_MS} cap are recorded in
-     * {@link IterationTimings} like every other abort ("honest estimates"). Experimental, set
-     * through the UCI option {@code HonestEstimates}; off by default, which keeps 4.9.1's rule of
-     * not recording them.
-     */
-    private static volatile boolean honestEstimates = false;
 
     /**
      * The time-related arguments of one UCI {@code go} command, as sent by the GUI.
@@ -134,15 +131,13 @@ public final class TimeManagement {
      */
     public static final class TimeManagementInstance {
         private final long softTimeout;
-        private final boolean recordAborts;
         private final String logPrefix;
         private int depth = 1;
         private IterationDecision decisionOnSoftTimeout;
         private long iterationStartTimestamp;
 
-        private TimeManagementInstance(long softTimeout, long hardTimeout, String logTag) {
+        private TimeManagementInstance(long softTimeout, String logTag) {
             this.softTimeout = softTimeout;
-            this.recordAborts = honestEstimates || hardTimeout < softTimeout + SOFT_LIMIT_MAX_OVERRUN_MS;
             this.logPrefix = logTag == null || logTag.isEmpty() ? "[time] " : "[time] " + logTag + " ";
         }
 
@@ -229,25 +224,12 @@ public final class TimeManagement {
         /**
          * Reports an iteration that was aborted at the hard limit; its result is discarded.
          *
-         * <p>Whether the abort is recorded depends on which cap set the hard limit
-         * ({@link #calculateHardLimit}):
-         * <ul>
-         *   <li><b>the overrun cap</b>, soft limit + {@link #SOFT_LIMIT_MAX_OVERRUN_MS}: the abort is
-         *       <em>not</em> recorded, by design. These are the most expensive iterations of all;
-         *       feeding them into the per-depth estimate makes the start decision against the soft
-         *       limit so cautious that the engine leaves its clock unused and searches shallower.
-         *       4.9.0 discarded them too, because its watcher canceled them before they reached
-         *       {@code IterationTimings}, and was measured at +21 Elo that way. The abort is logged
-         *       as {@code [time] abort}.</li>
-         *   <li><b>any other cap</b> (no clock, so hard equals soft; 4 x soft for a tiny soft limit;
-         *       20 % of a short clock): the elapsed time, measured from the
-         *       {@link #shouldSkipIteration} call that started the iteration, is recorded with
-         *       {@link IterationTimings#recordAbort}, which extrapolates it to a lower bound of the
-         *       full duration. 4.9.0 recorded these as well, because its search reached its own
-         *       hard limit before the watcher fired.</li>
-         * </ul>
-         * So the rule reproduces 4.9.0 exactly; it is a stopgap until the estimate itself is made
-         * honest.
+         * <p>The elapsed time, measured from the {@link #shouldSkipIteration} call that started the
+         * iteration, is recorded with {@link IterationTimings#recordAbort}, which extrapolates it to a
+         * lower bound of the full duration. Every abort is recorded, whichever cap set the hard limit
+         * ({@link #calculateHardLimit}), so the per-depth estimates are honest; the
+         * {@linkplain #setRiskFactor risk factor} compensates for their height. The abort is logged
+         * as {@code [time] abort}.
          *
          * <p>The depth stays as it was after the last completed iteration, so the search is expected
          * to stop and return that iteration's result.
@@ -260,13 +242,8 @@ public final class TimeManagement {
             __assert(() -> currentDepth == depth, () -> "unexpected depth: expected " + depth + ", but is " + currentDepth);
 
             long iterationDurationMs = iterationEndTimestamp - iterationStartTimestamp;
-
-            if (recordAborts) {
-                IterationTimings.recordAbort(depth, iterationDurationMs);
-            } else {
-                Log.info(logPrefix + "abort depth " + depth + ": " + (iterationEndTimestamp - softTimeout)
-                        + " ms past soft limit, not recorded");
-            }
+            IterationTimings.recordAbort(depth, iterationDurationMs);
+            Log.info(logPrefix + "abort depth " + depth + ": " + (iterationEndTimestamp - softTimeout) + " ms past soft limit");
 
             decisionOnSoftTimeout = null;
         }
@@ -289,27 +266,24 @@ public final class TimeManagement {
     /**
      * Creates the time management for one search.
      *
-     * <p>The hard limit itself is enforced by the search, which aborts a running iteration when it
-     * is reached; the instance only needs it to tell which cap set the hard limit, and with it
-     * whether an abort is recorded (see {@link TimeManagementInstance#iterationAborted}).
+     * <p>The hard limit is enforced by the search alone, which aborts a running iteration when it
+     * is reached and reports it with {@link TimeManagementInstance#iterationAborted}.
      *
      * @param softTimeout epoch milliseconds of the soft limit: no iteration is started that is
      *                    expected to end after it
-     * @param hardTimeout epoch milliseconds of the hard limit; usually {@code softTimeout} +
-     *                    {@link #SOFT_LIMIT_MAX_OVERRUN_MS}, lower when another cap binds
      * @param logTag      tag put after {@code [time]} in every log line, e.g. {@code game=4174bf06}, so
      *                    lines of engines sharing one log can be told apart; empty or {@code null} for none
      * @return a new instance, positioned before depth 1
      */
-    public static TimeManagement.TimeManagementInstance newInstance(long softTimeout, long hardTimeout, String logTag) {
-        return new TimeManagement.TimeManagementInstance(softTimeout, hardTimeout, logTag);
+    public static TimeManagement.TimeManagementInstance newInstance(long softTimeout, String logTag) {
+        return new TimeManagement.TimeManagementInstance(softTimeout, logTag);
     }
 
     /**
      * Sets the risk factor of the start decision: an iteration starts when its estimate is at most
      * {@code factor} times the remaining time. Used by the UCI option {@code TimeRiskPercent}.
      *
-     * @param factor the multiplier, greater than zero; {@link #DEFAULT_RISK_FACTOR} keeps the plain rule
+     * @param factor the multiplier, greater than zero; {@code 1.0} is the plain comparison
      * @throws IllegalArgumentException if {@code factor} is not greater than zero
      */
     public static void setRiskFactor(double factor) {
@@ -323,22 +297,6 @@ public final class TimeManagement {
     /** @return the current risk factor of the start decision */
     public static double getRiskFactor() {
         return riskFactor;
-    }
-
-    /**
-     * Switches honest estimates on or off: when on, aborts at the soft limit + one second cap are
-     * recorded in {@link IterationTimings} like every other abort. Used by the UCI option
-     * {@code HonestEstimates}.
-     *
-     * @param enabled {@code true} to record those aborts
-     */
-    public static void setHonestEstimates(boolean enabled) {
-        honestEstimates = enabled;
-    }
-
-    /** @return whether aborts at the overrun cap are recorded */
-    public static boolean isHonestEstimates() {
-        return honestEstimates;
     }
 
     /**
