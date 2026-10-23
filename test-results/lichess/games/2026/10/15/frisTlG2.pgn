@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/game/frisTlG2"]
+[Date "2026.10.15"]
+[Round "-"]
+[White "turox-bot"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "frisTlG2"]
+[UTCDate "2026.10.15"]
+[UTCTime "13:39:48"]
+[WhiteElo "1952"]
+[BlackElo "2046"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+2"]
+[ECO "A46"]
+[Opening "Indian Defense: London System"]
+[Termination "Time forfeit"]
+
+1. d4 Nf6 2. Nf3 e6 3. Bf4 Bd6 4. e3 Bxf4 5. exf4 Nd5 6. g3 O-O 7. Bg2 Nc6 8. O-O d6 9. Qd3 Qf6 10. Nbd2 Bd7 11. Rfe1 Qg6 0-1
+

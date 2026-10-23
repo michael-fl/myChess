@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/game/nEsl8cT6"]
+[Date "2026.10.12"]
+[Round "-"]
+[White "DeMen100ns-bot"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "nEsl8cT6"]
+[UTCDate "2026.10.12"]
+[UTCTime "22:32:34"]
+[WhiteElo "2198"]
+[BlackElo "2273"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "C44"]
+[Opening "Scotch Game: Scotch Gambit, London Defense"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Bc4 Bb4+ 5. c3 dxc3 6. O-O cxb2 7. Bxb2 Nf6 8. Ng5 O-O 9. e5 d5 10. exf6 dxc4 11. Qh5 h6 12. a3 Bd6 13. Ne4 Re8 14. fxg7 Re6 15. Bc3 Bf4 16. Rd1 Qe7 17. Nbd2 Be5 18. Rac1 Bxg7 19. Bxg7 Kxg7 20. Rxc4 Qxa3 21. Nf3 a6 22. Nc5 Rf6 23. Ra4 Qc3 24. Ne4 Qc2 25. Rda1 Rf5 26. Qg4+ Rg5 27. Qf4 Rd5 28. Qf6+ Kf8 29. Qxh6+ Ke7 30. Qf6+ Kf8 31. Re1 Rd1 32. Ra1 Rxa1 33. Qxa1 Rb8 34. Qh8+ Ke7 35. Qf6+ Ke8 36. Neg5+ Kd7 37. Nxf7 Qg6 38. Qxg6 1-0
+

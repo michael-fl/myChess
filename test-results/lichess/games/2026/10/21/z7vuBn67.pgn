@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/game/z7vuBn67"]
+[Date "2026.10.21"]
+[Round "-"]
+[White "Blujay-bot"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "z7vuBn67"]
+[UTCDate "2026.10.21"]
+[UTCTime "19:12:09"]
+[WhiteElo "1739"]
+[BlackElo "2290"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "900+10"]
+[ECO "A50"]
+[Opening "Indian Defense: Normal Variation"]
+[Termination "Normal"]
+
+1. d4 Nf6 2. c4 e6 3. e3 Bb4+ 4. Bd2 Nc6 5. Nf3 O-O 6. d5 Bxd2+ 7. Qxd2 Ne4 8. Qc2 Nb4 9. Qxe4 f5 10. Qe5 Nc2+ 11. Kd1 Nxa1 12. d6 cxd6 13. Qxd6 Qb6 14. Qxb6 axb6 15. Nc3 f4 16. Bd3 fxe3 17. fxe3 d5 18. cxd5 b5 19. d6 b4 20. Nb5 Rxa2 21. Bc4 Rxb2 22. Kc1 Rc2+ 23. Kb1 Rxc4 24. Ne5 Rc5 25. d7 Rxe5 26. dxc8=Q Rxc8 27. Nd6 Ra8 28. Nc4 Re4 29. Nd6 Rxe3 30. Nc4 Rc3 31. Nd2 Rd3 32. Rd1 Nb3 33. Kb2 Nxd2 34. Kc2 Rad8 35. Re1 Rc3+ 36. Kd1 Nc4+ 37. Ke2 Re3+ 38. Kf2 Rf8+ 39. Kg1 Rxe1# 0-1
+

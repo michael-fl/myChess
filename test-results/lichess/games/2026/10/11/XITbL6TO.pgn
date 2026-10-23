@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/game/XITbL6TO"]
+[Date "2026.10.11"]
+[Round "-"]
+[White "myChessJava"]
+[Black "GeoTsiBot"]
+[Result "1-0"]
+[GameId "XITbL6TO"]
+[UTCDate "2026.10.11"]
+[UTCTime "07:48:52"]
+[WhiteElo "2022"]
+[BlackElo "2032"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+3"]
+[ECO "B01"]
+[Opening "Scandinavian Defense: Modern Variation"]
+[Termination "Normal"]
+
+1. e4 d5 2. exd5 Nf6 3. Bb5+ Bd7 4. Bc4 b5 5. Bb3 c6 6. dxc6 Bxc6 7. Nf3 e6 8. O-O Bd6 9. d4 O-O 10. Ne5 Bb7 11. Bf4 Nc6 12. Nc3 a6 13. a3 Qc7 14. Re1 Rfd8 15. Bg3 Bxe5 16. Bxe5 Nxe5 17. Rxe5 Rd7 18. Na2 Rad8 19. c3 Qxe5 20. dxe5 Rxd1+ 21. Rxd1 Rxd1+ 22. Bxd1 Nd7 23. f4 g5 24. fxg5 Nxe5 25. Be2 Kg7 26. Nb4 Nc4 27. Bxc4 bxc4 28. Nc2 Bc6 29. Ne3 Bb5 30. h4 f6 31. gxf6+ Kxf6 32. Kf2 Ke5 33. Kf3 a5 34. h5 Bc6+ 35. Kg4 Bb5 36. a4 Bxa4 37. Nxc4+ Ke4 38. Nxa5 Bd1+ 39. Kg5 Kd3 40. h6 e5 41. Nc6 e4 42. Kf4 e3 43. Ne5+ Kc2 44. Kxe3 Kxb2 45. c4 Bb3 46. g4 Ba4 47. g5 Be8 48. g6 Bxg6 49. Nxg6 Kb3 50. c5 Kc3 51. c6 Kb3 52. c7 Kc4 53. c8=Q+ Kb5 54. Kd4 Kb6 55. Qb8+ Ka6 56. Kc5 hxg6 57. Qb6# 1-0
+

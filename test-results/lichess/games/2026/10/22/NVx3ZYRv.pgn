@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/game/NVx3ZYRv"]
+[Date "2026.10.22"]
+[Round "-"]
+[White "turkjs"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "NVx3ZYRv"]
+[UTCDate "2026.10.22"]
+[UTCTime "18:57:04"]
+[WhiteElo "1824"]
+[BlackElo "2283"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "A45"]
+[Opening "Indian Defense"]
+[Termination "Normal"]
+
+1. d4 Nf6 2. Nc3 e6 3. Qd3 Bb4 4. Bd2 d5 5. Nf3 O-O 6. Bg5 h6 7. Bxf6 Qxf6 8. a3 Ba5 9. b4 Bb6 10. g3 a5 11. Na4 axb4 12. axb4 Bd7 13. b5 Ba5+ 14. Kd1 Bb4 15. c3 Bd6 16. Kc2 Ra5 17. c4 dxc4 18. Qc3 Qg6+ 19. e4 Qxe4+ 20. Kd2 Rxb5 21. Re1 Qc6 22. Bxc4 Bb4 23. Bxb5 Bxc3+ 24. Ke3 Qxb5 25. Nxc3 Qb2 26. Rc1 Bc6 27. Rhd1 Bxf3 28. Kxf3 Nc6 29. Ne2 Ra8 30. Ke3 Ra2 31. Re1 Ra3+ 32. Nc3 Nb4 33. Ke4 Qxf2 34. g4 Ra5 35. d5 Rxd5 36. Re2 Rd4+ 37. Ke5 Nd3# 0-1
+

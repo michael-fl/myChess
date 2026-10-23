@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/game/lb1IXQR4"]
+[Date "2026.10.12"]
+[Round "-"]
+[White "FlounderBot"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "lb1IXQR4"]
+[UTCDate "2026.10.12"]
+[UTCTime "06:43:47"]
+[WhiteElo "2013"]
+[BlackElo "2020"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+1"]
+[ECO "A45"]
+[Opening "Indian Defense"]
+[Termination "Normal"]
+
+1. d4 Nf6 2. Nc3 e6 3. e4 Bb4 4. Bd3 Nc6 5. a3 Bxc3+ 6. bxc3 d5 7. e5 Ne4 8. Qg4 g6 9. Ne2 f5 10. Qh3 O-O 11. Qh6 Ne7 12. Rb1 c5 13. O-O c4 14. Bxe4 fxe4 15. Qh4 Qc7 16. Bg5 Nf5 17. Qh3 Rf7 18. f3 exf3 19. Rxf3 b6 20. Rbf1 h5 21. Nf4 Bd7 22. Nxg6 Rh7 23. Bf6 Qb7 24. Ne7+ Kf7 25. Rxf5 exf5 26. Qg3 Rah8 27. Qg6+ Kf8 28. Nxf5 Bxf5 29. Rxf5 Rf7 30. Bg7+ Ke8 31. Bxh8 Kf8 32. Qg7+ Ke8 33. Qg8+ Rf8 34. Qxf8+ 1-0
+
