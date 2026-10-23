@@ -1,0 +1,2156 @@
+{
+  "9obPxWi7": {
+    "chess960": true,
+    "color": "black",
+    "date": "2026-10-08",
+    "findings": [
+      {
+        "fen_before": "qrbnk1rb/pppppppp/4n3/8/8/4N1P1/PPPPPP1P/QRBNK1RB b KQkq - 2 2",
+        "move": "O-O",
+        "move_number": 2,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -118,
+          "eval_before_cp": -14,
+          "loss_cp": 104
+        },
+        "uci": "e8g8"
+      },
+      {
+        "fen_before": "qrbn1rkb/pppppp1p/4n1p1/8/8/2P1N1P1/PP1PPP1P/QRBN1RKB b - - 0 4",
+        "move": "Bg7",
+        "move_number": 4,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -85,
+          "eval_before_cp": -28,
+          "loss_cp": 57
+        },
+        "uci": "h8g7"
+      },
+      {
+        "fen_before": "1rb1r1k1/qp1p1nbp/1N4p1/p4p2/2Pp1P2/3P2P1/P3P2P/QR1N1RKB b - - 0 14",
+        "move": "Rxe2",
+        "move_number": 14,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -255,
+          "eval_before_cp": -192,
+          "loss_cp": 63
+        },
+        "uci": "e8e2"
+      },
+      {
+        "fen_before": "1rb1r1k1/qp1p1nbp/1N4p1/p1PB1p2/3p1P2/3P2P1/P6P/QR1N1RK1 b - - 0 16",
+        "move": "Re2",
+        "move_number": 16,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -377,
+          "eval_before_cp": -291,
+          "loss_cp": 86
+        },
+        "uci": "e8e2"
+      },
+      {
+        "fen_before": "1rb2k2/qp1prnb1/1N4pp/p1PB1p2/P2p1P2/Q2P2P1/1R5P/3N1RK1 b - - 3 20",
+        "move": "Nd8",
+        "move_number": 20,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -418,
+          "eval_before_cp": -345,
+          "loss_cp": 73
+        },
+        "uci": "f7d8"
+      },
+      {
+        "fen_before": "1rb2k2/qp1pr3/1N1N1bpp/pPPB1p2/3p1P2/Q2P2P1/7P/5RK1 b - - 2 25",
+        "move": "Re8",
+        "move_number": 25,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -571,
+          "eval_before_cp": -488,
+          "loss_cp": 83
+        },
+        "uci": "e7e8"
+      },
+      {
+        "fen_before": "1rb1Nk2/qp1p4/1N3bpp/pPPB1p2/3p1P2/Q2P2P1/7P/5RK1 b - - 0 26",
+        "move": "Kxe8",
+        "move_number": 26,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -931,
+          "eval_before_cp": -621,
+          "loss_cp": 310
+        },
+        "uci": "f8e8",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -1189,
+          "eval_before_cp": -746,
+          "loss_cp": 254
+        }
+      }
+    ],
+    "losses": [
+      [
+        1,
+        14,
+        -63
+      ],
+      [
+        2,
+        104,
+        -14
+      ],
+      [
+        3,
+        -1,
+        -30
+      ],
+      [
+        4,
+        57,
+        -28
+      ],
+      [
+        5,
+        48,
+        -36
+      ],
+      [
+        6,
+        18,
+        -82
+      ],
+      [
+        7,
+        47,
+        -99
+      ],
+      [
+        8,
+        -13,
+        -131
+      ],
+      [
+        9,
+        19,
+        -145
+      ],
+      [
+        10,
+        16,
+        -172
+      ],
+      [
+        11,
+        -2,
+        -158
+      ],
+      [
+        12,
+        2,
+        -156
+      ],
+      [
+        13,
+        47,
+        -155
+      ],
+      [
+        14,
+        63,
+        -192
+      ],
+      [
+        15,
+        31,
+        -248
+      ],
+      [
+        16,
+        86,
+        -291
+      ],
+      [
+        17,
+        26,
+        -297
+      ],
+      [
+        18,
+        43,
+        -321
+      ],
+      [
+        19,
+        39,
+        -373
+      ],
+      [
+        20,
+        73,
+        -345
+      ],
+      [
+        21,
+        26,
+        -411
+      ],
+      [
+        22,
+        2,
+        -443
+      ],
+      [
+        23,
+        -6,
+        -450
+      ],
+      [
+        24,
+        28,
+        -439
+      ],
+      [
+        25,
+        83,
+        -488
+      ],
+      [
+        26,
+        310,
+        -621
+      ],
+      [
+        27,
+        0,
+        -1075
+      ],
+      [
+        28,
+        -128,
+        -9991
+      ],
+      [
+        29,
+        0,
+        -9992
+      ],
+      [
+        30,
+        0,
+        -9996
+      ],
+      [
+        31,
+        0,
+        -9997
+      ]
+    ]
+  },
+  "NQHBUUZz": {
+    "chess960": true,
+    "color": "black",
+    "date": "2026-10-18",
+    "findings": [
+      {
+        "fen_before": "1rbbq1kr/ppp1pppp/1n2n3/3pP3/5P2/3P4/PPP3PP/NRBBQNKR b KQkq - 0 4",
+        "move": "Qa4",
+        "move_number": 4,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -153,
+          "eval_before_cp": -78,
+          "loss_cp": 75
+        },
+        "uci": "e8a4"
+      },
+      {
+        "fen_before": "1r4kr/pp2pppp/1n2b3/2Bpb3/8/2PPN3/PP4PP/1R1B2KR b KQkq - 0 13",
+        "move": "Nd7",
+        "move_number": 13,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": 21,
+          "eval_before_cp": 124,
+          "loss_cp": 103
+        },
+        "uci": "b6d7"
+      },
+      {
+        "fen_before": "4r1kr/1p3ppp/8/p2pn3/2PBb3/8/PP2BKPP/4R2R b k - 0 22",
+        "move": "Nxc4",
+        "move_number": 22,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": 77,
+          "eval_before_cp": 146,
+          "loss_cp": 69
+        },
+        "uci": "e5c4"
+      },
+      {
+        "fen_before": "6k1/1b1r2p1/4R3/pr5p/2p2p1P/2B5/1P3KP1/2R5 b - - 0 34",
+        "move": "Rf5",
+        "move_number": 34,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": 44,
+          "eval_before_cp": 95,
+          "loss_cp": 51
+        },
+        "uci": "b5f5"
+      },
+      {
+        "fen_before": "6k1/1b1rR1p1/8/5r1p/p1p4P/2B2pP1/1P3K2/4R3 b - - 1 37",
+        "move": "Rf7",
+        "move_number": 37,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": 24,
+          "eval_before_cp": 76,
+          "loss_cp": 52
+        },
+        "uci": "f5f7"
+      },
+      {
+        "fen_before": "6k1/1b1r2p1/8/4R2p/p1p4P/2B2pP1/1P3K2/8 b - - 1 39",
+        "move": "Bd5",
+        "move_number": 39,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -3,
+          "eval_before_cp": 84,
+          "loss_cp": 87
+        },
+        "uci": "b7d5"
+      }
+    ],
+    "losses": [
+      [
+        1,
+        4,
+        -22
+      ],
+      [
+        2,
+        13,
+        -30
+      ],
+      [
+        3,
+        16,
+        -65
+      ],
+      [
+        4,
+        75,
+        -78
+      ],
+      [
+        5,
+        19,
+        -56
+      ],
+      [
+        6,
+        13,
+        -69
+      ],
+      [
+        7,
+        7,
+        83
+      ],
+      [
+        8,
+        -4,
+        74
+      ],
+      [
+        9,
+        28,
+        74
+      ],
+      [
+        10,
+        4,
+        50
+      ],
+      [
+        11,
+        -2,
+        47
+      ],
+      [
+        12,
+        33,
+        91
+      ],
+      [
+        13,
+        103,
+        124
+      ],
+      [
+        14,
+        1,
+        15
+      ],
+      [
+        15,
+        8,
+        7
+      ],
+      [
+        16,
+        13,
+        79
+      ],
+      [
+        17,
+        4,
+        66
+      ],
+      [
+        18,
+        10,
+        86
+      ],
+      [
+        19,
+        11,
+        83
+      ],
+      [
+        20,
+        17,
+        91
+      ],
+      [
+        21,
+        4,
+        77
+      ],
+      [
+        22,
+        69,
+        146
+      ],
+      [
+        23,
+        2,
+        77
+      ],
+      [
+        24,
+        -18,
+        65
+      ],
+      [
+        25,
+        6,
+        67
+      ],
+      [
+        26,
+        -41,
+        58
+      ],
+      [
+        27,
+        6,
+        104
+      ],
+      [
+        28,
+        5,
+        94
+      ],
+      [
+        29,
+        0,
+        96
+      ],
+      [
+        30,
+        3,
+        94
+      ],
+      [
+        31,
+        -10,
+        88
+      ],
+      [
+        32,
+        23,
+        123
+      ],
+      [
+        33,
+        -7,
+        90
+      ],
+      [
+        34,
+        51,
+        95
+      ],
+      [
+        35,
+        -11,
+        69
+      ],
+      [
+        36,
+        12,
+        81
+      ],
+      [
+        37,
+        52,
+        76
+      ],
+      [
+        38,
+        -7,
+        79
+      ],
+      [
+        39,
+        87,
+        84
+      ],
+      [
+        40,
+        5,
+        -5
+      ],
+      [
+        41,
+        1,
+        -8
+      ],
+      [
+        42,
+        4,
+        -5
+      ],
+      [
+        43,
+        0,
+        0
+      ],
+      [
+        44,
+        0,
+        0
+      ],
+      [
+        45,
+        0,
+        0
+      ],
+      [
+        46,
+        0,
+        0
+      ],
+      [
+        47,
+        -1,
+        0
+      ],
+      [
+        48,
+        4,
+        6
+      ],
+      [
+        49,
+        7,
+        7
+      ],
+      [
+        50,
+        0,
+        4
+      ],
+      [
+        51,
+        4,
+        5
+      ],
+      [
+        52,
+        0,
+        2
+      ],
+      [
+        53,
+        0,
+        1
+      ],
+      [
+        54,
+        1,
+        3
+      ],
+      [
+        55,
+        2,
+        4
+      ],
+      [
+        56,
+        0,
+        0
+      ],
+      [
+        57,
+        0,
+        0
+      ],
+      [
+        58,
+        0,
+        0
+      ],
+      [
+        59,
+        0,
+        0
+      ],
+      [
+        60,
+        0,
+        1
+      ],
+      [
+        61,
+        0,
+        -1
+      ],
+      [
+        62,
+        0,
+        0
+      ],
+      [
+        63,
+        0,
+        0
+      ],
+      [
+        64,
+        0,
+        0
+      ],
+      [
+        65,
+        0,
+        0
+      ],
+      [
+        66,
+        0,
+        0
+      ],
+      [
+        67,
+        0,
+        0
+      ],
+      [
+        68,
+        0,
+        0
+      ],
+      [
+        69,
+        0,
+        0
+      ],
+      [
+        70,
+        0,
+        0
+      ],
+      [
+        71,
+        0,
+        0
+      ],
+      [
+        72,
+        0,
+        0
+      ],
+      [
+        73,
+        0,
+        0
+      ],
+      [
+        74,
+        0,
+        0
+      ],
+      [
+        75,
+        0,
+        0
+      ],
+      [
+        76,
+        0,
+        0
+      ],
+      [
+        77,
+        0,
+        0
+      ],
+      [
+        78,
+        0,
+        0
+      ],
+      [
+        79,
+        0,
+        0
+      ],
+      [
+        80,
+        0,
+        0
+      ],
+      [
+        81,
+        0,
+        0
+      ],
+      [
+        82,
+        0,
+        0
+      ],
+      [
+        83,
+        0,
+        0
+      ],
+      [
+        84,
+        0,
+        0
+      ],
+      [
+        85,
+        0,
+        0
+      ],
+      [
+        86,
+        0,
+        0
+      ],
+      [
+        87,
+        0,
+        0
+      ],
+      [
+        88,
+        0,
+        0
+      ],
+      [
+        89,
+        0,
+        0
+      ],
+      [
+        90,
+        0,
+        0
+      ],
+      [
+        91,
+        -3,
+        0
+      ],
+      [
+        92,
+        0,
+        0
+      ],
+      [
+        93,
+        0,
+        0
+      ],
+      [
+        94,
+        0,
+        0
+      ],
+      [
+        95,
+        0,
+        0
+      ],
+      [
+        96,
+        0,
+        0
+      ],
+      [
+        97,
+        0,
+        0
+      ],
+      [
+        98,
+        0,
+        0
+      ],
+      [
+        99,
+        0,
+        0
+      ],
+      [
+        100,
+        0,
+        0
+      ],
+      [
+        101,
+        0,
+        0
+      ],
+      [
+        102,
+        0,
+        0
+      ],
+      [
+        103,
+        0,
+        0
+      ],
+      [
+        104,
+        3,
+        3
+      ],
+      [
+        105,
+        0,
+        0
+      ],
+      [
+        106,
+        1,
+        1
+      ],
+      [
+        107,
+        0,
+        0
+      ],
+      [
+        108,
+        0,
+        0
+      ],
+      [
+        109,
+        0,
+        0
+      ],
+      [
+        110,
+        0,
+        0
+      ],
+      [
+        111,
+        0,
+        0
+      ],
+      [
+        112,
+        0,
+        0
+      ],
+      [
+        113,
+        0,
+        0
+      ],
+      [
+        114,
+        1,
+        0
+      ],
+      [
+        115,
+        1,
+        0
+      ],
+      [
+        116,
+        -1,
+        -1
+      ],
+      [
+        117,
+        1,
+        0
+      ],
+      [
+        118,
+        1,
+        0
+      ],
+      [
+        119,
+        1,
+        0
+      ],
+      [
+        120,
+        0,
+        0
+      ],
+      [
+        121,
+        0,
+        0
+      ],
+      [
+        122,
+        0,
+        0
+      ],
+      [
+        123,
+        0,
+        0
+      ],
+      [
+        124,
+        0,
+        0
+      ],
+      [
+        125,
+        0,
+        0
+      ],
+      [
+        126,
+        0,
+        0
+      ],
+      [
+        127,
+        2,
+        2
+      ],
+      [
+        128,
+        0,
+        0
+      ],
+      [
+        129,
+        0,
+        0
+      ]
+    ]
+  },
+  "Y4yoV1W0": {
+    "chess960": true,
+    "color": "white",
+    "date": "2026-10-20",
+    "findings": [
+      {
+        "fen_before": "nbrkqnbr/pp1ppppp/8/2p5/8/1N6/PPPPPPPP/1BRKQNBR w KQkq - 0 2",
+        "move": "Ne3",
+        "move_number": 2,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -53,
+          "eval_before_cp": 39,
+          "loss_cp": 92
+        },
+        "uci": "f1e3"
+      },
+      {
+        "fen_before": "1brk1nbr/pp1qpppp/8/2p2N2/n1P1P3/1N1p4/PP1P1PPP/1BRK1QBR w KQkq - 3 8",
+        "move": "O-O-O",
+        "move_number": 8,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -185,
+          "eval_before_cp": -103,
+          "loss_cp": 82
+        },
+        "uci": "d1c1"
+      },
+      {
+        "fen_before": "2rk2br/p2qpp1p/6p1/1ppN4/n1PnP3/bN1B4/P1KP1PPP/4RQBR w kq - 2 15",
+        "move": "Nxd4",
+        "move_number": 15,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -359,
+          "eval_before_cp": -177,
+          "loss_cp": 182
+        },
+        "uci": "b3d4",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -460,
+          "eval_before_cp": -211,
+          "loss_cp": 249
+        }
+      },
+      {
+        "fen_before": "2rk2br/p2qpp1p/6p1/1p1N4/n1PpP3/b2B4/P1KP1PPP/4RQBR w kq - 0 16",
+        "move": "Kb3",
+        "move_number": 16,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -475,
+          "eval_before_cp": -402,
+          "loss_cp": 73
+        },
+        "uci": "c2b3",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -637,
+          "eval_before_cp": -453,
+          "loss_cp": 184
+        }
+      },
+      {
+        "fen_before": "2rk2br/p2qpp1p/6p1/3N4/n1ppP3/bK1B4/P2P1PPP/4RQBR w kq - 0 17",
+        "move": "Kxa3",
+        "move_number": 17,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -678,
+          "eval_before_cp": -551,
+          "loss_cp": 127
+        },
+        "uci": "b3a3",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -887,
+          "eval_before_cp": -721,
+          "loss_cp": 166
+        }
+      },
+      {
+        "fen_before": "2rk2br/p3pp1p/3q2p1/3N4/n1ppP3/K2B4/P2P1PPP/4RQBR w kq - 1 18",
+        "move": "Kxa4",
+        "move_number": 18,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -837,
+          "eval_before_cp": -635,
+          "loss_cp": 202
+        },
+        "uci": "a3a4",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -1093,
+          "eval_before_cp": -1179,
+          "loss_cp": 0
+        }
+      }
+    ],
+    "losses": [
+      [
+        1,
+        0,
+        41
+      ],
+      [
+        2,
+        92,
+        39
+      ],
+      [
+        3,
+        -3,
+        -56
+      ],
+      [
+        4,
+        25,
+        -75
+      ],
+      [
+        5,
+        49,
+        -61
+      ],
+      [
+        6,
+        0,
+        -103
+      ],
+      [
+        7,
+        4,
+        -109
+      ],
+      [
+        8,
+        82,
+        -103
+      ],
+      [
+        9,
+        -1,
+        -191
+      ],
+      [
+        10,
+        27,
+        -212
+      ],
+      [
+        11,
+        -11,
+        -239
+      ],
+      [
+        12,
+        2,
+        -215
+      ],
+      [
+        13,
+        19,
+        -217
+      ],
+      [
+        14,
+        -20,
+        -245
+      ],
+      [
+        15,
+        182,
+        -177
+      ],
+      [
+        16,
+        73,
+        -402
+      ],
+      [
+        17,
+        127,
+        -551
+      ],
+      [
+        18,
+        202,
+        -635
+      ],
+      [
+        19,
+        0,
+        -1265
+      ],
+      [
+        20,
+        0,
+        -1350
+      ],
+      [
+        21,
+        0,
+        -1252
+      ],
+      [
+        22,
+        0,
+        -1125
+      ],
+      [
+        23,
+        0,
+        -9994
+      ],
+      [
+        24,
+        0,
+        -9995
+      ],
+      [
+        25,
+        0,
+        -9996
+      ],
+      [
+        26,
+        0,
+        -9997
+      ]
+    ]
+  },
+  "j04fdzS5": {
+    "chess960": true,
+    "color": "white",
+    "date": "2026-10-01",
+    "findings": [
+      {
+        "fen_before": "rqnkbbrn/pp1p1ppp/4p3/8/3p4/4P1N1/PPP2PPP/RQNKBBR1 w KQkq - 0 4",
+        "move": "Bd3",
+        "move_number": 4,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -137,
+          "eval_before_cp": 12,
+          "loss_cp": 149
+        },
+        "uci": "f1d3"
+      },
+      {
+        "fen_before": "r1nkb1r1/ppq2ppp/3bp3/3p4/3P1n2/1NBB2N1/PPP2PPP/RQ3RK1 w kq - 6 9",
+        "move": "Bxh7",
+        "move_number": 9,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -140,
+          "eval_before_cp": -75,
+          "loss_cp": 65
+        },
+        "uci": "d3h7",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -195,
+          "eval_before_cp": -85,
+          "loss_cp": 110
+        }
+      },
+      {
+        "fen_before": "r1nkb2r/pp2qpp1/3bp3/3p4/3P1n2/1NBB2N1/PPP2PPP/RQ3RK1 w q - 3 11",
+        "move": "Qd1",
+        "move_number": 11,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -664,
+          "eval_before_cp": -181,
+          "loss_cp": 483
+        },
+        "uci": "b1d1",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -732,
+          "eval_before_cp": -195,
+          "loss_cp": 537
+        }
+      },
+      {
+        "fen_before": "r1nkb2r/pp3pp1/3bp3/3p4/3P1n1q/1NBB2N1/PPP2PPP/R2Q1RK1 w q - 5 12",
+        "move": "h3",
+        "move_number": 12,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -1160,
+          "eval_before_cp": -668,
+          "loss_cp": 332
+        },
+        "uci": "h2h3",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -1235,
+          "eval_before_cp": -790,
+          "loss_cp": 210
+        }
+      }
+    ],
+    "losses": [
+      [
+        1,
+        30,
+        56
+      ],
+      [
+        2,
+        3,
+        22
+      ],
+      [
+        3,
+        3,
+        14
+      ],
+      [
+        4,
+        149,
+        12
+      ],
+      [
+        5,
+        2,
+        -24
+      ],
+      [
+        6,
+        23,
+        -28
+      ],
+      [
+        7,
+        16,
+        -32
+      ],
+      [
+        8,
+        19,
+        -51
+      ],
+      [
+        9,
+        65,
+        -75
+      ],
+      [
+        10,
+        13,
+        -171
+      ],
+      [
+        11,
+        483,
+        -181
+      ],
+      [
+        12,
+        332,
+        -668
+      ],
+      [
+        13,
+        0,
+        -9989
+      ],
+      [
+        14,
+        0,
+        -9990
+      ],
+      [
+        15,
+        0,
+        -9994
+      ],
+      [
+        16,
+        0,
+        -9995
+      ],
+      [
+        17,
+        0,
+        -9996
+      ],
+      [
+        18,
+        0,
+        -9997
+      ],
+      [
+        19,
+        0,
+        -9998
+      ],
+      [
+        20,
+        0,
+        -9999
+      ]
+    ]
+  },
+  "u8FaB4q9": {
+    "chess960": true,
+    "color": "white",
+    "date": "2026-10-06",
+    "findings": [
+      {
+        "fen_before": "rbkrnnb1/pp1pp2p/2p1q1p1/5p2/2P5/4NN2/PP1PPPPP/RBKR2BQ w KQkq - 0 6",
+        "move": "Bd3",
+        "move_number": 6,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -192,
+          "eval_before_cp": -110,
+          "loss_cp": 82
+        },
+        "uci": "b1d3"
+      },
+      {
+        "fen_before": "r1krn3/ppb1q2p/4n1p1/3bp1P1/5p1P/5N2/PPNP1P2/R1KR1BBQ w KQkq - 2 15",
+        "move": "d4",
+        "move_number": 15,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -276,
+          "eval_before_cp": -220,
+          "loss_cp": 56
+        },
+        "uci": "d2d4"
+      },
+      {
+        "fen_before": "r1krn3/ppb1q2p/6p1/3b2P1/3p1p1P/5N2/PP3P2/R1KR1BBQ w KQkq - 0 17",
+        "move": "Qh3+",
+        "move_number": 17,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -361,
+          "eval_before_cp": -267,
+          "loss_cp": 94
+        },
+        "uci": "h1h3",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -424,
+          "eval_before_cp": -312,
+          "loss_cp": 112
+        }
+      },
+      {
+        "fen_before": "r1krn3/ppb1q2p/4b1p1/6P1/3p1p1P/5N1Q/PP3P2/R1KR1BB1 w KQkq - 2 18",
+        "move": "Qg2",
+        "move_number": 18,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -504,
+          "eval_before_cp": -368,
+          "loss_cp": 136
+        },
+        "uci": "h3g2",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -701,
+          "eval_before_cp": -462,
+          "loss_cp": 239
+        }
+      },
+      {
+        "fen_before": "r1krn3/ppb4p/4b1p1/2q3P1/5p1P/3p1N2/PP3PQ1/RK1R1BB1 w kq - 0 20",
+        "move": "Bxd3",
+        "move_number": 20,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -789,
+          "eval_before_cp": -589,
+          "loss_cp": 200
+        },
+        "uci": "f1d3",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -1127,
+          "eval_before_cp": -716,
+          "loss_cp": 284
+        }
+      },
+      {
+        "fen_before": "r1k1n3/ppb4p/4b1p1/2q3P1/5p1P/3r1N2/PP3PQ1/RK1R2B1 w q - 0 21",
+        "move": "Rxd3",
+        "move_number": 21,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -864,
+          "eval_before_cp": -806,
+          "loss_cp": 58
+        },
+        "uci": "d1d3"
+      },
+      {
+        "fen_before": "2krn3/ppb4p/6p1/2q2bP1/5p1P/3R4/PP3PQ1/RK2N1B1 w - - 3 23",
+        "move": "a4",
+        "move_number": 23,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -9990,
+          "eval_before_cp": -911,
+          "loss_cp": 89
+        },
+        "uci": "a2a4"
+      }
+    ],
+    "losses": [
+      [
+        1,
+        46,
+        41
+      ],
+      [
+        2,
+        8,
+        -36
+      ],
+      [
+        3,
+        48,
+        -42
+      ],
+      [
+        4,
+        41,
+        -82
+      ],
+      [
+        5,
+        -7,
+        -106
+      ],
+      [
+        6,
+        82,
+        -110
+      ],
+      [
+        7,
+        8,
+        -173
+      ],
+      [
+        8,
+        13,
+        -175
+      ],
+      [
+        9,
+        13,
+        -182
+      ],
+      [
+        10,
+        29,
+        -198
+      ],
+      [
+        11,
+        -9,
+        -227
+      ],
+      [
+        12,
+        1,
+        -226
+      ],
+      [
+        13,
+        4,
+        -214
+      ],
+      [
+        14,
+        1,
+        -220
+      ],
+      [
+        15,
+        56,
+        -220
+      ],
+      [
+        16,
+        -6,
+        -267
+      ],
+      [
+        17,
+        94,
+        -267
+      ],
+      [
+        18,
+        136,
+        -368
+      ],
+      [
+        19,
+        27,
+        -522
+      ],
+      [
+        20,
+        200,
+        -589
+      ],
+      [
+        21,
+        58,
+        -806
+      ],
+      [
+        22,
+        45,
+        -858
+      ],
+      [
+        23,
+        89,
+        -911
+      ],
+      [
+        24,
+        0,
+        -9991
+      ],
+      [
+        25,
+        0,
+        -9993
+      ],
+      [
+        26,
+        0,
+        -9994
+      ],
+      [
+        27,
+        0,
+        -9995
+      ],
+      [
+        28,
+        0,
+        -9996
+      ],
+      [
+        29,
+        0,
+        -9997
+      ]
+    ]
+  },
+  "wcMceI9Y": {
+    "chess960": true,
+    "color": "black",
+    "date": "2026-10-17",
+    "findings": [
+      {
+        "fen_before": "r1krbqnb/ppp1pp1p/2n3p1/P2p4/6P1/4P3/1PPP1P1P/RNKRBQNB b KQkq - 0 4",
+        "move": "Qh6",
+        "move_number": 4,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -143,
+          "eval_before_cp": -51,
+          "loss_cp": 92
+        },
+        "uci": "f8h6"
+      },
+      {
+        "fen_before": "r1krb1nb/p1p1pp1p/Ppn3pq/3p4/3P1PP1/4PN2/1PP5/RNKRBQ1B b KQkq - 0 8",
+        "move": "Bd7",
+        "move_number": 8,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -212,
+          "eval_before_cp": -156,
+          "loss_cp": 56
+        },
+        "uci": "e8d7"
+      },
+      {
+        "fen_before": "r1kr2nb/p1p1pp1p/Ppn3pq/3P4/3P1Pb1/4PN2/1P6/RNKRBQ1B b KQkq - 0 10",
+        "move": "Nb8",
+        "move_number": 10,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -283,
+          "eval_before_cp": -226,
+          "loss_cp": 57
+        },
+        "uci": "c6b8"
+      },
+      {
+        "fen_before": "rnkr3b/p1p1pp1p/Pp3npq/3PN3/1B1P1Pb1/4P3/1P6/RNKR1Q1B b KQkq - 4 12",
+        "move": "O-O",
+        "move_number": 12,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -282,
+          "eval_before_cp": -192,
+          "loss_cp": 90
+        },
+        "uci": "c8d8"
+      },
+      {
+        "fen_before": "1b3qk1/1R3p1p/Pp3Qp1/r7/3P4/4P3/1P1N4/3K4 b - - 4 23",
+        "move": "Ra1+",
+        "move_number": 23,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -419,
+          "eval_before_cp": -282,
+          "loss_cp": 137
+        },
+        "uci": "a5a1"
+      },
+      {
+        "fen_before": "6k1/3R1p1p/qp4p1/4Q3/3PK3/2N1P3/1r6/8 b - - 1 30",
+        "move": "f5+",
+        "move_number": 30,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -803,
+          "eval_before_cp": -442,
+          "loss_cp": 361
+        },
+        "uci": "f7f5",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -720,
+          "eval_before_cp": -502,
+          "loss_cp": 218
+        }
+      },
+      {
+        "fen_before": "6k1/3R3p/qp4p1/4Qp2/3P1K2/2N1P3/1r6/8 b - - 1 31",
+        "move": "Qf1+",
+        "move_number": 31,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -9991,
+          "eval_before_cp": -921,
+          "loss_cp": 79
+        },
+        "uci": "a6f1"
+      }
+    ],
+    "losses": [
+      [
+        1,
+        -2,
+        -46
+      ],
+      [
+        2,
+        4,
+        -45
+      ],
+      [
+        3,
+        31,
+        -38
+      ],
+      [
+        4,
+        92,
+        -51
+      ],
+      [
+        5,
+        16,
+        -148
+      ],
+      [
+        6,
+        33,
+        -156
+      ],
+      [
+        7,
+        -1,
+        -164
+      ],
+      [
+        8,
+        56,
+        -156
+      ],
+      [
+        9,
+        25,
+        -216
+      ],
+      [
+        10,
+        57,
+        -226
+      ],
+      [
+        11,
+        26,
+        -309
+      ],
+      [
+        12,
+        90,
+        -192
+      ],
+      [
+        13,
+        5,
+        -226
+      ],
+      [
+        14,
+        -7,
+        -235
+      ],
+      [
+        15,
+        2,
+        -228
+      ],
+      [
+        16,
+        2,
+        -226
+      ],
+      [
+        17,
+        -33,
+        -191
+      ],
+      [
+        18,
+        41,
+        -164
+      ],
+      [
+        19,
+        21,
+        -182
+      ],
+      [
+        20,
+        22,
+        -206
+      ],
+      [
+        21,
+        9,
+        -254
+      ],
+      [
+        22,
+        5,
+        -177
+      ],
+      [
+        23,
+        137,
+        -282
+      ],
+      [
+        24,
+        -11,
+        -407
+      ],
+      [
+        25,
+        19,
+        -365
+      ],
+      [
+        26,
+        -6,
+        -336
+      ],
+      [
+        27,
+        18,
+        -406
+      ],
+      [
+        28,
+        -3,
+        -427
+      ],
+      [
+        29,
+        0,
+        -425
+      ],
+      [
+        30,
+        361,
+        -442
+      ],
+      [
+        31,
+        79,
+        -921
+      ],
+      [
+        32,
+        0,
+        -9992
+      ],
+      [
+        33,
+        0,
+        -9993
+      ],
+      [
+        34,
+        0,
+        -9996
+      ],
+      [
+        35,
+        0,
+        -9998
+      ]
+    ]
+  },
+  "xiP0Lmfu": {
+    "chess960": true,
+    "color": "black",
+    "date": "2026-10-17",
+    "findings": [
+      {
+        "fen_before": "rb1nbkqr/ppp1pppp/8/3p4/P1n2P2/4N3/1P1PP1PP/RBN1BKQR b KQkq - 1 4",
+        "move": "Nxb2",
+        "move_number": 4,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -106,
+          "eval_before_cp": 67,
+          "loss_cp": 173
+        },
+        "uci": "c4b2",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -72,
+          "eval_before_cp": 85,
+          "loss_cp": 157
+        }
+      },
+      {
+        "fen_before": "rb1nbkqr/ppp1pppp/8/3N4/P4P2/8/1n1PP1PP/RBN1BKQR b KQkq - 0 5",
+        "move": "Ne6",
+        "move_number": 5,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -177,
+          "eval_before_cp": -126,
+          "loss_cp": 51
+        },
+        "uci": "d8e6"
+      },
+      {
+        "fen_before": "rb2b1qr/pp2kp1p/2p1n3/5Pp1/P7/6B1/1n1PP1PP/RBN2KQR b KQ - 1 9",
+        "move": "Nc4",
+        "move_number": 9,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -12,
+          "eval_before_cp": 80,
+          "loss_cp": 92
+        },
+        "uci": "b2c4",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": 38,
+          "eval_before_cp": 70,
+          "loss_cp": 32
+        }
+      },
+      {
+        "fen_before": "rb2b1qr/pp2kp1p/2p1P3/6p1/P1n5/6B1/3PP1PP/RBN2KQR b KQ - 0 10",
+        "move": "Nxd2+",
+        "move_number": 10,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -137,
+          "eval_before_cp": 3,
+          "loss_cp": 140
+        },
+        "uci": "c4d2",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -109,
+          "eval_before_cp": 20,
+          "loss_cp": 129
+        }
+      },
+      {
+        "fen_before": "r3b1qr/pp2kp1p/2p1P3/6p1/P7/6P1/3nP1P1/RBN1K1QR b - - 0 12",
+        "move": "Qg7",
+        "move_number": 12,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -316,
+          "eval_before_cp": -145,
+          "loss_cp": 171
+        },
+        "uci": "g8g7",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -361,
+          "eval_before_cp": -122,
+          "loss_cp": 239
+        }
+      },
+      {
+        "fen_before": "r2kb2r/pp3pqp/2p1P3/2Q3p1/P7/R5P1/3nP1P1/1BN1K2R b - - 4 14",
+        "move": "Nxb1",
+        "move_number": 14,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -598,
+          "eval_before_cp": -353,
+          "loss_cp": 245
+        },
+        "uci": "d2b1",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -749,
+          "eval_before_cp": -362,
+          "loss_cp": 387
+        }
+      },
+      {
+        "fen_before": "r2k3r/pp1b1pqR/2p1P3/2Q3p1/P7/3R2P1/4P1P1/1nN1K3 b - - 0 16",
+        "move": "Rxh7",
+        "move_number": 16,
+        "scan": {
+          "depth": 15,
+          "eval_after_cp": -1108,
+          "eval_before_cp": -850,
+          "loss_cp": 150
+        },
+        "uci": "h8h7",
+        "verified": {
+          "depth": 20,
+          "eval_after_cp": -9991,
+          "eval_before_cp": -1152,
+          "loss_cp": 0
+        }
+      }
+    ],
+    "losses": [
+      [
+        1,
+        20,
+        -24
+      ],
+      [
+        2,
+        -13,
+        16
+      ],
+      [
+        3,
+        13,
+        78
+      ],
+      [
+        4,
+        173,
+        67
+      ],
+      [
+        5,
+        51,
+        -126
+      ],
+      [
+        6,
+        13,
+        -179
+      ],
+      [
+        7,
+        11,
+        -175
+      ],
+      [
+        8,
+        27,
+        83
+      ],
+      [
+        9,
+        92,
+        80
+      ],
+      [
+        10,
+        140,
+        3
+      ],
+      [
+        11,
+        26,
+        -124
+      ],
+      [
+        12,
+        171,
+        -145
+      ],
+      [
+        13,
+        15,
+        -337
+      ],
+      [
+        14,
+        245,
+        -353
+      ],
+      [
+        15,
+        -5,
+        -748
+      ],
+      [
+        16,
+        150,
+        -850
+      ],
+      [
+        17,
+        -50,
+        -1121
+      ],
+      [
+        18,
+        0,
+        -1102
+      ],
+      [
+        19,
+        0,
+        -9985
+      ],
+      [
+        20,
+        0,
+        -9986
+      ],
+      [
+        21,
+        0,
+        -9996
+      ]
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/game/rmeQKqXc"]
+[Date "2026.10.12"]
+[Round "-"]
+[White "myChessJava"]
+[Black "WolfuhfuhBot"]
+[Result "0-1"]
+[GameId "rmeQKqXc"]
+[UTCDate "2026.10.12"]
+[UTCTime "05:23:08"]
+[WhiteElo "2023"]
+[BlackElo "2138"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+3"]
+[ECO "C68"]
+[Opening "Ruy Lopez: Exchange Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Bg4 6. d3 Bd6 7. h3 Bh5 8. Nbd2 Nf6 9. d4 Qe7 10. g4 Bg6 11. dxe5 Bxe5 12. Nc4 Nd7 13. Qe2 O-O-O 14. Bd2 Rhe8 15. Rae1 b5 16. Na5 Nb8 17. c3 h6 18. Qe3 c5 19. Re2 Bd6 20. Rfe1 c6 21. c4 Bc7 22. cxb5 axb5 23. Nb3 Nd7 24. Ba5 Bxa5 25. Nxa5 Qd6 26. e5 Qc7 27. b4 c4 28. a3 Bd3 29. Rd2 Re6 30. Qf4 Rf8 31. Rdd1 f6 32. Nd4 Rxe5 33. Re3 Rfe8 34. Naxc6 Rxe3 35. fxe3 Qxf4 36. exf4 Kb7 37. f5 Kb6 38. Kf2 Re4 39. Rc1 Nb8 40. Nxb8 Rxd4 41. Re1 Kb7 42. Re8 c3 43. Nc6 Kxc6 44. Rc8+ Kd5 45. Rxc3 Bc4 46. Re3 Rd2+ 47. Kf3 Rh2 48. Kg3 Ra2 49. Kh4 Kd4 50. Re7 Rxa3 51. Rxg7 Ke4 52. Re7+ Kf4 53. Rd7 Rb3 54. Rd4+ Ke5 55. Rd1 Bd5 56. Re1+ Be4 57. Rc1 Rxb4 58. Rc3 Rc4 59. Rb3 b4 60. Rb2 Kd4 61. Rd2+ Kc3 62. Rf2 b3 63. Kh5 Bc2 64. Rf3+ Kd4 65. Rxb3 Bxb3 66. Kxh6 Ke5 67. Kg6 Rc3 68. h4 Rc4 69. g5 Rxh4 70. Kg7 Rh3 71. Kg6 Rg3 72. Kg7 Rxg5+ 73. Kh7 Bd5 74. Kh6 Kf4 75. Kh7 Kxf5 76. Kh6 Rg4 0-1
+

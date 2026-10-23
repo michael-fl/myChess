@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/game/6jz6SU0E"]
+[Date "2026.10.16"]
+[Round "-"]
+[White "HynobiusChess"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "6jz6SU0E"]
+[UTCDate "2026.10.16"]
+[UTCTime "21:35:49"]
+[WhiteElo "1797"]
+[BlackElo "2010"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+3"]
+[ECO "C20"]
+[Opening "King's Pawn Game: Alapin Opening"]
+[Termination "Normal"]
+
+1. e4 e5 2. Ne2 Nf6 3. Nbc3 Bc5 4. d4 exd4 5. Nxd4 O-O 6. Be3 Re8 7. Bd3 d5 8. exd5 Bxd4 9. Bxh7+ Kxh7 10. Qxd4 Bf5 11. O-O-O Ne4 12. Qb4 Nxc3 13. bxc3 Qf6 14. Kd2 b6 15. Qf4 Be4 16. c4 Qb2 17. Qxf7 Na6 18. Rc1 Qb4+ 19. Kd1 Qxc4 20. Qh5+ Kg8 21. d6 Rad8 22. d7 Rxd7+ 23. Ke1 Rdd8 24. Qe2 Qxa2 25. f3 Bh7 26. Kf1 Nb4 27. Kf2 Bxc2 28. Ra1 Qb3 29. Rhe1 Nd3+ 30. Kg1 Nxe1 31. Rxe1 Rd3 32. Kf2 Rdxe3 33. Qxe3 Rxe3 34. Rxe3 Qa4 35. Kf1 Qd4 36. Re8+ Kf7 37. Re4 Bxe4 38. fxe4 Qxe4 39. Kf2 a5 40. h3 a4 41. g4 a3 42. h4 Qxg4 43. h5 a2 44. Ke3 a1=Q 45. Kd2 Qgd1+ 46. Ke3 Qad4# 0-1
+

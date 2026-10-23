@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/game/Pc25M0p9"]
+[Date "2026.10.11"]
+[Round "-"]
+[White "StockFail"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "Pc25M0p9"]
+[UTCDate "2026.10.11"]
+[UTCTime "15:57:42"]
+[WhiteElo "1806"]
+[BlackElo "2299"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "A46"]
+[Opening "Indian Defense: Knights Variation"]
+[Termination "Normal"]
+
+1. d4 Nf6 2. Nf3 e6 3. Nc3 Bb4 4. Bd2 Nc6 5. e3 d5 6. Ne5 Nxe5 7. dxe5 Bxc3 8. Bxc3 Ne4 9. Bb5+ c6 10. Bd3 Nxc3 11. Qg4 Ne4 12. Qxg7 Rf8 13. Bxe4 Qa5+ 14. c3 dxe4 15. O-O-O Bd7 16. Kb1 O-O-O 17. g3 c5 18. c4 Qb4 19. b3 Qc3 20. h3 a5 21. h4 a4 22. Rc1 Qb4 23. Kb2 axb3 24. Rhd1 bxa2+ 25. Ka1 Qa3 26. Qxh7 Ba4 27. Rd6 Qxc1+ 28. Kxa2 Bc2 29. Qg7 Qb1+ 30. Ka3 Qb3# 0-1
+

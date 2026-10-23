@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/game/iJA6D566"]
+[Date "2026.10.14"]
+[Round "-"]
+[White "myChessJava"]
+[Black "AetherBot"]
+[Result "1/2-1/2"]
+[GameId "iJA6D566"]
+[UTCDate "2026.10.14"]
+[UTCTime "21:10:38"]
+[WhiteElo "2033"]
+[BlackElo "2010"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+2"]
+[ECO "C67"]
+[Opening "Ruy Lopez: Berlin Defense, Rio Gambit Accepted"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. Re1 Nd6 6. Bxc6 dxc6 7. Rxe5+ Be7 8. Qe2 f6 9. Re3 Nf5 10. Re4 Kf7 11. Nc3 Nd6 12. Rf4 Kg8 13. d3 g5 14. Ra4 b5 15. Rd4 g4 16. Nd2 f5 17. Nb3 Rb8 18. a4 a6 19. axb5 axb5 20. Ra7 Bf6 21. Rb4 h5 22. Be3 Rh7 23. Nc5 Re7 24. Qd2 Re8 25. g3 Be6 26. Bd4 Bg5 27. Qd1 Bf7 28. Ra6 Rb6 29. Ra1 Nb7 30. Nxb7 Rxb7 31. Bc5 Be7 32. Rd4 Bd6 33. Bxd6 cxd6 34. Rb4 d5 35. Rf4 Qf6 36. d4 Bg6 37. Qd2 Qd6 38. Nd1 Re4 39. Rxe4 fxe4 40. Ra6 Be8 41. Ra8 Qe6 42. Qg5+ Kh7 43. Qd8 Re7 44. Ne3 Kg6 45. c3 Bf7 46. Ra6 Rd7 47. Qb6 Rd6 48. Qc7 Be8 49. Ra8 Qd7 50. Qb8 Re6 51. Ra7 Qd6 52. Qc8 Kf6 53. Rh7 Kg5 54. Kg2 b4 55. cxb4 Bg6 56. Rc7 Rf6 57. b5 Qb4 58. h4+ gxh3+ 59. Qxh3 Rxf2+ 60. Kxf2 Qd2+ 61. Kf1 Qxe3 62. Qh4+ Kh6 63. Rxc6 Qd3+ 64. Ke1 Qe3+ 65. Kd1 Qd3+ 66. Kc1 Qf1+ 67. Kc2 Qd3+ 68. Kc1 Qf1+ 69. Kd2 Qd3+ 70. Ke1 Qe3+ 71. Kf1 Qd3+ 72. Kg2 Qf3+ 73. Kg1 Qd1+ 74. Kh2 Qe2+ 75. Kg1 Qd1+ 76. Kf2 Qd2+ 77. Kf1 Qd3+ 1/2-1/2
+
