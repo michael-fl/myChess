@@ -175,7 +175,7 @@ With (1)+(2)+(3) in place, every roadmap entry can be measured locally before me
 > **Shipped.** myChess plays Chess960: `UCI_Chess960` is handled in `UciHandler`, castling and
 > the 960 start positions are implemented in `Board`/`Fen`, and the bot accepts the variant on
 > lichess. Covered by `Chess960CastlingTest`, `Chess960StartPositionsTest`, `FenChess960ImportTest`
-> and randomized 960 walks in `ZobristHashingTest`. The design record is
+> randomized 960 walks in `ZobristHashingTest`, and since v4.9.3 by `Chess960PerftTest` (128 positions from lichess games, python-chess reference counts), which found and fixed a missing black queenside castle. The design record is
 > [Chess960-project.md](Chess960-project.md); what remains open there is evaluation *tuning* for
 > 960, not support — see § 12.11.1 below.
 
