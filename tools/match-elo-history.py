@@ -12,8 +12,18 @@ Below the table it estimates the time left: the declared length comes from the
 (or from --total), the pace from the median gap between the last game ends. The median
 ignores pauses and the interleaving of parallel games.
 
+With --sprt ELO0,ELO1 every line also shows the log-likelihood ratio of an SPRT with those
+bounds (logistic Elo, trinomial GSPRT: maximum-likelihood win/loss/draw probabilities under
+each hypothesis), and the last line states the decision against the bounds from --alpha and
+--beta. Checked against the cutechess log of the 4.9.2-md150 SPRT: within 0.01 of cutechess's
+"SPRT: llr" from about 40 games on, within 0.02 at 10 games.
+
 Usage, from the repository root:
-    tools/match-elo-history.py [--every MINUTES] <candidate-name> <pgn> [<pgn> ...]
+    tools/match-elo-history.py [--every MINUTES] [--sprt ELO0,ELO1] <candidate-name> <pgn> [<pgn> ...]
+
+Example, an SPRT with the bounds -5 and +15, capped at 4200 games:
+    tools/match-elo-history.py --every 30 --total 4200 --sprt -5,15 4.9.2-md150 \\
+        test-results/sprt-median-k150.pgn
 
 Example, the running 0.015 match in 30-minute steps:
     tools/match-elo-history.py --every 30 4.8.2-exchange-avoidance-0.015 \\
@@ -23,6 +33,7 @@ Example, the running 0.015 match in 30-minute steps:
 import argparse
 import datetime
 import importlib.util
+import math
 import pathlib
 import re
 import sys
@@ -108,6 +119,69 @@ def history(played, step):
     return rows
 
 
+def constrained_probabilities(counts, scores, target):
+    """
+    Maximum-likelihood outcome probabilities for the observed counts under the constraint that
+    the expected score equals `target`: p_i = p̂_i / (1 + λ (s_i − target)), with λ found by
+    bisection so that the probabilities sum to one.
+    """
+    total = sum(counts)
+    observed = [count / total for count in counts]
+
+    def excess(lam):
+        return sum(p * (s - target) / (1 + lam * (s - target)) for p, s in zip(observed, scores))
+
+    low = -1 / (max(scores) - target) * 0.999999
+    high = 1 / (target - min(scores)) * 0.999999
+
+    for _ in range(200):
+        middle = (low + high) / 2
+
+        if excess(middle) > 0:
+            low = middle
+        else:
+            high = middle
+
+    lam = (low + high) / 2
+
+    return [p / (1 + lam * (s - target)) for p, s in zip(observed, scores)]
+
+
+def sprt_llr(wins, losses, draws, elo0, elo1):
+    """
+    Log-likelihood ratio of H1 (Elo = elo1) against H0 (Elo = elo0), logistic Elo, trinomial
+    GSPRT, or None while one of the three outcomes has not occurred yet.
+    """
+    counts = [wins, losses, draws]
+
+    if min(counts) == 0:
+        return None
+
+    scores = [1.0, 0.0, 0.5]
+    p0 = constrained_probabilities(counts, scores, 1 / (1 + 10 ** (-elo0 / 400)))
+    p1 = constrained_probabilities(counts, scores, 1 / (1 + 10 ** (-elo1 / 400)))
+
+    return sum(n * math.log(a / b) for n, a, b in zip(counts, p1, p0))
+
+
+def sprt_bounds(alpha, beta):
+    """(lower, upper) LLR bounds: H0 is accepted below the lower, H1 above the upper."""
+    return math.log(beta / (1 - alpha)), math.log((1 - beta) / alpha)
+
+
+def parse_sprt(text):
+    """(elo0, elo1) from "ELO0,ELO1"."""
+    try:
+        elo0, elo1 = (float(part) for part in text.split(","))
+    except ValueError as error:
+        raise argparse.ArgumentTypeError(f"expected ELO0,ELO1, for example -5,15: {text}") from error
+
+    if elo1 <= elo0:
+        raise argparse.ArgumentTypeError(f"ELO1 must be greater than ELO0: {text}")
+
+    return elo0, elo1
+
+
 def declared_total(paths):
     """Games the whole match is declared to have, from the runner's state file, or None if absent."""
     for path in paths:
@@ -159,6 +233,10 @@ def main():
                         help="time step between lines, default 30")
     parser.add_argument("--total", type=int, metavar="GAMES",
                         help="declared match length; default: read from match-<name>.rounds")
+    parser.add_argument("--sprt", type=parse_sprt, metavar="ELO0,ELO1",
+                        help="also show the SPRT log-likelihood ratio for these Elo bounds")
+    parser.add_argument("--alpha", type=float, default=0.05, help="SPRT alpha, default 0.05")
+    parser.add_argument("--beta", type=float, default=0.05, help="SPRT beta, default 0.05")
     parser.add_argument("candidate")
     parser.add_argument("paths", nargs="+", metavar="pgn")
     args = parser.parse_args()
@@ -170,7 +248,9 @@ def main():
         sys.exit("no finished games found - check the engine name")
 
     print(f"{args.candidate}, every {args.every} min, cumulative from the first game")
-    print(f"  {'time':<16} {'games':>5}  {'W - L - D':<17} {'Elo':>6}  {'+/-':>5}  95 % interval")
+    header = f"  {'time':<16} {'games':>5}  {'W - L - D':<17} {'Elo':>6}  {'+/-':>5}  95 % interval"
+    print(header + ("       LLR" if args.sprt else ""))
+    last_llr = None
 
     for moment, wins, losses, draws in rows:
         stats = match_elo.elo_and_interval(wins, losses, draws)
@@ -180,8 +260,21 @@ def main():
 
         elo, error, _, n, _ = stats
         score = f"{wins} - {losses} - {draws}"
-        print(f"  {moment:%Y-%m-%d %H:%M} {n:>5}  {score:<17} {elo:>+6.1f}  {error:>5.1f}  "
-              f"[{elo - error:+.1f}, {elo + error:+.1f}]")
+        line = (f"  {moment:%Y-%m-%d %H:%M} {n:>5}  {score:<17} {elo:>+6.1f}  {error:>5.1f}  "
+                f"[{elo - error:+.1f}, {elo + error:+.1f}]")
+
+        if args.sprt:
+            last_llr = sprt_llr(wins, losses, draws, *args.sprt)
+            line = f"{line:<78}" + (f"  {last_llr:+6.2f}" if last_llr is not None else "       -")
+
+        print(line)
+
+    if args.sprt and last_llr is not None:
+        lower, upper = sprt_bounds(args.alpha, args.beta)
+        state = "H1 accepted" if last_llr >= upper else "H0 accepted" if last_llr <= lower else "no decision yet"
+        print(f"\n  SPRT elo0={args.sprt[0]:g} elo1={args.sprt[1]:g}: llr {last_llr:+.3f}, "
+              f"bounds [{lower:.2f}, {upper:.2f}] ({100 * last_llr / upper:.1f} % of the upper bound)"
+              f" - {state}")
 
     total = args.total if args.total is not None else declared_total(args.paths)
     estimate = time_left([end for end, _ in played], total)

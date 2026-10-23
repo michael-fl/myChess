@@ -112,5 +112,40 @@ class TimeLeftTest(unittest.TestCase):
         self.assertIsNone(history_tool.time_left(ends[:1], total=10), "one game gives no pace")
 
 
+
+# (wins, losses, draws, llr printed by cutechess) from the 4.9.2-md150 SPRT with elo0=-5, elo1=15
+CUTECHESS_LLR = [(25, 17, 18, 0.591), (42, 33, 25, 0.581), (52, 45, 33, 0.395), (59, 55, 46, 0.136)]
+
+
+class SprtTest(unittest.TestCase):
+
+    def test_llr_matches_cutechess(self):
+        for wins, losses, draws, expected in CUTECHESS_LLR:
+            self.assertAlmostEqual(history_tool.sprt_llr(wins, losses, draws, -5, 15), expected, delta=0.01,
+                                   msg=f"llr for {wins}-{losses}-{draws} must match cutechess's {expected}")
+
+    def test_llr_is_none_until_every_outcome_occurred(self):
+        self.assertIsNone(history_tool.sprt_llr(5, 3, 0, -5, 15), "without a draw the trinomial model is undefined")
+
+    def test_llr_sign_follows_the_score(self):
+        self.assertGreater(history_tool.sprt_llr(60, 40, 30, -5, 15), 0, "a clear plus must favor H1")
+        self.assertLess(history_tool.sprt_llr(40, 60, 30, -5, 15), 0, "a clear minus must favor H0")
+
+    def test_bounds_for_five_percent(self):
+        lower, upper = history_tool.sprt_bounds(0.05, 0.05)
+
+        self.assertAlmostEqual(lower, -2.944, places=3, msg="lower bound log(beta / (1 - alpha))")
+        self.assertAlmostEqual(upper, 2.944, places=3, msg="upper bound log((1 - beta) / alpha)")
+
+    def test_parse_sprt_reads_and_checks_the_bounds(self):
+        self.assertEqual(history_tool.parse_sprt("-5,15"), (-5.0, 15.0), "two numbers separated by a comma")
+
+        with self.assertRaises(history_tool.argparse.ArgumentTypeError, msg="elo1 must exceed elo0"):
+            history_tool.parse_sprt("15,-5")
+
+        with self.assertRaises(history_tool.argparse.ArgumentTypeError, msg="one number is not enough"):
+            history_tool.parse_sprt("15")
+
+
 if __name__ == "__main__":
     unittest.main()
