@@ -1,0 +1,1429 @@
+Started game 4 of 4200 (4.9.2 vs 4.9.2-md150)
+Started game 1 of 4200 (4.9.2-md150 vs 4.9.2)
+Started game 3 of 4200 (4.9.2-md150 vs 4.9.2)
+Started game 2 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 1 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 0 - 1 - 0  [0.000] 1
+Started game 5 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 4 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 1 - 1 - 0  [0.500] 2
+Started game 6 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 2 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 2 - 1 - 0  [0.667] 3
+Started game 7 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 3 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 2 - 2 - 0  [0.500] 4
+Started game 8 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 6 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 3 - 2 - 0  [0.600] 5
+Started game 9 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 5 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 4 - 2 - 0  [0.667] 6
+Started game 10 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 8 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 5 - 2 - 0  [0.714] 7
+Started game 11 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 11 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 6 - 2 - 0  [0.750] 8
+Started game 12 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 9 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 7 - 2 - 0  [0.778] 9
+Started game 13 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 7 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 7 - 2 - 1  [0.750] 10
+...      4.9.2-md150 playing White: 3 - 2 - 1  [0.583] 6
+...      4.9.2-md150 playing Black: 4 - 0 - 0  [1.000] 4
+...      White vs Black: 3 - 6 - 1  [0.350] 10
+Elo difference: 190.8 +/- 658.3, LOS: 95.2 %, DrawRatio: 10.0 %
+SPRT: llr 0.332 (11.3%), lbound -2.94, ubound 2.94
+Started game 14 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 10 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 7 - 3 - 1  [0.682] 11
+Started game 15 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 13 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 7 - 4 - 1  [0.625] 12
+Started game 16 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 14 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 8 - 4 - 1  [0.654] 13
+Started game 17 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 12 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 9 - 4 - 1  [0.679] 14
+Started game 18 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 15 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 9 - 4 - 2  [0.667] 15
+Started game 19 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 18 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 9 - 5 - 2  [0.625] 16
+Started game 20 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 16 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 9 - 5 - 3  [0.618] 17
+Started game 21 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 17 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 9 - 6 - 3  [0.583] 18
+Started game 22 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 20 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 9 - 7 - 3  [0.553] 19
+Started game 23 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 19 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 10 - 7 - 3  [0.575] 20
+...      4.9.2-md150 playing White: 4 - 4 - 2  [0.500] 10
+...      4.9.2-md150 playing Black: 6 - 3 - 1  [0.650] 10
+...      White vs Black: 7 - 10 - 3  [0.425] 20
+Elo difference: 52.5 +/- 151.0, LOS: 76.7 %, DrawRatio: 15.0 %
+SPRT: llr 0.186 (6.3%), lbound -2.94, ubound 2.94
+Started game 24 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 22 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 11 - 7 - 3  [0.595] 21
+Started game 25 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 21 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 11 - 8 - 3  [0.568] 22
+Started game 26 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 23 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 12 - 8 - 3  [0.587] 23
+Started game 27 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 24 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 12 - 9 - 3  [0.563] 24
+Started game 28 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 26 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 13 - 9 - 3  [0.580] 25
+Started game 29 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 25 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 14 - 9 - 3  [0.596] 26
+Started game 30 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 28 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 14 - 10 - 3  [0.574] 27
+Started game 31 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 30 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 14 - 11 - 3  [0.554] 28
+Started game 32 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 29 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 14 - 11 - 4  [0.552] 29
+Started game 33 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 27 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 15 - 11 - 4  [0.567] 30
+...      4.9.2-md150 playing White: 7 - 5 - 3  [0.567] 15
+...      4.9.2-md150 playing Black: 8 - 6 - 1  [0.567] 15
+...      White vs Black: 13 - 13 - 4  [0.500] 30
+Elo difference: 46.6 +/- 121.4, LOS: 78.4 %, DrawRatio: 13.3 %
+SPRT: llr 0.239 (8.1%), lbound -2.94, ubound 2.94
+Started game 34 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 31 (4.9.2-md150 vs 4.9.2): 1-0 {White mates}
+Score of 4.9.2-md150 vs 4.9.2: 16 - 11 - 4  [0.581] 31
+Started game 35 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 33 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 17 - 11 - 4  [0.594] 32
+Started game 36 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 34 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 17 - 12 - 4  [0.576] 33
+Started game 37 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 32 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 18 - 12 - 4  [0.588] 34
+Started game 38 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 36 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 19 - 12 - 4  [0.600] 35
+Started game 39 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 37 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 20 - 12 - 4  [0.611] 36
+Started game 40 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 38 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 20 - 12 - 5  [0.608] 37
+Started game 41 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 39 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 20 - 12 - 6  [0.605] 38
+Started game 42 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 40 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 20 - 12 - 7  [0.603] 39
+Started game 43 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 35 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.9.2-md150 vs 4.9.2: 20 - 12 - 8  [0.600] 40
+...      4.9.2-md150 playing White: 10 - 5 - 5  [0.625] 20
+...      4.9.2-md150 playing Black: 10 - 7 - 3  [0.575] 20
+...      White vs Black: 17 - 15 - 8  [0.525] 40
+Elo difference: 70.4 +/- 100.7, LOS: 92.1 %, DrawRatio: 20.0 %
+SPRT: llr 0.542 (18.4%), lbound -2.94, ubound 2.94
+Started game 44 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 41 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 20 - 13 - 8  [0.585] 41
+Started game 45 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 42 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 20 - 13 - 9  [0.583] 42
+Started game 46 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 43 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 20 - 13 - 10  [0.581] 43
+Started game 47 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 45 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 21 - 13 - 10  [0.591] 44
+Started game 48 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 46 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 21 - 14 - 10  [0.578] 45
+Started game 49 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 47 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 21 - 14 - 11  [0.576] 46
+Started game 50 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 48 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 21 - 15 - 11  [0.564] 47
+Started game 51 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 44 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 21 - 15 - 12  [0.563] 48
+Started game 52 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 49 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 21 - 15 - 13  [0.561] 49
+Started game 53 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 50 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 22 - 15 - 13  [0.570] 50
+...      4.9.2-md150 playing White: 11 - 6 - 8  [0.600] 25
+...      4.9.2-md150 playing Black: 11 - 9 - 5  [0.540] 25
+...      White vs Black: 20 - 17 - 13  [0.530] 50
+Elo difference: 49.0 +/- 85.0, LOS: 87.5 %, DrawRatio: 26.0 %
+SPRT: llr 0.492 (16.7%), lbound -2.94, ubound 2.94
+Started game 54 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 51 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 22 - 16 - 13  [0.559] 51
+Started game 55 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 53 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 22 - 16 - 14  [0.558] 52
+Started game 56 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 54 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 23 - 16 - 14  [0.566] 53
+Started game 57 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 52 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by stalemate}
+Score of 4.9.2-md150 vs 4.9.2: 23 - 16 - 15  [0.565] 54
+Started game 58 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 56 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 24 - 16 - 15  [0.573] 55
+Started game 59 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 55 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 25 - 16 - 15  [0.580] 56
+Started game 60 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 57 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 25 - 16 - 16  [0.579] 57
+Started game 61 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 59 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 25 - 16 - 17  [0.578] 58
+Started game 62 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 58 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 25 - 17 - 17  [0.568] 59
+Started game 63 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 60 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 25 - 17 - 18  [0.567] 60
+...      4.9.2-md150 playing White: 12 - 7 - 11  [0.583] 30
+...      4.9.2-md150 playing Black: 13 - 10 - 7  [0.550] 30
+...      White vs Black: 22 - 20 - 18  [0.517] 60
+Elo difference: 46.6 +/- 75.0, LOS: 89.1 %, DrawRatio: 30.0 %
+SPRT: llr 0.591 (20.1%), lbound -2.94, ubound 2.94
+Started game 64 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 63 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 26 - 17 - 18  [0.574] 61
+Started game 65 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 61 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 26 - 18 - 18  [0.565] 62
+Started game 66 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 62 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 27 - 18 - 18  [0.571] 63
+Started game 67 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 64 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 27 - 19 - 18  [0.563] 64
+Started game 68 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 67 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 28 - 19 - 18  [0.569] 65
+Started game 69 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 66 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 28 - 20 - 18  [0.561] 66
+Started game 70 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 65 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 28 - 21 - 18  [0.552] 67
+Started game 71 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 68 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 29 - 21 - 18  [0.559] 68
+Started game 72 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 69 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 29 - 22 - 18  [0.551] 69
+Started game 73 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 70 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 30 - 22 - 18  [0.557] 70
+...      4.9.2-md150 playing White: 14 - 10 - 11  [0.557] 35
+...      4.9.2-md150 playing Black: 16 - 12 - 7  [0.557] 35
+...      White vs Black: 26 - 26 - 18  [0.500] 70
+Elo difference: 39.9 +/- 71.4, LOS: 86.6 %, DrawRatio: 25.7 %
+SPRT: llr 0.544 (18.5%), lbound -2.94, ubound 2.94
+Started game 74 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 73 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 30 - 23 - 18  [0.549] 71
+Started game 75 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 71 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 30 - 23 - 19  [0.549] 72
+Started game 76 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 74 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 31 - 23 - 19  [0.555] 73
+Started game 77 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 72 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 32 - 23 - 19  [0.561] 74
+Started game 78 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 75 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 33 - 23 - 19  [0.567] 75
+Started game 79 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 77 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 34 - 23 - 19  [0.572] 76
+Started game 80 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 76 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 34 - 23 - 20  [0.571] 77
+Started game 81 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 79 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 35 - 23 - 20  [0.577] 78
+Started game 82 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 78 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 35 - 24 - 20  [0.570] 79
+Started game 83 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 80 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 35 - 25 - 20  [0.563] 80
+...      4.9.2-md150 playing White: 17 - 11 - 12  [0.575] 40
+...      4.9.2-md150 playing Black: 18 - 14 - 8  [0.550] 40
+...      White vs Black: 31 - 29 - 20  [0.512] 80
+Elo difference: 43.7 +/- 67.0, LOS: 90.2 %, DrawRatio: 25.0 %
+SPRT: llr 0.683 (23.2%), lbound -2.94, ubound 2.94
+Started game 84 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 81 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 35 - 26 - 20  [0.556] 81
+Started game 85 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 82 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 36 - 26 - 20  [0.561] 82
+Started game 86 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 83 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 36 - 27 - 20  [0.554] 83
+Started game 87 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 85 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 37 - 27 - 20  [0.560] 84
+Started game 88 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 86 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 37 - 28 - 20  [0.553] 85
+Started game 89 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 84 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.9.2-md150 vs 4.9.2: 37 - 28 - 21  [0.552] 86
+Started game 90 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 87 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 37 - 29 - 21  [0.546] 87
+Started game 91 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 88 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 38 - 29 - 21  [0.551] 88
+Started game 92 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 89 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 39 - 29 - 21  [0.556] 89
+Started game 93 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 91 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 39 - 30 - 21  [0.550] 90
+...      4.9.2-md150 playing White: 19 - 15 - 12  [0.543] 46
+...      4.9.2-md150 playing Black: 20 - 15 - 9  [0.557] 44
+...      White vs Black: 34 - 35 - 21  [0.494] 90
+Elo difference: 34.9 +/- 63.7, LOS: 86.1 %, DrawRatio: 23.3 %
+SPRT: llr 0.58 (19.7%), lbound -2.94, ubound 2.94
+Started game 94 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 92 (4.9.2 vs 4.9.2-md150): 1-0 {White mates}
+Score of 4.9.2-md150 vs 4.9.2: 39 - 31 - 21  [0.544] 91
+Started game 95 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 90 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 39 - 31 - 22  [0.543] 92
+Started game 96 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 93 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 39 - 32 - 22  [0.538] 93
+Started game 97 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 94 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 40 - 32 - 22  [0.543] 94
+Started game 98 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 96 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 40 - 33 - 22  [0.537] 95
+Started game 99 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 95 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 41 - 33 - 22  [0.542] 96
+Started game 100 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 98 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 41 - 33 - 23  [0.541] 97
+Started game 101 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 97 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.9.2-md150 vs 4.9.2: 41 - 33 - 24  [0.541] 98
+Started game 102 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 99 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 42 - 33 - 24  [0.545] 99
+Started game 103 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 101 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 42 - 33 - 25  [0.545] 100
+...      4.9.2-md150 playing White: 21 - 16 - 14  [0.549] 51
+...      4.9.2-md150 playing Black: 21 - 17 - 11  [0.541] 49
+...      White vs Black: 38 - 37 - 25  [0.505] 100
+Elo difference: 31.4 +/- 59.6, LOS: 85.1 %, DrawRatio: 25.0 %
+SPRT: llr 0.581 (19.7%), lbound -2.94, ubound 2.94
+Started game 104 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 100 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 42 - 34 - 25  [0.540] 101
+Started game 105 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 103 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 42 - 34 - 26  [0.539] 102
+Started game 106 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 102 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 42 - 34 - 27  [0.539] 103
+Started game 107 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 105 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 42 - 34 - 28  [0.538] 104
+Started game 108 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 106 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 42 - 35 - 28  [0.533] 105
+Started game 109 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 104 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.9.2-md150 vs 4.9.2: 42 - 35 - 29  [0.533] 106
+Started game 110 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 107 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 42 - 36 - 29  [0.528] 107
+Started game 111 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 109 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 43 - 36 - 29  [0.532] 108
+Started game 112 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 108 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 44 - 36 - 29  [0.537] 109
+Started game 113 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 110 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 44 - 37 - 29  [0.532] 110
+...      4.9.2-md150 playing White: 22 - 17 - 16  [0.545] 55
+...      4.9.2-md150 playing Black: 22 - 20 - 13  [0.518] 55
+...      White vs Black: 42 - 39 - 29  [0.514] 110
+Elo difference: 22.1 +/- 56.2, LOS: 78.2 %, DrawRatio: 26.4 %
+SPRT: llr 0.423 (14.4%), lbound -2.94, ubound 2.94
+Started game 114 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 111 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 44 - 37 - 30  [0.532] 111
+Started game 115 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 112 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 44 - 37 - 31  [0.531] 112
+Started game 116 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 113 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 45 - 37 - 31  [0.535] 113
+Started game 117 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 114 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 45 - 38 - 31  [0.531] 114
+Started game 118 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 115 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 46 - 38 - 31  [0.535] 115
+Started game 119 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 117 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 47 - 38 - 31  [0.539] 116
+Started game 120 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 118 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 47 - 39 - 31  [0.534] 117
+Started game 121 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 119 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 47 - 40 - 31  [0.530] 118
+Started game 122 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 116 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 47 - 40 - 32  [0.529] 119
+Started game 123 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 120 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 48 - 40 - 32  [0.533] 120
+...      4.9.2-md150 playing White: 25 - 18 - 17  [0.558] 60
+...      4.9.2-md150 playing Black: 23 - 22 - 15  [0.508] 60
+...      White vs Black: 47 - 41 - 32  [0.525] 120
+Elo difference: 23.2 +/- 53.7, LOS: 80.3 %, DrawRatio: 26.7 %
+SPRT: llr 0.492 (16.7%), lbound -2.94, ubound 2.94
+Started game 124 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 121 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 48 - 41 - 32  [0.529] 121
+Started game 125 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 122 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 49 - 41 - 32  [0.533] 122
+Started game 126 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 123 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 49 - 42 - 32  [0.528] 123
+Started game 127 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 124 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 50 - 42 - 32  [0.532] 124
+Started game 128 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 125 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 50 - 43 - 32  [0.528] 125
+Started game 129 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 126 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 51 - 43 - 32  [0.532] 126
+Started game 130 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 128 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 51 - 44 - 32  [0.528] 127
+Started game 131 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 127 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 51 - 44 - 33  [0.527] 128
+Started game 132 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 129 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 51 - 45 - 33  [0.523] 129
+Started game 133 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 130 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 52 - 45 - 33  [0.527] 130
+...      4.9.2-md150 playing White: 25 - 22 - 18  [0.523] 65
+...      4.9.2-md150 playing Black: 27 - 23 - 15  [0.531] 65
+...      White vs Black: 48 - 49 - 33  [0.496] 130
+Elo difference: 18.7 +/- 52.0, LOS: 76.1 %, DrawRatio: 25.4 %
+SPRT: llr 0.395 (13.4%), lbound -2.94, ubound 2.94
+Started game 134 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 134 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 52 - 46 - 33  [0.523] 131
+Started game 135 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 131 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 52 - 46 - 34  [0.523] 132
+Started game 136 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 132 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 52 - 46 - 35  [0.523] 133
+Started game 137 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 133 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 52 - 47 - 35  [0.519] 134
+Started game 138 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 137 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 52 - 47 - 36  [0.519] 135
+Started game 139 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 136 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 52 - 47 - 37  [0.518] 136
+Started game 140 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 135 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 52 - 47 - 38  [0.518] 137
+Started game 141 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 138 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 52 - 47 - 39  [0.518] 138
+Started game 142 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 139 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 52 - 47 - 40  [0.518] 139
+Started game 143 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 140 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 52 - 48 - 40  [0.514] 140
+...      4.9.2-md150 playing White: 25 - 23 - 22  [0.514] 70
+...      4.9.2-md150 playing Black: 27 - 25 - 18  [0.514] 70
+...      White vs Black: 50 - 50 - 40  [0.500] 140
+Elo difference: 9.9 +/- 48.9, LOS: 65.5 %, DrawRatio: 28.6 %
+SPRT: llr 0.158 (5.4%), lbound -2.94, ubound 2.94
+Started game 144 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 141 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 52 - 48 - 41  [0.514] 141
+Started game 145 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 142 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 52 - 48 - 42  [0.514] 142
+Started game 146 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 143 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 53 - 48 - 42  [0.517] 143
+Started game 147 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 145 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 54 - 48 - 42  [0.521] 144
+Started game 148 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 146 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 54 - 49 - 42  [0.517] 145
+Started game 149 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 144 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 54 - 50 - 42  [0.514] 146
+Started game 150 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 148 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 55 - 50 - 42  [0.517] 147
+Started game 151 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 149 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 56 - 50 - 42  [0.520] 148
+Started game 152 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 147 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 56 - 51 - 42  [0.517] 149
+Started game 153 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 151 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 56 - 51 - 43  [0.517] 150
+...      4.9.2-md150 playing White: 28 - 24 - 24  [0.526] 76
+...      4.9.2-md150 playing Black: 28 - 27 - 19  [0.507] 74
+...      White vs Black: 55 - 52 - 43  [0.510] 150
+Elo difference: 11.6 +/- 47.2, LOS: 68.6 %, DrawRatio: 28.7 %
+SPRT: llr 0.228 (7.7%), lbound -2.94, ubound 2.94
+Started game 154 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 150 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 56 - 52 - 43  [0.513] 151
+Started game 155 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 152 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 56 - 52 - 44  [0.513] 152
+Started game 156 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 155 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 56 - 53 - 44  [0.510] 153
+Started game 157 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 153 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 57 - 53 - 44  [0.513] 154
+Started game 158 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 156 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 58 - 53 - 44  [0.516] 155
+Started game 159 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 154 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 58 - 54 - 44  [0.513] 156
+Started game 160 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 159 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 58 - 55 - 44  [0.510] 157
+Started game 161 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 160 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 59 - 55 - 44  [0.513] 158
+Started game 162 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 158 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 59 - 55 - 45  [0.513] 159
+Started game 163 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 157 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 59 - 55 - 46  [0.512] 160
+...      4.9.2-md150 playing White: 29 - 26 - 25  [0.519] 80
+...      4.9.2-md150 playing Black: 30 - 29 - 21  [0.506] 80
+...      White vs Black: 58 - 56 - 46  [0.506] 160
+Elo difference: 8.7 +/- 45.6, LOS: 64.6 %, DrawRatio: 28.7 %
+SPRT: llr 0.136 (4.6%), lbound -2.94, ubound 2.94
+Started game 164 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 162 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 60 - 55 - 46  [0.516] 161
+Started game 165 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 163 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 61 - 55 - 46  [0.519] 162
+Started game 166 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 161 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 62 - 55 - 46  [0.521] 163
+Started game 167 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 164 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 62 - 56 - 46  [0.518] 164
+Started game 168 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 165 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 62 - 56 - 47  [0.518] 165
+Started game 169 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 167 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 63 - 56 - 47  [0.521] 166
+Started game 170 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 166 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 63 - 57 - 47  [0.518] 167
+Started game 171 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 168 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 63 - 58 - 47  [0.515] 168
+Started game 172 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 171 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 64 - 58 - 47  [0.518] 169
+Started game 173 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 169 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 64 - 59 - 47  [0.515] 170
+...      4.9.2-md150 playing White: 33 - 27 - 26  [0.535] 86
+...      4.9.2-md150 playing Black: 31 - 32 - 21  [0.494] 84
+...      White vs Black: 65 - 58 - 47  [0.521] 170
+Elo difference: 10.2 +/- 44.6, LOS: 67.4 %, DrawRatio: 27.6 %
+SPRT: llr 0.202 (6.9%), lbound -2.94, ubound 2.94
+Started game 174 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 172 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 64 - 60 - 47  [0.512] 171
+Started game 175 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 170 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 64 - 60 - 48  [0.512] 172
+Started game 176 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 175 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 64 - 61 - 48  [0.509] 173
+Started game 177 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 173 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 65 - 61 - 48  [0.511] 174
+Started game 178 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 174 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 65 - 62 - 48  [0.509] 175
+Started game 179 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 176 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 66 - 62 - 48  [0.511] 176
+Started game 180 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 178 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 66 - 63 - 48  [0.508] 177
+Started game 181 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 179 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 66 - 63 - 49  [0.508] 178
+Started game 182 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 177 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 66 - 64 - 49  [0.506] 179
+Started game 183 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 181 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 67 - 64 - 49  [0.508] 180
+...      4.9.2-md150 playing White: 35 - 29 - 27  [0.533] 91
+...      4.9.2-md150 playing Black: 32 - 35 - 22  [0.483] 89
+...      White vs Black: 70 - 61 - 49  [0.525] 180
+Elo difference: 5.8 +/- 43.5, LOS: 60.3 %, DrawRatio: 27.2 %
+SPRT: llr 0.0308 (1.0%), lbound -2.94, ubound 2.94
+Started game 184 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 182 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 67 - 65 - 49  [0.506] 181
+Started game 185 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 180 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 67 - 65 - 50  [0.505] 182
+Started game 186 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 183 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 67 - 65 - 51  [0.505] 183
+Started game 187 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 185 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 68 - 65 - 51  [0.508] 184
+Started game 188 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 186 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 68 - 66 - 51  [0.505] 185
+Started game 189 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 187 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 68 - 67 - 51  [0.503] 186
+Started game 190 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 184 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 68 - 68 - 51  [0.500] 187
+Started game 191 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 188 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 68 - 68 - 52  [0.500] 188
+Started game 192 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 190 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 68 - 69 - 52  [0.497] 189
+Started game 193 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 191 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 68 - 69 - 53  [0.497] 190
+...      4.9.2-md150 playing White: 36 - 30 - 29  [0.532] 95
+...      4.9.2-md150 playing Black: 32 - 39 - 24  [0.463] 95
+...      White vs Black: 75 - 62 - 53  [0.534] 190
+Elo difference: -1.8 +/- 42.1, LOS: 46.6 %, DrawRatio: 27.9 %
+SPRT: llr -0.3 (-10.2%), lbound -2.94, ubound 2.94
+Started game 194 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 189 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 69 - 69 - 53  [0.500] 191
+Started game 195 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 192 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 69 - 70 - 53  [0.497] 192
+Started game 196 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 195 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 70 - 70 - 53  [0.500] 193
+Started game 197 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 194 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 70 - 70 - 54  [0.500] 194
+Started game 198 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 197 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 71 - 70 - 54  [0.503] 195
+Started game 199 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 193 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 72 - 70 - 54  [0.505] 196
+Started game 200 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 196 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 72 - 71 - 54  [0.503] 197
+Started game 201 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 198 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 72 - 72 - 54  [0.500] 198
+Started game 202 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 199 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 73 - 72 - 54  [0.503] 199
+Started game 203 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 200 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 73 - 73 - 54  [0.500] 200
+...      4.9.2-md150 playing White: 41 - 30 - 29  [0.555] 100
+...      4.9.2-md150 playing Black: 32 - 43 - 25  [0.445] 100
+...      White vs Black: 84 - 62 - 54  [0.555] 200
+Elo difference: 0.0 +/- 41.3, LOS: 50.0 %, DrawRatio: 27.0 %
+SPRT: llr -0.229 (-7.8%), lbound -2.94, ubound 2.94
+Started game 204 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 201 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 73 - 73 - 55  [0.500] 201
+Started game 205 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 203 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 74 - 73 - 55  [0.502] 202
+Started game 206 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 205 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 74 - 73 - 56  [0.502] 203
+Started game 207 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 202 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 74 - 74 - 56  [0.500] 204
+Started game 208 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 204 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 74 - 74 - 57  [0.500] 205
+Started game 209 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 207 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 74 - 74 - 58  [0.500] 206
+Started game 210 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 206 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 74 - 75 - 58  [0.498] 207
+Started game 211 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 209 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 75 - 75 - 58  [0.500] 208
+Started game 212 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 208 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 75 - 75 - 59  [0.500] 209
+Started game 213 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 211 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 75 - 76 - 59  [0.498] 210
+...      4.9.2-md150 playing White: 43 - 31 - 32  [0.557] 106
+...      4.9.2-md150 playing Black: 32 - 45 - 27  [0.438] 104
+...      White vs Black: 88 - 63 - 59  [0.560] 210
+Elo difference: -1.7 +/- 40.0, LOS: 46.8 %, DrawRatio: 28.1 %
+SPRT: llr -0.324 (-11.0%), lbound -2.94, ubound 2.94
+Started game 214 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 212 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 75 - 76 - 60  [0.498] 211
+Started game 215 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 210 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 75 - 77 - 60  [0.495] 212
+Started game 216 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 213 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 75 - 78 - 60  [0.493] 213
+Started game 217 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 215 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 75 - 79 - 60  [0.491] 214
+Started game 218 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 214 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 75 - 79 - 61  [0.491] 215
+Started game 219 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 216 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 75 - 80 - 61  [0.488] 216
+Started game 220 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 219 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 76 - 80 - 61  [0.491] 217
+Started game 221 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 217 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 77 - 80 - 61  [0.493] 218
+Started game 222 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 218 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 77 - 81 - 61  [0.491] 219
+Started game 223 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 220 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 77 - 82 - 61  [0.489] 220
+...      4.9.2-md150 playing White: 45 - 33 - 32  [0.555] 110
+...      4.9.2-md150 playing Black: 32 - 49 - 29  [0.423] 110
+...      White vs Black: 94 - 65 - 61  [0.566] 220
+Elo difference: -7.9 +/- 39.1, LOS: 34.6 %, DrawRatio: 27.7 %
+SPRT: llr -0.652 (-22.2%), lbound -2.94, ubound 2.94
+Started game 224 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 221 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 77 - 82 - 62  [0.489] 221
+Started game 225 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 222 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 78 - 82 - 62  [0.491] 222
+Started game 226 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 223 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 78 - 83 - 62  [0.489] 223
+Started game 227 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 225 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 78 - 83 - 63  [0.489] 224
+Started game 228 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 226 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 78 - 83 - 64  [0.489] 225
+Started game 229 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 224 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 78 - 84 - 64  [0.487] 226
+Started game 230 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 229 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 78 - 84 - 65  [0.487] 227
+Started game 231 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 227 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 78 - 85 - 65  [0.485] 228
+Started game 232 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 228 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 78 - 85 - 66  [0.485] 229
+Started game 233 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 231 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 78 - 86 - 66  [0.483] 230
+...      4.9.2-md150 playing White: 45 - 36 - 35  [0.539] 116
+...      4.9.2-md150 playing Black: 33 - 50 - 31  [0.425] 114
+...      White vs Black: 95 - 69 - 66  [0.557] 230
+Elo difference: -12.1 +/- 38.0, LOS: 26.6 %, DrawRatio: 28.7 %
+SPRT: llr -0.915 (-31.1%), lbound -2.94, ubound 2.94
+Started game 234 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 232 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 79 - 86 - 66  [0.485] 231
+Started game 235 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 230 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.9.2-md150 vs 4.9.2: 79 - 86 - 67  [0.485] 232
+Started game 236 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 234 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 79 - 87 - 67  [0.483] 233
+Started game 237 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 235 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 79 - 87 - 68  [0.483] 234
+Started game 238 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 233 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.9.2-md150 vs 4.9.2: 79 - 87 - 69  [0.483] 235
+Started game 239 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 236 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 79 - 87 - 70  [0.483] 236
+Started game 240 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 238 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 80 - 87 - 70  [0.485] 237
+Started game 241 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 237 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 80 - 88 - 70  [0.483] 238
+Started game 242 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 239 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 80 - 89 - 70  [0.481] 239
+Started game 243 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 240 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 80 - 89 - 71  [0.481] 240
+...      4.9.2-md150 playing White: 45 - 38 - 37  [0.529] 120
+...      4.9.2-md150 playing Black: 35 - 51 - 34  [0.433] 120
+...      White vs Black: 96 - 73 - 71  [0.548] 240
+Elo difference: -13.0 +/- 37.0, LOS: 24.4 %, DrawRatio: 29.6 %
+SPRT: llr -1.02 (-34.7%), lbound -2.94, ubound 2.94
+Started game 244 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 241 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 80 - 90 - 71  [0.479] 241
+Started game 245 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 242 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 81 - 90 - 71  [0.481] 242
+Started game 246 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 243 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 81 - 91 - 71  [0.479] 243
+Started game 247 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 244 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 81 - 92 - 71  [0.477] 244
+Started game 248 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 245 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 82 - 92 - 71  [0.480] 245
+Started game 249 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 247 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 82 - 92 - 72  [0.480] 246
+Started game 250 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 246 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 83 - 92 - 72  [0.482] 247
+Started game 251 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 248 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 84 - 92 - 72  [0.484] 248
+Started game 252 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 249 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 84 - 93 - 72  [0.482] 249
+Started game 253 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 250 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 85 - 93 - 72  [0.484] 250
+...      4.9.2-md150 playing White: 46 - 41 - 38  [0.520] 125
+...      4.9.2-md150 playing Black: 39 - 52 - 34  [0.448] 125
+...      White vs Black: 98 - 80 - 72  [0.536] 250
+Elo difference: -11.1 +/- 36.4, LOS: 27.4 %, DrawRatio: 28.8 %
+SPRT: llr -0.94 (-31.9%), lbound -2.94, ubound 2.94
+Started game 254 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 251 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 86 - 93 - 72  [0.486] 251
+Started game 255 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 254 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 86 - 93 - 73  [0.486] 252
+Started game 256 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 253 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 86 - 93 - 74  [0.486] 253
+Started game 257 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 255 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 86 - 94 - 74  [0.484] 254
+Started game 258 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 256 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 86 - 94 - 75  [0.484] 255
+Started game 259 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 257 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 87 - 94 - 75  [0.486] 256
+Started game 260 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 252 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by stalemate}
+Score of 4.9.2-md150 vs 4.9.2: 87 - 94 - 76  [0.486] 257
+Started game 261 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 259 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 88 - 94 - 76  [0.488] 258
+Started game 262 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 258 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 89 - 94 - 76  [0.490] 259
+Started game 263 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 260 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 89 - 95 - 76  [0.488] 260
+...      4.9.2-md150 playing White: 49 - 42 - 39  [0.527] 130
+...      4.9.2-md150 playing Black: 40 - 53 - 37  [0.450] 130
+...      White vs Black: 102 - 82 - 76  [0.538] 260
+Elo difference: -8.0 +/- 35.6, LOS: 32.9 %, DrawRatio: 29.2 %
+SPRT: llr -0.794 (-27.0%), lbound -2.94, ubound 2.94
+Started game 264 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 263 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 90 - 95 - 76  [0.490] 261
+Started game 265 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 264 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 90 - 96 - 76  [0.489] 262
+Started game 266 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 261 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.9.2-md150 vs 4.9.2: 90 - 96 - 77  [0.489] 263
+Started game 267 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 262 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 90 - 97 - 77  [0.487] 264
+Started game 268 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 266 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 90 - 97 - 78  [0.487] 265
+Started game 269 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 265 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 90 - 98 - 78  [0.485] 266
+Started game 270 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 267 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 90 - 99 - 78  [0.483] 267
+Started game 271 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 268 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 91 - 99 - 78  [0.485] 268
+Started game 272 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 269 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 91 - 100 - 78  [0.483] 269
+Started game 273 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 273 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 91 - 100 - 79  [0.483] 270
+...      4.9.2-md150 playing White: 50 - 45 - 41  [0.518] 136
+...      4.9.2-md150 playing Black: 41 - 55 - 38  [0.448] 134
+...      White vs Black: 105 - 86 - 79  [0.535] 270
+Elo difference: -11.6 +/- 34.9, LOS: 25.7 %, DrawRatio: 29.3 %
+SPRT: llr -1.05 (-35.7%), lbound -2.94, ubound 2.94
+Started game 274 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 271 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 91 - 100 - 80  [0.483] 271
+Started game 275 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 272 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 91 - 101 - 80  [0.482] 272
+Started game 276 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 270 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 91 - 101 - 81  [0.482] 273
+Started game 277 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 274 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 91 - 101 - 82  [0.482] 274
+Started game 278 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 276 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 91 - 101 - 83  [0.482] 275
+Started game 279 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 277 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 91 - 102 - 83  [0.480] 276
+Started game 280 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 275 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 92 - 102 - 83  [0.482] 277
+Started game 281 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 278 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 92 - 103 - 83  [0.480] 278
+Started game 282 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 279 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 93 - 103 - 83  [0.482] 279
+Started game 283 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 281 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 94 - 103 - 83  [0.484] 280
+...      4.9.2-md150 playing White: 53 - 46 - 42  [0.525] 141
+...      4.9.2-md150 playing Black: 41 - 57 - 41  [0.442] 139
+...      White vs Black: 110 - 87 - 83  [0.541] 280
+Elo difference: -11.2 +/- 34.2, LOS: 26.1 %, DrawRatio: 29.6 %
+SPRT: llr -1.07 (-36.3%), lbound -2.94, ubound 2.94
+Started game 284 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 280 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 94 - 104 - 83  [0.482] 281
+Started game 285 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 282 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 94 - 104 - 84  [0.482] 282
+Started game 286 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 283 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 94 - 104 - 85  [0.482] 283
+Started game 287 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 284 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 95 - 104 - 85  [0.484] 284
+Started game 288 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 286 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 96 - 104 - 85  [0.486] 285
+Started game 289 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 285 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 96 - 105 - 85  [0.484] 286
+Started game 290 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 288 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 96 - 105 - 86  [0.484] 287
+Started game 291 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 287 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 97 - 105 - 86  [0.486] 288
+Started game 292 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 290 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 97 - 106 - 86  [0.484] 289
+Started game 293 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 289 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 97 - 106 - 87  [0.484] 290
+...      4.9.2-md150 playing White: 54 - 47 - 44  [0.524] 145
+...      4.9.2-md150 playing Black: 43 - 59 - 43  [0.445] 145
+...      White vs Black: 113 - 90 - 87  [0.540] 290
+Elo difference: -10.8 +/- 33.5, LOS: 26.4 %, DrawRatio: 30.0 %
+SPRT: llr -1.09 (-36.9%), lbound -2.94, ubound 2.94
+Started game 294 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 291 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 97 - 107 - 87  [0.483] 291
+Started game 295 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 294 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 98 - 107 - 87  [0.485] 292
+Started game 296 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 292 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 98 - 107 - 88  [0.485] 293
+Started game 297 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 293 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 98 - 108 - 88  [0.483] 294
+Started game 298 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 295 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 98 - 108 - 89  [0.483] 295
+Started game 299 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 298 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 99 - 108 - 89  [0.485] 296
+Started game 300 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 296 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 99 - 109 - 89  [0.483] 297
+Started game 301 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 297 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 99 - 110 - 89  [0.482] 298
+Started game 302 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 299 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 99 - 111 - 89  [0.480] 299
+Started game 303 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 300 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 99 - 112 - 89  [0.478] 300
+...      4.9.2-md150 playing White: 54 - 51 - 45  [0.510] 150
+...      4.9.2-md150 playing Black: 45 - 61 - 44  [0.447] 150
+...      White vs Black: 115 - 96 - 89  [0.532] 300
+Elo difference: -15.1 +/- 33.0, LOS: 18.5 %, DrawRatio: 29.7 %
+SPRT: llr -1.42 (-48.2%), lbound -2.94, ubound 2.94
+Started game 304 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 301 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 99 - 112 - 90  [0.478] 301
+Started game 305 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 302 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 99 - 113 - 90  [0.477] 302
+Started game 306 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 303 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 99 - 114 - 90  [0.475] 303
+Started game 307 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 304 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 99 - 114 - 91  [0.475] 304
+Started game 308 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 305 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 99 - 115 - 91  [0.474] 305
+Started game 309 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 306 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 99 - 116 - 91  [0.472] 306
+Started game 310 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 307 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 100 - 116 - 91  [0.474] 307
+Started game 311 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 308 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 100 - 117 - 91  [0.472] 308
+Started game 312 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 310 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 101 - 117 - 91  [0.474] 309
+Started game 313 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 309 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 101 - 118 - 91  [0.473] 310
+...      4.9.2-md150 playing White: 55 - 54 - 46  [0.503] 155
+...      4.9.2-md150 playing Black: 46 - 64 - 45  [0.442] 155
+...      White vs Black: 119 - 100 - 91  [0.531] 310
+Elo difference: -19.1 +/- 32.6, LOS: 12.5 %, DrawRatio: 29.4 %
+SPRT: llr -1.75 (-59.5%), lbound -2.94, ubound 2.94
+Started game 314 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 312 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 101 - 119 - 91  [0.471] 311
+Started game 315 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 311 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 101 - 120 - 91  [0.470] 312
+Started game 316 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 313 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 101 - 121 - 91  [0.468] 313
+Started game 317 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 314 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 102 - 121 - 91  [0.470] 314
+Started game 318 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 316 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 102 - 121 - 92  [0.470] 315
+Started game 319 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 315 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 102 - 122 - 92  [0.468] 316
+Started game 320 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 317 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 102 - 122 - 93  [0.468] 317
+Started game 321 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 320 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 102 - 122 - 94  [0.469] 318
+Started game 322 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 319 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 102 - 122 - 95  [0.469] 319
+Started game 323 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 318 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 102 - 122 - 96  [0.469] 320
+...      4.9.2-md150 playing White: 55 - 57 - 48  [0.494] 160
+...      4.9.2-md150 playing Black: 47 - 65 - 48  [0.444] 160
+...      White vs Black: 120 - 104 - 96  [0.525] 320
+Elo difference: -21.7 +/- 31.9, LOS: 9.1 %, DrawRatio: 30.0 %
+SPRT: llr -2.03 (-68.9%), lbound -2.94, ubound 2.94
+Started game 324 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 321 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 102 - 123 - 96  [0.467] 321
+Started game 325 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 322 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 103 - 123 - 96  [0.469] 322
+Started game 326 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 323 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 103 - 124 - 96  [0.467] 323
+Started game 327 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 324 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 104 - 124 - 96  [0.469] 324
+Started game 328 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 325 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 104 - 124 - 97  [0.469] 325
+Started game 329 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 326 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 104 - 124 - 98  [0.469] 326
+Started game 330 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 327 (4.9.2-md150 vs 4.9.2): 1-0 {White mates}
+Score of 4.9.2-md150 vs 4.9.2: 105 - 124 - 98  [0.471] 327
+Started game 331 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 328 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 105 - 125 - 98  [0.470] 328
+Started game 332 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 330 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 106 - 125 - 98  [0.471] 329
+Started game 333 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 329 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 107 - 125 - 98  [0.473] 330
+...      4.9.2-md150 playing White: 57 - 59 - 49  [0.494] 165
+...      4.9.2-md150 playing Black: 50 - 66 - 49  [0.452] 165
+...      White vs Black: 123 - 109 - 98  [0.521] 330
+Elo difference: -19.0 +/- 31.5, LOS: 11.9 %, DrawRatio: 29.7 %
+SPRT: llr -1.87 (-63.4%), lbound -2.94, ubound 2.94
+Started game 334 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 332 (4.9.2 vs 4.9.2-md150): 1-0 {White mates}
+Score of 4.9.2-md150 vs 4.9.2: 107 - 126 - 98  [0.471] 331
+Started game 335 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 331 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 107 - 126 - 99  [0.471] 332
+Started game 336 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 333 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 107 - 127 - 99  [0.470] 333
+Started game 337 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 334 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 107 - 128 - 99  [0.469] 334
+Started game 338 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 335 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 107 - 129 - 99  [0.467] 335
+Started game 339 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 336 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 107 - 129 - 100  [0.467] 336
+Started game 340 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 339 (4.9.2-md150 vs 4.9.2): 1-0 {White mates}
+Score of 4.9.2-md150 vs 4.9.2: 108 - 129 - 100  [0.469] 337
+Started game 341 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 340 (4.9.2 vs 4.9.2-md150): 1-0 {White mates}
+Score of 4.9.2-md150 vs 4.9.2: 108 - 130 - 100  [0.467] 338
+Started game 342 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 337 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 108 - 131 - 100  [0.466] 339
+Started game 343 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 338 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 108 - 131 - 101  [0.466] 340
+...      4.9.2-md150 playing White: 58 - 62 - 50  [0.488] 170
+...      4.9.2-md150 playing Black: 50 - 69 - 51  [0.444] 170
+...      White vs Black: 127 - 112 - 101  [0.522] 340
+Elo difference: -23.5 +/- 31.0, LOS: 6.8 %, DrawRatio: 29.7 %
+SPRT: llr -2.29 (-77.8%), lbound -2.94, ubound 2.94
+Started game 344 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 341 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 108 - 132 - 101  [0.465] 341
+Started game 345 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 343 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 108 - 133 - 101  [0.463] 342
+Started game 346 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 342 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 109 - 133 - 101  [0.465] 343
+Started game 347 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 344 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 110 - 133 - 101  [0.467] 344
+Started game 348 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 347 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 110 - 134 - 101  [0.465] 345
+Started game 349 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 346 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 110 - 135 - 101  [0.464] 346
+Started game 350 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 345 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 110 - 135 - 102  [0.464] 347
+Started game 351 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 348 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 111 - 135 - 102  [0.466] 348
+Started game 352 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 349 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 112 - 135 - 102  [0.467] 349
+Started game 353 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 350 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 112 - 136 - 102  [0.466] 350
+...      4.9.2-md150 playing White: 59 - 65 - 51  [0.483] 175
+...      4.9.2-md150 playing Black: 53 - 71 - 51  [0.449] 175
+...      White vs Black: 130 - 118 - 102  [0.517] 350
+Elo difference: -23.9 +/- 30.7, LOS: 6.4 %, DrawRatio: 29.1 %
+SPRT: llr -2.37 (-80.3%), lbound -2.94, ubound 2.94
+Started game 354 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 351 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 112 - 136 - 103  [0.466] 351
+Started game 355 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 352 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 112 - 136 - 104  [0.466] 352
+Started game 356 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 356 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 112 - 137 - 104  [0.465] 353
+Started game 357 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 355 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 113 - 137 - 104  [0.466] 354
+Started game 358 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 354 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 113 - 138 - 104  [0.465] 355
+Started game 359 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 353 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 113 - 138 - 105  [0.465] 356
+Started game 360 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 358 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 114 - 138 - 105  [0.466] 357
+Started game 361 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 357 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 114 - 139 - 105  [0.465] 358
+Started game 362 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 361 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 115 - 139 - 105  [0.467] 359
+Started game 363 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 359 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 116 - 139 - 105  [0.468] 360
+...      4.9.2-md150 playing White: 62 - 66 - 53  [0.489] 181
+...      4.9.2-md150 playing Black: 54 - 73 - 52  [0.447] 179
+...      White vs Black: 135 - 120 - 105  [0.521] 360
+Elo difference: -22.2 +/- 30.3, LOS: 7.5 %, DrawRatio: 29.2 %
+SPRT: llr -2.3 (-78.0%), lbound -2.94, ubound 2.94
+Started game 364 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 360 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 116 - 139 - 106  [0.468] 361
+Started game 365 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 362 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 116 - 139 - 107  [0.468] 362
+Started game 366 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 363 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 116 - 139 - 108  [0.468] 363
+Started game 367 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 365 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 116 - 139 - 109  [0.468] 364
+Started game 368 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 366 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 117 - 139 - 109  [0.470] 365
+Started game 369 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 368 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 117 - 139 - 110  [0.470] 366
+Started game 370 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 367 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 117 - 140 - 110  [0.469] 367
+Started game 371 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 369 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 118 - 140 - 110  [0.470] 368
+Started game 372 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 364 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 118 - 140 - 111  [0.470] 369
+Started game 373 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 372 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 118 - 141 - 111  [0.469] 370
+...      4.9.2-md150 playing White: 63 - 67 - 55  [0.489] 185
+...      4.9.2-md150 playing Black: 55 - 74 - 56  [0.449] 185
+...      White vs Black: 137 - 122 - 111  [0.520] 370
+Elo difference: -21.6 +/- 29.7, LOS: 7.6 %, DrawRatio: 30.0 %
+SPRT: llr -2.33 (-79.3%), lbound -2.94, ubound 2.94
+Started game 374 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 370 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 118 - 141 - 112  [0.469] 371
+Started game 375 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 371 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.2-md150 vs 4.9.2: 118 - 141 - 113  [0.469] 372
+Started game 376 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 373 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 118 - 141 - 114  [0.469] 373
+Started game 377 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 375 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 118 - 142 - 114  [0.468] 374
+Started game 378 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 374 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 118 - 143 - 114  [0.467] 375
+Started game 379 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 377 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 118 - 143 - 115  [0.467] 376
+Started game 380 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 376 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 118 - 143 - 116  [0.467] 377
+Started game 381 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 379 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 118 - 143 - 117  [0.467] 378
+Started game 382 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 380 (4.9.2 vs 4.9.2-md150): 1-0 {White mates}
+Score of 4.9.2-md150 vs 4.9.2: 118 - 144 - 117  [0.466] 379
+Started game 383 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 378 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by stalemate}
+Score of 4.9.2-md150 vs 4.9.2: 118 - 144 - 118  [0.466] 380
+...      4.9.2-md150 playing White: 63 - 68 - 59  [0.487] 190
+...      4.9.2-md150 playing Black: 55 - 76 - 59  [0.445] 190
+...      White vs Black: 139 - 123 - 118  [0.521] 380
+Elo difference: -23.8 +/- 29.1, LOS: 5.4 %, DrawRatio: 31.1 %
+SPRT: llr -2.63 (-89.5%), lbound -2.94, ubound 2.94
+Started game 384 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 381 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 118 - 145 - 118  [0.465] 381
+Started game 385 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 382 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 119 - 145 - 118  [0.466] 382
+Started game 386 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 383 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 120 - 145 - 118  [0.467] 383
+Started game 387 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 386 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 120 - 146 - 118  [0.466] 384
+Started game 388 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 385 (4.9.2-md150 vs 4.9.2): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 121 - 146 - 118  [0.468] 385
+Started game 389 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 384 (4.9.2 vs 4.9.2-md150): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 121 - 146 - 119  [0.468] 386
+Started game 390 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 387 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 121 - 147 - 119  [0.466] 387
+Started game 391 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 389 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 121 - 148 - 119  [0.465] 388
+Started game 392 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 391 (4.9.2-md150 vs 4.9.2): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.2-md150 vs 4.9.2: 121 - 148 - 120  [0.465] 389
+Started game 393 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 388 (4.9.2 vs 4.9.2-md150): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 122 - 148 - 120  [0.467] 390
+...      4.9.2-md150 playing White: 65 - 71 - 60  [0.485] 196
+...      4.9.2-md150 playing Black: 57 - 77 - 60  [0.448] 194
+...      White vs Black: 142 - 128 - 120  [0.518] 390
+Elo difference: -23.2 +/- 28.8, LOS: 5.7 %, DrawRatio: 30.8 %
+SPRT: llr -2.64 (-89.5%), lbound -2.94, ubound 2.94
+Started game 394 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 390 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 122 - 149 - 120  [0.465] 391
+Started game 395 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 393 (4.9.2-md150 vs 4.9.2): 1-0 {White mates}
+Score of 4.9.2-md150 vs 4.9.2: 123 - 149 - 120  [0.467] 392
+Started game 396 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 392 (4.9.2 vs 4.9.2-md150): 1-0 {White wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 123 - 150 - 120  [0.466] 393
+Started game 397 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 394 (4.9.2 vs 4.9.2-md150): 1-0 {White mates}
+Score of 4.9.2-md150 vs 4.9.2: 123 - 151 - 120  [0.464] 394
+Started game 398 of 4200 (4.9.2 vs 4.9.2-md150)
+Finished game 395 (4.9.2-md150 vs 4.9.2): 0-1 {Black wins by adjudication}
+Score of 4.9.2-md150 vs 4.9.2: 123 - 152 - 120  [0.463] 395
+Started game 399 of 4200 (4.9.2-md150 vs 4.9.2)
+Finished game 398 (4.9.2 vs 4.9.2-md150): 1-0 {White mates}
+Score of 4.9.2-md150 vs 4.9.2: 123 - 153 - 120  [0.462] 396
+Finished game 397 (4.9.2-md150 vs 4.9.2): * {No result}
+Score of 4.9.2-md150 vs 4.9.2: 123 - 153 - 120  [0.462] 396
+Finished game 399 (4.9.2-md150 vs 4.9.2): * {No result}
+Score of 4.9.2-md150 vs 4.9.2: 123 - 153 - 120  [0.462] 396
+Finished game 396 (4.9.2 vs 4.9.2-md150): * {No result}
+Score of 4.9.2-md150 vs 4.9.2: 123 - 153 - 120  [0.462] 396
+...      4.9.2-md150 playing White: 66 - 72 - 60  [0.485] 198
+...      4.9.2-md150 playing Black: 57 - 81 - 60  [0.439] 198
+...      White vs Black: 147 - 129 - 120  [0.523] 396
+Elo difference: -26.4 +/- 28.6, LOS: 3.5 %, DrawRatio: 30.3 %
+SPRT: llr -2.96 (-100.5%), lbound -2.94, ubound 2.94 - H0 was accepted
+
+Player: 4.9.2-md150
+   "Draw by 3-fold repetition": 48
+   "Draw by adjudication": 39
+   "Draw by fifty moves rule": 7
+   "Draw by insufficient mating material": 23
+   "Draw by stalemate": 3
+   "Loss: Black wins by adjudication": 72
+   "Loss: White mates": 6
+   "Loss: White wins by adjudication": 75
+   "No result": 3
+   "Win: Black wins by adjudication": 57
+   "Win: White mates": 4
+   "Win: White wins by adjudication": 62
+Player: 4.9.2
+   "Draw by 3-fold repetition": 48
+   "Draw by adjudication": 39
+   "Draw by fifty moves rule": 7
+   "Draw by insufficient mating material": 23
+   "Draw by stalemate": 3
+   "Loss: Black wins by adjudication": 57
+   "Loss: White mates": 4
+   "Loss: White wins by adjudication": 62
+   "No result": 3
+   "Win: Black wins by adjudication": 72
+   "Win: White mates": 6
+   "Win: White wins by adjudication": 75
+Finished match
+Terminating process of engine 4.9.2-md150(0)
+Terminating process of engine 4.9.2-md150(7)
+Terminating process of engine 4.9.2-md150(4)
+Terminating process of engine 4.9.2-md150(3)
