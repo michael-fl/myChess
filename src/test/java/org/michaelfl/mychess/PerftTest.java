@@ -139,7 +139,7 @@ class PerftTest {
      * legal move, including bishop promotions that the production
      * MoveGenerator intentionally skips.
      */
-    private static long perft(Board board, int depth) {
+    static long perft(Board board, int depth) {
         var gen = new MoveGenerator(MoveSorter.defaultImplementation(), true);
         return perftRecursive(board, gen, depth, 0);
     }
