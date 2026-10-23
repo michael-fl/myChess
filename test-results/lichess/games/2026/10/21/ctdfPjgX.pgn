@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/game/ctdfPjgX"]
+[Date "2026.10.21"]
+[Round "-"]
+[White "lamprook"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "ctdfPjgX"]
+[UTCDate "2026.10.21"]
+[UTCTime "21:08:28"]
+[WhiteElo "2021"]
+[BlackElo "2292"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "900+10"]
+[ECO "A05"]
+[Opening "Zukertort Opening"]
+[Termination "Normal"]
+
+1. Nf3 Nf6 2. Nc3 Nc6 3. d4 e6 4. Bf4 Bb4 5. a3 Bxc3+ 6. bxc3 Ne4 7. c4 g5 8. Be3 d5 9. Qd3 f5 10. h3 O-O 11. g3 dxc4 12. Qxc4 f4 13. gxf4 gxf4 14. Rg1+ Kh8 15. Bc1 Qd5 16. Qxd5 exd5 17. Rb1 Rb8 18. h4 Be6 19. h5 a5 20. Rh1 Bg4 21. Rh4 Bxf3 22. exf3 Ng5 23. Kd1 Rg8 24. Rxf4 Ne6 25. Rg4 Ncxd4 26. c4 Nxf3 27. Rxg8+ Rxg8 28. cxd5 Ned4 29. Be3 b6 30. Kc1 Nf5 31. Bf4 Ne7 32. Bg3 Nf5 33. Bf4 Rg1 34. Kc2 Ne7 35. d6 cxd6 36. Bxd6 Nf5 37. Bc7 Rh1 38. Bxb6 Rxh5 39. Bd3 Kg7 40. Be4 N3d4+ 41. Kb2 Rh2 42. Rd1 Rxf2+ 43. Kb1 Ne2 44. Rd7+ Kg6 45. Bxf2 Nc3+ 46. Kc2 Nxe4 47. Bb6 h5 48. a4 h4 49. Rd3 Ng5 50. Rd8 h3 51. Rg8+ Kh6 52. Bc7 Nd4+ 53. Kd3 Nde6 54. Bd6 Kh5 55. Ra8 Kg4 56. Rxa5 Nf4+ 57. Ke3 Ng2+ 58. Ke2 Ne4 59. Bh2 Nh4 60. Ke3 Nd2 61. Kxd2 Nf3+ 62. Ke2 Nxh2 63. Rc5 Nf3 64. Rc4+ Kg3 65. Rc3 h2 66. Rxf3+ Kg2 67. Rf1 h1=Q 68. Rxh1 Kxh1 69. a5 Kg2 70. a6 Kg3 71. a7 Kf4 72. a8=Q 1-0
+

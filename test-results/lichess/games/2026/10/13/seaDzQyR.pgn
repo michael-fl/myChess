@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/game/seaDzQyR"]
+[Date "2026.10.13"]
+[Round "-"]
+[White "myChessJava"]
+[Black "uzenatch"]
+[Result "1/2-1/2"]
+[GameId "seaDzQyR"]
+[UTCDate "2026.10.13"]
+[UTCTime "15:11:01"]
+[WhiteElo "2023"]
+[BlackElo "1958"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+2"]
+[ECO "C40"]
+[Opening "Elephant Gambit"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 d5 3. exd5 Qxd5 4. Nc3 Qd6 5. Bb5+ Bd7 6. O-O a6 7. Bc4 Nc6 8. Re1 Be6 9. Bxe6 fxe6 10. Qe2 Nf6 11. Nxe5 Nd4 12. Qd3 Rd8 13. Nf3 c5 14. Ne2 Nc6 15. Qb3 b5 16. Ned4 c4 17. Qe3 Nxd4 18. Nxd4 e5 19. Qxe5+ Qxe5 20. Rxe5+ Kf7 21. Ne6 Rd5 22. Rxd5 Nxd5 23. Ng5+ Kg6 24. Ne4 Nb4 25. Rb1 Nxc2 26. b3 cxb3 27. axb3 Bb4 28. Bb2 Re8 29. f3 Rc8 30. Rc1 Rc6 31. Rd1 h6 32. Be5 h5 33. Kf2 Ba3 34. f4 Rc8 35. d4 a5 36. d5 Kf5 37. Ng3+ Kg6 38. d6 Rd8 39. d7 h4 40. Ne4 Kf5 41. Kf3 Ke6 42. Bxg7 Rxd7 43. f5+ Ke7 44. f6+ Kd8 45. Rxd7+ Kxd7 46. f7 Ke6 47. f8=Q Bxf8 48. Bxf8 Nd4+ 49. Kg4 Nxb3 50. Kxh4 Kd5 51. Nf6+ Ke6 52. Kg5 b4 53. Ne4 Ke5 54. Ng3 Nd4 55. Be7 b3 56. Ba3 a4 57. h4 Nb5 58. h5 Nxa3 59. h6 b2 60. h7 b1=Q 61. h8=Q+ Kd5 62. Qg8+ Kd4 63. Nf5+ Kc3 64. Qg7+ Kb3 65. Qf7+ Kb2 66. Qf6+ Kc1 67. Qd6 Qa2 68. Ne3 Qb3 69. Qf4 Nb1 70. Nc4+ Kc2 71. Qf5+ Kc3 72. Na5 Qg8+ 73. Kh4 Qd8+ 74. Kh5 Qe8+ 75. Kh6 Qh8+ 76. Kg6 Qe8+ 77. Kh7 Qe7+ 78. Kh6 Qd6+ 79. Kg7 Nd2 80. Qc8+ Kb2 81. Qb7+ Kc2 82. Qc8+ Kb2 83. Qb7+ Kc2 84. Qc8+ Kb2 1/2-1/2
+

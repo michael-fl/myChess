@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/game/jRZ5e0Vp"]
+[Date "2026.10.22"]
+[Round "-"]
+[White "StockFail"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "jRZ5e0Vp"]
+[UTCDate "2026.10.22"]
+[UTCTime "02:00:23"]
+[WhiteElo "1853"]
+[BlackElo "2302"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "A46"]
+[Opening "Indian Defense: Knights Variation"]
+[Termination "Normal"]
+
+1. d4 Nf6 2. Nf3 e6 3. Nc3 Bb4 4. Bd2 Nc6 5. e3 d5 6. Ne5 Nxe5 7. dxe5 Bxc3 8. Bxc3 Ne4 9. Bb5+ c6 10. Bd3 Nxc3 11. Qg4 Ne4 12. Qxg7 Rf8 13. Bxe4 Qa5+ 14. c3 dxe4 15. O-O-O Bd7 16. Kb1 O-O-O 17. Rd2 c5 18. Rhd1 Bb5 19. Ka1 Bd3 20. f4 Qc7 21. Qh6 Qe7 22. b3 f6 23. Qh4 Qg7 24. Qh3 Kd7 25. exf6 Rxf6 26. Rxd3+ exd3 27. Rxd3+ Kc7 28. Rxd8 Rh6 29. Qxh6 Qxh6 30. Rg8 Qxh2 31. Kb2 Qg1 32. Rg7+ Kc6 33. Kc2 Qxe3 34. g3 Qe2+ 35. Kb1 h5 36. Rg5 Qd1+ 37. Kb2 b5 38. Rg8 Qd2+ 39. Kb1 Qxc3 40. Rc8+ Kd5 41. Rd8+ Ke4 42. Rd6 Qxg3 43. Rxe6+ Kd3 44. Rd6+ Kc3 45. Rd1 Qg6+ 46. Ka1 Kc2 47. Rd2+ Kxd2 48. f5 Qg1+ 49. Kb2 Qc1# 0-1
+

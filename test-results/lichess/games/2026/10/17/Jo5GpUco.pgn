@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/game/Jo5GpUco"]
+[Date "2026.10.17"]
+[Round "-"]
+[White "myChessJava"]
+[Black "ShallowRedBot"]
+[Result "1-0"]
+[GameId "Jo5GpUco"]
+[UTCDate "2026.10.17"]
+[UTCTime "03:28:17"]
+[WhiteElo "2007"]
+[BlackElo "1883"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+2"]
+[ECO "B23"]
+[Opening "Sicilian Defense: Closed"]
+[Termination "Normal"]
+
+1. e4 c5 2. Nc3 d6 3. Nf3 a6 4. Bc4 e6 5. O-O b5 6. Bd3 Bb7 7. b3 g6 8. e5 b4 9. Ne4 dxe5 10. Bb2 Nc6 11. Nxe5 Nd4 12. Re1 f5 13. Ng3 Bg7 14. Bc4 f4 15. c3 bxc3 16. dxc3 fxg3 17. cxd4 gxh2+ 18. Kxh2 cxd4 19. Bxe6 Qg5 20. Bd7+ Kf8 21. Ba3+ Ne7 22. Ng4 h5 23. Bxe7+ Qxe7 24. Rxe7 Kxe7 25. Qe1+ Kxd7 26. Ne5+ Bxe5+ 27. Qxe5 Bc6 28. Rc1 Rhc8 29. Qxd4+ Ke6 30. Re1+ Kf7 31. Qf4+ Kg8 32. Re7 h4 33. Qd4 h3 34. Qg7# 1-0
+
