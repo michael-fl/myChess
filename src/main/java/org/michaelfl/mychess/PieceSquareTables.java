@@ -265,26 +265,50 @@ public final class PieceSquareTables {
     private static final short[] kingEndgameTableBlack = invert(kingEndgameTableWhite);
 
     /** Combined piece-square tables (mid and end game) per piece constant, indexed as {@code table[piece][field]}. */
-    private static final int[][] piece2CombinedPST = new int[blackKing + 1][];
-    static {
-        piece2CombinedPST[whitePawn] = createCombinedTable(whitePawn);
-        piece2CombinedPST[whiteBishop] = createCombinedTable(whiteBishop);
-        piece2CombinedPST[whiteKnight] = createCombinedTable(whiteKnight);
-        piece2CombinedPST[whiteRook] = createCombinedTable(whiteRook);
-        piece2CombinedPST[whiteQueen] = createCombinedTable(whiteQueen);
-        piece2CombinedPST[whiteKing] = createCombinedTable(whiteKing);
-        piece2CombinedPST[blackPawn] = createCombinedTable(blackPawn);
-        piece2CombinedPST[blackBishop] = createCombinedTable(blackBishop);
-        piece2CombinedPST[blackKnight] = createCombinedTable(blackKnight);
-        piece2CombinedPST[blackRook] = createCombinedTable(blackRook);
-        piece2CombinedPST[blackQueen] = createCombinedTable(blackQueen);
-        piece2CombinedPST[blackKing] = createCombinedTable(blackKing);
+    private static final int[][] piece2CombinedPST = buildCombinedTables(Chess960Variant.NONE);
+
+    /**
+     * The combined tables used in Chess960 games: the standard tables with
+     * {@link Chess960Variant#ACTIVE} applied to the midgame tables. Without a variant they hold the
+     * same values as {@link #piece2CombinedPST}.
+     */
+    private static final int[][] piece2CombinedPST960 = buildCombinedTables(Chess960Variant.ACTIVE);
+
+    /**
+     * Builds the combined tables of all twelve pieces with {@code variant} applied to the white
+     * midgame tables; the black tables are their {@link #invert(short[]) inversions}, as always.
+     *
+     * @param variant the Chess960 variant, {@link Chess960Variant#NONE} for the standard tables
+     * @return the combined tables, indexed as {@code table[piece][field]}
+     */
+    static int[][] buildCombinedTables(Chess960Variant variant) {
+        final int[][] tables = new int[blackKing + 1][];
+        final byte[] whitePieces = {whitePawn, whiteKnight, whiteBishop, whiteRook, whiteQueen, whiteKing};
+
+        for (byte white : whitePieces) {
+            final byte black = (byte) (white + blackPawn - whitePawn);
+            final short[] mgWhite = variant.applyToWhiteMidGameTable(white, midGameTable(white));
+
+            tables[white] = createCombinedTable(mgWhite, endGameTable(white));
+            tables[black] = createCombinedTable(invert(mgWhite), endGameTable(black));
+        }
+
+        return tables;
     }
 
-    private static int[] createCombinedTable(byte forPiece) {
+    /**
+     * The combined tables for a game: the Chess960 set for a Chess960 board, the standard set
+     * otherwise.
+     *
+     * @param chess960 whether the board is a Chess960 board
+     * @return the combined tables, indexed as {@code table[piece][field]}
+     */
+    static int[][] combinedTables(boolean chess960) {
+        return chess960 ? piece2CombinedPST960 : piece2CombinedPST;
+    }
+
+    private static int[] createCombinedTable(short[] mgTable, short[] egTable) {
         int[] table = new int[LENGTH * LENGTH];
-        short[] mgTable = midGameTable(forPiece);
-        short[] egTable = endGameTable(forPiece);
 
         for (int field = a1; field <= h8; field++) {
             short mgWeight = mgTable[field];
