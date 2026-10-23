@@ -412,6 +412,9 @@ public final class WeightingFunction {
     private final int[] threadWeight = new int[2];
     private boolean containsIllegalMove;
     private final int[] castlingState = new int[2];
+
+    /** Weight of the castling term for the board being evaluated: 1, or the Chess960 variant's scale. */
+    private float castlingScale = 1f;
     private final int[] doublePawnCount = new int[2];
     private final int[] undefendedPiecesCount = new int[2];
     private final int[] bishopCount = new int[2];
@@ -505,6 +508,10 @@ public final class WeightingFunction {
 
         System.arraycopy(board, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
 
+        final boolean chess960 = theBoard.isChess960();
+        final int[][] pst = PieceSquareTables.combinedTables(chess960);
+        this.castlingScale = chess960 ? Chess960Variant.ACTIVE.castlingScale() : 1f;
+
         final int stopField = Board.h8 + 1;
         int phase = 0;
 
@@ -522,7 +529,7 @@ public final class WeightingFunction {
                 // afterward). The king is no longer excepted here: the crude
                 // endgame king-PST skip (isEndGame / plyCount > 60) has been
                 // removed, so the tapered king endgame table handles centralization.
-                int packed = PieceSquareTables.getCombinedWeight(piece, field);
+                int packed = pst[piece][field];
                 pstMidGameWeight[color] += (short) packed;
                 pstEndGameWeight[color] += (short) ((packed + 0x8000) >> 16);
 
@@ -659,7 +666,7 @@ public final class WeightingFunction {
                 positionWeight[0] - positionWeight[1],
                 mobilityWeight[0] - mobilityWeight[1],
                 threadWeight[0] - threadWeight[1],
-                blend((castlingState[0] - castlingState[1]) * 100, 0, CASTLING_RAMP[phase]),
+                blend((castlingState[0] - castlingState[1]) * 100, 0, CASTLING_RAMP[phase]) * castlingScale,
                 (chessCount[0] - chessCount[1]) * 100.0,
                 (doublePawnCount[0] - doublePawnCount[1]) * 100.0,
                 (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * 100.0,
@@ -679,7 +686,7 @@ public final class WeightingFunction {
                 + (positionWeight[0] - positionWeight[1]) / 100f * positionFactor
                 + (mobilityWeight[0] - mobilityWeight[1]) / 100f * mobilityFactor
                 + (threadWeight[0] - threadWeight[1]) / 100f * threadWeightFactor
-                + castlingWeight(castlingState[0] - castlingState[1], phase)
+                + castlingWeight(castlingState[0] - castlingState[1], phase) * castlingScale
                 + (chessCount[0] - chessCount[1]) * chessFactor
                 + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
                 + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor
