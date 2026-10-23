@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/game/4RKYRQ31"]
+[Date "2026.10.18"]
+[Round "-"]
+[White "myChessJava"]
+[Black "uzenatch"]
+[Result "1/2-1/2"]
+[GameId "4RKYRQ31"]
+[UTCDate "2026.10.18"]
+[UTCTime "18:53:56"]
+[WhiteElo "2028"]
+[BlackElo "1919"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+3"]
+[ECO "C40"]
+[Opening "Elephant Gambit"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 d5 3. exd5 Qxd5 4. Nc3 Qd6 5. Bb5+ c6 6. Bc4 b5 7. Bb3 Be6 8. O-O Nf6 9. Re1 b4 10. Nxe5 Be7 11. Bxe6 fxe6 12. Nc4 Qd7 13. Na4 Qd5 14. Ncb6 axb6 15. Nxb6 Qf5 16. Nxa8 Nd5 17. g4 Qf6 18. c4 bxc3 19. dxc3 Bc5 20. Rf1 O-O 21. c4 Nf4 22. Bxf4 Qxf4 23. Qe2 Kh8 24. Rad1 Na6 25. Rd7 Rxa8 26. Qxe6 Rf8 27. Qe2 Bd6 28. f3 Nc5 29. Ra7 Ne6 30. Kh1 Rb8 31. Ra6 h6 32. b3 Nd4 33. Qf2 Re8 34. Qg3 Re2 35. Qxf4 Bxf4 36. Kg1 Bxh2+ 37. Kh1 Bg3 38. Ra8+ Kh7 39. Kg1 Bh2+ 40. Kh1 Bg3 41. Kg1 Bh2+ 42. Kh1 Bg3 1/2-1/2
+

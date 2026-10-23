@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/game/K2G5elSV"]
+[Date "2026.10.19"]
+[Round "-"]
+[White "myChessJava"]
+[Black "Angela_eng"]
+[Result "1-0"]
+[GameId "K2G5elSV"]
+[UTCDate "2026.10.19"]
+[UTCTime "00:49:54"]
+[WhiteElo "2030"]
+[BlackElo "1834"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "300+3"]
+[ECO "C00"]
+[Opening "French Defense: Knight Variation"]
+[Termination "Normal"]
+
+1. e4 e6 2. Nf3 d5 3. e5 c5 4. Bb5+ Nc6 5. Bxc6+ bxc6 6. O-O Ne7 7. d3 Qb6 8. a4 a5 9. Re1 Nf5 10. g4 Nd4 11. Nfd2 Rb8 12. c3 Nb3 13. Nxb3 Qxb3 14. Qxb3 Rxb3 15. Nd2 Rb8 16. Nf3 Be7 17. Rb1 Ba6 18. Rd1 O-O 19. Be3 Rb7 20. h4 Rfb8 21. Bc1 c4 22. d4 c5 23. h5 cxd4 24. Nxd4 Rb6 25. g5 Ba3 26. b4 Bxc1 27. Rbxc1 axb4 28. cxb4 Rxb4 29. Nc6 R8b7 30. Nxb4 Rxb4 31. Rb1 Rb3 32. h6 gxh6 33. gxh6 Kf8 34. Rxb3 cxb3 35. Kg2 f6 36. exf6 Kf7 37. a5 Kxf6 38. Kf3 Bc4 39. Rg1 d4 40. Ke4 e5 41. Re1 d3 42. Ke3 Ke6 43. Kd2 Kd5 44. Kc3 e4 45. Rg1 Kc5 46. Rg5+ Kc6 47. Kxc4 b2 48. Rg1 Kb7 49. Rb1 Ka6 50. Rxb2 Kxa5 51. Kd4 d2 52. Rxd2 Kb6 53. Kc4 Kc6 54. Rd1 e3 55. fxe3 Kb6 56. e4 Kc6 57. e5 Kb6 58. e6 Kc6 59. e7 Kb6 60. e8=Q Kb7 61. Kb5 Kc7 62. Rd7# 1-0
+

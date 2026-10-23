@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/game/LFocmwNf"]
+[Date "2026.10.17"]
+[Round "-"]
+[White "myChessJava"]
+[Black "AetherBot"]
+[Result "1-0"]
+[GameId "LFocmwNf"]
+[UTCDate "2026.10.17"]
+[UTCTime "12:03:51"]
+[WhiteElo "2265"]
+[BlackElo "2175"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "600+5"]
+[ECO "C67"]
+[Opening "Ruy Lopez: Berlin Defense, Rio Gambit Accepted"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. Re1 Nd6 6. Bxc6 dxc6 7. Nxe5 Be7 8. Nc3 O-O 9. d3 Re8 10. Bf4 f6 11. Nf3 g5 12. Bg3 Nf5 13. Nd2 Nxg3 14. hxg3 f5 15. Qh5 Bd7 16. Nf3 Bf6 17. d4 g4 18. Ne5 Qe7 19. Re3 Bg5 20. Re2 Bf6 21. Nxg4 Qf8 22. Ne5 Be6 23. Rae1 Bg7 24. Nd3 Qf7 25. Qg5 Rab8 26. a4 h6 27. Qh4 a6 28. a5 Bd5 29. Ne5 Bxe5 30. Rxe5 Qg6 31. Qf4 Rxe5 32. Rxe5 Be6 33. Na4 Rf8 34. Nc5 Bc8 35. Re7 b6 36. Nd3 bxa5 37. Rxc7 a4 38. Qe5 Re8 39. Rg7+ Qxg7 40. Qxe8+ Qf8 41. Qxc6 Kg7 42. Ne5 Qg8 43. d5 h5 44. Qg6+ Kf8 45. Qf6+ Ke8 46. Qc6+ Kd8 47. d6 Qg7 48. Qc3 Qb7 49. Qc4 Qg7 50. Nf7+ Ke8 51. Qxc8+ Kxf7 52. d7 Qg5 53. d8=Q Qxd8 54. Qxd8 Kg6 55. Qd6+ Kf7 56. Qxa6 Ke7 57. Qxa4 Kd6 58. Qf4+ Ke6 59. b4 Kf6 60. b5 Kf7 61. b6 Kg7 62. b7 Kf6 63. b8=Q Kg6 64. Qf8 h4 65. Q4xf5# 1-0
+

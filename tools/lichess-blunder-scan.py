@@ -24,6 +24,10 @@ Usage::
     ../lichess-bot/venv/bin/python tools/lichess-blunder-scan.py
     ../lichess-bot/venv/bin/python tools/lichess-blunder-scan.py --report-only --threshold 200
     ../lichess-bot/venv/bin/python tools/lichess-blunder-scan.py --verify-only --verify-depth 24
+    ../lichess-bot/venv/bin/python tools/lichess-blunder-scan.py --variant chess960
+
+``--variant`` restricts scan and verify to one variant; the games of the other variant are
+left unscanned, so a later run without the option still scans them.
 
 The lichess-bot virtualenv is used because it already provides ``python-chess``,
 ``requests`` and ``PyYAML``; any interpreter with those three works.
@@ -483,9 +487,57 @@ def phase_move_numbers(findings: dict, window: int, threshold: int,
     return inside
 
 
+def variant_matches(chess960: bool, variant: str | None) -> bool:
+    """
+    Whether a game of the given kind belongs to a run restricted by ``--variant``.
+
+    :param chess960: whether the game is a Chess960 game
+    :param variant: ``None`` for every game, ``"standard"`` or ``"chess960"``
+    """
+    return variant is None or (variant == "chess960") == chess960
+
+
+def is_chess960_game(path: Path) -> bool:
+    """Whether the stored PGN at ``path`` is a Chess960 game, read from its Variant header."""
+    with path.open(encoding="utf-8") as handle:
+        headers = chess.pgn.read_headers(handle)
+
+    return headers is not None and "960" in headers.get("Variant", "")
+
+
+def select_games(paths: list[Path], done: set[str], variant: str | None) -> list[Path]:
+    """
+    The stored games a scan run takes on: not yet scanned and, with ``--variant``, of that
+    variant. Games left out are only skipped for this run; nothing marks them as scanned,
+    so a later run without ``--variant`` still picks them up.
+    """
+    return sorted(path for path in paths
+                  if path.stem not in done and variant_matches(is_chess960_game(path), variant))
+
+
+def pending_candidates(findings: dict, scan_threshold: int, depth: int,
+                       extra: set[tuple[str, int]] | None = None,
+                       variant: str | None = None) -> list[tuple[str, dict, dict]]:
+    """
+    The scan hits still to be verified at ``depth``: a scan loss of at least
+    ``scan_threshold``, or listed in ``extra``, not yet verified this deep, and of the
+    requested variant.
+    """
+    wanted = extra or set()
+
+    return [(game_id, entry, hit)
+            for game_id, entry in findings.items()
+            if variant_matches(entry.get("chess960", False), variant)
+            for hit in entry["findings"]
+            if (hit["scan"]["loss_cp"] >= scan_threshold
+                or (game_id, hit["move_number"]) in wanted)
+            and hit.get("verified", {}).get("depth", 0) < depth]
+
+
 def verify_candidates(findings: dict, engine: chess.engine.SimpleEngine,
                       scan_threshold: int, depth: int,
-                      extra: set[tuple[str, int]] | None = None) -> int:
+                      extra: set[tuple[str, int]] | None = None,
+                      variant: str | None = None) -> int:
     """
     Re-evaluate the scan's candidates at a greater depth, in place.
 
@@ -495,13 +547,7 @@ def verify_candidates(findings: dict, engine: chess.engine.SimpleEngine,
 
     :return: the number of candidates verified by this call.
     """
-    wanted = extra or set()
-    pending = [(game_id, entry, hit)
-               for game_id, entry in findings.items()
-               for hit in entry["findings"]
-               if (hit["scan"]["loss_cp"] >= scan_threshold
-                   or (game_id, hit["move_number"]) in wanted)
-               and hit.get("verified", {}).get("depth", 0) < depth]
+    pending = pending_candidates(findings, scan_threshold, depth, extra, variant)
 
     if not pending:
         return 0
@@ -709,6 +755,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--verify-only", action="store_true", help="verify stored candidates only")
     parser.add_argument("--report-only", action="store_true", help="regenerate the report only")
     parser.add_argument("--rescan", action="store_true", help="scan every stored game again")
+    parser.add_argument("--variant", choices=["standard", "chess960"], default=None,
+                        help="scan and verify only games of this variant; the others stay "
+                             "unscanned for a later run (default: all games)")
 
     return parser.parse_args()
 
@@ -716,7 +765,7 @@ def parse_args() -> argparse.Namespace:
 def run_scan(args: argparse.Namespace, state: dict, findings: dict) -> None:
     """Run the scan phase over every game not yet scanned."""
     done = set() if args.rescan else set(state["scanned_ids"])
-    todo = sorted(path for path in GAMES_DIR.rglob("*.pgn") if path.stem not in done)
+    todo = select_games(list(GAMES_DIR.rglob("*.pgn")), done, args.variant)
     if not todo:
         print("nothing new to scan")
         return
@@ -798,7 +847,8 @@ def main() -> None:
 
     engine = chess.engine.SimpleEngine.popen_uci(args.stockfish)
     try:
-        verify_candidates(findings, engine, args.scan_threshold, args.verify_depth, in_phases)
+        verify_candidates(findings, engine, args.scan_threshold, args.verify_depth, in_phases,
+                          args.variant)
     finally:
         engine.quit()
     save_findings(findings)

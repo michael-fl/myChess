@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/game/nNyQfYrA"]
+[Date "2026.10.20"]
+[Round "-"]
+[White "myChessJava"]
+[Black "Tussilago-bot"]
+[Result "0-1"]
+[GameId "nNyQfYrA"]
+[UTCDate "2026.10.20"]
+[UTCTime "00:50:56"]
+[WhiteElo "2039"]
+[BlackElo "2055"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+1"]
+[ECO "C60"]
+[Opening "Ruy Lopez: Cozio Defense"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nge7 4. O-O Ng6 5. d4 exd4 6. Nxd4 Bc5 7. Nf5 O-O 8. Nc3 a6 9. Ba4 d6 10. Bxc6 bxc6 11. Be3 Bxe3 12. fxe3 Ne5 13. Qe1 Qg5 14. h4 Qh5 15. Qd1 Qxd1 16. Ne7+ Kh8 17. Nxd1 Bd7 18. Nf5 g6 19. Ng3 a5 20. a4 c5 21. b3 c4 22. Nc3 Rfb8 23. Rab1 cxb3 24. cxb3 Rb4 25. Nd5 Rb7 26. Rfc1 c6 27. Nf4 Rab8 28. Rc3 c5 29. Rd1 Rxb3 30. Rxb3 Rxb3 31. Rxd6 Bxa4 32. Nf1 Ng4 33. Rd1 Bb5 34. Nd2 Rb2 35. Nf3 a4 36. e5 a3 37. e6 fxe6 38. Ne1 Bc4 39. Ned3 Rb8 40. Nc1 Rb1 41. h5 a2 42. hxg6 a1=Q 43. Rd8+ Kg7 44. Rd7+ Kf6 45. Rf7+ Kg5 0-1
+

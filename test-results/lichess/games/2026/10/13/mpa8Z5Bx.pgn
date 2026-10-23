@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/game/mpa8Z5Bx"]
+[Date "2026.10.13"]
+[Round "-"]
+[White "myChessJava"]
+[Black "fractionBOT"]
+[Result "1-0"]
+[GameId "mpa8Z5Bx"]
+[UTCDate "2026.10.13"]
+[UTCTime "16:00:35"]
+[WhiteElo "2024"]
+[BlackElo "1731"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+1"]
+[ECO "B10"]
+[Opening "Caro-Kann Defense"]
+[Termination "Normal"]
+
+1. e4 c6 2. Nf3 e6 3. Bd3 Nf6 4. e5 Nd5 5. O-O Nf4 6. Bc4 d5 7. Bb3 g6 8. d4 Bh6 9. g3 a5 10. a4 Nh3+ 11. Kg2 Ng5 12. h4 Nxf3 13. Bxh6 Nxh4+ 14. gxh4 Qxh4 15. Rh1 Qe4+ 16. f3 Qf5 17. c4 g5 18. Bc2 Qf4 19. Nc3 Na6 20. Ne2 Qe3 21. Ra3 Qxa3 22. bxa3 dxc4 23. Bxg5 h5 24. Bf6 Rg8+ 25. Kf2 b6 26. Rxh5 Kd7 27. Rh7 Rf8 28. Nf4 Kc7 29. Ng6 Rg8 30. Rxf7+ Bd7 31. Be4 Rxg6 32. Bxg6 Rg8 33. Qc2 b5 34. Qc3 b4 35. Qxc4 Rxg6 36. Qxa6 bxa3 37. Qa7+ Kc8 38. Qxd7+ Kb8 39. Qd8# 1-0
+

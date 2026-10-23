@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/game/mRhqDiMg"]
+[Date "2026.10.18"]
+[Round "-"]
+[White "chrismaghuhn"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "mRhqDiMg"]
+[UTCDate "2026.10.18"]
+[UTCTime "14:50:49"]
+[WhiteElo "2188"]
+[BlackElo "2020"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+2"]
+[ECO "C43"]
+[Opening "Petrov's Defense: Modern Attack, Center Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nf6 3. d4 Nxe4 4. Bd3 d5 5. Nxe5 Bb4+ 6. Bd2 Nxd2 7. Nxd2 O-O 8. O-O f6 9. Qh5 h6 10. Nef3 Bxd2 11. Nxd2 Nc6 12. Nf3 Nb4 13. Bg6 Be6 14. c3 Nc6 15. Rae1 Qd7 16. h3 Bf7 17. Bxf7+ Qxf7 18. Qf5 Rae8 19. Rxe8 Rxe8 20. Re1 Rd8 21. Qg4 a6 22. Nh4 h5 23. Qf3 g6 24. a4 Kg7 25. Re3 Kh7 26. Qe2 Rd7 27. f4 Re7 28. f5 Rxe3 29. Qxe3 g5 30. Ng6 Kg7 31. h4 Qd7 32. hxg5 Qxf5 33. Ne7 Qb1+ 34. Kf2 Qxb2+ 35. Kf3 Qb3 36. Nxc6 Qd1+ 37. Kf2 Qc2+ 38. Kg3 bxc6 39. Qe7+ Kg8 40. Qe6+ Kf8 41. Qxf6+ Ke8 42. g6 h4+ 43. Kh2 Qd3 44. Qf7+ Kd8 45. g7 Qg3+ 46. Kg1 Qe1+ 47. Qf1 Qe3+ 48. Kh1 Qg3 49. Qf8+ Kd7 50. g8=Q Qxg8 51. Qxg8 1-0
+

@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/game/YJXxWCLc"]
+[Date "2026.10.17"]
+[Round "-"]
+[White "myChessJava"]
+[Black "Botkingteam33"]
+[Result "0-1"]
+[GameId "YJXxWCLc"]
+[UTCDate "2026.10.17"]
+[UTCTime "17:08:17"]
+[WhiteElo "2023"]
+[BlackElo "2024"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+1"]
+[ECO "C68"]
+[Opening "Ruy Lopez: Exchange Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Qd6 6. Nc3 Bg4 7. h3 Bd7 8. d4 exd4 9. e5 Qb4 10. a3 Qc4 11. Qxd4 Qxd4 12. Nxd4 c5 13. Nb3 Bf5 14. Be3 b6 15. Rac1 Ne7 16. Rfd1 Nc6 17. Bf4 Be7 18. e6 fxe6 19. g4 e5 20. Nd5 Rd8 21. gxf5 exf4 22. Nxc7+ Kf7 23. Ne6 Rxd1+ 24. Rxd1 g6 25. Nxf4 c4 26. fxg6+ hxg6 27. Nc1 b5 28. Kg2 Bf6 29. Rd7+ Ke8 30. Rd6 Bxb2 31. Rxc6 Kd7 32. Rxa6 Bxc1 33. Nxg6 Re8 34. c3 Bd2 35. a4 b4 36. cxb4 c3 37. Ra7+ Kd6 38. Ne5 Kxe5 39. Rc7 Kd4 40. Kf3 Kd3 41. Rd7+ Kc4 42. b5 c2 43. Rc7+ Kd3 44. Rd7+ Kc4 45. Rc7+ Kb3 46. Rxc2 Kxc2 47. Kg3 Rf8 48. h4 Kd3 49. h5 Ke4 50. b6 Rg8+ 51. Kh3 Kf3 52. b7 Bf4 53. b8=Q Rxb8 54. a5 Rb1 55. a6 Rd1 0-1
+

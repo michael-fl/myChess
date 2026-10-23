@@ -1,0 +1,22 @@
+[Event "rated rapid game"]
+[Site "https://lichess.org/game/TdUYj6xG"]
+[Date "2026.10.21"]
+[Round "-"]
+[White "turkjs"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "TdUYj6xG"]
+[UTCDate "2026.10.21"]
+[UTCTime "17:51:57"]
+[WhiteElo "1814"]
+[BlackElo "2288"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "900+10"]
+[ECO "A45"]
+[Opening "Indian Defense"]
+[Termination "Normal"]
+
+1. d4 Nf6 2. Nc3 e6 3. Qd3 Bb4 4. Bd2 O-O 5. a3 Bxc3 6. bxc3 d5 7. Bg5 h6 8. Bxf6 Qxf6 9. e4 Nd7 10. e5 Qe7 11. Nf3 Nb6 12. Qb5 Bd7 13. Qa5 Rfc8 14. Kd2 c5 15. dxc5 Rxc5 16. Qb4 Rac8 17. Bd3 Bc6 18. Ke3 Ba4 19. Rab1 Qc7 20. Kd2 Rxc3 21. Rhc1 f6 22. exf6 Bxc2 23. Bg6 Bxg6 24. Rxc3 Qxc3+ 25. Qxc3 Rxc3 26. f7+ Kf8 27. Kxc3 Bxb1 28. Ne5 Ba2 29. Kd4 Nc4 30. Ng6+ Kxf7 31. Ne5+ Kf6 32. Nxc4 Bxc4 33. Kc3 Ke5 34. Kc2 Ke4 35. f3+ Ke3 36. Kb2 d4 37. f4 Be2 38. f5 exf5 39. g4 fxg4 40. a4 d3 41. Kb3 d2 42. a5 d1=Q+ 43. Kc3 Qa1+ 44. Kb3 Bd1+ 45. Kb4 Kd4 46. h3 Qb2# 0-1
+

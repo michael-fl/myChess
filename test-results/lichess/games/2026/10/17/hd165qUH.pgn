@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/game/hd165qUH"]
+[Date "2026.10.17"]
+[Round "-"]
+[White "BerkBot"]
+[Black "myChessJava"]
+[Result "1-0"]
+[GameId "hd165qUH"]
+[UTCDate "2026.10.17"]
+[UTCTime "13:10:41"]
+[WhiteElo "2098"]
+[BlackElo "2008"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+1"]
+[ECO "A45"]
+[Opening "Indian Defense"]
+[Termination "Normal"]
+
+1. d4 Nf6 2. Nc3 e6 3. e4 Bb4 4. e5 Nd5 5. Qg4 g6 6. a3 Bxc3+ 7. bxc3 h5 8. Qg3 Nc6 9. Bg5 h4 10. Qg4 f5 11. exf6 Nxf6 12. Qf4 O-O 13. Qxh4 Qe7 14. Bd3 d5 15. Bxg6 e5 16. Bh6 exd4+ 17. Ne2 Rd8 18. Bg5 Rd6 19. cxd4 Bg4 20. f3 Nxd4 21. Bd3 Nxe2 22. Bxf6 Rxf6 23. Qxg4+ Kf8 24. Kf2 Nf4 25. Rhe1 Qc5+ 26. Kf1 Qc3 27. Bh7 Qc4+ 28. Kg1 Qc5+ 29. Kh1 Kf7 30. g3 Ne6 31. Bf5 Ng7 32. Bd3 Rd8 33. f4 Qc3 34. Rab1 Rb6 35. Qg5 Rd7 36. h4 Qxa3 37. h5 Qc3 38. h6 Ne6 39. Qg6+ Kf8 40. h7 Rd8 41. Rxe6 Rxb1+ 42. Kh2 Qd2+ 43. Be2 Rh1+ 44. Kxh1 Qe1+ 45. Kg2 Qf1+ 46. Kxf1 1-0
+

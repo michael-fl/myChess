@@ -1,0 +1,22 @@
+[Event "casual blitz game"]
+[Site "https://lichess.org/game/JGYh1PWs"]
+[Date "2026.10.17"]
+[Round "-"]
+[White "myChessJava"]
+[Black "Waldemar-the-elf"]
+[Result "1-0"]
+[GameId "JGYh1PWs"]
+[UTCDate "2026.10.17"]
+[UTCTime "01:39:14"]
+[WhiteElo "2003"]
+[BlackElo "1868"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+1"]
+[ECO "C68"]
+[Opening "Ruy Lopez: Exchange Variation"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O f6 6. d4 Bg4 7. dxe5 Qxd1 8. Rxd1 fxe5 9. Bg5 Be7 10. Bxe7 Bxf3 11. Bf8 Kxf8 12. gxf3 Nf6 13. Nd2 Kf7 14. Nc4 Ke6 15. Na5 Rhb8 16. Rab1 Nd7 17. Kg2 Nc5 18. b4 Nd7 19. Rd3 Ra7 20. Nb3 Nf6 21. Rbd1 Kf7 22. a4 Re8 23. a5 Kg6 24. Rc3 Nh5 25. Rd7 Rc8 26. h4 Nf4+ 27. Kh2 Ne6 28. Nc5 Nf8 29. Rd1 Kf7 30. h5 Re8 31. Kg3 Re7 32. Rd8 Re8 33. Rd2 Re7 34. Rd1 Ne6 35. Nd7 Nd4 36. Nxe5+ Rxe5 37. Rxd4 Ra8 38. f4 Re6 39. Rcd3 Re7 40. Kf3 Rae8 41. Rc3 Re6 42. e5 Rc8 43. Rd7+ Re7 44. Rcd3 Re8 45. Ke4 Kf8 46. Rxe7 Kxe7 47. f5 Rg8 48. Rg3 Kf7 49. f6 g5 50. Kf5 Rf8 51. Rxg5 Ke8 52. e6 h6 53. Rg8 c5 54. Ke5 1-0
+

@@ -1,0 +1,22 @@
+[Event "rated blitz game"]
+[Site "https://lichess.org/game/wnngLpuO"]
+[Date "2026.10.19"]
+[Round "-"]
+[White "myChessJava"]
+[Black "Iskelt-Corax"]
+[Result "1-0"]
+[GameId "wnngLpuO"]
+[UTCDate "2026.10.19"]
+[UTCTime "02:14:31"]
+[WhiteElo "2034"]
+[BlackElo "1871"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "180+2"]
+[ECO "C42"]
+[Opening "Petrov's Defense"]
+[Termination "Time forfeit"]
+
+1. e4 e5 2. Nf3 Nf6 3. Nxe5 Qe7 4. Nf3 Qxe4+ 5. Be2 Bb4 6. a3 Bd6 7. Nc3 Qg4 8. O-O O-O 9. d4 Be7 10. Nb5 Na6 11. Ng5 Qf5 12. Bd3 Qd5 13. Re1 Bd8 14. Re5 Qc6 15. d5 Qb6 16. Be3 c5 17. dxc6 Qxc6 18. Nd6 Bc7 19. Nf5 Bd8 20. Rc1 d5 21. c4 Qc7 22. Nf3 Ng4 23. cxd5 Qd7 24. Bf4 Bb6 25. Re2 Nxf2 26. Rxf2 Bxf2+ 27. Kxf2 Qd8 28. Ne3 b6 29. Qc2 h6 30. b4 Bb7 31. Qb3 Re8 32. Qb2 Rf8 33. Nf5 f6 34. N3d4 Kh8 35. Nd6 Nxb4 36. Qxb4 Bxd5 37. Qb5 Bg8 38. Nc6 a6 39. Qb2 Qd7 40. Qxb6 Qg4 41. Bg3 Qg5 42. Qb2 Be6 43. h4 Qg4 44. Be2 Qg6 45. Ne7 Qh7 46. Bh5 Qd3 47. Ng6+ Kg8 48. Nxf8 Kxf8 49. Rc7 Rd8 50. Qb6 Qd2+ 51. Be2 Kg8 52. Re7 Rxd6 53. Bxd6 Qd5 54. Qc5 Qxc5+ 55. Bxc5 Bf7 56. Bxa6 g6 57. Bd3 1-0
+

@@ -1,0 +1,22 @@
+[Event "rated classical game"]
+[Site "https://lichess.org/game/R4tnEDnX"]
+[Date "2026.10.19"]
+[Round "-"]
+[White "zion-bot"]
+[Black "myChessJava"]
+[Result "0-1"]
+[GameId "R4tnEDnX"]
+[UTCDate "2026.10.19"]
+[UTCTime "02:30:18"]
+[WhiteElo "1999"]
+[BlackElo "2247"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "1800+0"]
+[ECO "A45"]
+[Opening "Queen's Pawn Game: Chigorin Variation"]
+[Termination "Normal"]
+
+1. Nc3 d5 2. d4 Nf6 3. Nf3 e6 4. e3 Bd6 5. Bb5+ Bd7 6. O-O Bxb5 7. Nxb5 O-O 8. Ne5 Bxe5 9. dxe5 Nfd7 10. f4 a6 11. Nd4 Nc5 12. Qg4 Ne4 13. f5 Nd7 14. f6 g6 15. Nf3 h6 16. Qh4 Kh7 17. Rd1 c6 18. b3 Qa5 19. Qe1 Qxe1+ 20. Rxe1 Rac8 21. Bb2 c5 22. Rad1 c4 23. Re2 c3 24. Ba3 Rfe8 25. Be7 Nb8 26. Ree1 Nc6 27. Ba3 b5 28. b4 Ra8 29. Ra1 g5 30. h3 h5 31. g4 hxg4 32. hxg4 Nd2 33. Nxd2 cxd2 34. Re2 Nxe5 35. Bb2 Nxg4 36. Rxd2 Kg6 37. Re1 a5 38. Rg2 Nxf6 39. Bxf6 Kxf6 40. Rf1+ Kg6 41. a3 Rec8 42. Rgf2 f5 43. Rd1 axb4 44. axb4 Ra2 45. Rdd2 Rb2 46. Kf1 Rxb4 47. Rd3 Rb2 48. c3 Rb3 49. Ke2 Rcxc3 50. Rxc3 Rxc3 51. Kf1 b4 52. Rb2 b3 53. Ke2 Rc2+ 54. Rxc2 bxc2 55. Kd2 g4 56. Kxc2 g3 57. Kc1 Kh7 58. Kc2 g2 59. Kd2 Kh8 60. Kd1 Kg8 61. Kd2 Kf8 62. Kd1 Ke7 63. Kd2 Kd6 64. Kd1 g1=Q+ 65. Kd2 Qh2+ 66. Ke1 Qg2 67. Kd1 Kc5 68. Ke1 Kc4 69. Kd1 Kd3 70. Kc1 Qc2# 0-1
+

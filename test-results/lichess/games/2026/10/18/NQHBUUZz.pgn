@@ -1,0 +1,22 @@
+[Event "casual variant:chess960 game"]
+[Site "https://lichess.org/game/NQHBUUZz"]
+[Date "2026.10.18"]
+[Round "-"]
+[White "ix-bot"]
+[Black "myChessJava"]
+[Result "1/2-1/2"]
+[GameId "NQHBUUZz"]
+[UTCDate "2026.10.18"]
+[UTCTime "11:43:34"]
+[WhiteElo "1710"]
+[BlackElo "1496"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Chess960"]
+[TimeControl "180+2"]
+[Termination "Normal"]
+[FEN "nrbbqnkr/pppppppp/8/8/8/8/PPPPPPPP/NRBBQNKR w KQkq - 0 1"]
+[SetUp "1"]
+
+1. e4 Nb6 2. f4 d5 3. e5 Ne6 4. d3 Qa4 5. Nb3 c5 6. f5 Nd4 7. Nxd4 Qxd4+ 8. Be3 Qxe5 9. Qg3 Bc7 10. Bxc5 Bxf5 11. Qxe5 Bxe5 12. Ne3 Be6 13. c3 Nd7 14. Bxe7 Re8 15. Bh4 Bf4 16. Bf2 Bxe3 17. Bxe3 Bf5 18. Kf2 Ne5 19. Be2 Bxd3 20. Rbe1 a5 21. Bd4 Be4 22. c4 Nxc4 23. Bxc4 dxc4 24. Re3 f5 25. Rc1 b5 26. Rg3 Re7 27. a4 Rd7 28. Be5 O-O 29. axb5 f4 30. Rg4 Rf5 31. Bc3 h5 32. Rg6 Rxb5 33. Re6 Bb7 34. h4 Rf5 35. Rce1 f3 36. g3 a4 37. Re7 Rf7 38. Rxd7 Rxd7 39. Re5 Bd5 40. Rxh5 g6 41. Rg5 Kf7 42. g4 Rd6 43. h5 gxh5 44. gxh5 Bc6 45. Rg7+ Ke8 46. Rg8+ Kd7 47. Rg7+ Kc8 48. Rg6 Rxg6 49. hxg6 Bd5 50. g7 Kd7 51. g8=Q Bxg8 52. Kxf3 Kc6 53. Ke3 Kc5 54. Kd2 Bf7 55. Bg7 Kb4 56. Kc2 Bg6+ 57. Kc1 Kb3 58. Kd2 Be4 59. Kc1 c3 60. bxc3 a3 61. c4 Kxc4 62. Bf8 Kb3 63. Bg7 Bf3 64. Bf8 a2 65. Bg7 Be4 66. Kd2 Bb7 67. Ba1 Bf3 68. Kc1 Bh1 69. Kd2 Bd5 70. Kc1 Bc6 71. Kd2 Ba8 72. Kc1 Bd5 73. Kd2 Bc4 74. Kc1 Bf7 75. Kd2 Be6 76. Bg7 Bc4 77. Ba1 Bf7 78. Bh8 Kc4 79. Ba1 Bg8 80. Bb2 Bh7 81. Ba1 Kd5 82. Bb2 Ke4 83. Ba1 Bf5 84. Bb2 Be6 85. Ba1 Bc4 86. Bb2 Bf7 87. Ba1 Bb3 88. Bb2 Bc4 89. Ba1 Bf7 90. Bb2 Bg6 91. Ba1 Bh5 92. Bb2 Be8 93. Ba1 Ba4 94. Bb2 Kf4 95. Ba1 Bb3 96. Bb2 Bd5 97. Ba1 Kf3 98. Bb2 Bb3 99. Ba1 Bf7 100. Bb2 Bd5 101. Ba1 Be4 102. Bb2 Bf5 103. Ba1 Bd7 104. Bb2 Bc6 105. Ba1 Bb5 106. Bb2 Ba6 107. Ba1 Bc4 108. Bb2 Bf7 109. Ba1 Bg6 110. Bb2 Bh5 111. Ba1 Kf4 112. Bb2 Be8 113. Ba1 Ke4 114. Bb2 a1=R 115. Bxa1 Bb5 116. Bb2 Bd3 117. Bc1 Bc4 118. Bb2 Be6 119. Bc1 Bg4 120. Bb2 Be6 121. Bc1 Bb3 122. Bb2 Bc4 123. Ba1 Bf1 124. Bb2 Bb5 125. Bc1 Bd3 126. Bb2 Ba6 127. Bc1 Bd3 128. Bb2 Bc4 129. Bc1 Bd3 1/2-1/2
+
