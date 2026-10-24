@@ -1,0 +1,1430 @@
+Started game 1 of 400 (4.9.3 vs sf-2300)
+Started game 2 of 400 (sf-2300 vs 4.9.3)
+Started game 4 of 400 (sf-2300 vs 4.9.3)
+Started game 3 of 400 (4.9.3 vs sf-2300)
+Finished game 4 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 0 - 1 - 0  [0.000] 1
+Started game 5 of 400 (4.9.3 vs sf-2300)
+Finished game 3 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 1 - 1 - 0  [0.500] 2
+Started game 6 of 400 (sf-2300 vs 4.9.3)
+Finished game 2 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 1 - 2 - 0  [0.333] 3
+Started game 7 of 400 (4.9.3 vs sf-2300)
+Finished game 5 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 2 - 2 - 0  [0.500] 4
+Started game 8 of 400 (sf-2300 vs 4.9.3)
+Finished game 1 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 2 - 3 - 0  [0.400] 5
+Started game 9 of 400 (4.9.3 vs sf-2300)
+Finished game 6 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 3 - 3 - 0  [0.500] 6
+Started game 10 of 400 (sf-2300 vs 4.9.3)
+Finished game 7 (4.9.3 vs sf-2300): 1-0 {White mates}
+Score of 4.9.3 vs sf-2300: 4 - 3 - 0  [0.571] 7
+Started game 11 of 400 (4.9.3 vs sf-2300)
+Finished game 8 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 4 - 4 - 0  [0.500] 8
+Started game 12 of 400 (sf-2300 vs 4.9.3)
+Finished game 9 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 4 - 5 - 0  [0.444] 9
+Started game 13 of 400 (4.9.3 vs sf-2300)
+Finished game 10 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 5 - 5 - 0  [0.500] 10
+...      4.9.3 playing White: 3 - 2 - 0  [0.600] 5
+...      4.9.3 playing Black: 2 - 3 - 0  [0.400] 5
+...      White vs Black: 6 - 4 - 0  [0.600] 10
+Elo difference: 0.0 +/- 251.3, LOS: 50.0 %, DrawRatio: 0.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 14 of 400 (sf-2300 vs 4.9.3)
+Finished game 11 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 6 - 5 - 0  [0.545] 11
+Started game 15 of 400 (4.9.3 vs sf-2300)
+Finished game 12 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 7 - 5 - 0  [0.583] 12
+Started game 16 of 400 (sf-2300 vs 4.9.3)
+Finished game 14 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 8 - 5 - 0  [0.615] 13
+Started game 17 of 400 (4.9.3 vs sf-2300)
+Finished game 15 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 8 - 6 - 0  [0.571] 14
+Started game 18 of 400 (sf-2300 vs 4.9.3)
+Finished game 13 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 9 - 6 - 0  [0.600] 15
+Started game 19 of 400 (4.9.3 vs sf-2300)
+Finished game 16 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 9 - 7 - 0  [0.563] 16
+Started game 20 of 400 (sf-2300 vs 4.9.3)
+Finished game 18 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 10 - 7 - 0  [0.588] 17
+Started game 21 of 400 (4.9.3 vs sf-2300)
+Finished game 17 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 11 - 7 - 0  [0.611] 18
+Started game 22 of 400 (sf-2300 vs 4.9.3)
+Finished game 19 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 12 - 7 - 0  [0.632] 19
+Started game 23 of 400 (4.9.3 vs sf-2300)
+Finished game 20 (sf-2300 vs 4.9.3): 1-0 {White mates}
+Score of 4.9.3 vs sf-2300: 12 - 8 - 0  [0.600] 20
+...      4.9.3 playing White: 7 - 3 - 0  [0.700] 10
+...      4.9.3 playing Black: 5 - 5 - 0  [0.500] 10
+...      White vs Black: 12 - 8 - 0  [0.600] 20
+Elo difference: 70.4 +/- 168.9, LOS: 81.4 %, DrawRatio: 0.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 24 of 400 (sf-2300 vs 4.9.3)
+Finished game 21 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 13 - 8 - 0  [0.619] 21
+Started game 25 of 400 (4.9.3 vs sf-2300)
+Finished game 22 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 13 - 9 - 0  [0.591] 22
+Started game 26 of 400 (sf-2300 vs 4.9.3)
+Finished game 23 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 13 - 10 - 0  [0.565] 23
+Started game 27 of 400 (4.9.3 vs sf-2300)
+Finished game 27 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 14 - 10 - 0  [0.583] 24
+Started game 28 of 400 (sf-2300 vs 4.9.3)
+Finished game 24 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 15 - 10 - 0  [0.600] 25
+Started game 29 of 400 (4.9.3 vs sf-2300)
+Finished game 26 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 15 - 11 - 0  [0.577] 26
+Started game 30 of 400 (sf-2300 vs 4.9.3)
+Finished game 25 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 15 - 12 - 0  [0.556] 27
+Started game 31 of 400 (4.9.3 vs sf-2300)
+Finished game 29 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 16 - 12 - 0  [0.571] 28
+Started game 32 of 400 (sf-2300 vs 4.9.3)
+Finished game 28 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 17 - 12 - 0  [0.586] 29
+Started game 33 of 400 (4.9.3 vs sf-2300)
+Finished game 30 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 17 - 13 - 0  [0.567] 30
+...      4.9.3 playing White: 10 - 5 - 0  [0.667] 15
+...      4.9.3 playing Black: 7 - 8 - 0  [0.467] 15
+...      White vs Black: 18 - 12 - 0  [0.600] 30
+Elo difference: 46.6 +/- 131.5, LOS: 76.7 %, DrawRatio: 0.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 34 of 400 (sf-2300 vs 4.9.3)
+Finished game 31 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 18 - 13 - 0  [0.581] 31
+Started game 35 of 400 (4.9.3 vs sf-2300)
+Finished game 32 (sf-2300 vs 4.9.3): 1-0 {White mates}
+Score of 4.9.3 vs sf-2300: 18 - 14 - 0  [0.563] 32
+Started game 36 of 400 (sf-2300 vs 4.9.3)
+Finished game 33 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 19 - 14 - 0  [0.576] 33
+Started game 37 of 400 (4.9.3 vs sf-2300)
+Finished game 34 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 20 - 14 - 0  [0.588] 34
+Started game 38 of 400 (sf-2300 vs 4.9.3)
+Finished game 35 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 20 - 15 - 0  [0.571] 35
+Started game 39 of 400 (4.9.3 vs sf-2300)
+Finished game 37 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 21 - 15 - 0  [0.583] 36
+Started game 40 of 400 (sf-2300 vs 4.9.3)
+Finished game 36 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 21 - 16 - 0  [0.568] 37
+Started game 41 of 400 (4.9.3 vs sf-2300)
+Finished game 38 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 22 - 16 - 0  [0.579] 38
+Started game 42 of 400 (sf-2300 vs 4.9.3)
+Finished game 40 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 23 - 16 - 0  [0.590] 39
+Started game 43 of 400 (4.9.3 vs sf-2300)
+Finished game 39 (4.9.3 vs sf-2300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.3 vs sf-2300: 23 - 16 - 1  [0.588] 40
+...      4.9.3 playing White: 13 - 6 - 1  [0.675] 20
+...      4.9.3 playing Black: 10 - 10 - 0  [0.500] 20
+...      White vs Black: 23 - 16 - 1  [0.588] 40
+Elo difference: 61.4 +/- 111.8, LOS: 86.9 %, DrawRatio: 2.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 44 of 400 (sf-2300 vs 4.9.3)
+Finished game 43 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 24 - 16 - 1  [0.598] 41
+Started game 45 of 400 (4.9.3 vs sf-2300)
+Finished game 44 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 25 - 16 - 1  [0.607] 42
+Started game 46 of 400 (sf-2300 vs 4.9.3)
+Finished game 42 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 26 - 16 - 1  [0.616] 43
+Started game 47 of 400 (4.9.3 vs sf-2300)
+Finished game 41 (4.9.3 vs sf-2300): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.3 vs sf-2300: 26 - 16 - 2  [0.614] 44
+Started game 48 of 400 (sf-2300 vs 4.9.3)
+Finished game 46 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 27 - 16 - 2  [0.622] 45
+Started game 49 of 400 (4.9.3 vs sf-2300)
+Finished game 45 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 27 - 17 - 2  [0.609] 46
+Started game 50 of 400 (sf-2300 vs 4.9.3)
+Finished game 47 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 28 - 17 - 2  [0.617] 47
+Started game 51 of 400 (4.9.3 vs sf-2300)
+Finished game 48 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 29 - 17 - 2  [0.625] 48
+Started game 52 of 400 (sf-2300 vs 4.9.3)
+Finished game 49 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 30 - 17 - 2  [0.633] 49
+Started game 53 of 400 (4.9.3 vs sf-2300)
+Finished game 51 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 31 - 17 - 2  [0.640] 50
+...      4.9.3 playing White: 17 - 7 - 2  [0.692] 26
+...      4.9.3 playing Black: 14 - 10 - 0  [0.583] 24
+...      White vs Black: 27 - 21 - 2  [0.560] 50
+Elo difference: 100.0 +/- 101.4, LOS: 97.8 %, DrawRatio: 4.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 54 of 400 (sf-2300 vs 4.9.3)
+Finished game 50 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 31 - 18 - 2  [0.627] 51
+Started game 55 of 400 (4.9.3 vs sf-2300)
+Finished game 53 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 32 - 18 - 2  [0.635] 52
+Started game 56 of 400 (sf-2300 vs 4.9.3)
+Finished game 54 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 33 - 18 - 2  [0.642] 53
+Started game 57 of 400 (4.9.3 vs sf-2300)
+Finished game 55 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 34 - 18 - 2  [0.648] 54
+Started game 58 of 400 (sf-2300 vs 4.9.3)
+Finished game 52 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 34 - 19 - 2  [0.636] 55
+Started game 59 of 400 (4.9.3 vs sf-2300)
+Finished game 56 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 35 - 19 - 2  [0.643] 56
+Started game 60 of 400 (sf-2300 vs 4.9.3)
+Finished game 57 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 36 - 19 - 2  [0.649] 57
+Started game 61 of 400 (4.9.3 vs sf-2300)
+Finished game 59 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 37 - 19 - 2  [0.655] 58
+Started game 62 of 400 (sf-2300 vs 4.9.3)
+Finished game 58 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 37 - 20 - 2  [0.644] 59
+Started game 63 of 400 (4.9.3 vs sf-2300)
+Finished game 63 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 38 - 20 - 2  [0.650] 60
+...      4.9.3 playing White: 22 - 7 - 2  [0.742] 31
+...      4.9.3 playing Black: 16 - 13 - 0  [0.552] 29
+...      White vs Black: 35 - 23 - 2  [0.600] 60
+Elo difference: 107.5 +/- 93.1, LOS: 99.1 %, DrawRatio: 3.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 64 of 400 (sf-2300 vs 4.9.3)
+Finished game 60 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 39 - 20 - 2  [0.656] 61
+Started game 65 of 400 (4.9.3 vs sf-2300)
+Finished game 61 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 39 - 21 - 2  [0.645] 62
+Started game 66 of 400 (sf-2300 vs 4.9.3)
+Finished game 62 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 40 - 21 - 2  [0.651] 63
+Started game 67 of 400 (4.9.3 vs sf-2300)
+Finished game 64 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 40 - 22 - 2  [0.641] 64
+Started game 68 of 400 (sf-2300 vs 4.9.3)
+Finished game 67 (4.9.3 vs sf-2300): 0-1 {Black mates}
+Score of 4.9.3 vs sf-2300: 40 - 23 - 2  [0.631] 65
+Started game 69 of 400 (4.9.3 vs sf-2300)
+Finished game 65 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 41 - 23 - 2  [0.636] 66
+Started game 70 of 400 (sf-2300 vs 4.9.3)
+Finished game 68 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 42 - 23 - 2  [0.642] 67
+Started game 71 of 400 (4.9.3 vs sf-2300)
+Finished game 66 (sf-2300 vs 4.9.3): 1/2-1/2 {Draw by stalemate}
+Score of 4.9.3 vs sf-2300: 42 - 23 - 3  [0.640] 68
+Started game 72 of 400 (sf-2300 vs 4.9.3)
+Finished game 69 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 43 - 23 - 3  [0.645] 69
+Started game 73 of 400 (4.9.3 vs sf-2300)
+Finished game 70 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 44 - 23 - 3  [0.650] 70
+...      4.9.3 playing White: 24 - 9 - 2  [0.714] 35
+...      4.9.3 playing Black: 20 - 14 - 1  [0.586] 35
+...      White vs Black: 38 - 29 - 3  [0.564] 70
+Elo difference: 107.5 +/- 85.3, LOS: 99.5 %, DrawRatio: 4.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 74 of 400 (sf-2300 vs 4.9.3)
+Finished game 71 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 45 - 23 - 3  [0.655] 71
+Started game 75 of 400 (4.9.3 vs sf-2300)
+Finished game 72 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 46 - 23 - 3  [0.660] 72
+Started game 76 of 400 (sf-2300 vs 4.9.3)
+Finished game 73 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 47 - 23 - 3  [0.664] 73
+Started game 77 of 400 (4.9.3 vs sf-2300)
+Finished game 74 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 47 - 24 - 3  [0.655] 74
+Started game 78 of 400 (sf-2300 vs 4.9.3)
+Finished game 75 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 47 - 25 - 3  [0.647] 75
+Started game 79 of 400 (4.9.3 vs sf-2300)
+Finished game 77 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 48 - 25 - 3  [0.651] 76
+Started game 80 of 400 (sf-2300 vs 4.9.3)
+Finished game 76 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 48 - 26 - 3  [0.643] 77
+Started game 81 of 400 (4.9.3 vs sf-2300)
+Finished game 78 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 49 - 26 - 3  [0.647] 78
+Started game 82 of 400 (sf-2300 vs 4.9.3)
+Finished game 80 (sf-2300 vs 4.9.3): 1-0 {White mates}
+Score of 4.9.3 vs sf-2300: 49 - 27 - 3  [0.639] 79
+Started game 83 of 400 (4.9.3 vs sf-2300)
+Finished game 79 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 50 - 27 - 3  [0.644] 80
+...      4.9.3 playing White: 28 - 10 - 2  [0.725] 40
+...      4.9.3 playing Black: 22 - 17 - 1  [0.563] 40
+...      White vs Black: 45 - 32 - 3  [0.581] 80
+Elo difference: 102.8 +/- 79.4, LOS: 99.6 %, DrawRatio: 3.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 84 of 400 (sf-2300 vs 4.9.3)
+Finished game 81 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 50 - 28 - 3  [0.636] 81
+Started game 85 of 400 (4.9.3 vs sf-2300)
+Finished game 82 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 51 - 28 - 3  [0.640] 82
+Started game 86 of 400 (sf-2300 vs 4.9.3)
+Finished game 83 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 52 - 28 - 3  [0.645] 83
+Started game 87 of 400 (4.9.3 vs sf-2300)
+Finished game 85 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 53 - 28 - 3  [0.649] 84
+Started game 88 of 400 (sf-2300 vs 4.9.3)
+Finished game 84 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 54 - 28 - 3  [0.653] 85
+Started game 89 of 400 (4.9.3 vs sf-2300)
+Finished game 87 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 54 - 29 - 3  [0.645] 86
+Started game 90 of 400 (sf-2300 vs 4.9.3)
+Finished game 88 (sf-2300 vs 4.9.3): 0-1 {Black mates}
+Score of 4.9.3 vs sf-2300: 55 - 29 - 3  [0.649] 87
+Started game 91 of 400 (4.9.3 vs sf-2300)
+Finished game 90 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 56 - 29 - 3  [0.653] 88
+Started game 92 of 400 (sf-2300 vs 4.9.3)
+Finished game 86 (sf-2300 vs 4.9.3): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.3 vs sf-2300: 56 - 29 - 4  [0.652] 89
+Started game 93 of 400 (4.9.3 vs sf-2300)
+Finished game 89 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 57 - 29 - 4  [0.656] 90
+...      4.9.3 playing White: 31 - 12 - 2  [0.711] 45
+...      4.9.3 playing Black: 26 - 17 - 2  [0.600] 45
+...      White vs Black: 48 - 38 - 4  [0.556] 90
+Elo difference: 111.8 +/- 75.0, LOS: 99.9 %, DrawRatio: 4.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 94 of 400 (sf-2300 vs 4.9.3)
+Finished game 91 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 57 - 30 - 4  [0.648] 91
+Started game 95 of 400 (4.9.3 vs sf-2300)
+Finished game 93 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 58 - 30 - 4  [0.652] 92
+Started game 96 of 400 (sf-2300 vs 4.9.3)
+Finished game 92 (sf-2300 vs 4.9.3): 1-0 {White mates}
+Score of 4.9.3 vs sf-2300: 58 - 31 - 4  [0.645] 93
+Started game 97 of 400 (4.9.3 vs sf-2300)
+Finished game 94 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 59 - 31 - 4  [0.649] 94
+Started game 98 of 400 (sf-2300 vs 4.9.3)
+Finished game 95 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 59 - 32 - 4  [0.642] 95
+Started game 99 of 400 (4.9.3 vs sf-2300)
+Finished game 97 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 60 - 32 - 4  [0.646] 96
+Started game 100 of 400 (sf-2300 vs 4.9.3)
+Finished game 96 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 61 - 32 - 4  [0.649] 97
+Started game 101 of 400 (4.9.3 vs sf-2300)
+Finished game 98 (sf-2300 vs 4.9.3): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.3 vs sf-2300: 61 - 32 - 5  [0.648] 98
+Started game 102 of 400 (sf-2300 vs 4.9.3)
+Finished game 100 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 62 - 32 - 5  [0.652] 99
+Started game 103 of 400 (4.9.3 vs sf-2300)
+Finished game 99 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 63 - 32 - 5  [0.655] 100
+...      4.9.3 playing White: 34 - 14 - 2  [0.700] 50
+...      4.9.3 playing Black: 29 - 18 - 3  [0.610] 50
+...      White vs Black: 52 - 43 - 5  [0.545] 100
+Elo difference: 111.4 +/- 70.8, LOS: 99.9 %, DrawRatio: 5.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 104 of 400 (sf-2300 vs 4.9.3)
+Finished game 101 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 64 - 32 - 5  [0.658] 101
+Started game 105 of 400 (4.9.3 vs sf-2300)
+Finished game 103 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 65 - 32 - 5  [0.662] 102
+Started game 106 of 400 (sf-2300 vs 4.9.3)
+Finished game 104 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 66 - 32 - 5  [0.665] 103
+Started game 107 of 400 (4.9.3 vs sf-2300)
+Finished game 105 (4.9.3 vs sf-2300): 1-0 {White mates}
+Score of 4.9.3 vs sf-2300: 67 - 32 - 5  [0.668] 104
+Started game 108 of 400 (sf-2300 vs 4.9.3)
+Finished game 106 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 67 - 33 - 5  [0.662] 105
+Started game 109 of 400 (4.9.3 vs sf-2300)
+Finished game 102 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 67 - 34 - 5  [0.656] 106
+Started game 110 of 400 (sf-2300 vs 4.9.3)
+Finished game 107 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 68 - 34 - 5  [0.659] 107
+Started game 111 of 400 (4.9.3 vs sf-2300)
+Finished game 108 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 69 - 34 - 5  [0.662] 108
+Started game 112 of 400 (sf-2300 vs 4.9.3)
+Finished game 109 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 69 - 35 - 5  [0.656] 109
+Started game 113 of 400 (4.9.3 vs sf-2300)
+Finished game 111 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 70 - 35 - 5  [0.659] 110
+...      4.9.3 playing White: 39 - 15 - 2  [0.714] 56
+...      4.9.3 playing Black: 31 - 20 - 3  [0.602] 54
+...      White vs Black: 59 - 46 - 5  [0.559] 110
+Elo difference: 114.5 +/- 67.7, LOS: 100.0 %, DrawRatio: 4.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 114 of 400 (sf-2300 vs 4.9.3)
+Finished game 110 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 71 - 35 - 5  [0.662] 111
+Started game 115 of 400 (4.9.3 vs sf-2300)
+Finished game 112 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 72 - 35 - 5  [0.665] 112
+Started game 116 of 400 (sf-2300 vs 4.9.3)
+Finished game 113 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 73 - 35 - 5  [0.668] 113
+Started game 117 of 400 (4.9.3 vs sf-2300)
+Finished game 114 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 73 - 36 - 5  [0.662] 114
+Started game 118 of 400 (sf-2300 vs 4.9.3)
+Finished game 117 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 74 - 36 - 5  [0.665] 115
+Started game 119 of 400 (4.9.3 vs sf-2300)
+Finished game 116 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 75 - 36 - 5  [0.668] 116
+Started game 120 of 400 (sf-2300 vs 4.9.3)
+Finished game 115 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 75 - 37 - 5  [0.662] 117
+Started game 121 of 400 (4.9.3 vs sf-2300)
+Finished game 118 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 75 - 38 - 5  [0.657] 118
+Started game 122 of 400 (sf-2300 vs 4.9.3)
+Finished game 121 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 76 - 38 - 5  [0.660] 119
+Started game 123 of 400 (4.9.3 vs sf-2300)
+Finished game 119 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 77 - 38 - 5  [0.662] 120
+...      4.9.3 playing White: 43 - 16 - 2  [0.721] 61
+...      4.9.3 playing Black: 34 - 22 - 3  [0.602] 59
+...      White vs Black: 65 - 50 - 5  [0.563] 120
+Elo difference: 117.2 +/- 65.1, LOS: 100.0 %, DrawRatio: 4.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 124 of 400 (sf-2300 vs 4.9.3)
+Finished game 120 (sf-2300 vs 4.9.3): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.9.3 vs sf-2300: 77 - 38 - 6  [0.661] 121
+Started game 125 of 400 (4.9.3 vs sf-2300)
+Finished game 122 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 77 - 39 - 6  [0.656] 122
+Started game 126 of 400 (sf-2300 vs 4.9.3)
+Finished game 123 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 78 - 39 - 6  [0.659] 123
+Started game 127 of 400 (4.9.3 vs sf-2300)
+Finished game 124 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 79 - 39 - 6  [0.661] 124
+Started game 128 of 400 (sf-2300 vs 4.9.3)
+Finished game 127 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 80 - 39 - 6  [0.664] 125
+Started game 129 of 400 (4.9.3 vs sf-2300)
+Finished game 126 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 81 - 39 - 6  [0.667] 126
+Started game 130 of 400 (sf-2300 vs 4.9.3)
+Finished game 125 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 82 - 39 - 6  [0.669] 127
+Started game 131 of 400 (4.9.3 vs sf-2300)
+Finished game 128 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 83 - 39 - 6  [0.672] 128
+Started game 132 of 400 (sf-2300 vs 4.9.3)
+Finished game 129 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 84 - 39 - 6  [0.674] 129
+Started game 133 of 400 (4.9.3 vs sf-2300)
+Finished game 130 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 85 - 39 - 6  [0.677] 130
+...      4.9.3 playing White: 47 - 16 - 2  [0.738] 65
+...      4.9.3 playing Black: 38 - 23 - 4  [0.615] 65
+...      White vs Black: 70 - 54 - 6  [0.562] 130
+Elo difference: 128.5 +/- 63.0, LOS: 100.0 %, DrawRatio: 4.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 134 of 400 (sf-2300 vs 4.9.3)
+Finished game 132 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 86 - 39 - 6  [0.679] 131
+Started game 135 of 400 (4.9.3 vs sf-2300)
+Finished game 131 (4.9.3 vs sf-2300): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.3 vs sf-2300: 86 - 39 - 7  [0.678] 132
+Started game 136 of 400 (sf-2300 vs 4.9.3)
+Finished game 133 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 86 - 40 - 7  [0.673] 133
+Started game 137 of 400 (4.9.3 vs sf-2300)
+Finished game 135 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 87 - 40 - 7  [0.675] 134
+Started game 138 of 400 (sf-2300 vs 4.9.3)
+Finished game 134 (sf-2300 vs 4.9.3): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.3 vs sf-2300: 87 - 40 - 8  [0.674] 135
+Started game 139 of 400 (4.9.3 vs sf-2300)
+Finished game 136 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 88 - 40 - 8  [0.676] 136
+Started game 140 of 400 (sf-2300 vs 4.9.3)
+Finished game 137 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 89 - 40 - 8  [0.679] 137
+Started game 141 of 400 (4.9.3 vs sf-2300)
+Finished game 138 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 90 - 40 - 8  [0.681] 138
+Started game 142 of 400 (sf-2300 vs 4.9.3)
+Finished game 139 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 91 - 40 - 8  [0.683] 139
+Started game 143 of 400 (4.9.3 vs sf-2300)
+Finished game 140 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 91 - 41 - 8  [0.679] 140
+...      4.9.3 playing White: 50 - 17 - 3  [0.736] 70
+...      4.9.3 playing Black: 41 - 24 - 5  [0.621] 70
+...      White vs Black: 74 - 58 - 8  [0.557] 140
+Elo difference: 129.8 +/- 60.3, LOS: 100.0 %, DrawRatio: 5.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 144 of 400 (sf-2300 vs 4.9.3)
+Finished game 142 (sf-2300 vs 4.9.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.3 vs sf-2300: 91 - 41 - 9  [0.677] 141
+Started game 145 of 400 (4.9.3 vs sf-2300)
+Finished game 144 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 91 - 42 - 9  [0.673] 142
+Started game 146 of 400 (sf-2300 vs 4.9.3)
+Finished game 143 (4.9.3 vs sf-2300): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.3 vs sf-2300: 91 - 42 - 10  [0.671] 143
+Started game 147 of 400 (4.9.3 vs sf-2300)
+Finished game 145 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 92 - 42 - 10  [0.674] 144
+Started game 148 of 400 (sf-2300 vs 4.9.3)
+Finished game 141 (4.9.3 vs sf-2300): 1/2-1/2 {Draw by insufficient mating material}
+Score of 4.9.3 vs sf-2300: 92 - 42 - 11  [0.672] 145
+Started game 149 of 400 (4.9.3 vs sf-2300)
+Finished game 146 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 92 - 43 - 11  [0.668] 146
+Started game 150 of 400 (sf-2300 vs 4.9.3)
+Finished game 147 (4.9.3 vs sf-2300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.3 vs sf-2300: 92 - 43 - 12  [0.667] 147
+Started game 151 of 400 (4.9.3 vs sf-2300)
+Finished game 149 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 93 - 43 - 12  [0.669] 148
+Started game 152 of 400 (sf-2300 vs 4.9.3)
+Finished game 148 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 93 - 44 - 12  [0.664] 149
+Started game 153 of 400 (4.9.3 vs sf-2300)
+Finished game 151 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 94 - 44 - 12  [0.667] 150
+...      4.9.3 playing White: 53 - 17 - 6  [0.737] 76
+...      4.9.3 playing Black: 41 - 27 - 6  [0.595] 74
+...      White vs Black: 80 - 58 - 12  [0.573] 150
+Elo difference: 120.4 +/- 56.8, LOS: 100.0 %, DrawRatio: 8.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 154 of 400 (sf-2300 vs 4.9.3)
+Finished game 150 (sf-2300 vs 4.9.3): 1-0 {White mates}
+Score of 4.9.3 vs sf-2300: 94 - 45 - 12  [0.662] 151
+Started game 155 of 400 (4.9.3 vs sf-2300)
+Finished game 152 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 94 - 46 - 12  [0.658] 152
+Started game 156 of 400 (sf-2300 vs 4.9.3)
+Finished game 153 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 95 - 46 - 12  [0.660] 153
+Started game 157 of 400 (4.9.3 vs sf-2300)
+Finished game 154 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 96 - 46 - 12  [0.662] 154
+Started game 158 of 400 (sf-2300 vs 4.9.3)
+Finished game 155 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 97 - 46 - 12  [0.665] 155
+Started game 159 of 400 (4.9.3 vs sf-2300)
+Finished game 156 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 98 - 46 - 12  [0.667] 156
+Started game 160 of 400 (sf-2300 vs 4.9.3)
+Finished game 158 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 98 - 47 - 12  [0.662] 157
+Started game 161 of 400 (4.9.3 vs sf-2300)
+Finished game 160 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 99 - 47 - 12  [0.665] 158
+Started game 162 of 400 (sf-2300 vs 4.9.3)
+Finished game 157 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 99 - 48 - 12  [0.660] 159
+Started game 163 of 400 (4.9.3 vs sf-2300)
+Finished game 159 (4.9.3 vs sf-2300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.3 vs sf-2300: 99 - 48 - 13  [0.659] 160
+...      4.9.3 playing White: 55 - 18 - 7  [0.731] 80
+...      4.9.3 playing Black: 44 - 30 - 6  [0.588] 80
+...      White vs Black: 85 - 62 - 13  [0.572] 160
+Elo difference: 114.7 +/- 54.7, LOS: 100.0 %, DrawRatio: 8.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 164 of 400 (sf-2300 vs 4.9.3)
+Finished game 161 (4.9.3 vs sf-2300): 1-0 {White mates}
+Score of 4.9.3 vs sf-2300: 100 - 48 - 13  [0.661] 161
+Started game 165 of 400 (4.9.3 vs sf-2300)
+Finished game 162 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 101 - 48 - 13  [0.664] 162
+Started game 166 of 400 (sf-2300 vs 4.9.3)
+Finished game 164 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 102 - 48 - 13  [0.666] 163
+Started game 167 of 400 (4.9.3 vs sf-2300)
+Finished game 163 (4.9.3 vs sf-2300): 1-0 {White mates}
+Score of 4.9.3 vs sf-2300: 103 - 48 - 13  [0.668] 164
+Started game 168 of 400 (sf-2300 vs 4.9.3)
+Finished game 165 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 104 - 48 - 13  [0.670] 165
+Started game 169 of 400 (4.9.3 vs sf-2300)
+Finished game 167 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 105 - 48 - 13  [0.672] 166
+Started game 170 of 400 (sf-2300 vs 4.9.3)
+Finished game 166 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 106 - 48 - 13  [0.674] 167
+Started game 171 of 400 (4.9.3 vs sf-2300)
+Finished game 168 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 107 - 48 - 13  [0.676] 168
+Started game 172 of 400 (sf-2300 vs 4.9.3)
+Finished game 169 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 108 - 48 - 13  [0.678] 169
+Started game 173 of 400 (4.9.3 vs sf-2300)
+Finished game 171 (4.9.3 vs sf-2300): 1-0 {White mates}
+Score of 4.9.3 vs sf-2300: 109 - 48 - 13  [0.679] 170
+...      4.9.3 playing White: 61 - 18 - 7  [0.750] 86
+...      4.9.3 playing Black: 48 - 30 - 6  [0.607] 84
+...      White vs Black: 91 - 66 - 13  [0.574] 170
+Elo difference: 130.5 +/- 54.0, LOS: 100.0 %, DrawRatio: 7.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 174 of 400 (sf-2300 vs 4.9.3)
+Finished game 170 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 109 - 49 - 13  [0.675] 171
+Started game 175 of 400 (4.9.3 vs sf-2300)
+Finished game 173 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 110 - 49 - 13  [0.677] 172
+Started game 176 of 400 (sf-2300 vs 4.9.3)
+Finished game 172 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 111 - 49 - 13  [0.679] 173
+Started game 177 of 400 (4.9.3 vs sf-2300)
+Finished game 174 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 112 - 49 - 13  [0.681] 174
+Started game 178 of 400 (sf-2300 vs 4.9.3)
+Finished game 176 (sf-2300 vs 4.9.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.3 vs sf-2300: 112 - 49 - 14  [0.680] 175
+Started game 179 of 400 (4.9.3 vs sf-2300)
+Finished game 175 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 112 - 50 - 14  [0.676] 176
+Started game 180 of 400 (sf-2300 vs 4.9.3)
+Finished game 177 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 113 - 50 - 14  [0.678] 177
+Started game 181 of 400 (4.9.3 vs sf-2300)
+Finished game 178 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 114 - 50 - 14  [0.680] 178
+Started game 182 of 400 (sf-2300 vs 4.9.3)
+Finished game 180 (sf-2300 vs 4.9.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.3 vs sf-2300: 114 - 50 - 15  [0.679] 179
+Started game 183 of 400 (4.9.3 vs sf-2300)
+Finished game 179 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 115 - 50 - 15  [0.681] 180
+...      4.9.3 playing White: 64 - 19 - 7  [0.750] 90
+...      4.9.3 playing Black: 51 - 31 - 8  [0.611] 90
+...      White vs Black: 95 - 70 - 15  [0.569] 180
+Elo difference: 131.4 +/- 52.2, LOS: 100.0 %, DrawRatio: 8.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 184 of 400 (sf-2300 vs 4.9.3)
+Finished game 182 (sf-2300 vs 4.9.3): 1-0 {White mates}
+Score of 4.9.3 vs sf-2300: 115 - 51 - 15  [0.677] 181
+Started game 185 of 400 (4.9.3 vs sf-2300)
+Finished game 181 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 116 - 51 - 15  [0.679] 182
+Started game 186 of 400 (sf-2300 vs 4.9.3)
+Finished game 183 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 117 - 51 - 15  [0.680] 183
+Started game 187 of 400 (4.9.3 vs sf-2300)
+Finished game 185 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 118 - 51 - 15  [0.682] 184
+Started game 188 of 400 (sf-2300 vs 4.9.3)
+Finished game 184 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 119 - 51 - 15  [0.684] 185
+Started game 189 of 400 (4.9.3 vs sf-2300)
+Finished game 188 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 120 - 51 - 15  [0.685] 186
+Started game 190 of 400 (sf-2300 vs 4.9.3)
+Finished game 186 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 120 - 52 - 15  [0.682] 187
+Started game 191 of 400 (4.9.3 vs sf-2300)
+Finished game 187 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 121 - 52 - 15  [0.684] 188
+Started game 192 of 400 (sf-2300 vs 4.9.3)
+Finished game 189 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 122 - 52 - 15  [0.685] 189
+Started game 193 of 400 (4.9.3 vs sf-2300)
+Finished game 191 (4.9.3 vs sf-2300): 0-1 {Black mates}
+Score of 4.9.3 vs sf-2300: 122 - 53 - 15  [0.682] 190
+...      4.9.3 playing White: 69 - 20 - 7  [0.755] 96
+...      4.9.3 playing Black: 53 - 33 - 8  [0.606] 94
+...      White vs Black: 102 - 73 - 15  [0.576] 190
+Elo difference: 132.2 +/- 51.0, LOS: 100.0 %, DrawRatio: 7.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 194 of 400 (sf-2300 vs 4.9.3)
+Finished game 190 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 123 - 53 - 15  [0.683] 191
+Started game 195 of 400 (4.9.3 vs sf-2300)
+Finished game 192 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 123 - 54 - 15  [0.680] 192
+Started game 196 of 400 (sf-2300 vs 4.9.3)
+Finished game 193 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 123 - 55 - 15  [0.676] 193
+Started game 197 of 400 (4.9.3 vs sf-2300)
+Finished game 195 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 124 - 55 - 15  [0.678] 194
+Started game 198 of 400 (sf-2300 vs 4.9.3)
+Finished game 197 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 125 - 55 - 15  [0.679] 195
+Started game 199 of 400 (4.9.3 vs sf-2300)
+Finished game 196 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 125 - 56 - 15  [0.676] 196
+Started game 200 of 400 (sf-2300 vs 4.9.3)
+Finished game 194 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 125 - 57 - 15  [0.673] 197
+Started game 201 of 400 (4.9.3 vs sf-2300)
+Finished game 198 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 126 - 57 - 15  [0.674] 198
+Started game 202 of 400 (sf-2300 vs 4.9.3)
+Finished game 199 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 127 - 57 - 15  [0.676] 199
+Started game 203 of 400 (4.9.3 vs sf-2300)
+Finished game 201 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 128 - 57 - 15  [0.677] 200
+...      4.9.3 playing White: 73 - 21 - 7  [0.757] 101
+...      4.9.3 playing Black: 55 - 36 - 8  [0.596] 99
+...      White vs Black: 109 - 76 - 15  [0.583] 200
+Elo difference: 129.0 +/- 49.6, LOS: 100.0 %, DrawRatio: 7.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 204 of 400 (sf-2300 vs 4.9.3)
+Finished game 200 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 128 - 58 - 15  [0.674] 201
+Started game 205 of 400 (4.9.3 vs sf-2300)
+Finished game 203 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 129 - 58 - 15  [0.676] 202
+Started game 206 of 400 (sf-2300 vs 4.9.3)
+Finished game 202 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 129 - 59 - 15  [0.672] 203
+Started game 207 of 400 (4.9.3 vs sf-2300)
+Finished game 204 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 130 - 59 - 15  [0.674] 204
+Started game 208 of 400 (sf-2300 vs 4.9.3)
+Finished game 205 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 131 - 59 - 15  [0.676] 205
+Started game 209 of 400 (4.9.3 vs sf-2300)
+Finished game 207 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 132 - 59 - 15  [0.677] 206
+Started game 210 of 400 (sf-2300 vs 4.9.3)
+Finished game 206 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 133 - 59 - 15  [0.679] 207
+Started game 211 of 400 (4.9.3 vs sf-2300)
+Finished game 208 (sf-2300 vs 4.9.3): 1-0 {White mates}
+Score of 4.9.3 vs sf-2300: 133 - 60 - 15  [0.675] 208
+Started game 212 of 400 (sf-2300 vs 4.9.3)
+Finished game 209 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 133 - 61 - 15  [0.672] 209
+Started game 213 of 400 (4.9.3 vs sf-2300)
+Finished game 211 (4.9.3 vs sf-2300): 0-1 {Black mates}
+Score of 4.9.3 vs sf-2300: 133 - 62 - 15  [0.669] 210
+...      4.9.3 playing White: 76 - 23 - 7  [0.750] 106
+...      4.9.3 playing Black: 57 - 39 - 8  [0.587] 104
+...      White vs Black: 115 - 80 - 15  [0.583] 210
+Elo difference: 122.3 +/- 48.2, LOS: 100.0 %, DrawRatio: 7.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 214 of 400 (sf-2300 vs 4.9.3)
+Finished game 210 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 134 - 62 - 15  [0.671] 211
+Started game 215 of 400 (4.9.3 vs sf-2300)
+Finished game 212 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 135 - 62 - 15  [0.672] 212
+Started game 216 of 400 (sf-2300 vs 4.9.3)
+Finished game 213 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 136 - 62 - 15  [0.674] 213
+Started game 217 of 400 (4.9.3 vs sf-2300)
+Finished game 215 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 137 - 62 - 15  [0.675] 214
+Started game 218 of 400 (sf-2300 vs 4.9.3)
+Finished game 214 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 137 - 63 - 15  [0.672] 215
+Started game 219 of 400 (4.9.3 vs sf-2300)
+Finished game 218 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 137 - 64 - 15  [0.669] 216
+Started game 220 of 400 (sf-2300 vs 4.9.3)
+Finished game 219 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 138 - 64 - 15  [0.671] 217
+Started game 221 of 400 (4.9.3 vs sf-2300)
+Finished game 217 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 138 - 65 - 15  [0.667] 218
+Started game 222 of 400 (sf-2300 vs 4.9.3)
+Finished game 220 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 138 - 66 - 15  [0.664] 219
+Started game 223 of 400 (4.9.3 vs sf-2300)
+Finished game 221 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 139 - 66 - 15  [0.666] 220
+...      4.9.3 playing White: 80 - 24 - 7  [0.752] 111
+...      4.9.3 playing Black: 59 - 42 - 8  [0.578] 109
+...      White vs Black: 122 - 83 - 15  [0.589] 220
+Elo difference: 119.8 +/- 47.1, LOS: 100.0 %, DrawRatio: 6.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 224 of 400 (sf-2300 vs 4.9.3)
+Finished game 216 (sf-2300 vs 4.9.3): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.3 vs sf-2300: 139 - 66 - 16  [0.665] 221
+Started game 225 of 400 (4.9.3 vs sf-2300)
+Finished game 222 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 140 - 66 - 16  [0.667] 222
+Started game 226 of 400 (sf-2300 vs 4.9.3)
+Finished game 225 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 141 - 66 - 16  [0.668] 223
+Started game 227 of 400 (4.9.3 vs sf-2300)
+Finished game 224 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 141 - 67 - 16  [0.665] 224
+Started game 228 of 400 (sf-2300 vs 4.9.3)
+Finished game 226 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 141 - 68 - 16  [0.662] 225
+Started game 229 of 400 (4.9.3 vs sf-2300)
+Finished game 223 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 141 - 69 - 16  [0.659] 226
+Started game 230 of 400 (sf-2300 vs 4.9.3)
+Finished game 227 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 141 - 70 - 16  [0.656] 227
+Started game 231 of 400 (4.9.3 vs sf-2300)
+Finished game 228 (sf-2300 vs 4.9.3): 1-0 {White mates}
+Score of 4.9.3 vs sf-2300: 141 - 71 - 16  [0.654] 228
+Started game 232 of 400 (sf-2300 vs 4.9.3)
+Finished game 230 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 142 - 71 - 16  [0.655] 229
+Started game 233 of 400 (4.9.3 vs sf-2300)
+Finished game 229 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 142 - 72 - 16  [0.652] 230
+...      4.9.3 playing White: 81 - 27 - 7  [0.735] 115
+...      4.9.3 playing Black: 61 - 45 - 9  [0.570] 115
+...      White vs Black: 126 - 88 - 16  [0.583] 230
+Elo difference: 109.2 +/- 45.6, LOS: 100.0 %, DrawRatio: 7.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 234 of 400 (sf-2300 vs 4.9.3)
+Finished game 231 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 143 - 72 - 16  [0.654] 231
+Started game 235 of 400 (4.9.3 vs sf-2300)
+Finished game 232 (sf-2300 vs 4.9.3): 1-0 {White mates}
+Score of 4.9.3 vs sf-2300: 143 - 73 - 16  [0.651] 232
+Started game 236 of 400 (sf-2300 vs 4.9.3)
+Finished game 233 (4.9.3 vs sf-2300): 0-1 {Black mates}
+Score of 4.9.3 vs sf-2300: 143 - 74 - 16  [0.648] 233
+Started game 237 of 400 (4.9.3 vs sf-2300)
+Finished game 234 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 144 - 74 - 16  [0.650] 234
+Started game 238 of 400 (sf-2300 vs 4.9.3)
+Finished game 235 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 145 - 74 - 16  [0.651] 235
+Started game 239 of 400 (4.9.3 vs sf-2300)
+Finished game 236 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 146 - 74 - 16  [0.653] 236
+Started game 240 of 400 (sf-2300 vs 4.9.3)
+Finished game 237 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 146 - 75 - 16  [0.650] 237
+Started game 241 of 400 (4.9.3 vs sf-2300)
+Finished game 238 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 147 - 75 - 16  [0.651] 238
+Started game 242 of 400 (sf-2300 vs 4.9.3)
+Finished game 240 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 148 - 75 - 16  [0.653] 239
+Started game 243 of 400 (4.9.3 vs sf-2300)
+Finished game 242 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 148 - 76 - 16  [0.650] 240
+...      4.9.3 playing White: 83 - 29 - 7  [0.727] 119
+...      4.9.3 playing Black: 65 - 47 - 9  [0.574] 121
+...      White vs Black: 130 - 94 - 16  [0.575] 240
+Elo difference: 107.5 +/- 44.6, LOS: 100.0 %, DrawRatio: 6.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 244 of 400 (sf-2300 vs 4.9.3)
+Finished game 239 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 148 - 77 - 16  [0.647] 241
+Started game 245 of 400 (4.9.3 vs sf-2300)
+Finished game 241 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 148 - 78 - 16  [0.645] 242
+Started game 246 of 400 (sf-2300 vs 4.9.3)
+Finished game 243 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 148 - 79 - 16  [0.642] 243
+Started game 247 of 400 (4.9.3 vs sf-2300)
+Finished game 244 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 149 - 79 - 16  [0.643] 244
+Started game 248 of 400 (sf-2300 vs 4.9.3)
+Finished game 246 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 149 - 80 - 16  [0.641] 245
+Started game 249 of 400 (4.9.3 vs sf-2300)
+Finished game 245 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 150 - 80 - 16  [0.642] 246
+Started game 250 of 400 (sf-2300 vs 4.9.3)
+Finished game 247 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 151 - 80 - 16  [0.644] 247
+Started game 251 of 400 (4.9.3 vs sf-2300)
+Finished game 249 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 152 - 80 - 16  [0.645] 248
+Started game 252 of 400 (sf-2300 vs 4.9.3)
+Finished game 248 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 152 - 81 - 16  [0.643] 249
+Started game 253 of 400 (4.9.3 vs sf-2300)
+Finished game 250 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 153 - 81 - 16  [0.644] 250
+...      4.9.3 playing White: 86 - 32 - 7  [0.716] 125
+...      4.9.3 playing Black: 67 - 49 - 9  [0.572] 125
+...      White vs Black: 135 - 99 - 16  [0.572] 250
+Elo difference: 103.0 +/- 43.6, LOS: 100.0 %, DrawRatio: 6.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 254 of 400 (sf-2300 vs 4.9.3)
+Finished game 252 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 154 - 81 - 16  [0.645] 251
+Started game 255 of 400 (4.9.3 vs sf-2300)
+Finished game 251 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 155 - 81 - 16  [0.647] 252
+Started game 256 of 400 (sf-2300 vs 4.9.3)
+Finished game 253 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 156 - 81 - 16  [0.648] 253
+Started game 257 of 400 (4.9.3 vs sf-2300)
+Finished game 254 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 156 - 82 - 16  [0.646] 254
+Started game 258 of 400 (sf-2300 vs 4.9.3)
+Finished game 256 (sf-2300 vs 4.9.3): 0-1 {Black mates}
+Score of 4.9.3 vs sf-2300: 157 - 82 - 16  [0.647] 255
+Started game 259 of 400 (4.9.3 vs sf-2300)
+Finished game 255 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 158 - 82 - 16  [0.648] 256
+Started game 260 of 400 (sf-2300 vs 4.9.3)
+Finished game 258 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 158 - 83 - 16  [0.646] 257
+Started game 261 of 400 (4.9.3 vs sf-2300)
+Finished game 257 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 158 - 84 - 16  [0.643] 258
+Started game 262 of 400 (sf-2300 vs 4.9.3)
+Finished game 259 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 159 - 84 - 16  [0.645] 259
+Started game 263 of 400 (4.9.3 vs sf-2300)
+Finished game 260 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 159 - 85 - 16  [0.642] 260
+...      4.9.3 playing White: 90 - 33 - 7  [0.719] 130
+...      4.9.3 playing Black: 69 - 52 - 9  [0.565] 130
+...      White vs Black: 142 - 102 - 16  [0.577] 260
+Elo difference: 101.7 +/- 42.8, LOS: 100.0 %, DrawRatio: 6.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 264 of 400 (sf-2300 vs 4.9.3)
+Finished game 262 (sf-2300 vs 4.9.3): 0-1 {Black mates}
+Score of 4.9.3 vs sf-2300: 160 - 85 - 16  [0.644] 261
+Started game 265 of 400 (4.9.3 vs sf-2300)
+Finished game 263 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 161 - 85 - 16  [0.645] 262
+Started game 266 of 400 (sf-2300 vs 4.9.3)
+Finished game 264 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 162 - 85 - 16  [0.646] 263
+Started game 267 of 400 (4.9.3 vs sf-2300)
+Finished game 261 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 162 - 86 - 16  [0.644] 264
+Started game 268 of 400 (sf-2300 vs 4.9.3)
+Finished game 265 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 163 - 86 - 16  [0.645] 265
+Started game 269 of 400 (4.9.3 vs sf-2300)
+Finished game 266 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 164 - 86 - 16  [0.647] 266
+Started game 270 of 400 (sf-2300 vs 4.9.3)
+Finished game 268 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 165 - 86 - 16  [0.648] 267
+Started game 271 of 400 (4.9.3 vs sf-2300)
+Finished game 267 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 166 - 86 - 16  [0.649] 268
+Started game 272 of 400 (sf-2300 vs 4.9.3)
+Finished game 269 (4.9.3 vs sf-2300): 1-0 {White mates}
+Score of 4.9.3 vs sf-2300: 167 - 86 - 16  [0.651] 269
+Started game 273 of 400 (4.9.3 vs sf-2300)
+Finished game 270 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 168 - 86 - 16  [0.652] 270
+...      4.9.3 playing White: 94 - 34 - 7  [0.722] 135
+...      4.9.3 playing Black: 74 - 52 - 9  [0.581] 135
+...      White vs Black: 146 - 108 - 16  [0.570] 270
+Elo difference: 109.0 +/- 42.3, LOS: 100.0 %, DrawRatio: 5.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 274 of 400 (sf-2300 vs 4.9.3)
+Finished game 272 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 169 - 86 - 16  [0.653] 271
+Started game 275 of 400 (4.9.3 vs sf-2300)
+Finished game 271 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 169 - 87 - 16  [0.651] 272
+Started game 276 of 400 (sf-2300 vs 4.9.3)
+Finished game 273 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 170 - 87 - 16  [0.652] 273
+Started game 277 of 400 (4.9.3 vs sf-2300)
+Finished game 274 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 171 - 87 - 16  [0.653] 274
+Started game 278 of 400 (sf-2300 vs 4.9.3)
+Finished game 275 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 172 - 87 - 16  [0.655] 275
+Started game 279 of 400 (4.9.3 vs sf-2300)
+Finished game 276 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 173 - 87 - 16  [0.656] 276
+Started game 280 of 400 (sf-2300 vs 4.9.3)
+Finished game 278 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 173 - 88 - 16  [0.653] 277
+Started game 281 of 400 (4.9.3 vs sf-2300)
+Finished game 277 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 174 - 88 - 16  [0.655] 278
+Started game 282 of 400 (sf-2300 vs 4.9.3)
+Finished game 279 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 175 - 88 - 16  [0.656] 279
+Started game 283 of 400 (4.9.3 vs sf-2300)
+Finished game 280 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 175 - 89 - 16  [0.654] 280
+...      4.9.3 playing White: 98 - 35 - 7  [0.725] 140
+...      4.9.3 playing Black: 77 - 54 - 9  [0.582] 140
+...      White vs Black: 152 - 112 - 16  [0.571] 280
+Elo difference: 110.3 +/- 41.6, LOS: 100.0 %, DrawRatio: 5.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 284 of 400 (sf-2300 vs 4.9.3)
+Finished game 282 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 176 - 89 - 16  [0.655] 281
+Started game 285 of 400 (4.9.3 vs sf-2300)
+Finished game 281 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 177 - 89 - 16  [0.656] 282
+Started game 286 of 400 (sf-2300 vs 4.9.3)
+Finished game 283 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 178 - 89 - 16  [0.657] 283
+Started game 287 of 400 (4.9.3 vs sf-2300)
+Finished game 284 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 179 - 89 - 16  [0.658] 284
+Started game 288 of 400 (sf-2300 vs 4.9.3)
+Finished game 286 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 180 - 89 - 16  [0.660] 285
+Started game 289 of 400 (4.9.3 vs sf-2300)
+Finished game 285 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 181 - 89 - 16  [0.661] 286
+Started game 290 of 400 (sf-2300 vs 4.9.3)
+Finished game 287 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 182 - 89 - 16  [0.662] 287
+Started game 291 of 400 (4.9.3 vs sf-2300)
+Finished game 288 (sf-2300 vs 4.9.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.3 vs sf-2300: 182 - 89 - 17  [0.661] 288
+Started game 292 of 400 (sf-2300 vs 4.9.3)
+Finished game 289 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 183 - 89 - 17  [0.663] 289
+Started game 293 of 400 (4.9.3 vs sf-2300)
+Finished game 290 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 183 - 90 - 17  [0.660] 290
+...      4.9.3 playing White: 103 - 35 - 7  [0.734] 145
+...      4.9.3 playing Black: 80 - 55 - 10  [0.586] 145
+...      White vs Black: 158 - 115 - 17  [0.574] 290
+Elo difference: 115.5 +/- 41.0, LOS: 100.0 %, DrawRatio: 5.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 294 of 400 (sf-2300 vs 4.9.3)
+Finished game 291 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 184 - 90 - 17  [0.662] 291
+Started game 295 of 400 (4.9.3 vs sf-2300)
+Finished game 292 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 185 - 90 - 17  [0.663] 292
+Started game 296 of 400 (sf-2300 vs 4.9.3)
+Finished game 294 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 186 - 90 - 17  [0.664] 293
+Started game 297 of 400 (4.9.3 vs sf-2300)
+Finished game 293 (4.9.3 vs sf-2300): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.3 vs sf-2300: 186 - 90 - 18  [0.663] 294
+Started game 298 of 400 (sf-2300 vs 4.9.3)
+Finished game 296 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 187 - 90 - 18  [0.664] 295
+Started game 299 of 400 (4.9.3 vs sf-2300)
+Finished game 295 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 187 - 91 - 18  [0.662] 296
+Started game 300 of 400 (sf-2300 vs 4.9.3)
+Finished game 297 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 188 - 91 - 18  [0.663] 297
+Started game 301 of 400 (4.9.3 vs sf-2300)
+Finished game 298 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 189 - 91 - 18  [0.664] 298
+Started game 302 of 400 (sf-2300 vs 4.9.3)
+Finished game 300 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 190 - 91 - 18  [0.666] 299
+Started game 303 of 400 (4.9.3 vs sf-2300)
+Finished game 299 (4.9.3 vs sf-2300): 0-1 {Black mates}
+Score of 4.9.3 vs sf-2300: 190 - 92 - 18  [0.663] 300
+...      4.9.3 playing White: 105 - 37 - 8  [0.727] 150
+...      4.9.3 playing Black: 85 - 55 - 10  [0.600] 150
+...      White vs Black: 160 - 122 - 18  [0.563] 300
+Elo difference: 117.8 +/- 40.4, LOS: 100.0 %, DrawRatio: 6.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 304 of 400 (sf-2300 vs 4.9.3)
+Finished game 301 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 191 - 92 - 18  [0.664] 301
+Started game 305 of 400 (4.9.3 vs sf-2300)
+Finished game 302 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 192 - 92 - 18  [0.666] 302
+Started game 306 of 400 (sf-2300 vs 4.9.3)
+Finished game 304 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 193 - 92 - 18  [0.667] 303
+Started game 307 of 400 (4.9.3 vs sf-2300)
+Finished game 303 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 194 - 92 - 18  [0.668] 304
+Started game 308 of 400 (sf-2300 vs 4.9.3)
+Finished game 305 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 195 - 92 - 18  [0.669] 305
+Started game 309 of 400 (4.9.3 vs sf-2300)
+Finished game 306 (sf-2300 vs 4.9.3): 1/2-1/2 {Draw by stalemate}
+Score of 4.9.3 vs sf-2300: 195 - 92 - 19  [0.668] 306
+Started game 310 of 400 (sf-2300 vs 4.9.3)
+Finished game 307 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 196 - 92 - 19  [0.669] 307
+Started game 311 of 400 (4.9.3 vs sf-2300)
+Finished game 308 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 196 - 93 - 19  [0.667] 308
+Started game 312 of 400 (sf-2300 vs 4.9.3)
+Finished game 309 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 197 - 93 - 19  [0.668] 309
+Started game 313 of 400 (4.9.3 vs sf-2300)
+Finished game 310 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 198 - 93 - 19  [0.669] 310
+...      4.9.3 playing White: 110 - 37 - 8  [0.735] 155
+...      4.9.3 playing Black: 88 - 56 - 11  [0.603] 155
+...      White vs Black: 166 - 125 - 19  [0.566] 310
+Elo difference: 122.5 +/- 39.8, LOS: 100.0 %, DrawRatio: 6.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 314 of 400 (sf-2300 vs 4.9.3)
+Finished game 311 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 199 - 93 - 19  [0.670] 311
+Started game 315 of 400 (4.9.3 vs sf-2300)
+Finished game 312 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 200 - 93 - 19  [0.671] 312
+Started game 316 of 400 (sf-2300 vs 4.9.3)
+Finished game 314 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 200 - 94 - 19  [0.669] 313
+Started game 317 of 400 (4.9.3 vs sf-2300)
+Finished game 313 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 201 - 94 - 19  [0.670] 314
+Started game 318 of 400 (sf-2300 vs 4.9.3)
+Finished game 315 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 202 - 94 - 19  [0.671] 315
+Started game 319 of 400 (4.9.3 vs sf-2300)
+Finished game 317 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 203 - 94 - 19  [0.672] 316
+Started game 320 of 400 (sf-2300 vs 4.9.3)
+Finished game 316 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 203 - 95 - 19  [0.670] 317
+Started game 321 of 400 (4.9.3 vs sf-2300)
+Finished game 319 (4.9.3 vs sf-2300): 0-1 {Black mates}
+Score of 4.9.3 vs sf-2300: 203 - 96 - 19  [0.668] 318
+Started game 322 of 400 (sf-2300 vs 4.9.3)
+Finished game 320 (sf-2300 vs 4.9.3): 0-1 {Black mates}
+Score of 4.9.3 vs sf-2300: 204 - 96 - 19  [0.669] 319
+Started game 323 of 400 (4.9.3 vs sf-2300)
+Finished game 318 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 205 - 96 - 19  [0.670] 320
+...      4.9.3 playing White: 114 - 38 - 8  [0.738] 160
+...      4.9.3 playing Black: 91 - 58 - 11  [0.603] 160
+...      White vs Black: 172 - 129 - 19  [0.567] 320
+Elo difference: 123.3 +/- 39.3, LOS: 100.0 %, DrawRatio: 5.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 324 of 400 (sf-2300 vs 4.9.3)
+Finished game 322 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 206 - 96 - 19  [0.671] 321
+Started game 325 of 400 (4.9.3 vs sf-2300)
+Finished game 321 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 206 - 97 - 19  [0.669] 322
+Started game 326 of 400 (sf-2300 vs 4.9.3)
+Finished game 323 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 206 - 98 - 19  [0.667] 323
+Started game 327 of 400 (4.9.3 vs sf-2300)
+Finished game 325 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 207 - 98 - 19  [0.668] 324
+Started game 328 of 400 (sf-2300 vs 4.9.3)
+Finished game 324 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 208 - 98 - 19  [0.669] 325
+Started game 329 of 400 (4.9.3 vs sf-2300)
+Finished game 326 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 208 - 99 - 19  [0.667] 326
+Started game 330 of 400 (sf-2300 vs 4.9.3)
+Finished game 329 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 209 - 99 - 19  [0.668] 327
+Started game 331 of 400 (4.9.3 vs sf-2300)
+Finished game 327 (4.9.3 vs sf-2300): 0-1 {Black mates}
+Score of 4.9.3 vs sf-2300: 209 - 100 - 19  [0.666] 328
+Started game 332 of 400 (sf-2300 vs 4.9.3)
+Finished game 328 (sf-2300 vs 4.9.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.3 vs sf-2300: 209 - 100 - 20  [0.666] 329
+Started game 333 of 400 (4.9.3 vs sf-2300)
+Finished game 332 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 209 - 101 - 20  [0.664] 330
+...      4.9.3 playing White: 116 - 41 - 8  [0.727] 165
+...      4.9.3 playing Black: 93 - 60 - 12  [0.600] 165
+...      White vs Black: 176 - 134 - 20  [0.564] 330
+Elo difference: 118.0 +/- 38.5, LOS: 100.0 %, DrawRatio: 6.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 334 of 400 (sf-2300 vs 4.9.3)
+Finished game 331 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 209 - 102 - 20  [0.662] 331
+Started game 335 of 400 (4.9.3 vs sf-2300)
+Finished game 333 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 210 - 102 - 20  [0.663] 332
+Started game 336 of 400 (sf-2300 vs 4.9.3)
+Finished game 330 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 210 - 103 - 20  [0.661] 333
+Started game 337 of 400 (4.9.3 vs sf-2300)
+Finished game 334 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 210 - 104 - 20  [0.659] 334
+Started game 338 of 400 (sf-2300 vs 4.9.3)
+Finished game 335 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 210 - 105 - 20  [0.657] 335
+Started game 339 of 400 (4.9.3 vs sf-2300)
+Finished game 337 (4.9.3 vs sf-2300): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.3 vs sf-2300: 210 - 105 - 21  [0.656] 336
+Started game 340 of 400 (sf-2300 vs 4.9.3)
+Finished game 338 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 211 - 105 - 21  [0.657] 337
+Started game 341 of 400 (4.9.3 vs sf-2300)
+Finished game 340 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 211 - 106 - 21  [0.655] 338
+Started game 342 of 400 (sf-2300 vs 4.9.3)
+Finished game 336 (sf-2300 vs 4.9.3): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.3 vs sf-2300: 211 - 106 - 22  [0.655] 339
+Started game 343 of 400 (4.9.3 vs sf-2300)
+Finished game 339 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 211 - 107 - 22  [0.653] 340
+...      4.9.3 playing White: 117 - 44 - 9  [0.715] 170
+...      4.9.3 playing Black: 94 - 63 - 13  [0.591] 170
+...      White vs Black: 180 - 138 - 22  [0.562] 340
+Elo difference: 109.8 +/- 37.5, LOS: 100.0 %, DrawRatio: 6.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 344 of 400 (sf-2300 vs 4.9.3)
+Finished game 341 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 212 - 107 - 22  [0.654] 341
+Started game 345 of 400 (4.9.3 vs sf-2300)
+Finished game 342 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 213 - 107 - 22  [0.655] 342
+Started game 346 of 400 (sf-2300 vs 4.9.3)
+Finished game 343 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 214 - 107 - 22  [0.656] 343
+Started game 347 of 400 (4.9.3 vs sf-2300)
+Finished game 344 (sf-2300 vs 4.9.3): 1/2-1/2 {Draw by stalemate}
+Score of 4.9.3 vs sf-2300: 214 - 107 - 23  [0.656] 344
+Started game 348 of 400 (sf-2300 vs 4.9.3)
+Finished game 345 (4.9.3 vs sf-2300): 0-1 {Black mates}
+Score of 4.9.3 vs sf-2300: 214 - 108 - 23  [0.654] 345
+Started game 349 of 400 (4.9.3 vs sf-2300)
+Finished game 346 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 215 - 108 - 23  [0.655] 346
+Started game 350 of 400 (sf-2300 vs 4.9.3)
+Finished game 347 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 215 - 109 - 23  [0.653] 347
+Started game 351 of 400 (4.9.3 vs sf-2300)
+Finished game 348 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 216 - 109 - 23  [0.654] 348
+Started game 352 of 400 (sf-2300 vs 4.9.3)
+Finished game 350 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 217 - 109 - 23  [0.655] 349
+Started game 353 of 400 (4.9.3 vs sf-2300)
+Finished game 351 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 218 - 109 - 23  [0.656] 350
+...      4.9.3 playing White: 120 - 46 - 9  [0.711] 175
+...      4.9.3 playing Black: 98 - 63 - 14  [0.600] 175
+...      White vs Black: 183 - 144 - 23  [0.556] 350
+Elo difference: 111.9 +/- 37.0, LOS: 100.0 %, DrawRatio: 6.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 354 of 400 (sf-2300 vs 4.9.3)
+Finished game 352 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 218 - 110 - 23  [0.654] 351
+Started game 355 of 400 (4.9.3 vs sf-2300)
+Finished game 354 (sf-2300 vs 4.9.3): 0-1 {Black mates}
+Score of 4.9.3 vs sf-2300: 219 - 110 - 23  [0.655] 352
+Started game 356 of 400 (sf-2300 vs 4.9.3)
+Finished game 353 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 220 - 110 - 23  [0.656] 353
+Started game 357 of 400 (4.9.3 vs sf-2300)
+Finished game 355 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 221 - 110 - 23  [0.657] 354
+Started game 358 of 400 (sf-2300 vs 4.9.3)
+Finished game 349 (4.9.3 vs sf-2300): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.3 vs sf-2300: 221 - 110 - 24  [0.656] 355
+Started game 359 of 400 (4.9.3 vs sf-2300)
+Finished game 356 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 222 - 110 - 24  [0.657] 356
+Started game 360 of 400 (sf-2300 vs 4.9.3)
+Finished game 357 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 223 - 110 - 24  [0.658] 357
+Started game 361 of 400 (4.9.3 vs sf-2300)
+Finished game 359 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 224 - 110 - 24  [0.659] 358
+Started game 362 of 400 (sf-2300 vs 4.9.3)
+Finished game 361 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 225 - 110 - 24  [0.660] 359
+Started game 363 of 400 (4.9.3 vs sf-2300)
+Finished game 358 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 225 - 111 - 24  [0.658] 360
+...      4.9.3 playing White: 125 - 46 - 10  [0.718] 181
+...      4.9.3 playing Black: 100 - 65 - 14  [0.598] 179
+...      White vs Black: 190 - 146 - 24  [0.561] 360
+Elo difference: 113.9 +/- 36.5, LOS: 100.0 %, DrawRatio: 6.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 364 of 400 (sf-2300 vs 4.9.3)
+Finished game 360 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 226 - 111 - 24  [0.659] 361
+Started game 365 of 400 (4.9.3 vs sf-2300)
+Finished game 362 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 227 - 111 - 24  [0.660] 362
+Started game 366 of 400 (sf-2300 vs 4.9.3)
+Finished game 363 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 228 - 111 - 24  [0.661] 363
+Started game 367 of 400 (4.9.3 vs sf-2300)
+Finished game 364 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 229 - 111 - 24  [0.662] 364
+Started game 368 of 400 (sf-2300 vs 4.9.3)
+Finished game 365 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 230 - 111 - 24  [0.663] 365
+Started game 369 of 400 (4.9.3 vs sf-2300)
+Finished game 366 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 230 - 112 - 24  [0.661] 366
+Started game 370 of 400 (sf-2300 vs 4.9.3)
+Finished game 369 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 231 - 112 - 24  [0.662] 367
+Started game 371 of 400 (4.9.3 vs sf-2300)
+Finished game 367 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 232 - 112 - 24  [0.663] 368
+Started game 372 of 400 (sf-2300 vs 4.9.3)
+Finished game 368 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 233 - 112 - 24  [0.664] 369
+Started game 373 of 400 (4.9.3 vs sf-2300)
+Finished game 370 (sf-2300 vs 4.9.3): 0-1 {Black mates}
+Score of 4.9.3 vs sf-2300: 234 - 112 - 24  [0.665] 370
+...      4.9.3 playing White: 129 - 46 - 10  [0.724] 185
+...      4.9.3 playing Black: 105 - 66 - 14  [0.605] 185
+...      White vs Black: 195 - 151 - 24  [0.559] 370
+Elo difference: 119.0 +/- 36.2, LOS: 100.0 %, DrawRatio: 6.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 374 of 400 (sf-2300 vs 4.9.3)
+Finished game 371 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 234 - 113 - 24  [0.663] 371
+Started game 375 of 400 (4.9.3 vs sf-2300)
+Finished game 373 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 235 - 113 - 24  [0.664] 372
+Started game 376 of 400 (sf-2300 vs 4.9.3)
+Finished game 374 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 236 - 113 - 24  [0.665] 373
+Started game 377 of 400 (4.9.3 vs sf-2300)
+Finished game 372 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 236 - 114 - 24  [0.663] 374
+Started game 378 of 400 (sf-2300 vs 4.9.3)
+Finished game 375 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 236 - 115 - 24  [0.661] 375
+Started game 379 of 400 (4.9.3 vs sf-2300)
+Finished game 376 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 237 - 115 - 24  [0.662] 376
+Started game 380 of 400 (sf-2300 vs 4.9.3)
+Finished game 378 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 238 - 115 - 24  [0.663] 377
+Started game 381 of 400 (4.9.3 vs sf-2300)
+Finished game 377 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 238 - 116 - 24  [0.661] 378
+Started game 382 of 400 (sf-2300 vs 4.9.3)
+Finished game 379 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 239 - 116 - 24  [0.662] 379
+Started game 383 of 400 (4.9.3 vs sf-2300)
+Finished game 382 (sf-2300 vs 4.9.3): 0-1 {Black mates}
+Score of 4.9.3 vs sf-2300: 240 - 116 - 24  [0.663] 380
+...      4.9.3 playing White: 131 - 49 - 10  [0.716] 190
+...      4.9.3 playing Black: 109 - 67 - 14  [0.611] 190
+...      White vs Black: 198 - 158 - 24  [0.553] 380
+Elo difference: 117.7 +/- 35.7, LOS: 100.0 %, DrawRatio: 6.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 384 of 400 (sf-2300 vs 4.9.3)
+Finished game 381 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 241 - 116 - 24  [0.664] 381
+Started game 385 of 400 (4.9.3 vs sf-2300)
+Finished game 380 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 241 - 117 - 24  [0.662] 382
+Started game 386 of 400 (sf-2300 vs 4.9.3)
+Finished game 383 (4.9.3 vs sf-2300): 0-1 {Black mates}
+Score of 4.9.3 vs sf-2300: 241 - 118 - 24  [0.661] 383
+Started game 387 of 400 (4.9.3 vs sf-2300)
+Finished game 385 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 241 - 119 - 24  [0.659] 384
+Started game 388 of 400 (sf-2300 vs 4.9.3)
+Finished game 386 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 241 - 120 - 24  [0.657] 385
+Started game 389 of 400 (4.9.3 vs sf-2300)
+Finished game 384 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 241 - 121 - 24  [0.655] 386
+Started game 390 of 400 (sf-2300 vs 4.9.3)
+Finished game 387 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 241 - 122 - 24  [0.654] 387
+Started game 391 of 400 (4.9.3 vs sf-2300)
+Finished game 388 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 242 - 122 - 24  [0.655] 388
+Started game 392 of 400 (sf-2300 vs 4.9.3)
+Finished game 391 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 243 - 122 - 24  [0.656] 389
+Started game 393 of 400 (4.9.3 vs sf-2300)
+Finished game 389 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 244 - 122 - 24  [0.656] 390
+...      4.9.3 playing White: 134 - 52 - 10  [0.709] 196
+...      4.9.3 playing Black: 110 - 70 - 14  [0.603] 194
+...      White vs Black: 204 - 162 - 24  [0.554] 390
+Elo difference: 112.5 +/- 35.1, LOS: 100.0 %, DrawRatio: 6.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 394 of 400 (sf-2300 vs 4.9.3)
+Finished game 393 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 245 - 122 - 24  [0.657] 391
+Started game 395 of 400 (4.9.3 vs sf-2300)
+Finished game 394 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 246 - 122 - 24  [0.658] 392
+Started game 396 of 400 (sf-2300 vs 4.9.3)
+Finished game 392 (sf-2300 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 246 - 123 - 24  [0.656] 393
+Started game 397 of 400 (4.9.3 vs sf-2300)
+Finished game 395 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 247 - 123 - 24  [0.657] 394
+Started game 398 of 400 (sf-2300 vs 4.9.3)
+Finished game 396 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 248 - 123 - 24  [0.658] 395
+Started game 399 of 400 (4.9.3 vs sf-2300)
+Finished game 397 (4.9.3 vs sf-2300): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 248 - 124 - 24  [0.657] 396
+Started game 400 of 400 (sf-2300 vs 4.9.3)
+Finished game 390 (sf-2300 vs 4.9.3): 1/2-1/2 {Draw by fifty moves rule}
+Score of 4.9.3 vs sf-2300: 248 - 124 - 25  [0.656] 397
+Finished game 398 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 249 - 124 - 25  [0.657] 398
+Finished game 399 (4.9.3 vs sf-2300): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-2300: 250 - 124 - 25  [0.658] 399
+Finished game 400 (sf-2300 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-2300: 251 - 124 - 25  [0.659] 400
+...      4.9.3 playing White: 137 - 53 - 10  [0.710] 200
+...      4.9.3 playing Black: 114 - 71 - 15  [0.608] 200
+...      White vs Black: 208 - 167 - 25  [0.551] 400
+Elo difference: 114.3 +/- 34.7, LOS: 100.0 %, DrawRatio: 6.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+
+Player: 4.9.3
+   "Draw by 3-fold repetition": 9
+   "Draw by adjudication": 9
+   "Draw by fifty moves rule": 2
+   "Draw by insufficient mating material": 2
+   "Draw by stalemate": 3
+   "Loss: Black mates": 9
+   "Loss: Black wins by adjudication": 44
+   "Loss: White mates": 9
+   "Loss: White wins by adjudication": 62
+   "Win: Black mates": 7
+   "Win: Black wins by adjudication": 107
+   "Win: White mates": 6
+   "Win: White wins by adjudication": 131
+Player: sf-2300
+   "Draw by 3-fold repetition": 9
+   "Draw by adjudication": 9
+   "Draw by fifty moves rule": 2
+   "Draw by insufficient mating material": 2
+   "Draw by stalemate": 3
+   "Loss: Black mates": 7
+   "Loss: Black wins by adjudication": 107
+   "Loss: White mates": 6
+   "Loss: White wins by adjudication": 131
+   "Win: Black mates": 9
+   "Win: Black wins by adjudication": 44
+   "Win: White mates": 9
+   "Win: White wins by adjudication": 62
+Finished match
