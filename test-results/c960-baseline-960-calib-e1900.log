@@ -1,0 +1,374 @@
+Started game 2 of 100 (sf-1900 vs 4.9.3)
+Started game 1 of 100 (4.9.3 vs sf-1900)
+Started game 3 of 100 (4.9.3 vs sf-1900)
+Started game 4 of 100 (sf-1900 vs 4.9.3)
+Finished game 2 (sf-1900 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 0 - 1 - 0  [0.000] 1
+Started game 5 of 100 (4.9.3 vs sf-1900)
+Finished game 3 (4.9.3 vs sf-1900): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 0 - 2 - 0  [0.000] 2
+Started game 6 of 100 (sf-1900 vs 4.9.3)
+Finished game 4 (sf-1900 vs 4.9.3): 1-0 {White mates}
+Score of 4.9.3 vs sf-1900: 0 - 3 - 0  [0.000] 3
+Started game 7 of 100 (4.9.3 vs sf-1900)
+Finished game 6 (sf-1900 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 0 - 4 - 0  [0.000] 4
+Started game 8 of 100 (sf-1900 vs 4.9.3)
+Finished game 5 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 1 - 4 - 0  [0.200] 5
+Started game 9 of 100 (4.9.3 vs sf-1900)
+Finished game 1 (4.9.3 vs sf-1900): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 1 - 5 - 0  [0.167] 6
+Started game 10 of 100 (sf-1900 vs 4.9.3)
+Finished game 7 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 2 - 5 - 0  [0.286] 7
+Started game 11 of 100 (4.9.3 vs sf-1900)
+Finished game 9 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 3 - 5 - 0  [0.375] 8
+Started game 12 of 100 (sf-1900 vs 4.9.3)
+Finished game 8 (sf-1900 vs 4.9.3): 0-1 {Black mates}
+Score of 4.9.3 vs sf-1900: 4 - 5 - 0  [0.444] 9
+Started game 13 of 100 (4.9.3 vs sf-1900)
+Finished game 11 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 5 - 5 - 0  [0.500] 10
+...      4.9.3 playing White: 4 - 2 - 0  [0.667] 6
+...      4.9.3 playing Black: 1 - 3 - 0  [0.250] 4
+...      White vs Black: 7 - 3 - 0  [0.700] 10
+Elo difference: 0.0 +/- 251.3, LOS: 50.0 %, DrawRatio: 0.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 14 of 100 (sf-1900 vs 4.9.3)
+Finished game 10 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 6 - 5 - 0  [0.545] 11
+Started game 15 of 100 (4.9.3 vs sf-1900)
+Finished game 13 (4.9.3 vs sf-1900): 1-0 {White mates}
+Score of 4.9.3 vs sf-1900: 7 - 5 - 0  [0.583] 12
+Started game 16 of 100 (sf-1900 vs 4.9.3)
+Finished game 12 (sf-1900 vs 4.9.3): 0-1 {Black mates}
+Score of 4.9.3 vs sf-1900: 8 - 5 - 0  [0.615] 13
+Started game 17 of 100 (4.9.3 vs sf-1900)
+Finished game 14 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 9 - 5 - 0  [0.643] 14
+Started game 18 of 100 (sf-1900 vs 4.9.3)
+Finished game 15 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 10 - 5 - 0  [0.667] 15
+Started game 19 of 100 (4.9.3 vs sf-1900)
+Finished game 16 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 11 - 5 - 0  [0.688] 16
+Started game 20 of 100 (sf-1900 vs 4.9.3)
+Finished game 18 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 12 - 5 - 0  [0.706] 17
+Started game 21 of 100 (4.9.3 vs sf-1900)
+Finished game 17 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 13 - 5 - 0  [0.722] 18
+Started game 22 of 100 (sf-1900 vs 4.9.3)
+Finished game 19 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 14 - 5 - 0  [0.737] 19
+Started game 23 of 100 (4.9.3 vs sf-1900)
+Finished game 20 (sf-1900 vs 4.9.3): 1-0 {White mates}
+Score of 4.9.3 vs sf-1900: 14 - 6 - 0  [0.700] 20
+...      4.9.3 playing White: 8 - 2 - 0  [0.800] 10
+...      4.9.3 playing Black: 6 - 4 - 0  [0.600] 10
+...      White vs Black: 12 - 8 - 0  [0.600] 20
+Elo difference: 147.2 +/- 191.6, LOS: 96.3 %, DrawRatio: 0.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 24 of 100 (sf-1900 vs 4.9.3)
+Finished game 21 (4.9.3 vs sf-1900): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 14 - 7 - 0  [0.667] 21
+Started game 25 of 100 (4.9.3 vs sf-1900)
+Finished game 23 (4.9.3 vs sf-1900): 1-0 {White mates}
+Score of 4.9.3 vs sf-1900: 15 - 7 - 0  [0.682] 22
+Started game 26 of 100 (sf-1900 vs 4.9.3)
+Finished game 24 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 16 - 7 - 0  [0.696] 23
+Started game 27 of 100 (4.9.3 vs sf-1900)
+Finished game 22 (sf-1900 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 16 - 8 - 0  [0.667] 24
+Started game 28 of 100 (sf-1900 vs 4.9.3)
+Finished game 25 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 17 - 8 - 0  [0.680] 25
+Started game 29 of 100 (4.9.3 vs sf-1900)
+Finished game 26 (sf-1900 vs 4.9.3): 1/2-1/2 {Draw by 3-fold repetition}
+Score of 4.9.3 vs sf-1900: 17 - 8 - 1  [0.673] 26
+Started game 30 of 100 (sf-1900 vs 4.9.3)
+Finished game 27 (4.9.3 vs sf-1900): 0-1 {Black mates}
+Score of 4.9.3 vs sf-1900: 17 - 9 - 1  [0.648] 27
+Started game 31 of 100 (4.9.3 vs sf-1900)
+Finished game 29 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 18 - 9 - 1  [0.661] 28
+Started game 32 of 100 (sf-1900 vs 4.9.3)
+Finished game 28 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 19 - 9 - 1  [0.672] 29
+Started game 33 of 100 (4.9.3 vs sf-1900)
+Finished game 30 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 20 - 9 - 1  [0.683] 30
+...      4.9.3 playing White: 11 - 4 - 0  [0.733] 15
+...      4.9.3 playing Black: 9 - 5 - 1  [0.633] 15
+...      White vs Black: 16 - 13 - 1  [0.550] 30
+Elo difference: 133.6 +/- 141.1, LOS: 97.9 %, DrawRatio: 3.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 34 of 100 (sf-1900 vs 4.9.3)
+Finished game 32 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 21 - 9 - 1  [0.694] 31
+Started game 35 of 100 (4.9.3 vs sf-1900)
+Finished game 33 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 22 - 9 - 1  [0.703] 32
+Started game 36 of 100 (sf-1900 vs 4.9.3)
+Finished game 31 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 23 - 9 - 1  [0.712] 33
+Started game 37 of 100 (4.9.3 vs sf-1900)
+Finished game 34 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 24 - 9 - 1  [0.721] 34
+Started game 38 of 100 (sf-1900 vs 4.9.3)
+Finished game 37 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 25 - 9 - 1  [0.729] 35
+Started game 39 of 100 (4.9.3 vs sf-1900)
+Finished game 36 (sf-1900 vs 4.9.3): 1-0 {White mates}
+Score of 4.9.3 vs sf-1900: 25 - 10 - 1  [0.708] 36
+Started game 40 of 100 (sf-1900 vs 4.9.3)
+Finished game 35 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 26 - 10 - 1  [0.716] 37
+Started game 41 of 100 (4.9.3 vs sf-1900)
+Finished game 38 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 27 - 10 - 1  [0.724] 38
+Started game 42 of 100 (sf-1900 vs 4.9.3)
+Finished game 39 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 28 - 10 - 1  [0.731] 39
+Started game 43 of 100 (4.9.3 vs sf-1900)
+Finished game 40 (sf-1900 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 28 - 11 - 1  [0.713] 40
+...      4.9.3 playing White: 16 - 4 - 0  [0.800] 20
+...      4.9.3 playing Black: 12 - 7 - 1  [0.625] 20
+...      White vs Black: 23 - 16 - 1  [0.588] 40
+Elo difference: 157.7 +/- 124.8, LOS: 99.7 %, DrawRatio: 2.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 44 of 100 (sf-1900 vs 4.9.3)
+Finished game 41 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 29 - 11 - 1  [0.720] 41
+Started game 45 of 100 (4.9.3 vs sf-1900)
+Finished game 42 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 30 - 11 - 1  [0.726] 42
+Started game 46 of 100 (sf-1900 vs 4.9.3)
+Finished game 43 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 31 - 11 - 1  [0.733] 43
+Started game 47 of 100 (4.9.3 vs sf-1900)
+Finished game 44 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 32 - 11 - 1  [0.739] 44
+Started game 48 of 100 (sf-1900 vs 4.9.3)
+Finished game 46 (sf-1900 vs 4.9.3): 1-0 {White mates}
+Score of 4.9.3 vs sf-1900: 32 - 12 - 1  [0.722] 45
+Started game 49 of 100 (4.9.3 vs sf-1900)
+Finished game 45 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 33 - 12 - 1  [0.728] 46
+Started game 50 of 100 (sf-1900 vs 4.9.3)
+Finished game 48 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 34 - 12 - 1  [0.734] 47
+Started game 51 of 100 (4.9.3 vs sf-1900)
+Finished game 47 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 35 - 12 - 1  [0.740] 48
+Started game 52 of 100 (sf-1900 vs 4.9.3)
+Finished game 49 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 36 - 12 - 1  [0.745] 49
+Started game 53 of 100 (4.9.3 vs sf-1900)
+Finished game 50 (sf-1900 vs 4.9.3): 1-0 {White mates}
+Score of 4.9.3 vs sf-1900: 36 - 13 - 1  [0.730] 50
+...      4.9.3 playing White: 21 - 4 - 0  [0.840] 25
+...      4.9.3 playing Black: 15 - 9 - 1  [0.620] 25
+...      White vs Black: 30 - 19 - 1  [0.610] 50
+Elo difference: 172.8 +/- 113.2, LOS: 99.9 %, DrawRatio: 2.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 54 of 100 (sf-1900 vs 4.9.3)
+Finished game 51 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 37 - 13 - 1  [0.735] 51
+Started game 55 of 100 (4.9.3 vs sf-1900)
+Finished game 52 (sf-1900 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 37 - 14 - 1  [0.721] 52
+Started game 56 of 100 (sf-1900 vs 4.9.3)
+Finished game 53 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 38 - 14 - 1  [0.726] 53
+Started game 57 of 100 (4.9.3 vs sf-1900)
+Finished game 54 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 39 - 14 - 1  [0.731] 54
+Started game 58 of 100 (sf-1900 vs 4.9.3)
+Finished game 55 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 40 - 14 - 1  [0.736] 55
+Started game 59 of 100 (4.9.3 vs sf-1900)
+Finished game 56 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 41 - 14 - 1  [0.741] 56
+Started game 60 of 100 (sf-1900 vs 4.9.3)
+Finished game 57 (4.9.3 vs sf-1900): 1-0 {White mates}
+Score of 4.9.3 vs sf-1900: 42 - 14 - 1  [0.746] 57
+Started game 61 of 100 (4.9.3 vs sf-1900)
+Finished game 58 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 43 - 14 - 1  [0.750] 58
+Started game 62 of 100 (sf-1900 vs 4.9.3)
+Finished game 60 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 44 - 14 - 1  [0.754] 59
+Started game 63 of 100 (4.9.3 vs sf-1900)
+Finished game 59 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 45 - 14 - 1  [0.758] 60
+...      4.9.3 playing White: 26 - 4 - 0  [0.867] 30
+...      4.9.3 playing Black: 19 - 10 - 1  [0.650] 30
+...      White vs Black: 36 - 23 - 1  [0.608] 60
+Elo difference: 198.7 +/- 107.2, LOS: 100.0 %, DrawRatio: 1.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 64 of 100 (sf-1900 vs 4.9.3)
+Finished game 61 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 46 - 14 - 1  [0.762] 61
+Started game 65 of 100 (4.9.3 vs sf-1900)
+Finished game 62 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 47 - 14 - 1  [0.766] 62
+Started game 66 of 100 (sf-1900 vs 4.9.3)
+Finished game 64 (sf-1900 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 47 - 15 - 1  [0.754] 63
+Started game 67 of 100 (4.9.3 vs sf-1900)
+Finished game 63 (4.9.3 vs sf-1900): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 47 - 16 - 1  [0.742] 64
+Started game 68 of 100 (sf-1900 vs 4.9.3)
+Finished game 65 (4.9.3 vs sf-1900): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 47 - 17 - 1  [0.731] 65
+Started game 69 of 100 (4.9.3 vs sf-1900)
+Finished game 67 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 48 - 17 - 1  [0.735] 66
+Started game 70 of 100 (sf-1900 vs 4.9.3)
+Finished game 66 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 49 - 17 - 1  [0.739] 67
+Started game 71 of 100 (4.9.3 vs sf-1900)
+Finished game 68 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 50 - 17 - 1  [0.743] 68
+Started game 72 of 100 (sf-1900 vs 4.9.3)
+Finished game 69 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 51 - 17 - 1  [0.746] 69
+Started game 73 of 100 (4.9.3 vs sf-1900)
+Finished game 70 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 52 - 17 - 1  [0.750] 70
+...      4.9.3 playing White: 29 - 6 - 0  [0.829] 35
+...      4.9.3 playing Black: 23 - 11 - 1  [0.671] 35
+...      White vs Black: 40 - 29 - 1  [0.579] 70
+Elo difference: 190.8 +/- 97.2, LOS: 100.0 %, DrawRatio: 1.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 74 of 100 (sf-1900 vs 4.9.3)
+Finished game 71 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 53 - 17 - 1  [0.754] 71
+Started game 75 of 100 (4.9.3 vs sf-1900)
+Finished game 72 (sf-1900 vs 4.9.3): 1-0 {White mates}
+Score of 4.9.3 vs sf-1900: 53 - 18 - 1  [0.743] 72
+Started game 76 of 100 (sf-1900 vs 4.9.3)
+Finished game 74 (sf-1900 vs 4.9.3): 0-1 {Black mates}
+Score of 4.9.3 vs sf-1900: 54 - 18 - 1  [0.747] 73
+Started game 77 of 100 (4.9.3 vs sf-1900)
+Finished game 73 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 55 - 18 - 1  [0.750] 74
+Started game 78 of 100 (sf-1900 vs 4.9.3)
+Finished game 75 (4.9.3 vs sf-1900): 1-0 {White mates}
+Score of 4.9.3 vs sf-1900: 56 - 18 - 1  [0.753] 75
+Started game 79 of 100 (4.9.3 vs sf-1900)
+Finished game 76 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 57 - 18 - 1  [0.757] 76
+Started game 80 of 100 (sf-1900 vs 4.9.3)
+Finished game 78 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 58 - 18 - 1  [0.760] 77
+Started game 81 of 100 (4.9.3 vs sf-1900)
+Finished game 79 (4.9.3 vs sf-1900): 1-0 {White mates}
+Score of 4.9.3 vs sf-1900: 59 - 18 - 1  [0.763] 78
+Started game 82 of 100 (sf-1900 vs 4.9.3)
+Finished game 77 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 60 - 18 - 1  [0.766] 79
+Started game 83 of 100 (4.9.3 vs sf-1900)
+Finished game 81 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 61 - 18 - 1  [0.769] 80
+...      4.9.3 playing White: 35 - 6 - 0  [0.854] 41
+...      4.9.3 playing Black: 26 - 12 - 1  [0.679] 39
+...      White vs Black: 47 - 32 - 1  [0.594] 80
+Elo difference: 208.7 +/- 93.4, LOS: 100.0 %, DrawRatio: 1.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 84 of 100 (sf-1900 vs 4.9.3)
+Finished game 83 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 62 - 18 - 1  [0.772] 81
+Started game 85 of 100 (4.9.3 vs sf-1900)
+Finished game 82 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 63 - 18 - 1  [0.774] 82
+Started game 86 of 100 (sf-1900 vs 4.9.3)
+Finished game 80 (sf-1900 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 63 - 19 - 1  [0.765] 83
+Started game 87 of 100 (4.9.3 vs sf-1900)
+Finished game 84 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 64 - 19 - 1  [0.768] 84
+Started game 88 of 100 (sf-1900 vs 4.9.3)
+Finished game 85 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 65 - 19 - 1  [0.771] 85
+Started game 89 of 100 (4.9.3 vs sf-1900)
+Finished game 86 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 66 - 19 - 1  [0.773] 86
+Started game 90 of 100 (sf-1900 vs 4.9.3)
+Finished game 88 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 67 - 19 - 1  [0.776] 87
+Started game 91 of 100 (4.9.3 vs sf-1900)
+Finished game 87 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 68 - 19 - 1  [0.778] 88
+Started game 92 of 100 (sf-1900 vs 4.9.3)
+Finished game 89 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 69 - 19 - 1  [0.781] 89
+Started game 93 of 100 (4.9.3 vs sf-1900)
+Finished game 91 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 70 - 19 - 1  [0.783] 90
+...      4.9.3 playing White: 40 - 6 - 0  [0.870] 46
+...      4.9.3 playing Black: 30 - 13 - 1  [0.693] 44
+...      White vs Black: 53 - 36 - 1  [0.594] 90
+Elo difference: 223.3 +/- 90.1, LOS: 100.0 %, DrawRatio: 1.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 94 of 100 (sf-1900 vs 4.9.3)
+Finished game 90 (sf-1900 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 70 - 20 - 1  [0.775] 91
+Started game 95 of 100 (4.9.3 vs sf-1900)
+Finished game 93 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 71 - 20 - 1  [0.777] 92
+Started game 96 of 100 (sf-1900 vs 4.9.3)
+Finished game 94 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 72 - 20 - 1  [0.780] 93
+Started game 97 of 100 (4.9.3 vs sf-1900)
+Finished game 92 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 73 - 20 - 1  [0.782] 94
+Started game 98 of 100 (sf-1900 vs 4.9.3)
+Finished game 95 (4.9.3 vs sf-1900): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.3 vs sf-1900: 73 - 20 - 2  [0.779] 95
+Started game 99 of 100 (4.9.3 vs sf-1900)
+Finished game 96 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 74 - 20 - 2  [0.781] 96
+Started game 100 of 100 (sf-1900 vs 4.9.3)
+Finished game 98 (sf-1900 vs 4.9.3): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 74 - 21 - 2  [0.773] 97
+Finished game 97 (4.9.3 vs sf-1900): 1/2-1/2 {Draw by adjudication}
+Score of 4.9.3 vs sf-1900: 74 - 21 - 3  [0.770] 98
+Finished game 99 (4.9.3 vs sf-1900): 1-0 {White wins by adjudication}
+Score of 4.9.3 vs sf-1900: 75 - 21 - 3  [0.773] 99
+Finished game 100 (sf-1900 vs 4.9.3): 0-1 {Black wins by adjudication}
+Score of 4.9.3 vs sf-1900: 76 - 21 - 3  [0.775] 100
+...      4.9.3 playing White: 42 - 6 - 2  [0.860] 50
+...      4.9.3 playing Black: 34 - 15 - 1  [0.690] 50
+...      White vs Black: 57 - 40 - 3  [0.585] 100
+Elo difference: 214.8 +/- 82.5, LOS: 100.0 %, DrawRatio: 3.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+
+Player: 4.9.3
+   "Draw by 3-fold repetition": 1
+   "Draw by adjudication": 2
+   "Loss: Black mates": 1
+   "Loss: Black wins by adjudication": 5
+   "Loss: White mates": 6
+   "Loss: White wins by adjudication": 9
+   "Win: Black mates": 3
+   "Win: Black wins by adjudication": 31
+   "Win: White mates": 5
+   "Win: White wins by adjudication": 37
+Player: sf-1900
+   "Draw by 3-fold repetition": 1
+   "Draw by adjudication": 2
+   "Loss: Black mates": 3
+   "Loss: Black wins by adjudication": 31
+   "Loss: White mates": 5
+   "Loss: White wins by adjudication": 37
+   "Win: Black mates": 1
+   "Win: Black wins by adjudication": 5
+   "Win: White mates": 6
+   "Win: White wins by adjudication": 9
+Finished match
