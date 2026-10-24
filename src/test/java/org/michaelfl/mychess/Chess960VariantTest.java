@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class Chess960VariantTest {
 
-    private static final List<String> ALL_ARMS = List.of(Chess960Variant.BASE, "N", "L", "A", "B", "C", "D", "R", "N+L+B+R");
+    private static final List<String> ALL_ARMS = List.of(Chess960Variant.BASE, "N", "L", "A", "B", "C", "D", "E", "R", "N+L+B+R");
 
     @Test
     void baseAndBlankChangeNothing() {
@@ -32,25 +32,43 @@ class Chess960VariantTest {
 
         assertTrue(variant.flatKnightRank(), "N flattens the knight rank");
         assertTrue(variant.flatBishopRank(), "L flattens the bishop rank");
-        assertEquals(new Chess960Variant.KingArm((short) 9, (short) 9, (short) 9), variant.king(), "B is the 9/9/9 king arm");
+        assertEquals(new Chess960Variant.KingArm((short) 9, (short) 9, (short) 9, false), variant.king(), "B is the 9/9/9 king arm");
         assertTrue(variant.noCastlingTerm(), "R switches the castling term off");
         assertEquals(0f, variant.castlingScale(), "castling scale of arm R");
     }
 
     @Test
     void parsesEveryKingArm() {
-        assertEquals(new Chess960Variant.KingArm((short) 16, (short) 16, (short) 9), Chess960Variant.parse("A").king(), "arm A");
-        assertEquals(new Chess960Variant.KingArm((short) 9, (short) 9, (short) 9), Chess960Variant.parse("B").king(), "arm B");
-        assertEquals(new Chess960Variant.KingArm((short) 0, (short) 0, (short) 0), Chess960Variant.parse("C").king(), "arm C");
-        assertEquals(new Chess960Variant.KingArm((short) 50, (short) 16, (short) 9), Chess960Variant.parse("D").king(), "arm D");
+        assertEquals(new Chess960Variant.KingArm((short) 16, (short) 16, (short) 9, false), Chess960Variant.parse("A").king(), "arm A");
+        assertEquals(new Chess960Variant.KingArm((short) 9, (short) 9, (short) 9, false), Chess960Variant.parse("B").king(), "arm B");
+        assertEquals(new Chess960Variant.KingArm((short) 0, (short) 0, (short) 0, false), Chess960Variant.parse("C").king(), "arm C");
+        assertEquals(new Chess960Variant.KingArm((short) 50, (short) 16, (short) 9, false), Chess960Variant.parse("D").king(), "arm D");
         assertNull(Chess960Variant.parse("N").king(), "no king arm unless one is named");
         assertEquals(1f, Chess960Variant.parse("N").castlingScale(), "castling term stays on without R");
+    }
+
+    @Test
+    void kingArmEKeepsTheStandardCornerValues() {
+        int[][] standard = PieceSquareTables.combinedTables(false);
+        int[][] tables = PieceSquareTables.buildCombinedTables(Chess960Variant.parse("E"));
+
+        assertEquals((short) standard[Board.whiteKing][Board.a1], (short) tables[Board.whiteKing][Board.a1], "arm E keeps a1");
+        assertEquals((short) standard[Board.whiteKing][Board.h1], (short) tables[Board.whiteKing][Board.h1], "arm E keeps h1");
+
+        for (int col = 1; col < 7; col++) {
+            int field = ChessUtil.getFieldFromColAndRow(col, 0);
+
+            assertEquals(50, (short) tables[Board.whiteKing][field], "arm E: b1-g1 at 50, col " + col);
+        }
+
+        assertEquals((short) tables[Board.blackKing][Board.a8], (short) standard[Board.blackKing][Board.a8], "arm E keeps a8 for black");
     }
 
     @Test
     void rejectsUnknownArmsAndTwoKingArms() {
         assertThrows(Chess960Variant.UnknownChess960VariantException.class, () -> Chess960Variant.parse("X"), "unknown arm");
         assertThrows(Chess960Variant.UnknownChess960VariantException.class, () -> Chess960Variant.parse("A+B"), "two king arms");
+        assertThrows(Chess960Variant.UnknownChess960VariantException.class, () -> Chess960Variant.parse("D+E"), "two king arms D and E");
     }
 
     @Test

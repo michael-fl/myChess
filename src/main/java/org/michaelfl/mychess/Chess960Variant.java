@@ -14,6 +14,8 @@ package org.michaelfl.mychess;
  *   <li>{@code L} - bishop: the whole first rank gets the value of c1/f1 (-26)</li>
  *   <li>{@code A}, {@code B}, {@code C}, {@code D} - king: a flat first rank of 16, 9, 0 or 50,
  *       with b2/g2 and a2/h2 lowered where they would otherwise be worth more than the first rank</li>
+ *   <li>{@code E} - king: like {@code D} (b1-g1 at 50), but a1 and h1 keep their standard value,
+ *       because the king never starts there in Chess960 (it always stands between the rooks)</li>
  *   <li>{@code R} - castling term switched off</li>
  * </ul>
  * For example {@code -Dmychess.c960arm=N+L+B+R}. At most one king arm may be given.
@@ -48,13 +50,14 @@ record Chess960Variant(boolean flatKnightRank, boolean flatBishopRank, KingArm k
     static final Chess960Variant ACTIVE = parse(System.getProperty(PROPERTY, BASE));
 
     /**
-     * A king arm: the value of the whole first rank and of the squares b2/g2 and a2/h2.
+     * A king arm: the value of the first rank and of the squares b2/g2 and a2/h2.
      *
-     * @param firstRank the value of every first-rank square
-     * @param b2g2      the value of b2 and g2
-     * @param a2h2      the value of a2 and h2
+     * @param firstRank   the value of the first-rank squares (all eight, or b1-g1 with {@code keepCorners})
+     * @param b2g2        the value of b2 and g2
+     * @param a2h2        the value of a2 and h2
+     * @param keepCorners whether a1 and h1 keep their standard value
      */
-    record KingArm(short firstRank, short b2g2, short a2h2) {
+    record KingArm(short firstRank, short b2g2, short a2h2, boolean keepCorners) {
     }
 
     /** Thrown for an arm list that names an unknown arm or more than one king arm. */
@@ -88,7 +91,7 @@ record Chess960Variant(boolean flatKnightRank, boolean flatBishopRank, KingArm k
                 case "N" -> knight = true;
                 case "L" -> bishop = true;
                 case "R" -> noCastling = true;
-                case "A", "B", "C", "D" -> {
+                case "A", "B", "C", "D", "E" -> {
                     if (king != null) {
                         throw new UnknownChess960VariantException("more than one king arm in '%s'".formatted(arms));
                     }
@@ -104,10 +107,11 @@ record Chess960Variant(boolean flatKnightRank, boolean flatBishopRank, KingArm k
 
     private static KingArm kingArm(String arm) {
         return switch (arm) {
-            case "A" -> new KingArm((short) 16, (short) 16, (short) 9);
-            case "B" -> new KingArm((short) 9, (short) 9, (short) 9);
-            case "C" -> new KingArm((short) 0, (short) 0, (short) 0);
-            case "D" -> new KingArm((short) 50, (short) 16, (short) 9);
+            case "A" -> new KingArm((short) 16, (short) 16, (short) 9, false);
+            case "B" -> new KingArm((short) 9, (short) 9, (short) 9, false);
+            case "C" -> new KingArm((short) 0, (short) 0, (short) 0, false);
+            case "D" -> new KingArm((short) 50, (short) 16, (short) 9, false);
+            case "E" -> new KingArm((short) 50, (short) 16, (short) 9, true);
             default -> throw new UnknownChess960VariantException("unknown king arm '%s'".formatted(arm));
         };
     }
@@ -128,7 +132,16 @@ record Chess960Variant(boolean flatKnightRank, boolean flatBishopRank, KingArm k
         } else if (whitePiece == Board.whiteBishop && flatBishopRank) {
             setFirstRank(result, BISHOP_RANK_VALUE);
         } else if (whitePiece == Board.whiteKing && king != null) {
+            final short a1 = table[Board.a1];
+            final short h1 = table[Board.h1];
+
             setFirstRank(result, king.firstRank());
+
+            if (king.keepCorners()) {
+                result[Board.a1] = a1;
+                result[Board.h1] = h1;
+            }
+
             result[Board.b2] = king.b2g2();
             result[Board.g2] = king.b2g2();
             result[Board.a2] = king.a2h2();
