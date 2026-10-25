@@ -503,6 +503,7 @@ public final class WeightingFunction {
         this.pstEndGameWeight[0] = 0;
         this.pstEndGameWeight[1] = 0;
 
+        final int[][] piece2CombinedPST = PieceSquareTables.getCombinedPST(theBoard.isChess960());
         System.arraycopy(board, 0, this.tempBoard, 0, Board.LENGTH * Board.LENGTH);
 
         final int stopField = Board.h8 + 1;
@@ -522,7 +523,7 @@ public final class WeightingFunction {
                 // afterward). The king is no longer excepted here: the crude
                 // endgame king-PST skip (isEndGame / plyCount > 60) has been
                 // removed, so the tapered king endgame table handles centralization.
-                int packed = PieceSquareTables.getCombinedWeight(piece, field);
+                final int packed = piece2CombinedPST[piece][field];
                 pstMidGameWeight[color] += (short) packed;
                 pstEndGameWeight[color] += (short) ((packed + 0x8000) >> 16);
 
