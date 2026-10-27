@@ -15,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.IntConsumer;
 
 /**
  * Minimal UCI (Universal Chess Interface) protocol handler.
@@ -59,6 +60,14 @@ final class UciHandler {
     static final int DEFAULT_TIME_RISK_PERCENT = 150;
     static final int MIN_TIME_RISK_PERCENT = 10;
     static final int MAX_TIME_RISK_PERCENT = 1000;
+
+    /** UCI option: the overrun past the soft limit in percent of it (0 = the fixed one second). */
+    static final String OPTION_TIME_OVERRUN_PERCENT = "TimeOverrunPercent";
+
+    static final int MIN_TIME_OVERRUN_PERCENT = TimeManagement.FIXED_OVERRUN_PERCENT;
+
+    /** 4 x the soft limit caps the hard limit anyway, so an overrun beyond 300 % has no effect. */
+    static final int MAX_TIME_OVERRUN_PERCENT = 300;
 
     private final MyChessEnv env;
     private final BufferedReader in;
@@ -173,6 +182,8 @@ final class UciHandler {
         writeLine("option name UCI_Chess960 type check default false");
         writeLine("option name " + OPTION_TIME_RISK_PERCENT + " type spin default " + DEFAULT_TIME_RISK_PERCENT
                 + " min " + MIN_TIME_RISK_PERCENT + " max " + MAX_TIME_RISK_PERCENT);
+        writeLine("option name " + OPTION_TIME_OVERRUN_PERCENT + " type spin default " + TimeManagement.FIXED_OVERRUN_PERCENT
+                + " min " + MIN_TIME_OVERRUN_PERCENT + " max " + MAX_TIME_OVERRUN_PERCENT);
         writeLine("uciok");
     }
 
@@ -188,6 +199,8 @@ final class UciHandler {
             this.is960 = false;
         } else if (line.startsWith(SETOPTION_PREFIX + OPTION_TIME_RISK_PERCENT + " value ")) {
             applyTimeRiskPercent(line.substring((SETOPTION_PREFIX + OPTION_TIME_RISK_PERCENT + " value ").length()).trim());
+        } else if (line.startsWith(SETOPTION_PREFIX + OPTION_TIME_OVERRUN_PERCENT + " value ")) {
+            applyTimeOverrunPercent(line.substring((SETOPTION_PREFIX + OPTION_TIME_OVERRUN_PERCENT + " value ").length()).trim());
         }
     }
 
@@ -197,12 +210,32 @@ final class UciHandler {
      * not a number is ignored and logged.
      */
     private static void applyTimeRiskPercent(String value) {
+        applyPercentOption(OPTION_TIME_RISK_PERCENT, value, MIN_TIME_RISK_PERCENT, MAX_TIME_RISK_PERCENT,
+                percent -> TimeManagement.setRiskFactor(percent / 100.0));
+    }
+
+    /**
+     * Sets the overrun past the soft limit from a {@code TimeOverrunPercent} value, in percent of the
+     * soft limit; {@value TimeManagement#FIXED_OVERRUN_PERCENT} keeps the fixed one second. Values
+     * outside [{@value #MIN_TIME_OVERRUN_PERCENT}, {@value #MAX_TIME_OVERRUN_PERCENT}] are clamped; a
+     * value that is not a number is ignored and logged.
+     */
+    private static void applyTimeOverrunPercent(String value) {
+        applyPercentOption(OPTION_TIME_OVERRUN_PERCENT, value, MIN_TIME_OVERRUN_PERCENT, MAX_TIME_OVERRUN_PERCENT,
+                TimeManagement::setOverrunPercent);
+    }
+
+    /**
+     * Parses a percent option value, clamps it to [{@code min}, {@code max}], hands it to
+     * {@code setter} and logs the result; a value that is not a number is ignored and logged.
+     */
+    private static void applyPercentOption(String name, String value, int min, int max, IntConsumer setter) {
         try {
-            int percent = Math.clamp(Integer.parseInt(value), MIN_TIME_RISK_PERCENT, MAX_TIME_RISK_PERCENT);
-            TimeManagement.setRiskFactor(percent / 100.0);
-            Log.info("[option] " + OPTION_TIME_RISK_PERCENT + " = " + percent);
+            int percent = Math.clamp(Integer.parseInt(value), min, max);
+            setter.accept(percent);
+            Log.info("[option] " + name + " = " + percent);
         } catch (NumberFormatException _) {
-            Log.info("[option] ignored non-numeric " + OPTION_TIME_RISK_PERCENT + ": " + value);
+            Log.info("[option] ignored non-numeric " + name + ": " + value);
         }
     }
 

@@ -16,8 +16,8 @@ import static org.michaelfl.mychess.Assert.__assert;
  *       remaining time plus most of the increment, capped by the clock and floored at a minimum;</li>
  *   <li>the <em>hard limit</em>, {@link #calculateHardLimit}: the absolute bound at which the search
  *       aborts a running iteration. With a clock it lets a started iteration run at most
- *       {@link #SOFT_LIMIT_MAX_OVERRUN_MS} past the soft limit, without a clock it equals the soft
- *       limit.</li>
+ *       {@link #SOFT_LIMIT_MAX_OVERRUN_MS} past the soft limit, or a share of the soft limit set
+ *       with {@link #setOverrunPercent}; without a clock it equals the soft limit.</li>
  * </ul>
  *
  * <p>Within one search, a {@link TimeManagementInstance} (from {@link #newInstance}) decides before
@@ -74,12 +74,19 @@ public final class TimeManagement {
      * times the soft limit) was never reached, and the +21 Elo of 4.9.0 was measured with this cap.
      * Letting iterations run to the full factor cost about 48 Elo (match {@code watcher-hard-limit}).
      *
-     * <p>TODO: tune this value. As an absolute time it only fits short controls: at 60+1, with a
-     * soft limit of about 1-3 s, one second is a substantial overrun, while at long controls it is
-     * negligible and the cap effectively disappears. It probably belongs as a factor of the soft
-     * limit instead, measured against this fixed value.
+     * <p>As an absolute time it only fits short controls: at 60+1, with a soft limit of about 1-3 s,
+     * one second is a substantial overrun, while at long controls it is negligible and the cap
+     * effectively disappears. {@link #setOverrunPercent} replaces it by a share of the soft limit;
+     * this fixed value applies while that share is {@value #FIXED_OVERRUN_PERCENT}, the default.
      */
     static final int SOFT_LIMIT_MAX_OVERRUN_MS = 1_000;
+
+    /**
+     * Value of {@link #overrunPercent} that selects the fixed {@link #SOFT_LIMIT_MAX_OVERRUN_MS}
+     * instead of a share of the soft limit. The default, so the engine behaves like 4.10.0 unless the
+     * UCI option {@code TimeOverrunPercent} is set.
+     */
+    static final int FIXED_OVERRUN_PERCENT = 0;
 
     private static final float HARD_LIMIT_REMAINING_TIME_FACTOR = 0.2f;
 
@@ -98,6 +105,13 @@ public final class TimeManagement {
      * {@code TimeRiskPercent}. Process-wide like {@link IterationTimings}, which it qualifies.
      */
     private static volatile double riskFactor = DEFAULT_RISK_FACTOR;
+
+    /**
+     * How far a started iteration may run past the soft limit, in percent of the soft limit;
+     * {@value #FIXED_OVERRUN_PERCENT} keeps the fixed {@link #SOFT_LIMIT_MAX_OVERRUN_MS}. Set through
+     * the UCI option {@code TimeOverrunPercent}. Process-wide like {@link #riskFactor}.
+     */
+    private static volatile int overrunPercent = FIXED_OVERRUN_PERCENT;
 
     /**
      * The time-related arguments of one UCI {@code go} command, as sent by the GUI.
@@ -300,11 +314,51 @@ public final class TimeManagement {
     }
 
     /**
+     * Sets how far a started iteration may run past the soft limit, as a share of the soft limit.
+     * Used by the UCI option {@code TimeOverrunPercent}.
+     *
+     * @param percent the overrun in percent of the soft limit, e.g. {@code 50} for half of it;
+     *                {@value #FIXED_OVERRUN_PERCENT} selects the fixed {@link #SOFT_LIMIT_MAX_OVERRUN_MS}
+     * @throws IllegalArgumentException if {@code percent} is negative
+     */
+    public static void setOverrunPercent(int percent) {
+        if (percent < 0) {
+            throw new IllegalArgumentException("overrun percent must not be negative: " + percent);
+        }
+
+        overrunPercent = percent;
+    }
+
+    /** @return the current overrun share in percent of the soft limit, {@value #FIXED_OVERRUN_PERCENT} for the fixed value */
+    public static int getOverrunPercent() {
+        return overrunPercent;
+    }
+
+    /**
+     * The most a started iteration may run past the soft limit, before the other caps of
+     * {@link #calculateHardLimit} apply.
+     *
+     * @param softLimitMs the soft limit in milliseconds
+     * @return {@link #SOFT_LIMIT_MAX_OVERRUN_MS} for the fixed setting, otherwise the configured
+     *         percentage of {@code softLimitMs}, rounded
+     */
+    static long maxOverrunMillis(int softLimitMs) {
+        final int percent = overrunPercent;
+
+        if (percent == FIXED_OVERRUN_PERCENT) {
+            return SOFT_LIMIT_MAX_OVERRUN_MS;
+        }
+
+        return Math.round(softLimitMs * (percent / 100.0));
+    }
+
+    /**
      * Hard limit for one move: the time after which the search aborts a running iteration.
      *
      * <p>Without a clock ({@code go movetime}, {@code go depth}, {@code go infinite}) it equals the
      * soft limit, because there is no reserve to draw on and a GUI expects the answer within the
-     * granted time. With a clock it is the soft limit plus {@link #SOFT_LIMIT_MAX_OVERRUN_MS}, but at
+     * granted time. With a clock it is the soft limit plus {@link #maxOverrunMillis} (the fixed
+     * {@link #SOFT_LIMIT_MAX_OVERRUN_MS} or a share of the soft limit, see {@link #setOverrunPercent}), but at
      * most {@value #HARD_LIMIT_SOFT_LIMIT_FACTOR} times the soft limit, at most 20 % of the remaining
      * clock and never more than the clock minus {@link #TIME_SAFETY_MARGIN_MS}; never less than
      * {@link #MIN_BUDGET_MS}.
@@ -320,7 +374,8 @@ public final class TimeManagement {
             return softLimitMs;
         }
 
-        int timeLimit = Math.min(softLimitMs + SOFT_LIMIT_MAX_OVERRUN_MS, Math.min(
+        long softPlusOverrun = softLimitMs + maxOverrunMillis(softLimitMs);
+        int timeLimit = (int) Math.min(softPlusOverrun, Math.min(
                 Math.round(softLimitMs * HARD_LIMIT_SOFT_LIMIT_FACTOR),
                 Math.round(remainingClockMs * HARD_LIMIT_REMAINING_TIME_FACTOR)));
 
