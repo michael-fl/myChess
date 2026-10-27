@@ -681,7 +681,7 @@ class EngineTest extends EngineTestBase {
         testPositionFromFen(
                 "rk1r2b1/ppp3pp/3b1pn1/3n4/3P2q1/4BNP1/PPP1N1BP/RKQR4 b KQkq - 3 11",
                 Set.of("d8-e8", "g4-e6", "g4-e4"), // Re8/Qe6 keep Black's ~ -3.6 dominance; Qe4 is eval-adjacent but suboptimal (SF ~ -2.3) since v4.3.1
-                -1.5f, // myChess under-reports — Black's advantage is beyond the depth-8 horizon; min was -1.3, v4.8.0 attack units -> -1.46
+                -1.7f, // myChess under-reports — Black's advantage is beyond the depth-8 horizon; min was -1.3, v4.8.0 attack units -> -1.46, v4.10.0 Chess960 PSTs -> -1.55
                 -0.4f,
                 new GameConfig(ENGINE, engineConfig())
         );

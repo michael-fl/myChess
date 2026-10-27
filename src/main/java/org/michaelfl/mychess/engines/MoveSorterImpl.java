@@ -149,6 +149,7 @@ public final class MoveSorterImpl implements MoveSorter {
         } else if (Board.isKing(movingPiece)) {
             bucketKingMoves.add(move);
         } else {
+            // Taking score from the default PSTs, regardless if it's standard or 960 chess
             final int srcWeight = PieceSquareTables.getMidGameWeight(movingPiece, fromField);
             final int destWeight = PieceSquareTables.getMidGameWeight(movingPiece, toField);
             final int weight = destWeight - srcWeight;
