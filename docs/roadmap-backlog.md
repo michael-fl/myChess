@@ -175,7 +175,7 @@ With (1)+(2)+(3) in place, every roadmap entry can be measured locally before me
 > **Shipped.** myChess plays Chess960: `UCI_Chess960` is handled in `UciHandler`, castling and
 > the 960 start positions are implemented in `Board`/`Fen`, and the bot accepts the variant on
 > lichess. Covered by `Chess960CastlingTest`, `Chess960StartPositionsTest`, `FenChess960ImportTest`
-> randomized 960 walks in `ZobristHashingTest`, and since v4.9.3 by `Chess960PerftTest` (128 positions from lichess games, python-chess reference counts), which found and fixed a missing black queenside castle. The design record is
+> randomized 960 walks in `ZobristHashingTest`, and since v4.9.3 by `Chess960PerftTest` (128 positions from lichess games, python-chess reference counts), which found and fixed a missing black queenside castle. Since v4.10.0 Chess960 games use their own piece-square tables with a flattened first rank for knight, bishop and king (+5.5 ± 9.3 in Chess960 self-play, standard chess unchanged; see § 12.11.1). The design record is
 > [Chess960-project.md](Chess960-project.md); what remains open there is evaluation *tuning* for
 > 960, not support — see § 12.11.1 below.
 
@@ -241,6 +241,8 @@ All three GUIs listed under [§ 12.9](roadmap-backlog.md#129-uci-protocol--m-12-
 **A 960 profile for the few variant-sensitive scalars.** For the small set of genuinely 960-sensitive scalars — king-safety weight, and opening-phase time allocation (which matters more in 960 precisely because there is no book) — it makes sense to carry variant-dependent values switched on `UCI_Chess960`, rather than a second full evaluation. The bulk PSTs stay a single shared set.
 
 **The largest 960 gap is not a tunable parameter at all.** myChess has no opening book for 960 (each start is unique), so it plays on search + evaluation from move 1 — exactly the phase where king safety and development decide games. That is why the king-safety re-test is doubly attractive: it targets the phase where myChess is most on its own, in the variant the user actually plays.
+
+**Shipped in v4.10.0 — Chess960 first-rank PSTs (2026-10-27).** One 960-specific divergence did ship, and on purpose: it cannot touch standard chess, so the rule above (standard decides) is not in play. The midgame knight, bishop and king tables pulled pieces off first-rank squares that only occur in 960 setups (h1-g3, a1-b3, a plain king step f1-g1). In 960 games the knight's first rank is now flat at −40, the bishop's at −26 and the king's b1-g1 at 50 (a1/h1 keep their standard value); everything else, including move ordering and the castling term, stays on the standard tables. Chosen offline from eight arms on 527 positions of myChess's lichess 960 games, confirmed at +5.5 ± 9.3 over 4200 960 self-play games against 4.9.3; all standard bench signatures are identical to 4.9.3. Test: `PieceSquareTables960Test`.
 
 Summary — where each parameter class belongs:
 
