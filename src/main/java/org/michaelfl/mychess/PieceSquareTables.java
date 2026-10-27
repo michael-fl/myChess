@@ -9,6 +9,8 @@
 
 package org.michaelfl.mychess;
 
+import java.util.Arrays;
+
 import static org.michaelfl.mychess.Board.*;
 
 /**
@@ -87,6 +89,26 @@ public final class PieceSquareTables {
         throw new IllegalStateException("Utility class");
     }
 
+    /**
+     * Chess960 knight midgame value for every square of the first rank: the value of b1/g1 in
+     * the standard table, so an undeveloped knight counts the same on every start square.
+     */
+    static final short CHESS960_KNIGHT_BASE_ROW_WEIGHT = -40;
+
+    /**
+     * Chess960 bishop midgame value for every square of the first rank: the value of c1/f1 in
+     * the standard table, so an undeveloped bishop counts the same on every start square.
+     */
+    static final short CHESS960_BISHOP_BASE_ROW_WEIGHT = -26;
+
+    /**
+     * Chess960 king midgame value for b1-g1, every square the king can start on; a1 and h1 keep
+     * their standard value because the king never starts there. Because all six squares share one
+     * value, a king step along the first rank gains nothing. Because the value is higher than every
+     * square of the second rank, a king step from the first to the second rank gains nothing either.
+     */
+    static final short CHESS960_KING_BASE_ROW_WEIGHT = 50;
+
     /** White pawn <b>midgame</b> table (PeSTO-derived; see the class comment). */
     private static final String pawnTableWhiteString = """
                0,   0,   0,   0,   0,   0,   0,   0,
@@ -100,6 +122,8 @@ public final class PieceSquareTables {
             """;
     private static final short[] pawnTableWhite = createBoard(pawnTableWhiteString);
     private static final short[] pawnTableBlack = invert(pawnTableWhite);
+    private static final short[] pawnTableWhite960 = pawnTableWhite;
+    private static final short[] pawnTableBlack960 = pawnTableBlack;
 
     /**
      * White pawn <b>endgame</b> table (PeSTO-derived; see the class
@@ -132,6 +156,16 @@ public final class PieceSquareTables {
             """;
     private static final short[] knightTableWhite = createBoard(knightTableWhiteString);
     private static final short[] knightTableBlack = invert(knightTableWhite);
+    private static final short[] knightTableWhite960 = createWhite960Table(knightTableWhite, CHESS960_KNIGHT_BASE_ROW_WEIGHT);
+    private static final short[] knightTableBlack960 = invert(knightTableWhite960);
+
+    private static short[] createWhite960Table(final short[] pst, short baseRowWeight) {
+        final short[] clone = Arrays.copyOf(pst, pst.length);
+
+        Arrays.fill(clone, a1, h1 + 1, baseRowWeight);
+
+        return clone;
+    }
 
     /* Knight (endgame) */
     private static final String knightEndgameTableWhiteString = """
@@ -160,6 +194,8 @@ public final class PieceSquareTables {
             """;
     private static final short[] bishopTableWhite = createBoard(bishopTableWhiteString);
     private static final short[] bishopTableBlack = invert(bishopTableWhite);
+    private static final short[] bishopTableWhite960 = createWhite960Table(bishopTableWhite, CHESS960_BISHOP_BASE_ROW_WEIGHT);
+    private static final short[] bishopTableBlack960 = invert(bishopTableWhite960);
 
     /* Bishop (endgame) */
     private static final String bishopEndgameTableWhiteString = """
@@ -188,6 +224,8 @@ public final class PieceSquareTables {
             """;
     private static final short[] rookTableWhite = createBoard(rookTableWhiteString);
     private static final short[] rookTableBlack = invert(rookTableWhite);
+    private static final short[] rookTableWhite960 = rookTableWhite;
+    private static final short[] rookTableBlack960 = rookTableBlack;
 
     /* Rook (endgame) */
     private static final String rookEndgameTableWhiteString = """
@@ -216,6 +254,8 @@ public final class PieceSquareTables {
             """;
     private static final short[] queenTableWhite = createBoard(queenTableWhiteString);
     private static final short[] queenTableBlack = invert(queenTableWhite);
+    private static final short[] queenTableWhite960 = queenTableWhite;
+    private static final short[] queenTableBlack960 = queenTableBlack;
 
     /* Queen (endgame) */
     private static final String queenEndgameTableWhiteString = """
@@ -244,6 +284,19 @@ public final class PieceSquareTables {
             """;
     private static final short[] kingTableWhite = createBoard(kingTableWhiteString);
     private static final short[] kingTableBlack = invert(kingTableWhite);
+    private static final short[] kingTableWhite960 = createWhite960KingTable(kingTableWhite);
+    private static final short[] kingTableBlack960 = invert(kingTableWhite960);
+
+    @SuppressWarnings("SameParameterValue")
+    private static short[] createWhite960KingTable(final short[] kingTable) {
+        short[] clone = createWhite960Table(kingTable, CHESS960_KING_BASE_ROW_WEIGHT);
+
+        // A king never starts on a1 or h1 in Chess960, so keep those two fields on their original value
+        clone[a1] = kingTable[a1];
+        clone[h1] = kingTable[h1];
+
+        return clone;
+    }
 
     /**
      * White king <b>endgame</b> table (PeSTO-derived; see the class
@@ -267,23 +320,40 @@ public final class PieceSquareTables {
     /** Combined piece-square tables (mid and end game) per piece constant, indexed as {@code table[piece][field]}. */
     private static final int[][] piece2CombinedPST = new int[blackKing + 1][];
     static {
-        piece2CombinedPST[whitePawn] = createCombinedTable(whitePawn);
-        piece2CombinedPST[whiteBishop] = createCombinedTable(whiteBishop);
-        piece2CombinedPST[whiteKnight] = createCombinedTable(whiteKnight);
-        piece2CombinedPST[whiteRook] = createCombinedTable(whiteRook);
-        piece2CombinedPST[whiteQueen] = createCombinedTable(whiteQueen);
-        piece2CombinedPST[whiteKing] = createCombinedTable(whiteKing);
-        piece2CombinedPST[blackPawn] = createCombinedTable(blackPawn);
-        piece2CombinedPST[blackBishop] = createCombinedTable(blackBishop);
-        piece2CombinedPST[blackKnight] = createCombinedTable(blackKnight);
-        piece2CombinedPST[blackRook] = createCombinedTable(blackRook);
-        piece2CombinedPST[blackQueen] = createCombinedTable(blackQueen);
-        piece2CombinedPST[blackKing] = createCombinedTable(blackKing);
+        piece2CombinedPST[whitePawn] = createCombinedTable(whitePawn, false);
+        piece2CombinedPST[whiteBishop] = createCombinedTable(whiteBishop, false);
+        piece2CombinedPST[whiteKnight] = createCombinedTable(whiteKnight, false);
+        piece2CombinedPST[whiteRook] = createCombinedTable(whiteRook, false);
+        piece2CombinedPST[whiteQueen] = createCombinedTable(whiteQueen, false);
+        piece2CombinedPST[whiteKing] = createCombinedTable(whiteKing, false);
+        piece2CombinedPST[blackPawn] = createCombinedTable(blackPawn, false);
+        piece2CombinedPST[blackBishop] = createCombinedTable(blackBishop, false);
+        piece2CombinedPST[blackKnight] = createCombinedTable(blackKnight, false);
+        piece2CombinedPST[blackRook] = createCombinedTable(blackRook, false);
+        piece2CombinedPST[blackQueen] = createCombinedTable(blackQueen, false);
+        piece2CombinedPST[blackKing] = createCombinedTable(blackKing, false);
     }
 
-    private static int[] createCombinedTable(byte forPiece) {
+    /** Combined piece-square tables (mid and end game) per piece constant for Chess960, indexed as {@code table[piece][field]}. */
+    private static final int[][] piece2CombinedPST960 = new int[blackKing + 1][];
+    static {
+        piece2CombinedPST960[whitePawn] = createCombinedTable(whitePawn, true);
+        piece2CombinedPST960[whiteBishop] = createCombinedTable(whiteBishop, true);
+        piece2CombinedPST960[whiteKnight] = createCombinedTable(whiteKnight, true);
+        piece2CombinedPST960[whiteRook] = createCombinedTable(whiteRook, true);
+        piece2CombinedPST960[whiteQueen] = createCombinedTable(whiteQueen, true);
+        piece2CombinedPST960[whiteKing] = createCombinedTable(whiteKing, true);
+        piece2CombinedPST960[blackPawn] = createCombinedTable(blackPawn, true);
+        piece2CombinedPST960[blackBishop] = createCombinedTable(blackBishop, true);
+        piece2CombinedPST960[blackKnight] = createCombinedTable(blackKnight, true);
+        piece2CombinedPST960[blackRook] = createCombinedTable(blackRook, true);
+        piece2CombinedPST960[blackQueen] = createCombinedTable(blackQueen, true);
+        piece2CombinedPST960[blackKing] = createCombinedTable(blackKing, true);
+    }
+
+    private static int[] createCombinedTable(byte forPiece, boolean isChess960) {
         int[] table = new int[LENGTH * LENGTH];
-        short[] mgTable = midGameTable(forPiece);
+        short[] mgTable = midGameTable(forPiece, isChess960);
         short[] egTable = endGameTable(forPiece);
 
         for (int field = a1; field <= h8; field++) {
@@ -302,20 +372,20 @@ public final class PieceSquareTables {
     }
 
     @SuppressWarnings("DuplicatedCode")
-    private static short[] midGameTable(byte forPiece) {
+    private static short[] midGameTable(byte forPiece, boolean isChess960) {
         return switch (forPiece) {
-            case whitePawn -> pawnTableWhite;
-            case blackPawn -> pawnTableBlack;
-            case whiteKnight -> knightTableWhite;
-            case blackKnight -> knightTableBlack;
-            case whiteBishop -> bishopTableWhite;
-            case blackBishop -> bishopTableBlack;
-            case whiteRook -> rookTableWhite;
-            case blackRook -> rookTableBlack;
-            case whiteQueen -> queenTableWhite;
-            case blackQueen -> queenTableBlack;
-            case whiteKing -> kingTableWhite;
-            case blackKing -> kingTableBlack;
+            case whitePawn -> isChess960 ? pawnTableWhite960 : pawnTableWhite;
+            case blackPawn -> isChess960 ? pawnTableBlack960 : pawnTableBlack;
+            case whiteKnight -> isChess960 ? knightTableWhite960 : knightTableWhite;
+            case blackKnight -> isChess960 ? knightTableBlack960 : knightTableBlack;
+            case whiteBishop -> isChess960 ? bishopTableWhite960 : bishopTableWhite;
+            case blackBishop -> isChess960 ? bishopTableBlack960 : bishopTableBlack;
+            case whiteRook -> isChess960 ? rookTableWhite960 : rookTableWhite;
+            case blackRook -> isChess960 ? rookTableBlack960 : rookTableBlack;
+            case whiteQueen -> isChess960 ? queenTableWhite960 : queenTableWhite;
+            case blackQueen -> isChess960 ? queenTableBlack960 : queenTableBlack;
+            case whiteKing -> isChess960 ? kingTableWhite960 : kingTableWhite;
+            case blackKing -> isChess960 ? kingTableBlack960 : kingTableBlack;
             default -> throw new IllegalStateException("Unknown piece: " + forPiece);
         };
     }
@@ -372,8 +442,20 @@ public final class PieceSquareTables {
         return resultTable;
     }
 
-    public static int getCombinedWeight(final byte piece, final int field) {
-        return piece2CombinedPST[piece][field];
+    /**
+     * The combined piece-square tables (midgame value in the low 16 bits, endgame value in the
+     * high 16 bits) for all pieces, indexed as {@code table[piece][field]}. Chess960 games get
+     * their own set, which differs from the standard one only in the first rank of the knight,
+     * bishop and king midgame tables. Move ordering keeps using the standard tables in both
+     * variants ({@link #getMidGameWeight}).
+     *
+     * <p>Fetch the set once per evaluation, not per piece: the result depends only on the game.
+     *
+     * @param isChess960 whether the board is a Chess960 board
+     * @return the table set for that variant; the arrays are shared and must not be modified
+     */
+    public static int[][] getCombinedPST(final boolean isChess960) {
+        return isChess960 ? piece2CombinedPST960 : piece2CombinedPST;
     }
 
     /**
