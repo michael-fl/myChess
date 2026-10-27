@@ -145,8 +145,54 @@ class UciHandlerTest {
         }
     }
 
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void uci_onHandshake_announcesTheTimeOverrunOption() {
+        runHandler("uci\nquit\n")
+                .expect("^option name TimeOverrunPercent type spin default 0 min 0 max 300$");
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void setoption_timeOverrunPercent_setsTheOverrun() {
+        try {
+            runHandler("setoption name TimeOverrunPercent value 50\nquit\n");
+
+            assertEquals(50, TimeManagement.getOverrunPercent(), "TimeOverrunPercent 50 must set an overrun of half the soft limit");
+        } finally {
+            resetTimeOptions();
+        }
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void setoption_timeOverrunPercentOutOfRange_isClamped() {
+        try {
+            runHandler("setoption name TimeOverrunPercent value 900\nquit\n");
+
+            assertEquals(UciHandler.MAX_TIME_OVERRUN_PERCENT, TimeManagement.getOverrunPercent(),
+                    "a percent above the maximum must be clamped to 300");
+        } finally {
+            resetTimeOptions();
+        }
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void setoption_timeOverrunPercentNotANumber_isIgnored() {
+        try {
+            runHandler("setoption name TimeOverrunPercent value long\nquit\n");
+
+            assertEquals(TimeManagement.FIXED_OVERRUN_PERCENT, TimeManagement.getOverrunPercent(),
+                    "a non-numeric value must leave the fixed overrun unchanged");
+        } finally {
+            resetTimeOptions();
+        }
+    }
+
     private static void resetTimeOptions() {
         TimeManagement.setRiskFactor(TimeManagement.DEFAULT_RISK_FACTOR);
+        TimeManagement.setOverrunPercent(TimeManagement.FIXED_OVERRUN_PERCENT);
     }
 
     @Test
