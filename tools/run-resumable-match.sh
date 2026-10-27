@@ -8,6 +8,12 @@
 # TOTAL_ROUNDS        rounds for the WHOLE match; one round is two games with colours swapped
 # TC                  time control, default 40/60
 #
+# Optional environment, for two settings of one build (e.g. a UCI option against its default):
+#   CANDIDATE_NAME / BASELINE_NAME        engine names in the PGN, default the directory names;
+#                                         they must differ, match-elo.py tells the sides apart by them
+#   CANDIDATE_OPTIONS / BASELINE_OPTIONS  extra cutechess engine arguments, space-separated, e.g.
+#                                         CANDIDATE_OPTIONS="option.TimeOverrunPercent=55"
+#
 # WHY. cutechess-cli has no --resume, and the acceptance criteria are bounds on the Elo
 # interval: criterion 0 wants the lower bound at +3, which needs an interval near +/-9 and
 # therefore thousands of games. A machine that must stay untouched for two days is not a
@@ -96,6 +102,16 @@ for version in "$CANDIDATE" "$BASELINE"; do
     fi
 done
 
+CANDIDATE_NAME=${CANDIDATE_NAME:-$CANDIDATE}
+BASELINE_NAME=${BASELINE_NAME:-$BASELINE}
+read -r -a CANDIDATE_ARGS <<< "${CANDIDATE_OPTIONS:-}"
+read -r -a BASELINE_ARGS <<< "${BASELINE_OPTIONS:-}"
+
+if [ "$CANDIDATE_NAME" = "$BASELINE_NAME" ]; then
+    echo "candidate and baseline are both named '$CANDIDATE_NAME' - set CANDIDATE_NAME or BASELINE_NAME" >&2
+    exit 1
+fi
+
 STATE=test-results/match-"$NAME".rounds
 
 # The declared length, locked on the first run. A later call asking for a different number is
@@ -142,7 +158,7 @@ REMAINING=$((TOTAL_ROUNDS - ROUNDS_DONE))
 
 if [ "$REMAINING" -le 0 ]; then
     echo "match complete: $DONE games, $ROUNDS_DONE of $TOTAL_ROUNDS rounds"
-    exec "$PYTHON" "$REPO/tools/match-elo.py" "$CANDIDATE" test-results/match-"$NAME"-seg*.pgn
+    exec "$PYTHON" "$REPO/tools/match-elo.py" "$CANDIDATE_NAME" test-results/match-"$NAME"-seg*.pgn
 fi
 
 SEGMENT=$(printf '%02d' $(( $(ls test-results/match-"$NAME"-seg*.pgn 2>/dev/null | wc -l) + 1 )))
@@ -152,7 +168,7 @@ LOG=test-results/match-"$NAME"-seg$SEGMENT.log
 echo "segment $SEGMENT: $DONE games banked, resuming at opening $START, $REMAINING rounds to go"
 
 if [ "$DONE" -gt 0 ]; then
-    "$PYTHON" "$REPO/tools/match-elo.py" "$CANDIDATE" test-results/match-"$NAME"-seg*.pgn || true
+    "$PYTHON" "$REPO/tools/match-elo.py" "$CANDIDATE_NAME" test-results/match-"$NAME"-seg*.pgn || true
 fi
 
 if [ $((DONE % 2)) -ne 0 ]; then
@@ -160,8 +176,8 @@ if [ $((DONE % 2)) -ne 0 ]; then
 fi
 
 exec caffeinate -is "$CUTECHESS" \
-    -engine name="$CANDIDATE" cmd=./versions/"$CANDIDATE"/mychess-uci.sh proto=uci \
-    -engine name="$BASELINE"  cmd=./versions/"$BASELINE"/mychess-uci.sh  proto=uci \
+    -engine name="$CANDIDATE_NAME" cmd=./versions/"$CANDIDATE"/mychess-uci.sh proto=uci ${CANDIDATE_ARGS[@]+"${CANDIDATE_ARGS[@]}"} \
+    -engine name="$BASELINE_NAME"  cmd=./versions/"$BASELINE"/mychess-uci.sh  proto=uci ${BASELINE_ARGS[@]+"${BASELINE_ARGS[@]}"} \
     -each tc="$TC" \
     -rounds "$REMAINING" -games 2 -repeat \
     -openings file="$BOOK" format=pgn order=sequential plies=8 start="$START" \
