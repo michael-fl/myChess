@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class Chess960VariantTest {
 
-    private static final List<String> ALL_ARMS = List.of(Chess960Variant.BASE, "N", "L", "A", "B", "C", "D", "E", "R", "N+L+B+R");
+    private static final List<String> ALL_ARMS = List.of(Chess960Variant.BASE, "N", "L", "A", "B", "C", "D", "E", "R", "P", "N+L+B+R", "N+L+E+P");
 
     @Test
     void baseAndBlankChangeNothing() {
@@ -88,6 +88,11 @@ class Chess960VariantTest {
             int[][] variant = PieceSquareTables.buildCombinedTables(Chess960Variant.parse(arm));
 
             for (byte piece : new byte[] {Board.whitePawn, Board.whiteRook, Board.whiteQueen, Board.blackPawn, Board.blackRook, Board.blackQueen}) {
+                // arm P changes the pawn table on purpose, see pawnArmLowersOnlyB2AndG2OfTheMidgameTable
+                if (Chess960Variant.parse(arm).pawnWings() && (piece & 7) == (Board.whitePawn & 7)) {
+                    continue;
+                }
+
                 assertArrayEquals(standard[piece], variant[piece], "arm " + arm + " leaves piece " + piece + " unchanged");
             }
         }
@@ -119,6 +124,27 @@ class Chess960VariantTest {
         int[][] standard = PieceSquareTables.combinedTables(false);
 
         assertEquals((short) standard[Board.whiteKing][Board.c2], (short) tables[Board.whiteKing][Board.c2], "arm C leaves c2");
+    }
+
+    @Test
+    void pawnArmLowersOnlyB2AndG2OfTheMidgameTable() {
+        int[][] standard = PieceSquareTables.combinedTables(false);
+        int[][] tables = PieceSquareTables.buildCombinedTables(Chess960Variant.parse("N+L+E+P"));
+
+        assertTrue(Chess960Variant.parse("P").pawnWings(), "P lowers the pawn wings");
+        assertEquals((short) standard[Board.whitePawn][Board.b4], Chess960Variant.PAWN_WING_VALUE, "the wing value is the standard b4 value");
+
+        for (int col = 0; col < 8; col++) {
+            for (int row = 0; row < 8; row++) {
+                int field = ChessUtil.getFieldFromColAndRow(col, row);
+                boolean wing = field == Board.b2 || field == Board.g2;
+                short expected = wing ? Chess960Variant.PAWN_WING_VALUE : (short) standard[Board.whitePawn][field];
+
+                assertEquals(expected, (short) tables[Board.whitePawn][field], "pawn midgame value, col " + col + ", row " + row);
+                assertEquals((short) ((standard[Board.whitePawn][field] + 0x8000) >> 16), (short) ((tables[Board.whitePawn][field] + 0x8000) >> 16),
+                        "pawn endgame value unchanged, col " + col + ", row " + row);
+            }
+        }
     }
 
     @Test

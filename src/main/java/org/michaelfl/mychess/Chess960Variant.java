@@ -17,6 +17,8 @@ package org.michaelfl.mychess;
  *   <li>{@code E} - king: like {@code D} (b1-g1 at 50), but a1 and h1 keep their standard value,
  *       because the king never starts there in Chess960 (it always stands between the rooks)</li>
  *   <li>{@code R} - castling term switched off</li>
+ *   <li>{@code P} - pawn: b2 and g2 get the value of b4/g4 ({@value #PAWN_WING_VALUE}), so no move of the
+ *       b- or g-pawn from its start square loses table value</li>
  * </ul>
  * For example {@code -Dmychess.c960arm=N+L+B+R}. At most one king arm may be given.
  *
@@ -27,9 +29,10 @@ package org.michaelfl.mychess;
  * @param flatBishopRank whether the bishop's first rank is flattened to {@link #BISHOP_RANK_VALUE}
  * @param king           the king arm, or {@code null} for today's king table
  * @param noCastlingTerm whether the castling term is switched off
+ * @param pawnWings      whether b2/g2 of the pawn table are lowered to {@link #PAWN_WING_VALUE}
  * @author Michael Fleischhauer
  */
-record Chess960Variant(boolean flatKnightRank, boolean flatBishopRank, KingArm king, boolean noCastlingTerm) {
+record Chess960Variant(boolean flatKnightRank, boolean flatBishopRank, KingArm king, boolean noCastlingTerm, boolean pawnWings) {
 
     /** System property that selects the variant. */
     static final String PROPERTY = "mychess.c960arm";
@@ -43,8 +46,11 @@ record Chess960Variant(boolean flatKnightRank, boolean flatBishopRank, KingArm k
     /** Bishop first-rank value of arm L: the value of c1/f1 in the standard table. */
     static final short BISHOP_RANK_VALUE = -26;
 
+    /** Pawn value of b2/g2 in arm P: the value of b4/g4 in the standard table. */
+    static final short PAWN_WING_VALUE = 8;
+
     /** The variant that changes nothing. */
-    static final Chess960Variant NONE = new Chess960Variant(false, false, null, false);
+    static final Chess960Variant NONE = new Chess960Variant(false, false, null, false, false);
 
     /** The variant of this JVM, read once from {@value #PROPERTY}. */
     static final Chess960Variant ACTIVE = parse(System.getProperty(PROPERTY, BASE));
@@ -80,6 +86,7 @@ record Chess960Variant(boolean flatKnightRank, boolean flatBishopRank, KingArm k
         boolean bishop = false;
         KingArm king = null;
         boolean noCastling = false;
+        boolean pawnWings = false;
 
         for (String token : arms.split("\\+")) {
             final String arm = token.trim();
@@ -91,6 +98,7 @@ record Chess960Variant(boolean flatKnightRank, boolean flatBishopRank, KingArm k
                 case "N" -> knight = true;
                 case "L" -> bishop = true;
                 case "R" -> noCastling = true;
+                case "P" -> pawnWings = true;
                 case "A", "B", "C", "D", "E" -> {
                     if (king != null) {
                         throw new UnknownChess960VariantException("more than one king arm in '%s'".formatted(arms));
@@ -102,7 +110,7 @@ record Chess960Variant(boolean flatKnightRank, boolean flatBishopRank, KingArm k
             }
         }
 
-        return new Chess960Variant(knight, bishop, king, noCastling);
+        return new Chess960Variant(knight, bishop, king, noCastling, pawnWings);
     }
 
     private static KingArm kingArm(String arm) {
@@ -127,7 +135,10 @@ record Chess960Variant(boolean flatKnightRank, boolean flatBishopRank, KingArm k
     short[] applyToWhiteMidGameTable(byte whitePiece, short[] table) {
         final short[] result = table.clone();
 
-        if (whitePiece == Board.whiteKnight && flatKnightRank) {
+        if (whitePiece == Board.whitePawn && pawnWings) {
+            result[Board.b2] = PAWN_WING_VALUE;
+            result[Board.g2] = PAWN_WING_VALUE;
+        } else if (whitePiece == Board.whiteKnight && flatKnightRank) {
             setFirstRank(result, KNIGHT_RANK_VALUE);
         } else if (whitePiece == Board.whiteBishop && flatBishopRank) {
             setFirstRank(result, BISHOP_RANK_VALUE);
