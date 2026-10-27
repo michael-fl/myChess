@@ -419,7 +419,7 @@ Possible directions:
   deviates from the standard default) and gate the legacy penalty on
   that.
 
-**Issue 3 — King piece-square table.** The current king PST rewards
+**Issue 3 — King piece-square table.** *Resolved in v4.10.0 (2026-10-27):* Chess960 games now use their own first rank for the king (b1-g1 all 50, a1/h1 as in the standard table), and for knight (all −40) and bishop (all −26), through `PieceSquareTables.getCombinedPST(isChess960)` — option (a) below, measured at +5.5 ± 9.3 in 960 self-play; see [roadmap-backlog § 12.11.1](roadmap-backlog.md#1211-evaluation-tuning-for-chess960--what-transfers-what-to-re-measure). The analysis below predates the PeSTO tables of v4.4.0 and is kept as the original reasoning. The current king PST rewards
 the back-rank corners aggressively to encode "castle the king to
 safety": `b1=+30`, `g1=+30`, `c1=+10`, `a1=+20`, `h1=+20`. In standard
 chess the king starts on `e1` (PST 0), so any castling direction is a
