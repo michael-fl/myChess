@@ -69,6 +69,15 @@ final class UciHandler {
     /** 4 x the soft limit caps the hard limit anyway, so an overrun beyond 300 % has no effect. */
     static final int MAX_TIME_OVERRUN_PERCENT = 300;
 
+    /**
+     * The result of our last search in the current game: the ply it started at and the score it
+     * reported, from the side to move's point of view.
+     *
+     * @param ply         ply count of the searched position
+     * @param weightCenti score in centipawns, or {@code null} if the search produced no move
+     */
+    record PlyAndWeight(int ply, Integer weightCenti) { }
+
     private final MyChessEnv env;
     private final BufferedReader in;
 
@@ -78,6 +87,10 @@ final class UciHandler {
     private final AtomicReference<NextMoveTask> currentTask = new AtomicReference<>();
     private final AtomicReference<Game> currentGame = new AtomicReference<>();
     private final AtomicReference<Thread> currentWatcher = new AtomicReference<>();
+    private PlyAndWeight previousPlyAndWeight;
+
+    /** Engine configuration of the most recent {@code go}; see {@link #getLastEngineConfig()}. */
+    private volatile EngineConfig lastEngineConfig;
 
     /**
      * Per-game identifier emitted on every {@code [move]} status line so that
@@ -124,6 +137,35 @@ final class UciHandler {
 
     Board getBoard() {
         return board;
+    }
+
+    /**
+     * Engine configuration built for the most recent {@code go}, i.e. exactly what that search
+     * received. Package-private so tests can check the values the handler passes to the engine,
+     * such as {@link EngineConfig#getPreviousOwnScoreCenti()}.
+     *
+     * @return the configuration of the last {@code go}, or {@code null} before the first one
+     */
+    EngineConfig getLastEngineConfig() {
+        return lastEngineConfig;
+    }
+
+    /**
+     * Ply at which our last search in this game started.
+     *
+     * @return the stored ply, or {@code null} if nothing is stored (new game, or no search yet)
+     */
+    synchronized Integer getPreviousPly() {
+        return previousPlyAndWeight != null ? previousPlyAndWeight.ply : null;
+    }
+
+    /**
+     * Score of our last search in this game, in centipawns from our point of view.
+     *
+     * @return the stored score, or {@code null} if nothing is stored or that search produced no move
+     */
+    synchronized Integer getPreviousWeightCenti() {
+        return previousPlyAndWeight != null ? previousPlyAndWeight.weightCenti : null;
     }
 
     /**
@@ -239,12 +281,13 @@ final class UciHandler {
         }
     }
 
-    private void handleNewGame() {
+    private synchronized void handleNewGame() {
         cancelCurrentTask();
         shutdownCurrentGame();
         this.board = Board.createNewGame();
         this.gameId = UUID.randomUUID().toString();
         this.gameStartMs = System.currentTimeMillis();
+        this.previousPlyAndWeight = null;
 
         ChessEngine.resetIterationTimings();
         tt.clear();
@@ -308,6 +351,8 @@ final class UciHandler {
         // not from any intermediate state inside the search.
         final int plyCountAtStart = board.getGameStatus().getPlyCount();
 
+        Integer previousOwnScoreCenti = getPreviousOwnScoreCenti(plyCountAtStart);
+
         logGoStatus(args, turnAtStart, plyCountAtStart);
 
         final int remainingClockMillis = remainingClockMillis(args, turnAtStart);
@@ -317,8 +362,10 @@ final class UciHandler {
                 .remainingClockMillis(remainingClockMillis)
                 .silent(true)
                 .setTranspositionTable(tt)
+                .setPreviousOwnScoreCenti(previousOwnScoreCenti)
                 .logTag("game=" + shortGameId())
                 .build();
+        lastEngineConfig = engineConfig;
         var gameConfig = new GameConfig(MyChessEngine.class, engineConfig);
 
         var game = new Game(gameConfig, board);
@@ -334,7 +381,7 @@ final class UciHandler {
         // Virtual threads are always daemons, so no explicit daemon flag.
         Thread watcher = Thread.ofVirtual()
                 .name("uci-search-watcher")
-                .start(() -> awaitAndEmitBestmove(game, task,
+                .start(() -> awaitAndEmitBestmove(gameId, game, task,
                         watcherTimeoutMillis(args.timeBudgetMillis, remainingClockMillis),
                         turnAtStart, plyCountAtStart, goStartMs));
         currentWatcher.set(watcher);
@@ -359,6 +406,33 @@ final class UciHandler {
         return TimeManagement.calculateHardLimit(softLimitMillis, remainingClockMillis) + WATCHER_GRACE_MILLIS;
     }
 
+    /**
+     * The stored score of our previous move, if it belongs to the position about to be searched.
+     * See {@link #previousOwnScoreCentiFor}.
+     */
+    private synchronized Integer getPreviousOwnScoreCenti(int plyCountAtStart) {
+        return previousOwnScoreCentiFor(previousPlyAndWeight, plyCountAtStart);
+    }
+
+    /**
+     * Score of our previous move, if it is comparable with the search about to start.
+     *
+     * <p>It is comparable only when exactly two plies lie between the two searches: our previous
+     * move and the opponent's reply. Any other distance means the GUI jumped to another position,
+     * resent the same one, or skipped a move, and the stored score says nothing about this one.
+     *
+     * @param prevPlyAndWeight the stored result of our last search, or {@code null} if none
+     * @param plyCountAtStart  ply count of the position about to be searched
+     * @return the stored score in centipawns, or {@code null} if there is none or it is not comparable
+     */
+    static Integer previousOwnScoreCentiFor(PlyAndWeight prevPlyAndWeight, int plyCountAtStart) {
+        if (prevPlyAndWeight != null && prevPlyAndWeight.ply + 2 != plyCountAtStart) {
+            prevPlyAndWeight = null;
+        }
+
+        return prevPlyAndWeight != null ? prevPlyAndWeight.weightCenti : null;
+    }
+
     private int remainingClockMillis(GoArgs args, int turn) {
         Integer millisOpt = turn == GameStatus.TURN_WHITE ? args.wtime : args.btime;
 
@@ -371,7 +445,7 @@ final class UciHandler {
 
     // ---- Search lifecycle ----
 
-    private void awaitAndEmitBestmove(Game game, NextMoveTask task, long timeoutMillis,
+    private void awaitAndEmitBestmove(String gameId, Game game, NextMoveTask task, long timeoutMillis,
                                       int turnAtStart, int plyCountAtStart, long goStartMs) {
         MoveAndWeight result = null;
         try {
@@ -412,6 +486,9 @@ final class UciHandler {
                 bestWeightStm = lastIterationWeight.get();
             }
 
+            Integer prevWeightCenti = bestmove != 0 ? Math.round(bestWeightStm * 100) : null;
+            setPreviousPlyAndWeight(gameId, plyCountAtStart, prevWeightCenti);
+
             if (bestmove != 0 && !isLegalInCurrentBoard(bestmove)) {
                 int fallback = firstLegalInCurrentBoard();
                 Log.error("[bestmove-validate] selected " + UciMoveParser.toUci(bestmove, board)
@@ -430,6 +507,22 @@ final class UciHandler {
             currentWatcher.compareAndSet(Thread.currentThread(), null);
             lastIterationFirstMove.set(0);
             lastIterationWeight.set(0f);
+        }
+    }
+
+    /**
+     * Stores the result of a finished search, unless a new game has started meanwhile.
+     *
+     * <p>Called on the watcher thread. The {@code gameId} check prevents a search that was still
+     * running during {@code ucinewgame} from writing its old score into the new game.
+     *
+     * @param gameId      game the search belonged to
+     * @param ply         ply count the search started at
+     * @param weightCenti score in centipawns, or {@code null} if the search produced no move
+     */
+    private synchronized void setPreviousPlyAndWeight(String gameId, int ply, Integer weightCenti) {
+        if (gameId.equals(this.gameId)) {
+            previousPlyAndWeight = new PlyAndWeight(ply, weightCenti);
         }
     }
 

@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.TimeManagement.TimeControlInput;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit tests for {@link TimeManagement}: the per-move budget derived from the {@code go} arguments
@@ -44,6 +46,16 @@ class TimeManagementTest {
     private static final int EIGHTY_PERCENT_OF_ONE_SECOND = 800;
 
     private static final int DEFAULT_MOVES_TO_GO = 30;
+
+    /** Two distinct non-zero move codes; the bookkeeping only compares them. */
+    private static final int MOVE_A = 1;
+    private static final int MOVE_B = 2;
+
+    /** First depth whose result is compared with the one before: the minimum depth 4. */
+    private static final int FIRST_SIGNAL_DEPTH = 4;
+
+    /** Score of the previous own move: three pawns. */
+    private static final int PREVIOUS_OWN_SCORE_CENTI = 300;
 
     // ---- computeMoveBudgetMillis: which go argument decides ----
 
@@ -316,14 +328,281 @@ class TimeManagementTest {
     // ---- TimeManagementInstance: bookkeeping per completed iteration ----
 
     @Test
-    void iterationDone_advancesTheDepth() {
-        long now = System.currentTimeMillis();
-        var instance = TimeManagement.newInstance(now + ONE_SECOND, "");
+    void iterationDone_advancesTheDepthAndStoresMoveAndScore() {
+        var instance = newInstance();
 
-        instance.shouldSkipIteration(1);
-        instance.iterationDone(1, System.currentTimeMillis());
+        runIteration(instance, 1, MOVE_A, 0.35f);
 
         assertEquals(2, instance.getDepth(), "after depth 1 the next expected depth must be 2");
+        assertEquals(MOVE_A, instance.getPreviousIterationBestMove(), "the best move of depth 1 must be stored");
+        assertEquals(35, instance.getPreviousIterationWeightCenti(), "the score of depth 1 must be stored in centipawns");
+    }
+
+    @Test
+    void iterationDone_atDepthOne_neverCountsAMoveChange() {
+        var instance = newInstance();
+
+        runIteration(instance, 1, MOVE_A, 0f);
+
+        assertEquals(0, instance.getMoveChangedCounter(),
+                "depth 1 has no previous best move, so it cannot count as a change");
+    }
+
+    @Test
+    void iterationDone_upToTheMinimumDepth_countsNoMoveChange() {
+        var instance = newInstance();
+
+        runIteration(instance, 1, MOVE_A, 0f);
+        runIteration(instance, 2, MOVE_B, 0f);
+        runIteration(instance, 3, MOVE_A, 0f);
+
+        assertEquals(0, instance.getMoveChangedCounter(),
+                "best-move changes up to depth 3 must not count; the signals start at depth " + FIRST_SIGNAL_DEPTH);
+    }
+
+    @Test
+    void iterationDone_newBestMove_countsAChange() {
+        var instance = newInstance();
+
+        runStableIterations(instance, MOVE_A, 0);
+        runIteration(instance, FIRST_SIGNAL_DEPTH, MOVE_B, 0f);
+
+        assertEquals(1, instance.getMoveChangedCounter(),
+                "a different best move at depth " + FIRST_SIGNAL_DEPTH + " must count as one change");
+    }
+
+    @Test
+    void iterationDone_sameBestMove_halvesTheChangeCounter() {
+        var instance = newInstance();
+
+        runStableIterations(instance, MOVE_A, 0);
+        runIteration(instance, FIRST_SIGNAL_DEPTH, MOVE_B, 0f);
+        runIteration(instance, FIRST_SIGNAL_DEPTH + 1, MOVE_A, 0f);
+        runIteration(instance, FIRST_SIGNAL_DEPTH + 2, MOVE_A, 0f);
+
+        assertEquals(1, instance.getMoveChangedCounter(),
+                "two changes then one stable iteration must decay the counter from 2 to 1");
+    }
+
+    // ---- TimeManagementInstance: score-drop signals ----
+
+    @Test
+    void weightDrop_beforeTheMinimumDepth_isNotFlagged() {
+        var instance = newInstance();
+
+        runIteration(instance, 1, MOVE_A, 0f);
+        runIteration(instance, 2, MOVE_A, -5f);
+
+        assertFalse(instance.isWeightDropped(), "a drop at depth 2 is below the minimum depth and must not count");
+    }
+
+    @Test
+    void weightDrop_byTheThresholdAgainstThePreviousIteration_isFlagged() {
+        var instance = newInstance();
+
+        runStableIterations(instance, MOVE_A, 0);
+        runIteration(instance, FIRST_SIGNAL_DEPTH, MOVE_A, -0.5f);
+
+        assertTrue(instance.isWeightDropped(),
+                "a drop of exactly 50 cp against the previous iteration must flag the next decision");
+    }
+
+    @Test
+    void weightDrop_belowTheThreshold_isNotFlagged() {
+        var instance = newInstance();
+
+        runStableIterations(instance, MOVE_A, 0);
+        runIteration(instance, FIRST_SIGNAL_DEPTH, MOVE_A, -0.49f);
+
+        assertFalse(instance.isWeightDropped(), "a drop of 49 cp is below the 50 cp threshold");
+    }
+
+    @Test
+    void weightRise_isNotFlagged() {
+        var instance = newInstance();
+
+        runStableIterations(instance, MOVE_A, 0);
+        runIteration(instance, FIRST_SIGNAL_DEPTH, MOVE_A, 5f);
+
+        assertFalse(instance.isWeightDropped(), "a rising score is no reason to think longer");
+    }
+
+    @Test
+    void weightDrop_holdsOnlyUntilTheNextIteration() {
+        var instance = newInstance();
+
+        runStableIterations(instance, MOVE_A, 0);
+        runIteration(instance, FIRST_SIGNAL_DEPTH, MOVE_A, -0.5f);
+        runIteration(instance, FIRST_SIGNAL_DEPTH + 1, MOVE_A, -0.5f);
+
+        assertFalse(instance.isWeightDropped(), "a score that stays at its new level is no new drop");
+    }
+
+    @Test
+    void dropBelowPreviousOwnScore_isFlaggedAndUsedUp() {
+        var instance = newInstance(PREVIOUS_OWN_SCORE_CENTI);
+
+        runStableIterations(instance, MOVE_A, 3);
+        runIteration(instance, FIRST_SIGNAL_DEPTH, MOVE_A, 2.5f);
+
+        assertTrue(instance.isDroppedBelowPreviousOwnScore(),
+                "300 cp at the previous move and 250 cp now is a drop of 50 cp");
+        assertTrue(instance.isWeightDropped(), "the drop below the previous own score must flag the next decision");
+    }
+
+    @Test
+    void dropBelowPreviousOwnScore_firesOnlyOncePerMove() {
+        var instance = newInstance(PREVIOUS_OWN_SCORE_CENTI);
+
+        runStableIterations(instance, MOVE_A, 3);
+        runIteration(instance, FIRST_SIGNAL_DEPTH, MOVE_A, 2.5f);
+        runIteration(instance, FIRST_SIGNAL_DEPTH + 1, MOVE_A, 2.5f);
+
+        assertFalse(instance.isWeightDropped(),
+                "once used up, a score that stays below the previous move's must not flag again");
+    }
+
+    @Test
+    void dropBelowPreviousOwnScore_canFireAtALaterDepth() {
+        var instance = newInstance(PREVIOUS_OWN_SCORE_CENTI);
+
+        runStableIterations(instance, MOVE_A, 3);
+        runIteration(instance, FIRST_SIGNAL_DEPTH, MOVE_A, 2.8f);
+        runIteration(instance, FIRST_SIGNAL_DEPTH + 1, MOVE_A, 2.6f);
+
+        assertFalse(instance.isDroppedBelowPreviousOwnScore(),
+                "test premise: 40 cp below the previous move is not yet a drop of 50 cp");
+
+        runIteration(instance, FIRST_SIGNAL_DEPTH + 2, MOVE_A, 2.5f);
+
+        assertTrue(instance.isDroppedBelowPreviousOwnScore(),
+                "a drop below the previous move's score found only at a deeper iteration must still fire");
+        assertTrue(instance.isWeightDropped(), "the late drop must flag the next decision");
+    }
+
+    @Test
+    void withoutPreviousOwnScore_onlyTheIterationDropCounts() {
+        var instance = newInstance();
+
+        runStableIterations(instance, MOVE_A, -10);
+        runIteration(instance, FIRST_SIGNAL_DEPTH, MOVE_A, -10f);
+
+        assertFalse(instance.isDroppedBelowPreviousOwnScore(), "without a previous score there is nothing to drop below");
+        assertFalse(instance.isWeightDropped(), "a stable score without a previous move's score must not flag");
+    }
+
+    // ---- TimeManagementInstance: mate scores ----
+
+    @Test
+    void mateGettingLonger_isNoDrop() {
+        var instance = newInstance();
+
+        runStableIterationsCenti(instance, MOVE_A, WeightingFunction.checkmateInCenti(3));
+        runIterationCenti(instance, FIRST_SIGNAL_DEPTH, MOVE_A, WeightingFunction.checkmateInCenti(5));
+
+        assertFalse(instance.isWeightDropped(),
+                "a mate for us that gets two plies longer is still a forced win, not a reason to think longer");
+    }
+
+    @Test
+    void mateAgainstUsAppearing_isNoDrop() {
+        var instance = newInstance();
+
+        runStableIterations(instance, MOVE_A, 0.5f);
+        runIterationCenti(instance, FIRST_SIGNAL_DEPTH, MOVE_A, -WeightingFunction.checkmateInCenti(4));
+
+        assertFalse(instance.isWeightDropped(), "a forced mate against us is settled; more time does not change it");
+    }
+
+    @Test
+    void mateAgainstUsAppearing_isNoDropBelowThePreviousOwnScore() {
+        var instance = newInstance(PREVIOUS_OWN_SCORE_CENTI);
+
+        runStableIterations(instance, MOVE_A, 3);
+        runIterationCenti(instance, FIRST_SIGNAL_DEPTH, MOVE_A, -WeightingFunction.checkmateInCenti(4));
+
+        assertFalse(instance.isDroppedBelowPreviousOwnScore(),
+                "a mate against us must not use up the drop against the previous own move");
+    }
+
+    @Test
+    void bestMoveChangeBetweenMatingMoves_isNotCounted() {
+        var instance = newInstance();
+
+        runStableIterationsCenti(instance, MOVE_A, WeightingFunction.checkmateInCenti(3));
+        runIterationCenti(instance, FIRST_SIGNAL_DEPTH, MOVE_B, WeightingFunction.checkmateInCenti(3));
+
+        assertEquals(0, instance.getMoveChangedCounter(),
+                "switching between equivalent mating moves is no sign of uncertainty");
+    }
+
+    @Test
+    void mateVanishing_isADrop() {
+        var instance = newInstance();
+
+        runStableIterations(instance, MOVE_A, 0);
+        runIterationCenti(instance, FIRST_SIGNAL_DEPTH, MOVE_A, WeightingFunction.checkmateInCenti(5));
+        runIterationCenti(instance, FIRST_SIGNAL_DEPTH + 1, MOVE_A, 800);
+
+        assertTrue(instance.isWeightDropped(),
+                "a mate for us that a deeper iteration refutes is a real drop and must flag the next decision");
+    }
+
+    @Test
+    void mateOfThePreviousOwnMoveVanishing_isADropBelowIt() {
+        var instance = newInstance(WeightingFunction.checkmateInCenti(5));
+
+        runStableIterations(instance, MOVE_A, 8);
+        runIteration(instance, FIRST_SIGNAL_DEPTH, MOVE_A, 8f);
+
+        assertTrue(instance.isDroppedBelowPreviousOwnScore(),
+                "a mate announced at the previous move that is gone now must fire the drop against it");
+    }
+
+    @Test
+    void iterationDone_withoutSkipDecision_usesNoExtension() {
+        var instance = newInstance();
+
+        runIteration(instance, 1, MOVE_A, 0f);
+        runIteration(instance, 2, MOVE_B, 0f);
+
+        assertEquals(0, instance.getExtraIterationsUsedCounter(),
+                "iterations the soft limit allowed anyway must not be counted as extensions");
+    }
+
+    /** Soft limit 1 s, hard limit 4 s from now, no previous score. */
+    private static TimeManagement.TimeManagementInstance newInstance() {
+        return newInstance(null);
+    }
+
+    /** Soft limit 1 s, hard limit 4 s from now, with the given score of the previous own move. */
+    private static TimeManagement.TimeManagementInstance newInstance(Integer previousOwnScoreCenti) {
+        long now = System.currentTimeMillis();
+
+        return TimeManagement.newInstance(now + ONE_SECOND, now + 4 * ONE_SECOND, previousOwnScoreCenti, "");
+    }
+
+    /** Runs depths 1 up to the one before {@link #FIRST_SIGNAL_DEPTH}, all with the same move and score. */
+    private static void runStableIterations(TimeManagement.TimeManagementInstance instance, int move, float weight) {
+        runStableIterationsCenti(instance, move, Math.round(weight * 100));
+    }
+
+    /** As {@link #runStableIterations}, with the score in centipawns, e.g. a mate score. */
+    private static void runStableIterationsCenti(TimeManagement.TimeManagementInstance instance, int move, int weightCenti) {
+        for (int depth = 1; depth < FIRST_SIGNAL_DEPTH; depth++) {
+            runIterationCenti(instance, depth, move, weightCenti);
+        }
+    }
+
+    /** Asks for the decision at {@code depth} and then reports the iteration as completed. */
+    private static void runIteration(TimeManagement.TimeManagementInstance instance, int depth, int move, float weight) {
+        runIterationCenti(instance, depth, move, Math.round(weight * 100));
+    }
+
+    /** As {@link #runIteration}, with the score in centipawns, e.g. a mate score. */
+    private static void runIterationCenti(TimeManagement.TimeManagementInstance instance, int depth, int move, int weightCenti) {
+        instance.shouldSkipIteration(depth);
+        instance.iterationDone(depth, move, weightCenti, System.currentTimeMillis());
     }
 
     /** Only {@code movetime} sent. */
