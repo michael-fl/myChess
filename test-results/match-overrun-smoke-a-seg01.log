@@ -1,0 +1,2130 @@
+Started game 3 of 600 (overrun-55 vs overrun-fixed)
+Started game 2 of 600 (overrun-fixed vs overrun-55)
+Started game 1 of 600 (overrun-55 vs overrun-fixed)
+Started game 4 of 600 (overrun-fixed vs overrun-55)
+Finished game 4 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 1 - 0 - 0  [1.000] 1
+Started game 5 of 600 (overrun-55 vs overrun-fixed)
+Finished game 2 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 2 - 0 - 0  [1.000] 2
+Started game 6 of 600 (overrun-fixed vs overrun-55)
+Finished game 1 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 2 - 1 - 0  [0.667] 3
+Started game 7 of 600 (overrun-55 vs overrun-fixed)
+Finished game 3 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 3 - 1 - 0  [0.750] 4
+Started game 8 of 600 (overrun-fixed vs overrun-55)
+Finished game 6 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 3 - 2 - 0  [0.600] 5
+Started game 9 of 600 (overrun-55 vs overrun-fixed)
+Finished game 8 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 4 - 2 - 0  [0.667] 6
+Started game 10 of 600 (overrun-fixed vs overrun-55)
+Finished game 7 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 4 - 2 - 1  [0.643] 7
+Started game 11 of 600 (overrun-55 vs overrun-fixed)
+Finished game 9 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 4 - 2 - 2  [0.625] 8
+Started game 12 of 600 (overrun-fixed vs overrun-55)
+Finished game 5 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by fifty moves rule}
+Score of overrun-55 vs overrun-fixed: 4 - 2 - 3  [0.611] 9
+Started game 13 of 600 (overrun-55 vs overrun-fixed)
+Finished game 10 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 5 - 2 - 3  [0.650] 10
+...      overrun-55 playing White: 1 - 1 - 3  [0.500] 5
+...      overrun-55 playing Black: 4 - 1 - 0  [0.800] 5
+...      White vs Black: 2 - 5 - 3  [0.350] 10
+Elo difference: 107.5 +/- 215.3, LOS: 87.2 %, DrawRatio: 30.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 14 of 600 (overrun-fixed vs overrun-55)
+Finished game 11 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 5 - 3 - 3  [0.591] 11
+Started game 15 of 600 (overrun-55 vs overrun-fixed)
+Finished game 12 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 5 - 4 - 3  [0.542] 12
+Started game 16 of 600 (overrun-fixed vs overrun-55)
+Finished game 13 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 6 - 4 - 3  [0.577] 13
+Started game 17 of 600 (overrun-55 vs overrun-fixed)
+Finished game 14 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 7 - 4 - 3  [0.607] 14
+Started game 18 of 600 (overrun-fixed vs overrun-55)
+Finished game 15 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 7 - 4 - 4  [0.600] 15
+Started game 19 of 600 (overrun-55 vs overrun-fixed)
+Finished game 18 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 7 - 4 - 5  [0.594] 16
+Started game 20 of 600 (overrun-fixed vs overrun-55)
+Finished game 16 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 7 - 5 - 5  [0.559] 17
+Started game 21 of 600 (overrun-55 vs overrun-fixed)
+Finished game 17 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 8 - 5 - 5  [0.583] 18
+Started game 22 of 600 (overrun-fixed vs overrun-55)
+Finished game 19 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 9 - 5 - 5  [0.605] 19
+Started game 23 of 600 (overrun-55 vs overrun-fixed)
+Finished game 20 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 9 - 6 - 5  [0.575] 20
+...      overrun-55 playing White: 4 - 2 - 4  [0.600] 10
+...      overrun-55 playing Black: 5 - 4 - 1  [0.550] 10
+...      White vs Black: 8 - 7 - 5  [0.525] 20
+Elo difference: 52.5 +/- 140.4, LOS: 78.1 %, DrawRatio: 25.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 24 of 600 (overrun-fixed vs overrun-55)
+Finished game 22 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 10 - 6 - 5  [0.595] 21
+Started game 25 of 600 (overrun-55 vs overrun-fixed)
+Finished game 21 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 10 - 7 - 5  [0.568] 22
+Started game 26 of 600 (overrun-fixed vs overrun-55)
+Finished game 24 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 10 - 8 - 5  [0.543] 23
+Started game 27 of 600 (overrun-55 vs overrun-fixed)
+Finished game 23 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 10 - 8 - 6  [0.542] 24
+Started game 28 of 600 (overrun-fixed vs overrun-55)
+Finished game 25 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 10 - 8 - 7  [0.540] 25
+Started game 29 of 600 (overrun-55 vs overrun-fixed)
+Finished game 26 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 10 - 9 - 7  [0.519] 26
+Started game 30 of 600 (overrun-fixed vs overrun-55)
+Finished game 27 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 11 - 9 - 7  [0.537] 27
+Started game 31 of 600 (overrun-55 vs overrun-fixed)
+Finished game 28 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 11 - 10 - 7  [0.518] 28
+Started game 32 of 600 (overrun-fixed vs overrun-55)
+Finished game 29 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 11 - 10 - 8  [0.517] 29
+Started game 33 of 600 (overrun-55 vs overrun-fixed)
+Finished game 30 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 12 - 10 - 8  [0.533] 30
+...      overrun-55 playing White: 5 - 3 - 7  [0.567] 15
+...      overrun-55 playing Black: 7 - 7 - 1  [0.500] 15
+...      White vs Black: 12 - 10 - 8  [0.533] 30
+Elo difference: 23.2 +/- 110.1, LOS: 66.5 %, DrawRatio: 26.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 34 of 600 (overrun-fixed vs overrun-55)
+Finished game 31 (overrun-55 vs overrun-fixed): 1-0 {White mates}
+Score of overrun-55 vs overrun-fixed: 13 - 10 - 8  [0.548] 31
+Started game 35 of 600 (overrun-55 vs overrun-fixed)
+Finished game 33 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 14 - 10 - 8  [0.563] 32
+Started game 36 of 600 (overrun-fixed vs overrun-55)
+Finished game 32 (overrun-fixed vs overrun-55): 1-0 {White mates}
+Score of overrun-55 vs overrun-fixed: 14 - 11 - 8  [0.545] 33
+Started game 37 of 600 (overrun-55 vs overrun-fixed)
+Finished game 34 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 14 - 12 - 8  [0.529] 34
+Started game 38 of 600 (overrun-fixed vs overrun-55)
+Finished game 35 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 15 - 12 - 8  [0.543] 35
+Started game 39 of 600 (overrun-55 vs overrun-fixed)
+Finished game 36 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 16 - 12 - 8  [0.556] 36
+Started game 40 of 600 (overrun-fixed vs overrun-55)
+Finished game 37 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 16 - 12 - 9  [0.554] 37
+Started game 41 of 600 (overrun-55 vs overrun-fixed)
+Finished game 38 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 17 - 12 - 9  [0.566] 38
+Started game 42 of 600 (overrun-fixed vs overrun-55)
+Finished game 39 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 18 - 12 - 9  [0.577] 39
+Started game 43 of 600 (overrun-55 vs overrun-fixed)
+Finished game 41 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 18 - 13 - 9  [0.563] 40
+...      overrun-55 playing White: 9 - 4 - 8  [0.619] 21
+...      overrun-55 playing Black: 9 - 9 - 1  [0.500] 19
+...      White vs Black: 18 - 13 - 9  [0.563] 40
+Elo difference: 43.7 +/- 97.8, LOS: 81.5 %, DrawRatio: 22.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 44 of 600 (overrun-fixed vs overrun-55)
+Finished game 44 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 18 - 13 - 10  [0.561] 41
+Started game 45 of 600 (overrun-55 vs overrun-fixed)
+Finished game 40 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 19 - 13 - 10  [0.571] 42
+Started game 46 of 600 (overrun-fixed vs overrun-55)
+Finished game 42 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 19 - 14 - 10  [0.558] 43
+Started game 47 of 600 (overrun-55 vs overrun-fixed)
+Finished game 45 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 20 - 14 - 10  [0.568] 44
+Started game 48 of 600 (overrun-fixed vs overrun-55)
+Finished game 43 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 20 - 15 - 10  [0.556] 45
+Started game 49 of 600 (overrun-55 vs overrun-fixed)
+Finished game 46 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 21 - 15 - 10  [0.565] 46
+Started game 50 of 600 (overrun-fixed vs overrun-55)
+Finished game 47 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 21 - 16 - 10  [0.553] 47
+Started game 51 of 600 (overrun-55 vs overrun-fixed)
+Finished game 50 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 22 - 16 - 10  [0.563] 48
+Started game 52 of 600 (overrun-fixed vs overrun-55)
+Finished game 48 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 22 - 17 - 10  [0.551] 49
+Started game 53 of 600 (overrun-55 vs overrun-fixed)
+Finished game 49 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 22 - 18 - 10  [0.540] 50
+...      overrun-55 playing White: 10 - 7 - 8  [0.560] 25
+...      overrun-55 playing Black: 12 - 11 - 2  [0.520] 25
+...      White vs Black: 21 - 19 - 10  [0.520] 50
+Elo difference: 27.9 +/- 88.1, LOS: 73.6 %, DrawRatio: 20.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 54 of 600 (overrun-fixed vs overrun-55)
+Finished game 51 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 22 - 19 - 10  [0.529] 51
+Started game 55 of 600 (overrun-55 vs overrun-fixed)
+Finished game 52 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 22 - 19 - 11  [0.529] 52
+Started game 56 of 600 (overrun-fixed vs overrun-55)
+Finished game 53 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 22 - 20 - 11  [0.519] 53
+Started game 57 of 600 (overrun-55 vs overrun-fixed)
+Finished game 54 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 23 - 20 - 11  [0.528] 54
+Started game 58 of 600 (overrun-fixed vs overrun-55)
+Finished game 55 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 24 - 20 - 11  [0.536] 55
+Started game 59 of 600 (overrun-55 vs overrun-fixed)
+Finished game 56 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 25 - 20 - 11  [0.545] 56
+Started game 60 of 600 (overrun-fixed vs overrun-55)
+Finished game 57 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 25 - 21 - 11  [0.535] 57
+Started game 61 of 600 (overrun-55 vs overrun-fixed)
+Finished game 59 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 25 - 21 - 12  [0.534] 58
+Started game 62 of 600 (overrun-fixed vs overrun-55)
+Finished game 60 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 26 - 21 - 12  [0.542] 59
+Started game 63 of 600 (overrun-55 vs overrun-fixed)
+Finished game 58 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 26 - 22 - 12  [0.533] 60
+...      overrun-55 playing White: 11 - 10 - 9  [0.517] 30
+...      overrun-55 playing Black: 15 - 12 - 3  [0.550] 30
+...      White vs Black: 23 - 25 - 12  [0.483] 60
+Elo difference: 23.2 +/- 80.1, LOS: 71.8 %, DrawRatio: 20.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 64 of 600 (overrun-fixed vs overrun-55)
+Finished game 62 (overrun-fixed vs overrun-55): 1-0 {White mates}
+Score of overrun-55 vs overrun-fixed: 26 - 23 - 12  [0.525] 61
+Started game 65 of 600 (overrun-55 vs overrun-fixed)
+Finished game 61 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 27 - 23 - 12  [0.532] 62
+Started game 66 of 600 (overrun-fixed vs overrun-55)
+Finished game 63 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 28 - 23 - 12  [0.540] 63
+Started game 67 of 600 (overrun-55 vs overrun-fixed)
+Finished game 64 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 28 - 24 - 12  [0.531] 64
+Started game 68 of 600 (overrun-fixed vs overrun-55)
+Finished game 65 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 28 - 25 - 12  [0.523] 65
+Started game 69 of 600 (overrun-55 vs overrun-fixed)
+Finished game 67 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 28 - 25 - 13  [0.523] 66
+Started game 70 of 600 (overrun-fixed vs overrun-55)
+Finished game 66 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 29 - 25 - 13  [0.530] 67
+Started game 71 of 600 (overrun-55 vs overrun-fixed)
+Finished game 68 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 29 - 25 - 14  [0.529] 68
+Started game 72 of 600 (overrun-fixed vs overrun-55)
+Finished game 69 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 29 - 26 - 14  [0.522] 69
+Started game 73 of 600 (overrun-55 vs overrun-fixed)
+Finished game 70 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 30 - 26 - 14  [0.529] 70
+...      overrun-55 playing White: 13 - 12 - 10  [0.514] 35
+...      overrun-55 playing Black: 17 - 14 - 4  [0.543] 35
+...      White vs Black: 27 - 29 - 14  [0.486] 70
+Elo difference: 19.9 +/- 73.9, LOS: 70.4 %, DrawRatio: 20.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 74 of 600 (overrun-fixed vs overrun-55)
+Finished game 73 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 30 - 27 - 14  [0.521] 71
+Started game 75 of 600 (overrun-55 vs overrun-fixed)
+Finished game 74 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 31 - 27 - 14  [0.528] 72
+Started game 76 of 600 (overrun-fixed vs overrun-55)
+Finished game 71 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 31 - 27 - 15  [0.527] 73
+Started game 77 of 600 (overrun-55 vs overrun-fixed)
+Finished game 76 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 32 - 27 - 15  [0.534] 74
+Started game 78 of 600 (overrun-fixed vs overrun-55)
+Finished game 72 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 32 - 28 - 15  [0.527] 75
+Started game 79 of 600 (overrun-55 vs overrun-fixed)
+Finished game 75 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 33 - 28 - 15  [0.533] 76
+Started game 80 of 600 (overrun-fixed vs overrun-55)
+Finished game 77 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 34 - 28 - 15  [0.539] 77
+Started game 81 of 600 (overrun-55 vs overrun-fixed)
+Finished game 78 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 34 - 29 - 15  [0.532] 78
+Started game 82 of 600 (overrun-fixed vs overrun-55)
+Finished game 79 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 34 - 30 - 15  [0.525] 79
+Started game 83 of 600 (overrun-55 vs overrun-fixed)
+Finished game 81 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 34 - 31 - 15  [0.519] 80
+...      overrun-55 playing White: 15 - 15 - 11  [0.500] 41
+...      overrun-55 playing Black: 19 - 16 - 4  [0.538] 39
+...      White vs Black: 31 - 34 - 15  [0.481] 80
+Elo difference: 13.0 +/- 69.5, LOS: 64.5 %, DrawRatio: 18.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 84 of 600 (overrun-fixed vs overrun-55)
+Finished game 80 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 34 - 32 - 15  [0.512] 81
+Started game 85 of 600 (overrun-55 vs overrun-fixed)
+Finished game 82 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 35 - 32 - 15  [0.518] 82
+Started game 86 of 600 (overrun-fixed vs overrun-55)
+Finished game 85 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 36 - 32 - 15  [0.524] 83
+Started game 87 of 600 (overrun-55 vs overrun-fixed)
+Finished game 84 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 37 - 32 - 15  [0.530] 84
+Started game 88 of 600 (overrun-fixed vs overrun-55)
+Finished game 86 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 37 - 33 - 15  [0.524] 85
+Started game 89 of 600 (overrun-55 vs overrun-fixed)
+Finished game 83 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 37 - 33 - 16  [0.523] 86
+Started game 90 of 600 (overrun-fixed vs overrun-55)
+Finished game 87 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 37 - 33 - 17  [0.523] 87
+Started game 91 of 600 (overrun-55 vs overrun-fixed)
+Finished game 88 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 38 - 33 - 17  [0.528] 88
+Started game 92 of 600 (overrun-fixed vs overrun-55)
+Finished game 89 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 38 - 33 - 18  [0.528] 89
+Started game 93 of 600 (overrun-55 vs overrun-fixed)
+Finished game 90 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 38 - 34 - 18  [0.522] 90
+...      overrun-55 playing White: 16 - 15 - 14  [0.511] 45
+...      overrun-55 playing Black: 22 - 19 - 4  [0.533] 45
+...      White vs Black: 35 - 37 - 18  [0.489] 90
+Elo difference: 15.5 +/- 64.9, LOS: 68.1 %, DrawRatio: 20.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 94 of 600 (overrun-fixed vs overrun-55)
+Finished game 91 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 38 - 34 - 19  [0.522] 91
+Started game 95 of 600 (overrun-55 vs overrun-fixed)
+Finished game 93 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 38 - 35 - 19  [0.516] 92
+Started game 96 of 600 (overrun-fixed vs overrun-55)
+Finished game 92 (overrun-fixed vs overrun-55): 1-0 {White mates}
+Score of overrun-55 vs overrun-fixed: 38 - 36 - 19  [0.511] 93
+Started game 97 of 600 (overrun-55 vs overrun-fixed)
+Finished game 94 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 39 - 36 - 19  [0.516] 94
+Started game 98 of 600 (overrun-fixed vs overrun-55)
+Finished game 95 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 40 - 36 - 19  [0.521] 95
+Started game 99 of 600 (overrun-55 vs overrun-fixed)
+Finished game 96 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 40 - 37 - 19  [0.516] 96
+Started game 100 of 600 (overrun-fixed vs overrun-55)
+Finished game 97 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 40 - 38 - 19  [0.510] 97
+Started game 101 of 600 (overrun-55 vs overrun-fixed)
+Finished game 98 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 41 - 38 - 19  [0.515] 98
+Started game 102 of 600 (overrun-fixed vs overrun-55)
+Finished game 99 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 41 - 38 - 20  [0.515] 99
+Started game 103 of 600 (overrun-55 vs overrun-fixed)
+Finished game 101 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 41 - 39 - 20  [0.510] 100
+...      overrun-55 playing White: 17 - 18 - 16  [0.490] 51
+...      overrun-55 playing Black: 24 - 21 - 4  [0.531] 49
+...      White vs Black: 38 - 42 - 20  [0.480] 100
+Elo difference: 6.9 +/- 61.5, LOS: 58.8 %, DrawRatio: 20.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 104 of 600 (overrun-fixed vs overrun-55)
+Finished game 102 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 42 - 39 - 20  [0.515] 101
+Started game 105 of 600 (overrun-55 vs overrun-fixed)
+Finished game 100 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 43 - 39 - 20  [0.520] 102
+Started game 106 of 600 (overrun-fixed vs overrun-55)
+Finished game 103 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 43 - 39 - 21  [0.519] 103
+Started game 107 of 600 (overrun-55 vs overrun-fixed)
+Finished game 106 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 43 - 40 - 21  [0.514] 104
+Started game 108 of 600 (overrun-fixed vs overrun-55)
+Finished game 104 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 43 - 40 - 22  [0.514] 105
+Started game 109 of 600 (overrun-55 vs overrun-fixed)
+Finished game 105 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 44 - 40 - 22  [0.519] 106
+Started game 110 of 600 (overrun-fixed vs overrun-55)
+Finished game 109 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 45 - 40 - 22  [0.523] 107
+Started game 111 of 600 (overrun-55 vs overrun-fixed)
+Finished game 107 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 45 - 40 - 23  [0.523] 108
+Started game 112 of 600 (overrun-fixed vs overrun-55)
+Finished game 110 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 45 - 41 - 23  [0.518] 109
+Started game 113 of 600 (overrun-55 vs overrun-fixed)
+Finished game 108 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 45 - 41 - 24  [0.518] 110
+...      overrun-55 playing White: 19 - 18 - 18  [0.509] 55
+...      overrun-55 playing Black: 26 - 23 - 6  [0.527] 55
+...      White vs Black: 42 - 44 - 24  [0.491] 110
+Elo difference: 12.6 +/- 57.9, LOS: 66.7 %, DrawRatio: 21.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 114 of 600 (overrun-fixed vs overrun-55)
+Finished game 111 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 45 - 41 - 25  [0.518] 111
+Started game 115 of 600 (overrun-55 vs overrun-fixed)
+Finished game 112 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 45 - 41 - 26  [0.518] 112
+Started game 116 of 600 (overrun-fixed vs overrun-55)
+Finished game 113 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 45 - 41 - 27  [0.518] 113
+Started game 117 of 600 (overrun-55 vs overrun-fixed)
+Finished game 114 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 46 - 41 - 27  [0.522] 114
+Started game 118 of 600 (overrun-fixed vs overrun-55)
+Finished game 115 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 47 - 41 - 27  [0.526] 115
+Started game 119 of 600 (overrun-55 vs overrun-fixed)
+Finished game 118 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 47 - 42 - 27  [0.522] 116
+Started game 120 of 600 (overrun-fixed vs overrun-55)
+Finished game 117 (overrun-55 vs overrun-fixed): 1-0 {White mates}
+Score of overrun-55 vs overrun-fixed: 48 - 42 - 27  [0.526] 117
+Started game 121 of 600 (overrun-55 vs overrun-fixed)
+Finished game 116 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 48 - 42 - 28  [0.525] 118
+Started game 122 of 600 (overrun-fixed vs overrun-55)
+Finished game 119 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 48 - 43 - 28  [0.521] 119
+Started game 123 of 600 (overrun-55 vs overrun-fixed)
+Finished game 120 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 49 - 43 - 28  [0.525] 120
+...      overrun-55 playing White: 21 - 19 - 20  [0.517] 60
+...      overrun-55 playing Black: 28 - 24 - 8  [0.533] 60
+...      White vs Black: 45 - 47 - 28  [0.492] 120
+Elo difference: 17.4 +/- 54.9, LOS: 73.4 %, DrawRatio: 23.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 124 of 600 (overrun-fixed vs overrun-55)
+Finished game 121 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 49 - 44 - 28  [0.521] 121
+Started game 125 of 600 (overrun-55 vs overrun-fixed)
+Finished game 122 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 50 - 44 - 28  [0.525] 122
+Started game 126 of 600 (overrun-fixed vs overrun-55)
+Finished game 123 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 50 - 45 - 28  [0.520] 123
+Started game 127 of 600 (overrun-55 vs overrun-fixed)
+Finished game 124 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 50 - 46 - 28  [0.516] 124
+Started game 128 of 600 (overrun-fixed vs overrun-55)
+Finished game 125 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 50 - 47 - 28  [0.512] 125
+Started game 129 of 600 (overrun-55 vs overrun-fixed)
+Finished game 126 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 51 - 47 - 28  [0.516] 126
+Started game 130 of 600 (overrun-fixed vs overrun-55)
+Finished game 128 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 52 - 47 - 28  [0.520] 127
+Started game 131 of 600 (overrun-55 vs overrun-fixed)
+Finished game 127 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 53 - 47 - 28  [0.523] 128
+Started game 132 of 600 (overrun-fixed vs overrun-55)
+Finished game 130 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 54 - 47 - 28  [0.527] 129
+Started game 133 of 600 (overrun-55 vs overrun-fixed)
+Finished game 133 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 54 - 47 - 29  [0.527] 130
+...      overrun-55 playing White: 22 - 22 - 21  [0.500] 65
+...      overrun-55 playing Black: 32 - 25 - 8  [0.554] 65
+...      White vs Black: 47 - 54 - 29  [0.473] 130
+Elo difference: 18.7 +/- 53.0, LOS: 75.7 %, DrawRatio: 22.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 134 of 600 (overrun-fixed vs overrun-55)
+Finished game 132 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 54 - 47 - 30  [0.527] 131
+Started game 135 of 600 (overrun-55 vs overrun-fixed)
+Finished game 129 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 54 - 47 - 31  [0.527] 132
+Started game 136 of 600 (overrun-fixed vs overrun-55)
+Finished game 131 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 54 - 47 - 32  [0.526] 133
+Started game 137 of 600 (overrun-55 vs overrun-fixed)
+Finished game 134 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 55 - 47 - 32  [0.530] 134
+Started game 138 of 600 (overrun-fixed vs overrun-55)
+Finished game 135 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 55 - 47 - 33  [0.530] 135
+Started game 139 of 600 (overrun-55 vs overrun-fixed)
+Finished game 136 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 55 - 47 - 34  [0.529] 136
+Started game 140 of 600 (overrun-fixed vs overrun-55)
+Finished game 137 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 55 - 47 - 35  [0.529] 137
+Started game 141 of 600 (overrun-55 vs overrun-fixed)
+Finished game 138 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 55 - 48 - 35  [0.525] 138
+Started game 142 of 600 (overrun-fixed vs overrun-55)
+Finished game 139 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 56 - 48 - 35  [0.529] 139
+Started game 143 of 600 (overrun-55 vs overrun-fixed)
+Finished game 140 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 56 - 49 - 35  [0.525] 140
+...      overrun-55 playing White: 23 - 22 - 25  [0.507] 70
+...      overrun-55 playing Black: 33 - 27 - 10  [0.543] 70
+...      White vs Black: 50 - 55 - 35  [0.482] 140
+Elo difference: 17.4 +/- 50.2, LOS: 75.3 %, DrawRatio: 25.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 144 of 600 (overrun-fixed vs overrun-55)
+Finished game 141 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 57 - 49 - 35  [0.528] 141
+Started game 145 of 600 (overrun-55 vs overrun-fixed)
+Finished game 142 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 57 - 49 - 36  [0.528] 142
+Started game 146 of 600 (overrun-fixed vs overrun-55)
+Finished game 143 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 57 - 49 - 37  [0.528] 143
+Started game 147 of 600 (overrun-55 vs overrun-fixed)
+Finished game 146 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 57 - 50 - 37  [0.524] 144
+Started game 148 of 600 (overrun-fixed vs overrun-55)
+Finished game 145 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 58 - 50 - 37  [0.528] 145
+Started game 149 of 600 (overrun-55 vs overrun-fixed)
+Finished game 144 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by stalemate}
+Score of overrun-55 vs overrun-fixed: 58 - 50 - 38  [0.527] 146
+Started game 150 of 600 (overrun-fixed vs overrun-55)
+Finished game 148 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 59 - 50 - 38  [0.531] 147
+Started game 151 of 600 (overrun-55 vs overrun-fixed)
+Finished game 147 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 59 - 51 - 38  [0.527] 148
+Started game 152 of 600 (overrun-fixed vs overrun-55)
+Finished game 149 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 60 - 51 - 38  [0.530] 149
+Started game 153 of 600 (overrun-55 vs overrun-fixed)
+Finished game 151 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 60 - 51 - 39  [0.530] 150
+...      overrun-55 playing White: 26 - 23 - 27  [0.520] 76
+...      overrun-55 playing Black: 34 - 28 - 12  [0.541] 74
+...      White vs Black: 54 - 57 - 39  [0.490] 150
+Elo difference: 20.9 +/- 48.1, LOS: 80.4 %, DrawRatio: 26.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 154 of 600 (overrun-fixed vs overrun-55)
+Finished game 152 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 60 - 51 - 40  [0.530] 151
+Started game 155 of 600 (overrun-55 vs overrun-fixed)
+Finished game 150 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 60 - 52 - 40  [0.526] 152
+Started game 156 of 600 (overrun-fixed vs overrun-55)
+Finished game 155 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 60 - 53 - 40  [0.523] 153
+Started game 157 of 600 (overrun-55 vs overrun-fixed)
+Finished game 153 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 61 - 53 - 40  [0.526] 154
+Started game 158 of 600 (overrun-fixed vs overrun-55)
+Finished game 154 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 61 - 54 - 40  [0.523] 155
+Started game 159 of 600 (overrun-55 vs overrun-fixed)
+Finished game 156 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 62 - 54 - 40  [0.526] 156
+Started game 160 of 600 (overrun-fixed vs overrun-55)
+Finished game 160 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 63 - 54 - 40  [0.529] 157
+Started game 161 of 600 (overrun-55 vs overrun-fixed)
+Finished game 158 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 64 - 54 - 40  [0.532] 158
+Started game 162 of 600 (overrun-fixed vs overrun-55)
+Finished game 159 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 64 - 54 - 41  [0.531] 159
+Started game 163 of 600 (overrun-55 vs overrun-fixed)
+Finished game 157 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 64 - 54 - 42  [0.531] 160
+...      overrun-55 playing White: 27 - 24 - 29  [0.519] 80
+...      overrun-55 playing Black: 37 - 30 - 13  [0.544] 80
+...      White vs Black: 57 - 61 - 42  [0.487] 160
+Elo difference: 21.7 +/- 46.5, LOS: 82.1 %, DrawRatio: 26.3 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 164 of 600 (overrun-fixed vs overrun-55)
+Finished game 161 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 64 - 55 - 42  [0.528] 161
+Started game 165 of 600 (overrun-55 vs overrun-fixed)
+Finished game 162 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 65 - 55 - 42  [0.531] 162
+Started game 166 of 600 (overrun-fixed vs overrun-55)
+Finished game 165 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 66 - 55 - 42  [0.534] 163
+Started game 167 of 600 (overrun-55 vs overrun-fixed)
+Finished game 163 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 67 - 55 - 42  [0.537] 164
+Started game 168 of 600 (overrun-fixed vs overrun-55)
+Finished game 164 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 67 - 56 - 42  [0.533] 165
+Started game 169 of 600 (overrun-55 vs overrun-fixed)
+Finished game 166 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 67 - 57 - 42  [0.530] 166
+Started game 170 of 600 (overrun-fixed vs overrun-55)
+Finished game 167 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 68 - 57 - 42  [0.533] 167
+Started game 171 of 600 (overrun-55 vs overrun-fixed)
+Finished game 169 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 68 - 58 - 42  [0.530] 168
+Started game 172 of 600 (overrun-fixed vs overrun-55)
+Finished game 168 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 68 - 58 - 43  [0.530] 169
+Started game 173 of 600 (overrun-55 vs overrun-fixed)
+Finished game 170 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 68 - 58 - 44  [0.529] 170
+...      overrun-55 playing White: 30 - 26 - 29  [0.524] 85
+...      overrun-55 playing Black: 38 - 32 - 15  [0.535] 85
+...      White vs Black: 62 - 64 - 44  [0.494] 170
+Elo difference: 20.5 +/- 45.2, LOS: 81.4 %, DrawRatio: 25.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 174 of 600 (overrun-fixed vs overrun-55)
+Finished game 171 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 69 - 58 - 44  [0.532] 171
+Started game 175 of 600 (overrun-55 vs overrun-fixed)
+Finished game 172 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 69 - 59 - 44  [0.529] 172
+Started game 176 of 600 (overrun-fixed vs overrun-55)
+Finished game 173 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 70 - 59 - 44  [0.532] 173
+Started game 177 of 600 (overrun-55 vs overrun-fixed)
+Finished game 175 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 70 - 60 - 44  [0.529] 174
+Started game 178 of 600 (overrun-fixed vs overrun-55)
+Finished game 174 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 70 - 61 - 44  [0.526] 175
+Started game 179 of 600 (overrun-55 vs overrun-fixed)
+Finished game 177 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 70 - 62 - 44  [0.523] 176
+Started game 180 of 600 (overrun-fixed vs overrun-55)
+Finished game 176 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 71 - 62 - 44  [0.525] 177
+Started game 181 of 600 (overrun-55 vs overrun-fixed)
+Finished game 178 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 71 - 62 - 45  [0.525] 178
+Started game 182 of 600 (overrun-fixed vs overrun-55)
+Finished game 179 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 72 - 62 - 45  [0.528] 179
+Started game 183 of 600 (overrun-55 vs overrun-fixed)
+Finished game 180 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 72 - 62 - 46  [0.528] 180
+...      overrun-55 playing White: 33 - 28 - 29  [0.528] 90
+...      overrun-55 playing Black: 39 - 34 - 17  [0.528] 90
+...      White vs Black: 67 - 67 - 46  [0.500] 180
+Elo difference: 19.3 +/- 44.0, LOS: 80.6 %, DrawRatio: 25.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 184 of 600 (overrun-fixed vs overrun-55)
+Finished game 183 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 72 - 62 - 47  [0.528] 181
+Started game 185 of 600 (overrun-55 vs overrun-fixed)
+Finished game 182 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 72 - 62 - 48  [0.527] 182
+Started game 186 of 600 (overrun-fixed vs overrun-55)
+Finished game 181 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 73 - 62 - 48  [0.530] 183
+Started game 187 of 600 (overrun-55 vs overrun-fixed)
+Finished game 184 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 74 - 62 - 48  [0.533] 184
+Started game 188 of 600 (overrun-fixed vs overrun-55)
+Finished game 185 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 75 - 62 - 48  [0.535] 185
+Started game 189 of 600 (overrun-55 vs overrun-fixed)
+Finished game 186 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 75 - 63 - 48  [0.532] 186
+Started game 190 of 600 (overrun-fixed vs overrun-55)
+Finished game 187 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 76 - 63 - 48  [0.535] 187
+Started game 191 of 600 (overrun-55 vs overrun-fixed)
+Finished game 188 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 76 - 63 - 49  [0.535] 188
+Started game 192 of 600 (overrun-fixed vs overrun-55)
+Finished game 189 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 77 - 63 - 49  [0.537] 189
+Started game 193 of 600 (overrun-55 vs overrun-fixed)
+Finished game 190 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 77 - 64 - 49  [0.534] 190
+...      overrun-55 playing White: 37 - 28 - 30  [0.547] 95
+...      overrun-55 playing Black: 40 - 36 - 19  [0.521] 95
+...      White vs Black: 73 - 68 - 49  [0.513] 190
+Elo difference: 23.8 +/- 42.8, LOS: 86.3 %, DrawRatio: 25.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 194 of 600 (overrun-fixed vs overrun-55)
+Finished game 191 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 77 - 64 - 50  [0.534] 191
+Started game 195 of 600 (overrun-55 vs overrun-fixed)
+Finished game 192 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 78 - 64 - 50  [0.536] 192
+Started game 196 of 600 (overrun-fixed vs overrun-55)
+Finished game 194 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 78 - 65 - 50  [0.534] 193
+Started game 197 of 600 (overrun-55 vs overrun-fixed)
+Finished game 193 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 78 - 65 - 51  [0.534] 194
+Started game 198 of 600 (overrun-fixed vs overrun-55)
+Finished game 198 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 78 - 66 - 51  [0.531] 195
+Started game 199 of 600 (overrun-55 vs overrun-fixed)
+Finished game 196 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 78 - 67 - 51  [0.528] 196
+Started game 200 of 600 (overrun-fixed vs overrun-55)
+Finished game 195 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 78 - 67 - 52  [0.528] 197
+Started game 201 of 600 (overrun-55 vs overrun-fixed)
+Finished game 197 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 79 - 67 - 52  [0.530] 198
+Started game 202 of 600 (overrun-fixed vs overrun-55)
+Finished game 200 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 79 - 68 - 52  [0.528] 199
+Started game 203 of 600 (overrun-55 vs overrun-fixed)
+Finished game 199 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 80 - 68 - 52  [0.530] 200
+...      overrun-55 playing White: 39 - 28 - 33  [0.555] 100
+...      overrun-55 playing Black: 41 - 40 - 19  [0.505] 100
+...      White vs Black: 79 - 69 - 52  [0.525] 200
+Elo difference: 20.9 +/- 41.6, LOS: 83.8 %, DrawRatio: 26.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 204 of 600 (overrun-fixed vs overrun-55)
+Finished game 201 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 80 - 69 - 52  [0.527] 201
+Started game 205 of 600 (overrun-55 vs overrun-fixed)
+Finished game 203 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 81 - 69 - 52  [0.530] 202
+Started game 206 of 600 (overrun-fixed vs overrun-55)
+Finished game 204 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 81 - 69 - 53  [0.530] 203
+Started game 207 of 600 (overrun-55 vs overrun-fixed)
+Finished game 202 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 81 - 69 - 54  [0.529] 204
+Started game 208 of 600 (overrun-fixed vs overrun-55)
+Finished game 208 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 81 - 69 - 55  [0.529] 205
+Started game 209 of 600 (overrun-55 vs overrun-fixed)
+Finished game 205 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 81 - 69 - 56  [0.529] 206
+Started game 210 of 600 (overrun-fixed vs overrun-55)
+Finished game 206 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 82 - 69 - 56  [0.531] 207
+Started game 211 of 600 (overrun-55 vs overrun-fixed)
+Finished game 207 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 82 - 69 - 57  [0.531] 208
+Started game 212 of 600 (overrun-fixed vs overrun-55)
+Finished game 209 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 83 - 69 - 57  [0.533] 209
+Started game 213 of 600 (overrun-55 vs overrun-fixed)
+Finished game 211 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 83 - 69 - 58  [0.533] 210
+...      overrun-55 playing White: 41 - 29 - 36  [0.557] 106
+...      overrun-55 playing Black: 42 - 40 - 22  [0.510] 104
+...      White vs Black: 81 - 71 - 58  [0.524] 210
+Elo difference: 23.2 +/- 40.2, LOS: 87.2 %, DrawRatio: 27.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 214 of 600 (overrun-fixed vs overrun-55)
+Finished game 210 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 83 - 69 - 59  [0.533] 211
+Started game 215 of 600 (overrun-55 vs overrun-fixed)
+Finished game 212 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 84 - 69 - 59  [0.535] 212
+Started game 216 of 600 (overrun-fixed vs overrun-55)
+Finished game 215 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 84 - 70 - 59  [0.533] 213
+Started game 217 of 600 (overrun-55 vs overrun-fixed)
+Finished game 213 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 85 - 70 - 59  [0.535] 214
+Started game 218 of 600 (overrun-fixed vs overrun-55)
+Finished game 216 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 85 - 70 - 60  [0.535] 215
+Started game 219 of 600 (overrun-55 vs overrun-fixed)
+Finished game 214 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 86 - 70 - 60  [0.537] 216
+Started game 220 of 600 (overrun-fixed vs overrun-55)
+Finished game 217 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 87 - 70 - 60  [0.539] 217
+Started game 221 of 600 (overrun-55 vs overrun-fixed)
+Finished game 220 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 87 - 71 - 60  [0.537] 218
+Started game 222 of 600 (overrun-fixed vs overrun-55)
+Finished game 219 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 87 - 71 - 61  [0.537] 219
+Started game 223 of 600 (overrun-55 vs overrun-fixed)
+Finished game 221 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 88 - 71 - 61  [0.539] 220
+...      overrun-55 playing White: 44 - 30 - 37  [0.563] 111
+...      overrun-55 playing Black: 44 - 41 - 24  [0.514] 109
+...      White vs Black: 85 - 74 - 61  [0.525] 220
+Elo difference: 26.9 +/- 39.2, LOS: 91.1 %, DrawRatio: 27.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 224 of 600 (overrun-fixed vs overrun-55)
+Finished game 222 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 89 - 71 - 61  [0.541] 221
+Started game 225 of 600 (overrun-55 vs overrun-fixed)
+Finished game 218 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 89 - 71 - 62  [0.541] 222
+Started game 226 of 600 (overrun-fixed vs overrun-55)
+Finished game 223 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 89 - 71 - 63  [0.540] 223
+Started game 227 of 600 (overrun-55 vs overrun-fixed)
+Finished game 224 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 89 - 72 - 63  [0.538] 224
+Started game 228 of 600 (overrun-fixed vs overrun-55)
+Finished game 226 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 89 - 72 - 64  [0.538] 225
+Started game 229 of 600 (overrun-55 vs overrun-fixed)
+Finished game 225 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 89 - 72 - 65  [0.538] 226
+Started game 230 of 600 (overrun-fixed vs overrun-55)
+Finished game 227 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 89 - 73 - 65  [0.535] 227
+Started game 231 of 600 (overrun-55 vs overrun-fixed)
+Finished game 229 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 89 - 73 - 66  [0.535] 228
+Started game 232 of 600 (overrun-fixed vs overrun-55)
+Finished game 230 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 89 - 73 - 67  [0.535] 229
+Started game 233 of 600 (overrun-55 vs overrun-fixed)
+Finished game 228 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 90 - 73 - 67  [0.537] 230
+...      overrun-55 playing White: 44 - 31 - 40  [0.557] 115
+...      overrun-55 playing Black: 46 - 42 - 27  [0.517] 115
+...      White vs Black: 86 - 77 - 67  [0.520] 230
+Elo difference: 25.7 +/- 38.0, LOS: 90.8 %, DrawRatio: 29.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 234 of 600 (overrun-fixed vs overrun-55)
+Finished game 231 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 90 - 74 - 67  [0.535] 231
+Started game 235 of 600 (overrun-55 vs overrun-fixed)
+Finished game 232 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 91 - 74 - 67  [0.537] 232
+Started game 236 of 600 (overrun-fixed vs overrun-55)
+Finished game 233 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by fifty moves rule}
+Score of overrun-55 vs overrun-fixed: 91 - 74 - 68  [0.536] 233
+Started game 237 of 600 (overrun-55 vs overrun-fixed)
+Finished game 236 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 91 - 74 - 69  [0.536] 234
+Started game 238 of 600 (overrun-fixed vs overrun-55)
+Finished game 234 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by fifty moves rule}
+Score of overrun-55 vs overrun-fixed: 91 - 74 - 70  [0.536] 235
+Started game 239 of 600 (overrun-55 vs overrun-fixed)
+Finished game 238 (overrun-fixed vs overrun-55): 1-0 {White mates}
+Score of overrun-55 vs overrun-fixed: 91 - 75 - 70  [0.534] 236
+Started game 240 of 600 (overrun-fixed vs overrun-55)
+Finished game 237 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 92 - 75 - 70  [0.536] 237
+Started game 241 of 600 (overrun-55 vs overrun-fixed)
+Finished game 235 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by fifty moves rule}
+Score of overrun-55 vs overrun-fixed: 92 - 75 - 71  [0.536] 238
+Started game 242 of 600 (overrun-fixed vs overrun-55)
+Finished game 240 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 92 - 75 - 72  [0.536] 239
+Started game 243 of 600 (overrun-55 vs overrun-fixed)
+Finished game 239 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 93 - 75 - 72  [0.537] 240
+...      overrun-55 playing White: 46 - 32 - 42  [0.558] 120
+...      overrun-55 playing Black: 47 - 43 - 30  [0.517] 120
+...      White vs Black: 89 - 79 - 72  [0.521] 240
+Elo difference: 26.1 +/- 36.9, LOS: 91.8 %, DrawRatio: 30.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 244 of 600 (overrun-fixed vs overrun-55)
+Finished game 241 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 93 - 75 - 73  [0.537] 241
+Started game 245 of 600 (overrun-55 vs overrun-fixed)
+Finished game 243 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 93 - 76 - 73  [0.535] 242
+Started game 246 of 600 (overrun-fixed vs overrun-55)
+Finished game 242 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 94 - 76 - 73  [0.537] 243
+Started game 247 of 600 (overrun-55 vs overrun-fixed)
+Finished game 244 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 94 - 77 - 73  [0.535] 244
+Started game 248 of 600 (overrun-fixed vs overrun-55)
+Finished game 245 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 94 - 77 - 74  [0.535] 245
+Started game 249 of 600 (overrun-55 vs overrun-fixed)
+Finished game 246 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 94 - 78 - 74  [0.533] 246
+Started game 250 of 600 (overrun-fixed vs overrun-55)
+Finished game 247 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 94 - 78 - 75  [0.532] 247
+Started game 251 of 600 (overrun-55 vs overrun-fixed)
+Finished game 249 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 94 - 79 - 75  [0.530] 248
+Started game 252 of 600 (overrun-fixed vs overrun-55)
+Finished game 250 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 95 - 79 - 75  [0.532] 249
+Started game 253 of 600 (overrun-55 vs overrun-fixed)
+Finished game 248 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 95 - 79 - 76  [0.532] 250
+...      overrun-55 playing White: 46 - 34 - 45  [0.548] 125
+...      overrun-55 playing Black: 49 - 45 - 31  [0.516] 125
+...      White vs Black: 91 - 83 - 76  [0.516] 250
+Elo difference: 22.3 +/- 36.1, LOS: 88.7 %, DrawRatio: 30.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 254 of 600 (overrun-fixed vs overrun-55)
+Finished game 252 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 95 - 79 - 77  [0.532] 251
+Started game 255 of 600 (overrun-55 vs overrun-fixed)
+Finished game 251 (overrun-55 vs overrun-fixed): 0-1 {Black mates}
+Score of overrun-55 vs overrun-fixed: 95 - 80 - 77  [0.530] 252
+Started game 256 of 600 (overrun-fixed vs overrun-55)
+Finished game 253 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 95 - 80 - 78  [0.530] 253
+Started game 257 of 600 (overrun-55 vs overrun-fixed)
+Finished game 254 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 95 - 81 - 78  [0.528] 254
+Started game 258 of 600 (overrun-fixed vs overrun-55)
+Finished game 255 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 95 - 81 - 79  [0.527] 255
+Started game 259 of 600 (overrun-55 vs overrun-fixed)
+Finished game 256 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 95 - 81 - 80  [0.527] 256
+Started game 260 of 600 (overrun-fixed vs overrun-55)
+Finished game 258 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 95 - 81 - 81  [0.527] 257
+Started game 261 of 600 (overrun-55 vs overrun-fixed)
+Finished game 259 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 96 - 81 - 81  [0.529] 258
+Started game 262 of 600 (overrun-fixed vs overrun-55)
+Finished game 260 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 96 - 82 - 81  [0.527] 259
+Started game 263 of 600 (overrun-55 vs overrun-fixed)
+Finished game 257 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by stalemate}
+Score of overrun-55 vs overrun-fixed: 96 - 82 - 82  [0.527] 260
+...      overrun-55 playing White: 47 - 35 - 48  [0.546] 130
+...      overrun-55 playing Black: 49 - 47 - 34  [0.508] 130
+...      White vs Black: 94 - 84 - 82  [0.519] 260
+Elo difference: 18.7 +/- 35.0, LOS: 85.3 %, DrawRatio: 31.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 264 of 600 (overrun-fixed vs overrun-55)
+Finished game 264 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 96 - 83 - 82  [0.525] 261
+Started game 265 of 600 (overrun-55 vs overrun-fixed)
+Finished game 262 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 96 - 83 - 83  [0.525] 262
+Started game 266 of 600 (overrun-fixed vs overrun-55)
+Finished game 261 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 96 - 83 - 84  [0.525] 263
+Started game 267 of 600 (overrun-55 vs overrun-fixed)
+Finished game 263 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 96 - 84 - 84  [0.523] 264
+Started game 268 of 600 (overrun-fixed vs overrun-55)
+Finished game 265 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 96 - 85 - 84  [0.521] 265
+Started game 269 of 600 (overrun-55 vs overrun-fixed)
+Finished game 268 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 96 - 85 - 85  [0.521] 266
+Started game 270 of 600 (overrun-fixed vs overrun-55)
+Finished game 266 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 96 - 85 - 86  [0.521] 267
+Started game 271 of 600 (overrun-55 vs overrun-fixed)
+Finished game 267 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 96 - 86 - 86  [0.519] 268
+Started game 272 of 600 (overrun-fixed vs overrun-55)
+Finished game 270 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 96 - 86 - 87  [0.519] 269
+Started game 273 of 600 (overrun-55 vs overrun-fixed)
+Finished game 269 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 96 - 87 - 87  [0.517] 270
+...      overrun-55 playing White: 47 - 39 - 49  [0.530] 135
+...      overrun-55 playing Black: 49 - 48 - 38  [0.504] 135
+...      White vs Black: 95 - 88 - 87  [0.513] 270
+Elo difference: 11.6 +/- 34.2, LOS: 74.7 %, DrawRatio: 32.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 274 of 600 (overrun-fixed vs overrun-55)
+Finished game 273 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 96 - 87 - 88  [0.517] 271
+Started game 275 of 600 (overrun-55 vs overrun-fixed)
+Finished game 274 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 96 - 87 - 89  [0.517] 272
+Started game 276 of 600 (overrun-fixed vs overrun-55)
+Finished game 271 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by fifty moves rule}
+Score of overrun-55 vs overrun-fixed: 96 - 87 - 90  [0.516] 273
+Started game 277 of 600 (overrun-55 vs overrun-fixed)
+Finished game 272 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 96 - 88 - 90  [0.515] 274
+Started game 278 of 600 (overrun-fixed vs overrun-55)
+Finished game 276 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 96 - 88 - 91  [0.515] 275
+Started game 279 of 600 (overrun-55 vs overrun-fixed)
+Finished game 275 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 97 - 88 - 91  [0.516] 276
+Started game 280 of 600 (overrun-fixed vs overrun-55)
+Finished game 278 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 97 - 88 - 92  [0.516] 277
+Started game 281 of 600 (overrun-55 vs overrun-fixed)
+Finished game 277 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 97 - 88 - 93  [0.516] 278
+Started game 282 of 600 (overrun-fixed vs overrun-55)
+Finished game 279 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 97 - 89 - 93  [0.514] 279
+Started game 283 of 600 (overrun-55 vs overrun-fixed)
+Finished game 282 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 97 - 90 - 93  [0.512] 280
+...      overrun-55 playing White: 48 - 40 - 52  [0.529] 140
+...      overrun-55 playing Black: 49 - 50 - 41  [0.496] 140
+...      White vs Black: 98 - 89 - 93  [0.516] 280
+Elo difference: 8.7 +/- 33.3, LOS: 69.6 %, DrawRatio: 33.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 284 of 600 (overrun-fixed vs overrun-55)
+Finished game 281 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 97 - 90 - 94  [0.512] 281
+Started game 285 of 600 (overrun-55 vs overrun-fixed)
+Finished game 280 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 98 - 90 - 94  [0.514] 282
+Started game 286 of 600 (overrun-fixed vs overrun-55)
+Finished game 283 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 98 - 91 - 94  [0.512] 283
+Started game 287 of 600 (overrun-55 vs overrun-fixed)
+Finished game 284 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 99 - 91 - 94  [0.514] 284
+Started game 288 of 600 (overrun-fixed vs overrun-55)
+Finished game 285 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 99 - 92 - 94  [0.512] 285
+Started game 289 of 600 (overrun-55 vs overrun-fixed)
+Finished game 286 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 100 - 92 - 94  [0.514] 286
+Started game 290 of 600 (overrun-fixed vs overrun-55)
+Finished game 289 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 101 - 92 - 94  [0.516] 287
+Started game 291 of 600 (overrun-55 vs overrun-fixed)
+Finished game 288 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 101 - 93 - 94  [0.514] 288
+Started game 292 of 600 (overrun-fixed vs overrun-55)
+Finished game 287 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 101 - 93 - 95  [0.514] 289
+Started game 293 of 600 (overrun-55 vs overrun-fixed)
+Finished game 290 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 101 - 94 - 95  [0.512] 290
+...      overrun-55 playing White: 49 - 42 - 54  [0.524] 145
+...      overrun-55 playing Black: 52 - 52 - 41  [0.500] 145
+...      White vs Black: 101 - 94 - 95  [0.512] 290
+Elo difference: 8.4 +/- 32.8, LOS: 69.2 %, DrawRatio: 32.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 294 of 600 (overrun-fixed vs overrun-55)
+Finished game 291 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 101 - 95 - 95  [0.510] 291
+Started game 295 of 600 (overrun-55 vs overrun-fixed)
+Finished game 293 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 101 - 96 - 95  [0.509] 292
+Started game 296 of 600 (overrun-fixed vs overrun-55)
+Finished game 294 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 102 - 96 - 95  [0.510] 293
+Started game 297 of 600 (overrun-55 vs overrun-fixed)
+Finished game 296 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 102 - 96 - 96  [0.510] 294
+Started game 298 of 600 (overrun-fixed vs overrun-55)
+Finished game 292 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 103 - 96 - 96  [0.512] 295
+Started game 299 of 600 (overrun-55 vs overrun-fixed)
+Finished game 295 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 104 - 96 - 96  [0.514] 296
+Started game 300 of 600 (overrun-fixed vs overrun-55)
+Finished game 297 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 104 - 97 - 96  [0.512] 297
+Started game 301 of 600 (overrun-55 vs overrun-fixed)
+Finished game 298 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 105 - 97 - 96  [0.513] 298
+Started game 302 of 600 (overrun-fixed vs overrun-55)
+Finished game 299 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 105 - 97 - 97  [0.513] 299
+Started game 303 of 600 (overrun-55 vs overrun-fixed)
+Finished game 301 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 105 - 97 - 98  [0.513] 300
+...      overrun-55 playing White: 50 - 45 - 56  [0.517] 151
+...      overrun-55 playing Black: 55 - 52 - 42  [0.510] 149
+...      White vs Black: 102 - 100 - 98  [0.503] 300
+Elo difference: 9.3 +/- 32.3, LOS: 71.3 %, DrawRatio: 32.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 304 of 600 (overrun-fixed vs overrun-55)
+Finished game 300 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 105 - 97 - 99  [0.513] 301
+Started game 305 of 600 (overrun-55 vs overrun-fixed)
+Finished game 303 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 105 - 97 - 100  [0.513] 302
+Started game 306 of 600 (overrun-fixed vs overrun-55)
+Finished game 305 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 106 - 97 - 100  [0.515] 303
+Started game 307 of 600 (overrun-55 vs overrun-fixed)
+Finished game 302 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 106 - 97 - 101  [0.515] 304
+Started game 308 of 600 (overrun-fixed vs overrun-55)
+Finished game 304 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 106 - 97 - 102  [0.515] 305
+Started game 309 of 600 (overrun-55 vs overrun-fixed)
+Finished game 306 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 106 - 97 - 103  [0.515] 306
+Started game 310 of 600 (overrun-fixed vs overrun-55)
+Finished game 307 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 107 - 97 - 103  [0.516] 307
+Started game 311 of 600 (overrun-55 vs overrun-fixed)
+Finished game 309 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 108 - 97 - 103  [0.518] 308
+Started game 312 of 600 (overrun-fixed vs overrun-55)
+Finished game 308 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 108 - 98 - 103  [0.516] 309
+Started game 313 of 600 (overrun-55 vs overrun-fixed)
+Finished game 310 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 109 - 98 - 103  [0.518] 310
+...      overrun-55 playing White: 53 - 45 - 57  [0.526] 155
+...      overrun-55 playing Black: 56 - 53 - 46  [0.510] 155
+...      White vs Black: 106 - 101 - 103  [0.508] 310
+Elo difference: 12.3 +/- 31.7, LOS: 77.8 %, DrawRatio: 33.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 314 of 600 (overrun-fixed vs overrun-55)
+Finished game 311 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 110 - 98 - 103  [0.519] 311
+Started game 315 of 600 (overrun-55 vs overrun-fixed)
+Finished game 313 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 110 - 99 - 103  [0.518] 312
+Started game 316 of 600 (overrun-fixed vs overrun-55)
+Finished game 312 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 111 - 99 - 103  [0.519] 313
+Started game 317 of 600 (overrun-55 vs overrun-fixed)
+Finished game 314 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 111 - 99 - 104  [0.519] 314
+Started game 318 of 600 (overrun-fixed vs overrun-55)
+Finished game 315 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 111 - 99 - 105  [0.519] 315
+Started game 319 of 600 (overrun-55 vs overrun-fixed)
+Finished game 317 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 112 - 99 - 105  [0.521] 316
+Started game 320 of 600 (overrun-fixed vs overrun-55)
+Finished game 316 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 112 - 100 - 105  [0.519] 317
+Started game 321 of 600 (overrun-55 vs overrun-fixed)
+Finished game 319 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 112 - 100 - 106  [0.519] 318
+Started game 322 of 600 (overrun-fixed vs overrun-55)
+Finished game 318 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 112 - 101 - 106  [0.517] 319
+Started game 323 of 600 (overrun-55 vs overrun-fixed)
+Finished game 320 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 113 - 101 - 106  [0.519] 320
+...      overrun-55 playing White: 55 - 46 - 59  [0.528] 160
+...      overrun-55 playing Black: 58 - 55 - 47  [0.509] 160
+...      White vs Black: 110 - 104 - 106  [0.509] 320
+Elo difference: 13.0 +/- 31.2, LOS: 79.4 %, DrawRatio: 33.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 324 of 600 (overrun-fixed vs overrun-55)
+Finished game 323 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 114 - 101 - 106  [0.520] 321
+Started game 325 of 600 (overrun-55 vs overrun-fixed)
+Finished game 321 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 114 - 101 - 107  [0.520] 322
+Started game 326 of 600 (overrun-fixed vs overrun-55)
+Finished game 324 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 115 - 101 - 107  [0.522] 323
+Started game 327 of 600 (overrun-55 vs overrun-fixed)
+Finished game 322 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 116 - 101 - 107  [0.523] 324
+Started game 328 of 600 (overrun-fixed vs overrun-55)
+Finished game 326 (overrun-fixed vs overrun-55): 1-0 {White mates}
+Score of overrun-55 vs overrun-fixed: 116 - 102 - 107  [0.522] 325
+Started game 329 of 600 (overrun-55 vs overrun-fixed)
+Finished game 325 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 116 - 102 - 108  [0.521] 326
+Started game 330 of 600 (overrun-fixed vs overrun-55)
+Finished game 328 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 117 - 102 - 108  [0.523] 327
+Started game 331 of 600 (overrun-55 vs overrun-fixed)
+Finished game 327 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 117 - 103 - 108  [0.521] 328
+Started game 332 of 600 (overrun-fixed vs overrun-55)
+Finished game 329 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 118 - 103 - 108  [0.523] 329
+Started game 333 of 600 (overrun-55 vs overrun-fixed)
+Finished game 330 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 118 - 104 - 108  [0.521] 330
+...      overrun-55 playing White: 57 - 47 - 61  [0.530] 165
+...      overrun-55 playing Black: 61 - 57 - 47  [0.512] 165
+...      White vs Black: 114 - 108 - 108  [0.509] 330
+Elo difference: 14.7 +/- 30.8, LOS: 82.6 %, DrawRatio: 32.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 334 of 600 (overrun-fixed vs overrun-55)
+Finished game 332 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 118 - 105 - 108  [0.520] 331
+Started game 335 of 600 (overrun-55 vs overrun-fixed)
+Finished game 331 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 118 - 105 - 109  [0.520] 332
+Started game 336 of 600 (overrun-fixed vs overrun-55)
+Finished game 333 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 119 - 105 - 109  [0.521] 333
+Started game 337 of 600 (overrun-55 vs overrun-fixed)
+Finished game 335 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 119 - 106 - 109  [0.519] 334
+Started game 338 of 600 (overrun-fixed vs overrun-55)
+Finished game 336 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 120 - 106 - 109  [0.521] 335
+Started game 339 of 600 (overrun-55 vs overrun-fixed)
+Finished game 334 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 120 - 106 - 110  [0.521] 336
+Started game 340 of 600 (overrun-fixed vs overrun-55)
+Finished game 338 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 121 - 106 - 110  [0.522] 337
+Started game 341 of 600 (overrun-55 vs overrun-fixed)
+Finished game 339 (overrun-55 vs overrun-fixed): 1-0 {White mates}
+Score of overrun-55 vs overrun-fixed: 122 - 106 - 110  [0.524] 338
+Started game 342 of 600 (overrun-fixed vs overrun-55)
+Finished game 340 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 122 - 107 - 110  [0.522] 339
+Started game 343 of 600 (overrun-55 vs overrun-fixed)
+Finished game 337 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 122 - 108 - 110  [0.521] 340
+...      overrun-55 playing White: 59 - 49 - 62  [0.529] 170
+...      overrun-55 playing Black: 63 - 59 - 48  [0.512] 170
+...      White vs Black: 118 - 112 - 110  [0.509] 340
+Elo difference: 14.3 +/- 30.4, LOS: 82.2 %, DrawRatio: 32.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 344 of 600 (overrun-fixed vs overrun-55)
+Finished game 341 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 122 - 109 - 110  [0.519] 341
+Started game 345 of 600 (overrun-55 vs overrun-fixed)
+Finished game 343 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 122 - 110 - 110  [0.518] 342
+Started game 346 of 600 (overrun-fixed vs overrun-55)
+Finished game 344 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 122 - 111 - 110  [0.516] 343
+Started game 347 of 600 (overrun-55 vs overrun-fixed)
+Finished game 342 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 122 - 111 - 111  [0.516] 344
+Started game 348 of 600 (overrun-fixed vs overrun-55)
+Finished game 346 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 122 - 111 - 112  [0.516] 345
+Started game 349 of 600 (overrun-55 vs overrun-fixed)
+Finished game 347 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 122 - 112 - 112  [0.514] 346
+Started game 350 of 600 (overrun-fixed vs overrun-55)
+Finished game 345 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 122 - 112 - 113  [0.514] 347
+Started game 351 of 600 (overrun-55 vs overrun-fixed)
+Finished game 348 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 122 - 112 - 114  [0.514] 348
+Started game 352 of 600 (overrun-fixed vs overrun-55)
+Finished game 349 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 123 - 112 - 114  [0.516] 349
+Started game 353 of 600 (overrun-55 vs overrun-fixed)
+Finished game 352 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 123 - 112 - 115  [0.516] 350
+...      overrun-55 playing White: 60 - 52 - 63  [0.523] 175
+...      overrun-55 playing Black: 63 - 60 - 52  [0.509] 175
+...      White vs Black: 120 - 115 - 115  [0.507] 350
+Elo difference: 10.9 +/- 29.9, LOS: 76.3 %, DrawRatio: 32.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 354 of 600 (overrun-fixed vs overrun-55)
+Finished game 350 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 123 - 112 - 116  [0.516] 351
+Started game 355 of 600 (overrun-55 vs overrun-fixed)
+Finished game 351 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 124 - 112 - 116  [0.517] 352
+Started game 356 of 600 (overrun-fixed vs overrun-55)
+Finished game 354 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 125 - 112 - 116  [0.518] 353
+Started game 357 of 600 (overrun-55 vs overrun-fixed)
+Finished game 355 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 125 - 113 - 116  [0.517] 354
+Started game 358 of 600 (overrun-fixed vs overrun-55)
+Finished game 356 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 126 - 113 - 116  [0.518] 355
+Started game 359 of 600 (overrun-55 vs overrun-fixed)
+Finished game 353 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 126 - 113 - 117  [0.518] 356
+Started game 360 of 600 (overrun-fixed vs overrun-55)
+Finished game 357 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 126 - 113 - 118  [0.518] 357
+Started game 361 of 600 (overrun-55 vs overrun-fixed)
+Finished game 358 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 127 - 113 - 118  [0.520] 358
+Started game 362 of 600 (overrun-fixed vs overrun-55)
+Finished game 359 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 127 - 113 - 119  [0.519] 359
+Started game 363 of 600 (overrun-55 vs overrun-fixed)
+Finished game 362 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 127 - 114 - 119  [0.518] 360
+...      overrun-55 playing White: 61 - 53 - 66  [0.522] 180
+...      overrun-55 playing Black: 66 - 61 - 53  [0.514] 180
+...      White vs Black: 122 - 119 - 119  [0.504] 360
+Elo difference: 12.6 +/- 29.4, LOS: 79.9 %, DrawRatio: 33.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 364 of 600 (overrun-fixed vs overrun-55)
+Finished game 360 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 127 - 114 - 120  [0.518] 361
+Started game 365 of 600 (overrun-55 vs overrun-fixed)
+Finished game 361 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 127 - 115 - 120  [0.517] 362
+Started game 366 of 600 (overrun-fixed vs overrun-55)
+Finished game 363 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 127 - 116 - 120  [0.515] 363
+Started game 367 of 600 (overrun-55 vs overrun-fixed)
+Finished game 364 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 127 - 116 - 121  [0.515] 364
+Started game 368 of 600 (overrun-fixed vs overrun-55)
+Finished game 365 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 127 - 116 - 122  [0.515] 365
+Started game 369 of 600 (overrun-55 vs overrun-fixed)
+Finished game 366 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 128 - 116 - 122  [0.516] 366
+Started game 370 of 600 (overrun-fixed vs overrun-55)
+Finished game 369 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 129 - 116 - 122  [0.518] 367
+Started game 371 of 600 (overrun-55 vs overrun-fixed)
+Finished game 368 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 129 - 117 - 122  [0.516] 368
+Started game 372 of 600 (overrun-fixed vs overrun-55)
+Finished game 367 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 129 - 117 - 123  [0.516] 369
+Started game 373 of 600 (overrun-55 vs overrun-fixed)
+Finished game 371 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 130 - 117 - 123  [0.518] 370
+...      overrun-55 playing White: 63 - 55 - 68  [0.522] 186
+...      overrun-55 playing Black: 67 - 62 - 55  [0.514] 184
+...      White vs Black: 125 - 122 - 123  [0.504] 370
+Elo difference: 12.2 +/- 29.0, LOS: 79.6 %, DrawRatio: 33.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 374 of 600 (overrun-fixed vs overrun-55)
+Finished game 370 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 130 - 117 - 124  [0.518] 371
+Started game 375 of 600 (overrun-55 vs overrun-fixed)
+Finished game 373 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 130 - 117 - 125  [0.517] 372
+Started game 376 of 600 (overrun-fixed vs overrun-55)
+Finished game 372 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 130 - 117 - 126  [0.517] 373
+Started game 377 of 600 (overrun-55 vs overrun-fixed)
+Finished game 374 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 130 - 118 - 126  [0.516] 374
+Started game 378 of 600 (overrun-fixed vs overrun-55)
+Finished game 377 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 130 - 119 - 126  [0.515] 375
+Started game 379 of 600 (overrun-55 vs overrun-fixed)
+Finished game 378 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 131 - 119 - 126  [0.516] 376
+Started game 380 of 600 (overrun-fixed vs overrun-55)
+Finished game 376 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 132 - 119 - 126  [0.517] 377
+Started game 381 of 600 (overrun-55 vs overrun-fixed)
+Finished game 381 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 132 - 120 - 126  [0.516] 378
+Started game 382 of 600 (overrun-fixed vs overrun-55)
+Finished game 380 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 132 - 121 - 126  [0.515] 379
+Started game 383 of 600 (overrun-55 vs overrun-fixed)
+Finished game 375 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by fifty moves rule}
+Score of overrun-55 vs overrun-fixed: 132 - 121 - 127  [0.514] 380
+...      overrun-55 playing White: 63 - 57 - 70  [0.516] 190
+...      overrun-55 playing Black: 69 - 64 - 57  [0.513] 190
+...      White vs Black: 127 - 126 - 127  [0.501] 380
+Elo difference: 10.1 +/- 28.5, LOS: 75.5 %, DrawRatio: 33.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 384 of 600 (overrun-fixed vs overrun-55)
+Finished game 379 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 133 - 121 - 127  [0.516] 381
+Started game 385 of 600 (overrun-55 vs overrun-fixed)
+Finished game 384 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 134 - 121 - 127  [0.517] 382
+Started game 386 of 600 (overrun-fixed vs overrun-55)
+Finished game 385 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 134 - 122 - 127  [0.516] 383
+Started game 387 of 600 (overrun-55 vs overrun-fixed)
+Finished game 383 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 135 - 122 - 127  [0.517] 384
+Started game 388 of 600 (overrun-fixed vs overrun-55)
+Finished game 382 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 136 - 122 - 127  [0.518] 385
+Started game 389 of 600 (overrun-55 vs overrun-fixed)
+Finished game 387 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 137 - 122 - 127  [0.519] 386
+Started game 390 of 600 (overrun-fixed vs overrun-55)
+Finished game 386 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 137 - 122 - 128  [0.519] 387
+Started game 391 of 600 (overrun-55 vs overrun-fixed)
+Finished game 388 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 138 - 122 - 128  [0.521] 388
+Started game 392 of 600 (overrun-fixed vs overrun-55)
+Finished game 389 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 139 - 122 - 128  [0.522] 389
+Started game 393 of 600 (overrun-55 vs overrun-fixed)
+Finished game 390 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 139 - 123 - 128  [0.521] 390
+...      overrun-55 playing White: 67 - 58 - 70  [0.523] 195
+...      overrun-55 playing Black: 72 - 65 - 58  [0.518] 195
+...      White vs Black: 132 - 130 - 128  [0.503] 390
+Elo difference: 14.3 +/- 28.3, LOS: 83.9 %, DrawRatio: 32.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 394 of 600 (overrun-fixed vs overrun-55)
+Finished game 392 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 139 - 124 - 128  [0.519] 391
+Started game 395 of 600 (overrun-55 vs overrun-fixed)
+Finished game 391 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 139 - 124 - 129  [0.519] 392
+Started game 396 of 600 (overrun-fixed vs overrun-55)
+Finished game 394 (overrun-fixed vs overrun-55): 1-0 {White mates}
+Score of overrun-55 vs overrun-fixed: 139 - 125 - 129  [0.518] 393
+Started game 397 of 600 (overrun-55 vs overrun-fixed)
+Finished game 393 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 139 - 125 - 130  [0.518] 394
+Started game 398 of 600 (overrun-fixed vs overrun-55)
+Finished game 397 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 140 - 125 - 130  [0.519] 395
+Started game 399 of 600 (overrun-55 vs overrun-fixed)
+Finished game 395 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 140 - 126 - 130  [0.518] 396
+Started game 400 of 600 (overrun-fixed vs overrun-55)
+Finished game 398 (overrun-fixed vs overrun-55): 1-0 {White mates}
+Score of overrun-55 vs overrun-fixed: 140 - 127 - 130  [0.516] 397
+Started game 401 of 600 (overrun-55 vs overrun-fixed)
+Finished game 399 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 141 - 127 - 130  [0.518] 398
+Started game 402 of 600 (overrun-fixed vs overrun-55)
+Finished game 396 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 142 - 127 - 130  [0.519] 399
+Started game 403 of 600 (overrun-55 vs overrun-fixed)
+Finished game 403 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 142 - 128 - 130  [0.517] 400
+...      overrun-55 playing White: 69 - 60 - 72  [0.522] 201
+...      overrun-55 playing Black: 73 - 68 - 58  [0.513] 199
+...      White vs Black: 137 - 133 - 130  [0.505] 400
+Elo difference: 12.2 +/- 28.0, LOS: 80.3 %, DrawRatio: 32.5 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 404 of 600 (overrun-fixed vs overrun-55)
+Finished game 401 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 142 - 128 - 131  [0.517] 401
+Started game 405 of 600 (overrun-55 vs overrun-fixed)
+Finished game 400 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 142 - 128 - 132  [0.517] 402
+Started game 406 of 600 (overrun-fixed vs overrun-55)
+Finished game 402 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 143 - 128 - 132  [0.519] 403
+Started game 407 of 600 (overrun-55 vs overrun-fixed)
+Finished game 407 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 144 - 128 - 132  [0.520] 404
+Started game 408 of 600 (overrun-fixed vs overrun-55)
+Finished game 404 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 144 - 129 - 132  [0.519] 405
+Started game 409 of 600 (overrun-55 vs overrun-fixed)
+Finished game 405 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 145 - 129 - 132  [0.520] 406
+Started game 410 of 600 (overrun-fixed vs overrun-55)
+Finished game 406 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 145 - 130 - 132  [0.518] 407
+Started game 411 of 600 (overrun-55 vs overrun-fixed)
+Finished game 410 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 145 - 130 - 133  [0.518] 408
+Started game 412 of 600 (overrun-fixed vs overrun-55)
+Finished game 411 (overrun-55 vs overrun-fixed): 1-0 {White mates}
+Score of overrun-55 vs overrun-fixed: 146 - 130 - 133  [0.520] 409
+Started game 413 of 600 (overrun-55 vs overrun-fixed)
+Finished game 408 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 146 - 131 - 133  [0.518] 410
+...      overrun-55 playing White: 72 - 60 - 73  [0.529] 205
+...      overrun-55 playing Black: 74 - 71 - 60  [0.507] 205
+...      White vs Black: 143 - 134 - 133  [0.511] 410
+Elo difference: 12.7 +/- 27.7, LOS: 81.6 %, DrawRatio: 32.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 414 of 600 (overrun-fixed vs overrun-55)
+Finished game 409 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 146 - 131 - 134  [0.518] 411
+Started game 415 of 600 (overrun-55 vs overrun-fixed)
+Finished game 412 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 146 - 132 - 134  [0.517] 412
+Started game 416 of 600 (overrun-fixed vs overrun-55)
+Finished game 413 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 146 - 132 - 135  [0.517] 413
+Started game 417 of 600 (overrun-55 vs overrun-fixed)
+Finished game 414 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 147 - 132 - 135  [0.518] 414
+Started game 418 of 600 (overrun-fixed vs overrun-55)
+Finished game 417 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 148 - 132 - 135  [0.519] 415
+Started game 419 of 600 (overrun-55 vs overrun-fixed)
+Finished game 415 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 148 - 133 - 135  [0.518] 416
+Started game 420 of 600 (overrun-fixed vs overrun-55)
+Finished game 418 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 148 - 133 - 136  [0.518] 417
+Started game 421 of 600 (overrun-55 vs overrun-fixed)
+Finished game 419 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 148 - 134 - 136  [0.517] 418
+Started game 422 of 600 (overrun-fixed vs overrun-55)
+Finished game 416 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 148 - 134 - 137  [0.517] 419
+Started game 423 of 600 (overrun-55 vs overrun-fixed)
+Finished game 420 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 149 - 134 - 137  [0.518] 420
+...      overrun-55 playing White: 73 - 62 - 75  [0.526] 210
+...      overrun-55 playing Black: 76 - 72 - 62  [0.510] 210
+...      White vs Black: 145 - 138 - 137  [0.508] 420
+Elo difference: 12.4 +/- 27.3, LOS: 81.4 %, DrawRatio: 32.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 424 of 600 (overrun-fixed vs overrun-55)
+Finished game 421 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 150 - 134 - 137  [0.519] 421
+Started game 425 of 600 (overrun-55 vs overrun-fixed)
+Finished game 422 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 151 - 134 - 137  [0.520] 422
+Started game 426 of 600 (overrun-fixed vs overrun-55)
+Finished game 423 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 151 - 134 - 138  [0.520] 423
+Started game 427 of 600 (overrun-55 vs overrun-fixed)
+Finished game 424 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 151 - 134 - 139  [0.520] 424
+Started game 428 of 600 (overrun-fixed vs overrun-55)
+Finished game 426 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 151 - 135 - 139  [0.519] 425
+Started game 429 of 600 (overrun-55 vs overrun-fixed)
+Finished game 427 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 151 - 136 - 139  [0.518] 426
+Started game 430 of 600 (overrun-fixed vs overrun-55)
+Finished game 425 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 151 - 136 - 140  [0.518] 427
+Started game 431 of 600 (overrun-55 vs overrun-fixed)
+Finished game 428 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 151 - 136 - 141  [0.518] 428
+Started game 432 of 600 (overrun-fixed vs overrun-55)
+Finished game 431 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 151 - 137 - 141  [0.516] 429
+Started game 433 of 600 (overrun-55 vs overrun-fixed)
+Finished game 429 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 152 - 137 - 141  [0.517] 430
+...      overrun-55 playing White: 75 - 64 - 77  [0.525] 216
+...      overrun-55 playing Black: 77 - 73 - 64  [0.509] 214
+...      White vs Black: 148 - 141 - 141  [0.508] 430
+Elo difference: 12.1 +/- 26.9, LOS: 81.1 %, DrawRatio: 32.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 434 of 600 (overrun-fixed vs overrun-55)
+Finished game 432 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 152 - 138 - 141  [0.516] 431
+Started game 435 of 600 (overrun-55 vs overrun-fixed)
+Finished game 430 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 153 - 138 - 141  [0.517] 432
+Started game 436 of 600 (overrun-fixed vs overrun-55)
+Finished game 433 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 153 - 139 - 141  [0.516] 433
+Started game 437 of 600 (overrun-55 vs overrun-fixed)
+Finished game 434 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 154 - 139 - 141  [0.517] 434
+Started game 438 of 600 (overrun-fixed vs overrun-55)
+Finished game 435 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 154 - 139 - 142  [0.517] 435
+Started game 439 of 600 (overrun-55 vs overrun-fixed)
+Finished game 436 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 154 - 139 - 143  [0.517] 436
+Started game 440 of 600 (overrun-fixed vs overrun-55)
+Finished game 438 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 154 - 139 - 144  [0.517] 437
+Started game 441 of 600 (overrun-55 vs overrun-fixed)
+Finished game 437 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 154 - 140 - 144  [0.516] 438
+Started game 442 of 600 (overrun-fixed vs overrun-55)
+Finished game 439 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 154 - 140 - 145  [0.516] 439
+Started game 443 of 600 (overrun-55 vs overrun-fixed)
+Finished game 441 (overrun-55 vs overrun-fixed): 1-0 {White mates}
+Score of overrun-55 vs overrun-fixed: 155 - 140 - 145  [0.517] 440
+...      overrun-55 playing White: 76 - 66 - 79  [0.523] 221
+...      overrun-55 playing Black: 79 - 74 - 66  [0.511] 219
+...      White vs Black: 150 - 145 - 145  [0.506] 440
+Elo difference: 11.8 +/- 26.6, LOS: 80.9 %, DrawRatio: 33.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 444 of 600 (overrun-fixed vs overrun-55)
+Finished game 440 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 155 - 140 - 146  [0.517] 441
+Started game 445 of 600 (overrun-55 vs overrun-fixed)
+Finished game 444 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 155 - 141 - 146  [0.516] 442
+Started game 446 of 600 (overrun-fixed vs overrun-55)
+Finished game 443 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 155 - 141 - 147  [0.516] 443
+Started game 447 of 600 (overrun-55 vs overrun-fixed)
+Finished game 442 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 155 - 142 - 147  [0.515] 444
+Started game 448 of 600 (overrun-fixed vs overrun-55)
+Finished game 447 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 156 - 142 - 147  [0.516] 445
+Started game 449 of 600 (overrun-55 vs overrun-fixed)
+Finished game 448 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 156 - 143 - 147  [0.515] 446
+Started game 450 of 600 (overrun-fixed vs overrun-55)
+Finished game 445 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 156 - 144 - 147  [0.513] 447
+Started game 451 of 600 (overrun-55 vs overrun-fixed)
+Finished game 446 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 157 - 144 - 147  [0.515] 448
+Started game 452 of 600 (overrun-fixed vs overrun-55)
+Finished game 449 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 157 - 144 - 148  [0.514] 449
+Started game 453 of 600 (overrun-55 vs overrun-fixed)
+Finished game 451 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 158 - 144 - 148  [0.516] 450
+...      overrun-55 playing White: 78 - 67 - 81  [0.524] 226
+...      overrun-55 playing Black: 80 - 77 - 67  [0.507] 224
+...      White vs Black: 155 - 147 - 148  [0.509] 450
+Elo difference: 10.8 +/- 26.3, LOS: 79.0 %, DrawRatio: 32.9 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 454 of 600 (overrun-fixed vs overrun-55)
+Finished game 452 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 159 - 144 - 148  [0.517] 451
+Started game 455 of 600 (overrun-55 vs overrun-fixed)
+Finished game 453 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 160 - 144 - 148  [0.518] 452
+Started game 456 of 600 (overrun-fixed vs overrun-55)
+Finished game 450 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by fifty moves rule}
+Score of overrun-55 vs overrun-fixed: 160 - 144 - 149  [0.518] 453
+Started game 457 of 600 (overrun-55 vs overrun-fixed)
+Finished game 454 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 160 - 144 - 150  [0.518] 454
+Started game 458 of 600 (overrun-fixed vs overrun-55)
+Finished game 455 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 161 - 144 - 150  [0.519] 455
+Started game 459 of 600 (overrun-55 vs overrun-fixed)
+Finished game 456 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 161 - 145 - 150  [0.518] 456
+Started game 460 of 600 (overrun-fixed vs overrun-55)
+Finished game 457 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 162 - 145 - 150  [0.519] 457
+Started game 461 of 600 (overrun-55 vs overrun-fixed)
+Finished game 458 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 162 - 146 - 150  [0.517] 458
+Started game 462 of 600 (overrun-fixed vs overrun-55)
+Finished game 460 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 162 - 146 - 151  [0.517] 459
+Started game 463 of 600 (overrun-55 vs overrun-fixed)
+Finished game 459 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 162 - 147 - 151  [0.516] 460
+...      overrun-55 playing White: 81 - 68 - 81  [0.528] 230
+...      overrun-55 playing Black: 81 - 79 - 70  [0.504] 230
+...      White vs Black: 160 - 149 - 151  [0.512] 460
+Elo difference: 11.3 +/- 26.0, LOS: 80.3 %, DrawRatio: 32.8 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 464 of 600 (overrun-fixed vs overrun-55)
+Finished game 462 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 163 - 147 - 151  [0.517] 461
+Started game 465 of 600 (overrun-55 vs overrun-fixed)
+Finished game 463 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 164 - 147 - 151  [0.518] 462
+Started game 466 of 600 (overrun-fixed vs overrun-55)
+Finished game 464 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 165 - 147 - 151  [0.519] 463
+Started game 467 of 600 (overrun-55 vs overrun-fixed)
+Finished game 461 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 165 - 147 - 152  [0.519] 464
+Started game 468 of 600 (overrun-fixed vs overrun-55)
+Finished game 465 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 166 - 147 - 152  [0.520] 465
+Started game 469 of 600 (overrun-55 vs overrun-fixed)
+Finished game 466 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 166 - 148 - 152  [0.519] 466
+Started game 470 of 600 (overrun-fixed vs overrun-55)
+Finished game 467 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 166 - 148 - 153  [0.519] 467
+Started game 471 of 600 (overrun-55 vs overrun-fixed)
+Finished game 468 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 166 - 148 - 154  [0.519] 468
+Started game 472 of 600 (overrun-fixed vs overrun-55)
+Finished game 469 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 166 - 148 - 155  [0.519] 469
+Started game 473 of 600 (overrun-55 vs overrun-fixed)
+Finished game 470 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 167 - 148 - 155  [0.520] 470
+...      overrun-55 playing White: 83 - 68 - 84  [0.532] 235
+...      overrun-55 playing Black: 84 - 80 - 71  [0.509] 235
+...      White vs Black: 163 - 152 - 155  [0.512] 470
+Elo difference: 14.1 +/- 25.7, LOS: 85.8 %, DrawRatio: 33.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 474 of 600 (overrun-fixed vs overrun-55)
+Finished game 471 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 168 - 148 - 155  [0.521] 471
+Started game 475 of 600 (overrun-55 vs overrun-fixed)
+Finished game 472 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 168 - 149 - 155  [0.520] 472
+Started game 476 of 600 (overrun-fixed vs overrun-55)
+Finished game 474 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 168 - 150 - 155  [0.519] 473
+Started game 477 of 600 (overrun-55 vs overrun-fixed)
+Finished game 473 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 169 - 150 - 155  [0.520] 474
+Started game 478 of 600 (overrun-fixed vs overrun-55)
+Finished game 476 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 170 - 150 - 155  [0.521] 475
+Started game 479 of 600 (overrun-55 vs overrun-fixed)
+Finished game 475 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 170 - 151 - 155  [0.520] 476
+Started game 480 of 600 (overrun-fixed vs overrun-55)
+Finished game 477 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 170 - 151 - 156  [0.520] 477
+Started game 481 of 600 (overrun-55 vs overrun-fixed)
+Finished game 479 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 170 - 151 - 157  [0.520] 478
+Started game 482 of 600 (overrun-fixed vs overrun-55)
+Finished game 478 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 170 - 151 - 158  [0.520] 479
+Started game 483 of 600 (overrun-55 vs overrun-fixed)
+Finished game 481 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 170 - 151 - 159  [0.520] 480
+...      overrun-55 playing White: 85 - 69 - 87  [0.533] 241
+...      overrun-55 playing Black: 85 - 82 - 72  [0.506] 239
+...      White vs Black: 167 - 154 - 159  [0.514] 480
+Elo difference: 13.8 +/- 25.4, LOS: 85.6 %, DrawRatio: 33.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 484 of 600 (overrun-fixed vs overrun-55)
+Finished game 480 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 170 - 151 - 160  [0.520] 481
+Started game 485 of 600 (overrun-55 vs overrun-fixed)
+Finished game 483 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 171 - 151 - 160  [0.521] 482
+Started game 486 of 600 (overrun-fixed vs overrun-55)
+Finished game 482 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 172 - 151 - 160  [0.522] 483
+Started game 487 of 600 (overrun-55 vs overrun-fixed)
+Finished game 485 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 173 - 151 - 160  [0.523] 484
+Started game 488 of 600 (overrun-fixed vs overrun-55)
+Finished game 484 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 173 - 151 - 161  [0.523] 485
+Started game 489 of 600 (overrun-55 vs overrun-fixed)
+Finished game 487 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 173 - 152 - 161  [0.522] 486
+Started game 490 of 600 (overrun-fixed vs overrun-55)
+Finished game 486 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 174 - 152 - 161  [0.523] 487
+Started game 491 of 600 (overrun-55 vs overrun-fixed)
+Finished game 488 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 175 - 152 - 161  [0.524] 488
+Started game 492 of 600 (overrun-fixed vs overrun-55)
+Finished game 489 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 175 - 153 - 161  [0.522] 489
+Started game 493 of 600 (overrun-55 vs overrun-fixed)
+Finished game 490 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 175 - 153 - 162  [0.522] 490
+...      overrun-55 playing White: 87 - 71 - 87  [0.533] 245
+...      overrun-55 playing Black: 88 - 82 - 75  [0.512] 245
+...      White vs Black: 169 - 159 - 162  [0.510] 490
+Elo difference: 15.6 +/- 25.2, LOS: 88.8 %, DrawRatio: 33.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 494 of 600 (overrun-fixed vs overrun-55)
+Finished game 491 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 175 - 153 - 163  [0.522] 491
+Started game 495 of 600 (overrun-55 vs overrun-fixed)
+Finished game 492 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 175 - 154 - 163  [0.521] 492
+Started game 496 of 600 (overrun-fixed vs overrun-55)
+Finished game 494 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 176 - 154 - 163  [0.522] 493
+Started game 497 of 600 (overrun-55 vs overrun-fixed)
+Finished game 493 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 177 - 154 - 163  [0.523] 494
+Started game 498 of 600 (overrun-fixed vs overrun-55)
+Finished game 495 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 177 - 154 - 164  [0.523] 495
+Started game 499 of 600 (overrun-55 vs overrun-fixed)
+Finished game 497 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 178 - 154 - 164  [0.524] 496
+Started game 500 of 600 (overrun-fixed vs overrun-55)
+Finished game 496 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 178 - 154 - 165  [0.524] 497
+Started game 501 of 600 (overrun-55 vs overrun-fixed)
+Finished game 498 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 178 - 154 - 166  [0.524] 498
+Started game 502 of 600 (overrun-fixed vs overrun-55)
+Finished game 499 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 178 - 154 - 167  [0.524] 499
+Started game 503 of 600 (overrun-55 vs overrun-fixed)
+Finished game 500 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 178 - 155 - 167  [0.523] 500
+...      overrun-55 playing White: 89 - 71 - 90  [0.536] 250
+...      overrun-55 playing Black: 89 - 84 - 77  [0.510] 250
+...      White vs Black: 173 - 160 - 167  [0.513] 500
+Elo difference: 16.0 +/- 24.9, LOS: 89.6 %, DrawRatio: 33.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 504 of 600 (overrun-fixed vs overrun-55)
+Finished game 501 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 178 - 156 - 167  [0.522] 501
+Started game 505 of 600 (overrun-55 vs overrun-fixed)
+Finished game 503 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 178 - 156 - 168  [0.522] 502
+Started game 506 of 600 (overrun-fixed vs overrun-55)
+Finished game 504 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 178 - 156 - 169  [0.522] 503
+Started game 507 of 600 (overrun-55 vs overrun-fixed)
+Finished game 502 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 178 - 156 - 170  [0.522] 504
+Started game 508 of 600 (overrun-fixed vs overrun-55)
+Finished game 505 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 178 - 156 - 171  [0.522] 505
+Started game 509 of 600 (overrun-55 vs overrun-fixed)
+Finished game 506 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 178 - 157 - 171  [0.521] 506
+Started game 510 of 600 (overrun-fixed vs overrun-55)
+Finished game 509 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 179 - 157 - 171  [0.522] 507
+Started game 511 of 600 (overrun-55 vs overrun-fixed)
+Finished game 508 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 180 - 157 - 171  [0.523] 508
+Started game 512 of 600 (overrun-fixed vs overrun-55)
+Finished game 510 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 180 - 158 - 171  [0.522] 509
+Started game 513 of 600 (overrun-55 vs overrun-fixed)
+Finished game 507 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by stalemate}
+Score of overrun-55 vs overrun-fixed: 180 - 158 - 172  [0.522] 510
+...      overrun-55 playing White: 90 - 72 - 93  [0.535] 255
+...      overrun-55 playing Black: 90 - 86 - 79  [0.508] 255
+...      White vs Black: 176 - 162 - 172  [0.514] 510
+Elo difference: 15.0 +/- 24.6, LOS: 88.4 %, DrawRatio: 33.7 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 514 of 600 (overrun-fixed vs overrun-55)
+Finished game 511 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 180 - 159 - 172  [0.521] 511
+Started game 515 of 600 (overrun-55 vs overrun-fixed)
+Finished game 512 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 180 - 160 - 172  [0.520] 512
+Started game 516 of 600 (overrun-fixed vs overrun-55)
+Finished game 513 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 181 - 160 - 172  [0.520] 513
+Started game 517 of 600 (overrun-55 vs overrun-fixed)
+Finished game 514 (overrun-fixed vs overrun-55): 1-0 {White mates}
+Score of overrun-55 vs overrun-fixed: 181 - 161 - 172  [0.519] 514
+Started game 518 of 600 (overrun-fixed vs overrun-55)
+Finished game 515 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 182 - 161 - 172  [0.520] 515
+Started game 519 of 600 (overrun-55 vs overrun-fixed)
+Finished game 517 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 182 - 162 - 172  [0.519] 516
+Started game 520 of 600 (overrun-fixed vs overrun-55)
+Finished game 518 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 183 - 162 - 172  [0.520] 517
+Started game 521 of 600 (overrun-55 vs overrun-fixed)
+Finished game 516 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 183 - 163 - 172  [0.519] 518
+Started game 522 of 600 (overrun-fixed vs overrun-55)
+Finished game 519 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 183 - 164 - 172  [0.518] 519
+Started game 523 of 600 (overrun-55 vs overrun-fixed)
+Finished game 520 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 183 - 165 - 172  [0.517] 520
+...      overrun-55 playing White: 92 - 75 - 93  [0.533] 260
+...      overrun-55 playing Black: 91 - 90 - 79  [0.502] 260
+...      White vs Black: 182 - 166 - 172  [0.515] 520
+Elo difference: 12.0 +/- 24.4, LOS: 83.3 %, DrawRatio: 33.1 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 524 of 600 (overrun-fixed vs overrun-55)
+Finished game 521 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 184 - 165 - 172  [0.518] 521
+Started game 525 of 600 (overrun-55 vs overrun-fixed)
+Finished game 522 (overrun-fixed vs overrun-55): 1-0 {White mates}
+Score of overrun-55 vs overrun-fixed: 184 - 166 - 172  [0.517] 522
+Started game 526 of 600 (overrun-fixed vs overrun-55)
+Finished game 525 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 185 - 166 - 172  [0.518] 523
+Started game 527 of 600 (overrun-55 vs overrun-fixed)
+Finished game 523 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 185 - 166 - 173  [0.518] 524
+Started game 528 of 600 (overrun-fixed vs overrun-55)
+Finished game 524 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 185 - 166 - 174  [0.518] 525
+Started game 529 of 600 (overrun-55 vs overrun-fixed)
+Finished game 527 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 185 - 167 - 174  [0.517] 526
+Started game 530 of 600 (overrun-fixed vs overrun-55)
+Finished game 526 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 185 - 167 - 175  [0.517] 527
+Started game 531 of 600 (overrun-55 vs overrun-fixed)
+Finished game 528 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 186 - 167 - 175  [0.518] 528
+Started game 532 of 600 (overrun-fixed vs overrun-55)
+Finished game 529 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 186 - 168 - 175  [0.517] 529
+Started game 533 of 600 (overrun-55 vs overrun-fixed)
+Finished game 531 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 187 - 168 - 175  [0.518] 530
+...      overrun-55 playing White: 95 - 77 - 94  [0.534] 266
+...      overrun-55 playing Black: 92 - 91 - 81  [0.502] 264
+...      White vs Black: 186 - 169 - 175  [0.516] 530
+Elo difference: 12.5 +/- 24.2, LOS: 84.3 %, DrawRatio: 33.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 534 of 600 (overrun-fixed vs overrun-55)
+Finished game 533 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 188 - 168 - 175  [0.519] 531
+Started game 535 of 600 (overrun-55 vs overrun-fixed)
+Finished game 532 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 188 - 169 - 175  [0.518] 532
+Started game 536 of 600 (overrun-fixed vs overrun-55)
+Finished game 535 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 188 - 170 - 175  [0.517] 533
+Started game 537 of 600 (overrun-55 vs overrun-fixed)
+Finished game 530 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by fifty moves rule}
+Score of overrun-55 vs overrun-fixed: 188 - 170 - 176  [0.517] 534
+Started game 538 of 600 (overrun-fixed vs overrun-55)
+Finished game 534 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 189 - 170 - 176  [0.518] 535
+Started game 539 of 600 (overrun-55 vs overrun-fixed)
+Finished game 536 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 190 - 170 - 176  [0.519] 536
+Started game 540 of 600 (overrun-fixed vs overrun-55)
+Finished game 537 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 190 - 171 - 176  [0.518] 537
+Started game 541 of 600 (overrun-55 vs overrun-fixed)
+Finished game 538 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 191 - 171 - 176  [0.519] 538
+Started game 542 of 600 (overrun-fixed vs overrun-55)
+Finished game 540 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 191 - 172 - 176  [0.518] 539
+Started game 543 of 600 (overrun-55 vs overrun-fixed)
+Finished game 539 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 192 - 172 - 176  [0.519] 540
+...      overrun-55 playing White: 97 - 79 - 94  [0.533] 270
+...      overrun-55 playing Black: 95 - 93 - 82  [0.504] 270
+...      White vs Black: 190 - 174 - 176  [0.515] 540
+Elo difference: 12.9 +/- 24.1, LOS: 85.3 %, DrawRatio: 32.6 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 544 of 600 (overrun-fixed vs overrun-55)
+Finished game 541 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 193 - 172 - 176  [0.519] 541
+Started game 545 of 600 (overrun-55 vs overrun-fixed)
+Finished game 542 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 193 - 173 - 176  [0.518] 542
+Started game 546 of 600 (overrun-fixed vs overrun-55)
+Finished game 543 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 194 - 173 - 176  [0.519] 543
+Started game 547 of 600 (overrun-55 vs overrun-fixed)
+Finished game 545 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 195 - 173 - 176  [0.520] 544
+Started game 548 of 600 (overrun-fixed vs overrun-55)
+Finished game 544 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 195 - 173 - 177  [0.520] 545
+Started game 549 of 600 (overrun-55 vs overrun-fixed)
+Finished game 549 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 195 - 174 - 177  [0.519] 546
+Started game 550 of 600 (overrun-fixed vs overrun-55)
+Finished game 547 (overrun-55 vs overrun-fixed): 0-1 {Black mates}
+Score of overrun-55 vs overrun-fixed: 195 - 175 - 177  [0.518] 547
+Started game 551 of 600 (overrun-55 vs overrun-fixed)
+Finished game 546 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by fifty moves rule}
+Score of overrun-55 vs overrun-fixed: 195 - 175 - 178  [0.518] 548
+Started game 552 of 600 (overrun-fixed vs overrun-55)
+Finished game 548 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 196 - 175 - 178  [0.519] 549
+Started game 553 of 600 (overrun-55 vs overrun-fixed)
+Finished game 550 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 197 - 175 - 178  [0.520] 550
+...      overrun-55 playing White: 100 - 81 - 94  [0.535] 275
+...      overrun-55 playing Black: 97 - 94 - 84  [0.505] 275
+...      White vs Black: 194 - 178 - 178  [0.515] 550
+Elo difference: 13.9 +/- 23.9, LOS: 87.3 %, DrawRatio: 32.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 554 of 600 (overrun-fixed vs overrun-55)
+Finished game 551 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 198 - 175 - 178  [0.521] 551
+Started game 555 of 600 (overrun-55 vs overrun-fixed)
+Finished game 553 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 198 - 176 - 178  [0.520] 552
+Started game 556 of 600 (overrun-fixed vs overrun-55)
+Finished game 552 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 199 - 176 - 178  [0.521] 553
+Started game 557 of 600 (overrun-55 vs overrun-fixed)
+Finished game 557 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 199 - 177 - 178  [0.520] 554
+Started game 558 of 600 (overrun-fixed vs overrun-55)
+Finished game 554 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 199 - 177 - 179  [0.520] 555
+Started game 559 of 600 (overrun-55 vs overrun-fixed)
+Finished game 555 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 200 - 177 - 179  [0.521] 556
+Started game 560 of 600 (overrun-fixed vs overrun-55)
+Finished game 556 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 200 - 178 - 179  [0.520] 557
+Started game 561 of 600 (overrun-55 vs overrun-fixed)
+Finished game 558 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 201 - 178 - 179  [0.521] 558
+Started game 562 of 600 (overrun-fixed vs overrun-55)
+Finished game 559 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 202 - 178 - 179  [0.521] 559
+Started game 563 of 600 (overrun-55 vs overrun-fixed)
+Finished game 560 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 202 - 179 - 179  [0.521] 560
+...      overrun-55 playing White: 103 - 83 - 94  [0.536] 280
+...      overrun-55 playing Black: 99 - 96 - 85  [0.505] 280
+...      White vs Black: 199 - 182 - 179  [0.515] 560
+Elo difference: 14.3 +/- 23.7, LOS: 88.1 %, DrawRatio: 32.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 564 of 600 (overrun-fixed vs overrun-55)
+Finished game 561 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 203 - 179 - 179  [0.521] 561
+Started game 565 of 600 (overrun-55 vs overrun-fixed)
+Finished game 562 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 203 - 180 - 179  [0.520] 562
+Started game 566 of 600 (overrun-fixed vs overrun-55)
+Finished game 564 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 204 - 180 - 179  [0.521] 563
+Started game 567 of 600 (overrun-55 vs overrun-fixed)
+Finished game 563 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 205 - 180 - 179  [0.522] 564
+Started game 568 of 600 (overrun-fixed vs overrun-55)
+Finished game 566 (overrun-fixed vs overrun-55): 0-1 {Black mates}
+Score of overrun-55 vs overrun-fixed: 206 - 180 - 179  [0.523] 565
+Started game 569 of 600 (overrun-55 vs overrun-fixed)
+Finished game 565 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 207 - 180 - 179  [0.524] 566
+Started game 570 of 600 (overrun-fixed vs overrun-55)
+Finished game 567 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 208 - 180 - 179  [0.525] 567
+Started game 571 of 600 (overrun-55 vs overrun-fixed)
+Finished game 568 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 208 - 181 - 179  [0.524] 568
+Started game 572 of 600 (overrun-fixed vs overrun-55)
+Finished game 569 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 209 - 181 - 179  [0.525] 569
+Started game 573 of 600 (overrun-55 vs overrun-fixed)
+Finished game 570 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 209 - 182 - 179  [0.524] 570
+...      overrun-55 playing White: 108 - 83 - 94  [0.544] 285
+...      overrun-55 playing Black: 101 - 99 - 85  [0.504] 285
+...      White vs Black: 207 - 184 - 179  [0.520] 570
+Elo difference: 16.5 +/- 23.6, LOS: 91.4 %, DrawRatio: 31.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 574 of 600 (overrun-fixed vs overrun-55)
+Finished game 573 (overrun-55 vs overrun-fixed): 0-1 {Black mates}
+Score of overrun-55 vs overrun-fixed: 209 - 183 - 179  [0.523] 571
+Started game 575 of 600 (overrun-55 vs overrun-fixed)
+Finished game 571 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 209 - 184 - 179  [0.522] 572
+Started game 576 of 600 (overrun-fixed vs overrun-55)
+Finished game 572 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 209 - 184 - 180  [0.522] 573
+Started game 577 of 600 (overrun-55 vs overrun-fixed)
+Finished game 574 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 209 - 185 - 180  [0.521] 574
+Started game 578 of 600 (overrun-fixed vs overrun-55)
+Finished game 575 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 209 - 185 - 181  [0.521] 575
+Started game 579 of 600 (overrun-55 vs overrun-fixed)
+Finished game 576 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by insufficient mating material}
+Score of overrun-55 vs overrun-fixed: 209 - 185 - 182  [0.521] 576
+Started game 580 of 600 (overrun-fixed vs overrun-55)
+Finished game 577 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 209 - 186 - 182  [0.520] 577
+Started game 581 of 600 (overrun-55 vs overrun-fixed)
+Finished game 578 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 210 - 186 - 182  [0.521] 578
+Started game 582 of 600 (overrun-fixed vs overrun-55)
+Finished game 579 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 210 - 187 - 182  [0.520] 579
+Started game 583 of 600 (overrun-55 vs overrun-fixed)
+Finished game 580 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 210 - 188 - 182  [0.519] 580
+...      overrun-55 playing White: 108 - 87 - 95  [0.536] 290
+...      overrun-55 playing Black: 102 - 101 - 87  [0.502] 290
+...      White vs Black: 209 - 189 - 182  [0.517] 580
+Elo difference: 13.2 +/- 23.4, LOS: 86.5 %, DrawRatio: 31.4 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 584 of 600 (overrun-fixed vs overrun-55)
+Finished game 582 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 211 - 188 - 182  [0.520] 581
+Started game 585 of 600 (overrun-55 vs overrun-fixed)
+Finished game 581 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 211 - 189 - 182  [0.519] 582
+Started game 586 of 600 (overrun-fixed vs overrun-55)
+Finished game 584 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 212 - 189 - 182  [0.520] 583
+Started game 587 of 600 (overrun-55 vs overrun-fixed)
+Finished game 583 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 212 - 190 - 182  [0.519] 584
+Started game 588 of 600 (overrun-fixed vs overrun-55)
+Finished game 586 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 213 - 190 - 182  [0.520] 585
+Started game 589 of 600 (overrun-55 vs overrun-fixed)
+Finished game 587 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 213 - 190 - 183  [0.520] 586
+Started game 590 of 600 (overrun-fixed vs overrun-55)
+Finished game 588 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 213 - 191 - 183  [0.519] 587
+Started game 591 of 600 (overrun-55 vs overrun-fixed)
+Finished game 590 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 213 - 192 - 183  [0.518] 588
+Started game 592 of 600 (overrun-fixed vs overrun-55)
+Finished game 589 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 214 - 192 - 183  [0.519] 589
+Started game 593 of 600 (overrun-55 vs overrun-fixed)
+Finished game 585 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 214 - 192 - 184  [0.519] 590
+...      overrun-55 playing White: 109 - 89 - 97  [0.534] 295
+...      overrun-55 playing Black: 105 - 103 - 87  [0.503] 295
+...      White vs Black: 212 - 194 - 184  [0.515] 590
+Elo difference: 13.0 +/- 23.3, LOS: 86.3 %, DrawRatio: 31.2 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+Started game 594 of 600 (overrun-fixed vs overrun-55)
+Finished game 591 (overrun-55 vs overrun-fixed): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 214 - 193 - 184  [0.518] 591
+Started game 595 of 600 (overrun-55 vs overrun-fixed)
+Finished game 592 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 215 - 193 - 184  [0.519] 592
+Started game 596 of 600 (overrun-fixed vs overrun-55)
+Finished game 595 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 216 - 193 - 184  [0.519] 593
+Started game 597 of 600 (overrun-55 vs overrun-fixed)
+Finished game 593 (overrun-55 vs overrun-fixed): 1/2-1/2 {Draw by adjudication}
+Score of overrun-55 vs overrun-fixed: 216 - 193 - 185  [0.519] 594
+Started game 598 of 600 (overrun-fixed vs overrun-55)
+Finished game 594 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 216 - 194 - 185  [0.518] 595
+Started game 599 of 600 (overrun-55 vs overrun-fixed)
+Finished game 596 (overrun-fixed vs overrun-55): 0-1 {Black wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 217 - 194 - 185  [0.519] 596
+Started game 600 of 600 (overrun-fixed vs overrun-55)
+Finished game 598 (overrun-fixed vs overrun-55): 1/2-1/2 {Draw by 3-fold repetition}
+Score of overrun-55 vs overrun-fixed: 217 - 194 - 186  [0.519] 597
+Finished game 600 (overrun-fixed vs overrun-55): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 217 - 195 - 186  [0.518] 598
+Finished game 599 (overrun-55 vs overrun-fixed): 1-0 {White wins by adjudication}
+Score of overrun-55 vs overrun-fixed: 218 - 195 - 186  [0.519] 599
+Finished game 597 (overrun-55 vs overrun-fixed): 0-1 {Black mates}
+Score of overrun-55 vs overrun-fixed: 218 - 196 - 186  [0.518] 600
+...      overrun-55 playing White: 111 - 91 - 98  [0.533] 300
+...      overrun-55 playing Black: 107 - 105 - 88  [0.503] 300
+...      White vs Black: 216 - 198 - 186  [0.515] 600
+Elo difference: 12.7 +/- 23.1, LOS: 86.0 %, DrawRatio: 31.0 %
+SPRT: llr 0 (0.0%), lbound -inf, ubound inf
+
+Player: overrun-55
+   "Draw by 3-fold repetition": 82
+   "Draw by adjudication": 55
+   "Draw by fifty moves rule": 9
+   "Draw by insufficient mating material": 37
+   "Draw by stalemate": 3
+   "Loss: Black mates": 4
+   "Loss: Black wins by adjudication": 87
+   "Loss: White mates": 9
+   "Loss: White wins by adjudication": 96
+   "Win: Black mates": 1
+   "Win: Black wins by adjudication": 106
+   "Win: White mates": 5
+   "Win: White wins by adjudication": 106
+Player: overrun-fixed
+   "Draw by 3-fold repetition": 82
+   "Draw by adjudication": 55
+   "Draw by fifty moves rule": 9
+   "Draw by insufficient mating material": 37
+   "Draw by stalemate": 3
+   "Loss: Black mates": 1
+   "Loss: Black wins by adjudication": 106
+   "Loss: White mates": 5
+   "Loss: White wins by adjudication": 106
+   "Win: Black mates": 4
+   "Win: Black wins by adjudication": 87
+   "Win: White mates": 9
+   "Win: White wins by adjudication": 96
+Finished match
