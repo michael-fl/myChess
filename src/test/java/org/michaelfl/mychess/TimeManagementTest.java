@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.TimeManagement.TimeControlInput;
 
@@ -34,6 +36,9 @@ class TimeManagementTest {
 
     /** A one-minute clock spread over the default 30 moves: 60 000 / 31. */
     private static final int ONE_MINUTE_DEFAULT_RATE = 1_935;
+
+    /** Close to the soft limit at the start of a 60+1 game (60 000 / 31 + 800 = 2,735 ms), rounded to 2.5 s for readable sums. */
+    private static final int TWO_AND_A_HALF_SECONDS = 2_500;
 
     /** 80 % of {@link #ONE_SECOND}. */
     private static final int EIGHTY_PERCENT_OF_ONE_SECOND = 800;
@@ -157,6 +162,17 @@ class TimeManagementTest {
                 "movesToGo 0 divides by 1 and must be capped at clock - 50 ms");
     }
 
+    /** The hard-limit tests below are written for the fixed one-second overrun; the share is tested separately. */
+    @BeforeEach
+    void useTheFixedOverrun() {
+        TimeManagement.setOverrunPercent(TimeManagement.FIXED_OVERRUN_PERCENT);
+    }
+
+    @AfterEach
+    void restoreTheDefaultOverrun() {
+        TimeManagement.setOverrunPercent(TimeManagement.DEFAULT_OVERRUN_PERCENT);
+    }
+
     // ---- calculateHardLimit ----
 
     @Test
@@ -210,6 +226,91 @@ class TimeManagementTest {
         int hardLimit = TimeManagement.calculateHardLimit(ONE_MINUTE, ONE_MINUTE);
 
         assertEquals(12_000, hardLimit, "a soft limit as large as the clock must be capped at 20 % of it");
+    }
+
+    // ---- the overrun as a share of the soft limit (TimeOverrunPercent) ----
+
+    @Test
+    void overrunPercent_fixedSetting_keepsTheFixedSecond() {
+        assertEquals(TimeManagement.SOFT_LIMIT_MAX_OVERRUN_MS, TimeManagement.maxOverrunMillis(TWO_AND_A_HALF_SECONDS),
+                "the fixed setting must give one second, whatever the soft limit");
+    }
+
+    @Test
+    void overrunPercent_default_isTheMeasuredFiftyFivePercent() {
+        TimeManagement.setOverrunPercent(TimeManagement.DEFAULT_OVERRUN_PERCENT);
+
+        assertEquals(55, TimeManagement.DEFAULT_OVERRUN_PERCENT, "the default must stay the measured 55 %");
+        assertEquals(2_000 + 1_100, TimeManagement.calculateHardLimit(2_000, ONE_MINUTE),
+                "with the default, a 2 s soft limit gets 55 % (1.1 s) of overrun, below 4 x soft and 20 % of the clock");
+    }
+
+    @Test
+    void hardLimit_withOverrunPercent_isTheSoftLimitPlusThatShare() {
+        try {
+            TimeManagement.setOverrunPercent(50);
+
+            assertEquals(TWO_AND_A_HALF_SECONDS + 1_250, TimeManagement.calculateHardLimit(TWO_AND_A_HALF_SECONDS, ONE_MINUTE),
+                    "50 % of a 2.5 s soft limit is 1.25 s, below 4 x soft (10 s) and 20 % of the clock (12 s)");
+        } finally {
+            TimeManagement.setOverrunPercent(TimeManagement.FIXED_OVERRUN_PERCENT);
+        }
+    }
+
+    @Test
+    void hardLimit_withOverrunPercent_scalesWithTheSoftLimit() {
+        try {
+            TimeManagement.setOverrunPercent(50);
+
+            assertEquals(15_000, TimeManagement.calculateHardLimit(10_000, 10 * ONE_MINUTE),
+                    "at a long control a 10 s soft limit gets 5 s overrun, where the fixed setting would allow only 1 s");
+        } finally {
+            TimeManagement.setOverrunPercent(TimeManagement.FIXED_OVERRUN_PERCENT);
+        }
+    }
+
+    @Test
+    void hardLimit_withLargeOverrunPercent_isStillCappedAtFourTimesTheSoftLimit() {
+        try {
+            TimeManagement.setOverrunPercent(500);
+
+            assertEquals(4_000, TimeManagement.calculateHardLimit(ONE_SECOND, ONE_MINUTE),
+                    "an overrun of 500 % would give 6 s, but 4 x the soft limit must still cap it at 4 s");
+        } finally {
+            TimeManagement.setOverrunPercent(TimeManagement.FIXED_OVERRUN_PERCENT);
+        }
+    }
+
+    @Test
+    void hardLimit_withOverrunPercentAndShortClock_isStillCappedAtAFifthOfTheClock() {
+        try {
+            TimeManagement.setOverrunPercent(100);
+
+            assertEquals(1_000, TimeManagement.calculateHardLimit(ONE_SECOND, 5_000),
+                    "with 5 s left, 20 % of the clock (1 s) must still cap the hard limit below soft + 100 % (2 s)");
+        } finally {
+            TimeManagement.setOverrunPercent(TimeManagement.FIXED_OVERRUN_PERCENT);
+        }
+    }
+
+    @Test
+    void hardLimit_withOverrunPercentButNoClock_equalsTheSoftLimit() {
+        try {
+            TimeManagement.setOverrunPercent(50);
+
+            assertEquals(ONE_SECOND, TimeManagement.calculateHardLimit(ONE_SECOND, Integer.MAX_VALUE),
+                    "without a clock the hard limit must equal the soft limit whatever the overrun setting");
+        } finally {
+            TimeManagement.setOverrunPercent(TimeManagement.FIXED_OVERRUN_PERCENT);
+        }
+    }
+
+    @Test
+    void setOverrunPercent_negative_isRejected() {
+        assertThrows(IllegalArgumentException.class, () -> TimeManagement.setOverrunPercent(-1),
+                "a negative overrun would put the hard limit before the soft limit and must be rejected");
+        assertEquals(TimeManagement.FIXED_OVERRUN_PERCENT, TimeManagement.getOverrunPercent(),
+                "a rejected value must leave the setting unchanged");
     }
 
     // ---- TimeManagementInstance: bookkeeping per completed iteration ----
