@@ -145,8 +145,54 @@ class UciHandlerTest {
         }
     }
 
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void uci_onHandshake_announcesTheTimeOverrunOption() {
+        runHandler("uci\nquit\n")
+                .expect("^option name TimeOverrunPercent type spin default 55 min 0 max 300$");
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void setoption_timeOverrunPercent_setsTheOverrun() {
+        try {
+            runHandler("setoption name TimeOverrunPercent value 50\nquit\n");
+
+            assertEquals(50, TimeManagement.getOverrunPercent(), "TimeOverrunPercent 50 must set an overrun of half the soft limit");
+        } finally {
+            resetTimeOptions();
+        }
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void setoption_timeOverrunPercentOutOfRange_isClamped() {
+        try {
+            runHandler("setoption name TimeOverrunPercent value 900\nquit\n");
+
+            assertEquals(UciHandler.MAX_TIME_OVERRUN_PERCENT, TimeManagement.getOverrunPercent(),
+                    "a percent above the maximum must be clamped to 300");
+        } finally {
+            resetTimeOptions();
+        }
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void setoption_timeOverrunPercentNotANumber_isIgnored() {
+        try {
+            runHandler("setoption name TimeOverrunPercent value long\nquit\n");
+
+            assertEquals(TimeManagement.DEFAULT_OVERRUN_PERCENT, TimeManagement.getOverrunPercent(),
+                    "a non-numeric value must leave the default overrun unchanged");
+        } finally {
+            resetTimeOptions();
+        }
+    }
+
     private static void resetTimeOptions() {
         TimeManagement.setRiskFactor(TimeManagement.DEFAULT_RISK_FACTOR);
+        TimeManagement.setOverrunPercent(TimeManagement.DEFAULT_OVERRUN_PERCENT);
     }
 
     @Test
@@ -875,14 +921,14 @@ class UciHandlerTest {
 
     @Test
     void watcherTimeout_withAmpleClock_isTheHardLimitPlusGrace() {
-        // 1 s soft limit, 60 s clock: hard limit = soft + 1 s = 2 s
-        assertEquals(2_000 + UciHandler.WATCHER_GRACE_MILLIS, UciHandler.watcherTimeoutMillis(1_000, 60_000),
+        // 1 s soft limit, 60 s clock: hard limit = soft + 55 % of it (the default overrun) = 1.55 s
+        assertEquals(1_550 + UciHandler.WATCHER_GRACE_MILLIS, UciHandler.watcherTimeoutMillis(1_000, 60_000),
                 "with a clock the watcher must wait until the hard limit, not just the budget, plus the grace");
     }
 
     @Test
     void watcherTimeout_withShortClock_followsTheCappedHardLimit() {
-        // 1 s soft limit, 5 s clock: 20 % of the clock (1 s) caps the hard limit below soft + 1 s
+        // 1 s soft limit, 5 s clock: 20 % of the clock (1 s) caps the hard limit below soft + 55 %
         assertEquals(1_000 + UciHandler.WATCHER_GRACE_MILLIS, UciHandler.watcherTimeoutMillis(1_000, 5_000),
                 "the watcher must follow the hard limit's clock cap, so a short clock is not overspent");
     }
