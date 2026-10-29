@@ -182,7 +182,7 @@ final class UciHandler {
         writeLine("option name UCI_Chess960 type check default false");
         writeLine("option name " + OPTION_TIME_RISK_PERCENT + " type spin default " + DEFAULT_TIME_RISK_PERCENT
                 + " min " + MIN_TIME_RISK_PERCENT + " max " + MAX_TIME_RISK_PERCENT);
-        writeLine("option name " + OPTION_TIME_OVERRUN_PERCENT + " type spin default " + TimeManagement.FIXED_OVERRUN_PERCENT
+        writeLine("option name " + OPTION_TIME_OVERRUN_PERCENT + " type spin default " + TimeManagement.DEFAULT_OVERRUN_PERCENT
                 + " min " + MIN_TIME_OVERRUN_PERCENT + " max " + MAX_TIME_OVERRUN_PERCENT);
         writeLine("uciok");
     }

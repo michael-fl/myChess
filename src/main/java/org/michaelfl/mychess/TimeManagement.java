@@ -76,17 +76,25 @@ public final class TimeManagement {
      *
      * <p>As an absolute time it only fits short controls: at 60+1, with a soft limit of about 1-3 s,
      * one second is a substantial overrun, while at long controls it is negligible and the cap
-     * effectively disappears. {@link #setOverrunPercent} replaces it by a share of the soft limit;
-     * this fixed value applies while that share is {@value #FIXED_OVERRUN_PERCENT}, the default.
+     * effectively disappears. Since 4.11.0 the default is a share of the soft limit,
+     * {@value #DEFAULT_OVERRUN_PERCENT} %; this fixed value applies only when {@link #setOverrunPercent}
+     * is given {@value #FIXED_OVERRUN_PERCENT}.
      */
     static final int SOFT_LIMIT_MAX_OVERRUN_MS = 1_000;
 
     /**
      * Value of {@link #overrunPercent} that selects the fixed {@link #SOFT_LIMIT_MAX_OVERRUN_MS}
-     * instead of a share of the soft limit. The default, so the engine behaves like 4.10.0 unless the
-     * UCI option {@code TimeOverrunPercent} is set.
+     * instead of a share of the soft limit, the behavior of 4.10.0.
      */
     static final int FIXED_OVERRUN_PERCENT = 0;
+
+    /**
+     * Default of {@link #overrunPercent}: a started iteration may run 55 % of the soft limit past it.
+     * At 60+1 that equals the fixed second at the median move (soft limit 1,812 ms in the 4.9.2
+     * games); unlike the second it scales with the control. Smoke tests against the fixed second:
+     * +12.7 +- 23.1 Elo at 60+1 (600 games) and +12.4 +- 34.6 at 180+2 (280 games), no time losses.
+     */
+    static final int DEFAULT_OVERRUN_PERCENT = 55;
 
     private static final float HARD_LIMIT_REMAINING_TIME_FACTOR = 0.2f;
 
@@ -111,7 +119,7 @@ public final class TimeManagement {
      * {@value #FIXED_OVERRUN_PERCENT} keeps the fixed {@link #SOFT_LIMIT_MAX_OVERRUN_MS}. Set through
      * the UCI option {@code TimeOverrunPercent}. Process-wide like {@link #riskFactor}.
      */
-    private static volatile int overrunPercent = FIXED_OVERRUN_PERCENT;
+    private static volatile int overrunPercent = DEFAULT_OVERRUN_PERCENT;
 
     /**
      * The time-related arguments of one UCI {@code go} command, as sent by the GUI.

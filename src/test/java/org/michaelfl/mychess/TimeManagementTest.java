@@ -1,5 +1,7 @@
 package org.michaelfl.mychess;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.TimeManagement.TimeControlInput;
 
@@ -160,6 +162,17 @@ class TimeManagementTest {
                 "movesToGo 0 divides by 1 and must be capped at clock - 50 ms");
     }
 
+    /** The hard-limit tests below are written for the fixed one-second overrun; the share is tested separately. */
+    @BeforeEach
+    void useTheFixedOverrun() {
+        TimeManagement.setOverrunPercent(TimeManagement.FIXED_OVERRUN_PERCENT);
+    }
+
+    @AfterEach
+    void restoreTheDefaultOverrun() {
+        TimeManagement.setOverrunPercent(TimeManagement.DEFAULT_OVERRUN_PERCENT);
+    }
+
     // ---- calculateHardLimit ----
 
     @Test
@@ -218,11 +231,18 @@ class TimeManagementTest {
     // ---- the overrun as a share of the soft limit (TimeOverrunPercent) ----
 
     @Test
-    void overrunPercent_default_keepsTheFixedSecond() {
-        assertEquals(TimeManagement.FIXED_OVERRUN_PERCENT, TimeManagement.getOverrunPercent(),
-                "without the option the overrun must stay the fixed one second of 4.10.0");
+    void overrunPercent_fixedSetting_keepsTheFixedSecond() {
         assertEquals(TimeManagement.SOFT_LIMIT_MAX_OVERRUN_MS, TimeManagement.maxOverrunMillis(TWO_AND_A_HALF_SECONDS),
-                "the fixed setting must not depend on the soft limit");
+                "the fixed setting must give one second, whatever the soft limit");
+    }
+
+    @Test
+    void overrunPercent_default_isTheMeasuredFiftyFivePercent() {
+        TimeManagement.setOverrunPercent(TimeManagement.DEFAULT_OVERRUN_PERCENT);
+
+        assertEquals(55, TimeManagement.DEFAULT_OVERRUN_PERCENT, "the default must stay the measured 55 %");
+        assertEquals(2_000 + 1_100, TimeManagement.calculateHardLimit(2_000, ONE_MINUTE),
+                "with the default, a 2 s soft limit gets 55 % (1.1 s) of overrun, below 4 x soft and 20 % of the clock");
     }
 
     @Test
