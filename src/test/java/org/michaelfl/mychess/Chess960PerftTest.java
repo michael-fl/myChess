@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * so the castling move and its undo lie inside the counted tree. The positions are reached the
  * way the UCI handler reaches them, from the start FEN via {@link Fen#importChess960FEN} and the
  * UCI moves replayed through {@link Game}. The reference counts in {@code perft960.csv} were
- * computed with python-chess ({@code myChess-lab/scripts/perft960-reference.py}).
+ * computed with python-chess ({@code myChess-Lab/scripts/perft960-reference.py}).
  *
  * <p>Besides the count, every case checks that the board is restored exactly after the
  * enumeration: a castling undo that leaves a piece behind would show up there even when the

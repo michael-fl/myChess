@@ -1,8 +1,8 @@
 # Profiling 4.8.2: JFR over bench v2 d8, cross-checked against the inlining log (roadmap row 3a)
 
-Run 2026-10-09 06:17–06:20 (runner and raw files in the lab, `myChess-lab/scripts/profiling-4.8.2.sh` and `myChess-lab/results/profiling-4.8.2/`), build `versions/4.8.2`, which has the same engine as master as of `a57a7de`. Both runs reproduce the release signature **169,439,389** nodes, so the profiled search is exactly the release search.
+Run 2026-10-09 06:17–06:20 (runner and raw files in the lab, `myChess-Lab/scripts/profiling-4.8.2.sh` and `myChess-Lab/results/profiling-4.8.2/`), build `versions/4.8.2`, which has the same engine as master as of `a57a7de`. Both runs reproduce the release signature **169,439,389** nodes, so the profiled search is exactly the release search.
 
-- JFR `settings=profile`, 7841 execution samples (`bench-v2-d8.jfr`). Stacks were exported again with `--stack-depth 64` (`execution-samples-deep.txt`) and aggregated with `myChess-lab/scripts/jfr-hot-methods.py` into `hot-methods.txt`.
+- JFR `settings=profile`, 7841 execution samples (`bench-v2-d8.jfr`). Stacks were exported again with `--stack-depth 64` (`execution-samples-deep.txt`) and aggregated with `myChess-Lab/scripts/jfr-hot-methods.py` into `hot-methods.txt`.
 - PrintInlining + PrintCompilation in a separate run (`inlining.log`).
 
 This is one run, so each share carries sampling noise of about ±0.7 percentage points at 10 % (binomial, 7841 samples). JFR attributes inlined code to its own Java method, so "self" here means the method's own bytecode whether or not the JIT inlined it.
@@ -93,7 +93,7 @@ At the roadmap's rule of thumb, 50–70 Elo per doubling, 7 % is worth roughly 5
 
 ## Inside the evaluation: hotspots by term (4.8.3, 2026-10-12)
 
-Requested by the owner on 2026-10-09: the hot spots inside `WeightingFunction.calculate`, down to single terms where measurable. Runner and raw files are in the lab: `myChess-lab/scripts/eval-hotspots-4.8.3.sh`, `eval-hotspots-analyze.py`, `eval-hotspots-terms.py` and `myChess-lab/results/eval-hotspots-4.8.3/`.
+Requested by the owner on 2026-10-09: the hot spots inside `WeightingFunction.calculate`, down to single terms where measurable. Runner and raw files are in the lab: `myChess-Lab/scripts/eval-hotspots-4.8.3.sh`, `eval-hotspots-analyze.py`, `eval-hotspots-terms.py` and `myChess-Lab/results/eval-hotspots-4.8.3/`.
 
 **Setup.** Build `versions/4.8.3`, whose evaluation is byte-for-byte the one of 4.8.2: `WeightingFunction` and `PieceSquareTables` are unchanged. Bench v2 d8 ran three times in one JVM, and all three runs reproduce **169,439,389**. JFR `settings=profile` with `jdk.ExecutionSample#period=2ms` gave 126,173 samples on the search thread, 16 times the 2026-10-09 recording. The evaluation is **43.9 % ± 0.1** of them, which matches the 43.3 % measured above.
 
@@ -128,7 +128,7 @@ All candidates are for the owner, who writes production code. Each one should ke
 
 ## JIT cold start: what a fresh JVM loses in the first moves (4.8.3, 2026-10-12)
 
-Requested by the owner on 2026-10-10. lichess-bot starts a new engine process for every game, so every game begins on a JVM whose JIT has compiled nothing yet. Runner and data are in the lab: `myChess-lab/scripts/jit-cold-start.py`, `jit-cold-start-analyze.py` and `myChess-lab/results/jit-cold-start/`.
+Requested by the owner on 2026-10-10. lichess-bot starts a new engine process for every game, so every game begins on a JVM whose JIT has compiled nothing yet. Runner and data are in the lab: `myChess-Lab/scripts/jit-cold-start.py`, `jit-cold-start-analyze.py` and `myChess-Lab/results/jit-cold-start/`.
 
 **Setup.** Build `versions/4.8.3` through its UCI wrapper, so the JVM flags are the production ones. Five of the bot's Lichess games, and in each the first ten positions with myChess to move. A fresh JVM plays them in order with `go movetime T`. Then the same JVM receives `ucinewgame`, which clears the TT and the iteration timings, and plays them again, so the second pass differs from the first only in the JIT state. Each game is repeated five times with a fresh JVM, at T = 1000 ms and T = 250 ms, for 50 JVM runs in total. The measure is the node count and depth of the last completed iteration, cold against warm. The interval is 95 % over the 25 runs per cell.
 

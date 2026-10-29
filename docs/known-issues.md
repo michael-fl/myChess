@@ -1221,7 +1221,7 @@ The measurement used bench v2 at depth 8, on master `e6fa6e5` plus counters (bra
 | in check, stand-pat returned anyway | 3,346,170 | 69.5 % of in-check nodes |
 | in check and actually checkmated | 1,860,249 | 38.6 % of in-check nodes |
 
-No capture escapes a mated node. So all 1.86 M mated nodes returned their static evaluation instead of a mate score. Raw output and a summary are in `myChess-lab/results/qs-in-check-count*`.
+No capture escapes a mated node. So all 1.86 M mated nodes returned their static evaluation instead of a mate score. Raw output and a summary are in `myChess-Lab/results/qs-in-check-count*`.
 
 ### What is not known
 

@@ -40,6 +40,9 @@
 #   test-results/gauntlet-king-line-stdout.log     cutechess log, standings every 10 games
 #   test-results/ordo-gauntlet-king-line.txt       Ordo rating list
 
+# Workspace root (holds myChess, myChess-Lab, cutechess, ordo, lichess-bot); override with CHESS_ROOT.
+CHESS_ROOT=${CHESS_ROOT:-$(cd "$(dirname "$0")/../.." && pwd)}
+
 set -u
 
 # --- keep the machine awake for the whole run (idempotent re-exec) ----------
@@ -50,8 +53,8 @@ fi
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT" || exit 1
 
-CUTECHESS="/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli"
-ORDO="/Users/mf/_PRIVAT_/New-Stuff/ordo/ordo"
+CUTECHESS="$CHESS_ROOT/cutechess/build/cutechess-cli"
+ORDO="$CHESS_ROOT/ordo/ordo"
 OPENINGS="2moves_v2.pgn"
 RESULTS="test-results"
 JAVA_HOME_DIR="/Library/Java/JavaVirtualMachines/amazon-corretto-25.jdk/Contents/Home"

@@ -1720,7 +1720,7 @@ of the good ones.
 > is written out in the prose below, and their inputs, the PGNs under `test-results/`, are all
 > still on disk. What is gone is the ability to re-run the same analysis cheaply on new games,
 > which would have been worth having for the anchor gauntlet. Successors belong in
-> `../myChess-lab/scripts`, outside `/tmp`; the scanner names are kept below because they say
+> `../myChess-Lab/scripts`, outside `/tmp`; the scanner names are kept below because they say
 > what was computed, not because the files can still be opened.
 
 § 4.14 closed the file-danger term as measured. Two redesigns were then proposed, both aimed at
@@ -2164,7 +2164,7 @@ shown to be worth ≥ 15 Elo", which is expressly not "neutral". 4200 games brin
 | score | **1544 – 1442 – 1214** `[0.512]` over 4200 games |
 | Elo | **+8.4 ± 8.9**, LOS 96.9 %, interval **[−0.4, +17.3]** |
 | draws | 28.9 % |
-| runner | `myChess-lab/scripts/run-attack-units-corner.sh` |
+| runner | `myChess-Lab/scripts/run-attack-units-corner.sh` |
 | PGN | `test-results/match-attack-units-corner.pgn` |
 
 The point estimate reproduces attempt five almost exactly — +9.1 then, +8.4 now, on a base two
@@ -2227,7 +2227,7 @@ the end and a measurement locating the moment the game stopped being savable.
 
 #### Method, and the coverage that fixed the thresholds
 
-`myChess-lab/scripts/tipping-phase.py` scans each decisive game backward from its end and finds the
+`myChess-Lab/scripts/tipping-phase.py` scans each decisive game backward from its end and finds the
 last ply at which Stockfish 18 (depth 12, one thread) still evaluated the losing side above the
 threshold; the ply after that is where the game tipped for good, and the reported quantity is
 myChess's own game phase at that ply. Both arms were analysed with `--side lost`, 1442 and 1544
@@ -2422,7 +2422,7 @@ This is § 4.3's pattern again, with Zurichess the outlier and the term carrying
 
 **What is closed.** The attack-unit term as built (zone, units, fitted table, linear phase blend) is at or near its local optimum in shape and in height. A midpoint test (0.0145) was ruled out: around a flat optimum it could gain a couple of Elo at most, which 4200 games cannot resolve. **What is not closed:** king safety itself. The next lever is a different mechanism, for example one that also counts the defenders of the zone, rather than another retune of this term.
 
-Records: `myChess-lab/preregistration/king-attack-factor-match.md` and `myChess-lab/results/texel-king-attack-factor/SUMMARY.md`. The games are in `test-results/match-king-attack-factor-0.019-seg01.pgn`.
+Records: `myChess-Lab/preregistration/king-attack-factor-match.md` and `myChess-Lab/results/texel-king-attack-factor/SUMMARY.md`. The games are in `test-results/match-king-attack-factor-0.019-seg01.pgn`.
 
 ---
 

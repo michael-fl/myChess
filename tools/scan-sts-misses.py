@@ -22,7 +22,7 @@ Input is the archived runner output plus the suite file: every per-position line
 INTERPRETER. ``python-chess`` is not installed in any system python on this machine; it
 comes with the lichess-bot virtualenv, which is what the other scanners here use too:
 
-    PY=/Users/mf/_PRIVAT_/New-Stuff/lichess-bot/venv/bin/python3
+    PY=$CHESS_ROOT/lichess-bot/venv/bin/python3
 
 Usage:
     $PY tools/scan-sts-misses.py                               # depth 20, all 87

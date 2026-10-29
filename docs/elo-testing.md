@@ -14,7 +14,7 @@ The reference setup used for every measurement run (`test01`,
 `test02`, …) is:
 
 ```sh
-/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+/Users/mf/_PRIVAT_/workspaces/chess/cutechess/build/cutechess-cli \
     -engine name=myChess cmd=./mychess-uci.sh proto=uci \
     -engine name=SF-1600 cmd=stockfish proto=uci \
           option.UCI_LimitStrength=true option.UCI_Elo=1600 \

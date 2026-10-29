@@ -181,7 +181,7 @@ This suite surfaced the latent en-passant Zobrist-drift bug fixed in v4.0.7: the
 
 ### `Chess960PerftTest` — the same check for Chess960
 
-Perft over 128 Chess960 positions taken from myChess's own lichess games: every start position at depth 4, and for every castling move in those games the position one ply before it at depth 3, so the castling move and its undo lie inside the counted tree. The positions are reached the way the UCI handler reaches them, from the start FEN via `Fen.importChess960FEN` plus the UCI moves replayed through `Game`. The reference counts in `src/test/resources/perft960.csv` come from python-chess (`myChess-lab/scripts/perft960-reference.py`). Besides the count, each case checks that the board is restored exactly after the enumeration.
+Perft over 128 Chess960 positions taken from myChess's own lichess games: every start position at depth 4, and for every castling move in those games the position one ply before it at depth 3, so the castling move and its undo lie inside the counted tree. The positions are reached the way the UCI handler reaches them, from the start FEN via `Fen.importChess960FEN` plus the UCI moves replayed through `Game`. The reference counts in `src/test/resources/perft960.csv` come from python-chess (`myChess-Lab/scripts/perft960-reference.py`). Besides the count, each case checks that the board is restored exactly after the enumeration.
 
 It found the bug fixed in v4.9.3: black could not castle queenside when its own castling rook stood on the king's path (king d8, rook c8, for example), because `MoveGenerator.canDoBlackCastlingQueenSide960` passed the king's square where the rook's belonged. 15 of the 128 positions failed before the fix.
 
