@@ -84,6 +84,7 @@ time-truncated.
 | **4.9.2** | 658,771,177 | **±0** | 107,227,388 (±0) | honest time estimates (every abort recorded) with the start-decision risk factor k = 1.5. A fixed-depth bench never reaches a time limit, so all 55 positions are identical to 4.9.1 (the per-position archive was run from the identical build while it still carried the version 4.10.0) | +23.7 ± 8.9 (4200 games at 60+1 against 4.9.0) | ~1943 |
 | **4.9.3** | 658,771,177 | **±0** | 107,227,388 (±0) | Chess960 castling fix (black queenside castle with the rook on the king's path). The bench positions are standard chess, so all 55 positions are identical to 4.9.2 | — (standard chess unchanged; no match) | ~1943 |
 | **4.10.0** | 658,771,177 | **±0** | 107,227,388 (±0) | Chess960 piece-square tables (flattened first rank for knight, bishop and king in Chess960 games only). The bench positions are standard chess, so all 55 positions are identical to 4.9.3 | +5.5 ± 9.3 in Chess960 (4200 self-play games at 60+1 against 4.9.3); standard chess unchanged, no match | ~1943 |
+| **4.11.0** | 658,771,177 | **±0** | 107,227,388 (±0) | the overrun past the soft limit as a share of it (`TimeOverrunPercent`, default 55). A fixed-depth bench never reaches a time limit, so all 55 positions are identical to 4.10.0 | smoke tests against the fixed second: +12.7 ± 23.1 (60+1), +12.4 ± 34.6 (180+2) | ~1943 |
 
 ### Measured but not a release — `4.6.0-king-line` (2026-09-02, shelved 2026-09-03)
 
@@ -570,6 +571,7 @@ and are historically closed.
 | **4.9.2** | 1,375,937,208 | 658,771,177 | **2.09** | — | — |
 | **4.9.3** | 1,375,937,208 | 658,771,177 | **2.09** | — | — |
 | **4.10.0** | 1,375,937,208 | 658,771,177 | **2.09** | — | — |
+| **4.11.0** | 1,375,937,208 | 658,771,177 | **2.09** | — | — |
 
 **The 4.8.3 row is the first depth-9 reading since 4.7.1**, taken on 2026-10-12 for the `skip-iteration-for-only-move` merge. Master (4.8.2 code) gave the same 1,375,937,208, so the value holds for 4.8.0 through 4.8.3. Its ratio of 2.09 is not comparable to the rows above: 4.8.0 shrank the artificial position 37 by itself, and that alone moves both totals. The realistic columns are empty because `tools/bench.sh` reports only the total; a per-position depth-9 archive would fill them.
 
@@ -951,6 +953,7 @@ nothing.
 | 4.9.2 | 2026-10-22 | 8 | 60 | **169,439,389** (±0) | 98,955 ms | 1,712,287 |
 | 4.9.3 | 2026-10-23 | 8 | 60 | **169,439,389** (±0) | 99,176 ms | 1,708,471 |
 | 4.10.0 | 2026-10-27 | 8 | 60 | **169,439,389** (±0) | 105,869 ms | 1,600,462 |
+| 4.11.0 | 2026-10-29 | 8 | 60 | **169,439,389** (±0) | 99,279 ms | 1,706,699 |
 
 Per-position archive: `test-results/bench/4.6.1-castling-mix-d8.txt`, same column
 layout as the `bench` archives of § 7. The largest position is 6.7 % of the total

@@ -60,12 +60,12 @@ A few useful pointers for first-time use:
 
 ### Running as a UCI engine
 
-Passing `uci` as the first CLI argument switches [`MyChessMain`](src/main/java/org/michaelfl/mychess/MyChessMain.java) from the REPL to the [`UciHandler`](src/main/java/org/michaelfl/mychess/UciHandler.java), which speaks a practical subset of UCI (`uci`, `isready`, `ucinewgame`, `setoption`, `position`, `go`, `stop`, `quit`) plus the `UCI_Chess960` option for Fischer-random play. During development the quickest path is `mvn exec:java -Dexec.arguments="uci"` (shown in the Quick start above).
+Passing `uci` as the first CLI argument switches [`MyChessMain`](src/main/java/org/michaelfl/mychess/MyChessMain.java) from the REPL to the [`UciHandler`](src/main/java/org/michaelfl/mychess/UciHandler.java), which speaks a practical subset of UCI (`uci`, `isready`, `ucinewgame`, `setoption`, `position`, `go`, `stop`, `quit`) plus the `UCI_Chess960` option for Fischer-random play and two time-management options: `TimeRiskPercent` (default 150, how boldly a deeper iteration is started) and `TimeOverrunPercent` (default 55, how far a started iteration may run past the soft limit, in percent of it; 0 = a fixed second). During development the quickest path is `mvn exec:java -Dexec.arguments="uci"` (shown in the Quick start above).
 
 For use in a GUI or a bot bridge, run the packaged jar standalone — `mvn package` puts the runtime dependencies under `target/dependency/` (adjust the version in the jar name to match `pom.xml`):
 
 ```bash
-java -cp "target/my-chess-4.10.0.jar:target/dependency/*" \
+java -cp "target/my-chess-4.11.0.jar:target/dependency/*" \
      org.michaelfl.mychess.MyChessMain uci
 ```
 
