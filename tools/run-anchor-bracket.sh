@@ -60,6 +60,9 @@
 #   test-results/match-<version>-vs-<engine>-stdout.log per-match cutechess log
 #   test-results/ordo-anchor-<version>.txt / .csv       combined Elo estimate
 
+# Workspace root (holds myChess, myChess-Lab, cutechess, ordo, lichess-bot); override with CHESS_ROOT.
+CHESS_ROOT=${CHESS_ROOT:-$(cd "$(dirname "$0")/../.." && pwd)}
+
 set -u
 
 # --- keep the machine awake for the whole run (idempotent re-exec) ----------
@@ -71,8 +74,8 @@ fi
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT" || exit 1
 
-CUTECHESS="/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli"
-ORDO="/Users/mf/_PRIVAT_/New-Stuff/ordo/ordo"
+CUTECHESS="$CHESS_ROOT/cutechess/build/cutechess-cli"
+ORDO="$CHESS_ROOT/ordo/ordo"
 OPENINGS="2moves_v2.pgn"
 RESULTS="test-results"
 

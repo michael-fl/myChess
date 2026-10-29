@@ -10,7 +10,7 @@ import java.util.Locale;
 /**
  * Chess960 weakness, stage 2: which evaluation terms make myChess prefer a worse move?
  *
- * <p>Reads the CSV written by {@code myChess-lab/scripts/c960-stage2-positions.py}: per position the
+ * <p>Reads the CSV written by {@code myChess-Lab/scripts/c960-stage2-positions.py}: per position the
  * position after the move myChess played and after Stockfish's best move. For every row where the
  * two differ, both positions are evaluated statically with {@link WeightingFunction#analyzeFactors}
  * and split into the tunable factor terms (factor value times coefficient), material, and the

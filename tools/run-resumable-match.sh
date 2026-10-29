@@ -61,6 +61,10 @@
 # cutechess writes the PGN in ROUND order, so games finishing out of sequence wait for the
 # older one. Measured on a live match the backlog sat at 4 to 6 games and did not grow; it is
 # bounded by how many finish while the slowest in flight is still going, not by a timer.
+
+# Workspace root (holds myChess, myChess-Lab, cutechess, ordo, lichess-bot); override with CHESS_ROOT.
+CHESS_ROOT=${CHESS_ROOT:-$(cd "$(dirname "$0")/../.." && pwd)}
+
 set -eu
 export LC_ALL=C
 
@@ -78,8 +82,8 @@ TC=${5:-40/60}
 # Repo-relative, so the script travels with the checkout. The two external tools are not in
 # the repository and are overridable, with this machine's locations as the defaults.
 REPO=$(git rev-parse --show-toplevel)
-CUTECHESS=${CUTECHESS:-/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli}
-PYTHON=${PYTHON:-/Users/mf/_PRIVAT_/New-Stuff/lichess-bot/venv/bin/python}
+CUTECHESS=${CUTECHESS:-$CHESS_ROOT/cutechess/build/cutechess-cli}
+PYTHON=${PYTHON:-$CHESS_ROOT/lichess-bot/venv/bin/python}
 BOOK=${BOOK:-2moves_v2-shuffled.pgn}
 
 cd "$REPO"

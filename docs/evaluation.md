@@ -426,7 +426,7 @@ pairing is neutral by construction:
 flat from 0.05 upward. Switching the term off entirely still leaves 88.2 %.
 
 The reference the target was set against: over **276,670 master games** of median Elo 2312
-(`src/test/resources/large.pgn`, tokenized by `myChess-lab/scripts/master-castling-rate.py`), a
+(`src/test/resources/large.pgn`, tokenized by `myChess-Lab/scripts/master-castling-rate.py`), a
 side castles in **87.0 %** of them — 91.9 % as White, 82.0 % as Black. Both sides castle in
 77.4 % of games, neither in 3.5 %. myChess at 88.2 % with the term *removed* is already at
 master practice; the owner's 85 % target sits *below* what the engine does with no castling term
@@ -476,7 +476,7 @@ than touching it, and a shifted SPRT computed afterwards accepts "not worse than
 The difference between rows two and three is about 9.4 Elo with an interval far wider than that;
 separating a 5.4 Elo effect at this error level needs on the order of **11,800 games**. Worse,
 the ramp-only arm measured under the thinner conditions of the two: replaying its own PGN
-(`myChess-lab/scripts/ramp-window.py`) shows the ramp can change a score — non-zero delta *and*
+(`myChess-Lab/scripts/ramp-window.py`) shows the ramp can change a score — non-zero delta *and*
 phase below 16 — in only **5.4 % of plies and 12.5 % of games**, against 11.4 % and 18.7 % for
 the halved arm, because the halved factor leaves more games with a non-zero delta. Seven eighths
 of that match was played by two builds computing identical numbers.

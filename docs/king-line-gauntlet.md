@@ -197,7 +197,7 @@ instruments, one number.
 ### The term does what it was built to do — against foreign opponents
 
 Measured from the PGNs as the count of unsheltered files at and beside the arm's own king
-(`myChess-lab/scripts/king-exposure-overall.py`), one observation per game:
+(`myChess-Lab/scripts/king-exposure-overall.py`), one observation per game:
 
 | arm | unsheltered king files | vs base | t |
 |---|---:|---:|---:|

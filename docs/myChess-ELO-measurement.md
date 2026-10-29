@@ -213,7 +213,7 @@ in with the lid open** (caffeinate can't beat clamshell sleep).
 Per anchor, one match — replace the myChess path and the anchor:
 
 ```sh
-/Users/mf/_PRIVAT_/New-Stuff/cutechess/build/cutechess-cli \
+/Users/mf/_PRIVAT_/workspaces/chess/cutechess/build/cutechess-cli \
     -engine name=myChess-4.3.2 cmd=./versions/4.3.2/mychess-uci.sh proto=uci \
     -engine name=TSCP          cmd=./engines/tscp-1.81-elo1609/tscp.sh proto=xboard \
     -each tc=40/120 \
@@ -238,7 +238,7 @@ cat > /tmp/anchors.csv <<'EOF'
 "Princhess",1985
 "BBC",2019
 EOF
-/Users/mf/_PRIVAT_/New-Stuff/ordo/ordo \
+/Users/mf/_PRIVAT_/workspaces/chess/ordo/ordo \
     -W -D -s 1000 \
     -p /tmp/bracket.pgn -m /tmp/anchors.csv \
     -o test-results/ordo-anchor-4.3.2.txt -c test-results/ordo-anchor-4.3.2.csv
