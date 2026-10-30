@@ -20,15 +20,18 @@ public final class QuiescenceSearch {
     private final WeightingFunction weightingFunction;
     private final Statistics statistics;
     private final int maxQuiescenceDepth;
-    private final long timeout;
     private boolean isTimeout;
     private boolean materialOnlyShortcutEnabled = true;
+    private long timeout;
 
-    public QuiescenceSearch(MoveGenerator moveGenerator, WeightingFunction weightingFunction, Statistics statistics, int maxQuiescenceDepth, long timeout) {
+    public QuiescenceSearch(MoveGenerator moveGenerator, WeightingFunction weightingFunction, Statistics statistics, int maxQuiescenceDepth) {
         this.moveGenerator = moveGenerator;
         this.weightingFunction = weightingFunction;
         this.statistics = statistics;
         this.maxQuiescenceDepth = maxQuiescenceDepth;
+    }
+
+    public void setTimeout(long timeout) {
         this.timeout = timeout;
     }
 

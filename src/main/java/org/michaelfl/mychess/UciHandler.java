@@ -394,8 +394,12 @@ final class UciHandler {
      * <p>The search aborts a running iteration itself at the hard limit
      * ({@link TimeManagement#calculateHardLimit}), but it checks the clock only every 10 000
      * nodes. The watcher is the safety net behind that check, so it waits until the hard limit
-     * plus {@link #WATCHER_GRACE_MILLIS}. Without a clock the hard limit equals the soft limit,
-     * so {@code go movetime} keeps its old bound of budget plus grace.
+     * plus {@link #WATCHER_GRACE_MILLIS}. With a clock that is the largest hard limit the move can
+     * reach: the one of {@link TimeManagement#DIFFICULT_POSITION_SOFT_LIMIT_FACTOR} times the soft
+     * limit, which the search uses when it grants the extra iteration of a difficult position; a
+     * watcher waiting only for the normal hard limit would cancel that iteration. Without a clock
+     * there is no extension and the hard limit equals the soft limit, so {@code go movetime} keeps
+     * its old bound of budget plus grace.
      *
      * @param softLimitMillis      the per-move budget (soft limit) in milliseconds
      * @param remainingClockMillis remaining clock of the side to move, or
@@ -403,7 +407,10 @@ final class UciHandler {
      * @return the watcher's timeout in milliseconds
      */
     static long watcherTimeoutMillis(int softLimitMillis, int remainingClockMillis) {
-        return TimeManagement.calculateHardLimit(softLimitMillis, remainingClockMillis) + WATCHER_GRACE_MILLIS;
+        int maxSoftLimitMillis = remainingClockMillis != Integer.MAX_VALUE ?
+                Math.round(softLimitMillis * TimeManagement.DIFFICULT_POSITION_SOFT_LIMIT_FACTOR) :
+                softLimitMillis;
+        return TimeManagement.calculateHardLimit(maxSoftLimitMillis, remainingClockMillis) + WATCHER_GRACE_MILLIS;
     }
 
     /**

@@ -73,23 +73,19 @@ public final class PositionSearch {
     private final int weightFactor;
     private final Statistics statistics = new Statistics();
     private final boolean silent;
-    private final int softLimitMillis;
     private final long startTimestamp;
-    private final long timeout;
     private boolean isTimeout;
+    private long timeout = Long.MAX_VALUE;
 
     private PositionSearch(ChessEngine engine, NextMoveTask task, Game game) {
         this.task = task;
         this.game = game;
         this.moveGenerator = new MoveGenerator(new MoveSorterImpl(killerMoves));
         this.engineConfig = engine.getConfig();
-        this.softLimitMillis = engineConfig.getMillisPerMove();
-        int hardLimitMillis = TimeManagement.calculateHardLimit(softLimitMillis, engineConfig.getRemainingClockMillis());
         this.startTimestamp = System.currentTimeMillis();
-        this.timeout = startTimestamp + hardLimitMillis;
         this.quiescenceSearch = new QuiescenceSearch(
                 MoveGenerator.forQuiescenceSearch(),
-                new WeightingFunction(), statistics, engineConfig.getMaxQuiescenceDepth(), timeout);
+                new WeightingFunction(), statistics, engineConfig.getMaxQuiescenceDepth());
         this.tt = engine.getTranspositionTable();
         this.weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
         this.silent = engineConfig.isSilent();
@@ -120,14 +116,17 @@ public final class PositionSearch {
         // Integer.MAX_VALUE for depth-unlimited go commands) cannot drive the
         // iteration loop into a runaway — see MAX_SEARCH_DEPTH Javadoc.
         final int maxDepth = Math.min(engineConfig.getMaxDepth(), MAX_SEARCH_DEPTH);
-        final long softTimeout = startTimestamp + softLimitMillis;
-        final var timeManagement = TimeManagement.newInstance(softTimeout, timeout, engineConfig.getPreviousOwnScoreCenti(),
-                engineConfig.getLogTag());
+        final var timeManagement = TimeManagement.newInstance(startTimestamp, engineConfig.getMillisPerMove(),
+                engineConfig.getRemainingClockMillis(), engineConfig.getPreviousOwnScoreCenti(), engineConfig.getLogTag());
 
         for (int depth = 1; depth <= maxDepth && !isTimeout(); depth++) {
             if (timeManagement.shouldSkipIteration(depth)) {
                 break;
             }
+
+            // The time management is allowed to increase the hard limit for an additional iteration
+            timeout = timeManagement.getTimeout();
+            quiescenceSearch.setTimeout(timeout);
 
             log("Current depth: " + depth);
             bestPath = calculateNextMove(depth, bestPath);
