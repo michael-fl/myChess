@@ -13,6 +13,12 @@
 #                                         they must differ, match-elo.py tells the sides apart by them
 #   CANDIDATE_OPTIONS / BASELINE_OPTIONS  extra cutechess engine arguments, space-separated, e.g.
 #                                         CANDIDATE_OPTIONS="option.TimeOverrunPercent=55"
+#   REPEAT=0                              every game gets its own opening instead of one opening per
+#                                         round with colors swapped. Only for log-collecting runs of
+#                                         one build against itself: there the swapped game repeats the
+#                                         first one for 40-80 plies (2026-10-30: 1 of 7 pairs identical,
+#                                         the others diverged at ply 44-77) and duplicates its positions.
+#                                         Never for an Elo match - the color swap is what makes it fair.
 #
 # WHY. cutechess-cli has no --resume, and the acceptance criteria are bounds on the Elo
 # interval: criterion 0 wants the lower bound at +3, which needs an interval near +/-9 and
@@ -159,6 +165,13 @@ done
 ROUNDS_DONE=$((DONE / 2))
 START=$((ROUNDS_DONE + 1))
 REMAINING=$((TOTAL_ROUNDS - ROUNDS_DONE))
+# One round = two games either way; without repeat each game takes the next opening.
+GAMES_ARGS=(-rounds "$REMAINING" -games 2 -repeat)
+
+if [ "${REPEAT:-1}" = "0" ]; then
+    START=$((DONE + 1))
+    GAMES_ARGS=(-rounds $((TOTAL_ROUNDS * 2 - DONE)) -games 1)
+fi
 
 if [ "$REMAINING" -le 0 ]; then
     echo "match complete: $DONE games, $ROUNDS_DONE of $TOTAL_ROUNDS rounds"
@@ -175,7 +188,7 @@ if [ "$DONE" -gt 0 ]; then
     "$PYTHON" "$REPO/tools/match-elo.py" "$CANDIDATE_NAME" test-results/match-"$NAME"-seg*.pgn || true
 fi
 
-if [ $((DONE % 2)) -ne 0 ]; then
+if [ "${REPEAT:-1}" != "0" ] && [ $((DONE % 2)) -ne 0 ]; then
     echo "note: $DONE is odd, so one opening was played once only - a one-game colour imbalance"
 fi
 
@@ -183,7 +196,7 @@ exec caffeinate -is "$CUTECHESS" \
     -engine name="$CANDIDATE_NAME" cmd=./versions/"$CANDIDATE"/mychess-uci.sh proto=uci ${CANDIDATE_ARGS[@]+"${CANDIDATE_ARGS[@]}"} \
     -engine name="$BASELINE_NAME"  cmd=./versions/"$BASELINE"/mychess-uci.sh  proto=uci ${BASELINE_ARGS[@]+"${BASELINE_ARGS[@]}"} \
     -each tc="$TC" \
-    -rounds "$REMAINING" -games 2 -repeat \
+    "${GAMES_ARGS[@]}" \
     -openings file="$BOOK" format=pgn order=sequential plies=8 start="$START" \
     -concurrency 4 -ratinginterval 10 \
     -recover \
