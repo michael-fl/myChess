@@ -42,8 +42,8 @@ class StatisticsTest {
         var board = Fen.importFEN(fen);
         var statistics = new Statistics();
         var qsearch = new QuiescenceSearch(MoveGenerator.forQuiescenceSearch(),
-                new WeightingFunction(), statistics, MAX_QUIESCENCE_DEPTH,
-                System.currentTimeMillis() + ONE_MINUTE);
+                new WeightingFunction(), statistics, MAX_QUIESCENCE_DEPTH);
+        qsearch.setTimeout(System.currentTimeMillis() + ONE_MINUTE);
         final int weightFactor = 1;
 
         qsearch.quiescenceSearch(board, 0, weightFactor, WeightingFunction.MIN_ALPHA,

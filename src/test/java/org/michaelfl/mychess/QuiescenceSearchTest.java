@@ -67,7 +67,8 @@ class QuiescenceSearchTest {
         var moveGenerator = MoveGenerator.forQuiescenceSearch();
         var statistics = new Statistics();
         var weightingFunction = new WeightingFunction();
-        var qsearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics, game.getEngine().getConfig().getMaxQuiescenceDepth(), System.currentTimeMillis() + 5 * 60_000);
+        var qsearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics, game.getEngine().getConfig().getMaxQuiescenceDepth());
+        qsearch.setTimeout(System.currentTimeMillis() + 5 * 60_000);
 
         var workingBoard = game.getBoard().copy();
         int weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
@@ -99,7 +100,8 @@ class QuiescenceSearchTest {
             statistics.incrPositionCount();
         }
         var qsearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics,
-                game.getEngine().getConfig().getMaxQuiescenceDepth(), System.currentTimeMillis() - 1);
+                game.getEngine().getConfig().getMaxQuiescenceDepth());
+        qsearch.setTimeout(System.currentTimeMillis() - 1);
 
         var workingBoard = game.getBoard().copy();
         int weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
@@ -137,7 +139,8 @@ class QuiescenceSearchTest {
         int maxQuiescenceDepth = GameImporter.importerFor("1.e4").importGame()
                 .getEngine().getConfig().getMaxQuiescenceDepth();
         var qsearch = new QuiescenceSearch(moveGenerator, new WeightingFunction(), new Statistics(),
-                maxQuiescenceDepth, System.currentTimeMillis() + 10_000);
+                maxQuiescenceDepth);
+        qsearch.setTimeout(System.currentTimeMillis() + 10_000);
 
         var board = Board.createNewGame();
         int weightFactor = 1; // white to move
@@ -164,7 +167,8 @@ class QuiescenceSearchTest {
         var statistics = new Statistics();
         var weightingFunction = new WeightingFunction();
 
-        var quiescenceSearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics, game.getEngine().getConfig().getMaxQuiescenceDepth(), System.currentTimeMillis() + 5 * 60_000);
+        var quiescenceSearch = new QuiescenceSearch(moveGenerator, weightingFunction, statistics, game.getEngine().getConfig().getMaxQuiescenceDepth());
+        quiescenceSearch.setTimeout(System.currentTimeMillis() + 5 * 60_000);
         var workingBoard = game.getBoard().copy();
         var weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
         var materialWeightCenti = WeightingFunction.calculateMaterialWeight(workingBoard);

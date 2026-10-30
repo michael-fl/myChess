@@ -932,10 +932,12 @@ class UciHandlerTest {
     // ---- watcher timeout: the safety net behind the search's hard limit ----
 
     @Test
-    void watcherTimeout_withAmpleClock_isTheHardLimitPlusGrace() {
-        // 1 s soft limit, 60 s clock: hard limit = soft + 55 % of it (the default overrun) = 1.55 s
-        assertEquals(1_550 + UciHandler.WATCHER_GRACE_MILLIS, UciHandler.watcherTimeoutMillis(1_000, 60_000),
-                "with a clock the watcher must wait until the hard limit, not just the budget, plus the grace");
+    void watcherTimeout_withAmpleClock_isTheExtendedHardLimitPlusGrace() {
+        // 1 s soft limit, 60 s clock. A difficult position may raise the soft limit to twice its value
+        // (TimeManagement.DIFFICULT_POSITION_SOFT_LIMIT_FACTOR), and the hard limit with it:
+        // 2 s + 55 % (the default overrun) = 3.1 s. The watcher must not cancel that extra iteration.
+        assertEquals(3_100 + UciHandler.WATCHER_GRACE_MILLIS, UciHandler.watcherTimeoutMillis(1_000, 60_000),
+                "with a clock the watcher must wait until the hard limit of the extended soft limit, plus the grace");
     }
 
     @Test
@@ -947,7 +949,8 @@ class UciHandlerTest {
 
     @Test
     void watcherTimeout_withoutClock_isTheBudgetPlusGrace() {
-        // go movetime / go depth: no clock, so hard limit == soft limit
+        // go movetime / go depth: no clock, so hard limit == soft limit, and no extension either
+        // (TimeManagementInstance does not extend without a clock), so nothing beyond the budget may be waited for
         assertEquals(1_000 + UciHandler.WATCHER_GRACE_MILLIS,
                 UciHandler.watcherTimeoutMillis(1_000, Integer.MAX_VALUE),
                 "without a clock the watcher must keep the old bound of budget plus grace");

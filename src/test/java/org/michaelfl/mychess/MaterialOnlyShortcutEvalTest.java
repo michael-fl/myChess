@@ -648,7 +648,8 @@ class MaterialOnlyShortcutEvalTest {
     private static int gateOutput(Board board, int weightFactor, int material, int materialDelta) {
         var quiescenceSearch = new QuiescenceSearch(
                 MoveGenerator.forQuiescenceSearch(), new WeightingFunction(), new Statistics(),
-                BOUNDARY_QUIESCENCE_DEPTH, System.currentTimeMillis() + BOUNDARY_BUDGET_MS);
+                BOUNDARY_QUIESCENCE_DEPTH);
+        quiescenceSearch.setTimeout(System.currentTimeMillis() + BOUNDARY_BUDGET_MS);
 
         return quiescenceSearch.quiescenceSearch(board.copy(), 0, weightFactor,
                 WeightingFunction.MIN_ALPHA, WeightingFunction.MAX_BETA, material, materialDelta);
