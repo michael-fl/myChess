@@ -197,7 +197,7 @@ exec caffeinate -is "$CUTECHESS" \
     -engine name="$BASELINE_NAME"  cmd=./versions/"$BASELINE"/mychess-uci.sh  proto=uci ${BASELINE_ARGS[@]+"${BASELINE_ARGS[@]}"} \
     -each tc="$TC" \
     "${GAMES_ARGS[@]}" \
-    -openings file="$BOOK" format=pgn order=sequential plies=8 start="$START" \
+    -openings file="$BOOK" format=pgn order=sequential plies=4 start="$START" \
     -concurrency 4 -ratinginterval 10 \
     -recover \
     -draw movenumber=40 movecount=8 score=40 \
