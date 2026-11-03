@@ -7,6 +7,7 @@ import org.michaelfl.mychess.Move;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -164,6 +165,16 @@ class FarMoveFilterTest {
         assertTrue(filter.isBlocked(move(Board.g5, Board.f3)), "return");
         assertTrue(filter.isBlocked(move(Board.c3, Board.b1)), "back rank");
         assertFalse(filter.isBlocked(move(Board.g5, Board.e6)), "an ordinary move must pass");
+    }
+
+    @Test
+    void blockingRule_namesTheRule() {
+        var filter = white(move(Board.c3, Board.c5), move(Board.a3, Board.c3), move(Board.a1, Board.a3));
+
+        assertEquals("return", filter.blockingRule(move(Board.c5, Board.c3)), "the rook back to c3");
+        assertEquals("backrank", filter.blockingRule(move(Board.d4, Board.d1)), "a retreat onto rank 1");
+        assertEquals("samepiece", filter.blockingRule(move(Board.c5, Board.e5)), "a fourth rook move in a row");
+        assertNull(filter.blockingRule(move(Board.h2, Board.h3)), "an ordinary move breaks no rule");
     }
 
     // ---- own moves from the game ---------------------------------------------------------------

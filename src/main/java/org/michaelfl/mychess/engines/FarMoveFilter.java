@@ -69,7 +69,20 @@ final class FarMoveFilter {
      * candidate is played.
      */
     boolean isBlocked(int move) {
-        return returnsToRecentSquare(move) || retreatsToBackRank(move) || movesSamePieceAgain(move);
+        return blockingRule(move) != null;
+    }
+
+    /** The name of the first rule the move breaks, for the log. Null if it breaks none. */
+    String blockingRule(int move) {
+        if (returnsToRecentSquare(move)) {
+            return "return";
+        }
+
+        if (retreatsToBackRank(move)) {
+            return "backrank";
+        }
+
+        return movesSamePieceAgain(move) ? "samepiece" : null;
     }
 
     /**

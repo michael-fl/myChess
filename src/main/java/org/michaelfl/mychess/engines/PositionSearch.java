@@ -6,8 +6,10 @@ import org.michaelfl.mychess.Game.GameResult;
 import org.michaelfl.mychess.TranspositionTable.Bound;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.CancellationException;
@@ -300,26 +302,30 @@ public final class PositionSearch {
     /**
      * Logs the tolerance choice of every move. It is also written in UCI mode. Example:
      *
-     * <pre>{@code [tolerance] game=<8-char> best=b8-c6 (+0.00) played=d7-d6 (-0.13) candidates=16 near=4 far=12 blocked=2}</pre>
+     * <pre>{@code [tolerance] game=<8-char> best=b8-c6 (+0.00) played=d7-d6 (-0.13) candidates=16 near=4 far=12 blocked=2 g5-f3:return c3-b1:backrank}</pre>
      */
     private void logToleranceChoice(MoveAndWeight best, MoveAndWeight chosen) {
         final String tag = engineConfig.getLogTag();
         final int near = countNear(rootCandidates, moveToleranceNearCenti);
-        int blocked = 0;
+        final List<String> blocked = new ArrayList<>();
 
         for (MoveAndWeight candidate : rootCandidates) {
-            if (distanceCenti(rootCandidates[0].weight(), candidate) >= Math.max(moveToleranceNearCenti, 1)
-                    && !isFarAllowed(candidate.move())) {
-                blocked++;
+            final String rule = farMoveFilter == null ? null : farMoveFilter.blockingRule(candidate.move());
+
+            final boolean far = distanceCenti(rootCandidates[0].weight(), candidate) >= Math.max(moveToleranceNearCenti, 1);
+
+            if (rule != null && far) {
+                blocked.add(ChessUtil.moveToString(candidate.move()) + ":" + rule);
             }
         }
 
         Log.info(String.format(Locale.ROOT,
-                "[tolerance] %sbest=%s (%+.2f) played=%s (%+.2f) candidates=%d near=%d far=%d blocked=%d",
+                "[tolerance] %sbest=%s (%+.2f) played=%s (%+.2f) candidates=%d near=%d far=%d blocked=%d%s",
                 tag == null || tag.isEmpty() ? "" : tag + " ",
                 ChessUtil.moveToString(best.move()), best.weight(),
                 ChessUtil.moveToString(chosen.move()), chosen.weight(), rootCandidates.length,
-                near, rootCandidates.length - near, blocked));
+                near, rootCandidates.length - near, blocked.size(),
+                blocked.isEmpty() ? "" : " " + String.join(" ", blocked)));
     }
 
     /** Whether the far-group filter lets the move pass. */
