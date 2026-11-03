@@ -6,6 +6,7 @@ import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 import org.michaelfl.mychess.engines.IterationInfo;
 import org.michaelfl.mychess.engines.MyChessEngine;
 import org.michaelfl.mychess.engines.NextMoveTask;
+import org.michaelfl.mychess.engines.PositionSearch;
 
 import java.io.BufferedReader;
 import java.util.Locale;
@@ -53,6 +54,10 @@ final class UciHandler {
     private static final String ENGINE_AUTHOR = "Michael Fleischhauer";
 
     private static final String SETOPTION_PREFIX = "setoption name ";
+    private static final String SETOPTION_VALUE = " value ";
+
+    /** UCI option: play Chess960. */
+    static final String OPTION_CHESS960 = "UCI_Chess960";
 
     /** UCI option: the start-decision risk factor in percent (100 = plain comparison). */
     static final String OPTION_TIME_RISK_PERCENT = "TimeRiskPercent";
@@ -69,11 +74,49 @@ final class UciHandler {
     /** 4 x the soft limit caps the hard limit anyway, so an overrun beyond 300 % has no effect. */
     static final int MAX_TIME_OVERRUN_PERCENT = 300;
 
+    /** UCI option: depth limit in plies. 0 means none. */
+    static final String OPTION_MAX_DEPTH = "MaxDepth";
+
+    static final int MAX_MAX_DEPTH = PositionSearch.MAX_SEARCH_DEPTH;
+
+    /** UCI option: how far the played move may lie below the best move, in centipawns. */
+    static final String OPTION_MOVE_TOLERANCE = "MoveTolerance";
+
+    static final int MAX_MOVE_TOLERANCE = 500;
+
+    /** UCI option: bound of the near group in centipawns. */
+    static final String OPTION_MOVE_TOLERANCE_NEAR = "MoveToleranceNear";
+
+    /** UCI option: keep unnatural moves out of the far group. */
+    static final String OPTION_MOVE_TOLERANCE_FILTER = "MoveToleranceFilter";
+
+    /** UCI option: N of the filter's return rule. */
+    static final String OPTION_MOVE_TOLERANCE_RETURN_PLIES = "MoveToleranceReturnPlies";
+
+    /** UCI option: M of the filter's same-piece rule. */
+    static final String OPTION_MOVE_TOLERANCE_SAME_PIECE = "MoveToleranceSamePiece";
+
+    static final int MAX_FILTER_MOVES = 20;
+
     private final MyChessEnv env;
     private final BufferedReader in;
 
     private Board board;
     private boolean is960;
+
+    /** Session value of {@link #OPTION_MAX_DEPTH}. */
+    private int strengthMaxDepth;
+
+    /** Session value of {@link #OPTION_MOVE_TOLERANCE}. */
+    private int moveToleranceCenti;
+
+    /** Session value of {@link #OPTION_MOVE_TOLERANCE_NEAR}. */
+    private int moveToleranceNearCenti = EngineConfig.DEFAULT_MOVE_TOLERANCE_NEAR_CENTI;
+
+    /** Values of the far-group filter options for this session. */
+    private boolean moveToleranceFilter = true;
+    private int moveToleranceReturnPlies = EngineConfig.DEFAULT_MOVE_TOLERANCE_RETURN_PLIES;
+    private int moveToleranceSamePiece = EngineConfig.DEFAULT_MOVE_TOLERANCE_SAME_PIECE;
     private final TranspositionTable tt;
     private final AtomicReference<NextMoveTask> currentTask = new AtomicReference<>();
     private final AtomicReference<Game> currentGame = new AtomicReference<>();
@@ -124,6 +167,41 @@ final class UciHandler {
 
     Board getBoard() {
         return board;
+    }
+
+    // for tests only
+    int getStrengthMaxDepth() {
+        return strengthMaxDepth;
+    }
+
+    // for tests only
+    int getMoveToleranceCenti() {
+        return moveToleranceCenti;
+    }
+
+    // for tests only
+    int getMoveToleranceNearCenti() {
+        return moveToleranceNearCenti;
+    }
+
+    // for tests only
+    boolean isMoveToleranceFilter() {
+        return moveToleranceFilter;
+    }
+
+    // for tests only
+    int getMoveToleranceReturnPlies() {
+        return moveToleranceReturnPlies;
+    }
+
+    // for tests only
+    int getMoveToleranceSamePiece() {
+        return moveToleranceSamePiece;
+    }
+
+    // for tests only. The game of the last go, or null after shutdown.
+    Game getCurrentGame() {
+        return currentGame.get();
     }
 
     /**
@@ -179,12 +257,22 @@ final class UciHandler {
     private void handleUci() {
         writeLine("id name " + ENGINE_NAME);
         writeLine("id author " + ENGINE_AUTHOR);
-        writeLine("option name UCI_Chess960 type check default false");
-        writeLine("option name " + OPTION_TIME_RISK_PERCENT + " type spin default " + DEFAULT_TIME_RISK_PERCENT
-                + " min " + MIN_TIME_RISK_PERCENT + " max " + MAX_TIME_RISK_PERCENT);
-        writeLine("option name " + OPTION_TIME_OVERRUN_PERCENT + " type spin default " + TimeManagement.DEFAULT_OVERRUN_PERCENT
-                + " min " + MIN_TIME_OVERRUN_PERCENT + " max " + MAX_TIME_OVERRUN_PERCENT);
+        writeLine("option name " + OPTION_CHESS960 + " type check default false");
+        writeSpinOption(OPTION_TIME_RISK_PERCENT, DEFAULT_TIME_RISK_PERCENT, MIN_TIME_RISK_PERCENT, MAX_TIME_RISK_PERCENT);
+        writeSpinOption(OPTION_TIME_OVERRUN_PERCENT, TimeManagement.DEFAULT_OVERRUN_PERCENT,
+                MIN_TIME_OVERRUN_PERCENT, MAX_TIME_OVERRUN_PERCENT);
+        writeSpinOption(OPTION_MAX_DEPTH, 0, 0, MAX_MAX_DEPTH);
+        writeSpinOption(OPTION_MOVE_TOLERANCE, 0, 0, MAX_MOVE_TOLERANCE);
+        writeSpinOption(OPTION_MOVE_TOLERANCE_NEAR, EngineConfig.DEFAULT_MOVE_TOLERANCE_NEAR_CENTI, 0, MAX_MOVE_TOLERANCE);
+        writeLine("option name " + OPTION_MOVE_TOLERANCE_FILTER + " type check default true");
+        writeSpinOption(OPTION_MOVE_TOLERANCE_RETURN_PLIES, EngineConfig.DEFAULT_MOVE_TOLERANCE_RETURN_PLIES, 0, MAX_FILTER_MOVES);
+        writeSpinOption(OPTION_MOVE_TOLERANCE_SAME_PIECE, EngineConfig.DEFAULT_MOVE_TOLERANCE_SAME_PIECE, 0, MAX_FILTER_MOVES);
         writeLine("uciok");
+    }
+
+    /** Announces a {@code spin} option in the {@code uci} response. */
+    private void writeSpinOption(String name, int defaultValue, int min, int max) {
+        writeLine("option name " + name + " type spin default " + defaultValue + " min " + min + " max " + max);
     }
 
     private void handleIsReady() {
@@ -192,15 +280,42 @@ final class UciHandler {
     }
 
     private void handleSetOption(String line) {
-        if (line.equals("setoption name UCI_Chess960 value true")) {
-            // Enable Chess960 game
-            this.is960 = true;
-        } else if (line.equals("setoption name UCI_Chess960 value false")) {
-            this.is960 = false;
-        } else if (line.startsWith(SETOPTION_PREFIX + OPTION_TIME_RISK_PERCENT + " value ")) {
-            applyTimeRiskPercent(line.substring((SETOPTION_PREFIX + OPTION_TIME_RISK_PERCENT + " value ").length()).trim());
-        } else if (line.startsWith(SETOPTION_PREFIX + OPTION_TIME_OVERRUN_PERCENT + " value ")) {
-            applyTimeOverrunPercent(line.substring((SETOPTION_PREFIX + OPTION_TIME_OVERRUN_PERCENT + " value ").length()).trim());
+        // setoption name <name> value <value>. A line without " value " sets nothing.
+        final int valueAt = line.indexOf(SETOPTION_VALUE, SETOPTION_PREFIX.length());
+        if (!line.startsWith(SETOPTION_PREFIX) || valueAt < 0) {
+            return;
+        }
+        final String name = line.substring(SETOPTION_PREFIX.length(), valueAt);
+        final String value = line.substring(valueAt + SETOPTION_VALUE.length()).trim();
+
+        switch (name) {
+            case OPTION_CHESS960 -> {
+                if (value.equals("true")) {
+                    this.is960 = true;
+                } else if (value.equals("false")) {
+                    this.is960 = false;
+                }
+            }
+            case OPTION_TIME_RISK_PERCENT -> applyTimeRiskPercent(value);
+            case OPTION_TIME_OVERRUN_PERCENT -> applyTimeOverrunPercent(value);
+            case OPTION_MAX_DEPTH -> applySpinOption(name, value, 0, MAX_MAX_DEPTH, depth -> this.strengthMaxDepth = depth);
+            case OPTION_MOVE_TOLERANCE -> applySpinOption(name, value, 0, MAX_MOVE_TOLERANCE,
+                    centi -> this.moveToleranceCenti = centi);
+            case OPTION_MOVE_TOLERANCE_NEAR -> applySpinOption(name, value, 0, MAX_MOVE_TOLERANCE,
+                    centi -> this.moveToleranceNearCenti = centi);
+            case OPTION_MOVE_TOLERANCE_FILTER -> {
+                if (value.equals("true") || value.equals("false")) {
+                    this.moveToleranceFilter = value.equals("true");
+                    Log.info("[option] " + name + " = " + value);
+                } else {
+                    Log.info("[option] ignored non-boolean " + name + ": " + value);
+                }
+            }
+            case OPTION_MOVE_TOLERANCE_RETURN_PLIES -> applySpinOption(name, value, 0, MAX_FILTER_MOVES,
+                    moves -> this.moveToleranceReturnPlies = moves);
+            case OPTION_MOVE_TOLERANCE_SAME_PIECE -> applySpinOption(name, value, 0, MAX_FILTER_MOVES,
+                    moves -> this.moveToleranceSamePiece = moves);
+            default -> { /* UCI spec: ignore unknown options */ }
         }
     }
 
@@ -210,7 +325,7 @@ final class UciHandler {
      * not a number is ignored and logged.
      */
     private static void applyTimeRiskPercent(String value) {
-        applyPercentOption(OPTION_TIME_RISK_PERCENT, value, MIN_TIME_RISK_PERCENT, MAX_TIME_RISK_PERCENT,
+        applySpinOption(OPTION_TIME_RISK_PERCENT, value, MIN_TIME_RISK_PERCENT, MAX_TIME_RISK_PERCENT,
                 percent -> TimeManagement.setRiskFactor(percent / 100.0));
     }
 
@@ -221,19 +336,16 @@ final class UciHandler {
      * value that is not a number is ignored and logged.
      */
     private static void applyTimeOverrunPercent(String value) {
-        applyPercentOption(OPTION_TIME_OVERRUN_PERCENT, value, MIN_TIME_OVERRUN_PERCENT, MAX_TIME_OVERRUN_PERCENT,
+        applySpinOption(OPTION_TIME_OVERRUN_PERCENT, value, MIN_TIME_OVERRUN_PERCENT, MAX_TIME_OVERRUN_PERCENT,
                 TimeManagement::setOverrunPercent);
     }
 
-    /**
-     * Parses a percent option value, clamps it to [{@code min}, {@code max}], hands it to
-     * {@code setter} and logs the result; a value that is not a number is ignored and logged.
-     */
-    private static void applyPercentOption(String name, String value, int min, int max, IntConsumer setter) {
+    /** Parses, clamps, sets and logs a spin option. A value that is not a number is ignored. */
+    private static void applySpinOption(String name, String value, int min, int max, IntConsumer setter) {
         try {
-            int percent = Math.clamp(Integer.parseInt(value), min, max);
-            setter.accept(percent);
-            Log.info("[option] " + name + " = " + percent);
+            int clamped = Math.clamp(Integer.parseInt(value), min, max);
+            setter.accept(clamped);
+            Log.info("[option] " + name + " = " + clamped);
         } catch (NumberFormatException _) {
             Log.info("[option] ignored non-numeric " + name + ": " + value);
         }
@@ -318,6 +430,12 @@ final class UciHandler {
                 .silent(true)
                 .setTranspositionTable(tt)
                 .logTag("game=" + shortGameId())
+                .strengthMaxDepth(strengthMaxDepth)
+                .moveToleranceCenti(moveToleranceCenti)
+                .moveToleranceNearCenti(moveToleranceNearCenti)
+                .moveToleranceFilter(moveToleranceFilter)
+                .moveToleranceReturnPlies(moveToleranceReturnPlies)
+                .moveToleranceSamePiece(moveToleranceSamePiece)
                 .build();
         var gameConfig = new GameConfig(MyChessEngine.class, engineConfig);
 

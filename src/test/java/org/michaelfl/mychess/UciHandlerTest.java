@@ -190,6 +190,187 @@ class UciHandlerTest {
         }
     }
 
+    // ---- strength options (MaxDepth, MoveTolerance, MoveToleranceNear): stored and passed on ----
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void uci_onHandshake_announcesTheStrengthOptions() {
+        runHandler("uci\nquit\n")
+                .expect("^option name MaxDepth type spin default 0 min 0 max " + UciHandler.MAX_MAX_DEPTH + "$")
+                .expect("^option name MoveTolerance type spin default 0 min 0 max " + UciHandler.MAX_MOVE_TOLERANCE + "$")
+                .expect("^option name MoveToleranceNear type spin default " + EngineConfig.DEFAULT_MOVE_TOLERANCE_NEAR_CENTI
+                        + " min 0 max " + UciHandler.MAX_MOVE_TOLERANCE + "$");
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void strengthOptions_withoutSetoption_areZero() {
+        var handler = newIdleHandler();
+
+        assertEquals(0, handler.getStrengthMaxDepth(), "without setoption there must be no depth limit");
+        assertEquals(0, handler.getMoveToleranceCenti(), "without setoption the best move must always be played");
+        assertEquals(EngineConfig.DEFAULT_MOVE_TOLERANCE_NEAR_CENTI, handler.getMoveToleranceNearCenti(),
+                "without setoption the near bound must be its default");
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void setoption_maxDepthAndMoveTolerance_areStored() {
+        var handler = newIdleHandler();
+
+        handler.handleLine("setoption name MaxDepth value 5");
+        handler.handleLine("setoption name MoveTolerance value 50");
+        handler.handleLine("setoption name MoveToleranceNear value 35");
+
+        assertEquals(5, handler.getStrengthMaxDepth(), "MaxDepth 5 must be stored");
+        assertEquals(50, handler.getMoveToleranceCenti(), "MoveTolerance 50 must be stored");
+        assertEquals(35, handler.getMoveToleranceNearCenti(),
+                "MoveToleranceNear 35 must be stored, and not be taken for MoveTolerance despite the shared prefix");
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void setoption_strengthOptionsOutOfRange_areClamped() {
+        var handler = newIdleHandler();
+
+        handler.handleLine("setoption name MaxDepth value 999");
+        handler.handleLine("setoption name MoveTolerance value -20");
+
+        assertEquals(UciHandler.MAX_MAX_DEPTH, handler.getStrengthMaxDepth(), "a depth above the maximum must be clamped");
+        assertEquals(0, handler.getMoveToleranceCenti(), "a negative tolerance must be clamped to 0");
+
+        handler.handleLine("setoption name MoveTolerance value 9000");
+
+        assertEquals(UciHandler.MAX_MOVE_TOLERANCE, handler.getMoveToleranceCenti(), "a tolerance above the maximum must be clamped");
+
+        handler.handleLine("setoption name MoveToleranceNear value -1");
+
+        assertEquals(0, handler.getMoveToleranceNearCenti(), "a negative near bound must be clamped to 0");
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void setoption_strengthOptionsNotANumber_areIgnored() {
+        var handler = newIdleHandler();
+
+        handler.handleLine("setoption name MaxDepth value 6");
+        handler.handleLine("setoption name MaxDepth value deep");
+        handler.handleLine("setoption name MoveTolerance value some");
+
+        assertEquals(6, handler.getStrengthMaxDepth(), "a non-numeric value must leave the previous depth limit unchanged");
+        assertEquals(0, handler.getMoveToleranceCenti(), "a non-numeric value must leave the tolerance unchanged");
+    }
+
+    @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
+    void go_afterSetoption_passesTheStrengthOptionsToTheEngineConfig() {
+        var handler = newIdleHandler();
+
+        try {
+            handler.handleLine("setoption name MaxDepth value 4");
+            handler.handleLine("setoption name MoveTolerance value 30");
+            handler.handleLine("setoption name MoveToleranceNear value 10");
+            handler.handleLine("position startpos");
+            handler.handleLine("go depth 1");
+
+            var config = handler.getCurrentGame().getEngine().getConfig();
+
+            assertEquals(4, config.getStrengthMaxDepth(), "the engine of the search must get MaxDepth");
+            assertEquals(30, config.getMoveToleranceCenti(), "the engine of the search must get MoveTolerance");
+            assertEquals(10, config.getMoveToleranceNearCenti(), "the engine of the search must get MoveToleranceNear");
+        } finally {
+            handler.run();   // empty input: returns at once and shuts the search down
+        }
+    }
+
+    @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
+    void go_withoutSetoption_passesZeroStrengthOptions() {
+        var handler = newIdleHandler();
+
+        try {
+            handler.handleLine("position startpos");
+            handler.handleLine("go depth 1");
+
+            var config = handler.getCurrentGame().getEngine().getConfig();
+
+            assertEquals(0, config.getStrengthMaxDepth(), "without setoption the engine must get no depth limit");
+            assertEquals(0, config.getMoveToleranceCenti(), "without setoption the engine must get no tolerance");
+            assertEquals(EngineConfig.DEFAULT_MOVE_TOLERANCE_NEAR_CENTI, config.getMoveToleranceNearCenti(),
+                    "without setoption the engine must get the default near bound");
+        } finally {
+            handler.run();
+        }
+    }
+
+    // ---- far-group filter options (MoveToleranceFilter, MoveToleranceReturnPlies, MoveToleranceSamePiece) ----
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void uci_onHandshake_announcesTheFilterOptions() {
+        runHandler("uci\nquit\n")
+                .expect("^option name MoveToleranceFilter type check default true$")
+                .expect("^option name MoveToleranceReturnPlies type spin default " + EngineConfig.DEFAULT_MOVE_TOLERANCE_RETURN_PLIES
+                        + " min 0 max " + UciHandler.MAX_FILTER_MOVES + "$")
+                .expect("^option name MoveToleranceSamePiece type spin default " + EngineConfig.DEFAULT_MOVE_TOLERANCE_SAME_PIECE
+                        + " min 0 max " + UciHandler.MAX_FILTER_MOVES + "$");
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void filterOptions_withoutSetoption_areTheirDefaults() {
+        var handler = newIdleHandler();
+
+        assertTrue(handler.isMoveToleranceFilter(), "the filter must be on by default");
+        assertEquals(EngineConfig.DEFAULT_MOVE_TOLERANCE_RETURN_PLIES, handler.getMoveToleranceReturnPlies());
+        assertEquals(EngineConfig.DEFAULT_MOVE_TOLERANCE_SAME_PIECE, handler.getMoveToleranceSamePiece());
+    }
+
+    @Test
+    @Timeout(value = 5, unit = TimeUnit.SECONDS)
+    void setoption_filterOptions_areStoredAndClamped() {
+        var handler = newIdleHandler();
+
+        handler.handleLine("setoption name MoveToleranceFilter value false");
+        handler.handleLine("setoption name MoveToleranceReturnPlies value 5");
+        handler.handleLine("setoption name MoveToleranceSamePiece value 99");
+
+        assertFalse(handler.isMoveToleranceFilter(), "false must switch the filter off");
+        assertEquals(5, handler.getMoveToleranceReturnPlies(), "N must be stored");
+        assertEquals(UciHandler.MAX_FILTER_MOVES, handler.getMoveToleranceSamePiece(), "M above the maximum must be clamped");
+
+        handler.handleLine("setoption name MoveToleranceFilter value maybe");
+
+        assertFalse(handler.isMoveToleranceFilter(), "a non-boolean value must leave the filter unchanged");
+    }
+
+    @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
+    void go_afterSetoption_passesTheFilterOptionsToTheEngineConfig() {
+        var handler = newIdleHandler();
+
+        try {
+            handler.handleLine("setoption name MoveToleranceFilter value false");
+            handler.handleLine("setoption name MoveToleranceReturnPlies value 4");
+            handler.handleLine("setoption name MoveToleranceSamePiece value 2");
+            handler.handleLine("position startpos");
+            handler.handleLine("go depth 1");
+
+            var config = handler.getCurrentGame().getEngine().getConfig();
+
+            assertFalse(config.isMoveToleranceFilter(), "the engine must get MoveToleranceFilter");
+            assertEquals(4, config.getMoveToleranceReturnPlies(), "the engine must get MoveToleranceReturnPlies");
+            assertEquals(2, config.getMoveToleranceSamePiece(), "the engine must get MoveToleranceSamePiece");
+        } finally {
+            handler.run();
+        }
+    }
+
+    /** A handler driven line by line through {@link UciHandler#handleLine}. Its own input is empty. */
+    private static UciHandler newIdleHandler() {
+        return new UciHandler(new MyChessEnv(), new BufferedReader(new StringReader("")));
+    }
+
     private static void resetTimeOptions() {
         TimeManagement.setRiskFactor(TimeManagement.DEFAULT_RISK_FACTOR);
         TimeManagement.setOverrunPercent(TimeManagement.DEFAULT_OVERRUN_PERCENT);

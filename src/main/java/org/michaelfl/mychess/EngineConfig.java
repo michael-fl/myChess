@@ -22,6 +22,21 @@ public final class EngineConfig {
     private final boolean enableThreefoldRepetition;
     private final boolean enableFiftyMovesRule;
     private final String logTag;
+    private final int strengthMaxDepth;
+    private final int moveToleranceCenti;
+    private final int moveToleranceNearCenti;
+    private final boolean moveToleranceFilter;
+    private final int moveToleranceReturnPlies;
+    private final int moveToleranceSamePiece;
+
+    /** Default of the UCI option {@code MoveToleranceNear}. */
+    public static final int DEFAULT_MOVE_TOLERANCE_NEAR_CENTI = 20;
+
+    /** Default of the UCI option {@code MoveToleranceReturnPlies}. */
+    public static final int DEFAULT_MOVE_TOLERANCE_RETURN_PLIES = 3;
+
+    /** Default of the UCI option {@code MoveToleranceSamePiece}. */
+    public static final int DEFAULT_MOVE_TOLERANCE_SAME_PIECE = 3;
 
     private EngineConfig(Builder builder) {
         this.tt = builder.tt;
@@ -32,6 +47,12 @@ public final class EngineConfig {
         this.enableThreefoldRepetition = builder.enableThreefoldRepetition;
         this.enableFiftyMovesRule = builder.enableFiftyMovesRule;
         this.logTag = builder.logTag;
+        this.strengthMaxDepth = builder.strengthMaxDepth;
+        this.moveToleranceCenti = builder.moveToleranceCenti;
+        this.moveToleranceNearCenti = builder.moveToleranceNearCenti;
+        this.moveToleranceFilter = builder.moveToleranceFilter;
+        this.moveToleranceReturnPlies = builder.moveToleranceReturnPlies;
+        this.moveToleranceSamePiece = builder.moveToleranceSamePiece;
     }
 
     /**
@@ -47,6 +68,45 @@ public final class EngineConfig {
 
     public final int getMaxDepth() {
         return maxDepth;
+    }
+
+    /**
+     * UCI option {@code MaxDepth} in plies. 0 means no limit. Unlike {@link #getMaxDepth()} it holds for
+     * every search of the session.
+     */
+    public final int getStrengthMaxDepth() {
+        return strengthMaxDepth;
+    }
+
+    /**
+     * UCI option {@code MoveTolerance} in centipawns. The engine plays a move less than this below the
+     * best move. 0 plays the best move.
+     */
+    public final int getMoveToleranceCenti() {
+        return moveToleranceCenti;
+    }
+
+    /**
+     * UCI option {@code MoveToleranceNear} in centipawns. Candidates below it form the near group. That
+     * group is played 80 % of the time.
+     */
+    public final int getMoveToleranceNearCenti() {
+        return moveToleranceNearCenti;
+    }
+
+    /** UCI option {@code MoveToleranceFilter}. Keeps unnatural moves out of the far group. */
+    public final boolean isMoveToleranceFilter() {
+        return moveToleranceFilter;
+    }
+
+    /** UCI option {@code MoveToleranceReturnPlies}. N of the filter's return rule. */
+    public final int getMoveToleranceReturnPlies() {
+        return moveToleranceReturnPlies;
+    }
+
+    /** UCI option {@code MoveToleranceSamePiece}. M of the filter's same-piece rule. */
+    public final int getMoveToleranceSamePiece() {
+        return moveToleranceSamePiece;
     }
 
     public final int getMillisPerMove() {
@@ -100,6 +160,12 @@ public final class EngineConfig {
         private boolean enableThreefoldRepetition = true;
         private boolean enableFiftyMovesRule = true;
         private String logTag = "";
+        private int strengthMaxDepth = 0;
+        private int moveToleranceCenti = 0;
+        private int moveToleranceNearCenti = DEFAULT_MOVE_TOLERANCE_NEAR_CENTI;
+        private boolean moveToleranceFilter = true;
+        private int moveToleranceReturnPlies = DEFAULT_MOVE_TOLERANCE_RETURN_PLIES;
+        private int moveToleranceSamePiece = DEFAULT_MOVE_TOLERANCE_SAME_PIECE;
 
         /**
          * Provide an explicit {@link TranspositionTable} instance for the
@@ -137,6 +203,36 @@ public final class EngineConfig {
 
         public Builder remainingClockMillis(int remainingClockMillis) {
             this.remainingClockMillis = remainingClockMillis;
+            return this;
+        }
+
+        public Builder strengthMaxDepth(int strengthMaxDepth) {
+            this.strengthMaxDepth = strengthMaxDepth;
+            return this;
+        }
+
+        public Builder moveToleranceCenti(int moveToleranceCenti) {
+            this.moveToleranceCenti = moveToleranceCenti;
+            return this;
+        }
+
+        public Builder moveToleranceNearCenti(int moveToleranceNearCenti) {
+            this.moveToleranceNearCenti = moveToleranceNearCenti;
+            return this;
+        }
+
+        public Builder moveToleranceFilter(boolean moveToleranceFilter) {
+            this.moveToleranceFilter = moveToleranceFilter;
+            return this;
+        }
+
+        public Builder moveToleranceReturnPlies(int moveToleranceReturnPlies) {
+            this.moveToleranceReturnPlies = moveToleranceReturnPlies;
+            return this;
+        }
+
+        public Builder moveToleranceSamePiece(int moveToleranceSamePiece) {
+            this.moveToleranceSamePiece = moveToleranceSamePiece;
             return this;
         }
 

@@ -7,7 +7,12 @@ import org.michaelfl.mychess.TranspositionTable.Bound;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Locale;
+import java.util.Random;
 import java.util.concurrent.CancellationException;
+import java.util.function.IntPredicate;
+import java.util.random.RandomGenerator;
 
 import static org.michaelfl.mychess.Assert.*;
 
@@ -63,6 +68,9 @@ public final class PositionSearch {
      */
     private static final int NMP_MIN_CHILD_DEPTH = 2;
 
+    /** Probability of playing a far candidate (UCI option {@code MoveTolerance}). */
+    static final double TOLERANCE_FAR_PROBABILITY = 0.2;
+
     private final NextMoveTask task;
     private final Game game;
     private final EngineConfig engineConfig;
@@ -77,6 +85,23 @@ public final class PositionSearch {
     private final long startTimestamp;
     private final long timeout;
     private boolean isTimeout;
+
+    /** UCI option {@code MoveTolerance} in centipawns. 0 plays the best move. */
+    private final int moveToleranceCenti;
+
+    /** Inner bound of {@link #moveToleranceCenti} (strength option {@code MoveToleranceNear}). */
+    private final int moveToleranceNearCenti;
+
+    /** The far-group filter. Null when it is off. */
+    private final FarMoveFilter farMoveFilter;
+
+    /**
+     * Candidates of the last completed iteration, the best move first. An aborted iteration keeps the
+     * previous list.
+     */
+    private MoveAndWeight[] rootCandidates = new MoveAndWeight[0];
+
+    private final RandomGenerator random = new Random();
 
     private PositionSearch(ChessEngine engine, NextMoveTask task, Game game) {
         this.task = task;
@@ -93,6 +118,12 @@ public final class PositionSearch {
         this.tt = engine.getTranspositionTable();
         this.weightFactor = game.getTurn() == GameStatus.TURN_WHITE ? 1 : -1;
         this.silent = engineConfig.isSilent();
+        this.moveToleranceCenti = engineConfig.getMoveToleranceCenti();
+        this.moveToleranceNearCenti = engineConfig.getMoveToleranceNearCenti();
+        this.farMoveFilter = engineConfig.getMoveToleranceCenti() > 0 && engineConfig.isMoveToleranceFilter()
+                ? new FarMoveFilter(game.getBoard().getGameStatusStackCopy(),
+                        engineConfig.getMoveToleranceReturnPlies(), engineConfig.getMoveToleranceSamePiece())
+                : null;
     }
 
     public static MoveAndWeight calculateNextMove(ChessEngine engine, NextMoveTask task, Game game) {
@@ -116,10 +147,7 @@ public final class PositionSearch {
 
     private MoveAndWeight calculateNextMove() {
         MoveAndWeight bestPath = null;
-        // Clamp to MAX_SEARCH_DEPTH so a UCI `go depth 5000` (or the default
-        // Integer.MAX_VALUE for depth-unlimited go commands) cannot drive the
-        // iteration loop into a runaway — see MAX_SEARCH_DEPTH Javadoc.
-        final int maxDepth = Math.min(engineConfig.getMaxDepth(), MAX_SEARCH_DEPTH);
+        final int maxDepth = depthLimit();
         final long softTimeout = startTimestamp + softLimitMillis;
         final var timeManagement = TimeManagement.newInstance(softTimeout, engineConfig.getLogTag());
 
@@ -172,7 +200,136 @@ public final class PositionSearch {
             bestPath.path()[maxDepth - 1] = 0;
         }
 
+        if (bestPath != null && moveToleranceCenti > 0 && rootCandidates.length > 0) {
+            return applyMoveTolerance(bestPath, maxDepth);
+        }
+
         return bestPath;
+    }
+
+    private int depthLimit() {
+        // Clamp to MAX_SEARCH_DEPTH so a UCI `go depth 5000` (or the default
+        // Integer.MAX_VALUE for depth-unlimited go commands) cannot drive the
+        // iteration loop into a runaway — see MAX_SEARCH_DEPTH Javadoc.
+        final int limit = Math.min(engineConfig.getMaxDepth(), MAX_SEARCH_DEPTH);
+        final int strengthMaxDepth = engineConfig.getStrengthMaxDepth();
+
+        return strengthMaxDepth > 0 ? Math.min(limit, strengthMaxDepth) : limit;
+    }
+
+    /** UCI option MoveTolerance. Picks the move once, from the last completed iteration. */
+    private MoveAndWeight applyMoveTolerance(MoveAndWeight bestPath, int maxDepth) {
+        final MoveAndWeight chosen = rootCandidates.length > 1
+                ? chooseCandidate(rootCandidates, moveToleranceCenti, moveToleranceNearCenti, random, this::isFarAllowed)
+                : bestPath;
+
+        if (chosen.path().length >= maxDepth) {
+            chosen.path()[maxDepth - 1] = 0;   // same reason as for bestPath in calculateNextMove
+        }
+
+        logToleranceChoice(bestPath, chosen);
+
+        return chosen;
+    }
+
+    /**
+     * Picks the move to play from the candidates (UCI option {@code MoveTolerance}).
+     *
+     * <p>Candidates less than {@code nearCenti} below the best move form the near group. The best move
+     * is always in it. The others form the far group. A far candidate is played with probability
+     * {@value #TOLERANCE_FAR_PROBABILITY}. Within a group every candidate is equally likely.
+     *
+     * @param candidates the candidates, the best move first. All lie within the tolerance.
+     */
+    static MoveAndWeight chooseCandidate(MoveAndWeight[] candidates, int toleranceCenti, int nearCenti,
+                                         RandomGenerator random) {
+        return chooseCandidate(candidates, toleranceCenti, nearCenti, random, move -> true);
+    }
+
+    /**
+     * Like {@link #chooseCandidate(MoveAndWeight[], int, int, RandomGenerator)}. A far candidate is played
+     * only if {@code farAllowed} accepts it. If no far candidate is accepted, a near one is played.
+     */
+    static MoveAndWeight chooseCandidate(MoveAndWeight[] candidates, int toleranceCenti, int nearCenti,
+                                         RandomGenerator random, IntPredicate farAllowed) {
+        __assert(() -> candidates.length > 0, "no candidate");
+
+        for (MoveAndWeight candidate : candidates) {
+            final int distance = distanceCenti(candidates[0].weight(), candidate);
+
+            __assert(() -> distance >= 0 && distance < toleranceCenti,
+                    () -> "candidate " + distance + " cp below the first one, tolerance " + toleranceCenti);
+        }
+
+        final int nearCount = countNear(candidates, nearCenti);
+
+        // the near group is the head, the far group the tail
+        final MoveAndWeight[] sorted = candidates.clone();
+        Arrays.sort(sorted, Comparator.comparingDouble(MoveAndWeight::weight).reversed());
+
+        final int farCount = candidates.length - nearCount;
+        final boolean near = farCount == 0 || random.nextDouble() >= TOLERANCE_FAR_PROBABILITY;
+
+        if (!near) {
+            final MoveAndWeight[] allowed = Arrays.stream(sorted, nearCount, sorted.length)
+                    .filter(candidate -> farAllowed.test(candidate.move()))
+                    .toArray(MoveAndWeight[]::new);
+
+            if (allowed.length > 0) {
+                return allowed[random.nextInt(allowed.length)];
+            }
+        }
+
+        return sorted[random.nextInt(nearCount)];
+    }
+
+    /** Size of the near group. A bound of 0 acts as 1, so the best move always counts. */
+    static int countNear(MoveAndWeight[] candidates, int nearCenti) {
+        final int nearBound = Math.max(nearCenti, 1);
+        int nearCount = 0;
+
+        for (MoveAndWeight candidate : candidates) {
+            if (distanceCenti(candidates[0].weight(), candidate) < nearBound) {
+                nearCount++;
+            }
+        }
+
+        return nearCount;
+    }
+
+    /**
+     * Logs the tolerance choice of every move. It is also written in UCI mode. Example:
+     *
+     * <pre>{@code [tolerance] game=<8-char> best=b8-c6 (+0.00) played=d7-d6 (-0.13) candidates=16 near=4 far=12 blocked=2}</pre>
+     */
+    private void logToleranceChoice(MoveAndWeight best, MoveAndWeight chosen) {
+        final String tag = engineConfig.getLogTag();
+        final int near = countNear(rootCandidates, moveToleranceNearCenti);
+        int blocked = 0;
+
+        for (MoveAndWeight candidate : rootCandidates) {
+            if (distanceCenti(rootCandidates[0].weight(), candidate) >= Math.max(moveToleranceNearCenti, 1)
+                    && !isFarAllowed(candidate.move())) {
+                blocked++;
+            }
+        }
+
+        Log.info(String.format(Locale.ROOT,
+                "[tolerance] %sbest=%s (%+.2f) played=%s (%+.2f) candidates=%d near=%d far=%d blocked=%d",
+                tag == null || tag.isEmpty() ? "" : tag + " ",
+                ChessUtil.moveToString(best.move()), best.weight(),
+                ChessUtil.moveToString(chosen.move()), chosen.weight(), rootCandidates.length,
+                near, rootCandidates.length - near, blocked));
+    }
+
+    /** Whether the far-group filter lets the move pass. */
+    private boolean isFarAllowed(int move) {
+        return farMoveFilter == null || !farMoveFilter.isBlocked(move);
+    }
+
+    /** Distance below the best weight in centipawns. Weights are in pawns. */
+    private static int distanceCenti(float bestWeight, MoveAndWeight candidate) {
+        return Math.round((bestWeight - candidate.weight()) * 100);
     }
 
     /**
@@ -263,31 +420,23 @@ public final class PositionSearch {
             boolean logWeight = false;
             boolean isPvMove = i == 0;
 
-            betaUsedPerMove[i] = -alphaWeight;
+            // MoveTolerance: lower alpha by the tolerance.
+            // So moves within the tolerance get an exact score.
+            final int rootAlpha = moveToleranceCenti > 0 && alphaWeight > WeightingFunction.MIN_ALPHA
+                    ? alphaWeight - moveToleranceCenti
+                    : alphaWeight;
+            betaUsedPerMove[i] = -rootAlpha;
             pvTable[0] = move;
 
-            // Use the material-only shortcut in the subtrees of quiet root moves, and the full
-            // evaluation in the subtrees of capturing ones. The flag is set per ROOT move and
-            // governs that move's whole subtree — it is not re-evaluated at deeper captures, so
-            // a quiet root move leading into an exchange sequence keeps the shortcut. That is
-            // the point rather than a shortcoming: the shortcut only fires once materialDelta
-            // passes its threshold, which is what capture subtrees do systematically and quiet
-            // ones do rarely, so this buys the accurate evaluation where it applies without
-            // paying for it everywhere.
-            //
-            // Measured at tc=40/60 against 4.5.0: this variant +18.4 (H1 accepted, read down -
-            // the estimate wandered 13..19 and the stop caught the high end), against -2.6 for
-            // disabling the shortcut in iterations 1-7 and -47.6 for disabling it in 1-9. The
-            // quantity that tracks Elo across the three is the depth lost under the clock
-            // (-0.13, -, -0.29 plies), not the tree size at fixed depth, where this variant is
-            // 3.86x the baseline and the -47.6 one 4.12x. bench cannot see the difference,
-            // because it spends unlimited time at a fixed depth.
+            // Quiet root move: material-only shortcut. Capture: full evaluation.
+            // The flag holds for the whole subtree of the root move.
+            // Measured at 40/60 against 4.5.0: +14.8 Elo. Details: roadmap § 12.26.
             quiescenceSearch.setMaterialOnlyShortcutEnabled(Move.getCapturedPiece(move) == 0);
 
             workingBoard.makeMove(move);
             var result = alphaBetaSearch(
                     new SearchNodeContext(1, maxDepth, bestKnownPath, -weightFactor, -newMaterialWeight, -moveWeight, workingBoard, pvTable, pvMaxLength, isPvMove, false),
-                    WeightingFunction.MIN_ALPHA, -alphaWeight)
+                    WeightingFunction.MIN_ALPHA, -rootAlpha)
                     .negate();
             if (result.isTimeout()) {
                 return previousBestKnownPath;
@@ -330,6 +479,10 @@ public final class PositionSearch {
 
             if (repairRootWinnerPv(bestMoveIndex, maxDepth, workingBoard, pvTable, rootMoves, materialWeight)) {
                 return previousBestKnownPath;
+            }
+
+            if (moveToleranceCenti > 0) {
+                rootCandidates = collectRootCandidates(rootMoves, countMoves, bestMoveIndex, moveCount);
             }
 
             return new MoveAndWeight(plainMoves[bestMoveIndex], results[bestMoveIndex].weight(), results[bestMoveIndex].result(), allPaths[bestMoveIndex], moveCount);
@@ -432,6 +585,33 @@ public final class PositionSearch {
         workingBoard.revertMove();
 
         return pvResult;
+    }
+
+    /**
+     * The best move first, then every root move with an exact score within the tolerance. A score is
+     * exact if it lies above the alpha the move was searched with.
+     */
+    private MoveAndWeight[] collectRootCandidates(RootMoves rootMoves, int countMoves, int bestMoveIndex,
+                                                  int moveCount) {
+        final SearchNodeResult[] results = rootMoves.results();
+        final int bestWeight = results[bestMoveIndex].weight();
+        final MoveAndWeight[] candidates = new MoveAndWeight[countMoves];
+        int count = 0;
+
+        candidates[count++] = new MoveAndWeight(rootMoves.moves()[bestMoveIndex], bestWeight,
+                results[bestMoveIndex].result(), rootMoves.paths()[bestMoveIndex], moveCount);
+
+        for (int i = 0; i < countMoves; i++) {
+            final int weight = results[i].weight();
+            final boolean exact = weight > -rootMoves.betaUsed()[i];
+            if (i != bestMoveIndex && weight > WeightingFunction.ILLEGAL_WEIGHT_NEG && exact
+                    && bestWeight - weight < moveToleranceCenti) {
+                candidates[count++] = new MoveAndWeight(rootMoves.moves()[i], weight, results[i].result(),
+                        rootMoves.paths()[i], moveCount);
+            }
+        }
+
+        return Arrays.copyOf(candidates, count);
     }
 
     private int countPathLength(int[] path) {
