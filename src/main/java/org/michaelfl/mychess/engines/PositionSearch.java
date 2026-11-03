@@ -594,30 +594,58 @@ public final class PositionSearch {
     }
 
     /**
-     * The best move first, then every root move with an exact score within the tolerance. A score is
-     * exact if it lies above the alpha the move was searched with.
+     * The root candidates of a completed iteration. The highest-rated move comes first. See
+     * {@link #candidateIndices} for which moves count.
      */
     private MoveAndWeight[] collectRootCandidates(RootMoves rootMoves, int countMoves, int bestMoveIndex,
                                                   int moveCount) {
         final SearchNodeResult[] results = rootMoves.results();
-        final int bestWeight = results[bestMoveIndex].weight();
-        final MoveAndWeight[] candidates = new MoveAndWeight[countMoves];
-        int count = 0;
-
-        candidates[count++] = new MoveAndWeight(rootMoves.moves()[bestMoveIndex], bestWeight,
-                results[bestMoveIndex].result(), rootMoves.paths()[bestMoveIndex], moveCount);
+        final int[] weights = new int[countMoves];
 
         for (int i = 0; i < countMoves; i++) {
-            final int weight = results[i].weight();
-            final boolean exact = weight > -rootMoves.betaUsed()[i];
-            if (i != bestMoveIndex && weight > WeightingFunction.ILLEGAL_WEIGHT_NEG && exact
-                    && bestWeight - weight < moveToleranceCenti) {
-                candidates[count++] = new MoveAndWeight(rootMoves.moves()[i], weight, results[i].result(),
-                        rootMoves.paths()[i], moveCount);
+            weights[i] = results[i].weight();
+        }
+
+        final int[] indices = candidateIndices(weights, rootMoves.betaUsed(), bestMoveIndex, moveToleranceCenti);
+
+        return Arrays.stream(indices)
+                .mapToObj(i -> new MoveAndWeight(rootMoves.moves()[i], weights[i], results[i].result(),
+                        rootMoves.paths()[i], moveCount))
+                .toArray(MoveAndWeight[]::new);
+    }
+
+    /**
+     * Indices of the root candidates, the highest-rated first. A move counts if its score is exact
+     * and less than the tolerance below the highest. A score is exact if it lies above the alpha the
+     * move was searched with. The winner's score is exact as well.
+     *
+     * <p>The highest-rated move need not be the winner. The PV repair can lower the winner's score
+     * below another move's, see {@link #repairRootWinnerPv}.
+     */
+    static int[] candidateIndices(int[] weights, int[] betaUsed, int bestMoveIndex, int toleranceCenti) {
+        final boolean[] eligible = new boolean[weights.length];
+        int top = bestMoveIndex;
+
+        for (int i = 0; i < weights.length; i++) {
+            eligible[i] = weights[i] > WeightingFunction.ILLEGAL_WEIGHT_NEG
+                    && (i == bestMoveIndex || weights[i] > -betaUsed[i]);
+
+            if (eligible[i] && weights[i] > weights[top]) {
+                top = i;
             }
         }
 
-        return Arrays.copyOf(candidates, count);
+        final int[] indices = new int[weights.length];
+        int count = 0;
+        indices[count++] = top;
+
+        for (int i = 0; i < weights.length; i++) {
+            if (i != top && eligible[i] && weights[top] - weights[i] < toleranceCenti) {
+                indices[count++] = i;
+            }
+        }
+
+        return Arrays.copyOf(indices, count);
     }
 
     private int countPathLength(int[] path) {
