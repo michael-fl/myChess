@@ -311,8 +311,7 @@ def main():
 
         print(f"  {label:<28}{100 * mean:>+10.2f}{elo:>+9.1f}{elo_half:>8.1f}{interval:>22}{rounds:>8}")
 
-    print("\n  NET = COST + EFFECT, exactly - all three arms meet the same anchors.")
-    print("  Paired per round, so the openings cancel and the interval is the tighter one.\n")
+    print()
 
 
 if __name__ == "__main__":
