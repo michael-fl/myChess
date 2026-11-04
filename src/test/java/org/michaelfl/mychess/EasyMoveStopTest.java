@@ -9,9 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Tests for the easy-move stop of {@link TimeManagement.TimeManagementInstance} (owner's rule): with a
- * clock, the search does not start a depth of at least {@link TimeManagement#EASY_MOVE_MIN_START_DEPTH}
- * when the last two completed iterations found the same best move.
+ * Tests for the easy-move stop of {@link TimeManagement.TimeManagementInstance} (owner's rule, three
+ * iterations): with a clock, the search does not start a depth of at least
+ * {@link TimeManagement#EASY_MOVE_MIN_START_DEPTH} when the last
+ * {@link TimeManagement#EASY_MOVE_STABLE_ITERATIONS} completed iterations found the same best move.
  *
  * <p>The skip heuristic of {@link IterationTimings} stays off, as in the whole suite, and the soft
  * limit lies far ahead. So every stop seen here comes from the easy-move rule alone.
@@ -30,21 +31,26 @@ class EasyMoveStopTest {
         TimeManagement.setEasyMoveStopEnabled(TimeManagement.DEFAULT_EASY_MOVE_STOP);
     }
 
-    /** Owner's example a: depths 1-6 done, depths 5 and 6 agree, so depth 7 does not start. */
     @Test
-    void sameMoveAtDepthsFiveAndSix_stopsBeforeDepthSeven() {
-        var instance = searchWith(true, MOVE_B, MOVE_B, MOVE_B, MOVE_B, MOVE_A, MOVE_A);
+    void sameMoveAtDepthsFourToSix_stopsBeforeDepthSeven() {
+        var instance = searchWith(true, MOVE_B, MOVE_B, MOVE_B, MOVE_A, MOVE_A, MOVE_A);
 
-        assertTrue(instance.shouldSkipIteration(7), "depths 5 and 6 agree, so depth 7 must not start");
+        assertTrue(instance.shouldSkipIteration(7), "depths 4, 5 and 6 agree, so depth 7 must not start");
         assertEquals(IterationDecision.SKIP, instance.getDecisionOnSoftTimeout(), "the stop must be recorded as a skip");
     }
 
-    /** Owner's example b: depths 1-5 done, depths 4 and 5 agree, but depth 6 is below the minimum. */
     @Test
-    void sameMoveAtDepthsFourAndFive_doesNotStopBeforeDepthSix() {
-        var instance = searchWith(true, MOVE_B, MOVE_B, MOVE_B, MOVE_A, MOVE_A);
+    void sameMoveAtDepthsFiveAndSixOnly_doesNotStopBeforeDepthSeven() {
+        var instance = searchWith(true, MOVE_B, MOVE_B, MOVE_B, MOVE_B, MOVE_A, MOVE_A);
 
-        assertFalse(instance.shouldSkipIteration(6), "depth 6 must start, the move of depth 4 does not count yet");
+        assertFalse(instance.shouldSkipIteration(7), "two agreeing iterations are not enough, depth 7 must start");
+    }
+
+    @Test
+    void sameMoveAtDepthsThreeToFive_doesNotStopBeforeDepthSix() {
+        var instance = searchWith(true, MOVE_B, MOVE_B, MOVE_A, MOVE_A, MOVE_A);
+
+        assertFalse(instance.shouldSkipIteration(6), "depth 6 is below the minimum and must start");
     }
 
     @Test
@@ -55,10 +61,10 @@ class EasyMoveStopTest {
     }
 
     @Test
-    void moveStableAgainLater_stopsOnceTwoIterationsAgree() {
-        var instance = searchWith(true, MOVE_A, MOVE_A, MOVE_A, MOVE_A, MOVE_A, MOVE_B, MOVE_A, MOVE_A);
+    void moveStableAgainLater_stopsOnceThreeIterationsAgree() {
+        var instance = searchWith(true, MOVE_A, MOVE_A, MOVE_A, MOVE_A, MOVE_A, MOVE_B, MOVE_A, MOVE_A, MOVE_A);
 
-        assertTrue(instance.shouldSkipIteration(9), "depths 7 and 8 agree, so depth 9 must not start");
+        assertTrue(instance.shouldSkipIteration(10), "depths 7, 8 and 9 agree, so depth 10 must not start");
     }
 
     @Test

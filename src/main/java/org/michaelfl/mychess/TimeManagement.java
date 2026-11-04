@@ -104,10 +104,14 @@ public final class TimeManagement {
 
     /**
      * The easy-move stop (owner's rule): with a clock, the search does not start a depth of at
-     * least this value when the last two completed iterations found the same best move. So the
-     * stop comes before depth 7 at the earliest, after depths 5 and 6 agreed.
+     * least this value when the last {@link #EASY_MOVE_STABLE_ITERATIONS} completed iterations
+     * found the same best move. So the stop comes before depth 7 at the earliest, after depths
+     * 4, 5 and 6 agreed.
      */
     static final int EASY_MOVE_MIN_START_DEPTH = 7;
+
+    /** How many completed iterations in a row must find the same best move for the easy-move stop. */
+    static final int EASY_MOVE_STABLE_ITERATIONS = 3;
 
     /** Default of {@link #easyMoveStopEnabled}. */
     static final boolean DEFAULT_EASY_MOVE_STOP = true;
@@ -192,9 +196,10 @@ public final class TimeManagement {
          *
          * <p>Depth 1 always runs. With a clock, the easy-move stop ends the search before a depth of
          * at least {@link #EASY_MOVE_MIN_START_DEPTH} when the best moves reported by
-         * {@link #bestMoveFound} were the same in the last two completed iterations; it is logged
-         * as {@code [time] easy} and not recorded. Otherwise {@link IterationTimings#decideIteration}
-         * compares the estimated cost of the depth with the time left until the soft limit.
+         * {@link #bestMoveFound} were the same in the last {@link #EASY_MOVE_STABLE_ITERATIONS}
+         * completed iterations; it is logged as {@code [time] easy} and not recorded. Otherwise
+         * {@link IterationTimings#decideIteration} compares the estimated cost of the depth with the
+         * time left until the soft limit.
          *
          * <p>Side effects: a skip because of the estimate is recorded with
          * {@link IterationTimings#recordSkip}, so a probing run becomes due eventually; a stop
@@ -289,7 +294,7 @@ public final class TimeManagement {
         }
 
         private boolean isEasyMove() {
-            return easyMoveStop && stableIterations >= 2 && depth >= EASY_MOVE_MIN_START_DEPTH;
+            return easyMoveStop && stableIterations >= EASY_MOVE_STABLE_ITERATIONS && depth >= EASY_MOVE_MIN_START_DEPTH;
         }
 
         /**
