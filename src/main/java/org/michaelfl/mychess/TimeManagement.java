@@ -51,7 +51,7 @@ public final class TimeManagement {
 
     /**
      * Default fallback when wtime/btime is given without movestogo. 15 instead of the 30 of 4.11.0
-     * doubles the budget per move. The easy-move stop ({@link #EASY_MOVE_MIN_DEPTH}) ends many
+     * doubles the budget per move. The easy-move stop ({@link #EASY_MOVE_MIN_START_DEPTH}) ends many
      * searches early, so the larger budget reaches the hard moves.
      */
     static final int DEFAULT_MOVES_TO_GO = 15;
@@ -103,22 +103,11 @@ public final class TimeManagement {
     private static final float HARD_LIMIT_REMAINING_TIME_FACTOR = 0.2f;
 
     /**
-     * The easy-move stop: with a clock, a move is easy when its best move was the same in the last
-     * two completed iterations, the last of them at least this deep, and its score is no mate score.
-     * For an easy move the start decision compares against a shorter soft limit,
-     * {@link #EASY_MOVE_SOFT_LIMIT_PERCENT} of the regular one. So the search ends about one
-     * iteration earlier than it would. Offline on the 7b gauntlet games, ending one iteration
-     * earlier on such moves saved 59 % of the think time. Each second saved cost about a third of
-     * what a second gains on the other moves ({@code myChess-Lab results/easy-move-signal}).
+     * The easy-move stop (owner's rule): with a clock, the search does not start a depth of at
+     * least this value when the last two completed iterations found the same best move. So the
+     * stop comes before depth 7 at the earliest, after depths 5 and 6 agreed.
      */
-    static final int EASY_MOVE_MIN_DEPTH = 4;
-
-    /**
-     * The soft limit of an easy move in percent of the regular one. An iteration takes about 2.8
-     * times as long as the one before (median at depth 6 and more in the 7b gauntlet logs), so
-     * 35 % ends the search about one iteration earlier.
-     */
-    static final int EASY_MOVE_SOFT_LIMIT_PERCENT = 35;
+    static final int EASY_MOVE_MIN_START_DEPTH = 7;
 
     /** Default of {@link #easyMoveStopEnabled}. */
     static final boolean DEFAULT_EASY_MOVE_STOP = true;
@@ -184,7 +173,6 @@ public final class TimeManagement {
      */
     public static final class TimeManagementInstance {
         private final long softTimeout;
-        private final long easySoftTimeout;
         private final boolean easyMoveStop;
         private final String logPrefix;
         private int depth = 1;
@@ -192,12 +180,9 @@ public final class TimeManagement {
         private long iterationStartTimestamp;
         private int bestMove;
         private int stableIterations;
-        private boolean bestMoveIsMate;
 
         private TimeManagementInstance(long softTimeout, boolean clock, String logTag) {
             this.softTimeout = softTimeout;
-            final long now = System.currentTimeMillis();
-            this.easySoftTimeout = now + (softTimeout - now) * EASY_MOVE_SOFT_LIMIT_PERCENT / 100;
             this.easyMoveStop = clock && easyMoveStopEnabled;
             this.logPrefix = logTag == null || logTag.isEmpty() ? "[time] " : "[time] " + logTag + " ";
         }
@@ -205,11 +190,11 @@ public final class TimeManagement {
         /**
          * Decides whether the iterative deepening should stop before {@code currentDepth}.
          *
-         * <p>Depth 1 always runs. For deeper iterations {@link IterationTimings#decideIteration}
-         * compares the estimated cost of the depth with the time left until the soft limit. For an
-         * easy move (see {@link #EASY_MOVE_MIN_DEPTH}, best moves reported by {@link #bestMoveFound})
-         * it first compares against the shorter easy limit; a skip there is logged as
-         * {@code [time] easy} and not recorded.
+         * <p>Depth 1 always runs. With a clock, the easy-move stop ends the search before a depth of
+         * at least {@link #EASY_MOVE_MIN_START_DEPTH} when the best moves reported by
+         * {@link #bestMoveFound} were the same in the last two completed iterations; it is logged
+         * as {@code [time] easy} and not recorded. Otherwise {@link IterationTimings#decideIteration}
+         * compares the estimated cost of the depth with the time left until the soft limit.
          *
          * <p>Side effects: a skip because of the estimate is recorded with
          * {@link IterationTimings#recordSkip}, so a probing run becomes due eventually; a stop
@@ -231,21 +216,16 @@ public final class TimeManagement {
                 return false;
             }
 
-            final long estimateMs = IterationTimings.getEstimatedMs(depth);
-
             if (isEasyMove()) {
-                final long easyRemainingMs = easySoftTimeout - System.currentTimeMillis();
+                decisionOnSoftTimeout = IterationDecision.SKIP;
+                Log.info(logPrefix + "easy depth " + depth + ": best move stable");
 
-                if (IterationTimings.decideIteration(currentDepth, easyRemainingMs, riskFactor) == IterationDecision.SKIP) {
-                    decisionOnSoftTimeout = IterationDecision.SKIP;
-                    Log.info(logPrefix + "easy depth " + depth + ": est " + estimateMs + " ms > easy remaining " + easyRemainingMs + " ms");
-
-                    return true;
-                }
+                return true;
             }
 
             final long remainingMs = softTimeout - System.currentTimeMillis();
             decisionOnSoftTimeout = IterationTimings.decideIteration(currentDepth, remainingMs, riskFactor);
+            final long estimateMs = IterationTimings.getEstimatedMs(depth);
 
             return recordAndLogSkip(decisionOnSoftTimeout, estimateMs, remainingMs);
         }
@@ -301,17 +281,15 @@ public final class TimeManagement {
          * Reports the best move of the iteration just completed, for the easy-move stop. Call it
          * after {@link #iterationDone}, once per completed iteration.
          *
-         * @param move   the best move of the iteration
-         * @param isMate whether its score is a mate score
+         * @param move the best move of the iteration
          */
-        public void bestMoveFound(final int move, final boolean isMate) {
+        public void bestMoveFound(final int move) {
             stableIterations = move == bestMove ? stableIterations + 1 : 1;
             bestMove = move;
-            bestMoveIsMate = isMate;
         }
 
         private boolean isEasyMove() {
-            return easyMoveStop && stableIterations >= 2 && !bestMoveIsMate && depth - 1 >= EASY_MOVE_MIN_DEPTH;
+            return easyMoveStop && stableIterations >= 2 && depth >= EASY_MOVE_MIN_START_DEPTH;
         }
 
         /**
