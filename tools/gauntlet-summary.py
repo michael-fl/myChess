@@ -108,7 +108,21 @@ def read_games(paths):
             yield game
 
 
-def progress(games, arms, label):
+SEGMENT_NAME = re.compile(r"^gauntlet-(.+?)(-seg\d+)?\.pgn$")
+
+
+def rounds_file(paths, label):
+    """The runner's .rounds file: from --label, otherwise from the name of the first PGN."""
+    if label:
+        return pathlib.Path(__file__).resolve().parent.parent / "test-results" / f"gauntlet-{label}.rounds"
+
+    first = pathlib.Path(paths[0])
+    match = SEGMENT_NAME.match(first.name)
+
+    return first.parent / f"gauntlet-{match.group(1)}.rounds" if match else None
+
+
+def progress(games, paths, label):
     """Games done, games left and how long the rest will take.
 
     The rate comes from a RECENT window, not from the whole run: a resumable match spends
@@ -116,20 +130,19 @@ def progress(games, arms, label):
     every interruption as slow play and understate what is left.
     """
     rounds_seen = collections.Counter(g.round for g in games)
-    anchors = ({g.white for g in games} | {g.black for g in games}) - set(arms)
-    per_round = 2 * len(arms) * len(anchors)
+    # games of a full round, read off the data: right for any number of arms, also when only
+    # two of them are compared
+    per_round = max(rounds_seen.values())
     print(f"\n{len(games)} finished games over {len(rounds_seen)} rounds")
 
     total = None
+    state = rounds_file(paths, label)
 
-    if label:
-        state = pathlib.Path(__file__).resolve().parent.parent / "test-results" / f"gauntlet-{label}.rounds"
-
-        if state.exists():
-            try:
-                total = int(state.read_text().splitlines()[0]) * per_round
-            except (ValueError, IndexError):
-                total = None
+    if state and state.exists():
+        try:
+            total = int(state.read_text().splitlines()[0]) * per_round
+        except (ValueError, IndexError):
+            total = None
 
     if total is None:
         print()
@@ -270,7 +283,7 @@ def main():
 
     points, counts = per_round_points(games, arms)
 
-    progress(games, arms, label)
+    progress(games, paths, label)
     print(f"{'arm':<26}{'games':>7}{'score':>9}")
 
     rates = {}
