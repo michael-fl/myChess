@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Tests for the easy-move stop of {@link TimeManagement.TimeManagementInstance}. With a clock, a move
  * is easy when its best move was the same in the last two completed iterations, the last of them at
- * least {@link TimeManagement#EASY_MOVE_MIN_DEPTH} deep, without a mate score. For an easy move the
- * start decision compares against {@link TimeManagement#EASY_MOVE_SOFT_LIMIT_PERCENT} of the soft limit.
+ * least {@link TimeManagement#EASY_MOVE_MIN_DEPTH} deep. For an easy move the start decision compares
+ * against {@link TimeManagement#EASY_MOVE_SOFT_LIMIT_PERCENT} of the soft limit.
  *
  * <p>The skip heuristic is switched on here, as in {@link TimeManagementInstanceTest}, and fed with
  * chosen samples. The next depth is estimated at {@link #NEXT_DEPTH_MS}. That fits the regular soft
@@ -86,18 +86,6 @@ class EasyMoveStopTest {
     }
 
     @Test
-    void mateScore_usesTheRegularLimit() {
-        var instance = searchWith(true, MOVE_A, MOVE_A, MOVE_A);
-
-        assertFalse(instance.shouldSkipIteration(4));
-        instance.iterationDone(4, System.currentTimeMillis());
-        instance.bestMoveFound(MOVE_A, true);
-        recordSamples(5, NEXT_DEPTH_MS);
-
-        assertFalse(instance.shouldSkipIteration(5), "a mate score at depth 4 must not make the move easy");
-    }
-
-    @Test
     void withoutAClock_usesTheRegularLimit() {
         var instance = searchWith(false, MOVE_A, MOVE_A, MOVE_A, MOVE_A);
 
@@ -143,7 +131,7 @@ class EasyMoveStopTest {
 
             assertFalse(instance.shouldSkipIteration(depth), "depth " + depth + " must start");
             instance.iterationDone(depth, System.currentTimeMillis());
-            instance.bestMoveFound(bestMoves[i], false);
+            instance.bestMoveFound(bestMoves[i]);
         }
     }
 

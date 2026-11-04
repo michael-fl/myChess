@@ -104,9 +104,9 @@ public final class TimeManagement {
 
     /**
      * The easy-move stop: with a clock, a move is easy when its best move was the same in the last
-     * two completed iterations, the last of them at least this deep, and its score is no mate score.
-     * For an easy move the start decision compares against a shorter soft limit,
-     * {@link #EASY_MOVE_SOFT_LIMIT_PERCENT} of the regular one. So the search ends about one
+     * two completed iterations, the last of them at least this deep. For an easy move the start
+     * decision compares against a shorter soft limit, {@link #EASY_MOVE_SOFT_LIMIT_PERCENT} of the
+     * regular one. So the search ends about one
      * iteration earlier than it would. Offline on the 7b gauntlet games, ending one iteration
      * earlier on such moves saved 59 % of the think time. Each second saved cost about a third of
      * what a second gains on the other moves ({@code myChess-Lab results/easy-move-signal}).
@@ -192,7 +192,6 @@ public final class TimeManagement {
         private long iterationStartTimestamp;
         private int bestMove;
         private int stableIterations;
-        private boolean bestMoveIsMate;
 
         private TimeManagementInstance(long softTimeout, boolean clock, String logTag) {
             this.softTimeout = softTimeout;
@@ -301,17 +300,15 @@ public final class TimeManagement {
          * Reports the best move of the iteration just completed, for the easy-move stop. Call it
          * after {@link #iterationDone}, once per completed iteration.
          *
-         * @param move   the best move of the iteration
-         * @param isMate whether its score is a mate score
+         * @param move the best move of the iteration
          */
-        public void bestMoveFound(final int move, final boolean isMate) {
+        public void bestMoveFound(final int move) {
             stableIterations = move == bestMove ? stableIterations + 1 : 1;
             bestMove = move;
-            bestMoveIsMate = isMate;
         }
 
         private boolean isEasyMove() {
-            return easyMoveStop && stableIterations >= 2 && !bestMoveIsMate && depth - 1 >= EASY_MOVE_MIN_DEPTH;
+            return easyMoveStop && stableIterations >= 2 && depth - 1 >= EASY_MOVE_MIN_DEPTH;
         }
 
         /**

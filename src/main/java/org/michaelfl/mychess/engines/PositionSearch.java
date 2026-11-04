@@ -142,7 +142,7 @@ public final class PositionSearch {
 
             __assert(() -> !(iterationResult.move() == 0 && iterationResult.result() == GameResult.ONGOING), "no move");
             timeManagement.iterationDone(depth, iterationEndTimestamp);
-            timeManagement.bestMoveFound(bestPath.move(), WeightingFunction.isCheckmateWeight(bestPath.weight()));
+            timeManagement.bestMoveFound(bestPath.move());
 
             MoveAndWeight mw = bestPath.weightFactor(weightFactor);
 
