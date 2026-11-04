@@ -391,6 +391,29 @@ class TimeManagementInstanceTest {
     }
 
     @Test
+    void iterationAborted_normalIteration_logsExtendedFalse() {
+        var instance = TimeManagement.newInstance(System.currentTimeMillis() - 1_500, SOFT_LIMIT_MS, LARGE_CLOCK_MS, null, "");
+        completeDepthOne(instance);
+        instance.shouldSkipIteration(2);
+
+        String log = capturedLog(() -> instance.iterationAborted(2, System.currentTimeMillis()));
+
+        assertTrue(log.contains("extended=false"), "a normal abort must log extended=false: " + log);
+    }
+
+    @Test
+    void iterationAborted_extendedIteration_logsExtendedTrue() {
+        recordSamples(FIRST_EXTENDABLE_DEPTH, 1_500);
+        var instance = difficultInstance(System.currentTimeMillis(), LARGE_CLOCK_MS);
+
+        assertFalse(instance.shouldSkipIteration(FIRST_EXTENDABLE_DEPTH), "test premise: the extension starts the iteration");
+
+        String log = capturedLog(() -> instance.iterationAborted(FIRST_EXTENDABLE_DEPTH, System.currentTimeMillis()));
+
+        assertTrue(log.contains("extended=true"), "an aborted extension must log extended=true: " + log);
+    }
+
+    @Test
     void iterationDone_afterTheSoftLimitOfTheMove_logsAnOverrun() {
         // started 1.5 s ago with a 1 s soft limit: a short depth 2 that ends now still ends 500 ms past the soft limit
         var instance = TimeManagement.newInstance(System.currentTimeMillis() - 1_500, SOFT_LIMIT_MS, LARGE_CLOCK_MS, null, "");

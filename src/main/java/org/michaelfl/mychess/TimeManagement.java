@@ -401,7 +401,8 @@ public final class TimeManagement {
 
             long iterationDurationMs = iterationEndTimestamp - iterationStartTimestamp;
             IterationTimings.recordAbort(depth, iterationDurationMs);
-            Log.info(logPrefix + "abort depth " + depth + ": " + (iterationEndTimestamp - (startTimestamp + softLimitMillis)) + " ms past soft limit");
+            Log.info(logPrefix + "abort depth " + depth + ": " + (iterationEndTimestamp - (startTimestamp + softLimitMillis))
+                    + " ms past soft limit, extended=" + (decisionOnSoftTimeout == IterationDecision.SKIP));
 
             decisionOnSoftTimeout = null;
             droppedBelowPreviousOwnScore = false;
