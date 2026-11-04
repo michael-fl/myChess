@@ -307,14 +307,14 @@ The score is always non-positive: castled = 0 (best), one or two rights remainin
 
 **Inputs come straight from `GameStatus`** — the four "castling-still-possible" bits and the two "has-castled" bits set by `Board.calculateNewCastlingState` after every move. No board scanning needed.
 
-**Scale factor.** `castlingFactor = 0.1875` since 4.7.0 — losing both castling rights without having castled is worth `(0 − (−4)) × 0.1875 = 0.75` pawn against the side that lost the rights, at full midgame material. It was `0.25` from `dabec30` until 4.6.1. The quarter came off against the characterization suite rather than against Elo or a castling rate, and **0.1875 is the lowest value that still holds**: § 5.5.2 has the sweep, and the constant's own JavaDoc repeats the warning, because the margin downward is zero.
+**Scale factor.** `castlingFactor = 0.1875` since 4.7.0 — losing both castling rights without having castled is worth `(0 − (−4)) × 0.1875 = 0.75` pawn against the side that lost the rights, at full midgame material. It was `0.25` from `1ab3390` until 4.6.1. The quarter came off against the characterization suite rather than against Elo or a castling rate, and **0.1875 is the lowest value that still holds**: § 5.5.2 has the sweep, and the constant's own JavaDoc repeats the warning, because the margin downward is zero.
 
 **Phase fade.** Since 4.7.1 the term no longer speaks at every phase. `castlingWeight(delta, phase)` interpolates the difference against `CASTLING_RAMP`, a precomputed 25-entry table holding the full value at `CASTLING_FULL_PHASE = 10` and above and falling linearly to zero at `CASTLING_DEAD_PHASE = 2`, the edge of a pure pawn endgame. Flat, the term charged a whole pawn for lost rights in positions where those rights can no longer be used at all. A first attempt at 16/6 was measured and rejected; § 5.5.2 records both.
 
 ### 5.5.1 Measured 2026-09-09 — load-bearing, and too strong
 
 These were the last hand-written numbers in the evaluation. `castlingFactor = 0.25f` dates from
-`dabec30`, the original implementation, and the `0 / −1 / −2 / −4` progression from `2cd229a`;
+`1ab3390`, the original implementation, and the `0 / −1 / −2 / −4` progression from `db7fefe`;
 neither had ever been tuned or swept, although `castlingFactor` has been wired into
 `TUNABLE_FACTOR_NAMES` the whole time.
 

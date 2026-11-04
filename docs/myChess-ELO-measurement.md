@@ -504,7 +504,7 @@ document's anchor file. So Ordo could be pointed at its PGN at no extra cost.
    8 TSCP                    :  1609.0   ----    98.0     578    17
 ```
 
-`mychess-base` is 4.6.1 at master `4e80a21`. **The propagated chain predicted ~1943 and
+`mychess-base` is 4.6.1 at master `e9d4569`. **The propagated chain predicted ~1943 and
 the measurement says 1945.9 ± 17.8** — 2.9 Elo apart, well inside either interval. That is
 the second time the chain has been checked against external opposition and held: the
 v4.4.1 re-anchor above predicted ~1915 and measured 1928.

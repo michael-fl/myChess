@@ -129,7 +129,7 @@ Cheap to implement (~5 lines), small but real Elo gain.
 
 ### 12.6.5 TT integration in QSearch — *tried, shelved (−11 Elo, LOS 4 %)*
 
-**Tried** on branch `qsearch-tt` (commit `1a39da5`): a **separate** full-size transposition table for the QSearch (`getDefaultQSearchInstance()`), probed on entry and stored on exit with EXACT/LOWER/UPPER bounds plus a TT move for ordering, keyed by remaining QSearch depth and cleared on `ucinewgame`.
+**Tried** on branch `qsearch-tt` (commit `faa2304`): a **separate** full-size transposition table for the QSearch (`getDefaultQSearchInstance()`), probed on entry and stored on exit with EXACT/LOWER/UPPER bounds plus a TT move for ordering, keyed by remaining QSearch depth and cleared on `ucinewgame`.
 
 **Measured 4.2.1-qsearch-tt vs 4.2.0: −10.6 ± 11.5 Elo, LOS 3.6 % over ~2040 games** — a real, small regression. The apparent color split (candidate 0.503 as White, 0.467 as Black) is **not** a bug: once the intrinsic first-move advantage (White vs Black 0.518 in the match) is factored out, the deficit is symmetric (−0.015 in both colors), i.e. a uniform ~−11 Elo.
 
@@ -182,7 +182,7 @@ The sub-items were *independent* refinements on top of the shipped all-captures 
 
 ### 12.7.2 Tried — rook-file / battery bonus, shelved (neutral)
 
-**Tried — rook-file and battery bonus, shelved (neutral).** Branch `rook-battery` (commit `a12ba0f`). A rook on an open file scored +20 cp, a half-open file (an opponent pawn but no own pawn) +10 cp, 0 on a file carrying an own pawn; two of a color's rooks connected on the same file (a battery) added a further +30 cp, folded into the evaluation through a new tunable `rookFileFactor`. **Result: −2.0 ± 10.8 Elo vs 4.2.1 (2420 games, LOS 35.8% — neutral).** An early 1100-game snapshot read +13.9 ± 15.9 but regressed cleanly to zero — a textbook reminder not to trust sub-2000-game samples.
+**Tried — rook-file and battery bonus, shelved (neutral).** Branch `rook-battery` (commit `95cba0a`). A rook on an open file scored +20 cp, a half-open file (an opponent pawn but no own pawn) +10 cp, 0 on a file carrying an own pawn; two of a color's rooks connected on the same file (a battery) added a further +30 cp, folded into the evaluation through a new tunable `rookFileFactor`. **Result: −2.0 ± 10.8 Elo vs 4.2.1 (2420 games, LOS 35.8% — neutral).** An early 1100-game snapshot read +13.9 ± 15.9 but regressed cleanly to zero — a textbook reminder not to trust sub-2000-game samples.
 
 **Why neutral — the term duplicates signal the evaluation already has:**
 
@@ -372,7 +372,7 @@ The single largest evaluation term myChess is still missing. Today the only king
 
 **Net take-away from all three attempts.** Hand-crafted king-safety terms — attacker count (−14.7), standalone shield (−57.5), king-dependent PST (−18.1) — all measured net-negative. This confirms the "must be tuned" caveat above: the next serious attempt should run through an automated tuner (Texel/SPSA) rather than hand-picked tables/weights, and should keep the eval a pure function of the position (avoid king-position-dependent piece values).
 
-**Forensic conditions for a tuned retry (`e93fea4` on branch `4.3.0-king-safety` — `4.3.0-attack-units` is the build name under `versions/`, not a branch; reviewed 2026-07).** Reading the shelved code alongside the match (`test-results/match-4.3.0-attack-units-stdout.log`: 662–753–819, [0.480] over 2235 games) surfaces *why* a plain Texel pass over the existing term would not be enough — three findings, each pointing at a fix beyond "just tune it":
+**Forensic conditions for a tuned retry (`4ad1cd3` on branch `4.3.0-king-safety` — `4.3.0-attack-units` is the build name under `versions/`, not a branch; reviewed 2026-07).** Reading the shelved code alongside the match (`test-results/match-4.3.0-attack-units-stdout.log`: 662–753–819, [0.480] over 2235 games) surfaces *why* a plain Texel pass over the existing term would not be enough — three findings, each pointing at a fix beyond "just tune it":
 
 - **No phase scaling.** The term fires with full magnitude in the endgame, where two pieces bearing on the enemy king's 3×3 zone are usually incidental (e.g. R + K vs K), not a real attack — pure noise. King safety must fade toward the endgame, which is cleanest built on top of the tapered evaluation ([§ 12.7.1](roadmap.md#1271-tapered-evaluation--staged-rollout-strategy)).
 - **Fires on presence, not danger.** Any ≥ 2 distinct attackers on the 3×3 zone trigger the (attacker-side) bonus, so the engine over-commits pieces toward the enemy king on speculative attacks that the already-strong tactical search then refutes — the "static noise to a strong search" failure mode, concretely.
@@ -1107,7 +1107,7 @@ is anything to save to *confirming* how much of it converts to wall clock.
 64 real squares**, because it walks the two-file border between ranks of the 12×12 board. About 30 %
 of that loop is wasted on every evaluation, and fixing it needs no design decision.
 
-**Where the instrumentation lives.** Branch `eval-work-counters`, commit `187d005` — `EvalWorkCounters`
+**Where the instrumentation lives.** Branch `eval-work-counters`, commit `9d03593` — `EvalWorkCounters`
 plus eleven guarded sites in `WeightingFunction` and the row-B2 extension of the analysis driver.
 Not on master, because it is production code in the hot path whose merge depends on the outcome.
 Master's driver reports rows A, B and C only.
@@ -1178,7 +1178,7 @@ boundary should sit.
 
 Halving `EVALUATE_MATERIAL_ONLY_THRESHOLD` from 200 to 100 makes the shortcut fire more often: one
 pawn of swing during the search is enough instead of two. Measured against released 4.6.0, branch
-`material-threshold-100`, commit `2909b84`, jar in `versions/4.6.0-material-threshold-100/`.
+`material-threshold-100`, commit `1406342`, jar in `versions/4.6.0-material-threshold-100/`.
 
 | | |
 |---|---|
@@ -1224,7 +1224,7 @@ everything else in this section.
 
 Raising the same constant to 300 makes the shortcut fire *less* often, so the full evaluation runs
 more, leaves get more accurate and the tree grows. Branch `material-threshold-300`, commit
-`12d06da`, jar in `versions/4.6.0-material-threshold-300/`, same control as the 100 side.
+`0cb4d13`, jar in `versions/4.6.0-material-threshold-300/`, same control as the 100 side.
 
 | | |
 |---|---|

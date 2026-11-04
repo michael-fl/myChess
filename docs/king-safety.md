@@ -27,7 +27,7 @@
 | **Curve to start from** | `0 0 0 13 16 47 47 47 80`, indices 0–8, everything above clamped onto 8 (§ 4.7; supersedes § 4.6's ungated `0 2 2 20 20 20 44 45 85` and § 4.5's `0 0 0 0 0 0 49 40 83`) |
 | **Where it comes from** | fitted against Stockfish's *static* evaluation rather than game results, phase-weighted, monotonicity as a constraint of the fit (§ 4.6). The game-result fits of § 4.5 are what it replaces: on a self-play corpus the label carries myChess's own blindness |
 | **Why only indices 1–2 are zero** | those two are not separable from zero (p5 = 0.0) and a single minor piece bearing on the king zone is the normal case. Indices 3–5 *were* zeroed by § 4.5 and are not: that was an artifact of the label, and they carry 24.2 % of king samples against 6.2 % for 6–8 (§ 4.6) |
-| **Where to build it** | ~~branch `attack-units`, `05f337d` — already ported, never measured, 106 commits behind master with `WeightingFunction.java` byte-identical (§ 1.1)~~ — built, measured and merged: master since v4.8.0 |
+| **Where to build it** | ~~branch `attack-units`, `e879ed4` — already ported, never measured, 106 commits behind master with `WeightingFunction.java` byte-identical (§ 1.1)~~ — built, measured and merged: master since v4.8.0 |
 | **The one missing change** | ~~multiply by the game phase. Without it the term runs at full strength in the endgame, where the measured sign is the *opposite* one (§ 4.2)~~ — done: the shipped term blends linearly toward phase 0. A sharper ramp that is off from phase 7, where the sign inverts, is prepared as the next candidate |
 | **How to implement it** | leave it where it is: branch `attack-units` already calls `increaseAttackUnit` from inside `move(...)`, the walk the evaluation performs anyway. Do **not** refactor it into a separate pass, however much tidier that looks — a standalone scan costs more than the entire evaluation (§ 4.5) |
 | **What will kill it** | ~~steering into sacrifices the material-only shortcut then hides (§ 4.4)~~ — measured, and it was not this: the cap held. ~~A diffuse evaluation error plus −21.9 % NPS (§ 4.8, § 4.9)~~ — **also wrong.** Repairing only the speed moved the identical evaluation by ~52 Elo (§ 4.10). What kills this class of term is **cost**, and the evaluation was never the problem |
@@ -79,13 +79,13 @@ This matters concretely in § 4: the obvious-looking metric is named after the w
 
 | Attempt | Where it lives | Result vs v4.2.1 | Games |
 |---|---|---|---|
-| Attacker-count term | branch `4.3.0-king-safety`, `e93fea4` | **−14.7 ± 11.5** | 2220 |
+| Attacker-count term | branch `4.3.0-king-safety`, `4ad1cd3` | **−14.7 ± 11.5** | 2220 |
 | Pawn shield, standalone | branch `4.3.0-pawn-shield` | **−57.5 ± 17.5** | 920 |
 | King-dependent pawn PSTs | branch `king-safety-pst` | **−18.1 ± 11.6** | 2068, LOS 0.1 % |
 
 **Note the branch names**, because § 12.21 and earlier drafts of this document got the first
 one wrong: `4.3.0-attack-units` is the *build* name under `versions/`, not a branch. The
-measured commit `e93fea4` sits on `4.3.0-king-safety`, where the term was still WIP and gated
+measured commit `4ad1cd3` sits on `4.3.0-king-safety`, where the term was still WIP and gated
 off behind `if (false && …)`.
 
 Three independent designs, three conclusive losses. That is the central fact this plan has to
@@ -93,7 +93,7 @@ answer for: **adding a king-safety term to myChess has, so far, always made it w
 
 ### 1.1 There is a fourth branch, and it is the starting point
 
-**`attack-units`, tip `05f337d`, 2026-08-08 — an unmeasured port of the attacker term onto
+**`attack-units`, tip `e879ed4`, 2026-08-08 — an unmeasured port of the attacker term onto
 today's evaluation.** Its own commit message says so: *"Known effect, pending self-play
 measurement."* It was never played.
 
@@ -120,10 +120,10 @@ endgame, where the measured sign is **+12 cp rather than −34** — finding F1,
 Worth recording before anyone tries to resume one of them.
 
 **`king-safety-pst` is not resumable and its tip is not what was measured.** The branch is
-**171 commits behind master** and its tip `defc82f` and the measured commit `e84d0de` are
-*siblings* sharing the parent `4a68aaf`, not a chain — `e84d0de` exists only as a loose commit,
+**171 commits behind master** and its tip `3957c0f` and the measured commit `e84d0de` are
+*siblings* sharing the parent `34ac532`, not a chain — `e84d0de` exists only as a loose commit,
 on no branch at all. They differ in the endgame gate: `e84d0de` carries
-`GameStatus.kingMayBecomeActive` (opponent non-pawn material ≤ 700), `defc82f` reverts to the
+`GameStatus.kingMayBecomeActive` (opponent non-pawn material ≤ 700), `3957c0f` reverts to the
 crude `plyCount > 60`. All three archived jars under `versions/` contain
 `kingMayBecomeActive`, so **no measured build corresponds to the current branch tip**.
 
@@ -146,7 +146,7 @@ structurally incompatible with the tapered representation.
 
 ## 2. Why the attempts failed — the three forensic findings
 
-From the review of `e93fea4` (branch `4.3.0-king-safety`) alongside its match log. Each points at a
+From the review of `4ad1cd3` (branch `4.3.0-king-safety`) alongside its match log. Each points at a
 fix beyond "just run a tuner over it".
 
 **F1 — no phase scaling.** The term fired at full magnitude in the endgame, where two pieces
@@ -405,7 +405,7 @@ walked into.
 curves *at the same table index* and concluded Audax was about three times louder. That was
 wrong: the two branches do not share a unit scale, so the same index means a different attack.
 
-| | our `05f337d` | Audax `aa5f574` |
+| | our `e879ed4` | Audax `aa5f574` |
 |---|---|---|
 | attack units | P1 N2 B2 R3 Q5 | **P3 N4 B4 R6 Q10** |
 | defenders | none | **subtracted**: `max(0, attack − defence)` |
@@ -2264,7 +2264,7 @@ that are not myChess: three arms, five foreign engines, 140 rounds, **4261 games
 |---|---|---:|---:|
 | base v4.7.1 | 1435 | 54.8 % |
 | placebo — the term computed and discarded | 1424 | 52.2 % |
-| candidate `e0fdc3f` | 1402 | 53.9 % |
+| candidate `7d74096` | 1402 | 53.9 % |
 
 | | Elo | 95 % | |
 |---|---:|---:|---|
@@ -2472,7 +2472,7 @@ pawns, or an open file toward the king.
 ### Step 2 — resume `attack-units` and add the one missing thing
 
 The term does not have to be written; § 1.1 has it ported and tested on branch `attack-units`
-(`05f337d`), never measured. The work is therefore short and each item is checkable:
+(`e879ed4`), never measured. The work is therefore short and each item is checkable:
 
 1. **Rebase `attack-units` onto master.** `WeightingFunction.java` is byte-identical between
    the branch point and master, so the file that matters carries no conflict.
@@ -2485,7 +2485,7 @@ The term does not have to be written; § 1.1 has it ported and tested on branch 
    be worse than ignoring it.
 3. **Replace the curve with the fitted one** (§ 4.7): `0 0 0 13 16 47 47 47 80`, indices 0–8,
    everything above clamped onto index 8. Measured, not chosen, and monotone by construction.
-   The inherited table on `05f337d` reads
+   The inherited table on `e879ed4` reads
    `0 0 5 5 10 10 15 15 25 35 50 65 85 105 130 160 195 235 285 340 400` — its upper half covers
    indices real play reaches in 0.3 % of positions, and across the fitted range it carries
    25 % to 50 % of what the fit puts there — 5 against 20 at three units, 25 against 85 at

@@ -1,6 +1,6 @@
 # Profiling 4.8.2: JFR over bench v2 d8, cross-checked against the inlining log (roadmap row 3a)
 
-Run 2026-10-09 06:17–06:20 (runner and raw files in the lab, `myChess-Lab/scripts/profiling-4.8.2.sh` and `myChess-Lab/results/profiling-4.8.2/`), build `versions/4.8.2`, which has the same engine as master as of `a57a7de`. Both runs reproduce the release signature **169,439,389** nodes, so the profiled search is exactly the release search.
+Run 2026-10-09 06:17–06:20 (runner and raw files in the lab, `myChess-Lab/scripts/profiling-4.8.2.sh` and `myChess-Lab/results/profiling-4.8.2/`), build `versions/4.8.2`, which has the same engine as master as of `f461e62`. Both runs reproduce the release signature **169,439,389** nodes, so the profiled search is exactly the release search.
 
 - JFR `settings=profile`, 7841 execution samples (`bench-v2-d8.jfr`). Stacks were exported again with `--stack-depth 64` (`execution-samples-deep.txt`) and aggregated with `myChess-Lab/scripts/jfr-hot-methods.py` into `hot-methods.txt`.
 - PrintInlining + PrintCompilation in a separate run (`inlining.log`).

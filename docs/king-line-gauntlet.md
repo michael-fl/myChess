@@ -45,9 +45,9 @@ total. That equality is the arm's entry ticket.
 
 | directory | branch | commit |
 |---|---|---|
-| `versions/4.6.1-gauntlet-base` | `master` | `4e80a21` |
-| `versions/4.6.1-gauntlet-king-line-v2` | `king-line-v2` | `07c1d16` |
-| `versions/4.6.1-gauntlet-placebo` | `king-line-v2-placebo` | `6fdf469` |
+| `versions/4.6.1-gauntlet-base` | `master` | `e9d4569` |
+| `versions/4.6.1-gauntlet-king-line-v2` | `king-line-v2` | `31bcb4a` |
+| `versions/4.6.1-gauntlet-placebo` | `king-line-v2-placebo` | `641ac76` |
 
 Each carries a `BUILT-FROM.txt` with the commit and the jar's SHA-256, per
 [`bench-history.md`](bench-history.md) § 6 rule 7. All three wrappers are generated from one

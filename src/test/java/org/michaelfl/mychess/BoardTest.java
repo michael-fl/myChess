@@ -1155,7 +1155,7 @@ class BoardTest {
 
     // ---------- revertCastling: rook destination == king source ----------
     //
-    // Second-generation 960 castle-overlap defect (after the bededba
+    // Second-generation 960 castle-overlap defect (after the da7dab0
     // "king target == king source" fix, which covered the c-file king /
     // g-file king degenerate cases). Here the king moves normally but
     // the rook ends up on the king's STARTING square. Concretely:
@@ -1176,7 +1176,7 @@ class BoardTest {
     // after a few moves" symptom in a live cutechess GUI game on the
     // RBNNQKBR Scharnagl starting position.
     //
-    // Each test does the same round-trip the bededba family did
+    // Each test does the same round-trip the da7dab0 family did
     // (snapshot raw board + hash, makeMove, revertMove, assertEquals).
     // With the buggy revert the post-revert byte array is missing the
     // king on the f-file (kingside tests) or d-file (queenside tests).
@@ -1282,7 +1282,7 @@ class BoardTest {
     // placed there. The final state is f1 = R, g1 = empty: the king
     // has disappeared from the board.
     //
-    // The bededba "king-target-equals-source" fix (degenerate cases:
+    // The da7dab0 "king-target-equals-source" fix (degenerate cases:
     // king on c/g file, rook on a/h) does not cover this geometry,
     // and the rook-destination-equals-king-source fix from the prior
     // commit only adjusted the revert path. Same diagnosis pattern

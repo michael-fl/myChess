@@ -425,7 +425,7 @@ setup":
 > the full suite, the post-fix matches ran many times over, and both illegal-PV causes are fixed
 > (see the first section). Kept as the record of how the May investigation was sequenced.
 
-Updated 2026-05-23 to reflect the illegal-PV fix in commit `26b33e5`
+Updated 2026-05-23 to reflect the illegal-PV fix in commit `6fd630f`
 and the color-asymmetry re-analysis above. The original plan from
 before the fix has been superseded: the
 "sweep `mychess-stderr.log` for `[pv-validate]` entries" item is
@@ -444,7 +444,7 @@ The remaining open work, in order:
 2. **Run a follow-up cutechess match (test02) with the post-fix
    binary.** Two purposes:
    a. Confirm that the `[pv-validate]` hook is silent — i.e. the
-      structural fix in commit `26b33e5` eliminates the illegal-PV
+      structural fix in commit `6fd630f` eliminates the illegal-PV
       class in practice, not just on the three regression
       positions.
    b. Re-measure the per-side scores against `SF-1600`. If the
@@ -824,7 +824,7 @@ slot and the stale value is illegal there — matching the "129 warnings across
 27/40 games" pattern.
 
 This fix had in fact existed once, on the shelved `nmp-verification-search` branch
-(commit `645ceb4`), and was discarded when that experiment was shelved.
+(commit `8a74f70`), and was discarded when that experiment was shelved.
 
 **Fix** (`SearchNodeContext.java`, `PositionSearch.java`, `QuiescenceSearch.java`):
 carry `pvMaxLength` as its own record component — the constant pv-table stride,
@@ -1212,7 +1212,7 @@ This is distinct from the general blind spot of a pass-less, captures-only quies
 
 ### How often it happens (measured 2026-10-07)
 
-The measurement used bench v2 at depth 8, on master `e6fa6e5` plus counters (branch `measure/qs-in-check-count`, not for merge). The node signature was 169,439,389, identical to 4.8.2, so the counters did not disturb the search.
+The measurement used bench v2 at depth 8, on master `abe7e73` plus counters (branch `measure/qs-in-check-count`, not for merge). The node signature was 169,439,389, identical to 4.8.2, so the counters did not disturb the search.
 
 | quantity | count | share |
 |---|---|---|

@@ -262,16 +262,16 @@ public final class WeightingFunction {
      */
     static final int MAX_PHASE = 24;
 
-    /** Mobility: one extra knight move is worth 5 cp. Hand-set in {@code 26f378c} (2019), never tuned or swept. */
+    /** Mobility: one extra knight move is worth 5 cp. Hand-set in {@code 308ad0f} (2019), never tuned or swept. */
     private static final float mobilityFactor = 0.1f;
 
-    /** Piece-square-table scale: halves the tables' centipawns. Hand-set in {@code 492599b} (2020) with the tables, never tuned. */
+    /** Piece-square-table scale: halves the tables' centipawns. Hand-set in {@code 12495b6} (2020) with the tables, never tuned. */
     private static final float positionFactor = 0.5f;
 
-    /** Threats: a threatened queen is worth 18 cp, deliberately tiny. Hand-set in {@code 2cd229a} (2020), never tuned. */
+    /** Threats: a threatened queen is worth 18 cp, deliberately tiny. Hand-set in {@code db7fefe} (2020), never tuned. */
     private static final float threadWeightFactor = 0.02f;
 
-    /** Checks: 25 cp each. Hand-set in {@code 2cd229a} (2020), never tuned; roadmap 12.17 confirmed the term productive, not this value. */
+    /** Checks: 25 cp each. Hand-set in {@code db7fefe} (2020), never tuned; roadmap 12.17 confirmed the term productive, not this value. */
     private static final float chessFactor = 0.25f;
 
     /**
@@ -1151,7 +1151,7 @@ public final class WeightingFunction {
                 chessCount[color]++;
                 // Should be 0. A check is already priced once by chessFactor at 25 cp, and
                 // paying for it a second time here was a thinking error. It is also mistyped:
-                // the intent in 2cd229a (2020) was 400, a minor piece plus one, but the scale
+                // the intent in db7fefe (2020) was 400, a minor piece plus one, but the scale
                 // in this term is centipawns divided by 100, so 4 contributes 0.08 cp where
                 // 400 would have contributed 8. The typo is what keeps the double pricing
                 // harmless, which is why the value stays as it is - zeroing it would move the

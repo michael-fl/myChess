@@ -9,7 +9,7 @@ its own file only so it cannot conflict with master, whose § 4.15 this branch d
 The term is the king-line danger of [§ 4.11–4.14](king-safety.md), plus a gate: it is scored only
 once that **color's** castling question is settled — castled, or both rights lost. The gate was
 first written against `GameStatus.isCastlingPossible()`, which asks only about the side to move;
-that made the term flicker with the clock and is fixed in `cbaf8e5`, pinned by
+that made the term flicker with the clock and is fixed in `bbbb29e`, pinned by
 `WeightingFunctionKingLineTest.theKingLineTermIsIndependentOfWhoseTurnItIs`.
 
 | | |

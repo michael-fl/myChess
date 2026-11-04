@@ -149,7 +149,7 @@ state per snapshot.
 | 5     | partial       | Test consolidation and edge cases                            | 960 mirror-eval, opening-DB hooks, full round-trip suite.    |
 | 6     | pending       | Evaluation adjustments for 960                               | Eval no longer penalizes 960-legitimate piece placements.    |
 
-### Phase 1 — FEN import, export, auto-detection (done — commits 89871df, b8bac8c, 4ea58d2)
+### Phase 1 — FEN import, export, auto-detection (done — commits baba6b5, 3e01d12, caf9635)
 
 1. Introduce `Board.castlingRookFiles` and `CastlingSlot` enum.
 2. `Board.createNewGame()` initializes to `{ 0, 7, 0, 7 }`.
@@ -167,14 +167,14 @@ state per snapshot.
    time in the final `is960` field and exposed via `isChess960()` /
    `isStandardChess()`. The flag survives the copy constructor, which
    is pinned by `BoardTest.is960_isCarriedByCopyConstructor`. Moved
-   from `Game` to `Board` in commit 4ea58d2 so callers in the
+   from `Game` to `Board` in commit caf9635 so callers in the
    move-generator hot path can ask `board.isStandardChess()` without
    re-running the detector. **Known limitation, intentional:** a 960
    game with rook files `{ 0, 7 }` and king on `e1`/`e8` that has
    already left the starting position is classified as standard
    chess. Such a position is rules-equivalent to standard chess in
    every relevant aspect, so the misclassification is harmless.
-   **Update (commit f5e0e37):** this structural heuristic is now only
+   **Update (commit 48e1167):** this structural heuristic is now only
    the *fallback*. When a GUI sets `UCI_Chess960`, `UciHandler` imports
    positions via `Fen.importChess960FEN`, which forces the board's
    `is960` flag regardless of structure (the `Board` constructor takes
@@ -191,17 +191,17 @@ state per snapshot.
      Scharnagl positions.
    - Standard FEN imports produce bit-identical `Board` state to before.
 
-### Phase 2 — castling move generation (done — commits 155ee56, e1a28a1, a2b85cf)
+### Phase 2 — castling move generation (done — commits d75cc9d, f800d5a, 06b6940)
 
 1. `MoveGenerator.calculateCastlingMoves(int kingField)` now takes the
    king's actual source field and dispatches to standard / 960 helpers
    via `theBoard.isStandardChess()`. The four `canDoXxxCastlingYyy960`
    helpers use `castlingRookFiles[slot]` to find the partner rook and
    verify path clearance against the *actual* back-rank squares, not
-   the hardcoded standard-chess paths. (commit 155ee56)
+   the hardcoded standard-chess paths. (commit d75cc9d)
 2. The `MoveGenerator.game` field was renamed to `gameStatus` along
    the way — cosmetic, matches its type and removes ambiguity with
-   the `Game` class. (commit 155ee56)
+   the `Game` class. (commit d75cc9d)
 3. `isCastlingPathEmpty` now takes the **field** of the castle
    partner instead of the piece type — signature is
    `(int startField, int targetField, int counterpartField)` and the
@@ -210,7 +210,7 @@ state per snapshot.
    non-partner rook (e.g. the queenside rook that had moved onto the
    kingside-castle path) pass as harmless. Pinned by the four
    `Chess960CastlingTest.{king,queen}sideCastle_isIllegalWhenOwn…RookSitsOnKingsPath_{white,black}`
-   regression tests added in commit e1a28a1.
+   regression tests added in commit f800d5a.
 4. **`Board.makeMove` / `revertMove` now use dynamic king/rook
    squares.** The earlier `if (fromField == e1) { … } else { … }`
    dispatch has been replaced; the make/revert helpers now read the
@@ -219,8 +219,8 @@ state per snapshot.
    same fields. The four
    `BoardTest.makeCastling{KingSide,QueenSide}Move_{white,black}_chess960_*`
    and the four `revertCastling{KingSide,QueenSide}Move_*_chess960_isRoundTripIdentity`
-   tests pinned the bug and are now green. (commit a2b85cf)
-5. **Degenerate-castle king-loss fix (commit bededba).** A latent bug
+   tests pinned the bug and are now green. (commit 06b6940)
+5. **Degenerate-castle king-loss fix (commit da7dab0).** A latent bug
    surfaced in match play: when the king's castle *target* equals its
    *source* square — king on the c-file castling queenside (`c→c`) or
    on the g-file castling kingside (`g→g`) — the make/revert helper set
@@ -247,7 +247,7 @@ four non-partner-rook spot tests):
 
 ### Phase 3 — UCI castle move notation (partial — inbound done)
 
-**Done** (in the same a2b85cf commit batch as Phase 2):
+**Done** (in the same 06b6940 commit batch as Phase 2):
 
 1. **Inbound castle-notation resolution** is centralised in a new
    `Board.resolve960MoveDescription` helper, called from
@@ -272,7 +272,7 @@ four non-partner-rook spot tests):
    (`fromString → resolveMoveDescription → moveDescriptionToMove`)
    for every (color × side × {standard chess, 960 adjacent, 960
    distant}) combination, 20 chain tests in total. All green.
-3. **`UCI_Chess960` option tracking (commit f5e0e37).**
+3. **`UCI_Chess960` option tracking (commit 48e1167).**
    `UciHandler.handleSetOption` now reads
    `setoption name UCI_Chess960 value true|false` into an `is960`
    flag. Its first consumer is the FEN-import path: `handlePosition`
@@ -298,7 +298,7 @@ inbound notations regardless of the `UCI_Chess960` flag, GUIs can
 the engine doesn't need the flag to *receive* castles correctly.
 The flag only matters for the *outbound* direction.
 
-### Phase 4 — FEN export (done — landed during Phase 1, commit b8bac8c)
+### Phase 4 — FEN export (done — landed during Phase 1, commit 3e01d12)
 
 Landed earlier than the plan called for, as a natural companion to
 the Shredder import work:
@@ -333,7 +333,7 @@ display picks the right form via `is960()`.
 5. **`BoardTest` `makeCastling*` and `revertCastling*` 960 tests** —
    four make + four revert round-trip tests with explicit board /
    hash assertions on the king's actual square. All green after
-   commit a2b85cf.
+   commit 06b6940.
 6. **`MirrorEvalTest` extended to 960 starting positions** — the
    `mirrorCastlingField` helper generalised to swap case on any
    letter (covers Shredder-FEN `A-H` / `a-h` in addition to the
@@ -354,7 +354,7 @@ display picks the right form via `is960()`.
    castling rights still alive. Together they pin Shredder-letter
    serialisation against any future regression in the FEN export
    path.
-8. **Bare-current-FEN 960 detection (commit f5e0e37).**
+8. **Bare-current-FEN 960 detection (commit 48e1167).**
    `UciHandlerTest.position_bareCurrentFenPerPly_keepsChess960Detection`
    drives a 960 game in which every `position` command sends only the
    *current* FEN (no `moves` list), as the UCI spec permits, and
@@ -480,7 +480,7 @@ playing strength in standard chess if we are not careful.
 ## Open items / pending decisions
 
 - **Branching.** Phases continue to land on `master` with green
-  tests between each. After commit a2b85cf the previously red
+  tests between each. After commit 06b6940 the previously red
   Phase-2 regression tests are green; the only remaining 960-
   related red marker would surface if Phase 3's outbound-formatter
   work introduced a regression. The earlier worry about ELO-

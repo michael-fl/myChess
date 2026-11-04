@@ -12,8 +12,8 @@ import java.util.Locale;
  * Fits the four castling-state values against game results.
  *
  * <p>The last hand-written numbers in the evaluation. {@code castlingFactor = 0.25f} comes from
- * {@code dabec30}, the original implementation, and the {@code 0 / −1 / −2 / −4} progression from
- * {@code 2cd229a}; neither was ever tuned or swept. See {@link CastlingStateTexelData} for why the
+ * {@code 1ab3390}, the original implementation, and the {@code 0 / −1 / −2 / −4} progression from
+ * {@code db7fefe}; neither was ever tuned or swept. See {@link CastlingStateTexelData} for why the
  * levels are fitted rather than the factor.
  *
  * <p><b>Why this term is worth the fit when the king-safety ones were not.</b> With the

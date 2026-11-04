@@ -14,8 +14,8 @@ import java.util.List;
  * Turns an EPD corpus into {@link Sample}s for fitting the four castling-state values.
  *
  * <p>The term is the last hand-written number in the evaluation. `castlingFactor = 0.25f` dates
- * back to {@code dabec30}, the original implementation, and the level progression
- * {@code 0 / −1 / −2 / −4} to {@code 2cd229a}; neither has ever been tuned or swept. Effectively
+ * back to {@code 1ab3390}, the original implementation, and the level progression
+ * {@code 0 / −1 / −2 / −4} to {@code db7fefe}; neither has ever been tuned or swept. Effectively
  * the four states are worth <b>0 / −25 / −50 / −100 cp</b>, chosen by intuition.
  *
  * <p><b>Why fit the levels and not the factor.</b> The factor can only stretch the four values

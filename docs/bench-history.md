@@ -72,7 +72,7 @@ time-truncated.
 | **4.4.0** | 335,919,557 | **−4.2 %** | 98,908,027 (+5.5 %) | PeSTO piece-square tables | +32.6 ± 12.4 | ~1900 |
 | **4.4.1** | 335,946,428 | **+0.008 %** | 101,431,971 (+2.6 %) | Repetition fix (§ 12.23) | ≈ +15 (SPRT H1 at 321 games, +42.4 ± 29.4) | **1928 ± 21** |
 | **4.5.0** | 336,412,842 | **+0.139 %** | 101,553,277 (+0.1 %) | Complete principal variation ([§ 12.25](roadmap.md#1225-tried--repairing-the-roots-move-choice-after-the-pv-re-search-reverted-twice-444-and-166-elo)) | +1.8 ± 11.6 over 2463 games — **neutral** | ~1928 |
-| **4.6.0** (`415a6ac`) | 1,300,002,835 | **+286 %** | 101,626,447 (+0.1 %) | Material-only shortcut only for quiet root moves ([§ 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460)) | **+14.8 ± 10.5** over 3000 games | ~1943 |
+| **4.6.0** (`33ec37a`) | 1,300,002,835 | **+286 %** | 101,626,447 (+0.1 %) | Material-only shortcut only for quiet root moves ([§ 12.26](roadmap.md#1226-material-only-shortcut-only-for-quiet-root-moves--done-148-elo-v460)) | **+14.8 ± 10.5** over 3000 games | ~1943 |
 | **4.7.0** | 1,300,911,231 | **+0.070 %** | 102,534,843 (+0.89 %) | castling factor 0.25 -> 0.1875 ([§ 5.5.2](evaluation.md#552-measured-2026-09-09-to-2026-09-17--the-opponent-effect-and-what-the-factor-cannot-do)) | not measured by a match — see the row's note in [version history](version-history.md) | ~1943 |
 | **4.7.1** | 1,300,910,618 | **−0.00005 %** | 102,534,230 (−0.0006 %) | castling term faded toward the endgame ([§ 5.5.2](evaluation.md#552-measured-2026-09-09-to-2026-09-17--the-opponent-effect-and-what-the-factor-cannot-do)) | **+0.5 ± 9.6** over 3897 games vs 4.7.0 at `tc=10+0.1` — neutral | ~1943 |
 | **4.8.0** | 658,771,177 | **−49.4 %** — but see the next column, the whole move is one artificial position | **107,227,388 (+4.6 %)** | **king-attack units**, the first shipped king-safety term ([§ 5.9](evaluation.md#59-king-attack-units), [king-safety.md § 4.17](king-safety.md)) | **−6.3 ± 19.8** net over 4261 anchor-gauntlet games at `tc=40/60`, against a ≥ −10 gate; +8.4 ± 8.9 in 4200 self-play games | ~1943 |
@@ -346,7 +346,7 @@ Per-position archives: `test-results/bench/4.7.0-d8.txt`, `-d9.txt`, `-castling-
 
 The 4.7.0 candidate: `castlingFactor` halved to 0.125 and the castling term faded out
 toward the endgame through `CASTLING_RAMP`. Measured from the sealed
-`versions/4.6.1-castling-halved-tapered` jar at commit `2424ef2`, on an idle machine.
+`versions/4.6.1-castling-halved-tapered` jar at commit `daba823`, on an idle machine.
 
 **Not a release row.** The candidate's full suite came back with five failures — one
 broken linearity contract in `analyzeFactors`, three worsened move choices including a
@@ -420,8 +420,8 @@ give 9 against 12).
 
 | | runs (NPS over 54 positions) | mean | SD |
 |---|---|---:|---:|
-| master `6b3f480` | 1,573,404 / 1,572,881 / 1,588,728 | 1,578,338 | 0.57 % |
-| + tracking `505d1f4` | 1,607,886 / 1,594,326 / 1,608,980 | **1,603,731** | 0.51 % |
+| master `72df922` | 1,573,404 / 1,572,881 / 1,588,728 | 1,578,338 | 0.57 % |
+| + tracking `9330d59` | 1,607,886 / 1,594,326 / 1,608,980 | **1,603,731** | 0.51 % |
 
 **+1.61 %**, SE of the difference 0.44 pp, t = 3.62 — and the raw values are
 **disjoint**: the fastest master run is below the slowest candidate run, which under
@@ -452,8 +452,8 @@ all six, so both builds demonstrably computed the same thing.
 
 | | runs (NPS over 54 positions) | mean | SD |
 |---|---|---:|---:|
-| master `6b3f480` | 1,704,587 / 1,713,755 / 1,747,642 | 1,721,995 | 1.32 % |
-| + tracking `3d09d4c` | 1,772,124 / 1,766,127 / 1,772,918 | **1,770,390** | 0.21 % |
+| master `72df922` | 1,704,587 / 1,713,755 / 1,747,642 | 1,721,995 | 1.32 % |
+| + tracking `03dabf6` | 1,772,124 / 1,766,127 / 1,772,918 | **1,770,390** | 0.21 % |
 
 **+2.81 %**, SE of the difference 0.77 pp, t = 3.65 — and the raw values are **disjoint
 again**, master's fastest 1,747,642 below the candidate's slowest 1,766,127. Absolute
@@ -562,7 +562,7 @@ and are historically closed.
 | **4.4.0** | 920,132,868 | 335,919,557 | **2.74** | 366,672,809 | **3.71** |
 | **4.4.1** | 918,718,652 | 335,946,428 | **2.73** | 372,117,621 | **3.67** |
 | **4.5.0** | 919,377,788 | 336,412,842 | **2.73** | 372,430,743 | **3.67** |
-| **4.6.0** (`415a6ac`) | 2,352,454,034 | 1,300,002,835 | **1.81** | 372,716,472 | **3.67** |
+| **4.6.0** (`33ec37a`) | 2,352,454,034 | 1,300,002,835 | **1.81** | 372,716,472 | **3.67** |
 | **4.7.0** | 2,354,625,105 | 1,300,911,231 | **1.810** | 374,887,543 | **3.66** |
 | **4.7.1** | 2,354,628,753 | 1,300,910,618 | **1.810** | 374,891,191 | **3.66** |
 | **4.8.3** | 1,375,937,208 | 658,771,177 | **2.09** | — | — |
@@ -810,7 +810,7 @@ The harness reproduces `Bench.run()` semantics exactly:
   `tt.clear()` and `ChessEngine.resetIterationTimings()` — precisely the
   per-position isolation `Bench` establishes for each FEN, so counts are
   order-independent. This has held since the transposition table was introduced
-  (commit `175e834`, present in every tag from v4.0.0), and 3.5.2 / 3.6.0 have no
+  (commit `e9e51a5`, present in every tag from v4.0.0), and 3.5.2 / 3.6.0 have no
   transposition table at all.
 - **`go depth N` runs with an infinite time budget** (`UciHandler`'s
   `INFINITE_MILLIS` for depth-only searches), so depth is the only bound and the
@@ -962,7 +962,7 @@ layout as the `bench` archives of § 7. The largest position is 6.7 % of the tot
 per-position diff here worth reading as a whole rather than as one position plus
 noise.
 
-**4.8.1 was measured paired against its parent** (master `4856c10`), three rounds with the two builds alternating on 2026-09-30. All six runs gave 169,439,389, which is the proof that the en-passant fix leaves the search untouched. The times were 103,685 / 104,305 / 103,885 ms for the parent and 104,510 / 105,552 / 105,564 ms for 4.8.1: +1.2 % on the mean, +0.8 % best against best, and every 4.8.1 run slower than every parent run. That is a direction, not a proven cost, and it went through regardless because the change is a correctness fix the owner ordered merged. The row records the first 4.8.1 run.
+**4.8.1 was measured paired against its parent** (master `b2ffb62`), three rounds with the two builds alternating on 2026-09-30. All six runs gave 169,439,389, which is the proof that the en-passant fix leaves the search untouched. The times were 103,685 / 104,305 / 103,885 ms for the parent and 104,510 / 105,552 / 105,564 ms for 4.8.1: +1.2 % on the mean, +0.8 % best against best, and every 4.8.1 run slower than every parent run. That is a direction, not a proven cost, and it went through regardless because the change is a correctness fix the owner ordered merged. The row records the first 4.8.1 run.
 
 **The direction did not survive a longer measurement.** Ten rounds later that day, five builds rotating, all 50 runs at 169,439,389. The builds: the parent, 4.8.1, and three reshapes of 4.8.1's en-passant code. The reshapes were an adjacency gate before the helper call, the helpers inlined back by hand, and the gate led by an `!= 0` test. Against the parent, paired per round, 4.8.1 came out at −0.26 ± 1.28 %. With round 8 dropped, where every build ran 2–8 % slow, it came out at +0.28 ± 0.44 %. None of the reshapes differs from the parent by more than its interval. The three-pair +1.2 % was noise, and 4.8.1 has no measurable cost. Raw data and script: `myChess-Lab/results/en-passant-perf-benches.tsv`, `myChess-Lab/scripts/en-passant-perf-analyze.py`.
 
