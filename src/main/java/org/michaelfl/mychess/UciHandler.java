@@ -69,6 +69,9 @@ final class UciHandler {
     /** 4 x the soft limit caps the hard limit anyway, so an overrun beyond 300 % has no effect. */
     static final int MAX_TIME_OVERRUN_PERCENT = 300;
 
+    /** UCI option: the easy-move stop, see {@link TimeManagement#setEasyMoveStopEnabled}. */
+    static final String OPTION_EASY_MOVE_STOP = "EasyMoveStop";
+
     private final MyChessEnv env;
     private final BufferedReader in;
 
@@ -184,6 +187,7 @@ final class UciHandler {
                 + " min " + MIN_TIME_RISK_PERCENT + " max " + MAX_TIME_RISK_PERCENT);
         writeLine("option name " + OPTION_TIME_OVERRUN_PERCENT + " type spin default " + TimeManagement.DEFAULT_OVERRUN_PERCENT
                 + " min " + MIN_TIME_OVERRUN_PERCENT + " max " + MAX_TIME_OVERRUN_PERCENT);
+        writeLine("option name " + OPTION_EASY_MOVE_STOP + " type check default " + TimeManagement.DEFAULT_EASY_MOVE_STOP);
         writeLine("uciok");
     }
 
@@ -201,7 +205,24 @@ final class UciHandler {
             applyTimeRiskPercent(line.substring((SETOPTION_PREFIX + OPTION_TIME_RISK_PERCENT + " value ").length()).trim());
         } else if (line.startsWith(SETOPTION_PREFIX + OPTION_TIME_OVERRUN_PERCENT + " value ")) {
             applyTimeOverrunPercent(line.substring((SETOPTION_PREFIX + OPTION_TIME_OVERRUN_PERCENT + " value ").length()).trim());
+        } else if (line.startsWith(SETOPTION_PREFIX + OPTION_EASY_MOVE_STOP + " value ")) {
+            applyEasyMoveStop(line.substring((SETOPTION_PREFIX + OPTION_EASY_MOVE_STOP + " value ").length()).trim());
         }
+    }
+
+    /**
+     * Switches the easy-move stop from an {@code EasyMoveStop} value. A value other than
+     * {@code true} or {@code false} is ignored and logged.
+     */
+    private static void applyEasyMoveStop(String value) {
+        if (!value.equals("true") && !value.equals("false")) {
+            Log.info("[option] ignored " + OPTION_EASY_MOVE_STOP + ": " + value);
+
+            return;
+        }
+
+        TimeManagement.setEasyMoveStopEnabled(Boolean.parseBoolean(value));
+        Log.info("[option] " + OPTION_EASY_MOVE_STOP + " = " + value);
     }
 
     /**

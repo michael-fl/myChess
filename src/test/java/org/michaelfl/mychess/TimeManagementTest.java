@@ -34,16 +34,16 @@ class TimeManagementTest {
     /** A one-second increment. */
     private static final int ONE_SECOND = 1_000;
 
-    /** A one-minute clock spread over the default 30 moves: 60 000 / 31. */
-    private static final int ONE_MINUTE_DEFAULT_RATE = 1_935;
+    /** A one-minute clock spread over the default 15 moves: 60 000 / 16. */
+    private static final int ONE_MINUTE_DEFAULT_RATE = 3_750;
 
-    /** Close to the soft limit at the start of a 60+1 game (60 000 / 31 + 800 = 2,735 ms), rounded to 2.5 s for readable sums. */
+    /** A soft limit of 2.5 s, a round value for readable sums (4.11.0 started a 60+1 game near it). */
     private static final int TWO_AND_A_HALF_SECONDS = 2_500;
 
     /** 80 % of {@link #ONE_SECOND}. */
     private static final int EIGHTY_PERCENT_OF_ONE_SECOND = 800;
 
-    private static final int DEFAULT_MOVES_TO_GO = 30;
+    private static final int DEFAULT_MOVES_TO_GO = TimeManagement.DEFAULT_MOVES_TO_GO;
 
     // ---- computeMoveBudgetMillis: which go argument decides ----
 
@@ -93,15 +93,15 @@ class TimeManagementTest {
 
         assertEquals(ONE_MINUTE_DEFAULT_RATE + EIGHTY_PERCENT_OF_ONE_SECOND,
                 TimeManagement.computeMoveBudgetMillis(input, GameStatus.TURN_WHITE),
-                "white to move: 60 000 / 31 + 80 % of the 1 s increment");
+                "white to move: 60 000 / 16 + 80 % of the 1 s increment");
     }
 
     @Test
     void blackUsesBtimeAndBinc() {
         var input = clockInput();
 
-        // btime 3000 / 31 = 96, plus 80 % of binc 500 = 400
-        assertEquals(496, TimeManagement.computeMoveBudgetMillis(input, GameStatus.TURN_BLACK),
+        // btime 3000 / 16 = 187, plus 80 % of binc 500 = 400
+        assertEquals(587, TimeManagement.computeMoveBudgetMillis(input, GameStatus.TURN_BLACK),
                 "black to move must read btime and binc, not white's clock");
     }
 
@@ -118,7 +118,7 @@ class TimeManagementTest {
         var input = new TimeControlInput(null, ONE_MINUTE, null, 40, false, null, null);
 
         assertEquals(ONE_MINUTE / 41, TimeManagement.computeMoveBudgetMillis(input, GameStatus.TURN_WHITE),
-                "an explicit movestogo 40 must spread the clock over 41 shares, not the default 31");
+                "an explicit movestogo 40 must spread the clock over 41 shares, not the default 16");
     }
 
     // ---- computeClockBudgetMillis: the formula ----
@@ -126,7 +126,7 @@ class TimeManagementTest {
     @Test
     void clockWithoutIncrementUsesTheRateAlone() {
         assertEquals(ONE_MINUTE_DEFAULT_RATE, TimeManagement.computeClockBudgetMillis(ONE_MINUTE, 0, DEFAULT_MOVES_TO_GO),
-                "60 s and no increment at the default rate: 60 000 / 31");
+                "60 s and no increment at the default rate: 60 000 / 16");
     }
 
     @Test
@@ -138,7 +138,7 @@ class TimeManagementTest {
 
     @Test
     void budgetNeverExceedsTheClockMinusTheMargin() {
-        // 500 / 31 + 800 = 816 would overrun a 500 ms clock: the increment is credited only after the move
+        // 500 / 16 + 800 = 831 would overrun a 500 ms clock: the increment is credited only after the move
         assertEquals(500 - FLOOR_MILLIS, TimeManagement.computeClockBudgetMillis(500, ONE_SECOND, DEFAULT_MOVES_TO_GO),
                 "with 0.5 s left the budget must be capped at clock - 50 ms, increment or not");
     }
