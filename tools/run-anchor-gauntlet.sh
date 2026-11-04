@@ -63,10 +63,10 @@
 #   tools/run-anchor-gauntlet.sh --label <slug> \
 #       --base <dir> --candidate <dir> --no-placebo "<why none is possible>"
 #
-# TWO CANDIDATES. --candidate2 <dir> --label2 <slug> adds a second candidate arm, named
-# mychess-<label2>, for comparing two variants of one change against the same base in one
-# run. It gets the same pre-flight as the first candidate. Read each pair with
-# tools/gauntlet-summary.py --two-arm.
+# MORE CANDIDATES. --extra-candidate <slug>=<dir> adds a candidate arm named mychess-<slug>,
+# for comparing variants of one change against the same base in one run. It may be given
+# several times. Each extra arm gets the same pre-flight as the first candidate. Read each
+# pair with tools/gauntlet-summary.py --two-arm.
 #
 # The three directories are under versions/ and each must hold exactly one
 # my-chess-*.jar plus a mychess-uci.sh. Example:
@@ -144,8 +144,7 @@ LABEL=""
 BASE_DIR=""
 PLACEBO_DIR=""
 CANDIDATE_DIR=""
-CANDIDATE2_DIR=""
-LABEL2=""
+EXTRA_CANDIDATES=""
 PROBE_FEN=""
 NO_PLACEBO_REASON=""
 TIMING_ONLY_REASON=""
@@ -168,8 +167,8 @@ while [ $# -gt 0 ]; do
         --timing-only)    shift; TIMING_ONLY_REASON="${1:-}"
                           [ -n "$TIMING_ONLY_REASON" ] || { echo "ERROR: --timing-only needs a reason" >&2; exit 2; } ;;
         --candidate)      shift; CANDIDATE_DIR="${1:-}" ;;
-        --candidate2)     shift; CANDIDATE2_DIR="${1:-}" ;;
-        --label2)         shift; LABEL2="${1:-}" ;;
+        --extra-candidate) shift; EXTRA_CANDIDATES="$EXTRA_CANDIDATES${1:-}
+" ;;
         --rounds)         shift; ROUNDS="${1:-}" ;;
         --tc)             shift; TC="${1:-}" ;;
         --probe-fen)      shift; PROBE_FEN="${1:-}" ;;
@@ -196,15 +195,23 @@ for required in LABEL BASE_DIR CANDIDATE_DIR; do
     fi
 done
 
-if { [ -n "$CANDIDATE2_DIR" ] && [ -z "$LABEL2" ]; } || { [ -z "$CANDIDATE2_DIR" ] && [ -n "$LABEL2" ]; }; then
-    echo "ERROR: --candidate2 and --label2 go together" >&2
-    exit 2
-fi
+SEEN_LABELS=" base placebo $LABEL "
 
-if [ -n "$LABEL2" ] && { [ "$LABEL2" = base ] || [ "$LABEL2" = placebo ] || [ "$LABEL2" = "$LABEL" ]; }; then
-    echo "ERROR: --label2 must differ from base, placebo and --label" >&2
-    exit 2
-fi
+for spec in $EXTRA_CANDIDATES; do
+    extra_label="${spec%%=*}"
+    extra_dir="${spec#*=}"
+
+    if [ -z "$extra_label" ] || [ "$extra_label" = "$spec" ] || [ -z "$extra_dir" ]; then
+        echo "ERROR: --extra-candidate needs <slug>=<dir>, got: $spec" >&2
+        exit 2
+    fi
+
+    case "$SEEN_LABELS" in
+        *" $extra_label "*) echo "ERROR: arm name used twice: $extra_label" >&2; exit 2 ;;
+    esac
+
+    SEEN_LABELS="$SEEN_LABELS$extra_label "
+done
 
 # The placebo is the default and skipping it has to be deliberate. An empty --no-placebo
 # is refused as well: "because I did not build one" is not a reason, and the whole point
@@ -257,11 +264,11 @@ ARMS="$ARMS
 $LABEL|$CANDIDATE_DIR|$CANDIDATE_JAR
 "
 
-if [ -n "$CANDIDATE2_DIR" ]; then
-    CANDIDATE2_JAR="$(jar_of "$CANDIDATE2_DIR")" || exit 1
-    ARMS="$ARMS$LABEL2|$CANDIDATE2_DIR|$CANDIDATE2_JAR
+for spec in $EXTRA_CANDIDATES; do
+    extra_jar="$(jar_of "${spec#*=}")" || exit 1
+    ARMS="$ARMS${spec%%=*}|${spec#*=}|$extra_jar
 "
-fi
+done
 
 ARM_COUNT=$(printf '%s\n' "$ARMS" | grep -c '|')
 PAIRINGS=$((ARM_COUNT * ANCHOR_COUNT))
@@ -497,16 +504,19 @@ fi
 
 echo "    candidate nodes=$cand_nodes  nps=$cand_nps"
 
-if [ -n "$CANDIDATE2_DIR" ]; then
-    CAND2_OUT="$(bench_arm "$CANDIDATE2_DIR" "$CANDIDATE2_JAR")"
-    cand2_nodes="$(nodes_of "$CAND2_OUT")"; cand2_nps="$(nps_of "$CAND2_OUT")"
-    echo "    candidate2 nodes=$cand2_nodes  nps=$cand2_nps"
-fi
+extra_nodes=""
+
+for spec in $EXTRA_CANDIDATES; do
+    extra_out="$(bench_arm "${spec#*=}" "$(jar_of "${spec#*=}")")"
+    nodes="$(nodes_of "$extra_out")"
+    extra_nodes="$extra_nodes $nodes"
+    echo "    ${spec%%=*} nodes=$nodes  nps=$(nps_of "$extra_out")"
+done
 
 if [ -n "$TIMING_ONLY_REASON" ]; then
 
     # Every arm must search the identical tree: the change may only act through the clock.
-    for arm_nodes in "$cand_nodes" ${PLACEBO_DIR:+"$plac_nodes"} ${CANDIDATE2_DIR:+"$cand2_nodes"}; do
+    for arm_nodes in "$cand_nodes" ${PLACEBO_DIR:+"$plac_nodes"} $extra_nodes; do
 
         if [ "$arm_nodes" != "$base_nodes" ]; then
             echo "ABORT: --timing-only, but an arm's signature differs from base's ($arm_nodes vs" >&2
@@ -547,11 +557,15 @@ if [ -z "$TIMING_ONLY_REASON" ] && [ "$cand_nodes" = "$base_nodes" ]; then
     exit 1
 fi
 
-if [ -z "$TIMING_ONLY_REASON" ] && [ -n "$CANDIDATE2_DIR" ] && [ "$cand2_nodes" = "$base_nodes" ]; then
-    echo "ABORT: the second candidate's signature equals base's, so it changed no search" >&2
-    echo "       decision at depth $PREFLIGHT_DEPTH." >&2
-    exit 1
-fi
+for nodes in $extra_nodes; do
+
+    if [ -z "$TIMING_ONLY_REASON" ] && [ "$nodes" = "$base_nodes" ]; then
+        echo "ABORT: an extra candidate's signature equals base's, so it changed no search" >&2
+        echo "       decision at depth $PREFLIGHT_DEPTH." >&2
+        exit 1
+    fi
+
+done
 
 if [ -n "$TIMING_ONLY_REASON" ]; then
     : # reported above
