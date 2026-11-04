@@ -37,7 +37,7 @@ public final class PositionSearch {
      * only material weight on the board is considered in the evaluation function.
      * Otherwise, the full evaluation of the position is done.
      */
-    public static final int EVALUATE_MATERIAL_ONLY_THRESHOLD = 200;
+    public static final int EVALUATE_MATERIAL_ONLY_THRESHOLD = Integer.MAX_VALUE;
 
     /**
      * Hard cap on the iterative-deepening target depth. UCI's
