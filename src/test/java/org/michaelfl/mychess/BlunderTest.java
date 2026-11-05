@@ -3929,4 +3929,369 @@ class BlunderTest {
                         + " with " + ChessUtil.moveToString(result.move())
                         + " - a score below -3 means the defect is fixed");
     }
+
+    // ================================================================
+    // King-safety collection from the 7b anchor gauntlet, 2026-11
+    //
+    // Source: the 4.11.0 arm (mychess-base) of the 7b anchor gauntlet of
+    // 2026-11-02/04 at 60+1, PGN test-results/gauntlet-difficulty-f2.pgn.
+    // The offline V8 check (myChess-Lab results/rising-score-v8) collected
+    // the positions where myChess overestimated itself by at least 150 cp
+    // against Stockfish, still did so two own moves later, and the opponent
+    // attacked its king. These ten come from that collection, one per game.
+    // Six pin a move, four pin an evaluation.
+    //
+    // Stockfish numbers: Stockfish 19, depth 22, from tools/probe-blunder.py.
+    // All ten were first written with the correct assertion and seen red.
+    // ================================================================
+
+    /** Depth the 45.Qc1 case first reproduces at; the other nine reproduce at {@link #SCANNER_DEPTH}. */
+    private static final int QC1_KOJIRO_DEPTH = 9;
+
+    /** Black (myChess) to move before {@code 27...Qa5??}, against Princhess, round 115. */
+    private static final String BEFORE_QA5_PRINCHESS_FEN = "3k3r/1pqbR1pp/8/1B1p4/2p5/r1P4P/5QP1/4R1K1 b - - 1 27";
+
+    /**
+     * A queen sortie that walks into mate in seven.
+     *
+     * <p>Round 115 against Princhess, black (myChess) to move, two pawns of material up. White's
+     * rook stands on e7 next to the king on d8. The move is {@code 27...Ra1}, Stockfish −8.76.
+     * myChess played {@code 27...Qa5}, after which Stockfish finds mate in seven for white.
+     * The opponent missed it, and the game ended in a draw.
+     *
+     * <p>myChess rates the position after {@code Qa5} at <b>−2.00</b> for itself. It does not
+     * see the mate at all.
+     *
+     * <p>Depth behavior: {@code Qa5} at depths 8 to 10, {@code Ra2} from depth 11. Knowledge
+     * three plies out of reach.
+     *
+     * <p><b>TODO — invert once king safety lands:</b> {@code assertEngineAvoids} for {@code c7-a5}.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void qa5_princhess_characterizesWalkingIntoMateInSeven() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_QA5_PRINCHESS_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.c7, Board.a5, "27...Qa5",
+                "after which Stockfish 19 finds mate in seven, against -8.76 after 27...Ra1");
+        assertTrue(result.weight() < 3f,
+                "characterization: it rates itself about two pawns down while mated in seven; got " + result.weight());
+    }
+
+    /** Black (myChess) to move before {@code 29...Nf4?}, against Princhess, round 30. */
+    private static final String BEFORE_NF4_PRINCHESS_FEN = "r1b5/pp1pr2k/4p2B/3nNp1Q/3q4/8/P4PP1/4R1K1 b - - 3 29";
+
+    /**
+     * A knight that leaves the king's defence to attack, with the white queen on h5.
+     *
+     * <p>Round 30 against Princhess, black (myChess) to move, seven pawns of material up. White's
+     * queen, bishop and knight bear on the king on h7. The move is {@code 29...Kg8}, Stockfish
+     * −7.21. myChess played {@code 29...Nf4}, Stockfish <b>−13.23</b>. It lost the game.
+     *
+     * <p>myChess rates its position at <b>+4.00</b> for itself, the material count without the
+     * attack.
+     *
+     * <p>Depth behavior: {@code Nf4} at depths 8 and 9, {@code f4} from depth 10, scored 0.00 at
+     * depth 11. Deeper search finds a better move but still not the danger.
+     *
+     * <p><b>TODO — invert once king safety lands:</b> {@code assertEngineAvoids} for {@code d5-f4}.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void nf4_princhess_characterizesLeavingTheKingToTheQueen() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_NF4_PRINCHESS_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.d5, Board.f4, "29...Nf4",
+                "which Stockfish 19 rates -13.23 for black, against -7.21 after 29...Kg8");
+        assertTrue(result.weight() < -2f,
+                "characterization: it rates black about four pawns ahead where Stockfish has black lost; got "
+                        + result.weight());
+    }
+
+    /** Black (myChess) to move before {@code 21...Ne2?}, against Princhess, round 63. */
+    private static final String BEFORE_NE2_PRINCHESS_FEN = "r2r1k2/pp2p1bQ/q3b1BN/3p4/3n1P2/2p1B3/P1P3P1/R4R1K b - - 4 21";
+
+    /**
+     * A knight check far from its own king, with three white pieces on its doorstep.
+     *
+     * <p>Round 63 against Princhess, black (myChess) to move, a pawn of material up. White's queen on h7,
+     * bishop on g6 and knight on h6 surround the king on f8. The move is {@code 21...Nf5}, which
+     * brings the knight back to defend, Stockfish −7.02. myChess played {@code 21...Ne2}, Stockfish
+     * <b>−13.21</b>. It lost the game.
+     *
+     * <p>myChess rates the position at <b>+0.76</b> for itself.
+     *
+     * <p>Depth behavior: {@code Ne2} at every depth from 8 to 12, scored between +0.76 and −1.20.
+     * A hole in the evaluation, not a horizon problem.
+     *
+     * <p><b>TODO — invert once king safety lands:</b> {@code assertEngineAvoids} for {@code d4-e2}.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void ne2_princhess_characterizesIgnoringThreeAttackersAroundItsKing() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_NE2_PRINCHESS_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.d4, Board.e2, "21...Ne2",
+                "which Stockfish 19 rates -13.21 for black, against -7.02 after 21...Nf5");
+        assertTrue(result.weight() < 2f,
+                "characterization: it rates the position about level where Stockfish has black lost; got "
+                        + result.weight());
+    }
+
+    /** White (myChess) to move before {@code 45.Qc1?}, against Kojiro, round 11. */
+    private static final String BEFORE_QC1_KOJIRO_FEN = "8/5rkp/5pp1/2R5/3q4/BP6/P1P1K1nP/4Q3 w - - 0 45";
+
+    /**
+     * A queen move to the far corner while a knight and the black queen close in on the king.
+     *
+     * <p>Round 11 against Kojiro, white (myChess) to move, a pawn up on material. The king on e2
+     * faces the black queen on d4 and the knight on g2. The move is {@code 45.Qg3}, Stockfish
+     * −10.49. myChess played {@code 45.Qc1}, Stockfish <b>−18.73</b>. It lost the game.
+     *
+     * <p>myChess rates the position at <b>−1.26</b> for itself, where Stockfish has it lost
+     * either way.
+     *
+     * <p>Depth behavior: {@code Qb4} at depth 8, {@code Qc1} at every depth from 9 to 12. Pinned at
+     * {@link #QC1_KOJIRO_DEPTH}, the first depth that reproduces.
+     *
+     * <p><b>TODO — invert once king safety lands:</b> {@code assertEngineAvoids} for {@code e1-c1}.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void qc1_kojiro_characterizesTakingTheQueenAwayFromItsKing() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_QC1_KOJIRO_FEN, QC1_KOJIRO_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.e1, Board.c1, "45.Qc1",
+                "which Stockfish 19 rates -18.73 for white, against -10.49 after 45.Qg3");
+        assertTrue(result.weight() > -4f,
+                "characterization: it rates white about a pawn down where Stockfish has white lost; got "
+                        + result.weight());
+    }
+
+    /** Black (myChess) to move before {@code 14...dxe5?}, against Princhess, round 31. */
+    private static final String BEFORE_DXE5_PRINCHESS_FEN = "r1b1k1nr/ppp3pp/3p4/4N3/1nB5/1P6/qB2QPPP/1N3RK1 b kq - 0 14";
+
+    /**
+     * Taking a knight while its own king is still in the centre and the bishop aims at g8.
+     *
+     * <p>Round 31 against Princhess, black (myChess) to move, four pawns of material up. Its king
+     * is uncastled on e8, white's bishop on c4 eyes the light squares around it. The move is
+     * {@code 14...Ne7}, Stockfish −6.66. myChess played {@code 14...dxe5}, Stockfish <b>−8.67</b>.
+     * It lost the game.
+     *
+     * <p>myChess rates the position at <b>+2.60</b> for itself.
+     *
+     * <p>Depth behavior: {@code dxe5} at depth 8, {@code Ne7} at 9 and 10, {@code dxe5} again at
+     * 11 and 12. It oscillates, so more depth does not settle it.
+     *
+     * <p><b>TODO — invert once king safety lands:</b> {@code assertEngineAvoids} for {@code d6-e5}.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void dxe5_princhess_characterizesGrabbingWithTheKingInTheCentre() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_DXE5_PRINCHESS_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.d6, Board.e5, "14...dxe5",
+                "which Stockfish 19 rates -8.67 for black, against -6.66 after 14...Ne7");
+        assertTrue(result.weight() < 0f,
+                "characterization: it rates black ahead where Stockfish has black lost; got " + result.weight());
+    }
+
+    /** Black (myChess) to move before {@code 32...Kxg7?}, against Princhess, round 85. */
+    private static final String BEFORE_KXG7_PRINCHESS_FEN = "2r5/1p2r1Bk/p1pb3N/7Q/Pqp5/6PP/5PK1/R7 b - - 2 32";
+
+    /**
+     * Recapturing with the king into the open, instead of with the rook.
+     *
+     * <p>Round 85 against Princhess, black (myChess) to move, two pawns of material up. A white
+     * bishop has just taken on g7, next to the king on h7, with the white queen on h5 and knight
+     * on h6. The move is {@code 32...Rxg7}, Stockfish −5.74. myChess played {@code 32...Kxg7},
+     * Stockfish <b>−7.04</b>. It lost the game.
+     *
+     * <p>myChess rates the position at <b>+3.09</b> for itself.
+     *
+     * <p>Depth behavior: {@code Kxg7} at depths 8 to 10, {@code Rxg7} at 11, {@code Kxg7} again at
+     * 12. It oscillates.
+     *
+     * <p><b>TODO — invert once king safety lands:</b> {@code assertEngineAvoids} for {@code h7-g7}.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void kxg7_princhess_characterizesRecapturingWithTheKing() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_KXG7_PRINCHESS_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertEngineStillPlays(result, Board.h7, Board.g7, "32...Kxg7",
+                "which Stockfish 19 rates -7.04 for black, against -5.74 after 32...Rxg7");
+        assertTrue(result.weight() < 0f,
+                "characterization: it rates black about three pawns ahead where Stockfish has black lost; got "
+                        + result.weight());
+    }
+
+    /** Black (myChess) to move at {@code 40...Kg5}, against Princhess, round 14. */
+    private static final String KG5_PRINCHESS_FEN = "3r4/5Qp1/1p3b1p/1q1p1k1r/3P4/6P1/5PB1/4R1K1 b - - 9 40";
+
+    /**
+     * A king hunt read as a winning position.
+     *
+     * <p>Round 14 against Princhess, black (myChess) to move, six pawns of material up. Its king
+     * stands on f5 in the open, with the white queen on f7 and the rook on e1. {@code 40...Kg5},
+     * the move it played, is also Stockfish's best, so the move is not in question. The position
+     * is: Stockfish has black lost at <b>−10.11</b>. It lost the game.
+     *
+     * <p>myChess rates the position at <b>+3.66</b> for itself, about the material count.
+     *
+     * <p>Depth behavior: {@code Kg5} at every depth from 8 to 12, scored +3.66 down to +2.00. The
+     * score drifts but never changes sign. This pins the evaluation, not the move.
+     *
+     * <p><b>TODO — invert once king safety lands:</b> assert a white-POV score above +7.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void kg5_princhess_characterizesScoringAKingHuntAsWinning() throws Exception {
+        var game = gameFromFenAtDepth(KG5_PRINCHESS_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_BLACK, game.getTurn(), "black (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertTrue(result.weight() < 0f,
+                "characterization: it rates black ahead where Stockfish 19 has black lost by about ten pawns; got "
+                        + result.weight() + " with " + ChessUtil.moveToString(result.move())
+                        + " - a score above +7 means the defect is fixed");
+    }
+
+    /** White (myChess) to move before {@code 20.Qxc7}, against Princhess, round 117. */
+    private static final String BEFORE_QXC7_PRINCHESS_FEN = "2b2r2/p1p3pk/7q/5p2/2Q2Pn1/6K1/PPPP2P1/RNB2R2 w - - 4 20";
+
+    /**
+     * Seven pawns of material up, and lost.
+     *
+     * <p>Round 117 against Princhess, white (myChess) to move. Its king stands on g3, with the
+     * black queen on h6 and the knight on g4 next to it. Stockfish has white lost at
+     * <b>−6.31</b> after the best move {@code 20.d4}. myChess played {@code 20.Qxc7}, −7.94, a
+     * small extra cost. The game ended in a draw.
+     *
+     * <p>myChess rates the position at <b>+6.41</b> for itself, the material count. A misjudgement
+     * of about twelve pawns with the sign inverted.
+     *
+     * <p>Depth behavior: {@code Qxc7} at every depth from 8 to 12, scored +6.41 down to +5.94.
+     * This pins the evaluation.
+     *
+     * <p><b>TODO — invert once king safety lands:</b> assert a white-POV score below −4.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void qxc7_princhess_characterizesReadingALostKingAsSevenPawnsUp() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_QXC7_PRINCHESS_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertTrue(result.weight() > 4f,
+                "characterization: it rates white about six pawns ahead where Stockfish 19 has white lost; got "
+                        + result.weight() + " with " + ChessUtil.moveToString(result.move())
+                        + " - a score below -4 means the defect is fixed");
+    }
+
+    /** White (myChess) to move at {@code 30.Ne6}, against Princhess, round 118. */
+    private static final String NE6_PRINCHESS_FEN = "r4r1k/6pp/8/p6q/Pp1N3n/6Q1/NPP2Pb1/R3R1K1 w - - 4 30";
+
+    /**
+     * A level score for a king that is being mated.
+     *
+     * <p>Round 118 against Princhess, white (myChess) to move, material level. The black bishop
+     * on g2, knight on h4 and queen on h5 surround its king on g1. {@code 30.Ne6}, the move it
+     * played, is also Stockfish's best. Stockfish has white lost at <b>−6.16</b>. It lost the
+     * game.
+     *
+     * <p>myChess rates the position at <b>+0.75</b> for itself.
+     *
+     * <p>Depth behavior: {@code Ne6} at every depth from 8 to 12, scored +0.75 down to −0.60.
+     * This pins the evaluation.
+     *
+     * <p><b>TODO — invert once king safety lands:</b> assert a white-POV score below −4.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void ne6_princhess_characterizesALevelScoreForAKingUnderAttack() throws Exception {
+        var game = gameFromFenAtDepth(NE6_PRINCHESS_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertTrue(result.weight() > -2f,
+                "characterization: it rates the position about level where Stockfish 19 has white lost by six; got "
+                        + result.weight() + " with " + ChessUtil.moveToString(result.move())
+                        + " - a score below -4 means the defect is fixed");
+    }
+
+    /** White (myChess) to move before {@code 30.Qa2}, against Princhess, round 48. */
+    private static final String BEFORE_QA2_PRINCHESS_FEN = "q5k1/5pp1/r3p2p/3pP3/2rB4/b2R4/1QP2PPP/1K1R4 w - - 10 30";
+
+    /**
+     * A king on b1 under a rook, bishop and queen, scored as two pawns down.
+     *
+     * <p>Round 48 against Princhess, white (myChess) to move, material level. Black's rook on a6,
+     * bishop on a3 and queen on a8 aim at the king on b1. Stockfish has white lost at
+     * <b>−7.43</b> after the best move {@code 30.Qa1}. The game saw {@code 30.Qa2}, −7.59. It
+     * lost the game.
+     *
+     * <p>myChess rates the position at <b>−2.00</b> for itself.
+     *
+     * <p>Depth behavior: {@code Rxa3} at every depth from 8 to 12, not the game's {@code Qa2}, so
+     * the move does not reproduce. The score does, −2.00 to −2.51 across the depths. This pins the
+     * evaluation.
+     *
+     * <p><b>TODO — invert once king safety lands:</b> assert a white-POV score below −6.
+     *
+     * <p><b>Test family:</b> king-safety (defect)
+     */
+    @Test
+    @Timeout(value = DEPTH_BOUND_TIMEOUT_S, unit = TimeUnit.SECONDS)
+    void qa2_princhess_characterizesUnderratingTheAttackOnB1() throws Exception {
+        var game = gameFromFenAtDepth(BEFORE_QA2_PRINCHESS_FEN, SCANNER_DEPTH, tt);
+        assertEquals(GameStatus.TURN_WHITE, game.getTurn(), "white (myChess) must be to move");
+
+        var result = searchCurrentPositionDeep(game);
+
+        assertTrue(result.weight() > -4f,
+                "characterization: it rates white about two pawns down where Stockfish 19 has white lost by seven; got "
+                        + result.weight() + " with " + ChessUtil.moveToString(result.move())
+                        + " - a score below -6 means the defect is fixed");
+    }
 }
