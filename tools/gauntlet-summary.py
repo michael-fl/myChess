@@ -32,6 +32,10 @@ Usage:
     tools/gauntlet-summary.py --label <label>
     tools/gauntlet-summary.py <base> <placebo> <candidate> <pgn> [<pgn> ...]
     tools/gauntlet-summary.py --two-arm <base> <candidate> <pgn> [...]
+    tools/gauntlet-summary.py --candidates <base> <candidate> [<candidate> ...] <pgn> [...]
+
+--candidates compares every candidate with base, for a run with several candidate arms. The
+arm names end at the first argument that ends in .pgn.
 
 --label takes the arm names from the runner's own convention - mychess-base,
 mychess-placebo, mychess-<label> - and reads every segment of that run.
@@ -45,9 +49,9 @@ import re
 import sys
 
 SCORE = {"1-0": 1.0, "0-1": 0.0, "1/2-1/2": 0.5}
-HEADER = re.compile(r'^\[(Event|Round|White|Black|Result|GameEndTime) "(.*)"\]')
+HEADER = re.compile(r'^\[(Event|Round|White|Black|Result|GameEndTime|Termination) "(.*)"\]')
 
-Game = collections.namedtuple("Game", "round white black result end")
+Game = collections.namedtuple("Game", "round white black result end termination")
 
 # A round is identified by its SEGMENT and its number, never by the number alone: cutechess
 # restarts round numbering at 1 in every resumed segment, so round "1" of segment 1 and round
@@ -64,7 +68,7 @@ def _finish(current, segment):
         return None
 
     return Game((segment, current["Round"]), current["White"], current["Black"],
-                current["Result"], _parse_time(current.get("GameEndTime")))
+                current["Result"], _parse_time(current.get("GameEndTime")), current.get("Termination"))
 
 
 def _parse_time(stamp):
@@ -188,6 +192,12 @@ def progress(games, paths, label):
     print()
 
 
+def time_losses(games, arm):
+    """Games the arm lost on time."""
+    return sum(1 for g in games if g.termination == "time forfeit"
+               and ((g.white == arm and g.result == "0-1") or (g.black == arm and g.result == "1-0")))
+
+
 def per_round_points(games, arms):
     """points[arm][round] = points scored that round, and the game count behind it."""
     points = {arm: collections.defaultdict(float) for arm in arms}
@@ -247,6 +257,7 @@ def main():
     argv = sys.argv[1:]
     two_arm = False
     label = None
+    extra = []
 
     if len(argv) == 2 and argv[0] == "--label":
         label = argv[1]
@@ -259,6 +270,21 @@ def main():
 
         argv = ["mychess-base", "mychess-placebo", f"mychess-{label}"] + paths
 
+    if argv and argv[0] == "--candidates":
+        names = []
+
+        for arg in argv[1:]:
+            if arg.endswith(".pgn"):
+                break
+
+            names.append(arg)
+
+        if len(names) < 2:
+            sys.exit(__doc__)
+
+        extra = names[2:]
+        argv = ["--two-arm"] + names[:2] + argv[1 + len(names):]
+
     if argv and argv[0] == "--two-arm":
         two_arm, argv = True, argv[1:]
 
@@ -270,7 +296,7 @@ def main():
     if two_arm:
         base, candidate = argv[0], argv[1]
         placebo, paths = None, argv[2:]
-        arms = [base, candidate]
+        arms = [base, candidate] + extra
     else:
         base, placebo, candidate = argv[0], argv[1], argv[2]
         paths = argv[3:]
@@ -284,7 +310,8 @@ def main():
     points, counts = per_round_points(games, arms)
 
     progress(games, paths, label)
-    print(f"{'arm':<26}{'games':>7}{'score':>9}")
+    width = max(26, max(len(arm) for arm in arms) + 2)
+    print(f"{'arm':<{width}}{'games':>7}{'score':>9}{'lost on time':>14}")
 
     rates = {}
 
@@ -296,9 +323,12 @@ def main():
             sys.exit(f"arm '{arm}' played no games - check the name against the PGN")
 
         rates[arm] = total_points / total_games
-        print(f"  {arm:<24}{total_games:>7}{rates[arm]:>8.1%}")
+        print(f"  {arm:<{width - 2}}{total_games:>7}{rates[arm]:>8.1%}{time_losses(games, arm):>14}")
 
     comparisons = [("NET      candidate - base", candidate, base)]
+
+    if extra:
+        comparisons = [(f"{arm.removeprefix('mychess-')} - base", arm, base) for arm in [candidate] + extra]
 
     if placebo:
         comparisons = [
@@ -307,13 +337,14 @@ def main():
             ("NET      candidate - base", candidate, base),
         ]
 
-    print(f"\n{'':<30}{'score pts':>11}{'Elo':>9}{'± 95 %':>8}{'95 % interval (Elo)':>22}{'rounds':>8}")
+    label_width = max(28, max(len(c[0]) for c in comparisons))
+    print(f"\n{'':<{label_width + 2}}{'score pts':>11}{'Elo':>9}{'± 95 %':>8}{'95 % interval (Elo)':>22}{'rounds':>8}")
 
     for label, arm_a, arm_b in comparisons:
         result = paired_difference(points, counts, arm_a, arm_b)
 
         if result is None:
-            print(f"  {label:<28}  not enough shared rounds")
+            print(f"  {label:<{label_width}}  not enough shared rounds")
             continue
 
         mean, half, rounds = result
@@ -322,7 +353,7 @@ def main():
 
         interval = f"[{elo - elo_half:+.1f}, {elo + elo_half:+.1f}]"
 
-        print(f"  {label:<28}{100 * mean:>+10.2f}{elo:>+9.1f}{elo_half:>8.1f}{interval:>22}{rounds:>8}")
+        print(f"  {label:<{label_width}}{100 * mean:>+10.2f}{elo:>+9.1f}{elo_half:>8.1f}{interval:>22}{rounds:>8}")
 
     print()
 
