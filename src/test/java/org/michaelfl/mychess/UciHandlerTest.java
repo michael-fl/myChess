@@ -33,6 +33,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @SuppressWarnings("SameParameterValue")
 class UciHandlerTest {
 
+    /** Shares the clock is spread over without movestogo: the default rate plus one. */
+    private static final int DEFAULT_SHARES = TimeManagement.DEFAULT_MOVES_TO_GO + 1;
+
     private static final String START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
     /**
@@ -785,9 +788,9 @@ class UciHandlerTest {
         int withoutIncrement = budgetOf("go depth 1 wtime 600000 btime 600000");
         int withIncrement = budgetOf("go depth 1 wtime 600000 btime 600000 winc 5000 binc 5000");
 
-        assertEquals(600_000 / 31, withoutIncrement,
+        assertEquals(600_000 / DEFAULT_SHARES, withoutIncrement,
                 "without an increment the budget must stay the plain share of the remaining clock");
-        assertEquals(600_000 / 31 + 4_000, withIncrement,
+        assertEquals(600_000 / DEFAULT_SHARES + 4_000, withIncrement,
                 "80 % of a 5 s increment is 4 s and must be added to that share");
     }
 
@@ -799,7 +802,7 @@ class UciHandlerTest {
         Integer budget = lastGoBudget("color=B");
 
         assertNotNull(budget, "the handler must log a [go] line for black");
-        assertEquals(60_000 / 31 + 800, budget,
+        assertEquals(60_000 / DEFAULT_SHARES + 800, budget,
                 "black must be budgeted from btime=60000 and binc=1000, not from white's 600000/9000");
     }
 
@@ -812,7 +815,7 @@ class UciHandlerTest {
     @Test
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
     void goWithWincOnly_isAccepted_andBlackFallsBackToNoIncrement() {
-        assertEquals(600_000 / 31 + 4_000, budgetOf("go depth 1 wtime 600000 btime 600000 winc 5000"),
+        assertEquals(600_000 / DEFAULT_SHARES + 4_000, budgetOf("go depth 1 wtime 600000 btime 600000 winc 5000"),
                 "a winc without a matching binc must still be applied for white");
     }
 
@@ -858,7 +861,7 @@ class UciHandlerTest {
      * the hard cap, so a game <em>without</em> an increment — which is every anchor match and
      * most cutechess runs — gets 50 ms more per move than before. At 40/120 that is 50 ms on
      * a ~3 s budget, well under two percent, and arguably the better design: the margin exists
-     * to prevent a flag fall, and a budget of one thirty-first of the clock cannot cause one.
+     * to prevent a flag fall, and a budget of one sixteenth of the clock cannot cause one.
      *
      * <p>It is pinned separately because it is a change to the pre-existing path rather than
      * part of adding increments, and because a reader comparing the two formulas should find
@@ -870,9 +873,9 @@ class UciHandlerTest {
     void goWithoutIncrement_noLongerSubtractsTheSafetyMargin() {
         int budget = budgetOf("go depth 1 wtime 600000 btime 600000");
 
-        assertEquals(600_000 / 31, budget,
+        assertEquals(600_000 / DEFAULT_SHARES, budget,
                 "the plain share of the clock, with no margin deducted — the previous formula "
-                        + "returned " + (600_000 / 31 - 50));
+                        + "returned " + (600_000 / DEFAULT_SHARES - 50));
     }
 
     /**

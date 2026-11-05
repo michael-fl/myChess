@@ -49,8 +49,12 @@ import static org.michaelfl.mychess.Assert.__assert;
  */
 public final class TimeManagement {
 
-    /** Default fallback when wtime/btime is given without movestogo. */
-    private static final int DEFAULT_MOVES_TO_GO = 30;
+    /**
+     * Default fallback when wtime/btime is given without movestogo. 15 instead of the 30 of 4.11.0
+     * doubles the budget per move. Control arm of the easy-move gauntlet: the larger budget alone,
+     * without an easy-move stop.
+     */
+    static final int DEFAULT_MOVES_TO_GO = 15;
 
     /** Safety margin per move when computing time budget from clock. */
     private static final int TIME_SAFETY_MARGIN_MS = 50;
