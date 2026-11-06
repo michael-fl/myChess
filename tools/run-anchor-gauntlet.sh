@@ -364,9 +364,23 @@ count_segment() {
     ' "$2"
 }
 
+# A segment may have run with fewer arms than this one, when arms were dropped on a resume.
+# Its round size follows from the arm count in its Event tag ("<label> 5-arm anchor gauntlet").
+segment_games_per_round() {
+    local arms
+
+    arms=$(grep -m1 '^\[Event ' "$1" | sed -nE 's/.* ([0-9]+)-arm anchor gauntlet.*/\1/p')
+
+    if [ -n "$arms" ]; then
+        echo $((2 * arms * ANCHOR_COUNT))
+    else
+        echo "$GAMES_PER_ROUND"
+    fi
+}
+
 for seg in "$RESULTS"/gauntlet-"$LABEL"-seg*.pgn; do
     [ -e "$seg" ] || continue
-    set -- $(count_segment "$GAMES_PER_ROUND" "$seg")
+    set -- $(count_segment "$(segment_games_per_round "$seg")" "$seg")
     ROUNDS_DONE=$((ROUNDS_DONE + $1))
     PARTIAL_GAMES=$((PARTIAL_GAMES + $2))
     SPOILED=$((SPOILED + $3))

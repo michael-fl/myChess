@@ -51,7 +51,7 @@ import sys
 SCORE = {"1-0": 1.0, "0-1": 0.0, "1/2-1/2": 0.5}
 HEADER = re.compile(r'^\[(Event|Round|White|Black|Result|GameEndTime|Termination) "(.*)"\]')
 
-Game = collections.namedtuple("Game", "round white black result end termination")
+Game = collections.namedtuple("Game", "round white black result end termination event")
 
 # A round is identified by its SEGMENT and its number, never by the number alone: cutechess
 # restarts round numbering at 1 in every resumed segment, so round "1" of segment 1 and round
@@ -68,7 +68,8 @@ def _finish(current, segment):
         return None
 
     return Game((segment, current["Round"]), current["White"], current["Black"],
-                current["Result"], _parse_time(current.get("GameEndTime")), current.get("Termination"))
+                current["Result"], _parse_time(current.get("GameEndTime")), current.get("Termination"),
+                current.get("Event", ""))
 
 
 def _parse_time(stamp):
@@ -112,6 +113,7 @@ def read_games(paths):
             yield game
 
 
+SEGMENT_ARMS = re.compile(r"(\d+)-arm anchor gauntlet")
 SEGMENT_NAME = re.compile(r"^gauntlet-(.+?)(-seg\d+)?\.pgn$")
 
 
@@ -139,7 +141,19 @@ def progress(games, arms_given, paths, label):
     # named on the command line count too, since some may not have played yet
     names = {g.white for g in games} | {g.black for g in games}
     arms = {n for n in names if n.startswith("mychess-")} | set(arms_given)
-    per_round = 2 * len(arms) * len(names - arms) or max(rounds_seen.values())
+    anchors = len(names - arms)
+    per_round = 2 * len(arms) * anchors or max(rounds_seen.values())
+
+    # A segment may have run with fewer arms, when arms were dropped on a resume. Its round size
+    # follows from the arm count in its Event tag ("<label> 5-arm anchor gauntlet").
+    segment_size = {}
+
+    for g in games:
+        match = SEGMENT_ARMS.search(g.event)
+        segment_size.setdefault(g.round[0], 2 * int(match.group(1)) * anchors if match else per_round)
+
+    segments = sorted(segment_size)
+    complete = collections.Counter(seg for (seg, _), n in rounds_seen.items() if n == segment_size[seg])
     print(f"\n{len(games)} finished games over {len(rounds_seen)} rounds")
 
     total = None
@@ -147,15 +161,23 @@ def progress(games, arms_given, paths, label):
 
     if state and state.exists():
         try:
-            total = int(state.read_text().splitlines()[0]) * per_round
+            declared = int(state.read_text().splitlines()[0])
         except (ValueError, IndexError):
-            total = None
+            declared = None
+
+        if declared is not None and segments:
+            banked = sum(complete[seg] * segment_size[seg] for seg in segments)
+            last = segments[-1]
+            in_last_partial = sum(n for (seg, _), n in rounds_seen.items()
+                                  if seg == last and n != segment_size[last])
+            total = banked + (declared - sum(complete.values())) * segment_size[last]
+            done = banked + in_last_partial
 
     if total is None:
         print()
         return
 
-    left = max(total - len(games), 0)
+    left = max(total - done, 0)
     stamped = sorted(g.end for g in games if g.end)
     window = stamped[-200:] if len(stamped) > 200 else stamped
     rate = None
@@ -181,8 +203,8 @@ def progress(games, arms_given, paths, label):
         if sum(kept) > 0:
             rate = 3600.0 * len(kept) / sum(kept)
 
-    print(f"  {len(games)} of {total} played, {left} to go"
-          f"  ({100.0 * len(games) / total:.1f} %)")
+    print(f"  {done} of {total} played, {left} to go"
+          f"  ({100.0 * done / total:.1f} %)")
 
     if rate:
         hours = left / rate
