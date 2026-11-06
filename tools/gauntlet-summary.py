@@ -126,7 +126,7 @@ def rounds_file(paths, label):
     return first.parent / f"gauntlet-{match.group(1)}.rounds" if match else None
 
 
-def progress(games, paths, label):
+def progress(games, arms_given, paths, label):
     """Games done, games left and how long the rest will take.
 
     The rate comes from a RECENT window, not from the whole run: a resumable match spends
@@ -134,9 +134,12 @@ def progress(games, paths, label):
     every interruption as slow play and understate what is left.
     """
     rounds_seen = collections.Counter(g.round for g in games)
-    # games of a full round, read off the data: right for any number of arms, also when only
-    # two of them are compared
-    per_round = max(rounds_seen.values())
+    # games of a full round: every mychess- arm plays every anchor once with each colour. Read
+    # off the names rather than off a round, which is still incomplete early in a run; the arms
+    # named on the command line count too, since some may not have played yet
+    names = {g.white for g in games} | {g.black for g in games}
+    arms = {n for n in names if n.startswith("mychess-")} | set(arms_given)
+    per_round = 2 * len(arms) * len(names - arms) or max(rounds_seen.values())
     print(f"\n{len(games)} finished games over {len(rounds_seen)} rounds")
 
     total = None
@@ -309,7 +312,7 @@ def main():
 
     points, counts = per_round_points(games, arms)
 
-    progress(games, paths, label)
+    progress(games, arms, paths, label)
     width = max(26, max(len(arm) for arm in arms) + 2)
     print(f"{'arm':<{width}}{'games':>7}{'score':>9}{'lost on time':>14}")
 
