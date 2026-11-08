@@ -50,7 +50,26 @@ import static org.michaelfl.mychess.Assert.__assert;
 public final class TimeManagement {
 
     /** Default fallback when wtime/btime is given without movestogo. */
-    private static final int DEFAULT_MOVES_TO_GO = 30;
+    static final int DEFAULT_MOVES_TO_GO = 30;
+
+    /**
+     * Phase time management (test variant, owner 2026-11-08): the fallback in the middlegame. 15
+     * instead of {@value #DEFAULT_MOVES_TO_GO} doubles the budget per move there. Opening and
+     * endgame keep {@value #DEFAULT_MOVES_TO_GO}.
+     */
+    static final int MIDDLEGAME_MOVES_TO_GO = 15;
+
+    /** Phase time management: the deepest iteration in the opening. Depth 9 and deeper never start. */
+    static final int OPENING_MAX_DEPTH = 8;
+
+    /** Phase time management: the lowest material phase (of 24) that is still opening, 0.85 of the full material. */
+    static final int OPENING_MIN_PHASE = 21;
+
+    /** Phase time management: the highest material phase (of 24) that is endgame, 0.35 of the full material. */
+    static final int ENDGAME_MAX_PHASE = 8;
+
+    /** Game phase of the root position, by its material (see {@link #gamePhaseOf}). No interpolation between them. */
+    public enum GamePhase { OPENING, MIDDLEGAME, ENDGAME }
 
     /** Safety margin per move when computing time budget from clock. */
     private static final int TIME_SAFETY_MARGIN_MS = 50;
@@ -415,6 +434,71 @@ public final class TimeManagement {
      * @return the soft limit for this move in milliseconds, at least {@link #MIN_BUDGET_MS}
      */
     public static int computeMoveBudgetMillis(TimeManagement.TimeControlInput input, int turn) {
+        return computeMoveBudgetMillis(input, turn, DEFAULT_MOVES_TO_GO);
+    }
+
+    /**
+     * Soft limit for one move under the phase time management: as {@link #computeMoveBudgetMillis(TimeControlInput, int)},
+     * but without {@code movestogo} the clock is spread over {@link #MIDDLEGAME_MOVES_TO_GO} moves in the
+     * middlegame and over {@link #DEFAULT_MOVES_TO_GO} in the opening and the endgame.
+     *
+     * @param input the parsed {@code go} tokens; absent arguments are {@code null}
+     * @param turn  the side to move, {@link GameStatus#TURN_WHITE} or {@link GameStatus#TURN_BLACK}
+     * @param phase the game phase of the root position
+     * @return the soft limit for this move in milliseconds, at least {@link #MIN_BUDGET_MS}
+     */
+    public static int computeMoveBudgetMillis(TimeManagement.TimeControlInput input, int turn, GamePhase phase) {
+        final int defaultMovesToGo = phase == GamePhase.MIDDLEGAME ? MIDDLEGAME_MOVES_TO_GO : DEFAULT_MOVES_TO_GO;
+
+        return computeMoveBudgetMillis(input, turn, defaultMovesToGo);
+    }
+
+    /**
+     * Game phase of a position for the phase time management: opening from
+     * {@link #OPENING_MIN_PHASE} of 24 up, endgame up to {@link #ENDGAME_MAX_PHASE}, middlegame in
+     * between. The material is counted as in the evaluation ({@link WeightingFunction#gamePhase}).
+     *
+     * @param board the root position of the search
+     * @return its game phase
+     */
+    public static GamePhase gamePhaseOf(Board board) {
+        final int phase = WeightingFunction.gamePhase(board);
+
+        if (phase >= OPENING_MIN_PHASE) {
+            return GamePhase.OPENING;
+        }
+
+        if (phase <= ENDGAME_MAX_PHASE) {
+            return GamePhase.ENDGAME;
+        }
+
+        return GamePhase.MIDDLEGAME;
+    }
+
+    /**
+     * Deepest iteration of one search under the phase time management: in the opening at most
+     * {@link #OPENING_MAX_DEPTH}, when the clock governs the move. Without a clock ({@code go depth},
+     * {@code go movetime}, {@code go infinite}) the requested depth stays, so fixed-depth benches
+     * and analysis are unchanged.
+     *
+     * @param input          the parsed {@code go} tokens; absent arguments are {@code null}
+     * @param turn           the side to move, {@link GameStatus#TURN_WHITE} or {@link GameStatus#TURN_BLACK}
+     * @param phase          the game phase of the root position
+     * @param requestedDepth the depth from {@code go depth}, {@link Integer#MAX_VALUE} if none was sent
+     * @return the depth limit of the search
+     */
+    public static int maxDepthFor(TimeManagement.TimeControlInput input, int turn, GamePhase phase, int requestedDepth) {
+        final Integer ourMs = turn == GameStatus.TURN_WHITE ? input.wtime : input.btime;
+        final boolean clockGoverns = !input.infinite && input.movetime == null && ourMs != null;
+
+        if (phase != GamePhase.OPENING || !clockGoverns) {
+            return requestedDepth;
+        }
+
+        return Math.min(requestedDepth, OPENING_MAX_DEPTH);
+    }
+
+    private static int computeMoveBudgetMillis(TimeManagement.TimeControlInput input, int turn, int defaultMovesToGo) {
         if (input.infinite) {
             return INFINITE_MILLIS;
         }
@@ -428,7 +512,7 @@ public final class TimeManagement {
         Integer ourMs = (turn == GameStatus.TURN_WHITE) ? input.wtime : input.btime;
         if (ourMs != null) {
             Integer ourIncMs = (turn == GameStatus.TURN_WHITE) ? input.winc : input.binc;
-            int movesToGo = input.movestogo != null ? input.movestogo : DEFAULT_MOVES_TO_GO;
+            int movesToGo = input.movestogo != null ? input.movestogo : defaultMovesToGo;
             return computeClockBudgetMillis(ourMs, ourIncMs != null ? ourIncMs : 0, movesToGo);
         }
 

@@ -262,6 +262,28 @@ public final class WeightingFunction {
      */
     static final int MAX_PHASE = 24;
 
+    /**
+     * Game phase of a position, the same sum as in {@link #calculate(Board)}: knight and bishop 1,
+     * rook 2, queen 4, clamped to {@link #MAX_PHASE}. Read by the phase time management
+     * ({@link TimeManagement#gamePhaseOf}).
+     *
+     * @param board the position
+     * @return the phase, {@code 0..}{@link #MAX_PHASE}; {@link #MAX_PHASE} is the full starting material
+     */
+    static int gamePhase(Board board) {
+        int phase = 0;
+
+        for (int field = Board.a1; field <= Board.h8; field++) {
+            final byte piece = board.get(field);
+
+            if (piece != Board.empty && piece != Board.illegal) {
+                phase += phaseWeightOfPiece[piece];
+            }
+        }
+
+        return Math.min(phase, MAX_PHASE);
+    }
+
     /** Mobility: one extra knight move is worth 5 cp. Hand-set in {@code 308ad0f} (2019), never tuned or swept. */
     private static final float mobilityFactor = 0.1f;
 

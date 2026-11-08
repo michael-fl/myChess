@@ -816,6 +816,45 @@ class UciHandlerTest {
                 "a winc without a matching binc must still be applied for white");
     }
 
+    // ---- Phase time management ----
+
+    /** Middlegame (queen and rook against rook and knight, phase 9): the clock is spread over 15 moves. */
+    @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
+    void goInTheMiddlegame_spreadsTheClockOver15Moves() {
+        runHandler("uci\nposition fen 4k3/pppr1ppp/4n3/8/8/8/PPP2PPP/3QR1K1 w - - 0 1\n"
+                + "go depth 1 wtime 600000 btime 600000\nquit\n");
+
+        assertEquals(600_000 / 16, lastGoBudget("phase=middlegame"),
+                "the [go] line must name the middlegame and carry 600 000 / 16");
+    }
+
+    /** Endgame (two rooks each, phase 8): the default 30 moves. */
+    @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
+    void goInTheEndgame_keepsTheDefault30Moves() {
+        runHandler("uci\nposition fen r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 0 1\n"
+                + "go depth 1 wtime 600000 btime 600000\nquit\n");
+
+        assertEquals(600_000 / 31, lastGoBudget("phase=endgame"),
+                "the [go] line must name the endgame and carry 600 000 / 31");
+    }
+
+    /**
+     * Opening with a clock: the search stops after depth 8. The budget of 10 minutes / 31 is
+     * about 19 s, far more than depth 8 needs, so depth 9 would start without the limit.
+     */
+    @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
+    void goInTheOpeningWithAClock_neverStartsDepth9() {
+        var response = runHandler("uci\nposition startpos\ngo wtime 600000 btime 600000\nquit\n");
+
+        assertEquals(600_000 / 31, lastGoBudget("phase=opening"));
+        response.expect("^info depth 8 .+$").expect(BESTMOVE_LINE_REGEX);
+        assertFalse(capturedOut.toString(StandardCharsets.UTF_8).contains("info depth 9 "),
+                "no iteration of depth 9 may start in the opening");
+    }
+
     /**
      * The hard cap, and the reason the increment cannot simply be added.
      *
