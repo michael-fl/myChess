@@ -54,10 +54,16 @@ public final class TimeManagement {
 
     /**
      * Phase time management (test variant, owner 2026-11-08): the fallback in the middlegame. 15
-     * instead of {@value #DEFAULT_MOVES_TO_GO} doubles the budget per move there. Opening and
-     * endgame keep {@value #DEFAULT_MOVES_TO_GO}.
+     * instead of {@value #DEFAULT_MOVES_TO_GO} doubles the budget per move there. The opening keeps
+     * {@value #DEFAULT_MOVES_TO_GO}.
      */
     static final int MIDDLEGAME_MOVES_TO_GO = 15;
+
+    /**
+     * Phase time management, variant eg20 (owner 2026-11-09): the fallback in the endgame. With 30
+     * the clock ended the games with about 24 s unused. 20 spends that reserve in the endgame.
+     */
+    static final int ENDGAME_MOVES_TO_GO = 20;
 
     /** Phase time management: the deepest iteration in the opening. Depth 9 and deeper never start. */
     static final int OPENING_MAX_DEPTH = 8;
@@ -440,7 +446,8 @@ public final class TimeManagement {
     /**
      * Soft limit for one move under the phase time management: as {@link #computeMoveBudgetMillis(TimeControlInput, int)},
      * but without {@code movestogo} the clock is spread over {@link #MIDDLEGAME_MOVES_TO_GO} moves in the
-     * middlegame and over {@link #DEFAULT_MOVES_TO_GO} in the opening and the endgame.
+     * middlegame, over {@link #ENDGAME_MOVES_TO_GO} in the endgame and over {@link #DEFAULT_MOVES_TO_GO}
+     * in the opening.
      *
      * @param input the parsed {@code go} tokens; absent arguments are {@code null}
      * @param turn  the side to move, {@link GameStatus#TURN_WHITE} or {@link GameStatus#TURN_BLACK}
@@ -448,7 +455,11 @@ public final class TimeManagement {
      * @return the soft limit for this move in milliseconds, at least {@link #MIN_BUDGET_MS}
      */
     public static int computeMoveBudgetMillis(TimeManagement.TimeControlInput input, int turn, GamePhase phase) {
-        final int defaultMovesToGo = phase == GamePhase.MIDDLEGAME ? MIDDLEGAME_MOVES_TO_GO : DEFAULT_MOVES_TO_GO;
+        final int defaultMovesToGo = switch (phase) {
+            case OPENING -> DEFAULT_MOVES_TO_GO;
+            case MIDDLEGAME -> MIDDLEGAME_MOVES_TO_GO;
+            case ENDGAME -> ENDGAME_MOVES_TO_GO;
+        };
 
         return computeMoveBudgetMillis(input, turn, defaultMovesToGo);
     }
