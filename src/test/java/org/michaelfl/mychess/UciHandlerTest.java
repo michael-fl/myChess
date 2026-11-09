@@ -829,15 +829,15 @@ class UciHandlerTest {
                 "the [go] line must name the middlegame and carry 600 000 / 16");
     }
 
-    /** Endgame (two rooks each, phase 8): the default 30 moves. */
+    /** Endgame (two rooks each, phase 8): the clock is spread over 20 moves. */
     @Test
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
-    void goInTheEndgame_keepsTheDefault30Moves() {
+    void goInTheEndgame_spreadsTheClockOver20Moves() {
         runHandler("uci\nposition fen r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 0 1\n"
                 + "go depth 1 wtime 600000 btime 600000\nquit\n");
 
-        assertEquals(600_000 / 31, lastGoBudget("phase=endgame"),
-                "the [go] line must name the endgame and carry 600 000 / 31");
+        assertEquals(600_000 / 21, lastGoBudget("phase=endgame"),
+                "the [go] line must name the endgame and carry 600 000 / 21");
     }
 
     /**

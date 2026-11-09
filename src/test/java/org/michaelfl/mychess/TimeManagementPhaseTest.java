@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * opening ({@link TimeManagement#maxDepthFor}).
  *
  * <p>The phase counts knight and bishop 1, rook 2 and queen 4, out of 24. Opening is 21 to 24,
- * endgame 0 to 8, middlegame 9 to 20. The middlegame spreads the clock over 15 moves, the other
- * phases over 30. The opening searches at most depth 8 when a clock governs the move.
+ * endgame 0 to 8, middlegame 9 to 20. The middlegame spreads the clock over 15 moves, the endgame
+ * over 20 and the opening over 30. The opening searches at most depth 8 when a clock governs the move.
  *
  * @author Michael Fleischhauer
  */
@@ -94,9 +94,9 @@ class TimeManagementPhaseTest {
     }
 
     @Test
-    void endgameKeepsTheDefault30Moves() {
-        assertEquals(TEN_MINUTES / 31, budget(GamePhase.ENDGAME),
-                "endgame: 600 000 / (30 + 1), as without the phase");
+    void endgameSpreadsTheClockOver20Moves() {
+        assertEquals(TEN_MINUTES / 21, budget(GamePhase.ENDGAME),
+                "endgame: 600 000 / (20 + 1)");
     }
 
     @Test
