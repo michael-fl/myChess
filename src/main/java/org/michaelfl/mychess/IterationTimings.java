@@ -279,6 +279,10 @@ public final class IterationTimings {
      * Like {@link #recordSkip} it is the caller's job, so {@link #decideIteration} stays a query.
      * Completed samples stay as they are.
      *
+     * <p>Without this, one abort could block a depth for the rest of the game. The abort raises the
+     * estimate, the depth is then skipped, and a skipped depth records no new sample that could
+     * lower it again.
+     *
      * @param depth the depth just decided about
      */
     public static synchronized void shrinkAbortSamples(int depth) {
