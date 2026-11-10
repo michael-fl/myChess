@@ -26,9 +26,8 @@ public final class EngineTuning {
     public static final double ABORT_EXTRAPOLATION_FACTOR = 1.2;
 
     /**
-     * Factor by which the abort samples of a depth shrink after every decision about that depth
-     * (owner, 2026-11-10). An abort can only raise the estimate, and a skipped depth records
-     * nothing. So without this one abort can block a depth for many moves. Completed samples
+     * Factor by which the abort samples of a depth shrink after every decision about that depth.
+     * An abort can only raise the estimate, and a skipped depth records nothing. So without this one abort can block a depth for many moves. Completed samples
      * do not shrink. 1.0 is the behavior of 4.11.0. Offline check:
      * myChess-Lab/results/estimate-replay/REPORT.md, section 3.
      */
