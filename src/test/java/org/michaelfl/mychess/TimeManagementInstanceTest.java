@@ -71,6 +71,20 @@ class TimeManagementInstanceTest {
     }
 
     @Test
+    void shouldSkipIteration_decidesOnTheAbortSampleBeforeItShrinks() {
+        IterationTimings.recordAbort(2, SOFT_LIMIT_MS);
+        IterationTimings.recordAbort(2, SOFT_LIMIT_MS);
+        var instance = instanceWithSoftLimit(SOFT_LIMIT_MS);
+        completeDepthOne(instance);
+        long abortSample = (long) (SOFT_LIMIT_MS * EngineTuning.ABORT_EXTRAPOLATION_FACTOR);
+
+        assertTrue(instance.shouldSkipIteration(2),
+                "the 1.2 s abort estimate exceeds the 1 s soft limit, so the decision must still skip");
+        assertEquals(Math.round(abortSample * EngineTuning.ABORT_SAMPLE_DECAY), IterationTimings.getEstimatedMs(2),
+                "after the decision the abort samples of depth 2 must have shrunk once");
+    }
+
+    @Test
     void estimateBeyondSoftLimit_isSkipped() {
         recordSamples(2, 2_000);
         var instance = instanceWithSoftLimit(SOFT_LIMIT_MS);

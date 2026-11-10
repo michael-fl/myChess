@@ -380,4 +380,76 @@ class IterationTimingsTest {
                 "a test that enables the heuristic must hand it back disabled, or every test running after it "
                         + "becomes order-dependent");
     }
+
+    // ---- shrinking abort samples (ABORT_SAMPLE_DECAY) ----
+
+    @Test
+    void shrinkAbortSamples_shrinksAnAbortSample() {
+        IterationTimings.recordAbort(DEPTH, SAMPLE_MS);
+        long before = IterationTimings.getEstimatedMs(DEPTH);
+
+        IterationTimings.shrinkAbortSamples(DEPTH);
+
+        assertEquals(Math.round(before * EngineTuning.ABORT_SAMPLE_DECAY), IterationTimings.getEstimatedMs(DEPTH),
+                "an abort sample must shrink by ABORT_SAMPLE_DECAY");
+    }
+
+    @Test
+    void shrinkAbortSamples_leavesCompletedSamples() {
+        primeSamples();
+
+        IterationTimings.shrinkAbortSamples(DEPTH);
+
+        assertEquals(SAMPLE_MS, IterationTimings.getEstimatedMs(DEPTH),
+                "completed samples are real measurements and must not shrink");
+    }
+
+    @Test
+    void shrinkAbortSamples_shrinksOnlyTheAbortSampleInAMixedWindow() {
+        IterationTimings.recordCompletion(DEPTH, SAMPLE_MS);
+        IterationTimings.recordAbort(DEPTH, 2 * SAMPLE_MS);
+        long abortSample = (long) (2 * SAMPLE_MS * EngineTuning.ABORT_EXTRAPOLATION_FACTOR);
+
+        IterationTimings.shrinkAbortSamples(DEPTH);
+
+        long expected = (SAMPLE_MS + Math.round(abortSample * EngineTuning.ABORT_SAMPLE_DECAY)) / 2;
+
+        assertEquals(expected, IterationTimings.getEstimatedMs(DEPTH),
+                "only the abort sample may shrink, the completed one stays");
+    }
+
+    @Test
+    void shrinkAbortSamples_touchesOnlyTheGivenDepth() {
+        IterationTimings.recordAbort(DEPTH, SAMPLE_MS);
+        IterationTimings.recordAbort(DEPTH + 1, SAMPLE_MS);
+        long other = IterationTimings.getEstimatedMs(DEPTH + 1);
+
+        IterationTimings.shrinkAbortSamples(DEPTH);
+
+        assertEquals(other, IterationTimings.getEstimatedMs(DEPTH + 1),
+                "the abort samples of other depths must stay until a decision is made about them");
+    }
+
+    /**
+     * Two aborts block the depth: 1.2 s against 0.5 s left. With a decay of 0.85 per decision the
+     * estimate runs 1200, 1020, 867, 737, 626, 532, 452 ms. So the depth runs again at the seventh
+     * decision, after six shrinks.
+     */
+    @Test
+    void shrinkAbortSamples_unblocksADepthAfterEnoughDecisions() {
+        withSkipHeuristicEnabled(() -> {
+            IterationTimings.recordAbort(DEPTH, SAMPLE_MS);
+            IterationTimings.recordAbort(DEPTH, SAMPLE_MS);
+            long remaining = SAMPLE_MS / 2;
+            int shrinks = 0;
+
+            while (IterationTimings.decideIteration(DEPTH, remaining) == IterationDecision.SKIP) {
+                IterationTimings.shrinkAbortSamples(DEPTH);
+                shrinks++;
+                assertTrue(shrinks < 20, "the depth must run again after a few decisions");
+            }
+
+            assertEquals(6, shrinks, "1200 ms x 0.85^6 = 452 ms is the first estimate that fits into 500 ms");
+        });
+    }
 }

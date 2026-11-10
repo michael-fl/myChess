@@ -192,6 +192,7 @@ public final class TimeManagement {
             final long remainingMs = softTimeout - System.currentTimeMillis();
             decisionOnSoftTimeout = IterationTimings.decideIteration(currentDepth, remainingMs, riskFactor);
             final long estimateMs = IterationTimings.getEstimatedMs(depth);
+            IterationTimings.shrinkAbortSamples(currentDepth);
 
             return recordAndLogSkip(decisionOnSoftTimeout, estimateMs, remainingMs);
         }

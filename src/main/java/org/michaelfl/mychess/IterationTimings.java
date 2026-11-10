@@ -60,6 +60,8 @@ public final class IterationTimings {
     private static volatile boolean skipHeuristicEnabled = true;
 
     private static final long[][] window = new long[MAX_TRACKED_DEPTH + 1][EngineTuning.SMA_WINDOW_SIZE];
+    /** Whether the sample in the same slot of {@link #window} came from an abort. */
+    private static final boolean[][] fromAbort = new boolean[MAX_TRACKED_DEPTH + 1][EngineTuning.SMA_WINDOW_SIZE];
     private static final int[] nextWriteIdx = new int[MAX_TRACKED_DEPTH + 1];
     private static final int[] consecutiveSkips = new int[MAX_TRACKED_DEPTH + 1];
 
@@ -243,7 +245,7 @@ public final class IterationTimings {
             return;
         }
 
-        addSample(depth, iterationMs);
+        addSample(depth, iterationMs, false);
         consecutiveSkips[depth] = 0;
     }
 
@@ -267,8 +269,28 @@ public final class IterationTimings {
         }
 
         long estimatedMs = getEstimatedMs(depth);
-        addSample(depth, Math.max(estimatedMs, (long) (elapsedMs * EngineTuning.ABORT_EXTRAPOLATION_FACTOR)));
+        addSample(depth, Math.max(estimatedMs, (long) (elapsedMs * EngineTuning.ABORT_EXTRAPOLATION_FACTOR)), true);
         consecutiveSkips[depth] = 0;
+    }
+
+    /**
+     * Shrinks the abort samples of {@code depth} by {@link EngineTuning#ABORT_SAMPLE_DECAY}.
+     * The caller invokes it after every decision about {@code depth}, whatever the decision.
+     * Like {@link #recordSkip} it is the caller's job, so {@link #decideIteration} stays a query.
+     * Completed samples stay as they are.
+     *
+     * @param depth the depth just decided about
+     */
+    public static synchronized void shrinkAbortSamples(int depth) {
+        if (depth < 0 || depth > MAX_TRACKED_DEPTH) {
+            return;
+        }
+
+        for (int i = 0; i < EngineTuning.SMA_WINDOW_SIZE; i++) {
+            if (fromAbort[depth][i]) {
+                window[depth][i] = Math.max(1L, Math.round(window[depth][i] * EngineTuning.ABORT_SAMPLE_DECAY));
+            }
+        }
     }
 
     /** Drop all timing history and skip counters. Call on {@code ucinewgame}. */
@@ -277,12 +299,17 @@ public final class IterationTimings {
             Arrays.fill(row, 0L);
         }
 
+        for (boolean[] row : fromAbort) {
+            Arrays.fill(row, false);
+        }
+
         Arrays.fill(nextWriteIdx, 0);
         Arrays.fill(consecutiveSkips, 0);
     }
 
-    private static void addSample(int depth, long sampleMs) {
+    private static void addSample(int depth, long sampleMs, boolean abort) {
         int idx = nextWriteIdx[depth];
+        fromAbort[depth][idx] = abort;
         // Clamp to >= 1: a value of 0 doubles as the "empty slot" sentinel,
         // so a real 0 ms sample (theoretically possible at depth 1) must not
         // be stored as 0 — it would be invisible to the slot-counting logic.
