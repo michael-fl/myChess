@@ -53,7 +53,7 @@ public final class TimeManagement {
     static final int DEFAULT_MOVES_TO_GO = 30;
 
     /**
-     * Phase time management (test variant, owner 2026-11-08): the fallback in the middlegame. 15
+     * Phase time management (test variant): the fallback in the middlegame. 15
      * instead of {@value #DEFAULT_MOVES_TO_GO} doubles the budget per move there. Opening and
      * endgame keep {@value #DEFAULT_MOVES_TO_GO}.
      */
