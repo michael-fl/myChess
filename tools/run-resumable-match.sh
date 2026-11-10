@@ -5,7 +5,7 @@
 #
 # NAME                a short label; segments land in test-results/match-NAME-segNN.pgn
 # CANDIDATE/BASELINE  directory names under versions/
-# TOTAL_ROUNDS        rounds for the WHOLE match; one round is two games with colours swapped
+# TOTAL_ROUNDS        rounds for the WHOLE match; one round is two games with colors swapped
 # TC                  time control, default 40/60
 #
 # Optional environment, for two settings of one build (e.g. a UCI option against its default):
@@ -189,7 +189,7 @@ if [ "$DONE" -gt 0 ]; then
 fi
 
 if [ "${REPEAT:-1}" != "0" ] && [ $((DONE % 2)) -ne 0 ]; then
-    echo "note: $DONE is odd, so one opening was played once only - a one-game colour imbalance"
+    echo "note: $DONE is odd, so one opening was played once only - a one-game color imbalance"
 fi
 
 exec caffeinate -is "$CUTECHESS" \

@@ -136,7 +136,7 @@ def progress(games, arms_given, paths, label):
     every interruption as slow play and understate what is left.
     """
     rounds_seen = collections.Counter(g.round for g in games)
-    # games of a full round: every mychess- arm plays every anchor once with each colour. Read
+    # games of a full round: every mychess- arm plays every anchor once with each color. Read
     # off the names rather than off a round, which is still incomplete early in a run; the arms
     # named on the command line count too, since some may not have played yet
     names = {g.white for g in games} | {g.black for g in games}

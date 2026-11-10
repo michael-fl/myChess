@@ -14,13 +14,13 @@ the ability to accumulate games across interruptions is what makes the criteria 
 HOW TO MAKE A MATCH RESUMABLE. Use `order=sequential start=N` instead of `order=random`:
 sequential mode plays openings 1, 2, 3 ... in order, and START says where to begin. On resume
 this script prints the next start. With `-games 2 -repeat` one round is two games on the same
-opening with the colours swapped, so rounds = games / 2 and the resume point is the first
+opening with the colors swapped, so rounds = games / 2 and the resume point is the first
 round not completely played. At most one unpaired game per interruption survives, which is a
-colour imbalance of one game in thousands.
+color imbalance of one game in thousands.
 
 UNFINISHED GAMES. Stopping a match makes cutechess abandon the games in flight with the result
 "*". They are left out of the score. Until 2026-11-10 they were counted as a win or a loss,
-depending on the colour. They still count for the resume point, because run-resumable-match.sh
+depending on the color. They still count for the resume point, because run-resumable-match.sh
 counts every game in the segments.
 
 A match already running under `order=random` can still be continued - random openings stay a
@@ -202,7 +202,7 @@ def main():
 
     if n % 2:
         print(f"  note: {n} games is an odd count, so one opening was played once only;"
-              " a colour imbalance of a single game")
+              " a color imbalance of a single game")
 
 
 if __name__ == "__main__":

@@ -282,7 +282,7 @@ fi
 # "White advantage = 0.00" and "Draw rate = 50.00 %", which read like results and
 # are merely the defaults: measured on the v4.4.1 bracket they are 26.2 +/- 7.7
 # Elo and 19.0 +/- 1.0 %. The point estimate barely moves (1924.6 -> 1925.0 on
-# four engines), so the switches buy the error bars almost for free -- colour-
+# four engines), so the switches buy the error bars almost for free -- color-
 # balanced matches cancel the white advantage out of the ratings, and the draw
 # rate acts mainly on the simulation. See myChess-ELO-measurement.md section 5.
 "$ORDO" -W -D -s "$ORDO_SIMULATIONS" \
