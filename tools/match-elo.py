@@ -18,6 +18,11 @@ opening with the colours swapped, so rounds = games / 2 and the resume point is 
 round not completely played. At most one unpaired game per interruption survives, which is a
 colour imbalance of one game in thousands.
 
+UNFINISHED GAMES. Stopping a match makes cutechess abandon the games in flight with the result
+"*". They are left out of the score. Until 2026-11-10 they were counted as a win or a loss,
+depending on the colour. They still count for the resume point, because run-resumable-match.sh
+counts every game in the segments.
+
 A match already running under `order=random` can still be continued - random openings stay a
 random sample - it just is not reproducible.
 
@@ -64,8 +69,12 @@ GATE = re.compile(r'^([^:]+):\s*(lower|upper|elo)\s*(>=|>|<=|<)\s*([-+]?\d+(?:\.
 OPERATORS = {">=": operator.ge, ">": operator.gt, "<=": operator.le, "<": operator.lt}
 
 
+FINISHED = ("1-0", "0-1", "1/2-1/2")
+
+
 def tally(paths, candidate):
-    wins = losses = draws = 0
+    """Wins, losses and draws of the candidate, and the unfinished games ("*") left out."""
+    wins = losses = draws = unfinished = 0
     white = black = None
 
     for path in paths:
@@ -89,6 +98,11 @@ def tally(paths, candidate):
 
             result = match.group(1)
 
+            if result not in FINISHED:
+                unfinished += 1
+                white = black = None
+                continue
+
             if result == "1/2-1/2":
                 draws += 1
             elif (result == "1-0") == (white == candidate):
@@ -98,7 +112,7 @@ def tally(paths, candidate):
 
             white = black = None
 
-    return wins, losses, draws
+    return wins, losses, draws, unfinished
 
 
 def elo_and_interval(wins, losses, draws):
@@ -164,7 +178,7 @@ def main():
     args = parser.parse_args()
 
     candidate, paths = args.candidate, args.paths
-    wins, losses, draws = tally(paths, candidate)
+    wins, losses, draws, unfinished = tally(paths, candidate)
     stats = elo_and_interval(wins, losses, draws)
 
     if stats is None:
@@ -180,7 +194,11 @@ def main():
     print()
     print_gates(args.gate, elo, lower, upper)
     print()
-    print(f"  to resume: -openings ... order=sequential start={n // 2 + 1}")
+    played = n + unfinished
+    print(f"  to resume: -openings ... order=sequential start={played // 2 + 1}")
+
+    if unfinished:
+        print(f"  note: {unfinished} unfinished game(s) with result \"*\" left out of the score")
 
     if n % 2:
         print(f"  note: {n} games is an odd count, so one opening was played once only;"

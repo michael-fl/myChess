@@ -9,6 +9,7 @@ import contextlib
 import importlib.util
 import io
 import pathlib
+import tempfile
 import unittest
 
 SPEC = importlib.util.spec_from_file_location(
@@ -56,6 +57,34 @@ class GateRoundingTest(unittest.TestCase):
         lines = gate_lines([gate], 0.0, -10.04, 10.0)
 
         self.assertIn("PASS", lines[0], "a lower bound printed as -10.0 passes >= -10")
+
+
+class UnfinishedGameTest(unittest.TestCase):
+    """A game abandoned by a stop has the result "*". It must not count as a win or a loss."""
+
+    def tally_of(self, results):
+        games = []
+
+        for white, result in results:
+            black = "base" if white == "cand" else "cand"
+            games.append(f'[Event "m"]\n[White "{white}"]\n[Black "{black}"]\n[Result "{result}"]\n\n1. e4 {result}\n')
+
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp) / "seg01.pgn"
+            path.write_text("\n".join(games))
+
+            return match_elo.tally([path], "cand")
+
+    def test_unfinished_game_with_candidate_as_black_is_not_a_win(self):
+        self.assertEqual(self.tally_of([("base", "*")]), (0, 0, 0, 1))
+
+    def test_unfinished_game_with_candidate_as_white_is_not_a_loss(self):
+        self.assertEqual(self.tally_of([("cand", "*")]), (0, 0, 0, 1))
+
+    def test_finished_games_still_count(self):
+        results = [("cand", "1-0"), ("base", "1-0"), ("cand", "1/2-1/2"), ("base", "*")]
+
+        self.assertEqual(self.tally_of(results), (1, 1, 1, 1))
 
 
 if __name__ == "__main__":
