@@ -1,6 +1,5 @@
 package org.michaelfl.mychess;
 
-import org.michaelfl.mychess.TimeManagement.GamePhase;
 import org.michaelfl.mychess.TimeManagement.TimeControlInput;
 import org.michaelfl.mychess.engines.ChessEngine;
 import org.michaelfl.mychess.engines.ChessEngine.MoveAndWeight;
@@ -621,7 +620,7 @@ final class UciHandler {
         int fullMoveNumber = (plyCountAtStart / 2) + 1;
 
         Log.info(String.format(Locale.ROOT,
-                "[go] game=%s color=%s move=%d wtime=%s btime=%s movestogo=%s movetime=%s winc=%s binc=%s budget=%d phase=%s",
+                "[go] game=%s color=%s move=%d wtime=%s btime=%s movestogo=%s movetime=%s winc=%s binc=%s budget=%d phase=%d",
                 shortGameId(), color, fullMoveNumber,
                 formatNullable(args.wtime()),
                 formatNullable(args.btime()),
@@ -630,7 +629,7 @@ final class UciHandler {
                 formatNullable(args.winc()),
                 formatNullable(args.binc()),
                 args.timeBudgetMillis(),
-                args.phase().name().toLowerCase(Locale.ROOT)));
+                args.phase()));
     }
 
     private String shortGameId() {
@@ -831,7 +830,7 @@ final class UciHandler {
      * analysis. Nullable rather than defaulted: the log has to distinguish
      * "the GUI sent no increment" from "the GUI sent zero".
      */
-    private record GoArgs(int maxDepth, int timeBudgetMillis, GamePhase phase,
+    private record GoArgs(int maxDepth, int timeBudgetMillis, int phase,
                           Integer wtime, Integer btime, Integer movestogo,
                           Integer movetimeMs, Integer winc, Integer binc) {}
 
@@ -851,11 +850,10 @@ final class UciHandler {
         final int turn = board.getGameStatus().getTurn();
         RawGoTokens raw = readGoTokens(line);
         final TimeControlInput input = toTimeControlInput(raw);
-        final GamePhase phase = TimeManagement.gamePhaseOf(board);
-        int budgetMillis = TimeManagement.computeMoveBudgetMillis(input, turn, phase);
-        int maxDepth = TimeManagement.maxDepthFor(input, turn, phase, raw.maxDepth);
+        final int phase = WeightingFunction.gamePhase(board);
+        int budgetMillis = TimeManagement.computePhaseBudgetMillis(input, turn, phase);
 
-        return new GoArgs(maxDepth, budgetMillis, phase,
+        return new GoArgs(raw.maxDepth, budgetMillis, phase,
                 raw.wtime, raw.btime, raw.movestogo, raw.movetimeMs, raw.winc, raw.binc);
     }
 

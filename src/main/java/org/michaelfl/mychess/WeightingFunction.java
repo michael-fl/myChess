@@ -265,7 +265,7 @@ public final class WeightingFunction {
     /**
      * Game phase of a position, the same sum as in {@link #calculate(Board)}: knight and bishop 1,
      * rook 2, queen 4, clamped to {@link #MAX_PHASE}. Read by the phase time management
-     * ({@link TimeManagement#gamePhaseOf}).
+     * ({@link TimeManagement#computePhaseBudgetMillis}).
      *
      * @param board the position
      * @return the phase, {@code 0..}{@link #MAX_PHASE}; {@link #MAX_PHASE} is the full starting material

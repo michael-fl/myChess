@@ -43,6 +43,12 @@ class UciHandlerTest {
             "id ", "uciok", "readyok", "bestmove ", "info ", "option ", "copyprotection ", "registration "
     );
 
+    /**
+     * The start position has full material. The phase-blend fallback spreads its clock over 120
+     * moves, so a budget is the clock divided by 121 (4.11.0: 31).
+     */
+    private static final int FULL_MATERIAL_SHARE = 121;
+
     private static final String BESTMOVE_LINE_REGEX = "^bestmove [a-h][1-8][a-h][1-8][qrbn]?$";
     private static final String BESTMOVE_OR_NULL_REGEX = "^bestmove (0000|[a-h][1-8][a-h][1-8][qrbn]?)$";
 
@@ -785,9 +791,9 @@ class UciHandlerTest {
         int withoutIncrement = budgetOf("go depth 1 wtime 600000 btime 600000");
         int withIncrement = budgetOf("go depth 1 wtime 600000 btime 600000 winc 5000 binc 5000");
 
-        assertEquals(600_000 / 31, withoutIncrement,
+        assertEquals(600_000 / FULL_MATERIAL_SHARE, withoutIncrement,
                 "without an increment the budget must stay the plain share of the remaining clock");
-        assertEquals(600_000 / 31 + 4_000, withIncrement,
+        assertEquals(600_000 / FULL_MATERIAL_SHARE + 4_000, withIncrement,
                 "80 % of a 5 s increment is 4 s and must be added to that share");
     }
 
@@ -799,7 +805,7 @@ class UciHandlerTest {
         Integer budget = lastGoBudget("color=B");
 
         assertNotNull(budget, "the handler must log a [go] line for black");
-        assertEquals(60_000 / 31 + 800, budget,
+        assertEquals(60_000 / FULL_MATERIAL_SHARE + 800, budget,
                 "black must be budgeted from btime=60000 and binc=1000, not from white's 600000/9000");
     }
 
@@ -812,47 +818,46 @@ class UciHandlerTest {
     @Test
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
     void goWithWincOnly_isAccepted_andBlackFallsBackToNoIncrement() {
-        assertEquals(600_000 / 31 + 4_000, budgetOf("go depth 1 wtime 600000 btime 600000 winc 5000"),
+        assertEquals(600_000 / FULL_MATERIAL_SHARE + 4_000, budgetOf("go depth 1 wtime 600000 btime 600000 winc 5000"),
                 "a winc without a matching binc must still be applied for white");
     }
 
     // ---- Phase time management ----
 
-    /** Middlegame (queen and rook against rook and knight, phase 9): the clock is spread over 15 moves. */
+    /** Queen and rook against rook and knight, phase 9: the clock is spread over 16 moves. */
     @Test
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
-    void goInTheMiddlegame_spreadsTheClockOver15Moves() {
+    void goAtPhase9_spreadsTheClockOver16Moves() {
         runHandler("uci\nposition fen 4k3/pppr1ppp/4n3/8/8/8/PPP2PPP/3QR1K1 w - - 0 1\n"
                 + "go depth 1 wtime 600000 btime 600000\nquit\n");
 
-        assertEquals(600_000 / 16, lastGoBudget("phase=middlegame"),
-                "the [go] line must name the middlegame and carry 600 000 / 16");
+        assertEquals(600_000 / 17, lastGoBudget("phase=9"),
+                "the [go] line must name phase 9 and carry 600 000 / 17");
     }
 
-    /** Endgame (two rooks each, phase 8): the clock is spread over 20 moves. */
+    /** Two rooks each, phase 8: the clock is spread over 18 moves. */
     @Test
     @Timeout(value = 10, unit = TimeUnit.SECONDS)
-    void goInTheEndgame_spreadsTheClockOver20Moves() {
+    void goAtPhase8_spreadsTheClockOver18Moves() {
         runHandler("uci\nposition fen r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 0 1\n"
                 + "go depth 1 wtime 600000 btime 600000\nquit\n");
 
-        assertEquals(600_000 / 21, lastGoBudget("phase=endgame"),
-                "the [go] line must name the endgame and carry 600 000 / 21");
+        assertEquals(600_000 / 19, lastGoBudget("phase=8"),
+                "the [go] line must name phase 8 and carry 600 000 / 19");
     }
 
     /**
-     * Opening with a clock: the search stops after depth 8. The budget of 10 minutes / 31 is
-     * about 19 s, far more than depth 8 needs, so depth 9 would start without the limit.
+     * Full material with a clock: the clock is spread over 120 moves, and there is no depth limit.
+     * The budget of 20 minutes / 121 is about 10 s, more than depth 9 needs from the start position.
+     * The search runs past the 5 s the handler waits after quit, so no bestmove is expected here.
      */
     @Test
     @Timeout(value = 30, unit = TimeUnit.SECONDS)
-    void goInTheOpeningWithAClock_neverStartsDepth9() {
-        var response = runHandler("uci\nposition startpos\ngo wtime 600000 btime 600000\nquit\n");
+    void goWithFullMaterialAndAClock_hasNoDepthLimit() {
+        var response = runHandler("uci\nposition startpos\ngo wtime 1200000 btime 1200000\nquit\n");
 
-        assertEquals(600_000 / 31, lastGoBudget("phase=opening"));
-        response.expect("^info depth 8 .+$").expect(BESTMOVE_LINE_REGEX);
-        assertFalse(capturedOut.toString(StandardCharsets.UTF_8).contains("info depth 9 "),
-                "no iteration of depth 9 may start in the opening");
+        assertEquals(1_200_000 / FULL_MATERIAL_SHARE, lastGoBudget("phase=24"));
+        response.expect("^info depth 9 .+$");
     }
 
     /**
@@ -897,7 +902,7 @@ class UciHandlerTest {
      * the hard cap, so a game <em>without</em> an increment — which is every anchor match and
      * most cutechess runs — gets 50 ms more per move than before. At 40/120 that is 50 ms on
      * a ~3 s budget, well under two percent, and arguably the better design: the margin exists
-     * to prevent a flag fall, and a budget of one thirty-first of the clock cannot cause one.
+     * to prevent a flag fall, and a budget that is a small share of the clock cannot cause one.
      *
      * <p>It is pinned separately because it is a change to the pre-existing path rather than
      * part of adding increments, and because a reader comparing the two formulas should find
@@ -909,9 +914,9 @@ class UciHandlerTest {
     void goWithoutIncrement_noLongerSubtractsTheSafetyMargin() {
         int budget = budgetOf("go depth 1 wtime 600000 btime 600000");
 
-        assertEquals(600_000 / 31, budget,
+        assertEquals(600_000 / FULL_MATERIAL_SHARE, budget,
                 "the plain share of the clock, with no margin deducted — the previous formula "
-                        + "returned " + (600_000 / 31 - 50));
+                        + "returned " + (600_000 / FULL_MATERIAL_SHARE - 50));
     }
 
     /**
