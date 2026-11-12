@@ -53,15 +53,20 @@ public final class TimeManagement {
     static final int DEFAULT_MOVES_TO_GO = 30;
 
     /**
-     * Phase time management, variant phase-blend: the movestogo fallback over the material phase,
-     * linear between these support points (phase as a fraction of full material from 0 to 1, divisor). Full
-     * material spreads the clock over 120 moves, the middlegame over 15, the endgame over 20.
-     * At 60+1 the opening thus spends about as much time as the depth cap 8 of eg20 did. Unlike
-     * the cap, the budget grows with the time control. The support points come from an offline
-     * replay (myChess-Lab/results/phase-divisor-estimate/REPORT.md).
+     * Phase time management, variant phase-blend: the movestogo fallback per material phase, from
+     * 0 (only kings and pawns) to 24 (full material). Full material spreads the clock over 120
+     * moves, the middlegame over 15, the endgame over 20. At 60+1 the opening thus spends about as
+     * much time as the depth cap 8 of eg20 did. Unlike the cap, the budget grows with the time
+     * control.
+     *
+     * <p>The values come from a curve that is linear between the support points 1.0:120, 0.85:15,
+     * 0.4:15, 0.3:20 and 0:20 (phase as a fraction of full material), rounded to whole moves. The
+     * support points come from an offline replay (myChess-Lab/results/phase-divisor-estimate/REPORT.md).
      */
-    private static final double[][] PHASE_DIVISORS = {
-            {0.0, 20}, {0.3, 20}, {0.4, 15}, {0.85, 15}, {1.0, 120}
+    private static final int[] PHASE_MOVES_TO_GO = {
+            20, 20, 20, 20, 20, 20, 20, 20, 18, 16,          // phase 0-9
+            15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,      // phase 10-20
+            33, 62, 91, 120                                  // phase 21-24
     };
 
     /** Safety margin per move when computing time budget from clock. */
@@ -444,29 +449,13 @@ public final class TimeManagement {
     }
 
     /**
-     * The movestogo fallback for a position of the given material phase: linear between the
-     * support points of {@link #PHASE_DIVISORS}, rounded to whole moves.
+     * The movestogo fallback for a position of the given material phase, from {@link #PHASE_MOVES_TO_GO}.
      *
-     * @param phase the material phase, {@code 0..}{@link WeightingFunction#MAX_PHASE}
+     * @param phase the material phase, {@code 0..}{@link WeightingFunction#MAX_PHASE}; values outside are clamped
      * @return the number of moves the clock is spread over
      */
     static int phaseMovesToGo(int phase) {
-        final double phaseFraction = (double) Math.clamp(phase, 0, WeightingFunction.MAX_PHASE) / WeightingFunction.MAX_PHASE;
-
-        for (int i = 1; i < PHASE_DIVISORS.length; i++) {
-            final double lowPhase = PHASE_DIVISORS[i - 1][0];
-            final double lowDivisor = PHASE_DIVISORS[i - 1][1];
-            final double highPhase = PHASE_DIVISORS[i][0];
-            final double highDivisor = PHASE_DIVISORS[i][1];
-
-            if (phaseFraction <= highPhase) {
-                return (int) Math.round(lowDivisor + (highDivisor - lowDivisor) * (phaseFraction - lowPhase) / (highPhase - lowPhase));
-            }
-        }
-
-        final double lastDivisor = PHASE_DIVISORS[PHASE_DIVISORS.length - 1][1];
-
-        return (int) Math.round(lastDivisor);
+        return PHASE_MOVES_TO_GO[Math.clamp(phase, 0, WeightingFunction.MAX_PHASE)];
     }
 
     private static int computeMoveBudgetMillis(TimeManagement.TimeControlInput input, int turn, int defaultMovesToGo) {

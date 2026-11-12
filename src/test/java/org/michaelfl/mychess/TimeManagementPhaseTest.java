@@ -10,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * fallback over the material phase ({@link TimeManagement#phaseMovesToGo}) and the budget built
  * from it ({@link TimeManagement#computePhaseBudgetMillis}).
  *
- * <p>The phase counts knight and bishop 1, rook 2 and queen 4, out of 24. The fallback runs
- * linearly between the support points 1.0:120, 0.85:15, 0.4:15, 0.3:20 and 0:20, rounded to whole
- * moves. There is no depth limit in any phase.
+ * <p>The phase counts knight and bishop 1, rook 2 and queen 4, out of 24. The fallback is a table
+ * over the phase. Its values follow a curve that is linear between the support points 1.0:120,
+ * 0.85:15, 0.4:15, 0.3:20 and 0:20, rounded to whole moves. There is no depth limit in any phase.
  *
  * @author Michael Fleischhauer
  */
@@ -71,6 +71,12 @@ class TimeManagementPhaseTest {
     void endgameSpreadsTheClockOver20Moves() {
         assertEquals(20, TimeManagement.phaseMovesToGo(7), "7 of 24 is 0.29, below 0.3");
         assertEquals(20, TimeManagement.phaseMovesToGo(0));
+    }
+
+    @Test
+    void phaseOutsideTheTableIsClamped() {
+        assertEquals(120, TimeManagement.phaseMovesToGo(30), "more than full material, after promotions, counts as 24");
+        assertEquals(20, TimeManagement.phaseMovesToGo(-1));
     }
 
     // ---- computePhaseBudgetMillis ----
