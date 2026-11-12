@@ -54,7 +54,7 @@ public final class TimeManagement {
 
     /**
      * Phase time management, variant phase-blend: the movestogo fallback over the material phase,
-     * linear between these support points (phase as a share of full material, divisor). Full
+     * linear between these support points (phase as a fraction of full material from 0 to 1, divisor). Full
      * material spreads the clock over 120 moves, the middlegame over 15, the endgame over 20.
      * At 60+1 the opening thus spends about as much time as the depth cap 8 of eg20 did. Unlike
      * the cap, the budget grows with the time control. The support points come from an offline
@@ -451,14 +451,14 @@ public final class TimeManagement {
      * @return the number of moves the clock is spread over
      */
     static int phaseMovesToGo(int phase) {
-        final double share = (double) Math.clamp(phase, 0, WeightingFunction.MAX_PHASE) / WeightingFunction.MAX_PHASE;
+        final double phaseFraction = (double) Math.clamp(phase, 0, WeightingFunction.MAX_PHASE) / WeightingFunction.MAX_PHASE;
 
         for (int i = 1; i < PHASE_DIVISORS.length; i++) {
             final double[] low = PHASE_DIVISORS[i - 1];
             final double[] high = PHASE_DIVISORS[i];
 
-            if (share <= high[0]) {
-                return (int) Math.round(low[1] + (high[1] - low[1]) * (share - low[0]) / (high[0] - low[0]));
+            if (phaseFraction <= high[0]) {
+                return (int) Math.round(low[1] + (high[1] - low[1]) * (phaseFraction - low[0]) / (high[0] - low[0]));
             }
         }
 
