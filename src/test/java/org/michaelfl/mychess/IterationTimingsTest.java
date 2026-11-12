@@ -241,7 +241,7 @@ class IterationTimingsTest {
     void decideIteration_heuristicDisabled_alwaysRuns() {
         primeSamples();
 
-        assertEquals(IterationDecision.RUN, IterationTimings.decideIteration(DEPTH, 1),
+        assertEquals(IterationDecision.RUN, IterationTimings.decideIteration(DEPTH, 1, 1.0),
                 "with the heuristic off the estimate must be ignored, however hopeless it looks");
     }
 
@@ -252,7 +252,7 @@ class IterationTimingsTest {
 
             // Remaining time above MIN_REMAINING_MILLIS, otherwise the "time is up" rule decides first.
             assertEquals(IterationDecision.RUN,
-                    IterationTimings.decideIteration(DEPTH, IterationTimings.MIN_REMAINING_MILLIS + 1),
+                    IterationTimings.decideIteration(DEPTH, IterationTimings.MIN_REMAINING_MILLIS + 1, 1.0),
                     "a single sample is below MIN_SAMPLES_FOR_SKIP, so there is nothing to decide on");
         });
     }
@@ -260,14 +260,14 @@ class IterationTimingsTest {
     @Test
     void decideIteration_timeAlmostUp_skipsFromDepthThreeWithoutSamples() {
         withSkipHeuristicEnabled(() -> assertEquals(IterationDecision.SKIP,
-                IterationTimings.decideIteration(3, IterationTimings.MIN_REMAINING_MILLIS),
+                IterationTimings.decideIteration(3, IterationTimings.MIN_REMAINING_MILLIS, 1.0),
                 "with MIN_REMAINING_MILLIS or less left, depth 3 and deeper must be skipped even without samples"));
     }
 
     @Test
     void decideIteration_timeAlmostUp_stillRunsDepthTwo() {
         withSkipHeuristicEnabled(() -> assertEquals(IterationDecision.RUN,
-                IterationTimings.decideIteration(2, 0),
+                IterationTimings.decideIteration(2, 0, 1.0),
                 "depth 2 is cheap and must still run when the time is up, so there is always a searched move"));
     }
 
@@ -276,9 +276,9 @@ class IterationTimingsTest {
         withSkipHeuristicEnabled(() -> {
             primeSamples();
 
-            assertEquals(IterationDecision.RUN, IterationTimings.decideIteration(DEPTH, SAMPLE_MS),
+            assertEquals(IterationDecision.RUN, IterationTimings.decideIteration(DEPTH, SAMPLE_MS, 1.0),
                     "an estimate equal to the remaining time still fits — the comparison is not strict");
-            assertEquals(IterationDecision.RUN, IterationTimings.decideIteration(DEPTH, SAMPLE_MS + 1),
+            assertEquals(IterationDecision.RUN, IterationTimings.decideIteration(DEPTH, SAMPLE_MS + 1, 1.0),
                     "an estimate below the remaining time fits");
         });
     }
@@ -288,7 +288,7 @@ class IterationTimingsTest {
         withSkipHeuristicEnabled(() -> {
             primeSamples();
 
-            assertEquals(IterationDecision.SKIP, IterationTimings.decideIteration(DEPTH, SAMPLE_MS - 1),
+            assertEquals(IterationDecision.SKIP, IterationTimings.decideIteration(DEPTH, SAMPLE_MS - 1, 1.0),
                     "an estimate above the remaining time must skip while no probe is due");
         });
     }
@@ -331,12 +331,12 @@ class IterationTimingsTest {
             long remainingMs = SAMPLE_MS - 1;
 
             for (int i = 0; i < EngineTuning.SKIPS_BETWEEN_PROBES; i++) {
-                assertEquals(IterationDecision.SKIP, IterationTimings.decideIteration(DEPTH, remainingMs),
+                assertEquals(IterationDecision.SKIP, IterationTimings.decideIteration(DEPTH, remainingMs, 1.0),
                         "skip #" + (i + 1) + " before the probe is due");
                 IterationTimings.recordSkip(DEPTH);
             }
 
-            assertEquals(IterationDecision.PROBE, IterationTimings.decideIteration(DEPTH, remainingMs),
+            assertEquals(IterationDecision.PROBE, IterationTimings.decideIteration(DEPTH, remainingMs, 1.0),
                     "after SKIPS_BETWEEN_PROBES consecutive skips the depth must be probed again");
         });
     }
@@ -352,7 +352,7 @@ class IterationTimingsTest {
 
             long farTooLittle = (long) (SAMPLE_MS * EngineTuning.MIN_PROBE_REMAINING_RATIO) - 1;
 
-            assertEquals(IterationDecision.SKIP, IterationTimings.decideIteration(DEPTH, farTooLittle),
+            assertEquals(IterationDecision.SKIP, IterationTimings.decideIteration(DEPTH, farTooLittle, 1.0),
                     "the ratio gate must suppress a probe that would only contribute a misleadingly short sample");
         });
     }
@@ -363,10 +363,10 @@ class IterationTimingsTest {
             primeSamples();
 
             for (int i = 0; i < EngineTuning.SKIPS_BETWEEN_PROBES + 2; i++) {
-                IterationTimings.decideIteration(DEPTH, SAMPLE_MS - 1);
+                IterationTimings.decideIteration(DEPTH, SAMPLE_MS - 1, 1.0);
             }
 
-            assertEquals(IterationDecision.SKIP, IterationTimings.decideIteration(DEPTH, SAMPLE_MS - 1),
+            assertEquals(IterationDecision.SKIP, IterationTimings.decideIteration(DEPTH, SAMPLE_MS - 1, 1.0),
                     "asking the question must not advance the skip counter; only recordSkip may do that, "
                             + "otherwise a probe would become due without a single iteration being skipped");
         });

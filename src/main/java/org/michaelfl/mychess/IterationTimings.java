@@ -117,29 +117,19 @@ public final class IterationTimings {
      * so the decision itself has no side effect and can be exercised
      * repeatedly in a test.
      *
-     * @param depth       the deepening depth about to be started
-     * @param remainingMs milliseconds left in the move's time budget
-     * @return {@link IterationDecision#RUN} whenever the heuristic is off, the
-     *         depth has too little history, or the estimate fits in the
-     *         remaining time
-     */
-    static IterationDecision decideIteration(int depth, long remainingMs) {
-        return decideIteration(depth, remainingMs, 1.0);
-    }
-
-    /**
-     * The skip decision with an explicit risk factor: the iteration runs when its
-     * estimate is at most {@code riskFactor} times the remaining time. A factor of
-     * {@code 1.0} is the plain rule above; a larger one starts deeper iterations more
-     * boldly, which is how honest estimates (aborts recorded) can be made to behave
-     * like the low-biased estimates of 4.9.0. The floor {@link #MIN_REMAINING_MILLIS}
-     * still applies to the real remaining time.
+     * <p>The iteration runs when its estimate is at most {@code riskFactor} times
+     * the remaining time. A factor of {@code 1.0} is the plain comparison. A larger
+     * one starts deeper iterations more boldly, which is how honest estimates (aborts
+     * recorded) can be made to behave like the low-biased estimates of 4.9.0. The
+     * floor {@link #MIN_REMAINING_MILLIS} still applies to the real remaining time.
      *
      * @param depth       the deepening depth about to be started
      * @param remainingMs milliseconds left in the move's time budget
      * @param riskFactor  multiplier on {@code remainingMs} for the estimate comparison
      *                    and the probing gate
-     * @return the decision, as for {@link #decideIteration(int, long)}
+     * @return {@link IterationDecision#RUN} whenever the heuristic is off, the
+     *         depth has too little history, or the estimate fits in the allowed
+     *         time; otherwise {@link IterationDecision#PROBE} or {@link IterationDecision#SKIP}
      */
     static synchronized IterationDecision decideIteration(int depth, long remainingMs, double riskFactor) {
         if (!skipHeuristicEnabled) {
