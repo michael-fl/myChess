@@ -454,15 +454,19 @@ public final class TimeManagement {
         final double phaseFraction = (double) Math.clamp(phase, 0, WeightingFunction.MAX_PHASE) / WeightingFunction.MAX_PHASE;
 
         for (int i = 1; i < PHASE_DIVISORS.length; i++) {
-            final double[] low = PHASE_DIVISORS[i - 1];
-            final double[] high = PHASE_DIVISORS[i];
+            final double lowPhase = PHASE_DIVISORS[i - 1][0];
+            final double lowDivisor = PHASE_DIVISORS[i - 1][1];
+            final double highPhase = PHASE_DIVISORS[i][0];
+            final double highDivisor = PHASE_DIVISORS[i][1];
 
-            if (phaseFraction <= high[0]) {
-                return (int) Math.round(low[1] + (high[1] - low[1]) * (phaseFraction - low[0]) / (high[0] - low[0]));
+            if (phaseFraction <= highPhase) {
+                return (int) Math.round(lowDivisor + (highDivisor - lowDivisor) * (phaseFraction - lowPhase) / (highPhase - lowPhase));
             }
         }
 
-        return (int) Math.round(PHASE_DIVISORS[PHASE_DIVISORS.length - 1][1]);
+        final double lastDivisor = PHASE_DIVISORS[PHASE_DIVISORS.length - 1][1];
+
+        return (int) Math.round(lastDivisor);
     }
 
     private static int computeMoveBudgetMillis(TimeManagement.TimeControlInput input, int turn, int defaultMovesToGo) {
