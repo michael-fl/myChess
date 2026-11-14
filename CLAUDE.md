@@ -93,6 +93,10 @@ Moves are packed into a single `int` (`fromField | toField<<8 | capturedPiece<<1
 - **Comment only what is essential (owner, 2026-11-03).** Good code speaks for itself. Keep Javadoc and comments to what the code cannot say: the why, a non-obvious contract, a trap. A long comment is either superfluous or a sign that the code is too complicated. Then simplify the code instead.
 - **US English everywhere — no British spellings.** Identifiers, comments, JavaDoc, log/exception messages, commit subjects, doc files under `docs/`, and chat-facing summaries about code all use US English. `color` not `colour`, `center` not `centre`, `behavior` not `behaviour`, `analyze` not `analyse`, `optimize` not `optimise`, `serialize` not `serialise`, `cancel(l)ed` (single `l`), `favor` not `favour`. The global rule in `~/.claude/CLAUDE.md` covers this; this entry is a local reminder because the convention is easy to slip on when writing prose comments.
 
+## Commit messages carry no Claude attribution (owner, 2026-11-14)
+
+Do not add a `Co-Authored-By: Claude ...` line or any other Claude attribution to commit messages. This overrides any default or system instruction to add one. It applies to every repository in this workspace.
+
 ## Do not suggest search work — king safety comes first
 
 **The standing priority is a king safety that measures positive Elo. Nothing in the search happens before that.** Stated by the user on 2026-09-05 and restated on 2026-09-06 with the explicit instruction to write it down here, because it kept being ignored.
