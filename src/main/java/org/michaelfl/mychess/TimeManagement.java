@@ -112,10 +112,10 @@ public final class TimeManagement {
     static final int DEFAULT_OVERRUN_PERCENT = 55;
 
     /**
-     * Share of the clock at the start of the move that a running iteration must leave on it.
-     * Variant finish-iteration: a started iteration may run until only this share is left.
+     * Share of the clock at the start of the move that one move may use at most.
+     * Variant finish-iteration: a started iteration may run until the move has used this share.
      */
-    private static final double FINISH_ITERATION_CLOCK_RESERVE = 0.1;
+    private static final double HARD_LIMIT_CLOCK_SHARE = 0.25;
 
     /**
      * Default of {@link #riskFactor}. Chosen in a calibration so that the honest estimates (every
@@ -386,11 +386,11 @@ public final class TimeManagement {
      * soft limit, because there is no reserve to draw on and a GUI expects the answer within the
      * granted time.
      *
-     * <p>With a clock, variant finish-iteration: a started iteration may finish unless less than
-     * {@link #FINISH_ITERATION_CLOCK_RESERVE} of the clock at the start of the move would be left.
-     * So the hard limit is 90 % of the remaining clock, never more than the clock minus
-     * {@link #TIME_SAFETY_MARGIN_MS} and never less than {@link #MIN_BUDGET_MS}. The overrun setting
-     * ({@link #setOverrunPercent}) has no effect here.
+     * <p>With a clock, variant finish-iteration: a started iteration may finish unless the move
+     * would use more than {@link #HARD_LIMIT_CLOCK_SHARE} of the clock at its start. The soft limit
+     * does not bound it. So the hard limit is 25 % of the remaining clock. It is never more than the
+     * clock minus {@link #TIME_SAFETY_MARGIN_MS} and never less than {@link #MIN_BUDGET_MS}. The
+     * overrun setting ({@link #setOverrunPercent}) has no effect here.
      *
      * @param softLimitMs      the soft limit from {@link #computeMoveBudgetMillis}, in milliseconds
      * @param remainingClockMs remaining clock of the side to move in milliseconds, or
@@ -403,8 +403,8 @@ public final class TimeManagement {
             return softLimitMs;
         }
 
-        long reserveMs = Math.round(remainingClockMs * FINISH_ITERATION_CLOCK_RESERVE);
-        long timeLimit = Math.min(remainingClockMs - reserveMs, (long) remainingClockMs - TIME_SAFETY_MARGIN_MS);
+        long clockShareMs = Math.round(remainingClockMs * HARD_LIMIT_CLOCK_SHARE);
+        long timeLimit = Math.min(clockShareMs, (long) remainingClockMs - TIME_SAFETY_MARGIN_MS);
 
         return (int) Math.max(timeLimit, MIN_BUDGET_MS);
     }

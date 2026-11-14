@@ -965,15 +965,15 @@ class UciHandlerTest {
 
     @Test
     void watcherTimeout_withAmpleClock_isTheHardLimitPlusGrace() {
-        // 1 s soft limit, 60 s clock: hard limit = 90 % of the clock = 54 s
-        assertEquals(54_000 + UciHandler.WATCHER_GRACE_MILLIS, UciHandler.watcherTimeoutMillis(1_000, 60_000),
+        // 1 s soft limit, 60 s clock: hard limit = 25 % of the clock = 15 s
+        assertEquals(15_000 + UciHandler.WATCHER_GRACE_MILLIS, UciHandler.watcherTimeoutMillis(1_000, 60_000),
                 "with a clock the watcher must wait until the hard limit, not just the budget, plus the grace");
     }
 
     @Test
     void watcherTimeout_withShortClock_followsTheCappedHardLimit() {
-        // 1 s soft limit, 5 s clock: hard limit = 90 % of the clock = 4.5 s
-        assertEquals(4_500 + UciHandler.WATCHER_GRACE_MILLIS, UciHandler.watcherTimeoutMillis(1_000, 5_000),
+        // 1 s soft limit, 5 s clock: hard limit = 25 % of the clock = 1.25 s
+        assertEquals(1_250 + UciHandler.WATCHER_GRACE_MILLIS, UciHandler.watcherTimeoutMillis(1_000, 5_000),
                 "the watcher must follow the hard limit's clock cap, so a short clock is not overspent");
     }
 
