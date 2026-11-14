@@ -173,26 +173,44 @@ class TimeManagementTest {
         TimeManagement.setOverrunPercent(TimeManagement.DEFAULT_OVERRUN_PERCENT);
     }
 
-    // ---- calculateHardLimit ----
+    // ---- calculateHardLimit (variant finish-iteration: 10 % of the clock stays as a reserve) ----
 
     @Test
-    void hardLimit_withAmpleClock_isTheSoftLimitPlusTheMaxOverrun() {
-        assertEquals(ONE_SECOND + TimeManagement.SOFT_LIMIT_MAX_OVERRUN_MS,
-                TimeManagement.calculateHardLimit(ONE_SECOND, ONE_MINUTE),
-                "1 s soft limit and 60 s on the clock: soft + 1 s (2 s) is below 4 x soft (4 s) and 20 % of the clock (12 s)");
+    void hardLimit_withAClock_leavesTenPercentOfIt() {
+        assertEquals(54_000, TimeManagement.calculateHardLimit(ONE_SECOND, ONE_MINUTE),
+                "with 60 s on the clock a started iteration may run until 6 s are left");
     }
 
     @Test
-    void hardLimit_withTinySoftLimit_isCappedAtFourTimesIt() {
-        // 200 ms soft limit: soft + 1 s = 1.2 s, but 4 x soft = 0.8 s is smaller
-        assertEquals(800, TimeManagement.calculateHardLimit(200, ONE_MINUTE),
-                "for a soft limit below a third of a second, 4 x soft must cap the hard limit below soft + 1 s");
+    void hardLimit_withAClock_doesNotDependOnTheSoftLimit() {
+        assertEquals(54_000, TimeManagement.calculateHardLimit(200, ONE_MINUTE),
+                "a small soft limit must not shorten the hard limit");
+        assertEquals(54_000, TimeManagement.calculateHardLimit(ONE_MINUTE, ONE_MINUTE),
+                "a soft limit as large as the clock must not raise the hard limit");
     }
 
     @Test
-    void hardLimit_withShortClock_isCappedAtAFifthOfTheClock() {
-        assertEquals(1_000, TimeManagement.calculateHardLimit(ONE_SECOND, 5_000),
-                "with 5 s left, 20 % of the clock (1 s) must cap the hard limit below soft + 1 s (2 s)");
+    void hardLimit_withShortClock_keepsTheSafetyMargin() {
+        assertEquals(250, TimeManagement.calculateHardLimit(ONE_SECOND, 300),
+                "with 300 ms left, 90 % (270 ms) is above the clock minus the 50 ms margin, so the margin must win");
+    }
+
+    @Test
+    void hardLimit_withNearlyEmptyClock_isFlooredAtTheMinimum() {
+        assertEquals(FLOOR_MILLIS, TimeManagement.calculateHardLimit(ONE_SECOND, 40),
+                "with 40 ms left, the 50 ms floor must win");
+    }
+
+    @Test
+    void hardLimit_withAClock_ignoresTheOverrunSetting() {
+        try {
+            TimeManagement.setOverrunPercent(500);
+
+            assertEquals(54_000, TimeManagement.calculateHardLimit(ONE_SECOND, ONE_MINUTE),
+                    "the overrun setting must have no effect on the hard limit in this variant");
+        } finally {
+            TimeManagement.setOverrunPercent(TimeManagement.FIXED_OVERRUN_PERCENT);
+        }
     }
 
     @Test
@@ -215,19 +233,6 @@ class TimeManagementTest {
                 "go infinite / go depth must keep the infinite budget unchanged, not multiply it");
     }
 
-    @Test
-    void hardLimit_withNearlyEmptyClock_isFlooredAtTheMinimum() {
-        assertEquals(FLOOR_MILLIS, TimeManagement.calculateHardLimit(ONE_SECOND, 100),
-                "20 ms (20 % of 100 ms) is below the 50 ms floor, so the floor must win");
-    }
-
-    @Test
-    void hardLimit_softLimitAsLargeAsTheClock_isCappedAtAFifthOfIt() {
-        int hardLimit = TimeManagement.calculateHardLimit(ONE_MINUTE, ONE_MINUTE);
-
-        assertEquals(12_000, hardLimit, "a soft limit as large as the clock must be capped at 20 % of it");
-    }
-
     // ---- the overrun as a share of the soft limit (TimeOverrunPercent) ----
 
     @Test
@@ -241,68 +246,8 @@ class TimeManagementTest {
         TimeManagement.setOverrunPercent(TimeManagement.DEFAULT_OVERRUN_PERCENT);
 
         assertEquals(55, TimeManagement.DEFAULT_OVERRUN_PERCENT, "the default must stay the measured 55 %");
-        assertEquals(2_000 + 1_100, TimeManagement.calculateHardLimit(2_000, ONE_MINUTE),
-                "with the default, a 2 s soft limit gets 55 % (1.1 s) of overrun, below 4 x soft and 20 % of the clock");
-    }
-
-    @Test
-    void hardLimit_withOverrunPercent_isTheSoftLimitPlusThatShare() {
-        try {
-            TimeManagement.setOverrunPercent(50);
-
-            assertEquals(TWO_AND_A_HALF_SECONDS + 1_250, TimeManagement.calculateHardLimit(TWO_AND_A_HALF_SECONDS, ONE_MINUTE),
-                    "50 % of a 2.5 s soft limit is 1.25 s, below 4 x soft (10 s) and 20 % of the clock (12 s)");
-        } finally {
-            TimeManagement.setOverrunPercent(TimeManagement.FIXED_OVERRUN_PERCENT);
-        }
-    }
-
-    @Test
-    void hardLimit_withOverrunPercent_scalesWithTheSoftLimit() {
-        try {
-            TimeManagement.setOverrunPercent(50);
-
-            assertEquals(15_000, TimeManagement.calculateHardLimit(10_000, 10 * ONE_MINUTE),
-                    "at a long control a 10 s soft limit gets 5 s overrun, where the fixed setting would allow only 1 s");
-        } finally {
-            TimeManagement.setOverrunPercent(TimeManagement.FIXED_OVERRUN_PERCENT);
-        }
-    }
-
-    @Test
-    void hardLimit_withLargeOverrunPercent_isStillCappedAtFourTimesTheSoftLimit() {
-        try {
-            TimeManagement.setOverrunPercent(500);
-
-            assertEquals(4_000, TimeManagement.calculateHardLimit(ONE_SECOND, ONE_MINUTE),
-                    "an overrun of 500 % would give 6 s, but 4 x the soft limit must still cap it at 4 s");
-        } finally {
-            TimeManagement.setOverrunPercent(TimeManagement.FIXED_OVERRUN_PERCENT);
-        }
-    }
-
-    @Test
-    void hardLimit_withOverrunPercentAndShortClock_isStillCappedAtAFifthOfTheClock() {
-        try {
-            TimeManagement.setOverrunPercent(100);
-
-            assertEquals(1_000, TimeManagement.calculateHardLimit(ONE_SECOND, 5_000),
-                    "with 5 s left, 20 % of the clock (1 s) must still cap the hard limit below soft + 100 % (2 s)");
-        } finally {
-            TimeManagement.setOverrunPercent(TimeManagement.FIXED_OVERRUN_PERCENT);
-        }
-    }
-
-    @Test
-    void hardLimit_withOverrunPercentButNoClock_equalsTheSoftLimit() {
-        try {
-            TimeManagement.setOverrunPercent(50);
-
-            assertEquals(ONE_SECOND, TimeManagement.calculateHardLimit(ONE_SECOND, Integer.MAX_VALUE),
-                    "without a clock the hard limit must equal the soft limit whatever the overrun setting");
-        } finally {
-            TimeManagement.setOverrunPercent(TimeManagement.FIXED_OVERRUN_PERCENT);
-        }
+        assertEquals(1_100, TimeManagement.maxOverrunMillis(2_000),
+                "with the default, a 2 s soft limit gets 55 % (1.1 s) of overrun");
     }
 
     @Test
