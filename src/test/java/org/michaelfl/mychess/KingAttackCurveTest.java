@@ -31,10 +31,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * measured **−67.1 Elo** in the Audax fork, worse than having no attack term at all
  * (§ 4.4).
  *
- * <p>This is green today with a good margin — the table tops out at 85 against a limit of 100 —
- * and it is not decoration: the anchor-corpus calibration reaches 191 cp, entirely above the cap,
- * so the next re-fit can breach it. It also fails if someone *lowers* the threshold, which is the
- * other way the two constants can collide.
+ * <p>It is not decoration. The table fitted on the attack units alone topped out at 80. The
+ * tables refitted with the pawn shield reach the limit of 100 exactly, because the fit runs into
+ * it: without the cap it would rise to about 130 cp. The anchor-corpus calibration even reached
+ * 191 cp. So every re-fit has to respect the cap. The test also fails if someone lowers the
+ * threshold, which is the other way the two constants can collide.
  *
  * <p><b>Monotonicity.</b> More attackers must never score as less danger. This is not a
  * hypothetical: the curve § 4.5 recommended fell from 49 to 40 between six and seven attack
@@ -51,7 +52,7 @@ class KingAttackCurveTest {
     /**
      * Headroom demanded between the loudest the term can be and the point where the shortcut
      * blinds the search. A factor of two: the cap argued for in § 4.4 is 150 against a threshold
-     * of 200, and the shipped curve tops out at 85.
+     * of 200. The fits with the pawn shield stop at this limit of 100.
      */
     private static final int SAFETY_DIVISOR = 2;
 

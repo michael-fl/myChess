@@ -311,18 +311,22 @@ class WeightingFunctionAttackUnitTest {
         void realGameQueenPlusKnightAreTwoAttackersNotSixSquares() {
             // Real position (EngineSmokeTest.testPosition1 after 41.Nd5): white's queen
             // e6 and knight d5 attack the exposed black king on g7. That is TWO attackers
-            // with 7 attack units (Q=5 + N=2) -> KING_ATTACK_PENALTY[7]. The per-square
-            // bug instead reports 6 attackers / 27 units (the queen alone hits
-            // f6/g6/h6/f7/g8), which clamps to the table maximum and hugely overvalues
-            // the position.
+            // with 7 attack units (Q=5 + N=2). No black piece defends the zone: the pawn g5
+            // blocks Bf4. The pawn h7 shields the king, which lowers the index by one
+            // -> KING_ATTACK_PENALTY[6]. The per-square bug instead reports 6 attackers /
+            // 27 units (the queen alone hits f6/g6/h6/f7/g8), which clamps to the table maximum
+            // and hugely overvalues the position.
             var wf = evalFor("8/6kp/p2pQ3/1p1N2p1/5b2/2P5/PP1r3P/4K3 b - - 2 41");
+            int index = 7 - WeightingFunction.PAWN_SHIELD_DEFENSE_UNITS[1];
 
             assertEquals(2, wf.getKingAttackerCount()[WHITE], "only the queen and the knight attack black's king zone");
             assertEquals(7, wf.getAttackUnit()[WHITE], "queen (5) + knight (2), each counted once");
-            assertEquals(WeightingFunction.KING_ATTACK_PENALTY[7],
+            assertEquals(0, wf.getDefenseUnit()[BLACK], "g5 blocks Bf4, so no black piece defends the zone");
+            assertEquals(1, wf.getPawnShieldCount()[BLACK], "h7 is black's only shield pawn");
+            assertEquals(WeightingFunction.KING_ATTACK_PENALTY[index],
                     wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE),
-                    "two attackers, 7 units -> penalty table entry 7 undiluted, not the clamped maximum");
-            assertEquals(WeightingFunction.blend(WeightingFunction.KING_ATTACK_PENALTY[7], 0, wf.getPhase()),
+                    "two attackers, 7 units, one shield pawn -> entry 6, not the clamped maximum");
+            assertEquals(WeightingFunction.blend(WeightingFunction.KING_ATTACK_PENALTY[index], 0, wf.getPhase()),
                     wf.calcKingAttackPenalty(WHITE, wf.getPhase()),
                     "at this position's own phase the same entry is scaled down: it is an endgame "
                             + "(phase " + wf.getPhase() + " of " + WeightingFunction.MAX_PHASE

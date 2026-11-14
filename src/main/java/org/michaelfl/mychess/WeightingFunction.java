@@ -153,43 +153,89 @@ public final class WeightingFunction {
     }
 
     /**
-     * King-attack penalty at full midgame material, in centipawns, indexed by the attacking
-     * side's accumulated {@link #attackUnit} and scaled down by the game phase in
+     * The summed defense units of a side are divided by this number before they lower the attack
+     * index. It allows half units with integer weights. The division rounds down, so a lone rook
+     * (one half unit) lowers nothing.
+     */
+    static final int DEFENSE_UNIT_DIVISOR = 2;
+
+    /**
+     * Defense-unit weights in units of 1 / {@link #DEFENSE_UNIT_DIVISOR}: knight and bishop count 1,
+     * rook and queen 0.5. A piece counts once when it bears on a square of its own king zone, like
+     * an attacker on the enemy zone. Pawns and the king count 0. Pawns defend through the
+     * {@link #PAWN_SHIELD_DEFENSE_UNITS} instead. The king always stands in its own zone, so a
+     * weight for it would only shift every index by the same amount.
+     */
+    static final int DEFENSE_UNIT_KING = 0;
+    static final int DEFENSE_UNIT_PAWN = 0;
+    static final int DEFENSE_UNIT_KNIGHT = 2; // effectively 1
+    static final int DEFENSE_UNIT_BISHOP = 2;
+    static final int DEFENSE_UNIT_ROOK = 1;   // effectively 0.5
+    static final int DEFENSE_UNIT_QUEEN = 1;
+
+    /** Defense-unit weight indexed by piece constant; see {@link #DEFENSE_UNIT_KING}. */
+    private static final int[] DEFENSE_UNIT_OF_PIECE = new int[Board.blackKing + 1];
+    static {
+        DEFENSE_UNIT_OF_PIECE[Board.whitePawn]   = DEFENSE_UNIT_PAWN;
+        DEFENSE_UNIT_OF_PIECE[Board.whiteKnight] = DEFENSE_UNIT_KNIGHT;
+        DEFENSE_UNIT_OF_PIECE[Board.whiteBishop] = DEFENSE_UNIT_BISHOP;
+        DEFENSE_UNIT_OF_PIECE[Board.whiteRook]   = DEFENSE_UNIT_ROOK;
+        DEFENSE_UNIT_OF_PIECE[Board.whiteQueen]  = DEFENSE_UNIT_QUEEN;
+        DEFENSE_UNIT_OF_PIECE[Board.whiteKing]   = DEFENSE_UNIT_KING;
+        DEFENSE_UNIT_OF_PIECE[Board.blackPawn]   = DEFENSE_UNIT_PAWN;
+        DEFENSE_UNIT_OF_PIECE[Board.blackKnight] = DEFENSE_UNIT_KNIGHT;
+        DEFENSE_UNIT_OF_PIECE[Board.blackBishop] = DEFENSE_UNIT_BISHOP;
+        DEFENSE_UNIT_OF_PIECE[Board.blackRook]   = DEFENSE_UNIT_ROOK;
+        DEFENSE_UNIT_OF_PIECE[Board.blackQueen]  = DEFENSE_UNIT_QUEEN;
+        DEFENSE_UNIT_OF_PIECE[Board.blackKing]   = DEFENSE_UNIT_KING;
+    }
+
+    /**
+     * King-attack penalty at full midgame material, in centipawns, scaled down by the game phase
+     * in {@link #calcKingAttackPenalty}. The index is the attacking side's {@link #attackUnit}
+     * minus the defense of the attacked king, at least 0. The defense is the
+     * {@link #defenseUnit} divided by {@link #DEFENSE_UNIT_DIVISOR} plus the
+     * {@link #PAWN_SHIELD_DEFENSE_UNITS}.
+     *
+     * <p><b>Fitted, not shaped by hand.</b> The method is that of {@code docs/king-safety.md}
+     * § 4.6 and § 4.7. The target was Stockfish's <em>static</em> evaluation minus this one
+     * without the term, over a 39 619-position corpus. The fit was monotone, gated on two
+     * attackers, and capped at 100 cp. This table was refitted on 2026-11-15 for the index with
+     * pieces and pawn shield ({@code myChess-Lab/results/defense-units/REPORT.md}). The table
+     * fitted on the attack units alone read {@code 0 0 0 13 16 47 47 47 80}.
+     *
+     * <p><b>Equal neighbors are the measurement, not rounding.</b> Where the data cannot tell two
+     * indices apart, the isotonic fit merges them into one level. The last three entries sit at
+     * the cap of 100 cp, half the material-only threshold, which {@code KingAttackCurveTest}
+     * guards.
+     *
+     * <p>Index 0 is pinned: only the difference between the two sides reaches the score, so a
+     * constant on every entry would cancel. The term applies only once at least two distinct
+     * pieces attack, and the index is clamped to the last entry. Both happen in
      * {@link #calcKingAttackPenalty}.
-     *
-     * <p><b>Fitted, not shaped by hand</b> — see {@code docs/king-safety.md} § 4.6. The target
-     * was Stockfish's <em>static</em> evaluation minus this one, over a 39 619-position corpus,
-     * with monotonicity as a constraint of the fit rather than a property hoped for afterward.
-     * An earlier hand-built table ran to index 20 and rose to 400; the entries above 8 covered
-     * positions real play reaches in 0.3 % of samples, and its lower half carried a quarter to a
-     * half of what the fit puts there.
-     *
-     * <p><b>The flat runs are the measurement, not rounding.</b> Indices 5 to 7 share a value
-     * because the data place all three well above zero without distinguishing between them;
-     * where the unconstrained fit fell — which would score more attackers as less danger — the
-     * isotonic projection merges the offending indices into one level. Constraining the fit that
-     * way costs 0.077 % of residual, so the descent it removed was noise.
-     *
-     * <p>Indices 1 and 2 are zero because a single minor piece bearing on the king zone is the
-     * normal case rather than a danger, and their intervals do not separate from zero. Index 0
-     * is pinned: only the difference between the two sides reaches the score, so a constant on
-     * every entry would cancel.
-     *
-     * <p>Applied only once at least two distinct pieces attack, and the index is clamped to the
-     * last entry — both in {@link #calcKingAttackPenalty}, both deliberate, both explained
-     * there.
      */
     static final int[] KING_ATTACK_PENALTY = {
             0,    //  0
-            0,    //  1
-            0,    //  2
-            13,   //  3
-            16,   //  4
-            47,   //  5
-            47,   //  6
-            47,   //  7
-            80    //  8
+            21,   //  1
+            44,   //  2
+            44,   //  3
+            65,   //  4
+            89,   //  5
+            100,  //  6
+            100,  //  7
+            100   //  8
     };
+
+    /**
+     * Defense units of a pawn shield, indexed by the number of own pawns in the own king zone.
+     * Three and more pawns read the last entry.
+     *
+     * <p>Convex on purpose: the third pawn is worth more than the first. A full shield cancels
+     * most of an attack, a shield with a gap much less. Measured offline as the best of 84
+     * monotone maps ({@code myChess-Lab/results/defense-units/REPORT.md}). Four shield pawns
+     * occur in 0.06 % of the positions, too rare to fit an entry of their own.
+     */
+    static final int[] PAWN_SHIELD_DEFENSE_UNITS = { 0, 1, 3, 6 };
 
     /**
      * Shifts the king-zone centre off the a- and h-file, indexed by the king's column
@@ -417,6 +463,10 @@ public final class WeightingFunction {
     private final int[] bishopCount = new int[2];
     /** Accumulated attack units bearing on the enemy king zone, per attacking color. */
     private final int[] attackUnit = new int[2];
+    /** Accumulated defense units bearing on the own king zone, per color, before the {@link #DEFENSE_UNIT_DIVISOR}. */
+    private final int[] defenseUnit = new int[2];
+    /** Own pawns standing in the own king zone, per color. */
+    private final int[] pawnShieldCount = new int[2];
     /** Number of distinct pieces bearing on the enemy king zone, per attacking color. */
     private final int[] kingAttackerCount = new int[2];
     /** Per-color sum of midgame piece-square values for the current position (index 0 = white, 1 = black). */
@@ -427,6 +477,7 @@ public final class WeightingFunction {
     /** Game phase of the most recently evaluated position, {@code 0..}{@link #MAX_PHASE}; see {@link #phaseWeightOfPiece}. */
     private int phase;
     private boolean isCurrentAttackerCounted;
+    private boolean isCurrentDefenderCounted;
 
     /** Material weight (delta white - black) in centi pawns. */
     public static int calculateMaterialWeight(Board theBoard) {
@@ -496,6 +547,10 @@ public final class WeightingFunction {
         this.bishopCount[1] = 0;
         this.attackUnit[0] = 0;
         this.attackUnit[1] = 0;
+        this.defenseUnit[0] = 0;
+        this.defenseUnit[1] = 0;
+        this.pawnShieldCount[0] = 0;
+        this.pawnShieldCount[1] = 0;
         this.kingAttackerCount[0] = 0;
         this.kingAttackerCount[1] = 0;
         this.pstMidGameWeight[0] = 0;
@@ -722,6 +777,13 @@ public final class WeightingFunction {
         }
     }
 
+    private void increaseDefenseUnit(final int color, final byte piece) {
+        if (!isCurrentDefenderCounted) {
+            isCurrentDefenderCounted = true;
+            defenseUnit[color] += DEFENSE_UNIT_OF_PIECE[piece];
+        }
+    }
+
     private boolean isKingZoneField(int field, int color) {
         if (board[field] == Board.illegal) {
             return false;
@@ -736,8 +798,10 @@ public final class WeightingFunction {
 
     /**
      * King-attack penalty for the given attacking color, looked up in
-     * {@link #KING_ATTACK_PENALTY} by that side's accumulated {@link #attackUnit} and scaled by
-     * the game phase.
+     * {@link #KING_ATTACK_PENALTY} and scaled by the game phase. The index is that side's
+     * accumulated {@link #attackUnit}, lowered by the defense of the attacked king: its
+     * {@link #defenseUnit} divided by {@link #DEFENSE_UNIT_DIVISOR}, plus its
+     * {@link #PAWN_SHIELD_DEFENSE_UNITS}.
      *
      * <p><b>The phase scaling is the whole reason this term was worth porting.</b> Branch
      * {@code attack-units} carried it for weeks without any reference to the phase, so it ran at
@@ -764,9 +828,15 @@ public final class WeightingFunction {
      * @return the penalty the enemy king incurs, as a positive centipawn value
      */
     int calcKingAttackPenalty(final int color, final int phase) {
-        return kingAttackerCount[color] < 2 ?
-                0 :
-                blend(KING_ATTACK_PENALTY[Math.min(attackUnit[color], KING_ATTACK_PENALTY.length - 1)], 0, phase);
+        if (kingAttackerCount[color] < 2) {
+            return 0;
+        }
+
+        int cappedPawnShieldCount = Math.min(pawnShieldCount[color^1], PAWN_SHIELD_DEFENSE_UNITS.length - 1);
+        int effectiveDefenseUnit = defenseUnit[color^1] / DEFENSE_UNIT_DIVISOR + PAWN_SHIELD_DEFENSE_UNITS[cappedPawnShieldCount];
+        final int effectiveAttackUnit = Math.max(attackUnit[color] - effectiveDefenseUnit, 0);
+
+        return blend(KING_ATTACK_PENALTY[Math.min(effectiveAttackUnit, KING_ATTACK_PENALTY.length - 1)], 0, phase);
     }
 
     // --- Package-private accessors for attack-unit unit tests. The arrays are
@@ -778,6 +848,14 @@ public final class WeightingFunction {
 
     int[] getKingAttackerCount() {
         return kingAttackerCount;
+    }
+
+    int[] getPawnShieldCount() {
+        return pawnShieldCount;
+    }
+
+    int[] getDefenseUnit() {
+        return defenseUnit;
     }
 
     boolean isInKingZone(int color, int field) {
@@ -839,6 +917,7 @@ public final class WeightingFunction {
         }
 
         isCurrentAttackerCounted = false;
+        isCurrentDefenderCounted = false;
 
         // Cheap pre-check if we need to calculate the attack units
         final boolean mayAttackKingZone = ChessUtil.chebyshevDistance(field, kingFieldCorrected[1]) <= ChessUtil.KING_ZONE_ATTACK_CHEBYSHEV_DISTANCE_PAWN;
@@ -852,6 +931,11 @@ public final class WeightingFunction {
         // en passant
         if (game.getEnPassantField() != 0 && fieldToRow(field) == 4) {
             checkWhiteEnPassant(field);
+        }
+
+        // Increment pawn shield counter if pawn stands in own king zone
+        if (ChessUtil.chebyshevDistance(field, kingFieldCorrected[0]) <= 1) {
+            pawnShieldCount[0]++;
         }
 
         checkWhiteDoublePawn(field);
@@ -916,6 +1000,7 @@ public final class WeightingFunction {
         }
 
         isCurrentAttackerCounted = false;
+        isCurrentDefenderCounted = false;
 
         // Cheap pre-check if we need to calculate the attack units
         final boolean mayAttackKingZone = ChessUtil.chebyshevDistance(field, kingFieldCorrected[0]) <= ChessUtil.KING_ZONE_ATTACK_CHEBYSHEV_DISTANCE_PAWN;
@@ -931,6 +1016,11 @@ public final class WeightingFunction {
         // en passant
         if (game.getEnPassantField() != 0 && fieldToRow(field) == 3) {
             checkBlackEnPassant(field);
+        }
+
+        // Increment pawn shield counter if pawn stands in own king zone
+        if (ChessUtil.chebyshevDistance(field, kingFieldCorrected[1]) <= 1) {
+            pawnShieldCount[1]++;
         }
 
         checkBlackDoublePawn(field);
@@ -962,30 +1052,36 @@ public final class WeightingFunction {
     private void calculateForKnight(int field, int color) {
         final byte myPiece = board[field];
 
-        // Cheap pre-check if we need to calculate the attack units
-        boolean mayAttackKingZone = ChessUtil.chebyshevDistance(field, kingFieldCorrected[color^1]) <= ChessUtil.KING_ZONE_ATTACK_CHEBYSHEV_DISTANCE_KNIGHT;
+        // Cheap pre-check if we need to calculate the attack and defense units
+        final boolean[] checkKingZones = {
+                ChessUtil.chebyshevDistance(field, kingFieldCorrected[color]) <= ChessUtil.KING_ZONE_ATTACK_CHEBYSHEV_DISTANCE_KNIGHT,
+                ChessUtil.chebyshevDistance(field, kingFieldCorrected[color^1]) <= ChessUtil.KING_ZONE_ATTACK_CHEBYSHEV_DISTANCE_KNIGHT
+        };
 
         isCurrentAttackerCounted = false;
+        isCurrentDefenderCounted = false;
 
-        mayAttackKingZone = knightMove(myPiece, field, field + 2 * Board.LENGTH + 1, color, mayAttackKingZone);
-        mayAttackKingZone = knightMove(myPiece, field, field + 1 * Board.LENGTH + 2, color, mayAttackKingZone);
-        mayAttackKingZone = knightMove(myPiece, field, field - 1 * Board.LENGTH + 2, color, mayAttackKingZone);
-        mayAttackKingZone = knightMove(myPiece, field, field - 2 * Board.LENGTH + 1, color, mayAttackKingZone);
-        mayAttackKingZone = knightMove(myPiece, field, field - 2 * Board.LENGTH - 1, color, mayAttackKingZone);
-        mayAttackKingZone = knightMove(myPiece, field, field - 1 * Board.LENGTH - 2, color, mayAttackKingZone);
-        mayAttackKingZone = knightMove(myPiece, field, field + 1 * Board.LENGTH - 2, color, mayAttackKingZone);
-        knightMove(myPiece, field, field + 2 * Board.LENGTH - 1, color, mayAttackKingZone);
+        knightMove(myPiece, field, field + 2 * Board.LENGTH + 1, color, checkKingZones);
+        knightMove(myPiece, field, field + 1 * Board.LENGTH + 2, color, checkKingZones);
+        knightMove(myPiece, field, field - 1 * Board.LENGTH + 2, color, checkKingZones);
+        knightMove(myPiece, field, field - 2 * Board.LENGTH + 1, color, checkKingZones);
+        knightMove(myPiece, field, field - 2 * Board.LENGTH - 1, color, checkKingZones);
+        knightMove(myPiece, field, field - 1 * Board.LENGTH - 2, color, checkKingZones);
+        knightMove(myPiece, field, field + 1 * Board.LENGTH - 2, color, checkKingZones);
+        knightMove(myPiece, field, field + 2 * Board.LENGTH - 1, color, checkKingZones);
     }
 
-    private boolean knightMove(final byte movingPiece, final int from, final int to, final int color, final boolean mayAttackKingZone) {
+    private void knightMove(final byte movingPiece, final int from, final int to, final int color, final boolean[] checkKingZones) {
         move(from, to, color, KNIGHT_MOBILITY_WEIGHT);
 
-        if (mayAttackKingZone && isKingZoneField(to, color^1)) {
-            increaseAttackUnit(color, movingPiece);
-            return false;
+        if (checkKingZones[0] && isKingZoneField(to, color)) {
+            increaseDefenseUnit(color, movingPiece);
+            checkKingZones[0] = false;
         }
-
-        return mayAttackKingZone;
+        if (checkKingZones[1] && isKingZoneField(to, color^1)) {
+            increaseAttackUnit(color, movingPiece);
+            checkKingZones[1] = false;
+        }
     }
 
     private static void _calculateForBishop(WeightingFunction generator, int field, int color) {
@@ -998,33 +1094,41 @@ public final class WeightingFunction {
         // count this bishop toward the side's bishop-pair bonus (awarded once in calculatePositionWeight)
         bishopCount[color]++;
 
-        // Cheap pre-check if we need to calculate the attack units
-        final int kingField = kingFieldCorrected[color^1];
-        final boolean mayAttackKingZone = ChessUtil.canReachKingZoneDiagonal(field, kingField);
-        final int zoneDistances = mayAttackKingZone ? ChessUtil.getKingZoneDistancesDiagonalEncoded(field, kingField) : ChessUtil.ALL_SENTINELS_ENCODED;
+        // Cheap pre-check if we need to calculate the attack or defense units
+        final int ownKingField = kingFieldCorrected[color];
+        final boolean mayDefendKingZone = ChessUtil.canReachKingZoneDiagonal(field, ownKingField);
+        final int ownKingZoneDistances = mayDefendKingZone ? ChessUtil.getKingZoneDistancesDiagonalEncoded(field, ownKingField) : ChessUtil.ALL_SENTINELS_ENCODED;
+        final int opponentKingField = kingFieldCorrected[color^1];
+        final boolean mayAttackKingZone = ChessUtil.canReachKingZoneDiagonal(field, opponentKingField);
+        final int opponentKingZoneDistances = mayAttackKingZone ? ChessUtil.getKingZoneDistancesDiagonalEncoded(field, opponentKingField) : ChessUtil.ALL_SENTINELS_ENCODED;
 
         isCurrentAttackerCounted = false;
+        isCurrentDefenderCounted = false;
 
         // move up-right
-        xray(myPiece, field, color, Board.LENGTH + 1, BitOps.getByte0(zoneDistances));
+        xray(myPiece, field, color, Board.LENGTH + 1, BitOps.getByte0(ownKingZoneDistances), BitOps.getByte0(opponentKingZoneDistances));
         // move down-right
-        xray(myPiece, field, color, -Board.LENGTH + 1, BitOps.getByte1(zoneDistances));
+        xray(myPiece, field, color, -Board.LENGTH + 1, BitOps.getByte1(ownKingZoneDistances), BitOps.getByte1(opponentKingZoneDistances));
         // move down-left
-        xray(myPiece, field, color, -Board.LENGTH - 1, BitOps.getByte2(zoneDistances));
+        xray(myPiece, field, color, -Board.LENGTH - 1, BitOps.getByte2(ownKingZoneDistances), BitOps.getByte2(opponentKingZoneDistances));
         // move up-left
-        xray(myPiece, field, color, Board.LENGTH - 1, BitOps.getByte3(zoneDistances));
+        xray(myPiece, field, color, Board.LENGTH - 1, BitOps.getByte3(ownKingZoneDistances), BitOps.getByte3(opponentKingZoneDistances));
     }
 
-    private void xray(final byte piece, final int startField, final int color, final int increment, final int kingZoneDistance) {
-        xray(piece, startField, color, increment, mobilityWeightOfPiece[piece], kingZoneDistance);
+    private void xray(final byte piece, final int startField, final int color, final int increment, final int ownKingZoneDistance, final int opponentKingZoneDistance) {
+        xray(piece, startField, color, increment, mobilityWeightOfPiece[piece], ownKingZoneDistance, opponentKingZoneDistance);
     }
 
-    private void xray(final byte piece, final int startField, final int color, final int increment, final int weight, final int kingZoneDistance) {
-        int dist = kingZoneDistance - 1;
+    private void xray(final byte piece, final int startField, final int color, final int increment, final int weight, final int ownKingZoneDistance, final int opponentKingZoneDistance) {
+        int distOwnKing = ownKingZoneDistance - 1;
+        int distOpponentKing = opponentKingZoneDistance - 1;
 
-        for (int to = startField + increment; move(startField, to, color, weight); to += increment, dist--);
+        for (int to = startField + increment; move(startField, to, color, weight); to += increment, distOwnKing--, distOpponentKing--);
 
-        if (dist <= 0) { // piece reached or crossed the king zone
+        if (distOwnKing <= 0) { // piece reached or crossed the own king zone
+            increaseDefenseUnit(color, piece);
+        }
+        if (distOpponentKing <= 0) { // piece reached or crossed the enemy king zone
             increaseAttackUnit(color, piece);
         }
     }
@@ -1038,20 +1142,24 @@ public final class WeightingFunction {
         final int rankWeight = mobilityWeightOfPiece[myPiece] / 2;
 
         // Cheap pre-check if we need to calculate the attack units
-        final int kingField = kingFieldCorrected[color^1];
-        final boolean mayAttackKingZone = ChessUtil.canReachKingZoneOrthogonal(field, kingField);
-        final int zoneDistances = mayAttackKingZone ? ChessUtil.getKingZoneDistancesOrthogonalEncoded(field, kingField) : ChessUtil.ALL_SENTINELS_ENCODED;
+        final int ownKingField = kingFieldCorrected[color];
+        final boolean mayDefendKingZone = ChessUtil.canReachKingZoneOrthogonal(field, ownKingField);
+        final int ownKingZoneDistances = mayDefendKingZone ? ChessUtil.getKingZoneDistancesOrthogonalEncoded(field, ownKingField) : ChessUtil.ALL_SENTINELS_ENCODED;
+        final int opponentKingField = kingFieldCorrected[color^1];
+        final boolean mayAttackKingZone = ChessUtil.canReachKingZoneOrthogonal(field, opponentKingField);
+        final int opponentKingZoneDistances = mayAttackKingZone ? ChessUtil.getKingZoneDistancesOrthogonalEncoded(field, opponentKingField) : ChessUtil.ALL_SENTINELS_ENCODED;
 
         isCurrentAttackerCounted = false;
+        isCurrentDefenderCounted = false;
 
         // move up — file mobility (full weight)
-        xray(myPiece, field, color, Board.LENGTH, BitOps.getByte0(zoneDistances));
+        xray(myPiece, field, color, Board.LENGTH, BitOps.getByte0(ownKingZoneDistances), BitOps.getByte0(opponentKingZoneDistances));
         // move right — rank mobility (half weight)
-        xray(myPiece, field, color, 1, rankWeight, BitOps.getByte1(zoneDistances));
+        xray(myPiece, field, color, 1, rankWeight, BitOps.getByte1(ownKingZoneDistances), BitOps.getByte1(opponentKingZoneDistances));
         // move down — file mobility (full weight)
-        xray(myPiece, field, color, -Board.LENGTH, BitOps.getByte2(zoneDistances));
+        xray(myPiece, field, color, -Board.LENGTH, BitOps.getByte2(ownKingZoneDistances), BitOps.getByte2(opponentKingZoneDistances));
         // move left — rank mobility (half weight)
-        xray(myPiece, field, color, -1, rankWeight, BitOps.getByte3(zoneDistances));
+        xray(myPiece, field, color, -1, rankWeight, BitOps.getByte3(ownKingZoneDistances), BitOps.getByte3(opponentKingZoneDistances));
     }
 
     private static void _calculateForQueen(WeightingFunction generator, int field, int color) {
@@ -1062,30 +1170,37 @@ public final class WeightingFunction {
         final byte myPiece = board[field];
 
         isCurrentAttackerCounted = false;
+        isCurrentDefenderCounted = false;
 
         // Cheap pre-check if we need to calculate the attack units
-        final int kingField = kingFieldCorrected[color^1];
-        final boolean canReachKingZoneOrthogonal = ChessUtil.canReachKingZoneOrthogonal(field, kingField);
-        final boolean canReachKingZoneDiagonal = ChessUtil.canReachKingZoneDiagonal(field, kingField);
-        final int zoneOrthoDistances = canReachKingZoneOrthogonal ? ChessUtil.getKingZoneDistancesOrthogonalEncoded(field, kingField) : ChessUtil.ALL_SENTINELS_ENCODED;
-        final int zoneDiagDistances = canReachKingZoneDiagonal ? ChessUtil.getKingZoneDistancesDiagonalEncoded(field, kingField) : ChessUtil.ALL_SENTINELS_ENCODED;
+        final int ownKingField = kingFieldCorrected[color];
+        final boolean canReachOwnKingZoneOrthogonal = ChessUtil.canReachKingZoneOrthogonal(field, ownKingField);
+        final boolean canReachOwnKingZoneDiagonal = ChessUtil.canReachKingZoneDiagonal(field, ownKingField);
+        final int ownKingZoneOrthoDistances = canReachOwnKingZoneOrthogonal ? ChessUtil.getKingZoneDistancesOrthogonalEncoded(field, ownKingField) : ChessUtil.ALL_SENTINELS_ENCODED;
+        final int ownKingZoneDiagDistances = canReachOwnKingZoneDiagonal ? ChessUtil.getKingZoneDistancesDiagonalEncoded(field, ownKingField) : ChessUtil.ALL_SENTINELS_ENCODED;
+
+        final int opponentKingField = kingFieldCorrected[color^1];
+        final boolean canReachOpponentKingZoneOrthogonal = ChessUtil.canReachKingZoneOrthogonal(field, opponentKingField);
+        final boolean canReachOpponentKingZoneDiagonal = ChessUtil.canReachKingZoneDiagonal(field, opponentKingField);
+        final int opponentKingZoneOrthoDistances = canReachOpponentKingZoneOrthogonal ? ChessUtil.getKingZoneDistancesOrthogonalEncoded(field, opponentKingField) : ChessUtil.ALL_SENTINELS_ENCODED;
+        final int opponentKingZoneDiagDistances = canReachOpponentKingZoneDiagonal ? ChessUtil.getKingZoneDistancesDiagonalEncoded(field, opponentKingField) : ChessUtil.ALL_SENTINELS_ENCODED;
 
         // move up
-        xray(myPiece, field, color, Board.LENGTH, BitOps.getByte0(zoneOrthoDistances));
+        xray(myPiece, field, color, Board.LENGTH, BitOps.getByte0(ownKingZoneOrthoDistances), BitOps.getByte0(opponentKingZoneOrthoDistances));
         // move up-right
-        xray(myPiece, field, color, Board.LENGTH + 1, BitOps.getByte0(zoneDiagDistances));
+        xray(myPiece, field, color, Board.LENGTH + 1, BitOps.getByte0(ownKingZoneDiagDistances), BitOps.getByte0(opponentKingZoneDiagDistances));
         // move right
-        xray(myPiece, field, color, 1, BitOps.getByte1(zoneOrthoDistances));
+        xray(myPiece, field, color, 1, BitOps.getByte1(ownKingZoneOrthoDistances), BitOps.getByte1(opponentKingZoneOrthoDistances));
         // move down-right
-        xray(myPiece, field, color, -Board.LENGTH + 1, BitOps.getByte1(zoneDiagDistances));
+        xray(myPiece, field, color, -Board.LENGTH + 1, BitOps.getByte1(ownKingZoneDiagDistances), BitOps.getByte1(opponentKingZoneDiagDistances));
         // move down
-        xray(myPiece, field, color, -Board.LENGTH, BitOps.getByte2(zoneOrthoDistances));
+        xray(myPiece, field, color, -Board.LENGTH, BitOps.getByte2(ownKingZoneOrthoDistances), BitOps.getByte2(opponentKingZoneOrthoDistances));
         // move down-left
-        xray(myPiece, field, color, -Board.LENGTH - 1, BitOps.getByte2(zoneDiagDistances));
+        xray(myPiece, field, color, -Board.LENGTH - 1, BitOps.getByte2(ownKingZoneDiagDistances), BitOps.getByte2(opponentKingZoneDiagDistances));
         // move left
-        xray(myPiece, field, color, -1, BitOps.getByte3(zoneOrthoDistances));
+        xray(myPiece, field, color, -1, BitOps.getByte3(ownKingZoneOrthoDistances), BitOps.getByte3(opponentKingZoneOrthoDistances));
         // move up-left
-        xray(myPiece, field, color, Board.LENGTH - 1, BitOps.getByte3(zoneDiagDistances));
+        xray(myPiece, field, color, Board.LENGTH - 1, BitOps.getByte3(ownKingZoneDiagDistances), BitOps.getByte3(opponentKingZoneDiagDistances));
     }
 
     private static void _calculateForKing(WeightingFunction generator, int field, int color) {
@@ -1096,6 +1211,7 @@ public final class WeightingFunction {
         final byte myPiece = board[field];
 
         isCurrentAttackerCounted = false;
+        isCurrentDefenderCounted = false;
 
         // move up
         move(myPiece, field, field + Board.LENGTH, color);
