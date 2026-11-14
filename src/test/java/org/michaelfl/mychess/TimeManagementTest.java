@@ -173,32 +173,32 @@ class TimeManagementTest {
         TimeManagement.setOverrunPercent(TimeManagement.DEFAULT_OVERRUN_PERCENT);
     }
 
-    // ---- calculateHardLimit (variant finish-iteration: 10 % of the clock stays as a reserve) ----
+    // ---- calculateHardLimit (variant finish-iteration: a move may use at most 25 % of the clock) ----
 
     @Test
-    void hardLimit_withAClock_leavesTenPercentOfIt() {
-        assertEquals(54_000, TimeManagement.calculateHardLimit(ONE_SECOND, ONE_MINUTE),
-                "with 60 s on the clock a started iteration may run until 6 s are left");
+    void hardLimit_withAClock_isAQuarterOfIt() {
+        assertEquals(15_000, TimeManagement.calculateHardLimit(ONE_SECOND, ONE_MINUTE),
+                "with 60 s on the clock a started iteration may run until the move has used 15 s");
     }
 
     @Test
     void hardLimit_withAClock_doesNotDependOnTheSoftLimit() {
-        assertEquals(54_000, TimeManagement.calculateHardLimit(200, ONE_MINUTE),
+        assertEquals(15_000, TimeManagement.calculateHardLimit(200, ONE_MINUTE),
                 "a small soft limit must not shorten the hard limit");
-        assertEquals(54_000, TimeManagement.calculateHardLimit(ONE_MINUTE, ONE_MINUTE),
+        assertEquals(15_000, TimeManagement.calculateHardLimit(ONE_MINUTE, ONE_MINUTE),
                 "a soft limit as large as the clock must not raise the hard limit");
     }
 
     @Test
-    void hardLimit_withShortClock_keepsTheSafetyMargin() {
-        assertEquals(250, TimeManagement.calculateHardLimit(ONE_SECOND, 300),
-                "with 300 ms left, 90 % (270 ms) is above the clock minus the 50 ms margin, so the margin must win");
+    void hardLimit_withShortClock_isAQuarterOfIt() {
+        assertEquals(300, TimeManagement.calculateHardLimit(ONE_SECOND, 1_200),
+                "with 1.2 s left, a quarter (300 ms) is below the clock minus the 50 ms margin");
     }
 
     @Test
     void hardLimit_withNearlyEmptyClock_isFlooredAtTheMinimum() {
-        assertEquals(FLOOR_MILLIS, TimeManagement.calculateHardLimit(ONE_SECOND, 40),
-                "with 40 ms left, the 50 ms floor must win");
+        assertEquals(FLOOR_MILLIS, TimeManagement.calculateHardLimit(ONE_SECOND, 100),
+                "with 100 ms left, a quarter (25 ms) is below the 50 ms floor, so the floor must win");
     }
 
     @Test
@@ -206,7 +206,7 @@ class TimeManagementTest {
         try {
             TimeManagement.setOverrunPercent(500);
 
-            assertEquals(54_000, TimeManagement.calculateHardLimit(ONE_SECOND, ONE_MINUTE),
+            assertEquals(15_000, TimeManagement.calculateHardLimit(ONE_SECOND, ONE_MINUTE),
                     "the overrun setting must have no effect on the hard limit in this variant");
         } finally {
             TimeManagement.setOverrunPercent(TimeManagement.FIXED_OVERRUN_PERCENT);
