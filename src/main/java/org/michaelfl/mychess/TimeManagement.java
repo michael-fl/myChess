@@ -81,14 +81,12 @@ public final class TimeManagement {
     /** Percentage of the increment to be used per move. */
     private static final int INCREMENT_USE_PERCENTAGE = 80;
 
-    private static final float HARD_LIMIT_SOFT_LIMIT_FACTOR = 4f;
-
     /**
      * The most a started iteration may run past the soft limit before the search aborts it.
      *
      * <p>This reproduces what 4.9.0 actually did: its UCI watcher canceled the search at the soft
-     * limit plus one second, so the computed hard limit (up to {@value #HARD_LIMIT_SOFT_LIMIT_FACTOR}
-     * times the soft limit) was never reached, and the +21 Elo of 4.9.0 was measured with this cap.
+     * limit plus one second, so the computed hard limit (up to 4 times the soft limit) was never
+     * reached, and the +21 Elo of 4.9.0 was measured with this cap.
      * Letting iterations run to the full factor cost about 48 Elo (match {@code watcher-hard-limit}).
      *
      * <p>As an absolute time it only fits short controls: at 60+1, with a soft limit of about 1-3 s,
@@ -113,7 +111,11 @@ public final class TimeManagement {
      */
     static final int DEFAULT_OVERRUN_PERCENT = 55;
 
-    private static final float HARD_LIMIT_REMAINING_TIME_FACTOR = 0.2f;
+    /**
+     * Share of the clock at the start of the move that a running iteration must leave on it.
+     * Variant finish-iteration: a started iteration may run until only this share is left.
+     */
+    private static final double FINISH_ITERATION_CLOCK_RESERVE = 0.1;
 
     /**
      * Default of {@link #riskFactor}. Chosen in a calibration so that the honest estimates (every
@@ -382,11 +384,13 @@ public final class TimeManagement {
      *
      * <p>Without a clock ({@code go movetime}, {@code go depth}, {@code go infinite}) it equals the
      * soft limit, because there is no reserve to draw on and a GUI expects the answer within the
-     * granted time. With a clock it is the soft limit plus {@link #maxOverrunMillis} (the fixed
-     * {@link #SOFT_LIMIT_MAX_OVERRUN_MS} or a share of the soft limit, see {@link #setOverrunPercent}), but at
-     * most {@value #HARD_LIMIT_SOFT_LIMIT_FACTOR} times the soft limit, at most 20 % of the remaining
-     * clock and never more than the clock minus {@link #TIME_SAFETY_MARGIN_MS}; never less than
-     * {@link #MIN_BUDGET_MS}.
+     * granted time.
+     *
+     * <p>With a clock, variant finish-iteration: a started iteration may finish unless less than
+     * {@link #FINISH_ITERATION_CLOCK_RESERVE} of the clock at the start of the move would be left.
+     * So the hard limit is 90 % of the remaining clock, never more than the clock minus
+     * {@link #TIME_SAFETY_MARGIN_MS} and never less than {@link #MIN_BUDGET_MS}. The overrun setting
+     * ({@link #setOverrunPercent}) has no effect here.
      *
      * @param softLimitMs      the soft limit from {@link #computeMoveBudgetMillis}, in milliseconds
      * @param remainingClockMs remaining clock of the side to move in milliseconds, or
@@ -399,12 +403,10 @@ public final class TimeManagement {
             return softLimitMs;
         }
 
-        long softPlusOverrun = softLimitMs + maxOverrunMillis(softLimitMs);
-        int timeLimit = (int) Math.min(softPlusOverrun, Math.min(
-                Math.round(softLimitMs * HARD_LIMIT_SOFT_LIMIT_FACTOR),
-                Math.round(remainingClockMs * HARD_LIMIT_REMAINING_TIME_FACTOR)));
+        long reserveMs = Math.round(remainingClockMs * FINISH_ITERATION_CLOCK_RESERVE);
+        long timeLimit = Math.min(remainingClockMs - reserveMs, (long) remainingClockMs - TIME_SAFETY_MARGIN_MS);
 
-        return Math.max(Math.min(timeLimit, remainingClockMs - TIME_SAFETY_MARGIN_MS), MIN_BUDGET_MS);
+        return (int) Math.max(timeLimit, MIN_BUDGET_MS);
     }
 
     /**
