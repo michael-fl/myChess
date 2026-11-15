@@ -640,6 +640,22 @@ class EngineTest extends EngineTestBase {
         );
     }
 
+    // FEN: r7/1kqb2Rp/1p2p3/p2pPn1P/P4B2/1Pp2BQ1/2P5/1K6 w - - 5 35
+    // White has to give up the bishop. 35.Bxd5 exd5 36.e6 is the only move that keeps the
+    // game level (Stockfish 18 depth 24: -0.37). Every other move loses more than four pawns
+    // (depth 20: Rxd7 -4.37, Qg4 -5.14, Qg2 -5.22). myChess finds Bxd5 from depth 8 on but
+    // rates it far too low (-1.9 at depth 8, -2.1 at depth 10).
+    @Test
+    void testPositionBishopSacrificeOnD5() {
+        testPositionFromFen(
+                "r7/1kqb2Rp/1p2p3/p2pPn1P/P4B2/1Pp2BQ1/2P5/1K6 w - - 5 35",
+                "f3-d5",
+                -2.4f, // TODO -0.4 (Stockfish depth 24: -0.37); myChess -1.91 at depth 8
+                -1.4f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
     // FEN: rk1r2b1/ppp3pp/3b1pn1/3n4/3P2q1/4BNP1/PPP1N2P/RKQR1B2 w KQkq - 2 11
     // Chess960 middlegame (both kings on the b-file). Black stands slightly
     // better — active queen g4, central knight d5, and both bishops — while
