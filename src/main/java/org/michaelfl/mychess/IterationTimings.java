@@ -59,6 +59,14 @@ public final class IterationTimings {
      */
     private static volatile boolean skipHeuristicEnabled = true;
 
+    /**
+     * Variant no-estimate-skip: whether a depth may be skipped because its estimate does not fit
+     * the remaining time. Off here, so every depth starts while more than
+     * {@link #MIN_REMAINING_MILLIS} are left before the soft limit. The stop at the soft limit
+     * stays, and the statistics are still recorded.
+     */
+    private static volatile boolean estimateSkipEnabled = false;
+
     private static final long[][] window = new long[MAX_TRACKED_DEPTH + 1][EngineTuning.SMA_WINDOW_SIZE];
     private static final int[] nextWriteIdx = new int[MAX_TRACKED_DEPTH + 1];
     private static final int[] consecutiveSkips = new int[MAX_TRACKED_DEPTH + 1];
@@ -94,6 +102,16 @@ public final class IterationTimings {
      */
     static void setSkipHeuristicEnabled(boolean enabled) {
         skipHeuristicEnabled = enabled;
+    }
+
+    /**
+     * Turns the skip on the estimate on or off. Exists for the tests of the estimate rule, which
+     * switch it on.
+     *
+     * @param enabled {@code true} to let {@code decideIteration} skip or probe on the estimate
+     */
+    static void setEstimateSkipEnabled(boolean enabled) {
+        estimateSkipEnabled = enabled;
     }
 
     /** What {@link PositionSearch} should do with the next deepening iteration. */
@@ -137,6 +155,9 @@ public final class IterationTimings {
         }
         if (remainingMs <= MIN_REMAINING_MILLIS) {
             return depth > 2 ? IterationDecision.SKIP : IterationDecision.RUN;
+        }
+        if (!estimateSkipEnabled) {
+            return IterationDecision.RUN;
         }
         if (!hasEnoughSamplesForSkipDecision(depth)) {
             return IterationDecision.RUN;

@@ -223,10 +223,12 @@ class IterationTimingsTest {
 
     private static void withSkipHeuristicEnabled(Runnable body) {
         IterationTimings.setSkipHeuristicEnabled(true);
+        IterationTimings.setEstimateSkipEnabled(true);
         try {
             body.run();
         } finally {
             IterationTimings.setSkipHeuristicEnabled(false);
+            IterationTimings.setEstimateSkipEnabled(false);
         }
     }
 
@@ -291,6 +293,32 @@ class IterationTimingsTest {
             assertEquals(IterationDecision.SKIP, IterationTimings.decideIteration(DEPTH, SAMPLE_MS - 1, 1.0),
                     "an estimate above the remaining time must skip while no probe is due");
         });
+    }
+
+    @Test
+    void decideIteration_withoutEstimateSkip_runsAnEstimateFarAboveTheRemainingTime() {
+        IterationTimings.setSkipHeuristicEnabled(true);
+        try {
+            primeSamples();
+
+            assertEquals(IterationDecision.RUN, IterationTimings.decideIteration(DEPTH, SAMPLE_MS / 10, 1.0),
+                    "with the estimate skip off, an estimate ten times the remaining time must still run");
+        } finally {
+            IterationTimings.setSkipHeuristicEnabled(false);
+        }
+    }
+
+    @Test
+    void decideIteration_withoutEstimateSkip_stillStopsAtTheSoftLimit() {
+        IterationTimings.setSkipHeuristicEnabled(true);
+        try {
+            primeSamples();
+
+            assertEquals(IterationDecision.SKIP, IterationTimings.decideIteration(DEPTH, IterationTimings.MIN_REMAINING_MILLIS, 1.0),
+                    "the stop with almost no time left must stay when the estimate skip is off");
+        } finally {
+            IterationTimings.setSkipHeuristicEnabled(false);
+        }
     }
 
     @Test

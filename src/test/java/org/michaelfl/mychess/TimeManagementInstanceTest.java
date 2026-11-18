@@ -39,6 +39,7 @@ class TimeManagementInstanceTest {
     void enableHeuristic() {
         IterationTimings.reset();
         IterationTimings.setSkipHeuristicEnabled(true);
+        IterationTimings.setEstimateSkipEnabled(true);
 
         // plain comparison of estimate and remaining time, so the sample values below read directly
         TimeManagement.setRiskFactor(1.0);
@@ -47,6 +48,7 @@ class TimeManagementInstanceTest {
     @AfterEach
     void restoreSuiteDefault() {
         IterationTimings.setSkipHeuristicEnabled(false);
+        IterationTimings.setEstimateSkipEnabled(false);
         IterationTimings.reset();
         TimeManagement.setRiskFactor(TimeManagement.DEFAULT_RISK_FACTOR);
     }
