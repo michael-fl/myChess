@@ -55,6 +55,7 @@
 #       --base <dir> --placebo <dir> --candidate <dir> \
 #       [--rounds N] [--tc TC] [--probe-fen FEN] [--preflight-only] [--wait-for-cores]
 #       [--timing-only "<why the trees are identical>"]
+#       [--extra-candidate <slug>=<dir>] [--extra-timing-candidate <slug>=<dir>]
 #
 # --tc sets the time control in cutechess syntax, default 40/60 (see TC below). Use a
 # Fischer control such as 60+1 to test the engine as it plays on Lichess: increment, no
@@ -62,6 +63,12 @@
 #
 #   tools/run-anchor-gauntlet.sh --label <slug> \
 #       --base <dir> --candidate <dir> --no-placebo "<why none is possible>"
+#
+# TIMING ARMS AMONG OTHERS. --extra-timing-candidate <slug>=<dir> adds an extra arm that changes
+# only the timing, in a run whose other candidates change the search tree. Pre-flight 3 then
+# requires this arm's signature to equal base's, and the other arms' to differ. Without it a
+# mixed run cannot pass: --timing-only would reject the tree-changing arms, and the default
+# rejects the timing arm as inert.
 #
 # MORE CANDIDATES. --extra-candidate <slug>=<dir> adds a candidate arm named mychess-<slug>,
 # for comparing variants of one change against the same base in one run. It may be given
@@ -145,6 +152,7 @@ BASE_DIR=""
 PLACEBO_DIR=""
 CANDIDATE_DIR=""
 EXTRA_CANDIDATES=""
+TIMING_EXTRA_LABELS=" "
 PROBE_FEN=""
 NO_PLACEBO_REASON=""
 TIMING_ONLY_REASON=""
@@ -169,6 +177,9 @@ while [ $# -gt 0 ]; do
         --candidate)      shift; CANDIDATE_DIR="${1:-}" ;;
         --extra-candidate) shift; EXTRA_CANDIDATES="$EXTRA_CANDIDATES${1:-}
 " ;;
+        --extra-timing-candidate) shift; EXTRA_CANDIDATES="$EXTRA_CANDIDATES${1:-}
+"
+                          TIMING_EXTRA_LABELS="$TIMING_EXTRA_LABELS${1%%=*} " ;;
         --rounds)         shift; ROUNDS="${1:-}" ;;
         --tc)             shift; TC="${1:-}" ;;
         --probe-fen)      shift; PROBE_FEN="${1:-}" ;;
@@ -519,12 +530,25 @@ fi
 echo "    candidate nodes=$cand_nodes  nps=$cand_nps"
 
 extra_nodes=""
+tree_extra_nodes=""
 
 for spec in $EXTRA_CANDIDATES; do
     extra_out="$(bench_arm "${spec#*=}" "$(jar_of "${spec#*=}")")"
     nodes="$(nodes_of "$extra_out")"
     extra_nodes="$extra_nodes $nodes"
     echo "    ${spec%%=*} nodes=$nodes  nps=$(nps_of "$extra_out")"
+
+    case "$TIMING_EXTRA_LABELS" in
+        *" ${spec%%=*} "*)
+            if [ "$nodes" != "$base_nodes" ]; then
+                echo "ABORT: ${spec%%=*} is a timing arm, but its signature differs from base's" >&2
+                echo "       ($nodes vs $base_nodes), so the build changes more than the timing." >&2
+                exit 1
+            fi
+            echo "    OK (timing arm): ${spec%%=*} searches the identical tree" ;;
+        *)
+            tree_extra_nodes="$tree_extra_nodes $nodes" ;;
+    esac
 done
 
 if [ -n "$TIMING_ONLY_REASON" ]; then
@@ -571,7 +595,7 @@ if [ -z "$TIMING_ONLY_REASON" ] && [ "$cand_nodes" = "$base_nodes" ]; then
     exit 1
 fi
 
-for nodes in $extra_nodes; do
+for nodes in $tree_extra_nodes; do
 
     if [ -z "$TIMING_ONLY_REASON" ] && [ "$nodes" = "$base_nodes" ]; then
         echo "ABORT: an extra candidate's signature equals base's, so it changed no search" >&2
