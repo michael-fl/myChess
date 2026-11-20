@@ -1,0 +1,14 @@
+
+   # PLAYER                        :  RATING  ERROR  POINTS  PLAYED   (%)
+   1 Kojiro                        :  2428.6   16.1   479.0     841    57
+   2 mychess-base                  :  2382.8   12.9   919.5    1409    65
+   3 mychess-phase-blend-finish    :  2378.6   13.1   906.5    1400    65
+   4 mychess-phase-blend           :  2377.2   12.6   906.0    1402    65
+   5 Princhess                     :  2337.7   15.8   371.0     842    44
+   6 BBC                           :  2299.5   16.5   326.5     842    39
+   7 ZetaDva                       :  2189.8   18.0   213.0     842    25
+   8 TSCP                          :  2005.9   24.5    89.5     844    11
+
+White advantage = 0.00 +/- 0.00
+Draw rate (equal opponents) = 50.00 % +/- 0.00
+
