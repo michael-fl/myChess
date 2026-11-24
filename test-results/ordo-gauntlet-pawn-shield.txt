@@ -1,0 +1,16 @@
+
+   # PLAYER                      :  RATING  ERROR  POINTS  PLAYED   (%)
+   1 Kojiro                      :  2038.9   14.4   823.5    1400    59
+   2 BBC                         :  2019.0   ----   773.0    1400    55
+   3 mychess-pawn-shield         :  1989.5   15.2   849.5    1400    61
+   4 Princhess                   :  1985.0   ----   730.5    1400    52
+   5 mychess-base                :  1983.5   14.4   839.5    1400    60
+   6 mychess-defense-units       :  1977.4   15.2   829.5    1400    59
+   7 mychess-no-estimate-skip    :  1973.1   14.6   822.5    1400    59
+   8 mychess-no-skip-finish      :  1955.3   14.3   793.0    1400    57
+   9 ZetaDva                     :  1801.0   ----   362.5    1400    26
+  10 TSCP                        :  1609.0   ----   176.5    1400    13
+
+White advantage = 0.00 +/- 0.00
+Draw rate (equal opponents) = 50.00 % +/- 0.00
+
