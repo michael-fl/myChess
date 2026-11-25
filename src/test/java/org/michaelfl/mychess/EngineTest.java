@@ -656,6 +656,22 @@ class EngineTest extends EngineTestBase {
         );
     }
 
+    // FEN: b1r2rk1/1pp2pp1/3p1n2/p3q3/2PbP2p/1PN4P/P1BR1PP1/B3QRK1 w - - 5 14
+    // The exchange sacrifice 14.Rxd4 is by far the strongest move (Stockfish 19 depth 24: +7.53;
+    // Rd1 +2.51, Nd5 +2.07, Rd3 +1.39). After 14...Qxd4 15.Nd5 the queen can only go to c5. There
+    // it is caged and cannot help while the black king position is torn apart. myChess finds Rxd4
+    // from depth 4 on but rates it far too low (+0.66 at depth 8, about +1.0 at depth 12).
+    @Test
+    void testPositionRookSacrificeOnD4() {
+        testPositionFromFen(
+                "b1r2rk1/1pp2pp1/3p1n2/p3q3/2PbP2p/1PN4P/P1BR1PP1/B3QRK1 w - - 5 14",
+                "d2-d4",
+                0.2f, // TODO +7.5 (Stockfish depth 24: +7.53); myChess +0.66 at depth 8
+                1.2f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
     // FEN: rk1r2b1/ppp3pp/3b1pn1/3n4/3P2q1/4BNP1/PPP1N2P/RKQR1B2 w KQkq - 2 11
     // Chess960 middlegame (both kings on the b-file). Black stands slightly
     // better — active queen g4, central knight d5, and both bishops — while
