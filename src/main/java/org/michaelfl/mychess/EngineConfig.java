@@ -28,6 +28,7 @@ public final class EngineConfig {
     private final boolean moveToleranceFilter;
     private final int moveToleranceReturnPlies;
     private final int moveToleranceSamePiece;
+    private final int moveToleranceMobilityDrop;
 
     /** Default of the UCI option {@code MoveToleranceNear}. */
     public static final int DEFAULT_MOVE_TOLERANCE_NEAR_CENTI = 20;
@@ -37,6 +38,9 @@ public final class EngineConfig {
 
     /** Default of the UCI option {@code MoveToleranceSamePiece}. */
     public static final int DEFAULT_MOVE_TOLERANCE_SAME_PIECE = 3;
+
+    /** Default of the UCI option {@code MoveToleranceMobilityDrop}, in percent. */
+    public static final int DEFAULT_MOVE_TOLERANCE_MOBILITY_DROP = 30;
 
     private EngineConfig(Builder builder) {
         this.tt = builder.tt;
@@ -53,6 +57,7 @@ public final class EngineConfig {
         this.moveToleranceFilter = builder.moveToleranceFilter;
         this.moveToleranceReturnPlies = builder.moveToleranceReturnPlies;
         this.moveToleranceSamePiece = builder.moveToleranceSamePiece;
+        this.moveToleranceMobilityDrop = builder.moveToleranceMobilityDrop;
     }
 
     /**
@@ -107,6 +112,11 @@ public final class EngineConfig {
     /** UCI option {@code MoveToleranceSamePiece}. M of the filter's same-piece rule. */
     public final int getMoveToleranceSamePiece() {
         return moveToleranceSamePiece;
+    }
+
+    /** UCI option {@code MoveToleranceMobilityDrop}. Limit of the filter's mobility rule in percent. 0 disables it. */
+    public final int getMoveToleranceMobilityDrop() {
+        return moveToleranceMobilityDrop;
     }
 
     public final int getMillisPerMove() {
@@ -166,6 +176,7 @@ public final class EngineConfig {
         private boolean moveToleranceFilter = true;
         private int moveToleranceReturnPlies = DEFAULT_MOVE_TOLERANCE_RETURN_PLIES;
         private int moveToleranceSamePiece = DEFAULT_MOVE_TOLERANCE_SAME_PIECE;
+        private int moveToleranceMobilityDrop = DEFAULT_MOVE_TOLERANCE_MOBILITY_DROP;
 
         /**
          * Provide an explicit {@link TranspositionTable} instance for the
@@ -233,6 +244,11 @@ public final class EngineConfig {
 
         public Builder moveToleranceSamePiece(int moveToleranceSamePiece) {
             this.moveToleranceSamePiece = moveToleranceSamePiece;
+            return this;
+        }
+
+        public Builder moveToleranceMobilityDrop(int moveToleranceMobilityDrop) {
+            this.moveToleranceMobilityDrop = moveToleranceMobilityDrop;
             return this;
         }
 

@@ -123,8 +123,8 @@ public final class PositionSearch {
         this.moveToleranceCenti = engineConfig.getMoveToleranceCenti();
         this.moveToleranceNearCenti = engineConfig.getMoveToleranceNearCenti();
         this.farMoveFilter = engineConfig.getMoveToleranceCenti() > 0 && engineConfig.isMoveToleranceFilter()
-                ? new FarMoveFilter(game.getBoard().getGameStatusStackCopy(),
-                        engineConfig.getMoveToleranceReturnPlies(), engineConfig.getMoveToleranceSamePiece())
+                ? new FarMoveFilter(game.getBoard(), engineConfig.getMoveToleranceReturnPlies(),
+                        engineConfig.getMoveToleranceSamePiece(), engineConfig.getMoveToleranceMobilityDrop())
                 : null;
     }
 
@@ -302,7 +302,7 @@ public final class PositionSearch {
     /**
      * Logs the tolerance choice of every move. It is also written in UCI mode. Example:
      *
-     * <pre>{@code [tolerance] game=<8-char> best=b8-c6 (+0.00) played=d7-d6 (-0.13) candidates=16 near=4 far=12 blocked=2 g5-f3:return c3-b1:backrank}</pre>
+     * <pre>{@code [tolerance] game=<8-char> best=b8-c6 (+0.00) played=d7-d6 (-0.13) candidates=16 near=4 far=12 blocked=2 g5-f3:return a1-a3:mobility}</pre>
      */
     private void logToleranceChoice(MoveAndWeight best, MoveAndWeight chosen) {
         final String tag = engineConfig.getLogTag();

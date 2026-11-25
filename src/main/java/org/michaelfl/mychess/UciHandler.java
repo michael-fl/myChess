@@ -96,6 +96,11 @@ final class UciHandler {
     /** UCI option: M of the filter's same-piece rule. */
     static final String OPTION_MOVE_TOLERANCE_SAME_PIECE = "MoveToleranceSamePiece";
 
+    /** UCI option: limit of the filter's mobility rule in percent. */
+    static final String OPTION_MOVE_TOLERANCE_MOBILITY_DROP = "MoveToleranceMobilityDrop";
+
+    static final int MAX_MOBILITY_DROP = 100;
+
     static final int MAX_FILTER_MOVES = 20;
 
     private final MyChessEnv env;
@@ -117,6 +122,7 @@ final class UciHandler {
     private boolean moveToleranceFilter = true;
     private int moveToleranceReturnPlies = EngineConfig.DEFAULT_MOVE_TOLERANCE_RETURN_PLIES;
     private int moveToleranceSamePiece = EngineConfig.DEFAULT_MOVE_TOLERANCE_SAME_PIECE;
+    private int moveToleranceMobilityDrop = EngineConfig.DEFAULT_MOVE_TOLERANCE_MOBILITY_DROP;
     private final TranspositionTable tt;
     private final AtomicReference<NextMoveTask> currentTask = new AtomicReference<>();
     private final AtomicReference<Game> currentGame = new AtomicReference<>();
@@ -199,6 +205,11 @@ final class UciHandler {
         return moveToleranceSamePiece;
     }
 
+    // for tests only
+    int getMoveToleranceMobilityDrop() {
+        return moveToleranceMobilityDrop;
+    }
+
     // for tests only. The game of the last go, or null after shutdown.
     Game getCurrentGame() {
         return currentGame.get();
@@ -267,6 +278,8 @@ final class UciHandler {
         writeLine("option name " + OPTION_MOVE_TOLERANCE_FILTER + " type check default true");
         writeSpinOption(OPTION_MOVE_TOLERANCE_RETURN_PLIES, EngineConfig.DEFAULT_MOVE_TOLERANCE_RETURN_PLIES, 0, MAX_FILTER_MOVES);
         writeSpinOption(OPTION_MOVE_TOLERANCE_SAME_PIECE, EngineConfig.DEFAULT_MOVE_TOLERANCE_SAME_PIECE, 0, MAX_FILTER_MOVES);
+        writeSpinOption(OPTION_MOVE_TOLERANCE_MOBILITY_DROP, EngineConfig.DEFAULT_MOVE_TOLERANCE_MOBILITY_DROP, 0,
+                MAX_MOBILITY_DROP);
         writeLine("uciok");
     }
 
@@ -315,6 +328,8 @@ final class UciHandler {
                     moves -> this.moveToleranceReturnPlies = moves);
             case OPTION_MOVE_TOLERANCE_SAME_PIECE -> applySpinOption(name, value, 0, MAX_FILTER_MOVES,
                     moves -> this.moveToleranceSamePiece = moves);
+            case OPTION_MOVE_TOLERANCE_MOBILITY_DROP -> applySpinOption(name, value, 0, MAX_MOBILITY_DROP,
+                    percent -> this.moveToleranceMobilityDrop = percent);
             default -> { /* UCI spec: ignore unknown options */ }
         }
     }
@@ -436,6 +451,7 @@ final class UciHandler {
                 .moveToleranceFilter(moveToleranceFilter)
                 .moveToleranceReturnPlies(moveToleranceReturnPlies)
                 .moveToleranceSamePiece(moveToleranceSamePiece)
+                .moveToleranceMobilityDrop(moveToleranceMobilityDrop)
                 .build();
         var gameConfig = new GameConfig(MyChessEngine.class, engineConfig);
 

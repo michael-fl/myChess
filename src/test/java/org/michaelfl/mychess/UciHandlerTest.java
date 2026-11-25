@@ -303,7 +303,7 @@ class UciHandlerTest {
         }
     }
 
-    // ---- far-group filter options (MoveToleranceFilter, MoveToleranceReturnPlies, MoveToleranceSamePiece) ----
+    // ---- far-group filter options (MoveToleranceFilter, MoveToleranceReturnPlies, MoveToleranceSamePiece, MoveToleranceMobilityDrop) ----
 
     @Test
     @Timeout(value = 5, unit = TimeUnit.SECONDS)
@@ -313,7 +313,9 @@ class UciHandlerTest {
                 .expect("^option name MoveToleranceReturnPlies type spin default " + EngineConfig.DEFAULT_MOVE_TOLERANCE_RETURN_PLIES
                         + " min 0 max " + UciHandler.MAX_FILTER_MOVES + "$")
                 .expect("^option name MoveToleranceSamePiece type spin default " + EngineConfig.DEFAULT_MOVE_TOLERANCE_SAME_PIECE
-                        + " min 0 max " + UciHandler.MAX_FILTER_MOVES + "$");
+                        + " min 0 max " + UciHandler.MAX_FILTER_MOVES + "$")
+                .expect("^option name MoveToleranceMobilityDrop type spin default " + EngineConfig.DEFAULT_MOVE_TOLERANCE_MOBILITY_DROP
+                        + " min 0 max " + UciHandler.MAX_MOBILITY_DROP + "$");
     }
 
     @Test
@@ -324,6 +326,7 @@ class UciHandlerTest {
         assertTrue(handler.isMoveToleranceFilter(), "the filter must be on by default");
         assertEquals(EngineConfig.DEFAULT_MOVE_TOLERANCE_RETURN_PLIES, handler.getMoveToleranceReturnPlies());
         assertEquals(EngineConfig.DEFAULT_MOVE_TOLERANCE_SAME_PIECE, handler.getMoveToleranceSamePiece());
+        assertEquals(EngineConfig.DEFAULT_MOVE_TOLERANCE_MOBILITY_DROP, handler.getMoveToleranceMobilityDrop());
     }
 
     @Test
@@ -334,10 +337,13 @@ class UciHandlerTest {
         handler.handleLine("setoption name MoveToleranceFilter value false");
         handler.handleLine("setoption name MoveToleranceReturnPlies value 5");
         handler.handleLine("setoption name MoveToleranceSamePiece value 99");
+        handler.handleLine("setoption name MoveToleranceMobilityDrop value 150");
 
         assertFalse(handler.isMoveToleranceFilter(), "false must switch the filter off");
         assertEquals(5, handler.getMoveToleranceReturnPlies(), "N must be stored");
         assertEquals(UciHandler.MAX_FILTER_MOVES, handler.getMoveToleranceSamePiece(), "M above the maximum must be clamped");
+        assertEquals(UciHandler.MAX_MOBILITY_DROP, handler.getMoveToleranceMobilityDrop(),
+                "a mobility limit above the maximum must be clamped");
 
         handler.handleLine("setoption name MoveToleranceFilter value maybe");
 
@@ -353,6 +359,7 @@ class UciHandlerTest {
             handler.handleLine("setoption name MoveToleranceFilter value false");
             handler.handleLine("setoption name MoveToleranceReturnPlies value 4");
             handler.handleLine("setoption name MoveToleranceSamePiece value 2");
+            handler.handleLine("setoption name MoveToleranceMobilityDrop value 40");
             handler.handleLine("position startpos");
             handler.handleLine("go depth 1");
 
@@ -361,6 +368,7 @@ class UciHandlerTest {
             assertFalse(config.isMoveToleranceFilter(), "the engine must get MoveToleranceFilter");
             assertEquals(4, config.getMoveToleranceReturnPlies(), "the engine must get MoveToleranceReturnPlies");
             assertEquals(2, config.getMoveToleranceSamePiece(), "the engine must get MoveToleranceSamePiece");
+            assertEquals(40, config.getMoveToleranceMobilityDrop(), "the engine must get MoveToleranceMobilityDrop");
         } finally {
             handler.run();
         }

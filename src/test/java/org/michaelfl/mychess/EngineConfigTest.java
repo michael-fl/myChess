@@ -62,6 +62,7 @@ class EngineConfigTest {
         assertTrue(config.isMoveToleranceFilter(), "the far-group filter must be on by default");
         assertEquals(EngineConfig.DEFAULT_MOVE_TOLERANCE_RETURN_PLIES, config.getMoveToleranceReturnPlies());
         assertEquals(EngineConfig.DEFAULT_MOVE_TOLERANCE_SAME_PIECE, config.getMoveToleranceSamePiece());
+        assertEquals(EngineConfig.DEFAULT_MOVE_TOLERANCE_MOBILITY_DROP, config.getMoveToleranceMobilityDrop());
     }
 
     @Test
@@ -70,11 +71,13 @@ class EngineConfigTest {
                 .moveToleranceFilter(false)
                 .moveToleranceReturnPlies(5)
                 .moveToleranceSamePiece(2)
+                .moveToleranceMobilityDrop(45)
                 .build();
 
         assertFalse(config.isMoveToleranceFilter(), "the filter switch must arrive unchanged");
         assertEquals(5, config.getMoveToleranceReturnPlies(), "N must arrive unchanged");
         assertEquals(2, config.getMoveToleranceSamePiece(), "M must arrive unchanged");
+        assertEquals(45, config.getMoveToleranceMobilityDrop(), "the mobility limit must arrive unchanged");
     }
 
     @Test

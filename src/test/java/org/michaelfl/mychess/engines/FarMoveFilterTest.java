@@ -3,6 +3,7 @@ package org.michaelfl.mychess.engines;
 import org.junit.jupiter.api.Test;
 import org.michaelfl.mychess.BitOps;
 import org.michaelfl.mychess.Board;
+import org.michaelfl.mychess.FenFixture;
 import org.michaelfl.mychess.Move;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -177,6 +178,100 @@ class FarMoveFilterTest {
         assertNull(filter.blockingRule(move(Board.h2, Board.h3)), "an ordinary move breaks no rule");
     }
 
+    // ---- mobility rule ------------------------------------------------------------------------
+
+    /** The rook on a5 has 12 squares. On a3, between its own pawns a2 and b3, it has 5. */
+    private static final String ROOK_INTO_A_CORNER = "4k3/8/8/R7/8/1P6/P7/4K3 w - - 0 1";
+
+    /** The knight on a2 has 3 squares. On c1 it has 2, because d3 and e2 hold own pawns. */
+    private static final String KNIGHT_LOSES_ONE = "4k3/8/8/8/8/3P4/N3P3/7K w - - 0 1";
+
+    /** As {@link #KNIGHT_LOSES_ONE}, with an own pawn on b3. On c1 the knight has 1 square left. */
+    private static final String KNIGHT_LOSES_TWO = "4k3/8/8/8/8/1P1P4/N3P3/7K w - - 0 1";
+
+    private static final int DROP = 30;
+
+    @Test
+    void mobility_countsEmptyAndEnemySquares() {
+        assertEquals(12, FarMoveFilter.mobility(FenFixture.board(ROOK_INTO_A_CORNER), Board.a5), "rook on a5");
+        assertEquals(3, FarMoveFilter.mobility(FenFixture.board(KNIGHT_LOSES_ONE), Board.a2), "knight on a2");
+        assertEquals(11, FarMoveFilter.mobility(FenFixture.board("4k3/8/8/R7/n7/1P6/P7/4K3 w - - 0 1"), Board.a5),
+                "the enemy knight on a4 counts, the square a3 behind it does not");
+    }
+
+    @Test
+    void mobilityRule_rookIntoACorner_isBlocked() {
+        var filter = mobilityFilter(ROOK_INTO_A_CORNER, DROP);
+
+        assertTrue(filter.losesMobility(move(Board.a5, Board.a3)), "12 to 5 squares must be blocked");
+        assertFalse(filter.losesMobility(move(Board.a5, Board.d5)), "12 to 12 squares must pass");
+    }
+
+    @Test
+    void mobilityRule_dropOfOneSquare_isAllowed() {
+        var filter = mobilityFilter(KNIGHT_LOSES_ONE, DROP);
+
+        assertFalse(filter.losesMobility(move(Board.a2, Board.c1)),
+                "3 to 2 squares is 33 % but only one square. That must pass.");
+    }
+
+    @Test
+    void mobilityRule_dropOfTwoSquares_isBlocked() {
+        var filter = mobilityFilter(KNIGHT_LOSES_TWO, DROP);
+
+        assertTrue(filter.losesMobility(move(Board.a2, Board.c1)), "3 to 1 squares must be blocked");
+    }
+
+    @Test
+    void mobilityRule_dropAtTheLimit_isAllowed() {
+        var filter = mobilityFilter(ROOK_INTO_A_CORNER, 59);
+
+        assertFalse(filter.losesMobility(move(Board.a5, Board.a3)), "7 of 12 squares is 58 %. That is below 59 %.");
+    }
+
+    @Test
+    void mobilityRule_capture_isExempt() {
+        var filter = mobilityFilter("4k3/8/8/R7/8/nP6/P7/4K3 w - - 0 1", DROP);
+
+        assertFalse(filter.losesMobility(move(Board.a5, Board.a3)), "a capture must pass");
+    }
+
+    @Test
+    void mobilityRule_check_isExempt() {
+        // the knight on b3 has 6 squares. On a1 it has 2.
+        var withCheck = mobilityFilter("7K/8/8/8/8/1N6/2k5/8 w - - 0 1", DROP);
+        var withoutCheck = mobilityFilter("7K/8/8/8/8/1N6/8/7k w - - 0 1", DROP);
+
+        assertFalse(withCheck.losesMobility(move(Board.b3, Board.a1)), "Nb3-a1 checks the king on c2. It must pass.");
+        assertTrue(withoutCheck.losesMobility(move(Board.b3, Board.a1)), "the same move without check must be blocked");
+    }
+
+    @Test
+    void mobilityRule_pawnAndKing_areExempt() {
+        var filter = mobilityFilter(ROOK_INTO_A_CORNER, DROP);
+
+        assertFalse(filter.losesMobility(move(Board.a2, Board.a3)), "a pawn move must pass");
+        assertFalse(filter.losesMobility(move(Board.e1, Board.d1)), "a king move must pass");
+    }
+
+    @Test
+    void mobilityRule_zeroDisablesTheRule() {
+        var filter = mobilityFilter(ROOK_INTO_A_CORNER, 0);
+
+        assertFalse(filter.losesMobility(move(Board.a5, Board.a3)), "a limit of 0 must disable the rule");
+    }
+
+    @Test
+    void mobilityRule_namesTheRuleAndLeavesTheBoardUnchanged() {
+        var board = FenFixture.board(ROOK_INTO_A_CORNER);
+        var filter = new FarMoveFilter(board, N, M, DROP);
+
+        assertEquals("mobility", filter.blockingRule(move(Board.a5, Board.a3)), "the rook into the corner");
+        assertEquals("mobility", filter.blockingRule(move(Board.a5, Board.a3)), "a second call must give the same answer");
+        assertNull(filter.blockingRule(move(Board.a5, Board.d5)), "a move along rank 5 breaks no rule");
+        assertEquals(ROOK_INTO_A_CORNER, board.exportFEN(), "the filter must not change the game's board");
+    }
+
     // ---- own moves from the game ---------------------------------------------------------------
 
     @Test
@@ -219,5 +314,9 @@ class FarMoveFilterTest {
 
     private static FarMoveFilter black(int... ownMovesNewestFirst) {
         return new FarMoveFilter(ownMovesNewestFirst, false, N, M);
+    }
+
+    private static FarMoveFilter mobilityFilter(String fen, int dropPercent) {
+        return new FarMoveFilter(FenFixture.board(fen), N, M, dropPercent);
     }
 }
