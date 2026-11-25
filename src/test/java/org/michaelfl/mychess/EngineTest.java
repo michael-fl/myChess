@@ -672,6 +672,25 @@ class EngineTest extends EngineTestBase {
         );
     }
 
+    // FEN: b1r2rk1/1p3pp1/2pp4/p7/2PR3p/1P5P/P3qPP1/B1Q2R1K w - - 0 22
+    // Same game as the exchange sacrifice on d4, six moves later: 20...Qxe4? 21.Rxd4 Qxe2.
+    // Black is a pawn up, but White wins with an attack on g7: rook on the g- or h-file plus
+    // the bishop on a1, while the black queen is off side. Stockfish 19 depth 24: Rg4 +6.69,
+    // Rxh4 +6.19, Re1 +5.17. myChess plays the weak d4-d2 (Stockfish +1.2) at depth 8 and rates
+    // the position about level. It finds Rxh4 from depth 10 on, still without seeing the win.
+    // This pins the weak move. It turns red once king safety sees the attack.
+    // Test family: king-safety (open)
+    @Test
+    void testPositionKingAttackOnG7() {
+        testPositionFromFen(
+                "b1r2rk1/1p3pp1/2pp4/p7/2PR3p/1P5P/P3qPP1/B1Q2R1K w - - 0 22",
+                "d4-d2", // TODO d4-g4, d4-h4 or f1-e1 (Stockfish depth 24: +6.69, +6.19, +5.17)
+                -0.6f, // TODO +6.7 (Stockfish depth 24: +6.69); myChess -0.06 at depth 8
+                0.5f,
+                new GameConfig(ENGINE, engineConfig())
+        );
+    }
+
     // FEN: rk1r2b1/ppp3pp/3b1pn1/3n4/3P2q1/4BNP1/PPP1N2P/RKQR1B2 w KQkq - 2 11
     // Chess960 middlegame (both kings on the b-file). Black stands slightly
     // better — active queen g4, central knight d5, and both bishops — while
