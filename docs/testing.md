@@ -309,7 +309,7 @@ it is now pinned.
 ### `KingAttackCurveTest` (×5, branch `attack-units`) — guarding a calibration, not behavior
 
 A fitted table needs different guards than hand-written code, and this class is the pattern for
-them. `WeightingFunction.KING_ATTACK_PENALTY` was produced by a regression
+them. `WeightingFunction.KING_ATTACK_BONUS` was produced by a regression
 (`docs/king-safety.md` §§ 4.6–4.7), so the usual question — does this method do what its name
 says — does not apply. What can go wrong is that the number stops being the number that was
 fitted.
@@ -797,7 +797,7 @@ The two newest, both **Chess960** and both from [3RoDIOcC](https://lichess.org/3
 the term from the other side — they say where it does *not* reach.
 `castling960_atMove5_characterizesChoosingTheStormedWing` is the sharper of the two: myChess
 castles toward the wing white is storming, and at that moment white has **zero** attack units on
-the black king. Every variant of the planned `KING_ATTACK_PENALTY`, ours and the Audax fork's,
+the black king. Every variant of the planned `KING_ATTACK_BONUS`, ours and the Audax fork's,
 indexes on attackers already bearing on the zone, so all of them score that position at 0 and
 leave the move exactly as attractive as it is today. Recording it before the term is built is
 the point: it is the difference between a term that underperforms and a term that was never

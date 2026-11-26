@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fit the king-attack curve against Stockfish's static evaluation instead of game results.
 
-`tools/king-attack-curve.py` and `king-attack-bootstrap.py` fit `KING_ATTACK_PENALTY` by labelling
+`tools/king-attack-curve.py` and `king-attack-bootstrap.py` fit `KING_ATTACK_BONUS` by labelling
 each position with the result of the game it came from. For the Chess960 corpus that label is a
 **myChess self-play result**, and there the method eats itself: if myChess is blind to king
 attacks then neither side converts one, so the fit learns "attack units are worthless" from games
@@ -43,7 +43,7 @@ Whatever the placebo also earns is activity rather than danger.
 **Fit against an evaluation that does NOT already carry the term.** This is the easiest way to
 get a wrong curve, and the output gives no hint that it happened. The target is
 `stockfish - myChess`, so running the tool against a build that already applies
-`KING_ATTACK_PENALTY` fits the *residual after the term*, not the gap the term exists to close.
+`KING_ATTACK_BONUS` fits the *residual after the term*, not the gap the term exists to close.
 Measured on branch `attack-units`: the same corpus that yields 1.30 % explained variance against
 master's evaluation yields **0.000 %** against the branch's, and the gated curve comes out all
 zeros. That is the correct answer to a different question — it says the shipped curve has already
@@ -258,7 +258,7 @@ def report(label, fitted):
               f"{low:>9.1f}{high:>9.1f}   {verdict}")
 
     rounded = [0] + [int(round(v)) for v in fitted["curve"]]
-    print(f"\nKING_ATTACK_PENALTY = {{ {', '.join(str(v) for v in rounded)} }}")
+    print(f"\nKING_ATTACK_BONUS = {{ {', '.join(str(v) for v in rounded)} }}")
 
     return rounded
 
@@ -284,7 +284,7 @@ def main():
         raise SystemExit(f"corpus not found: {source}")
 
     print("HINWEIS: die Zielgroesse ist stockfish - myChess. Laeuft dieses myChess bereits mit\n"
-          "         KING_ATTACK_PENALTY, misst der Fit die Restluecke NACH dem Term, nicht die\n"
+          "         KING_ATTACK_BONUS, misst der Fit die Restluecke NACH dem Term, nicht die\n"
           "         Luecke, die er schliessen soll. Auf master fitten, oder mit Nullkurve.\n", flush=True)
 
     started = time.time()

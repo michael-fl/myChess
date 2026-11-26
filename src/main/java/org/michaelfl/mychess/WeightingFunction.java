@@ -119,7 +119,7 @@ public final class WeightingFunction {
      * enemy king zone contributes to the king-attack pressure. Heavier pieces
      * weigh more; the king contributes nothing (and is thus never counted as an
      * attacker). These weights are summed into {@link #attackUnit} and used to
-     * index {@link #KING_ATTACK_PENALTY}.
+     * index {@link #KING_ATTACK_BONUS}.
      *
      * <p><b>They cannot be changed on their own.</b> The penalty table is a lookup
      * <em>indexed by</em> these weights, not merely scaled by them: raise the queen to 9 and
@@ -153,8 +153,8 @@ public final class WeightingFunction {
     }
 
     /**
-     * King-attack penalty at full midgame material, in centipawns, scaled down by the game phase
-     * in {@link #calcKingAttackPenalty}. The index is the attacking side's {@link #attackUnit}
+     * King-attack bonus at full midgame material, in centipawns, scaled down by the game phase
+     * in {@link #calcKingAttackBonus}. The index is the attacking side's {@link #attackUnit}
      * minus the {@link #PAWN_SHIELD_DEFENSE_UNITS} of the attacked king, at least 0.
      *
      * <p><b>Fitted, not shaped by hand.</b> The method is that of {@code docs/king-safety.md}
@@ -171,9 +171,9 @@ public final class WeightingFunction {
      * <p>Index 0 is pinned: only the difference between the two sides reaches the score, so a
      * constant on every entry would cancel. The term applies only once at least two distinct
      * pieces attack, and the index is clamped to the last entry. Both happen in
-     * {@link #calcKingAttackPenalty}.
+     * {@link #calcKingAttackBonus}.
      */
-    static final int[] KING_ATTACK_PENALTY = {
+    static final int[] KING_ATTACK_BONUS = {
             0,    //  0
             9,    //  1
             24,   //  2
@@ -213,7 +213,7 @@ public final class WeightingFunction {
      *
      * <p><b>Package-private for the same reason as {@link #ATTACK_UNIT_OF_PIECE}:</b> the
      * standalone {@code KingAttackUnits} in test sources — the implementation
-     * {@link #KING_ATTACK_PENALTY} was fitted over — reads this array from here rather than
+     * {@link #KING_ATTACK_BONUS} was fitted over — reads this array from here rather than
      * repeating it, so the two cannot drift. A disagreement about which squares belong to the
      * zone would mean the table is indexed by a quantity nobody calibrated, and it would not
      * fail loudly. {@code KingAttackCurveTest.theProductionScanCountsWhatTheCurveWasFittedOn}
@@ -261,7 +261,7 @@ public final class WeightingFunction {
      * Phase of the full starting material (4·1 knights + 4·1 bishops + 4·2 rooks + 2·4 queens); the phase is clamped to this.
      *
      * <p>Package-private rather than private so {@code WeightingFunctionAttackUnitTest} can ask
-     * for the king-attack penalty at full midgame. Its fixtures build a {@link WeightingFunction}
+     * for the king-attack bonus at full midgame. Its fixtures build a {@link WeightingFunction}
      * without calling {@link #calculate(Board)}, so their phase field is 0 and every phase-scaled
      * term would come back as 0 — the assertions would pass while testing nothing.
      */
@@ -382,8 +382,8 @@ public final class WeightingFunction {
     private static final float bishopPairFactor = 0.4f;
 
     /**
-     * Scales the king-attack penalty delta (white − black, from
-     * {@link #KING_ATTACK_PENALTY}) into the final position weight. With the
+     * Scales the king-attack bonus delta (white − black, from
+     * {@link #KING_ATTACK_BONUS}) into the final position weight. With the
      * penalty table already in centipawns and the final-weight sum in pawn
      * units, {@code 0.01} carries the table's centipawn values through
      * unchanged.
@@ -674,7 +674,7 @@ public final class WeightingFunction {
                 (doublePawnCount[0] - doublePawnCount[1]) * 100.0,
                 (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * 100.0,
                 ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * 100.0,
-                (calcKingAttackPenalty(0, phase) - calcKingAttackPenalty(1, phase)) * 100.0
+                (calcKingAttackBonus(0, phase) - calcKingAttackBonus(1, phase)) * 100.0
         };
 
         return new FactorBreakdown(eval, features);
@@ -694,7 +694,7 @@ public final class WeightingFunction {
                 + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
                 + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor
                 + ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * bishopPairFactor
-                + (calcKingAttackPenalty(0, phase) - calcKingAttackPenalty(1, phase)) * kingAttackFactor) * 100);
+                + (calcKingAttackBonus(0, phase) - calcKingAttackBonus(1, phase)) * kingAttackFactor) * 100);
     }
 
     /**
@@ -744,8 +744,8 @@ public final class WeightingFunction {
     }
 
     /**
-     * King-attack penalty for the given attacking color, looked up in
-     * {@link #KING_ATTACK_PENALTY} and scaled by the game phase. The index is that side's
+     * King-attack bonus for the given attacking color, looked up in
+     * {@link #KING_ATTACK_BONUS} and scaled by the game phase. The index is that side's
      * accumulated {@link #attackUnit}, lowered by the {@link #PAWN_SHIELD_DEFENSE_UNITS} of the
      * attacked king.
      *
@@ -771,9 +771,9 @@ public final class WeightingFunction {
      *
      * @param color attacking color (0 = white, 1 = black)
      * @param phase game phase in {@code [0, }{@link #MAX_PHASE}{@code ]}; 0 switches the term off
-     * @return the penalty the enemy king incurs, as a positive centipawn value
+     * @return the bonus of the attacking side, as a positive centipawn value
      */
-    int calcKingAttackPenalty(final int color, final int phase) {
+    int calcKingAttackBonus(final int color, final int phase) {
         if (kingAttackerCount[color] < 2) {
             return 0;
         }
@@ -781,7 +781,7 @@ public final class WeightingFunction {
         int cappedPawnShieldCount = Math.min(pawnShieldCount[color^1], PAWN_SHIELD_DEFENSE_UNITS.length - 1);
         int effectiveAttackUnit = Math.max(attackUnit[color] - PAWN_SHIELD_DEFENSE_UNITS[cappedPawnShieldCount], 0);
 
-        return blend(KING_ATTACK_PENALTY[Math.min(effectiveAttackUnit, KING_ATTACK_PENALTY.length - 1)], 0, phase);
+        return blend(KING_ATTACK_BONUS[Math.min(effectiveAttackUnit, KING_ATTACK_BONUS.length - 1)], 0, phase);
     }
 
     // --- Package-private accessors for attack-unit unit tests. The arrays are
@@ -830,7 +830,7 @@ public final class WeightingFunction {
                "doublePawnCount:       w=" + doublePawnCount[0] + ", b=" + doublePawnCount[1] + DELTA_STR + (doublePawnCount[0] - doublePawnCount[1]) + WEIGHT_STR + round((doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor) + '\n' +
                "chessCount:            w=" + chessCount[0] + ", b=" + chessCount[1] + DELTA_STR + (chessCount[0] - chessCount[1]) + WEIGHT_STR + round((chessCount[0] - chessCount[1]) * chessFactor) + '\n' +
                "undefendedPiecesCount: w=" + undefendedPiecesCount[0] + ", b=" + undefendedPiecesCount[1] + DELTA_STR + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) + WEIGHT_STR + round((undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor) + '\n' +
-               "attackUnit:            w=" + attackUnit[0] + ", b=" + attackUnit[1] + DELTA_STR + (attackUnit[0] - attackUnit[1]) + WEIGHT_STR + round((calcKingAttackPenalty(0, phase) - calcKingAttackPenalty(1, phase)) * kingAttackFactor) + '\n' +
+               "attackUnit:            w=" + attackUnit[0] + ", b=" + attackUnit[1] + DELTA_STR + (attackUnit[0] - attackUnit[1]) + WEIGHT_STR + round((calcKingAttackBonus(0, phase) - calcKingAttackBonus(1, phase)) * kingAttackFactor) + '\n' +
                "weight: " + calculatePositionWeight(phase) / 100f;
     }
 

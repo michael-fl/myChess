@@ -59,7 +59,7 @@ import java.util.regex.Pattern;
  * engine is systematically more optimistic, which is worth knowing on its own.
  * The <b>king-attack index</b> is reported last and as a secondary figure only:
  * not as evidence of aggression, but as a check that
- * {@link WeightingFunction#KING_ATTACK_PENALTY} is being asked for the indices it
+ * {@link WeightingFunction#KING_ATTACK_BONUS} is being asked for the indices it
  * was calibrated for. Only plies where the gate lets the term speak are counted,
  * because that is the number the table is actually indexed by; raw pressure the
  * evaluation never priced would be the opposite of a calibration check. The
@@ -138,7 +138,7 @@ public final class MatchStyleAnalysis {
 
     /**
      * Attackers the evaluation's gate demands before it prices an attack at all; mirrors
-     * {@code WeightingFunction.calcKingAttackPenalty}. Read here so the peak index reports what
+     * {@code WeightingFunction.calcKingAttackBonus}. Read here so the peak index reports what
      * the term was actually indexed by rather than raw pressure it never scored.
      */
     private static final int GATE_ATTACKERS = 2;
@@ -285,7 +285,7 @@ public final class MatchStyleAnalysis {
             }
 
             // Restored 2026-08-30 now that the term exists here. The index is only read where
-            // the gate lets the term speak, because that is the number KING_ATTACK_PENALTY is
+            // the gate lets the term speak, because that is the number KING_ATTACK_BONUS is
             // actually indexed by -- recording units the gate suppresses would report pressure
             // the evaluation never priced, which is the opposite of a calibration check.
             //
@@ -297,7 +297,7 @@ public final class MatchStyleAnalysis {
                 if (weightingFunction.getKingAttackerCount()[color] >= GATE_ATTACKERS) {
                     peakIndex[color] = Math.max(peakIndex[color],
                             Math.min(weightingFunction.getAttackUnit()[color],
-                                    WeightingFunction.KING_ATTACK_PENALTY.length - 1));
+                                    WeightingFunction.KING_ATTACK_BONUS.length - 1));
                 }
             }
         }

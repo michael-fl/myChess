@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Place the KING_ATTACK_PENALTY curve by measurement instead of by intuition.
+"""Place the KING_ATTACK_BONUS curve by measurement instead of by intuition.
 
 `tools/king-safety-signal.py` measured king danger per **attacker** — one more piece bearing
 on the ring is worth about −34 cp in the midgame. The evaluation's table is not indexed by
@@ -257,7 +257,7 @@ def main():
 
     Path(args.output).write_text(json.dumps(report, indent=1), encoding="utf-8")
     print(f"-> {args.output}")
-    print("\n'curve cp' is the KING_ATTACK_PENALTY entry for that index, relative to index 0,\n"
+    print("\n'curve cp' is the KING_ATTACK_BONUS entry for that index, relative to index 0,\n"
           "read from the ATTACKER's side: positive means the attacking side scores better, which\n"
           "is the sign the evaluation stores.\n\n"
           "Caveat: isolating f by requiring the opponent to have zero attack units does not\n"

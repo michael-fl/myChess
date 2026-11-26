@@ -3339,7 +3339,7 @@ class BlunderTest {
      *
      * <p><b>The measurement that makes this case load-bearing.</b> Black holds <b>ten</b> attack
      * units on the white king here and white holds none, which is as clear a signature as this
-     * family produces — and the fitted {@code KING_ATTACK_PENALTY} of `docs/king-safety.md`
+     * family produces — and the fitted {@code KING_ATTACK_BONUS} of `docs/king-safety.md`
      * § 4.6 does not help. Applying it to all 36 legal moves leaves {@code Qxd7} ranked
      * <b>1 of 36</b>, exactly where the static evaluation already had it and where Stockfish
      * puts it 15th (depth 18, all 36 successors scored). The term is not silent; it points the wrong way, because the queen landing
@@ -3419,7 +3419,7 @@ class BlunderTest {
      *
      * <p><b>What makes this case different from the twenty other king-safety entries, and the
      * reason it is worth its own test:</b> at the moment of the decision white has <b>zero</b>
-     * attack units on the black king. The planned {@code KING_ATTACK_PENALTY} term — and every
+     * attack units on the black king. The planned {@code KING_ATTACK_BONUS} term — and every
      * variant of it, ours or the Audax fork's — indexes on attackers already bearing on the
      * zone, so all of them score this position at exactly 0 and would leave {@code 5...O-O}
      * just as attractive. This is the boundary of that term, recorded before it is built rather

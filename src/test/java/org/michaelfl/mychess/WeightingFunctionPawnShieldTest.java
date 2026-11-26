@@ -42,7 +42,7 @@ class WeightingFunctionPawnShieldTest {
         int[] shieldUnits = WeightingFunction.PAWN_SHIELD_DEFENSE_UNITS;
         int shield = Math.min(wf.getPawnShieldCount()[attacker ^ 1], shieldUnits.length - 1);
         int index = Math.max(wf.getAttackUnit()[attacker] - shieldUnits[shield], 0);
-        int[] table = WeightingFunction.KING_ATTACK_PENALTY;
+        int[] table = WeightingFunction.KING_ATTACK_BONUS;
 
         return WeightingFunction.blend(table[Math.min(index, table.length - 1)], 0, phase);
     }
@@ -164,8 +164,8 @@ class WeightingFunctionPawnShieldTest {
             var wf = whiteAttacks(2, 8);
             wf.getPawnShieldCount()[BLACK] = 3;
 
-            assertEquals(WeightingFunction.KING_ATTACK_PENALTY[2],
-                    wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE),
+            assertEquals(WeightingFunction.KING_ATTACK_BONUS[2],
+                    wf.calcKingAttackBonus(WHITE, WeightingFunction.MAX_PHASE),
                     "8 attack units against a black king behind three pawns read entry 2");
         }
 
@@ -174,8 +174,8 @@ class WeightingFunctionPawnShieldTest {
             var wf = whiteAttacks(2, 8);
             wf.getPawnShieldCount()[WHITE] = 3;
 
-            assertEquals(WeightingFunction.KING_ATTACK_PENALTY[8],
-                    wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE),
+            assertEquals(WeightingFunction.KING_ATTACK_BONUS[8],
+                    wf.calcKingAttackBonus(WHITE, WeightingFunction.MAX_PHASE),
                     "the black king has no shield, so the white shield must not matter");
         }
 
@@ -187,8 +187,8 @@ class WeightingFunctionPawnShieldTest {
                 var wf = whiteAttacks(2, 8);
                 wf.getPawnShieldCount()[BLACK] = pawns;
 
-                assertEquals(WeightingFunction.KING_ATTACK_PENALTY[expectedIndex[pawns]],
-                        wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE),
+                assertEquals(WeightingFunction.KING_ATTACK_BONUS[expectedIndex[pawns]],
+                        wf.calcKingAttackBonus(WHITE, WeightingFunction.MAX_PHASE),
                         pawns + " shield pawns of the attacked king");
             }
         }
@@ -198,14 +198,14 @@ class WeightingFunctionPawnShieldTest {
             var wf = whiteAttacks(3, 5);
             wf.getPawnShieldCount()[BLACK] = 3;
 
-            assertEquals(0, wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE));
+            assertEquals(0, wf.calcKingAttackBonus(WHITE, WeightingFunction.MAX_PHASE));
         }
 
         @Test
         void gate_staysOnTheAttackers() {
             var wf = whiteAttacks(1, 8);
 
-            assertEquals(0, wf.calcKingAttackPenalty(WHITE, WeightingFunction.MAX_PHASE),
+            assertEquals(0, wf.calcKingAttackBonus(WHITE, WeightingFunction.MAX_PHASE),
                     "one attacker stays below the gate whatever the shield");
         }
 
@@ -216,8 +216,8 @@ class WeightingFunctionPawnShieldTest {
             wf.getAttackUnit()[BLACK] = 8;
             wf.getPawnShieldCount()[WHITE] = 2;
 
-            assertEquals(WeightingFunction.KING_ATTACK_PENALTY[5],
-                    wf.calcKingAttackPenalty(BLACK, WeightingFunction.MAX_PHASE));
+            assertEquals(WeightingFunction.KING_ATTACK_BONUS[5],
+                    wf.calcKingAttackBonus(BLACK, WeightingFunction.MAX_PHASE));
         }
 
         /** The evaluation must charge what its own counters say, for both sides, in every position. */
@@ -231,7 +231,7 @@ class WeightingFunctionPawnShieldTest {
 
                 for (int attacker = WHITE; attacker <= BLACK; attacker++) {
                     int expected = expectedPenalty(wf, attacker, phase);
-                    int actual = wf.calcKingAttackPenalty(attacker, phase);
+                    int actual = wf.calcKingAttackBonus(attacker, phase);
 
                     if (expected != actual) {
                         divergences.add("%s attacker %d: penalty %d, expected %d".formatted(fen, attacker, actual, expected));

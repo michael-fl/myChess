@@ -689,7 +689,7 @@ Shipped in **v4.8.0** — the first king-safety term in this engine to pass a pr
 
 `increaseAttackUnit` is reached from inside the per-piece pseudo-move walk, so no separate scan exists; `isCurrentAttackerCounted` is what makes the contribution per *piece* rather than per square. `kingAttackerCount[color]` counts the distinct attackers alongside the unit sum.
 
-**The curve.** The unit sum indexes `KING_ATTACK_PENALTY`, nine entries in centipawns, clamped at the last:
+**The curve.** The unit sum indexes `KING_ATTACK_BONUS`, nine entries in centipawns, clamped at the last:
 
 ```
 index  0  1  2   3   4   5   6   7   8
@@ -698,7 +698,7 @@ value  0  0  0  13  16  47  47  47  80
 
 It is **fitted, not shaped by hand** — against Stockfish's *static* evaluation minus this one over a 39,619-position corpus, with monotonicity imposed as a constraint of the fit. The flat run at 5–7 is therefore a measurement: where the unconstrained fit descended, the isotonic projection merged the offending indices, at a cost of 0.077 % of residual. Indices 1 and 2 are zero because one minor piece bearing on the zone is the normal case and not a danger; index 0 is pinned because only the difference between the two sides reaches the score, so a constant on every entry would cancel.
 
-**Two gates.** `calcKingAttackPenalty` returns zero below **two distinct attackers**, which keeps the ordinary single-piece case out of the score entirely, and `blend(value, 0, phase)` fades the penalty to nothing toward a pawn endgame — the same phase machinery the castling term uses ([§ 5.5](#55-castling-state)). `kingAttackFactor = 0.01` then carries the table's centipawns through unchanged into the pawn-unit sum, and is not (yet) a tunable Texel factor.
+**Two gates.** `calcKingAttackBonus` returns zero below **two distinct attackers**, which keeps the ordinary single-piece case out of the score entirely, and `blend(value, 0, phase)` fades the penalty to nothing toward a pawn endgame — the same phase machinery the castling term uses ([§ 5.5](#55-castling-state)). `kingAttackFactor = 0.01` then carries the table's centipawns through unchanged into the pawn-unit sum, and is not (yet) a tunable Texel factor.
 
 **It is not cheap, and that is measured.** A four-arm cost ladder over one bench signature puts the term at **8.41 % of throughput**, split 22 / 77 / 1 between building the zone, asking per attacked square, and the penalty lookup. Three quarters of the price is the per-square query reached from the mobility walk, so the lever is the call *frequency*, not the zone test — swapping that test between arithmetic and a lookup table moved the total by 0.58 %, inside the run-to-run spread. In the anchor gauntlet the arm that computes the term and throws it away measured **−18.0 ± 14.5 Elo** against the arm that does not compute it at all.
 
@@ -722,7 +722,7 @@ private int calculatePositionWeight(final int phase) {
             + (doublePawnCount[0] - doublePawnCount[1]) * doublePawnFactor
             + (undefendedPiecesCount[0] - undefendedPiecesCount[1]) * undefendedPiecesFactor
             + ((bishopCount[0] >= 2 ? 1 : 0) - (bishopCount[1] >= 2 ? 1 : 0)) * bishopPairFactor
-            + (calcKingAttackPenalty(0, phase) - calcKingAttackPenalty(1, phase)) * kingAttackFactor)
+            + (calcKingAttackBonus(0, phase) - calcKingAttackBonus(1, phase)) * kingAttackFactor)
             * 100);
 }
 ```

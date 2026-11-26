@@ -3,7 +3,7 @@ package org.michaelfl.mychess;
 /**
  * Attack units bearing on a king's 3×3 zone, computed from a {@link Board} alone.
  *
- * <p>This is the quantity {@link WeightingFunction#KING_ATTACK_PENALTY} is indexed by: every
+ * <p>This is the quantity {@link WeightingFunction#KING_ATTACK_BONUS} is indexed by: every
  * enemy piece that attacks at least one square of the king's zone contributes its weight, and
  * each piece counts <b>once</b> however many zone squares it bears on.
  *
@@ -106,7 +106,7 @@ final class KingAttackUnits {
     /**
      * Distinct pieces {@code attackerColor} has bearing on the other king's zone.
      *
-     * <p>This is the quantity {@code WeightingFunction.calcKingAttackPenalty} gates on, and it is
+     * <p>This is the quantity {@code WeightingFunction.calcKingAttackBonus} gates on, and it is
      * not derivable from the unit sum: five units is one queen or a rook and a knight, and the
      * gate treats those differently. Measuring the gate's effect needs both numbers, which is why
      * this exists alongside {@link #of}.

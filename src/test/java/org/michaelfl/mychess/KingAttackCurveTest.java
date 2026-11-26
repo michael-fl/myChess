@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Guards the shape and the magnitude of {@link WeightingFunction#KING_ATTACK_PENALTY}.
+ * Guards the shape and the magnitude of {@link WeightingFunction#KING_ATTACK_BONUS}.
  *
  * <p>The table is fitted rather than chosen — see `docs/king-safety.md` § 4.6 — and the two
  * properties that make it safe to ship are not properties a fit enforces. Both are checked here
@@ -58,7 +58,7 @@ class KingAttackCurveTest {
 
     @Test
     void curveCannotOnItsOwnMakeASacrificeLookProfitable() {
-        int loudest = Arrays.stream(WeightingFunction.KING_ATTACK_PENALTY).max().orElseThrow();
+        int loudest = Arrays.stream(WeightingFunction.KING_ATTACK_BONUS).max().orElseThrow();
         int limit = PositionSearch.EVALUATE_MATERIAL_ONLY_THRESHOLD / SAFETY_DIVISOR;
 
         assertTrue(loudest <= limit,
@@ -72,7 +72,7 @@ class KingAttackCurveTest {
 
     @Test
     void curveNeverRewardsFewerAttackers() {
-        int[] curve = WeightingFunction.KING_ATTACK_PENALTY;
+        int[] curve = WeightingFunction.KING_ATTACK_BONUS;
 
         for (int units = 1; units < curve.length; units++) {
             assertTrue(curve[units] >= curve[units - 1],
@@ -89,18 +89,18 @@ class KingAttackCurveTest {
      */
     @Test
     void curveStartsAtZero() {
-        assertEquals(0, WeightingFunction.KING_ATTACK_PENALTY[0],
+        assertEquals(0, WeightingFunction.KING_ATTACK_BONUS[0],
                 "index 0 is the pinned reference point; only differences reach the score");
     }
 
     /**
      * The table is fitted over indices 0–8, which carry 99.7 % of king samples; everything above
-     * is clamped onto the last entry by {@code calcKingAttackPenalty}. A longer table would
+     * is clamped onto the last entry by {@code calcKingAttackBonus}. A longer table would
      * therefore contain entries the fit never placed.
      */
     @Test
     void curveCoversExactlyTheFittedRange() {
-        assertEquals(9, WeightingFunction.KING_ATTACK_PENALTY.length,
+        assertEquals(9, WeightingFunction.KING_ATTACK_BONUS.length,
                 "the curve was fitted for 0..8 attack units; entries beyond that are not measured");
     }
 
@@ -117,7 +117,7 @@ class KingAttackCurveTest {
      * The production scan and the implementation the curve was fitted over must agree exactly.
      *
      * <p><b>This is the assertion that makes the calibration mean anything.</b>
-     * {@link WeightingFunction#KING_ATTACK_PENALTY} is a lookup indexed by an attack-unit count,
+     * {@link WeightingFunction#KING_ATTACK_BONUS} is a lookup indexed by an attack-unit count,
      * and it was fitted over {@link KingAttackUnits} — a second implementation living in test
      * sources, written because master had no attacker-set API at the time. The shipped table is
      * therefore only correct while the number the evaluation computes is the number the fit saw.
@@ -159,7 +159,7 @@ class KingAttackCurveTest {
 
         assertTrue(divergences.isEmpty(),
                 divergences.size() + " of the positions count different attack units in the "
-                        + "evaluation than in KingAttackUnits, which is what KING_ATTACK_PENALTY "
+                        + "evaluation than in KingAttackUnits, which is what KING_ATTACK_BONUS "
                         + "was fitted against — so the table is being indexed by a quantity "
                         + "nobody calibrated. Either restore the agreement or refit the curve; do "
                         + "not relax this test. First few: "

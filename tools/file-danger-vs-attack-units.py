@@ -25,7 +25,7 @@ one -- running this on the branch measures the residual *after* the attack-unit 
 report roughly zero for it. The log entry is the surviving record; treat a rerun as a different
 question rather than a contradiction.
 
-**The production gate is applied.** `WeightingFunction.calcKingAttackPenalty` returns zero below
+**The production gate is applied.** `WeightingFunction.calcKingAttackBonus` returns zero below
 two distinct attackers, and that suppresses a large share of the term's mass. Fitting ungated
 measures a term the engine does not have -- an error already made once in this series, and the
 refit that followed changed the curve substantially.
@@ -56,7 +56,7 @@ CLASSPATH = "target/classes:target/test-classes:target/dependency/*"
 ATTACK_PROBE = "org.michaelfl.mychess.KingAttackProbe"
 REPLICATES = 60
 
-#: WeightingFunction.calcKingAttackPenalty scores zero below this many distinct attackers.
+#: WeightingFunction.calcKingAttackBonus scores zero below this many distinct attackers.
 MIN_ATTACKERS = 2
 
 FILE_DANGER = "Liniengefahr"

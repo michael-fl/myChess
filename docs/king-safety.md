@@ -104,7 +104,7 @@ today's evaluation.** Its own commit message says so: *"Known effect, pending se
 measurement."* It was never played.
 
 What it already carries: the 3×3 king zone, per-piece attack units (P1 N2 B2 R3 Q5, king 0)
-deduplicated by origin square, the progressive `KING_ATTACK_PENALTY` curve, the ≥ 2-attacker
+deduplicated by origin square, the progressive `KING_ATTACK_BONUS` curve, the ≥ 2-attacker
 gate, and a migrated test class `WeightingFunctionAttackUnitTest` with 12 tests — including
 suites that were `@Disabled` on the old branch and are active here. The pawn-shield experiment
 was deliberately left behind, which matches § 4.3's conclusion that the two halves should be
@@ -164,7 +164,7 @@ the attacker-side bonus, so the engine over-committed pieces toward the enemy ki
 speculative attacks that its own tactical search then refuted. This is the "static noise added
 to a strong search" failure mode, concretely.
 
-**F3 — Texel cannot tune the part that matters most.** The `KING_ATTACK_PENALTY` curve is
+**F3 — Texel cannot tune the part that matters most.** The `KING_ATTACK_BONUS` curve is
 linear per bucket, so each bucket value *is* Texel-tunable. But the Zurichess `quiet-labeled`
 set under-samples exactly the sharp positions the curve exists for, so tuning on it mostly
 **shrinks the curve toward neutral** rather than learning attacking value. And the unit weights
@@ -868,7 +868,7 @@ not the first.
 > term on two attackers while the fit did not, so the two are calibrated on different
 > quantities. Refitting under the gate gives `0 0 0 13 16 47 47 47 80`.
 
-**`KING_ATTACK_PENALTY = { 0, 2, 2, 20, 20, 20, 44, 45, 85 }`.** This replaces § 4.5.
+**`KING_ATTACK_BONUS = { 0, 2, 2, 20, 20, 20, 44, 45, 85 }`.** This replaces § 4.5.
 
 Two things forced the refit, and neither was visible while the curve was only ever compared
 against other fits of the same kind.
@@ -973,7 +973,7 @@ and they are not evidence that the calibration is wrong.
 
 ### 4.7 The gate was in the code but not in the fit (2026-08-30)
 
-**`KING_ATTACK_PENALTY = { 0, 0, 0, 13, 16, 47, 47, 47, 80 }`.** This is what ships.
+**`KING_ATTACK_BONUS = { 0, 0, 0, 13, 16, 47, 47, 47, 80 }`.** This is what ships.
 
 § 4.6 fitted the curve over `KingAttackUnits`, which sums attack units unconditionally.
 The production term does not: it scores zero unless at least two distinct pieces bear on the
@@ -1053,7 +1053,7 @@ the six unit weights from `WeightingFunction` rather than repeating them, which 
 trade (the two cannot drift apart) and has the consequence that it no longer compiles on master:
 master's evaluation has no attack-unit constants at all. Reviving the fit means reviving the
 branch, or restoring local constants in that one class. **Read its warning before re-running it:** the target is
-`stockfish − myChess`, so fitting against a build that already applies `KING_ATTACK_PENALTY`
+`stockfish − myChess`, so fitting against a build that already applies `KING_ATTACK_BONUS`
 measures the residual *after* the term. On branch `attack-units` the same corpus that gives
 1.30 % explained variance against master's evaluation gives **0.000 %** and an all-zero gated
 curve — the right answer to a different question, and indistinguishable from "no signal".

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Fits the {@code KING_ATTACK_PENALTY} table against game results.
+ * Fits the {@code KING_ATTACK_BONUS} table against game results.
  *
  * <p>This is the first curve in the project placed by a fit rather than by hand. All three
  * shelved king-safety attempts wrote their tables from intuition and then measured the whole
@@ -176,7 +176,7 @@ public final class TexelKingAttackTuner {
     }
 
     private static void report(double[] fitted) {
-        System.out.println("\nfitted KING_ATTACK_PENALTY (centipawns, index 0 pinned at 0):");
+        System.out.println("\nfitted KING_ATTACK_BONUS (centipawns, index 0 pinned at 0):");
         System.out.printf(Locale.ROOT, "  %2d -> %7.1f%n", 0, 0.0);
 
         double previous = 0.0;
