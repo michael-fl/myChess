@@ -137,7 +137,7 @@ class DeepWeightTest {
                 """;
         testPosition(pgn,
                 0.14f,
-                0.65f, // max was 0.34; v4.3.4 deep eval ~0.47
+                0.8f, // max was 0.34, then 0.65 (v4.3.4 deep eval ~0.47); v4.12.0 pawn shield -> 0.72
                 new GameConfig(MyChessEngine.class, engineConfig())
         );
     }

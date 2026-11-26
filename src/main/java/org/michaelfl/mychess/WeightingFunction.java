@@ -153,43 +153,48 @@ public final class WeightingFunction {
     }
 
     /**
-     * King-attack penalty at full midgame material, in centipawns, indexed by the attacking
-     * side's accumulated {@link #attackUnit} and scaled down by the game phase in
+     * King-attack penalty at full midgame material, in centipawns, scaled down by the game phase
+     * in {@link #calcKingAttackPenalty}. The index is the attacking side's {@link #attackUnit}
+     * minus the {@link #PAWN_SHIELD_DEFENSE_UNITS} of the attacked king, at least 0.
+     *
+     * <p><b>Fitted, not shaped by hand.</b> The method is that of {@code docs/king-safety.md}
+     * § 4.6 and § 4.7. The target was Stockfish's <em>static</em> evaluation minus this one
+     * without the term, over a 39 619-position corpus. The fit was monotone, gated on two
+     * attackers, and capped at 100 cp. This table was refitted on 2026-11-14 for the index with
+     * the pawn shield ({@code myChess-Lab/results/defense-units/REPORT.md}). The table before
+     * it, fitted on the attack units alone, read {@code 0 0 0 13 16 47 47 47 80}.
+     *
+     * <p><b>Equal neighbors are the measurement, not rounding.</b> Where the data cannot tell two
+     * indices apart, the isotonic fit merges them into one level. The last two entries sit at the
+     * cap of 100 cp, half the material-only threshold, which {@code KingAttackCurveTest} guards.
+     *
+     * <p>Index 0 is pinned: only the difference between the two sides reaches the score, so a
+     * constant on every entry would cancel. The term applies only once at least two distinct
+     * pieces attack, and the index is clamped to the last entry. Both happen in
      * {@link #calcKingAttackPenalty}.
-     *
-     * <p><b>Fitted, not shaped by hand</b> — see {@code docs/king-safety.md} § 4.6. The target
-     * was Stockfish's <em>static</em> evaluation minus this one, over a 39 619-position corpus,
-     * with monotonicity as a constraint of the fit rather than a property hoped for afterward.
-     * An earlier hand-built table ran to index 20 and rose to 400; the entries above 8 covered
-     * positions real play reaches in 0.3 % of samples, and its lower half carried a quarter to a
-     * half of what the fit puts there.
-     *
-     * <p><b>The flat runs are the measurement, not rounding.</b> Indices 5 to 7 share a value
-     * because the data place all three well above zero without distinguishing between them;
-     * where the unconstrained fit fell — which would score more attackers as less danger — the
-     * isotonic projection merges the offending indices into one level. Constraining the fit that
-     * way costs 0.077 % of residual, so the descent it removed was noise.
-     *
-     * <p>Indices 1 and 2 are zero because a single minor piece bearing on the king zone is the
-     * normal case rather than a danger, and their intervals do not separate from zero. Index 0
-     * is pinned: only the difference between the two sides reaches the score, so a constant on
-     * every entry would cancel.
-     *
-     * <p>Applied only once at least two distinct pieces attack, and the index is clamped to the
-     * last entry — both in {@link #calcKingAttackPenalty}, both deliberate, both explained
-     * there.
      */
     static final int[] KING_ATTACK_PENALTY = {
             0,    //  0
-            0,    //  1
-            0,    //  2
-            13,   //  3
-            16,   //  4
-            47,   //  5
-            47,   //  6
-            47,   //  7
-            80    //  8
+            9,    //  1
+            24,   //  2
+            24,   //  3
+            45,   //  4
+            55,   //  5
+            55,   //  6
+            100,  //  7
+            100   //  8
     };
+
+    /**
+     * Defense units of a pawn shield, indexed by the number of own pawns in the own king zone.
+     * Three and more pawns read the last entry.
+     *
+     * <p>Convex on purpose: the third pawn is worth more than the first. A full shield cancels
+     * most of an attack, a shield with a gap much less. Measured offline as the best of 84
+     * monotone maps ({@code myChess-Lab/results/defense-units/REPORT.md}). Four shield pawns
+     * occur in 0.06 % of the positions, too rare to fit an entry of their own.
+     */
+    static final int[] PAWN_SHIELD_DEFENSE_UNITS = { 0, 1, 3, 6 };
 
     /**
      * Shifts the king-zone centre off the a- and h-file, indexed by the king's column
@@ -417,6 +422,8 @@ public final class WeightingFunction {
     private final int[] bishopCount = new int[2];
     /** Accumulated attack units bearing on the enemy king zone, per attacking color. */
     private final int[] attackUnit = new int[2];
+    /** Own pawns standing in the own king zone, per color. */
+    private final int[] pawnShieldCount = new int[2];
     /** Number of distinct pieces bearing on the enemy king zone, per attacking color. */
     private final int[] kingAttackerCount = new int[2];
     /** Per-color sum of midgame piece-square values for the current position (index 0 = white, 1 = black). */
@@ -496,6 +503,8 @@ public final class WeightingFunction {
         this.bishopCount[1] = 0;
         this.attackUnit[0] = 0;
         this.attackUnit[1] = 0;
+        this.pawnShieldCount[0] = 0;
+        this.pawnShieldCount[1] = 0;
         this.kingAttackerCount[0] = 0;
         this.kingAttackerCount[1] = 0;
         this.pstMidGameWeight[0] = 0;
@@ -736,8 +745,9 @@ public final class WeightingFunction {
 
     /**
      * King-attack penalty for the given attacking color, looked up in
-     * {@link #KING_ATTACK_PENALTY} by that side's accumulated {@link #attackUnit} and scaled by
-     * the game phase.
+     * {@link #KING_ATTACK_PENALTY} and scaled by the game phase. The index is that side's
+     * accumulated {@link #attackUnit}, lowered by the {@link #PAWN_SHIELD_DEFENSE_UNITS} of the
+     * attacked king.
      *
      * <p><b>The phase scaling is the whole reason this term was worth porting.</b> Branch
      * {@code attack-units} carried it for weeks without any reference to the phase, so it ran at
@@ -764,9 +774,14 @@ public final class WeightingFunction {
      * @return the penalty the enemy king incurs, as a positive centipawn value
      */
     int calcKingAttackPenalty(final int color, final int phase) {
-        return kingAttackerCount[color] < 2 ?
-                0 :
-                blend(KING_ATTACK_PENALTY[Math.min(attackUnit[color], KING_ATTACK_PENALTY.length - 1)], 0, phase);
+        if (kingAttackerCount[color] < 2) {
+            return 0;
+        }
+
+        int cappedPawnShieldCount = Math.min(pawnShieldCount[color^1], PAWN_SHIELD_DEFENSE_UNITS.length - 1);
+        int effectiveAttackUnit = Math.max(attackUnit[color] - PAWN_SHIELD_DEFENSE_UNITS[cappedPawnShieldCount], 0);
+
+        return blend(KING_ATTACK_PENALTY[Math.min(effectiveAttackUnit, KING_ATTACK_PENALTY.length - 1)], 0, phase);
     }
 
     // --- Package-private accessors for attack-unit unit tests. The arrays are
@@ -778,6 +793,10 @@ public final class WeightingFunction {
 
     int[] getKingAttackerCount() {
         return kingAttackerCount;
+    }
+
+    int[] getPawnShieldCount() {
+        return pawnShieldCount;
     }
 
     boolean isInKingZone(int color, int field) {
@@ -852,6 +871,11 @@ public final class WeightingFunction {
         // en passant
         if (game.getEnPassantField() != 0 && fieldToRow(field) == 4) {
             checkWhiteEnPassant(field);
+        }
+
+        // Increment pawn shield counter if pawn stands in own king zone
+        if (ChessUtil.chebyshevDistance(field, kingFieldCorrected[0]) <= 1) {
+            pawnShieldCount[0]++;
         }
 
         checkWhiteDoublePawn(field);
@@ -931,6 +955,11 @@ public final class WeightingFunction {
         // en passant
         if (game.getEnPassantField() != 0 && fieldToRow(field) == 3) {
             checkBlackEnPassant(field);
+        }
+
+        // Increment pawn shield counter if pawn stands in own king zone
+        if (ChessUtil.chebyshevDistance(field, kingFieldCorrected[1]) <= 1) {
+            pawnShieldCount[1]++;
         }
 
         checkBlackDoublePawn(field);

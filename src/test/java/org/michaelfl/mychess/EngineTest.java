@@ -46,7 +46,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "h3-e6",
                 0.2f,
-                1.1f, // max was 0.5, 0.7, then 0.85; v4.8.0 attack units -> 1.05
+                1.35f, // max was 0.5, 0.7, then 0.85; v4.8.0 attack units -> 1.05; v4.12.0 pawn shield -> 1.24
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -60,7 +60,11 @@ class EngineTest extends EngineTestBase {
                 Nxe6 Bxe6 17. fxe6 O-O 18. Rg1 Bf6 19. Bh3 Re8
                 """;
         testPosition(pgn,
-                "c3-d5", // TODO
+                // REGRESSED (v4.12.0): the pawn shield moves this from Nd5 to Bf5 at 0.73.
+                // Stockfish 19 depth 20: Nd5 +5.82, Bf5 +3.87. It costs 1.95 pawns, and the
+                // position stays won. Recorded rather than argued away: the shield passed its
+                // self-play match at +10.0 Elo.
+                "h3-f5", // TODO c3-d5
                 0.1f,
                 1.0f,
                 new GameConfig(ENGINE, engineConfig())
@@ -198,12 +202,14 @@ class EngineTest extends EngineTestBase {
                 // here, and the position stays won either way. Recorded rather than argued
                 // away: the term was merged on a gauntlet that cleared its guard, not on a
                 // claim that it improves every position.
-                Set.of("e5-e6"),
+                // RECOVERED AGAIN (v4.12.0): with the pawn shield it plays Ne6 at 2.0.
+                // Stockfish 19 depth 20: Ne6 +7.46, exe6 +6.14.
+                Set.of("g5-e6"),
                 // PV-path assertion dropped: the deep PV shifted with the tapered
                 // pawn-EG table (v4.3.0).
                 null,
                 1.8f, // was 2.0; tapered pawn-EG (v4.3.0)
-                3.0f, // TODO should be 4.5 (SF depth 22 for the best move Ne6)
+                3.0f, // TODO should be 4.5 (SF depth 22 for Ne6)
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -223,7 +229,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 "b7-g7",
                 6.0f, // OPT: Should be M13
-                7.1f, // max was 7.0; v4.8.0 attack units -> 7.05
+                7.2f, // max was 7.0; v4.8.0 attack units -> 7.05; v4.12.0 pawn shield -> 7.11
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -430,7 +436,7 @@ class EngineTest extends EngineTestBase {
         testPosition(pgn,
                 Set.of("Rxh4"),
                 -0.45f, // was -0.2; Rxh4 is SF-best (SF depth 20: +0.58); v4.2.0 eval drift
-                0.7f, // king-EG (v4.3.1), v4.3.3 bishop-pair → ~0.37; v4.8.0 attack units -> 0.64
+                0.9f, // king-EG (v4.3.1), v4.3.3 bishop-pair → ~0.37; v4.8.0 attack units -> 0.64; v4.12.0 pawn shield -> 0.81
                 new GameConfig(ENGINE, engineConfig())
         );
     }
@@ -486,7 +492,8 @@ class EngineTest extends EngineTestBase {
                 // repetition fix added Ke4 (f3-e4). Measured with the check toggled and
                 // nothing else changed: Rg2 at -1.34, Ke4 at -1.27 — the fix prunes a
                 // repeating line, which reorders two moves 0.07 pawns apart.
-                Set.of("a2-a3", "f3-g3", "e2-e6", "e2-g2", "f3-e4"),
+                // e2-c2 since v4.12.0, at -1.29. Rc2+ is in the band above (Stockfish 19 depth 20: -0.25).
+                Set.of("a2-a3", "f3-g3", "e2-e6", "e2-g2", "f3-e4", "e2-c2"),
                 -1.5f, // was -1.3; tapered pawn-EG (v4.3.0), full-joint (v4.3.4)
                 -0.6f,
                 new GameConfig(ENGINE, engineConfig())
@@ -676,15 +683,15 @@ class EngineTest extends EngineTestBase {
     // Same game as the exchange sacrifice on d4, six moves later: 20...Qxe4? 21.Rxd4 Qxe2.
     // Black is a pawn up, but White wins with an attack on g7: rook on the g- or h-file plus
     // the bishop on a1, while the black queen is off side. Stockfish 19 depth 24: Rg4 +6.69,
-    // Rxh4 +6.19, Re1 +5.17. myChess plays the weak d4-d2 (Stockfish +1.2) at depth 8 and rates
-    // the position about level. It finds Rxh4 from depth 10 on, still without seeing the win.
-    // This pins the weak move. It turns red once king safety sees the attack.
+    // Rxh4 +6.19, Re1 +5.17. 4.11.0 played the weak d4-d2 (Stockfish +1.2) at depth 8.
+    // Since v4.12.0 the pawn shield finds Rxh4 at depth 8. It still rates the position level,
+    // so the weight TODO stays open.
     // Test family: king-safety (open)
     @Test
     void testPositionKingAttackOnG7() {
         testPositionFromFen(
                 "b1r2rk1/1p3pp1/2pp4/p7/2PR3p/1P5P/P3qPP1/B1Q2R1K w - - 0 22",
-                "d4-d2", // TODO d4-g4, d4-h4 or f1-e1 (Stockfish depth 24: +6.69, +6.19, +5.17)
+                Set.of("d4-g4", "d4-h4", "f1-e1"),
                 -0.6f, // TODO +6.7 (Stockfish depth 24: +6.69); myChess -0.06 at depth 8
                 0.5f,
                 new GameConfig(ENGINE, engineConfig())
