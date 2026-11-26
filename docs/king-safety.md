@@ -10,6 +10,12 @@
 > priority list; the reasoning and the steps live here. Everything below § 4.17 is the record of
 > how it got there, including the claims that were withdrawn on the way.
 
+> **Pawn shield shipped in v4.12.0, 2026-11-26.** Own pawns in the own king zone lower the
+> opponent's attack index by 0 / 1 / 3 / 6 units. The curve was refitted for that index:
+> `0 9 24 24 45 55 55 100 100`. Self-play against 4.11.0 measured **+10.0 ± 8.8** [+1.2, +18.8].
+> That is the first king-safety variant with a positive measurement. Fit and gauntlet are in
+> `myChess-Lab/results/defense-units/REPORT.md` and `myChess-Lab/preregistration/pawn-shield-match.md`.
+
 > **Priority: this document is the current work, and it stays that way until a king-safety
 > variant measures positive Elo.** No search work — LMR, PVS, history heuristic, aspiration
 > windows, check extensions — starts before that, and none of it belongs in a recommendation
